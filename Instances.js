@@ -139,7 +139,7 @@ class Instances extends React.Component {
   render() {
     const { resources } = this.props;
     const instances = (resources.instances || {}).records || [];
-    const searchHeader = <FilterPaneSearch id="SearchField" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
+    const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
 
     const getIdFormatter = () =>
      (r) => {
