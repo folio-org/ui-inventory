@@ -179,6 +179,7 @@ class Instances extends React.Component {
           }
         >
           <MultiColumnList
+            id="list-instances"
             contentData={instances}
             rowMetadata={['title', 'id']}
             formatter={resultsFormatter}
