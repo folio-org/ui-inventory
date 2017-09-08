@@ -16,7 +16,9 @@
     "displayName": "Instances",
     "route": "/instances",
     "hasSettings": false,
-    "okapiInterfaces": { },
+    "okapiInterfaces": { 
+      "inventory": "2.1"
+    },
     "permissionSets": [
       {
         "permissionName": "module.instances.enabled",
