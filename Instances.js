@@ -19,6 +19,9 @@ const RESULT_COUNT_INCREMENT = 30;
 class Instances extends React.Component {
 
   static propTypes = {
+    stripes: PropTypes.shape({
+      locale: PropTypes.string.isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
       instances: PropTypes.shape({
         hasLoaded: PropTypes.bool.isRequired,
@@ -137,7 +140,7 @@ class Instances extends React.Component {
   }, 250);
 
   render() {
-    const { resources } = this.props;
+    const { resources, stripes: { locale } } = this.props;
     const instances = (resources.instances || {}).records || [];
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
 
@@ -154,9 +157,12 @@ class Instances extends React.Component {
        }
        return formatted;
      };
-
     const resultsFormatter = {
       identifiers: getIdFormatter(),
+      author: () => 'to come',
+      creators: () => 'to come',
+      publisher: () => 'to come',
+      'publication date': () => ('2017-01-05T12:42:21Z' ? new Date(Date.parse('2017-09-08T12:42:21Z')).toLocaleDateString(locale) : ''),
     };
 
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
@@ -185,7 +191,7 @@ class Instances extends React.Component {
             formatter={resultsFormatter}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'identifiers']}
+            visibleColumns={['title', 'author', 'identifiers', 'creators', 'publisher', 'publication date']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
