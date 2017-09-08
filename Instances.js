@@ -64,7 +64,7 @@ class Instances extends React.Component {
           query: makeQueryFunction(
             'cql.allRecords=1',
             'title="$QUERY*"',
-            { 'Title': 'title' },
+            { Title: 'title' },
           ),
         },
         staticFallback: { params: {} },
@@ -141,14 +141,31 @@ class Instances extends React.Component {
     const instances = (resources.instances || {}).records || [];
     const searchHeader = <FilterPaneSearch id="SearchField" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
 
+    const getIdFormatter = () =>
+     (r) => {
+       let formatted = '';
+       if (r.identifiers && r.identifiers.length) {
+         for (let i = 0; i < r.identifiers.length; i += 1) {
+           const id = r.identifiers[i];
+           formatted += (i > 0 ? ', ' : '') +
+                        id.value +
+                        (id.namespace && id.namespace.length ? ` (${id.namespace})` : '');
+         }
+       }
+       return formatted;
+     };
+
+    const resultsFormatter = {
+      identifiers: getIdFormatter(),
+    };
+
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
 
     return (
       <Paneset>
         <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
-        <Pane defaultWidth="16%" header={searchHeader}>
-        </Pane>
+        <Pane defaultWidth="16%" header={searchHeader} />
         {/* Results Pane */}
         <Pane
           defaultWidth="fill"
@@ -164,9 +181,10 @@ class Instances extends React.Component {
           <MultiColumnList
             contentData={instances}
             rowMetadata={['title', 'id']}
+            formatter={resultsFormatter}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title']}
+            visibleColumns={['title', 'identifiers']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
