@@ -15,7 +15,7 @@ module.exports.test = function(uiTestCtx) {
       })
       it('should open module "Instances" and find version tag ', done => {
         nightmare
-        .use(openApp(nightmare, config, done, 'requests', testVersion))
+        .use(openApp(nightmare, config, done, 'instances', testVersion))
         .then(result => result )
       })
     })
