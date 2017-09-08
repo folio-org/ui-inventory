@@ -1,6 +1,6 @@
 {
   "name": "@folio/instances",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Instances manager",
   "repository": "folio-org/ui-instances",
   "publishConfig": {
