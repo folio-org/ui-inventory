@@ -1,6 +1,6 @@
 module.exports.test = function(uiTestCtx) {
 
-  describe('Module test: checkout:stub', function() {
+  describe('Module test: instances:stub', function() {
     const { config, helpers: { login, openApp, logout }, meta: { testVersion } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
