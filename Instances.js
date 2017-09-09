@@ -15,6 +15,8 @@ import packageInfo from './package';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+const defaultObj = {};
+const defaultArr = [];
 
 class Instances extends React.Component {
 
@@ -153,7 +155,7 @@ class Instances extends React.Component {
 
   render() {
     const { resources } = this.props;
-    const instances = (resources.instances || {}).records || [];
+    const instances = (resources.instances || defaultObj).records || defaultArr;
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
 
     const resultsFormatter = {
