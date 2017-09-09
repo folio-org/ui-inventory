@@ -83,9 +83,6 @@ class Instances extends React.Component {
       searchTerm: query.query || '',
       sortOrder: query.sort || '',
     };
-    this.onClearSearch = this.onClearSearch.bind(this);
-    this.onSort = this.onSort.bind(this);
-    this.onChangeSearch = this.onChangeSearch.bind(this);
     this.transitionToParams = transitionToParams.bind(this);
     this.resultsList = null;
     this.SRStatus = null;
@@ -99,7 +96,7 @@ class Instances extends React.Component {
     }
   }
 
-  onClearSearch() {
+  onClearSearch = () => {
     const path = (_.get(packageInfo, ['stripes', 'home']) ||
                   _.get(packageInfo, ['stripes', 'route']));
     this.setState({
@@ -109,7 +106,7 @@ class Instances extends React.Component {
     this.props.history.push(path);
   }
 
-  onSort(e, meta) {
+  onSort = (e, meta) => {
     const newOrder = meta.alias;
     const oldOrder = this.state.sortOrder || '';
     const orders = oldOrder ? oldOrder.split(',') : [];
@@ -124,7 +121,7 @@ class Instances extends React.Component {
     this.transitionToParams({ sort: sortOrder });
   }
 
-  onChangeSearch(e) {
+  onChangeSearch = (e) => {
     this.props.mutator.instanceCount.replace(INITIAL_RESULT_COUNT);
     const query = e.target.value;
     this.setState({ searchTerm: query });
