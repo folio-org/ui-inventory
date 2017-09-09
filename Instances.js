@@ -136,30 +136,32 @@ class Instances extends React.Component {
     this.transitionToParams({ query });
   }, 250);
 
+  dateLocalized = dateString => (dateString ? new Date(Date.parse(dateString)).toLocaleDateString(this.props.stripes.locale) : '');
+
+  identifiersFormatter = () => (r) => {
+    let formatted = '';
+    if (r.identifiers && r.identifiers.length) {
+      for (let i = 0; i < r.identifiers.length; i += 1) {
+        const id = r.identifiers[i];
+        formatted += (i > 0 ? ', ' : '') +
+                     id.value +
+                     (id.namespace && id.namespace.length ? ` (${id.namespace})` : '');
+      }
+    }
+    return formatted;
+  };
+
   render() {
-    const { resources, stripes: { locale } } = this.props;
+    const { resources } = this.props;
     const instances = (resources.instances || {}).records || [];
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
 
-    const getIdFormatter = () =>
-     (r) => {
-       let formatted = '';
-       if (r.identifiers && r.identifiers.length) {
-         for (let i = 0; i < r.identifiers.length; i += 1) {
-           const id = r.identifiers[i];
-           formatted += (i > 0 ? ', ' : '') +
-                        id.value +
-                        (id.namespace && id.namespace.length ? ` (${id.namespace})` : '');
-         }
-       }
-       return formatted;
-     };
     const resultsFormatter = {
-      identifiers: getIdFormatter(),
+      identifiers: this.identifiersFormatter(),
       author: () => 'to come',
       creators: () => 'to come',
       publisher: () => 'to come',
-      'publication date': () => ('2017-01-05T12:42:21Z' ? new Date(Date.parse('2017-09-08T12:42:21Z')).toLocaleDateString(locale) : ''),
+      'publication date': () => this.dateLocalized('2017-09-08T12:42:21Z'),
     };
 
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
@@ -176,7 +178,7 @@ class Instances extends React.Component {
             <div style={{ textAlign: 'center' }}>
               <strong>Instances</strong>
               <div>
-                <em>{this.props.resources.instances && this.props.resources.instances.hasLoaded ? this.props.resources.instances.other.totalRecords : ''} Result{instances.length === 1 ? '' : 's'} Found</em>
+                <em>{resources.instances && resources.instances.hasLoaded ? resources.instances.other.totalRecords : ''} Result{instances.length === 1 ? '' : 's'} Found</em>
               </div>
             </div>
           }
@@ -192,7 +194,7 @@ class Instances extends React.Component {
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
-            loading={this.props.resources.instances ? this.props.resources.instances.isPending : false}
+            loading={resources.instances ? resources.instances.isPending : false}
             autosize
             virtualize
             ariaLabel={'Instances search results'}
