@@ -5,13 +5,18 @@ import _ from 'lodash';
 
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import Button from '@folio/stripes-components/lib/Button';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import FilterPaneSearch from '@folio/stripes-components/lib/FilterPaneSearch';
+import Layer from '@folio/stripes-components/lib/Layer';
 import SRStatus from '@folio/stripes-components/lib/SRStatus';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
 
 import packageInfo from './package';
+
+import InstanceForm from './InstanceForm';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -50,14 +55,22 @@ class Instances extends React.Component {
       search: PropTypes.string,
     }).isRequired,
     mutator: PropTypes.shape({
+      addInstanceMode: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      instances: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
       instanceCount: PropTypes.shape({
         replace: PropTypes.func,
       }),
     }).isRequired,
+    okapi: PropTypes.object,
   };
 
   static manifest = Object.freeze({
     instanceCount: { initialValue: INITIAL_RESULT_COUNT },
+    addInstanceMode: { initialValue: { mode: false } },
     instances: {
       type: 'okapi',
       records: 'instances',
@@ -123,6 +136,11 @@ class Instances extends React.Component {
     this.transitionToParams({ sort: sortOrder });
   }
 
+  onClickAddNewInstance = (e) => {
+    if (e) e.preventDefault();
+    this.props.mutator.addInstanceMode.replace({ mode: true });
+  }
+
   onChangeSearch = (e) => {
     this.props.mutator.instanceCount.replace(INITIAL_RESULT_COUNT);
     const query = e.target.value;
@@ -133,6 +151,18 @@ class Instances extends React.Component {
   onNeedMore = () => {
     this.props.mutator.instanceCount.replace(this.props.resources.instanceCount + RESULT_COUNT_INCREMENT);
   }
+
+  closeNewInstance = (e) => {
+    if (e) e.preventDefault();
+    this.props.mutator.addInstanceMode.replace({ mode: false });
+  }
+
+  createInstance = (instance) => {
+    // POST item record
+    this.props.mutator.instances.POST(instance);
+    this.closeNewInstance();
+  }
+
 
   performSearch = _.debounce((query) => {
     this.transitionToParams({ query });
@@ -157,6 +187,7 @@ class Instances extends React.Component {
     const { resources } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
+    const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
 
     const resultsFormatter = {
       identifiers: r => this.identifiersFormatter(r),
@@ -184,6 +215,7 @@ class Instances extends React.Component {
               </div>
             </div>
           }
+          lastMenu={newInstanceButton}
         >
           <MultiColumnList
             id="list-instances"
@@ -203,6 +235,14 @@ class Instances extends React.Component {
             containerRef={(ref) => { this.resultsList = ref; }}
           />
         </Pane>
+        <Layer isOpen={resources.addInstanceMode ? resources.addInstanceMode.mode : false} label="Add New Instance Dialog">
+          <InstanceForm
+            initialValues={{}}
+            onSubmit={(record) => { this.createInstance(record); }}
+            onCancel={this.closeNewInstance}
+            okapi={this.props.okapi}
+          />
+        </Layer>
       </Paneset>
     );
   }
