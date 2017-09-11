@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Route from 'react-router-dom/Route';
 import queryString from 'query-string';
 import _ from 'lodash';
 
@@ -17,6 +18,7 @@ import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction'
 import packageInfo from './package';
 
 import InstanceForm from './InstanceForm';
+import ViewInstance from './ViewInstance';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -24,49 +26,6 @@ const emptyObj = {};
 const emptyArr = [];
 
 class Instances extends React.Component {
-
-  static propTypes = {
-    stripes: PropTypes.shape({
-      locale: PropTypes.string.isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      instances: PropTypes.shape({
-        hasLoaded: PropTypes.bool.isRequired,
-        other: PropTypes.shape({
-          totalRecords: PropTypes.number,
-          total_records: PropTypes.number,
-        }),
-        isPending: PropTypes.bool.isPending,
-        successfulMutations: PropTypes.arrayOf(
-          PropTypes.shape({
-            record: PropTypes.shape({
-              id: PropTypes.string.isRequired,
-            }).isRequired,
-          }),
-        ),
-      }),
-      instanceCount: PropTypes.number,
-    }).isRequired,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-      search: PropTypes.string,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      addInstanceMode: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-      instances: PropTypes.shape({
-        POST: PropTypes.func,
-      }),
-      instanceCount: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-    }).isRequired,
-    okapi: PropTypes.object,
-  };
 
   static manifest = Object.freeze({
     instanceCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -99,6 +58,7 @@ class Instances extends React.Component {
       sortOrder: query.sort || '',
     };
     this.transitionToParams = transitionToParams.bind(this);
+    this.connectedViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
   }
@@ -134,6 +94,12 @@ class Instances extends React.Component {
     const sortOrder = orders.slice(0, 2).join(',');
     this.setState({ sortOrder });
     this.transitionToParams({ sort: sortOrder });
+  }
+
+  onSelectRow = (e, meta) => {
+    const instanceId = meta.id;
+    this.setState({ selectedInstance: meta });
+    this.props.history.push(`/instances/view/${instanceId}${this.props.location.search}`);
   }
 
   onClickAddNewInstance = (e) => {
@@ -183,12 +149,19 @@ class Instances extends React.Component {
     return formatted;
   };
 
+  collapseDetails = () => {
+    this.setState({
+      selectedItem: {},
+    });
+    this.props.history.push(`${this.props.match.path}${this.props.location.search}`);
+  };
+
   render() {
-    const { resources } = this.props;
+    const { stripes, okapi, match, resources } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
-
+// /
     const resultsFormatter = {
       identifiers: r => this.identifiersFormatter(r),
       author: () => 'to come',
@@ -220,8 +193,10 @@ class Instances extends React.Component {
           <MultiColumnList
             id="list-instances"
             contentData={instances}
+            selectedRow={this.state.selectedInstance}
             rowMetadata={['title', 'id']}
             formatter={resultsFormatter}
+            onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
             visibleColumns={['title', 'author', 'identifiers', 'creators', 'publisher', 'publication date']}
@@ -235,17 +210,70 @@ class Instances extends React.Component {
             containerRef={(ref) => { this.resultsList = ref; }}
           />
         </Pane>
+        {/* Details Pane */}
+        <Route
+          path={`${match.path}/view/:instanceid`}
+          render={props => <this.connectedViewInstance stripes={stripes} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
+        />
         <Layer isOpen={resources.addInstanceMode ? resources.addInstanceMode.mode : false} label="Add New Instance Dialog">
           <InstanceForm
             initialValues={{}}
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
-            okapi={this.props.okapi}
+            okapi={okapi}
           />
         </Layer>
       </Paneset>
     );
   }
 }
+
+
+Instances.propTypes = {
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
+    locale: PropTypes.string.isRequired,
+  }).isRequired,
+  resources: PropTypes.shape({
+    instances: PropTypes.shape({
+      hasLoaded: PropTypes.bool.isRequired,
+      other: PropTypes.shape({
+        totalRecords: PropTypes.number,
+        total_records: PropTypes.number,
+      }),
+      isPending: PropTypes.bool.isPending,
+      successfulMutations: PropTypes.arrayOf(
+        PropTypes.shape({
+          record: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+          }).isRequired,
+        }),
+      ),
+    }),
+    instanceCount: PropTypes.number,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string,
+  }).isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string.isRequired,
+  }).isRequired,
+  mutator: PropTypes.shape({
+    addInstanceMode: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+    instances: PropTypes.shape({
+      POST: PropTypes.func,
+    }),
+    instanceCount: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+  }).isRequired,
+  okapi: PropTypes.object,
+};
 
 export default Instances;
