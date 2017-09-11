@@ -15,8 +15,8 @@ import packageInfo from './package';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
-const defaultObj = {};
-const defaultArr = [];
+const emptyObj = {};
+const emptyArr = [];
 
 class Instances extends React.Component {
 
@@ -140,7 +140,7 @@ class Instances extends React.Component {
 
   dateLocalized = dateString => (dateString ? new Date(Date.parse(dateString)).toLocaleDateString(this.props.stripes.locale) : '');
 
-  identifiersFormatter = () => (r) => {
+  identifiersFormatter = (r) => {
     let formatted = '';
     if (r.identifiers && r.identifiers.length) {
       for (let i = 0; i < r.identifiers.length; i += 1) {
@@ -155,11 +155,11 @@ class Instances extends React.Component {
 
   render() {
     const { resources } = this.props;
-    const instances = (resources.instances || defaultObj).records || defaultArr;
+    const instances = (resources.instances || emptyObj).records || emptyArr;
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
 
     const resultsFormatter = {
-      identifiers: this.identifiersFormatter(),
+      identifiers: r => this.identifiersFormatter(r),
       author: () => 'to come',
       creators: () => 'to come',
       publisher: () => 'to come',
