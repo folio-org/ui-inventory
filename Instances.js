@@ -104,7 +104,7 @@ class Instances extends React.Component {
 
   onClickAddNewInstance = (e) => {
     if (e) e.preventDefault();
-    transitionToParams({ layer: 'create' });
+    this.transitionToParams({ layer: 'create' });
   }
 
   onChangeSearch = (e) => {
