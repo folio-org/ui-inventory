@@ -30,7 +30,6 @@ class Instances extends React.Component {
 
   static manifest = Object.freeze({
     instanceCount: { initialValue: INITIAL_RESULT_COUNT },
-    addInstanceMode: { initialValue: { mode: false } },
     instances: {
       type: 'okapi',
       records: 'instances',
@@ -105,7 +104,7 @@ class Instances extends React.Component {
 
   onClickAddNewInstance = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.addInstanceMode.replace({ mode: true });
+    transitionToParams({ layer: 'create' });
   }
 
   onChangeSearch = (e) => {
@@ -121,13 +120,12 @@ class Instances extends React.Component {
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.addInstanceMode.replace({ mode: false });
+    utils.removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   createInstance = (instance) => {
     // POST item record
-    this.props.mutator.instances.POST(instance);
-    this.closeNewInstance();
+    this.props.mutator.instances.POST(instance).then(() => this.closeNewInstance());
   }
 
 
@@ -135,7 +133,6 @@ class Instances extends React.Component {
     this.transitionToParams({ query });
   }, 250);
 
-  
   collapseDetails = () => {
     this.setState({
       selectedItem: {},
@@ -144,8 +141,10 @@ class Instances extends React.Component {
   };
 
   render() {
-    const { stripes, okapi, match, resources } = this.props;
+    const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
+    const query = location.search ? queryString.parse(location.search) : {};
+
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
 // /
@@ -201,7 +200,7 @@ class Instances extends React.Component {
           path={`${match.path}/view/:instanceid`}
           render={props => <this.connectedViewInstance stripes={stripes} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
         />
-        <Layer isOpen={resources.addInstanceMode ? resources.addInstanceMode.mode : false} label="Add New Instance Dialog">
+        <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
             initialValues={{}}
             onSubmit={(record) => { this.createInstance(record); }}

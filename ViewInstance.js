@@ -1,12 +1,15 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
+
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Layer from '@folio/stripes-components/lib/Layer';
+import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
 import InstanceForm from './InstanceForm';
 import utils from './utils';
@@ -18,7 +21,6 @@ const emptyArr = [];
 class ViewInstance extends React.Component {
 
   static manifest = Object.freeze({
-    editMode: { initialValue: { mode: false } },
     selectedInstance: {
       type: 'okapi',
       path: 'inventory/instances/:{instanceid}',
@@ -26,30 +28,15 @@ class ViewInstance extends React.Component {
     },
   });
 
-  /*
-   * Helper function for displaying property names in the instance view. Given
-   * a 'property' array of { id: x, name: y } entries, returns the name
-   * corresponding to the specified id.
-  */
-  static propNameForId(id, property) {
-    if (!id || !property) {
-      return '';
-    } else if (property.length > 0) {
-      return _.find(property, { id }).name;
-    }
-
-    return id;
-  }
-
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.editMode.replace({ mode: true });
+    transitionToParams.bind(this)({ layer: 'edit' });
   }
 
   closeEditInstance = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.editMode.replace({ mode: false });
+    utils.removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   update(instance) {
@@ -59,17 +46,18 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
-
-    const { resources, match: { params: { instanceid } } } = this.props;
+    const { resources, match: { params: { instanceid } }, location } = this.props;
+    const query = location.search ? queryString.parse(location.search) : {};
     const selectedInstance = (resources.selectedInstance || emptyObj).records || emptyArr;
 
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
 
+    const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
+
     return instance ? (
       <Pane defaultWidth={this.props.paneWidth} paneTitle={instance.title} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
-        {"Fields in square brackets are placeholders for yet to be implemented properties"}
+        {'Fields in square brackets are placeholders for yet to be implemented properties'}
         <Row>
           <Col xs={12}>
             <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
@@ -157,13 +145,13 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Date Added to FOLIO]" value={_.get(instance, ['metadata','createdDate'], '')} />
+            <KeyValue label="[Date Added to FOLIO]" value={_.get(instance, ['metadata', 'createdDate'], '')} />
           </Col>
         </Row>
 
 
         <br />
-        <Layer isOpen={this.props.resources.editMode ? this.props.resources.editMode.mode : false} label="Edit Instance Dialog">
+        <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
@@ -180,13 +168,12 @@ ViewInstance.propTypes = {
     selectedInstance: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    editMode: PropTypes.shape({
-      mode: PropTypes.bool,
-    }),
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.object,
   }),
+  location: PropTypes.object,
+  history: PropTypes.object,
   mutator: React.PropTypes.shape({
     selectedInstance: React.PropTypes.shape({
       PUT: React.PropTypes.func.isRequired,
