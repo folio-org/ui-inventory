@@ -164,7 +164,6 @@ class Instances extends React.Component {
 // /
     const resultsFormatter = {
       identifiers: r => this.identifiersFormatter(r),
-      author: () => 'to come',
       creators: () => 'to come',
       publisher: () => 'to come',
       'publication date': () => this.dateLocalized('2017-09-08T12:42:21Z'),
@@ -199,7 +198,7 @@ class Instances extends React.Component {
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'author', 'identifiers', 'creators', 'publisher', 'publication date']}
+            visibleColumns={['title', 'creators', 'identifiers', 'publisher', 'publication date']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}

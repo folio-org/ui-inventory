@@ -6,7 +6,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 
 function validate(values) {
@@ -20,6 +20,48 @@ function validate(values) {
 function asyncValidate(/* values, dispatch, props, blurredField */) {
   return new Promise(resolve => resolve());
 }
+
+const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) => (
+  <div>
+    <Row>
+      <Col sm={2} smOffset={4}>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-identifier" onClick={() => fields.push({})}>Add Identifier</Button>
+        {(touched || submitFailed) && error && <span>{error}</span>}
+      </Col>
+    </Row>
+    {fields.map((identifier, index) => (
+      <Row key={index}>
+        <Col sm={3} smOffset={1}>
+          <Field
+            name={`${identifier}.value`}
+            type="text"
+            component={TextField}
+            label="Identifier"
+          />
+        </Col>
+        <Col sm={1}>
+          <Field
+            name={`${identifier}.namespace`}
+            type="text"
+            component={TextField}
+            label="Type"
+          />
+        </Col>
+        <Col sm={1}>
+          <br />
+          <Button
+            buttonStyle="fullWidth secondary"
+            type="button"
+            title={`Remove Identifier ${index + 1}`}
+            onClick={() => fields.remove(index)}
+          >Delete identifier</Button>
+        </Col>
+      </Row>
+    ))}
+  </div>
+);
+renderIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+
 
 function InstanceForm(props) {
   const {
@@ -46,12 +88,12 @@ function InstanceForm(props) {
               <Field label="Title *" name="title" id="input_instance_title" component={TextField} fullWidth />
             </Col>
           </Row>
+          <FieldArray name="identifiers" component={renderIdentifiers} />
         </Pane>
       </Paneset>
     </form>
   );
 }
-
 InstanceForm.propTypes = {
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newinstance: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
