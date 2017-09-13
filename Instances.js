@@ -19,6 +19,7 @@ import packageInfo from './package';
 
 import InstanceForm from './InstanceForm';
 import ViewInstance from './ViewInstance';
+import utils from './utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -134,21 +135,7 @@ class Instances extends React.Component {
     this.transitionToParams({ query });
   }, 250);
 
-  dateLocalized = dateString => (dateString ? new Date(Date.parse(dateString)).toLocaleDateString(this.props.stripes.locale) : '');
-
-  identifiersFormatter = (r) => {
-    let formatted = '';
-    if (r.identifiers && r.identifiers.length) {
-      for (let i = 0; i < r.identifiers.length; i += 1) {
-        const id = r.identifiers[i];
-        formatted += (i > 0 ? ', ' : '') +
-                     id.value +
-                     (id.namespace && id.namespace.length ? ` (${id.namespace})` : '');
-      }
-    }
-    return formatted;
-  };
-
+  
   collapseDetails = () => {
     this.setState({
       selectedItem: {},
@@ -163,10 +150,10 @@ class Instances extends React.Component {
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
 // /
     const resultsFormatter = {
-      identifiers: r => this.identifiersFormatter(r),
+      identifiers: r => utils.identifiersFormatter(r),
       creators: () => 'to come',
       publisher: () => 'to come',
-      'publication date': () => this.dateLocalized('2017-09-08T12:42:21Z'),
+      'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
     };
 
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
