@@ -10,7 +10,7 @@ const data = [
             { id: '0009', name: 'System Control Number' },
             { id: '0010', name: 'Other Standard Identifier' },
             { id: 'asin', name: 'ASIN' },
-            { id: 'UkMac', name: 'UkMac' },
+            { id: 'UkMaC', name: 'UkMac' },
             { id: 'StEdNL', name: 'StEdNL' },
             { id: 'bnb', name: 'BNB' },
             { id: '0015', name: 'OCLC' },
