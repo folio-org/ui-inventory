@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import queryString from 'query-string';
+import identifierTypes from './data/instance-identifier-types';
 
 export default {
 
@@ -10,9 +11,10 @@ export default {
     if (r.identifiers && r.identifiers.length) {
       for (let i = 0; i < r.identifiers.length; i += 1) {
         const id = r.identifiers[i];
+        const type = identifierTypes.typeById(id.namespace);
         formatted += (i > 0 ? ', ' : '') +
                      id.value +
-                     (id.namespace && id.namespace.length ? ` (${id.namespace})` : '');
+                     (type ? ` (${type.name})` : '');
       }
     }
     return formatted;

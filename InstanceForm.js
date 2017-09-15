@@ -6,8 +6,11 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
+import Select from '@folio/stripes-components/lib/Select';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
+import identifierTypes from './data/instance-identifier-types';
+import languages from './data/languages';
 
 function validate(values) {
   const errors = {};
@@ -29,39 +32,80 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
-    {fields.map((identifier, index) => (
-      <Row key={index}>
-        <Col sm={3} smOffset={1}>
-          <Field
-            name={`${identifier}.value`}
-            type="text"
-            component={TextField}
-            label="Identifier"
-          />
-        </Col>
-        <Col sm={1}>
-          <Field
-            name={`${identifier}.namespace`}
-            type="text"
-            component={TextField}
-            label="Type"
-          />
-        </Col>
-        <Col sm={1}>
-          <br />
-          <Button
-            buttonStyle="fullWidth secondary"
-            type="button"
-            title={`Remove Identifier ${index + 1}`}
-            onClick={() => fields.remove(index)}
-          >Delete identifier</Button>
-        </Col>
-      </Row>
-    ))}
+    {fields.map((identifier, index) => {
+      const identifierTypeOptions = identifierTypes.selectOptions(identifier.value);
+      return (
+        <Row key={index}>
+          <Col sm={2} smOffset={1}>
+            <Field
+              name={`${identifier}.value`}
+              type="text"
+              component={TextField}
+              label="Identifier"
+            />
+          </Col>
+          <Col sm={1}>
+            <Field
+              name={`${identifier}.namespace`}
+              type="text"
+              component={Select}
+              label="Type"
+              dataOptions={[{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions]}
+            />
+          </Col>
+          <Col sm={1} smOffset={1}>
+            <br />
+            <Button
+              buttonStyle="fullWidth secondary"
+              type="button"
+              title={`Remove Identifier ${index + 1}`}
+              onClick={() => fields.remove(index)}
+            >Delete identifier</Button>
+          </Col>
+        </Row>
+      );
+    })}
   </div>
 );
 renderIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
 
+const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => (
+  <div>
+    <Row>
+      <Col sm={2} smOffset={4}>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-identifier" onClick={() => fields.push({})}>Add Language</Button>
+        {(touched || submitFailed) && error && <span>{error}</span>}
+      </Col>
+    </Row>
+    {fields.map((language, index) => {
+      const languageOptions = languages.selectOptions(language.value);
+      return (
+        <Row key={index}>
+          <Col sm={2} smOffset={1}>
+            <Field
+              name={`${language}.value`}
+              type="text"
+              component={Select}
+              label="Language"
+              dataOptions={[{ label: 'Select language', value: '' }, ...languageOptions]}
+            />
+          </Col>
+          <Col sm={1} smOffset={2}>
+            <br />
+            <Button
+              buttonStyle="fullWidth secondary"
+              type="button"
+              title={`Remove language ${index + 1}`}
+              onClick={() => fields.remove(index)}
+            >Delete language</Button>
+          </Col>
+        </Row>
+      // /
+      );
+    })}
+  </div>
+);
+renderLanguages.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
 
 function InstanceForm(props) {
   const {
@@ -89,6 +133,7 @@ function InstanceForm(props) {
             </Col>
           </Row>
           <FieldArray name="identifiers" component={renderIdentifiers} />
+          <FieldArray name="languages" component={renderLanguages} />
         </Pane>
       </Paneset>
     </form>

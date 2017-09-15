@@ -154,10 +154,8 @@ class Instances extends React.Component {
       publisher: () => 'to come',
       'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
     };
-
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
-
     return (
       <Paneset>
         <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
