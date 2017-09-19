@@ -199,7 +199,7 @@ class Instances extends React.Component {
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'author', 'identifiers', 'creators', 'publisher', 'publication date']}
+            visibleColumns={['title', 'identifiers', 'creators', 'publisher', 'publication date']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
