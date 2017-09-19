@@ -1,7 +1,7 @@
-const stub = require('./stub.js');
+const new_title = require('./new_title.js');
 
 module.exports.test = function(uiTestCtx) {
 
-  stub.test(uiTestCtx);
+  new_title.test(uiTestCtx);
 
 }
