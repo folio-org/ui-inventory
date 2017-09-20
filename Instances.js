@@ -17,9 +17,10 @@ import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction'
 
 import packageInfo from './package';
 
+import utils from './utils';
+
 import InstanceForm from './InstanceForm';
 import ViewInstance from './ViewInstance';
-import utils from './utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -58,7 +59,7 @@ class Instances extends React.Component {
       sortOrder: query.sort || '',
     };
     this.transitionToParams = transitionToParams.bind(this);
-    this.connectedViewInstance = this.props.stripes.connect(ViewInstance);
+    this.cViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
   }
@@ -196,7 +197,7 @@ class Instances extends React.Component {
         {/* Details Pane */}
         <Route
           path={`${match.path}/view/:instanceid`}
-          render={props => <this.connectedViewInstance stripes={stripes} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
+          render={props => <this.cViewInstance stripes={stripes} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
         />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm

@@ -11,8 +11,10 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import Layer from '@folio/stripes-components/lib/Layer';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
-import InstanceForm from './InstanceForm';
 import utils from './utils';
+
+import InstanceItems from './InstanceItems';
+import InstanceForm from './InstanceForm';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -27,6 +29,16 @@ class ViewInstance extends React.Component {
       clear: false,
     },
   });
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      accordions: {
+        itemsAccordion: true,
+      },
+    };
+    this.cInstanceItems = this.props.stripes.connect(InstanceItems);
+  }
 
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
@@ -45,9 +57,17 @@ class ViewInstance extends React.Component {
     });
   }
 
+  handleAccordionToggle = ({ id }) => {
+    this.setState((state) => {
+      const newState = _.cloneDeep(state);
+      newState.accordions[id] = !newState.accordions[id];
+      return newState;
+    });
+  }
+
   render() {
     const { resources, match: { params: { instanceid } }, location } = this.props;
-    const query = location.search ? queryString.parse(location.search) : {};
+    const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selectedInstance = (resources.selectedInstance || emptyObj).records || emptyArr;
 
     if (!selectedInstance || !instanceid) return <div />;
@@ -148,8 +168,13 @@ class ViewInstance extends React.Component {
             <KeyValue label="[Date Added to FOLIO]" value={_.get(instance, ['metadata', 'createdDate'], '')} />
           </Col>
         </Row>
-
-
+        <h3>Items</h3>
+        <this.cInstanceItems
+          accordionExpanded={this.state.accordions.itemsAccordion}
+          accordionId="itemsAccordion"
+          accordionToggle={this.handleAccordionToggle}
+          {...this.props}
+        />
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
@@ -164,6 +189,10 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
+    locale: PropTypes.string.isRequired,
+  }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
