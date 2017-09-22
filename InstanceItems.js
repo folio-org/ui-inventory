@@ -39,14 +39,11 @@ class InstanceItems extends React.Component {
         rowMetadata={['id', 'instanceId']}
         formatter={itemsFormatter}
         visibleColumns={['Material Type', 'location', 'Permanent Loan Type', 'status', 'barcode']}
-        autosize
         ariaLabel={'Instance\'s items'}
         containerRef={(ref) => { this.resultsList = ref; }}
       />);
   }
 }
-
-// /
 
 InstanceItems.propTypes = {
   resources: PropTypes.shape({
