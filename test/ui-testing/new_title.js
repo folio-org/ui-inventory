@@ -34,9 +34,9 @@ module.exports.test = function(uiTestCtx) {
         nightmare
 	.wait('#list-instances')
 	.xclick('//div[@role="presentation"][.="title"]')
-	.wait(1111)
+	.wait(2111)
 	.evaluate(function(title) {
-	    var ti = document.querySelector('#list-instances > .scrollable---9-pBJ > div > div > div > div[title="' + title + '"]')
+	    var ti = document.querySelector('#list-instances > div > div > div > div > div[title="' + title + '"]')
 	    if (ti == null) {
 	    	throw new Error("Can't find newly created title (" + title + ") at top of sorted list")
 	    }
