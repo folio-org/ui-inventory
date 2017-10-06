@@ -22,27 +22,27 @@ module.exports.test = function(uiTestCtx) {
       })
       it('should create new instance ', done => {
         nightmare
-	.wait('#clickable-new-instance')
-	.click('#clickable-new-instance')
-	.wait(222)
-	.insert('input[name=title]', title)
-	.wait(222)
-	.click('#clickable-create-instance')
+        .wait('#clickable-new-instance')
+        .click('#clickable-new-instance')
+        .wait(222)
+        .insert('input[name=title]', title)
+        .wait(222)
+        .click('#clickable-create-instance')
         .then(result => { done() } )
       }) 
       it('should find new title in list ', done => {
         nightmare
-	.wait('#list-instances')
-	.xclick('//div[@role="presentation"][.="title"]')
-	.wait(2111)
-	.evaluate(function(title) {
-	    var ti = document.querySelector('#list-instances > div > div > div > div > div[title="' + title + '"]')
-	    if (ti == null) {
-	    	throw new Error("Can't find newly created title (" + title + ") at top of sorted list")
-	    }
-	}, title)
+        .wait('#list-instances')
+        .xclick('//div[@role="presentation"][.="title"]')
+        .wait(3111)
+        .evaluate(function(title) {
+            var ti = document.querySelector('#list-instances > div[class^="scrollable"] > div > div > div > div[title="' + title + '"]')
+            if (ti == null) {
+              throw new Error("Can't find newly created title (" + title + ") at top of sorted list")
+            }
+        }, title)
         .then(result => { done() } )
-	.catch(done)
+        .catch(done)
       })
     })
   })
