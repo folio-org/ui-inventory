@@ -9,7 +9,6 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
-import identifierTypes from './data/instance-identifier-types';
 import languages from './data/languages';
 
 function validate(values) {
@@ -24,7 +23,7 @@ function asyncValidate(/* values, dispatch, props, blurredField */) {
   return new Promise(resolve => resolve());
 }
 
-const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) => (
+const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed }, identifierTypes }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
@@ -33,7 +32,12 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =
       </Col>
     </Row>
     {fields.map((identifier, index) => {
-      const identifierTypeOptions = identifierTypes.selectOptions(identifier.value);
+      const identifierTypeOptions = identifierTypes.map(
+                                        it => ({
+                                          label: it.name,
+                                          value: it.id,
+                                          selected: it.id === identifier.typeId,
+                                        }));
       return (
         <Row key={index}>
           <Col sm={2} smOffset={1}>
@@ -46,7 +50,7 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =
           </Col>
           <Col sm={1}>
             <Field
-              name={`${identifier}.namespace`}
+              name={`${identifier}.typeId`}
               type="text"
               component={Select}
               label="Type"
@@ -67,7 +71,7 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =
     })}
   </div>
 );
-renderIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+renderIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object, identifierTypes: PropTypes.arrayOf(PropTypes.object) };
 
 const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
@@ -115,13 +119,13 @@ function InstanceForm(props) {
     submitting,
     onCancel,
     initialValues,
+    identifierTypes,
   } = props;
 
   /* Menus for Add Instance workflow */
   const addInstanceFirstMenu = <PaneMenu><button onClick={onCancel} title="close" aria-label="Close New Instance Dialog"><span style={{ fontSize: '30px', color: '#999', lineHeight: '18px' }} >&times;</span></button></PaneMenu>;
   const addInstanceLastMenu = <PaneMenu><Button id="clickable-create-instance" type="submit" title="Create New Instance" disabled={pristine || submitting} onClick={handleSubmit}>Create instance</Button></PaneMenu>;
   const editInstanceLastMenu = <PaneMenu><Button id="clickable-update-instance" type="submit" title="Update Instance" disabled={pristine || submitting} onClick={handleSubmit}>Update instance</Button></PaneMenu>;
-
   return (
     <form>
       <Paneset isRoot>
@@ -132,7 +136,7 @@ function InstanceForm(props) {
               <Field label="Title *" name="title" id="input_instance_title" component={TextField} fullWidth />
             </Col>
           </Row>
-          <FieldArray name="identifiers" component={renderIdentifiers} />
+          <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
           <FieldArray name="languages" component={renderLanguages} />
         </Pane>
       </Paneset>
@@ -148,6 +152,7 @@ InstanceForm.propTypes = {
   submitting: PropTypes.bool,
   onCancel: PropTypes.func,
   initialValues: PropTypes.object,
+  identifierTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default stripesForm({

@@ -1,19 +1,18 @@
 import _ from 'lodash';
 import queryString from 'query-string';
-import identifierTypes from './data/instance-identifier-types';
 
 export default {
 
   localizeDate: (dateString, locale) => (dateString ? new Date(Date.parse(dateString)).toLocaleDateString(locale) : ''),
 
-  identifiersFormatter: (r) => {
+  identifiersFormatter: (r, identifierTypes) => {
     let formatted = '';
     if (r.identifiers && r.identifiers.length) {
       for (let i = 0; i < r.identifiers.length; i += 1) {
-        const id = r.identifiers[i];
-        const type = identifierTypes.typeById(id.typeId);
+        const identifier = r.identifiers[i];
+        const type = identifierTypes.find(it => it.id === identifier.typeId);
         formatted += (i > 0 ? ', ' : '') +
-                     id.value +
+                     identifier.value +
                      (type ? ` (${type.name})` : '');
       }
     }
@@ -25,6 +24,5 @@ export default {
     _.unset(parsed, qp);
     hist.push(`${loc.pathname}?${queryString.stringify(parsed)}`);
   },
-
 
 };

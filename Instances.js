@@ -48,6 +48,11 @@ class Instances extends React.Component {
         staticFallback: { params: {} },
       },
     },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=100',
+    },
   });
 
   constructor(props) {
@@ -144,13 +149,13 @@ class Instances extends React.Component {
   render() {
     const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
+    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const query = location.search ? queryString.parse(location.search) : {};
-
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
 // /
     const resultsFormatter = {
-      identifiers: r => utils.identifiersFormatter(r),
+      identifiers: r => utils.identifiersFormatter(r, identifierTypes),
       publisher: r => r.publisher,
       creators: () => 'to come',
       'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),

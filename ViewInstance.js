@@ -28,6 +28,11 @@ class ViewInstance extends React.Component {
       path: 'inventory/instances/:{instanceid}',
       clear: false,
     },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=100',
+    },
   });
 
   constructor(props) {
@@ -72,6 +77,7 @@ class ViewInstance extends React.Component {
 
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
+    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
 
     const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
 
@@ -105,7 +111,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance)} />
+            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance, identifierTypes)} />
           </Col>
         </Row>
         <Row>
@@ -181,6 +187,7 @@ class ViewInstance extends React.Component {
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
+            identifierTypes={identifierTypes}
           />
         </Layer>
       </Pane>
