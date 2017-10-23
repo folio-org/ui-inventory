@@ -34,7 +34,7 @@ class Instances extends React.Component {
     instances: {
       type: 'okapi',
       records: 'instances',
-      path: 'inventory/instances',
+      path: 'instance-storage/instances',
       recordsRequired: '%{instanceCount}',
       perRequest: RESULT_COUNT_INCREMENT,
       GET: {
@@ -151,8 +151,8 @@ class Instances extends React.Component {
 // /
     const resultsFormatter = {
       identifiers: r => utils.identifiersFormatter(r),
+      publisher: r => r.publisher,
       creators: () => 'to come',
-      publisher: () => 'to come',
       'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';

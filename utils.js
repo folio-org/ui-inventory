@@ -11,7 +11,7 @@ export default {
     if (r.identifiers && r.identifiers.length) {
       for (let i = 0; i < r.identifiers.length; i += 1) {
         const id = r.identifiers[i];
-        const type = identifierTypes.typeById(id.namespace);
+        const type = identifierTypes.typeById(id.typeId);
         formatted += (i > 0 ? ', ' : '') +
                      id.value +
                      (type ? ` (${type.name})` : '');
