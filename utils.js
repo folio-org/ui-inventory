@@ -19,6 +19,17 @@ export default {
     return formatted;
   },
 
+  alternativeTitlesFormatter: (r) => {
+    let formatted = '';
+    if (r.alternativeTitles && r.alternativeTitles.length) {
+      for (let i = 0; i < r.alternativeTitles.length; i += 1) {
+        const title = r.alternativeTitles[i];
+        formatted += (i > 0 ? ', ' : '') + title;
+      }
+    }
+    return formatted;
+  },
+
   removeQueryParam: (qp, loc, hist) => {
     const parsed = queryString.parse(loc.search);
     _.unset(parsed, qp);

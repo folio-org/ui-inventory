@@ -25,7 +25,7 @@ class ViewInstance extends React.Component {
   static manifest = Object.freeze({
     selectedInstance: {
       type: 'okapi',
-      path: 'inventory/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{instanceid}',
       clear: false,
     },
     identifierTypes: {
@@ -96,7 +96,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Alternative Title(s)]" value={_.get(instance, ['alternativeTitles'], '')} />
+            <KeyValue label="Alternative Titles" value={utils.alternativeTitlesFormatter(instance)} />
           </Col>
         </Row>
         <Row>
