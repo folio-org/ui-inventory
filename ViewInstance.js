@@ -96,7 +96,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Alternative Titles" value={utils.alternativeTitlesFormatter(instance)} />
+            <KeyValue label="Alternative Titles" value={_.get(instance, ['alternativeTitles'], []).join(', ')} />
           </Col>
         </Row>
         <Row>
@@ -126,7 +126,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Publisher(s)]" value={_.get(instance, ['publishers'], '')} />
+            <KeyValue label="Publishers" value={_.get(instance, ['publishers'], []).join(', ')} />
           </Col>
         </Row>
         <Row>
