@@ -53,6 +53,17 @@ class Instances extends React.Component {
       records: 'identifierTypes',
       path: 'identifier-types?limit=100',
     },
+    creatorTypes: {
+      type: 'okapi',
+      records: 'creatorTypes',
+      path: 'creator-types?limit=100',
+    },
+    contributorTypes: {
+      type: 'okapi',
+      records: 'contributorTypes',
+      path: 'contributor-types?limit=100',
+    },
+
   });
 
   constructor(props) {
@@ -150,6 +161,9 @@ class Instances extends React.Component {
     const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
+    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
+    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
+
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
@@ -157,7 +171,7 @@ class Instances extends React.Component {
     const resultsFormatter = {
       identifiers: r => utils.identifiersFormatter(r, identifierTypes),
       publishers: r => r.publishers.join(', '),
-      creators: () => 'to come',
+      creators: r => utils.creatorsFormatter(r, creatorTypes),
       'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';

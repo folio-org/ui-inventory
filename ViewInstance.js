@@ -33,6 +33,16 @@ class ViewInstance extends React.Component {
       records: 'identifierTypes',
       path: 'identifier-types?limit=100',
     },
+    creatorTypes: {
+      type: 'okapi',
+      records: 'creatorTypes',
+      path: 'creator-types?limit=100',
+    },
+    contributorTypes: {
+      type: 'okapi',
+      records: 'contributorTypes',
+      path: 'contributor-types?limit=100',
+    },
   });
 
   constructor(props) {
@@ -78,6 +88,8 @@ class ViewInstance extends React.Component {
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
+    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
+    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
 
     const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
 
@@ -116,12 +128,12 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Creator(s)]" value={_.get(instance, ['creators'], '')} />
+            <KeyValue label="Creators" value={utils.creatorsFormatter(instance, creatorTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Contributor(s)]" value={_.get(instance, ['contributors'], '')} />
+            <KeyValue label="Contributors" value={utils.contributorsFormatter(instance, contributorTypes)} />
           </Col>
         </Row>
         <Row>

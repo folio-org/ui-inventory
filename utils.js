@@ -19,6 +19,34 @@ export default {
     return formatted;
   },
 
+  creatorsFormatter: (r, creatorTypes) => {
+    let formatted = '';
+    if (r.creators && r.creators.length) {
+      for (let i = 0; i < r.creators.length; i += 1) {
+        const creator = r.creators[i];
+        const type = creatorTypes.find(ct => ct.id === creator.creatorTypeId);
+        formatted += (i > 0 ? ', ' : '') +
+                     creator.name +
+                     (type ? ` (${type.name})` : '');
+      }
+    }
+    return formatted;
+  },
+
+  contributorsFormatter: (r, contributorTypes) => {
+    let formatted = '';
+    if (r.contributors && r.contributors.length) {
+      for (let i = 0; i < r.contributors.length; i += 1) {
+        const contributor = r.contributors[i];
+        const type = contributorTypes.find(ct => ct.id === contributor.contributorTypeId);
+        formatted += (i > 0 ? ', ' : '') +
+                     contributor.name +
+                     (type ? ` (${type.name})` : '');
+      }
+    }
+    return formatted;
+  },
+
   removeQueryParam: (qp, loc, hist) => {
     const parsed = queryString.parse(loc.search);
     _.unset(parsed, qp);
