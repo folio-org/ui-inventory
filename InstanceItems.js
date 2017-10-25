@@ -23,7 +23,7 @@ class InstanceItems extends React.Component {
 
     if (!items || !items.hasLoaded) return <div />;
 
-    const instanceItems = (items || emptyObj).records || emptyArr;
+    const instanceItems = items.records;
 
     const itemsFormatter = {
       'Material Type': x => _.get(x, ['materialType', 'name']),

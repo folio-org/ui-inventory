@@ -114,7 +114,6 @@ renderLanguages.propTypes = { fields: PropTypes.object, meta: PropTypes.object }
 function InstanceForm(props) {
   const {
     handleSubmit,
-    reset,  // eslint-disable-line no-unused-vars
     pristine,
     submitting,
     onCancel,
