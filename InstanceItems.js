@@ -4,9 +4,6 @@ import _ from 'lodash';
 
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
-const emptyObj = {};
-const emptyArr = [];
-
 class InstanceItems extends React.Component {
 
   static manifest = Object.freeze({

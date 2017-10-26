@@ -162,7 +162,6 @@ class Instances extends React.Component {
     const instances = (resources.instances || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
-    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
 
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
@@ -170,7 +169,7 @@ class Instances extends React.Component {
 // /
     const resultsFormatter = {
       identifiers: r => utils.identifiersFormatter(r, identifierTypes),
-      publishers: r => r.publishers.join(', '),
+      publishers: r => utils.publishersFormatter(r),
       creators: r => utils.creatorsFormatter(r, creatorTypes),
       'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
     };

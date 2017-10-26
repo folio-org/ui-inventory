@@ -146,7 +146,6 @@ InstanceForm.propTypes = {
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newinstance: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   onCancel: PropTypes.func,

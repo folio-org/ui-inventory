@@ -138,17 +138,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Publishers" value={_.get(instance, ['publishers'], []).join(', ')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="[Place(s) of Publication]" value={_.get(instance, ['placesOfPublication'], '')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="[Publication Date(s)]" value={_.get(instance, ['placesOfPublication'], '')} />
+            <KeyValue label="Publishers" value={utils.publishersFormatter(instance)} />
           </Col>
         </Row>
         <Row>

@@ -47,6 +47,19 @@ export default {
     return formatted;
   },
 
+  publishersFormatter: (r) => {
+    let formatted = '';
+    if (r.publication && r.publication.length) {
+      for (let i = 0; i < r.publication.length; i += 1) {
+        const pub = r.publication[i];
+        formatted += (i > 0 ? ', ' : '') +
+                     pub.publisher +
+                     (pub.dateOfPublication ? ` (${pub.dateOfPublication})` : '');
+      }
+    }
+    return formatted;
+  },
+
   removeQueryParam: (qp, loc, hist) => {
     const parsed = queryString.parse(loc.search);
     _.unset(parsed, qp);
