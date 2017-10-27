@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import queryString from 'query-string';
+import { data as languagetable } from './data/languages';
+
 
 export default {
 
@@ -55,6 +57,18 @@ export default {
         formatted += (i > 0 ? ', ' : '') +
                      pub.publisher +
                      (pub.dateOfPublication ? ` (${pub.dateOfPublication})` : '');
+      }
+    }
+    return formatted;
+  },
+
+  languagesFormatter: (r) => {
+    let formatted = '';
+    if (r.languages && r.languages.length) {
+      for (let i = 0; i < r.languages.length; i += 1) {
+        const languagecode = r.languages[i];
+        const language = languagetable.find(lang => lang.code === languagecode);
+        formatted += (i > 0 ? ', ' : '') + (language.name['#text'] || language.name);
       }
     }
     return formatted;

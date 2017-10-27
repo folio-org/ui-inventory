@@ -113,12 +113,12 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Edition]" value={_.get(instance, ['edition'], '')} />
+            <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Series Statement]" value={_.get(instance, ['series'], '')} />
+            <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
           </Col>
         </Row>
         <Row>
@@ -138,12 +138,22 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
+            <KeyValue label="Subjects" value={_.get(instance, ['subjects'], []).join(', ')} />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue label="Classification" value={_.get(instance, ['classification'], []).join(', ')} />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
             <KeyValue label="Publishers" value={utils.publishersFormatter(instance)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[URL(s)]" value={_.get(instance, ['urls'], '')} />
+            <KeyValue label="URLs" value={_.get(instance, ['urls'], '')} />
           </Col>
         </Row>
         <Row>
@@ -158,17 +168,17 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Physical Description(s)]" value={_.get(instance, ['physicalDescriptions'], '')} />
+            <KeyValue label="Physical Descriptions" value={_.get(instance, ['physicalDescriptions'], '')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Language(s)]" value={_.get(instance, ['languages'], '')} />
+            <KeyValue label="Languages" value={utils.languagesFormatter(instance)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Notes]" value={_.get(instance, ['notes'], '')} />
+            <KeyValue label="Notes" value={_.get(instance, ['notes'], '')} />
           </Col>
         </Row>
         <Row>

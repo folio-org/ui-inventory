@@ -82,7 +82,7 @@ const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => 
       </Col>
     </Row>
     {fields.map((language, index) => {
-      const languageOptions = languages.selectOptions(language.value);
+      const languageOptions = languages.selectOptions(language);
       return (
         <Row key={index}>
           <Col sm={2} smOffset={1}>
