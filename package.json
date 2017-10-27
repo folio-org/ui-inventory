@@ -17,7 +17,7 @@
     "route": "/instances",
     "hasSettings": false,
     "okapiInterfaces": { 
-      "inventory": "2.1"
+      "inventory": "3.0"
     },
     "permissionSets": [
       {
