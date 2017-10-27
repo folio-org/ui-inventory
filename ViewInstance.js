@@ -222,9 +222,9 @@ ViewInstance.propTypes = {
   }),
   location: PropTypes.object,
   history: PropTypes.object,
-  mutator: React.PropTypes.shape({
-    selectedInstance: React.PropTypes.shape({
-      PUT: React.PropTypes.func.isRequired,
+  mutator: PropTypes.shape({
+    selectedInstance: PropTypes.shape({
+      PUT: PropTypes.func.isRequired,
     }),
     editMode: PropTypes.shape({
       replace: PropTypes.func,
