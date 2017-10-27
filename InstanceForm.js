@@ -87,7 +87,7 @@ const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => 
         <Row key={index}>
           <Col sm={2} smOffset={1}>
             <Field
-              name={`${language}.value`}
+              name={`${language}`}
               type="text"
               component={Select}
               label="Language"
