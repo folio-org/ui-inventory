@@ -1,7 +1,8 @@
 # Change history for ui-instances
 
-## [1.1.0] (IN PROGRESS)
+## [1.1.0](IN PROGRESS)
 
+* Dependency on inventory: 3.0
 * Use PropTypes, not React.PropTypes. STRIPES-427.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
