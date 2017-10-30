@@ -43,6 +43,11 @@ class ViewInstance extends React.Component {
       records: 'contributorTypes',
       path: 'contributor-types?limit=100',
     },
+    instanceFormats: {
+      type: 'okapi',
+      records: 'instanceFormats',
+      path: 'instance-formats?limit=100',
+    },
   });
 
   constructor(props) {
@@ -90,6 +95,7 @@ class ViewInstance extends React.Component {
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
+    const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
 
     const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
 
@@ -163,7 +169,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Format]" value={_.get(instance, ['format'], '')} />
+            <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, instanceFormats)} />
           </Col>
         </Row>
         <Row>

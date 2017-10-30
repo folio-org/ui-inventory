@@ -74,6 +74,15 @@ export default {
     return formatted;
   },
 
+  instanceFormatsFormatter: (r, instanceFormats) => {
+    let formatted = '';
+    if (r.instanceFormatId) {
+      const format = instanceFormats.find(fmt => fmt.id === r.instanceFormatId);
+      formatted = format.name;
+    }
+    return formatted;
+  },
+
   removeQueryParam: (qp, loc, hist) => {
     const parsed = queryString.parse(loc.search);
     _.unset(parsed, qp);
