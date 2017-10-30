@@ -86,8 +86,8 @@ export default {
   instanceTypesFormatter: (r, instanceTypes) => {
     let formatted = '';
     if (r.instanceTypeId) {
-      const type = instanceTypes.find(type => type.id === r.instanceTypeId);
-      formatted = type.name;
+      const qualifier = instanceTypes.find(type => type.id === r.instanceTypeId);
+      formatted = qualifier.name;
     }
     return formatted;
   },
