@@ -48,6 +48,16 @@ class ViewInstance extends React.Component {
       records: 'instanceFormats',
       path: 'instance-formats?limit=100',
     },
+    instanceTypes: {
+      type: 'okapi',
+      records: 'instanceTypes',
+      path: 'instance-types?limit=100',
+    },
+    classificationTypes: {
+      type: 'okapi',
+      records: 'classificationTypes',
+      path: 'classification-types?limit=100',
+    },
   });
 
   constructor(props) {
@@ -96,6 +106,8 @@ class ViewInstance extends React.Component {
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
+    const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
 
     const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
 
@@ -149,7 +161,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Classification" value={_.get(instance, ['classification'], []).join(', ')} />
+            <KeyValue label="Classification" value={utils.classificationsFormatter(instance, classificationTypes)} />
           </Col>
         </Row>
         <Row>
@@ -159,12 +171,12 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="URLs" value={_.get(instance, ['urls'], '')} />
+            <KeyValue label="URLs" value={_.get(instance, ['urls'], []).join(', ')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Resource Type]" value={_.get(instance, ['resourceType'], '')} />
+            <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, instanceTypes)} />
           </Col>
         </Row>
         <Row>

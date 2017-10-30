@@ -83,6 +83,29 @@ export default {
     return formatted;
   },
 
+  instanceTypesFormatter: (r, instanceTypes) => {
+    let formatted = '';
+    if (r.instanceTypeId) {
+      const type = instanceTypes.find(type => type.id === r.instanceTypeId);
+      formatted = type.name;
+    }
+    return formatted;
+  },
+
+  classificationsFormatter: (r, classificationTypes) => {
+    let formatted = '';
+    if (r.classifications && r.classifications.length) {
+      for (let i = 0; i < r.classifications.length; i += 1) {
+        const classification = r.classifications[i];
+        const type = classificationTypes.find(ct => ct.id === classification.classificationTypeId);
+        formatted += (i > 0 ? ', ' : '') +
+                     classification.classificationNumber +
+                     (type ? ` (${type.name})` : '');
+      }
+    }
+    return formatted;
+  },
+
   removeQueryParam: (qp, loc, hist) => {
     const parsed = queryString.parse(loc.search);
     _.unset(parsed, qp);
