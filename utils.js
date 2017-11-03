@@ -12,7 +12,7 @@ export default {
     if (r.identifiers && r.identifiers.length) {
       for (let i = 0; i < r.identifiers.length; i += 1) {
         const identifier = r.identifiers[i];
-        const type = identifierTypes.find(it => it.id === identifier.typeId);
+        const type = identifierTypes.find(it => it.id === identifier.identifierTypeId);
         formatted += (i > 0 ? ', ' : '') +
                      identifier.value +
                      (type ? ` (${type.name})` : '');
