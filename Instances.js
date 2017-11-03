@@ -171,7 +171,7 @@ class Instances extends React.Component {
       identifiers: r => utils.identifiersFormatter(r, identifierTypes),
       publishers: r => utils.publishersFormatter(r),
       creators: r => utils.creatorsFormatter(r, creatorTypes),
-      'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
+      'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
