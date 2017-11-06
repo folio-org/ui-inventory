@@ -14,7 +14,7 @@ import transitionToParams from '@folio/stripes-components/util/transitionToParam
 import utils from './utils';
 
 import InstanceItems from './InstanceItems';
-import InstanceForm from './InstanceForm';
+import InstanceForm from './edit/InstanceForm';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -204,19 +204,14 @@ class ViewInstance extends React.Component {
             <KeyValue label="[Date Added to FOLIO]" value={_.get(instance, ['metadata', 'createdDate'], '')} />
           </Col>
         </Row>
-        <h3>Items</h3>
-        <this.cInstanceItems
-          accordionExpanded={this.state.accordions.itemsAccordion}
-          accordionId="itemsAccordion"
-          accordionToggle={this.handleAccordionToggle}
-          {...this.props}
-        />
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
+            creatorTypes={creatorTypes}
+            contributorTypes={contributorTypes}
             identifierTypes={identifierTypes}
           />
         </Layer>

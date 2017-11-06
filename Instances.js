@@ -19,7 +19,7 @@ import packageInfo from './package';
 
 import utils from './utils';
 
-import InstanceForm from './InstanceForm';
+import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 
 const INITIAL_RESULT_COUNT = 30;
@@ -63,7 +63,21 @@ class Instances extends React.Component {
       records: 'contributorTypes',
       path: 'contributor-types?limit=100',
     },
-
+    instanceFormats: {
+      type: 'okapi',
+      records: 'instanceFormats',
+      path: 'instance-formats?limit=100',
+    },
+    instanceTypes: {
+      type: 'okapi',
+      records: 'instanceTypes',
+      path: 'instance-types?limit=100',
+    },
+    classificationTypes: {
+      type: 'okapi',
+      records: 'classificationTypes',
+      path: 'classification-types?limit=100',
+    },
   });
 
   constructor(props) {
@@ -160,8 +174,9 @@ class Instances extends React.Component {
   render() {
     const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
-    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
+    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
+    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
 
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
@@ -219,10 +234,13 @@ class Instances extends React.Component {
         />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
-            initialValues={{}}
+            initialValues={{ source: 'manual' }}
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
             okapi={okapi}
+            creatorTypes={creatorTypes}
+            contributorTypes={contributorTypes}
+            identifierTypes={identifierTypes}
           />
         </Layer>
       </Paneset>

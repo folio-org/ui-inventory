@@ -78,7 +78,9 @@ export default {
     let formatted = '';
     if (r.instanceFormatId) {
       const format = instanceFormats.find(fmt => fmt.id === r.instanceFormatId);
-      formatted = format.name;
+      if (format) {
+        formatted = format.name;
+      }
     }
     return formatted;
   },
@@ -87,7 +89,9 @@ export default {
     let formatted = '';
     if (r.instanceTypeId) {
       const qualifier = instanceTypes.find(type => type.id === r.instanceTypeId);
-      formatted = qualifier.name;
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
     }
     return formatted;
   },
