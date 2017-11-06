@@ -5,22 +5,22 @@ import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field } from 'redux-form';
 
-const renderAlternativeTitles = ({ fields, meta: { touched, error, submitFailed } }) => (
+const renderURLs = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-alt-title" onClick={() => fields.push({})}>Add Alternative Title</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-url" onClick={() => fields.push({})}>Add URL</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
-    {fields.map((alternativeTitle, index) =>
+    {fields.map((url, index) =>
       <Row key={index}>
         <Col sm={2} smOffset={1}>
           <Field
-            name={alternativeTitle}
+            name={url}
             type="text"
             component={TextField}
-            label="Alternative Title"
+            label="URL"
           />
         </Col>
         <Col sm={1} smOffset={1}>
@@ -28,15 +28,15 @@ const renderAlternativeTitles = ({ fields, meta: { touched, error, submitFailed 
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
-            title={`Remove Alternative Title ${index + 1}`}
+            title={`Remove URL ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete Alternative Title</Button>
+          >Delete URL</Button>
         </Col>
       </Row>,
         // /
      )}
   </div>
 );
-renderAlternativeTitles.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+renderURLs.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
 
-export default renderAlternativeTitles;
+export default renderURLs;

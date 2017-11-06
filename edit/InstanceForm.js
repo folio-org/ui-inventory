@@ -9,12 +9,16 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import renderAlternativeTitles from './alternativeTitles';
+import renderSeries from './seriesFields';
 import renderCreators from './creatorFields';
 import renderContributors from './contributorFields';
+import renderSubjects from './subjectFields';
 import renderIdentifiers from './identifierFields';
 import renderClassifications from './classificationFields';
 import renderPublication from './publicationFields';
+import renderURLs from './urlFields';
 import renderLanguages from './languageFields';
+import renderNotes from './noteFields';
 
 function validate(values) {
   const errors = {};
@@ -57,12 +61,22 @@ function InstanceForm(props) {
           </Row>
           <Field type="hidden" name="source" component="input" />
           <FieldArray name="alternativeTitles" component={renderAlternativeTitles} />
+          <Row>
+            <Col sm={5} smOffset={1}>
+              <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
+            </Col>
+          </Row>
+          <FieldArray name="series" component={renderSeries} />
+
           <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
           <FieldArray name="creators" component={renderCreators} creatorTypes={creatorTypes} />
           <FieldArray name="contributors" component={renderContributors} contributorTypes={contributorTypes} />
+          <FieldArray name="subjects" component={renderSubjects} />
           <FieldArray name="classifications" component={renderClassifications} classificationTypes={classificationTypes} />
           <FieldArray name="publication" component={renderPublication} />
+          <FieldArray name="urls" component={renderURLs} />
           <FieldArray name="languages" component={renderLanguages} />
+          <FieldArray name="notes" component={renderNotes} />
         </Pane>
       </Paneset>
     </form>
