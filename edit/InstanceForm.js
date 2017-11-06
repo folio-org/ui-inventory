@@ -35,9 +35,9 @@ function InstanceForm(props) {
     submitting,
     onCancel,
     initialValues,
+    identifierTypes,
     creatorTypes,
     contributorTypes,
-    identifierTypes,
     classificationTypes,
   } = props;
 
@@ -57,9 +57,9 @@ function InstanceForm(props) {
           </Row>
           <Field type="hidden" name="source" component="input" />
           <FieldArray name="alternativeTitles" component={renderAlternativeTitles} />
+          <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
           <FieldArray name="creators" component={renderCreators} creatorTypes={creatorTypes} />
           <FieldArray name="contributors" component={renderContributors} contributorTypes={contributorTypes} />
-          <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
           <FieldArray name="classifications" component={renderClassifications} classificationTypes={classificationTypes} />
           <FieldArray name="publication" component={renderPublication} />
           <FieldArray name="languages" component={renderLanguages} />
