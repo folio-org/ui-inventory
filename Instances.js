@@ -177,6 +177,8 @@ class Instances extends React.Component {
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
+    const classificationTypes = (resources.classificatoinTypes || emptyObj).records || emptyArr;
+
 
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
@@ -241,6 +243,7 @@ class Instances extends React.Component {
             creatorTypes={creatorTypes}
             contributorTypes={contributorTypes}
             identifierTypes={identifierTypes}
+            classificationTypes={classificationTypes}
           />
         </Layer>
       </Paneset>

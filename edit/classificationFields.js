@@ -6,38 +6,38 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field } from 'redux-form';
 
-const renderContributors = ({ fields, meta: { touched, error, submitFailed }, contributorTypes }) => (
+const renderClassifications = ({ fields, meta: { touched, error, submitFailed }, classificationTypes }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-contributor" onClick={() => fields.push({})}>Add Contributor</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-classification" onClick={() => fields.push({})}>Add Classification</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
-    {fields.map((contributor, index) => {
-      const contributorTypeOptions = contributorTypes.map(
+    {fields.map((classification, index) => {
+      const classificationTypeOptions = classificationTypes.map(
                                         it => ({
                                           label: it.name,
                                           value: it.id,
-                                          selected: it.id === contributor.contributorTypeId,
+                                          selected: it.id === classification.classificationTypeId,
                                         }));
       return (
         <Row key={index}>
           <Col sm={2} smOffset={1}>
             <Field
-              name={`${contributor}.name`}
+              name={`${classification}.classificationNumber`}
               type="text"
               component={TextField}
-              label="Contributor"
+              label="Classification"
             />
           </Col>
           <Col sm={1}>
             <Field
-              name={`${contributor}.contributorTypeId`}
+              name={`${classification}.classificationTypeId`}
               type="text"
               component={Select}
               label="Type"
-              dataOptions={[{ label: 'Select type of contributor', value: '' }, ...contributorTypeOptions]}
+              dataOptions={[{ label: 'Select classification type', value: '' }, ...classificationTypeOptions]}
             />
           </Col>
           <Col sm={1} smOffset={1}>
@@ -45,15 +45,15 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
             <Button
               buttonStyle="fullWidth secondary"
               type="button"
-              title={`Remove Contributor ${index + 1}`}
+              title={`Remove Classification ${index + 1}`}
               onClick={() => fields.remove(index)}
-            >Delete contributor</Button>
+            >Delete classification</Button>
           </Col>
         </Row>
       );
     })}
   </div>
 );
-renderContributors.propTypes = { fields: PropTypes.object, meta: PropTypes.object, contributorTypes: PropTypes.arrayOf(PropTypes.object) };
+renderClassifications.propTypes = { fields: PropTypes.object, meta: PropTypes.object, classificationTypes: PropTypes.arrayOf(PropTypes.object) };
 
-export default renderContributors;
+export default renderClassifications;

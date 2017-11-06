@@ -213,6 +213,7 @@ class ViewInstance extends React.Component {
             creatorTypes={creatorTypes}
             contributorTypes={contributorTypes}
             identifierTypes={identifierTypes}
+            classificationTypes={classificationTypes}
           />
         </Layer>
       </Pane>

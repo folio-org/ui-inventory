@@ -8,9 +8,12 @@ import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
+import renderAlternativeTitles from './alternativeTitles';
 import renderCreators from './creatorFields';
 import renderContributors from './contributorFields';
 import renderIdentifiers from './identifierFields';
+import renderClassifications from './classificationFields';
+import renderPublication from './publicationFields';
 import renderLanguages from './languageFields';
 
 function validate(values) {
@@ -35,6 +38,7 @@ function InstanceForm(props) {
     creatorTypes,
     contributorTypes,
     identifierTypes,
+    classificationTypes,
   } = props;
 
   /* Menus for Add Instance workflow */
@@ -52,9 +56,12 @@ function InstanceForm(props) {
             </Col>
           </Row>
           <Field type="hidden" name="source" component="input" />
+          <FieldArray name="alternativeTitles" component={renderAlternativeTitles} />
           <FieldArray name="creators" component={renderCreators} creatorTypes={creatorTypes} />
           <FieldArray name="contributors" component={renderContributors} contributorTypes={contributorTypes} />
           <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
+          <FieldArray name="classifications" component={renderClassifications} classificationTypes={classificationTypes} />
+          <FieldArray name="publication" component={renderPublication} />
           <FieldArray name="languages" component={renderLanguages} />
         </Pane>
       </Paneset>
@@ -72,6 +79,7 @@ InstanceForm.propTypes = {
   creatorTypes: PropTypes.arrayOf(PropTypes.object),
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
   identifierTypes: PropTypes.arrayOf(PropTypes.object),
+  classificationTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default stripesForm({
