@@ -113,7 +113,6 @@ class ViewInstance extends React.Component {
 
     return instance ? (
       <Pane defaultWidth={this.props.paneWidth} paneTitle={instance.title} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
-        {'Fields in square brackets are placeholders for yet to be implemented properties'}
         <Row>
           <Col xs={12}>
             <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
@@ -197,11 +196,6 @@ class ViewInstance extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue label="Notes" value={_.get(instance, ['notes'], '')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="[Date Added to FOLIO]" value={_.get(instance, ['metadata', 'createdDate'], '')} />
           </Col>
         </Row>
         <br />
