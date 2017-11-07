@@ -28,7 +28,7 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed }, ide
               name={`${identifier}.value`}
               type="text"
               component={TextField}
-              label={index === 0 ? 'Identifier' : null}
+              label={index === 0 ? 'Identifier *' : null}
             />
           </Col>
           <Col sm={2}>
@@ -36,7 +36,7 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed }, ide
               name={`${identifier}.identifierTypeId`}
               type="text"
               component={Select}
-              label={index === 0 ? 'Type' : null}
+              label={index === 0 ? 'Type *' : null}
               dataOptions={[{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions]}
             />
           </Col>
