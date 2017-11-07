@@ -10,7 +10,7 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-contributor" onClick={() => fields.push({})}>Add Contributor</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-contributor" onClick={() => fields.push()}>Add Contributor</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -28,7 +28,7 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
               name={`${contributor}.name`}
               type="text"
               component={TextField}
-              label="Contributor"
+              label={ index === 0 ? 'Contributor' : null }
             />
           </Col>
           <Col sm={1}>
@@ -36,12 +36,12 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
               name={`${contributor}.contributorTypeId`}
               type="text"
               component={Select}
-              label="Type"
+              label={ index === 0 ? 'Type' : null }
               dataOptions={[{ label: 'Select type of contributor', value: '' }, ...contributorTypeOptions]}
             />
           </Col>
           <Col sm={1} smOffset={1}>
-            <br />
+            { index === 0 ? <br /> : null }
             <Button
               buttonStyle="fullWidth secondary"
               type="button"

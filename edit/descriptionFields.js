@@ -9,28 +9,28 @@ const renderPhysicalDescriptions = ({ fields, meta: { touched, error, submitFail
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-description" onClick={() => fields.push({})}>Add Description</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-description" onClick={() => fields.push()}>Add Description</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
     {fields.map((description, index) =>
       <Row key={index}>
-        <Col sm={2} smOffset={1}>
+        <Col sm={4} smOffset={1}>
           <Field
             name={description}
             type="text"
             component={TextField}
-            label="Description"
+            label={ index === 0 ? 'Description' : null }
           />
         </Col>
-        <Col sm={1} smOffset={1}>
-          <br />
+        <Col sm={1}>
+          { index === 0 ? <br /> : null }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
             title={`Remove Description ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete Description</Button>
+          >Remove</Button>
         </Col>
       </Row>,
         // /

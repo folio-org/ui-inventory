@@ -9,7 +9,7 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-publication" onClick={() => fields.push({})}>Add Publication</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-publication" onClick={() => fields.push()}>Add Publication</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -20,7 +20,7 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
             name={`${publication}.publisher`}
             type="text"
             component={TextField}
-            label="Publisher"
+            label={ index === 0 ? 'Publisher' : null }
           />
         </Col>
         <Col sm={1}>
@@ -28,7 +28,7 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
             name={`${publication}.place`}
             type="text"
             component={TextField}
-            label="Place"
+            label={ index === 0 ? 'Place' : null }
           />
         </Col>
         <Col sm={1}>
@@ -36,17 +36,17 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
             name={`${publication}.dateOfPublication`}
             type="text"
             component={TextField}
-            label="Date"
+            label={ index === 0 ? 'Date' : null }
           />
         </Col>
-        <Col sm={1} smOffset={1}>
-          <br />
+        <Col sm={1}>
+          { index === 0 ? <br /> : null }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
             title={`Remove Publication ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete publication</Button>
+          >Remove</Button>
         </Col>
       </Row>,
     )}

@@ -10,7 +10,7 @@ const renderCreators = ({ fields, meta: { touched, error, submitFailed }, creato
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-creator" onClick={() => fields.push({})}>Add Creator</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-creator" onClick={() => fields.push()}>Add Creator</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -28,7 +28,7 @@ const renderCreators = ({ fields, meta: { touched, error, submitFailed }, creato
               name={`${creator}.name`}
               type="text"
               component={TextField}
-              label="Creator"
+              label={ index === 0 ? 'Creator' : null }
             />
           </Col>
           <Col sm={1}>
@@ -36,12 +36,12 @@ const renderCreators = ({ fields, meta: { touched, error, submitFailed }, creato
               name={`${creator}.creatorTypeId`}
               type="text"
               component={Select}
-              label="Type"
+              label={ index === 0 ? 'Type of name' : null }
               dataOptions={[{ label: 'Select creator name type', value: '' }, ...creatorTypeOptions]}
             />
           </Col>
           <Col sm={1} smOffset={1}>
-            <br />
+            { index === 0 ? <br /> : null }
             <Button
               buttonStyle="fullWidth secondary"
               type="button"

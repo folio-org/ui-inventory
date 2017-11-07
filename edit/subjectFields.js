@@ -9,28 +9,28 @@ const renderSubjects = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-series" onClick={() => fields.push({})}>Add Subject</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-series" onClick={() => fields.push()}>Add Subject</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
     {fields.map((subject, index) =>
       <Row key={index}>
-        <Col sm={2} smOffset={1}>
+        <Col sm={4} smOffset={1}>
           <Field
             name={subject}
             type="text"
             component={TextField}
-            label="Subject"
+            label={ index === 0 ? 'Subject' : null }
           />
         </Col>
-        <Col sm={1} smOffset={1}>
-          <br />
+        <Col sm={1}>
+          { index === 0 ? <br /> : null }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
             title={`Remove Subject ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete Subject</Button>
+          >Remove</Button>
         </Col>
       </Row>,
         // /

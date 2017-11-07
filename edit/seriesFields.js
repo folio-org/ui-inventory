@@ -9,7 +9,7 @@ const renderSeries = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-series" onClick={() => fields.push({})}>Add Series Statement</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-series" onClick={() => fields.push()}>Add Series Statement</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -20,11 +20,11 @@ const renderSeries = ({ fields, meta: { touched, error, submitFailed } }) => (
             name={seriesStatement}
             type="text"
             component={TextField}
-            label="Series Statement"
+            label={ index === 0 ? 'Series Statement' : null }
           />
         </Col>
         <Col sm={1} smOffset={1}>
-          <br />
+          { index === 0 ? <br /> : null }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"

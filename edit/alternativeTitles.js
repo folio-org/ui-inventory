@@ -9,7 +9,7 @@ const renderAlternativeTitles = ({ fields, meta: { touched, error, submitFailed 
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-alt-title" onClick={() => fields.push({})}>Add Alternative Title</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-alt-title" onClick={() => fields.push()}>Add Alternative Title</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -20,17 +20,17 @@ const renderAlternativeTitles = ({ fields, meta: { touched, error, submitFailed 
             name={alternativeTitle}
             type="text"
             component={TextField}
-            label="Alternative Title"
+            label={ index === 0 ? 'Alternative Title' : null }
           />
         </Col>
-        <Col sm={1} smOffset={1}>
-          <br />
+        <Col sm={1}>
+          { index === 0 ? <br /> : null }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
             title={`Remove Alternative Title ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete Alternative Title</Button>
+          >Remove</Button>
         </Col>
       </Row>,
         // /

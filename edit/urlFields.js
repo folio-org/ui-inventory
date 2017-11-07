@@ -9,28 +9,28 @@ const renderURLs = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-url" onClick={() => fields.push({})}>Add URL</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-url" onClick={() => fields.push()}>Add URL</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
     {fields.map((url, index) =>
       <Row key={index}>
-        <Col sm={2} smOffset={1}>
+        <Col sm={4} smOffset={1}>
           <Field
             name={url}
             type="text"
             component={TextField}
-            label="URL"
+            label={ index === 0 ? 'URL' : null }
           />
         </Col>
-        <Col sm={1} smOffset={1}>
-          <br />
+        <Col sm={1} >
+          { index === 0 ? <br /> : null }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
             title={`Remove URL ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete URL</Button>
+          >Remove</Button>
         </Col>
       </Row>,
         // /

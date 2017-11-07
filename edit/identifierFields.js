@@ -10,7 +10,7 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed }, ide
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-identifier" onClick={() => fields.push({})}>Add Identifier</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-identifier" onClick={() => fields.push()}>Add Identifier</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -28,26 +28,26 @@ const renderIdentifiers = ({ fields, meta: { touched, error, submitFailed }, ide
               name={`${identifier}.value`}
               type="text"
               component={TextField}
-              label="Identifier"
+              label={ index === 0 ? 'Identifier' : null }
             />
           </Col>
-          <Col sm={1}>
+          <Col sm={2}>
             <Field
               name={`${identifier}.identifierTypeId`}
               type="text"
               component={Select}
-              label="Type"
+              label={ index === 0 ? 'Type' : null }
               dataOptions={[{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions]}
             />
           </Col>
-          <Col sm={1} smOffset={1}>
-            <br />
+          <Col sm={1}>
+            { index === 0 ? <br /> : null }
             <Button
               buttonStyle="fullWidth secondary"
               type="button"
               title={`Remove Identifier ${index + 1}`}
               onClick={() => fields.remove(index)}
-            >Delete identifier</Button>
+            >Remove</Button>
           </Col>
         </Row>
       );

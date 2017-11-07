@@ -25,12 +25,12 @@ const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => 
               name={`${language}`}
               type="text"
               component={Select}
-              label="Language"
+              label={ index === 0 ? 'Language' : null }
               dataOptions={[{ label: 'Select language', value: '' }, ...languageOptions]}
             />
           </Col>
           <Col sm={1} smOffset={2}>
-            <br />
+            { index === 0 ? <br /> : null }
             <Button
               buttonStyle="fullWidth secondary"
               type="button"

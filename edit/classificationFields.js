@@ -10,7 +10,7 @@ const renderClassifications = ({ fields, meta: { touched, error, submitFailed },
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-classification" onClick={() => fields.push({})}>Add Classification</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-classification" onClick={() => fields.push()}>Add Classification</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -28,26 +28,26 @@ const renderClassifications = ({ fields, meta: { touched, error, submitFailed },
               name={`${classification}.classificationNumber`}
               type="text"
               component={TextField}
-              label="Classification"
+              label={ index === 0 ? 'Classification' : null }
             />
           </Col>
-          <Col sm={1}>
+          <Col sm={2}>
             <Field
               name={`${classification}.classificationTypeId`}
               type="text"
               component={Select}
-              label="Type"
+              label={ index === 0 ? 'Type' : null }
               dataOptions={[{ label: 'Select classification type', value: '' }, ...classificationTypeOptions]}
             />
           </Col>
-          <Col sm={1} smOffset={1}>
-            <br />
+          <Col sm={1}>
+            { index === 0 ? <br /> : null }
             <Button
               buttonStyle="fullWidth secondary"
               type="button"
               title={`Remove Classification ${index + 1}`}
               onClick={() => fields.remove(index)}
-            >Delete classification</Button>
+            >Remove</Button>
           </Col>
         </Row>
       );

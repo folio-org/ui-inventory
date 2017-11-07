@@ -81,7 +81,7 @@ function InstanceForm(props) {
           <Field type="hidden" name="source" component="input" />
           <FieldArray name="alternativeTitles" component={renderAlternativeTitles} />
           <Row>
-            <Col sm={5} smOffset={1}>
+            <Col sm={4} smOffset={1}>
               <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
             </Col>
           </Row>
@@ -100,7 +100,7 @@ function InstanceForm(props) {
                 name="instanceTypeId"
                 type="text"
                 component={Select}
-                label="Format"
+                label="Resource type"
                 dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
               />
             </Col>
