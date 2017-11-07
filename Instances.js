@@ -177,7 +177,7 @@ class Instances extends React.Component {
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
-    const classificationTypes = (resources.classificatoinTypes || emptyObj).records || emptyArr;
+    const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
 
