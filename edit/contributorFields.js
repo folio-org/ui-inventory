@@ -28,7 +28,7 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
               name={`${contributor}.name`}
               type="text"
               component={TextField}
-              label={ index === 0 ? 'Contributor' : null }
+              label={index === 0 ? 'Contributor' : null}
             />
           </Col>
           <Col sm={1}>
@@ -36,7 +36,7 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
               name={`${contributor}.contributorTypeId`}
               type="text"
               component={Select}
-              label={ index === 0 ? 'Type' : null }
+              label={index === 0 ? 'Type' : null}
               dataOptions={[{ label: 'Select type of contributor', value: '' }, ...contributorTypeOptions]}
             />
           </Col>

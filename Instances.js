@@ -187,7 +187,7 @@ class Instances extends React.Component {
 // /
     const resultsFormatter = {
       identifiers: r => utils.identifiersFormatter(r, identifierTypes),
-      publishers: r => utils.publishersFormatter(r),
+      publishers: r => r.publication.map(p => p.publisher).join(', '),
       creators: r => utils.creatorsFormatter(r, creatorTypes),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
     };

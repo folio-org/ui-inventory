@@ -28,7 +28,7 @@ const renderClassifications = ({ fields, meta: { touched, error, submitFailed },
               name={`${classification}.classificationNumber`}
               type="text"
               component={TextField}
-              label={ index === 0 ? 'Classification' : null }
+              label={index === 0 ? 'Classification' : null}
             />
           </Col>
           <Col sm={2}>
@@ -36,7 +36,7 @@ const renderClassifications = ({ fields, meta: { touched, error, submitFailed },
               name={`${classification}.classificationTypeId`}
               type="text"
               component={Select}
-              label={ index === 0 ? 'Type' : null }
+              label={index === 0 ? 'Type' : null}
               dataOptions={[{ label: 'Select classification type', value: '' }, ...classificationTypeOptions]}
             />
           </Col>

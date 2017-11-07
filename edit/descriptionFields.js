@@ -20,7 +20,7 @@ const renderPhysicalDescriptions = ({ fields, meta: { touched, error, submitFail
             name={description}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Description' : null }
+            label={index === 0 ? 'Description' : null}
           />
         </Col>
         <Col sm={1}>

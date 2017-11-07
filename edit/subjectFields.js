@@ -20,7 +20,7 @@ const renderSubjects = ({ fields, meta: { touched, error, submitFailed } }) => (
             name={subject}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Subject' : null }
+            label={index === 0 ? 'Subject' : null}
           />
         </Col>
         <Col sm={1}>

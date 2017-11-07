@@ -20,7 +20,7 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
             name={`${publication}.publisher`}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Publisher' : null }
+            label={index === 0 ? 'Publisher' : null}
           />
         </Col>
         <Col sm={1}>
@@ -28,7 +28,7 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
             name={`${publication}.place`}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Place' : null }
+            label={index === 0 ? 'Place' : null}
           />
         </Col>
         <Col sm={1}>
@@ -36,7 +36,7 @@ const renderPublication = ({ fields, meta: { touched, error, submitFailed } }) =
             name={`${publication}.dateOfPublication`}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Date' : null }
+            label={index === 0 ? 'Date' : null}
           />
         </Col>
         <Col sm={1}>

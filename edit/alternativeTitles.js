@@ -20,7 +20,7 @@ const renderAlternativeTitles = ({ fields, meta: { touched, error, submitFailed 
             name={alternativeTitle}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Alternative Title' : null }
+            label={index === 0 ? 'Alternative Title' : null}
           />
         </Col>
         <Col sm={1}>

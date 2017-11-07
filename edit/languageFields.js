@@ -25,7 +25,7 @@ const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => 
               name={`${language}`}
               type="text"
               component={Select}
-              label={ index === 0 ? 'Language' : null }
+              label={index === 0 ? 'Language' : null}
               dataOptions={[{ label: 'Select language', value: '' }, ...languageOptions]}
             />
           </Col>

@@ -20,11 +20,11 @@ const renderSeries = ({ fields, meta: { touched, error, submitFailed } }) => (
             name={seriesStatement}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'Series Statement' : null }
+            label={index === 0 ? 'Series Statement' : null}
           />
         </Col>
         <Col sm={1} smOffset={1}>
-          { index === 0 ? <br /> : null }
+          {index === 0 ? <br /> : null}
           <Button
             buttonStyle="fullWidth secondary"
             type="button"

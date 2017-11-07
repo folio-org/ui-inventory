@@ -20,7 +20,7 @@ const renderURLs = ({ fields, meta: { touched, error, submitFailed } }) => (
             name={url}
             type="text"
             component={TextField}
-            label={ index === 0 ? 'URL' : null }
+            label={index === 0 ? 'URL' : null}
           />
         </Col>
         <Col sm={1} >
