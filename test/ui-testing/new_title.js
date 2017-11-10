@@ -7,6 +7,7 @@ module.exports.test = function(uiTestCtx) {
     this.timeout(Number(config.test_timeout));
 
     const title = '0000000 : a new test title'
+    const author = 'Test author name'
 
     describe('Login > Open module "Instances" > Create new instance > Sort list by title > Confirm creation of new title > Logout', () => {
       before( done => {
@@ -27,6 +28,13 @@ module.exports.test = function(uiTestCtx) {
         .wait(222)
         .insert('input[name=title]', title)
         .wait(222)
+        .click('#clickable-add-creator')
+        .wait(222)
+        .insert('#input_creator_name_0', author)
+        .type('#select_creator_type_0', 'P')
+        .wait(5000)
+        .type('#select_instance_type', 'B')
+        .wait(5000)
         .click('#clickable-create-instance')
         .then(result => { done() } )
       }) 
