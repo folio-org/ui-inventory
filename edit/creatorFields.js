@@ -26,6 +26,7 @@ const renderCreators = ({ fields, meta: { touched, error, submitFailed }, creato
           <Col sm={2} smOffset={1}>
             <Field
               name={`${creator}.name`}
+              id={`input_creator_name_${index}`}
               type="text"
               component={TextField}
               label={index === 0 ? 'Creator *' : null}
@@ -34,6 +35,7 @@ const renderCreators = ({ fields, meta: { touched, error, submitFailed }, creato
           <Col sm={1}>
             <Field
               name={`${creator}.creatorTypeId`}
+              id={`select_creator_type_${index}`}
               type="text"
               component={Select}
               label={index === 0 ? 'Type of name *' : null}

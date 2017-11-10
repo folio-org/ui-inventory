@@ -98,6 +98,7 @@ function InstanceForm(props) {
             <Col sm={5} smOffset={1}>
               <Field
                 name="instanceTypeId"
+                id="select_instance_type"
                 type="text"
                 component={Select}
                 label="Resource type *"
