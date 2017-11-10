@@ -19,7 +19,7 @@ import packageInfo from './package';
 
 import utils from './utils';
 
-import InstanceForm from './InstanceForm';
+import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 
 const INITIAL_RESULT_COUNT = 30;
@@ -34,7 +34,7 @@ class Instances extends React.Component {
     instances: {
       type: 'okapi',
       records: 'instances',
-      path: 'inventory/instances',
+      path: 'instance-storage/instances',
       recordsRequired: '%{instanceCount}',
       perRequest: RESULT_COUNT_INCREMENT,
       GET: {
@@ -47,6 +47,36 @@ class Instances extends React.Component {
         },
         staticFallback: { params: {} },
       },
+    },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=100',
+    },
+    creatorTypes: {
+      type: 'okapi',
+      records: 'creatorTypes',
+      path: 'creator-types?limit=100',
+    },
+    contributorTypes: {
+      type: 'okapi',
+      records: 'contributorTypes',
+      path: 'contributor-types?limit=100',
+    },
+    instanceFormats: {
+      type: 'okapi',
+      records: 'instanceFormats',
+      path: 'instance-formats?limit=100',
+    },
+    instanceTypes: {
+      type: 'okapi',
+      records: 'instanceTypes',
+      path: 'instance-types?limit=100',
+    },
+    classificationTypes: {
+      type: 'okapi',
+      records: 'classificationTypes',
+      path: 'classification-types?limit=100',
     },
   });
 
@@ -144,16 +174,22 @@ class Instances extends React.Component {
   render() {
     const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
-    const query = location.search ? queryString.parse(location.search) : {};
+    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
+    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
+    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
+    const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
+    const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
+    const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
 
+    const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
 // /
     const resultsFormatter = {
-      identifiers: r => utils.identifiersFormatter(r),
-      creators: () => 'to come',
-      publisher: () => 'to come',
-      'publication date': () => utils.localizeDate('2017-09-08T12:42:21Z', this.props.stripes.locale),
+      identifiers: r => utils.identifiersFormatter(r, identifierTypes),
+      publishers: r => r.publication.map(p => p.publisher).join(', '),
+      creators: r => utils.creatorsFormatter(r, creatorTypes),
+      'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
@@ -183,7 +219,7 @@ class Instances extends React.Component {
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'creators', 'identifiers', 'publisher', 'publication date']}
+            visibleColumns={['title', 'creators', 'identifiers', 'publishers', 'publication date']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
@@ -201,10 +237,16 @@ class Instances extends React.Component {
         />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
-            initialValues={{}}
+            initialValues={{ source: 'manual' }}
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
             okapi={okapi}
+            creatorTypes={creatorTypes}
+            contributorTypes={contributorTypes}
+            identifierTypes={identifierTypes}
+            classificationTypes={classificationTypes}
+            instanceTypes={instanceTypes}
+            instanceFormats={instanceFormats}
           />
         </Layer>
       </Paneset>

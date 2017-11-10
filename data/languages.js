@@ -1,5 +1,5 @@
 /* eslint comma-dangle: [2, "never"] */
-const data = [
+export const data = [
   {
     uri: 'info:lc/vocabulary/languages/abk',
     name: {
@@ -22061,7 +22061,7 @@ const languages = {
 
   languageByCode: (code) => {
     const lang = data.find(l => l.code === code);
-    return lang ? lang.name['#text'] : null;
+    return (lang ? (lang.name['#text'] || lang.name) : null);
   }
 };
 

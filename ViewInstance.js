@@ -14,7 +14,7 @@ import transitionToParams from '@folio/stripes-components/util/transitionToParam
 import utils from './utils';
 
 import InstanceItems from './InstanceItems';
-import InstanceForm from './InstanceForm';
+import InstanceForm from './edit/InstanceForm';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -25,8 +25,38 @@ class ViewInstance extends React.Component {
   static manifest = Object.freeze({
     selectedInstance: {
       type: 'okapi',
-      path: 'inventory/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{instanceid}',
       clear: false,
+    },
+    identifierTypes: {
+      type: 'okapi',
+      records: 'identifierTypes',
+      path: 'identifier-types?limit=100',
+    },
+    creatorTypes: {
+      type: 'okapi',
+      records: 'creatorTypes',
+      path: 'creator-types?limit=100',
+    },
+    contributorTypes: {
+      type: 'okapi',
+      records: 'contributorTypes',
+      path: 'contributor-types?limit=100',
+    },
+    instanceFormats: {
+      type: 'okapi',
+      records: 'instanceFormats',
+      path: 'instance-formats?limit=100',
+    },
+    instanceTypes: {
+      type: 'okapi',
+      records: 'instanceTypes',
+      path: 'instance-types?limit=100',
+    },
+    classificationTypes: {
+      type: 'okapi',
+      records: 'classificationTypes',
+      path: 'classification-types?limit=100',
     },
   });
 
@@ -72,12 +102,17 @@ class ViewInstance extends React.Component {
 
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
+    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
+    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
+    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
+    const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
+    const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
 
     const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
 
     return instance ? (
       <Pane defaultWidth={this.props.paneWidth} paneTitle={instance.title} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
-        {'Fields in square brackets are placeholders for yet to be implemented properties'}
         <Row>
           <Col xs={12}>
             <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
@@ -90,97 +125,91 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Alternative Title(s)]" value={_.get(instance, ['alternativeTitles'], '')} />
+            <KeyValue label="Alternative Titles" value={_.get(instance, ['alternativeTitles'], []).join(', ')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Edition]" value={_.get(instance, ['edition'], '')} />
+            <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Series Statement]" value={_.get(instance, ['series'], '')} />
+            <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance)} />
+            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance, identifierTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Creator(s)]" value={_.get(instance, ['creators'], '')} />
+            <KeyValue label="Creators" value={utils.creatorsFormatter(instance, creatorTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Contributor(s)]" value={_.get(instance, ['contributors'], '')} />
+            <KeyValue label="Contributors" value={utils.contributorsFormatter(instance, contributorTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Publisher(s)]" value={_.get(instance, ['publishers'], '')} />
+            <KeyValue label="Subjects" value={_.get(instance, ['subjects'], []).join(', ')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Place(s) of Publication]" value={_.get(instance, ['placesOfPublication'], '')} />
+            <KeyValue label="Classification" value={utils.classificationsFormatter(instance, classificationTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Publication Date(s)]" value={_.get(instance, ['placesOfPublication'], '')} />
+            <KeyValue label="Publishers" value={utils.publishersFormatter(instance)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[URL(s)]" value={_.get(instance, ['urls'], '')} />
+            <KeyValue label="URLs" value={_.get(instance, ['urls'], []).join(', ')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Resource Type]" value={_.get(instance, ['resourceType'], '')} />
+            <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, instanceTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Format]" value={_.get(instance, ['format'], '')} />
+            <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, instanceFormats)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Physical Description(s)]" value={_.get(instance, ['physicalDescriptions'], '')} />
+            <KeyValue label="Physical Descriptions" value={_.get(instance, ['physicalDescriptions'], '')} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Language(s)]" value={_.get(instance, ['languages'], '')} />
+            <KeyValue label="Languages" value={utils.languagesFormatter(instance)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="[Notes]" value={_.get(instance, ['notes'], '')} />
+            <KeyValue label="Notes" value={_.get(instance, ['notes'], '')} />
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="[Date Added to FOLIO]" value={_.get(instance, ['metadata', 'createdDate'], '')} />
-          </Col>
-        </Row>
-        <h3>Items</h3>
-        <this.cInstanceItems
-          accordionExpanded={this.state.accordions.itemsAccordion}
-          accordionId="itemsAccordion"
-          accordionToggle={this.handleAccordionToggle}
-          {...this.props}
-        />
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
+            creatorTypes={creatorTypes}
+            contributorTypes={contributorTypes}
+            identifierTypes={identifierTypes}
+            classificationTypes={classificationTypes}
+            instanceTypes={instanceTypes}
+            instanceFormats={instanceFormats}
           />
         </Layer>
       </Pane>
