@@ -130,7 +130,7 @@ class Instances extends React.Component {
   onSelectRow = (e, meta) => {
     const instanceId = meta.id;
     this.setState({ selectedInstance: meta });
-    this.props.history.push(`/instances/view/${instanceId}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${instanceId}${this.props.location.search}`);
   }
 
   onClickAddNewInstance = (e) => {

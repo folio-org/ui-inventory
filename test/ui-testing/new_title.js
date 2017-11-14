@@ -9,16 +9,16 @@ module.exports.test = function(uiTestCtx) {
     const title = '0000000 : a new test title'
     const author = 'Test author name'
 
-    describe('Login > Open module "Instances" > Create new instance > Sort list by title > Confirm creation of new title > Logout', () => {
+    describe('Login > Open module "Inventory" > Create new instance > Sort list by title > Confirm creation of new title > Logout', () => {
       before( done => {
         login(nightmare, config, done);  // logs in with the default admin credentials
       })
       after( done => {
         logout(nightmare, config, done);
       })
-      it('should open module "Instances" and find version tag ', done => {
+      it('should open module "Inventory" and find version tag ', done => {
         nightmare
-        .use(openApp(nightmare, config, done, 'instances', testVersion))
+        .use(openApp(nightmare, config, done, 'inventory', testVersion))
         .then(result => result )
       })
       it('should create new instance ', done => {
