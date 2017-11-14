@@ -28,7 +28,7 @@
     "permissionSets": [
       {
         "permissionName": "module.instances.enabled",
-        "displayName": "UI: Instances module is enabled"
+        "displayName": "UI: Inventory module is enabled"
       }
     ]
   },
