@@ -14,7 +14,7 @@
   "stripes": {
     "type": "app",
     "displayName": "Inventory",
-    "route": "/instances",
+    "route": "/inventory",
     "hasSettings": false,
     "okapiInterfaces": { 
       "instance-storage": "3.0",
@@ -27,7 +27,7 @@
     },
     "permissionSets": [
       {
-        "permissionName": "module.instances.enabled",
+        "permissionName": "module.inventory.enabled",
         "displayName": "UI: Inventory module is enabled"
       }
     ]

@@ -1,7 +1,8 @@
-# Change history for ui-instances
+# Change history for ui-inventory
 
 ## [1.1.0](IN PROGRESS)
 
+* Project renamed from ui-instances to ui-inventory. UIIN-17.
 * Dependency on inventory: 3.0
 * Use PropTypes, not React.PropTypes. STRIPES-427.
 
