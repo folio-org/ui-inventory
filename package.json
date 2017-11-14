@@ -1,8 +1,8 @@
 {
-  "name": "@folio/instances",
+  "name": "@folio/inventory",
   "version": "1.0.0",
-  "description": "Instances manager",
-  "repository": "folio-org/ui-instances",
+  "description": "Inventory manager",
+  "repository": "folio-org/ui-inventory",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
@@ -13,7 +13,7 @@
   "main": "index.js",
   "stripes": {
     "type": "app",
-    "displayName": "Instances",
+    "displayName": "Inventory",
     "route": "/instances",
     "hasSettings": false,
     "okapiInterfaces": { 
