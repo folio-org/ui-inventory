@@ -13,7 +13,7 @@ import transitionToParams from '@folio/stripes-components/util/transitionToParam
 
 import utils from './utils';
 
-import InstanceItems from './InstanceItems';
+import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 
 const emptyObj = {};
@@ -65,9 +65,10 @@ class ViewInstance extends React.Component {
     this.state = {
       accordions: {
         itemsAccordion: true,
+        holdingsAccordion: true,
       },
     };
-    this.cInstanceItems = this.props.stripes.connect(InstanceItems);
+    this.cHoldings = this.props.stripes.connect(Holdings);
   }
 
   // Edit Instance Handlers
@@ -198,6 +199,15 @@ class ViewInstance extends React.Component {
             <KeyValue label="Notes" value={_.get(instance, ['notes'], '')} />
           </Col>
         </Row>
+        <h3>Holdings</h3>
+        <this.cHoldings
+          dataKey={instanceid}
+          id={instanceid}
+          accordionExpanded={this.state.accordions.holdingsAccordion}
+          accordionId="holdingsAccordion"
+          accordionToggle={this.handleAccordionToggle}
+          {...this.props}
+        />
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
