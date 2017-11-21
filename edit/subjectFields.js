@@ -9,7 +9,7 @@ const renderSubjects = ({ fields, meta: { touched, error, submitFailed } }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-series" onClick={() => fields.push()}>Add Subject</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-subject" onClick={() => fields.push()}>Add Subject</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>

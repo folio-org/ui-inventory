@@ -12,7 +12,7 @@ const renderLanguages = ({ fields, meta: { touched, error, submitFailed } }) => 
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-identifier" onClick={() => fields.push({})}>Add Language</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-language" onClick={() => fields.push({})}>Add Language</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
