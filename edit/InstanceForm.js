@@ -25,9 +25,57 @@ import renderNotes from './noteFields';
 
 function validate(values) {
   const errors = {};
+
+  const requiredMessage = 'Please fill this in to continue';
+
   if (!values.title) {
-    errors.title = 'Please fill this in to continue';
+    errors.title = requiredMessage;
   }
+
+  if (!values.instanceTypeId) {
+    errors.instanceTypeId = 'Please select to continue';
+  }
+
+  // at least one creator is required
+  if (!values.creators || !values.creators.length) {
+    errors.creators = { _error: 'At least one creator must be entered' };
+  } else {
+    const creatorErrorList = [];
+    values.creators.forEach((creator, i) => {
+      const creatorErrors = {};
+      if (!creator || !creator.name) {
+        creatorErrors.name = requiredMessage;
+        creatorErrorList[i] = creatorErrors;
+      }
+      if (!creator || !creator.creatorTypeId) {
+        creatorErrors.creatorTypeId = 'Please select to continue';
+        creatorErrorList[i] = creatorErrors;
+      }
+    });
+    if (creatorErrorList.length) {
+      errors.creators = creatorErrorList;
+    }
+  }
+
+  // identifiers are not required, but if present must include value and type
+  if (values.identifiers && values.identifiers.length) {
+    const identifierErrorList = [];
+    values.identifiers.forEach((identifier, i) => {
+      const identifierErrors = {};
+      if (!identifier || !identifier.value) {
+        identifierErrors.value = requiredMessage;
+        identifierErrorList[i] = identifierErrors;
+      }
+      if (!identifier || !identifier.identifierTypeId) {
+        identifierErrors.identifierTypeId = 'Please select to continue';
+        identifierErrorList[i] = identifierErrors;
+      }
+    });
+    if (identifierErrorList.length) {
+      errors.identifiers = identifierErrorList;
+    }
+  }
+
   return errors;
 }
 
