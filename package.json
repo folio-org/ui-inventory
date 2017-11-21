@@ -16,7 +16,7 @@
     "displayName": "Inventory",
     "route": "/inventory",
     "hasSettings": false,
-    "okapiInterfaces": { 
+    "okapiInterfaces": {
       "instance-storage": "3.0",
       "identifier-types": "1.0",
       "contributor-types": "1.0",
@@ -34,7 +34,7 @@
   },
   "scripts": {
     "lint": "eslint *.js lib settings edit data",
-    "test": "echo 'placeholder. no tests implemented'" 
+    "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
