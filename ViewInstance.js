@@ -206,6 +206,7 @@ class ViewInstance extends React.Component {
           accordionExpanded={this.state.accordions.holdingsAccordion}
           accordionId="holdingsAccordion"
           accordionToggle={this.handleAccordionToggle}
+          instance={instance}
           {...this.props}
         />
         <br />

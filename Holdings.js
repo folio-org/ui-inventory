@@ -1,36 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
+import Layer from '@folio/stripes-components/lib/Layer';
+import Button from '@folio/stripes-components/lib/Button';
 
-import ItemCreator from './ItemCreator';
+import HoldingsForm from './edit/holdings/HoldingsForm';
+import ItemsPerHoldingsRecord from './ItemsPerHoldingsRecord';
 
 class Holdings extends React.Component {
 
   static manifest = Object.freeze({
+    addHoldingsMode: { initialValue: { mode: false } },
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
       path: 'holdings-storage/holdings?query=(instanceId=:{instanceid})',
     },
+    shelfLocations: {
+      type: 'okapi',
+      records: 'shelflocations',
+      path: 'shelf-locations',
+    },
   });
 
   constructor(props) {
     super(props);
-    this.cItemCreator = this.props.stripes.connect(ItemCreator);
+    this.cItems = this.props.stripes.connect(ItemsPerHoldingsRecord);
+  }
+
+  onClickAddNewHoldingsRecord = (e) => {
+    if (e) e.preventDefault();
+    console.log('clicked "add new holdings record"');
+    this.props.mutator.addHoldingsMode.replace({ mode: true });
+  }
+
+  onClickCloseNewHoldingsRecord = (e) => {
+    if (e) e.preventDefault();
+    console.log('clicked "close new holdings record"');
+    this.props.mutator.addHoldingsMode.replace({ mode: false });
+  }
+
+  createHoldings(holdingsRecord) {
+    // POST item record
+    console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
+    this.props.mutator.holdings.POST(holdingsRecord);
+    this.onClickCloseNewHoldingsRecord();
   }
 
 
   render() {
-    const { resources: { holdings } } = this.props;
+    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations } } = this.props;
 
-    if (!holdings || !holdings.hasLoaded) return <div />;
+    if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
 
     const holdingsRecords = holdings.records;
-    const that = this;
+    const locations = (shelfLocations || {}).records || [];
 
+    const that = this;
+    const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
     return (
       <div>
+        {newHoldingsRecordButton}
         {holdingsRecords.map(record =>
           <div key={record.id}>
             <Row>
@@ -38,7 +70,7 @@ class Holdings extends React.Component {
                 <KeyValue label="Callnumber" value={record.callNumber} />
               </Col>
               <Col sm={7}>
-                <KeyValue label="Permanent location" value={record.permanentLocationId} />
+                <KeyValue label="Permanent location" value={locations.find(loc => record.permanentLocationId === loc.id).name} />
               </Col>
             </Row>
             <Row>
@@ -46,11 +78,21 @@ class Holdings extends React.Component {
                 <KeyValue label="Items" value="" />
               </Col>
               <Col sm={9} >
-                <that.cItemCreator key={record.id} id={record.id} holdingsRecordId={record.id} {...that.props} />
+                <that.cItems key={record.id} id={record.id} holdingsRecordId={record.id} holdingsRecord={record} {...that.props} />
               </Col>
             </Row>
             <br />
-          </div>)}
+          </div>,
+        )}
+        <Layer isOpen={addHoldingsMode ? addHoldingsMode.mode : false} label="Add New Holdings Dialog">
+          <HoldingsForm
+            initialValues={{ instanceId: 'dummy' }}
+            onSubmit={(record) => { this.createHoldingsRecord(record); }}
+            onCancel={this.onClickCloseNewHoldingsRecord}
+            okapi={okapi}
+          />
+        </Layer>
+
       </div>
     );
   }
@@ -62,10 +104,20 @@ Holdings.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }),
+  instance: PropTypes.object,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  mutator: PropTypes.shape({
+    addHoldingsMode: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+    holdings: PropTypes.shape({
+      POST: PropTypes.func,
+    }),
+  }),
+  okapi: PropTypes.object,
 };
 
 export default Holdings;
