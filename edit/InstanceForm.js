@@ -12,7 +12,6 @@ import Select from '@folio/stripes-components/lib/Select';
 
 import renderAlternativeTitles from './alternativeTitles';
 import renderSeries from './seriesFields';
-import renderCreators from './creatorFields';
 import renderContributors from './contributorFields';
 import renderSubjects from './subjectFields';
 import renderIdentifiers from './identifierFields';
@@ -91,7 +90,6 @@ function InstanceForm(props) {
     onCancel,
     initialValues,
     identifierTypes,
-    creatorTypes,
     contributorTypes,
     classificationTypes,
     instanceTypes,
@@ -136,7 +134,6 @@ function InstanceForm(props) {
           <FieldArray name="series" component={renderSeries} />
 
           <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
-          <FieldArray name="creators" component={renderCreators} creatorTypes={creatorTypes} />
           <FieldArray name="contributors" component={renderContributors} contributorTypes={contributorTypes} />
           <FieldArray name="subjects" component={renderSubjects} />
           <FieldArray name="classifications" component={renderClassifications} classificationTypes={classificationTypes} />
@@ -182,7 +179,6 @@ InstanceForm.propTypes = {
   submitting: PropTypes.bool,
   onCancel: PropTypes.func,
   initialValues: PropTypes.object,
-  creatorTypes: PropTypes.arrayOf(PropTypes.object),
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
   identifierTypes: PropTypes.arrayOf(PropTypes.object),
   classificationTypes: PropTypes.arrayOf(PropTypes.object),
