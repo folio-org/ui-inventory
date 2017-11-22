@@ -53,6 +53,11 @@ class Instances extends React.Component {
       records: 'identifierTypes',
       path: 'identifier-types?limit=100',
     },
+    creatorTypes: {
+      type: 'okapi',
+      records: 'creatorTypes',
+      path: 'creator-types?limit=100',
+    },
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
@@ -169,6 +174,7 @@ class Instances extends React.Component {
   render() {
     const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
+    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
@@ -182,7 +188,7 @@ class Instances extends React.Component {
     const resultsFormatter = {
       identifiers: r => utils.identifiersFormatter(r, identifierTypes),
       publishers: r => r.publication.map(p => p.publisher).join(', '),
-      contributors: r => utils.contributorsFormatter(r, contributorTypes),
+      creators: r => utils.creatorsFormatter(r, creatorTypes),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
@@ -213,7 +219,7 @@ class Instances extends React.Component {
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'contributors', 'identifiers', 'publishers', 'publication date']}
+            visibleColumns={['title', 'creators', 'identifiers', 'publishers', 'publication date']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
@@ -235,6 +241,7 @@ class Instances extends React.Component {
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
             okapi={okapi}
+            creatorTypes={creatorTypes}
             contributorTypes={contributorTypes}
             identifierTypes={identifierTypes}
             classificationTypes={classificationTypes}
