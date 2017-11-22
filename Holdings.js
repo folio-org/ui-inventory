@@ -37,7 +37,7 @@ class Holdings extends React.Component {
               <Col sm={3}>
                 <KeyValue label="Callnumber" value={record.callNumber} />
               </Col>
-              <Col sm={5}>
+              <Col sm={7}>
                 <KeyValue label="Permanent location" value={record.permanentLocationId} />
               </Col>
             </Row>
