@@ -1,9 +1,11 @@
-# Change history for ui-instances
+# Change history for ui-inventory
 
 ## [1.1.0](IN PROGRESS)
 
+* Project renamed from ui-instances to ui-inventory. UIIN-17.
 * Dependency on inventory: 3.0
 * Use PropTypes, not React.PropTypes. STRIPES-427.
+* Validation. Fixes UIIN-19.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

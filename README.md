@@ -1,4 +1,4 @@
-# ui-instances
+# ui-inventory
 
 Copyright (C) 2017 The Open Library Foundation
 
@@ -7,7 +7,8 @@ Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 
 ## Introduction
 
-This is a [Stripes](https://github.com/folio-org/stripes-core/) UI module for administrating instances.
+This is a [Stripes](https://github.com/folio-org/stripes-core/) UI module for administrating locally created
+instances, holdings records and items.
 
 ## Additional information
 
