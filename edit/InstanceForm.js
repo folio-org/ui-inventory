@@ -25,55 +25,51 @@ import renderNotes from './noteFields';
 function validate(values) {
   const errors = {};
 
-  const requiredMessage = 'Please fill this in to continue';
+  const requiredTextMessage = 'Please fill this in to continue';
+  const requiredSelectMessage = 'Please fill this in to continue';
 
   if (!values.title) {
-    errors.title = requiredMessage;
+    errors.title = requiredTextMessage;
   }
 
   if (!values.instanceTypeId) {
-    errors.instanceTypeId = 'Please select to continue';
+    errors.instanceTypeId = requiredSelectMessage;
   }
 
-  // at least one creator is required
-  if (!values.creators || !values.creators.length) {
-    errors.creators = { _error: 'At least one creator must be entered' };
-  } else {
-    const creatorErrorList = [];
-    values.creators.forEach((creator, i) => {
-      const creatorErrors = {};
-      if (!creator || !creator.name) {
-        creatorErrors.name = requiredMessage;
-        creatorErrorList[i] = creatorErrors;
-      }
-      if (!creator || !creator.creatorTypeId) {
-        creatorErrors.creatorTypeId = 'Please select to continue';
-        creatorErrorList[i] = creatorErrors;
-      }
-    });
-    if (creatorErrorList.length) {
-      errors.creators = creatorErrorList;
-    }
-  }
+  // the list itself is not required, but if a list is present,
+  // each item must have non-empty values in each field.
+  const optionalLists = [
+    { list: 'identifiers', textFields: ['value'], selectFields: ['identifierTypeId'] },
+    { list: 'contributors', textFields: ['name'], selectFields: ['contributorTypeId'] },
+    { list: 'classifications', textFields: ['classificationNumber'], selectFields: ['classificationTypeId'] },
+  ];
 
-  // identifiers are not required, but if present must include value and type
-  if (values.identifiers && values.identifiers.length) {
-    const identifierErrorList = [];
-    values.identifiers.forEach((identifier, i) => {
-      const identifierErrors = {};
-      if (!identifier || !identifier.value) {
-        identifierErrors.value = requiredMessage;
-        identifierErrorList[i] = identifierErrors;
+  optionalLists.forEach((l) => {
+    if (values[l.list] && values[l.list].length) {
+      const errorList = [];
+      values[l.list].forEach((item, i) => {
+        const entryErrors = {};
+
+        l.textFields.forEach((field) => {
+          if (!item || !item[field]) {
+            entryErrors[field] = requiredTextMessage;
+            errorList[i] = entryErrors;
+          }
+        });
+
+        l.selectFields.forEach((field) => {
+          if (!item || !item[field]) {
+            entryErrors[field] = requiredSelectMessage;
+            errorList[i] = entryErrors;
+          }
+        });
+      });
+
+      if (errorList.length) {
+        errors[l.list] = errorList;
       }
-      if (!identifier || !identifier.identifierTypeId) {
-        identifierErrors.identifierTypeId = 'Please select to continue';
-        identifierErrorList[i] = identifierErrors;
-      }
-    });
-    if (identifierErrorList.length) {
-      errors.identifiers = identifierErrorList;
     }
-  }
+  });
 
   return errors;
 }
