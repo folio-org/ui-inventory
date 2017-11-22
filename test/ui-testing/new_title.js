@@ -50,12 +50,8 @@ module.exports.test = function(uiTestCtx) {
 	.wait(55)
 	.insert('input[name="identifiers[1].value', isbn)
 	.type('select[name="identifiers[1].identifierTypeId', 'ii')
-        .click('#clickable-add-creator')
-	.wait(55)
-        .insert('#input_creator_name_0', author)
-        .type('#select_creator_type_0', 'P')
-        .type('#select_instance_type', 'B')
 	.click('#clickable-add-contributor')
+  .wait(55)
 	.insert('input[name="contributors[0].name"', contrib)
 	.type('select[name="contributors[0].contributorTypeId"]', 'r')
         .click('#clickable-add-subject')
@@ -96,7 +92,7 @@ module.exports.test = function(uiTestCtx) {
 	.wait(2222)
         .then(result => { done() } )
 	.catch(done)
-      }) 
+      })
       it('should find new title in list ', done => {
         nightmare
         .wait('#list-instances')
@@ -114,4 +110,3 @@ module.exports.test = function(uiTestCtx) {
     })
   })
 }
-

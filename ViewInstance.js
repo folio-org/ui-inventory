@@ -33,11 +33,6 @@ class ViewInstance extends React.Component {
       records: 'identifierTypes',
       path: 'identifier-types?limit=100',
     },
-    creatorTypes: {
-      type: 'okapi',
-      records: 'creatorTypes',
-      path: 'creator-types?limit=100',
-    },
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
@@ -103,7 +98,6 @@ class ViewInstance extends React.Component {
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
-    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
@@ -141,11 +135,6 @@ class ViewInstance extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance, identifierTypes)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Creators" value={utils.creatorsFormatter(instance, creatorTypes)} />
           </Col>
         </Row>
         <Row>
@@ -204,7 +193,6 @@ class ViewInstance extends React.Component {
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
-            creatorTypes={creatorTypes}
             contributorTypes={contributorTypes}
             identifierTypes={identifierTypes}
             classificationTypes={classificationTypes}
