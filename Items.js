@@ -10,7 +10,7 @@ class Items extends React.Component {
     items: {
       type: 'okapi',
       records: 'items',
-      path: 'inventory/items?query=(holdingsRecordId=!{holdingsRecordId})',
+      path: 'inventory/items?query=(holdingsRecordId=!{holdingsRecord.id})',
     },
   });
 

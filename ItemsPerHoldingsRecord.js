@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Layer from '@folio/stripes-components/lib/Layer';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Button from '@folio/stripes-components/lib/Button';
 
 import Items from './Items';
@@ -28,36 +30,36 @@ class ItemsPerHoldingsRecord extends React.Component {
       records: 'shelflocations',
       path: 'shelf-locations',
     },
-    items: {
+    itemsStored: {
       type: 'okapi',
       records: 'items',
-      path: 'inventory/items',
+      path: 'item-storage/items',
       fetch: false,
     },
   });
 
   constructor(props) {
     super(props);
-    this.cItems = props.stripes.connect(Items, { dataKey: props.holdingsRecordId });
+    this.cItems = props.stripes.connect(Items, { dataKey: props.holdingsRecord.id });
+    this.addItemModeThisLayer = false;
   }
 
   onClickAddNewItem = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "add new item"');
     this.props.mutator.addItemMode.replace({ mode: true });
+    this.addItemModeThisLayer = true;
   }
 
   onClickCloseNewItem = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "close new item"');
     this.props.mutator.addItemMode.replace({ mode: false });
+    this.addItemModeThisLayer = false;
   }
 
   createItem = (item) => {
     // POST item record
-    console.log(`Creating new item record: ${JSON.stringify(item)}`);
-    this.props.mutator.items.POST(item);
-    this.onClickCloseNewItem();
+    this.props.mutator.itemsStored.POST(item)
+    .then(this.onClickCloseNewItem());
   }
 
   render() {
@@ -67,16 +69,25 @@ class ItemsPerHoldingsRecord extends React.Component {
     const loantypes = (loanTypes || {}).records || [];
     const shelflocations = (shelfLocations || {}).records || [];
 
-
-    const newItemButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ New item</Button></div>;
+    const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ New item</Button>;
 
     return (
-      <div>
-        {newItemButton}
+        <div>
+          <Row>
+            <Col sm={1}>
+              <KeyValue label="Items"/>
+            </Col>
+            <Col sm={2} smOffset={8}>
+              {newItemButton}
+            </Col>
+        </Row>
         <this.cItems {...this.props} />
-        <Layer isOpen={addItemMode ? addItemMode.mode : false} label="Add New Item Dialog">
+        <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label="Add New Item Dialog">
           <ItemForm
-            initialValues={{ status: { name: 'Available' }, title: instance.title, instanceId: 'dummy' }}
+            form={`itemform_${holdingsRecord.id}`}
+            id={holdingsRecord.id}
+            key={holdingsRecord.id}
+            initialValues={{ status: { name: 'Available' }, title: instance.title, holdingsRecordId: holdingsRecord.id }}
             onSubmit={(record) => { this.createItem(record); }}
             onCancel={this.onClickCloseNewItem}
             okapi={okapi}
@@ -92,14 +103,13 @@ class ItemsPerHoldingsRecord extends React.Component {
 }
 
 ItemsPerHoldingsRecord.propTypes = {
-  holdingsRecordId: PropTypes.string.isRequired,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     addItemMode: PropTypes.shape({
       replace: PropTypes.func,
     }),
-    items: PropTypes.shape({
+    itemsStored: PropTypes.shape({
       POST: PropTypes.func,
     }),
   }),

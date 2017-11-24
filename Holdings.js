@@ -42,7 +42,7 @@ class Holdings extends React.Component {
     this.props.mutator.addHoldingsMode.replace({ mode: false });
   }
 
-  createHoldings(holdingsRecord) {
+  createHoldingsRecord = (holdingsRecord) => {
     // POST item record
     console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
     this.props.mutator.holdings.POST(holdingsRecord);
@@ -51,7 +51,7 @@ class Holdings extends React.Component {
 
 
   render() {
-    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations } } = this.props;
+    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations }, instance, instanceTypes, instanceFormats } = this.props;
 
     if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
 
@@ -60,11 +60,12 @@ class Holdings extends React.Component {
 
     const that = this;
     const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
+
     return (
       <div>
         {newHoldingsRecordButton}
         {holdingsRecords.map(record =>
-          <div key={record.id}>
+          <div key={`holdingsrecord_${record.id}`}>
             <Row>
               <Col sm={3}>
                 <KeyValue label="Callnumber" value={record.callNumber} />
@@ -73,12 +74,17 @@ class Holdings extends React.Component {
                 <KeyValue label="Permanent location" value={locations.find(loc => record.permanentLocationId === loc.id).name} />
               </Col>
             </Row>
+            {_.get(record, ['holdingsStatements']).length ? 
             <Row>
-              <Col sm={1}>
-                <KeyValue label="Items" value="" />
+              <Col xs={12} smOffset={1}>
+                <KeyValue label="Statements" value={_.get(record, ['holdingsStatements'], '')} />
               </Col>
-              <Col sm={9} >
-                <that.cItems key={record.id} id={record.id} holdingsRecordId={record.id} holdingsRecord={record} {...that.props} />
+            </Row>
+            :
+            null}
+            <Row>
+              <Col sm={11} smOffset={1}>
+                <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />
               </Col>
             </Row>
             <br />
@@ -86,10 +92,14 @@ class Holdings extends React.Component {
         )}
         <Layer isOpen={addHoldingsMode ? addHoldingsMode.mode : false} label="Add New Holdings Dialog">
           <HoldingsForm
-            initialValues={{ instanceId: 'dummy' }}
-            onSubmit={(record) => { this.createHoldingsRecord(record); }}
+            initialValues={{ instanceId: instance.id }}
+            onSubmit={(record) => { that.createHoldingsRecord(record); }}
             onCancel={this.onClickCloseNewHoldingsRecord}
             okapi={okapi}
+            locations={locations}
+            instance={instance}
+            instanceTypes={instanceTypes}
+            instanceFormats={instanceFormats}
           />
         </Layer>
 
@@ -105,6 +115,8 @@ Holdings.propTypes = {
     }),
   }),
   instance: PropTypes.object,
+  instanceTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  instanceFormats: PropTypes.arrayOf(PropTypes.object.isRequired),
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,

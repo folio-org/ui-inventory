@@ -124,11 +124,10 @@ function ItemForm(props) {
           </Row>
           <Row >
             <Col sm={5} smOffset={1}>
-              <Field label="" name="title" id="additem_title" disabled component={TextField} fullWidth />
               {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
               <Field
                 label="Material Type *"
-                name="materialType.id"
+                name="materialTypeId"
                 id="additem_materialType"
                 component={Select}
                 fullWidth
@@ -137,7 +136,7 @@ function ItemForm(props) {
               <Field label="Barcode" name="barcode" id="additem_barcode" component={TextField} required fullWidth />
               <Field
                 label="Temporary Location"
-                name="temporaryLocation.id"
+                name="temporaryLocationId"
                 id="additem_location"
                 component={Select}
                 fullWidth
@@ -146,7 +145,7 @@ function ItemForm(props) {
               <Field label="Status" name="status.name" id="additem_status" component={TextField} disabled fullWidth />
               <Field
                 label="Loan Type (Permanent) *"
-                name="permanentLoanType.id"
+                name="permanentLoanTypeId"
                 id="additem_loanTypePerm"
                 component={Select}
                 fullWidth
@@ -154,7 +153,7 @@ function ItemForm(props) {
               />
               <Field
                 label="Loan Type (Temporary)"
-                name="temporaryLoanType.id"
+                name="temporaryLoanTypeId"
                 id="additem_loanTypeTemp"
                 component={Select}
                 fullWidth
@@ -188,4 +187,5 @@ export default stripesForm({
   form: 'itemForm',
   asyncBlurFields: ['barcode'],
   navigationCheck: true,
+  enableReinitialize: true,
 })(ItemForm);

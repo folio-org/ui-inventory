@@ -97,7 +97,7 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { resources, match: { params: { instanceid } }, location } = this.props;
+    const { resources, match: { params: { instanceid } }, location, stripes } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selectedInstance = (resources.selectedInstance || emptyObj).records || emptyArr;
 
@@ -207,7 +207,11 @@ class ViewInstance extends React.Component {
           accordionId="holdingsAccordion"
           accordionToggle={this.handleAccordionToggle}
           instance={instance}
-          {...this.props}
+          instanceTypes={instanceTypes}
+          instanceFormats={instanceFormats}
+          match={this.props.match}
+          stripes={stripes}
+          location={location}
         />
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
