@@ -12,7 +12,7 @@ import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import utils from '../../utils';
 
-import renderStatements from './holdingsStatementsFields';
+import renderStatements from './holdingsStatementFields';
 
 
 function HoldingsForm(props) {
