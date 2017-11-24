@@ -28,36 +28,6 @@ class ViewInstance extends React.Component {
       path: 'instance-storage/instances/:{instanceid}',
       clear: false,
     },
-    identifierTypes: {
-      type: 'okapi',
-      records: 'identifierTypes',
-      path: 'identifier-types?limit=100',
-    },
-    creatorTypes: {
-      type: 'okapi',
-      records: 'creatorTypes',
-      path: 'creator-types?limit=100',
-    },
-    contributorTypes: {
-      type: 'okapi',
-      records: 'contributorTypes',
-      path: 'contributor-types?limit=100',
-    },
-    instanceFormats: {
-      type: 'okapi',
-      records: 'instanceFormats',
-      path: 'instance-formats?limit=100',
-    },
-    instanceTypes: {
-      type: 'okapi',
-      records: 'instanceTypes',
-      path: 'instance-types?limit=100',
-    },
-    classificationTypes: {
-      type: 'okapi',
-      records: 'classificationTypes',
-      path: 'classification-types?limit=100',
-    },
   });
 
   constructor(props) {
@@ -97,18 +67,13 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { resources, match: { params: { instanceid } }, location, stripes } = this.props;
+    const { resources, match: { params: { instanceid } }, location,
+            referenceTables, stripes } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selectedInstance = (resources.selectedInstance || emptyObj).records || emptyArr;
 
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
-    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
-    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
-    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
-    const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
-    const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
-    const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
 
     const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
 
@@ -141,17 +106,17 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance, identifierTypes)} />
+            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance, referenceTables.identifierTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Creators" value={utils.creatorsFormatter(instance, creatorTypes)} />
+            <KeyValue label="Creators" value={utils.creatorsFormatter(instance, referenceTables.creatorTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Contributors" value={utils.contributorsFormatter(instance, contributorTypes)} />
+            <KeyValue label="Contributors" value={utils.contributorsFormatter(instance, referenceTables.contributorTypes)} />
           </Col>
         </Row>
         <Row>
@@ -161,7 +126,7 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Classification" value={utils.classificationsFormatter(instance, classificationTypes)} />
+            <KeyValue label="Classification" value={utils.classificationsFormatter(instance, referenceTables.classificationTypes)} />
           </Col>
         </Row>
         <Row>
@@ -176,12 +141,12 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, instanceTypes)} />
+            <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, instanceFormats)} />
+            <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
           </Col>
         </Row>
         <Row>
@@ -207,8 +172,7 @@ class ViewInstance extends React.Component {
           accordionId="holdingsAccordion"
           accordionToggle={this.handleAccordionToggle}
           instance={instance}
-          instanceTypes={instanceTypes}
-          instanceFormats={instanceFormats}
+          referenceTables={referenceTables}
           match={this.props.match}
           stripes={stripes}
           location={location}
@@ -219,12 +183,7 @@ class ViewInstance extends React.Component {
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
-            creatorTypes={creatorTypes}
-            contributorTypes={contributorTypes}
-            identifierTypes={identifierTypes}
-            classificationTypes={classificationTypes}
-            instanceTypes={instanceTypes}
-            instanceFormats={instanceFormats}
+            referenceTables={referenceTables}
           />
         </Layer>
       </Pane>
@@ -247,6 +206,7 @@ ViewInstance.propTypes = {
   }),
   location: PropTypes.object,
   history: PropTypes.object,
+  referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     selectedInstance: PropTypes.shape({
       PUT: PropTypes.func.isRequired,

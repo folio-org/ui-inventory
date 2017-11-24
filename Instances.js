@@ -180,11 +180,19 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const referenceTables = {
+      creatorTypes,
+      contributorTypes,
+      identifierTypes,
+      classificationTypes,
+      instanceTypes,
+      instanceFormats,
+    };
 
     const query = location.search ? queryString.parse(location.search) : {};
     const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
-    const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
-// /
+    const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>; // /
+
     const resultsFormatter = {
       identifiers: r => utils.identifiersFormatter(r, identifierTypes),
       publishers: r => r.publication.map(p => p.publisher).join(', '),
@@ -233,7 +241,7 @@ class Instances extends React.Component {
         {/* Details Pane */}
         <Route
           path={`${match.path}/view/:instanceid`}
-          render={props => <this.cViewInstance stripes={stripes} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
+          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
         />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
@@ -241,12 +249,7 @@ class Instances extends React.Component {
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
             okapi={okapi}
-            creatorTypes={creatorTypes}
-            contributorTypes={contributorTypes}
-            identifierTypes={identifierTypes}
-            classificationTypes={classificationTypes}
-            instanceTypes={instanceTypes}
-            instanceFormats={instanceFormats}
+            referenceTables={referenceTables}
           />
         </Layer>
       </Paneset>

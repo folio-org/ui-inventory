@@ -12,7 +12,7 @@ import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import utils from '../../utils';
 
-import renderStatements from './holdingsStatementsFields';
+import renderStatements from './holdingsStatementFields';
 
 
 function HoldingsForm(props) {
@@ -23,10 +23,8 @@ function HoldingsForm(props) {
     submitting,
     onCancel,
     initialValues,
-    locations,
     instance,
-    instanceTypes,
-    instanceFormats,
+    referenceTables,
   } = props;
 
   /* Menus for Add Item workflow */
@@ -34,7 +32,7 @@ function HoldingsForm(props) {
   const addHoldingsLastMenu = <PaneMenu><Button id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
   const editHoldingsLastMenu = <PaneMenu><Button id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
 
-  const permanentLocationOptions = (locations || []).map(l => ({
+  const permanentLocationOptions = (referenceTables.shelfLocations || []).map(l => ({
     label: l.name,
     value: l.id,
     selected: initialValues.permanentLocationId ? initialValues.permanentLocationId === l.id : false,
@@ -55,10 +53,10 @@ function HoldingsForm(props) {
               <KeyValue label="Title" value={instance.title} />
             </Col>
             <Col sm={2}>
-              <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, instanceTypes)} />
+              <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
             </Col>
             <Col sm={2}>
-              <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, instanceFormats)} />
+              <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
             </Col>
           </Row>
           <Row >
@@ -95,9 +93,7 @@ HoldingsForm.propTypes = {
   onCancel: PropTypes.func,
   initialValues: PropTypes.object,
   instance: PropTypes.object,
-  locations: PropTypes.arrayOf(PropTypes.object),
-  instanceTypes: PropTypes.arrayOf(PropTypes.object),
-  instanceFormats: PropTypes.arrayOf(PropTypes.object),
+  referenceTables: PropTypes.object.isRequired,
 };
 
 export default stripesForm({

@@ -86,22 +86,17 @@ function InstanceForm(props) {
     submitting,
     onCancel,
     initialValues,
-    identifierTypes,
-    creatorTypes,
-    contributorTypes,
-    classificationTypes,
-    instanceTypes,
-    instanceFormats,
+    referenceTables,
   } = props;
 
-  const instanceTypeOptions = instanceTypes ? instanceTypes.map(
+  const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
                                 it => ({
                                   label: it.name,
                                   value: it.id,
                                   selected: it.id === initialValues.instanceTypeId,
                                 })) : [];
 
-  const instanceFormatOptions = instanceFormats ? instanceFormats.map(
+  const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
                                 it => ({
                                   label: it.name,
                                   value: it.id,
@@ -131,11 +126,11 @@ function InstanceForm(props) {
           </Row>
           <FieldArray name="series" component={renderSeries} />
 
-          <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={identifierTypes} />
-          <FieldArray name="creators" component={renderCreators} creatorTypes={creatorTypes} />
-          <FieldArray name="contributors" component={renderContributors} contributorTypes={contributorTypes} />
+          <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={referenceTables.identifierTypes} />
+          <FieldArray name="creators" component={renderCreators} creatorTypes={referenceTables.creatorTypes} />
+          <FieldArray name="contributors" component={renderContributors} contributorTypes={referenceTables.contributorTypes} />
           <FieldArray name="subjects" component={renderSubjects} />
-          <FieldArray name="classifications" component={renderClassifications} classificationTypes={classificationTypes} />
+          <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} />
           <FieldArray name="publication" component={renderPublication} />
           <FieldArray name="urls" component={renderURLs} />
           <Row>
@@ -178,12 +173,7 @@ InstanceForm.propTypes = {
   submitting: PropTypes.bool,
   onCancel: PropTypes.func,
   initialValues: PropTypes.object,
-  creatorTypes: PropTypes.arrayOf(PropTypes.object),
-  contributorTypes: PropTypes.arrayOf(PropTypes.object),
-  identifierTypes: PropTypes.arrayOf(PropTypes.object),
-  classificationTypes: PropTypes.arrayOf(PropTypes.object),
-  instanceTypes: PropTypes.arrayOf(PropTypes.object),
-  instanceFormats: PropTypes.arrayOf(PropTypes.object),
+  referenceTables: PropTypes.object.isRequired,
 };
 
 export default stripesForm({
