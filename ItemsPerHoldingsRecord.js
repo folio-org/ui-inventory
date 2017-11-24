@@ -25,7 +25,7 @@ class ItemsPerHoldingsRecord extends React.Component {
       path: 'loan-types',
       records: 'loantypes',
     },
-    itemsStored: {
+    items: {
       type: 'okapi',
       records: 'items',
       path: 'item-storage/items',
@@ -53,8 +53,8 @@ class ItemsPerHoldingsRecord extends React.Component {
 
   createItem = (item) => {
     // POST item record
-    this.props.mutator.itemsStored.POST(item)
-    .then(this.onClickCloseNewItem());
+    this.props.mutator.items.POST(item)
+    this.onClickCloseNewItem();
   }
 
   render() {
