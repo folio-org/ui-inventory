@@ -250,12 +250,6 @@ class Instances extends React.Component {
             onCancel={this.closeNewInstance}
             okapi={okapi}
             referenceTables={referenceTables}
-            creatorTypes={creatorTypes}
-            contributorTypes={contributorTypes}
-            identifierTypes={identifierTypes}
-            classificationTypes={classificationTypes}
-            instanceTypes={instanceTypes}
-            instanceFormats={instanceFormats}
           />
         </Layer>
       </Paneset>
