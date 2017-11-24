@@ -78,7 +78,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             {newItemButton}
           </Col>
         </Row>
-        <this.cItems referenceTables={referenceTables} {...this.props} />
+        <this.cItems holdingsRecord={holdingsRecord} />
         <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label="Add New Item Dialog">
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}

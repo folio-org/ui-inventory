@@ -180,19 +180,6 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
-
-    const query = location.search ? queryString.parse(location.search) : {};
-    const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
-    const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>;
-// /
-    const resultsFormatter = {
-      identifiers: r => utils.identifiersFormatter(r, identifierTypes),
-      publishers: r => r.publication.map(p => p.publisher).join(', '),
-      creators: r => utils.creatorsFormatter(r, creatorTypes),
-      'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
-    };
-    const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
-    const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
     const referenceTables = {
       creatorTypes,
       contributorTypes,
@@ -201,6 +188,19 @@ class Instances extends React.Component {
       instanceTypes,
       instanceFormats,
     };
+
+    const query = location.search ? queryString.parse(location.search) : {};
+    const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
+    const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>; // /
+
+    const resultsFormatter = {
+      identifiers: r => utils.identifiersFormatter(r, identifierTypes),
+      publishers: r => r.publication.map(p => p.publisher).join(', '),
+      creators: r => utils.creatorsFormatter(r, creatorTypes),
+      'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
+    };
+    const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
+    const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
     return (
       <Paneset>
         <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
