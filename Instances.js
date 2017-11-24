@@ -193,6 +193,14 @@ class Instances extends React.Component {
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
+    const referenceTables = {
+      creatorTypes,
+      contributorTypes,
+      identifierTypes,
+      classificationTypes,
+      instanceTypes,
+      instanceFormats,
+    };
     return (
       <Paneset>
         <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
@@ -233,7 +241,7 @@ class Instances extends React.Component {
         {/* Details Pane */}
         <Route
           path={`${match.path}/view/:instanceid`}
-          render={props => <this.cViewInstance stripes={stripes} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
+          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
         />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
@@ -241,6 +249,7 @@ class Instances extends React.Component {
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
             okapi={okapi}
+            referenceTables={referenceTables}
             creatorTypes={creatorTypes}
             contributorTypes={contributorTypes}
             identifierTypes={identifierTypes}

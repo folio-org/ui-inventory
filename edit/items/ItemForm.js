@@ -71,17 +71,15 @@ function ItemForm(props) {
     initialValues,
     instance,
     holdingsRecord,
-    materialTypes,
-    loanTypes,
-    shelfLocations,
+    referenceTables,
   } = props;
 
   /* Menus for Add Item workflow */
   const addItemFirstMenu = <PaneMenu><button onClick={onCancel} title="close" aria-label="Close New Item Dialog"><span style={{ fontSize: '30px', color: '#999', lineHeight: '18px' }} >&times;</span></button></PaneMenu>;
   const addItemLastMenu = <PaneMenu><Button id="clickable-create-item" type="submit" title="Create New Item" disabled={pristine || submitting} onClick={handleSubmit}>Create item</Button></PaneMenu>;
   const editItemLastMenu = <PaneMenu><Button id="clickable-update-item" type="submit" title="Update Item" disabled={pristine || submitting} onClick={handleSubmit}>Update item</Button></PaneMenu>;
-  const materialTypeOptions = materialTypes ?
-        materialTypes.map((t) => {
+  const materialTypeOptions = referenceTables.materialTypes ?
+        referenceTables.materialTypes.map((t) => {
           let selectedValue;
           if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
           return {
@@ -90,13 +88,13 @@ function ItemForm(props) {
             selected: selectedValue,
           };
         }) : [];
-  const loanTypeOptions = (loanTypes || []).map(t => ({
+  const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
     label: t.name,
     value: t.id,
     selected: initialValues.loanType ? initialValues.loanType.id === t.id : false,
   }));
 
-  const temporaryLocationOptions = (shelfLocations || []).map(l => ({
+  const temporaryLocationOptions = (referenceTables.shelfLocations || []).map(l => ({
     label: l.name,
     value: l.id,
     selected: initialValues.temporaryLocation ? initialValues.temporaryLocation.id === l.id : false,
@@ -119,7 +117,7 @@ function ItemForm(props) {
               <KeyValue label="Call Number" value={holdingsRecord.callNumber} />
             </Col>
             <Col sm={2}>
-              <KeyValue label="Location" value={shelfLocations.find(loc => loc.id === holdingsRecord.permanentLocationId).name} />
+              <KeyValue label="Location" value={referenceTables.shelfLocations.find(loc => loc.id === holdingsRecord.permanentLocationId).name} />
             </Col>
           </Row>
           <Row >
@@ -178,9 +176,7 @@ ItemForm.propTypes = {
   initialValues: PropTypes.object,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object,
-  materialTypes: PropTypes.arrayOf(PropTypes.object),
-  loanTypes: PropTypes.arrayOf(PropTypes.object),
-  shelfLocations: PropTypes.arrayOf(PropTypes.object),
+  referenceTables: PropTypes.object.isRequired,
 };
 
 export default stripesForm({

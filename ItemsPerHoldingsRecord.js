@@ -25,11 +25,6 @@ class ItemsPerHoldingsRecord extends React.Component {
       path: 'loan-types',
       records: 'loantypes',
     },
-    shelfLocations: {
-      type: 'okapi',
-      records: 'shelflocations',
-      path: 'shelf-locations',
-    },
     itemsStored: {
       type: 'okapi',
       records: 'items',
@@ -63,11 +58,13 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addItemMode, materialTypes, loanTypes, shelfLocations }, instance, holdingsRecord } = this.props;
+    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord } = this.props;
 
     const materialtypes = (materialTypes || {}).records || [];
     const loantypes = (loanTypes || {}).records || [];
-    const shelflocations = (shelfLocations || {}).records || [];
+    const referenceTables = this.props.referenceTables;
+    referenceTables.loanTypes = loantypes;
+    referenceTables.materialTypes = materialtypes;
 
     const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ New item</Button>;
 
@@ -81,7 +78,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             {newItemButton}
           </Col>
         </Row>
-        <this.cItems {...this.props} />
+        <this.cItems referenceTables={referenceTables} {...this.props} />
         <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label="Add New Item Dialog">
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}
@@ -93,9 +90,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             okapi={okapi}
             instance={instance}
             holdingsRecord={holdingsRecord}
-            materialTypes={materialtypes}
-            loanTypes={loantypes}
-            shelfLocations={shelflocations}
+            referenceTables={referenceTables}
           />
         </Layer>
       </div>);
@@ -124,6 +119,7 @@ ItemsPerHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
+  referenceTables: PropTypes.object.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,

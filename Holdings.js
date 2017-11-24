@@ -52,15 +52,18 @@ class Holdings extends React.Component {
 
 
   render() {
-    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations }, instance, instanceTypes, instanceFormats } = this.props;
+    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations }, instance } = this.props;
 
     if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
 
     const holdingsRecords = holdings.records;
-    const locations = (shelfLocations || {}).records || [];
+
+    const referenceTables = this.props.referenceTables;
+    referenceTables.shelfLocations = (shelfLocations || {}).records || [];
 
     const that = this;
     const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
+
 
     return (
       <div>
@@ -72,7 +75,7 @@ class Holdings extends React.Component {
                 <KeyValue label="Callnumber" value={record.callNumber} />
               </Col>
               <Col sm={7}>
-                <KeyValue label="Permanent location" value={locations.find(loc => record.permanentLocationId === loc.id).name} />
+                <KeyValue label="Permanent location" value={referenceTables.shelfLocations.find(loc => record.permanentLocationId === loc.id).name} />
               </Col>
             </Row>
             {_.get(record, ['holdingsStatements']).length ?
@@ -97,10 +100,8 @@ class Holdings extends React.Component {
             onSubmit={(record) => { that.createHoldingsRecord(record); }}
             onCancel={this.onClickCloseNewHoldingsRecord}
             okapi={okapi}
-            locations={locations}
             instance={instance}
-            instanceTypes={instanceTypes}
-            instanceFormats={instanceFormats}
+            referenceTables={referenceTables}
           />
         </Layer>
 
@@ -116,8 +117,7 @@ Holdings.propTypes = {
     }),
   }),
   instance: PropTypes.object,
-  instanceTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  instanceFormats: PropTypes.arrayOf(PropTypes.object.isRequired),
+  referenceTables: PropTypes.object.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
