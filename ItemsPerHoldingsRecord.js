@@ -53,7 +53,7 @@ class ItemsPerHoldingsRecord extends React.Component {
 
   createItem = (item) => {
     // POST item record
-    this.props.mutator.items.POST(item)
+    this.props.mutator.items.POST(item);
     this.onClickCloseNewItem();
   }
 
@@ -104,7 +104,7 @@ ItemsPerHoldingsRecord.propTypes = {
     addItemMode: PropTypes.shape({
       replace: PropTypes.func,
     }),
-    itemsStored: PropTypes.shape({
+    items: PropTypes.shape({
       POST: PropTypes.func,
     }),
   }),
