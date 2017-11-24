@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
@@ -74,14 +75,14 @@ class Holdings extends React.Component {
                 <KeyValue label="Permanent location" value={locations.find(loc => record.permanentLocationId === loc.id).name} />
               </Col>
             </Row>
-            {_.get(record, ['holdingsStatements']).length ? 
-            <Row>
-              <Col xs={12} smOffset={1}>
-                <KeyValue label="Statements" value={_.get(record, ['holdingsStatements'], '')} />
-              </Col>
-            </Row>
-            :
-            null}
+            {_.get(record, ['holdingsStatements']).length ?
+              <Row>
+                <Col xs={12} smOffset={1}>
+                  <KeyValue label="Statements" value={_.get(record, ['holdingsStatements'], '')} />
+                </Col>
+              </Row>
+              :
+              null}
             <Row>
               <Col sm={11} smOffset={1}>
                 <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />

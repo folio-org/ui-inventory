@@ -72,14 +72,14 @@ class ItemsPerHoldingsRecord extends React.Component {
     const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ New item</Button>;
 
     return (
-        <div>
-          <Row>
-            <Col sm={1}>
-              <KeyValue label="Items"/>
-            </Col>
-            <Col sm={2} smOffset={8}>
-              {newItemButton}
-            </Col>
+      <div>
+        <Row>
+          <Col sm={1}>
+            <KeyValue label="Items" />
+          </Col>
+          <Col sm={2} smOffset={8}>
+            {newItemButton}
+          </Col>
         </Row>
         <this.cItems {...this.props} />
         <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label="Add New Item Dialog">
