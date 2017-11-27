@@ -194,10 +194,9 @@ class Instances extends React.Component {
     const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>; // /
 
     const resultsFormatter = {
-      identifiers: r => utils.identifiersFormatter(r, identifierTypes),
-      publishers: r => r.publication.map(p => p.publisher).join(', '),
-      creators: r => utils.creatorsFormatter(r, creatorTypes),
+      publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
+      contributors: r => utils.contributorsFormatter(r, contributorTypes),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
@@ -227,7 +226,7 @@ class Instances extends React.Component {
             onRowClick={this.onSelectRow}
             onHeaderClick={this.onSort}
             onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'creators', 'identifiers', 'publishers', 'publication date']}
+            visibleColumns={['title', 'contributors', 'publishers']}
             sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
             sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
             isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
