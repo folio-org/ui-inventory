@@ -14,6 +14,16 @@ import utils from '../../utils';
 
 import renderStatements from './holdingsStatementFields';
 
+function validate(values) {
+  const errors = {};
+
+  if (!values.permanentLocationId) {
+    errors.permanentLocationId = 'Please select to continue';
+  }
+
+  return errors;
+}
+
 
 function HoldingsForm(props) {
   const {
@@ -67,7 +77,7 @@ function HoldingsForm(props) {
           <Row >
             <Col sm={5} smOffset={1}>
               <Field
-                label="Permanent Location"
+                label="Permanent Location *"
                 name="permanentLocationId"
                 id="additem_permanentlocation"
                 component={Select}
@@ -98,5 +108,6 @@ HoldingsForm.propTypes = {
 
 export default stripesForm({
   form: 'holdingsForm',
+  validate,
   navigationCheck: true,
 })(HoldingsForm);
