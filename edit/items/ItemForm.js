@@ -14,16 +14,12 @@ import stripesForm from '@folio/stripes-form';
 function validate(values) {
   const errors = {};
 
-  if (!values.title) {
-    errors.title = 'Please fill this in to continue';
+  if (!values.materialTypeId) {
+    errors.materialTypeId = 'Please select to continue';
   }
 
-  if (!values.materialType || !values.materialType.id) {
-    errors.materialType = { id: 'Please select to continue' };
-  }
-
-  if (!values.permanentLoanType || !values.permanentLoanType.id) {
-    errors.permanentLoanType = { id: 'Please select to continue' };
+  if (!values.permanentLoanTypeId) {
+    errors.permanentLoanTypeId = 'Please select to continue';
   }
 
   return errors;
@@ -181,6 +177,8 @@ ItemForm.propTypes = {
 
 export default stripesForm({
   form: 'itemForm',
+  validate,
+  asyncValidate,
   asyncBlurFields: ['barcode'],
   navigationCheck: true,
   enableReinitialize: true,
