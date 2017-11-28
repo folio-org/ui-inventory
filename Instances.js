@@ -64,7 +64,6 @@ const filterConfig = [
 ];
 
 class Instances extends React.Component {
-
   static manifest = Object.freeze({
     instanceCount: { initialValue: INITIAL_RESULT_COUNT },
     instances: {
@@ -77,7 +76,7 @@ class Instances extends React.Component {
         params: {
           query: makeQueryFunction(
             'cql.allRecords=1',
-            'title="$QUERY*"',
+            'title="$QUERY*" or identifiers.value="$QUERY*" or contributors.name="$QUERY*"',
             { Title: 'title' },
             filterConfig,
           ),
