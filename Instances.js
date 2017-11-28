@@ -10,6 +10,8 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Button from '@folio/stripes-components/lib/Button';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import FilterPaneSearch from '@folio/stripes-components/lib/FilterPaneSearch';
+import FilterGroups, { initialFilterState, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
+
 import Layer from '@folio/stripes-components/lib/Layer';
 import SRStatus from '@folio/stripes-components/lib/SRStatus';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
@@ -27,6 +29,40 @@ const RESULT_COUNT_INCREMENT = 30;
 const emptyObj = {};
 const emptyArr = [];
 
+
+const languages = [
+  { code: 'eng', name: 'English' },
+  { code: 'spa', name: 'Spanish' },
+  { code: 'fre', name: 'French' },
+  { code: 'ger', name: 'German' },
+  { code: 'chi', name: 'Mandarin' },
+  { code: 'rus', name: 'Russian' },
+  { code: 'ara', name: 'Arabic' },
+];
+
+// the empty 'values' properties will be filled in by componentWillUpdate
+// as those are pulled from the backend
+const filterConfig = [
+  {
+    label: 'Resource Type',
+    name: 'resource',
+    cql: 'instanceTypeId',
+    values: [],
+  },
+  {
+    label: 'Language',
+    name: 'language',
+    cql: 'languages.code',
+    values: languages.map(rec => ({ name: rec.name, cql: rec.code })),
+  },
+  {
+    label: 'Location',
+    name: 'location',
+    cql: 'location.id',
+    values: [],
+  },
+];
+
 class Instances extends React.Component {
 
   static manifest = Object.freeze({
@@ -43,6 +79,7 @@ class Instances extends React.Component {
             'cql.allRecords=1',
             'title="$QUERY*"',
             { Title: 'title' },
+            filterConfig,
           ),
         },
         staticFallback: { params: {} },
@@ -78,6 +115,11 @@ class Instances extends React.Component {
       records: 'classificationTypes',
       path: 'classification-types?limit=100',
     },
+    locations: {
+      type: 'okapi',
+      records: 'shelflocations',
+      path: 'shelf-locations?limit=100',
+    },
   });
 
   constructor(props) {
@@ -87,11 +129,14 @@ class Instances extends React.Component {
     this.state = {
       searchTerm: query.query || '',
       sortOrder: query.sort || '',
+      filters: initialFilterState(filterConfig, query.filters),
     };
     this.transitionToParams = transitionToParams.bind(this);
     this.cViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
+
+    this.onChangeFilter = commonChangeFilter.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -102,12 +147,31 @@ class Instances extends React.Component {
     }
   }
 
+  /**
+   * fill in the filter values
+   */
+  componentWillUpdate() {
+    // resource types
+    const rt = (this.props.resources.instanceTypes || {}).records || [];
+    if (rt && rt.length) {
+      filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    // locations
+    const locations = (this.props.resources.locations || {}).records || [];
+    if (locations && locations.length) {
+      filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
+    }
+  }
+
   onClearSearch = () => {
     const path = (_.get(packageInfo, ['stripes', 'home']) ||
                   _.get(packageInfo, ['stripes', 'route']));
     this.setState({
       searchTerm: '',
       sortOrder: 'title',
+      filters: {},
     });
     this.props.history.push(path);
   }
@@ -145,8 +209,17 @@ class Instances extends React.Component {
     this.performSearch(query);
   }
 
+  onChangeFilter = (e) => {
+    this.props.mutator.instanceCount.replace(INITIAL_RESULT_COUNT);
+    this.commonChangeFilter(e);
+  }
+
   onNeedMore = () => {
     this.props.mutator.instanceCount.replace(this.props.resources.instanceCount + RESULT_COUNT_INCREMENT);
+  }
+
+  updateFilters(filters) { // provided for onChangeFilter
+    this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
 
   closeNewInstance = (e) => {
@@ -203,7 +276,9 @@ class Instances extends React.Component {
     return (
       <Paneset>
         <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
-        <Pane defaultWidth="16%" header={searchHeader} />
+        <Pane defaultWidth="16%" header={searchHeader}>
+          <FilterGroups config={filterConfig} filters={this.state.filters} onChangeFilter={this.onChangeFilter} />
+        </Pane>
         {/* Results Pane */}
         <Pane
           defaultWidth="fill"
@@ -279,6 +354,12 @@ Instances.propTypes = {
       ),
     }),
     instanceCount: PropTypes.number,
+    instanceTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    locations: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
