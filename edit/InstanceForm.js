@@ -27,7 +27,7 @@ function validate(values) {
   const errors = {};
 
   const requiredTextMessage = 'Please fill this in to continue';
-  const requiredSelectMessage = 'Please fill this in to continue';
+  const requiredSelectMessage = 'Please select to continue';
 
   if (!values.title) {
     errors.title = requiredTextMessage;
