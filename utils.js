@@ -56,6 +56,7 @@ export default {
         const pub = r.publication[i];
         formatted += (i > 0 ? ', ' : '') +
                      pub.publisher +
+                     (pub.place ? `, ${pub.place}` : '') +
                      (pub.dateOfPublication ? ` (${pub.dateOfPublication})` : '');
       }
     }
