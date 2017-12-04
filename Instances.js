@@ -52,7 +52,7 @@ const filterConfig = [
   {
     label: 'Language',
     name: 'language',
-    cql: 'languages.code',
+    cql: 'languages',
     values: languages.map(rec => ({ name: rec.name, cql: rec.code })),
   },
   {
