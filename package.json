@@ -17,7 +17,13 @@
     "route": "/inventory",
     "hasSettings": false,
     "okapiInterfaces": {
+      "inventory": "4.0",
       "instance-storage": "3.0",
+      "holdings-storage": "1.0",
+      "item-storage": "4.0",
+      "loan-types": "2.0",
+      "material-types": "2.0",
+      "shelf-locations": "1.0",
       "identifier-types": "1.0",
       "contributor-types": "1.0",
       "creator-types": "1.0",
