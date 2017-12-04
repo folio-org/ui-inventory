@@ -136,6 +136,7 @@ class Instances extends React.Component {
     this.SRStatus = null;
 
     this.onChangeFilter = commonChangeFilter.bind(this);
+    this.copyInstance = this.copyInstance.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -191,9 +192,7 @@ class Instances extends React.Component {
   }
 
   onSelectRow = (e, meta) => {
-    const instanceId = meta.id;
-    this.setState({ selectedInstance: meta });
-    this.props.history.push(`/inventory/view/${instanceId}${this.props.location.search}`);
+    this.openInstance(meta);
   }
 
   onClickAddNewInstance = (e) => {
@@ -217,20 +216,34 @@ class Instances extends React.Component {
     this.props.mutator.instanceCount.replace(this.props.resources.instanceCount + RESULT_COUNT_INCREMENT);
   }
 
+  openInstance(selectedInstance) {
+    const instanceId = selectedInstance.id;
+    this.setState({ selectedInstance });
+    this.props.history.push(`/inventory/view/${instanceId}${this.props.location.search}`);
+  }
+
   updateFilters(filters) { // provided for onChangeFilter
     this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
+    this.setState({ copiedInstance: null });
     utils.removeQueryParam('layer', this.props.location, this.props.history);
+  }
+
+  copyInstance(instance) {
+    this.setState({ copiedInstance: _.omit(instance, ['id']) });
+    this.transitionToParams({ layer: 'create' });
   }
 
   createInstance = (instance) => {
     // POST item record
-    this.props.mutator.instances.POST(instance).then(() => this.closeNewInstance());
+    this.props.mutator.instances.POST(instance).then((createdInstance) => {
+      this.closeNewInstance();
+      this.goToInstance(createdInstance);
+    });
   }
-
 
   performSearch = _.debounce((query) => {
     this.transitionToParams({ query });
@@ -314,14 +327,15 @@ class Instances extends React.Component {
         {/* Details Pane */}
         <Route
           path={`${match.path}/view/:instanceid`}
-          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onClose={this.collapseDetails} {...props} />}
+          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
         />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
-            initialValues={{ source: 'manual' }}
+            initialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
             onSubmit={(record) => { this.createInstance(record); }}
             onCancel={this.closeNewInstance}
             okapi={okapi}
+            copy={!!(this.state.copiedInstance)}
             referenceTables={referenceTables}
           />
         </Layer>
