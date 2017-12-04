@@ -68,14 +68,19 @@ class ViewInstance extends React.Component {
 
   render() {
     const { resources, match: { params: { instanceid } }, location,
-            referenceTables, stripes } = this.props;
+            referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selectedInstance = (resources.selectedInstance || emptyObj).records || emptyArr;
 
     if (!selectedInstance || !instanceid) return <div />;
     const instance = selectedInstance.find(i => i.id === instanceid);
 
-    const detailMenu = <PaneMenu><button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button></PaneMenu>;
+    const detailMenu = (
+      <PaneMenu>
+        <button id="clickable-copy-instance" onClick={() => onCopy(instance)} title="Copy Instance"><Icon icon="copy" />Copy</button>
+        <button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button>
+      </PaneMenu>
+    );
 
     return instance ? (
       <Pane defaultWidth={this.props.paneWidth} paneTitle={instance.title} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
@@ -216,6 +221,7 @@ ViewInstance.propTypes = {
     }),
   }),
   onClose: PropTypes.func,
+  onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
 };
 
