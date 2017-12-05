@@ -5,8 +5,6 @@ import { data as languagetable } from './data/languages';
 
 export default {
 
-  localizeDate: (dateString, locale) => (dateString ? new Date(Date.parse(dateString)).toLocaleDateString(locale) : ''),
-
   identifiersFormatter: (r, identifierTypes) => {
     let formatted = '';
     if (r.identifiers && r.identifiers.length) {
