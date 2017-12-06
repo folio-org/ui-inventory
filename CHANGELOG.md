@@ -10,6 +10,7 @@
 * Filter search results by Resource Type, Language, Location. Fixes UIIN-32.
 * Identifiers and Contributors are now included in the search query, though not yet tied in on the back end. Refs UIIN-3.
 * Add ability to copy instances. Fixes UIIN-24.
+* Pruning local locale-date-formatters. Refs STCOR-109.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
