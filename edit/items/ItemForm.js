@@ -8,8 +8,11 @@ import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import TextField from '@folio/stripes-components/lib/TextField';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
+import renderNotes from './noteFields';
+import renderPieceIdentifiers from './pieceIdentifierFields';
+
 
 function validate(values) {
   const errors = {};
@@ -153,8 +156,39 @@ function ItemForm(props) {
                 fullWidth
                 dataOptions={[{ label: 'Select loan type', value: '' }, ...loanTypeOptions]}
               />
+              <Field 
+                label="Enumeration"
+                name="enumeration"
+                id="additem_enumeration"
+                component={TextField}
+                fullWidth
+              />
+              <Field 
+                label="Chronology"
+                name="chronology"
+                id="additem_chronology"
+                component={TextField}
+                fullWidth
+              />
+              <Field 
+                label="Number of pieces"
+                name="numberOfPieces"
+                id="additem_numberofpieces"
+                component={TextField}
+              />
             </Col>
           </Row>
+          <Row>
+            <Col sm={8} smOffset={1}>
+              <FieldArray name="notes" component={renderNotes} />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={8} smOffset={1}>
+              <FieldArray name="pieceIdentifiers" component={renderPieceIdentifiers} />
+            </Col>
+          </Row>
+
         </Pane>
       </Paneset>
     </form>
