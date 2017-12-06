@@ -76,7 +76,7 @@ class Instances extends React.Component {
         params: {
           query: makeQueryFunction(
             'cql.allRecords=1',
-            'title="$QUERY*" or identifiers.value="$QUERY*" or contributors.name="$QUERY*"',
+            'title="$QUERY*" or identifiers.value="$QUERY*" or contributors="name": "$QUERY*" or identifiers="value": "$QUERY*"',
             { Title: 'title' },
             filterConfig,
           ),
