@@ -24,6 +24,11 @@ class Holdings extends React.Component {
       records: 'shelflocations',
       path: 'shelf-locations',
     },
+    platforms: {
+      type: 'okapi',
+      records: 'platforms',
+      path: 'platforms',
+    },
   });
 
   constructor(props) {
@@ -52,7 +57,7 @@ class Holdings extends React.Component {
 
 
   render() {
-    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations }, instance } = this.props;
+    const { okapi, resources: { holdings, addHoldingsMode, shelfLocations, platforms }, instance } = this.props;
 
     if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
 
@@ -60,6 +65,7 @@ class Holdings extends React.Component {
 
     const referenceTables = this.props.referenceTables;
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
+    referenceTables.platforms = (platforms || {}).records || [];
 
     const that = this;
     const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
@@ -80,7 +86,13 @@ class Holdings extends React.Component {
                 </Col>
                 :
                 <Col sm={7}>
-                  <KeyValue label="Platform" value={_.get(record, ['electronicLocation', 'platformId'], '')} />
+                  <KeyValue
+                    label="Platform"
+                    value={_.get(record, ['electronicLocation', 'platformId'], null) ?
+                           (referenceTables.platforms.find(platform => _.get(record, ['electronicLocation', 'platformId'], '') === platform.id).name)
+                           :
+                           null}
+                  />
                   <KeyValue label="URI" value={_.get(record, ['electronicLocation', 'uri'], '')} />
                 </Col>
                }
