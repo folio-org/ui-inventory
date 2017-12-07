@@ -74,9 +74,17 @@ class Holdings extends React.Component {
               <Col sm={3}>
                 <KeyValue label="Callnumber" value={record.callNumber} />
               </Col>
-              <Col sm={7}>
-                <KeyValue label="Permanent location" value={referenceTables.shelfLocations.find(loc => record.permanentLocationId === loc.id).name} />
-              </Col>
+              { record.permanentLocationId ?
+                <Col sm={7}>
+                  <KeyValue label="Permanent location" value={referenceTables.shelfLocations.find(loc => record.permanentLocationId === loc.id).name} />
+                </Col>
+                :
+                <Col sm={7}>
+                  <KeyValue label="Platform" value={_.get(record, ['electronicLocation', 'platformId'], '')} />
+                  <KeyValue label="URI" value={_.get(record, ['electronicLocation', 'uri'], '')} />
+                </Col>
+               }
+
             </Row>
             {_.get(record, ['holdingsStatements']).length ?
               <Row>
