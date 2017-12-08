@@ -1,3 +1,4 @@
+import React from 'react';
 import _ from 'lodash';
 import queryString from 'query-string';
 import { data as languagetable } from './data/languages';
@@ -6,17 +7,14 @@ import { data as languagetable } from './data/languages';
 export default {
 
   identifiersFormatter: (r, identifierTypes) => {
-    let formatted = '';
+    const formatted = [];
     if (r.identifiers && r.identifiers.length) {
-      for (let i = 0; i < r.identifiers.length; i += 1) {
-        const identifier = r.identifiers[i];
+      r.identifiers.forEach((identifier) => {
         const type = identifierTypes.find(it => it.id === identifier.identifierTypeId);
-        formatted += (i > 0 ? ', ' : '') +
-                     identifier.value +
-                     (type ? ` (${type.name})` : '');
-      }
+        formatted.push(`${type ? `${type.name} ` : ''}${identifier.value}`);
+      });
     }
-    return formatted;
+    return formatted.sort().map((id, i) => <div key={i}>{id}</div>);
   },
 
   creatorsFormatter: (r, creatorTypes) => {
@@ -48,17 +46,13 @@ export default {
   },
 
   publishersFormatter: (r) => {
-    let formatted = '';
+    const formatted = [];
     if (r.publication && r.publication.length) {
-      for (let i = 0; i < r.publication.length; i += 1) {
-        const pub = r.publication[i];
-        formatted += (i > 0 ? ', ' : '') +
-                     pub.publisher +
-                     (pub.place ? `, ${pub.place}` : '') +
-                     (pub.dateOfPublication ? ` (${pub.dateOfPublication})` : '');
-      }
+      r.publication.forEach((pub) => {
+        formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+      });
     }
-    return formatted;
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
   languagesFormatter: (r) => {
@@ -96,17 +90,14 @@ export default {
   },
 
   classificationsFormatter: (r, classificationTypes) => {
-    let formatted = '';
+    const formatted = [];
     if (r.classifications && r.classifications.length) {
-      for (let i = 0; i < r.classifications.length; i += 1) {
-        const classification = r.classifications[i];
+      r.classifications.forEach((classification) => {
         const type = classificationTypes.find(ct => ct.id === classification.classificationTypeId);
-        formatted += (i > 0 ? ', ' : '') +
-                     classification.classificationNumber +
-                     (type ? ` (${type.name})` : '');
-      }
+        formatted.push(`${type ? `${type.name} ` : ''}${classification.classificationNumber}`);
+      });
     }
-    return formatted;
+    return formatted.sort().map((c, i) => <div key={i}>{c}</div>);
   },
 
   removeQueryParam: (qp, loc, hist) => {
