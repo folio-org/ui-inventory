@@ -83,7 +83,22 @@ class ViewInstance extends React.Component {
     );
 
     return instance ? (
-      <Pane defaultWidth={this.props.paneWidth} paneTitle={instance.title} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
+      <Pane
+        defaultWidth={this.props.paneWidth}
+        paneTitle={
+          <div style={{ textAlign: 'center' }}>
+            <strong>{instance.title}</strong>
+            {(instance.publication && instance.publication.length > 0) &&
+              <div>
+                <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
+              </div>
+            }
+          </div>
+        }
+        lastMenu={detailMenu}
+        dismissible
+        onClose={this.props.onClose}
+      >
         <Row>
           <Col xs={12}>
             <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
@@ -91,84 +106,111 @@ class ViewInstance extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label="Title" value={_.get(instance, ['title'], '')} />
+            <KeyValue label="Metadata source" value="TBA" />
           </Col>
         </Row>
+        { (instance.identifiers.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Resource identifier" value={utils.identifiersFormatter(instance, referenceTables.identifierTypes)} />
+            </Col>
+          </Row>
+        }
+        { (instance.instanceFormatId) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+            </Col>
+          </Row>
+        }
         <Row>
           <Col xs={12}>
-            <KeyValue label="Alternative Titles" value={_.get(instance, ['alternativeTitles'], []).join(', ')} />
+            <KeyValue label="Resource title" value={_.get(instance, ['title'], '')} />
           </Col>
         </Row>
+        { (instance.alternativeTitles.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Alternative titles" value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)} />
+            </Col>
+          </Row>
+        }
+        { (instance.contributors.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Contributor" value={utils.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+            </Col>
+          </Row>
+        }
+        { (instance.publication.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Publisher" value={utils.publishersFormatter(instance)} />
+            </Col>
+          </Row>
+        }
         <Row>
           <Col xs={12}>
-            <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
+            <KeyValue label="Resource type" value={utils.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Identifiers" value={utils.identifiersFormatter(instance, referenceTables.identifierTypes)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Creators" value={utils.creatorsFormatter(instance, referenceTables.creatorTypes)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Contributors" value={utils.contributorsFormatter(instance, referenceTables.contributorTypes)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Subjects" value={_.get(instance, ['subjects'], []).join(', ')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Classification" value={utils.classificationsFormatter(instance, referenceTables.classificationTypes)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Publishers" value={utils.publishersFormatter(instance)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="URLs" value={_.get(instance, ['urls'], []).join(', ')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Physical Descriptions" value={_.get(instance, ['physicalDescriptions'], '')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Languages" value={utils.languagesFormatter(instance)} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Notes" value={_.get(instance, ['notes'], '')} />
-          </Col>
-        </Row>
+        { (instance.physicalDescriptions.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Physical description" value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+            </Col>
+          </Row>
+        }
+        { (instance.languages.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Language" value={utils.languagesFormatter(instance)} />
+            </Col>
+          </Row>
+        }
+        { (instance.subjects.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Subject headings" value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
+            </Col>
+          </Row>
+        }
+        { (instance.classifications.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Classification" value={utils.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+            </Col>
+          </Row>
+        }
+        { (instance.notes.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Notes" value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+            </Col>
+          </Row>
+        }
+
+        { (!!instance.edition) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
+            </Col>
+          </Row>
+        }
+        { (instance.series.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
+            </Col>
+          </Row>
+        }
+        { (instance.urls.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="URLs" value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+            </Col>
+          </Row>
+        }
         <h3>Holdings</h3>
         <this.cHoldings
           dataKey={instanceid}
