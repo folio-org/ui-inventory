@@ -29,7 +29,8 @@
       "creator-types": "1.0",
       "instance-formats": "1.0",
       "instance-types": "1.0",
-      "classification-types": "1.0"
+      "classification-types": "1.0",
+      "platforms": "1.0"
     },
     "permissionSets": [
       {

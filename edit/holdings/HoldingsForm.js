@@ -48,6 +48,11 @@ function HoldingsForm(props) {
     selected: initialValues.permanentLocationId ? initialValues.permanentLocationId === l.id : false,
   }));
 
+  const platformOptions = (referenceTables.platforms || []).map(l => ({
+    label: l.name,
+    value: l.id,
+    selected: initialValues.electronicLocation ? initialValues.electronicLocation.platformId === l.id : false,
+  }));
 
   return (
     <form>
@@ -77,12 +82,31 @@ function HoldingsForm(props) {
           <Row >
             <Col sm={5} smOffset={1}>
               <Field
-                label="Permanent Location *"
+                label="Permanent Location"
                 name="permanentLocationId"
                 id="additem_permanentlocation"
                 component={Select}
                 fullWidth
                 dataOptions={[{ label: 'Select permanent location', value: '' }, ...permanentLocationOptions]}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={5} smOffset={1}>
+              <Field
+                label="Platform"
+                name="electronicLocation.platformId"
+                id="additem_platformid"
+                component={Select}
+                fullWidth
+                dataOptions={[{ label: 'Select platform', value: '' }, ...platformOptions]}
+              />
+              <Field
+                label="URI"
+                name="electronicLocation.uri"
+                id="additem_uri"
+                component={TextField}
+                fullWidth
               />
             </Col>
           </Row>
@@ -108,6 +132,5 @@ HoldingsForm.propTypes = {
 
 export default stripesForm({
   form: 'holdingsForm',
-  validate,
   navigationCheck: true,
 })(HoldingsForm);
