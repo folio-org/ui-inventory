@@ -156,21 +156,21 @@ function ItemForm(props) {
                 fullWidth
                 dataOptions={[{ label: 'Select loan type', value: '' }, ...loanTypeOptions]}
               />
-              <Field 
+              <Field
                 label="Enumeration"
                 name="enumeration"
                 id="additem_enumeration"
                 component={TextField}
                 fullWidth
               />
-              <Field 
+              <Field
                 label="Chronology"
                 name="chronology"
                 id="additem_chronology"
                 component={TextField}
                 fullWidth
               />
-              <Field 
+              <Field
                 label="Number of pieces"
                 name="numberOfPieces"
                 id="additem_numberofpieces"
