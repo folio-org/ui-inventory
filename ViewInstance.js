@@ -77,7 +77,7 @@ class ViewInstance extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
-        <button id="clickable-copy-instance" onClick={() => onCopy(instance)} title="Copy Instance"><Icon icon="copy" />Copy</button>
+        <button id="clickable-copy-instance" onClick={() => onCopy(instance)} title="Copy Instance"><Icon icon="duplicate" />Copy</button>
         <button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button>
       </PaneMenu>
     );
