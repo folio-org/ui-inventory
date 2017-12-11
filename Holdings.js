@@ -96,16 +96,7 @@ class Holdings extends React.Component {
                   <KeyValue label="URI" value={_.get(record, ['electronicLocation', 'uri'], '')} />
                 </Col>
                }
-
             </Row>
-            {_.get(record, ['holdingsStatements']).length ?
-              <Row>
-                <Col xs={12} smOffset={1}>
-                  <KeyValue label="Statements" value={_.get(record, ['holdingsStatements'], '')} />
-                </Col>
-              </Row>
-              :
-              null}
             <Row>
               <Col sm={11} smOffset={1}>
                 <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />

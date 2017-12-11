@@ -116,7 +116,13 @@ function ItemForm(props) {
               <KeyValue label="Call Number" value={holdingsRecord.callNumber} />
             </Col>
             <Col sm={2}>
-              <KeyValue label="Location" value={referenceTables.shelfLocations.find(loc => loc.id === holdingsRecord.permanentLocationId).name} />
+              <KeyValue
+                label="Location"
+                value={holdingsRecord.permanentLocationId ?
+                  referenceTables.shelfLocations.find(loc => loc.id === holdingsRecord.permanentLocationId).name
+                  :
+                  null}
+              />
             </Col>
           </Row>
           <Row >
