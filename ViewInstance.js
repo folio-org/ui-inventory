@@ -18,6 +18,7 @@ import utils from './utils';
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
+import ViewItem from './ViewItem';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -49,6 +50,7 @@ class ViewInstance extends React.Component {
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
+    this.cViewItem = this.props.stripes.connect(ViewItem);
   }
 
   // Edit Instance Handlers
@@ -96,7 +98,7 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
@@ -250,19 +252,23 @@ class ViewInstance extends React.Component {
           <Col sm={10}>{newHoldingsRecordButton}</Col>
         </Row>
         <br />
-        <this.cHoldings
-          dataKey={instanceid}
-          id={instanceid}
-          accordionExpanded={this.state.accordions.holdingsAccordion}
-          accordionId="holdingsAccordion"
-          accordionToggle={this.handleAccordionToggle}
-          instance={instance}
-          referenceTables={referenceTables}
-          match={this.props.match}
-          stripes={stripes}
-          location={location}
-          history={this.props.history}
-        />
+        { itemid ?
+          <this.cViewItem {...this.props} />
+         :
+          <this.cHoldings
+            dataKey={instanceid}
+            id={instanceid}
+            accordionExpanded={this.state.accordions.holdingsAccordion}
+            accordionId="holdingsAccordion"
+            accordionToggle={this.handleAccordionToggle}
+            instance={instance}
+            referenceTables={referenceTables}
+            match={this.props.match}
+            stripes={stripes}
+            location={location}
+            history={this.props.history}
+          />
+        }
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
