@@ -134,7 +134,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         </Row>
         <Row>
           <Col sm={10} smOffset={1}>
-            <this.cItems holdingsRecord={holdingsRecord} referenceTables={referenceTables} okapi={okapi} instance={instance} location={location} history={this.props.history} />
+            <this.cItems holdingsRecord={holdingsRecord} referenceTables={referenceTables} okapi={okapi} instance={instance} location={location} history={this.props.history} match={this.props.match} />
           </Col>
         </Row>
         <br />
@@ -196,6 +196,9 @@ ItemsPerHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
   }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object,
+  }),
   history: PropTypes.object,
   okapi: PropTypes.object,
   location: PropTypes.shape({

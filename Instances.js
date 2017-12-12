@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
+import Switch from 'react-router-dom/Switch';
 import queryString from 'query-string';
 import _ from 'lodash';
 
@@ -325,10 +326,22 @@ class Instances extends React.Component {
           />
         </Pane>
         {/* Details Pane */}
-        <Route
-          path={`${match.path}/view/:instanceid`}
-          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
-        />
+        <Switch>
+          <Route
+            path={`${match.path}/view/:instanceid/:holdingsrecordid/:itemid`}
+            render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
+          />
+          <Route
+            exact
+            path={`${match.path}/view/:instanceid/:holdingsrecordid`}
+            render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
+          />
+          <Route
+            exact
+            path={`${match.path}/view/:instanceid`}
+            render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
+          />
+        </Switch>
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
             initialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
