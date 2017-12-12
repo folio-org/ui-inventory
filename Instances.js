@@ -241,7 +241,6 @@ class Instances extends React.Component {
     // POST item record
     this.props.mutator.instances.POST(instance).then((createdInstance) => {
       this.closeNewInstance();
-      this.goToInstance(createdInstance);
     });
   }
 
