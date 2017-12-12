@@ -90,19 +90,19 @@ function ItemForm(props) {
   const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
     label: t.name,
     value: t.id,
-    selected: initialValues.loanType ? initialValues.loanType.id === t.id : false,
+    selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
   }));
 
   const temporaryLocationOptions = (referenceTables.shelfLocations || []).map(l => ({
     label: l.name,
     value: l.id,
-    selected: initialValues.temporaryLocation ? initialValues.temporaryLocation.id === l.id : false,
+    selected: (initialValues.temporaryLocation) ? initialValues.temporaryLocation.id === l.id : false,
   }));
 
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" firstMenu={addItemFirstMenu} lastMenu={initialValues.title ? editItemLastMenu : addItemLastMenu} paneTitle={initialValues.title ? 'Edit Item' : 'New Item'}>
+        <Pane defaultWidth="100%" firstMenu={addItemFirstMenu} lastMenu={(initialValues.title) ? editItemLastMenu : addItemLastMenu} paneTitle={(initialValues.title) ? 'Edit Item' : 'New Item'}>
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Item Record</h2>

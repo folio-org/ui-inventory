@@ -9,12 +9,15 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Layer from '@folio/stripes-components/lib/Layer';
+import Button from '@folio/stripes-components/lib/Button';
+
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
 import utils from './utils';
 
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
+import HoldingsForm from './edit/holdings/HoldingsForm';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -23,10 +26,17 @@ const emptyArr = [];
 class ViewInstance extends React.Component {
 
   static manifest = Object.freeze({
+    addHoldingsMode: { initialValue: { mode: false } },
     selectedInstance: {
       type: 'okapi',
       path: 'instance-storage/instances/:{instanceid}',
       clear: false,
+    },
+    holdings: {
+      type: 'okapi',
+      records: 'holdingsRecords',
+      path: 'holdings-storage/holdings',
+      fetch: false,
     },
   });
 
@@ -47,15 +57,34 @@ class ViewInstance extends React.Component {
     transitionToParams.bind(this)({ layer: 'edit' });
   }
 
-  closeEditInstance = (e) => {
+  onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    utils.removeQueryParam('layer', this.props.location, this.props.history);
+    console.log('clicked "add new holdings record"');
+    this.props.mutator.addHoldingsMode.replace({ mode: true });
+  }
+
+  onClickCloseNewHoldingsRecord = (e) => {
+    if (e) e.preventDefault();
+    console.log('clicked "close new holdings record"');
+    this.props.mutator.addHoldingsMode.replace({ mode: false });
   }
 
   update(instance) {
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.closeEditInstance();
     });
+  }
+
+  closeEditInstance = (e) => {
+    if (e) e.preventDefault();
+    utils.removeQueryParam('layer', this.props.location, this.props.history);
+  }
+
+  createHoldingsRecord = (holdingsRecord) => {
+    // POST item record
+    console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
+    this.props.mutator.holdings.POST(holdingsRecord);
+    this.onClickCloseNewHoldingsRecord();
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -67,13 +96,13 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { resources, match: { params: { instanceid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
-    const selectedInstance = (resources.selectedInstance || emptyObj).records || emptyArr;
+    const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
-    if (!selectedInstance || !instanceid) return <div />;
-    const instance = selectedInstance.find(i => i.id === instanceid);
+    if (!selInstance || !instanceid) return <div />;
+    const instance = selInstance.find(i => i.id === instanceid);
 
     const detailMenu = (
       <PaneMenu>
@@ -81,6 +110,10 @@ class ViewInstance extends React.Component {
         <button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button>
       </PaneMenu>
     );
+
+    const that = this;
+
+    const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
 
     return instance ? (
       <Pane
@@ -211,7 +244,12 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
         }
-        <h3>Holdings</h3>
+        <br />
+        <Row>
+          <Col><h3>Holdings</h3></Col>
+          <Col sm={10}>{newHoldingsRecordButton}</Col>
+        </Row>
+        <br />
         <this.cHoldings
           dataKey={instanceid}
           id={instanceid}
@@ -223,6 +261,7 @@ class ViewInstance extends React.Component {
           match={this.props.match}
           stripes={stripes}
           location={location}
+          history={this.props.history}
         />
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
@@ -230,6 +269,16 @@ class ViewInstance extends React.Component {
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
+            referenceTables={referenceTables}
+          />
+        </Layer>
+        <Layer isOpen={addHoldingsMode ? addHoldingsMode.mode : false} label="Add New Holdings Dialog">
+          <HoldingsForm
+            initialValues={{ instanceId: instance.id }}
+            onSubmit={(record) => { that.createHoldingsRecord(record); }}
+            onCancel={this.onClickCloseNewHoldingsRecord}
+            okapi={okapi}
+            instance={instance}
             referenceTables={referenceTables}
           />
         </Layer>
@@ -261,10 +310,17 @@ ViewInstance.propTypes = {
     editMode: PropTypes.shape({
       replace: PropTypes.func,
     }),
+    addHoldingsMode: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+    holdings: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
+  okapi: PropTypes.object,
 };
 
 export default ViewInstance;
