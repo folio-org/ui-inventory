@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import Layer from '@folio/stripes-components/lib/Layer';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Button from '@folio/stripes-components/lib/Button';
+import Icon from '@folio/stripes-components/lib/Icon';
+
+import queryString from 'query-string';
+import transitionToParams from '@folio/stripes-components/util/transitionToParams';
+
+import utils from './utils';
 
 import Items from './Items';
+import HoldingsForm from './edit/holdings/HoldingsForm';
 import ItemForm from './edit/items/ItemForm';
 
-
 class ItemsPerHoldingsRecord extends React.Component {
-
 
   static manifest = Object.freeze({
     addItemMode: { initialValue: { mode: false } },
@@ -31,6 +37,12 @@ class ItemsPerHoldingsRecord extends React.Component {
       path: 'item-storage/items',
       fetch: false,
     },
+    holdings: {
+      type: 'okapi',
+      records: 'holdingsRecords',
+      path: 'holdings-storage/holdings',
+      fetch: false,
+    },
   });
 
   constructor(props) {
@@ -39,6 +51,20 @@ class ItemsPerHoldingsRecord extends React.Component {
     this.addItemModeThisLayer = false;
   }
 
+  // Edit Holdings records handlers
+  onClickEditHoldings = (e) => {
+    if (e) e.preventDefault();
+    transitionToParams.bind(this)({ layer: 'editHoldings' });
+    this.editHoldingsModeThisLayer = true;
+  }
+
+  onClickCloseEditHoldings = (e) => {
+    if (e) e.preventDefault();
+    utils.removeQueryParam('layer', this.props.location, this.props.history);
+    this.editHoldingsModeThisLayer = false;
+  }
+
+  // Add Item handlers
   onClickAddNewItem = (e) => {
     if (e) e.preventDefault();
     this.props.mutator.addItemMode.replace({ mode: true });
@@ -51,6 +77,12 @@ class ItemsPerHoldingsRecord extends React.Component {
     this.addItemModeThisLayer = false;
   }
 
+  updateHoldingsRecord = (holdingsRecord) => {
+    this.props.mutator.holdings.PUT(holdingsRecord).then(() => {
+      this.onClickCloseEditHoldings();
+    });
+  }
+
   createItem = (item) => {
     // POST item record
     this.props.mutator.items.POST(item);
@@ -58,7 +90,10 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord } = this.props;
+    const that = this;
+
+    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, location } = this.props;
+    const query = location.search ? queryString.parse(location.search) : {};
 
     const materialtypes = (materialTypes || {}).records || [];
     const loantypes = (loanTypes || {}).records || [];
@@ -72,13 +107,37 @@ class ItemsPerHoldingsRecord extends React.Component {
       <div>
         <Row>
           <Col sm={1}>
-            <KeyValue label="Items" />
+            <button title="Edit Holdings Record" onClick={this.onClickEditHoldings}><Icon icon="edit" /></button>
           </Col>
-          <Col sm={2} smOffset={8}>
+          <Col sm={4}>
+            <KeyValue label="Callnumber" value={holdingsRecord.callNumber} />
+          </Col>
+          { holdingsRecord.permanentLocationId ?
+            <Col sm={5}>
+              <KeyValue label="Permanent location" value={referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name} />
+            </Col>
+            :
+            <Col sm={5}>
+              <KeyValue
+                label="Platform"
+                value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], null) ?
+                       (referenceTables.platforms.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId'], '') === platform.id).name)
+                       :
+                       null}
+              />
+              <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
+            </Col>
+          }
+          <Col>
             {newItemButton}
           </Col>
         </Row>
-        <this.cItems holdingsRecord={holdingsRecord} />
+        <Row>
+          <Col sm={10} smOffset={1}>
+            <this.cItems holdingsRecord={holdingsRecord} referenceTables={referenceTables} okapi={okapi} instance={instance} location={location} history={this.props.history} />
+          </Col>
+        </Row>
+        <br />
         <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label="Add New Item Dialog">
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}
@@ -93,6 +152,16 @@ class ItemsPerHoldingsRecord extends React.Component {
             referenceTables={referenceTables}
           />
         </Layer>
+        <Layer isOpen={query.layer ? (query.layer === 'editHoldings' && this.editHoldingsModeThisLayer) : false} label="Edit Holdings Record Dialog">
+          <HoldingsForm
+            initialValues={holdingsRecord}
+            onSubmit={(record) => { that.updateHoldingsRecord(record); }}
+            onCancel={this.onClickCloseEditHoldings}
+            okapi={okapi}
+            instance={instance}
+            referenceTables={referenceTables}
+          />
+        </Layer>
       </div>);
   }
 }
@@ -101,11 +170,14 @@ ItemsPerHoldingsRecord.propTypes = {
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
-    addItemMode: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
     items: PropTypes.shape({
       POST: PropTypes.func,
+    }),
+    holdings: PropTypes.shape({
+      PUT: PropTypes.func,
+    }),
+    addItemMode: PropTypes.shape({
+      replace: PropTypes.func,
     }),
   }),
   resources: PropTypes.shape({
@@ -124,7 +196,12 @@ ItemsPerHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
   }).isRequired,
+  history: PropTypes.object,
   okapi: PropTypes.object,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string,
+  }),
 };
 
 export default ItemsPerHoldingsRecord;
