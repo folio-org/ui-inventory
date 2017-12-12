@@ -14,6 +14,7 @@ import utils from '../../utils';
 
 import renderStatements from './holdingsStatementFields';
 
+// eslint-disable-next-line no-unused-vars
 function validate(values) {
   const errors = {};
 
