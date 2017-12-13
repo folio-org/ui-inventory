@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import Icon from '@folio/stripes-components/lib/Icon';
 
 class Items extends React.Component {
 
@@ -34,7 +33,7 @@ class Items extends React.Component {
     if (!items || !items.hasLoaded) return <div />;
     const itemRecords = items.records;
     const itemsFormatter = {
-      'Item: barcode': x => <div> <button title="Edit Item" onClick={(e) => { this.onClickEditItem(e, x); }}><Icon icon="edit" /></button> {_.get(x, ['barcode'])}</div>,
+      'Item: barcode': x => _.get(x, ['barcode']),
       status: x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };

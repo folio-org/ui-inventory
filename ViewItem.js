@@ -1,17 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import queryString from 'query-string';
 
 import Layer from '@folio/stripes-components/lib/Layer';
+import Pane from '@folio/stripes-components/lib/Pane';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import KeyValue from '@folio/stripes-components/lib/KeyValue';
+import { Row, Col } from 'react-flexbox-grid';
+import Icon from '@folio/stripes-components/lib/Icon';
+import transitionToParams from '@folio/stripes-components/util/transitionToParams';
+
+import utils from './utils';
 
 import ItemForm from './edit/items/ItemForm';
 
 class ViewItem extends React.Component {
 
-
   static manifest = Object.freeze({
     items: {
       type: 'okapi',
-      path: 'item-storage/items/:{itemid}',
+      path: 'inventory/items/:{itemid}',
     },
     selectedHoldingsRecord: {
       type: 'okapi',
@@ -38,13 +47,14 @@ class ViewItem extends React.Component {
     },
   });
 
-  constructor(props) {
-    super(props);
+  onClickEditItem = (e) => {
+    if (e) e.preventDefault();
+    transitionToParams.bind(this)({ layer: 'editItem' });
   }
 
   onClickCloseEditItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}`);
+    utils.removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   updateItem = (item) => {
@@ -55,8 +65,9 @@ class ViewItem extends React.Component {
 
   render() {
     const { resources: { items, selectedHoldingsRecord, selectedInstance, shelfLocations, materialTypes, loanTypes },
-            match: { params: { itemid } },
-            referenceTables } = this.props;
+            referenceTables,
+            okapi } = this.props;
+
     const selInstance = (selectedInstance || {}).records || [];
     const selItem = (items || {}).records || [];
     const selHoldingsRecord = (selectedHoldingsRecord || {}).records || [];
@@ -64,22 +75,91 @@ class ViewItem extends React.Component {
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
 
-    if (!selItem.length || !selHoldingsRecord.length || !selInstance.length) return <div>No resources</div>;
-    return (
-      <Layer isOpen label="Edit Item Dialog">
-        <ItemForm
-          form={`itemform_${itemid}`}
-          id={itemid}
-          key={itemid}
-          initialValues={selItem[0]}
-          onCancel={this.onClickCloseEditItem}
-          onSubmit={(record) => { this.updateItem(record); }}
-          referenceTables={referenceTables}
-          holdingsRecord={selHoldingsRecord[0]}
-          instance={selInstance[0]}
-        />
-      </Layer>
+    if (!selItem.length || !selectedInstance) return <div>No resources</div>;
+    const instance = selInstance[0];
+    const item = selItem[0];
+
+    const query = location.search ? queryString.parse(location.search) : {};
+
+    const detailMenu = (
+      <PaneMenu>
+        <button id="clickable-edit-item" onClick={this.onClickEditItem} title="Edit Item"><Icon icon="edit" />Edit</button>
+      </PaneMenu>
     );
+
+    return selectedInstance ? (
+      <div>
+        <Layer isOpen label="View Item">
+          <Pane
+            defaultWidth={this.props.paneWidth}
+            paneTitle={
+              <div style={{ textAlign: 'center' }}>
+                <strong>{instance.title}</strong>
+                {(instance.publication && instance.publication.length > 0) &&
+                  <div>
+                    <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
+                  </div>
+                }
+              </div>
+            }
+            lastMenu={detailMenu}
+            dismissible
+            onClose={this.props.onCloseViewItem}
+          >
+            <Row>
+              <Col sm={1}>
+                <KeyValue label="Barcode" value={_.get(item, ['barcode'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Material type" value={_.get(item, ['materialType', 'name'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Permanent location" value={_.get(item, ['permanentLocation', 'name'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Status" value={_.get(item, ['status', 'name'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Permanent loantype" value={_.get(item, ['permanentLoanType', 'name'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Temporary loantype" value={_.get(item, ['temporaryLoanType', 'name'], '')} />
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={1}>
+                <KeyValue label="Enumeration" value={_.get(item, ['enumeration'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Chronology" value={_.get(item, ['chronology'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Number of pieces" value={_.get(item, ['numberOfPieces'], '')} />
+              </Col>
+              <Col sm={2}>
+                <KeyValue label="Piece identifiers" value={_.get(item, ['pieceIdentifiers'], []).join(', ')} />
+              </Col>
+              <Col sm={2}>
+                <KeyValue label="Notes" value={_.get(item, ['notes'], []).join(', ')} />
+              </Col>
+
+            </Row>
+          </Pane>
+        </Layer>
+        <Layer isOpen={query.layer ? query.layer === 'editItem' : false} label="Edit Item Dialog">
+          <ItemForm
+            form={`itemform_${item.id}`}
+            onSubmit={(record) => { this.updateItem(record); }}
+            initialValues={item}
+            onCancel={this.onClickCloseEditItem}
+            okapi={okapi}
+            instance={instance}
+            holdingsRecord={selHoldingsRecord[0]}
+            referenceTables={referenceTables}
+          />
+        </Layer>
+      </div>
+    ) : null;
   }
 }
 
@@ -95,9 +175,9 @@ ViewItem.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.object,
-  }),
+  location: PropTypes.object,
+  okapi: PropTypes.object,
+  paneWidth: PropTypes.object,
   history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
@@ -105,6 +185,7 @@ ViewItem.propTypes = {
       PUT: PropTypes.func.isRequired,
     }),
   }),
+  onCloseViewItem: PropTypes.func.isRequired,
 };
 
 export default ViewItem;

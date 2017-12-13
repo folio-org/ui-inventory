@@ -2,7 +2,8 @@
 
 ## [1.1.0](IN PROGRESS)
 
-* Add items form, holdings form (UIIN-5, UIIN-20)
+* Add item details view, initial version (UIIN-31)
+* Add item form, holdings form (UIIN-5, UIIN-20)
 * Add list of holdings records and items under instance view (UIIN-15,16,29,31,33)
 * Project renamed from ui-instances to ui-inventory. UIIN-17.
 * Update Okapi dependencies, inventory: 4.2, item-storage: 4.1
