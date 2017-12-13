@@ -82,6 +82,11 @@ class ViewInstance extends React.Component {
     utils.removeQueryParam('layer', this.props.location, this.props.history);
   }
 
+  closeViewItem = (e) => {
+    if (e) e.preventDefault();
+    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}`);
+  }
+
   createHoldingsRecord = (holdingsRecord) => {
     // POST item record
     console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
@@ -253,7 +258,7 @@ class ViewInstance extends React.Component {
         </Row>
         <br />
         { itemid ?
-          <this.cViewItem {...this.props} />
+          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
          :
           <this.cHoldings
             dataKey={instanceid}
