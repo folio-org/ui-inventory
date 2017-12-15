@@ -30,7 +30,7 @@ class ViewInstance extends React.Component {
     addHoldingsMode: { initialValue: { mode: false } },
     selectedInstance: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{id}',
       clear: false,
     },
     holdings: {
@@ -84,7 +84,7 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}`);
   }
 
   createHoldingsRecord = (holdingsRecord) => {
@@ -103,13 +103,13 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, itemid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
-    if (!selInstance || !instanceid) return <div />;
-    const instance = selInstance.find(i => i.id === instanceid);
+    if (!selInstance || !id) return <div />;
+    const instance = selInstance.find(i => i.id === id);
 
     const detailMenu = (
       <PaneMenu>
@@ -261,8 +261,8 @@ class ViewInstance extends React.Component {
           <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
          :
           <this.cHoldings
-            dataKey={instanceid}
-            id={instanceid}
+            dataKey={id}
+            id={id}
             accordionExpanded={this.state.accordions.holdingsAccordion}
             accordionId="holdingsAccordion"
             accordionToggle={this.handleAccordionToggle}
@@ -309,7 +309,10 @@ ViewInstance.propTypes = {
     }),
   }).isRequired,
   match: PropTypes.shape({
-    params: PropTypes.object,
+    path: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
   }),
   location: PropTypes.object,
   history: PropTypes.object,
