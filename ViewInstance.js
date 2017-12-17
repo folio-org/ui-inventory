@@ -19,6 +19,7 @@ import formatters from './referenceFormatters';
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
+import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
 
 const emptyObj = {};
@@ -51,6 +52,7 @@ class ViewInstance extends React.Component {
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
+    this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewItem = this.props.stripes.connect(ViewItem);
   }
 
@@ -88,6 +90,11 @@ class ViewInstance extends React.Component {
     this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}`);
   }
 
+  closeViewHoldingsRecord = (e) => {
+    if (e) e.preventDefault();
+    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}`);
+  }
+
   createHoldingsRecord = (holdingsRecord) => {
     // POST item record
     console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
@@ -104,7 +111,7 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, itemid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, holdingsrecordid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
@@ -259,7 +266,13 @@ class ViewInstance extends React.Component {
         <br />
         { itemid ?
           <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
-         :
+         : null
+        }
+        { holdingsrecordid ?
+          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
+          : null
+        }
+        { !itemid && !holdingsrecordid ?
           <this.cHoldings
             dataKey={instanceid}
             id={instanceid}
@@ -273,6 +286,7 @@ class ViewInstance extends React.Component {
             location={location}
             history={this.props.history}
           />
+          : null
         }
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">

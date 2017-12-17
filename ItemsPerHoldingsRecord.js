@@ -8,13 +8,7 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Button from '@folio/stripes-components/lib/Button';
 import Icon from '@folio/stripes-components/lib/Icon';
 
-import queryString from 'query-string';
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-
-import utils from './utils';
-
 import Items from './Items';
-import HoldingsForm from './edit/holdings/HoldingsForm';
 import ItemForm from './edit/items/ItemForm';
 
 class ItemsPerHoldingsRecord extends React.Component {
@@ -51,19 +45,6 @@ class ItemsPerHoldingsRecord extends React.Component {
     this.addItemModeThisLayer = false;
   }
 
-  // Edit Holdings records handlers
-  onClickEditHoldings = (e) => {
-    if (e) e.preventDefault();
-    transitionToParams.bind(this)({ layer: 'editHoldings' });
-    this.editHoldingsModeThisLayer = true;
-  }
-
-  onClickCloseEditHoldings = (e) => {
-    if (e) e.preventDefault();
-    utils.removeQueryParam('layer', this.props.location, this.props.history);
-    this.editHoldingsModeThisLayer = false;
-  }
-
   // Add Item handlers
   onClickAddNewItem = (e) => {
     if (e) e.preventDefault();
@@ -77,23 +58,19 @@ class ItemsPerHoldingsRecord extends React.Component {
     this.addItemModeThisLayer = false;
   }
 
-  updateHoldingsRecord = (holdingsRecord) => {
-    this.props.mutator.holdings.PUT(holdingsRecord).then(() => {
-      this.onClickCloseEditHoldings();
-    });
-  }
-
   createItem = (item) => {
     // POST item record
     this.props.mutator.items.POST(item);
     this.onClickCloseNewItem();
   }
 
-  render() {
-    const that = this;
+  viewHoldingsRecord = () => {
+    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`);
+  }
 
+
+  render() {
     const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, location } = this.props;
-    const query = location.search ? queryString.parse(location.search) : {};
 
     const materialtypes = (materialTypes || {}).records || [];
     const loantypes = (loanTypes || {}).records || [];
@@ -107,7 +84,7 @@ class ItemsPerHoldingsRecord extends React.Component {
       <div>
         <Row>
           <Col sm={1}>
-            <button title="Edit Holdings Record" onClick={this.onClickEditHoldings}><Icon icon="edit" /></button>
+            <button title="View Holdings Record" onClick={this.viewHoldingsRecord}><Icon icon="view" />View</button>
           </Col>
           <Col sm={4}>
             <KeyValue label="Callnumber" value={holdingsRecord.callNumber} />
@@ -149,16 +126,6 @@ class ItemsPerHoldingsRecord extends React.Component {
             okapi={okapi}
             instance={instance}
             holdingsRecord={holdingsRecord}
-            referenceTables={referenceTables}
-          />
-        </Layer>
-        <Layer isOpen={query.layer ? (query.layer === 'editHoldings' && this.editHoldingsModeThisLayer) : false} label="Edit Holdings Record Dialog">
-          <HoldingsForm
-            initialValues={holdingsRecord}
-            onSubmit={(record) => { that.updateHoldingsRecord(record); }}
-            onCancel={this.onClickCloseEditHoldings}
-            okapi={okapi}
-            instance={instance}
             referenceTables={referenceTables}
           />
         </Layer>
