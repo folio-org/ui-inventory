@@ -22,7 +22,7 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
     },
-    instances: {
+    instances1: {
       type: 'okapi',
       path: 'instance-storage/instances/:{instanceid}',
     },
@@ -56,13 +56,13 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { resources: { holdingsRecords, instances, shelfLocations, platforms },
+    const { resources: { holdingsRecords, instances1, shelfLocations, platforms },
         referenceTables,
         okapi } = this.props;
 
-    if (!holdingsRecords || !holdingsRecords.hasLoaded || !instances || !instances.hasLoaded) return <div>Awaiting resources</div>;
+    if (!holdingsRecords || !holdingsRecords.hasLoaded || !instances1 || !instances1.hasLoaded) return <div>Awaiting resources</div>;
     const holdingsRecord = holdingsRecords.records[0];
-    const instance = instances.records[0];
+    const instance = instances1.records[0];
 
     const query = location.search ? queryString.parse(location.search) : {};
     const that = this;
@@ -75,7 +75,7 @@ class ViewHoldingsRecord extends React.Component {
 
     return (
       <div>
-        <Layer isOpen label="View Item">
+        <Layer isOpen label="View Holdings Record">
           <Pane
             defaultWidth={this.props.paneWidth}
             paneTitle={
@@ -92,7 +92,23 @@ class ViewHoldingsRecord extends React.Component {
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
           >
-            Holdings record details
+            <Row>
+              <Col sm={1}>
+                <KeyValue label="Call number" value={_.get(holdingsRecord, ['callNumber'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Permanent location" value={_.get(holdingsRecord, ['permanentLocationId'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="Platform" value={_.get(holdingsRecord, ['platformId'], '')} />
+              </Col>
+              <Col sm={1}>
+                <KeyValue label="URI" value={_.get(holdingsRecord, ['uri'], '')} />
+              </Col>
+              <Col sm={2}>
+                <KeyValue label="Notes" value={_.get(holdingsRecord, ['holdingsStatement'], []).join(', ')} />
+              </Col>
+            </Row>
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label="Edit Holdings Record Dialog">
@@ -112,7 +128,7 @@ class ViewHoldingsRecord extends React.Component {
 
 ViewHoldingsRecord.propTypes = {
   resources: PropTypes.shape({
-    instances: PropTypes.shape({
+    instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     holdingsRecords: PropTypes.shape({

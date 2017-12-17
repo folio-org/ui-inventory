@@ -26,7 +26,7 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
     },
-    instances: {
+    instances1: {
       type: 'okapi',
       path: 'instance-storage/instances/:{instanceid}',
     },
@@ -64,7 +64,7 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { resources: { items, holdingsRecords, instances, shelfLocations, materialTypes, loanTypes },
+    const { resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
             referenceTables,
             okapi } = this.props;
 
@@ -72,8 +72,8 @@ class ViewItem extends React.Component {
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
 
-    if (!items || !items.hasLoaded || !instances || !instances.hasLoaded || !holdingsRecords || !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
-    const instance = instances.records[0];
+    if (!items || !items.hasLoaded || !instances1 || !instances1.hasLoaded || !holdingsRecords || !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
+    const instance = instances1.records[0];
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
 
@@ -112,7 +112,7 @@ class ViewItem extends React.Component {
                 <KeyValue label="Material type" value={_.get(item, ['materialType', 'name'], '')} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="Permanent location" value={_.get(item, ['permanentLocation', 'name'], '')} />
+                <KeyValue label="Temporary location" value={_.get(item, ['temporaryLocation', 'name'], '')} />
               </Col>
               <Col sm={1}>
                 <KeyValue label="Status" value={_.get(item, ['status', 'name'], '')} />
@@ -163,7 +163,7 @@ class ViewItem extends React.Component {
 
 ViewItem.propTypes = {
   resources: PropTypes.shape({
-    instances: PropTypes.shape({
+    instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     materialTypes: PropTypes.shape({

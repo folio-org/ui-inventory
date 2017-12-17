@@ -6,7 +6,6 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Button from '@folio/stripes-components/lib/Button';
-import Icon from '@folio/stripes-components/lib/Icon';
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
@@ -82,10 +81,7 @@ class ItemsPerHoldingsRecord extends React.Component {
 
     return (
       <div>
-        <Row>
-          <Col sm={1}>
-            <button title="View Holdings Record" onClick={this.viewHoldingsRecord}><Icon icon="view" />View</button>
-          </Col>
+        <Row onClick={this.viewHoldingsRecord}>
           <Col sm={4}>
             <KeyValue label="Callnumber" value={holdingsRecord.callNumber} />
           </Col>
