@@ -22,11 +22,11 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
     },
-    selectedHoldingsRecord: {
+    holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
     },
-    selectedInstance: {
+    instances1: {
       type: 'okapi',
       path: 'instance-storage/instances/:{instanceid}',
     },
@@ -64,20 +64,18 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { resources: { items, selectedHoldingsRecord, selectedInstance, shelfLocations, materialTypes, loanTypes },
+    const { resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
             referenceTables,
             okapi } = this.props;
 
-    const selInstance = (selectedInstance || {}).records || [];
-    const selItem = (items || {}).records || [];
-    const selHoldingsRecord = (selectedHoldingsRecord || {}).records || [];
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
 
-    if (!selItem.length || !selectedInstance) return <div>No resources</div>;
-    const instance = selInstance[0];
-    const item = selItem[0];
+    if (!items || !items.hasLoaded || !instances1 || !instances1.hasLoaded || !holdingsRecords || !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
+    const instance = instances1.records[0];
+    const item = items.records[0];
+    const holdingsRecord = holdingsRecords.records[0];
 
     const query = location.search ? queryString.parse(location.search) : {};
 
@@ -87,7 +85,7 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    return selectedInstance ? (
+    return (
       <div>
         <Layer isOpen label="View Item">
           <Pane
@@ -114,7 +112,7 @@ class ViewItem extends React.Component {
                 <KeyValue label="Material type" value={_.get(item, ['materialType', 'name'], '')} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="Permanent location" value={_.get(item, ['permanentLocation', 'name'], '')} />
+                <KeyValue label="Temporary location" value={_.get(item, ['temporaryLocation', 'name'], '')} />
               </Col>
               <Col sm={1}>
                 <KeyValue label="Status" value={_.get(item, ['status', 'name'], '')} />
@@ -154,18 +152,18 @@ class ViewItem extends React.Component {
             onCancel={this.onClickCloseEditItem}
             okapi={okapi}
             instance={instance}
-            holdingsRecord={selHoldingsRecord[0]}
+            holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
           />
         </Layer>
       </div>
-    ) : null;
+    );
   }
 }
 
 ViewItem.propTypes = {
   resources: PropTypes.shape({
-    selectedInstance: PropTypes.shape({
+    instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     materialTypes: PropTypes.shape({
@@ -177,7 +175,7 @@ ViewItem.propTypes = {
   }).isRequired,
   location: PropTypes.object,
   okapi: PropTypes.object,
-  paneWidth: PropTypes.object,
+  paneWidth: PropTypes.string,
   history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({

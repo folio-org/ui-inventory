@@ -29,13 +29,11 @@ class Holdings extends React.Component {
   }
 
   render() {
-    const { resources: { holdings, shelfLocations, platforms } } = this.props;
+    const { resources: { holdings, shelfLocations, platforms }, referenceTables } = this.props;
 
     if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
 
     const holdingsRecords = holdings.records;
-
-    const referenceTables = this.props.referenceTables;
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.platforms = (platforms || {}).records || [];
 

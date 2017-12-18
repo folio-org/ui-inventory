@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
 import queryString from 'query-string';
 import _ from 'lodash';
 
@@ -20,10 +19,10 @@ import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction'
 
 import packageInfo from './package';
 
-import utils from './utils';
-
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
+import formatters from './referenceFormatters';
+import utils from './utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -281,7 +280,7 @@ class Instances extends React.Component {
     const resultsFormatter = {
       publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
-      contributors: r => utils.contributorsFormatter(r, contributorTypes),
+      contributors: r => formatters.contributorsFormatter(r, contributorTypes),
     };
     const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
     const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
@@ -325,22 +324,10 @@ class Instances extends React.Component {
           />
         </Pane>
         {/* Details Pane */}
-        <Switch>
-          <Route
-            path={`${match.path}/view/:instanceid/:holdingsrecordid/:itemid`}
-            render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
-          />
-          <Route
-            exact
-            path={`${match.path}/view/:instanceid/:holdingsrecordid`}
-            render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
-          />
-          <Route
-            exact
-            path={`${match.path}/view/:instanceid`}
-            render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
-          />
-        </Switch>
+        <Route
+          path={`${match.path}/view/:instanceid/:holdingsrecordid?/:itemid?`}
+          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
+        />
         <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
           <InstanceForm
             initialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}

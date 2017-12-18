@@ -14,10 +14,12 @@ import Button from '@folio/stripes-components/lib/Button';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
 import utils from './utils';
+import formatters from './referenceFormatters';
 
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
+import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
 
 const emptyObj = {};
@@ -50,6 +52,7 @@ class ViewInstance extends React.Component {
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
+    this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewItem = this.props.stripes.connect(ViewItem);
   }
 
@@ -84,7 +87,12 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+  }
+
+  closeViewHoldingsRecord = (e) => {
+    if (e) e.preventDefault();
+    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
   }
 
   createHoldingsRecord = (holdingsRecord) => {
@@ -103,7 +111,7 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, itemid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, holdingsrecordid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
@@ -152,14 +160,14 @@ class ViewInstance extends React.Component {
         { (instance.identifiers.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Resource identifier" value={utils.identifiersFormatter(instance, referenceTables.identifierTypes)} />
+              <KeyValue label="Resource identifier" value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
             </Col>
           </Row>
         }
         { (instance.instanceFormatId) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+              <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
             </Col>
           </Row>
         }
@@ -178,20 +186,20 @@ class ViewInstance extends React.Component {
         { (instance.contributors.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Contributor" value={utils.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+              <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
             </Col>
           </Row>
         }
         { (instance.publication.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Publisher" value={utils.publishersFormatter(instance)} />
+              <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
             </Col>
           </Row>
         }
         <Row>
           <Col xs={12}>
-            <KeyValue label="Resource type" value={utils.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+            <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
           </Col>
         </Row>
         { (instance.physicalDescriptions.length > 0) &&
@@ -204,7 +212,7 @@ class ViewInstance extends React.Component {
         { (instance.languages.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Language" value={utils.languagesFormatter(instance)} />
+              <KeyValue label="Language" value={formatters.languagesFormatter(instance)} />
             </Col>
           </Row>
         }
@@ -218,7 +226,7 @@ class ViewInstance extends React.Component {
         { (instance.classifications.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Classification" value={utils.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+              <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
             </Col>
           </Row>
         }
@@ -229,7 +237,6 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
         }
-
         { (!!instance.edition) &&
           <Row>
             <Col xs={12}>
@@ -259,7 +266,13 @@ class ViewInstance extends React.Component {
         <br />
         { itemid ?
           <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
-         :
+         : null
+        }
+        { holdingsrecordid ?
+          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
+          : null
+        }
+        { !itemid && !holdingsrecordid ?
           <this.cHoldings
             dataKey={instanceid}
             id={instanceid}
@@ -273,6 +286,7 @@ class ViewInstance extends React.Component {
             location={location}
             history={this.props.history}
           />
+          : null
         }
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
