@@ -60,9 +60,14 @@ class ViewHoldingsRecord extends React.Component {
         referenceTables,
         okapi } = this.props;
 
-    if (!holdingsRecords || !holdingsRecords.hasLoaded || !instances1 || !instances1.hasLoaded) return <div>Awaiting resources</div>;
+    if (!holdingsRecords || !holdingsRecords.hasLoaded
+        || !instances1 || !instances1.hasLoaded
+        || !shelfLocations || !shelfLocations.hasLoaded
+        || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
+
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
+    const locations = shelfLocations.records;
 
     const query = location.search ? queryString.parse(location.search) : {};
     const that = this;
@@ -97,7 +102,7 @@ class ViewHoldingsRecord extends React.Component {
                 <KeyValue label="Call number" value={_.get(holdingsRecord, ['callNumber'], '')} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="Permanent location" value={_.get(holdingsRecord, ['permanentLocationId'], '')} />
+                <KeyValue label="Permanent location" value={locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name} />
               </Col>
               <Col sm={1}>
                 <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '')} />
