@@ -12,6 +12,7 @@ import Select from '@folio/stripes-components/lib/Select';
 
 import renderAlternativeTitles from './alternativeTitles';
 import renderSeries from './seriesFields';
+import renderCreators from './creatorFields';
 import renderContributors from './contributorFields';
 import renderSubjects from './subjectFields';
 import renderIdentifiers from './identifierFields';
@@ -40,7 +41,7 @@ function validate(values) {
   // each item must have non-empty values in each field.
   const optionalLists = [
     { list: 'identifiers', textFields: ['value'], selectFields: ['identifierTypeId'] },
-    { list: 'contributors', textFields: ['name'], selectFields: ['contributorNameTypeId'] },
+    { list: 'contributors', textFields: ['name'], selectFields: ['contributorTypeId'] },
     { list: 'classifications', textFields: ['classificationNumber'], selectFields: ['classificationTypeId'] },
   ];
 
@@ -127,7 +128,8 @@ function InstanceForm(props) {
           <FieldArray name="series" component={renderSeries} />
 
           <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={referenceTables.identifierTypes} />
-          <FieldArray name="contributors" component={renderContributors} contributorNameTypes={referenceTables.contributorNameTypes} />
+          <FieldArray name="creators" component={renderCreators} creatorTypes={referenceTables.creatorTypes} />
+          <FieldArray name="contributors" component={renderContributors} contributorTypes={referenceTables.contributorTypes} />
           <FieldArray name="subjects" component={renderSubjects} />
           <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} />
           <FieldArray name="publication" component={renderPublication} />
