@@ -25,7 +25,7 @@ class Items extends React.Component {
 
   openItem(selectedItem) {
     const itemId = selectedItem.id;
-    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`);
+    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}${this.props.location.search}`);
   }
 
   render() {
@@ -60,6 +60,9 @@ Items.propTypes = {
     }),
   }),
   history: PropTypes.object,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }),
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
 };

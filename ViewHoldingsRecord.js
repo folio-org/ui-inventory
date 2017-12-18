@@ -100,10 +100,10 @@ class ViewHoldingsRecord extends React.Component {
                 <KeyValue label="Permanent location" value={_.get(holdingsRecord, ['permanentLocationId'], '')} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="Platform" value={_.get(holdingsRecord, ['platformId'], '')} />
+                <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '')} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="URI" value={_.get(holdingsRecord, ['uri'], '')} />
+                <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
               </Col>
               <Col sm={2}>
                 <KeyValue label="Notes" value={_.get(holdingsRecord, ['holdingsStatement'], []).join(', ')} />

@@ -64,7 +64,7 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   viewHoldingsRecord = () => {
-    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`);
+    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}${this.props.location.search}`);
   }
 
 
