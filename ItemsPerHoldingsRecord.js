@@ -47,6 +47,7 @@ class ItemsPerHoldingsRecord extends React.Component {
   // Add Item handlers
   onClickAddNewItem = (e) => {
     if (e) e.preventDefault();
+    if (e) e.stopPropagation();
     this.props.mutator.addItemMode.replace({ mode: true });
     this.addItemModeThisLayer = true;
   }
