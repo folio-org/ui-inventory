@@ -89,15 +89,15 @@ class Instances extends React.Component {
       records: 'identifierTypes',
       path: 'identifier-types?limit=100',
     },
-    creatorTypes: {
-      type: 'okapi',
-      records: 'creatorTypes',
-      path: 'creator-types?limit=100',
-    },
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
       path: 'contributor-types?limit=100',
+    },
+    contributorNameTypes: {
+      type: 'okapi',
+      records: 'contributorNameTypes',
+      path: 'contributor-name-types?limit=100',
     },
     instanceFormats: {
       type: 'okapi',
@@ -258,15 +258,15 @@ class Instances extends React.Component {
   render() {
     const { stripes, okapi, match, resources, location } = this.props;
     const instances = (resources.instances || emptyObj).records || emptyArr;
-    const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
+    const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
     const referenceTables = {
-      creatorTypes,
       contributorTypes,
+      contributorNameTypes,
       identifierTypes,
       classificationTypes,
       instanceTypes,
