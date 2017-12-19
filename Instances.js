@@ -8,9 +8,10 @@ import { filters2cql, initialFilterState, onChangeFilter as commonChangeFilter }
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
 import packageInfo from './package';
-import utils from './utils';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
+import formatters from './referenceFormatters';
+import utils from './utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -305,7 +306,7 @@ class Instances extends React.Component {
     const resultsFormatter = {
       publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
-      contributors: r => utils.contributorsFormatter(r, contributorTypes),
+      contributors: r => formatters.contributorsFormatter(r, contributorTypes),
     };
 
     return (<SearchAndSort

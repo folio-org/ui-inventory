@@ -10,7 +10,7 @@ import Select from '@folio/stripes-components/lib/Select';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
-import utils from '../../utils';
+import formatters from '../../referenceFormatters';
 
 import renderStatements from './holdingsStatementFields';
 
@@ -69,10 +69,10 @@ function HoldingsForm(props) {
               <KeyValue label="Title" value={instance.title} />
             </Col>
             <Col sm={2}>
-              <KeyValue label="Resource Type" value={utils.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+              <KeyValue label="Resource Type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
             </Col>
             <Col sm={2}>
-              <KeyValue label="Format" value={utils.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+              <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
             </Col>
           </Row>
           <Row >
