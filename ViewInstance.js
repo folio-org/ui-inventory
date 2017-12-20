@@ -45,6 +45,10 @@ class ViewInstance extends React.Component {
 
   constructor(props) {
     super(props);
+
+    const logger = props.stripes.logger;
+    this.log = logger.log.bind(logger);
+
     this.state = {
       accordions: {
         itemsAccordion: true,
@@ -64,13 +68,13 @@ class ViewInstance extends React.Component {
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "add new holdings record"');
+    this.log('clicked "add new holdings record"');
     this.props.mutator.addHoldingsMode.replace({ mode: true });
   }
 
   onClickCloseNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "close new holdings record"');
+    this.log('clicked "close new holdings record"');
     this.props.mutator.addHoldingsMode.replace({ mode: false });
   }
 
@@ -97,7 +101,7 @@ class ViewInstance extends React.Component {
 
   createHoldingsRecord = (holdingsRecord) => {
     // POST item record
-    console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
+    this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
     this.props.mutator.holdings.POST(holdingsRecord);
     this.onClickCloseNewHoldingsRecord();
   }
@@ -316,6 +320,7 @@ ViewInstance.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
+    logger: PropTypes.object.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({
