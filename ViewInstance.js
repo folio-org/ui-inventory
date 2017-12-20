@@ -141,7 +141,7 @@ class ViewInstance extends React.Component {
       if (instance.publication && instance.publication.length > 0) {
         return `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`;
       }
-      return 'Hello';
+      return null;
     }
 
     const that = this;

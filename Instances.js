@@ -293,14 +293,8 @@ class Instances extends React.Component {
         {/* Results Pane */}
         <Pane
           defaultWidth="fill"
-          paneTitle={
-            <div style={{ textAlign: 'center' }}>
-              <strong>Instances</strong>
-              <div>
-                <em>{resources.instances && resources.instances.hasLoaded ? resources.instances.other.totalRecords : ''} Result{instances.length === 1 ? '' : 's'} Found</em>
-              </div>
-            </div>
-          }
+          paneTitle="Instances"
+          paneSub={`${resources.instances && resources.instances.hasLoaded ? resources.instances.other.totalRecords : ''} Result${instances.length === 1 ? '' : 's'} Found`}
           lastMenu={newInstanceButton}
         >
           <MultiColumnList
