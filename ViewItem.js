@@ -68,11 +68,16 @@ class ViewItem extends React.Component {
             referenceTables,
             okapi } = this.props;
 
+    if (!items || !items.hasLoaded ||
+        !instances1 || !instances1.hasLoaded ||
+        !holdingsRecords || !holdingsRecords.hasLoaded ||
+        !shelfLocations || !shelfLocations.hasLoaded ||
+        !loanTypes || !loanTypes.hasLoaded ||
+        !materialTypes || !materialTypes.hasLoaded) return <div>Waiting for resources</div>;
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
 
-    if (!items || !items.hasLoaded || !instances1 || !instances1.hasLoaded || !holdingsRecords || !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
     const instance = instances1.records[0];
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
