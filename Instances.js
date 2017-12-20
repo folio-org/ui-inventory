@@ -291,6 +291,8 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const shelfLocations = (resources.locations || emptyObj).records || emptyArr;
+
     const referenceTables = {
       creatorTypes,
       contributorTypes,
@@ -298,7 +300,12 @@ class Instances extends React.Component {
       classificationTypes,
       instanceTypes,
       instanceFormats,
+      shelfLocations,
     };
+
+    Object.entries(referenceTables).forEach(([k, v]) => {
+      v.sort((a, b) => a.name.localeCompare(b.name));
+    });
 
     const initialPath = (_.get(packageInfo, ['stripes', 'home']) ||
                          _.get(packageInfo, ['stripes', 'route']));
@@ -320,25 +327,20 @@ class Instances extends React.Component {
       resultCountIncrement={RESULT_COUNT_INCREMENT}
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
-// @@      newRecordInitialValues={{ active: true, personal: { preferredContactTypeId: '002' } }}
+      newRecordInitialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
       visibleColumns={['title', 'contributors', 'publishers']}
       resultsFormatter={resultsFormatter}
-      onCreate={this.onClickAddNewInstance}
-// @@      massageNewRecord={this.massageNewRecord}
-      finishedResourceName="perms"
-      viewRecordPerms="users.item.get"
-      newRecordPerms="users.item.post,login.item.post,perms.users.item.post"
-      // viewRecordPerms="module.inventory.enabled" // @@
-      // newRecordPerms="module.inventory.enabled" // @@
+      onCreate={this.createInstance}
+      viewRecordPerms="inventory-storage.instances.item.get"
+      newRecordPerms="inventory-storage.instances.item.post"
       disableRecordCreation={false}
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
-
       detailProps={{ referenceTables }}
+      path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
     />);
   }
 }
-
 
 Instances.propTypes = {
   stripes: PropTypes.shape({
