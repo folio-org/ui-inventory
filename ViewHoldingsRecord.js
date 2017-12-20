@@ -111,7 +111,7 @@ class ViewHoldingsRecord extends React.Component {
                 <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
               </Col>
               <Col sm={2}>
-                <KeyValue label="Notes" value={_.get(holdingsRecord, ['holdingsStatement'], []).join(', ')} />
+                <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).join(', ')} />
               </Col>
             </Row>
           </Pane>
