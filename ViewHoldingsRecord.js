@@ -24,7 +24,7 @@ class ViewHoldingsRecord extends React.Component {
     },
     instances1: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{id}',
     },
     shelfLocations: {
       type: 'okapi',

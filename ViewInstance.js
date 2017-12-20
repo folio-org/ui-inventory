@@ -87,12 +87,12 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
   }
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
   }
 
   createHoldingsRecord = (holdingsRecord) => {
