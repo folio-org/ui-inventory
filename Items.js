@@ -20,6 +20,7 @@ class Items extends React.Component {
   }
 
   onSelectRow = (e, meta) => {
+    if (e) e.stopPropagation();
     this.openItem(meta);
   }
 
