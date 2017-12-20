@@ -137,6 +137,13 @@ class ViewInstance extends React.Component {
       </PaneMenu>
     );
 
+    const instanceSub = () => {
+      if (instance.publication && instance.publication.length > 0) {
+        return `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`;
+      }
+      return 'Hello';
+    }
+
     const that = this;
 
     const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
@@ -145,7 +152,7 @@ class ViewInstance extends React.Component {
       <Pane
         defaultWidth={this.props.paneWidth}
         paneTitle={instance.title}
-        paneSub={ (instance.publication && instance.publication.length > 0) && `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`}
+        paneSub={ instanceSub() }
         lastMenu={detailMenu}
         dismissible
         onClose={this.props.onClose}
