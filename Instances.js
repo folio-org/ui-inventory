@@ -296,6 +296,7 @@ class Instances extends React.Component {
           paneTitle="Instances"
           paneSub={`${resources.instances && resources.instances.hasLoaded ? resources.instances.other.totalRecords : ''} Result${instances.length === 1 ? '' : 's'} Found`}
           lastMenu={newInstanceButton}
+          padContent={false}
         >
           <MultiColumnList
             id="list-instances"

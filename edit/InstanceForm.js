@@ -5,6 +5,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
@@ -105,13 +106,12 @@ function InstanceForm(props) {
                                 })) : [];
 
   /* Menus for Add Instance workflow */
-  const addInstanceFirstMenu = <PaneMenu><button onClick={onCancel} title="close" aria-label="Close New Instance Dialog"><span style={{ fontSize: '30px', color: '#999', lineHeight: '18px' }} >&times;</span></button></PaneMenu>;
-  const addInstanceLastMenu = <PaneMenu><Button id="clickable-create-instance" type="submit" title="Create New Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create instance</Button></PaneMenu>;
-  const editInstanceLastMenu = <PaneMenu><Button id="clickable-update-instance" type="submit" title="Update Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update instance</Button></PaneMenu>;
+  const addInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-instance" type="submit" title="Create New Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create instance</Button></PaneMenu>;
+  const editInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-instance" type="submit" title="Update Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update instance</Button></PaneMenu>;
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" firstMenu={addInstanceFirstMenu} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
+        <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Instance Record</h2>
