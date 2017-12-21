@@ -99,11 +99,11 @@ module.exports.test = function(uiTestCtx) {
       }) 
       it('should find new title in list ', done => {
         nightmare
-        .wait('#list-instances')
+        .wait('#list-inventory')
         .xclick('//div[@role="presentation"][.="title"]')
         .wait(3111)
         .evaluate(function(title) {
-            var ti = document.querySelector('#list-instances > div[class^="scrollable"] > div > div > div > div[title="' + title + '"]')
+            var ti = document.querySelector('#list-inventory > div[class^="scrollable"] > div > div > div > div[title="' + title + '"]')
             if (ti == null) {
               throw new Error("Can't find newly created title (" + title + ") at top of sorted list")
             }
