@@ -7,7 +7,6 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
-import Icon from '@folio/stripes-components/lib/Icon';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
@@ -142,7 +141,7 @@ class ViewInstance extends React.Component {
         return `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`;
       }
       return null;
-    }
+    };
 
     const that = this;
 
@@ -152,7 +151,7 @@ class ViewInstance extends React.Component {
       <Pane
         defaultWidth={this.props.paneWidth}
         paneTitle={instance.title}
-        paneSub={ instanceSub() }
+        paneSub={instanceSub()}
         lastMenu={detailMenu}
         dismissible
         onClose={this.props.onClose}
