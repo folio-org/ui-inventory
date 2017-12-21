@@ -6,7 +6,6 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
-import IconButton from '@folio/stripes-components/lib/IconButton';
 import Select from '@folio/stripes-components/lib/Select';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
