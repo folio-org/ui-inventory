@@ -47,7 +47,7 @@ const filterConfig = [
   {
     label: 'Location',
     name: 'location',
-    cql: 'location.id',
+    cql: 'holdingsRecords.permanentLocationId',
     values: [],
   },
 ];
