@@ -6,7 +6,7 @@ module.exports.test = function(uiTestCtx) {
 
     this.timeout(Number(config.test_timeout));
 
-    const title = '00'
+    const title = '0'
     const ed = '[1st ed.]'
     const series = 'Catalogus (Museum van Hedendaagse Kunst Antwerpen), 92'
     const id = new Date().valueOf()
@@ -64,7 +64,6 @@ module.exports.test = function(uiTestCtx) {
 	.insert('input[name="subjects[1]"]', subjects[1])
         .click('#clickable-add-subject')
 	.insert('input[name="subjects[2]"]', subjects[2])
-        //.click('#clickable-add-classification')
         .click('#clickable-add-publication')
 	.wait(55)
 	.insert('input[name="publication[0].publisher"]', pub.publisher)
@@ -94,6 +93,10 @@ module.exports.test = function(uiTestCtx) {
 	.wait(55)
         .click('#clickable-create-instance')
 	.wait(2222)
+	.click('button[title^="Close"]')
+	.wait(222)
+	.click('button[title^="close"]')
+	.wait(1111)
         .then(result => { done() } )
 	.catch(done)
       }) 
@@ -101,15 +104,20 @@ module.exports.test = function(uiTestCtx) {
         nightmare
         .wait('#list-inventory')
         .xclick('//div[@role="presentation"][.="title"]')
-        .wait(3111)
+        .wait(3000)
+        .xclick('//div[@role="presentation"][.="title"]')
+        .wait(3000)
         .evaluate(function(title) {
-            var ti = document.querySelector('#list-inventory > div[class^="scrollable"] > div > div > div > div[title="' + title + '"]')
+            var sel = '#list-inventory div[role="listitem"]:nth-child(1) > a > div[title="' + title + '"]'
+            var ti = document.querySelector(sel)
             if (ti == null) {
-              throw new Error("Can't find newly created title (" + title + ") at top of sorted list")
+              throw new Error("Can't find newly created title (" + title + ") at top of sorted list with selector: " + sel)
             }
         }, title)
-        .then(result => { done() } )
-        .catch(done)
+        .then(result => { 
+	  done()
+	})
+	.catch(done)
       })
     })
   })
