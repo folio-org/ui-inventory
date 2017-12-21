@@ -39,9 +39,8 @@ function HoldingsForm(props) {
   } = props;
 
   /* Menus for Add Item workflow */
-  const addHoldingsFirstMenu = <PaneMenu><button onClick={onCancel} title="close" aria-label="Close New Holdings Dialog"><span style={{ fontSize: '30px', color: '#999', lineHeight: '18px' }} >&times;</span></button></PaneMenu>;
-  const addHoldingsLastMenu = <PaneMenu><Button id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
-  const editHoldingsLastMenu = <PaneMenu><Button id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
+  const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
+  const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
 
   const permanentLocationOptions = (referenceTables.shelfLocations || []).map(l => ({
     label: l.name,
@@ -58,7 +57,7 @@ function HoldingsForm(props) {
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" firstMenu={addHoldingsFirstMenu} lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu} paneTitle={initialValues.title ? 'Edit Holdings' : 'New Holdings Record'}>
+        <Pane defaultWidth="100%" dismissible onClick={onCancel} lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu} paneTitle={initialValues.title ? 'Edit Holdings' : 'New Holdings Record'}>
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Holdings Record</h2>
