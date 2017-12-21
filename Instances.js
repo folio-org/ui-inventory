@@ -1,24 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Route from 'react-router-dom/Route';
 import queryString from 'query-string';
 import _ from 'lodash';
 
-import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import Button from '@folio/stripes-components/lib/Button';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import FilterPaneSearch from '@folio/stripes-components/lib/FilterPaneSearch';
-import FilterGroups, { initialFilterState, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
-
-import Layer from '@folio/stripes-components/lib/Layer';
-import SRStatus from '@folio/stripes-components/lib/SRStatus';
+import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
+import { filters2cql, initialFilterState, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
 
 import packageInfo from './package';
-
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
@@ -65,21 +54,68 @@ const filterConfig = [
 
 class Instances extends React.Component {
   static manifest = Object.freeze({
-    instanceCount: { initialValue: INITIAL_RESULT_COUNT },
-    instances: {
+    query: {
+      initialValue: {
+        query: '',
+        filters: '',
+        sort: 'title',
+      },
+    },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    records: {
       type: 'okapi',
       records: 'instances',
+      recordsRequired: '%{resultCount}',
+      perRequest: 30,
       path: 'instance-storage/instances',
-      recordsRequired: '%{instanceCount}',
-      perRequest: RESULT_COUNT_INCREMENT,
       GET: {
         params: {
-          query: makeQueryFunction(
-            'cql.allRecords=1',
-            'title="$QUERY*" or contributors="name": "$QUERY*" or identifiers="value": "$QUERY*"',
-            { Title: 'title' },
-            filterConfig,
-          ),
+          query: (...args) => {
+            /*
+              This code is not DRY as it is copied from makeQueryFunction in stripes-components.
+              This is necessary, as makeQueryFunction only referneces query paramaters as a data source.
+              STRIPES-480 is intended to correct this and allow this query function to be replace with a call
+              to makeQueryFunction.
+              https://issues.folio.org/browse/STRIPES-480
+            */
+            const resourceData = args[2];
+            const sortMap = {
+              Title: 'title',
+              Publisher: 'publisher',
+              Contributors: 'contributors',
+            };
+
+            let cql = `(title="${resourceData.query.query}*" or contributors="name": "${resourceData.query.query}*" or identifiers="value": "${resourceData.query.query}*")`;
+            const filterCql = filters2cql(filterConfig, resourceData.query.filters);
+            if (filterCql) {
+              if (cql) {
+                cql = `(${cql}) and ${filterCql}`;
+              } else {
+                cql = filterCql;
+              }
+            }
+
+            const { sort } = resourceData.query;
+            if (sort) {
+              const sortIndexes = sort.split(',').map((sort1) => {
+                let reverse = false;
+                if (sort1.startsWith('-')) {
+                  // eslint-disable-next-line no-param-reassign
+                  sort1 = sort1.substr(1);
+                  reverse = true;
+                }
+                let sortIndex = sortMap[sort1] || sort1;
+                if (reverse) {
+                  sortIndex = `${sortIndex.replace(' ', '/sort.descending ')}/sort.descending`;
+                }
+                return sortIndex;
+              });
+
+              cql += ` sortby ${sortIndexes.join(' ')}`;
+            }
+
+            return cql;
+          },
         },
         staticFallback: { params: {} },
       },
@@ -140,9 +176,9 @@ class Instances extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const resource = this.props.resources.instances;
-    if (resource && resource.isPending && !nextProps.resources.instances.isPending) {
-      const resultAmount = nextProps.resources.instances.other.totalRecords;
+    const resource = this.props.resources.records;
+    if (resource && resource.isPending && !nextProps.resources.records.isPending) {
+      const resultAmount = nextProps.resources.records.other.totalRecords;
       if (this.SRSStatus) this.SRStatus.sendMessage(`Search returned ${resultAmount} result${resultAmount !== 1 ? 's' : ''}`);
     }
   }
@@ -191,29 +227,21 @@ class Instances extends React.Component {
     this.transitionToParams({ sort: sortOrder });
   }
 
-  onSelectRow = (e, meta) => {
-    this.openInstance(meta);
-  }
-
   onClickAddNewInstance = (e) => {
     if (e) e.preventDefault();
     this.transitionToParams({ layer: 'create' });
   }
 
   onChangeSearch = (e) => {
-    this.props.mutator.instanceCount.replace(INITIAL_RESULT_COUNT);
+    this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
     const query = e.target.value;
     this.setState({ searchTerm: query });
     this.performSearch(query);
   }
 
   onChangeFilter = (e) => {
-    this.props.mutator.instanceCount.replace(INITIAL_RESULT_COUNT);
+    this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
     this.commonChangeFilter(e);
-  }
-
-  onNeedMore = () => {
-    this.props.mutator.instanceCount.replace(this.props.resources.instanceCount + RESULT_COUNT_INCREMENT);
   }
 
   openInstance(selectedInstance) {
@@ -239,7 +267,7 @@ class Instances extends React.Component {
 
   createInstance = (instance) => {
     // POST item record
-    this.props.mutator.instances.POST(instance).then(() => {
+    this.props.mutator.records.POST(instance).then(() => {
       this.closeNewInstance();
     });
   }
@@ -256,14 +284,15 @@ class Instances extends React.Component {
   };
 
   render() {
-    const { stripes, okapi, match, resources, location } = this.props;
-    const instances = (resources.instances || emptyObj).records || emptyArr;
+    const { resources } = this.props;
     const creatorTypes = (resources.creatorTypes || emptyObj).records || emptyArr;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const shelfLocations = (resources.locations || emptyObj).records || emptyArr;
+
     const referenceTables = {
       creatorTypes,
       contributorTypes,
@@ -271,73 +300,47 @@ class Instances extends React.Component {
       classificationTypes,
       instanceTypes,
       instanceFormats,
+      shelfLocations,
     };
 
-    const query = location.search ? queryString.parse(location.search) : {};
-    const searchHeader = <FilterPaneSearch id="input-instances-search" onChange={this.onChangeSearch} onClear={this.onClearSearch} resultsList={this.resultsList} value={this.state.searchTerm} />;
-    const newInstanceButton = <PaneMenu><Button id="clickable-new-instance" onClick={this.onClickAddNewInstance} title="+ Instance" buttonStyle="primary paneHeaderNewButton">+ New</Button></PaneMenu>; // /
+    Object.entries(referenceTables).forEach(([k, v]) => {
+      v.sort((a, b) => a.name.localeCompare(b.name));
+    });
+
+    const initialPath = (_.get(packageInfo, ['stripes', 'home']) ||
+                         _.get(packageInfo, ['stripes', 'route']));
 
     const resultsFormatter = {
       publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       contributors: r => formatters.contributorsFormatter(r, contributorTypes),
     };
-    const maybeTerm = this.state.searchTerm ? ` for "${this.state.searchTerm}"` : '';
-    const maybeSpelling = this.state.searchTerm ? 'spelling and ' : '';
-    return (
-      <Paneset>
-        <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
-        <Pane defaultWidth="16%" header={searchHeader}>
-          <FilterGroups config={filterConfig} filters={this.state.filters} onChangeFilter={this.onChangeFilter} />
-        </Pane>
-        {/* Results Pane */}
-        <Pane
-          defaultWidth="fill"
-          paneTitle="Instances"
-          paneSub={`${resources.instances && resources.instances.hasLoaded ? resources.instances.other.totalRecords : ''} Result${instances.length === 1 ? '' : 's'} Found`}
-          lastMenu={newInstanceButton}
-          padContent={false}
-        >
-          <MultiColumnList
-            id="list-instances"
-            contentData={instances}
-            selectedRow={this.state.selectedInstance}
-            rowMetadata={['title', 'id']}
-            formatter={resultsFormatter}
-            onRowClick={this.onSelectRow}
-            onHeaderClick={this.onSort}
-            onNeedMoreData={this.onNeedMore}
-            visibleColumns={['title', 'contributors', 'publishers']}
-            sortOrder={this.state.sortOrder.replace(/^-/, '').replace(/,.*/, '')}
-            sortDirection={this.state.sortOrder.startsWith('-') ? 'descending' : 'ascending'}
-            isEmptyMessage={`No results found${maybeTerm}. Please check your ${maybeSpelling}filters.`}
-            loading={resources.instances ? resources.instances.isPending : false}
-            autosize
-            virtualize
-            ariaLabel={'Instances search results'}
-            containerRef={(ref) => { this.resultsList = ref; }}
-          />
-        </Pane>
-        {/* Details Pane */}
-        <Route
-          path={`${match.path}/view/:instanceid/:holdingsrecordid?/:itemid?`}
-          render={props => <this.cViewInstance stripes={stripes} referenceTables={referenceTables} paneWidth="44%" onCopy={this.copyInstance} onClose={this.collapseDetails} {...props} />}
-        />
-        <Layer isOpen={query.layer ? query.layer === 'create' : false} label="Add New Instance Dialog">
-          <InstanceForm
-            initialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-            onSubmit={(record) => { this.createInstance(record); }}
-            onCancel={this.closeNewInstance}
-            okapi={okapi}
-            copy={!!(this.state.copiedInstance)}
-            referenceTables={referenceTables}
-          />
-        </Layer>
-      </Paneset>
-    );
+
+    return (<SearchAndSort
+      moduleName={packageInfo.name.replace(/.*\//, '')}
+      moduleTitle={packageInfo.stripes.displayName}
+      objectName="inventory"
+      baseRoute={packageInfo.stripes.route}
+      initialPath={initialPath}
+      filterConfig={filterConfig}
+      initialResultCount={INITIAL_RESULT_COUNT}
+      resultCountIncrement={RESULT_COUNT_INCREMENT}
+      viewRecordComponent={ViewInstance}
+      editRecordComponent={InstanceForm}
+      newRecordInitialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+      visibleColumns={['title', 'contributors', 'publishers']}
+      resultsFormatter={resultsFormatter}
+      onCreate={this.createInstance}
+      viewRecordPerms="inventory-storage.instances.item.get"
+      newRecordPerms="inventory-storage.instances.item.post"
+      disableRecordCreation={false}
+      parentResources={this.props.resources}
+      parentMutator={this.props.mutator}
+      detailProps={{ referenceTables }}
+      path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
+    />);
   }
 }
-
 
 Instances.propTypes = {
   stripes: PropTypes.shape({
@@ -345,7 +348,7 @@ Instances.propTypes = {
     locale: PropTypes.string.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    instances: PropTypes.shape({
+    records: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,
       other: PropTypes.shape({
         totalRecords: PropTypes.number,
@@ -360,7 +363,7 @@ Instances.propTypes = {
         }),
       ),
     }),
-    instanceCount: PropTypes.number,
+    resultCount: PropTypes.number,
     instanceTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
@@ -382,14 +385,13 @@ Instances.propTypes = {
     addInstanceMode: PropTypes.shape({
       replace: PropTypes.func,
     }),
-    instances: PropTypes.shape({
+    records: PropTypes.shape({
       POST: PropTypes.func,
     }),
-    instanceCount: PropTypes.shape({
+    resultCount: PropTypes.shape({
       replace: PropTypes.func,
     }),
   }).isRequired,
-  okapi: PropTypes.object,
 };
 
 export default Instances;
