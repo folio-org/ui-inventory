@@ -9,7 +9,7 @@ class Holdings extends React.Component {
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
-      path: 'holdings-storage/holdings?query=(instanceId=:{instanceid})',
+      path: 'holdings-storage/holdings?query=(instanceId=:{id})',
     },
     shelfLocations: {
       type: 'okapi',

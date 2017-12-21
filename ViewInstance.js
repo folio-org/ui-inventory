@@ -32,7 +32,7 @@ class ViewInstance extends React.Component {
     addHoldingsMode: { initialValue: { mode: false } },
     selectedInstance: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{id}',
       clear: false,
     },
     holdings: {
@@ -45,6 +45,10 @@ class ViewInstance extends React.Component {
 
   constructor(props) {
     super(props);
+
+    const logger = props.stripes.logger;
+    this.log = logger.log.bind(logger);
+
     this.state = {
       accordions: {
         itemsAccordion: true,
@@ -64,13 +68,13 @@ class ViewInstance extends React.Component {
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "add new holdings record"');
+    this.log('clicked "add new holdings record"');
     this.props.mutator.addHoldingsMode.replace({ mode: true });
   }
 
   onClickCloseNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "close new holdings record"');
+    this.log('clicked "close new holdings record"');
     this.props.mutator.addHoldingsMode.replace({ mode: false });
   }
 
@@ -87,17 +91,17 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
   }
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
   }
 
   createHoldingsRecord = (holdingsRecord) => {
     // POST item record
-    console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
+    this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
     this.props.mutator.holdings.POST(holdingsRecord);
     this.onClickCloseNewHoldingsRecord();
   }
@@ -111,13 +115,13 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, holdingsrecordid, itemid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
-    if (!selInstance || !instanceid) return <div />;
-    const instance = selInstance.find(i => i.id === instanceid);
+    if (!selInstance || !id) return <div />;
+    const instance = selInstance.find(i => i.id === id);
 
     const detailMenu = (
       <PaneMenu>
@@ -274,8 +278,8 @@ class ViewInstance extends React.Component {
         }
         { !itemid && !holdingsrecordid ?
           <this.cHoldings
-            dataKey={instanceid}
-            id={instanceid}
+            dataKey={id}
+            id={id}
             accordionExpanded={this.state.accordions.holdingsAccordion}
             accordionId="holdingsAccordion"
             accordionToggle={this.handleAccordionToggle}
@@ -316,6 +320,7 @@ ViewInstance.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
+    logger: PropTypes.object.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({
@@ -323,7 +328,10 @@ ViewInstance.propTypes = {
     }),
   }).isRequired,
   match: PropTypes.shape({
-    params: PropTypes.object,
+    path: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
   }),
   location: PropTypes.object,
   history: PropTypes.object,
