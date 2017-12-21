@@ -1,4 +1,4 @@
-import lodash from 'lodash';
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
