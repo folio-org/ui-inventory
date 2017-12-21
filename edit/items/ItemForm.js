@@ -74,9 +74,8 @@ function ItemForm(props) {
   } = props;
 
   /* Menus for Add Item workflow */
-  const addItemFirstMenu = <PaneMenu><button onClick={onCancel} title="close" aria-label="Close New Item Dialog"><span style={{ fontSize: '30px', color: '#999', lineHeight: '18px' }} >&times;</span></button></PaneMenu>;
-  const addItemLastMenu = <PaneMenu><Button id="clickable-create-item" type="submit" title="Create New Item" disabled={pristine || submitting} onClick={handleSubmit}>Create item</Button></PaneMenu>;
-  const editItemLastMenu = <PaneMenu><Button id="clickable-update-item" type="submit" title="Update Item" disabled={pristine || submitting} onClick={handleSubmit}>Update item</Button></PaneMenu>;
+  const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={pristine || submitting} onClick={handleSubmit}>Create item</Button></PaneMenu>;
+  const editItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Item" disabled={pristine || submitting} onClick={handleSubmit}>Update item</Button></PaneMenu>;
   const materialTypeOptions = referenceTables.materialTypes ?
         referenceTables.materialTypes.map((t) => {
           let selectedValue;
@@ -102,7 +101,7 @@ function ItemForm(props) {
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" firstMenu={addItemFirstMenu} lastMenu={(initialValues.title) ? editItemLastMenu : addItemLastMenu} paneTitle={(initialValues.title) ? 'Edit Item' : 'New Item'}>
+        <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={(initialValues.title) ? editItemLastMenu : addItemLastMenu} paneTitle={(initialValues.title) ? 'Edit Item' : 'New Item'}>
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Item Record</h2>

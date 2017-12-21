@@ -8,8 +8,8 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
-import Icon from '@folio/stripes-components/lib/Icon';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 
 import utils from './utils';
 
@@ -28,7 +28,7 @@ class ViewItem extends React.Component {
     },
     instances1: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{id}',
     },
     shelfLocations: {
       type: 'okapi',
@@ -81,7 +81,12 @@ class ViewItem extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
-        <button id="clickable-edit-item" onClick={this.onClickEditItem} title="Edit Item"><Icon icon="edit" />Edit</button>
+        <IconButton
+          icon="edit"
+          id="clickable-edit-item"
+          onClick={this.onClickEditItem}
+          title="Edit Item"
+        />
       </PaneMenu>
     );
 

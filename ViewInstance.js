@@ -7,9 +7,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
-import Icon from '@folio/stripes-components/lib/Icon';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
@@ -32,7 +32,7 @@ class ViewInstance extends React.Component {
     addHoldingsMode: { initialValue: { mode: false } },
     selectedInstance: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{id}',
       clear: false,
     },
     holdings: {
@@ -45,6 +45,10 @@ class ViewInstance extends React.Component {
 
   constructor(props) {
     super(props);
+
+    const logger = props.stripes.logger;
+    this.log = logger.log.bind(logger);
+
     this.state = {
       accordions: {
         itemsAccordion: true,
@@ -64,13 +68,13 @@ class ViewInstance extends React.Component {
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "add new holdings record"');
+    this.log('clicked "add new holdings record"');
     this.props.mutator.addHoldingsMode.replace({ mode: true });
   }
 
   onClickCloseNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    console.log('clicked "close new holdings record"');
+    this.log('clicked "close new holdings record"');
     this.props.mutator.addHoldingsMode.replace({ mode: false });
   }
 
@@ -87,17 +91,17 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
   }
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.instanceid}${this.props.location.search}`);
+    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
   }
 
   createHoldingsRecord = (holdingsRecord) => {
     // POST item record
-    console.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
+    this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
     this.props.mutator.holdings.POST(holdingsRecord);
     this.onClickCloseNewHoldingsRecord();
   }
@@ -111,20 +115,44 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { instanceid, holdingsrecordid, itemid } }, location,
+    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
-    if (!selInstance || !instanceid) return <div />;
-    const instance = selInstance.find(i => i.id === instanceid);
+    if (!selInstance || !id) return <div />;
+    const instance = selInstance.find(i => i.id === id);
 
     const detailMenu = (
       <PaneMenu>
-        <button id="clickable-copy-instance" onClick={() => onCopy(instance)} title="Copy Instance"><Icon icon="duplicate" />Copy</button>
-        <button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button>
+        <IconButton
+          id="clickable-show-notes"
+          style={{ visibility: !instance ? 'hidden' : 'visible' }}
+          onClick={this.props.notesToggle}
+          title="Show Notes"
+          icon="comment"
+        />
+        <IconButton
+          id="clickable-copy-instance"
+          onClick={() => onCopy(instance)}
+          title="Copy Instance"
+          icon="duplicate"
+        />
+        <IconButton
+          id="clickable-edit-instance"
+          onClick={this.onClickEditInstance}
+          title="Edit Instance"
+          icon="edit"
+        />
       </PaneMenu>
     );
+
+    const instanceSub = () => {
+      if (instance.publication && instance.publication.length > 0) {
+        return `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`;
+      }
+      return null;
+    };
 
     const that = this;
 
@@ -133,16 +161,8 @@ class ViewInstance extends React.Component {
     return instance ? (
       <Pane
         defaultWidth={this.props.paneWidth}
-        paneTitle={
-          <div style={{ textAlign: 'center' }}>
-            <strong>{instance.title}</strong>
-            {(instance.publication && instance.publication.length > 0) &&
-              <div>
-                <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
-              </div>
-            }
-          </div>
-        }
+        paneTitle={instance.title}
+        paneSub={instanceSub()}
         lastMenu={detailMenu}
         dismissible
         onClose={this.props.onClose}
@@ -264,18 +284,10 @@ class ViewInstance extends React.Component {
           <Col sm={10}>{newHoldingsRecordButton}</Col>
         </Row>
         <br />
-        { itemid ?
-          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
-         : null
-        }
-        { holdingsrecordid ?
-          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
-          : null
-        }
-        { !itemid && !holdingsrecordid ?
+        { (!holdingsrecordid && !itemid) ?
           <this.cHoldings
-            dataKey={instanceid}
-            id={instanceid}
+            dataKey={id}
+            id={id}
             accordionExpanded={this.state.accordions.holdingsAccordion}
             accordionId="holdingsAccordion"
             accordionToggle={this.handleAccordionToggle}
@@ -287,6 +299,14 @@ class ViewInstance extends React.Component {
             history={this.props.history}
           />
           : null
+        }
+        { (holdingsrecordid && !itemid) ?
+          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
+          : null
+        }
+        { (holdingsrecordid && itemid) ?
+          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
+         : null
         }
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
@@ -316,6 +336,7 @@ ViewInstance.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
+    logger: PropTypes.object.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({
@@ -323,7 +344,10 @@ ViewInstance.propTypes = {
     }),
   }).isRequired,
   match: PropTypes.shape({
-    params: PropTypes.object,
+    path: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
   }),
   location: PropTypes.object,
   history: PropTypes.object,
@@ -344,6 +368,7 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
+  notesToggle: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
   okapi: PropTypes.object,
 };

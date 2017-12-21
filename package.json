@@ -15,7 +15,9 @@
     "type": "app",
     "displayName": "Inventory",
     "route": "/inventory",
+    "home": "/inventory?filters=&sort=Title",
     "hasSettings": false,
+    "queryResource": "query",
     "okapiInterfaces": {
       "inventory": "5.0",
       "instance-storage": "5.0",
@@ -37,7 +39,17 @@
         "permissionName": "module.inventory.enabled",
         "displayName": "UI: Inventory module is enabled"
       }
-    ]
+    ],
+    "translations": {
+      "en": {
+        "search": "Search",
+        "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}"
+      },
+      "de": {
+        "search": "Suche",
+        "resultCount": "Gefunden {count, number} {count, plural, one {Aufzeichnung} other {Aufzeichnungen}}"
+      }
+    }
   },
   "scripts": {
     "lint": "eslint *.js lib settings edit data",
@@ -62,6 +74,7 @@
   "dependencies": {
     "@folio/stripes-components": "^1.7.0",
     "@folio/stripes-form": "^0.8.1",
+    "@folio/stripes-smart-components": "^1.4.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "query-string": "^4.3.2",

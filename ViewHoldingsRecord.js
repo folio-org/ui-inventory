@@ -24,7 +24,7 @@ class ViewHoldingsRecord extends React.Component {
     },
     instances1: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{instanceid}',
+      path: 'instance-storage/instances/:{id}',
     },
     shelfLocations: {
       type: 'okapi',
@@ -50,7 +50,10 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   updateHoldingsRecord = (holdingsRecord) => {
-    this.props.mutator.holdingsRecords.PUT(holdingsRecord).then(() => {
+    const holdings = holdingsRecord;
+    if (holdings.permanentLocationId === '') delete holdings.permanentLocationId;
+    if (holdings.platformId === '') delete holdings.platformId;
+    this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
       this.onClickCloseEditHoldingsRecord();
     });
   }
@@ -68,6 +71,8 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
     const locations = shelfLocations.records;
+    referenceTables.shelfLocations = locations;
+    referenceTables.platforms = platforms.records;
 
     const query = location.search ? queryString.parse(location.search) : {};
     const that = this;
@@ -102,16 +107,16 @@ class ViewHoldingsRecord extends React.Component {
                 <KeyValue label="Call number" value={_.get(holdingsRecord, ['callNumber'], '')} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="Permanent location" value={locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name} />
+                <KeyValue label="Permanent location" value={holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} />
               </Col>
               <Col sm={1}>
-                <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '')} />
+                <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
               </Col>
               <Col sm={1}>
                 <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
               </Col>
               <Col sm={2}>
-                <KeyValue label="Notes" value={_.get(holdingsRecord, ['holdingsStatement'], []).join(', ')} />
+                <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).join(', ')} />
               </Col>
             </Row>
           </Pane>
