@@ -6,7 +6,7 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field } from 'redux-form';
 
-const renderContributors = ({ fields, meta: { touched, error, submitFailed }, contributorTypes }) => (
+const renderContributors = ({ fields, meta: { touched, error, submitFailed }, contributorNameTypes }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
@@ -15,11 +15,11 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
       </Col>
     </Row>
     {fields.map((contributor, index) => {
-      const contributorTypeOptions = contributorTypes.map(
+      const contributorNameTypeOptions = contributorNameTypes.map(
                                         it => ({
                                           label: it.name,
                                           value: it.id,
-                                          selected: it.id === contributor.contributorTypeId,
+                                          selected: it.id === contributor.contributorNameTypeId,
                                         }));
       return (
         <Row key={index}>
@@ -33,11 +33,11 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
           </Col>
           <Col sm={1}>
             <Field
-              name={`${contributor}.contributorTypeId`}
+              name={`${contributor}.contributorNameTypeId`}
               type="text"
               component={Select}
               label={index === 0 ? 'Type' : null}
-              dataOptions={[{ label: 'Select type of contributor', value: '' }, ...contributorTypeOptions]}
+              dataOptions={[{ label: 'Select name type', value: '' }, ...contributorNameTypeOptions]}
             />
           </Col>
           <Col sm={1} smOffset={1}>
@@ -54,6 +54,6 @@ const renderContributors = ({ fields, meta: { touched, error, submitFailed }, co
     })}
   </div>
 );
-renderContributors.propTypes = { fields: PropTypes.object, meta: PropTypes.object, contributorTypes: PropTypes.arrayOf(PropTypes.object) };
+renderContributors.propTypes = { fields: PropTypes.object, meta: PropTypes.object, contributorNameTypes: PropTypes.arrayOf(PropTypes.object) };
 
 export default renderContributors;

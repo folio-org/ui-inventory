@@ -117,7 +117,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             form={`itemform_${holdingsRecord.id}`}
             id={holdingsRecord.id}
             key={holdingsRecord.id}
-            initialValues={{ status: { name: 'Available' }, title: instance.title, holdingsRecordId: holdingsRecord.id }}
+            initialValues={{ status: { name: 'Available' }, holdingsRecordId: holdingsRecord.id }}
             onSubmit={(record) => { this.createItem(record); }}
             onCancel={this.onClickCloseNewItem}
             okapi={okapi}
