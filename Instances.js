@@ -123,37 +123,37 @@ class Instances extends React.Component {
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
-      path: 'identifier-types?limit=100',
+      path: 'identifier-types?limit=100&query=cql.allRecords=1 sortby name',
     },
     creatorTypes: {
       type: 'okapi',
       records: 'creatorTypes',
-      path: 'creator-types?limit=100',
+      path: 'creator-types?limit=100&query=cql.allRecords=1 sortby name',
     },
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
-      path: 'contributor-types?limit=100',
+      path: 'contributor-types?limit=100&query=cql.allRecords=1sortby name',
     },
     instanceFormats: {
       type: 'okapi',
       records: 'instanceFormats',
-      path: 'instance-formats?limit=100',
+      path: 'instance-formats?limit=100&query=cql.allRecords=1 sortby name',
     },
     instanceTypes: {
       type: 'okapi',
       records: 'instanceTypes',
-      path: 'instance-types?limit=100',
+      path: 'instance-types?limit=100&query=cql.allRecords=1 sortby name',
     },
     classificationTypes: {
       type: 'okapi',
       records: 'classificationTypes',
-      path: 'classification-types?limit=100',
+      path: 'classification-types?limit=100&query=cql.allRecords=1 sortby name',
     },
     locations: {
       type: 'okapi',
       records: 'shelflocations',
-      path: 'shelf-locations?limit=100',
+      path: 'shelf-locations?limit=100&query=cql.allRecords=1 sortby name',
     },
   });
 
@@ -190,8 +190,7 @@ class Instances extends React.Component {
     // resource types
     const rt = (this.props.resources.instanceTypes || {}).records || [];
     if (rt && rt.length) {
-      filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }))
-        .sort((a, b) => a.name.localeCompare(b.name));
+      filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
     }
 
     // locations
@@ -302,10 +301,6 @@ class Instances extends React.Component {
       instanceFormats,
       shelfLocations,
     };
-
-    Object.entries(referenceTables).forEach(([k, v]) => {
-      v.sort((a, b) => a.name.localeCompare(b.name));
-    });
 
     const initialPath = (_.get(packageInfo, ['stripes', 'home']) ||
                          _.get(packageInfo, ['stripes', 'route']));

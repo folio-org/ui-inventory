@@ -20,6 +20,7 @@
 * Refactor through `<SearchAndSort>`. Fixes UIIN-34, Refs FOLIO-942, FOLIO-940, UIIN-41.
 * Adding `<Notes>`. Fixes UIIN-10. 
 * Adding search by Location. Refs UIIN-3.
+* Sort lookup tables server side because it's the right thing to do. 
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
