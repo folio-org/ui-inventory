@@ -125,6 +125,7 @@ class ViewInstance extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
+        <button id="clickable-show-notes" style={{ visibility: !instance ? 'hidden' : 'visible' }} onClick={this.props.notesToggle} title="Show Notes"><Icon icon="comment" />Notes</button>
         <button id="clickable-copy-instance" onClick={() => onCopy(instance)} title="Copy Instance"><Icon icon="duplicate" />Copy</button>
         <button id="clickable-edit-instance" onClick={this.onClickEditInstance} title="Edit Instance"><Icon icon="edit" />Edit</button>
       </PaneMenu>
@@ -352,6 +353,7 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
+  notesToggle: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
   okapi: PropTypes.object,
 };
