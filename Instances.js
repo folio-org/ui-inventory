@@ -303,7 +303,7 @@ class Instances extends React.Component {
       shelfLocations,
     };
 
-    Object.entries(referenceTables).forEach(([k, v]) => {
+    Object.entries(referenceTables).forEach(([, v]) => {
       v.sort((a, b) => a.name.localeCompare(b.name));
     });
 
