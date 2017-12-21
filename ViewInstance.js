@@ -268,15 +268,7 @@ class ViewInstance extends React.Component {
           <Col sm={10}>{newHoldingsRecordButton}</Col>
         </Row>
         <br />
-        { itemid ?
-          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
-         : null
-        }
-        { holdingsrecordid ?
-          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
-          : null
-        }
-        { !itemid && !holdingsrecordid ?
+        { (!holdingsrecordid && !itemid) ?
           <this.cHoldings
             dataKey={id}
             id={id}
@@ -291,6 +283,14 @@ class ViewInstance extends React.Component {
             history={this.props.history}
           />
           : null
+        }
+        { (holdingsrecordid && !itemid) ?
+          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
+          : null
+        }
+        { (holdingsrecordid && itemid) ?
+          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
+         : null
         }
         <br />
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
