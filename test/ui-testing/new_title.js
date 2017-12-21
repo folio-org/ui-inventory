@@ -34,8 +34,8 @@ module.exports.test = function(uiTestCtx) {
       })
       it('should create new instance ', done => {
         nightmare
-        .wait('#clickable-new-instance')
-        .click('#clickable-new-instance')
+        .wait('#clickable-newinventory')
+        .click('#clickable-newinventory')
 	.wait(55)
         .insert('input[name=title]', title)
 	.insert('#input_instance_edition', ed)
