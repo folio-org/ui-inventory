@@ -2,6 +2,7 @@
 
 ## [1.1.0](IN PROGRESS)
 
+* Remove creators field (UIIN-30)
 * Add item details view, initial version (UIIN-31)
 * Add item form, holdings form (UIIN-5, UIIN-20)
 * Add list of holdings records and items under instance view (UIIN-15,16,29,31,33)
