@@ -117,6 +117,18 @@ function InstanceForm(props) {
             </Col>
           </Row>
           <Field type="hidden" name="source" component="input" />
+          <Row>
+            <Col sm={5} smOffset={1}>
+              <Field
+                name="instanceTypeId"
+                id="select_instance_type"
+                type="text"
+                component={Select}
+                label="Resource type *"
+                dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
+              />
+            </Col>
+          </Row>
           <FieldArray name="alternativeTitles" component={renderAlternativeTitles} />
           <Row>
             <Col sm={5} smOffset={1}>
@@ -131,18 +143,6 @@ function InstanceForm(props) {
           <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} />
           <FieldArray name="publication" component={renderPublication} />
           <FieldArray name="urls" component={renderURLs} />
-          <Row>
-            <Col sm={5} smOffset={1}>
-              <Field
-                name="instanceTypeId"
-                id="select_instance_type"
-                type="text"
-                component={Select}
-                label="Resource type *"
-                dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
-              />
-            </Col>
-          </Row>
 
           <Row>
             <Col sm={5} smOffset={1}>

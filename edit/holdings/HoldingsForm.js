@@ -76,11 +76,6 @@ function HoldingsForm(props) {
           </Row>
           <Row >
             <Col sm={5} smOffset={1}>
-              <Field label="Call number" name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
-            </Col>
-          </Row>
-          <Row >
-            <Col sm={5} smOffset={1}>
               <Field
                 label="Permanent Location"
                 name="permanentLocationId"
@@ -108,6 +103,11 @@ function HoldingsForm(props) {
                 component={TextField}
                 fullWidth
               />
+            </Col>
+          </Row>
+          <Row >
+            <Col sm={5} smOffset={1}>
+              <Field label="Call number" name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
             </Col>
           </Row>
           <FieldArray name="holdingsStatements" component={renderStatements} />
