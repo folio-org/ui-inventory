@@ -72,7 +72,7 @@
     "webpack": "1.11.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^1.7.0",
+    "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-form": "^0.8.1",
     "@folio/stripes-smart-components": "^1.4.0",
     "lodash": "^4.17.4",
