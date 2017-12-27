@@ -76,6 +76,7 @@ function ItemForm(props) {
   /* Menus for Add Item workflow */
   const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={pristine || submitting} onClick={handleSubmit}>Create item</Button></PaneMenu>;
   const editItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Item" disabled={pristine || submitting} onClick={handleSubmit}>Update item</Button></PaneMenu>;
+
   const materialTypeOptions = referenceTables.materialTypes ?
         referenceTables.materialTypes.map((t) => {
           let selectedValue;
@@ -129,7 +130,7 @@ function ItemForm(props) {
               {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
               <Field
                 label="Material Type *"
-                name="materialTypeId"
+                name="materialType.id"
                 id="additem_materialType"
                 component={Select}
                 fullWidth
@@ -137,7 +138,7 @@ function ItemForm(props) {
               />
               <Field
                 label="Loan Type (Permanent) *"
-                name="permanentLoanTypeId"
+                name="permanentLoanType.id"
                 id="additem_loanTypePerm"
                 component={Select}
                 fullWidth
@@ -146,7 +147,7 @@ function ItemForm(props) {
               <Field label="Barcode" name="barcode" id="additem_barcode" component={TextField} required fullWidth />
               <Field
                 label="Temporary Location"
-                name="temporaryLocationId"
+                name="temporaryLocation.id"
                 id="additem_location"
                 component={Select}
                 fullWidth
@@ -155,7 +156,7 @@ function ItemForm(props) {
               <Field label="Status" name="status.name" id="additem_status" component={TextField} disabled fullWidth />
               <Field
                 label="Loan Type (Temporary)"
-                name="temporaryLoanTypeId"
+                name="temporaryLoanType.id"
                 id="additem_loanTypeTemp"
                 component={Select}
                 fullWidth
