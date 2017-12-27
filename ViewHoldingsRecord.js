@@ -103,22 +103,36 @@ class ViewHoldingsRecord extends React.Component {
             onClose={this.props.onCloseViewHoldingsRecord}
           >
             <Row>
-              <Col sm={1}>
+              <Col smOffset={1} sm={4}>
                 <KeyValue label="Call number" value={_.get(holdingsRecord, ['callNumber'], '')} />
               </Col>
-              <Col sm={1}>
+            </Row>
+            <Row>
+              <Col smOffset={1} sm={4}>
                 <KeyValue label="Permanent location" value={holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} />
               </Col>
-              <Col sm={1}>
-                <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
-              </Col>
-              <Col sm={1}>
-                <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
-              </Col>
-              <Col sm={2}>
-                <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).join(', ')} />
-              </Col>
             </Row>
+            { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
+              <Row>
+                <Col smOffset={1} sm={4}>
+                  <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
+                </Col>
+              </Row>
+            }
+            { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
+              <Row>
+                <Col smOffset={1} sm={4}>
+                  <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
+                </Col>
+              </Row>
+            }
+            { (holdingsRecord.holdingsStatements.length > 0) &&
+              <Row>
+                <Col smOffset={1} sm={4}>
+                  <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                </Col>
+              </Row>
+            }
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label="Edit Holdings Record Dialog">
