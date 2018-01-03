@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import { FormattedDate } from 'react-intl';
 
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -275,6 +276,13 @@ class ViewInstance extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue label="URLs" value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+            </Col>
+          </Row>
+        }
+        { (instance.metadata && instance.metadata.createdDate) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Date added to FOLIO" value={<FormattedDate value={(_.get(instance, ['metadata', 'createdDate'], '')).toLocaleString(this.props.stripes.locale)} />} />
             </Col>
           </Row>
         }
