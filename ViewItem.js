@@ -11,7 +11,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 
-import utils from './utils';
+import { removeQueryParam } from './utils';
 
 import ItemForm from './edit/items/ItemForm';
 
@@ -54,7 +54,7 @@ class ViewItem extends React.Component {
 
   onClickCloseEditItem = (e) => {
     if (e) e.preventDefault();
-    utils.removeQueryParam('layer', this.props.location, this.props.history);
+    removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   updateItem = (item) => {

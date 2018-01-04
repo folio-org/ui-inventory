@@ -20,7 +20,7 @@
     "queryResource": "query",
     "okapiInterfaces": {
       "inventory": "5.0",
-      "instance-storage": "4.0",
+      "instance-storage": "4.1",
       "holdings-storage": "1.0",
       "item-storage": "5.0",
       "loan-types": "2.0",

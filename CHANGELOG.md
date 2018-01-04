@@ -2,6 +2,7 @@
 
 ## [1.1.0](IN PROGRESS)
 
+* Add instance record metadata (created date and updated date) (UIIN-28)
 * Remove creators field (UIIN-30)
 * Add item details view, initial version (UIIN-31)
 * Add item form, holdings form (UIIN-5, UIIN-20)

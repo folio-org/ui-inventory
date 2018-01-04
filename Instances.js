@@ -11,7 +11,7 @@ import packageInfo from './package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
-import utils from './utils';
+import { removeQueryParam } from './utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -256,7 +256,7 @@ class Instances extends React.Component {
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
-    utils.removeQueryParam('layer', this.props.location, this.props.history);
+    removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   copyInstance(instance) {
