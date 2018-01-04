@@ -11,7 +11,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import Icon from '@folio/stripes-components/lib/Icon';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
-import utils from './utils';
+import { removeQueryParam } from './utils';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
 
@@ -46,7 +46,7 @@ class ViewHoldingsRecord extends React.Component {
 
   onClickCloseEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    utils.removeQueryParam('layer', this.props.location, this.props.history);
+    removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   updateHoldingsRecord = (holdingsRecord) => {

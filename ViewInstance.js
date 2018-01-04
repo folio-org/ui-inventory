@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import { FormattedDate } from 'react-intl';
 
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -14,7 +13,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
-import utils from './utils';
+import { removeQueryParam, formatDateTime } from './utils';
 import formatters from './referenceFormatters';
 
 import Holdings from './Holdings';
@@ -87,7 +86,7 @@ class ViewInstance extends React.Component {
 
   closeEditInstance = (e) => {
     if (e) e.preventDefault();
-    utils.removeQueryParam('layer', this.props.location, this.props.history);
+    removeQueryParam('layer', this.props.location, this.props.history);
   }
 
   closeViewItem = (e) => {
@@ -282,7 +281,14 @@ class ViewInstance extends React.Component {
         { (instance.metadata && instance.metadata.createdDate) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Date added to FOLIO" value={<FormattedDate value={(_.get(instance, ['metadata', 'createdDate'], '')).toLocaleString(this.props.stripes.locale)} />} />
+              <KeyValue label="Date added to FOLIO" value={formatDateTime(_.get(instance, ['metadata', 'createdDate'], '').toLocaleString(this.props.stripes.locale))} />
+            </Col>
+          </Row>
+        }
+        { (instance.metadata && instance.metadata.updatedDate) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label="Record last updated" value={formatDateTime(_.get(instance, ['metadata', 'updatedDate'], '').toLocaleString(this.props.stripes.locale))} />
             </Col>
           </Row>
         }
