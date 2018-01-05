@@ -27,7 +27,7 @@ class ItemsPerHoldingsRecord extends React.Component {
     items: {
       type: 'okapi',
       records: 'items',
-      path: 'item-storage/items',
+      path: 'inventory/items',
       fetch: false,
     },
     holdings: {
