@@ -143,7 +143,7 @@ class ViewInstance extends React.Component {
           onClick={this.props.notesToggle}
           title="Show Notes"
           icon="comment"
-        />        
+        />
       </PaneMenu>
     );
 
