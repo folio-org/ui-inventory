@@ -10,9 +10,9 @@ import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
 
-import renderAlternativeTitles from './alternativeTitles';
-import renderSeries from './seriesFields';
-import renderContributors from './contributorFields';
+// import renderAlternativeTitles from './alternativeTitles';
+// import renderSeries from './seriesFields';
+//import renderContributors from './contributorFields';
 import renderSubjects from './subjectFields';
 import renderIdentifiers from './identifierFields';
 import renderClassifications from './classificationFields';
@@ -21,6 +21,10 @@ import renderURLs from './urlFields';
 import renderDescriptions from './descriptionFields';
 import renderLanguages from './languageFields';
 import renderNotes from './noteFields';
+
+import AlternativeTitles from './AlternativeTitles';
+import SeriesFields from './seriesFields';
+import ContributorFields from './contributorFields';
 
 function validate(values) {
   const errors = {};
@@ -129,16 +133,19 @@ function InstanceForm(props) {
               />
             </Col>
           </Row>
-          <FieldArray name="alternativeTitles" component={renderAlternativeTitles} />
+          <AlternativeTitles />
+          {/*<FieldArray name="alternativeTitles" component={renderAlternativeTitles} />*/}
           <Row>
             <Col sm={5} smOffset={1}>
               <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
             </Col>
           </Row>
-          <FieldArray name="series" component={renderSeries} />
+
+          <SeriesFields />
 
           <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={referenceTables.identifierTypes} />
-          <FieldArray name="contributors" component={renderContributors} contributorNameTypes={referenceTables.contributorNameTypes} />
+          <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
+          {/* <FieldArray name="contributors" component={renderContributors} contributorNameTypes={referenceTables.contributorNameTypes} /> */}
           <FieldArray name="subjects" component={renderSubjects} />
           <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} />
           <FieldArray name="publication" component={renderPublication} />
