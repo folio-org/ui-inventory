@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Layer from '@folio/stripes-components/lib/Layer';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
@@ -70,7 +71,7 @@ class ItemsPerHoldingsRecord extends React.Component {
 
 
   render() {
-    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, location } = this.props;
+    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, location, accordionToggle, accordionStates } = this.props;
 
     const materialtypes = (materialTypes || {}).records || [];
     const loantypes = (loanTypes || {}).records || [];
@@ -78,18 +79,22 @@ class ItemsPerHoldingsRecord extends React.Component {
     referenceTables.loanTypes = loantypes;
     referenceTables.materialTypes = materialtypes;
 
-    const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ New item</Button>;
+    const viewHoldingsButton = <Button id="clickable-view-holdings" onClick={this.viewHoldingsRecord}>View holdings</Button>;
+    const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ Add item</Button>;
+    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
-      <div>
-        <Row onClick={this.viewHoldingsRecord}>
-          <Col sm={4}>
-            <KeyValue label="Callnumber" value={holdingsRecord.callNumber} />
-          </Col>
+      <Accordion
+        open={accordionStates[holdingsRecord.id] === undefined || accordionStates[holdingsRecord.id]}
+        id={holdingsRecord.id}
+        onToggle={accordionToggle}
+        label={`Holdings: ${labelLocation} > ${labelCallNumber}`}
+        displayWhenOpen={<div>{viewHoldingsButton} {newItemButton}</div>}
+      >
+        <Row>
           { holdingsRecord.permanentLocationId ?
-            <Col sm={5}>
-              <KeyValue label="Permanent location" value={referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name} />
-            </Col>
+            null
             :
             <Col sm={5}>
               <KeyValue
@@ -102,12 +107,9 @@ class ItemsPerHoldingsRecord extends React.Component {
               <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
             </Col>
           }
-          <Col>
-            {newItemButton}
-          </Col>
         </Row>
         <Row>
-          <Col sm={10} smOffset={1}>
+          <Col sm={12}>
             <this.cItems holdingsRecord={holdingsRecord} referenceTables={referenceTables} okapi={okapi} instance={instance} location={location} history={this.props.history} match={this.props.match} />
           </Col>
         </Row>
@@ -126,7 +128,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             referenceTables={referenceTables}
           />
         </Layer>
-      </div>);
+      </Accordion>);
   }
 }
 
@@ -169,6 +171,8 @@ ItemsPerHoldingsRecord.propTypes = {
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
   }),
+  accordionToggle: PropTypes.func.isRequired,
+  accordionStates: PropTypes.object.isRequired,
 };
 
 export default ItemsPerHoldingsRecord;
