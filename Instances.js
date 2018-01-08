@@ -86,7 +86,7 @@ class Instances extends React.Component {
             };
 
             // eslint-disable-next-line no-useless-escape
-            let cql = `(title="${resourceData.query.query}*" or contributors adj "\"name\": \"${resourceData.query.query}*\"" or identifiers adj "\"value\": \"${resourceData.query.query}*\"")`;
+            let cql = `(title="${resourceData.query.query}*" or contributors adj "\\\"name\\\": \\\"${resourceData.query.query}*\\\"" or identifiers adj "\\\"value\\\": \\\"${resourceData.query.query}*\\\"")`;
             const filterCql = filters2cql(filterConfig, resourceData.query.filters);
             if (filterCql) {
               if (cql) {
