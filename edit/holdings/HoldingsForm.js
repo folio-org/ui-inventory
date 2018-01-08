@@ -57,7 +57,7 @@ function HoldingsForm(props) {
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" dismissible onClick={onCancel} lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu} paneTitle={initialValues.title ? 'Edit Holdings' : 'New Holdings Record'}>
+        <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu} paneTitle={initialValues.title ? 'Edit Holdings' : 'New Holdings Record'}>
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Holdings Record</h2>
