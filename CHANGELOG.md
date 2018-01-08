@@ -23,6 +23,7 @@
 * Adding `<Notes>`. Fixes UIIN-10. 
 * Adding search by Location. Refs UIIN-3.
 * Sort lookup tables server side because it's the right thing to do. 
+* Pass escape sequences on to CQL. Fixes UIIN-55.  
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
