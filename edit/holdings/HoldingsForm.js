@@ -4,13 +4,11 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from 'react-flexbox-grid';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
-import formatters from '../../referenceFormatters';
 
 import renderStatements from './holdingsStatementFields';
 
@@ -57,21 +55,24 @@ function HoldingsForm(props) {
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu} paneTitle={initialValues.title ? 'Edit Holdings' : 'New Holdings Record'}>
+        <Pane
+          defaultWidth="100%"
+          dismissible onClose={onCancel}
+          lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu}
+          paneTitle={
+            <div style={{ textAlign: 'center' }}>
+              <strong>{instance.title}</strong>
+              {(instance.publication && instance.publication.length > 0) &&
+                <div>
+                  <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
+                </div>
+              }
+            </div>
+          }
+        >
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Holdings Record</h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={2} smOffset={1}>
-              <KeyValue label="Title" value={instance.title} />
-            </Col>
-            <Col sm={2}>
-              <KeyValue label="Resource Type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
-            </Col>
-            <Col sm={2}>
-              <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
             </Col>
           </Row>
           <Row >

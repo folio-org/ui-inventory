@@ -90,6 +90,9 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
+    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    const labelCallNumber = holdingsRecord.callNumber || '';
+
     return (
       <div>
         <Layer isOpen label="View Item">
@@ -97,12 +100,13 @@ class ViewItem extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <strong>{instance.title}</strong>
+                <em>{instance.title}</em>
                 {(instance.publication && instance.publication.length > 0) &&
-                  <div>
-                    <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
-                  </div>
+                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
+                <div>
+                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                </div>
               </div>
             }
             lastMenu={detailMenu}
