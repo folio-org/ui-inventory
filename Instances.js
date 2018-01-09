@@ -128,7 +128,7 @@ class Instances extends React.Component {
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
-      path: 'contributor-types?limit=100&query=cql.allRecords=1sortby name',
+      path: 'contributor-types?limit=100&query=cql.allRecords=1 sortby name',
     },
     contributorNameTypes: {
       type: 'okapi',
