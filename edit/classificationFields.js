@@ -33,7 +33,7 @@ const ClassificationFields = ({ classificationTypes }) => {
           required: true,
         },
         ]}
-      newItemTemplate={{ name: '', classificationNameTypeId: '' }}
+      newItemTemplate={{ classificationNumber: '', classificationTypeId: '' }}
     />
   );
 };

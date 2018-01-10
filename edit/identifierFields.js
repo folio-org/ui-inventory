@@ -31,7 +31,7 @@ const IdentifierFields = ({ identifierTypes }) => {
           required: true,
         },
         ]}
-      newItemTemplate={{ name: '', identifierNameTypeId: '' }}
+      newItemTemplate={{ value: '', identifierTypeId: '' }}
     />
   );
 };
