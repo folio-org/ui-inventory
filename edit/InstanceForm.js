@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cloneDeep from 'lodash/cloneDeep';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
 
-import AlternativeTitles from './AlternativeTitles';
+import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
 import ContributorFields from './contributorFields';
 import IdentifierFields from './identifierFields';
@@ -89,30 +90,30 @@ class InstanceForm extends React.Component {
         instanceSection1: true,
         instanceSection2: true,
         instanceSection3: true,
-      }
+      },
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
   }
 
-  onToggleSection({ label, id }) {
+  onToggleSection({ id }) {
     this.setState((curState) => {
-      let newState = _.cloneDeep(curState); // remember to safely copy state! using lodash's cloneDeep() for example.
+      const newState = cloneDeep(curState); // remember to safely copy state! using lodash's cloneDeep() for example.
       newState.sections[id] = !curState.sections[id];
-      return newState
+      return newState;
     });
   }
 
   render() {
     const {
-        handleSubmit,
+      handleSubmit,
       pristine,
       submitting,
       onCancel,
       initialValues,
       referenceTables,
       copy,
-      } = this.props;
+    } = this.props;
 
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
       it => ({
@@ -137,87 +138,87 @@ class InstanceForm extends React.Component {
           <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">Instance Record</Headline>
-              
-            <Accordion label={<h3>Section 1</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
-            <Row>
-              <Col sm={7}>
-              <Row>
-                <Col sm={8}>
-                  <Field
-                    label="Title *"
-                    name="title"
-                    id="input_instance_title"
-                    component={TextField}
-                    fullWidth
-                    required
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={8}>
-                  <Field
-                    type="hidden"
-                    name="source"
-                    component="input"
-                  />
-                </Col>
-              </Row>
-                  <AlternativeTitles />
-                  <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
-              <Row>
-                <Col sm={8}>
-                  <Field
-                    name="instanceTypeId"
-                    id="select_instance_type"
-                    type="text"
-                    component={Select}
-                    label="Resource type *"
-                    dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
-                    required
-                  />
-                  </Col>
-              </Row>
-              <Row>
-                <Col sm={8}>
-                  <Field
-                    name="instanceFormatId"
-                    type="text"
-                    component={Select}
-                    label="Format"
-                    dataOptions={[{ label: 'Select format', value: '' }, ...instanceFormatOptions]}
-                  />
-                </Col>
-              </Row>
-              <IdentifierFields identifierTypes={referenceTables.identifierTypes} />
+
+                <Accordion label={<h3>Section 1</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
+                  <Row>
+                    <Col sm={7}>
+                      <Row>
+                        <Col sm={8}>
+                          <Field
+                            label="Title *"
+                            name="title"
+                            id="input_instance_title"
+                            component={TextField}
+                            fullWidth
+                            required
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={8}>
+                          <Field
+                            type="hidden"
+                            name="source"
+                            component="input"
+                          />
+                        </Col>
+                      </Row>
+                      <AlternativeTitles />
+                      <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
+                      <Row>
+                        <Col sm={8}>
+                          <Field
+                            name="instanceTypeId"
+                            id="select_instance_type"
+                            type="text"
+                            component={Select}
+                            label="Resource type *"
+                            dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
+                            required
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={8}>
+                          <Field
+                            name="instanceFormatId"
+                            type="text"
+                            component={Select}
+                            label="Format"
+                            dataOptions={[{ label: 'Select format', value: '' }, ...instanceFormatOptions]}
+                          />
+                        </Col>
+                      </Row>
+                      <IdentifierFields identifierTypes={referenceTables.identifierTypes} />
+                    </Col>
+                  </Row>
+                </Accordion>
+                <Accordion label={<h3>Section 2</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
+                  <Row>
+                    <Col sm={7}>
+                      <PublicationFields />
+                      <Row>
+                        <Col sm={8}>
+                          <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
+                        </Col>
+                      </Row>
+                      <DescriptionFields />
+                      <LanguageFields />
+                      <URLFields />
+                    </Col>
+                  </Row>
+                </Accordion>
+                <Accordion label={<h3>Section 3</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
+                  <Row>
+                    <Col sm={7}>
+                      <SeriesFields />
+                      <SubjectFields />
+                      <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
+                      <NoteFields />
+                    </Col>
+                  </Row>
+                </Accordion>
               </Col>
-              </Row>
-            </Accordion>
-            <Accordion label={<h3>Section 2</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
-            <Row>
-              <Col sm={7}>
-              <PublicationFields />
-              <Row>
-                <Col sm={8}>
-                  <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
-                </Col>
-              </Row>
-              <DescriptionFields />
-              <LanguageFields />
-              <URLFields />
-              </Col>
-              </Row>
-            </Accordion>
-            <Accordion label={<h3>Section 3</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
-            <Row>
-              <Col sm={7}>
-              <SeriesFields />
-              <SubjectFields />
-              <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
-              <NoteFields />
-              </Col>
-              </Row>
-            </Accordion>
-            </Col>
             </Row>
           </Pane>
         </Paneset>
