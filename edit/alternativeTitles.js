@@ -45,21 +45,16 @@ import { Field } from 'redux-form';
 class AlternativeTitles extends React.Component {
   render() {
     return (
-      <Row>
-        <Col sm={8} smOffset={1}>
-          <RepeatableField
-            name="alternativeTitles"
-            label="Alternative titles"
-            addLabel="+ Add title"
-            addId="clickable-add-alt-title"
-            template={[{
-              name: "text",
-              component: TextField
-            }]}
-            newItemTemplate={{text:''}}
-          />
-        </Col>
-      </Row>
+      <RepeatableField
+        name="alternativeTitles"
+        label="Alternative titles"
+        addLabel="+ Add alternative title"
+        addId="clickable-add-alt-title"
+        template={[{
+          label: "Alternative title",
+          component: TextField
+        }]}
+      />
     );
   }
 }

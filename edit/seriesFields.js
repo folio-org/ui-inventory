@@ -45,21 +45,16 @@ import { Field } from 'redux-form';
 class SeriesFields extends React.Component {
   render() {
     return (
-      <Row>
-        <Col sm={8} smOffset={1}>
-          <RepeatableField
-            name="series"
-            label="Series statement"
-            addLabel="+ Add series"
-            addId="clickable-add-series"
-            template={[{
-              name: "series",
-              component: TextField
-            }]}
-            newItemTemplate={{text:''}}
-          />
-        </Col>
-      </Row>
+      <RepeatableField
+        name="series"
+        label="Series statements"
+        addLabel="+ Add series"
+        addId="clickable-add-series"
+        template={[{
+          component: TextField
+        }]}
+        newItemTemplate={''}
+      />
     );
   }
 }

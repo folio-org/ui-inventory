@@ -9,22 +9,32 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
+import Headline from '@folio/stripes-components/lib/Headline';
 
 // import renderAlternativeTitles from './alternativeTitles';
 // import renderSeries from './seriesFields';
-//import renderContributors from './contributorFields';
-import renderSubjects from './subjectFields';
-import renderIdentifiers from './identifierFields';
-import renderClassifications from './classificationFields';
-import renderPublication from './publicationFields';
-import renderURLs from './urlFields';
-import renderDescriptions from './descriptionFields';
-import renderLanguages from './languageFields';
-import renderNotes from './noteFields';
+// import renderContributors from './contributorFields';
+// import renderSubjects from './subjectFields';
+// import renderIdentifiers from './identifierFields';
+// import renderClassifications from './classificationFields';
+// import renderPublication from './publicationFields';
+// import renderURLs from './urlFields';
+// import renderDescriptions from './descriptionFields';
+// import renderLanguages from './languageFields';
+// import renderNotes from './noteFields';
 
 import AlternativeTitles from './AlternativeTitles';
 import SeriesFields from './seriesFields';
 import ContributorFields from './contributorFields';
+import IdentifierFields from './identifierFields';
+import SubjectFields from './subjectFields';
+import ClassificationFields from './classificationFields';
+import PublicationFields from './publicationFields';
+import URLFields from './urlFields';
+import DescriptionFields from './descriptionFields';
+import NoteFields from './noteFields';
+import LanguageFields from './languageFields';
 
 function validate(values) {
   const errors = {};
@@ -82,94 +92,161 @@ function asyncValidate(/* values, dispatch, props, blurredField */) {
   return new Promise(resolve => resolve());
 }
 
-function InstanceForm(props) {
-  const {
-    handleSubmit,
-    pristine,
-    submitting,
-    onCancel,
-    initialValues,
-    referenceTables,
-    copy,
-  } = props;
+class InstanceForm extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
-                                it => ({
-                                  label: it.name,
-                                  value: it.id,
-                                  selected: it.id === initialValues.instanceTypeId,
-                                })) : [];
+    this.state = {
+      sections: {
+        instanceSection1: true,
+        instanceSection2: true,
+        instanceSection3: true,
+      }
+    };
 
-  const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
-                                it => ({
-                                  label: it.name,
-                                  value: it.id,
-                                  selected: it.id === initialValues.instanceFormatId,
-                                })) : [];
+    this.onToggleSection = this.onToggleSection.bind(this);
+  }
 
-  /* Menus for Add Instance workflow */
-  const addInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-instance" type="submit" title="Create New Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create instance</Button></PaneMenu>;
-  const editInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-instance" type="submit" title="Update Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update instance</Button></PaneMenu>;
-  return (
-    <form>
-      <Paneset isRoot>
-        <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
-          <Row>
-            <Col sm={5} smOffset={1}>
-              <h2>Instance Record</h2>
-              <Field label="Title *" name="title" id="input_instance_title" component={TextField} fullWidth />
+  onToggleSection({ label, id }) {
+    this.setState((curState) => {
+      let newState = _.cloneDeep(curState); // remember to safely copy state! using lodash's cloneDeep() for example.
+      newState.sections[id] = !curState.sections[id];
+      return newState
+    });
+  }
+
+  render() {
+    const {
+        handleSubmit,
+      pristine,
+      submitting,
+      onCancel,
+      initialValues,
+      referenceTables,
+      copy,
+      } = this.props;
+
+    const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceTypeId,
+      })) : [];
+
+    const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceFormatId,
+      })) : [];
+
+    /* Menus for Add Instance workflow */
+    const addInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-instance" type="submit" title="Create New Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create instance</Button></PaneMenu>;
+    const editInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-instance" type="submit" title="Update Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update instance</Button></PaneMenu>;
+    return (
+      <form>
+        <Paneset isRoot>
+          <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
+            <Row>
+              <Col sm={12}><Headline size="large" tag="h3">Instance Record</Headline>
+              
+            <Accordion label={<h3>Section 1</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
+            <Row>
+              <Col sm={7}>
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    label="Title *"
+                    name="title"
+                    id="input_instance_title"
+                    component={TextField}
+                    fullWidth
+                    required
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    type="hidden"
+                    name="source"
+                    component="input"
+                  />
+                </Col>
+              </Row>
+                  {/*<FieldArray name="alternativeTitles" component={renderAlternativeTitles} />*/}
+                  <AlternativeTitles />
+                  <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    name="instanceTypeId"
+                    id="select_instance_type"
+                    type="text"
+                    component={Select}
+                    label="Resource type *"
+                    dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
+                    required
+                  />
+                  </Col>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    name="instanceFormatId"
+                    type="text"
+                    component={Select}
+                    label="Format"
+                    dataOptions={[{ label: 'Select format', value: '' }, ...instanceFormatOptions]}
+                  />
+                </Col>
+              </Row>
+              <IdentifierFields identifierTypes={referenceTables.identifierTypes} />
+              {/* <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={referenceTables.identifierTypes} />       */}
+              </Col>
+              </Row>
+            </Accordion>
+            <Accordion label={<h3>Section 2</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
+            <Row>
+              <Col sm={7}>
+              {/* <FieldArray name="publication" component={renderPublication} /> */}
+              <PublicationFields />
+              <Row>
+                <Col sm={8}>
+                  <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
+                </Col>
+              </Row>
+              {/* <FieldArray name="physicalDescriptions" component={renderDescriptions} /> */}
+              <DescriptionFields />
+              {/* <FieldArray name="languages" component={renderLanguages} /> */}
+              <LanguageFields />
+              {/* <FieldArray name="urls" component={renderURLs} /> */}
+              <URLFields />
+              </Col>
+              </Row>
+            </Accordion>
+            <Accordion label={<h3>Section 3</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
+            <Row>
+              <Col sm={7}>
+              <SeriesFields />
+              {/* <FieldArray name="subjects" component={renderSubjects} /> */}
+              <SubjectFields />
+              {/* <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} /> */}
+              <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
+              {/* <FieldArray name="notes" component={renderNotes} /> */}
+              <NoteFields />
+              </Col>
+              </Row>
+            </Accordion>
             </Col>
-          </Row>
-          <Field type="hidden" name="source" component="input" />
-          <Row>
-            <Col sm={5} smOffset={1}>
-              <Field
-                name="instanceTypeId"
-                id="select_instance_type"
-                type="text"
-                component={Select}
-                label="Resource type *"
-                dataOptions={[{ label: 'Select resource type', value: '' }, ...instanceTypeOptions]}
-              />
-            </Col>
-          </Row>
-          <AlternativeTitles />
-          {/*<FieldArray name="alternativeTitles" component={renderAlternativeTitles} />*/}
-          <Row>
-            <Col sm={5} smOffset={1}>
-              <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
-            </Col>
-          </Row>
-
-          <SeriesFields />
-
-          <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={referenceTables.identifierTypes} />
-          <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
-          {/* <FieldArray name="contributors" component={renderContributors} contributorNameTypes={referenceTables.contributorNameTypes} /> */}
-          <FieldArray name="subjects" component={renderSubjects} />
-          <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} />
-          <FieldArray name="publication" component={renderPublication} />
-          <FieldArray name="urls" component={renderURLs} />
-
-          <Row>
-            <Col sm={5} smOffset={1}>
-              <Field
-                name="instanceFormatId"
-                type="text"
-                component={Select}
-                label="Format"
-                dataOptions={[{ label: 'Select format', value: '' }, ...instanceFormatOptions]}
-              />
-            </Col>
-          </Row>
-          <FieldArray name="physicalDescriptions" component={renderDescriptions} />
-          <FieldArray name="languages" component={renderLanguages} />
-          <FieldArray name="notes" component={renderNotes} />
-        </Pane>
-      </Paneset>
-    </form>
-  );
+            </Row>
+          </Pane>
+        </Paneset>
+      </form>
+    );
+  }
 }
+
 InstanceForm.propTypes = {
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newinstance: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types

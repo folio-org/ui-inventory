@@ -68,28 +68,27 @@ class ContributorFields extends React.Component {
                                                 value: it.id,
                                               }));
     return (
-      <Row>
-        <Col sm={8} smOffset={1}>
-          <RepeatableField
-            name="contributors"
-            label="Contributor(s)"
-            addLabel="+ Add contributor"
-            addId="clickable-add-contributor"
-            template={
-              [ {
-                  name: "name",
-                  component: TextField
-                },
-                {
-                  name: "contributorNameTypeId",
-                  component: Select,
-                  dataOptions: [{ label: 'Select name type', value: '' }, ...contributorNameTypeOptions],
-                },
-              ]}
-            newItemTemplate={{name:'', contributorNameTypeId:''}}
-          />
-        </Col>
-      </Row>
+
+      <RepeatableField
+        name="contributors"
+        label="Contributors"
+        addLabel="+ Add contributor"
+        addId="clickable-add-contributor"
+        template={
+          [ {
+              label:'Name',
+              name:'name',
+              component: TextField
+            },
+            {
+              label: 'Type',
+              name: 'contributorNameTypeId',
+              component: Select,
+              dataOptions: [{ label: 'Select name type', value: '' }, ...contributorNameTypeOptions],
+            },
+          ]}
+        newItemTemplate={{name:'', contributorNameTypeId:''}}
+      />
     );
   }
 }
