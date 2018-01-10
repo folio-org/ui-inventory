@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
@@ -99,30 +98,32 @@ function ItemForm(props) {
     selected: (initialValues.temporaryLocation) ? initialValues.temporaryLocation.id === l.id : false,
   }));
 
+  const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+  const labelCallNumber = holdingsRecord.callNumber || '';
+
   return (
     <form>
       <Paneset isRoot>
-        <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={(initialValues.title) ? editItemLastMenu : addItemLastMenu} paneTitle={(initialValues.title) ? 'Edit Item' : 'New Item'}>
+        <Pane
+          defaultWidth="100%"
+          dismissible
+          onClose={onCancel}
+          lastMenu={(initialValues.title) ? editItemLastMenu : addItemLastMenu}
+          paneTitle={
+            <div style={{ textAlign: 'center' }}>
+              <em>{instance.title}</em>
+              {(instance.publication && instance.publication.length > 0) &&
+              <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
+              }
+              <div>
+                {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+              </div>
+            </div>
+          }
+        >
           <Row>
             <Col sm={5} smOffset={1}>
               <h2>Item Record</h2>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={2} smOffset={1}>
-              <KeyValue label="Title" value={instance.title} />
-            </Col>
-            <Col sm={2}>
-              <KeyValue label="Call Number" value={holdingsRecord.callNumber} />
-            </Col>
-            <Col sm={2}>
-              <KeyValue
-                label="Location"
-                value={holdingsRecord.permanentLocationId ?
-                  referenceTables.shelfLocations.find(loc => loc.id === holdingsRecord.permanentLocationId).name
-                  :
-                  null}
-              />
             </Col>
           </Row>
           <Row >

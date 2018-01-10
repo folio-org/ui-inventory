@@ -5,6 +5,7 @@ import queryString from 'query-string';
 
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Layer from '@folio/stripes-components/lib/Layer';
@@ -51,8 +52,7 @@ class ViewInstance extends React.Component {
 
     this.state = {
       accordions: {
-        itemsAccordion: true,
-        holdingsAccordion: true,
+        instanceAccordion: true,
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -109,6 +109,7 @@ class ViewInstance extends React.Component {
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
+      if (!_.has(newState.accordions, id)) newState.accordions[id] = true;
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
@@ -156,7 +157,7 @@ class ViewInstance extends React.Component {
 
     const that = this;
 
-    const newHoldingsRecordButton = <div style={{ textAlign: 'right' }}><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary paneHeaderNewButton">+ New holdings</Button></div>;
+    const newHoldingsRecordButton = <div><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary" fullWidth>+ Add holdings</Button></div>;
 
     return instance ? (
       <Pane
@@ -167,144 +168,145 @@ class ViewInstance extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Metadata source" value="TBA" />
-          </Col>
-        </Row>
-        { (instance.identifiers.length > 0) &&
+        <Accordion
+          open={this.state.accordions.instanceAccordion}
+          id={'instanceAccordion'}
+          onToggle={this.handleAccordionToggle}
+          label="Instance"
+          displayWhenOpen={<Button>Add item</Button>}
+        >
           <Row>
             <Col xs={12}>
-              <KeyValue label="Resource identifier" value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
+              <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
             </Col>
           </Row>
-        }
-        { (instance.instanceFormatId) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+              <KeyValue label="Metadata source" value="TBA" />
             </Col>
           </Row>
-        }
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Resource title" value={_.get(instance, ['title'], '')} />
-          </Col>
-        </Row>
-        { (instance.alternativeTitles.length > 0) &&
+          { (instance.identifiers.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Resource identifier" value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
+              </Col>
+            </Row>
+          }
+          { (instance.instanceFormatId) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+              </Col>
+            </Row>
+          }
           <Row>
             <Col xs={12}>
-              <KeyValue label="Alternative titles" value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)} />
+              <KeyValue label="Resource title" value={_.get(instance, ['title'], '')} />
             </Col>
           </Row>
-        }
-        { (instance.contributors.length > 0) &&
+          { (instance.alternativeTitles.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Alternative titles" value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)} />
+              </Col>
+            </Row>
+          }
+          { (instance.contributors.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+              </Col>
+            </Row>
+          }
+          { (instance.publication.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
+              </Col>
+            </Row>
+          }
           <Row>
             <Col xs={12}>
-              <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+              <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
             </Col>
           </Row>
-        }
-        { (instance.publication.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
-            </Col>
-          </Row>
-        }
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
-          </Col>
-        </Row>
-        { (instance.physicalDescriptions.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Physical description" value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
-            </Col>
-          </Row>
-        }
-        { (instance.languages.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Language" value={formatters.languagesFormatter(instance)} />
-            </Col>
-          </Row>
-        }
-        { (instance.subjects.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Subject headings" value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
-            </Col>
-          </Row>
-        }
-        { (instance.classifications.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
-            </Col>
-          </Row>
-        }
-        { (instance.notes.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Notes" value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
-            </Col>
-          </Row>
-        }
-        { (!!instance.edition) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
-            </Col>
-          </Row>
-        }
-        { (instance.series.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
-            </Col>
-          </Row>
-        }
-        { (instance.urls.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="URLs" value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
-            </Col>
-          </Row>
-        }
-        { (instance.metadata && instance.metadata.createdDate) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Date added to FOLIO" value={formatDateTime(_.get(instance, ['metadata', 'createdDate'], '').toLocaleString(this.props.stripes.locale))} />
-            </Col>
-          </Row>
-        }
-        { (instance.metadata && instance.metadata.updatedDate) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label="Record last updated" value={formatDateTime(_.get(instance, ['metadata', 'updatedDate'], '').toLocaleString(this.props.stripes.locale))} />
-            </Col>
-          </Row>
-        }
-        <br />
-        <Row>
-          <Col><h3>Holdings</h3></Col>
-          <Col sm={10}>{newHoldingsRecordButton}</Col>
-        </Row>
-        <br />
+          { (instance.physicalDescriptions.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Physical description" value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+              </Col>
+            </Row>
+          }
+          { (instance.languages.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Language" value={formatters.languagesFormatter(instance)} />
+              </Col>
+            </Row>
+          }
+          { (instance.subjects.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Subject headings" value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
+              </Col>
+            </Row>
+          }
+          { (instance.classifications.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+              </Col>
+            </Row>
+          }
+          { (instance.notes.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Notes" value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+              </Col>
+            </Row>
+          }
+          { (!!instance.edition) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
+              </Col>
+            </Row>
+          }
+          { (instance.series.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
+              </Col>
+            </Row>
+          }
+          { (instance.urls.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="URLs" value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+              </Col>
+            </Row>
+          }
+          { (instance.metadata && instance.metadata.createdDate) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Date added to FOLIO" value={formatDateTime(_.get(instance, ['metadata', 'createdDate'], '').toLocaleString(this.props.stripes.locale))} />
+              </Col>
+            </Row>
+          }
+          { (instance.metadata && instance.metadata.updatedDate) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label="Record last updated" value={formatDateTime(_.get(instance, ['metadata', 'updatedDate'], '').toLocaleString(this.props.stripes.locale))} />
+              </Col>
+            </Row>
+          }
+        </ Accordion>
         { (!holdingsrecordid && !itemid) ?
           <this.cHoldings
             dataKey={id}
             id={id}
-            accordionExpanded={this.state.accordions.holdingsAccordion}
-            accordionId="holdingsAccordion"
             accordionToggle={this.handleAccordionToggle}
+            accordionStates={this.state.accordions}
             instance={instance}
             referenceTables={referenceTables}
             match={this.props.match}
@@ -322,7 +324,9 @@ class ViewInstance extends React.Component {
           <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
          : null
         }
-        <br />
+        <Row>
+          <Col sm={12}>{newHoldingsRecordButton}</Col>
+        </Row>
         <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
           <InstanceForm
             onSubmit={(record) => { this.update(record); }}

@@ -85,7 +85,7 @@ class Instances extends React.Component {
               Contributors: 'contributors',
             };
 
-            let cql = `(title="${resourceData.query.query}*" or contributors="name": "${resourceData.query.query}*" or identifiers="value": "${resourceData.query.query}*")`;
+            let cql = `(title="${resourceData.query.query}*" or contributors adj "\\"name\\": \\"${resourceData.query.query}*\\"" or identifiers adj "\\"value\\": \\"${resourceData.query.query}*\\"")`;
             const filterCql = filters2cql(filterConfig, resourceData.query.filters);
             if (filterCql) {
               if (cql) {
@@ -128,7 +128,7 @@ class Instances extends React.Component {
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
-      path: 'contributor-types?limit=100&query=cql.allRecords=1sortby name',
+      path: 'contributor-types?limit=100&query=cql.allRecords=1 sortby name',
     },
     contributorNameTypes: {
       type: 'okapi',
