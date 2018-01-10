@@ -12,18 +12,6 @@ import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
 
-// import renderAlternativeTitles from './alternativeTitles';
-// import renderSeries from './seriesFields';
-// import renderContributors from './contributorFields';
-// import renderSubjects from './subjectFields';
-// import renderIdentifiers from './identifierFields';
-// import renderClassifications from './classificationFields';
-// import renderPublication from './publicationFields';
-// import renderURLs from './urlFields';
-// import renderDescriptions from './descriptionFields';
-// import renderLanguages from './languageFields';
-// import renderNotes from './noteFields';
-
 import AlternativeTitles from './AlternativeTitles';
 import SeriesFields from './seriesFields';
 import ContributorFields from './contributorFields';
@@ -174,7 +162,6 @@ class InstanceForm extends React.Component {
                   />
                 </Col>
               </Row>
-                  {/*<FieldArray name="alternativeTitles" component={renderAlternativeTitles} />*/}
                   <AlternativeTitles />
                   <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
               <Row>
@@ -202,25 +189,20 @@ class InstanceForm extends React.Component {
                 </Col>
               </Row>
               <IdentifierFields identifierTypes={referenceTables.identifierTypes} />
-              {/* <FieldArray name="identifiers" component={renderIdentifiers} identifierTypes={referenceTables.identifierTypes} />       */}
               </Col>
               </Row>
             </Accordion>
             <Accordion label={<h3>Section 2</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
             <Row>
               <Col sm={7}>
-              {/* <FieldArray name="publication" component={renderPublication} /> */}
               <PublicationFields />
               <Row>
                 <Col sm={8}>
                   <Field label="Edition" name="edition" id="input_instance_edition" component={TextField} fullWidth />
                 </Col>
               </Row>
-              {/* <FieldArray name="physicalDescriptions" component={renderDescriptions} /> */}
               <DescriptionFields />
-              {/* <FieldArray name="languages" component={renderLanguages} /> */}
               <LanguageFields />
-              {/* <FieldArray name="urls" component={renderURLs} /> */}
               <URLFields />
               </Col>
               </Row>
@@ -229,11 +211,8 @@ class InstanceForm extends React.Component {
             <Row>
               <Col sm={7}>
               <SeriesFields />
-              {/* <FieldArray name="subjects" component={renderSubjects} /> */}
               <SubjectFields />
-              {/* <FieldArray name="classifications" component={renderClassifications} classificationTypes={referenceTables.classificationTypes} /> */}
               <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
-              {/* <FieldArray name="notes" component={renderNotes} /> */}
               <NoteFields />
               </Col>
               </Row>
