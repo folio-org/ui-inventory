@@ -16,8 +16,8 @@ const IdentifierFields = ({ identifierTypes }) => {
       label="Identifiers"
       addLabel="+ Add identifier"
       addId="clickable-add-identifier"
-      template={
-        [{
+      template={[
+        {
           name: 'value',
           label: 'Identifier *',
           component: TextField,
@@ -30,7 +30,7 @@ const IdentifierFields = ({ identifierTypes }) => {
           dataOptions: [{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions],
           required: true,
         },
-        ]}
+      ]}
       newItemTemplate={{ value: '', identifierTypeId: '' }}
     />
   );

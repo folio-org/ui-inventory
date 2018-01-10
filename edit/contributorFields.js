@@ -17,8 +17,8 @@ const ContributorFields = ({ contributorNameTypes }) => {
       label="Contributors"
       addLabel="+ Add contributor"
       addId="clickable-add-contributor"
-      template={
-        [{
+      template={[
+        {
           label: 'Name',
           name: 'name',
           component: TextField,
@@ -29,7 +29,7 @@ const ContributorFields = ({ contributorNameTypes }) => {
           component: Select,
           dataOptions: [{ label: 'Select name type', value: '' }, ...contributorNameTypeOptions],
         },
-        ]}
+      ]}
       newItemTemplate={{ name: '', contributorNameTypeId: '' }}
     />
   );

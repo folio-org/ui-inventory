@@ -18,8 +18,8 @@ const ClassificationFields = ({ classificationTypes }) => {
       addLabel="+ Add classification"
       addId="clickable-add-classification"
       addDefaultItem={false}
-      template={
-        [{
+      template={[
+        {
           label: 'Number *',
           name: 'classificationNumber',
           component: TextField,
@@ -32,7 +32,7 @@ const ClassificationFields = ({ classificationTypes }) => {
           dataOptions: [{ label: 'Select classification type', value: '' }, ...classificationTypeOptions],
           required: true,
         },
-        ]}
+      ]}
       newItemTemplate={{ classificationNumber: '', classificationTypeId: '' }}
     />
   );
