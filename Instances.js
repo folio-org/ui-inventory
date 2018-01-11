@@ -81,7 +81,7 @@ class Instances extends React.Component {
             const resourceData = args[2];
             const sortMap = {
               Title: 'title',
-              Publisher: 'publisher',
+              publishers: 'publication',
               Contributors: 'contributors',
             };
 
@@ -306,7 +306,7 @@ class Instances extends React.Component {
                          _.get(packageInfo, ['stripes', 'route']));
 
     const resultsFormatter = {
-      publication: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
+      publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       contributors: r => formatters.contributorsFormatter(r, contributorTypes),
     };
@@ -323,7 +323,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'contributors', 'publication']}
+      visibleColumns={['title', 'contributors', 'publishers']}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
       viewRecordPerms="inventory-storage.instances.item.get"
