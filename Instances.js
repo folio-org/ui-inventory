@@ -317,6 +317,7 @@ class Instances extends React.Component {
       objectName="inventory"
       baseRoute={packageInfo.stripes.route}
       initialPath={initialPath}
+      maxSortKeys={1}
       filterConfig={filterConfig}
       initialResultCount={INITIAL_RESULT_COUNT}
       resultCountIncrement={RESULT_COUNT_INCREMENT}
