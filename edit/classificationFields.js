@@ -16,7 +16,7 @@ const ClassificationFields = ({ classificationTypes }) => {
       name="classifications"
       label="Classifications"
       addLabel="+ Add classification"
-      addId="clickable-add-classification"
+      addButtonId="clickable-add-classification"
       addDefaultItem={false}
       template={[
         {

@@ -15,7 +15,7 @@ const IdentifierFields = ({ identifierTypes }) => {
       name="identifiers"
       label="Identifiers"
       addLabel="+ Add identifier"
-      addId="clickable-add-identifier"
+      addButtonId="clickable-add-identifier"
       template={[
         {
           name: 'value',

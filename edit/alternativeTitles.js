@@ -7,7 +7,7 @@ const AlternativeTitles = () => (
     name="alternativeTitles"
     label="Alternative titles"
     addLabel="+ Add alternative title"
-    addId="clickable-add-alt-title"
+    addButtonId="clickable-add-alternativeTitle"
     template={[{
       label: 'Alternative title',
       component: TextField,

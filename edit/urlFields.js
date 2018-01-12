@@ -7,7 +7,7 @@ const URLFields = () => (
     name="urls"
     label="URLs"
     addLabel="+ Add URL"
-    addId="clickable-add-url"
+    addButtonId="clickable-add-url"
     template={[{
       label: 'URL',
       component: TextField,

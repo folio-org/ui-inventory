@@ -16,7 +16,7 @@ const ContributorFields = ({ contributorNameTypes }) => {
       name="contributors"
       label="Contributors"
       addLabel="+ Add contributor"
-      addId="clickable-add-contributor"
+      addButtonId="clickable-add-contributor"
       template={[
         {
           label: 'Name',
