@@ -7,7 +7,7 @@ const SubjectFields = () => (
     name="subjects"
     label="Subjects"
     addLabel="+ Add subject"
-    addId="clickable-add-subject"
+    addButtonId="clickable-add-subject"
     template={[{
       component: TextField,
     }]}

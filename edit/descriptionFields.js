@@ -7,7 +7,7 @@ const DescriptionFields = () => (
     name="physicalDescriptions"
     label="Descriptions"
     addLabel="+ Add description"
-    addId="clickable-add-description"
+    addButtonId="clickable-add-description"
     template={[{
       label: 'Description',
       component: TextField,

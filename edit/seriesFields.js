@@ -7,7 +7,7 @@ const SeriesFields = () => (
     name="series"
     label="Series statements"
     addLabel="+ Add series"
-    addId="clickable-add-series"
+    addButtonId="clickable-add-series"
     template={[{
       component: TextField,
     }]}

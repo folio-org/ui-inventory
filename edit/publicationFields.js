@@ -7,7 +7,7 @@ const PublicationFields = () => (
     name="publication"
     label="Publications"
     addLabel="+ Add publication"
-    addId="clickable-add-publication"
+    addButtonId="clickable-add-publication"
     template={[
       {
         name: 'publisher',

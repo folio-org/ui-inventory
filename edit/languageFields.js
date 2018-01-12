@@ -27,7 +27,7 @@ const LanguageFields = () => (
     name="languages"
     label="Languages"
     addLabel="+ Add language"
-    addId="clickable-add-language"
+    addButtonId="clickable-add-language"
     template={[{
       render: renderLanguageField,
     }]}

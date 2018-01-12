@@ -7,7 +7,7 @@ const NoteFields = () => (
     name="notes"
     label="Notes"
     addLabel="+ Add note"
-    addId="clickable-add-note"
+    addButtonId="clickable-add-notes"
     template={[{
       label: 'Note',
       component: TextField,
