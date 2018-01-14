@@ -24,6 +24,10 @@ function validate(values) {
     errors.permanentLoanTypeId = 'Please select to continue';
   }
 
+  if (!values.status.name) {
+    errors.status = { name: 'Please fill this in to continue' };
+  }
+
   return errors;
 }
 
@@ -154,7 +158,7 @@ function ItemForm(props) {
                 fullWidth
                 dataOptions={[{ label: 'Select temporary location', value: '' }, ...temporaryLocationOptions]}
               />
-              <Field label="Status" name="status.name" id="additem_status" component={TextField} disabled fullWidth />
+              <Field label="Status" name="status.name" id="additem_status" component={TextField} fullWidth />
               <Field
                 label="Loan Type (Temporary)"
                 name="temporaryLoanType.id"

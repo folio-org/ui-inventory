@@ -27,6 +27,7 @@
 * Close "Add holdings" pane correctly. Fixes UIIN-54.
 * Sort contributor-types correctly. Refs UIIN-32. 
 * Implement `<RepeatableField>` component on InstanceForm. Fixes UIIN-52.
+* Enable and validate item-record's status field. Fixes UIIN-61.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
