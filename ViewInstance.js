@@ -177,6 +177,12 @@ class ViewInstance extends React.Component {
         >
           <Row>
             <Col xs={12}>
+              Instance record {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+            </Col>
+          </Row>
+          <br />
+          <Row>
+            <Col xs={12}>
               <h3>{instance.title}</h3>
             </Col>
           </Row>
