@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Icon from '@folio/stripes-components/lib/Icon';
@@ -38,6 +39,15 @@ class ViewHoldingsRecord extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      accordions: {
+        holdingsAccordion: true,
+      },
+    };
+  }
+
   // Edit Holdings records handlers
   onClickEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
@@ -55,6 +65,14 @@ class ViewHoldingsRecord extends React.Component {
     if (holdings.platformId === '') delete holdings.platformId;
     this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
       this.onClickCloseEditHoldingsRecord();
+    });
+  }
+
+  handleAccordionToggle = ({ id }) => {
+    this.setState((state) => {
+      const newState = _.cloneDeep(state);
+      newState.accordions[id] = !newState.accordions[id];
+      return newState;
     });
   }
 
@@ -90,49 +108,55 @@ class ViewHoldingsRecord extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <strong>{instance.title}</strong>
-                {(instance.publication && instance.publication.length > 0) &&
-                  <div>
-                    <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
-                  </div>
-                }
+                <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
+                <div>
+                  Holdings
+                </div>
               </div>
             }
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
           >
-            <Row>
-              <Col smOffset={1} sm={4}>
-                <KeyValue label="Call number" value={_.get(holdingsRecord, ['callNumber'], '')} />
-              </Col>
-            </Row>
-            <Row>
-              <Col smOffset={1} sm={4}>
-                <KeyValue label="Permanent location" value={holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} />
-              </Col>
-            </Row>
-            { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
+            <Accordion
+              open={this.state.accordions.holdingsAccordion}
+              id={'holdingsAccordion'}
+              onToggle={this.handleAccordionToggle}
+              label="Holdings data"
+            >
               <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
+                <Col sm={12}>
+                  Holdings record
                 </Col>
               </Row>
-            }
-            { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
+              <br />
               <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
+                <Col sm={12}>
+                  {holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
                 </Col>
               </Row>
-            }
-            { (holdingsRecord.holdingsStatements.length > 0) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                </Col>
-              </Row>
-            }
+              { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
+                <Row>
+                  <Col smOffset={1} sm={4}>
+                    <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
+                  </Col>
+                </Row>
+              }
+              { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
+                <Row>
+                  <Col smOffset={1} sm={4}>
+                    <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (holdingsRecord.holdingsStatements.length > 0) &&
+                <Row>
+                  <Col smOffset={1} sm={4}>
+                    <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
+                </Row>
+              }
+            </Accordion>
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label="Edit Holdings Record Dialog">

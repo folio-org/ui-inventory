@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
@@ -47,6 +48,15 @@ class ViewItem extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      accordions: {
+        itemAccordion: true,
+      },
+    };
+  }
+
   onClickEditItem = (e) => {
     if (e) e.preventDefault();
     transitionToParams.bind(this)({ layer: 'editItem' });
@@ -60,6 +70,14 @@ class ViewItem extends React.Component {
   updateItem = (item) => {
     this.props.mutator.items.PUT(item).then(() => {
       this.onClickCloseEditItem();
+    });
+  }
+
+  handleAccordionToggle = ({ id }) => {
+    this.setState((state) => {
+      const newState = _.cloneDeep(state);
+      newState.accordions[id] = !newState.accordions[id];
+      return newState;
     });
   }
 
@@ -90,9 +108,6 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
-    const labelCallNumber = holdingsRecord.callNumber || '';
-
     return (
       <div>
         <Layer isOpen label="View Item">
@@ -100,12 +115,9 @@ class ViewItem extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <em>{instance.title}</em>
-                {(instance.publication && instance.publication.length > 0) &&
-                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
-                }
+                {_.get(item, ['barcode'], '')}
                 <div>
-                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  Item . {_.get(item, ['status', 'name'], '')}
                 </div>
               </div>
             }
@@ -113,83 +125,84 @@ class ViewItem extends React.Component {
             dismissible
             onClose={this.props.onCloseViewItem}
           >
-            { (item.barcode) &&
+            <Accordion
+              open={this.state.accordions.itemAccordion}
+              id={'itemAccordion'}
+              onToggle={this.handleAccordionToggle}
+              label="Item data"
+            >
               <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Barcode" value={_.get(item, ['barcode'], '')} />
+                <Col sm={12}>
+                  Item record {_.get(item, ['materialType', 'name'], '')} {_.get(item, ['status', 'name'], '')}
                 </Col>
               </Row>
-            }
-            { (item.materialType) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Material type" value={_.get(item, ['materialType', 'name'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.temporaryLocation) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Temporary location" value={_.get(item, ['temporaryLocation', 'name'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.status) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Status" value={_.get(item, ['status', 'name'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.permanentLoanType) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Permanent loantype" value={_.get(item, ['permanentLoanType', 'name'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.temporaryLoanType) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Temporary loantype" value={_.get(item, ['temporaryLoanType', 'name'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.enumeration) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Enumeration" value={_.get(item, ['enumeration'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.chronology) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Chronology" value={_.get(item, ['chronology'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.numberOfPieces) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Number of pieces" value={_.get(item, ['numberOfPieces'], '')} />
-                </Col>
-              </Row>
-            }
-            { (item.pieceIdentifiers) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Piece identifiers" value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                </Col>
-              </Row>
-            }
-            { (item.notes.length > 0) &&
-              <Row>
-                <Col smOffset={1} sm={4}>
-                  <KeyValue label="Notes" value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                </Col>
-              </Row>
-            }
+              <br />
+              { (item.barcode) &&
+                <Row>
+                  <br />
+                  <Col sm={12}>
+                    <strong>{_.get(item, ['barcode'], '')}</strong>
+                  </Col>
+                </Row>
+              }
+              <br /><br />
+              { (item.temporaryLocation) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Temporary location" value={_.get(item, ['temporaryLocation', 'name'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (item.permanentLoanType) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Permanent loantype" value={_.get(item, ['permanentLoanType', 'name'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (item.temporaryLoanType) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Temporary loantype" value={_.get(item, ['temporaryLoanType', 'name'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (item.enumeration) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Enumeration" value={_.get(item, ['enumeration'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (item.chronology) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Chronology" value={_.get(item, ['chronology'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (item.numberOfPieces) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Number of pieces" value={_.get(item, ['numberOfPieces'], '')} />
+                  </Col>
+                </Row>
+              }
+              { (item.pieceIdentifiers) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Piece identifiers" value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
+                </Row>
+              }
+              { (item.notes.length > 0) &&
+                <Row>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label="Notes" value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
+                </Row>
+              }
+            </Accordion>
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? query.layer === 'editItem' : false} label="Edit Item Dialog">
