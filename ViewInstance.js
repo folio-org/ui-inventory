@@ -172,9 +172,15 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.instanceAccordion}
           id={'instanceAccordion'}
           onToggle={this.handleAccordionToggle}
-          label="Instance"
+          label="Instance data"
           displayWhenOpen={<Button>Add item</Button>}
         >
+          <Row>
+            <Col xs={12}>
+              <h3>{instance.title}</h3>
+            </Col>
+          </Row>
+          <br />
           <Row>
             <Col xs={12}>
               <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
