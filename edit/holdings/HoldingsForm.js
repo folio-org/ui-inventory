@@ -134,4 +134,5 @@ HoldingsForm.propTypes = {
 export default stripesForm({
   form: 'holdingsForm',
   navigationCheck: true,
+  validate,
 })(HoldingsForm);
