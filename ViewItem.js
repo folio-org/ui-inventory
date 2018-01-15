@@ -108,6 +108,9 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
+    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    const labelCallNumber = holdingsRecord.callNumber || '';
+
     return (
       <div>
         <Layer isOpen label="View Item">
@@ -125,6 +128,17 @@ class ViewItem extends React.Component {
             dismissible
             onClose={this.props.onCloseViewItem}
           >
+            <Row center="xs">
+              <Col sm={6}>
+                Instance: {instance.title}
+                {(instance.publication && instance.publication.length > 0) &&
+                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
+                }
+                <div>
+                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                </div>
+              </Col>
+            </Row>
             <Accordion
               open={this.state.accordions.itemAccordion}
               id={'itemAccordion'}
