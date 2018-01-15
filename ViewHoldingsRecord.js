@@ -118,6 +118,15 @@ class ViewHoldingsRecord extends React.Component {
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
           >
+            <Row center="xs">
+              <Col sm={6}>
+                Instance: {instance.title}
+                {(instance.publication && instance.publication.length > 0) &&
+                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
+                }
+              </Col>
+            </Row>
+
             <Accordion
               open={this.state.accordions.holdingsAccordion}
               id={'holdingsAccordion'}
