@@ -11,10 +11,11 @@ import { Row, Col } from 'react-flexbox-grid';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import MetaSection from '@folio/stripes-components/lib/MetaSection';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
-import { removeQueryParam, formatDateTime } from './utils';
+import { removeQueryParam } from './utils';
 import formatters from './referenceFormatters';
 
 import Holdings from './Holdings';
@@ -299,18 +300,12 @@ class ViewInstance extends React.Component {
             </Row>
           }
           { (instance.metadata && instance.metadata.createdDate) &&
-            <Row>
-              <Col xs={12}>
-                <KeyValue label="Date added to FOLIO" value={formatDateTime(_.get(instance, ['metadata', 'createdDate'], '').toLocaleString(this.props.stripes.locale))} />
-              </Col>
-            </Row>
-          }
-          { (instance.metadata && instance.metadata.updatedDate) &&
-            <Row>
-              <Col xs={12}>
-                <KeyValue label="Record last updated" value={formatDateTime(_.get(instance, ['metadata', 'updatedDate'], '').toLocaleString(this.props.stripes.locale))} />
-              </Col>
-            </Row>
+            <MetaSection
+              id="instanceRecordMeta"
+              contentId="instanceRecordMetaContent"
+              lastUpdatedDate={instance.metadata.updatedDate}
+              createdDate={instance.metadata.createdDate}
+            />
           }
         </ Accordion>
         { (!holdingsrecordid && !itemid) ?
