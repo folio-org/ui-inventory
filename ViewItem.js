@@ -9,8 +9,10 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
+import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+
+import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
 import { removeQueryParam } from './utils';
 
@@ -153,9 +155,10 @@ class ViewItem extends React.Component {
               <br />
               { (item.barcode) &&
                 <Row>
-                  <br />
                   <Col sm={12}>
-                    <strong>{_.get(item, ['barcode'], '')}</strong>
+                    <Headline size="medium" margin="medium">
+                      {_.get(item, ['barcode'], '')}
+                    </Headline>
                   </Col>
                 </Row>
               }

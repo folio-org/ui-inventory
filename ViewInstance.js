@@ -12,6 +12,7 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import MetaSection from '@folio/stripes-components/lib/MetaSection';
+import Headline from '@folio/stripes-components/lib/Headline';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
@@ -184,7 +185,9 @@ class ViewInstance extends React.Component {
           <br />
           <Row>
             <Col xs={12}>
-              <h3>{instance.title}</h3>
+              <Headline size="medium" margin="medium">
+                {instance.title}
+              </Headline>
             </Col>
           </Row>
           <br />

@@ -10,6 +10,8 @@ import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Icon from '@folio/stripes-components/lib/Icon';
+import Headline from '@folio/stripes-components/lib/Headline';
+
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 
 import { removeQueryParam } from './utils';
@@ -141,7 +143,9 @@ class ViewHoldingsRecord extends React.Component {
               <br />
               <Row>
                 <Col sm={12}>
-                  {holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
+                  <Headline size="medium" margin="medium">
+                    {holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
+                  </Headline>
                 </Col>
               </Row>
               { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
