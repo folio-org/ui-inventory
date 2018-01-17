@@ -30,6 +30,7 @@
 * Enable and validate item-record's status field. Fixes UIIN-61.
 * Require holdings-record's location field. Fixes UIIN-60.
 * Search by barcode. Fixes UIIN-59.
+* Sort contributor-type lookup table by name. Fixes UIIN-63.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
