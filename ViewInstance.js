@@ -5,12 +5,13 @@ import queryString from 'query-string';
 
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
+import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import Icon from '@folio/stripes-components/lib/Icon';
 import MetaSection from '@folio/stripes-components/lib/MetaSection';
 import Headline from '@folio/stripes-components/lib/Headline';
 
@@ -117,14 +118,22 @@ class ViewInstance extends React.Component {
     });
   }
 
+  handleExpandAll = (obj) => {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.accordions = obj;
+      return newState;
+    });
+  }
+
   render() {
     const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
-    if (!selInstance || !id) return <div />;
-    const instance = selInstance.find(i => i.id === id);
+
+    const instance = (selInstance && id) ? selInstance.find(i => i.id === id) : null;
 
     const detailMenu = (
       <PaneMenu>
@@ -150,6 +159,14 @@ class ViewInstance extends React.Component {
       </PaneMenu>
     );
 
+    if (!instance) {
+      return (
+        <Pane id="pane-instancedetails" defaultWidth={this.props.paneWidth} paneTitle="Instance Details" lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
+          <div style={{ paddingTop: '1rem' }}><Icon icon="spinner-ellipsis" width="100px" /></div>
+        </Pane>
+      );
+    }
+
     const instanceSub = () => {
       if (instance.publication && instance.publication.length > 0) {
         return `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`;
@@ -170,6 +187,7 @@ class ViewInstance extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
+        <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
         <Accordion
           open={this.state.accordions.instanceAccordion}
           id={'instanceAccordion'}
