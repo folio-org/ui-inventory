@@ -175,7 +175,6 @@ class ViewInstance extends React.Component {
           id={'instanceAccordion'}
           onToggle={this.handleAccordionToggle}
           label="Instance data"
-          displayWhenOpen={<Button>Add item</Button>}
         >
           <Row>
             <Col xs={12}>
