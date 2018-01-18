@@ -9,8 +9,8 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
-import Icon from '@folio/stripes-components/lib/Icon';
 import Headline from '@folio/stripes-components/lib/Headline';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
@@ -211,13 +211,8 @@ ViewHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-    search: PropTypes.string,
-  }).isRequired,
   okapi: PropTypes.object,
   paneWidth: PropTypes.string,
-  history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     holdingsRecords: PropTypes.shape({

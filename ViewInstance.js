@@ -122,7 +122,7 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
+    const { okapi, resources: { selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 

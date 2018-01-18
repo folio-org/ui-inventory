@@ -257,13 +257,8 @@ ViewItem.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-    search: PropTypes.string,
-  }).isRequired,
   okapi: PropTypes.object,
   paneWidth: PropTypes.string,
-  history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     items: PropTypes.shape({
