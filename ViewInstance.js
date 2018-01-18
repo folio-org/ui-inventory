@@ -118,6 +118,14 @@ class ViewInstance extends React.Component {
     });
   }
 
+  handleExpandAll = (obj) => {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.accordions = obj;
+      return newState;
+    });
+  }
+
   render() {
     const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location,
             referenceTables, stripes, onCopy } = this.props;
