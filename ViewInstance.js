@@ -168,6 +168,7 @@ class ViewInstance extends React.Component {
       <div>
         <Button
           id="clickable-new-holdings-record"
+          href={this.craftLayerUrl('createHoldingsRecord')}
           onClick={this.onClickAddNewHoldingsRecord}
           title="+ Holdings"
           buttonStyle="primary"
