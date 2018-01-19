@@ -16,8 +16,9 @@ import MetaSection from '@folio/stripes-components/lib/MetaSection';
 import Headline from '@folio/stripes-components/lib/Headline';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
+import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
+import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
-import { removeQueryParam } from './utils';
 import formatters from './referenceFormatters';
 
 import Holdings from './Holdings';
@@ -33,7 +34,6 @@ const emptyArr = [];
 class ViewInstance extends React.Component {
 
   static manifest = Object.freeze({
-    addHoldingsMode: { initialValue: { mode: false } },
     selectedInstance: {
       type: 'okapi',
       path: 'instance-storage/instances/:{id}',
@@ -61,24 +61,28 @@ class ViewInstance extends React.Component {
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewItem = this.props.stripes.connect(ViewItem);
+
+    this.transitionToParams = transitionToParams.bind(this);
+    this.removeQueryParam = removeQueryParam.bind(this);
+    this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
-    transitionToParams.bind(this)({ layer: 'edit' });
+    this.transitionToParams({ layer: 'edit' });
   }
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
     this.log('clicked "add new holdings record"');
-    this.props.mutator.addHoldingsMode.replace({ mode: true });
+    this.transitionToParams({ layer: 'createHoldingsRecord' });
   }
 
   onClickCloseNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
     this.log('clicked "close new holdings record"');
-    this.props.mutator.addHoldingsMode.replace({ mode: false });
+    this.removeQueryParam('layer');
   }
 
   update(instance) {
@@ -89,7 +93,7 @@ class ViewInstance extends React.Component {
 
   closeEditInstance = (e) => {
     if (e) e.preventDefault();
-    removeQueryParam('layer', this.props.location, this.props.history);
+    this.removeQueryParam('layer');
   }
 
   closeViewItem = (e) => {
@@ -127,8 +131,7 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addHoldingsMode, selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location,
-            referenceTables, stripes, onCopy } = this.props;
+    const { okapi, resources: { selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
@@ -152,6 +155,8 @@ class ViewInstance extends React.Component {
         />
         <IconButton
           id="clickable-edit-instance"
+          style={{ visibility: !instance ? 'hidden' : 'visible' }}
+          href={this.craftLayerUrl('edit')}
           onClick={this.onClickEditInstance}
           title="Edit Instance"
           icon="edit"
@@ -176,7 +181,18 @@ class ViewInstance extends React.Component {
 
     const that = this;
 
-    const newHoldingsRecordButton = <div><Button id="clickable-new-holdings-record" onClick={this.onClickAddNewHoldingsRecord} title="+ Holdings" buttonStyle="primary" fullWidth>+ Add holdings</Button></div>;
+    const newHoldingsRecordButton = (
+      <div>
+        <Button
+          id="clickable-new-holdings-record"
+          href={this.craftLayerUrl('createHoldingsRecord')}
+          onClick={this.onClickAddNewHoldingsRecord}
+          title="+ Holdings"
+          buttonStyle="primary"
+          fullWidth
+        >+ Add holdings</Button>
+      </div>
+    );
 
     return instance ? (
       <Pane
@@ -362,7 +378,7 @@ class ViewInstance extends React.Component {
             referenceTables={referenceTables}
           />
         </Layer>
-        <Layer isOpen={addHoldingsMode ? addHoldingsMode.mode : false} label="Add New Holdings Dialog">
+        <Layer isOpen={query.layer ? query.layer === 'createHoldingsRecord' : false} label="Add New Holdings Dialog">
           <HoldingsForm
             initialValues={{ instanceId: instance.id }}
             onSubmit={(record) => { that.createHoldingsRecord(record); }}
@@ -394,18 +410,15 @@ ViewInstance.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  location: PropTypes.object,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string,
+  }).isRequired,
   history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     selectedInstance: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
-    }),
-    editMode: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
-    addHoldingsMode: PropTypes.shape({
-      replace: PropTypes.func,
     }),
     holdings: PropTypes.shape({
       POST: PropTypes.func.isRequired,

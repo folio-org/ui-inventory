@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import queryString from 'query-string';
 
 import Layer from '@folio/stripes-components/lib/Layer';
@@ -13,8 +13,8 @@ import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-
-import { removeQueryParam } from './utils';
+import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
+import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
 
@@ -57,16 +57,20 @@ class ViewItem extends React.Component {
         itemAccordion: true,
       },
     };
+
+    this.transitionToParams = transitionToParams.bind(this);
+    this.removeQueryParam = removeQueryParam.bind(this);
+    this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
   onClickEditItem = (e) => {
     if (e) e.preventDefault();
-    transitionToParams.bind(this)({ layer: 'editItem' });
+    this.transitionToParams({ layer: 'editItem' });
   }
 
   onClickCloseEditItem = (e) => {
     if (e) e.preventDefault();
-    removeQueryParam('layer', this.props.location, this.props.history);
+    this.removeQueryParam('layer');
   }
 
   updateItem = (item) => {
@@ -104,6 +108,8 @@ class ViewItem extends React.Component {
         <IconButton
           icon="edit"
           id="clickable-edit-item"
+          style={{ visibility: !item ? 'hidden' : 'visible' }}
+          href={this.craftLayerUrl('editItem')}
           onClick={this.onClickEditItem}
           title="Edit Item"
         />
@@ -251,10 +257,8 @@ ViewItem.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
-  location: PropTypes.object,
   okapi: PropTypes.object,
   paneWidth: PropTypes.string,
-  history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     items: PropTypes.shape({

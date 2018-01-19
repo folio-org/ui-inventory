@@ -9,12 +9,12 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
-import Icon from '@folio/stripes-components/lib/Icon';
 import Headline from '@folio/stripes-components/lib/Headline';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-
-import { removeQueryParam } from './utils';
+import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
+import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
 
@@ -48,17 +48,21 @@ class ViewHoldingsRecord extends React.Component {
         holdingsAccordion: true,
       },
     };
+
+    this.transitionToParams = transitionToParams.bind(this);
+    this.removeQueryParam = removeQueryParam.bind(this);
+    this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
   // Edit Holdings records handlers
   onClickEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    transitionToParams.bind(this)({ layer: 'editHoldingsRecord' });
+    this.transitionToParams({ layer: 'editHoldingsRecord' });
   }
 
   onClickCloseEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    removeQueryParam('layer', this.props.location, this.props.history);
+    this.removeQueryParam('layer');
   }
 
   updateHoldingsRecord = (holdingsRecord) => {
@@ -79,9 +83,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { resources: { holdingsRecords, instances1, shelfLocations, platforms },
-        referenceTables,
-        okapi } = this.props;
+    const { resources: { holdingsRecords, instances1, shelfLocations, platforms }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded
         || !instances1 || !instances1.hasLoaded
@@ -99,7 +101,14 @@ class ViewHoldingsRecord extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
-        <button id="clickable-edit-holdingsrecord" onClick={this.onClickEditHoldingsRecord} title="Edit Holdings"><Icon icon="edit" />Edit</button>
+        <IconButton
+          icon="edit"
+          id="clickable-edit-holdingsrecord"
+          style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
+          href={this.craftLayerUrl('editHoldingsRecord')}
+          onClick={this.onClickEditHoldingsRecord}
+          title="Edit Holdings"
+        />
       </PaneMenu>
     );
 
@@ -202,10 +211,8 @@ ViewHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
-  location: PropTypes.object,
   okapi: PropTypes.object,
   paneWidth: PropTypes.string,
-  history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     holdingsRecords: PropTypes.shape({

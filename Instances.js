@@ -6,12 +6,12 @@ import _ from 'lodash';
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { filters2cql, initialFilterState, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
+import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 
 import packageInfo from './package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
-import { removeQueryParam } from './utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -166,7 +166,10 @@ class Instances extends React.Component {
       sortOrder: query.sort || '',
       filters: initialFilterState(filterConfig, query.filters),
     };
+
     this.transitionToParams = transitionToParams.bind(this);
+    this.removeQueryParam = removeQueryParam.bind(this);
+
     this.cViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
@@ -256,7 +259,7 @@ class Instances extends React.Component {
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
-    removeQueryParam('layer', this.props.location, this.props.history);
+    this.removeQueryParam('layer');
   }
 
   copyInstance(instance) {
