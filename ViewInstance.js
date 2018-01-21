@@ -141,13 +141,6 @@ class ViewInstance extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <IconButton
-          id="clickable-show-notes"
-          style={{ visibility: !instance ? 'hidden' : 'visible' }}
-          onClick={this.props.notesToggle}
-          title="Show Notes"
-          icon="comment"
-        />
-        <IconButton
           id="clickable-copy-instance"
           onClick={() => onCopy(instance)}
           title="Copy Instance"
@@ -160,6 +153,13 @@ class ViewInstance extends React.Component {
           onClick={this.onClickEditInstance}
           title="Edit Instance"
           icon="edit"
+        />
+        <IconButton
+          id="clickable-show-notes"
+          style={{ visibility: !instance ? 'hidden' : 'visible' }}
+          onClick={this.props.notesToggle}
+          title="Show Notes"
+          icon="comment"
         />
       </PaneMenu>
     );
