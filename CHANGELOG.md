@@ -32,6 +32,7 @@
 * Search by barcode. Fixes UIIN-59.
 * Sort contributor-type lookup table by name. Fixes UIIN-63.
 * Update stripes-connect, redux-form dependencies. Refs STRIPES-501.
+* Use stripes-components' Row and Col so that react-flexbox-grid remains a transitive dependency. Refs STRIPES-490.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
