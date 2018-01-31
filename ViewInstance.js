@@ -7,7 +7,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
