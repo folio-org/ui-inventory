@@ -107,10 +107,11 @@ class ViewInstance extends React.Component {
   }
 
   createHoldingsRecord = (holdingsRecord) => {
-    // POST item record
+    // POST holdings record
     this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
-    this.props.mutator.holdings.POST(holdingsRecord);
-    this.onClickCloseNewHoldingsRecord();
+    this.props.mutator.holdings.POST(holdingsRecord).then(() => {
+      this.onClickCloseNewHoldingsRecord();
+    });
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -178,8 +179,6 @@ class ViewInstance extends React.Component {
       }
       return null;
     };
-
-    const that = this;
 
     const newHoldingsRecordButton = (
       <div>
@@ -380,8 +379,11 @@ class ViewInstance extends React.Component {
         </Layer>
         <Layer isOpen={query.layer ? query.layer === 'createHoldingsRecord' : false} label="Add New Holdings Dialog">
           <HoldingsForm
+            form={instance.id}
+            id={instance.id}
+            key={instance.id}
             initialValues={{ instanceId: instance.id }}
-            onSubmit={(record) => { that.createHoldingsRecord(record); }}
+            onSubmit={(record) => { this.createHoldingsRecord(record); }}
             onCancel={this.onClickCloseNewHoldingsRecord}
             okapi={okapi}
             instance={instance}
