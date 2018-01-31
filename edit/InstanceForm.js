@@ -4,7 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field } from 'redux-form';
