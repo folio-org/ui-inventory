@@ -32,7 +32,6 @@ const emptyArr = [];
 
 
 class ViewInstance extends React.Component {
-
   static manifest = Object.freeze({
     selectedInstance: {
       type: 'okapi',
@@ -189,7 +188,8 @@ class ViewInstance extends React.Component {
           title="+ Holdings"
           buttonStyle="primary"
           fullWidth
-        >+ Add holdings</Button>
+        >+ Add holdings
+        </Button>
       </div>
     );
 
@@ -205,7 +205,7 @@ class ViewInstance extends React.Component {
         <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
         <Accordion
           open={this.state.accordions.instanceAccordion}
-          id={'instanceAccordion'}
+          id="instanceAccordion"
           onToggle={this.handleAccordionToggle}
           label="Instance data"
         >
@@ -342,7 +342,7 @@ class ViewInstance extends React.Component {
               createdDate={instance.metadata.createdDate}
             />
           }
-        </ Accordion>
+        </Accordion>
         { (!holdingsrecordid && !itemid) ?
           <this.cHoldings
             dataKey={id}

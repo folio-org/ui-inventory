@@ -19,7 +19,6 @@ import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 
 class ViewHoldingsRecord extends React.Component {
-
   static manifest = Object.freeze({
     holdingsRecords: {
       type: 'okapi',
@@ -140,7 +139,7 @@ class ViewHoldingsRecord extends React.Component {
 
             <Accordion
               open={this.state.accordions.holdingsAccordion}
-              id={'holdingsAccordion'}
+              id="holdingsAccordion"
               onToggle={this.handleAccordionToggle}
               label="Holdings data"
             >

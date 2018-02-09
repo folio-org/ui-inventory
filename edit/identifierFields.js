@@ -9,7 +9,8 @@ const IdentifierFields = ({ identifierTypes }) => {
     it => ({
       label: it.name,
       value: it.id,
-    }));
+    }),
+  );
   return (
     <RepeatableField
       name="identifiers"

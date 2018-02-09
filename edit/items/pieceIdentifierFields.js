@@ -30,7 +30,8 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
             type="button"
             title={`Remove identifier ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Remove</Button>
+          >Remove
+          </Button>
         </Col>
       </Row>,
         // /

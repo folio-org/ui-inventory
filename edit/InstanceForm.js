@@ -120,14 +120,16 @@ class InstanceForm extends React.Component {
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceTypeId,
-      })) : [];
+      }),
+    ) : [];
 
     const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
       it => ({
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceFormatId,
-      })) : [];
+      }),
+    ) : [];
 
     /* Menus for Add Instance workflow */
     const addInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-instance" type="submit" title="Create New Instance" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create instance</Button></PaneMenu>;

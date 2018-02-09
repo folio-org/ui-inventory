@@ -22057,7 +22057,8 @@ const languages = {
       label: l.name['#text'] || l.name,
       value: l.code,
       selected: l.code === selected
-    })),
+    })
+  ),
 
   languageByCode: (code) => {
     const lang = data.find(l => l.code === code);
