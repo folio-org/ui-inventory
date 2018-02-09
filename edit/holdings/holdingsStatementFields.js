@@ -30,7 +30,8 @@ const renderStatements = ({ fields, meta: { touched, error, submitFailed } }) =>
             type="button"
             title={`Remove statement ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Delete Statement</Button>
+          >Delete Statement
+          </Button>
         </Col>
       </Row>,
         // /

@@ -27,7 +27,7 @@ function validate(values) {
 function HoldingsForm(props) {
   const {
     handleSubmit,
-    reset,  // eslint-disable-line no-unused-vars
+    reset, // eslint-disable-line no-unused-vars
     pristine,
     submitting,
     onCancel,
@@ -57,7 +57,8 @@ function HoldingsForm(props) {
       <Paneset isRoot>
         <Pane
           defaultWidth="100%"
-          dismissible onClose={onCancel}
+          dismissible
+          onClose={onCancel}
           lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu}
           paneTitle={
             <div style={{ textAlign: 'center' }}>

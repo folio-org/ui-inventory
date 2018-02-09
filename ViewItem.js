@@ -19,7 +19,6 @@ import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 import ItemForm from './edit/items/ItemForm';
 
 class ViewItem extends React.Component {
-
   static manifest = Object.freeze({
     items: {
       type: 'okapi',
@@ -89,8 +88,8 @@ class ViewItem extends React.Component {
 
   render() {
     const { resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
-            referenceTables,
-            okapi } = this.props;
+      referenceTables,
+      okapi } = this.props;
 
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -149,7 +148,7 @@ class ViewItem extends React.Component {
             </Row>
             <Accordion
               open={this.state.accordions.itemAccordion}
-              id={'itemAccordion'}
+              id="itemAccordion"
               onToggle={this.handleAccordionToggle}
               label="Item data"
             >

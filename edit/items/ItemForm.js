@@ -33,12 +33,9 @@ function validate(values) {
 
 function checkUniqueBarcode(okapi, barcode) {
   return fetch(`${okapi.url}/inventory/items?query=(barcode="${barcode}")`,
-    { headers: Object.assign({}, {
-      'X-Okapi-Tenant': okapi.tenant,
+    { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
       'X-Okapi-Token': okapi.token,
-      'Content-Type': 'application/json' }),
-    },
-  );
+      'Content-Type': 'application/json' }) });
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
@@ -66,7 +63,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
 function ItemForm(props) {
   const {
     handleSubmit,
-    reset,  // eslint-disable-line no-unused-vars
+    reset, // eslint-disable-line no-unused-vars
     pristine,
     submitting,
     onCancel,
@@ -81,15 +78,15 @@ function ItemForm(props) {
   const editItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Item" disabled={pristine || submitting} onClick={handleSubmit}>Update item</Button></PaneMenu>;
 
   const materialTypeOptions = referenceTables.materialTypes ?
-        referenceTables.materialTypes.map((t) => {
-          let selectedValue;
-          if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
-          return {
-            label: t.name,
-            value: t.id,
-            selected: selectedValue,
-          };
-        }) : [];
+    referenceTables.materialTypes.map((t) => {
+      let selectedValue;
+      if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
+      return {
+        label: t.name,
+        value: t.id,
+        selected: selectedValue,
+      };
+    }) : [];
   const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
     label: t.name,
     value: t.id,

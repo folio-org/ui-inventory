@@ -9,7 +9,8 @@ const ContributorFields = ({ contributorNameTypes }) => {
     it => ({
       label: it.name,
       value: it.id,
-    }));
+    }),
+  );
 
   return (
     <RepeatableField

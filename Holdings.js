@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ItemsPerHoldingsRecord from './ItemsPerHoldingsRecord';
 
 class Holdings extends React.Component {
-
   static manifest = Object.freeze({
     holdings: {
       type: 'okapi',
@@ -42,8 +41,7 @@ class Holdings extends React.Component {
     return (
       <div>
         {holdingsRecords.map(record =>
-          <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />,
-        )}
+          <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />)}
       </div>
     );
   }

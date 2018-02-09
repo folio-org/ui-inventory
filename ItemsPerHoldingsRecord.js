@@ -12,7 +12,6 @@ import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
 
 class ItemsPerHoldingsRecord extends React.Component {
-
   static manifest = Object.freeze({
     addItemMode: { initialValue: { mode: false } },
     materialTypes: {

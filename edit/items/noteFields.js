@@ -30,7 +30,8 @@ const renderNotes = ({ fields, meta: { touched, error, submitFailed } }) => (
             type="button"
             title={`Remove Notes ${index + 1}`}
             onClick={() => fields.remove(index)}
-          >Remove</Button>
+          >Remove
+          </Button>
         </Col>
       </Row>,
         // /

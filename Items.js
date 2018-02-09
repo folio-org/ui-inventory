@@ -5,7 +5,6 @@ import _ from 'lodash';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
 class Items extends React.Component {
-
   static manifest = Object.freeze({
     items: {
       type: 'okapi',
@@ -47,7 +46,7 @@ class Items extends React.Component {
           onRowClick={this.onSelectRow}
           formatter={itemsFormatter}
           visibleColumns={['Item: barcode', 'status', 'Material Type']}
-          ariaLabel={'Items'}
+          ariaLabel="Items"
           containerRef={(ref) => { this.resultsList = ref; }}
         />
       </div>);
