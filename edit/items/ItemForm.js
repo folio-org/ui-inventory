@@ -16,15 +16,15 @@ import renderPieceIdentifiers from './pieceIdentifierFields';
 function validate(values) {
   const errors = {};
 
-  if (!values.materialType.id) {
+  if (!(values.materialType && values.materialType.id)) {
     errors.materialType = { id: 'Please select to continue' };
   }
 
-  if (!values.permanentLoanType.id) {
+  if (!(values.permanentLoanType && values.permanentLoanType.id)) {
     errors.permanentLoanType = { id: 'Please select to continue' };
   }
 
-  if (!values.status.name) {
+  if (!(values.status && values.status.name)) {
     errors.status = { name: 'Please fill this in to continue' };
   }
 
