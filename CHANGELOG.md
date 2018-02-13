@@ -35,6 +35,7 @@
 * Use stripes-components' Row and Col so that react-flexbox-grid remains a transitive dependency. Refs STRIPES-490.
 * Restore show-single-record. Refs UIIN-58, STSMACOM-52.
 * Fix validation of item-record's Material Type, Permanent Loan Type fields. Refs UIIN-61.
+* Fix validation of item-records for new item records. Refs UIIN-61.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
