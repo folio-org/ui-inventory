@@ -16,12 +16,12 @@ import renderPieceIdentifiers from './pieceIdentifierFields';
 function validate(values) {
   const errors = {};
 
-  if (!values.materialTypeId) {
-    errors.materialTypeId = 'Please select to continue';
+  if (!values.materialType.id) {
+    errors.materialType = { id: 'Please select to continue' };
   }
 
-  if (!values.permanentLoanTypeId) {
-    errors.permanentLoanTypeId = 'Please select to continue';
+  if (!values.permanentLoanType.id) {
+    errors.permanentLoanType = { id: 'Please select to continue' };
   }
 
   if (!values.status.name) {
