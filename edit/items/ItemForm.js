@@ -48,7 +48,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
-              const error = new SubmissionError({ barcode: 'This barcode has already been taken'})
+              const error = new SubmissionError({ barcode: 'This barcode has already been taken' });
               reject(error);
             } else {
               resolve();

@@ -176,14 +176,6 @@ class Instances extends React.Component {
     this.copyInstance = this.copyInstance.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const resource = this.props.resources.records;
-    if (resource && resource.isPending && !nextProps.resources.records.isPending) {
-      const resultAmount = nextProps.resources.records.other.totalRecords;
-      if (this.SRSStatus) this.SRStatus.sendMessage(`Search returned ${resultAmount} result${resultAmount !== 1 ? 's' : ''}`);
-    }
-  }
-
   /**
    * fill in the filter values
    */
@@ -344,7 +336,6 @@ Instances.propTypes = {
         totalRecords: PropTypes.number,
         total_records: PropTypes.number,
       }),
-      isPending: PropTypes.bool.isPending,
       successfulMutations: PropTypes.arrayOf(
         PropTypes.shape({
           record: PropTypes.shape({
