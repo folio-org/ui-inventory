@@ -33,9 +33,7 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
           >Remove
           </Button>
         </Col>
-      </Row>,
-        // /
-     )}
+      </Row>)}
   </div>
 );
 renderPieceIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object };

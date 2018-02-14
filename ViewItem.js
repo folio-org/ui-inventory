@@ -87,7 +87,7 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
+    const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
       referenceTables,
       okapi } = this.props;
 
@@ -257,6 +257,7 @@ ViewItem.propTypes = {
     }),
   }).isRequired,
   okapi: PropTypes.object,
+  location: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
