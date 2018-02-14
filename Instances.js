@@ -328,6 +328,7 @@ class Instances extends React.Component {
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
       visibleColumns={['title', 'contributors', 'publishers']}
+      columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
       viewRecordPerms="inventory-storage.instances.item.get"
