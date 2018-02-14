@@ -33,9 +33,7 @@ const renderNotes = ({ fields, meta: { touched, error, submitFailed } }) => (
           >Remove
           </Button>
         </Col>
-      </Row>,
-        // /
-     )}
+      </Row>)}
   </div>
 );
 renderNotes.propTypes = { fields: PropTypes.object, meta: PropTypes.object };

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
+import { Field, FieldArray, SubmissionError } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -44,11 +44,12 @@ function asyncValidate(values, dispatch, props, blurredField) {
       // TODO: Should use stripes-connect (dispatching an action and update state)
       checkUniqueBarcode(props.okapi, values.barcode).then((response) => {
         if (response.status >= 400) {
-          console.log('Error fetching barcode');
+          //
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
-              reject({ barcode: 'This barcode has already been taken' });
+              const error = new SubmissionError({ barcode: 'This barcode has already been taken'})
+              reject(error);
             } else {
               resolve();
             }

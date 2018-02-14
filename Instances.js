@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import _ from 'lodash';
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
-import { filters2cql, initialFilterState, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
+import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 
@@ -85,7 +85,7 @@ class Instances extends React.Component {
               Contributors: 'contributors',
             };
 
-            let cql = `(title="${resourceData.query.query}*" or contributors adj "\\"name\\": \\"${resourceData.query.query}*\\"" or identifiers adj "\\"value\\": \\"${resourceData.query.query}*\\"")`;
+            let cql = `(title="${resourceData.query.query}*" or contributors adj "\\"name\\": \\"${resourceData.query.query}*\\"" or identifiers adj "\\"value\\": \\"${resourceData.query.query}*\\"" or item.barcode="${resourceData.query.query}*")`;
             const filterCql = filters2cql(filterConfig, resourceData.query.filters);
             if (filterCql) {
               if (cql) {
@@ -162,9 +162,7 @@ class Instances extends React.Component {
 
     const query = props.location.search ? queryString.parse(props.location.search) : {};
     this.state = {
-      searchTerm: query.query || '',
       sortOrder: query.sort || '',
-      filters: initialFilterState(filterConfig, query.filters),
     };
 
     this.transitionToParams = transitionToParams.bind(this);
@@ -207,9 +205,7 @@ class Instances extends React.Component {
     const path = (_.get(packageInfo, ['stripes', 'home']) ||
                   _.get(packageInfo, ['stripes', 'route']));
     this.setState({
-      searchTerm: '',
       sortOrder: 'title',
-      filters: {},
     });
     this.props.history.push(path);
   }
@@ -237,7 +233,6 @@ class Instances extends React.Component {
   onChangeSearch = (e) => {
     this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
     const query = e.target.value;
-    this.setState({ searchTerm: query });
     this.performSearch(query);
   }
 
@@ -248,7 +243,6 @@ class Instances extends React.Component {
 
   openInstance(selectedInstance) {
     const instanceId = selectedInstance.id;
-    this.setState({ selectedInstance });
     this.props.history.push(`/inventory/view/${instanceId}${this.props.location.search}`);
   }
 
@@ -279,9 +273,6 @@ class Instances extends React.Component {
   }, 250);
 
   collapseDetails = () => {
-    this.setState({
-      selectedItem: {},
-    });
     this.props.history.push(`${this.props.match.path}${this.props.location.search}`);
   };
 
@@ -337,7 +328,6 @@ class Instances extends React.Component {
       parentMutator={this.props.mutator}
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
-      showSingleResult
     />);
   }
 }
