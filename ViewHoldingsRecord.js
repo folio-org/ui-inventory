@@ -82,7 +82,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { resources: { holdingsRecords, instances1, shelfLocations, platforms }, referenceTables, okapi } = this.props;
+    const { location, resources: { holdingsRecords, instances1, shelfLocations, platforms }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded
         || !instances1 || !instances1.hasLoaded
@@ -211,6 +211,7 @@ ViewHoldingsRecord.propTypes = {
     }),
   }).isRequired,
   okapi: PropTypes.object,
+  location: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({

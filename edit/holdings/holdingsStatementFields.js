@@ -33,9 +33,7 @@ const renderStatements = ({ fields, meta: { touched, error, submitFailed } }) =>
           >Delete Statement
           </Button>
         </Col>
-      </Row>,
-        // /
-     )}
+      </Row>)}
   </div>
 );
 renderStatements.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
