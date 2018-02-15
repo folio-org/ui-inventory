@@ -52,7 +52,7 @@
     }
   },
   "scripts": {
-    "lint": "eslint *.js lib settings edit data",
+    "lint": "eslint *.js lib settings edit data test/ui-testing",
     "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
