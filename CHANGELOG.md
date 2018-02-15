@@ -27,7 +27,7 @@
 * Close "Add holdings" pane correctly. Fixes UIIN-54.
 * Sort contributor-types correctly. Refs UIIN-32. 
 * Implement `<RepeatableField>` component on InstanceForm. Fixes UIIN-52.
-* Enable and validate item-record's status field. Fixes UIIN-61.
+* (Enable and validate item-record's status field. Fixes UIIN-61. Rolled back again. UIIN-83)
 * Require holdings-record's location field. Fixes UIIN-60.
 * Search by barcode. Fixes UIIN-59.
 * Sort contributor-type lookup table by name. Fixes UIIN-63.
@@ -35,7 +35,6 @@
 * Use stripes-components' Row and Col so that react-flexbox-grid remains a transitive dependency. Refs STRIPES-490.
 * Restore show-single-record. Refs UIIN-58, STSMACOM-52.
 * Fix validation of item-record's Material Type, Permanent Loan Type fields. Refs UIIN-61.
-* Fix validation of item-records for new item records. Refs UIIN-61.
 * Apply eslint-config-stripes. Enforces react/no-unused-state, no-restricted-globals, prefer-promise-reject-errors,  no-console and others.
 * Fix lint errors due to new lint rules. UIIN-85. 
 * Set width of title to 40% in instance list. UIIN-78.
