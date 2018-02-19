@@ -1,4 +1,6 @@
 import React from 'react';
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import _ from 'lodash';
@@ -51,6 +53,46 @@ const filterConfig = [
     values: [],
   },
 ];
+
+const GET_INSTANCES = gql`
+query {
+  instances {
+     id,
+     source,
+     title,
+     alternativeTitles,
+     edition,
+     series,
+     identifiers { value, identifierTypeId,
+                   identifierType { name }
+                 },
+     contributors { name,
+                    contributorTypeId,
+                    contributorNameTypeId,
+                    primary,
+                    contributorType { name },
+                    contributorNameType { name }
+                  },
+     subjects,
+     classifications { classificationNumber,
+                       classificationTypeId,
+                       classificationType { name }
+                     },
+     publication { publisher,
+                   place,
+                   dateOfPublication },
+     urls,
+     instanceTypeId,
+     instanceType { name },
+     instanceFormatId,
+     instanceFormat {name},
+     physicalDescriptions,
+     languages,
+     notes,
+     metadata { updatedByUser { username } }
+  }
+}
+`;
 
 class Instances extends React.Component {
   static manifest = Object.freeze({
@@ -376,4 +418,6 @@ Instances.propTypes = {
   }).isRequired,
 };
 
-export default Instances;
+export default compose(
+  graphql(GET_INSTANCES)
+)(Instances);
