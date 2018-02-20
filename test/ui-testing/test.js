@@ -1,7 +1,5 @@
-const new_title = require('./new_title.js');
+const newTitle = require('./new_title.js');
 
-module.exports.test = function(uiTestCtx) {
-
-  new_title.test(uiTestCtx);
-
-}
+module.exports.test = function test(uiTestCtx) {
+  newTitle.test(uiTestCtx);
+};
