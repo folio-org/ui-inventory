@@ -18,6 +18,13 @@
     "home": "/inventory?filters=&sort=Title",
     "hasSettings": false,
     "queryResource": "query",
+    "icons": [
+     {
+       "name": "icon",
+       "alt": "View and manage instance records, holdings records and item records",
+       "title": "Inventory"
+     }
+    ],
     "okapiInterfaces": {
       "inventory": "5.0",
       "instance-storage": "4.1",
