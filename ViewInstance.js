@@ -3,6 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
+
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
@@ -29,6 +32,46 @@ import ViewItem from './ViewItem';
 
 const emptyObj = {};
 const emptyArr = [];
+
+const GET_INSTANCE = gql`
+query {
+  instances {
+     id,
+     source,
+     title,
+     alternativeTitles,
+     edition,
+     series,
+     identifiers { value, identifierTypeId,
+                   identifierType { name }
+                 },
+     contributors { name,
+                    contributorTypeId,
+                    contributorNameTypeId,
+                    primary,
+                    contributorType { name },
+                    contributorNameType { name }
+                  },
+     subjects,
+     classifications { classificationNumber,
+                       classificationTypeId,
+                       classificationType { name }
+                     },
+     publication { publisher,
+                   place,
+                   dateOfPublication },
+     urls,
+     instanceTypeId,
+     instanceType { name },
+     instanceFormatId,
+     instanceFormat {name},
+     physicalDescriptions,
+     languages,
+     notes,
+     metadata { updatedByUser { username } }
+  }
+}
+`;
 
 
 class ViewInstance extends React.Component {
@@ -433,4 +476,6 @@ ViewInstance.propTypes = {
   okapi: PropTypes.object,
 };
 
-export default ViewInstance;
+export default compose(
+  graphql(GET_INSTANCE)
+)(ViewInstance);
