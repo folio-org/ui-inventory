@@ -20,7 +20,7 @@
     "queryResource": "query",
     "icons": [
      {
-       "name": "icon",
+       "name": "app",
        "alt": "View and manage instance records, holdings records and item records",
        "title": "Inventory"
      }
