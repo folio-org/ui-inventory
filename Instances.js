@@ -419,5 +419,5 @@ Instances.propTypes = {
 };
 
 export default compose(
-  graphql(GET_INSTANCES)
+  graphql(GET_INSTANCES),
 )(Instances);
