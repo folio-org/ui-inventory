@@ -34,8 +34,8 @@ const emptyObj = {};
 const emptyArr = [];
 
 const GET_INSTANCE = gql`
-query ($cql: String) {
-  instances (cql: $cql) {
+query ($id: String) {
+  instance (id: $id) {
      id,
      source,
      title,
@@ -76,11 +76,6 @@ query ($cql: String) {
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
-    selectedInstance: {
-      type: 'okapi',
-      path: 'instance-storage/instances/:{id}',
-      clear: false,
-    },
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
@@ -174,11 +169,8 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
+    const { okapi, data: { instance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
-    const selInstance = (selectedInstance || emptyObj).records || emptyArr;
-
-    const instance = (selInstance && id) ? selInstance.find(i => i.id === id) : null;
 
     const detailMenu = (
       <PaneMenu>
@@ -479,7 +471,7 @@ export default compose(
   graphql(GET_INSTANCE,
     { options: viewInstanceProps => ({
       variables: {
-        cql: `(id=${viewInstanceProps.match.params.id})`,
+        id: viewInstanceProps.match.params.id,
       },
     }) }),
 )(ViewInstance);
