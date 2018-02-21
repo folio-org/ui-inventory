@@ -245,7 +245,7 @@ class ViewInstance extends React.Component {
         >
           <Row>
             <Col xs={12}>
-              Instance record {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+              Instance record {instance.instanceType.name}
             </Col>
           </Row>
           <br />
@@ -277,7 +277,7 @@ class ViewInstance extends React.Component {
           { (instance.instanceFormatId) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+                <KeyValue label="Format" value={instance.instanceFormat.name} />
               </Col>
             </Row>
           }
@@ -309,7 +309,7 @@ class ViewInstance extends React.Component {
           }
           <Row>
             <Col xs={12}>
-              <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+              <KeyValue label="Resource type" value={instance.instanceType.name} />
             </Col>
           </Row>
           { (instance.physicalDescriptions.length > 0) &&
