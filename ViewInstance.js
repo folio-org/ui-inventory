@@ -22,7 +22,7 @@ import transitionToParams from '@folio/stripes-components/util/transitionToParam
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
-import formatters from './referenceFormatters';
+import { data as languagetable } from './data/languages';
 
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
@@ -31,7 +31,6 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
 
 const emptyObj = {};
-const emptyArr = [];
 
 const GET_INSTANCE = gql`
 query ($id: String) {
@@ -227,6 +226,18 @@ class ViewInstance extends React.Component {
       </div>
     );
 
+    const languagesFormatter = (r) => {
+      let formatted = '';
+      if (r.languages && r.languages.length) {
+        for (let i = 0; i < r.languages.length; i += 1) {
+          const languagecode = r.languages[i];
+          const language = languagetable.find(lang => lang.code === languagecode);
+          formatted += (i > 0 ? ', ' : '') + (language.name['#text'] || language.name);
+        }
+      }
+      return formatted;
+    };
+
     return instance ? (
       <Pane
         defaultWidth={this.props.paneWidth}
@@ -270,7 +281,7 @@ class ViewInstance extends React.Component {
           { (instance.identifiers.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Resource identifier" value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
+                <KeyValue label="Resource identifier" value={_.get(instance, ['identifiers'], []).map((identifier, i) => <div key={i}>{identifier.identifierType.name} {identifier.value}</div>)} />
               </Col>
             </Row>
           }
@@ -296,14 +307,14 @@ class ViewInstance extends React.Component {
           { (instance.contributors.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+                <KeyValue label="Contributor" value={_.get(instance, ['contributors'], []).map((contributor, i) => <div key={i}>{contributor.name} {(contributor.contributorType ? contributor.contributorType.name : '')}</div>)} />
               </Col>
             </Row>
           }
           { (instance.publication.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
+                <KeyValue label="Publisher" value={_.get(instance, ['publication'], []).map((pub, i) => <div key={i}>{pub.publisher}{pub.place ? `, ${pub.place}` : ''}{pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}</div>)} />
               </Col>
             </Row>
           }
@@ -322,7 +333,7 @@ class ViewInstance extends React.Component {
           { (instance.languages.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Language" value={formatters.languagesFormatter(instance)} />
+                <KeyValue label="Language" value={languagesFormatter(instance)} />
               </Col>
             </Row>
           }
@@ -336,7 +347,7 @@ class ViewInstance extends React.Component {
           { (instance.classifications.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+                <KeyValue label="Classification" value={_.get(instance, ['classifications'], []).map((clss, i) => <div key={i}>{clss.classificationType.name} {clss.classificationNumber}</div>)} />
               </Col>
             </Row>
           }
@@ -446,6 +457,7 @@ ViewInstance.propTypes = {
       id: PropTypes.string,
     }),
   }),
+  data: PropTypes.object,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
