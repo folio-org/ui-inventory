@@ -23,6 +23,16 @@
        "name": "app",
        "alt": "View and manage instance records, holdings records and item records",
        "title": "Inventory"
+     },
+     {
+       "name": "holdings",
+       "alt": "",
+       "title": "Holding"
+     },
+     {
+       "name": "items",
+       "alt": "",
+       "title": "Item"
      }
     ],
     "okapiInterfaces": {
