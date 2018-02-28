@@ -321,6 +321,7 @@ class Instances extends React.Component {
       parentMutator={this.props.mutator}
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
+      showSingleResult
     />);
   }
 }
