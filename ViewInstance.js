@@ -11,6 +11,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Icon from '@folio/stripes-components/lib/Icon';
 import MetaSection from '@folio/stripes-components/lib/MetaSection';
 import Headline from '@folio/stripes-components/lib/Headline';
@@ -211,7 +212,7 @@ class ViewInstance extends React.Component {
         >
           <Row>
             <Col xs={12}>
-              Instance record {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+              <AppIcon app="inventory" iconKey="instance" /> Instance record <AppIcon app="inventory" iconKey="resource-type" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
             </Col>
           </Row>
           <br />

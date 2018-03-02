@@ -11,6 +11,7 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import AppIcon from '@folio/stripes-components/lib/AppIcon';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
@@ -118,7 +119,7 @@ class ViewHoldingsRecord extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
+                <AppIcon app="inventory" iconKey="holdings" /> <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
                 <div>
                   Holdings
                 </div>
@@ -145,7 +146,7 @@ class ViewHoldingsRecord extends React.Component {
             >
               <Row>
                 <Col sm={12}>
-                  Holdings record
+                  <AppIcon app="inventory" iconKey="holdings" /> Holdings record
                 </Col>
               </Row>
               <br />
