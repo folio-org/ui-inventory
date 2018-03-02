@@ -11,6 +11,7 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import AppIcon from '@folio/stripes-components/lib/AppIcon';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
@@ -125,7 +126,7 @@ class ViewItem extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                {_.get(item, ['barcode'], '')}
+                <AppIcon app="inventory" iconKey="item" /> {_.get(item, ['barcode'], '')}
                 <div>
                   Item . {_.get(item, ['status', 'name'], '')}
                 </div>
@@ -154,7 +155,7 @@ class ViewItem extends React.Component {
             >
               <Row>
                 <Col sm={12}>
-                  Item record {_.get(item, ['materialType', 'name'], '')} {_.get(item, ['status', 'name'], '')}
+                  <AppIcon app="inventory" iconKey="item" /> Item record <AppIcon app="inventory" iconKey="material-type" /> {_.get(item, ['materialType', 'name'], '')} <AppIcon app="inventory" iconKey="item-status" /> {_.get(item, ['status', 'name'], '')}
                 </Col>
               </Row>
               <br />

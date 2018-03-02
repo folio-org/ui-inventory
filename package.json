@@ -30,9 +30,14 @@
        "title": "Holding"
      },
      {
-       "name": "items",
+       "name": "item",
        "alt": "",
        "title": "Item"
+     },
+     {
+       "name": "instance",
+       "alt": "",
+       "title": "Instance"
      }
     ],
     "okapiInterfaces": {
