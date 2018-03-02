@@ -21,7 +21,7 @@ export default {
       for (let i = 0; i < r.contributors.length; i += 1) {
         const contributor = r.contributors[i];
         const type = contributorTypes.find(ct => ct.id === contributor.contributorNameTypeId);
-        formatted += (i > 0 ? ', ' : '') +
+        formatted += (i > 0 ? ' ; ' : '') +
                      contributor.name +
                      (type ? ` (${type.name})` : '');
       }
