@@ -193,51 +193,6 @@ class Instances extends React.Component {
     }
   }
 
-  onClearSearch = () => {
-    const path = (_.get(packageInfo, ['stripes', 'home']) ||
-                  _.get(packageInfo, ['stripes', 'route']));
-    this.setState({
-      sortOrder: 'title',
-    });
-    this.props.history.push(path);
-  }
-
-  onSort = (e, meta) => {
-    const newOrder = meta.alias;
-    const oldOrder = this.state.sortOrder || '';
-    const orders = oldOrder ? oldOrder.split(',') : [];
-    if (orders[0] && newOrder === orders[0].replace(/^-/, '')) {
-      orders[0] = `-${orders[0]}`.replace(/^--/, '');
-    } else {
-      orders.unshift(newOrder);
-    }
-
-    const sortOrder = orders.slice(0, 2).join(',');
-    this.setState({ sortOrder });
-    this.transitionToParams({ sort: sortOrder });
-  }
-
-  onClickAddNewInstance = (e) => {
-    if (e) e.preventDefault();
-    this.transitionToParams({ layer: 'create' });
-  }
-
-  onChangeSearch = (e) => {
-    this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
-    const query = e.target.value;
-    this.performSearch(query);
-  }
-
-  onChangeFilter = (e) => {
-    this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
-    this.commonChangeFilter(e);
-  }
-
-  openInstance(selectedInstance) {
-    const instanceId = selectedInstance.id;
-    this.props.history.push(`/inventory/view/${instanceId}${this.props.location.search}`);
-  }
-
   updateFilters(filters) { // provided for onChangeFilter
     this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
@@ -259,14 +214,6 @@ class Instances extends React.Component {
       this.closeNewInstance();
     });
   }
-
-  performSearch = _.debounce((query) => {
-    this.transitionToParams({ query });
-  }, 250);
-
-  collapseDetails = () => {
-    this.props.history.push(`${this.props.match.path}${this.props.location.search}`);
-  };
 
   render() {
     const { resources } = this.props;
@@ -353,9 +300,6 @@ Instances.propTypes = {
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-  }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
