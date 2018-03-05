@@ -66,7 +66,9 @@
         "displayName": "Inventory: enable the app",
         "description": "Some subperms to support enabling the Inventory app",
         "subPermissions": [
-          "module.inventory.enabled"
+          "module.inventory.enabled",
+          "inventory-storage.all",
+          "inventory.all"
         ],
         "visible": true
       }
