@@ -60,7 +60,7 @@
       {
         "permissionName": "module.inventory.enabled",
         "displayName": "UI: Inventory module is enabled"
-      }
+      },
       {
         "permissionName": "ui-inventory.enabled",
         "displayName": "Inventory: enable the app",
