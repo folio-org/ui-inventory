@@ -59,7 +59,15 @@
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
-        "displayName": "UI: Inventory module is enabled",
+        "displayName": "UI: Inventory module is enabled"
+      }
+      {
+        "permissionName": "ui-inventory.enabled",
+        "displayName": "Inventory: enable the app",
+        "description": "Some subperms to support enabling the Inventory app",
+        "subPermissions": [
+          "module.inventory.enabled"
+        ],
         "visible": true
       }
     ],
