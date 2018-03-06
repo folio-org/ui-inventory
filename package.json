@@ -63,7 +63,7 @@
       },
       {
         "permissionName": "ui-inventory.enabled",
-        "displayName": "Inventory: enable the app",
+        "displayName": "Inventory: enable UI",
         "description": "Some subperms to support enabling the Inventory app",
         "subPermissions": [
           "module.inventory.enabled",
