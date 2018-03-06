@@ -62,9 +62,9 @@
         "displayName": "UI: Inventory module is enabled"
       },
       {
-        "permissionName": "ui-inventory.enabled",
-        "displayName": "Inventory: enable UI",
-        "description": "Some subperms to support enabling the Inventory app",
+        "permissionName": "ui-inventory.all-permissions.TEMPORARY",
+        "displayName": "Inventory: <temporary> all perms including UI",
+        "description": "Some subperms to support enabling/using the Inventory app",
         "subPermissions": [
           "module.inventory.enabled",
           "inventory-storage.all",
