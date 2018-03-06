@@ -23,6 +23,7 @@ module.exports.test = function uiTest(uiTestCtx) {
       it('should find hit count with no filters applied ', (done) => {
         nightmare
           .wait('p[title*="Records found"]:not([title^="0 "]')
+          .wait(1111)
           .evaluate(() => {
             let count = document.querySelector('p[title*="Records found"]').title;
             count = count.replace(/^(\d+).+/, '$1');
