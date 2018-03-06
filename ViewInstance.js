@@ -13,7 +13,6 @@ import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Icon from '@folio/stripes-components/lib/Icon';
-import MetaSection from '@folio/stripes-components/lib/MetaSection';
 import Headline from '@folio/stripes-components/lib/Headline';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
@@ -27,6 +26,7 @@ import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
+import ViewMetaData from './ViewMetaData';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -61,6 +61,7 @@ class ViewInstance extends React.Component {
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewItem = this.props.stripes.connect(ViewItem);
+    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
 
     this.transitionToParams = transitionToParams.bind(this);
     this.removeQueryParam = removeQueryParam.bind(this);
@@ -210,6 +211,9 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label="Instance data"
         >
+          { (instance.metadata && instance.metadata.createdDate) &&
+            <this.cViewMetaData metadata={instance.metadata} />
+          }
           <Row>
             <Col xs={12}>
               <AppIcon app="inventory" iconKey="instance" /> Instance record <AppIcon app="inventory" iconKey="resource-type" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
@@ -334,14 +338,6 @@ class ViewInstance extends React.Component {
                 <KeyValue label="URLs" value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
               </Col>
             </Row>
-          }
-          { (instance.metadata && instance.metadata.createdDate) &&
-            <MetaSection
-              id="instanceRecordMeta"
-              contentId="instanceRecordMetaContent"
-              lastUpdatedDate={instance.metadata.updatedDate}
-              createdDate={instance.metadata.createdDate}
-            />
           }
         </Accordion>
         { (!holdingsrecordid && !itemid) ?
