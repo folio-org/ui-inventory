@@ -235,9 +235,6 @@ class Instances extends React.Component {
       shelfLocations,
     };
 
-    const initialPath = (_.get(packageInfo, ['stripes', 'home']) ||
-                         _.get(packageInfo, ['stripes', 'route']));
-
     const resultsFormatter = {
       publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
@@ -245,11 +242,8 @@ class Instances extends React.Component {
     };
 
     return (<SearchAndSort
-      moduleName={packageInfo.name.replace(/.*\//, '')}
-      moduleTitle={packageInfo.stripes.displayName}
+      packageInfo={packageInfo}
       objectName="inventory"
-      baseRoute={packageInfo.stripes.route}
-      initialPath={initialPath}
       maxSortKeys={1}
       filterConfig={filterConfig}
       initialResultCount={INITIAL_RESULT_COUNT}
