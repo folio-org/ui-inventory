@@ -43,6 +43,7 @@
 * Implement icons for instance, holdings, and item records. UIIN-49,50,51.
 * Add creator/updater usernames to meta-data section. UIIN-97.
 * Pass packageInfo to SearchAndSort; it's simpler. Refs STSMACOM-64. Available after v1.0.2.
+* Lint. Fixes UIIN-104. 
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
