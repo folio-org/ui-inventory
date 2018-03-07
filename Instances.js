@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import _ from 'lodash';
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
@@ -160,11 +159,6 @@ class Instances extends React.Component {
   constructor(props) {
     super(props);
 
-    const query = props.location.search ? queryString.parse(props.location.search) : {};
-    this.state = {
-      sortOrder: query.sort || '',
-    };
-
     this.transitionToParams = transitionToParams.bind(this);
     this.removeQueryParam = removeQueryParam.bind(this);
 
@@ -250,7 +244,7 @@ class Instances extends React.Component {
       resultCountIncrement={RESULT_COUNT_INCREMENT}
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
-      newRecordInitialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+      newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
       visibleColumns={['title', 'contributors', 'publishers']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
@@ -294,10 +288,6 @@ Instances.propTypes = {
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-    search: PropTypes.string,
   }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
