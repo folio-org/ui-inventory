@@ -41,6 +41,7 @@
 * Re-restoring show-single-record that was inadvertently removed in d9e3b8d565. Re-fixes UIIN-58. Available from v1.0.1.
 * Pruning cruft methods unnecessary after the SearchAndSort conversion. Refs UIIN-34.
 * Implement icons for instance, holdings, and item records. UIIN-49,50,51.
+* Add creator/updater usernames to meta-data section. UIIN-97.
 * Pass packageInfo to SearchAndSort; it's simpler. Refs STSMACOM-64. Available after v1.0.2.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
