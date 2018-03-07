@@ -68,11 +68,12 @@ function ItemForm(props) {
     instance,
     holdingsRecord,
     referenceTables,
+    copy,
   } = props;
 
   /* Menus for Add Item workflow */
-  const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={pristine || submitting} onClick={handleSubmit}>Create item</Button></PaneMenu>;
-  const editItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Item" disabled={pristine || submitting} onClick={handleSubmit}>Update item</Button></PaneMenu>;
+  const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create item</Button></PaneMenu>;
+  const editItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Item" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update item</Button></PaneMenu>;
 
   const materialTypeOptions = referenceTables.materialTypes ?
     referenceTables.materialTypes.map((t) => {
@@ -106,7 +107,7 @@ function ItemForm(props) {
           defaultWidth="100%"
           dismissible
           onClose={onCancel}
-          lastMenu={(initialValues.title) ? editItemLastMenu : addItemLastMenu}
+          lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
           paneTitle={
             <div style={{ textAlign: 'center' }}>
               <em>{instance.title}</em>
@@ -212,6 +213,7 @@ ItemForm.propTypes = {
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
+  copy: PropTypes.bool,
 };
 
 export default stripesForm({
