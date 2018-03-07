@@ -246,4 +246,5 @@ export default stripesForm({
   validate,
   asyncValidate,
   navigationCheck: true,
+  scrollToError: true,
 })(InstanceForm);
