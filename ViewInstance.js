@@ -216,7 +216,7 @@ class ViewInstance extends React.Component {
           }
           <Row>
             <Col xs={12}>
-              <AppIcon app="inventory" iconKey="instance" /> Instance record <AppIcon app="inventory" iconKey="resource-type" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+              <AppIcon app="inventory" iconKey="instance" size="small" /> Instance record <AppIcon app="inventory" iconKey="resource-type" size="small" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
             </Col>
           </Row>
           <br />
