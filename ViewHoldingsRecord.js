@@ -119,7 +119,7 @@ class ViewHoldingsRecord extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="holdings" /> <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
+                <AppIcon app="inventory" iconKey="holdings" size="small" /> <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
                 <div>
                   Holdings
                 </div>
@@ -146,7 +146,7 @@ class ViewHoldingsRecord extends React.Component {
             >
               <Row>
                 <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="holdings" /> Holdings record
+                  <AppIcon app="inventory" iconKey="holdings" size="small" /> Holdings record
                 </Col>
               </Row>
               <br />

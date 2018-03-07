@@ -126,7 +126,7 @@ class ViewItem extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="item" /> {_.get(item, ['barcode'], '')}
+                <AppIcon app="inventory" iconKey="item" size="small" /> {_.get(item, ['barcode'], '')}
                 <div>
                   Item . {_.get(item, ['status', 'name'], '')}
                 </div>
@@ -155,7 +155,7 @@ class ViewItem extends React.Component {
             >
               <Row>
                 <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="item" /> Item record <AppIcon app="inventory" iconKey="material-type" /> {_.get(item, ['materialType', 'name'], '')} <AppIcon app="inventory" iconKey="item-status" /> {_.get(item, ['status', 'name'], '')}
+                  <AppIcon app="inventory" iconKey="item" size="small" /> Item record <AppIcon app="inventory" iconKey="material-type" size="small" /> {_.get(item, ['materialType', 'name'], '')} <AppIcon app="inventory" iconKey="item-status" size="small" /> {_.get(item, ['status', 'name'], '')}
                 </Col>
               </Row>
               <br />
