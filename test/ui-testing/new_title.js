@@ -101,7 +101,7 @@ module.exports.test = function uiTest(uiTestCtx) {
         // .wait(3000)
           .xclick('//div[@role="presentation"][.="title"]')
           .wait(3000)
-          .evaluate(function evalSort(titl) {
+          .evaluate((titl) => {
             const sel = `#list-inventory div[role="listitem"]:nth-child(1) > a > div[title="${titl}"]`;
             const ti = document.querySelector(sel);
             if (ti === null) {

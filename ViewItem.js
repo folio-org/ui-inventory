@@ -24,6 +24,9 @@ class ViewItem extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
+      POST: {
+        path: 'inventory/items',
+      },
     },
     holdingsRecords: {
       type: 'okapi',
@@ -73,9 +76,18 @@ class ViewItem extends React.Component {
     this.removeQueryParam('layer');
   }
 
-  updateItem = (item) => {
-    this.props.mutator.items.PUT(item).then(() => {
-      this.onClickCloseEditItem();
+  saveItem = (item) => {
+    this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
+  }
+
+  copyItem = (item) => {
+    const { location, history, resources: { holdingsRecords, instances1 } } = this.props;
+    const holdingsRecord = holdingsRecords.records[0];
+    const instance = instances1.records[0];
+
+    this.props.mutator.items.POST(item).then((data) => {
+      history.push(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}${location.search}`);
+      setTimeout(() => this.removeQueryParam('layer'));
     });
   }
 
@@ -85,6 +97,16 @@ class ViewItem extends React.Component {
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
+  }
+
+  onCopy(item) {
+    this.setState((state) => {
+      const newState = _.cloneDeep(state);
+      newState.copiedItem = _.omit(item, ['id', 'barcode']);
+      return newState;
+    });
+
+    this.transitionToParams({ layer: 'copyItem' });
   }
 
   render() {
@@ -105,6 +127,12 @@ class ViewItem extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
+        <IconButton
+          id="clickable-copy-item"
+          onClick={() => this.onCopy(item)}
+          title="Copy Item"
+          icon="duplicate"
+        />
         <IconButton
           icon="edit"
           id="clickable-edit-item"
@@ -231,7 +259,7 @@ class ViewItem extends React.Component {
         <Layer isOpen={query.layer ? query.layer === 'editItem' : false} label="Edit Item Dialog">
           <ItemForm
             form={`itemform_${item.id}`}
-            onSubmit={(record) => { this.updateItem(record); }}
+            onSubmit={(record) => { this.saveItem(record); }}
             initialValues={item}
             onCancel={this.onClickCloseEditItem}
             okapi={okapi}
@@ -240,6 +268,20 @@ class ViewItem extends React.Component {
             referenceTables={referenceTables}
           />
         </Layer>
+        <Layer isOpen={query.layer === 'copyItem'} label="Copy Item Dialog">
+          <ItemForm
+            form={`itemform_${holdingsRecord.id}`}
+            onSubmit={(record) => { this.copyItem(record); }}
+            initialValues={this.state.copiedItem}
+            onCancel={this.onClickCloseEditItem}
+            okapi={okapi}
+            instance={instance}
+            copy
+            holdingsRecord={holdingsRecord}
+            referenceTables={referenceTables}
+          />
+        </Layer>
+
       </div>
     );
   }
@@ -259,11 +301,13 @@ ViewItem.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
+  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     items: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
+      POST: PropTypes.func.isRequired,
     }),
   }),
   onCloseViewItem: PropTypes.func.isRequired,
