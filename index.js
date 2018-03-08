@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Instances from './Instances';
+import Settings from './settings';
 
 class InstancesRouting extends React.Component {
   static propTypes = {
@@ -11,6 +12,7 @@ class InstancesRouting extends React.Component {
     }).isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
+    showSettings: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -31,6 +33,9 @@ class InstancesRouting extends React.Component {
   }
 
   render() {
+    if (this.props.showSettings) {
+      return <Settings {...this.props} />;
+    }
     return (
       <Switch>
         <Route
