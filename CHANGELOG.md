@@ -46,6 +46,7 @@
 * Enable Settings section for ui-inventory. UIIN-86.
 * Lint. Fixes UIIN-104.
 * Clone an item record. Fixes UIIN-27.
+* Clone a holding record. Fixes UIIN-26.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

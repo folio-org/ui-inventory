@@ -24,6 +24,9 @@ class ViewHoldingsRecord extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
+      POST: {
+        path: 'holdings-storage/holdings',
+      },
     },
     instances1: {
       type: 'okapi',
@@ -74,12 +77,32 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  copyHoldingsRecord = (holdingsRecord) => {
+    const { location, history, resources: { instances1 } } = this.props;
+    const instance = instances1.records[0];
+
+    this.props.mutator.holdingsRecords.POST(holdingsRecord).then((data) => {
+      history.push(`/inventory/view/${instance.id}/${data.id}${location.search}`);
+      setTimeout(() => this.removeQueryParam('layer'));
+    });
+  }
+
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
+  }
+
+  onCopy(record) {
+    this.setState((state) => {
+      const newState = _.cloneDeep(state);
+      newState.copiedRecord = _.omit(record, ['id']);
+      return newState;
+    });
+
+    this.transitionToParams({ layer: 'copyHoldingsRecord' });
   }
 
   render() {
@@ -101,6 +124,12 @@ class ViewHoldingsRecord extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
+        <IconButton
+          id="clickable-copy-item"
+          onClick={() => this.onCopy(holdingsRecord)}
+          title="Copy Item"
+          icon="duplicate"
+        />
         <IconButton
           icon="edit"
           id="clickable-edit-holdingsrecord"
@@ -191,6 +220,17 @@ class ViewHoldingsRecord extends React.Component {
             referenceTables={referenceTables}
           />
         </Layer>
+        <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label="Copy Holdings Record Dialog">
+          <HoldingsForm
+            initialValues={this.state.copiedRecord}
+            onSubmit={(record) => { that.copyHoldingsRecord(record); }}
+            onCancel={this.onClickCloseEditHoldingsRecord}
+            okapi={okapi}
+            instance={instance}
+            copy
+            referenceTables={referenceTables}
+          />
+        </Layer>
       </div>
     );
   }
@@ -213,11 +253,13 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
+  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     holdingsRecords: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
+      POST: PropTypes.func.isRequired,
     }),
   }),
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,

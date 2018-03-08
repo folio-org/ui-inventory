@@ -34,11 +34,12 @@ function HoldingsForm(props) {
     initialValues,
     instance,
     referenceTables,
+    copy,
   } = props;
 
   /* Menus for Add Item workflow */
-  const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
-  const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={pristine || submitting} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
+  const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
+  const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
 
   const permanentLocationOptions = (referenceTables.shelfLocations || []).map(l => ({
     label: l.name,
@@ -126,6 +127,7 @@ HoldingsForm.propTypes = {
   reset: PropTypes.func,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
+  copy: PropTypes.bool,
   onCancel: PropTypes.func,
   initialValues: PropTypes.object,
   instance: PropTypes.object,
