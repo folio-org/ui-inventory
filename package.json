@@ -16,7 +16,7 @@
     "displayName": "Inventory",
     "route": "/inventory",
     "home": "/inventory?filters=&sort=Title",
-    "hasSettings": false,
+    "hasSettings": true,
     "queryResource": "query",
     "icons": [
      {
@@ -70,6 +70,22 @@
           "module.inventory.enabled",
           "inventory-storage.all",
           "inventory.all"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "inventory.settings.placeholder",
+        "displayName": "Settings (Inventory): placeholder",
+        "subPermissions": [
+          "settings.users.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "settings.inventory.enabled",
+        "displayName": "Settings (Inventory): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
         ],
         "visible": true
       }

@@ -43,6 +43,7 @@
 * Implement icons for instance, holdings, and item records. UIIN-49,50,51.
 * Add creator/updater usernames to meta-data section. UIIN-97.
 * Pass packageInfo to SearchAndSort; it's simpler. Refs STSMACOM-64. Available after v1.0.2.
+* Enable Settings section for ui-inventory. UIIN-86.
 * Lint. Fixes UIIN-104.
 * Clone an item record. Fixes UIIN-27.
 
