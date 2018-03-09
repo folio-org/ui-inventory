@@ -74,13 +74,19 @@
         "visible": true
       },
       {
-        "permissionName": "inventory.settings.placeholder",
-        "displayName": "Settings (Inventory): placeholder",
+        "permissionName": "ui-inventory.settings.materialtypes",
+        "displayName": "Settings (Inventory): Can create, edit and remove material types",
         "subPermissions": [
-          "settings.users.enabled"
+          "material-types.collection.get",
+          "material-types.item.delete",
+          "material-types.item.get",
+          "material-types.item.post",
+          "material-types.item.put",
+          "settings.inventory.enabled"
         ],
         "visible": true
       },
+
       {
         "permissionName": "settings.inventory.enabled",
         "displayName": "Settings (Inventory): display list of settings pages",
