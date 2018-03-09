@@ -86,7 +86,19 @@
         ],
         "visible": true
       },
-
+      {
+        "permissionName": "ui-inventory.settings.loantypes",
+        "displayName": "Settings (Inventory): Can create, edit and remove loan types",
+        "subPermissions": [
+          "loan-types.collection.get",
+          "loan-types.item.delete",
+          "loan-types.item.get",
+          "loan-types.item.post",
+          "loan-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
       {
         "permissionName": "settings.inventory.enabled",
         "displayName": "Settings (Inventory): display list of settings pages",
