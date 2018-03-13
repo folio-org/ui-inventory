@@ -125,9 +125,9 @@ class ViewHoldingsRecord extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <IconButton
-          id="clickable-copy-item"
+          id="clickable-copy-holdingsrecord"
           onClick={() => this.onCopy(holdingsRecord)}
-          title="Copy Item"
+          title="Copy Holding"
           icon="duplicate"
         />
         <IconButton
