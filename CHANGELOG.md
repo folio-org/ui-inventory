@@ -49,6 +49,7 @@
 * Clone a holding record. Fixes UIIN-26.
 * Add Material Types to Settings section. UIIN-87.
 * Add Loan Types to Settings section. UIIN-88.
+* Add targeted search dropdown. UIIN-56.
 
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
