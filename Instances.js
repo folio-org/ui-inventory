@@ -57,8 +57,8 @@ const filterConfig = [
 ];
 
 const GET_INSTANCES = gql`
-query allInstances {
-  instances {
+query allInstances ($cql: String) {
+  instances (cql: $cql) {
     records {
      id,
      source,
