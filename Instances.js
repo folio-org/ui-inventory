@@ -4,8 +4,6 @@ import _ from 'lodash';
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 
 import packageInfo from './package';
 import InstanceForm from './edit/InstanceForm';
@@ -180,9 +178,6 @@ class Instances extends React.Component {
   constructor(props) {
     super(props);
 
-    this.transitionToParams = transitionToParams.bind(this);
-    this.removeQueryParam = removeQueryParam.bind(this);
-
     this.cViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
@@ -214,18 +209,18 @@ class Instances extends React.Component {
   }
 
   updateFilters(filters) { // provided for onChangeFilter
-    this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
+    this.props.mutator.query.update({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
-    this.removeQueryParam('layer');
+    this.props.mutator.query.update({ layer: null });
   }
 
   copyInstance(instance) {
     this.setState({ copiedInstance: _.omit(instance, ['id']) });
-    this.transitionToParams({ layer: 'create' });
+    this.props.mutator.query.update({ layer: 'create' });
   }
 
   createInstance = (instance) => {

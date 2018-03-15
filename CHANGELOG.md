@@ -50,7 +50,7 @@
 * Add Material Types to Settings section. UIIN-87.
 * Add Loan Types to Settings section. UIIN-88.
 * Add targeted search dropdown. UIIN-56.
-
+* Deprecate `transitionToParams` in favor of `this.props.mutator.query.update`. Fixes UIIN-109.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
