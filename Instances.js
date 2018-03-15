@@ -4,6 +4,9 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
+import { stripesShape } from '@folio/stripes-core/src/Stripes';
+
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
@@ -95,6 +98,10 @@ query allInstances {
   }
 }
 `;
+
+
+let GlobalLogger; // see below: I am not proud of this
+
 
 class Instances extends React.Component {
   static manifest = Object.freeze({
@@ -213,6 +220,8 @@ class Instances extends React.Component {
 
     this.onChangeFilter = commonChangeFilter.bind(this);
     this.copyInstance = this.copyInstance.bind(this);
+
+    if (!GlobalLogger) GlobalLogger = props.stripes.logger;
   }
 
   /**
@@ -307,10 +316,7 @@ class Instances extends React.Component {
 }
 
 Instances.propTypes = {
-  stripes: PropTypes.shape({
-    connect: PropTypes.func.isRequired,
-    locale: PropTypes.string.isRequired,
-  }).isRequired,
+  stripes: stripesShape.isRequired,
   resources: PropTypes.shape({
     records: PropTypes.shape({
       hasLoaded: PropTypes.bool.isRequired,
@@ -350,16 +356,39 @@ Instances.propTypes = {
   }).isRequired,
 };
 
-// This will need some work :-)
+
+const QueryFunction = makeQueryFunction(
+  'cql.allRecords=1',
+  'title="%{query.query}*" or contributors adj "\\"name\\": \\"%{query.query}*\\"" or identifiers adj "\\"value\\": \\"%{query.query}*\\""',
+  {
+    Title: 'title',
+    publishers: 'publication',
+    Contributors: 'contributors',
+  },
+  filterConfig,
+);
+
+
 function makeCQL(props) {
-  return 'cql.allRecords=1';
+  // The query function should be passed three sets of parameters:
+  // * the first to look up using ?{X}
+  // * the second to look up using :{X} and !{X}
+  // * the third to look up using %{X}
+  // But since our query template only uses %{X}, we only need provide the third
+  //
+  // Also, there is no good way to get hold of the logger in use in
+  // the component. The best we can do is to have it stash a reference
+  // in a global, and use that.
+
+  return QueryFunction(null, null, props.resources, GlobalLogger);
 }
 
 export default compose(
-  graphql(GET_INSTANCES,
-    { options: props => ({
+  graphql(GET_INSTANCES, {
+    options: props => ({
       variables: {
         cql: makeCQL(props),
       },
-    }) }),
+    }),
+  }),
 )(Instances);
