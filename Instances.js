@@ -100,8 +100,6 @@ query allInstances ($cql: String) {
 `;
 
 
-let GlobalLogger; // see below: I am not proud of this
-
 const searchableIndexes = [
   { label: 'Search all fields', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
   { label: 'FOLIO ID', value: 'id', makeQuery: term => `(id="${term}*")` },
@@ -240,8 +238,6 @@ class Instances extends React.Component {
 
     this.onChangeFilter = commonChangeFilter.bind(this);
     this.copyInstance = this.copyInstance.bind(this);
-
-    if (!GlobalLogger) GlobalLogger = props.stripes.logger;
   }
 
   /**
@@ -411,12 +407,7 @@ function makeCQL(props) {
   // * the second to look up using :{X} and !{X}
   // * the third to look up using %{X}
   // But since our query template only uses %{X}, we only need provide the third
-  //
-  // Also, there is no good way to get hold of the logger in use in
-  // the component. The best we can do is to have it stash a reference
-  // in a global, and use that.
-
-  return QueryFunction(null, null, props.resources, GlobalLogger);
+  return QueryFunction(null, null, props.resources, props.stripes.logger);
 }
 
 export default compose(
