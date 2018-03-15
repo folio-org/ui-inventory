@@ -22,7 +22,7 @@ import transitionToParams from '@folio/stripes-components/util/transitionToParam
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
-import { data as languagetable } from './data/languages';
+import formatters from './referenceFormatters';
 
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
@@ -32,6 +32,7 @@ import ViewItem from './ViewItem';
 import ViewMetaData from './ViewMetaData';
 
 const emptyObj = {};
+const emptyArr = [];
 
 const GET_INSTANCE = gql`
 query ($id: String) {
@@ -76,6 +77,11 @@ query ($id: String) {
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
+    selectedInstance: {
+      type: 'okapi',
+      path: 'instance-storage/instances/:{id}',
+      clear: false,
+    },
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
@@ -170,8 +176,12 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, data: { instance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
+    const { okapi, resources: { selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
+    const selInstance = (selectedInstance || emptyObj).records || emptyArr;
+
+
+    const instance = (selInstance && id) ? selInstance.find(i => i.id === id) : null;
 
     const detailMenu = (
       <PaneMenu>
@@ -228,18 +238,6 @@ class ViewInstance extends React.Component {
       </div>
     );
 
-    const languagesFormatter = (r) => {
-      let formatted = '';
-      if (r.languages && r.languages.length) {
-        for (let i = 0; i < r.languages.length; i += 1) {
-          const languagecode = r.languages[i];
-          const language = languagetable.find(lang => lang.code === languagecode);
-          formatted += (i > 0 ? ', ' : '') + (language.name['#text'] || language.name);
-        }
-      }
-      return formatted;
-    };
-
     return instance ? (
       <Pane
         defaultWidth={this.props.paneWidth}
@@ -261,7 +259,6 @@ class ViewInstance extends React.Component {
           }
           <Row>
             <Col xs={12}>
-              Instance record {instance.instanceType.name}
               <AppIcon app="inventory" iconKey="instance" size="small" /> Instance record <AppIcon app="inventory" iconKey="resource-type" size="small" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
             </Col>
           </Row>
@@ -287,14 +284,14 @@ class ViewInstance extends React.Component {
           { (instance.identifiers.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Resource identifier" value={_.get(instance, ['identifiers'], []).map((identifier, i) => <div key={i}>{identifier.identifierType.name} {identifier.value}</div>)} />
+                <KeyValue label="Resource identifier" value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
               </Col>
             </Row>
           }
           { (instance.instanceFormatId) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Format" value={instance.instanceFormat.name} />
+		 <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
               </Col>
             </Row>
           }
@@ -313,20 +310,20 @@ class ViewInstance extends React.Component {
           { (instance.contributors.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Contributor" value={_.get(instance, ['contributors'], []).map((contributor, i) => <div key={i}>{contributor.name} {(contributor.contributorType ? contributor.contributorType.name : '')}</div>)} />
+		 <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
               </Col>
             </Row>
           }
           { (instance.publication.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Publisher" value={_.get(instance, ['publication'], []).map((pub, i) => <div key={i}>{pub.publisher}{pub.place ? `, ${pub.place}` : ''}{pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}</div>)} />
+		 <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
               </Col>
             </Row>
           }
           <Row>
             <Col xs={12}>
-              <KeyValue label="Resource type" value={instance.instanceType.name} />
+	       <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
             </Col>
           </Row>
           { (instance.physicalDescriptions.length > 0) &&
@@ -339,7 +336,7 @@ class ViewInstance extends React.Component {
           { (instance.languages.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Language" value={languagesFormatter(instance)} />
+                <KeyValue label="Language" value={formatters.languagesFormatter(instance)} />
               </Col>
             </Row>
           }
@@ -353,7 +350,7 @@ class ViewInstance extends React.Component {
           { (instance.classifications.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Classification" value={_.get(instance, ['classifications'], []).map((clss, i) => <div key={i}>{clss.classificationType.name} {clss.classificationNumber}</div>)} />
+		 <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
               </Col>
             </Row>
           }
@@ -455,7 +452,6 @@ ViewInstance.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  data: PropTypes.object,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
