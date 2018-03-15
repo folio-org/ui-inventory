@@ -53,7 +53,6 @@ const filterConfig = [
 
 const searchableIndexes = [
   { label: 'Search all fields', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: '(Bar code)', value: 'barcode', makeQuery: term => term },
   { label: 'FOLIO ID', value: 'id', makeQuery: term => `(id="${term}*")` },
   { label: 'Title', value: 'title', makeQuery: term => `(title="${term}*")` },
   { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}*\\"")` },
@@ -61,8 +60,6 @@ const searchableIndexes = [
   { label: 'ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
   { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}*\\"")` },
   { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}*")` },
-  { label: '(Classification)', value: 'classification', makeQuery: term => `(classifications adj "\\"classificationNumber\\": \\"${term}*\\"")` },
-  { label: '(Publisher)', value: 'publisher', makeQuery: term => term },
 ];
 
 class Instances extends React.Component {
