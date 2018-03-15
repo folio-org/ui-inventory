@@ -52,23 +52,18 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'Search all fields', value: 'all', query: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: '(Bar code)', value: 'barcode', query: term => term },
-  { label: 'FOLIO ID', value: 'id', query: term => `(id="${term}*")` },
-  { label: 'Title', value: 'title', query: term => `(title="${term}*")` },
-  { label: 'Identifier', value: 'identifier', query: term => `(identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: 'ISBN', value: 'isbn', query: (term, typeid) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${typeid}\\"*"` },
-  { label: 'ISSN', value: 'issn', query: (term, typeid) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${typeid}\\"*"` },
-  { label: 'Contributor', value: 'contributor', query: term => `(contributors adj "\\"name\\": \\"${term}*\\"")` },
-  { label: 'Subject', value: 'subject', query: term => `(subjects="${term}*")` },
-  { label: '(Classification)', value: 'classification', query: term => `(classifications adj "\\"value\\": \\"${term}*\\"")` },
-  { label: '(Publisher)', value: 'publisher', query: term => term },
+  { label: 'Search all fields', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
+  { label: '(Bar code)', value: 'barcode', makeQuery: term => term },
+  { label: 'FOLIO ID', value: 'id', makeQuery: term => `(id="${term}*")` },
+  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}*")` },
+  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}*\\"")` },
+  { label: 'ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
+  { label: 'ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
+  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}*\\"")` },
+  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}*")` },
+  { label: '(Classification)', value: 'classification', makeQuery: term => `(classifications adj "\\"value\\": \\"${term}*\\"")` },
+  { label: '(Publisher)', value: 'publisher', makeQuery: term => term },
 ];
-
-const getQuery = (indexValue, term, arg) => {
-  const indexFound = searchableIndexes.find(index => index.value === indexValue);
-  return indexFound.query(term, arg);
-};
 
 class Instances extends React.Component {
   static manifest = Object.freeze({
@@ -104,13 +99,16 @@ class Instances extends React.Component {
             };
 
             const index = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            let cql = '';
+            const searchableIndex = searchableIndexes.find(idx => idx.value === index);
+
+            let makeQueryArgs = {};
             if (index === 'isbn' || index === 'issn') {
               const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === index);
-              cql = getQuery(index, resourceData.query.query, identifierType.id);
-            } else {
-              cql = getQuery(index, resourceData.query.query);
+              makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
             }
+
+            let cql = searchableIndex.makeQuery(resourceData.query.query, makeQueryArgs);
+
             const filterCql = filters2cql(filterConfig, resourceData.query.filters);
             if (filterCql) {
               if (cql) {
