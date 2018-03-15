@@ -291,7 +291,7 @@ class ViewInstance extends React.Component {
           { (instance.instanceFormatId) &&
             <Row>
               <Col xs={12}>
-		 <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+                <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
               </Col>
             </Row>
           }
@@ -310,20 +310,20 @@ class ViewInstance extends React.Component {
           { (instance.contributors.length > 0) &&
             <Row>
               <Col xs={12}>
-		 <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+                <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
               </Col>
             </Row>
           }
           { (instance.publication.length > 0) &&
             <Row>
               <Col xs={12}>
-		 <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
+                <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
               </Col>
             </Row>
           }
           <Row>
             <Col xs={12}>
-	       <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+              <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
             </Col>
           </Row>
           { (instance.physicalDescriptions.length > 0) &&
@@ -350,7 +350,7 @@ class ViewInstance extends React.Component {
           { (instance.classifications.length > 0) &&
             <Row>
               <Col xs={12}>
-		 <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+                <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
               </Col>
             </Row>
           }
