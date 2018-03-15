@@ -51,6 +51,17 @@ const filterConfig = [
   },
 ];
 
+const searchableIndexes = [
+  { label: 'Search all fields', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
+  { label: 'FOLIO ID', value: 'id', makeQuery: term => `(id="${term}*")` },
+  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}*")` },
+  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}*\\"")` },
+  { label: 'ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
+  { label: 'ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
+  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}*\\"")` },
+  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}*")` },
+];
+
 class Instances extends React.Component {
   static manifest = Object.freeze({
     query: {
@@ -84,7 +95,17 @@ class Instances extends React.Component {
               Contributors: 'contributors',
             };
 
-            let cql = `(title="${resourceData.query.query}*" or contributors adj "\\"name\\": \\"${resourceData.query.query}*\\"" or identifiers adj "\\"value\\": \\"${resourceData.query.query}*\\"")`;
+            const index = resourceData.query.qindex ? resourceData.query.qindex : 'all';
+            const searchableIndex = searchableIndexes.find(idx => idx.value === index);
+
+            let makeQueryArgs = {};
+            if (index === 'isbn' || index === 'issn') {
+              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === index);
+              makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
+            }
+
+            let cql = searchableIndex.makeQuery(resourceData.query.query, makeQueryArgs);
+
             const filterCql = filters2cql(filterConfig, resourceData.query.filters);
             if (filterCql) {
               if (cql) {
@@ -187,6 +208,11 @@ class Instances extends React.Component {
     }
   }
 
+  onChangeIndex = (e) => {
+    const qindex = e.target.value;
+    this.props.mutator.query.update({ qindex });
+  }
+
   updateFilters(filters) { // provided for onChangeFilter
     this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
@@ -239,6 +265,10 @@ class Instances extends React.Component {
       packageInfo={packageInfo}
       objectName="inventory"
       maxSortKeys={1}
+      searchableIndexes={searchableIndexes}
+      selectedIndex={_.get(this.props.resources.query, 'qindex')}
+      searchableIndexesPlaceholder={null}
+      onChangeIndex={this.onChangeIndex}
       filterConfig={filterConfig}
       initialResultCount={INITIAL_RESULT_COUNT}
       resultCountIncrement={RESULT_COUNT_INCREMENT}
@@ -288,6 +318,10 @@ Instances.propTypes = {
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    query: PropTypes.shape({
+      qindex: PropTypes.string,
+      term: PropTypes.string,
+    }),
   }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
@@ -301,6 +335,9 @@ Instances.propTypes = {
     }),
     resultCount: PropTypes.shape({
       replace: PropTypes.func,
+    }),
+    query: PropTypes.shape({
+      update: PropTypes.func,
     }),
   }).isRequired,
 };
