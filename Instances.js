@@ -56,6 +56,7 @@ const filterConfig = [
 const GET_INSTANCES = gql`
 query allInstances {
   instances {
+    records {
      id,
      source,
      title,
@@ -89,6 +90,8 @@ query allInstances {
      languages,
      notes,
      metadata { updatedByUser { username } }
+    }
+    totalCount
   }
 }
 `;
@@ -347,6 +350,16 @@ Instances.propTypes = {
   }).isRequired,
 };
 
+// This will need some work :-)
+function makeCQL(props) {
+  return 'cql.allRecords=1';
+}
+
 export default compose(
-  graphql(GET_INSTANCES),
+  graphql(GET_INSTANCES,
+    { options: props => ({
+      variables: {
+        cql: makeCQL(props),
+      },
+    }) }),
 )(Instances);
