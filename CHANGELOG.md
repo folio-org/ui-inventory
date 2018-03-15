@@ -20,12 +20,12 @@
 * Search complex fields (contributors, identifiers). Refs UIIN-3.
 * Detail view refinement. Refs UIIN-28.
 * Refactor through `<SearchAndSort>`. Fixes UIIN-34, Refs FOLIO-942, FOLIO-940, UIIN-41.
-* Adding `<Notes>`. Fixes UIIN-10. 
+* Adding `<Notes>`. Fixes UIIN-10.
 * Adding search by Location. Refs UIIN-3.
-* Sort lookup tables server side because it's the right thing to do. 
-* Pass escape sequences on to CQL. Fixes UIIN-55.  
+* Sort lookup tables server side because it's the right thing to do.
+* Pass escape sequences on to CQL. Fixes UIIN-55.
 * Close "Add holdings" pane correctly. Fixes UIIN-54.
-* Sort contributor-types correctly. Refs UIIN-32. 
+* Sort contributor-types correctly. Refs UIIN-32.
 * Implement `<RepeatableField>` component on InstanceForm. Fixes UIIN-52.
 * (Enable and validate item-record's status field. Fixes UIIN-61. Rolled back again. UIIN-83)
 * Require holdings-record's location field. Fixes UIIN-60.
@@ -36,8 +36,20 @@
 * Restore show-single-record. Refs UIIN-58, STSMACOM-52.
 * Fix validation of item-record's Material Type, Permanent Loan Type fields. Refs UIIN-61.
 * Apply eslint-config-stripes. Enforces react/no-unused-state, no-restricted-globals, prefer-promise-reject-errors,  no-console and others.
-* Fix lint errors due to new lint rules. UIIN-85. 
+* Fix lint errors due to new lint rules. UIIN-85.
 * Set width of title to 40% in instance list. UIIN-78.
+* Re-restoring show-single-record that was inadvertently removed in d9e3b8d565. Re-fixes UIIN-58. Available from v1.0.1.
+* Pruning cruft methods unnecessary after the SearchAndSort conversion. Refs UIIN-34.
+* Implement icons for instance, holdings, and item records. UIIN-49,50,51.
+* Add creator/updater usernames to meta-data section. UIIN-97.
+* Pass packageInfo to SearchAndSort; it's simpler. Refs STSMACOM-64. Available after v1.0.2.
+* Enable Settings section for ui-inventory. UIIN-86.
+* Lint. Fixes UIIN-104.
+* Clone an item record. Fixes UIIN-27.
+* Clone a holding record. Fixes UIIN-26.
+* Add Material Types to Settings section. UIIN-87.
+* Add Loan Types to Settings section. UIIN-88.
+
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -16,13 +16,28 @@
     "displayName": "Inventory",
     "route": "/inventory",
     "home": "/inventory?filters=&sort=Title",
-    "hasSettings": false,
+    "hasSettings": true,
     "queryResource": "query",
     "icons": [
      {
-       "name": "icon",
+       "name": "app",
        "alt": "View and manage instance records, holdings records and item records",
        "title": "Inventory"
+     },
+     {
+       "name": "holdings",
+       "alt": "",
+       "title": "Holding"
+     },
+     {
+       "name": "item",
+       "alt": "",
+       "title": "Item"
+     },
+     {
+       "name": "instance",
+       "alt": "",
+       "title": "Instance"
      }
     ],
     "okapiInterfaces": {
@@ -39,12 +54,58 @@
       "instance-formats": "1.0",
       "instance-types": "1.0",
       "classification-types": "1.0",
-      "platforms": "1.0"
+      "platforms": "1.0",
+      "users": "14.0"
     },
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
         "displayName": "UI: Inventory module is enabled"
+      },
+      {
+        "permissionName": "ui-inventory.all-permissions.TEMPORARY",
+        "displayName": "Inventory: <temporary> all perms including UI",
+        "description": "Some subperms to support enabling/using the Inventory app",
+        "subPermissions": [
+          "module.inventory.enabled",
+          "inventory-storage.all",
+          "inventory.all"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.materialtypes",
+        "displayName": "Settings (Inventory): Can create, edit and remove material types",
+        "subPermissions": [
+          "material-types.collection.get",
+          "material-types.item.delete",
+          "material-types.item.get",
+          "material-types.item.post",
+          "material-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.loantypes",
+        "displayName": "Settings (Inventory): Can create, edit and remove loan types",
+        "subPermissions": [
+          "loan-types.collection.get",
+          "loan-types.item.delete",
+          "loan-types.item.get",
+          "loan-types.item.post",
+          "loan-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "settings.inventory.enabled",
+        "displayName": "Settings (Inventory): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
       }
     ],
     "translations": {
@@ -76,7 +137,7 @@
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-form": "^0.8.1",
-    "@folio/stripes-smart-components": "^1.4.0",
+    "@folio/stripes-smart-components": "^1.4.3",
     "graphql-tag": "^2.5.0",
     "react-apollo": "^2.0.1",
     "lodash": "^4.17.4",

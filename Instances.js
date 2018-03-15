@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import _ from 'lodash';
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
@@ -202,11 +201,6 @@ class Instances extends React.Component {
   constructor(props) {
     super(props);
 
-    const query = props.location.search ? queryString.parse(props.location.search) : {};
-    this.state = {
-      sortOrder: query.sort || '',
-    };
-
     this.transitionToParams = transitionToParams.bind(this);
     this.removeQueryParam = removeQueryParam.bind(this);
 
@@ -235,51 +229,6 @@ class Instances extends React.Component {
     }
   }
 
-  onClearSearch = () => {
-    const path = (_.get(packageInfo, ['stripes', 'home']) ||
-                  _.get(packageInfo, ['stripes', 'route']));
-    this.setState({
-      sortOrder: 'title',
-    });
-    this.props.history.push(path);
-  }
-
-  onSort = (e, meta) => {
-    const newOrder = meta.alias;
-    const oldOrder = this.state.sortOrder || '';
-    const orders = oldOrder ? oldOrder.split(',') : [];
-    if (orders[0] && newOrder === orders[0].replace(/^-/, '')) {
-      orders[0] = `-${orders[0]}`.replace(/^--/, '');
-    } else {
-      orders.unshift(newOrder);
-    }
-
-    const sortOrder = orders.slice(0, 2).join(',');
-    this.setState({ sortOrder });
-    this.transitionToParams({ sort: sortOrder });
-  }
-
-  onClickAddNewInstance = (e) => {
-    if (e) e.preventDefault();
-    this.transitionToParams({ layer: 'create' });
-  }
-
-  onChangeSearch = (e) => {
-    this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
-    const query = e.target.value;
-    this.performSearch(query);
-  }
-
-  onChangeFilter = (e) => {
-    this.props.mutator.resultCount.replace(INITIAL_RESULT_COUNT);
-    this.commonChangeFilter(e);
-  }
-
-  openInstance(selectedInstance) {
-    const instanceId = selectedInstance.id;
-    this.props.history.push(`/inventory/view/${instanceId}${this.props.location.search}`);
-  }
-
   updateFilters(filters) { // provided for onChangeFilter
     this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
@@ -302,14 +251,6 @@ class Instances extends React.Component {
     });
   }
 
-  performSearch = _.debounce((query) => {
-    this.transitionToParams({ query });
-  }, 250);
-
-  collapseDetails = () => {
-    this.props.history.push(`${this.props.match.path}${this.props.location.search}`);
-  };
-
   render() {
     const { resources } = this.props;
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -330,9 +271,6 @@ class Instances extends React.Component {
       shelfLocations,
     };
 
-    const initialPath = (_.get(packageInfo, ['stripes', 'home']) ||
-                         _.get(packageInfo, ['stripes', 'route']));
-
     const resultsFormatter = {
       publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
@@ -340,18 +278,15 @@ class Instances extends React.Component {
     };
 
     return (<SearchAndSort
-      moduleName={packageInfo.name.replace(/.*\//, '')}
-      moduleTitle={packageInfo.stripes.displayName}
+      packageInfo={packageInfo}
       objectName="inventory"
-      baseRoute={packageInfo.stripes.route}
-      initialPath={initialPath}
       maxSortKeys={1}
       filterConfig={filterConfig}
       initialResultCount={INITIAL_RESULT_COUNT}
       resultCountIncrement={RESULT_COUNT_INCREMENT}
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
-      newRecordInitialValues={(this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+      newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
       visibleColumns={['title', 'contributors', 'publishers']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
@@ -363,6 +298,7 @@ class Instances extends React.Component {
       parentMutator={this.props.mutator}
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
+      showSingleResult
     />);
   }
 }
@@ -394,13 +330,6 @@ Instances.propTypes = {
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-  }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-    search: PropTypes.string,
   }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,

@@ -11,6 +11,7 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import AppIcon from '@folio/stripes-components/lib/AppIcon';
 
 import transitionToParams from '@folio/stripes-components/util/transitionToParams';
 import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
@@ -23,6 +24,9 @@ class ViewHoldingsRecord extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
+      POST: {
+        path: 'holdings-storage/holdings',
+      },
     },
     instances1: {
       type: 'okapi',
@@ -73,12 +77,32 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  copyHoldingsRecord = (holdingsRecord) => {
+    const { location, history, resources: { instances1 } } = this.props;
+    const instance = instances1.records[0];
+
+    this.props.mutator.holdingsRecords.POST(holdingsRecord).then((data) => {
+      history.push(`/inventory/view/${instance.id}/${data.id}${location.search}`);
+      setTimeout(() => this.removeQueryParam('layer'));
+    });
+  }
+
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
+  }
+
+  onCopy(record) {
+    this.setState((state) => {
+      const newState = _.cloneDeep(state);
+      newState.copiedRecord = _.omit(record, ['id']);
+      return newState;
+    });
+
+    this.transitionToParams({ layer: 'copyHoldingsRecord' });
   }
 
   render() {
@@ -101,6 +125,12 @@ class ViewHoldingsRecord extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <IconButton
+          id="clickable-copy-holdingsrecord"
+          onClick={() => this.onCopy(holdingsRecord)}
+          title="Copy Holding"
+          icon="duplicate"
+        />
+        <IconButton
           icon="edit"
           id="clickable-edit-holdingsrecord"
           style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
@@ -118,7 +148,7 @@ class ViewHoldingsRecord extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
+                <AppIcon app="inventory" iconKey="holdings" size="small" /> <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
                 <div>
                   Holdings
                 </div>
@@ -145,7 +175,7 @@ class ViewHoldingsRecord extends React.Component {
             >
               <Row>
                 <Col sm={12}>
-                  Holdings record
+                  <AppIcon app="inventory" iconKey="holdings" size="small" /> Holdings record
                 </Col>
               </Row>
               <br />
@@ -190,6 +220,17 @@ class ViewHoldingsRecord extends React.Component {
             referenceTables={referenceTables}
           />
         </Layer>
+        <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label="Copy Holdings Record Dialog">
+          <HoldingsForm
+            initialValues={this.state.copiedRecord}
+            onSubmit={(record) => { that.copyHoldingsRecord(record); }}
+            onCancel={this.onClickCloseEditHoldingsRecord}
+            okapi={okapi}
+            instance={instance}
+            copy
+            referenceTables={referenceTables}
+          />
+        </Layer>
       </div>
     );
   }
@@ -212,11 +253,13 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
+  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     holdingsRecords: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
+      POST: PropTypes.func.isRequired,
     }),
   }),
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
