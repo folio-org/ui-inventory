@@ -10,8 +10,6 @@ import { stripesShape } from '@folio/stripes-core/src/Stripes';
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 
 import packageInfo from './package';
 import InstanceForm from './edit/InstanceForm';
@@ -102,12 +100,12 @@ query allInstances ($cql: String) {
 
 
 const searchableIndexes = [
-  { label: 'Search all fields', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: 'FOLIO ID', value: 'id', makeQuery: term => `(id="${term}*")` },
+  { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
+  { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}*")` },
   { label: 'Title', value: 'title', makeQuery: term => `(title="${term}*")` },
   { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: 'ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
-  { label: 'ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
+  { label: '- ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
+  { label: '- ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
   { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}*\\"")` },
   { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}*")` },
 ];
@@ -230,9 +228,6 @@ class Instances extends React.Component {
   constructor(props) {
     super(props);
 
-    this.transitionToParams = transitionToParams.bind(this);
-    this.removeQueryParam = removeQueryParam.bind(this);
-
     this.cViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
@@ -264,18 +259,18 @@ class Instances extends React.Component {
   }
 
   updateFilters(filters) { // provided for onChangeFilter
-    this.transitionToParams({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
+    this.props.mutator.query.update({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
   }
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
-    this.removeQueryParam('layer');
+    this.props.mutator.query.update({ layer: null });
   }
 
   copyInstance(instance) {
     this.setState({ copiedInstance: _.omit(instance, ['id']) });
-    this.transitionToParams({ layer: 'create' });
+    this.props.mutator.query.update({ layer: 'create' });
   }
 
   createInstance = (instance) => {

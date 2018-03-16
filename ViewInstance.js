@@ -18,8 +18,6 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Headline from '@folio/stripes-components/lib/Headline';
 
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import formatters from './referenceFormatters';
@@ -77,6 +75,7 @@ query ($id: String) {
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     selectedInstance: {
       type: 'okapi',
       path: 'instance-storage/instances/:{id}',
@@ -106,27 +105,25 @@ class ViewInstance extends React.Component {
     this.cViewItem = this.props.stripes.connect(ViewItem);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
 
-    this.transitionToParams = transitionToParams.bind(this);
-    this.removeQueryParam = removeQueryParam.bind(this);
     this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
-    this.transitionToParams({ layer: 'edit' });
+    this.props.mutator.query.update({ layer: 'edit' });
   }
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
     this.log('clicked "add new holdings record"');
-    this.transitionToParams({ layer: 'createHoldingsRecord' });
+    this.props.mutator.query.update({ layer: 'createHoldingsRecord' });
   }
 
   onClickCloseNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
     this.log('clicked "close new holdings record"');
-    this.removeQueryParam('layer');
+    this.props.mutator.query.update({ layer: null });
   }
 
   update(instance) {
@@ -137,7 +134,7 @@ class ViewInstance extends React.Component {
 
   closeEditInstance = (e) => {
     if (e) e.preventDefault();
-    this.removeQueryParam('layer');
+    this.props.mutator.query.update({ layer: null });
   }
 
   closeViewItem = (e) => {
@@ -273,7 +270,7 @@ class ViewInstance extends React.Component {
           <br />
           <Row>
             <Col xs={12}>
-              <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
+              <KeyValue label="Instance ID" value={_.get(instance, ['id'], '')} />
             </Col>
           </Row>
           <Row>
@@ -465,6 +462,7 @@ ViewInstance.propTypes = {
     holdings: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
+    query: PropTypes.object.isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,

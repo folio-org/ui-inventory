@@ -13,8 +13,6 @@ import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
@@ -51,21 +49,18 @@ class ViewHoldingsRecord extends React.Component {
         holdingsAccordion: true,
       },
     };
-
-    this.transitionToParams = transitionToParams.bind(this);
-    this.removeQueryParam = removeQueryParam.bind(this);
     this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
   // Edit Holdings records handlers
   onClickEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.transitionToParams({ layer: 'editHoldingsRecord' });
+    this.props.mutator.query.update({ layer: 'editHoldingsRecord' });
   }
 
   onClickCloseEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.removeQueryParam('layer');
+    this.props.mutator.query.update({ layer: null });
   }
 
   updateHoldingsRecord = (holdingsRecord) => {
@@ -83,7 +78,7 @@ class ViewHoldingsRecord extends React.Component {
 
     this.props.mutator.holdingsRecords.POST(holdingsRecord).then((data) => {
       history.push(`/inventory/view/${instance.id}/${data.id}${location.search}`);
-      setTimeout(() => this.removeQueryParam('layer'));
+      setTimeout(() => this.removeQueryParam({ layer: null }));
     });
   }
 
@@ -102,7 +97,7 @@ class ViewHoldingsRecord extends React.Component {
       return newState;
     });
 
-    this.transitionToParams({ layer: 'copyHoldingsRecord' });
+    this.props.mutator.query.update({ layer: 'copyHoldingsRecord' });
   }
 
   render() {
@@ -186,6 +181,11 @@ class ViewHoldingsRecord extends React.Component {
                   </Headline>
                 </Col>
               </Row>
+              <Row>
+                <Col xs={12}>
+                  <KeyValue label="Holdings ID" value={_.get(holdingsRecord, ['id'], '')} />
+                </Col>
+              </Row>
               { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
                 <Row>
                   <Col smOffset={1} sm={4}>
@@ -261,6 +261,7 @@ ViewHoldingsRecord.propTypes = {
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
     }),
+    query: PropTypes.object.isRequired,
   }),
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
 };

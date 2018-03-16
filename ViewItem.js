@@ -13,14 +13,13 @@ import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 
-import transitionToParams from '@folio/stripes-components/util/transitionToParams';
-import removeQueryParam from '@folio/stripes-components/util/removeQueryParam';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     items: {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
@@ -61,19 +60,17 @@ class ViewItem extends React.Component {
       },
     };
 
-    this.transitionToParams = transitionToParams.bind(this);
-    this.removeQueryParam = removeQueryParam.bind(this);
     this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
   onClickEditItem = (e) => {
     if (e) e.preventDefault();
-    this.transitionToParams({ layer: 'editItem' });
+    this.props.mutator.query.update({ layer: 'editItem' });
   }
 
   onClickCloseEditItem = (e) => {
     if (e) e.preventDefault();
-    this.removeQueryParam('layer');
+    this.props.mutator.query.update({ layer: null });
   }
 
   saveItem = (item) => {
@@ -87,7 +84,7 @@ class ViewItem extends React.Component {
 
     this.props.mutator.items.POST(item).then((data) => {
       history.push(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}${location.search}`);
-      setTimeout(() => this.removeQueryParam('layer'));
+      setTimeout(() => this.props.mutator.query.update({ layer: null }));
     });
   }
 
@@ -106,7 +103,7 @@ class ViewItem extends React.Component {
       return newState;
     });
 
-    this.transitionToParams({ layer: 'copyItem' });
+    this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
   render() {
@@ -197,6 +194,11 @@ class ViewItem extends React.Component {
                 </Row>
               }
               <br /><br />
+              <Row>
+                <Col xs={12}>
+                  <KeyValue label="Item ID" value={_.get(item, ['id'], '')} />
+                </Col>
+              </Row>
               { (item.temporaryLocation) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
@@ -309,6 +311,7 @@ ViewItem.propTypes = {
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
     }),
+    query: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
 };
