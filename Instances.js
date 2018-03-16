@@ -3,6 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import queryString from 'query-string';
 
 import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
 import { stripesShape } from '@folio/stripes-core/src/Stripes';
@@ -402,12 +403,8 @@ const QueryFunction = makeQueryFunction(
 
 
 function makeCQL(props) {
-  // The query function should be passed three sets of parameters:
-  // * the first to look up using ?{X}
-  // * the second to look up using :{X} and !{X}
-  // * the third to look up using %{X}
-  // But since our query template only uses %{X}, we only need provide the third
-  return QueryFunction(null, null, props.resources, props.stripes.logger);
+  const parsedQuery = queryString.parse(props.location.search || '');
+  return QueryFunction(parsedQuery, props, props.resources, props.stripes.logger);
 }
 
 export default compose(
