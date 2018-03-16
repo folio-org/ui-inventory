@@ -227,7 +227,7 @@ class ViewInstance extends React.Component {
           <br />
           <Row>
             <Col xs={12}>
-              <KeyValue label="FOLIO ID" value={_.get(instance, ['id'], '')} />
+              <KeyValue label="Instance ID" value={_.get(instance, ['id'], '')} />
             </Col>
           </Row>
           <Row>
