@@ -182,7 +182,7 @@ class ViewHoldingsRecord extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col xs={12}>
+                <Col smOffset={1} sm={4}>
                   <KeyValue label="Holdings ID" value={_.get(holdingsRecord, ['id'], '')} />
                 </Col>
               </Row>
