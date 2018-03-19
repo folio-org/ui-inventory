@@ -194,6 +194,11 @@ class ViewItem extends React.Component {
                 </Row>
               }
               <br /><br />
+              <Row>
+                <Col xs={12}>
+                  <KeyValue label="Item ID" value={_.get(item, ['id'], '')} />
+                </Col>
+              </Row>
               { (item.temporaryLocation) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
