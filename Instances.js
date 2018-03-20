@@ -62,6 +62,7 @@ const searchableIndexes = [
 
 class Instances extends React.Component {
   static manifest = Object.freeze({
+    numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
     query: {
       initialValue: {
         query: '',
@@ -193,13 +194,23 @@ class Instances extends React.Component {
     // resource types
     const rt = (this.props.resources.instanceTypes || {}).records || [];
     if (rt && rt.length) {
+      const oldValuesLength = filterConfig[0].values.length;
       filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
+      if (oldValuesLength === 0) {
+        const numFiltersLoaded = this.props.resources.numFiltersLoaded;
+        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of users
+      }
     }
 
     // locations
     const locations = (this.props.resources.locations || {}).records || [];
     if (locations && locations.length) {
+      const oldValuesLength = filterConfig[2].values.length;
       filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
+      if (oldValuesLength === 0) {
+        const numFiltersLoaded = this.props.resources.numFiltersLoaded;
+        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of users
+      }
     }
   }
 
@@ -306,6 +317,7 @@ Instances.propTypes = {
         }),
       ),
     }),
+    numFiltersLoaded: PropTypes.number,
     resultCount: PropTypes.number,
     instanceTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -324,6 +336,9 @@ Instances.propTypes = {
   mutator: PropTypes.shape({
     addInstanceMode: PropTypes.shape({
       replace: PropTypes.func,
+    }),
+    numFiltersLoaded: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
     }),
     records: PropTypes.shape({
       POST: PropTypes.func,
