@@ -198,7 +198,7 @@ class Instances extends React.Component {
       filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
         const numFiltersLoaded = this.props.resources.numFiltersLoaded;
-        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of users
+        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
       }
     }
 
@@ -209,7 +209,7 @@ class Instances extends React.Component {
       filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
         const numFiltersLoaded = this.props.resources.numFiltersLoaded;
-        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of users
+        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
       }
     }
   }
