@@ -340,6 +340,7 @@ class Instances extends React.Component {
       disableRecordCreation={false}
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
+      parentData={this.props.data}
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult
