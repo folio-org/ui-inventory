@@ -24,7 +24,6 @@ class MaterialTypesSettings extends React.Component {
         labelSingular="Material Type"
         objectLabel="Items"
         hiddenFields={['description', 'numberOfObjects']}
-        /* TODO: allowDeletion={(item) => return itemIsNotInUse} */
         nameKey="name"
         id="materialtypes"
       />

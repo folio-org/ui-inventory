@@ -4,9 +4,6 @@ import ControlledVocab from '@folio/stripes-smart-components/lib/ControlledVocab
 
 class LoanTypesSettings extends React.Component {
   static propTypes = {
-    // The stripes prop will probably get used eventually, so
-    // it's probably best to leave it there.
-    // eslint-disable-next-line
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -27,7 +24,6 @@ class LoanTypesSettings extends React.Component {
         labelSingular="Loan Type"
         objectLabel="Loans"
         hiddenFields={['description', 'numberOfObjects']}
-        /* TODO: allowDeletion={(item) => return itemIsNotInUse} */
         columnMapping={{ name: 'Loan Type' }}
         nameKey="name"
         id="loantypes"
