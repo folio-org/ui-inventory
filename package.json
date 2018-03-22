@@ -94,7 +94,7 @@
           "inventory-storage.loan-types.item.delete",
           "inventory-storage.loan-types.item.get",
           "inventory-storage.loan-types.item.post",
-          "inventory-storage.oan-types.item.put",
+          "inventory-storage.loan-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
