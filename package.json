@@ -77,11 +77,11 @@
         "permissionName": "ui-inventory.settings.materialtypes",
         "displayName": "Settings (Inventory): Can create, edit and remove material types",
         "subPermissions": [
-          "material-types.collection.get",
-          "material-types.item.delete",
-          "material-types.item.get",
-          "material-types.item.post",
-          "material-types.item.put",
+          "inventory-storage.material-types.collection.get",
+          "inventory-storage.material-types.item.delete",
+          "inventory-storage.material-types.item.get",
+          "inventory-storage.material-types.item.post",
+          "inventory-storage.material-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
@@ -90,11 +90,11 @@
         "permissionName": "ui-inventory.settings.loantypes",
         "displayName": "Settings (Inventory): Can create, edit and remove loan types",
         "subPermissions": [
-          "loan-types.collection.get",
-          "loan-types.item.delete",
-          "loan-types.item.get",
-          "loan-types.item.post",
-          "loan-types.item.put",
+          "inventory-storage.loan-types.collection.get",
+          "inventory-storage.loan-types.item.delete",
+          "inventory-storage.loan-types.item.get",
+          "inventory-storage.loan-types.item.post",
+          "inventory-storage.loan-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
