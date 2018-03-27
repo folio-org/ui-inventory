@@ -166,7 +166,7 @@ class InstanceForm extends React.Component {
                         </Col>
                       </Row>
                       <AlternativeTitles />
-                      <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
+                      <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
                       <Row>
                         <Col sm={8}>
                           <Field
