@@ -34,7 +34,7 @@ class Items extends React.Component {
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': x => _.get(x, ['barcode']),
-      status: x => _.get(x, ['status', 'name']) || '--',
+      'status': x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };
     return (
