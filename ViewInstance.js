@@ -96,12 +96,12 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
+    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
   }
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
+    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
   }
 
   createHoldingsRecord = (holdingsRecord) => {
@@ -348,7 +348,6 @@ class ViewInstance extends React.Component {
             match={this.props.match}
             stripes={stripes}
             location={location}
-            history={this.props.history}
           />
           : null
         }
@@ -410,7 +409,6 @@ ViewInstance.propTypes = {
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
   }).isRequired,
-  history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     selectedInstance: PropTypes.shape({

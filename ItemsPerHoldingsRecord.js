@@ -13,6 +13,7 @@ import ItemForm from './edit/items/ItemForm';
 
 class ItemsPerHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     addItemMode: { initialValue: { mode: false } },
     materialTypes: {
       type: 'okapi',
@@ -65,12 +66,14 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   viewHoldingsRecord = () => {
-    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}${this.props.location.search}`);
+    this.props.mutator.query.update({
+      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`,
+    });
   }
 
 
   render() {
-    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, location, accordionToggle, accordionStates } = this.props;
+    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, accordionToggle, accordionStates } = this.props;
 
     const materialtypes = (materialTypes || {}).records || [];
     const loantypes = (loanTypes || {}).records || [];
@@ -109,7 +112,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         </Row>
         <Row>
           <Col sm={12}>
-            <this.cItems holdingsRecord={holdingsRecord} referenceTables={referenceTables} okapi={okapi} instance={instance} location={location} history={this.props.history} match={this.props.match} />
+            <this.cItems holdingsRecord={holdingsRecord} instance={instance} parentMutator={this.props.mutator} />
           </Col>
         </Row>
         <br />
@@ -144,6 +147,7 @@ ItemsPerHoldingsRecord.propTypes = {
     addItemMode: PropTypes.shape({
       replace: PropTypes.func,
     }),
+    query: PropTypes.object.isRequired,
   }),
   resources: PropTypes.shape({
     materialTypes: PropTypes.shape({
@@ -161,15 +165,7 @@ ItemsPerHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
   }).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.object,
-  }),
-  history: PropTypes.object,
   okapi: PropTypes.object,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-    search: PropTypes.string,
-  }),
   accordionToggle: PropTypes.func.isRequired,
   accordionStates: PropTypes.object.isRequired,
 };

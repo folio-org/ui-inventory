@@ -18,14 +18,13 @@ class Items extends React.Component {
     this.editItemModeThisLayer = false;
   }
 
-  onSelectRow = (e, meta) => {
-    if (e) e.stopPropagation();
-    this.openItem(meta);
-  }
-
-  openItem(selectedItem) {
+  openItem = (e, selectedItem) => {
+    if (e) e.preventDefault();
     const itemId = selectedItem.id;
-    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}${this.props.location.search}`);
+
+    this.props.parentMutator.query.update({
+      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`
+    });
   }
 
   render() {
@@ -43,7 +42,7 @@ class Items extends React.Component {
           id="list-items"
           contentData={itemRecords}
           rowMetadata={['id', 'holdingsRecordId']}
-          onRowClick={this.onSelectRow}
+          onRowClick={this.openItem}
           formatter={itemsFormatter}
           visibleColumns={['Item: barcode', 'status', 'Material Type']}
           ariaLabel="Items"
@@ -58,11 +57,9 @@ Items.propTypes = {
     items: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    query: PropTypes.object,
   }),
-  history: PropTypes.object,
-  location: PropTypes.shape({
-    search: PropTypes.string,
-  }),
+  parentMutator: PropTypes.object.isRequired,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
 };

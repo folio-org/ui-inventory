@@ -78,13 +78,15 @@ class ViewItem extends React.Component {
   }
 
   copyItem = (item) => {
-    const { location, history, resources: { holdingsRecords, instances1 } } = this.props;
+    const { resources: { holdingsRecords, instances1 } } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
     this.props.mutator.items.POST(item).then((data) => {
-      history.push(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}${location.search}`);
-      setTimeout(() => this.props.mutator.query.update({ layer: null }));
+      this.props.mutator.query.update({
+        _path: `/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`,
+        layer: null,
+      });
     });
   }
 
@@ -141,7 +143,11 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    let labelLocation = '';
+    if (holdingsRecord.permanentLocationId) {
+      const shelfLocation = referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id);
+      labelLocation = _.get(shelfLocation, ['name'], '');
+    }
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
@@ -303,7 +309,6 @@ ViewItem.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
