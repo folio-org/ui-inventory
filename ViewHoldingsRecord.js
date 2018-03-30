@@ -19,6 +19,7 @@ import HoldingsForm from './edit/holdings/HoldingsForm';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
@@ -73,12 +74,14 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   copyHoldingsRecord = (holdingsRecord) => {
-    const { location, history, resources: { instances1 } } = this.props;
+    const { resources: { instances1 } } = this.props;
     const instance = instances1.records[0];
 
     this.props.mutator.holdingsRecords.POST(holdingsRecord).then((data) => {
-      history.push(`/inventory/view/${instance.id}/${data.id}${location.search}`);
-      setTimeout(() => this.removeQueryParam({ layer: null }));
+      this.props.mutator.query.update({
+        _path: `/inventory/view/${instance.id}/${data.id}`,
+        layer: null,
+      });
     });
   }
 
@@ -253,7 +256,6 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({

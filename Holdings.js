@@ -5,6 +5,7 @@ import ItemsPerHoldingsRecord from './ItemsPerHoldingsRecord';
 
 class Holdings extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
