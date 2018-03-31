@@ -1,0 +1,9 @@
+{
+  "item.availability": "Availability",
+  "item.availability.itemStatus": "Item status",
+  "item.availability.itemStatusDate": "Item status date",
+  "item.availability.requests": "Requests",
+  "item.availability.borrower": "Borrower",
+  "item.availability.loanDate": "Loan date",
+  "item.availability.dueDate": "Due date"
+}

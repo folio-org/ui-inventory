@@ -11,6 +11,11 @@ import Button from '@folio/stripes-components/lib/Button';
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
 
+/**
+ * Accordion wrapper for an individual Holdings record on the instance-view
+ * pane. Actual display of item summary is handled via Items.
+ *
+ */
 class ItemsPerHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
     query: {},

@@ -111,7 +111,7 @@ class ViewItem extends React.Component {
   render() {
     const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
       referenceTables,
-      okapi } = this.props;
+      okapi, stripes: { intl } } = this.props;
 
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -262,6 +262,35 @@ class ViewItem extends React.Component {
                 </Row>
               }
             </Accordion>
+            <Accordion
+              open={this.state.accordions.itemAvailabilityAccordion}
+              id="itemAvailabilityAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={intl.formatMessage({ id: 'ui-inventory.item.availability' })}
+            >
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value="-" />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value="-" />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.requests' })} value="-" />
+                </Col>
+              </Row>
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.borrower' })} value="-" />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value="-" />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value="-" />
+                </Col>
+              </Row>
+            </Accordion>
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? query.layer === 'editItem' : false} label="Edit Item Dialog">
@@ -296,6 +325,9 @@ class ViewItem extends React.Component {
 }
 
 ViewItem.propTypes = {
+  stripes: PropTypes.shape({
+    intl: PropTypes.object.isRequired,
+  }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
