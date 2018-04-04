@@ -17,6 +17,7 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
+import ViewMetaData from './ViewMetaData';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -138,6 +139,7 @@ class ViewItem extends React.Component {
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   onClickEditItem = (e) => {
@@ -283,6 +285,9 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
               <br />
+              { (item.metadata && item.metadata.createdDate) &&
+                <this.cViewMetaData metadata={item.metadata} />
+              }
               { (item.barcode) &&
                 <Row>
                   <Col sm={12}>
@@ -420,6 +425,7 @@ class ViewItem extends React.Component {
 ViewItem.propTypes = {
   stripes: PropTypes.shape({
     intl: PropTypes.object.isRequired,
+    connect: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({

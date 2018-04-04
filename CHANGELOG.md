@@ -55,6 +55,7 @@
 * Fix Okapi permission names. UIIN-136.
 * Add contributorTypeId and contributorTypeText to instance form. UIIN-92.
 * Ignore yarn-error.log file. Refs STRIPES-517. 
+* Wait for reference tables to load before rendering. UIIN-140, UIIN-141.
 * Show availability on item details. Fixes UIIN-110.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)

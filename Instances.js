@@ -243,6 +243,15 @@ class Instances extends React.Component {
 
   render() {
     const { resources } = this.props;
+
+    if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
+        || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
+        || !resources.identifierTypes || !resources.identifierTypes.hasLoaded
+        || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
+        || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
+        || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
+        || !resources.locations || !resources.locations.hasLoaded) return <div />;
+
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
