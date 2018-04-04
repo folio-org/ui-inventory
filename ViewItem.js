@@ -193,10 +193,12 @@ class ViewItem extends React.Component {
       requestLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
     }
 
+    let loanLink = item.status.name;
     let borrowerLink = '-';
     let itemStatusDate = '-';
     if (this.state.loan && this.state.borrower) {
-      borrowerLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{this.state.borrower.barcode}</Link>;
+      loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
+      borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
       itemStatusDate = formatDateTime(_.get(this.state.loan, ['metaData', 'updatedDate']));
     }
 
@@ -320,7 +322,7 @@ class ViewItem extends React.Component {
             >
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value={_.get(item, ['status', 'name'])} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value={loanLink} />
                 </Col>
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value={itemStatusDate} />
