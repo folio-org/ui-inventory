@@ -61,11 +61,10 @@ class ViewItem extends React.Component {
       path: 'circulation/loans?query=(itemId==:{itemid})',
       records: 'loans',
     },
+    borrowerId: {},
     borrower: {
-      fetch: false,
-      accumulate: true,
       type: 'okapi',
-      path: 'users',
+      path: 'users?query=(id==%{borrowerId})',
       records: 'users',
     }
   });
@@ -74,7 +73,14 @@ class ViewItem extends React.Component {
     const loanRecords = (nextProps.resources.loans || {}).records || [];
     if ((!prevState.loan) && loanRecords.length === 1) {
       const loan = loanRecords[0];
+      nextProps.mutator.borrowerId.replace(loan.userId);
       return { loan };
+    }
+
+    const borrowerRecords = (nextProps.resources.borrower || {}).records || [];
+    if ((!prevState.borrower) && borrowerRecords.length === 1) {
+      const borrower = borrowerRecords[0];
+      return { borrower };
     }
 
     return null;
@@ -91,17 +97,6 @@ class ViewItem extends React.Component {
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.loan && !prevState.borrowerQuery) {
-      this.setState({ borrowerQuery: true });
-      this.props.mutator.borrower.GET({ params: { query: `query=id==${this.state.loan.userId}` } })
-        .then((records) => {
-          const borrower = records[0];
-          this.setState({ borrower });
-        });
-    }
   }
 
   onClickEditItem = (e) => {
@@ -399,9 +394,7 @@ ViewItem.propTypes = {
     loans: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    borrower: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    borrower: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
@@ -413,7 +406,6 @@ ViewItem.propTypes = {
       POST: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
-    borrower: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
 };
