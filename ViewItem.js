@@ -58,29 +58,70 @@ class ViewItem extends React.Component {
     },
     loans: {
       type: 'okapi',
-      path: 'circulation/loans?query=(itemId==:{itemid})',
+      path: 'circulation/loans?query=(itemId==!{itemId})',
       records: 'loans',
     },
     borrowerId: {},
     borrower: {
       type: 'okapi',
-      path: 'users?query=(id==%{borrowerId})',
+      path: 'users?query=(id==%{borrowerId.query})',
       records: 'users',
     }
   });
 
+  /**
+   * If a loan is retrieved matching this item, retrieve the corresponding
+   * user record as well.
+   *
+   * I do not understand why it is necessary to check that loan.itemId matches
+   * itemid and that borrower.id matches userId; the latter values are those
+   * that are used in the manifest above and I can see that the correct
+   * queries are running in the browser's network inspector. And yet, if
+   * they are not checked, the values in nextProps.resources are always
+   * from a previous incarnation of this object.
+   *
+   * Likewise, if the borrower resource's path is defined to have a string
+   * substituted in rather than an object, it will always contain the value
+   * from the previous incarnation of the object. i.e. if the path is
+   *     users?query=(id==%{borrowerId})
+   * and we call
+   *     nextProps.mutator.borrowerId.replace(loan.userId);
+   * instead of
+   *     users?query=(id==%{ borrowerId.query })
+   * and
+   *     nextProps.mutator.borrowerId.replace({ query: loan.userId });
+   * then the value retrieved by nextProps.resources.borrower will always
+   * be that from the previous instance of this object.
+   *
+   * This smells like a dataKey issue in stripes-connect.
+   *
+   * dataKey, with a lower case "d",
+   * that rhymes with "t",
+   * that stands for "tap dancing" or maybe "tesseract" and also "thelonious"
+   * that rhymes with "felonious"
+   * and that stands for "funk!"
+   *
+   */
   static getDerivedStateFromProps(nextProps, prevState) {
     const loanRecords = (nextProps.resources.loans || {}).records || [];
     if ((!prevState.loan) && loanRecords.length === 1) {
       const loan = loanRecords[0];
-      nextProps.mutator.borrowerId.replace(loan.userId);
-      return { loan };
+      if (nextProps.itemId === loan.itemId) {
+        nextProps.mutator.borrowerId.replace({ query: loan.userId });
+        return { loan };
+      }
+
+      // console.warn(`retrieved a loan.itemId ${loan.itemId} that did not match the item.itemid ${nextProps.itemid}`)
     }
 
     const borrowerRecords = (nextProps.resources.borrower || {}).records || [];
-    if ((!prevState.borrower) && borrowerRecords.length === 1) {
+    if (prevState.loan && (!prevState.borrower) && borrowerRecords.length === 1) {
       const borrower = borrowerRecords[0];
-      return { borrower };
+      if (prevState.loan.userId === borrower.id) {
+        return { borrower };
+      }
+
+      // console.warn('retrieved a borrower.id ${borrower.id} that did not match the loan.userId ${prevState.loan.userId}')
     }
 
     return null;
@@ -336,10 +377,10 @@ class ViewItem extends React.Component {
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.borrower' })} value={borrowerLink} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value={formatDateTime(_.get(this.state.loan, ['loanDate']))} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value={this.state.loan ? formatDateTime(this.state.loan.loanDate) : '-'} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value={formatDateTime(_.get(this.state.loan, ['dueDate']))} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value={this.state.loan ? formatDateTime(this.state.loan.dueDate) : '-'} />
                 </Col>
               </Row>
             </Accordion>

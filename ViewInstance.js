@@ -352,12 +352,12 @@ class ViewInstance extends React.Component {
           : null
         }
         { (holdingsrecordid && !itemid) ?
-          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
+          <this.cViewHoldingsRecord id={id} holdingsrecordid={holdingsrecordid} {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
           : null
         }
         { (holdingsrecordid && itemid) ?
-          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
-         : null
+          <this.cViewItem id={id} holdingsRecordId={holdingsrecordid} itemId={itemid} {...this.props} onCloseViewItem={this.closeViewItem} />
+          : null
         }
         <Row>
           <Col sm={12}>{newHoldingsRecordButton}</Col>
