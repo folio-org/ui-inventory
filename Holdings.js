@@ -31,7 +31,9 @@ class Holdings extends React.Component {
   render() {
     const { resources: { holdings, shelfLocations, platforms }, referenceTables } = this.props;
 
-    if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
+    if (!holdings || !holdings.hasLoaded
+        || !shelfLocations || !shelfLocations.hasLoaded
+        || !platforms || !platforms.hasLoaded) return <div />;
 
     const holdingsRecords = holdings.records;
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
