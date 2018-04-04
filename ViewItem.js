@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import Link from 'react-router-dom/Link';
 
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -50,7 +51,34 @@ class ViewItem extends React.Component {
       path: 'loan-types',
       records: 'loantypes',
     },
+    requests: {
+      type: 'okapi',
+      path: 'circulation/requests?query=(itemId==:{itemid}) sortby requestDate desc',
+      records: 'requests',
+    },
+    loans: {
+      type: 'okapi',
+      path: 'circulation/loans?query=(itemId==:{itemid})',
+      records: 'loans',
+    },
+    borrower: {
+      fetch: false,
+      accumulate: true,
+      type: 'okapi',
+      path: 'users',
+      records: 'users',
+    }
   });
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const loanRecords = (nextProps.resources.loans || {}).records || [];
+    if ((!prevState.loan) && loanRecords.length === 1) {
+      const loan = loanRecords[0];
+      return { loan };
+    }
+
+    return null;
+  }
 
   constructor(props) {
     super(props);
@@ -58,9 +86,22 @@ class ViewItem extends React.Component {
       accordions: {
         itemAccordion: true,
       },
+      loan: null,
+      borrower: null,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.loan && !prevState.borrowerQuery) {
+      this.setState({ borrowerQuery: true });
+      this.props.mutator.borrower.GET({ params: { query: `query=id==${this.state.loan.userId}` } })
+        .then((records) => {
+          const borrower = records[0];
+          this.setState({ borrower });
+        });
+    }
   }
 
   onClickEditItem = (e) => {
@@ -109,9 +150,9 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
+    const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes, requests },
       referenceTables,
-      okapi, stripes: { intl } } = this.props;
+      okapi, stripes: { intl, formatDateTime } } = this.props;
 
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -121,6 +162,8 @@ class ViewItem extends React.Component {
     const instance = instances1.records[0];
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
+
+    const requestRecords = (requests || {}).records || [];
 
     const query = location.search ? queryString.parse(location.search) : {};
 
@@ -149,6 +192,18 @@ class ViewItem extends React.Component {
       labelLocation = _.get(shelfLocation, ['name'], '');
     }
     const labelCallNumber = holdingsRecord.callNumber || '';
+
+    let requestLink = 0;
+    if (requestRecords.length && item.barcode) {
+      requestLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+    }
+
+    let borrowerLink = '-';
+    let itemStatusDate = '-';
+    if (this.state.loan && this.state.borrower) {
+      borrowerLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{this.state.borrower.barcode}</Link>;
+      itemStatusDate = formatDateTime(_.get(this.state.loan, ['metaData', 'updatedDate']));
+    }
 
     return (
       <div>
@@ -270,24 +325,24 @@ class ViewItem extends React.Component {
             >
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value="-" />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value={_.get(item, ['status', 'name'])} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value="-" />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value={itemStatusDate} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.requests' })} value="-" />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.requests' })} value={requestLink} />
                 </Col>
               </Row>
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.borrower' })} value="-" />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.borrower' })} value={borrowerLink} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value="-" />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value={formatDateTime(_.get(this.state.loan, ['loanDate']))} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value="-" />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value={formatDateTime(_.get(this.state.loan, ['dueDate']))} />
                 </Col>
               </Row>
             </Accordion>
@@ -338,6 +393,15 @@ ViewItem.propTypes = {
     loanTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    requests: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    loans: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    borrower: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
@@ -349,6 +413,7 @@ ViewItem.propTypes = {
       POST: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
+    borrower: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
 };
