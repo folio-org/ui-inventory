@@ -53,6 +53,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .click('#clickable-add-contributor')
           .insert('input[name="contributors[0].name"', contrib)
           .type('select[name="contributors[0].contributorNameTypeId"]', 'P')
+          .type('select[name="contributors[0].primary"]', 'P')
           .click('#clickable-add-subject')
           .insert('input[name="subjects[0]"]', subjects[0])
           .click('#clickable-add-subject')
@@ -87,9 +88,9 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('input[name="notes[2]"]', notes[2])
           .wait(55)
           .click('#clickable-create-instance')
-          .wait(2222)
+          .wait('button[title^="Close"]')
           .click('button[title^="Close"]')
-          .wait(1111)
+          .wait('#clickable-new-holdings-record')
           .then(() => { done(); })
           .catch(done);
       });
@@ -97,8 +98,6 @@ module.exports.test = function uiTest(uiTestCtx) {
       it('should find new title in list ', (done) => {
         nightmare
           .wait('#list-inventory')
-        // .xclick('//div[@role="presentation"][.="title"]')
-        // .wait(3000)
           .xclick('//div[@role="presentation"][.="title"]')
           .wait(3000)
           .evaluate((titl) => {
