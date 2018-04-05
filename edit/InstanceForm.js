@@ -43,7 +43,7 @@ function validate(values) {
   // each item must have non-empty values in each field.
   const optionalLists = [
     { list: 'identifiers', textFields: ['value'], selectFields: ['identifierTypeId'] },
-    { list: 'contributors', textFields: ['name'], selectFields: ['contributorNameTypeId'] },
+    { list: 'contributors', textFields: ['name'], selectFields: ['contributorNameTypeId', 'primary'] },
     { list: 'classifications', textFields: ['classificationNumber'], selectFields: ['classificationTypeId'] },
   ];
 

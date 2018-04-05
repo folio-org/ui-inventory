@@ -19,6 +19,12 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
     }),
   );
 
+  const primaryContributorOptions = [
+    { label: 'Primary', value: true },
+    { label: 'Non-primary', value: false },
+  ];
+
+
   return (
     <RepeatableField
       name="contributors"
@@ -32,17 +38,18 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           component: TextField,
         },
         {
-          label: 'Name Type',
+          label: 'Name Type *',
           name: 'contributorNameTypeId',
           component: Select,
           dataOptions: [{ label: 'Select type', value: '' }, ...contributorNameTypeOptions],
+          required: true,
         },
         {
-          label: 'Primary',
+          label: 'Primary *',
           name: 'primary',
           component: Select,
-          dataOptions: [{ label: 'Primary', value: true },
-                        { label: 'Non-primary', value: false }]
+          dataOptions: [{ label: 'Select primary', value: '' }, ...primaryContributorOptions],
+          required: true,
         },
         {
           label: 'Type',
@@ -56,7 +63,7 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           component: TextField,
         },
       ]}
-      newItemTemplate={{ name: '', contributorNameTypeId: '', primary: true, contributorTypeId: '', contributorTypeText: '' }}
+      newItemTemplate={{ name: '', contributorNameTypeId: '', primary: '', contributorTypeId: '', contributorTypeText: '' }}
     />
   );
 };
