@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
+import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
 
 const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
@@ -18,12 +19,6 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
       value: it.id,
     }),
   );
-
-  const primaryContributorOptions = [
-    { label: 'Primary', value: true },
-    { label: 'Non-primary', value: false },
-  ];
-
 
   return (
     <RepeatableField
@@ -45,11 +40,9 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           required: true,
         },
         {
-          label: 'Primary *',
+          label: 'Primary',
           name: 'primary',
-          component: Select,
-          dataOptions: [{ label: 'Select primary', value: '' }, ...primaryContributorOptions],
-          required: true,
+          component: Checkbox,
         },
         {
           label: 'Type',
