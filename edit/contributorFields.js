@@ -35,13 +35,20 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           label: 'Name Type',
           name: 'contributorNameTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select name type', value: '' }, ...contributorNameTypeOptions],
+          dataOptions: [{ label: 'Select type', value: '' }, ...contributorNameTypeOptions],
         },
         {
-          label: 'Contributor Type',
+          label: 'Primary',
+          name: 'primary',
+          component: Select,
+          dataOptions: [{ label: 'Primary', value: true },
+                        { label: 'Non-primary', value: false }]
+        },
+        {
+          label: 'Type',
           name: 'contributorTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select contributor type', value: '' }, ...contributorTypeOptions],
+          dataOptions: [{ label: 'Select type', value: '' }, ...contributorTypeOptions],
         },
         {
           label: 'Type, free text',
@@ -49,7 +56,7 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           component: TextField,
         },
       ]}
-      newItemTemplate={{ name: '', contributorNameTypeId: '', contributorTypeId: '', contributorTypeText: '' }}
+      newItemTemplate={{ name: '', contributorNameTypeId: '', primary: true, contributorTypeId: '', contributorTypeText: '' }}
     />
   );
 };
