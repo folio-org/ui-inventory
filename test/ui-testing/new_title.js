@@ -53,7 +53,6 @@ module.exports.test = function uiTest(uiTestCtx) {
           .click('#clickable-add-contributor')
           .insert('input[name="contributors[0].name"', contrib)
           .type('select[name="contributors[0].contributorNameTypeId"]', 'P')
-          .type('select[name="contributors[0].primary"]', 'P')
           .click('#clickable-add-subject')
           .insert('input[name="subjects[0]"]', subjects[0])
           .click('#clickable-add-subject')
