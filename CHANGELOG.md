@@ -57,6 +57,7 @@
 * Ignore yarn-error.log file. Refs STRIPES-517. 
 * Wait for reference tables to load before rendering. UIIN-140, UIIN-141.
 * Add 'primary' selector to contributors in instance forms. UIIN-131
+* Show availability on item details. Fixes UIIN-110.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 
 import ItemsPerHoldingsRecord from './ItemsPerHoldingsRecord';
 
+/**
+ * Wrapper for items-per-holdings display which shows item links on
+ * the instance-details pane. This component retrieves all holdings
+ * records and then passes them off to ItemsPerHoldingsRecord to render.
+ *
+ */
 class Holdings extends React.Component {
   static manifest = Object.freeze({
     query: {},

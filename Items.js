@@ -4,6 +4,11 @@ import _ from 'lodash';
 
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
+/**
+ * List items for display in the Holdings accordion in the main
+ * instance-details pane.
+ *
+ */
 class Items extends React.Component {
   static manifest = Object.freeze({
     items: {
