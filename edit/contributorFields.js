@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
+import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
 
 const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
@@ -32,16 +33,22 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           component: TextField,
         },
         {
-          label: 'Name Type',
+          label: 'Name Type *',
           name: 'contributorNameTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select name type', value: '' }, ...contributorNameTypeOptions],
+          dataOptions: [{ label: 'Select type', value: '' }, ...contributorNameTypeOptions],
+          required: true,
         },
         {
-          label: 'Contributor Type',
+          label: 'Primary',
+          name: 'primary',
+          component: Checkbox,
+        },
+        {
+          label: 'Type',
           name: 'contributorTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select contributor type', value: '' }, ...contributorTypeOptions],
+          dataOptions: [{ label: 'Select type', value: '' }, ...contributorTypeOptions],
         },
         {
           label: 'Type, free text',
@@ -49,7 +56,7 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           component: TextField,
         },
       ]}
-      newItemTemplate={{ name: '', contributorNameTypeId: '', contributorTypeId: '', contributorTypeText: '' }}
+      newItemTemplate={{ name: '', contributorNameTypeId: '', primary: '', contributorTypeId: '', contributorTypeText: '' }}
     />
   );
 };
