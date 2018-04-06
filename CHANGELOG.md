@@ -54,10 +54,11 @@
 * Record IDs: Relabel 'FOLIO ID' to 'Instance ID'. Display 'Item ID', 'Holdings ID'. UIIN-113, UIIN-114, UIIN-115.
 * Fix Okapi permission names. UIIN-136.
 * Add contributorTypeId and contributorTypeText to instance form. UIIN-92.
-* Ignore yarn-error.log file. Refs STRIPES-517. 
+* Ignore yarn-error.log file. Refs STRIPES-517.
 * Wait for reference tables to load before rendering. UIIN-140, UIIN-141.
 * Add 'primary' selector to contributors in instance forms. UIIN-131
 * Show availability on item details. Fixes UIIN-110.
+* Set cloned item's status to Available. Fixes UIIN-142.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
