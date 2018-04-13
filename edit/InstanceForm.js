@@ -141,7 +141,7 @@ class InstanceForm extends React.Component {
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">Instance Record</Headline>
 
-                <Accordion label={<h3>Section 1</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
+                <Accordion label={<h3>Title data</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>
                       <Row>
@@ -195,7 +195,7 @@ class InstanceForm extends React.Component {
                     </Col>
                   </Row>
                 </Accordion>
-                <Accordion label={<h3>Section 2</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
+                <Accordion label={<h3>Descriptive data</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
                   <Row>
                     <Col sm={9}>
                       <PublicationFields />
@@ -210,7 +210,7 @@ class InstanceForm extends React.Component {
                     </Col>
                   </Row>
                 </Accordion>
-                <Accordion label={<h3>Section 3</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
+                <Accordion label={<h3>Content data</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
                   <Row>
                     <Col sm={9}>
                       <SeriesFields />
