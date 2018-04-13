@@ -7,8 +7,8 @@ module.exports.test = function test(uiTestCtx) {
     this.timeout(Number(config.test_timeout));
 
     describe('Login > Click Inventory > Ente Search Term > Wait for Results > Confirm search term at top of results > Click Reset All > Wait for results pan to change state > Logout\n', () => {
-      const title = '14 cows for America';
-      const authorName = 'Harmon, Daniel E.';
+      const title = 'God bless';
+      const authorName = 'Winget, Susan';
       before((done) => {
         login(nightmare, config, done); // logs in with the default admin credentials
       });
@@ -50,22 +50,15 @@ module.exports.test = function test(uiTestCtx) {
               }
             });
           })
-          .wait(() => {
-            let bool = false;
-            const control = document.querySelector('div[class^="controlGroup"] > div');
-            if (control === null) {
-              bool = true;
-            }
-            return bool;
-          })
+          .wait(5555)
           .then(done)
           .catch(done);
       });
       it(`should search for title: ${title}`, (done) => {
         nightmare
-          .wait(555)
+          .wait(55)
           .select('#input-inventory-search-qindex', 'title')
-          .wait(555)
+          .wait(55)
           .insert('#input-inventory-search', title)
           .wait('#clickable-input-inventory-search-clear-field')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${title}"]`)
@@ -89,22 +82,15 @@ module.exports.test = function test(uiTestCtx) {
               }
             });
           })
-          .wait(() => {
-            let bool = false;
-            const control = document.querySelector('div[class^="controlGroup"] > div');
-            if (control === null) {
-              bool = true;
-            }
-            return bool;
-          })
+          .wait(5555)
           .then(done)
           .catch(done);
       });
       it(`should search for contributor: ${authorName}`, (done) => {
         nightmare
-          .wait(555)
+          .wait(55)
           .select('#input-inventory-search-qindex', 'contributor')
-          .wait(555)
+          .wait(55)
           .insert('#input-inventory-search', authorName)
           .wait('#clickable-input-inventory-search-clear-field')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${authorName}"]`)
