@@ -59,6 +59,7 @@
 * Add 'primary' selector to contributors in instance forms. UIIN-131
 * Show availability on item details. Fixes UIIN-110.
 * Set cloned item's status to Available. Fixes UIIN-142.
+* Changes section titles in Instance form. UIIN-72
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
