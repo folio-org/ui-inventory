@@ -109,6 +109,9 @@ class ViewItem extends React.Component {
       const loan = loanRecords[0];
       if (nextProps.itemId === loan.itemId) {
         nextProps.mutator.borrowerId.replace({ query: loan.userId });
+
+        // don't choke while we migrate from metaData to metadata
+        loan.metadata = loan.metadata || loan.metaData;
         return { loan };
       }
 
@@ -243,7 +246,7 @@ class ViewItem extends React.Component {
     if (this.state.loan && this.state.borrower) {
       loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
-      itemStatusDate = formatDateTime(_.get(this.state.loan, ['metaData', 'updatedDate']));
+      itemStatusDate = formatDateTime(_.get(this.state.loan, ['metadata', 'updatedDate']));
     }
 
     return (
