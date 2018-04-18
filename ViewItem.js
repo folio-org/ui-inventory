@@ -57,9 +57,11 @@ class ViewItem extends React.Component {
       path: 'circulation/requests?query=(itemId==:{itemid}) sortby requestDate desc',
       records: 'requests',
     },
+    // there is no canonical method to retrieve an item's "current" loan.
+    // the top item, sorted by loan-date descending, is a best-effort.
     loans: {
       type: 'okapi',
-      path: 'circulation/loans?query=(itemId==!{itemId})',
+      path: 'circulation/loans?query=(itemId==!{itemId}) sortby loanDate/sort.descending&limit=1',
       records: 'loans',
     },
     borrowerId: {},
@@ -107,7 +109,8 @@ class ViewItem extends React.Component {
     const loanRecords = (nextProps.resources.loans || {}).records || [];
     if ((!prevState.loan) && loanRecords.length === 1) {
       const loan = loanRecords[0];
-      if (nextProps.itemId === loan.itemId) {
+      // FIXME: loan-status-check must be i18n friendly
+      if (nextProps.itemId === loan.itemId && loan.item.status.name ==! 'Available') {
         nextProps.mutator.borrowerId.replace({ query: loan.userId });
 
         // don't choke while we migrate from metaData to metadata
