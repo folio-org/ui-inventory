@@ -121,74 +121,6 @@ class Instances extends React.Component {
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    records: {
-      type: 'okapi',
-      records: 'instances',
-      recordsRequired: '%{resultCount}',
-      perRequest: 30,
-      path: 'instance-storage/instances',
-      GET: {
-        params: {
-          query: (...args) => {
-            /*
-              This code is not DRY as it is copied from makeQueryFunction in stripes-components.
-              This is necessary, as makeQueryFunction only references query parameters as a data source.
-              STRIPES-480 is intended to correct this and allow this query function to be replace with a call
-              to makeQueryFunction.
-              https://issues.folio.org/browse/STRIPES-480
-            */
-            const resourceData = args[2];
-            const sortMap = {
-              Title: 'title',
-              publishers: 'publication',
-              Contributors: 'contributors',
-            };
-
-            const index = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            const searchableIndex = searchableIndexes.find(idx => idx.value === index);
-
-            let makeQueryArgs = {};
-            if (index === 'isbn' || index === 'issn') {
-              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === index);
-              makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
-            }
-
-            let cql = searchableIndex.makeQuery(resourceData.query.query, makeQueryArgs);
-
-            const filterCql = filters2cql(filterConfig, resourceData.query.filters);
-            if (filterCql) {
-              if (cql) {
-                cql = `(${cql}) and ${filterCql}`;
-              } else {
-                cql = filterCql;
-              }
-            }
-
-            const { sort } = resourceData.query;
-            if (sort) {
-              const sortIndexes = sort.split(',').map((sort1) => {
-                let reverse = false;
-                if (sort1.startsWith('-')) {
-                  // eslint-disable-next-line no-param-reassign
-                  sort1 = sort1.substr(1);
-                  reverse = true;
-                }
-                let sortIndex = sortMap[sort1] || sort1;
-                if (reverse) {
-                  sortIndex = `${sortIndex.replace(' ', '/sort.descending ')}/sort.descending`;
-                }
-                return sortIndex;
-              });
-
-              cql += ` sortby ${sortIndexes.join(' ')}`;
-            }
-
-            return cql;
-          },
-        },
-        staticFallback: { params: {} },
-      },
-    },
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
@@ -341,6 +273,7 @@ class Instances extends React.Component {
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
       parentData={this.props.data}
+      apolloResource='instances'
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult
@@ -421,6 +354,7 @@ function makeCQL(props) {
 export default compose(
   graphql(GET_INSTANCES, {
     options: props => ({
+      errorPolicy: 'none',
       variables: {
         cql: makeCQL(props),
       },
