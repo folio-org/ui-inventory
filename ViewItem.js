@@ -110,7 +110,7 @@ class ViewItem extends React.Component {
     if ((!prevState.loan) && loanRecords.length === 1) {
       const loan = loanRecords[0];
       // FIXME: loan-status-check must be i18n friendly
-      if (nextProps.itemId === loan.itemId && loan.item.status.name ==! 'Available') {
+      if (nextProps.itemId === loan.itemId && loan.item.status.name !== 'Available') {
         nextProps.mutator.borrowerId.replace({ query: loan.userId });
 
         // don't choke while we migrate from metaData to metadata
