@@ -7,8 +7,8 @@ module.exports.test = function test(uiTestCtx) {
     this.timeout(Number(config.test_timeout));
 
     describe('Login > Click Inventory > Ente Search Term > Wait for Results > Confirm search term at top of results > Click Reset All > Wait for results pan to change state > Logout\n', () => {
-      const title = 'God bless';
-      const authorName = 'Winget, Susan';
+      const title = 'California';
+      const authorName = 'Huntley, Henry Veel';
       before((done) => {
         login(nightmare, config, done); // logs in with the default admin credentials
       });
