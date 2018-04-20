@@ -193,6 +193,7 @@ class ViewItem extends React.Component {
       referenceTables,
       okapi, stripes: { intl, formatDateTime } } = this.props;
 
+    const formatMsg = intl.formatMessage;
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
@@ -255,7 +256,7 @@ class ViewItem extends React.Component {
               <div style={{ textAlign: 'center' }}>
                 <AppIcon app="inventory" iconKey="item" size="small" /> {_.get(item, ['barcode'], '')}
                 <div>
-                  Item . {_.get(item, ['status', 'name'], '')}
+                  { formatMsg({ id: 'ui-inventory.itemDotStatus' }, {status: _.get(item, ['status', 'name'], '') }) }
                 </div>
               </div>
             }
@@ -265,12 +266,12 @@ class ViewItem extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                Instance: {instance.title}
+                {formatMsg({ id:'ui-inventory.instance' })} {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
                 <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
                 <div>
-                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  { formatMsg({ id: 'ui-inventory.holdingsColon' }) + ` ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </Col>
             </Row>
@@ -278,11 +279,11 @@ class ViewItem extends React.Component {
               open={this.state.accordions.itemAccordion}
               id="itemAccordion"
               onToggle={this.handleAccordionToggle}
-              label="Item data"
+              label={formatMsg({ id: 'ui-inventory.itemData' })}
             >
               <Row>
                 <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="item" size="small" /> Item record <AppIcon app="inventory" iconKey="material-type" size="small" /> {_.get(item, ['materialType', 'name'], '')} <AppIcon app="inventory" iconKey="item-status" size="small" /> {_.get(item, ['status', 'name'], '')}
+                  <AppIcon app="inventory" iconKey="item" size="small" /> {formatMsg({ id: 'ui-inventory.itemRecord' })} <AppIcon app="inventory" iconKey="material-type" size="small" /> {_.get(item, ['materialType', 'name'], '')} <AppIcon app="inventory" iconKey="item-status" size="small" /> {_.get(item, ['status', 'name'], '')}
                 </Col>
               </Row>
               <br />
@@ -301,62 +302,62 @@ class ViewItem extends React.Component {
               <br /><br />
               <Row>
                 <Col xs={12}>
-                  <KeyValue label="Item ID" value={_.get(item, ['id'], '')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemId' })} value={_.get(item, ['id'], '')} />
                 </Col>
               </Row>
               { (item.temporaryLocation) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Temporary location" value={_.get(item, ['temporaryLocation', 'name'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], '')} />
                   </Col>
                 </Row>
               }
               { (item.permanentLoanType) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Permanent loantype" value={_.get(item, ['permanentLoanType', 'name'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
                   </Col>
                 </Row>
               }
               { (item.temporaryLoanType) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Temporary loantype" value={_.get(item, ['temporaryLoanType', 'name'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
                   </Col>
                 </Row>
               }
               { (item.enumeration) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Enumeration" value={_.get(item, ['enumeration'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
                   </Col>
                 </Row>
               }
               { (item.chronology) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Chronology" value={_.get(item, ['chronology'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
                   </Col>
                 </Row>
               }
               { (item.numberOfPieces) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Number of pieces" value={_.get(item, ['numberOfPieces'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
                   </Col>
                 </Row>
               }
               { (item.pieceIdentifiers) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Piece identifiers" value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
                   </Col>
                 </Row>
               }
               { (item.notes.length > 0) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <KeyValue label="Notes" value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.notes' })} value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
                   </Col>
                 </Row>
               }
@@ -402,6 +403,7 @@ class ViewItem extends React.Component {
             instance={instance}
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
+            intl={intl}
           />
         </Layer>
         <Layer isOpen={query.layer === 'copyItem'} label="Copy Item Dialog">

@@ -86,8 +86,9 @@ class ItemsPerHoldingsRecord extends React.Component {
     referenceTables.loanTypes = loantypes;
     referenceTables.materialTypes = materialtypes;
 
-    const viewHoldingsButton = <Button id="clickable-view-holdings" onClick={this.viewHoldingsRecord}>View holdings</Button>;
-    const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title="+ Item" buttonStyle="primary paneHeaderNewButton">+ Add item</Button>;
+    const formatMsg = this.props.stripes.intl.formatMessage;
+    const viewHoldingsButton = <Button id="clickable-view-holdings" onClick={this.viewHoldingsRecord}>{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button>;
+    const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title={formatMsg({ id: 'ui-inventory.addItem' })} buttonStyle="primary paneHeaderNewButton">{formatMsg({ id: 'ui-inventory.addItem' })}</Button>;
     const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
 
@@ -96,7 +97,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         open={accordionStates[holdingsRecord.id] === undefined || accordionStates[holdingsRecord.id]}
         id={holdingsRecord.id}
         onToggle={accordionToggle}
-        label={`Holdings: ${labelLocation} > ${labelCallNumber}`}
+        label={formatMsg({ id: 'ui-inventory.holdingsHeader' }, { location: labelLocation, callNumber: labelCallNumber })}
         displayWhenOpen={<div>{viewHoldingsButton} {newItemButton}</div>}
       >
         <Row>
@@ -121,7 +122,7 @@ class ItemsPerHoldingsRecord extends React.Component {
           </Col>
         </Row>
         <br />
-        <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label="Add New Item Dialog">
+        <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label={formatMsg({id: 'ui-inventory.addNewHoldingsDialog'})}>
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}
             id={holdingsRecord.id}
@@ -133,6 +134,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             instance={instance}
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
+            intl={this.props.stripes.intl}
           />
         </Layer>
       </Accordion>);

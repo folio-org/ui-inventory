@@ -2,14 +2,14 @@ import React from 'react';
 import TextField from '@folio/stripes-components/lib/TextField';
 import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
 
-const NoteFields = () => (
+const NoteFields = ({ formatMsg }) => (
   <RepeatableField
     name="notes"
-    label="Notes"
-    addLabel="+ Add note"
+    label={formatMsg({ id: "ui-inventory.notes" })}
+    addLabel={formatMsg({ id: "ui-inventory.addNote" })}
     addButtonId="clickable-add-notes"
     template={[{
-      label: 'Note',
+      label: formatMsg({ id: "ui-inventory.note" }),
       component: TextField,
     }]}
   />

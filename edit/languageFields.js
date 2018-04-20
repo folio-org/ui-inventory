@@ -5,14 +5,14 @@ import Select from '@folio/stripes-components/lib/Select';
 import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
 import languages from '../data/languages';
 
-const renderLanguageField = ({ field, fieldIndex }) => {
+const renderLanguageField = ({ field, fieldIndex }, formatMsg) => {
   const languageOptions = languages.selectOptions(field);
   return (
     <Field
-      label={fieldIndex === 0 ? 'language' : null}
+      label={fieldIndex === 0 ? formatMsg({ id: "ui-inventory.language" }) : null}
       name={`${field}`}
       component={Select}
-      dataOptions={[{ label: 'Select language', value: '' }, ...languageOptions]}
+      dataOptions={[{ label: formatMsg({ id: "ui-inventory.selectLanguage" }), value: '' }, ...languageOptions]}
     />
   );
 };
@@ -22,16 +22,18 @@ renderLanguageField.propTypes = {
   fieldIndex: PropTypes.number,
 };
 
-const LanguageFields = () => (
-  <RepeatableField
-    name="languages"
-    label="Languages"
-    addLabel="+ Add language"
-    addButtonId="clickable-add-language"
-    template={[{
-      render: renderLanguageField,
-    }]}
-  />
-);
+const LanguageFields = ({ formatMsg }) => {
+  return (
+    <RepeatableField
+      name="languages"
+      label={formatMsg({ id: "ui-inventory.languages" })}
+      addLabel={formatMsg({ id: "ui-inventory.addLanguage" })}
+      addButtonId="clickable-add-language"
+      template={[{
+        render: function(fieldObj){ return renderLanguageField(fieldObj, formatMsg)},
+      }]}
+    />
+  );
+}
 
 export default LanguageFields;

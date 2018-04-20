@@ -4,7 +4,7 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
 
-const ClassificationFields = ({ classificationTypes }) => {
+const ClassificationFields = ({ classificationTypes, formatMsg }) => {
   const classificationTypeOptions = classificationTypes.map(
     it => ({
       label: it.name,
@@ -15,22 +15,22 @@ const ClassificationFields = ({ classificationTypes }) => {
   return (
     <RepeatableField
       name="classifications"
-      label="Classifications"
-      addLabel="+ Add classification"
+      label={formatMsg({ id: "ui-inventory.classifications" })}
+      addLabel={formatMsg({ id: "ui-inventory.addClassifications" })}
       addButtonId="clickable-add-classification"
       addDefaultItem={false}
       template={[
         {
-          label: 'Number *',
+          label: formatMsg({ id: "ui-inventory.number" }),
           name: 'classificationNumber',
           component: TextField,
           required: true,
         },
         {
-          label: 'Type *',
+          label: formatMsg({ id: "ui-inventory.type" }),
           name: 'classificationTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select classification type', value: '' }, ...classificationTypeOptions],
+          dataOptions: [{ label: formatMsg({ id: "ui-inventory.selectClassification" }), value: '' }, ...classificationTypeOptions],
           required: true,
         },
       ]}
