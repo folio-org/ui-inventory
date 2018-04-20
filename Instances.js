@@ -354,7 +354,7 @@ function makeCQL(props) {
 export default compose(
   graphql(GET_INSTANCES, {
     options: props => ({
-      errorPolicy: 'none',
+      errorPolicy: 'all',
       variables: {
         cql: makeCQL(props),
       },
