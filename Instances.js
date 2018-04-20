@@ -6,7 +6,7 @@ import _ from 'lodash';
 import queryString from 'query-string';
 
 import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
-import { stripesShape } from '@folio/stripes-core/src/Stripes';
+import { stripesShape } from '@folio/stripes-core/src/Stripes'; // eslint-disable-line import/no-unresolved
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
