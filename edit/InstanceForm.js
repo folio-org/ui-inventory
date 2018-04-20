@@ -141,9 +141,9 @@ class InstanceForm extends React.Component {
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">Instance Record</Headline>
 
-                <Accordion label={<h3>Section 1</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
+                <Accordion label={<h3>Title data</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
-                    <Col sm={7}>
+                    <Col sm={9}>
                       <Row>
                         <Col sm={8}>
                           <Field
@@ -166,7 +166,7 @@ class InstanceForm extends React.Component {
                         </Col>
                       </Row>
                       <AlternativeTitles />
-                      <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} />
+                      <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
                       <Row>
                         <Col sm={8}>
                           <Field
@@ -195,9 +195,9 @@ class InstanceForm extends React.Component {
                     </Col>
                   </Row>
                 </Accordion>
-                <Accordion label={<h3>Section 2</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
+                <Accordion label={<h3>Descriptive data</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
                   <Row>
-                    <Col sm={7}>
+                    <Col sm={9}>
                       <PublicationFields />
                       <Row>
                         <Col sm={8}>
@@ -210,9 +210,9 @@ class InstanceForm extends React.Component {
                     </Col>
                   </Row>
                 </Accordion>
-                <Accordion label={<h3>Section 3</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
+                <Accordion label={<h3>Content data</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
                   <Row>
-                    <Col sm={7}>
+                    <Col sm={9}>
                       <SeriesFields />
                       <SubjectFields />
                       <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
@@ -246,5 +246,4 @@ export default stripesForm({
   validate,
   asyncValidate,
   navigationCheck: true,
-  scrollToError: true,
 })(InstanceForm);

@@ -16,9 +16,11 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
+import ViewMetaData from './ViewMetaData';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
@@ -50,6 +52,7 @@ class ViewHoldingsRecord extends React.Component {
       },
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   // Edit Holdings records handlers
@@ -73,12 +76,14 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   copyHoldingsRecord = (holdingsRecord) => {
-    const { location, history, resources: { instances1 } } = this.props;
+    const { resources: { instances1 } } = this.props;
     const instance = instances1.records[0];
 
     this.props.mutator.holdingsRecords.POST(holdingsRecord).then((data) => {
-      history.push(`/inventory/view/${instance.id}/${data.id}${location.search}`);
-      setTimeout(() => this.removeQueryParam({ layer: null }));
+      this.props.mutator.query.update({
+        _path: `/inventory/view/${instance.id}/${data.id}`,
+        layer: null,
+      });
     });
   }
 
@@ -174,6 +179,9 @@ class ViewHoldingsRecord extends React.Component {
                 </Col>
               </Row>
               <br />
+              { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
+                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+              }
               <Row>
                 <Col sm={12}>
                   <Headline size="medium" margin="medium">
@@ -237,6 +245,9 @@ class ViewHoldingsRecord extends React.Component {
 }
 
 ViewHoldingsRecord.propTypes = {
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
+  }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -253,7 +264,6 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({

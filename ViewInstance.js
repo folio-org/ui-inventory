@@ -139,12 +139,12 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
+    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
   }
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.history.push(`/inventory/view/${this.props.match.params.id}${this.props.location.search}`);
+    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
   }
 
   createHoldingsRecord = (holdingsRecord) => {
@@ -391,17 +391,16 @@ class ViewInstance extends React.Component {
             match={this.props.match}
             stripes={stripes}
             location={location}
-            history={this.props.history}
           />
           : null
         }
         { (holdingsrecordid && !itemid) ?
-          <this.cViewHoldingsRecord {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
+          <this.cViewHoldingsRecord id={id} holdingsrecordid={holdingsrecordid} {...this.props} onCloseViewHoldingsRecord={this.closeViewHoldingsRecord} />
           : null
         }
         { (holdingsrecordid && itemid) ?
-          <this.cViewItem {...this.props} onCloseViewItem={this.closeViewItem} />
-         : null
+          <this.cViewItem id={id} holdingsRecordId={holdingsrecordid} itemId={itemid} {...this.props} onCloseViewItem={this.closeViewItem} />
+          : null
         }
         <Row>
           <Col sm={12}>{newHoldingsRecordButton}</Col>
@@ -453,7 +452,6 @@ ViewInstance.propTypes = {
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
   }).isRequired,
-  history: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     selectedInstance: PropTypes.shape({

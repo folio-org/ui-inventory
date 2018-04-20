@@ -8,7 +8,7 @@
 * Add item form, holdings form (UIIN-5, UIIN-20)
 * Add list of holdings records and items under instance view (UIIN-15,16,29,31,33)
 * Project renamed from ui-instances to ui-inventory. UIIN-17.
-* Update Okapi dependencies, inventory: 5.0, instance-storage 4.0, item-storage: 5.0
+* Update Okapi dependencies, inventory: 5.0, instance-storage 4.2, item-storage: 5.0
 * Add Okapi dependencies on reference tables
 * Use PropTypes, not React.PropTypes. STRIPES-427.
 * Validation. Fixes UIIN-19.
@@ -52,6 +52,17 @@
 * Add targeted search dropdown. UIIN-56.
 * Deprecate `transitionToParams` in favor of `this.props.mutator.query.update`. Fixes UIIN-109.
 * Record IDs: Relabel 'FOLIO ID' to 'Instance ID'. Display 'Item ID', 'Holdings ID'. UIIN-113, UIIN-114, UIIN-115.
+* Fix Okapi permission names. UIIN-136.
+* Add contributorTypeId and contributorTypeText to instance form. UIIN-92.
+* Ignore yarn-error.log file. Refs STRIPES-517.
+* Wait for reference tables to load before rendering. UIIN-140, UIIN-141.
+* Add 'primary' selector to contributors in instance forms. UIIN-131
+* Show availability on item details. Fixes UIIN-110.
+* Set cloned item's status to Available. Fixes UIIN-142.
+* Changes section titles in Instance form. UIIN-72
+* Migrate to hierarchical location end-point. Fixes UIIN-127.
+* Handle "metaData" field case insensitively for compatibility. Fixes UIIN-159.
+* Only show item-availabilty for open loans. Refs UIIN-110.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

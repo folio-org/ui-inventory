@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 
 import ItemsPerHoldingsRecord from './ItemsPerHoldingsRecord';
 
+/**
+ * Wrapper for items-per-holdings display which shows item links on
+ * the instance-details pane. This component retrieves all holdings
+ * records and then passes them off to ItemsPerHoldingsRecord to render.
+ *
+ */
 class Holdings extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
       path: 'holdings-storage/holdings?query=(instanceId=:{id})',
+      resourceShouldRefresh: true,
     },
     shelfLocations: {
       type: 'okapi',
@@ -30,7 +38,9 @@ class Holdings extends React.Component {
   render() {
     const { resources: { holdings, shelfLocations, platforms }, referenceTables } = this.props;
 
-    if (!holdings || !holdings.hasLoaded || !shelfLocations || !shelfLocations.hasLoaded) return <div />;
+    if (!holdings || !holdings.hasLoaded
+        || !shelfLocations || !shelfLocations.hasLoaded
+        || !platforms || !platforms.hasLoaded) return <div />;
 
     const holdingsRecords = holdings.records;
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];

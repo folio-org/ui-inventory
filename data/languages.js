@@ -1,724 +1,724 @@
 /* eslint comma-dangle: [2, "never"] */
 export const data = [
   {
-    uri: 'info:lc/vocabulary/languages/abk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/abk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Abkhaz'
     },
-    code: 'abk'
+    'code': 'abk'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ace',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ace',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Achinese'
     },
-    code: 'ace',
-    uf: { name: 'Atjeh' }
+    'code': 'ace',
+    'uf': { 'name': 'Atjeh' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ach',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ach',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Acoli'
     },
-    code: 'ach',
-    uf: [
-      { name: 'Acholi' },
-      { name: 'Gang' },
-      { name: 'Lwo' },
-      { name: 'Shuli' }
+    'code': 'ach',
+    'uf': [
+      { 'name': 'Acholi' },
+      { 'name': 'Gang' },
+      { 'name': 'Lwo' },
+      { 'name': 'Shuli' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ada',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ada',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Adangme'
     },
-    code: 'ada',
-    uf: { name: 'Dangme' }
+    'code': 'ada',
+    'uf': { 'name': 'Dangme' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ady',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ady',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Adygei'
     },
-    code: 'ady',
-    uf: [
-      { name: 'Circassian, Lower' },
-      { name: 'Circassian, West' },
-      { name: 'Kiakh' },
-      { name: 'Kjax' },
-      { name: 'Lower Circassian' },
-      { name: 'West Circassian' }
+    'code': 'ady',
+    'uf': [
+      { 'name': 'Circassian, Lower' },
+      { 'name': 'Circassian, West' },
+      { 'name': 'Kiakh' },
+      { 'name': 'Kjax' },
+      { 'name': 'Lower Circassian' },
+      { 'name': 'West Circassian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/aar',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/aar',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Afar'
     },
-    code: 'aar',
-    uf: [
-      { name: 'Adaiel' },
-      { name: 'Danakil' }
+    'code': 'aar',
+    'uf': [
+      { 'name': 'Adaiel' },
+      { 'name': 'Danakil' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/afh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/afh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Afrihili (Artificial language)'
     },
-    code: 'afh'
+    'code': 'afh'
   },
   {
-    uri: 'info:lc/vocabulary/languages/afr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/afr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Afrikaans'
     },
-    code: 'afr',
-    uf: [
-      { name: 'Afrikander' },
-      { name: 'Cape Dutch' }
+    'code': 'afr',
+    'uf': [
+      { 'name': 'Afrikander' },
+      { 'name': 'Cape Dutch' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/afa',
-    name: 'Afroasiatic (Other)',
-    code: 'afa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/afa',
+    'name': 'Afroasiatic (Other)',
+    'code': 'afa',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Angas'
         },
-        uf: [
-          { name: 'Karan' },
-          { name: 'Karang (Nigeria)' },
-          { name: 'Ngas' }
+        'uf': [
+          { 'name': 'Karan' },
+          { 'name': 'Karang (Nigeria)' },
+          { 'name': 'Ngas' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bidiyo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bura-Pabir'
         },
-        uf: [
-          { name: 'Babir' },
-          { name: 'Babur' },
-          { name: 'Barburr' },
-          { name: 'Boura' },
-          { name: 'Bourrah' },
-          { name: 'Bura (Chadic)' },
-          { name: 'Burra' },
-          { name: 'Huve' },
-          { name: 'Huviya' },
-          { name: 'Kwojeffa' },
-          { name: 'Mya Bura' },
-          { name: 'Pabir' },
-          { name: 'Toxrica' }
+        'uf': [
+          { 'name': 'Babir' },
+          { 'name': 'Babur' },
+          { 'name': 'Barburr' },
+          { 'name': 'Boura' },
+          { 'name': 'Bourrah' },
+          { 'name': 'Bura (Chadic)' },
+          { 'name': 'Burra' },
+          { 'name': 'Huve' },
+          { 'name': 'Huviya' },
+          { 'name': 'Kwojeffa' },
+          { 'name': 'Mya Bura' },
+          { 'name': 'Pabir' },
+          { 'name': 'Toxrica' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Daba (Cameroon and Nigeria)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dangaleat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Day (Chad)'
         },
-        uf: [
-          { name: 'Dari (Chad)' },
-          { name: 'Sara Dai' }
+        'uf': [
+          { 'name': 'Dari (Chad)' },
+          { 'name': 'Sara Dai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gabri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gamo (Ethiopia)'
         },
-        uf: { name: 'Gemu' }
+        'uf': { 'name': 'Gemu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Glavda'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Goemai'
         },
-        uf: [
-          { name: 'Ankwe' },
-          { name: 'Gamai (Nigeria)' },
-          { name: 'Kemai' }
+        'uf': [
+          { 'name': 'Ankwe' },
+          { 'name': 'Gamai (Nigeria)' },
+          { 'name': 'Kemai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gude'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guruntum-Mbaaru'
         },
-        uf: [
-          { name: 'Gurdung' },
-          { name: 'Guruntum' }
+        'uf': [
+          { 'name': 'Gurdung' },
+          { 'name': 'Guruntum' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hedi'
         },
-        uf: { name: 'Hdi' }
+        'uf': { 'name': 'Hdi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huba'
         },
-        uf: [
-          { name: 'Chobba' },
-          { name: 'Kilba' }
+        'uf': [
+          { 'name': 'Chobba' },
+          { 'name': 'Kilba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jongor'
         },
-        uf: [
-          { name: 'Dionkor' },
-          { name: 'Djongor' }
+        'uf': [
+          { 'name': 'Dionkor' },
+          { 'name': 'Djongor' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kamwe'
         },
-        uf: [
-          { name: 'Higi' },
-          { name: 'Higgi' },
-          { name: 'Hiji' },
-          { name: 'Vacamwe' }
+        'uf': [
+          { 'name': 'Higi' },
+          { 'name': 'Higgi' },
+          { 'name': 'Hiji' },
+          { 'name': 'Vacamwe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kanakuru'
         },
-        uf: { name: 'Dera' }
+        'uf': { 'name': 'Dera' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kapsiki'
         },
-        uf: [
-          { name: 'Kamsiki' },
-          { name: 'Psikye' },
-          { name: 'Ptsake' }
+        'uf': [
+          { 'name': 'Kamsiki' },
+          { 'name': 'Psikye' },
+          { 'name': 'Ptsake' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kera'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mada (Cameroon)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mafa'
         },
-        uf: [
-          { name: 'Matakam' },
-          { name: 'Natakan' }
+        'uf': [
+          { 'name': 'Matakam' },
+          { 'name': 'Natakan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Male (Ethiopia)'
         },
-        uf: { name: 'Maale' }
+        'uf': { 'name': 'Maale' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Masa (Chadic)'
         },
-        uf: [
-          { name: 'Banaa' },
-          { name: 'Banana (Masa)' },
-          { name: 'Masana' },
-          { name: 'Massa' },
-          { name: 'Walai' }
+        'uf': [
+          { 'name': 'Banaa' },
+          { 'name': 'Banana (Masa)' },
+          { 'name': 'Masana' },
+          { 'name': 'Massa' },
+          { 'name': 'Walai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miship'
         },
-        uf: [
-          { name: 'Chip' },
-          { name: 'Cip' },
-          { name: 'Ship' }
+        'uf': [
+          { 'name': 'Chip' },
+          { 'name': 'Cip' },
+          { 'name': 'Ship' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Musgu'
         },
-        uf: { name: 'Masa' }
+        'uf': { 'name': 'Masa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Muyang'
         },
-        uf: [
-          { name: 'Mouyenge' },
-          { name: 'Mouyengue' },
-          { name: 'Muyenge' },
-          { name: 'Myau' },
-          { name: 'Myenge' }
+        'uf': [
+          { 'name': 'Mouyenge' },
+          { 'name': 'Mouyengue' },
+          { 'name': 'Muyenge' },
+          { 'name': 'Myau' },
+          { 'name': 'Myenge' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nancere'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngizim'
         },
-        uf: [
-          { name: 'Gwazum' },
-          { name: 'Kirdiwat' },
-          { name: 'Nugzum' },
-          { name: 'Walu' }
+        'uf': [
+          { 'name': 'Gwazum' },
+          { 'name': 'Kirdiwat' },
+          { 'name': 'Nugzum' },
+          { 'name': 'Walu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paduko'
         },
-        uf: { name: 'Podoko' }
+        'uf': { 'name': 'Podoko' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ron'
         },
-        uf: [
-          { name: 'Chala' },
-          { name: 'Run' }
+        'uf': [
+          { 'name': 'Chala' },
+          { 'name': 'Run' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saya'
         },
-        uf: [
-          { name: 'Sayanci' },
-          { name: 'Sayara' },
-          { name: 'Sayawa' },
-          { name: 'Seiyara' },
-          { name: 'Seya' },
-          { name: 'Seyawa' }
+        'uf': [
+          { 'name': 'Sayanci' },
+          { 'name': 'Sayara' },
+          { 'name': 'Sayawa' },
+          { 'name': 'Seiyara' },
+          { 'name': 'Seya' },
+          { 'name': 'Seyawa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sheko'
         },
-        uf: [
-          { name: 'Shak' },
-          { name: 'Shako (Sheko)' },
-          { name: 'Shekka (Sheko)' },
-          { name: 'Shekko' },
-          { name: 'Tschako' }
+        'uf': [
+          { 'name': 'Shak' },
+          { 'name': 'Shako (Sheko)' },
+          { 'name': 'Shekka (Sheko)' },
+          { 'name': 'Shekko' },
+          { 'name': 'Tschako' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southern Mofu'
         },
-        uf: [
-          { name: 'Mofu, Southern' },
-          { name: 'Mofu-Gudur' }
+        'uf': [
+          { 'name': 'Mofu, Southern' },
+          { 'name': 'Mofu-Gudur' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tera'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tumak'
         },
-        uf: [
-          { name: 'Maga' },
-          { name: 'Sara Toumak' },
-          { name: 'Toumak' }
+        'uf': [
+          { 'name': 'Maga' },
+          { 'name': 'Sara Toumak' },
+          { 'name': 'Toumak' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tupuri'
         },
-        uf: [
-          { name: 'Ndore' },
-          { name: 'Tuburi' }
+        'uf': [
+          { 'name': 'Ndore' },
+          { 'name': 'Tuburi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Uldeme'
         },
-        uf: [
-          { name: 'Mizlime' },
-          { name: 'Ouldémé' },
-          { name: 'Udlam' },
-          { name: 'Uzlam' },
-          { name: 'Uzan' },
-          { name: 'Wuzlam' }
+        'uf': [
+          { 'name': 'Mizlime' },
+          { 'name': 'Ouldémé' },
+          { 'name': 'Udlam' },
+          { 'name': 'Uzlam' },
+          { 'name': 'Uzan' },
+          { 'name': 'Wuzlam' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wandala'
         },
-        uf: { name: 'Mandara' }
+        'uf': { 'name': 'Mandara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yemsa'
         },
-        uf: { name: 'Janjero' }
+        'uf': { 'name': 'Janjero' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zaar'
         },
-        uf: [
-          { name: 'Vigzar' },
-          { name: 'Vikzar' }
+        'uf': [
+          { 'name': 'Vigzar' },
+          { 'name': 'Vikzar' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zulgo'
         },
-        uf: { name: 'Zelgwa' }
+        'uf': { 'name': 'Zelgwa' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ain',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ain',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ainu'
     },
-    code: 'ain'
+    'code': 'ain'
   },
   {
-    uri: 'info:lc/vocabulary/languages/aka',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/aka',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Akan'
     },
-    code: 'aka',
-    uf: { name: 'Twi-Fante' }
+    'code': 'aka',
+    'uf': { 'name': 'Twi-Fante' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/akk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/akk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Akkadian'
     },
-    code: 'akk',
-    uf: [
-      { name: 'Assyro-Babylonian' },
-      { name: 'Babylonian' }
+    'code': 'akk',
+    'uf': [
+      { 'name': 'Assyro-Babylonian' },
+      { 'name': 'Babylonian' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/alb',
-    name: 'Albanian',
-    code: 'alb',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/alb',
+    'name': 'Albanian',
+    'code': 'alb',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Calabrian Albanian'
       },
-      uf: { name: 'Albanian, Calabrian' }
+      'uf': { 'name': 'Albanian, Calabrian' }
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ale',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ale',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Aleut'
     },
-    code: 'ale',
-    uf: { name: 'Eleuth' }
+    'code': 'ale',
+    'uf': { 'name': 'Eleuth' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/alg',
-    name: 'Algonquian (Other)',
-    code: 'alg',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/alg',
+    'name': 'Algonquian (Other)',
+    'code': 'alg',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abenaki'
         },
-        uf: { name: 'Abnaki' }
+        'uf': { 'name': 'Abnaki' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Algonquin'
         },
-        uf: { name: 'Algonkin' }
+        'uf': { 'name': 'Algonkin' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Atakapa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Atikamekw'
         },
-        uf: [
-          { name: 'Attikamekw' },
-          { name: 'Tête-de-Boule' }
+        'uf': [
+          { 'name': 'Attikamekw' },
+          { 'name': 'Tête-de-Boule' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fox'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gros Ventre (Algonquian)'
         },
-        uf: [
-          { name: 'Ahahnelin' },
-          { name: 'Ahe (Algonquian)' },
-          { name: 'Ahenin' },
-          { name: 'Ananin' },
-          { name: 'Atsina' },
-          { name: 'Fall Indian' },
-          { name: 'Gros Ventres (Algonquian)' },
-          { name: 'Grosventre (Algonquian)' },
-          { name: 'Grosventres (Algonquian)' },
-          { name: 'White Clay People\'s language' }
+        'uf': [
+          { 'name': 'Ahahnelin' },
+          { 'name': 'Ahe (Algonquian)' },
+          { 'name': 'Ahenin' },
+          { 'name': 'Ananin' },
+          { 'name': 'Atsina' },
+          { 'name': 'Fall Indian' },
+          { 'name': 'Gros Ventres (Algonquian)' },
+          { 'name': 'Grosventre (Algonquian)' },
+          { 'name': 'Grosventres (Algonquian)' },
+          { 'name': 'White Clay People\'s language' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Illinois'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kickapoo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mahican'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Massachuset'
         },
-        uf: [
-          { name: 'Natick' },
-          { name: 'Niantic' },
-          { name: 'Nonantum' }
+        'uf': [
+          { 'name': 'Natick' },
+          { 'name': 'Niantic' },
+          { 'name': 'Nonantum' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Menominee'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miami (Ind. and Okla.)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mohegan'
         },
-        uf: { name: 'Pequot' }
+        'uf': { 'name': 'Pequot' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Montagnais'
         },
-        uf: [
-          { name: 'Innu (Montagnais)' },
-          { name: 'Montagnais Innu' },
-          { name: 'Montagnar' },
-          { name: 'Montagnard' },
-          { name: 'Montagnie' },
-          { name: 'Mountainee' }
+        'uf': [
+          { 'name': 'Innu (Montagnais)' },
+          { 'name': 'Montagnais Innu' },
+          { 'name': 'Montagnar' },
+          { 'name': 'Montagnard' },
+          { 'name': 'Montagnie' },
+          { 'name': 'Mountainee' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Naskapi'
         },
-        uf: [
-          { name: 'Nascapee' },
-          { name: 'Naskapee' }
+        'uf': [
+          { 'name': 'Nascapee' },
+          { 'name': 'Naskapee' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Passamaquoddy'
         },
-        uf: [
-          { name: 'Etchemin' },
-          { name: 'Malecite' }
+        'uf': [
+          { 'name': 'Etchemin' },
+          { 'name': 'Malecite' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Penobscot'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Potawatomi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Powhatan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Quileute'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Roanoak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shawnee'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wampanoag'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yurok'
         }
@@ -726,26 +726,26 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ajm',
-    name: 'Aljamía',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/ajm',
+    'name': 'Aljamía',
+    'code': {
       '-status': 'obsolete',
       '#text': 'ajm'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/alt',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/alt',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Altai'
     },
-    code: 'alt',
-    uf: [
-      { name: 'Oirat (Turkic)' },
-      { name: 'Southern Altai' },
+    'code': 'alt',
+    'uf': [
+      { 'name': 'Oirat (Turkic)' },
+      { 'name': 'Southern Altai' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tubalar'
         }
@@ -754,292 +754,292 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tut',
-    name: 'Altaic (Other)',
-    code: 'tut',
-    uf: [
-      { name: 'Turko-Tataric (Other)' },
+    'uri': 'info:lc/vocabulary/languages/tut',
+    'name': 'Altaic (Other)',
+    'code': 'tut',
+    'uf': [
+      { 'name': 'Turko-Tataric (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bulgaro-Turkic'
         },
-        uf: [
-          { name: 'Turko-Bulgarian' },
-          { name: '(Altaic (Other))' }
+        'uf': [
+          { 'name': 'Turko-Bulgarian' },
+          { 'name': '(Altaic (Other))' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dagur'
         },
-        uf: [
-          { name: 'Daghur' },
-          { name: 'Daur' }
+        'uf': [
+          { 'name': 'Daghur' },
+          { 'name': 'Daur' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dolgan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Even'
         },
-        uf: { name: 'Lamut' }
+        'uf': { 'name': 'Lamut' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Evenki'
         },
-        uf: [
-          { name: 'O-wen-k`o' },
-          { name: 'Tungus' }
+        'uf': [
+          { 'name': 'O-wen-k`o' },
+          { 'name': 'Tungus' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gagauz'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Greek Tatar'
         },
-        uf: { name: 'Urum' }
+        'uf': { 'name': 'Urum' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karaim'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karakhanid'
         },
-        uf: [
-          { name: 'Khakani' },
-          { name: 'Qarakhanid' }
+        'uf': [
+          { 'name': 'Khakani' },
+          { 'name': 'Qarakhanid' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khakass'
         },
-        uf: [
-          { name: 'Xakas' },
-          { name: 'Xaqas' }
+        'uf': [
+          { 'name': 'Xakas' },
+          { 'name': 'Xaqas' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khalaj'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khitan'
         },
-        uf: [
-          { name: 'Kitan' },
-          { name: 'Liao' }
+        'uf': [
+          { 'name': 'Kitan' },
+          { 'name': 'Liao' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khorezmian Turkic'
         },
-        uf: { name: 'Khwarezmian Turkic' }
+        'uf': { 'name': 'Khwarezmian Turkic' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kipchak'
         },
-        uf: [
-          { name: 'Coman' },
-          { name: 'Cuman' },
-          { name: 'Falven' },
-          { name: 'Kuman' },
-          { name: 'Polovtsi' },
-          { name: 'Walwen' }
+        'uf': [
+          { 'name': 'Coman' },
+          { 'name': 'Cuman' },
+          { 'name': 'Falven' },
+          { 'name': 'Kuman' },
+          { 'name': 'Polovtsi' },
+          { 'name': 'Walwen' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moghol'
         },
-        uf: { name: 'Mogol' }
+        'uf': { 'name': 'Mogol' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mongolian, Middle (13th-16th centuries)'
         },
-        uf: { name: 'Middle Mongolian (13th-16th centuries)' }
+        'uf': { 'name': 'Middle Mongolian (13th-16th centuries)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mongour'
         },
-        uf: { name: 'Tu' }
+        'uf': { 'name': 'Tu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nanai'
         },
-        uf: { name: 'Goldi' }
+        'uf': { 'name': 'Goldi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northern Altai'
         },
-        uf: { name: 'Altai, Northern' }
+        'uf': { 'name': 'Altai, Northern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Olcha'
         },
-        uf: { name: 'Ulcha' }
+        'uf': { 'name': 'Ulcha' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Old Turkic'
         },
-        uf: { name: 'Turkic, Old' }
+        'uf': { 'name': 'Turkic, Old' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oroch'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oroqen'
         },
-        uf: { name: 'Orochon' }
+        'uf': { 'name': 'Orochon' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Salar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shor'
         },
-        uf: [
-          { name: 'Shorian' },
-          { name: 'Shortsian' },
-          { name: 'Shortzy' },
-          { name: 'Šor' }
+        'uf': [
+          { 'name': 'Shorian' },
+          { 'name': 'Shortsian' },
+          { 'name': 'Shortzy' },
+          { 'name': 'Šor' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sibo'
         },
-        uf: { name: 'Xive' }
+        'uf': { 'name': 'Xive' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Teleut'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Turkish, Old (to 1500)'
         },
-        uf: [
-          { name: 'Anatolian Turkish, Old' },
-          { name: 'Old Anatolian Turkish' },
-          { name: 'Old Ottoman Turkish' },
-          { name: 'Old Turkish' },
-          { name: 'Ottoman Turkish, Old' }
+        'uf': [
+          { 'name': 'Anatolian Turkish, Old' },
+          { 'name': 'Old Anatolian Turkish' },
+          { 'name': 'Old Ottoman Turkish' },
+          { 'name': 'Old Turkish' },
+          { 'name': 'Ottoman Turkish, Old' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Udekhe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Western Yugur'
         },
-        uf: { name: 'Yugur, Western' }
+        'uf': { 'name': 'Yugur, Western' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/amh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/amh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Amharic'
     },
-    code: 'amh',
-    uf: [
-      { name: 'Amarigna' },
-      { name: 'Amarinya' }
+    'code': 'amh',
+    'uf': [
+      { 'name': 'Amarigna' },
+      { 'name': 'Amarinya' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/anp',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/anp',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Angika'
     },
-    code: 'anp',
-    uf: { name: 'Anga' }
+    'code': 'anp',
+    'uf': { 'name': 'Anga' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/apa',
-    name: 'Apache languages',
-    code: 'apa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/apa',
+    'name': 'Apache languages',
+    'code': 'apa',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chiricahua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mescalero'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'White Mountain Apache'
         }
@@ -1048,179 +1048,179 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ara',
-    name: 'Arabic',
-    code: 'ara',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/ara',
+    'name': 'Arabic',
+    'code': 'ara',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Hassaniyya'
       }
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/arg',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arg',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Aragonese'
     },
-    code: 'arg',
-    uf: [
-      { name: 'Altoaragonés' },
-      { name: 'Aragoieraz' },
-      { name: 'Aragonés' },
-      { name: 'Fabla Aragonesa' },
-      { name: 'High Aragonese' },
-      { name: 'Patués' },
-      { name: 'Spanish, Aragonese' }
+    'code': 'arg',
+    'uf': [
+      { 'name': 'Altoaragonés' },
+      { 'name': 'Aragoieraz' },
+      { 'name': 'Aragonés' },
+      { 'name': 'Fabla Aragonesa' },
+      { 'name': 'High Aragonese' },
+      { 'name': 'Patués' },
+      { 'name': 'Spanish, Aragonese' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/arc',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arc',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Aramaic'
     },
-    code: 'arc',
-    uf: [
-      { name: 'Aramean' },
-      { name: 'Biblical Aramaic' },
-      { name: 'Chaldaic' },
-      { name: 'Chaldean (Aramaic)' },
-      { name: 'Chaldee' }
+    'code': 'arc',
+    'uf': [
+      { 'name': 'Aramean' },
+      { 'name': 'Biblical Aramaic' },
+      { 'name': 'Chaldaic' },
+      { 'name': 'Chaldean (Aramaic)' },
+      { 'name': 'Chaldee' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/arp',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arp',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Arapaho'
     },
-    code: 'arp'
+    'code': 'arp'
   },
   {
-    uri: 'info:lc/vocabulary/languages/arw',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arw',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Arawak'
     },
-    code: 'arw',
-    uf: [
-      { name: 'Loko (Arawakan)' },
-      { name: 'Lokono' }
+    'code': 'arw',
+    'uf': [
+      { 'name': 'Loko (Arawakan)' },
+      { 'name': 'Lokono' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/arm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Armenian'
     },
-    code: 'arm',
-    uf: {
-      name: {
+    'code': 'arm',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Khayasa'
       },
-      uf: [
-        { name: 'Hayasa' },
-        { name: 'Khaiass' }
+      'uf': [
+        { 'name': 'Hayasa' },
+        { 'name': 'Khaiass' }
       ]
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/rup',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/rup',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Aromanian'
     },
-    code: 'rup',
-    uf: { name: 'Macedo-Romanian' }
+    'code': 'rup',
+    'uf': { 'name': 'Macedo-Romanian' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/art',
-    name: 'Artificial (Other)',
-    code: 'art',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/art',
+    'name': 'Artificial (Other)',
+    'code': 'art',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ande (Artificial language)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Babm'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balaibalan'
         },
-        uf: [
-          { name: 'Bâl-i bîlen' },
-          { name: 'Bala-i-balan' },
-          { name: 'Balabalan' },
-          { name: 'Bâleybelen' },
-          { name: 'Bali belen' },
-          { name: 'Bâlibîlen' }
+        'uf': [
+          { 'name': 'Bâl-i bîlen' },
+          { 'name': 'Bala-i-balan' },
+          { 'name': 'Balabalan' },
+          { 'name': 'Bâleybelen' },
+          { 'name': 'Bali belen' },
+          { 'name': 'Bâlibîlen' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Enochian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Europanto'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Glosa (Artificial language)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'International auxiliari linguo (Artificial language)'
         },
-        uf: { name: 'INTAL (Artificial language)' }
+        'uf': { 'name': 'INTAL (Artificial language)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Loglan (Artificial language)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Neo (Artificial language)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Novial (Artificial language)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tsolyáni (Artificial language)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vela (Artificial language)'
         }
@@ -1229,132 +1229,132 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/asm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/asm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Assamese'
     },
-    code: 'asm',
-    uf: [
+    'code': 'asm',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kāmrūpī'
         },
-        uf: { name: 'Kāmarūpī upabhāshā' }
+        'uf': { 'name': 'Kāmarūpī upabhāshā' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rābhāmija'
         },
-        uf: { name: 'Rābhāmiz' }
+        'uf': { 'name': 'Rābhāmiz' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ath',
-    name: 'Athapascan (Other)',
-    code: 'ath',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ath',
+    'name': 'Athapascan (Other)',
+    'code': 'ath',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ahtena'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Carrier'
         },
-        uf: { name: 'Takulli' }
+        'uf': { 'name': 'Takulli' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chilcotin'
         },
-        uf: { name: 'Tsilkotin' }
+        'uf': { 'name': 'Tsilkotin' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dena\'ina'
         },
-        uf: { name: 'Tanaina' }
+        'uf': { 'name': 'Tanaina' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaska'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kiowa Apache'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Koyukon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sarsi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sekani-Beaver'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southern Tutchone'
         },
-        uf: { name: 'Tutchone, Southern' }
+        'uf': { 'name': 'Tutchone, Southern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tagish'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tahltan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tanacross'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tsattine'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Upper Tanana'
         },
-        uf: { name: 'Tanana, Upper' }
+        'uf': { 'name': 'Tanana, Upper' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Upper Umpqua'
         }
@@ -1363,681 +1363,681 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/aus',
-    name: 'Australian languages',
-    code: 'aus',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/aus',
+    'name': 'Australian languages',
+    'code': 'aus',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Adnyamathanha'
         },
-        uf: [
-          { name: 'Atynyamatana' },
-          { name: 'Wailpi' }
+        'uf': [
+          { 'name': 'Atynyamatana' },
+          { 'name': 'Wailpi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alawa'
         },
-        uf: { name: 'Galawa' }
+        'uf': { 'name': 'Galawa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alyawarra'
         },
-        uf: { name: 'Iliaura' }
+        'uf': { 'name': 'Iliaura' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anindilyakwa'
         },
-        uf: { name: 'Andilyaugwa' }
+        'uf': { 'name': 'Andilyaugwa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Awabakal'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bandjalang'
         },
-        uf: { name: 'Minyung' }
+        'uf': { 'name': 'Minyung' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bidjara'
         },
-        uf: { name: 'Pitjara' }
+        'uf': { 'name': 'Pitjara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Biri (Australia)'
         },
-        uf: { name: 'Birri (Australia)' }
+        'uf': { 'name': 'Birri (Australia)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Burarra'
         },
-        uf: [
-          { name: 'Bara (Australia)' },
-          { name: 'Jikai' },
-          { name: 'Tchikai' }
+        'uf': [
+          { 'name': 'Bara (Australia)' },
+          { 'name': 'Jikai' },
+          { 'name': 'Tchikai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Butchulla'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Darling River dialects'
         },
-        uf: { name: 'Bagandji dialects' }
+        'uf': { 'name': 'Bagandji dialects' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dhungutti'
         },
-        uf: [
-          { name: 'Daingatti' },
-          { name: 'Dyangadi' },
-          { name: 'Thangatti' }
+        'uf': [
+          { 'name': 'Daingatti' },
+          { 'name': 'Dyangadi' },
+          { 'name': 'Thangatti' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Djaru'
         },
-        uf: [
-          { name: 'Jaroo' },
-          { name: 'Tjaru' }
+        'uf': [
+          { 'name': 'Jaroo' },
+          { 'name': 'Tjaru' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Djinang'
         },
-        uf: [
-          { name: 'Jandjinung' },
-          { name: 'Yandjinung' }
+        'uf': [
+          { 'name': 'Jandjinung' },
+          { 'name': 'Yandjinung' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Djingili'
         },
-        uf: [
-          { name: 'Jingulu' },
-          { name: 'Tjingili' }
+        'uf': [
+          { 'name': 'Jingulu' },
+          { 'name': 'Tjingili' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eastern Arrernte'
         },
-        uf: [
-          { name: 'Aranda, Eastern' },
-          { name: 'Arrernte, Eastern' }
+        'uf': [
+          { 'name': 'Aranda, Eastern' },
+          { 'name': 'Arrernte, Eastern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Garawa'
         },
-        uf: [
-          { name: 'Karawa (Australia)' },
-          { name: 'Korrawa' },
-          { name: 'Kurrawar' },
-          { name: 'Leearrawa' }
+        'uf': [
+          { 'name': 'Karawa (Australia)' },
+          { 'name': 'Korrawa' },
+          { 'name': 'Kurrawar' },
+          { 'name': 'Leearrawa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gidabal'
         },
-        uf: { name: 'Kitabul' }
+        'uf': { 'name': 'Kitabul' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gubbi-Gubbi'
         },
-        uf: { name: 'Kabi Kabi' }
+        'uf': { 'name': 'Kabi Kabi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gugada'
         },
-        uf: { name: 'Kukota' }
+        'uf': { 'name': 'Kukota' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gumatj'
         },
-        uf: [
-          { name: 'Gomadj' },
-          { name: 'Kainyao' },
-          { name: 'Komaits' },
-          { name: 'Kumait' }
+        'uf': [
+          { 'name': 'Gomadj' },
+          { 'name': 'Kainyao' },
+          { 'name': 'Komaits' },
+          { 'name': 'Kumait' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gungabula'
         },
-        uf: { name: 'Kongabula' }
+        'uf': { 'name': 'Kongabula' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gunian'
         },
-        uf: { name: 'Gooniyandi' }
+        'uf': { 'name': 'Gooniyandi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gunwinggu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gupapuyngu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guugu Yimithirr'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iwaidja'
         },
-        uf: [
-          { name: 'Jiwadja' },
-          { name: 'Yiwadja' }
+        'uf': [
+          { 'name': 'Jiwadja' },
+          { 'name': 'Yiwadja' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jaminjung'
         },
-        uf: [
-          { name: 'Djamindjung' },
-          { name: 'Djaminjung' },
-          { name: 'Djaminydyung' },
-          { name: 'Dyaminydyung' },
-          { name: 'Tjamindjung' },
-          { name: 'Yilngali' }
+        'uf': [
+          { 'name': 'Djamindjung' },
+          { 'name': 'Djaminjung' },
+          { 'name': 'Djaminydyung' },
+          { 'name': 'Dyaminydyung' },
+          { 'name': 'Tjamindjung' },
+          { 'name': 'Yilngali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kala Lagaw Ya'
         },
-        uf: { name: 'Mabuiaq' }
+        'uf': { 'name': 'Mabuiaq' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalkatungu'
         },
-        uf: { name: 'Galgadung' }
+        'uf': { 'name': 'Galgadung' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kattang'
         },
-        uf: { name: 'Kutthung' }
+        'uf': { 'name': 'Kutthung' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kitja'
         },
-        uf: [
-          { name: 'Gidja' },
-          { name: 'Kija' }
+        'uf': [
+          { 'name': 'Gidja' },
+          { 'name': 'Kija' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuku-Yalanji'
         },
-        uf: [
-          { name: 'Gugu Yalanji' },
-          { name: 'Koko Jelandji' }
+        'uf': [
+          { 'name': 'Gugu Yalanji' },
+          { 'name': 'Koko Jelandji' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuuku Ya\'u'
         },
-        uf: { name: 'Koko Ya\'o' }
+        'uf': { 'name': 'Koko Ya\'o' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwini'
         },
-        uf: [
-          { name: 'Belaa' },
-          { name: 'Cuini' },
-          { name: 'Goonan' },
-          { name: 'Gunin' },
-          { name: 'Gwiini' },
-          { name: 'Gwini' },
-          { name: 'Kunan (Kwini)' },
-          { name: 'Kwini/Belaa' },
-          { name: 'Wunambal (Kwini)' }
+        'uf': [
+          { 'name': 'Belaa' },
+          { 'name': 'Cuini' },
+          { 'name': 'Goonan' },
+          { 'name': 'Gunin' },
+          { 'name': 'Gwiini' },
+          { 'name': 'Gwini' },
+          { 'name': 'Kunan (Kwini)' },
+          { 'name': 'Kwini/Belaa' },
+          { 'name': 'Wunambal (Kwini)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Malgana'
         },
-        uf: [
-          { name: 'Maldjana' },
-          { name: 'Maljanna' },
-          { name: 'Malkana' }
+        'uf': [
+          { 'name': 'Maldjana' },
+          { 'name': 'Maljanna' },
+          { 'name': 'Malkana' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandjildjara'
         },
-        uf: { name: 'Mantjiltjara' }
+        'uf': { 'name': 'Mantjiltjara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mangarayi'
         },
-        uf: [
-          { name: 'Manggarai (Australia)' },
-          { name: 'Mungerry' }
+        'uf': [
+          { 'name': 'Manggarai (Australia)' },
+          { 'name': 'Mungerry' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maranunggu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Marringarr'
         },
-        uf: [
-          { name: 'Gidjingali' },
-          { name: 'Marengar' },
-          { name: 'Marenggar' },
-          { name: 'Maringa' },
-          { name: 'Maringar' },
-          { name: 'Maringarr' },
-          { name: 'Marri Ngarr' },
-          { name: 'Marringar' },
-          { name: 'Merringar' },
-          { name: 'Moil (Marringarr)' },
-          { name: 'Moyle' },
-          { name: 'Muringa' },
-          { name: 'Muringar' },
-          { name: 'Murrinnga' },
-          { name: 'Tangural' },
-          { name: 'Yaghani' }
+        'uf': [
+          { 'name': 'Gidjingali' },
+          { 'name': 'Marengar' },
+          { 'name': 'Marenggar' },
+          { 'name': 'Maringa' },
+          { 'name': 'Maringar' },
+          { 'name': 'Maringarr' },
+          { 'name': 'Marri Ngarr' },
+          { 'name': 'Marringar' },
+          { 'name': 'Merringar' },
+          { 'name': 'Moil (Marringarr)' },
+          { 'name': 'Moyle' },
+          { 'name': 'Muringa' },
+          { 'name': 'Muringar' },
+          { 'name': 'Murrinnga' },
+          { 'name': 'Tangural' },
+          { 'name': 'Yaghani' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Martu Wangka'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Murrinhpatha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nakara'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Narangga'
         },
-        uf: { name: 'Narungga' }
+        'uf': { 'name': 'Narungga' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Narrinyeri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngaanyatjarra'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngandi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngangikurunggurr'
         },
-        uf: [
-          { name: 'Moil (Ngangikurunggurr)' },
-          { name: 'Nangikurrunggurr' },
-          { name: 'Nangikurunggur' },
-          { name: 'Ngangikarangurr' },
-          { name: 'Ngangikurongor' },
-          { name: 'Ngangikurrunggurr' },
-          { name: 'Ngangikurrungur' },
-          { name: 'Ngankikurrunkurr' },
-          { name: 'Ngankikurunggurr' },
-          { name: 'Ngankikurungkurr' },
-          { name: 'Ngenkikurrunggur' }
+        'uf': [
+          { 'name': 'Moil (Ngangikurunggurr)' },
+          { 'name': 'Nangikurrunggurr' },
+          { 'name': 'Nangikurunggur' },
+          { 'name': 'Ngangikarangurr' },
+          { 'name': 'Ngangikurongor' },
+          { 'name': 'Ngangikurrunggurr' },
+          { 'name': 'Ngangikurrungur' },
+          { 'name': 'Ngankikurrunkurr' },
+          { 'name': 'Ngankikurunggurr' },
+          { 'name': 'Ngankikurungkurr' },
+          { 'name': 'Ngenkikurrunggur' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngarinyin'
         },
-        uf: [
-          { name: 'Ungarinjin' },
-          { name: 'Wungarinjin' }
+        'uf': [
+          { 'name': 'Ungarinjin' },
+          { 'name': 'Wungarinjin' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngarla'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngarluma'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nukunu'
         },
-        uf: { name: 'Nugunu' }
+        'uf': { 'name': 'Nugunu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nunggubuyu'
         },
-        uf: { name: 'Wubuy' }
+        'uf': { 'name': 'Wubuy' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Peek whuurung'
         },
-        uf: { name: 'Peek wuhrrong' }
+        'uf': { 'name': 'Peek wuhrrong' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pintupi'
         },
-        uf: { name: 'Bindubi' }
+        'uf': { 'name': 'Bindubi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pitjantjatjara'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Proto Mirndi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ritharrngu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tharrkari'
         },
-        uf: { name: 'Dhargari' }
+        'uf': { 'name': 'Dhargari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tiwi (Australia)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Umpila'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Walmajarri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wandarang'
         },
-        uf: [
-          { name: 'Andarang' },
-          { name: 'Nawariyi' }
+        'uf': [
+          { 'name': 'Andarang' },
+          { 'name': 'Nawariyi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wanʼguri'
         },
-        uf: { name: 'Wonguri' }
+        'uf': { 'name': 'Wonguri' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Warlpiri'
         },
-        uf: [
-          { name: 'Elpira' },
-          { name: 'Ilpara' },
-          { name: 'Ngaliya' },
-          { name: 'Ngardilpa' },
-          { name: 'Wailbri' },
-          { name: 'Walbiri' },
-          { name: 'Waljbiri' },
-          { name: 'Walmama' },
-          { name: 'Walpiri' },
-          { name: 'Warnayaka' },
-          { name: 'Warrmarla' }
+        'uf': [
+          { 'name': 'Elpira' },
+          { 'name': 'Ilpara' },
+          { 'name': 'Ngaliya' },
+          { 'name': 'Ngardilpa' },
+          { 'name': 'Wailbri' },
+          { 'name': 'Walbiri' },
+          { 'name': 'Waljbiri' },
+          { 'name': 'Walmama' },
+          { 'name': 'Walpiri' },
+          { 'name': 'Warnayaka' },
+          { 'name': 'Warrmarla' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Warumungu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Western Arrernte'
         },
-        uf: [
-          { name: 'Aranda, Western' },
-          { name: 'Arrernte, Western' }
+        'uf': [
+          { 'name': 'Aranda, Western' },
+          { 'name': 'Arrernte, Western' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Western Desert'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wik-Munkan'
         },
-        uf: { name: 'Munggan' }
+        'uf': { 'name': 'Munggan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wik-Ngathan'
         },
-        uf: { name: 'Wik-Ngathana' }
+        'uf': { 'name': 'Wik-Ngathana' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Worora'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wunambal'
         },
-        uf: [
-          { name: 'Jeidji' },
-          { name: 'Jeithi' },
-          { name: 'Unambal' },
-          { name: 'Wumnabal' },
-          { name: 'Wunambullu' },
-          { name: 'Yeidji' },
-          { name: 'Yeithi' }
+        'uf': [
+          { 'name': 'Jeidji' },
+          { 'name': 'Jeithi' },
+          { 'name': 'Unambal' },
+          { 'name': 'Wumnabal' },
+          { 'name': 'Wunambullu' },
+          { 'name': 'Yeidji' },
+          { 'name': 'Yeithi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yandruwandha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yanyuwa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yawuru'
         },
-        uf: [
-          { name: 'Jaudjibara' },
-          { name: 'Jawadjag' },
-          { name: 'Jawdjibaia' },
-          { name: 'Jawdjibara' },
-          { name: 'Winjawindjagu' },
-          { name: 'Yaudijbaia' },
-          { name: 'Yaudjibara' },
-          { name: 'Yawjibara' }
+        'uf': [
+          { 'name': 'Jaudjibara' },
+          { 'name': 'Jawadjag' },
+          { 'name': 'Jawdjibaia' },
+          { 'name': 'Jawdjibara' },
+          { 'name': 'Winjawindjagu' },
+          { 'name': 'Yaudijbaia' },
+          { 'name': 'Yaudjibara' },
+          { 'name': 'Yawjibara' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yidiny'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yindjibarndi'
         },
-        uf: { name: 'Jindjibandji' }
+        'uf': { 'name': 'Jindjibandji' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yinhawangka'
         },
-        uf: { name: 'Inawonga' }
+        'uf': { 'name': 'Inawonga' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yualyai'
         },
-        uf: [
-          { name: 'Euahlayi' },
-          { name: 'Jualjai' },
-          { name: 'Ualari' },
-          { name: 'Uollaroi' },
-          { name: 'Wallaroi' },
-          { name: 'Yerraleroi' },
-          { name: 'Yowalri' },
-          { name: 'Yuwaalaraay' }
+        'uf': [
+          { 'name': 'Euahlayi' },
+          { 'name': 'Jualjai' },
+          { 'name': 'Ualari' },
+          { 'name': 'Uollaroi' },
+          { 'name': 'Wallaroi' },
+          { 'name': 'Yerraleroi' },
+          { 'name': 'Yowalri' },
+          { 'name': 'Yuwaalaraay' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yugambeh'
         }
@@ -2046,1545 +2046,1545 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/map',
-    name: 'Austronesian (Other)',
-    code: 'map',
-    uf: [
-      { name: 'Malayo-Polynesian (Other)' },
+    'uri': 'info:lc/vocabulary/languages/map',
+    'name': 'Austronesian (Other)',
+    'code': 'map',
+    'uf': [
+      { 'name': 'Malayo-Polynesian (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Adzera'
         },
-        uf: [
-          { name: 'Acira' },
-          { name: 'Atsera' },
-          { name: 'Atzera' }
+        'uf': [
+          { 'name': 'Acira' },
+          { 'name': 'Atsera' },
+          { 'name': 'Atzera' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ajie'
         },
-        uf: [
-          { name: 'Houailou' },
-          { name: 'Wailu' }
+        'uf': [
+          { 'name': 'Houailou' },
+          { 'name': 'Wailu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ambrym'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Amis'
         },
-        uf: { name: 'Ami' }
+        'uf': { 'name': 'Ami' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anesu'
         },
-        uf: [
-          { name: 'Canala' },
-          { name: 'Kanala' },
-          { name: 'Xaracuu' },
-          { name: 'Yaracuu' }
+        'uf': [
+          { 'name': 'Canala' },
+          { 'name': 'Kanala' },
+          { 'name': 'Xaracuu' },
+          { 'name': 'Yaracuu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Apma'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Areare'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arop-Lokep'
         },
-        uf: [
-          { name: 'Lokep' },
-          { name: 'Lokewe' }
+        'uf': [
+          { 'name': 'Lokep' },
+          { 'name': 'Lokewe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arosi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Atayal'
         },
-        uf: { name: 'Tayal' }
+        'uf': { 'name': 'Tayal' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bajau'
         },
-        uf: [
-          { name: 'Badjo' },
-          { name: 'Bayo' },
-          { name: 'Luaan' },
-          { name: 'Orang Laut (Indonesia)' },
-          { name: 'Sama (Indonesia)' },
-          { name: 'Turije̕ne̕' }
+        'uf': [
+          { 'name': 'Badjo' },
+          { 'name': 'Bayo' },
+          { 'name': 'Luaan' },
+          { 'name': 'Orang Laut (Indonesia)' },
+          { 'name': 'Sama (Indonesia)' },
+          { 'name': 'Turije̕ne̕' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bakumpai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balaesang'
         },
-        uf: [
-          { name: 'Balaisang' },
-          { name: 'Pajo' }
+        'uf': [
+          { 'name': 'Balaisang' },
+          { 'name': 'Pajo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Banjar Hulu'
         },
-        uf: { name: 'Hulu' }
+        'uf': { 'name': 'Hulu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Barangas'
         },
-        uf: { name: 'Alalak' }
+        'uf': { 'name': 'Alalak' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bareë'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Begak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Berawan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Biliau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bimanese'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bolaang Mongondow'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Buang'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bugotu'
         },
-        uf: { name: 'Mahaga' }
+        'uf': { 'name': 'Mahaga' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bukar Sadong'
         },
-        uf: [
-          { name: 'Sadong' },
-          { name: 'Serian' },
-          { name: 'Tebakang' }
+        'uf': [
+          { 'name': 'Sadong' },
+          { 'name': 'Serian' },
+          { 'name': 'Tebakang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bunama'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bunun'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Buol'
         },
-        uf: [
-          { name: 'Bual' },
-          { name: 'Bwuolo' },
-          { name: 'Dia' }
+        'uf': [
+          { 'name': 'Bual' },
+          { 'name': 'Bwuolo' },
+          { 'name': 'Dia' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bwaidoga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bwatoo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Camuhi'
         },
-        uf: [
-          { name: 'Cemuhi' },
-          { name: 'Tyamuhi' },
-          { name: 'Wagap' }
+        'uf': [
+          { 'name': 'Cemuhi' },
+          { 'name': 'Tyamuhi' },
+          { 'name': 'Wagap' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Carolinian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Daa'
         },
-        uf: { name: 'Pekawa' }
+        'uf': { 'name': 'Pekawa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dawawa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dehu'
         },
-        uf: [
-          { name: 'Drehu' },
-          { name: 'Lifu' },
-          { name: 'Miny' }
+        'uf': [
+          { 'name': 'Drehu' },
+          { 'name': 'Lifu' },
+          { 'name': 'Miny' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dobel'
         },
-        uf: { name: 'Kobroor' }
+        'uf': { 'name': 'Kobroor' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dobu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dumbea'
         },
-        uf: { name: 'Drubea' }
+        'uf': { 'name': 'Drubea' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Duri'
         },
-        uf: [
-          { name: 'Masenrempulu (Duri)' },
-          { name: 'Massenrempulu (Duri)' }
+        'uf': [
+          { 'name': 'Masenrempulu (Duri)' },
+          { 'name': 'Massenrempulu (Duri)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dusun'
         },
-        uf: { name: 'Kadazan' }
+        'uf': { 'name': 'Kadazan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'East Makian'
         },
-        uf: [
-          { name: 'Inner Makian' },
-          { name: 'Makian, East' },
-          { name: 'Makian, Inner' },
-          { name: 'Taba' }
+        'uf': [
+          { 'name': 'Inner Makian' },
+          { 'name': 'Makian, East' },
+          { 'name': 'Makian, Inner' },
+          { 'name': 'Taba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'East Uvean'
         },
-        uf: [
-          { name: 'Uvean, East' },
-          { name: 'Wallisian' }
+        'uf': [
+          { 'name': 'Uvean, East' },
+          { 'name': 'Wallisian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Enggano'
         },
-        uf: { name: 'Etaka' }
+        'uf': { 'name': 'Etaka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Enim'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eromanga'
         },
-        uf: [
-          { name: 'Sie' },
-          { name: 'Sye' }
+        'uf': [
+          { 'name': 'Sie' },
+          { 'name': 'Sye' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Favorlang'
         },
-        uf: { name: 'Babuza' }
+        'uf': { 'name': 'Babuza' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Futuna-Aniwa'
         },
-        uf: [
-          { name: 'Erronan' },
-          { name: 'West Futuna' }
+        'uf': [
+          { 'name': 'Erronan' },
+          { 'name': 'West Futuna' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gapapaiwa'
         },
-        uf: { name: 'Manape' }
+        'uf': { 'name': 'Manape' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gedaged'
         },
-        uf: { name: 'Graged' }
+        'uf': { 'name': 'Graged' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gumasi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Halia'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ham'
         },
-        uf: { name: 'Dami' }
+        'uf': { 'name': 'Dami' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hote'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iai (Loyalty Islands)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iamalele'
         },
-        uf: { name: 'Yamalele' }
+        'uf': { 'name': 'Yamalele' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ida\'an'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iduna'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Irahutu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaidipang'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaili'
         },
-        uf: [
-          { name: 'Ledo\'' },
-          { name: 'Palu' }
+        'uf': [
+          { 'name': 'Ledo\'' },
+          { 'name': 'Palu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaiwa (Papua New Guinea)'
         },
-        uf: { name: 'Iwal' }
+        'uf': { 'name': 'Iwal' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kambera'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kapingamarangi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kara (Papua New Guinea)'
         },
-        uf: [
-          { name: 'Kara-Lemakot' },
-          { name: 'Lemakot' },
-          { name: 'Lemusmus' }
+        'uf': [
+          { 'name': 'Kara-Lemakot' },
+          { 'name': 'Lemakot' },
+          { 'name': 'Lemusmus' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Katingan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaulong'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kayan (Borneo)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kayu Agung'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kemak'
         },
-        uf: { name: 'Ema' }
+        'uf': { 'name': 'Ema' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kerinci'
         },
-        uf: [
-          { name: 'Kinchai' },
-          { name: 'Korintje' }
+        'uf': [
+          { 'name': 'Kinchai' },
+          { 'name': 'Korintje' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kiput'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kiriwinian'
         },
-        uf: [
-          { name: 'Kilivila' },
-          { name: 'Trobriand' }
+        'uf': [
+          { 'name': 'Kilivila' },
+          { 'name': 'Trobriand' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Koluwawa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Komodo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kubu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuni'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kurada'
         },
-        uf: [
-          { name: 'Auhelawa' },
-          { name: 'Cauhelawa' },
-          { name: 'Nuakata' }
+        'uf': [
+          { 'name': 'Auhelawa' },
+          { 'name': 'Cauhelawa' },
+          { 'name': 'Nuakata' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kutai'
         },
-        uf: { name: 'Tenggarong' }
+        'uf': { 'name': 'Tenggarong' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwara\'ae'
         },
-        uf: { name: 'Fiu' }
+        'uf': { 'name': 'Fiu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lamenu'
         },
-        uf: [
-          { name: 'Lamen' },
-          { name: 'Lewo (Lamenu)' },
-          { name: 'Varmali' }
+        'uf': [
+          { 'name': 'Lamen' },
+          { 'name': 'Lewo (Lamenu)' },
+          { 'name': 'Varmali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lampung'
         },
-        uf: [
-          { name: 'Api' },
-          { name: 'Lampong' }
+        'uf': [
+          { 'name': 'Api' },
+          { 'name': 'Lampong' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lavongai'
         },
-        uf: [
-          { name: 'Dang (Papua New Guinea)' },
-          { name: 'Lavangai' },
-          { name: 'New Hanover' },
-          { name: 'Tungag' },
-          { name: 'Tungak' }
+        'uf': [
+          { 'name': 'Dang (Papua New Guinea)' },
+          { 'name': 'Lavangai' },
+          { 'name': 'New Hanover' },
+          { 'name': 'Tungag' },
+          { 'name': 'Tungak' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lembak Bilide'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lenakel'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Letri Igona'
         },
-        uf: [
-          { name: 'Leti' },
-          { name: 'Letti' },
-          { name: 'Lgona' },
-          { name: 'Literi Lagona' },
-          { name: 'Luang' },
-          { name: 'Wetan' },
-          { name: 'Wetang' }
+        'uf': [
+          { 'name': 'Leti' },
+          { 'name': 'Letti' },
+          { 'name': 'Lgona' },
+          { 'name': 'Literi Lagona' },
+          { 'name': 'Luang' },
+          { 'name': 'Wetan' },
+          { 'name': 'Wetang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lewo'
         },
-        uf: { name: 'Varsu' }
+        'uf': { 'name': 'Varsu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lindrou'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lundayeh'
         },
-        uf: [
-          { name: 'Lun Daya' },
-          { name: 'Lun Daye' },
-          { name: 'Lun Dayho' },
-          { name: 'Lundaya' },
-          { name: 'Southern Murut' }
+        'uf': [
+          { 'name': 'Lun Daya' },
+          { 'name': 'Lun Daye' },
+          { 'name': 'Lun Dayho' },
+          { 'name': 'Lundaya' },
+          { 'name': 'Southern Murut' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manam'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandak'
         },
-        uf: { name: 'Lelet' }
+        'uf': { 'name': 'Lelet' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandara (Papua New Guinea)'
         },
-        uf: [
-          { name: 'Madara' },
-          { name: 'Tabar' }
+        'uf': [
+          { 'name': 'Madara' },
+          { 'name': 'Tabar' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mangap'
         },
-        uf: { name: 'Mbula (Mangap)' }
+        'uf': { 'name': 'Mbula (Mangap)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manggarai (Indonesia)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mangseng'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Marquesan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mekeo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mele-Fila'
         },
-        uf: { name: 'Fila' }
+        'uf': { 'name': 'Fila' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mentawai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mokilese'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mori'
         },
-        uf: { name: 'Aikoa' }
+        'uf': { 'name': 'Aikoa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mortlockese'
         },
-        uf: [
-          { name: 'Mortlock (Micronesia)' },
-          { name: 'Nomoi' }
+        'uf': [
+          { 'name': 'Mortlock (Micronesia)' },
+          { 'name': 'Nomoi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Motu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mouk'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mukawa'
         },
-        uf: { name: 'Kapikapi' }
+        'uf': { 'name': 'Kapikapi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Muna'
         },
-        uf: [
-          { name: 'Mina (Indonesia)' },
-          { name: 'Wuna' }
+        'uf': [
+          { 'name': 'Mina (Indonesia)' },
+          { 'name': 'Wuna' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nakanai'
         },
-        uf: { name: 'Lakalai' }
+        'uf': { 'name': 'Lakalai' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nali'
         },
-        uf: { name: 'Yiru' }
+        'uf': { 'name': 'Yiru' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Napu'
         },
-        uf: { name: 'Bara (Indonesia)' }
+        'uf': { 'name': 'Bara (Indonesia)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nemi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nengone'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngada'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngaju'
         },
-        uf: [
-          { name: 'Biadju' },
-          { name: 'Ngaju Dayak' }
+        'uf': [
+          { 'name': 'Biadju' },
+          { 'name': 'Ngaju Dayak' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngatik'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nguna'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Notsi'
         },
-        uf: { name: 'Nochi' }
+        'uf': { 'name': 'Nochi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nuaulu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nukuoro'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Numfor'
         },
-        uf: [
-          { name: 'Mafor' },
-          { name: 'Noemfoor' },
-          { name: 'Nufor' }
+        'uf': [
+          { 'name': 'Mafor' },
+          { 'name': 'Noemfoor' },
+          { 'name': 'Nufor' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paiwan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pala'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paranan'
         },
-        uf: { name: 'Palanan' }
+        'uf': { 'name': 'Palanan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pasir (Lawangan)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pazeh'
         },
-        uf: { name: 'Bazai' }
+        'uf': { 'name': 'Bazai' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pendau'
         },
-        uf: [
-          { name: 'Ndaoe' },
-          { name: 'Ndau (Malayan)' },
-          { name: 'Umalasa' }
+        'uf': [
+          { 'name': 'Ndaoe' },
+          { 'name': 'Ndau (Malayan)' },
+          { 'name': 'Umalasa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Petats'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pileni'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Puluwat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Puyuma'
         },
-        uf: [
-          { name: 'Kadas language (Puyuma)' },
-          { name: 'Panapanayan' },
-          { name: 'Pelam' },
-          { name: 'Pilam' },
-          { name: 'Piyuma' },
-          { name: 'Pyuma' },
-          { name: 'Tipun' }
+        'uf': [
+          { 'name': 'Kadas language (Puyuma)' },
+          { 'name': 'Panapanayan' },
+          { 'name': 'Pelam' },
+          { 'name': 'Pilam' },
+          { 'name': 'Piyuma' },
+          { 'name': 'Pyuma' },
+          { 'name': 'Tipun' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ramoaaina'
         },
-        uf: { name: 'Malu (Papua New Guinea)' }
+        'uf': { 'name': 'Malu (Papua New Guinea)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rejang (Sumatra, Indonesia)'
         },
-        uf: { name: 'Redjang (Sumatra, Indonesia)' }
+        'uf': { 'name': 'Redjang (Sumatra, Indonesia)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rennellese'
         },
-        uf: [
-          { name: 'Bellonese' },
-          { name: 'Munggava' }
+        'uf': [
+          { 'name': 'Bellonese' },
+          { 'name': 'Munggava' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Roti'
         },
-        uf: { name: 'Rottinese' }
+        'uf': { 'name': 'Rottinese' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rotuman'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rukai'
         },
-        uf: { name: 'Drukai' }
+        'uf': { 'name': 'Drukai' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rungus'
         },
-        uf: [
-          { name: 'Dusun Dayak' },
-          { name: 'Melobong Rungus' },
-          { name: 'Memagun' },
-          { name: 'Memogun' },
-          { name: 'Momogun' },
-          { name: 'Roongas' },
-          { name: 'Rungus Dusun' }
+        'uf': [
+          { 'name': 'Dusun Dayak' },
+          { 'name': 'Melobong Rungus' },
+          { 'name': 'Memagun' },
+          { 'name': 'Memogun' },
+          { 'name': 'Momogun' },
+          { 'name': 'Roongas' },
+          { 'name': 'Rungus Dusun' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saaroa'
         },
-        uf: [
-          { name: 'La\'alua' },
-          { name: 'La\'arua' },
-          { name: 'Pachien' },
-          { name: 'Paichien' },
-          { name: 'Rarua' },
-          { name: 'Saarua' },
-          { name: 'Saroa' },
-          { name: 'Shishaban' },
-          { name: 'Sisyaban' }
+        'uf': [
+          { 'name': 'La\'alua' },
+          { 'name': 'La\'arua' },
+          { 'name': 'Pachien' },
+          { 'name': 'Paichien' },
+          { 'name': 'Rarua' },
+          { 'name': 'Saarua' },
+          { 'name': 'Saroa' },
+          { 'name': 'Shishaban' },
+          { 'name': 'Sisyaban' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sangen'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sangil'
         },
-        uf: { name: 'Sangiré' }
+        'uf': { 'name': 'Sangiré' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sangir (Indonesia and Philippines)'
         },
-        uf: { name: 'Sangihe' }
+        'uf': { 'name': 'Sangihe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saposa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sawu'
         },
-        uf: [
-          { name: 'Havunese' },
-          { name: 'Hawu' },
-          { name: 'Sabu' },
-          { name: 'Savu' }
+        'uf': [
+          { 'name': 'Havunese' },
+          { 'name': 'Hawu' },
+          { 'name': 'Sabu' },
+          { 'name': 'Savu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sedik'
         },
-        uf: [
-          { name: 'Sazek' },
-          { name: 'Seedik' },
-          { name: 'Shedekka' }
+        'uf': [
+          { 'name': 'Sazek' },
+          { 'name': 'Seedik' },
+          { 'name': 'Shedekka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Semendo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Serawai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sigi'
         },
-        uf: { name: 'Idja' }
+        'uf': { 'name': 'Idja' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sikka'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Siladang'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sinagoro'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sio'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sissano'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sobei'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sokop'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sonsorol-Tobi'
         },
-        uf: { name: 'Tobi' }
+        'uf': { 'name': 'Tobi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Suau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sumba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sumbawa'
         },
-        uf: [
-          { name: 'Semana' },
-          { name: 'Soembawa' }
+        'uf': [
+          { 'name': 'Semana' },
+          { 'name': 'Soembawa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sursurunga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Suwawa'
         },
-        uf: { name: 'Bunda (Indonesia)' }
+        'uf': { 'name': 'Bunda (Indonesia)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tagal Murut'
         },
-        uf: [
-          { name: 'Murut Tahol' },
-          { name: 'Semambu' },
-          { name: 'Semembu' },
-          { name: 'Sumambu' },
-          { name: 'Sumambu-Tagal' },
-          { name: 'Sumambuq' }
+        'uf': [
+          { 'name': 'Murut Tahol' },
+          { 'name': 'Semambu' },
+          { 'name': 'Semembu' },
+          { 'name': 'Sumambu' },
+          { 'name': 'Sumambu-Tagal' },
+          { 'name': 'Sumambuq' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tagula'
         },
-        uf: { name: 'Sudest' }
+        'uf': { 'name': 'Sudest' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Takuu'
         },
-        uf: [
-          { name: 'Mortlock (Papua New Guinea)' },
-          { name: 'Nahoa' },
-          { name: 'Taku' },
-          { name: 'Taʻu' },
-          { name: 'Tauu' }
+        'uf': [
+          { 'name': 'Mortlock (Papua New Guinea)' },
+          { 'name': 'Nahoa' },
+          { 'name': 'Taku' },
+          { 'name': 'Taʻu' },
+          { 'name': 'Tauu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Talaud'
         },
-        uf: { name: 'Talaoed' }
+        'uf': { 'name': 'Talaoed' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tamuan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tanga (Tanga Islands)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tavara (Papua New Guinea)'
         },
-        uf: [
-          { name: 'Kehelala' },
-          { name: 'Tawala' }
+        'uf': [
+          { 'name': 'Kehelala' },
+          { 'name': 'Tawala' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tawoyan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Teop'
         },
-        uf: { name: 'Tiop' }
+        'uf': { 'name': 'Tiop' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tidore'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tikopia'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Timor'
         },
-        uf: [
-          { name: 'Atoni' },
-          { name: 'Timorese' }
+        'uf': [
+          { 'name': 'Atoni' },
+          { 'name': 'Timorese' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Timugon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tinputz'
         },
-        uf: [
-          { name: 'Timputs' },
-          { name: 'Vasuii' },
-          { name: 'Wasoi' }
+        'uf': [
+          { 'name': 'Timputs' },
+          { 'name': 'Vasuii' },
+          { 'name': 'Wasoi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Titan'
         },
-        uf: [
-          { name: 'Manus' },
-          { name: 'M\'bunai' },
-          { name: 'Moanus' },
-          { name: 'Tito' }
+        'uf': [
+          { 'name': 'Manus' },
+          { 'name': 'M\'bunai' },
+          { 'name': 'Moanus' },
+          { 'name': 'Tito' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tolai'
         },
-        uf: [
-          { name: 'Blanche Bay' },
-          { name: 'Gunantuna' },
-          { name: 'Kuanua' },
-          { name: 'New Britain' },
-          { name: 'Raluana' },
-          { name: 'Tinata Tuna' },
-          { name: 'Tuna' }
+        'uf': [
+          { 'name': 'Blanche Bay' },
+          { 'name': 'Gunantuna' },
+          { 'name': 'Kuanua' },
+          { 'name': 'New Britain' },
+          { 'name': 'Raluana' },
+          { 'name': 'Tinata Tuna' },
+          { 'name': 'Tuna' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tolaki'
         },
-        uf: [
-          { name: 'Kendari' },
-          { name: 'Toolaki' }
+        'uf': [
+          { 'name': 'Kendari' },
+          { 'name': 'Toolaki' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tombulu'
         },
-        uf: { name: 'Toumbulu' }
+        'uf': { 'name': 'Toumbulu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tondano'
         },
-        uf: [
-          { name: 'Tolou' },
-          { name: 'Tolour' }
+        'uf': [
+          { 'name': 'Tolou' },
+          { 'name': 'Tolour' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tonsea'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toraja'
         },
-        uf: { name: 'Toradja' }
+        'uf': { 'name': 'Toradja' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toraja Sa\'dan'
         },
-        uf: [
-          { name: 'Sadan (Indonesia)' },
-          { name: 'Saqdab Toraja' },
-          { name: 'South Toraja' },
-          { name: 'Tae\'' }
+        'uf': [
+          { 'name': 'Sadan (Indonesia)' },
+          { 'name': 'Saqdab Toraja' },
+          { 'name': 'South Toraja' },
+          { 'name': 'Tae\'' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tuamotuan'
         },
-        uf: { name: 'Paumotu' }
+        'uf': { 'name': 'Paumotu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tubetube'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ulithi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Uma'
         },
-        uf: { name: 'Pipikoro' }
+        'uf': { 'name': 'Pipikoro' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Urak Lawoi̕̕'
         },
-        uf: [
-          { name: 'Chāo Lē' },
-          { name: 'Orak Lawoi\'' },
-          { name: 'Orang Laut (Thailand and Malaysia)' }
+        'uf': [
+          { 'name': 'Chāo Lē' },
+          { 'name': 'Orak Lawoi\'' },
+          { 'name': 'Orang Laut (Thailand and Malaysia)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Uripiv'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wampar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wandamen'
         },
-        uf: [
-          { name: 'Windesi' },
-          { name: 'Wondama' }
+        'uf': [
+          { 'name': 'Windesi' },
+          { 'name': 'Wondama' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wewewa'
         },
-        uf: [
-          { name: 'Sumba, West' },
-          { name: 'Waidjewa' },
-          { name: 'West Sumba' }
+        'uf': [
+          { 'name': 'Sumba, West' },
+          { 'name': 'Waidjewa' },
+          { 'name': 'West Sumba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Woleaian'
         },
-        uf: [
-          { name: 'Uleai' },
-          { name: 'Woleai' }
+        'uf': [
+          { 'name': 'Uleai' },
+          { 'name': 'Woleai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wolio'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yabim'
         },
-        uf: { name: 'Jabêm' }
+        'uf': { 'name': 'Jabêm' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yamdena'
         },
-        uf: { name: 'Jamdena' }
+        'uf': { 'name': 'Jamdena' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ava',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ava',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Avaric'
     },
-    code: 'ava'
+    'code': 'ava'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ave',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ave',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Avestan'
     },
-    code: 'ave',
-    uf: [
-      { name: 'Avesta' },
-      { name: 'Bactrian, Old (Avestan)' },
-      { name: 'Old Bactrian (Avestan)' },
-      { name: 'Zend' }
+    'code': 'ave',
+    'uf': [
+      { 'name': 'Avesta' },
+      { 'name': 'Bactrian, Old (Avestan)' },
+      { 'name': 'Old Bactrian (Avestan)' },
+      { 'name': 'Zend' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/awa',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/awa',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Awadhi'
     },
-    code: 'awa'
+    'code': 'awa'
   },
   {
-    uri: 'info:lc/vocabulary/languages/aym',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/aym',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Aymara'
     },
-    code: 'aym',
-    uf: { name: 'Aimara' }
+    'code': 'aym',
+    'uf': { 'name': 'Aimara' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/aze',
-    name: 'Azerbaijani',
-    code: 'aze',
-    uf: [
-      { name: 'Azari' },
-      { name: 'Azeri' },
+    'uri': 'info:lc/vocabulary/languages/aze',
+    'name': 'Azerbaijani',
+    'code': 'aze',
+    'uf': [
+      { 'name': 'Azari' },
+      { 'name': 'Azeri' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Afshar'
         }
@@ -3592,114 +3592,114 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ast',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ast',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bable'
     },
-    code: 'ast',
-    uf: { name: 'Asturian' }
+    'code': 'ast',
+    'uf': { 'name': 'Asturian' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ban',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ban',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Balinese'
     },
-    code: 'ban'
+    'code': 'ban'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bat',
-    name: 'Baltic (Other)',
-    code: 'bat',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bat',
+    'name': 'Baltic (Other)',
+    'code': 'bat',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Curonian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Proto-Baltic'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Prussian'
         },
-        uf: { name: 'Old Prussian' }
+        'uf': { 'name': 'Old Prussian' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bal',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bal',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Baluchi'
     },
-    code: 'bal',
-    uf: [
-      { name: 'Balochi' },
-      { name: 'Beloutchi' },
-      { name: 'Biluchi' }
+    'code': 'bal',
+    'uf': [
+      { 'name': 'Balochi' },
+      { 'name': 'Beloutchi' },
+      { 'name': 'Biluchi' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bam',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bam',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bambara'
     },
-    code: 'bam',
-    uf: [
-      { name: 'Bamana (Mandekan)' },
-      { name: 'Bamanankan' }
+    'code': 'bam',
+    'uf': [
+      { 'name': 'Bamana (Mandekan)' },
+      { 'name': 'Bamanankan' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bai',
-    name: 'Bamileke languages',
-    code: 'bai',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bai',
+    'name': 'Bamileke languages',
+    'code': 'bai',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bandjoun'
         },
-        uf: { name: 'Bamileke-Jo' }
+        'uf': { 'name': 'Bamileke-Jo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fe\'fe\''
         },
-        uf: [
-          { name: 'Bafang' },
-          { name: 'Bamileke-Fe\'fe\'' },
-          { name: 'Bana (Bamileke)' },
-          { name: 'Fa (Bamileke)' },
-          { name: 'Fan (Bamileke)' },
-          { name: 'Fanwe (Bamileke)' },
-          { name: 'Fe\'e fe\'e' },
-          { name: 'Fotouni' },
-          { name: 'Kuu' },
-          { name: 'Nufi' }
+        'uf': [
+          { 'name': 'Bafang' },
+          { 'name': 'Bamileke-Fe\'fe\'' },
+          { 'name': 'Bana (Bamileke)' },
+          { 'name': 'Fa (Bamileke)' },
+          { 'name': 'Fan (Bamileke)' },
+          { 'name': 'Fanwe (Bamileke)' },
+          { 'name': 'Fe\'e fe\'e' },
+          { 'name': 'Fotouni' },
+          { 'name': 'Kuu' },
+          { 'name': 'Nufi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngyemboon'
         },
-        uf: { name: 'Nguemba (Bamileke)' }
+        'uf': { 'name': 'Nguemba (Bamileke)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yemba'
         }
@@ -3708,18 +3708,18 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bad',
-    name: 'Banda languages',
-    code: 'bad',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bad',
+    'name': 'Banda languages',
+    'code': 'bad',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Banda (Central Africa)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Linda'
         }
@@ -3728,1400 +3728,1400 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bnt',
-    name: 'Bantu (Other)',
-    code: 'bnt',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bnt',
+    'name': 'Bantu (Other)',
+    'code': 'bnt',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abo (Cameroon)'
         },
-        uf: [
-          { name: 'Abaw' },
-          { name: 'Bo (Cameroon)' },
-          { name: 'Bon (Cameroon)' }
+        'uf': [
+          { 'name': 'Abaw' },
+          { 'name': 'Bo (Cameroon)' },
+          { 'name': 'Bon (Cameroon)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aka (Central African Republic)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Asu'
         },
-        uf: [
-          { name: 'Athu' },
-          { name: 'Chasu' },
-          { name: 'Pare' }
+        'uf': [
+          { 'name': 'Athu' },
+          { 'name': 'Chasu' },
+          { 'name': 'Pare' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bafia'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bakundu'
         },
-        uf: { name: 'Kundu' }
+        'uf': { 'name': 'Kundu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bati'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bekwil'
         },
-        uf: [
-          { name: 'Bakwele' },
-          { name: 'Bakwil' },
-          { name: 'Bekwel' },
-          { name: 'Bekwie' },
-          { name: 'Bekwyel' },
-          { name: 'Kwele' },
-          { name: 'Okpele' }
+        'uf': [
+          { 'name': 'Bakwele' },
+          { 'name': 'Bakwil' },
+          { 'name': 'Bekwel' },
+          { 'name': 'Bekwie' },
+          { 'name': 'Bekwyel' },
+          { 'name': 'Kwele' },
+          { 'name': 'Okpele' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bembe (Congo (Brazzaville))'
         },
-        uf: [
-          { name: 'KiBembe' },
-          { name: 'Mbembe' }
+        'uf': [
+          { 'name': 'KiBembe' },
+          { 'name': 'Mbembe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Benga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bisa (Bantu)'
         },
-        uf: { name: 'Wisa' }
+        'uf': { 'name': 'Wisa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bobangi'
         },
-        uf: { name: 'Rebu' }
+        'uf': { 'name': 'Rebu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bolia'
         },
-        uf: { name: 'Bulia' }
+        'uf': { 'name': 'Bulia' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Boma (Congo)'
         },
-        uf: { name: 'Buma (Congo)' }
+        'uf': { 'name': 'Buma (Congo)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bomitaba'
         },
-        uf: [
-          { name: 'Mbomitaba' },
-          { name: 'Mitaba' }
+        'uf': [
+          { 'name': 'Mbomitaba' },
+          { 'name': 'Mitaba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bondei'
         },
-        uf: [
-          { name: 'Bonde' },
-          { name: 'Boondei' },
-          { name: 'Kibondei' },
-          { name: 'Wabondei' }
+        'uf': [
+          { 'name': 'Bonde' },
+          { 'name': 'Boondei' },
+          { 'name': 'Kibondei' },
+          { 'name': 'Wabondei' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bube'
         },
-        uf: [
-          { name: 'Bubi (Equatorial Guinea)' },
-          { name: 'Fernandian' }
+        'uf': [
+          { 'name': 'Bubi (Equatorial Guinea)' },
+          { 'name': 'Fernandian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bubi (Gabon)'
         },
-        uf: { name: 'Pove' }
+        'uf': { 'name': 'Pove' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Budu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bukusu'
         },
-        uf: { name: 'Lubukusu' }
+        'uf': { 'name': 'Lubukusu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bulu'
         },
-        uf: { name: 'Boulou' }
+        'uf': { 'name': 'Boulou' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Camtho'
         },
-        uf: [
-          { name: 'Iscamtho' },
-          { name: 'Isicamtho' },
-          { name: 'Shalambombo' },
-          { name: 'Tsotsitaal (Camtho)' }
+        'uf': [
+          { 'name': 'Iscamtho' },
+          { 'name': 'Isicamtho' },
+          { 'name': 'Shalambombo' },
+          { 'name': 'Tsotsitaal (Camtho)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chaga'
         },
-        uf: [
-          { name: 'Djaga' },
-          { name: 'Dschagga' },
-          { name: 'Jagga' },
-          { name: 'Tschagga' }
+        'uf': [
+          { 'name': 'Djaga' },
+          { 'name': 'Dschagga' },
+          { 'name': 'Jagga' },
+          { 'name': 'Tschagga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chokwe'
         },
-        uf: [
-          { name: 'Cibokwe' },
-          { name: 'Cokwe' },
-          { name: 'Jok' },
-          { name: 'Katchokue' },
-          { name: 'Kioko' },
-          { name: 'Quioco' },
-          { name: 'Tutchokue' }
+        'uf': [
+          { 'name': 'Cibokwe' },
+          { 'name': 'Cokwe' },
+          { 'name': 'Jok' },
+          { 'name': 'Katchokue' },
+          { 'name': 'Kioko' },
+          { 'name': 'Quioco' },
+          { 'name': 'Tutchokue' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chopi'
         },
-        uf: { name: 'Lenge' }
+        'uf': { 'name': 'Lenge' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Comorian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Diriku'
         },
-        uf: [
-          { name: 'Mbogedo' },
-          { name: 'Rugciriku' },
-          { name: 'Rumanyo' },
-          { name: 'Shimbogedu' }
+        'uf': [
+          { 'name': 'Mbogedo' },
+          { 'name': 'Rugciriku' },
+          { 'name': 'Rumanyo' },
+          { 'name': 'Shimbogedu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Doko (Congo)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Duruma'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Embu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Enahara'
         },
-        uf: [
-          { name: 'Emathipane' },
-          { name: 'Enaharra' },
-          { name: 'Maharra' },
-          { name: 'Nahara' },
-          { name: 'Naharra' }
+        'uf': [
+          { 'name': 'Emathipane' },
+          { 'name': 'Enaharra' },
+          { 'name': 'Maharra' },
+          { 'name': 'Nahara' },
+          { 'name': 'Naharra' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fipa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fuliru'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ganguela'
         },
-        uf: { name: 'Ngangela' }
+        'uf': { 'name': 'Ngangela' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Geviya'
         },
-        uf: [
-          { name: 'Avias' },
-          { name: 'Eviya' },
-          { name: 'Viya' }
+        'uf': [
+          { 'name': 'Avias' },
+          { 'name': 'Eviya' },
+          { 'name': 'Viya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Giryama'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gisu'
         },
-        uf: [
-          { name: 'Lugisu' },
-          { name: 'Lumasaaba' },
-          { name: 'Masaba' }
+        'uf': [
+          { 'name': 'Lugisu' },
+          { 'name': 'Lumasaaba' },
+          { 'name': 'Masaba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gungu'
         },
-        uf: [
-          { name: 'Lugungu' },
-          { name: 'Rugungu' }
+        'uf': [
+          { 'name': 'Lugungu' },
+          { 'name': 'Rugungu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gusii'
         },
-        uf: [
-          { name: 'Ekegusii' },
-          { name: 'Kisii' }
+        'uf': [
+          { 'name': 'Ekegusii' },
+          { 'name': 'Kisii' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gweno'
         },
-        uf: { name: 'Kigweno' }
+        'uf': { 'name': 'Kigweno' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gwere'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Haya'
         },
-        uf: [
-          { name: 'Luhaya' },
-          { name: 'Lusiba' },
-          { name: 'Ruhaya' },
-          { name: 'Ziba' }
+        'uf': [
+          { 'name': 'Luhaya' },
+          { 'name': 'Lusiba' },
+          { 'name': 'Ruhaya' },
+          { 'name': 'Ziba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hehe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hunde'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ikizu'
         },
-        uf: [
-          { name: 'Ikiizo' },
-          { name: 'Ikikizo' },
-          { name: 'Ikikizu' },
-          { name: 'Kiikizu' }
+        'uf': [
+          { 'name': 'Ikiizo' },
+          { 'name': 'Ikikizo' },
+          { 'name': 'Ikikizu' },
+          { 'name': 'Kiikizu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ila'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jita'
         },
-        uf: [
-          { name: 'Echijita' },
-          { name: 'Ecijita' },
-          { name: 'Kijita' }
+        'uf': [
+          { 'name': 'Echijita' },
+          { 'name': 'Ecijita' },
+          { 'name': 'Kijita' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kahe'
         },
-        uf: { name: 'Kikahe' }
+        'uf': { 'name': 'Kikahe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kako'
         },
-        uf: [
-          { name: 'Kaka (Northwest Bantu)' },
-          { name: 'Yaka (Cameroon and Central African Republic)' }
+        'uf': [
+          { 'name': 'Kaka (Northwest Bantu)' },
+          { 'name': 'Yaka (Cameroon and Central African Republic)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalanga (Botswana and Zimbabwe)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kanyok'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaonde'
         },
-        uf: { name: 'Luba-Kaonde' }
+        'uf': { 'name': 'Luba-Kaonde' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kare'
         },
-        uf: [
-          { name: 'Akare' },
-          { name: 'Bakare' }
+        'uf': [
+          { 'name': 'Akare' },
+          { 'name': 'Bakare' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kele (Gabon)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kete'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kom (Cameroon)'
         },
-        uf: { name: 'Nkom' }
+        'uf': { 'name': 'Nkom' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kombe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Komo (Congo)'
         },
-        uf: { name: 'Kumu' }
+        'uf': { 'name': 'Kumu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Koonzime'
         },
-        uf: [
-          { name: 'Djimu' },
-          { name: 'Dzimou' },
-          { name: 'Konzime' },
-          { name: 'Kooncimo' },
-          { name: 'Koozhime' },
-          { name: 'Koozime' },
-          { name: 'Nzime' },
-          { name: 'Zimu' }
+        'uf': [
+          { 'name': 'Djimu' },
+          { 'name': 'Dzimou' },
+          { 'name': 'Konzime' },
+          { 'name': 'Kooncimo' },
+          { 'name': 'Koozhime' },
+          { 'name': 'Koozime' },
+          { 'name': 'Nzime' },
+          { 'name': 'Zimu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuria'
         },
-        uf: [
-          { name: 'Ekiguria' },
-          { name: 'Igikuria' },
-          { name: 'Ikikuria' },
-          { name: 'Kikoria' },
-          { name: 'Kikouria' },
-          { name: 'Kikuria' },
-          { name: 'Kikuria cha juu' },
-          { name: 'Kikuria cha Mashariki' },
-          { name: 'Koria' },
-          { name: 'Kurya' },
-          { name: 'Kurye' },
-          { name: 'Tende (Kuria)' }
+        'uf': [
+          { 'name': 'Ekiguria' },
+          { 'name': 'Igikuria' },
+          { 'name': 'Ikikuria' },
+          { 'name': 'Kikoria' },
+          { 'name': 'Kikouria' },
+          { 'name': 'Kikuria' },
+          { 'name': 'Kikuria cha juu' },
+          { 'name': 'Kikuria cha Mashariki' },
+          { 'name': 'Koria' },
+          { 'name': 'Kurya' },
+          { 'name': 'Kurye' },
+          { 'name': 'Tende (Kuria)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwangali'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwese'
         },
-        uf: { name: 'Kwezo' }
+        'uf': { 'name': 'Kwezo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwiri'
         },
-        uf: { name: 'Mokpwe' }
+        'uf': { 'name': 'Mokpwe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lala'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lega'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lenje'
         },
-        uf: [
-          { name: 'Bwine-Mukuni' },
-          { name: 'Ci-Renje' }
+        'uf': [
+          { 'name': 'Bwine-Mukuni' },
+          { 'name': 'Ci-Renje' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Logooli'
         },
-        uf: { name: 'Ragoli' }
+        'uf': { 'name': 'Ragoli' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lomwe (Malawi)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Londo'
         },
-        uf: [
-          { name: 'Balondo Ba Diko' },
-          { name: 'Balondo Ba Nanga' },
-          { name: 'Balondo' },
-          { name: 'Barondo' },
-          { name: 'Lundu' }
+        'uf': [
+          { 'name': 'Balondo Ba Diko' },
+          { 'name': 'Balondo Ba Nanga' },
+          { 'name': 'Balondo' },
+          { 'name': 'Barondo' },
+          { 'name': 'Lundu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lucazi'
         },
-        uf: { name: 'Ponda' }
+        'uf': { 'name': 'Ponda' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Luvale'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Luyana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Luyia'
         },
-        uf: { name: 'Oluluyia' }
+        'uf': { 'name': 'Oluluyia' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maka (Cameroon)'
         },
-        uf: [
-          { name: 'Makaa (Cameroon)' },
-          { name: 'Mekaa' }
+        'uf': [
+          { 'name': 'Makaa (Cameroon)' },
+          { 'name': 'Mekaa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Makhuwa'
         },
-        uf: [
-          { name: 'Central Makhuwa' },
-          { name: 'Emakhuwa' },
-          { name: 'Emakua' },
-          { name: 'Macua' },
-          { name: 'Makhuwa-Makhuwana' },
-          { name: 'Makhuwwa of Nampula' },
-          { name: 'Makoane language' },
-          { name: 'Makua (Mozambique)' },
-          { name: 'Maquoua (Makhuwa)' }
+        'uf': [
+          { 'name': 'Central Makhuwa' },
+          { 'name': 'Emakhuwa' },
+          { 'name': 'Emakua' },
+          { 'name': 'Macua' },
+          { 'name': 'Makhuwa-Makhuwana' },
+          { 'name': 'Makhuwwa of Nampula' },
+          { 'name': 'Makoane language' },
+          { 'name': 'Makua (Mozambique)' },
+          { 'name': 'Maquoua (Makhuwa)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Makonde'
         },
-        uf: [
-          { name: 'Chimakonde' },
-          { name: 'Chinimakonde' },
-          { name: 'Cimakonde' },
-          { name: 'Konde (Makonde)' },
-          { name: 'Maconde' },
-          { name: 'Makonda' },
-          { name: 'Matambe' },
-          { name: 'Matambwe (Makonde)' },
-          { name: 'Mekwengo' },
-          { name: 'Shimakonde' }
+        'uf': [
+          { 'name': 'Chimakonde' },
+          { 'name': 'Chinimakonde' },
+          { 'name': 'Cimakonde' },
+          { 'name': 'Konde (Makonde)' },
+          { 'name': 'Maconde' },
+          { 'name': 'Makonda' },
+          { 'name': 'Matambe' },
+          { 'name': 'Matambwe (Makonde)' },
+          { 'name': 'Mekwengo' },
+          { 'name': 'Shimakonde' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Makwe'
         },
-        uf: [
-          { name: 'Kimakwe' },
-          { name: 'Macue' },
-          { name: 'Maraba (Makwe)' },
-          { name: 'Palma' }
+        'uf': [
+          { 'name': 'Kimakwe' },
+          { 'name': 'Macue' },
+          { 'name': 'Maraba (Makwe)' },
+          { 'name': 'Palma' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mashami'
         },
-        uf: [
-          { name: 'Kimashami' },
-          { name: 'Machambe' },
-          { name: 'Machame' },
-          { name: 'Madschame' }
+        'uf': [
+          { 'name': 'Kimashami' },
+          { 'name': 'Machambe' },
+          { 'name': 'Machame' },
+          { 'name': 'Madschame' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbala (Bandundu, Congo)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbo (Cameroon)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbosi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbukushu'
         },
-        uf: [
-          { name: 'Goba' },
-          { name: 'Mambukush' },
-          { name: 'Mpukush' },
-          { name: 'Thimbukushu' }
+        'uf': [
+          { 'name': 'Goba' },
+          { 'name': 'Mambukush' },
+          { 'name': 'Mpukush' },
+          { 'name': 'Thimbukushu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbunda (Angola and Zambia)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Meru'
         },
-        uf: { name: 'Kimeru' }
+        'uf': { 'name': 'Kimeru' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mijikenda languages'
         },
-        uf: [
-          { name: 'Nika languages' },
-          { name: 'Nyika languages' }
+        'uf': [
+          { 'name': 'Nika languages' },
+          { 'name': 'Nyika languages' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mituku'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mkaaʼ'
         },
-        uf: { name: 'Bakaka' }
+        'uf': { 'name': 'Bakaka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mochi'
         },
-        uf: [
-          { name: 'Kimochi' },
-          { name: 'Kimoshi' },
-          { name: 'Moshi (Tanzania)' },
-          { name: 'Mosi (Tanzania)' },
-          { name: 'Old Moshi' }
+        'uf': [
+          { 'name': 'Kimochi' },
+          { 'name': 'Kimoshi' },
+          { 'name': 'Moshi (Tanzania)' },
+          { 'name': 'Mosi (Tanzania)' },
+          { 'name': 'Old Moshi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mpiemo'
         },
-        uf: [
-          { name: 'Bimu' },
-          { name: 'Mbimou' },
-          { name: 'Mbimu' },
-          { name: 'Mbyemo' },
-          { name: 'Mpo' },
-          { name: 'Mpyemo' }
+        'uf': [
+          { 'name': 'Bimu' },
+          { 'name': 'Mbimou' },
+          { 'name': 'Mbimu' },
+          { 'name': 'Mbyemo' },
+          { 'name': 'Mpo' },
+          { 'name': 'Mpyemo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mpongwe'
         },
-        uf: { name: 'Pongwe' }
+        'uf': { 'name': 'Pongwe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mpur (Congo)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nambya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nande'
         },
-        uf: { name: 'Nandi (Congo)' }
+        'uf': { 'name': 'Nandi (Congo)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ndau'
         },
-        uf: [
-          { name: 'Chindau' },
-          { name: 'Shona, Southeastern' }
+        'uf': [
+          { 'name': 'Chindau' },
+          { 'name': 'Shona, Southeastern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ndumu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngonde'
         },
-        uf: [
-          { name: 'Ikinyi-Kiusa' },
-          { name: 'Kiusa' },
-          { name: 'Konde (Nyakyusa)' },
-          { name: 'Mombe' },
-          { name: 'Nkonde' },
-          { name: 'Nyakyusa' },
-          { name: 'Sochile' }
+        'uf': [
+          { 'name': 'Ikinyi-Kiusa' },
+          { 'name': 'Kiusa' },
+          { 'name': 'Konde (Nyakyusa)' },
+          { 'name': 'Mombe' },
+          { 'name': 'Nkonde' },
+          { 'name': 'Nyakyusa' },
+          { 'name': 'Sochile' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngul'
         },
-        uf: [
-          { name: 'Engwî' },
-          { name: 'Ingul' },
-          { name: 'Kingóli' },
-          { name: 'Ngoli' },
-          { name: 'Nguli' },
-          { name: 'Ngulu (Congo (Democratic Republic))' },
-          { name: 'Ngwi (Congo (Democratic Republic))' }
+        'uf': [
+          { 'name': 'Engwî' },
+          { 'name': 'Ingul' },
+          { 'name': 'Kingóli' },
+          { 'name': 'Ngoli' },
+          { 'name': 'Nguli' },
+          { 'name': 'Ngulu (Congo (Democratic Republic))' },
+          { 'name': 'Ngwi (Congo (Democratic Republic))' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nsenga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ntomba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyaneka'
         },
-        uf: [
-          { name: 'Lunyaneka' },
-          { name: 'Olunyaneka' }
+        'uf': [
+          { 'name': 'Lunyaneka' },
+          { 'name': 'Olunyaneka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyanga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyaturu'
         },
-        uf: [
-          { name: 'Keremi' },
-          { name: 'Kinyaturu' },
-          { name: 'Kiremi' },
-          { name: 'Kirimi' },
-          { name: 'Limi (Nyaturu)' },
-          { name: 'Remi' },
-          { name: 'Rimi' },
-          { name: 'Turu (Nyaturu)' }
+        'uf': [
+          { 'name': 'Keremi' },
+          { 'name': 'Kinyaturu' },
+          { 'name': 'Kiremi' },
+          { 'name': 'Kirimi' },
+          { 'name': 'Limi (Nyaturu)' },
+          { 'name': 'Remi' },
+          { 'name': 'Rimi' },
+          { 'name': 'Turu (Nyaturu)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyole (Uganda)'
         },
-        uf: [
-          { name: 'Lunyole (Uganda)' },
-          { name: 'Nyule' },
-          { name: 'Nyuli' }
+        'uf': [
+          { 'name': 'Lunyole (Uganda)' },
+          { 'name': 'Nyule' },
+          { 'name': 'Nyuli' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyungwe'
         },
-        uf: { name: 'Tete' }
+        'uf': { 'name': 'Tete' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nzebi'
         },
-        uf: [
-          { name: 'Bandzabi' },
-          { name: 'Indzèbi' },
-          { name: 'Injebi' },
-          { name: 'Ndjabi' },
-          { name: 'Ndjebi' },
-          { name: 'Ndjevi' },
-          { name: 'Njabi' },
-          { name: 'Njevi' },
-          { name: 'Nzabi' },
-          { name: 'Yinzabi' }
+        'uf': [
+          { 'name': 'Bandzabi' },
+          { 'name': 'Indzèbi' },
+          { 'name': 'Injebi' },
+          { 'name': 'Ndjabi' },
+          { 'name': 'Ndjebi' },
+          { 'name': 'Ndjevi' },
+          { 'name': 'Njabi' },
+          { 'name': 'Njevi' },
+          { 'name': 'Nzabi' },
+          { 'name': 'Yinzabi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pangwa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pelende'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pende'
         },
-        uf: [
-          { name: 'Kipende' },
-          { name: 'Pindi (Pende)' }
+        'uf': [
+          { 'name': 'Kipende' },
+          { 'name': 'Pindi (Pende)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pokomo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Punu'
         },
-        uf: [
-          { name: 'Bapounou' },
-          { name: 'Pounou' }
+        'uf': [
+          { 'name': 'Bapounou' },
+          { 'name': 'Pounou' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rangi'
         },
-        uf: [
-          { name: 'Irangi' },
-          { name: 'Kilangi' },
-          { name: 'Kirangi' },
-          { name: 'Langi (Tanzania)' }
+        'uf': [
+          { 'name': 'Irangi' },
+          { 'name': 'Kilangi' },
+          { 'name': 'Kirangi' },
+          { 'name': 'Langi (Tanzania)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ronga'
         },
-        uf: [
-          { name: 'Landim' },
-          { name: 'Shironga' },
-          { name: 'Xironga' }
+        'uf': [
+          { 'name': 'Landim' },
+          { 'name': 'Shironga' },
+          { 'name': 'Xironga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ruri'
         },
-        uf: [
-          { name: 'Ciruuri' },
-          { name: 'Kiruri' },
-          { name: 'Ruuri' }
+        'uf': [
+          { 'name': 'Ciruuri' },
+          { 'name': 'Kiruri' },
+          { 'name': 'Ruuri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ruund'
         },
-        uf: [
-          { name: 'Chiluwunda' },
-          { name: 'Lunda, Northern' },
-          { name: 'Luwunda' },
-          { name: 'Muatiamvua' },
-          { name: 'Northern Lunda' },
-          { name: 'Uruund' }
+        'uf': [
+          { 'name': 'Chiluwunda' },
+          { 'name': 'Lunda, Northern' },
+          { 'name': 'Luwunda' },
+          { 'name': 'Muatiamvua' },
+          { 'name': 'Northern Lunda' },
+          { 'name': 'Uruund' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saamia'
         },
-        uf: [
-          { name: 'Luhya (Saamia)' },
-          { name: 'Luluyia (Saamia)' },
-          { name: 'Lusaamia' },
-          { name: 'Luyia (Saamia)' },
-          { name: 'Ólusaamya' },
-          { name: 'Olusamia' },
-          { name: 'Samia' },
-          { name: 'Samya' }
+        'uf': [
+          { 'name': 'Luhya (Saamia)' },
+          { 'name': 'Luluyia (Saamia)' },
+          { 'name': 'Lusaamia' },
+          { 'name': 'Luyia (Saamia)' },
+          { 'name': 'Ólusaamya' },
+          { 'name': 'Olusamia' },
+          { 'name': 'Samia' },
+          { 'name': 'Samya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sakata'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Salampasu'
         },
-        uf: { name: 'Chisalampasu' }
+        'uf': { 'name': 'Chisalampasu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sanga'
         },
-        uf: [
-          { name: 'Luba, Southern' },
-          { name: 'Southern Luba' }
+        'uf': [
+          { 'name': 'Luba, Southern' },
+          { 'name': 'Southern Luba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sena'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shambala'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shi'
         },
-        uf: [
-          { name: 'Mashi' },
-          { name: 'Nyabungu' }
+        'uf': [
+          { 'name': 'Mashi' },
+          { 'name': 'Nyabungu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shimaore'
         },
-        uf: { name: 'Mahorais' }
+        'uf': { 'name': 'Mahorais' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Simbiti'
         },
-        uf: { name: 'Kisimbiti' }
+        'uf': { 'name': 'Kisimbiti' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Songye'
         },
-        uf: { name: 'Songe' }
+        'uf': { 'name': 'Songe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Subiya'
         },
-        uf: [
-          { name: 'ciIkuhane' },
-          { name: 'Ikuhane' },
-          { name: 'Soubiya' }
+        'uf': [
+          { 'name': 'ciIkuhane' },
+          { 'name': 'Ikuhane' },
+          { 'name': 'Soubiya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Suku (Congo)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sumbwa'
         },
-        uf: [
-          { name: 'Kisumbwa' },
-          { name: 'Shisumbwa' },
-          { name: 'Sisumbwa' },
-          { name: 'Sisuumbwa' }
+        'uf': [
+          { 'name': 'Kisumbwa' },
+          { 'name': 'Shisumbwa' },
+          { 'name': 'Sisumbwa' },
+          { 'name': 'Sisuumbwa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Taita'
         },
-        uf: [
-          { name: 'Sagalla' },
-          { name: 'Teita' }
+        'uf': [
+          { 'name': 'Sagalla' },
+          { 'name': 'Teita' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Talinga-Bwisi'
         },
-        uf: [
-          { name: 'Bwisi-Talinga' },
-          { name: 'Kitalinga' }
+        'uf': [
+          { 'name': 'Bwisi-Talinga' },
+          { 'name': 'Kitalinga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Teke'
         },
-        uf: [
-          { name: 'Balali' },
-          { name: 'Ilali' },
-          { name: 'Itio' },
-          { name: 'Lali' }
+        'uf': [
+          { 'name': 'Balali' },
+          { 'name': 'Ilali' },
+          { 'name': 'Itio' },
+          { 'name': 'Lali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tembo (Sud-Kivu, Congo)'
         },
-        uf: { name: 'KiTembo' }
+        'uf': { 'name': 'KiTembo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Temi'
         },
-        uf: [
-          { name: 'Gitemi' },
-          { name: 'Kisonjo' },
-          { name: 'Sonjo' },
-          { name: 'Sonyo' },
-          { name: 'Wasonjo' },
-          { name: 'Watemi' }
+        'uf': [
+          { 'name': 'Gitemi' },
+          { 'name': 'Kisonjo' },
+          { 'name': 'Sonjo' },
+          { 'name': 'Sonyo' },
+          { 'name': 'Wasonjo' },
+          { 'name': 'Watemi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tetela'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tharaka'
         },
-        uf: { name: 'Saraka' }
+        'uf': { 'name': 'Saraka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tiene'
         },
-        uf: [
-          { name: 'Ketiine' },
-          { name: 'Kitiene' },
-          { name: 'Kitiini' },
-          { name: 'Tende (Congo (Democratic Republic))' }
+        'uf': [
+          { 'name': 'Ketiine' },
+          { 'name': 'Kitiene' },
+          { 'name': 'Kitiini' },
+          { 'name': 'Tende (Congo (Democratic Republic))' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tiriki'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tonga (Inhambane)'
         },
-        uf: { name: 'Gitonga' }
+        'uf': { 'name': 'Gitonga' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tonga (Zambezi)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tooro'
         },
-        uf: { name: 'Toro' }
+        'uf': { 'name': 'Toro' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tsogo'
         },
-        uf: [
-          { name: 'Apindji' },
-          { name: 'Mitsogo' }
+        'uf': [
+          { 'name': 'Apindji' },
+          { 'name': 'Mitsogo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tswa'
         },
-        uf: [
-          { name: 'Kitswa' },
-          { name: 'Shitswa' },
-          { name: 'Tshwa' },
-          { name: 'Xitswa' }
+        'uf': [
+          { 'name': 'Kitswa' },
+          { 'name': 'Shitswa' },
+          { 'name': 'Tshwa' },
+          { 'name': 'Xitswa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tunen'
         },
-        uf: { name: 'Banen' }
+        'uf': { 'name': 'Banen' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yaka (Congo and Angola)'
         },
-        uf: { name: 'Iaka' }
+        'uf': { 'name': 'Iaka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yanzi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yombe (Congo and Angola)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zanaki'
         },
-        uf: [
-          { name: 'Iki-Zanaki' },
-          { name: 'IkiZanaki' }
+        'uf': [
+          { 'name': 'Iki-Zanaki' },
+          { 'name': 'IkiZanaki' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zigula'
         },
-        uf: [
-          { name: 'Kizigula' },
-          { name: 'Seguha' },
-          { name: 'Wayombo' },
-          { name: 'Wazegua' },
-          { name: 'Wazigua' },
-          { name: 'Zeguha' },
-          { name: 'Zegura' },
-          { name: 'Zigoua' },
-          { name: 'Zigua' },
-          { name: 'Zigwa' }
+        'uf': [
+          { 'name': 'Kizigula' },
+          { 'name': 'Seguha' },
+          { 'name': 'Wayombo' },
+          { 'name': 'Wazegua' },
+          { 'name': 'Wazigua' },
+          { 'name': 'Zeguha' },
+          { 'name': 'Zegura' },
+          { 'name': 'Zigoua' },
+          { 'name': 'Zigua' },
+          { 'name': 'Zigwa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zinza'
         },
-        uf: [
-          { name: 'Dzinda' },
-          { name: 'Dzindza' },
-          { name: 'Echidzindza' },
-          { name: 'Echijinja' },
-          { name: 'Eciinja' },
-          { name: 'Ecizinza' },
-          { name: 'Jinja' },
-          { name: 'Kizinza' },
-          { name: 'Luzinza' },
-          { name: 'Zinja' }
+        'uf': [
+          { 'name': 'Dzinda' },
+          { 'name': 'Dzindza' },
+          { 'name': 'Echidzindza' },
+          { 'name': 'Echijinja' },
+          { 'name': 'Eciinja' },
+          { 'name': 'Ecizinza' },
+          { 'name': 'Jinja' },
+          { 'name': 'Kizinza' },
+          { 'name': 'Luzinza' },
+          { 'name': 'Zinja' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bas',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bas',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Basa'
     },
-    code: 'bas'
+    'code': 'bas'
   },
   {
-    uri: 'info:lc/vocabulary/languages/bak',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bak',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bashkir'
     },
-    code: 'bak'
+    'code': 'bak'
   },
   {
-    uri: 'info:lc/vocabulary/languages/baq',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/baq',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Basque'
     },
-    code: 'baq',
-    uf: { name: 'Euskara' }
+    'code': 'baq',
+    'uf': { 'name': 'Euskara' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/btk',
-    name: 'Batak',
-    code: 'btk',
-    uf: [
-      { name: 'Batta (Sumatra)' },
+    'uri': 'info:lc/vocabulary/languages/btk',
+    'name': 'Batak',
+    'code': 'btk',
+    'uf': [
+      { 'name': 'Batta (Sumatra)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alas'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Angkola'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dairi Pakpak'
         },
-        uf: { name: 'Pakpak' }
+        'uf': { 'name': 'Pakpak' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karo-Batak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandailing'
         },
-        uf: { name: 'Batak Mandailing' }
+        'uf': { 'name': 'Batak Mandailing' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Simelungun'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toba-Batak'
         }
@@ -5129,501 +5129,501 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bej',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bej',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Beja'
     },
-    code: 'bej',
-    uf: [
-      { name: 'Bedawiye' },
-      { name: 'Bedja' },
-      { name: 'Bishári' }
+    'code': 'bej',
+    'uf': [
+      { 'name': 'Bedawiye' },
+      { 'name': 'Bedja' },
+      { 'name': 'Bishári' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bel',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bel',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Belarusian'
     },
-    code: 'bel',
-    uf: [
-      { name: 'Belarusan' },
-      { name: 'Belorussian' },
-      { name: 'Byelorussian' },
-      { name: 'Russian, White' },
-      { name: 'Ruthenian, White' },
-      { name: 'White Russian' },
-      { name: 'White Ruthenian' }
+    'code': 'bel',
+    'uf': [
+      { 'name': 'Belarusan' },
+      { 'name': 'Belorussian' },
+      { 'name': 'Byelorussian' },
+      { 'name': 'Russian, White' },
+      { 'name': 'Ruthenian, White' },
+      { 'name': 'White Russian' },
+      { 'name': 'White Ruthenian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bem',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bem',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bemba'
     },
-    code: 'bem'
+    'code': 'bem'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ben',
-    name: 'Bengali',
-    code: 'ben',
-    uf: [
-      { name: 'Banga-Bhasa' },
-      { name: 'Bangala' },
-      { name: 'Bangla' },
+    'uri': 'info:lc/vocabulary/languages/ben',
+    'name': 'Bengali',
+    'code': 'ben',
+    'uf': [
+      { 'name': 'Banga-Bhasa' },
+      { 'name': 'Bangala' },
+      { 'name': 'Bangla' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sylheti'
         },
-        uf: [
-          { name: 'Sylhet' },
-          { name: 'Sylhetti Bangla' }
+        'uf': [
+          { 'name': 'Sylhet' },
+          { 'name': 'Sylhetti Bangla' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ber',
-    name: 'Berber (Other)',
-    code: 'ber',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ber',
+    'name': 'Berber (Other)',
+    'code': 'ber',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mzab'
         },
-        uf: { name: 'Mozabite' }
+        'uf': { 'name': 'Mozabite' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rif'
         },
-        uf: [
-          { name: 'Northern Shilha' },
-          { name: 'Shilha, Northern' },
-          { name: 'Tarifit' }
+        'uf': [
+          { 'name': 'Northern Shilha' },
+          { 'name': 'Shilha, Northern' },
+          { 'name': 'Tarifit' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shilha'
         },
-        uf: [
-          { name: 'Chleuh' },
-          { name: 'Sölha' },
-          { name: 'Tachelhait' },
-          { name: 'Tashelhiyt' }
+        'uf': [
+          { 'name': 'Chleuh' },
+          { 'name': 'Sölha' },
+          { 'name': 'Tachelhait' },
+          { 'name': 'Tashelhiyt' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tamazight'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Taznatit'
         },
-        uf: [
-          { name: 'Gourara' },
-          { name: 'Gurara-Berberisch' },
-          { name: 'Gurara language' },
-          { name: 'Tazenatit' }
+        'uf': [
+          { 'name': 'Gourara' },
+          { 'name': 'Gurara-Berberisch' },
+          { 'name': 'Gurara language' },
+          { 'name': 'Tazenatit' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bho',
-    name: 'Bhojpuri',
-    code: 'bho',
-    uf: [
-      { name: 'Bajpuri' },
-      { name: 'Bhojapuri' },
-      { name: 'Bhozpuri' },
-      { name: 'Bihari (Bhojpuri)' },
-      { name: 'Deswali (Bhojpuri)' },
-      { name: 'Khotla' },
-      { name: 'Piscimas' },
+    'uri': 'info:lc/vocabulary/languages/bho',
+    'name': 'Bhojpuri',
+    'code': 'bho',
+    'uf': [
+      { 'name': 'Bajpuri' },
+      { 'name': 'Bhojapuri' },
+      { 'name': 'Bhozpuri' },
+      { 'name': 'Bihari (Bhojpuri)' },
+      { 'name': 'Deswali (Bhojpuri)' },
+      { 'name': 'Khotla' },
+      { 'name': 'Piscimas' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sadani'
         },
-        uf: [
-          { name: 'Chota Nagpuri' },
-          { name: 'Chotar Nagpuri' },
-          { name: 'Dikku Kaji' },
-          { name: 'Dikkukaji' },
-          { name: 'Nagpuri (Bhojpuri)' },
-          { name: 'Nagpuriā' },
-          { name: 'Napuria' },
-          { name: 'Sadan' },
-          { name: 'Sadari' },
-          { name: 'Sadati' },
-          { name: 'Sadhan' },
-          { name: 'Sadhana' },
-          { name: 'Sadharan' },
-          { name: 'Sadna' },
-          { name: 'Sadri' },
-          { name: 'Sadrik' },
-          { name: 'Santri' },
-          { name: 'Siddri' },
-          { name: 'Sradri' }
+        'uf': [
+          { 'name': 'Chota Nagpuri' },
+          { 'name': 'Chotar Nagpuri' },
+          { 'name': 'Dikku Kaji' },
+          { 'name': 'Dikkukaji' },
+          { 'name': 'Nagpuri (Bhojpuri)' },
+          { 'name': 'Nagpuriā' },
+          { 'name': 'Napuria' },
+          { 'name': 'Sadan' },
+          { 'name': 'Sadari' },
+          { 'name': 'Sadati' },
+          { 'name': 'Sadhan' },
+          { 'name': 'Sadhana' },
+          { 'name': 'Sadharan' },
+          { 'name': 'Sadna' },
+          { 'name': 'Sadri' },
+          { 'name': 'Sadrik' },
+          { 'name': 'Santri' },
+          { 'name': 'Siddri' },
+          { 'name': 'Sradri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Western Standard Bhojpuri'
         },
-        uf: [
-          { name: 'Benarsi' },
-          { name: 'Bhojpuri, Western Standard' },
-          { name: 'Purbi' }
+        'uf': [
+          { 'name': 'Benarsi' },
+          { 'name': 'Bhojpuri, Western Standard' },
+          { 'name': 'Purbi' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bih',
-    name: 'Bihari (Other)',
-    code: 'bih',
-    uf: [
-      { name: 'Behari' },
+    'uri': 'info:lc/vocabulary/languages/bih',
+    'name': 'Bihari (Other)',
+    'code': 'bih',
+    'uf': [
+      { 'name': 'Behari' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bajjika'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kudmali'
         },
-        uf: [
-          { name: 'Bedia' },
-          { name: 'Dharua' },
-          { name: 'Khotta (Kurmali)' },
-          { name: 'Kurma' },
-          { name: 'Kurmali' },
-          { name: 'Kurmali Thar' },
-          { name: 'Kurmik' },
-          { name: 'Kurni' },
-          { name: 'Kurumali' }
+        'uf': [
+          { 'name': 'Bedia' },
+          { 'name': 'Dharua' },
+          { 'name': 'Khotta (Kurmali)' },
+          { 'name': 'Kurma' },
+          { 'name': 'Kurmali' },
+          { 'name': 'Kurmali Thar' },
+          { 'name': 'Kurmik' },
+          { 'name': 'Kurni' },
+          { 'name': 'Kurumali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Panchpargania'
         },
-        uf: [
-          { name: 'Bedia (Panchpargania)' },
-          { name: 'Chik Barik' },
-          { name: 'Pan' },
-          { name: 'Pan Sawasi' },
-          { name: 'Tair' },
-          { name: 'Tamara' },
-          { name: 'Tamaria' },
-          { name: 'Tanti' },
-          { name: 'Temoral' },
-          { name: 'Tumariya' }
+        'uf': [
+          { 'name': 'Bedia (Panchpargania)' },
+          { 'name': 'Chik Barik' },
+          { 'name': 'Pan' },
+          { 'name': 'Pan Sawasi' },
+          { 'name': 'Tair' },
+          { 'name': 'Tamara' },
+          { 'name': 'Tamaria' },
+          { 'name': 'Tanti' },
+          { 'name': 'Temoral' },
+          { 'name': 'Tumariya' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bik',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bik',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bikol'
     },
-    code: 'bik',
-    uf: { name: 'Vikol' }
+    'code': 'bik',
+    'uf': { 'name': 'Vikol' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/byn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/byn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bilin'
     },
-    code: 'byn'
+    'code': 'byn'
   },
   {
-    uri: 'info:lc/vocabulary/languages/bis',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bis',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bislama'
     },
-    code: 'bis',
-    uf: [
-      { name: 'Beach-la-mar' },
-      { name: 'Bêche-de-mer' },
-      { name: 'Bichelamar' }
+    'code': 'bis',
+    'uf': [
+      { 'name': 'Beach-la-mar' },
+      { 'name': 'Bêche-de-mer' },
+      { 'name': 'Bichelamar' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/zbl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zbl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Blissymbolics'
     },
-    code: 'zbl'
+    'code': 'zbl'
   },
   {
-    uri: 'info:lc/vocabulary/languages/bos',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bos',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bosnian'
     },
-    code: 'bos'
+    'code': 'bos'
   },
   {
-    uri: 'info:lc/vocabulary/languages/bra',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bra',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Braj'
     },
-    code: 'bra',
-    uf: [
-      { name: 'Braj bhākhā' },
-      { name: 'Braj bhāshā' },
-      { name: 'Pingal' }
+    'code': 'bra',
+    'uf': [
+      { 'name': 'Braj bhākhā' },
+      { 'name': 'Braj bhāshā' },
+      { 'name': 'Pingal' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bre',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bre',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Breton'
     },
-    code: 'bre',
-    uf: { name: 'Armoric' }
+    'code': 'bre',
+    'uf': { 'name': 'Armoric' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/bug',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bug',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bugis'
     },
-    code: 'bug',
-    uf: { name: 'Buginese' }
+    'code': 'bug',
+    'uf': { 'name': 'Buginese' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/bul',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bul',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Bulgarian'
     },
-    code: 'bul'
+    'code': 'bul'
   },
   {
-    uri: 'info:lc/vocabulary/languages/bua',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bua',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Buriat'
     },
-    code: 'bua',
-    uf: [
-      { name: 'Buryat' },
-      { name: 'Mongolian, Northern' },
-      { name: 'Northern Mongolian' }
+    'code': 'bua',
+    'uf': [
+      { 'name': 'Buryat' },
+      { 'name': 'Mongolian, Northern' },
+      { 'name': 'Northern Mongolian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bur',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bur',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Burmese'
     },
-    code: 'bur'
+    'code': 'bur'
   },
   {
-    uri: 'info:lc/vocabulary/languages/cad',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cad',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Caddo'
     },
-    code: 'cad'
+    'code': 'cad'
   },
   {
-    uri: 'info:lc/vocabulary/languages/car',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/car',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Carib'
     },
-    code: 'car',
-    uf: { name: 'Galibi' }
+    'code': 'car',
+    'uf': { 'name': 'Galibi' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cat',
-    name: 'Catalan',
-    code: 'cat',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cat',
+    'name': 'Catalan',
+    'code': 'cat',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Majorcan Catalan'
         },
-        uf: { name: 'Catalan, Majorcan' }
+        'uf': { 'name': 'Catalan, Majorcan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Valencian Catalan'
         },
-        uf: { name: 'Catalan, Valencian' }
+        'uf': { 'name': 'Catalan, Valencian' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cau',
-    name: 'Caucasian (Other)',
-    code: 'cau',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cau',
+    'name': 'Caucasian (Other)',
+    'code': 'cau',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abazin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bats'
         },
-        uf: [
-          { name: 'Bac' },
-          { name: 'Tsova-Tush' },
-          { name: 'Tush' }
+        'uf': [
+          { 'name': 'Bac' },
+          { 'name': 'Tsova-Tush' },
+          { 'name': 'Tush' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bezhta'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Botlikh'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Budukh'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chamalal'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dido'
         },
-        uf: { name: 'Tsez' }
+        'uf': { 'name': 'Tsez' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ginukh'
         },
-        uf: [
-          { name: 'Ginukhtsy' },
-          { name: 'Ginux' },
-          { name: 'Hinukh' },
-          { name: 'Hinux' }
+        'uf': [
+          { 'name': 'Ginukhtsy' },
+          { 'name': 'Ginux' },
+          { 'name': 'Hinukh' },
+          { 'name': 'Hinux' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hunzib'
         },
-        uf: { name: 'Gunzib' }
+        'uf': { 'name': 'Gunzib' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kubachi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Laz'
         },
-        uf: [
-          { name: 'Chan' },
-          { name: 'Chanuri' },
-          { name: 'Chanzan' },
-          { name: 'Laze' },
-          { name: 'Lazian' },
-          { name: 'Lazuri' },
-          { name: 'Zan' }
+        'uf': [
+          { 'name': 'Chan' },
+          { 'name': 'Chanuri' },
+          { 'name': 'Chanzan' },
+          { 'name': 'Laze' },
+          { 'name': 'Lazian' },
+          { 'name': 'Lazuri' },
+          { 'name': 'Zan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mingrelian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Svan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tabasaran'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tsakhur'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ubykh'
         },
-        uf: { name: 'Oubykh' }
+        'uf': { 'name': 'Oubykh' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Udi'
         }
@@ -5631,580 +5631,580 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ceb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ceb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Cebuano'
     },
-    code: 'ceb',
-    uf: [
-      { name: 'Binisaya' },
-      { name: 'Bisayan' },
-      { name: 'Sebuano' },
-      { name: 'Sinugboanon' },
-      { name: 'Sugbuanon' },
-      { name: 'Sugbuhanon' },
-      { name: 'Visayan' }
+    'code': 'ceb',
+    'uf': [
+      { 'name': 'Binisaya' },
+      { 'name': 'Bisayan' },
+      { 'name': 'Sebuano' },
+      { 'name': 'Sinugboanon' },
+      { 'name': 'Sugbuanon' },
+      { 'name': 'Sugbuhanon' },
+      { 'name': 'Visayan' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cel',
-    name: 'Celtic (Other)',
-    code: 'cel',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cel',
+    'name': 'Celtic (Other)',
+    'code': 'cel',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Celtiberian'
         },
-        uf: [
-          { name: 'Celti-Iberian' },
-          { name: 'Celto-Iberian' }
+        'uf': [
+          { 'name': 'Celti-Iberian' },
+          { 'name': 'Celto-Iberian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gaulish'
         },
-        uf: { name: 'Gallic' }
+        'uf': { 'name': 'Gallic' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Proto-Celtic'
         },
-        uf: { name: 'Common Celtic' }
+        'uf': { 'name': 'Common Celtic' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Welsh, Middle (ca. 1100-1400)'
         },
-        uf: { name: 'Middle Welsh (ca. 1100-1400)' }
+        'uf': { 'name': 'Middle Welsh (ca. 1100-1400)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Welsh, Old (to 1100)'
         },
-        uf: { name: 'Old Welsh (to 1100)' }
+        'uf': { 'name': 'Old Welsh (to 1100)' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cai',
-    name: 'Central American Indian (Other)',
-    code: 'cai',
-    note: {
-      text: 'Use for the other languages of Central America and Mexico, as well as for the languages of the Azteco-Tanoan language phylum.'
+    'uri': 'info:lc/vocabulary/languages/cai',
+    'name': 'Central American Indian (Other)',
+    'code': 'cai',
+    'note': {
+      'text': 'Use for the other languages of Central America and Mexico, as well as for the languages of the Azteco-Tanoan language phylum.'
     },
-    uf: [
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Amuzgo'
         },
-        uf: { name: 'Amishgo' }
+        'uf': { 'name': 'Amishgo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Boruca'
         },
-        uf: [
-          { name: 'Brunka' },
-          { name: 'Burunca' }
+        'uf': [
+          { 'name': 'Brunka' },
+          { 'name': 'Burunca' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bribri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cabecar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cahita'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cahuilla'
         },
-        uf: [
-          { name: 'Coahuila' },
-          { name: 'Kawia (Shoshone)' }
+        'uf': [
+          { 'name': 'Coahuila' },
+          { 'name': 'Kawia (Shoshone)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chatino'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chiapanec'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chinantecan languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chocho'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chontal'
         },
-        uf: { name: 'Tequistlateca' }
+        'uf': { 'name': 'Tequistlateca' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cochimi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Comanche'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cora'
         },
-        uf: [
-          { name: 'Chora' },
-          { name: 'Nayarita' }
+        'uf': [
+          { 'name': 'Chora' },
+          { 'name': 'Nayarita' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cuicatec'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cuitlateco'
         },
-        uf: { name: 'Teco (Cuitlateco)' }
+        'uf': { 'name': 'Teco (Cuitlateco)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cupeño'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eudeve'
         },
-        uf: [
-          { name: 'Batuco' },
-          { name: 'Dohema' },
-          { name: 'Hegue' }
+        'uf': [
+          { 'name': 'Batuco' },
+          { 'name': 'Dohema' },
+          { 'name': 'Hegue' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Garifuna'
         },
-        uf: [
-          { name: 'Black Carib' },
-          { name: 'Carib, Black' }
+        'uf': [
+          { 'name': 'Black Carib' },
+          { 'name': 'Carib, Black' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guarijío'
         },
-        uf: [
-          { name: 'Huarijío' },
-          { name: 'Warijío' }
+        'uf': [
+          { 'name': 'Huarijío' },
+          { 'name': 'Warijío' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guatuso'
         },
-        uf: { name: 'Maléku Jaíka' }
+        'uf': { 'name': 'Maléku Jaíka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guaymi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hopi'
         },
-        uf: { name: 'Moki' }
+        'uf': { 'name': 'Moki' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huave'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huichol'
         },
-        uf: { name: 'Guichola' }
+        'uf': { 'name': 'Guichola' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ixcateco'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jicaque'
         },
-        uf: [
-          { name: 'Tol' },
-          { name: 'Torrupan' },
-          { name: 'Xicaque' }
+        'uf': [
+          { 'name': 'Tol' },
+          { 'name': 'Torrupan' },
+          { 'name': 'Xicaque' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kawaiisu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kiowa'
         },
-        uf: { name: 'Kayowe' }
+        'uf': { 'name': 'Kayowe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lenca'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mangue'
         },
-        uf: { name: 'Choluteca' }
+        'uf': { 'name': 'Choluteca' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Matagalpa'
         },
-        uf: { name: 'Cacaopera' }
+        'uf': { 'name': 'Cacaopera' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mayo (Piman)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mazateco'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miskito'
         },
-        uf: { name: 'Mosquito' }
+        'uf': { 'name': 'Mosquito' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mixe'
         },
-        uf: { name: 'Ayook' }
+        'uf': { 'name': 'Ayook' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mixtec'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Opata'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Panamint'
         },
-        uf: [
-          { name: 'Coso' },
-          { name: 'Koso' },
-          { name: 'Tümpisa' }
+        'uf': [
+          { 'name': 'Coso' },
+          { 'name': 'Koso' },
+          { 'name': 'Tümpisa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pima'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Popoloca'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rama'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Seri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Serrano'
         },
-        uf: { name: 'Maarrenga\'twich' }
+        'uf': { 'name': 'Maarrenga\'twich' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sierra Popoluca'
         },
-        uf: [
-          { name: 'Highland Popoluca' },
-          { name: 'Popoluca, Highland' },
-          { name: 'Popoluca of Vera Cruz' }
+        'uf': [
+          { 'name': 'Highland Popoluca' },
+          { 'name': 'Popoluca, Highland' },
+          { 'name': 'Popoluca of Vera Cruz' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southern Paiute'
         },
-        uf: { name: 'Paiute, Southern' }
+        'uf': { 'name': 'Paiute, Southern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sumo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tarahumara'
         },
-        uf: { name: 'Rarámuri' }
+        'uf': { 'name': 'Rarámuri' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tarascan'
         },
-        uf: [
-          { name: 'Michoacana' },
-          { name: 'Phurhembe' },
-          { name: 'Purepecha' }
+        'uf': [
+          { 'name': 'Michoacana' },
+          { 'name': 'Phurhembe' },
+          { 'name': 'Purepecha' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tepehuan'
         },
-        uf: { name: 'O\'dam' }
+        'uf': { 'name': 'O\'dam' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Terraba'
         },
-        uf: [
-          { name: 'Teribe' },
-          { name: 'Tirribi' }
+        'uf': [
+          { 'name': 'Teribe' },
+          { 'name': 'Tirribi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tewa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tlapanec'
         },
-        uf: [
-          { name: 'Chocho (Tlapanec)' },
-          { name: 'Tiapaneco' }
+        'uf': [
+          { 'name': 'Chocho (Tlapanec)' },
+          { 'name': 'Tiapaneco' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tohono O\'odham'
         },
-        uf: { name: 'Papago' }
+        'uf': { 'name': 'Papago' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Totonac'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Trique'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ulva'
         },
-        uf: [
-          { name: 'Woolwa' },
-          { name: 'Wulwa' }
+        'uf': [
+          { 'name': 'Woolwa' },
+          { 'name': 'Wulwa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ute'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Xinca'
         },
-        uf: [
-          { name: 'Ikomagi' },
-          { name: 'Jinca' },
-          { name: 'Shinca' },
-          { name: 'Sinca' },
-          { name: 'Szinca' },
-          { name: 'Xincan' },
-          { name: 'Xinka' }
+        'uf': [
+          { 'name': 'Ikomagi' },
+          { 'name': 'Jinca' },
+          { 'name': 'Shinca' },
+          { 'name': 'Sinca' },
+          { 'name': 'Szinca' },
+          { 'name': 'Xincan' },
+          { 'name': 'Xinka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yaqui'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zoque'
         },
-        uf: { name: 'Soke' }
+        'uf': { 'name': 'Soke' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/chg',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chg',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chagatai'
     },
-    code: 'chg',
-    uf: [
-      { name: 'Dschagatai' },
-      { name: 'Jagataic' },
-      { name: 'Old Uzbek' },
-      { name: 'Tschagatai' },
-      { name: 'Uzbek, Old' }
+    'code': 'chg',
+    'uf': [
+      { 'name': 'Dschagatai' },
+      { 'name': 'Jagataic' },
+      { 'name': 'Old Uzbek' },
+      { 'name': 'Tschagatai' },
+      { 'name': 'Uzbek, Old' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cmc',
-    name: 'Chamic languages',
-    code: 'cmc',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cmc',
+    'name': 'Chamic languages',
+    'code': 'cmc',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cham'
         },
-        uf: { name: 'Čam' }
+        'uf': { 'name': 'Čam' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Haroi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jarai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rade'
         },
-        uf: [
-          { name: 'Ede' },
-          { name: 'Rhade' }
+        'uf': [
+          { 'name': 'Ede' },
+          { 'name': 'Rhade' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Roglai'
         }
@@ -6212,267 +6212,267 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/cha',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cha',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chamorro'
     },
-    code: 'cha',
-    uf: { name: 'Tjamoro' }
+    'code': 'cha',
+    'uf': { 'name': 'Tjamoro' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/che',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/che',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chechen'
     },
-    code: 'che',
-    uf: { name: 'Tchetchen' }
+    'code': 'che',
+    'uf': { 'name': 'Tchetchen' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/chr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Cherokee'
     },
-    code: 'chr'
+    'code': 'chr'
   },
   {
-    uri: 'info:lc/vocabulary/languages/chy',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chy',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Cheyenne'
     },
-    code: 'chy'
+    'code': 'chy'
   },
   {
-    uri: 'info:lc/vocabulary/languages/chb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chibcha'
     },
-    code: 'chb'
+    'code': 'chb'
   },
   {
-    uri: 'info:lc/vocabulary/languages/chi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chinese'
     },
-    code: 'chi',
-    uf: [
-      { name: 'Cantonese' },
-      { name: 'Mandarin' }
+    'code': 'chi',
+    'uf': [
+      { 'name': 'Cantonese' },
+      { 'name': 'Mandarin' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/chn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chinook jargon'
     },
-    code: 'chn',
-    uf: { name: 'Chinook pidgin' }
+    'code': 'chn',
+    'uf': { 'name': 'Chinook pidgin' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/chp',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chp',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chipewyan'
     },
-    code: 'chp',
-    uf: [
-      { name: 'Dene (Chipewyan)' },
-      { name: 'Montagnais (Athapascan)' }
+    'code': 'chp',
+    'uf': [
+      { 'name': 'Dene (Chipewyan)' },
+      { 'name': 'Montagnais (Athapascan)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/cho',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cho',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Choctaw'
     },
-    code: 'cho',
-    uf: { name: 'Chahta' }
+    'code': 'cho',
+    'uf': { 'name': 'Chahta' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/chu',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chu',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Church Slavic'
     },
-    code: 'chu',
-    uf: [
-      { name: 'Bulgarian, Old (to 1100)' },
-      { name: 'Old Bulgarian (to 1100)' },
-      { name: 'Old Church Slavic' },
-      { name: 'Old Slovenian' },
-      { name: 'Slavonic, Old Church' },
-      { name: 'Slovenian, Old' }
+    'code': 'chu',
+    'uf': [
+      { 'name': 'Bulgarian, Old (to 1100)' },
+      { 'name': 'Old Bulgarian (to 1100)' },
+      { 'name': 'Old Church Slavic' },
+      { 'name': 'Old Slovenian' },
+      { 'name': 'Slavonic, Old Church' },
+      { 'name': 'Slovenian, Old' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/chk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chuukese'
     },
-    code: 'chk',
-    uf: { name: 'Truk' }
+    'code': 'chk',
+    'uf': { 'name': 'Truk' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/chv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Chuvash'
     },
-    code: 'chv'
+    'code': 'chv'
   },
   {
-    uri: 'info:lc/vocabulary/languages/cop',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cop',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Coptic'
     },
-    code: 'cop'
+    'code': 'cop'
   },
   {
-    uri: 'info:lc/vocabulary/languages/cor',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cor',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Cornish'
     },
-    code: 'cor'
+    'code': 'cor'
   },
   {
-    uri: 'info:lc/vocabulary/languages/cos',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cos',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Corsican'
     },
-    code: 'cos',
-    uf: [
-      { name: 'Corse' },
-      { name: 'Corsi' },
-      { name: 'Corso' },
-      { name: 'Corsu' }
+    'code': 'cos',
+    'uf': [
+      { 'name': 'Corse' },
+      { 'name': 'Corsi' },
+      { 'name': 'Corso' },
+      { 'name': 'Corsu' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/cre',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cre',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Cree'
     },
-    code: 'cre',
-    uf: [
-      { name: 'Cris' },
-      { name: 'Knistenaux' },
-      { name: 'Maskegon' }
+    'code': 'cre',
+    'uf': [
+      { 'name': 'Cris' },
+      { 'name': 'Knistenaux' },
+      { 'name': 'Maskegon' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mus',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mus',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Creek'
     },
-    code: 'mus',
-    uf: [
-      { name: 'Maskoki' },
-      { name: 'Muscogee' }
+    'code': 'mus',
+    'uf': [
+      { 'name': 'Maskoki' },
+      { 'name': 'Muscogee' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/crp',
-    name: 'Creoles and Pidgins (Other)',
-    code: 'crp',
-    uf: [
-      { name: 'Pidgins' },
+    'uri': 'info:lc/vocabulary/languages/crp',
+    'name': 'Creoles and Pidgins (Other)',
+    'code': 'crp',
+    'uf': [
+      { 'name': 'Pidgins' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ambonese Malay'
         },
-        uf: { name: 'Malay, Ambonese' }
+        'uf': { 'name': 'Malay, Ambonese' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Betawi'
         },
-        uf: [
-          { name: 'Batawi' },
-          { name: 'Jakarta Malay' },
-          { name: 'Malay, Jakarta' }
+        'uf': [
+          { 'name': 'Batawi' },
+          { 'name': 'Jakarta Malay' },
+          { 'name': 'Malay, Jakarta' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chabacano'
         },
-        uf: [
-          { name: 'Chavacano' },
-          { name: 'Zamboangueño' }
+        'uf': [
+          { 'name': 'Chavacano' },
+          { 'name': 'Zamboangueño' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fanakalo'
         },
-        uf: [
-          { name: 'Fanagalo' },
-          { name: 'Pidgin Kaffir' }
+        'uf': [
+          { 'name': 'Fanagalo' },
+          { 'name': 'Pidgin Kaffir' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kituba (Congo (Democratic Republic))'
         },
-        uf: [
-          { name: 'Kibulamatadi' },
-          { name: 'Kikongo Commercial' },
-          { name: 'Kikongo-Kutuba' },
-          { name: 'Kikongo Simplifié' },
-          { name: 'Kikongo ya Leta' },
-          { name: 'Kikwango' },
-          { name: 'Kileta' }
+        'uf': [
+          { 'name': 'Kibulamatadi' },
+          { 'name': 'Kikongo Commercial' },
+          { 'name': 'Kikongo-Kutuba' },
+          { 'name': 'Kikongo Simplifié' },
+          { 'name': 'Kikongo ya Leta' },
+          { 'name': 'Kikwango' },
+          { 'name': 'Kileta' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Naga Pidgin'
         },
-        uf: { name: 'Nagamese' }
+        'uf': { 'name': 'Nagamese' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Petjo'
         },
-        uf: [
-          { name: 'Pecok' },
-          { name: 'Petjoh' },
-          { name: 'Petjok' }
+        'uf': [
+          { 'name': 'Pecok' },
+          { 'name': 'Petjoh' },
+          { 'name': 'Petjok' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'San Basilio del Palenque Spanish Creole'
         },
-        uf: [
-          { name: 'Palenquero (Colombia)' },
-          { name: 'Spanish Creole, San Basilio del Palenque' }
+        'uf': [
+          { 'name': 'Palenquero (Colombia)' },
+          { 'name': 'Spanish Creole, San Basilio del Palenque' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Unami jargon'
         }
@@ -6481,297 +6481,297 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cpe',
-    name: 'Creoles and Pidgins, English-based (Other)',
-    code: 'cpe',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cpe',
+    'name': 'Creoles and Pidgins, English-based (Other)',
+    'code': 'cpe',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bamyili Creole'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Djuka'
         },
-        uf: [
-          { name: 'Aucaans' },
-          { name: 'Aukan' },
-          { name: 'Djoeka' },
-          { name: 'Ndjuka' }
+        'uf': [
+          { 'name': 'Aucaans' },
+          { 'name': 'Aukan' },
+          { 'name': 'Djoeka' },
+          { 'name': 'Ndjuka' }
         ]
       },
-      { name: 'English-based Creoles and Pidgins (Other)' },
+      { 'name': 'English-based Creoles and Pidgins (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fitzroy Valley Kriol'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hawaiian Pidgin English'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jamaican Creole'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Krio'
         },
-        uf: { name: 'Aku (Creole)' }
+        'uf': { 'name': 'Aku (Creole)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kriol'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pijin'
         },
-        uf: [
-          { name: 'Neo-Solomonic' },
-          { name: 'Solomons Pidgin' }
+        'uf': [
+          { 'name': 'Neo-Solomonic' },
+          { 'name': 'Solomons Pidgin' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pidgin English'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saramaccan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sea Islands Creole'
         },
-        uf: [
-          { name: 'Geechee' },
-          { name: 'Gullah' }
+        'uf': [
+          { 'name': 'Geechee' },
+          { 'name': 'Gullah' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cpf',
-    name: 'Creoles and Pidgins, French-based (Other)',
-    code: 'cpf',
-    uf: [
-      { name: 'French-based Creoles and Pidgins (Other)' },
+    'uri': 'info:lc/vocabulary/languages/cpf',
+    'name': 'Creoles and Pidgins, French-based (Other)',
+    'code': 'cpf',
+    'uf': [
+      { 'name': 'French-based Creoles and Pidgins (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dominican French Creole'
         },
-        uf: { name: 'French Creole, Dominican' }
+        'uf': { 'name': 'French Creole, Dominican' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Louisiana French Creole'
         },
-        uf: { name: 'French Creole, Louisiana' }
+        'uf': { 'name': 'French Creole, Louisiana' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mauritian French Creole'
         },
-        uf: { name: 'French Creole, Mauritian' }
+        'uf': { 'name': 'French Creole, Mauritian' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Michif'
         },
-        uf: [
-          { name: 'Cree, French' },
-          { name: 'French Cree' },
-          { name: 'Mitchif' }
+        'uf': [
+          { 'name': 'Cree, French' },
+          { 'name': 'French Cree' },
+          { 'name': 'Mitchif' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Reunionese French Creole'
         },
-        uf: { name: 'French Creole, Reunionese' }
+        'uf': { 'name': 'French Creole, Reunionese' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Seychellois French Creole'
         },
-        uf: { name: 'French Creole, Seychellois' }
+        'uf': { 'name': 'French Creole, Seychellois' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cpp',
-    name: 'Creoles and Pidgins, Portuguese-based (Other)',
-    code: 'cpp',
-    uf: [
-      { name: 'Portuguese-based Creoles and Pidgins (Other)' },
+    'uri': 'info:lc/vocabulary/languages/cpp',
+    'name': 'Creoles and Pidgins, Portuguese-based (Other)',
+    'code': 'cpp',
+    'uf': [
+      { 'name': 'Portuguese-based Creoles and Pidgins (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Annobon'
         },
-        uf: { name: 'Ambu' }
+        'uf': { 'name': 'Ambu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cape Verde Creole'
         },
-        uf: { name: 'Brava Island Creole' }
+        'uf': { 'name': 'Brava Island Creole' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Crioulo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Indo-Portuguese'
         },
-        uf: { name: 'Ceylon Portuguese' }
+        'uf': { 'name': 'Ceylon Portuguese' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/crh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/crh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Crimean Tatar'
     },
-    code: 'crh',
-    uf: [
-      { name: 'Crimean Turkish' },
-      { name: 'Tatar, Crimean' },
-      { name: 'Turkish, Crimean' }
+    'code': 'crh',
+    'uf': [
+      { 'name': 'Crimean Turkish' },
+      { 'name': 'Tatar, Crimean' },
+      { 'name': 'Turkish, Crimean' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/hrv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hrv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Croatian'
     },
-    code: 'hrv'
+    'code': 'hrv'
   },
   {
-    uri: 'info:lc/vocabulary/languages/scr',
-    name: 'Croatian',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/scr',
+    'name': 'Croatian',
+    'code': {
       '-status': 'obsolete',
       '#text': 'scr'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cus',
-    name: 'Cushitic (Other)',
-    code: 'cus',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cus',
+    'name': 'Cushitic (Other)',
+    'code': 'cus',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alaba'
         },
-        uf: [
-          { name: 'Alaaba' },
-          { name: 'Allaaba' },
-          { name: 'Halaba' }
+        'uf': [
+          { 'name': 'Alaaba' },
+          { 'name': 'Allaaba' },
+          { 'name': 'Halaba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Burji'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dasenech'
         },
-        uf: [
-          { name: 'Geleb' },
-          { name: 'Marille' }
+        'uf': [
+          { 'name': 'Geleb' },
+          { 'name': 'Marille' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gedeo'
         },
-        uf: [
-          { name: 'Darasa' },
-          { name: 'Derasa' }
+        'uf': [
+          { 'name': 'Darasa' },
+          { 'name': 'Derasa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hadiya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iraqw'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kambata'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Qebena'
         },
-        uf: [
-          { name: 'K\'abena' },
-          { name: 'Kebena' },
-          { name: 'Qabena' },
-          { name: 'Womba' },
-          { name: 'Wombi Afoo' },
-          { name: 'Wombisanat' }
+        'uf': [
+          { 'name': 'K\'abena' },
+          { 'name': 'Kebena' },
+          { 'name': 'Qabena' },
+          { 'name': 'Womba' },
+          { 'name': 'Wombi Afoo' },
+          { 'name': 'Wombisanat' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rendille'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tunni'
         }
@@ -6779,42 +6779,42 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/cze',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/cze',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Czech'
     },
-    code: 'cze',
-    uf: { name: 'Bohemian' }
+    'code': 'cze',
+    'uf': { 'name': 'Bohemian' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/dak',
-    name: 'Dakota',
-    code: 'dak',
-    uf: [
-      { name: 'Sioux' },
+    'uri': 'info:lc/vocabulary/languages/dak',
+    'name': 'Dakota',
+    'code': 'dak',
+    'uf': [
+      { 'name': 'Sioux' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Assiniboine'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lakota'
         },
-        uf: { name: 'Teton' }
+        'uf': { 'name': 'Teton' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Santee'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yankton'
         }
@@ -6822,39 +6822,39 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dan',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dan',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Danish'
     },
-    code: 'dan'
+    'code': 'dan'
   },
   {
-    uri: 'info:lc/vocabulary/languages/dar',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dar',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dargwa'
     },
-    code: 'dar',
-    uf: [
-      { name: 'Darghi' },
-      { name: 'Dargin' }
+    'code': 'dar',
+    'uf': [
+      { 'name': 'Darghi' },
+      { 'name': 'Dargin' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/day',
-    name: 'Dayak',
-    code: 'day',
-    uf: [
-      { name: 'Bidayuh' },
-      { name: 'Bideyu' },
-      { name: 'Dajak' },
-      { name: 'Dyak' },
-      { name: 'Kendayan' },
-      { name: 'Land Dayak' },
+    'uri': 'info:lc/vocabulary/languages/day',
+    'name': 'Dayak',
+    'code': 'day',
+    'uf': [
+      { 'name': 'Bidayuh' },
+      { 'name': 'Bideyu' },
+      { 'name': 'Dajak' },
+      { 'name': 'Dyak' },
+      { 'name': 'Kendayan' },
+      { 'name': 'Land Dayak' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Biatah'
         }
@@ -6863,196 +6863,196 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/del',
-    name: 'Delaware',
-    code: 'del',
-    uf: [
-      { name: 'Lenape' },
-      { name: 'Lenni Lenape' },
+    'uri': 'info:lc/vocabulary/languages/del',
+    'name': 'Delaware',
+    'code': 'del',
+    'uf': [
+      { 'name': 'Lenape' },
+      { 'name': 'Lenni Lenape' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Munsee'
         },
-        uf: { name: 'Minsi' }
+        'uf': { 'name': 'Minsi' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/din',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/din',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dinka'
     },
-    code: 'din',
-    uf: { name: 'Denca' }
+    'code': 'din',
+    'uf': { 'name': 'Denca' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/div',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/div',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Divehi'
     },
-    code: 'div',
-    uf: [
-      { name: 'Dhivehi' },
-      { name: 'Maldivian' }
+    'code': 'div',
+    'uf': [
+      { 'name': 'Dhivehi' },
+      { 'name': 'Maldivian' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/doi',
-    name: 'Dogri',
-    code: 'doi',
-    uf: [
-      { name: 'Dhogaryali' },
-      { name: 'Dogari' },
-      { name: 'Dogra' },
-      { name: 'Dogri Jammu' },
-      { name: 'Dogri-Kangri' },
-      { name: 'Dogri Pahari' },
-      { name: 'Dongari' },
-      { name: 'Hindi Dogri' },
-      { name: 'Tokkaru' },
+    'uri': 'info:lc/vocabulary/languages/doi',
+    'name': 'Dogri',
+    'code': 'doi',
+    'uf': [
+      { 'name': 'Dhogaryali' },
+      { 'name': 'Dogari' },
+      { 'name': 'Dogra' },
+      { 'name': 'Dogri Jammu' },
+      { 'name': 'Dogri-Kangri' },
+      { 'name': 'Dogri Pahari' },
+      { 'name': 'Dongari' },
+      { 'name': 'Hindi Dogri' },
+      { 'name': 'Tokkaru' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kangri'
         },
-        uf: [
-          { name: 'Kangari' },
-          { name: 'Kangra' }
+        'uf': [
+          { 'name': 'Kangari' },
+          { 'name': 'Kangra' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dgr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dgr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dogrib'
     },
-    code: 'dgr',
-    uf: { name: 'Thlingchadinne' }
+    'code': 'dgr',
+    'uf': { 'name': 'Thlingchadinne' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/dra',
-    name: 'Dravidian (Other)',
-    code: 'dra',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/dra',
+    'name': 'Dravidian (Other)',
+    'code': 'dra',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abujhmaria'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alu Kurumba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Brahui'
         },
-        uf: [
-          { name: 'Berouhi' },
-          { name: 'Birohi' },
-          { name: 'Brohki' }
+        'uf': [
+          { 'name': 'Berouhi' },
+          { 'name': 'Birohi' },
+          { 'name': 'Brohki' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gadaba (Dravidian)'
         },
-        uf: [
-          { name: 'Gadba (Dravidian)' },
-          { name: 'Gudwa (Dravidian)' },
-          { name: 'Gutob (Dravidian)' },
-          { name: 'Konekor Gadaba' },
-          { name: 'Ollari' },
-          { name: 'Salur' }
+        'uf': [
+          { 'name': 'Gadba (Dravidian)' },
+          { 'name': 'Gudwa (Dravidian)' },
+          { 'name': 'Gutob (Dravidian)' },
+          { 'name': 'Konekor Gadaba' },
+          { 'name': 'Ollari' },
+          { 'name': 'Salur' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kodagu'
         },
-        uf: [
-          { name: 'Coorg' },
-          { name: 'Kodava' },
-          { name: 'Kurg' }
+        'uf': [
+          { 'name': 'Coorg' },
+          { 'name': 'Kodava' },
+          { 'name': 'Kurg' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kolami'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kota (India)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kui (Dravidian)'
         },
-        uf: [
-          { name: 'Kanda (India)' },
-          { name: 'Kandh' },
-          { name: 'Kandha' },
-          { name: 'Khand' },
-          { name: 'Khond (Kui)' },
-          { name: 'Khondi (Kui)' },
-          { name: 'Khondo' },
-          { name: 'Kodu (India)' },
-          { name: 'Kodulu' },
-          { name: 'Kuinga' },
-          { name: 'Kuy (India)' }
+        'uf': [
+          { 'name': 'Kanda (India)' },
+          { 'name': 'Kandh' },
+          { 'name': 'Kandha' },
+          { 'name': 'Khand' },
+          { 'name': 'Khond (Kui)' },
+          { 'name': 'Khondi (Kui)' },
+          { 'name': 'Khondo' },
+          { 'name': 'Kodu (India)' },
+          { 'name': 'Kodulu' },
+          { 'name': 'Kuinga' },
+          { 'name': 'Kuy (India)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuvi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Malto'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manda (Dravidian)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pengo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toda (India)'
         },
-        uf: { name: 'Tuda (India)' }
+        'uf': { 'name': 'Tuda (India)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tulu'
         }
@@ -7060,101 +7060,101 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dua',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dua',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Duala'
     },
-    code: 'dua',
-    uf: { name: 'Douala' }
+    'code': 'dua',
+    'uf': { 'name': 'Douala' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/dut',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dut',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dutch'
     },
-    code: 'dut',
-    uf: [
-      { name: 'Flemish' },
-      { name: 'Netherlandic' }
+    'code': 'dut',
+    'uf': [
+      { 'name': 'Flemish' },
+      { 'name': 'Netherlandic' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dum',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dum',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dutch, Middle (ca. 1050-1350)'
     },
-    code: 'dum',
-    uf: [
-      { name: 'Diets' },
-      { name: 'Middle Dutch' }
+    'code': 'dum',
+    'uf': [
+      { 'name': 'Diets' },
+      { 'name': 'Middle Dutch' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dyu',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dyu',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dyula'
     },
-    code: 'dyu',
-    uf: [
-      { name: 'Dioula' },
-      { name: 'Diula' },
-      { name: 'Jula' }
+    'code': 'dyu',
+    'uf': [
+      { 'name': 'Dioula' },
+      { 'name': 'Diula' },
+      { 'name': 'Jula' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dzo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dzo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Dzongkha'
     },
-    code: 'dzo',
-    uf: [
-      { name: 'Bhotia of Bhutan' },
-      { name: 'Bhutanese' },
-      { name: 'Drukha' },
-      { name: 'Drukke' },
-      { name: 'Dukpa' },
-      { name: 'Hloka' },
-      { name: 'Jonkha' },
-      { name: 'Lhoka' },
-      { name: 'Lhoke' },
-      { name: 'Lhoskad' },
-      { name: 'Ngalopkha' },
-      { name: 'Zongkhar' },
-      { name: 'Zonkar' }
+    'code': 'dzo',
+    'uf': [
+      { 'name': 'Bhotia of Bhutan' },
+      { 'name': 'Bhutanese' },
+      { 'name': 'Drukha' },
+      { 'name': 'Drukke' },
+      { 'name': 'Dukpa' },
+      { 'name': 'Hloka' },
+      { 'name': 'Jonkha' },
+      { 'name': 'Lhoka' },
+      { 'name': 'Lhoke' },
+      { 'name': 'Lhoskad' },
+      { 'name': 'Ngalopkha' },
+      { 'name': 'Zongkhar' },
+      { 'name': 'Zonkar' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/frs',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/frs',
+    'name': {
       '-authorized': 'yes',
       '#text': 'East Frisian'
     },
-    code: 'frs',
-    uf: { name: 'Frisian, East' }
+    'code': 'frs',
+    'uf': { 'name': 'Frisian, East' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/bin',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bin',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Edo'
     },
-    code: 'bin',
-    uf: { name: 'Bini' }
+    'code': 'bin',
+    'uf': { 'name': 'Bini' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/efi',
-    name: 'Efik',
-    code: 'efi',
-    uf: [
-      { name: 'Calabar' },
+    'uri': 'info:lc/vocabulary/languages/efi',
+    'name': 'Efik',
+    'code': 'efi',
+    'uf': [
+      { 'name': 'Calabar' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ibibio'
         }
@@ -7162,278 +7162,278 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/egy',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/egy',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Egyptian'
     },
-    code: 'egy',
-    uf: [
-      { name: 'Demotic' },
-      { name: 'Hieratic' },
-      { name: 'Hieroglyphics (Egyptian)' }
+    'code': 'egy',
+    'uf': [
+      { 'name': 'Demotic' },
+      { 'name': 'Hieratic' },
+      { 'name': 'Hieroglyphics (Egyptian)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/eka',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/eka',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ekajuk'
     },
-    code: 'eka'
+    'code': 'eka'
   },
   {
-    uri: 'info:lc/vocabulary/languages/elx',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/elx',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Elamite'
     },
-    code: 'elx',
-    uf: [
-      { name: 'Amardic' },
-      { name: 'Anzanic' },
-      { name: 'Susian' }
+    'code': 'elx',
+    'uf': [
+      { 'name': 'Amardic' },
+      { 'name': 'Anzanic' },
+      { 'name': 'Susian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/eng',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/eng',
+    'name': {
       '-authorized': 'yes',
       '#text': 'English'
     },
-    code: 'eng'
+    'code': 'eng'
   },
   {
-    uri: 'info:lc/vocabulary/languages/enm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/enm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'English, Middle (1100-1500)'
     },
-    code: 'enm',
-    uf: { name: 'Middle English' }
+    'code': 'enm',
+    'uf': { 'name': 'Middle English' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ang',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ang',
+    'name': {
       '-authorized': 'yes',
       '#text': 'English, Old (ca. 450-1100)'
     },
-    code: 'ang',
-    uf: [
-      { name: 'Anglo-Saxon' },
-      { name: 'Old English' },
-      { name: 'West Saxon' }
+    'code': 'ang',
+    'uf': [
+      { 'name': 'Anglo-Saxon' },
+      { 'name': 'Old English' },
+      { 'name': 'West Saxon' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/myv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/myv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Erzya'
     },
-    code: 'myv'
+    'code': 'myv'
   },
   {
-    uri: 'info:lc/vocabulary/languages/esk',
-    name: 'Eskimo languages',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/esk',
+    'name': 'Eskimo languages',
+    'code': {
       '-status': 'obsolete',
       '#text': 'esk'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/epo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/epo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Esperanto'
     },
-    code: 'epo'
+    'code': 'epo'
   },
   {
-    uri: 'info:lc/vocabulary/languages/esp',
-    name: 'Esperanto',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/esp',
+    'name': 'Esperanto',
+    'code': {
       '-status': 'obsolete',
       '#text': 'esp'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/est',
-    name: 'Estonian',
-    code: 'est',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/est',
+    'name': 'Estonian',
+    'code': 'est',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Seto'
         },
-        uf: { name: 'Setu' }
+        'uf': { 'name': 'Setu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Võro'
         },
-        uf: [
-          { name: 'Võru' },
-          { name: 'Werro' }
+        'uf': [
+          { 'name': 'Võru' },
+          { 'name': 'Werro' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gez',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gez',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ethiopic'
     },
-    code: 'gez',
-    uf: { name: 'Geez' }
+    'code': 'gez',
+    'uf': { 'name': 'Geez' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/eth',
-    name: 'Ethiopic',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/eth',
+    'name': 'Ethiopic',
+    'code': {
       '-status': 'obsolete',
       '#text': 'eth'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ewe',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ewe',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ewe'
     },
-    code: 'ewe'
+    'code': 'ewe'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ewo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ewo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ewondo'
     },
-    code: 'ewo',
-    uf: [
-      { name: 'Jaunde' },
-      { name: 'Yaounde' },
-      { name: 'Yaunde' }
+    'code': 'ewo',
+    'uf': [
+      { 'name': 'Jaunde' },
+      { 'name': 'Yaounde' },
+      { 'name': 'Yaunde' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/fan',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fan',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Fang'
     },
-    code: 'fan',
-    uf: { name: 'Fan (Bantu)' }
+    'code': 'fan',
+    'uf': { 'name': 'Fan (Bantu)' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/fat',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fat',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Fanti'
     },
-    code: 'fat'
+    'code': 'fat'
   },
   {
-    uri: 'info:lc/vocabulary/languages/fao',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fao',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Faroese'
     },
-    code: 'fao',
-    uf: { name: 'Faeroese' }
+    'code': 'fao',
+    'uf': { 'name': 'Faeroese' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/far',
-    name: 'Faroese',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/far',
+    'name': 'Faroese',
+    'code': {
       '-status': 'obsolete',
       '#text': 'far'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/fij',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fij',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Fijian'
     },
-    code: 'fij',
-    uf: { name: 'Viti' }
+    'code': 'fij',
+    'uf': { 'name': 'Viti' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/fil',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fil',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Filipino'
     },
-    code: 'fil'
+    'code': 'fil'
   },
   {
-    uri: 'info:lc/vocabulary/languages/fin',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fin',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Finnish'
     },
-    code: 'fin'
+    'code': 'fin'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/fiu',
-    name: 'Finno-Ugrian (Other)',
-    code: 'fiu',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/fiu',
+    'name': 'Finno-Ugrian (Other)',
+    'code': 'fiu',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ingrian'
         },
-        uf: { name: 'Izhorskii' }
+        'uf': { 'name': 'Izhorskii' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khanty'
         },
-        uf: [
-          { name: 'Ostiak' },
-          { name: 'Xanty' }
+        'uf': [
+          { 'name': 'Ostiak' },
+          { 'name': 'Xanty' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Livonian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ludic'
         },
-        uf: { name: 'Lydi' }
+        'uf': { 'name': 'Lydi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mansi'
         },
-        uf: { name: 'Vogul' }
+        'uf': { 'name': 'Vogul' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mordvin'
         },
-        uf: [
-          { name: 'Mordva' },
-          { name: 'Mordvinian' }
+        'uf': [
+          { 'name': 'Mordva' },
+          { 'name': 'Mordvinian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Veps'
         }
@@ -7441,219 +7441,219 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/fon',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fon',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Fon'
     },
-    code: 'fon',
-    uf: [
-      { name: 'Dahoman' },
-      { name: 'Djedji' },
-      { name: 'Jeji' }
+    'code': 'fon',
+    'uf': [
+      { 'name': 'Dahoman' },
+      { 'name': 'Djedji' },
+      { 'name': 'Jeji' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/fre',
-    name: 'French',
-    code: 'fre',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/fre',
+    'name': 'French',
+    'code': 'fre',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Allevard French'
         },
-        uf: { name: 'French, Allevard' }
+        'uf': { 'name': 'French, Allevard' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Judeo-French'
         },
-        uf: [
-          { name: 'Western Loez' },
-          { name: 'Zarphatic' }
+        'uf': [
+          { 'name': 'Western Loez' },
+          { 'name': 'Zarphatic' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Morvan French'
         },
-        uf: { name: 'French, Morvan' }
+        'uf': { 'name': 'French, Morvan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Poitevin French'
         },
-        uf: { name: 'French, Poitevin' }
+        'uf': { 'name': 'French, Poitevin' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saintongeais French'
         },
-        uf: { name: 'French, Saintongeais' }
+        'uf': { 'name': 'French, Saintongeais' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/frm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/frm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'French, Middle (ca. 1300-1600)'
     },
-    code: 'frm',
-    uf: { name: 'Middle French' }
+    'code': 'frm',
+    'uf': { 'name': 'Middle French' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/fro',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fro',
+    'name': {
       '-authorized': 'yes',
       '#text': 'French, Old (ca. 842-1300)'
     },
-    code: 'fro',
-    uf: { name: 'Old French' }
+    'code': 'fro',
+    'uf': { 'name': 'Old French' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/fry',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fry',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Frisian'
     },
-    code: 'fry',
-    uf: [
-      { name: 'Friesian' },
-      { name: 'West Frisian' },
+    'code': 'fry',
+    'uf': [
+      { 'name': 'Friesian' },
+      { 'name': 'West Frisian' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Stadsfries'
         },
-        uf: [
-          { name: 'Stadfries' },
-          { name: 'Stedsk' },
-          { name: 'Town Frisian' }
+        'uf': [
+          { 'name': 'Stadfries' },
+          { 'name': 'Stedsk' },
+          { 'name': 'Town Frisian' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/fri',
-    name: 'Frisian',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/fri',
+    'name': 'Frisian',
+    'code': {
       '-status': 'obsolete',
       '#text': 'fri'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/fur',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fur',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Friulian'
     },
-    code: 'fur'
+    'code': 'fur'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ful',
-    name: 'Fula',
-    code: 'ful',
-    uf: [
-      { name: 'Adamawa' },
-      { name: 'Fulah' },
-      { name: 'Fulani' },
-      { name: 'Fulbe' },
-      { name: 'Fulfulde' },
-      { name: 'Peul' },
-      { name: 'Poul' },
+    'uri': 'info:lc/vocabulary/languages/ful',
+    'name': 'Fula',
+    'code': 'ful',
+    'uf': [
+      { 'name': 'Adamawa' },
+      { 'name': 'Fulah' },
+      { 'name': 'Fulani' },
+      { 'name': 'Fulbe' },
+      { 'name': 'Fulfulde' },
+      { 'name': 'Peul' },
+      { 'name': 'Poul' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bororo (West Africa)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pular'
         },
-        uf: [
-          { name: 'Poular' },
-          { name: 'Toucouleur' },
-          { name: 'Tukolor' }
+        'uf': [
+          { 'name': 'Poular' },
+          { 'name': 'Toucouleur' },
+          { 'name': 'Tukolor' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gaa',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gaa',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gã'
     },
-    code: 'gaa',
-    uf: [
-      { name: 'Acra' },
-      { name: 'Incran' }
+    'code': 'gaa',
+    'uf': [
+      { 'name': 'Acra' },
+      { 'name': 'Incran' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/glg',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/glg',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Galician'
     },
-    code: 'glg',
-    uf: { name: 'Gallegan' }
+    'code': 'glg',
+    'uf': { 'name': 'Gallegan' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/gag',
-    name: 'Galician',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/gag',
+    'name': 'Galician',
+    'code': {
       '-status': 'obsolete',
       '#text': 'gag'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/lug',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lug',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ganda'
     },
-    code: 'lug',
-    uf: { name: 'Luganda' }
+    'code': 'lug',
+    'uf': { 'name': 'Luganda' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/gay',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gay',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gayo'
     },
-    code: 'gay'
+    'code': 'gay'
   },
   {
-    uri: 'info:lc/vocabulary/languages/gba',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gba',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gbaya'
     },
-    code: 'gba',
-    uf: [
-      { name: 'Baya' },
-      { name: 'Gbeya' }
+    'code': 'gba',
+    'uf': [
+      { 'name': 'Baya' },
+      { 'name': 'Gbeya' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/geo',
-    name: 'Georgian',
-    code: 'geo',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/geo',
+    'name': 'Georgian',
+    'code': 'geo',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Ingilo'
       }
@@ -7661,124 +7661,124 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ger',
-    name: 'German',
-    code: 'ger',
-    uf: [
-      { name: 'Ashkenazic German' },
-      { name: 'Hochdeutsch' },
-      { name: 'Judaeo-German (German)' },
-      { name: 'Judendeutsch' },
-      { name: 'Judeo-German (German)' },
-      { name: 'Jüdisch-Deutsch' },
-      { name: 'Jüdischdeutsch' },
+    'uri': 'info:lc/vocabulary/languages/ger',
+    'name': 'German',
+    'code': 'ger',
+    'uf': [
+      { 'name': 'Ashkenazic German' },
+      { 'name': 'Hochdeutsch' },
+      { 'name': 'Judaeo-German (German)' },
+      { 'name': 'Judendeutsch' },
+      { 'name': 'Judeo-German (German)' },
+      { 'name': 'Jüdisch-Deutsch' },
+      { 'name': 'Jüdischdeutsch' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alemannic'
         },
-        uf: [
-          { name: 'Alamannic' },
-          { name: 'Alemannisch' },
-          { name: 'Allemannic' },
-          { name: 'Allemannisch' },
-          { name: 'Alsatian' },
-          { name: 'Schwyzerdütsch' }
+        'uf': [
+          { 'name': 'Alamannic' },
+          { 'name': 'Alemannisch' },
+          { 'name': 'Allemannic' },
+          { 'name': 'Allemannisch' },
+          { 'name': 'Alsatian' },
+          { 'name': 'Schwyzerdütsch' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cimbrian'
         },
-        uf: [
-          { name: 'Tzimbro' },
-          { name: 'Zimbrisch' }
+        'uf': [
+          { 'name': 'Tzimbro' },
+          { 'name': 'Zimbrisch' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gmh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gmh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'German, Middle High (ca. 1050-1500)'
     },
-    code: 'gmh',
-    uf: { name: 'Middle High German' }
+    'code': 'gmh',
+    'uf': { 'name': 'Middle High German' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/goh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/goh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'German, Old High (ca. 750-1050)'
     },
-    code: 'goh',
-    uf: { name: 'Old High German' }
+    'code': 'goh',
+    'uf': { 'name': 'Old High German' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/gem',
-    name: 'Germanic (Other)',
-    code: 'gem',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/gem',
+    'name': 'Germanic (Other)',
+    'code': 'gem',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Danish, Old (to 1500)'
         },
-        uf: { name: 'Old Danish' }
+        'uf': { 'name': 'Old Danish' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dutch, Old (to 1050)'
         },
-        uf: [
-          { name: 'Franconian, Old Low' },
-          { name: 'Old Dutch' },
-          { name: 'Old Low Franconian' }
+        'uf': [
+          { 'name': 'Franconian, Old Low' },
+          { 'name': 'Old Dutch' },
+          { 'name': 'Old Low Franconian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Frisian, Old (to 1500)'
         },
-        uf: { name: 'Old Frisian' }
+        'uf': { 'name': 'Old Frisian' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lombard'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Old Saxon'
         },
-        uf: [
-          { name: 'Low German, Old (ca. 850-1050)' },
-          { name: 'Old Low German (ca. 850-1050)' },
-          { name: 'Saxon, Old' }
+        'uf': [
+          { 'name': 'Low German, Old (ca. 850-1050)' },
+          { 'name': 'Old Low German (ca. 850-1050)' },
+          { 'name': 'Saxon, Old' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pennsylvania German'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Swedish, Old (to 1550)'
         },
-        uf: { name: 'Old Swedish' }
+        'uf': { 'name': 'Old Swedish' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Walser'
         }
@@ -7786,148 +7786,148 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gil',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gil',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gilbertese'
     },
-    code: 'gil',
-    uf: [
-      { name: 'Arorai' },
-      { name: 'I-Kiribati' },
-      { name: 'Kiribatese' }
+    'code': 'gil',
+    'uf': [
+      { 'name': 'Arorai' },
+      { 'name': 'I-Kiribati' },
+      { 'name': 'Kiribatese' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gon',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gon',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gondi'
     },
-    code: 'gon'
+    'code': 'gon'
   },
   {
-    uri: 'info:lc/vocabulary/languages/gor',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gor',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gorontalo'
     },
-    code: 'gor'
+    'code': 'gor'
   },
   {
-    uri: 'info:lc/vocabulary/languages/got',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/got',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gothic'
     },
-    code: 'got'
+    'code': 'got'
   },
   {
-    uri: 'info:lc/vocabulary/languages/grb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/grb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Grebo'
     },
-    code: 'grb',
-    uf: [
-      { name: 'Gdebo' },
-      { name: 'Gedebo' },
-      { name: 'Krebo' }
+    'code': 'grb',
+    'uf': [
+      { 'name': 'Gdebo' },
+      { 'name': 'Gedebo' },
+      { 'name': 'Krebo' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/grc',
-    name: 'Greek, Ancient (to 1453)',
-    code: 'grc',
-    uf: [
-      { name: 'Ancient Greek' },
-      { name: 'Biblical Greek' },
-      { name: 'Byzantine Greek' },
-      { name: 'Classical Greek' },
-      { name: 'Greek, Biblical' },
-      { name: 'Greek, Byzantine' },
-      { name: 'Greek, Classical' },
-      { name: 'Greek, Hellenistic' },
-      { name: 'Greek, Medieval' },
-      { name: 'Greek, Patristic' },
-      { name: 'Greek (Koine)' },
-      { name: 'Hellenistic Greek' },
-      { name: 'Koine (Greek)' },
-      { name: 'Medieval Greek' },
-      { name: 'Patristic Greek' },
+    'uri': 'info:lc/vocabulary/languages/grc',
+    'name': 'Greek, Ancient (to 1453)',
+    'code': 'grc',
+    'uf': [
+      { 'name': 'Ancient Greek' },
+      { 'name': 'Biblical Greek' },
+      { 'name': 'Byzantine Greek' },
+      { 'name': 'Classical Greek' },
+      { 'name': 'Greek, Biblical' },
+      { 'name': 'Greek, Byzantine' },
+      { 'name': 'Greek, Classical' },
+      { 'name': 'Greek, Hellenistic' },
+      { 'name': 'Greek, Medieval' },
+      { 'name': 'Greek, Patristic' },
+      { 'name': 'Greek (Koine)' },
+      { 'name': 'Hellenistic Greek' },
+      { 'name': 'Koine (Greek)' },
+      { 'name': 'Medieval Greek' },
+      { 'name': 'Patristic Greek' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aeolic Greek'
         },
-        uf: { name: 'Greek, Aeolic' }
+        'uf': { 'name': 'Greek, Aeolic' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Attic Greek'
         },
-        uf: { name: 'Greek, Attic' }
+        'uf': { 'name': 'Greek, Attic' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Doric Greek'
         },
-        uf: { name: 'Greek, Doric' }
+        'uf': { 'name': 'Greek, Doric' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ionic Greek'
         },
-        uf: { name: 'Greek, Ionic' }
+        'uf': { 'name': 'Greek, Ionic' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/gre',
-    name: 'Greek, Modern (1453- )',
-    code: 'gre',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/gre',
+    'name': 'Greek, Modern (1453- )',
+    'code': 'gre',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'East Cretan Greek'
       },
-      uf: [
-        { name: 'Cretan Greek, East' },
-        { name: 'Greek, East Cretan' }
+      'uf': [
+        { 'name': 'Cretan Greek, East' },
+        { 'name': 'Greek, East Cretan' }
       ]
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/grn',
-    name: 'Guarani',
-    code: 'grn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/grn',
+    'name': 'Guarani',
+    'code': 'grn',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chiriguano'
         },
-        uf: [
-          { name: 'Aba' },
-          { name: 'Camba' },
-          { name: 'Tembeta' }
+        'uf': [
+          { 'name': 'Aba' },
+          { 'name': 'Camba' },
+          { 'name': 'Tembeta' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chiripá'
         },
-        uf: { name: 'Tsiripa' }
+        'uf': { 'name': 'Tsiripa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbya'
         }
@@ -7935,76 +7935,76 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gua',
-    name: 'Guarani',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/gua',
+    'name': 'Guarani',
+    'code': {
       '-status': 'obsolete',
       '#text': 'gua'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/guj',
-    name: 'Gujarati',
-    code: 'guj',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/guj',
+    'name': 'Gujarati',
+    'code': 'guj',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dhodia'
         },
-        uf: [
-          { name: 'Dhobi' },
-          { name: 'Dhoḍiyā' },
-          { name: 'Dhore' },
-          { name: 'Dhowari' },
-          { name: 'Doria' }
+        'uf': [
+          { 'name': 'Dhobi' },
+          { 'name': 'Dhoḍiyā' },
+          { 'name': 'Dhore' },
+          { 'name': 'Dhowari' },
+          { 'name': 'Doria' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gamit'
         },
-        uf: [
-          { name: 'Gamati' },
-          { name: 'Gameti' },
-          { name: 'Gāmīta' },
-          { name: 'Gamith' },
-          { name: 'Gamta' },
-          { name: 'Gamti' },
-          { name: 'Gavit' }
+        'uf': [
+          { 'name': 'Gamati' },
+          { 'name': 'Gameti' },
+          { 'name': 'Gāmīta' },
+          { 'name': 'Gamith' },
+          { 'name': 'Gamta' },
+          { 'name': 'Gamti' },
+          { 'name': 'Gavit' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Halari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Parsi-Gujarati'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saurashtri'
         },
-        uf: [
-          { name: 'Patanuli' },
-          { name: 'Patnuli' },
-          { name: 'Saurashtra' },
-          { name: 'Saurastra' },
-          { name: 'Sawrashtra' },
-          { name: 'Sourashtra' },
-          { name: 'Sowrashtra' }
+        'uf': [
+          { 'name': 'Patanuli' },
+          { 'name': 'Patnuli' },
+          { 'name': 'Saurashtra' },
+          { 'name': 'Saurastra' },
+          { 'name': 'Sawrashtra' },
+          { 'name': 'Sourashtra' },
+          { 'name': 'Sowrashtra' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sidi'
         }
@@ -8012,1547 +8012,1547 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gwi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gwi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Gwich\'in'
     },
-    code: 'gwi',
-    uf: [
-      { name: 'Kutchin' },
-      { name: 'Loucheux' },
-      { name: 'Takudh' },
-      { name: 'Tukudh' }
+    'code': 'gwi',
+    'uf': [
+      { 'name': 'Kutchin' },
+      { 'name': 'Loucheux' },
+      { 'name': 'Takudh' },
+      { 'name': 'Tukudh' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/hai',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hai',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Haida'
     },
-    code: 'hai',
-    uf: { name: 'Skittagetan' }
+    'code': 'hai',
+    'uf': { 'name': 'Skittagetan' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/hat',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hat',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Haitian French Creole'
     },
-    code: 'hat',
-    uf: [
-      { name: 'French Creole, Haitian' },
-      { name: 'Kreyòl' }
+    'code': 'hat',
+    'uf': [
+      { 'name': 'French Creole, Haitian' },
+      { 'name': 'Kreyòl' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/hau',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hau',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hausa'
     },
-    code: 'hau'
+    'code': 'hau'
   },
   {
-    uri: 'info:lc/vocabulary/languages/haw',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/haw',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hawaiian'
     },
-    code: 'haw'
+    'code': 'haw'
   },
   {
-    uri: 'info:lc/vocabulary/languages/heb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/heb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hebrew'
     },
-    code: 'heb',
-    uf: { name: 'Ancient Hebrew' }
+    'code': 'heb',
+    'uf': { 'name': 'Ancient Hebrew' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/her',
-    name: 'Herero',
-    code: 'her',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/her',
+    'name': 'Herero',
+    'code': 'her',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Himba'
       },
-      uf: [
-        { name: 'Chimba' },
-        { name: 'Cimba' },
-        { name: 'Dhimba' },
-        { name: 'Simba' },
-        { name: 'Tjimba' }
+      'uf': [
+        { 'name': 'Chimba' },
+        { 'name': 'Cimba' },
+        { 'name': 'Dhimba' },
+        { 'name': 'Simba' },
+        { 'name': 'Tjimba' }
       ]
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/hil',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hil',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hiligaynon'
     },
-    code: 'hil',
-    uf: [
-      { name: 'Ilongo' },
-      { name: 'Panayan' }
+    'code': 'hil',
+    'uf': [
+      { 'name': 'Ilongo' },
+      { 'name': 'Panayan' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/hin',
-    name: 'Hindi',
-    code: 'hin',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/hin',
+    'name': 'Hindi',
+    'code': 'hin',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Badayuni'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bagheli'
         },
-        uf: [
-          { name: 'Bagelkhandi' },
-          { name: 'Bhugelkhud' },
-          { name: 'Ganggai' },
-          { name: 'Kawathi' },
-          { name: 'Kenat' },
-          { name: 'Kevat Boli' },
-          { name: 'Kevati' },
-          { name: 'Kewani' },
-          { name: 'Kewat' },
-          { name: 'Kewati' },
-          { name: 'Kewot' },
-          { name: 'Mandal' },
-          { name: 'Mannadi' },
-          { name: 'Riwai' }
+        'uf': [
+          { 'name': 'Bagelkhandi' },
+          { 'name': 'Bhugelkhud' },
+          { 'name': 'Ganggai' },
+          { 'name': 'Kawathi' },
+          { 'name': 'Kenat' },
+          { 'name': 'Kevat Boli' },
+          { 'name': 'Kevati' },
+          { 'name': 'Kewani' },
+          { 'name': 'Kewat' },
+          { 'name': 'Kewati' },
+          { 'name': 'Kewot' },
+          { 'name': 'Mandal' },
+          { 'name': 'Mannadi' },
+          { 'name': 'Riwai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bangaru'
         },
-        uf: [
-          { name: 'Hariani' },
-          { name: 'Jatu' }
+        'uf': [
+          { 'name': 'Hariani' },
+          { 'name': 'Jatu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bundeli'
         },
-        uf: { name: 'Bundelkhandi' }
+        'uf': { 'name': 'Bundelkhandi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chattisgarhi'
         },
-        uf: [
-          { name: 'Chhattisgarhi' },
-          { name: 'Khalṭāhī' },
-          { name: 'Khatahi' },
-          { name: 'Laria' }
+        'uf': [
+          { 'name': 'Chhattisgarhi' },
+          { 'name': 'Khalṭāhī' },
+          { 'name': 'Khatahi' },
+          { 'name': 'Laria' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Deswali'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kanauji'
         },
-        uf: [
-          { name: 'Bhakha' },
-          { name: 'Braj Kanauji' },
-          { name: 'Kannaujī' }
+        'uf': [
+          { 'name': 'Bhakha' },
+          { 'name': 'Braj Kanauji' },
+          { 'name': 'Kannaujī' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khari Boli'
         },
-        uf: [
-          { name: 'Kauravī' },
-          { name: 'Khaṛībolī' },
-          { name: 'Kourvi' }
+        'uf': [
+          { 'name': 'Kauravī' },
+          { 'name': 'Khaṛībolī' },
+          { 'name': 'Kourvi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Marari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pawari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Powari'
         },
-        uf: { name: 'Povārī' }
+        'uf': { 'name': 'Povārī' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/hmo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hmo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hiri Motu'
     },
-    code: 'hmo',
-    uf: { name: 'Police Motu' }
+    'code': 'hmo',
+    'uf': { 'name': 'Police Motu' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/hit',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hit',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hittite'
     },
-    code: 'hit'
+    'code': 'hit'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/hmn',
-    name: 'Hmong',
-    code: 'hmn',
-    uf: [
-      { name: 'Humung' },
-      { name: 'Meo' },
-      { name: 'Miao' },
-      { name: 'Mong' },
+    'uri': 'info:lc/vocabulary/languages/hmn',
+    'name': 'Hmong',
+    'code': 'hmn',
+    'uf': [
+      { 'name': 'Humung' },
+      { 'name': 'Meo' },
+      { 'name': 'Miao' },
+      { 'name': 'Mong' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hmong Njua'
         },
-        uf: [
-          { name: 'Black Flowery Miao' },
-          { name: 'Blue Miao' },
-          { name: 'Green Hmong' },
-          { name: 'Green Miao' },
-          { name: 'Green Mong' },
-          { name: 'Hmong Leng' },
-          { name: 'Moob Ntsuab' },
-          { name: 'Tak Meo' }
+        'uf': [
+          { 'name': 'Black Flowery Miao' },
+          { 'name': 'Blue Miao' },
+          { 'name': 'Green Hmong' },
+          { 'name': 'Green Miao' },
+          { 'name': 'Green Mong' },
+          { 'name': 'Hmong Leng' },
+          { 'name': 'Moob Ntsuab' },
+          { 'name': 'Tak Meo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'She'
         },
-        uf: [
-          { name: 'Ho Ne' },
-          { name: 'Ho Nte' },
-          { name: 'Huo Nte' },
-          { name: 'She Yao' }
+        'uf': [
+          { 'name': 'Ho Ne' },
+          { 'name': 'Ho Nte' },
+          { 'name': 'Huo Nte' },
+          { 'name': 'She Yao' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'White Hmong'
         },
-        uf: [
-          { name: 'Hmong, White' },
-          { name: 'Hmong Daw' },
-          { name: 'Hmoob Dawb' },
-          { name: 'Miao, White' },
-          { name: 'White Miao' }
+        'uf': [
+          { 'name': 'Hmong, White' },
+          { 'name': 'Hmong Daw' },
+          { 'name': 'Hmoob Dawb' },
+          { 'name': 'Miao, White' },
+          { 'name': 'White Miao' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/hun',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hun',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hungarian'
     },
-    code: 'hun',
-    uf: { name: 'Magyar' }
+    'code': 'hun',
+    'uf': { 'name': 'Magyar' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/hup',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hup',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Hupa'
     },
-    code: 'hup'
+    'code': 'hup'
   },
   {
-    uri: 'info:lc/vocabulary/languages/iba',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/iba',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Iban'
     },
-    code: 'iba',
-    uf: { name: 'Sea Dyak' }
+    'code': 'iba',
+    'uf': { 'name': 'Sea Dyak' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ice',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ice',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Icelandic'
     },
-    code: 'ice'
+    'code': 'ice'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ido',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ido',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ido'
     },
-    code: 'ido'
+    'code': 'ido'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ibo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ibo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Igbo'
     },
-    code: 'ibo',
-    uf: { name: 'Ibo' }
+    'code': 'ibo',
+    'uf': { 'name': 'Ibo' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ijo',
-    name: 'Ijo',
-    code: 'ijo',
-    uf: [
-      { name: 'Djo' },
-      { name: 'Dzo' },
-      { name: 'Ejo' },
-      { name: 'Ido (African)' },
-      { name: 'Iyo (Nigeria)' },
-      { name: 'Izo' },
-      { name: 'Izon' },
-      { name: 'Ojo' },
-      { name: 'Oru' },
-      { name: 'Udzo' },
-      { name: 'Uzo' },
+    'uri': 'info:lc/vocabulary/languages/ijo',
+    'name': 'Ijo',
+    'code': 'ijo',
+    'uf': [
+      { 'name': 'Djo' },
+      { 'name': 'Dzo' },
+      { 'name': 'Ejo' },
+      { 'name': 'Ido (African)' },
+      { 'name': 'Iyo (Nigeria)' },
+      { 'name': 'Izo' },
+      { 'name': 'Izon' },
+      { 'name': 'Ojo' },
+      { 'name': 'Oru' },
+      { 'name': 'Udzo' },
+      { 'name': 'Uzo' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ibani'
         },
-        uf: [
-          { name: 'Bonny' },
-          { name: 'Ubani' }
+        'uf': [
+          { 'name': 'Bonny' },
+          { 'name': 'Ubani' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nembe'
         },
-        uf: { name: 'Nimbi' }
+        'uf': { 'name': 'Nimbi' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ilo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ilo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Iloko'
     },
-    code: 'ilo',
-    uf: { name: 'Ilocano' }
+    'code': 'ilo',
+    'uf': { 'name': 'Ilocano' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/smn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/smn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Inari Sami'
     },
-    code: 'smn',
-    uf: [
-      { name: 'Finnish Lapp' },
-      { name: 'Lapp, Finnish' },
-      { name: 'Sami, Inari' }
+    'code': 'smn',
+    'uf': [
+      { 'name': 'Finnish Lapp' },
+      { 'name': 'Lapp, Finnish' },
+      { 'name': 'Sami, Inari' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/inc',
-    name: 'Indic (Other)',
-    code: 'inc',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/inc',
+    'name': 'Indic (Other)',
+    'code': 'inc',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Adiwasi Garasia'
         },
-        uf: [
-          { name: 'Adivasi Garasia' },
-          { name: 'Ādivāsī Garāsiyā' },
-          { name: 'Adiwasi Girasia' },
-          { name: 'Adiwasi Gujarati' },
-          { name: 'Garasia Adivasi' }
+        'uf': [
+          { 'name': 'Adivasi Garasia' },
+          { 'name': 'Ādivāsī Garāsiyā' },
+          { 'name': 'Adiwasi Girasia' },
+          { 'name': 'Adiwasi Gujarati' },
+          { 'name': 'Garasia Adivasi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ahirani'
         },
-        uf: { name: 'Ahiri' }
+        'uf': { 'name': 'Ahiri' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Apabhraṃśa'
         },
-        uf: { name: 'Apabhramsha' }
+        'uf': { 'name': 'Apabhramsha' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Avahattha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bashgali'
         },
-        uf: [
-          { name: 'Bashgal' },
-          { name: 'Bashgari' },
-          { name: 'Kamtoz' },
-          { name: 'Katai' },
-          { name: 'Kati' }
+        'uf': [
+          { 'name': 'Bashgal' },
+          { 'name': 'Bashgari' },
+          { 'name': 'Kamtoz' },
+          { 'name': 'Katai' },
+          { 'name': 'Kati' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bhantu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bhili'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bote-Majhi'
         },
-        uf: [
-          { name: 'Bote-Mahi' },
-          { name: 'Kushar' },
-          { name: 'Pakhe-Bote' }
+        'uf': [
+          { 'name': 'Bote-Mahi' },
+          { 'name': 'Kushar' },
+          { 'name': 'Pakhe-Bote' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chakma'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chamthi'
         },
-        uf: [
-          { name: 'Cāmaṭhī' },
-          { name: 'Chamtha' }
+        'uf': [
+          { 'name': 'Cāmaṭhī' },
+          { 'name': 'Chamtha' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Changari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chinali'
         },
-        uf: [
-          { name: 'Chana (India)' },
-          { name: 'Channali' },
-          { name: 'Chinal' },
-          { name: 'Dagi' },
-          { name: 'Harijan' },
-          { name: 'Shipi' }
+        'uf': [
+          { 'name': 'Chana (India)' },
+          { 'name': 'Channali' },
+          { 'name': 'Chinal' },
+          { 'name': 'Dagi' },
+          { 'name': 'Harijan' },
+          { 'name': 'Shipi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chodri'
         },
-        uf: [
-          { name: 'Caudharī' },
-          { name: 'Chaudhari' },
-          { name: 'Chaudri' },
-          { name: 'Chodhari' },
-          { name: 'Choudhara' },
-          { name: 'Choudhary' },
-          { name: 'Chowdhary' }
+        'uf': [
+          { 'name': 'Caudharī' },
+          { 'name': 'Chaudhari' },
+          { 'name': 'Chaudri' },
+          { 'name': 'Chodhari' },
+          { 'name': 'Choudhara' },
+          { 'name': 'Choudhary' },
+          { 'name': 'Chowdhary' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Danuwar Rai'
         },
-        uf: [
-          { name: 'Denwar' },
-          { name: 'Dhanvar' },
-          { name: 'Dhanwar' },
-          { name: 'Donwar' }
+        'uf': [
+          { 'name': 'Denwar' },
+          { 'name': 'Dhanvar' },
+          { 'name': 'Dhanwar' },
+          { 'name': 'Donwar' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Darai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dehawali'
         },
-        uf: [
-          { name: 'Dehavali' },
-          { name: 'Dehwali' }
+        'uf': [
+          { 'name': 'Dehavali' },
+          { 'name': 'Dehwali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Domaaki'
         },
-        uf: [
-          { name: 'Bericho' },
-          { name: 'Dom' },
-          { name: 'Doma' },
-          { name: 'Dumaki' }
+        'uf': [
+          { 'name': 'Bericho' },
+          { 'name': 'Dom' },
+          { 'name': 'Doma' },
+          { 'name': 'Dumaki' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dungra Bhil'
         },
-        uf: [
-          { name: 'Dungari Bhili' },
-          { name: 'Dungri Bhili' }
+        'uf': [
+          { 'name': 'Dungari Bhili' },
+          { 'name': 'Dungri Bhili' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fiji Hindi'
         },
-        uf: { name: 'Hindi, Fiji' }
+        'uf': { 'name': 'Hindi, Fiji' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Garasiya'
         },
-        uf: [
-          { name: 'Garahaiya' },
-          { name: 'Girasia' }
+        'uf': [
+          { 'name': 'Garahaiya' },
+          { 'name': 'Girasia' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Garhwali'
         },
-        uf: [
-          { name: 'Gadhavali' },
-          { name: 'Gadhawala' },
-          { name: 'Gadwahi' },
-          { name: 'Gashwali' },
-          { name: 'Girwali' },
-          { name: 'Godauli' },
-          { name: 'Gorwali' },
-          { name: 'Gurvali' },
-          { name: 'Pahari Garhwali' }
+        'uf': [
+          { 'name': 'Gadhavali' },
+          { 'name': 'Gadhawala' },
+          { 'name': 'Gadwahi' },
+          { 'name': 'Gashwali' },
+          { 'name': 'Girwali' },
+          { 'name': 'Godauli' },
+          { 'name': 'Gorwali' },
+          { 'name': 'Gurvali' },
+          { 'name': 'Pahari Garhwali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Halbi'
         },
-        uf: { name: 'Bastari' }
+        'uf': { 'name': 'Bastari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hindustani'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Indus Kohistani'
         },
-        uf: [
-          { name: 'Khili' },
-          { name: 'Kohistani, Indus' },
-          { name: 'Kohiste' },
-          { name: 'Mair' },
-          { name: 'Maiya' },
-          { name: 'Maiyan' },
-          { name: 'Maiyon' },
-          { name: 'Shuthun' }
+        'uf': [
+          { 'name': 'Khili' },
+          { 'name': 'Kohistani, Indus' },
+          { 'name': 'Kohiste' },
+          { 'name': 'Mair' },
+          { 'name': 'Maiya' },
+          { 'name': 'Maiyan' },
+          { 'name': 'Maiyon' },
+          { 'name': 'Shuthun' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalami'
         },
-        uf: [
-          { name: 'Bashgharik' },
-          { name: 'Bashkarik' },
-          { name: 'Dir Kohistani' },
-          { name: 'Diri (Kalami)' },
-          { name: 'Dirwali' },
-          { name: 'Gaawro' },
-          { name: 'Garwa' },
-          { name: 'Garwi' },
-          { name: 'Gawri' },
-          { name: 'Gowri' },
-          { name: 'Kalam Kohistani' },
-          { name: 'Kalami Kohistani' },
-          { name: 'Kohistana' },
-          { name: 'Kohistani, Dir' },
-          { name: 'Kohistani, Kalam' },
-          { name: 'Kohistani, Kalami' }
+        'uf': [
+          { 'name': 'Bashgharik' },
+          { 'name': 'Bashkarik' },
+          { 'name': 'Dir Kohistani' },
+          { 'name': 'Diri (Kalami)' },
+          { 'name': 'Dirwali' },
+          { 'name': 'Gaawro' },
+          { 'name': 'Garwa' },
+          { 'name': 'Garwi' },
+          { 'name': 'Gawri' },
+          { 'name': 'Gowri' },
+          { 'name': 'Kalam Kohistani' },
+          { 'name': 'Kalami Kohistani' },
+          { 'name': 'Kohistana' },
+          { 'name': 'Kohistani, Dir' },
+          { 'name': 'Kohistani, Kalam' },
+          { 'name': 'Kohistani, Kalami' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khandesi'
         },
-        uf: [
-          { name: 'Dhed Gujari' },
-          { name: 'Khandeshi' },
-          { name: 'Khandish' }
+        'uf': [
+          { 'name': 'Dhed Gujari' },
+          { 'name': 'Khandeshi' },
+          { 'name': 'Khandish' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khowar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kumaoni'
         },
-        uf: [
-          { name: 'Kamaoni' },
-          { name: 'Kumau' },
-          { name: 'Kumauni' },
-          { name: 'Kumawani' },
-          { name: 'Kumgoni' },
-          { name: 'Kumman' },
-          { name: 'Kunayaoni' }
+        'uf': [
+          { 'name': 'Kamaoni' },
+          { 'name': 'Kumau' },
+          { 'name': 'Kumauni' },
+          { 'name': 'Kumawani' },
+          { 'name': 'Kumgoni' },
+          { 'name': 'Kumman' },
+          { 'name': 'Kunayaoni' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kupia'
         },
-        uf: { name: 'Valmiki' }
+        'uf': { 'name': 'Valmiki' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Madari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mawchi'
         },
-        uf: [
-          { name: 'Mauchi' },
-          { name: 'Māvacī' },
-          { name: 'Mavchi' },
-          { name: 'Mawachi' },
-          { name: 'Mawchi Bhil' },
-          { name: 'Mowchi' }
+        'uf': [
+          { 'name': 'Mauchi' },
+          { 'name': 'Māvacī' },
+          { 'name': 'Mavchi' },
+          { 'name': 'Mawachi' },
+          { 'name': 'Mawchi Bhil' },
+          { 'name': 'Mowchi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Memoni'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nayki'
         },
-        uf: [
-          { name: 'Naiki' },
-          { name: 'Nāyakī' }
+        'uf': [
+          { 'name': 'Naiki' },
+          { 'name': 'Nāyakī' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Parya'
         },
-        uf: { name: 'Tajuzbeki' }
+        'uf': { 'name': 'Tajuzbeki' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rajbangsi'
         },
-        uf: [
-          { name: 'Kamtapuri' },
-          { name: 'Rajbanshi' },
-          { name: 'Rajbansi' },
-          { name: 'Rajbongshi' }
+        'uf': [
+          { 'name': 'Kamtapuri' },
+          { 'name': 'Rajbanshi' },
+          { 'name': 'Rajbansi' },
+          { 'name': 'Rajbongshi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rathvi'
         },
-        uf: [
-          { name: 'Rāthavi' },
-          { name: 'Rathwi' }
+        'uf': [
+          { 'name': 'Rāthavi' },
+          { 'name': 'Rathwi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shina'
         },
-        uf: [
-          { name: 'Sheena' },
-          { name: 'Sina' }
+        'uf': [
+          { 'name': 'Sheena' },
+          { 'name': 'Sina' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Suriname Hindustani'
         },
-        uf: [
-          { name: 'Aili-Gaili' },
-          { name: 'Hindustani, Suriname' },
-          { name: 'Surinam Hindustani' },
-          { name: 'Sarnami Hindi' }
+        'uf': [
+          { 'name': 'Aili-Gaili' },
+          { 'name': 'Hindustani, Suriname' },
+          { 'name': 'Surinam Hindustani' },
+          { 'name': 'Sarnami Hindi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tharu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vaagri Boli'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vanzari'
         },
-        uf: [
-          { name: 'Vaṇajhārī' },
-          { name: 'Vanjhara' },
-          { name: 'Wanjhari' }
+        'uf': [
+          { 'name': 'Vaṇajhārī' },
+          { 'name': 'Vanjhara' },
+          { 'name': 'Wanjhari' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Veddah (Sinhalese)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Waigali'
         },
-        uf: [
-          { name: 'Kalaṣa-alā' },
-          { name: 'Vaigalī' },
-          { name: 'Wai' },
-          { name: 'Wai-alā' },
-          { name: 'Waigelī' }
+        'uf': [
+          { 'name': 'Kalaṣa-alā' },
+          { 'name': 'Vaigalī' },
+          { 'name': 'Wai' },
+          { 'name': 'Wai-alā' },
+          { 'name': 'Waigelī' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wotapuri-Katarqalai'
         },
-        uf: { name: 'Katarqalai' }
+        'uf': { 'name': 'Katarqalai' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ine',
-    name: 'Indo-European (Other)',
-    code: 'ine',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ine',
+    'name': 'Indo-European (Other)',
+    'code': 'ine',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Carian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dacian'
         },
-        uf: [
-          { name: 'Daco-Mysian' },
-          { name: 'North Thracian' }
+        'uf': [
+          { 'name': 'Daco-Mysian' },
+          { 'name': 'North Thracian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Luwian'
         },
-        uf: [
-          { name: 'Luian' },
-          { name: 'Lûish' },
-          { name: 'Luvian' }
+        'uf': [
+          { 'name': 'Luian' },
+          { 'name': 'Lûish' },
+          { 'name': 'Luvian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lycian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lydian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Macedonian (Ancient)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Messapic'
         },
-        uf: [
-          { name: 'Iapygian' },
-          { name: 'Messapian' }
+        'uf': [
+          { 'name': 'Iapygian' },
+          { 'name': 'Messapian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Palaic'
         },
-        uf: [
-          { name: 'Balaic' },
-          { name: 'Palâ (Palaic)' },
-          { name: 'Palaite' },
-          { name: 'Palawi' }
+        'uf': [
+          { 'name': 'Balaic' },
+          { 'name': 'Palâ (Palaic)' },
+          { 'name': 'Palaite' },
+          { 'name': 'Palawi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Phrygian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Proto-Indo-European'
         },
-        uf: [
-          { name: 'Proto-Aryan' },
-          { name: 'Protoindoeuropean' }
+        'uf': [
+          { 'name': 'Proto-Aryan' },
+          { 'name': 'Protoindoeuropean' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Thracian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tokharian'
         },
-        uf: [
-          { name: 'Kuchean' },
-          { name: 'Tocharian' },
-          { name: 'Tocharish' },
-          { name: 'Turfanish' }
+        'uf': [
+          { 'name': 'Kuchean' },
+          { 'name': 'Tocharian' },
+          { 'name': 'Tocharish' },
+          { 'name': 'Turfanish' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Venetic'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yuezhi'
         },
-        uf: { name: 'Yüeh-chih' }
+        'uf': { 'name': 'Yüeh-chih' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ind',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ind',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Indonesian'
     },
-    code: 'ind',
-    uf: { name: 'Bahasa Indonesia' }
+    'code': 'ind',
+    'uf': { 'name': 'Bahasa Indonesia' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/inh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/inh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ingush'
     },
-    code: 'inh'
+    'code': 'inh'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ina',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ina',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Interlingua (International Auxiliary Language Association)'
     },
-    code: 'ina'
+    'code': 'ina'
   },
   {
-    uri: 'info:lc/vocabulary/languages/int',
-    name: 'Interlingua (International Auxiliary Language Association)',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/int',
+    'name': 'Interlingua (International Auxiliary Language Association)',
+    'code': {
       '-status': 'obsolete',
       '#text': 'int'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ile',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ile',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Interlingue'
     },
-    code: 'ile',
-    uf: { name: 'Occidental' }
+    'code': 'ile',
+    'uf': { 'name': 'Occidental' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/iku',
-    name: 'Inuktitut',
-    code: 'iku',
-    uf: [
-      { name: 'Inuit' },
+    'uri': 'info:lc/vocabulary/languages/iku',
+    'name': 'Inuktitut',
+    'code': 'iku',
+    'uf': [
+      { 'name': 'Inuit' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Inuvialuktun'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kopagmiut'
         },
-        uf: [
-          { name: 'Chiglit' },
-          { name: 'Siglit' }
+        'uf': [
+          { 'name': 'Chiglit' },
+          { 'name': 'Siglit' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ipk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ipk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Inupiaq'
     },
-    code: 'ipk',
-    uf: { name: 'Inuit' }
+    'code': 'ipk',
+    'uf': { 'name': 'Inuit' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ira',
-    name: 'Iranian (Other)',
-    code: 'ira',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ira',
+    'name': 'Iranian (Other)',
+    'code': 'ira',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bactrian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Badzhuv'
         },
-        uf: [
-          { name: 'Badschu' },
-          { name: 'Badžū' },
-          { name: 'Bāǰūī' }
+        'uf': [
+          { 'name': 'Badschu' },
+          { 'name': 'Badžū' },
+          { 'name': 'Bāǰūī' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bakhtiari'
         },
-        uf: [
-          { name: 'Bakhtiyārī' },
-          { name: 'Baxtīarī' },
-          { name: 'Lori' },
-          { name: 'Lori-ye Khaveri' },
-          { name: 'Lur (Bakhtiari)' },
-          { name: 'Luri (Bakhtiari)' }
+        'uf': [
+          { 'name': 'Bakhtiyārī' },
+          { 'name': 'Baxtīarī' },
+          { 'name': 'Lori' },
+          { 'name': 'Lori-ye Khaveri' },
+          { 'name': 'Lur (Bakhtiari)' },
+          { 'name': 'Luri (Bakhtiari)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bartang'
         },
-        uf: { name: 'Bartangi' }
+        'uf': { 'name': 'Bartangi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ephthalite'
         },
-        uf: { name: 'Hephthalite' }
+        'uf': { 'name': 'Hephthalite' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gilaki'
         },
-        uf: [
-          { name: 'Gelaki' },
-          { name: 'Gilan' }
+        'uf': [
+          { 'name': 'Gelaki' },
+          { 'name': 'Gilan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gurani'
         },
-        uf: [
-          { name: 'Awromani' },
-          { name: 'Gorani' },
-          { name: 'Hawramani' },
-          { name: 'Hawrami' },
-          { name: 'Hewrami' },
-          { name: 'Howrami' },
-          { name: 'Macho' }
+        'uf': [
+          { 'name': 'Awromani' },
+          { 'name': 'Gorani' },
+          { 'name': 'Hawramani' },
+          { 'name': 'Hawrami' },
+          { 'name': 'Hewrami' },
+          { 'name': 'Howrami' },
+          { 'name': 'Macho' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hazaragi'
         },
-        uf: [
-          { name: 'Azargi' },
-          { name: 'Hazara' },
-          { name: 'Hezareh' },
-          { name: 'Hezareʼi' },
-          { name: 'Khazara' },
-          { name: 'Khezare' }
+        'uf': [
+          { 'name': 'Azargi' },
+          { 'name': 'Hazara' },
+          { 'name': 'Hezareh' },
+          { 'name': 'Hezareʼi' },
+          { 'name': 'Khazara' },
+          { 'name': 'Khezare' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ishkashmi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Judeo-Tat'
         },
-        uf: [
-          { name: 'Bik' },
-          { name: 'Dzhuhuric' },
-          { name: 'Hebrew Tat' },
-          { name: 'Hebrew Tati' },
-          { name: 'Jew-Tatish' },
-          { name: 'Jewish Tat' },
-          { name: 'Judeo-Tatic' }
+        'uf': [
+          { 'name': 'Bik' },
+          { 'name': 'Dzhuhuric' },
+          { 'name': 'Hebrew Tat' },
+          { 'name': 'Hebrew Tati' },
+          { 'name': 'Jew-Tatish' },
+          { 'name': 'Jewish Tat' },
+          { 'name': 'Judeo-Tatic' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khorezmi'
         },
-        uf: [
-          { name: 'Choresmian' },
-          { name: 'Khwarezmian' }
+        'uf': [
+          { 'name': 'Choresmian' },
+          { 'name': 'Khwarezmian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khuf'
         },
-        uf: { name: 'Chuf' }
+        'uf': { 'name': 'Chuf' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Laki (Iran)'
         },
-        uf: [
-          { name: 'Alaki' },
-          { name: 'Leki' }
+        'uf': [
+          { 'name': 'Alaki' },
+          { 'name': 'Leki' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Māzandarānī'
         },
-        uf: [
-          { name: 'Mazanderani' },
-          { name: 'Tabri' }
+        'uf': [
+          { 'name': 'Mazanderani' },
+          { 'name': 'Tabri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Median'
         },
-        uf: { name: 'Medic' }
+        'uf': { 'name': 'Medic' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Munji'
         },
-        uf: [
-          { name: 'Mundzhan' },
-          { name: 'Munjani' }
+        'uf': [
+          { 'name': 'Mundzhan' },
+          { 'name': 'Munjani' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Natanzi'
         },
-        uf: { name: 'Naṭanz' }
+        'uf': { 'name': 'Naṭanz' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ormuri'
         },
-        uf: [
-          { name: 'Baraks' },
-          { name: 'Bargista' }
+        'uf': [
+          { 'name': 'Baraks' },
+          { 'name': 'Bargista' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Parachi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Parthian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Roshan'
         },
-        uf: [
-          { name: 'Rochani' },
-          { name: 'Ruschan' }
+        'uf': [
+          { 'name': 'Rochani' },
+          { 'name': 'Ruschan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sarikoli'
         },
-        uf: { name: 'Sarykoli' }
+        'uf': { 'name': 'Sarykoli' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sarmatian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shughni'
         },
-        uf: { name: 'Shugnan-Rushan' }
+        'uf': { 'name': 'Shugnan-Rushan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sivandi'
         },
-        uf: { name: 'Sivendi' }
+        'uf': { 'name': 'Sivendi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Talysh'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wakhi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yaghnobi'
         },
-        uf: [
-          { name: 'Neo-Sogdian' },
-          { name: 'Yaghnabi' },
-          { name: 'Yaghnubi' },
-          { name: 'Yagnabi' },
-          { name: 'Yagnob' },
-          { name: 'Yagnobi' },
-          { name: 'Yagnubi' }
+        'uf': [
+          { 'name': 'Neo-Sogdian' },
+          { 'name': 'Yaghnabi' },
+          { 'name': 'Yaghnubi' },
+          { 'name': 'Yagnabi' },
+          { 'name': 'Yagnob' },
+          { 'name': 'Yagnobi' },
+          { 'name': 'Yagnubi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yazghulami'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zebaki'
         },
-        uf: { name: 'Sanglici' }
+        'uf': { 'name': 'Sanglici' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gle',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gle',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Irish'
     },
-    code: 'gle',
-    uf: [
-      { name: 'Erse (Irish)' },
-      { name: 'Gaelic (Irish)' },
-      { name: 'Irish Gaelic' }
+    'code': 'gle',
+    'uf': [
+      { 'name': 'Erse (Irish)' },
+      { 'name': 'Gaelic (Irish)' },
+      { 'name': 'Irish Gaelic' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/iri',
-    name: 'Irish',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/iri',
+    'name': 'Irish',
+    'code': {
       '-status': 'obsolete',
       '#text': 'iri'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/mga',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mga',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Irish, Middle (ca. 1100-1550)'
     },
-    code: 'mga',
-    uf: { name: 'Middle Irish' }
+    'code': 'mga',
+    'uf': { 'name': 'Middle Irish' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sga',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sga',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Irish, Old (to 1100)'
     },
-    code: 'sga',
-    uf: { name: 'Old Irish' }
+    'code': 'sga',
+    'uf': { 'name': 'Old Irish' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/iro',
-    name: 'Iroquoian (Other)',
-    code: 'iro',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/iro',
+    'name': 'Iroquoian (Other)',
+    'code': 'iro',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cayuga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iroquois'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oneida'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Onondaga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Seneca'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tuscarora'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wyandot'
         },
-        uf: { name: 'Huron' }
+        'uf': { 'name': 'Huron' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ita',
-    name: 'Italian',
-    code: 'ita',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ita',
+    'name': 'Italian',
+    'code': 'ita',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Judeo-Italian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Milanese'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Modena Italian'
         },
-        uf: { name: 'Italian, Modena' }
+        'uf': { 'name': 'Italian, Modena' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Romagnol'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Venetian Italian'
         },
-        uf: { name: 'Italian, Venetian' }
+        'uf': { 'name': 'Italian, Venetian' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/jpn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/jpn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Japanese'
     },
-    code: 'jpn',
-    note: { text: 'Use for related Japanese languages and dialects' }
+    'code': 'jpn',
+    'note': { text: 'Use for related Japanese languages and dialects' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/jav',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/jav',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Javanese'
     },
-    code: 'jav'
+    'code': 'jav'
   },
   {
-    uri: 'info:lc/vocabulary/languages/jrb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/jrb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Judeo-Arabic'
     },
-    code: 'jrb'
+    'code': 'jrb'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/jpr',
-    name: 'Judeo-Persian',
-    code: 'jpr',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/jpr',
+    'name': 'Judeo-Persian',
+    'code': 'jpr',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Judeo-Tajik'
       }
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kbd',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kbd',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kabardian'
     },
-    code: 'kbd',
-    uf: [
-      { name: 'Cabardan' },
-      { name: 'Circassian, East' },
-      { name: 'Circassian, Upper' },
-      { name: 'East Circassian' },
-      { name: 'Qabardian' },
-      { name: 'Upper Circassian' }
+    'code': 'kbd',
+    'uf': [
+      { 'name': 'Cabardan' },
+      { 'name': 'Circassian, East' },
+      { 'name': 'Circassian, Upper' },
+      { 'name': 'East Circassian' },
+      { 'name': 'Qabardian' },
+      { 'name': 'Upper Circassian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kab',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kab',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kabyle'
     },
-    code: 'kab'
+    'code': 'kab'
   },
   {
-    uri: 'info:lc/vocabulary/languages/kac',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kac',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kachin'
     },
-    code: 'kac',
-    uf: [
-      { name: 'Chingpaw' },
-      { name: 'Jingpho' }
+    'code': 'kac',
+    'uf': [
+      { 'name': 'Chingpaw' },
+      { 'name': 'Jingpho' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kal',
-    name: 'Kalâtdlisut',
-    code: 'kal',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kal',
+    'name': 'Kalâtdlisut',
+    'code': 'kal',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ammassalimiut'
         },
-        uf: [
-          { name: 'East Greenlandic' },
-          { name: 'Greenlandic, East' },
-          { name: 'Tunumiisut' }
+        'uf': [
+          { 'name': 'East Greenlandic' },
+          { 'name': 'Greenlandic, East' },
+          { 'name': 'Tunumiisut' }
         ]
       },
-      { name: 'Greenlandic' },
-      { name: 'Inuit' },
-      { name: 'Kalaallisut' }
+      { 'name': 'Greenlandic' },
+      { 'name': 'Inuit' },
+      { 'name': 'Kalaallisut' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kam',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kam',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kamba'
     },
-    code: 'kam'
+    'code': 'kam'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kan',
-    name: 'Kannada',
-    code: 'kan',
-    uf: [
-      { name: 'Canarese' },
-      { name: 'Kanarese' },
+    'uri': 'info:lc/vocabulary/languages/kan',
+    'name': 'Kannada',
+    'code': 'kan',
+    'uf': [
+      { 'name': 'Canarese' },
+      { 'name': 'Kanarese' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Havyaka'
         }
@@ -9560,270 +9560,270 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kau',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kau',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kanuri'
     },
-    code: 'kau',
-    uf: { name: 'Bornu' }
+    'code': 'kau',
+    'uf': { 'name': 'Bornu' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/krc',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/krc',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Karachay-Balkar'
     },
-    code: 'krc',
-    uf: { name: 'Balkar' }
+    'code': 'krc',
+    'uf': { 'name': 'Balkar' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kaa',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kaa',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kara-Kalpak'
     },
-    code: 'kaa',
-    uf: [
-      { name: 'Karakalpak' },
-      { name: 'Qaraqalpaq' }
+    'code': 'kaa',
+    'uf': [
+      { 'name': 'Karakalpak' },
+      { 'name': 'Qaraqalpaq' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/krl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/krl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Karelian'
     },
-    code: 'krl',
-    uf: { name: 'Carelian' }
+    'code': 'krl',
+    'uf': { 'name': 'Carelian' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kar',
-    name: 'Karen languages',
-    code: 'kar',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kar',
+    'name': 'Karen languages',
+    'code': 'kar',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kayah'
         },
-        uf: [
-          { name: 'Karen, Red' },
-          { name: 'Red Karen' }
+        'uf': [
+          { 'name': 'Karen, Red' },
+          { 'name': 'Red Karen' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pwo Karen'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sgaw Karen'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Taungthu'
         },
-        uf: { name: 'Pa-o' }
+        'uf': { 'name': 'Pa-o' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kas',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kas',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kashmiri'
     },
-    code: 'kas'
+    'code': 'kas'
   },
   {
-    uri: 'info:lc/vocabulary/languages/csb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/csb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kashubian'
     },
-    code: 'csb',
-    uf: { name: 'Cashubian' }
+    'code': 'csb',
+    'uf': { 'name': 'Cashubian' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kaw',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kaw',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kawi'
     },
-    code: 'kaw',
-    uf: [
-      { name: 'Javanese, Old' },
-      { name: 'Old Javanese' }
+    'code': 'kaw',
+    'uf': [
+      { 'name': 'Javanese, Old' },
+      { 'name': 'Old Javanese' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kaz',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kaz',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kazakh'
     },
-    code: 'kaz',
-    uf: { name: 'Kirghiz-Kaissak' }
+    'code': 'kaz',
+    'uf': { 'name': 'Kirghiz-Kaissak' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kha',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kha',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Khasi'
     },
-    code: 'kha'
+    'code': 'kha'
   },
   {
-    uri: 'info:lc/vocabulary/languages/khm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/khm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Khmer'
     },
-    code: 'khm',
-    uf: [
-      { name: 'Cambodian' },
-      { name: 'Central Khmer' }
+    'code': 'khm',
+    'uf': [
+      { 'name': 'Cambodian' },
+      { 'name': 'Central Khmer' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/cam',
-    name: 'Khmer',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/cam',
+    'name': 'Khmer',
+    'code': {
       '-status': 'obsolete',
       '#text': 'cam'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/khi',
-    name: 'Khoisan (Other)',
-    code: 'khi',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/khi',
+    'name': 'Khoisan (Other)',
+    'code': 'khi',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ju/\'hoan'
         },
-        uf: [
-          { name: '!Xũ (!Kung)' },
-          { name: 'Zjuc\'hôa' },
-          { name: 'Žu/\'hõasi' }
+        'uf': [
+          { 'name': '!Xũ (!Kung)' },
+          { 'name': 'Zjuc\'hôa' },
+          { 'name': 'Žu/\'hõasi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khoikhoi'
         },
-        uf: { name: 'Hottentot' }
+        'uf': { 'name': 'Hottentot' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Korana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nama'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nharo'
         },
-        uf: { name: 'Naro' }
+        'uf': { 'name': 'Naro' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'San languages'
         },
-        uf: { name: 'Bushman languages' }
+        'uf': { 'name': 'Bushman languages' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': '!Xõ'
         },
-        uf: [
-          { name: 'Gxon' },
-          { name: 'Hua-owani' },
-          { name: '!Kõ (Botswana and Namibia)' },
-          { name: 'Koon' },
-          { name: 'Magong' },
-          { name: '!Xong (Botswana and Namibia)' }
+        'uf': [
+          { 'name': 'Gxon' },
+          { 'name': 'Hua-owani' },
+          { 'name': '!Kõ (Botswana and Namibia)' },
+          { 'name': 'Koon' },
+          { 'name': 'Magong' },
+          { 'name': '!Xong (Botswana and Namibia)' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kho',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kho',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Khotanese'
     },
-    code: 'kho',
-    uf: [
-      { name: 'Khotan-Saka' },
-      { name: 'Khotanese-Sakan' },
-      { name: 'Khotani' },
-      { name: 'Khotansaka' },
-      { name: 'Middle Khotanese' },
-      { name: 'North Aryan' },
-      { name: 'Old Khotanese' },
-      { name: 'Saka' },
-      { name: 'Sakan' }
+    'code': 'kho',
+    'uf': [
+      { 'name': 'Khotan-Saka' },
+      { 'name': 'Khotanese-Sakan' },
+      { 'name': 'Khotani' },
+      { 'name': 'Khotansaka' },
+      { 'name': 'Middle Khotanese' },
+      { 'name': 'North Aryan' },
+      { 'name': 'Old Khotanese' },
+      { 'name': 'Saka' },
+      { 'name': 'Sakan' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kik',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kik',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kikuyu'
     },
-    code: 'kik',
-    uf: { name: 'Gikuyu' }
+    'code': 'kik',
+    'uf': { 'name': 'Gikuyu' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kmb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kmb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kimbundu'
     },
-    code: 'kmb',
-    uf: [
-      { name: 'Angola' },
-      { name: 'Bunda' },
-      { name: 'Mbundu (Luanda Province, Angola)' },
-      { name: 'Nbundu' },
-      { name: 'Quimbundo (Luanda Province, Angola)' }
+    'code': 'kmb',
+    'uf': [
+      { 'name': 'Angola' },
+      { 'name': 'Bunda' },
+      { 'name': 'Mbundu (Luanda Province, Angola)' },
+      { 'name': 'Nbundu' },
+      { 'name': 'Quimbundo (Luanda Province, Angola)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kin',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kin',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kinyarwanda'
     },
-    code: 'kin',
-    uf: [
-      { name: 'Nyaruanda' },
-      { name: 'Ruanda' },
-      { name: 'Runyarwanda' },
-      { name: 'Rwanda' },
+    'code': 'kin',
+    'uf': [
+      { 'name': 'Nyaruanda' },
+      { 'name': 'Ruanda' },
+      { 'name': 'Runyarwanda' },
+      { 'name': 'Rwanda' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rufumbira'
         }
@@ -9831,98 +9831,98 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tlh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tlh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Klingon (Artificial language)'
     },
-    code: 'tlh'
+    'code': 'tlh'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kom',
-    name: 'Komi',
-    code: 'kom',
-    uf: [
-      { name: 'Syryenian' },
-      { name: 'Zyrian' },
+    'uri': 'info:lc/vocabulary/languages/kom',
+    'name': 'Komi',
+    'code': 'kom',
+    'uf': [
+      { 'name': 'Syryenian' },
+      { 'name': 'Zyrian' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Komi-Permyak'
         },
-        uf: { name: 'Permiak' }
+        'uf': { 'name': 'Permiak' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kon',
-    name: 'Kongo',
-    code: 'kon',
-    uf: [
-      { name: 'Congo' },
-      { name: 'Kikongo' },
+    'uri': 'info:lc/vocabulary/languages/kon',
+    'name': 'Kongo',
+    'code': 'kon',
+    'uf': [
+      { 'name': 'Congo' },
+      { 'name': 'Kikongo' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kituba (Congo (Brazzaville))'
         },
-        uf: [
-          { name: 'Kikoongo (Kituba (Congo (Brazzaville)))' },
-          { name: 'Munukutuba' }
+        'uf': [
+          { 'name': 'Kikoongo (Kituba (Congo (Brazzaville)))' },
+          { 'name': 'Munukutuba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Laadi'
         },
-        uf: { name: 'Kilari' }
+        'uf': { 'name': 'Kilari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manyanga'
         },
-        uf: [
-          { name: 'Kimanyanga' },
-          { name: 'Kisi-Ngóombe' },
-          { name: 'Manianga' }
+        'uf': [
+          { 'name': 'Kimanyanga' },
+          { 'name': 'Kisi-Ngóombe' },
+          { 'name': 'Manianga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ntaandu'
         },
-        uf: [
-          { name: 'Kintaandu' },
-          { name: 'Kisantu' },
-          { name: 'Santu' }
+        'uf': [
+          { 'name': 'Kintaandu' },
+          { 'name': 'Kisantu' },
+          { 'name': 'Santu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vili'
         },
-        uf: [
-          { name: 'Civili' },
-          { name: 'Fiot' },
-          { name: 'Fiote' },
-          { name: 'Ki-vili' },
-          { name: 'Ki-vumbu' },
-          { name: 'Kivili' },
-          { name: 'Kivumbu' },
-          { name: 'Loango' },
-          { name: 'Lu-wumbu' },
-          { name: 'Luwumbu' },
-          { name: 'Tsivili' }
+        'uf': [
+          { 'name': 'Civili' },
+          { 'name': 'Fiot' },
+          { 'name': 'Fiote' },
+          { 'name': 'Ki-vili' },
+          { 'name': 'Ki-vumbu' },
+          { 'name': 'Kivili' },
+          { 'name': 'Kivumbu' },
+          { 'name': 'Loango' },
+          { 'name': 'Lu-wumbu' },
+          { 'name': 'Luwumbu' },
+          { 'name': 'Tsivili' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zombo'
         }
@@ -9931,287 +9931,287 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kok',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kok',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Konkani'
     },
-    code: 'kok',
-    uf: [
-      { name: 'Concani' },
-      { name: 'Komkani' },
-      { name: 'Koṅkṇi' },
+    'code': 'kok',
+    'uf': [
+      { 'name': 'Concani' },
+      { 'name': 'Komkani' },
+      { 'name': 'Koṅkṇi' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Agri'
         },
-        uf: { name: 'Agari' }
+        'uf': { 'name': 'Agari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chitapavani'
         },
-        uf: [
-          { name: 'Chitpavani' },
-          { name: 'Citpāvanī' }
+        'uf': [
+          { 'name': 'Chitpavani' },
+          { 'name': 'Citpāvanī' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jhāḍī'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kudali'
         },
-        uf: { name: 'Malvani' }
+        'uf': { 'name': 'Malvani' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kut',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kut',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kootenai'
     },
-    code: 'kut',
-    uf: { name: 'Kutenai' }
+    'code': 'kut',
+    'uf': { 'name': 'Kutenai' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kor',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kor',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Korean'
     },
-    code: 'kor',
-    note: { text: 'Use for related Korean languages and dialects' }
+    'code': 'kor',
+    'note': { text: 'Use for related Korean languages and dialects' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kos',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kos',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kosraean'
     },
-    code: 'kos',
-    uf: [
-      { name: 'Kosrae' },
-      { name: 'Kusaie' },
-      { name: 'Kusaiean' }
+    'code': 'kos',
+    'uf': [
+      { 'name': 'Kosrae' },
+      { 'name': 'Kusaie' },
+      { 'name': 'Kusaiean' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kpe',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kpe',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kpelle'
     },
-    code: 'kpe',
-    uf: { name: 'Guerzé' }
+    'code': 'kpe',
+    'uf': { 'name': 'Guerzé' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kro',
-    name: 'Kru (Other)',
-    code: 'kro',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kro',
+    'name': 'Kru (Other)',
+    'code': 'kro',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bakwé'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bassa (Liberia and Sierra Leone)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bete'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dadjriwalé'
         },
-        uf: [
-          { name: 'Dadjrignoa' },
-          { name: 'Dagli' },
-          { name: 'Dajriwali' }
+        'uf': [
+          { 'name': 'Dadjrignoa' },
+          { 'name': 'Dagli' },
+          { 'name': 'Dajriwali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dewoin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dida'
         },
-        uf: { name: 'Wawi' }
+        'uf': { 'name': 'Wawi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Godié'
         },
-        uf: [
-          { name: 'Go (Côte d\'Ivoire)' },
-          { name: 'Godia' },
-          { name: 'Godye' }
+        'uf': [
+          { 'name': 'Go (Côte d\'Ivoire)' },
+          { 'name': 'Godia' },
+          { 'name': 'Godye' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jabo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kouya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Krahn'
         },
-        uf: [
-          { name: 'Kran' },
-          { name: 'Northern Krahn' },
-          { name: 'Western Krahn' }
+        'uf': [
+          { 'name': 'Kran' },
+          { 'name': 'Northern Krahn' },
+          { 'name': 'Western Krahn' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kru'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuwaa'
         },
-        uf: [
-          { name: 'Belle' },
-          { name: 'Belleh' },
-          { name: 'Kowaao' },
-          { name: 'Kwaa' }
+        'uf': [
+          { 'name': 'Belle' },
+          { 'name': 'Belleh' },
+          { 'name': 'Kowaao' },
+          { 'name': 'Kwaa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Neyo'
         },
-        uf: [
-          { name: 'Gwibwen' },
-          { name: 'Néouolé' },
-          { name: 'Néyau' },
-          { name: 'Niyo' },
-          { name: 'Towi' }
+        'uf': [
+          { 'name': 'Gwibwen' },
+          { 'name': 'Néouolé' },
+          { 'name': 'Néyau' },
+          { 'name': 'Niyo' },
+          { 'name': 'Towi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngere'
         },
-        uf: [
-          { name: 'Gere' },
-          { name: 'Guéré' }
+        'uf': [
+          { 'name': 'Gere' },
+          { 'name': 'Guéré' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyabwa'
         },
-        uf: { name: 'Niaboua' }
+        'uf': { 'name': 'Niaboua' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tchien'
         },
-        uf: [
-          { name: 'Gien' },
-          { name: 'Kien' },
-          { name: 'Tie' }
+        'uf': [
+          { 'name': 'Gien' },
+          { 'name': 'Kien' },
+          { 'name': 'Tie' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tepo'
         },
-        uf: [
-          { name: 'Kroumen' },
-          { name: 'Tewi' }
+        'uf': [
+          { 'name': 'Kroumen' },
+          { 'name': 'Tewi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vata'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wobe'
         },
-        uf: { name: 'Ouobe' }
+        'uf': { 'name': 'Ouobe' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kua',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kua',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kuanyama'
     },
-    code: 'kua',
-    uf: [
-      { name: 'Cuanhama' },
-      { name: 'Kwanyama' },
-      { name: 'Ovambo (Kuanyama)' }
+    'code': 'kua',
+    'uf': [
+      { 'name': 'Cuanhama' },
+      { 'name': 'Kwanyama' },
+      { 'name': 'Ovambo (Kuanyama)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kum',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kum',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kumyk'
     },
-    code: 'kum'
+    'code': 'kum'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kur',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kur',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kurdish'
     },
-    code: 'kur',
-    uf: [
-      { name: 'Kurmanji' },
+    'code': 'kur',
+    'uf': [
+      { 'name': 'Kurmanji' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mukri'
         }
@@ -10219,482 +10219,482 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kru',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kru',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kurukh'
     },
-    code: 'kru',
-    uf: [
-      { name: 'Kurux' },
-      { name: 'Oraon' },
-      { name: 'Uraon' }
+    'code': 'kru',
+    'uf': [
+      { 'name': 'Kurux' },
+      { 'name': 'Oraon' },
+      { 'name': 'Uraon' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/kus',
-    name: 'Kusaie',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/kus',
+    'name': 'Kusaie',
+    'code': {
       '-status': 'obsolete',
       '#text': 'kus'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/kir',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kir',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kyrgyz'
     },
-    code: 'kir',
-    uf: [
-      { name: 'Kara-Kirghiz' },
-      { name: 'Kirghiz' }
+    'code': 'kir',
+    'uf': [
+      { 'name': 'Kara-Kirghiz' },
+      { 'name': 'Kirghiz' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/lad',
-    name: 'Ladino',
-    code: 'lad',
-    uf: [
-      { name: 'Judeo-Spanish' },
-      { name: 'Judesmo' },
+    'uri': 'info:lc/vocabulary/languages/lad',
+    'name': 'Ladino',
+    'code': 'lad',
+    'uf': [
+      { 'name': 'Judeo-Spanish' },
+      { 'name': 'Judesmo' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ḥakétia'
         },
-        uf: [
-          { name: 'Ḥakétie' },
-          { name: 'Haketiya' },
-          { name: 'Ḥakitía' },
-          { name: 'Haquetía' },
-          { name: 'Haquetiya' }
+        'uf': [
+          { 'name': 'Ḥakétie' },
+          { 'name': 'Haketiya' },
+          { 'name': 'Ḥakitía' },
+          { 'name': 'Haquetía' },
+          { 'name': 'Haquetiya' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/lah',
-    name: 'Lahndā',
-    code: 'lah',
-    uf: [
-      { name: 'Jaṭkī' },
-      { name: 'Lahndi' },
-      { name: 'Panjabi, Western' },
-      { name: 'Western Panjabi' },
+    'uri': 'info:lc/vocabulary/languages/lah',
+    'name': 'Lahndā',
+    'code': 'lah',
+    'uf': [
+      { 'name': 'Jaṭkī' },
+      { 'name': 'Lahndi' },
+      { 'name': 'Panjabi, Western' },
+      { 'name': 'Western Panjabi' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hindkōo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khetrānī'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pōṭhwārī'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Siraiki'
         },
-        uf: [
-          { name: 'Bahawalpuri' },
-          { name: 'Lahnda, Southern' },
-          { name: 'Multani' },
-          { name: 'Mutani' },
-          { name: 'Panjabi, Southern' },
-          { name: 'Reasati' },
-          { name: 'Riasati' },
-          { name: 'Saraiki' },
-          { name: 'Southern Lahnda' },
-          { name: 'Southern Panjabi' }
+        'uf': [
+          { 'name': 'Bahawalpuri' },
+          { 'name': 'Lahnda, Southern' },
+          { 'name': 'Multani' },
+          { 'name': 'Mutani' },
+          { 'name': 'Panjabi, Southern' },
+          { 'name': 'Reasati' },
+          { 'name': 'Riasati' },
+          { 'name': 'Saraiki' },
+          { 'name': 'Southern Lahnda' },
+          { 'name': 'Southern Panjabi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sirāikī Hindkī'
         },
-        uf: { name: 'Siraiki Lahndi' }
+        'uf': { 'name': 'Siraiki Lahndi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sirāikī Sindhī'
         },
-        uf: { name: 'Sindhi, Siraiki' }
+        'uf': { 'name': 'Sindhi, Siraiki' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lam',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lam',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lamba (Zambia and Congo)'
     },
-    code: 'lam'
+    'code': 'lam'
   },
   {
-    uri: 'info:lc/vocabulary/languages/lao',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lao',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lao'
     },
-    code: 'lao'
+    'code': 'lao'
   },
   {
-    uri: 'info:lc/vocabulary/languages/lat',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lat',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Latin'
     },
-    code: 'lat',
-    uf: [
-      { name: 'Latin, Vulgar' },
-      { name: 'Vulgar Latin' }
+    'code': 'lat',
+    'uf': [
+      { 'name': 'Latin, Vulgar' },
+      { 'name': 'Vulgar Latin' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/lav',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lav',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Latvian'
     },
-    code: 'lav',
-    uf: [
-      { name: 'Lettish' },
+    'code': 'lav',
+    'uf': [
+      { 'name': 'Lettish' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Latgalian'
         },
-        uf: [
-          { name: 'East Latvian' },
-          { name: 'High Latvian' },
-          { name: 'Letgalian' }
+        'uf': [
+          { 'name': 'East Latvian' },
+          { 'name': 'High Latvian' },
+          { 'name': 'Letgalian' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lez',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lez',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lezgian'
     },
-    code: 'lez'
+    'code': 'lez'
   },
   {
-    uri: 'info:lc/vocabulary/languages/lim',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lim',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Limburgish'
     },
-    code: 'lim',
-    uf: { name: 'Limburger' }
+    'code': 'lim',
+    'uf': { 'name': 'Limburger' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/lin',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lin',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lingala'
     },
-    code: 'lin',
-    uf: [
-      { name: 'Bangala (Congo)' },
-      { name: 'Mangala (Congo)' },
-      { name: 'Ngala (Congo)' }
+    'code': 'lin',
+    'uf': [
+      { 'name': 'Bangala (Congo)' },
+      { 'name': 'Mangala (Congo)' },
+      { 'name': 'Ngala (Congo)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lit',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lit',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lithuanian'
     },
-    code: 'lit'
+    'code': 'lit'
   },
   {
-    uri: 'info:lc/vocabulary/languages/jbo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/jbo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lojban (Artificial language)'
     },
-    code: 'jbo'
+    'code': 'jbo'
   },
   {
-    uri: 'info:lc/vocabulary/languages/nds',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nds',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Low German'
     },
-    code: 'nds',
-    uf: [
-      { name: 'German, Low' },
-      { name: 'Low Saxon' },
-      { name: 'Plattdeutsch' },
-      { name: 'Plautdietsch' },
-      { name: 'Saxon, Low' }
+    'code': 'nds',
+    'uf': [
+      { 'name': 'German, Low' },
+      { 'name': 'Low Saxon' },
+      { 'name': 'Plattdeutsch' },
+      { 'name': 'Plautdietsch' },
+      { 'name': 'Saxon, Low' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/dsb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/dsb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lower Sorbian'
     },
-    code: 'dsb',
-    uf: { name: 'Sorbian, Lower' }
+    'code': 'dsb',
+    'uf': { 'name': 'Sorbian, Lower' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/loz',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/loz',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lozi'
     },
-    code: 'loz',
-    uf: [
-      { name: 'Kololo' },
-      { name: 'Rozi' },
-      { name: 'Sikololo' }
+    'code': 'loz',
+    'uf': [
+      { 'name': 'Kololo' },
+      { 'name': 'Rozi' },
+      { 'name': 'Sikololo' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lub',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lub',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Luba-Katanga'
     },
-    code: 'lub',
-    uf: [
-      { name: 'Chiluba' },
-      { name: 'Katanga' }
+    'code': 'lub',
+    'uf': [
+      { 'name': 'Chiluba' },
+      { 'name': 'Katanga' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lua',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lua',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Luba-Lulua'
     },
-    code: 'lua',
-    uf: [
-      { name: 'Ciluba' },
-      { name: 'Kalebwe (Luba-Lulua)' },
-      { name: 'Luba, Western' },
-      { name: 'Luba-Kasai' },
-      { name: 'Western Luba' }
+    'code': 'lua',
+    'uf': [
+      { 'name': 'Ciluba' },
+      { 'name': 'Kalebwe (Luba-Lulua)' },
+      { 'name': 'Luba, Western' },
+      { 'name': 'Luba-Kasai' },
+      { 'name': 'Western Luba' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lui',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lui',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Luiseño'
     },
-    code: 'lui'
+    'code': 'lui'
   },
   {
-    uri: 'info:lc/vocabulary/languages/smj',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/smj',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lule Sami'
     },
-    code: 'smj',
-    uf: [
-      { name: 'Lapp, Swedish' },
-      { name: 'Sami, Lule' },
-      { name: 'Swedish Lapp' }
+    'code': 'smj',
+    'uf': [
+      { 'name': 'Lapp, Swedish' },
+      { 'name': 'Sami, Lule' },
+      { 'name': 'Swedish Lapp' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lun',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lun',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lunda'
     },
-    code: 'lun'
+    'code': 'lun'
   },
   {
-    uri: 'info:lc/vocabulary/languages/luo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/luo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Luo (Kenya and Tanzania)'
     },
-    code: 'luo',
-    uf: [
-      { name: 'Dho Luo' },
-      { name: 'Gaya' },
-      { name: 'Jo Luo' },
-      { name: 'Kavirondo, Nilotic' },
-      { name: 'Nife' },
-      { name: 'Nilotic Kavirondo' },
-      { name: 'Nyife' },
-      { name: 'Wagaya' }
+    'code': 'luo',
+    'uf': [
+      { 'name': 'Dho Luo' },
+      { 'name': 'Gaya' },
+      { 'name': 'Jo Luo' },
+      { 'name': 'Kavirondo, Nilotic' },
+      { 'name': 'Nife' },
+      { 'name': 'Nilotic Kavirondo' },
+      { 'name': 'Nyife' },
+      { 'name': 'Wagaya' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lus',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lus',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Lushai'
     },
-    code: 'lus',
-    uf: [
-      { name: 'Dulien' },
-      { name: 'Mizo' },
-      { name: 'Sailau' }
+    'code': 'lus',
+    'uf': [
+      { 'name': 'Dulien' },
+      { 'name': 'Mizo' },
+      { 'name': 'Sailau' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ltz',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ltz',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Luxembourgish'
     },
-    code: 'ltz',
-    uf: [
-      { name: 'Letzebuergesch' },
-      { name: 'Letzeburgesch' },
-      { name: 'Luxembourgeois' },
-      { name: 'Luxemburgian' }
+    'code': 'ltz',
+    'uf': [
+      { 'name': 'Letzebuergesch' },
+      { 'name': 'Letzeburgesch' },
+      { 'name': 'Luxembourgeois' },
+      { 'name': 'Luxemburgian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mac',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mac',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Macedonian'
     },
-    code: 'mac',
-    uf: [
-      { name: 'Bǎlgarski (Macedonian)' },
-      { name: 'Balgàrtzki (Macedonian)' },
-      { name: 'Bolgàrtski (Macedonian)' },
-      { name: 'Bulgàrtski (Macedonian)' },
-      { name: 'Dópia' },
-      { name: 'Entópia' },
-      { name: 'Macedonian Slavic' },
-      { name: 'Makedoniski' },
-      { name: 'Makedonski' },
-      { name: 'Slavic (Macedonian)' },
-      { name: 'Slaviká (Macedonian)' },
-      { name: 'Slavomacedonian' }
+    'code': 'mac',
+    'uf': [
+      { 'name': 'Bǎlgarski (Macedonian)' },
+      { 'name': 'Balgàrtzki (Macedonian)' },
+      { 'name': 'Bolgàrtski (Macedonian)' },
+      { 'name': 'Bulgàrtski (Macedonian)' },
+      { 'name': 'Dópia' },
+      { 'name': 'Entópia' },
+      { 'name': 'Macedonian Slavic' },
+      { 'name': 'Makedoniski' },
+      { 'name': 'Makedonski' },
+      { 'name': 'Slavic (Macedonian)' },
+      { 'name': 'Slaviká (Macedonian)' },
+      { 'name': 'Slavomacedonian' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mad',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mad',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Madurese'
     },
-    code: 'mad'
+    'code': 'mad'
   },
   {
-    uri: 'info:lc/vocabulary/languages/mag',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mag',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Magahi'
     },
-    code: 'mag',
-    uf: [
-      { name: 'Bihari (Magahi)' },
-      { name: 'Magadhi' },
-      { name: 'Magaya' },
-      { name: 'Maghadi' },
-      { name: 'Maghai' },
-      { name: 'Maghaya' },
-      { name: 'Maghori' },
-      { name: 'Magi (India)' },
-      { name: 'Magodhi' },
-      { name: 'Megahi' }
+    'code': 'mag',
+    'uf': [
+      { 'name': 'Bihari (Magahi)' },
+      { 'name': 'Magadhi' },
+      { 'name': 'Magaya' },
+      { 'name': 'Maghadi' },
+      { 'name': 'Maghai' },
+      { 'name': 'Maghaya' },
+      { 'name': 'Maghori' },
+      { 'name': 'Magi (India)' },
+      { 'name': 'Magodhi' },
+      { 'name': 'Megahi' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mai',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mai',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Maithili'
     },
-    code: 'mai',
-    uf: [
-      { name: 'Apabhramsa (Maithili)' },
-      { name: 'Bihari (Maithili)' },
-      { name: 'Maitili' },
-      { name: 'Maitli' },
-      { name: 'Methli' },
-      { name: 'Tirahutia' },
-      { name: 'Tirhuti' },
-      { name: 'Tirhutia' },
+    'code': 'mai',
+    'uf': [
+      { 'name': 'Apabhramsa (Maithili)' },
+      { 'name': 'Bihari (Maithili)' },
+      { 'name': 'Maitili' },
+      { 'name': 'Maitli' },
+      { 'name': 'Methli' },
+      { 'name': 'Tirahutia' },
+      { 'name': 'Tirhuti' },
+      { 'name': 'Tirhutia' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khotta (Maithili)'
         },
-        uf: [
-          { name: 'Eastern Maithili' },
-          { name: 'Khoratha' }
+        'uf': [
+          { 'name': 'Eastern Maithili' },
+          { 'name': 'Khoratha' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mak',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mak',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Makasar'
     },
-    code: 'mak',
-    uf: { name: 'Macassarese' }
+    'code': 'mak',
+    'uf': { 'name': 'Macassarese' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mlg',
-    name: 'Malagasy',
-    code: 'mlg',
-    uf: [
-      { name: 'Hova' },
-      { name: 'Madagascan' },
-      { name: 'Malgache' },
-      { name: 'Merina' },
+    'uri': 'info:lc/vocabulary/languages/mlg',
+    'name': 'Malagasy',
+    'code': 'mlg',
+    'uf': [
+      { 'name': 'Hova' },
+      { 'name': 'Madagascan' },
+      { 'name': 'Malgache' },
+      { 'name': 'Merina' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bara (Madagascar)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Betsileo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Masikoro'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sakalava'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tsimihety'
         }
@@ -10702,20 +10702,20 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mla',
-    name: 'Malagasy',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/mla',
+    'name': 'Malagasy',
+    'code': {
       '-status': 'obsolete',
       '#text': 'mla'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/may',
-    name: 'Malay',
-    code: 'may',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/may',
+    'name': 'Malay',
+    'code': 'may',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Palembang Malay'
       }
@@ -10723,13 +10723,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mal',
-    name: 'Malayalam',
-    code: 'mal',
-    uf: [
-      { name: 'Malabar' },
+    'uri': 'info:lc/vocabulary/languages/mal',
+    'name': 'Malayalam',
+    'code': 'mal',
+    'uf': [
+      { 'name': 'Malabar' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moplah'
         }
@@ -10737,540 +10737,540 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mlt',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mlt',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Maltese'
     },
-    code: 'mlt'
+    'code': 'mlt'
   },
   {
-    uri: 'info:lc/vocabulary/languages/mnc',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mnc',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Manchu'
     },
-    code: 'mnc'
+    'code': 'mnc'
   },
   {
-    uri: 'info:lc/vocabulary/languages/mdr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mdr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mandar'
     },
-    code: 'mdr',
-    uf: { name: 'Andian' }
+    'code': 'mdr',
+    'uf': { 'name': 'Andian' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/man',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/man',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mandingo'
     },
-    code: 'man',
-    uf: [
-      { name: 'Malinka' },
-      { name: 'Mandeka' },
-      { name: 'Maninka' },
-      { name: 'Meninka' }
+    'code': 'man',
+    'uf': [
+      { 'name': 'Malinka' },
+      { 'name': 'Mandeka' },
+      { 'name': 'Maninka' },
+      { 'name': 'Meninka' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mni',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mni',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Manipuri'
     },
-    code: 'mni',
-    uf: { name: 'Meithei' }
+    'code': 'mni',
+    'uf': { 'name': 'Meithei' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mno',
-    name: 'Manobo languages',
-    code: 'mno',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mno',
+    'name': 'Manobo languages',
+    'code': 'mno',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Agusan Manobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ata Manobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Binukid Manobo'
         },
-        uf: [
-          { name: 'Binokid' },
-          { name: 'Bukidnon' }
+        'uf': [
+          { 'name': 'Binokid' },
+          { 'name': 'Bukidnon' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cotabato Manobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dibabawon'
         },
-        uf: [
-          { name: 'Debabaon' },
-          { name: 'Dibabaon' },
-          { name: 'Mandaya' }
+        'uf': [
+          { 'name': 'Debabaon' },
+          { 'name': 'Dibabaon' },
+          { 'name': 'Mandaya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Higaonon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ilianen Manobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kagayanen'
         },
-        uf: { name: 'Cagayano Cillo' }
+        'uf': { 'name': 'Cagayano Cillo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manuvu'
         },
-        uf: [
-          { name: 'Bagobo, Upper' },
-          { name: 'Upper Bagobo' }
+        'uf': [
+          { 'name': 'Bagobo, Upper' },
+          { 'name': 'Upper Bagobo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'MatigSalug'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sarangani Manobo'
         },
-        uf: [
-          { name: 'Culamanes' },
-          { name: 'Kulaman' }
+        'uf': [
+          { 'name': 'Culamanes' },
+          { 'name': 'Kulaman' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Western Bukidnon Manobo'
         },
-        uf: [
-          { name: 'Bukidnon Manobo, Western' },
-          { name: 'Central Manobo' },
-          { name: 'Central Mindanao Manobo' }
+        'uf': [
+          { 'name': 'Bukidnon Manobo, Western' },
+          { 'name': 'Central Manobo' },
+          { 'name': 'Central Mindanao Manobo' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/glv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/glv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Manx'
     },
-    code: 'glv',
-    uf: { name: 'Manx Gaelic' }
+    'code': 'glv',
+    'uf': { 'name': 'Manx Gaelic' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/max',
-    name: 'Manx',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/max',
+    'name': 'Manx',
+    'code': {
       '-status': 'obsolete',
       '#text': 'max'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mao',
-    name: 'Maori',
-    code: 'mao',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/mao',
+    'name': 'Maori',
+    'code': 'mao',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'South Island Maori'
       },
-      uf: { name: 'Maori, South Island' }
+      'uf': { 'name': 'Maori, South Island' }
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/arn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mapuche'
     },
-    code: 'arn',
-    uf: [
-      { name: 'Araucanian' },
-      { name: 'Mapudungun' }
+    'code': 'arn',
+    'uf': [
+      { 'name': 'Araucanian' },
+      { 'name': 'Mapudungun' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mar',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mar',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Marathi'
     },
-    code: 'mar',
-    uf: [
-      { name: 'Mahratta' },
-      { name: 'Mahratti' },
-      { name: 'Murathee' },
+    'code': 'mar',
+    'uf': [
+      { 'name': 'Mahratta' },
+      { 'name': 'Mahratti' },
+      { 'name': 'Murathee' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Are'
         },
-        uf: [
-          { name: 'Ade Basha' },
-          { name: 'Aray' },
-          { name: 'Arrey' },
-          { name: 'Arya' },
-          { name: 'Kalika Arya Bhasha' }
+        'uf': [
+          { 'name': 'Ade Basha' },
+          { 'name': 'Aray' },
+          { 'name': 'Arrey' },
+          { 'name': 'Arya' },
+          { 'name': 'Kalika Arya Bhasha' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Koshti (Marathi)'
         },
-        uf: { name: 'Kosti (Marathi)' }
+        'uf': { 'name': 'Kosti (Marathi)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kunabi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Varhadi  Nagpuri'
         },
-        uf: [
-          { name: 'Berar Marathi' },
-          { name: 'Berari' },
-          { name: 'Dhanagari' },
-          { name: 'Kumbhari' },
-          { name: 'Madhya Pradesh Marathi' },
-          { name: 'Nagpuri (Varhadi Nagpuri)' },
-          { name: 'Nagpuri-Varhadi' },
-          { name: 'Varhadi-Nagpuri Marathi' }
+        'uf': [
+          { 'name': 'Berar Marathi' },
+          { 'name': 'Berari' },
+          { 'name': 'Dhanagari' },
+          { 'name': 'Kumbhari' },
+          { 'name': 'Madhya Pradesh Marathi' },
+          { 'name': 'Nagpuri (Varhadi Nagpuri)' },
+          { 'name': 'Nagpuri-Varhadi' },
+          { 'name': 'Varhadi-Nagpuri Marathi' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/chm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/chm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mari'
     },
-    code: 'chm',
-    uf: { name: 'Cheremissian' }
+    'code': 'chm',
+    'uf': { 'name': 'Cheremissian' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/mah',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mah',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Marshallese'
     },
-    code: 'mah',
-    uf: { name: 'Ebon' }
+    'code': 'mah',
+    'uf': { 'name': 'Ebon' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mwr',
-    name: 'Marwari',
-    code: 'mwr',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mwr',
+    'name': 'Marwari',
+    'code': 'mwr',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bikaneri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dingal'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mewari'
         },
-        uf: [
-          { name: 'Mevadi' },
-          { name: 'Mewa' },
-          { name: 'Mewadi' }
+        'uf': [
+          { 'name': 'Mevadi' },
+          { 'name': 'Mewa' },
+          { 'name': 'Mewadi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shekhawati'
         },
-        uf: { name: 'Sekhavati' }
+        'uf': { 'name': 'Sekhavati' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mas',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mas',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Maasai'
     },
-    code: 'mas',
-    uf: [
-      { name: 'Maa (Kenya and Tanzania)' },
-      { name: 'Masai' }
+    'code': 'mas',
+    'uf': [
+      { 'name': 'Maa (Kenya and Tanzania)' },
+      { 'name': 'Masai' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/myn',
-    name: 'Mayan languages',
-    code: 'myn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/myn',
+    'name': 'Mayan languages',
+    'code': 'myn',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Achi'
         },
-        uf: [
-          { name: 'Cubulco Achi' },
-          { name: 'Rabinal Achi' }
+        'uf': [
+          { 'name': 'Cubulco Achi' },
+          { 'name': 'Rabinal Achi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Akatek'
         },
-        uf: [
-          { name: 'Acateco' },
-          { name: 'Kanjobal, Western' },
-          { name: 'San Miguel Acatán Kanjobal' },
-          { name: 'Western Kanjobal' }
+        'uf': [
+          { 'name': 'Acateco' },
+          { 'name': 'Kanjobal, Western' },
+          { 'name': 'San Miguel Acatán Kanjobal' },
+          { 'name': 'Western Kanjobal' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Awakateko'
         },
-        uf: { name: 'Aguacatec' }
+        'uf': { 'name': 'Aguacatec' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cakchikel'
         },
-        uf: { name: 'Kacchiquel' }
+        'uf': { 'name': 'Kacchiquel' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chol'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chontal of Tabasco'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chorti'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chuj'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huastec'
         },
-        uf: [
-          { name: 'Guastec' },
-          { name: 'Wastek' }
+        'uf': [
+          { 'name': 'Guastec' },
+          { 'name': 'Wastek' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Itzá'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ixil'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jacalteca'
         },
-        uf: { name: 'Jakalteka' }
+        'uf': { 'name': 'Jakalteka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kanjobal'
         },
-        uf: { name: 'Conob' }
+        'uf': { 'name': 'Conob' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kekchi'
         },
-        uf: [
-          { name: 'Cacchi' },
-          { name: 'Ghec-chi' },
-          { name: 'Quekchi' }
+        'uf': [
+          { 'name': 'Cacchi' },
+          { 'name': 'Ghec-chi' },
+          { 'name': 'Quekchi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lacandon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mam'
         },
-        uf: { name: 'Zaklohpakap' }
+        'uf': { 'name': 'Zaklohpakap' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maya'
         },
-        uf: { name: 'Yucatecan' }
+        'uf': { 'name': 'Yucatecan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mochó'
         },
-        uf: { name: 'Motozintlec' }
+        'uf': { 'name': 'Motozintlec' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mopan'
         },
-        uf: { name: 'Manche' }
+        'uf': { 'name': 'Manche' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pokomam'
         },
-        uf: [
-          { name: 'Pocomam' },
-          { name: 'Poqomam' }
+        'uf': [
+          { 'name': 'Pocomam' },
+          { 'name': 'Poqomam' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pokonchi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Quiché'
         },
-        uf: [
-          { name: 'Kiché' },
-          { name: 'Utlateca' }
+        'uf': [
+          { 'name': 'Kiché' },
+          { 'name': 'Utlateca' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tectiteco'
         },
-        uf: { name: 'Teco (Mayan)' }
+        'uf': { 'name': 'Teco (Mayan)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tojolabal'
         },
-        uf: { name: 'Chañabal' }
+        'uf': { 'name': 'Chañabal' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tzeltal'
         },
-        uf: [
-          { name: 'Celdal' },
-          { name: 'Tseltal' },
-          { name: 'Zendal' }
+        'uf': [
+          { 'name': 'Celdal' },
+          { 'name': 'Tseltal' },
+          { 'name': 'Zendal' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tzotzil'
         },
-        uf: [
-          { name: 'Chamula' },
-          { name: 'Querene' },
-          { name: 'Zotzil' }
+        'uf': [
+          { 'name': 'Chamula' },
+          { 'name': 'Querene' },
+          { 'name': 'Zotzil' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tzutuhil'
         },
-        uf: { name: 'Zutuhil' }
+        'uf': { 'name': 'Zutuhil' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Uspanteca'
         }
@@ -11278,526 +11278,526 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/men',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/men',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mende'
     },
-    code: 'men'
+    'code': 'men'
   },
   {
-    uri: 'info:lc/vocabulary/languages/mic',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mic',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Micmac'
     },
-    code: 'mic'
+    'code': 'mic'
   },
   {
-    uri: 'info:lc/vocabulary/languages/min',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/min',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Minangkabau'
     },
-    code: 'min',
-    uf: { name: 'Menangkabau' }
+    'code': 'min',
+    'uf': { 'name': 'Menangkabau' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/mwl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mwl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mirandese'
     },
-    code: 'mwl'
+    'code': 'mwl'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mis',
-    name: 'Miscellaneous languages',
-    code: 'mis',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mis',
+    'name': 'Miscellaneous languages',
+    'code': 'mis',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Andamanese'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Burushaski'
         },
-        uf: [
-          { name: 'Boorishki' },
-          { name: 'Khajuna' }
+        'uf': [
+          { 'name': 'Boorishki' },
+          { 'name': 'Khajuna' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chukchi'
         },
-        uf: [
-          { name: 'Tchuktchi' },
-          { name: 'Tuski' }
+        'uf': [
+          { 'name': 'Tchuktchi' },
+          { 'name': 'Tuski' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Etruscan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gilyak'
         },
-        uf: [
-          { name: 'Guiliak' },
-          { name: 'Nivkh' }
+        'uf': [
+          { 'name': 'Guiliak' },
+          { 'name': 'Nivkh' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hattic'
         },
-        uf: [
-          { name: 'Hattian' },
-          { name: 'Khattic' },
-          { name: 'Khattili' },
-          { name: 'Khattish' },
-          { name: 'Proto-Hittite' }
+        'uf': [
+          { 'name': 'Hattian' },
+          { 'name': 'Khattic' },
+          { 'name': 'Khattili' },
+          { 'name': 'Khattish' },
+          { 'name': 'Proto-Hittite' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hurrian'
         },
-        uf: [
-          { name: 'Mitani' },
-          { name: 'Subarian' }
+        'uf': [
+          { 'name': 'Mitani' },
+          { 'name': 'Subarian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iberian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Indus script'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jarawa (India)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kamchadal'
         },
-        uf: { name: 'Itelmes' }
+        'uf': { 'name': 'Itelmes' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ket'
         },
-        uf: { name: 'Yenisei-Ostiak' }
+        'uf': { 'name': 'Yenisei-Ostiak' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Koryak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manipravalam (Malayalam)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mysian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nancowry'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nenets'
         },
-        uf: [
-          { name: 'Jurak' },
-          { name: 'Yurak' }
+        'uf': [
+          { 'name': 'Jurak' },
+          { 'name': 'Yurak' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nganasan'
         },
-        uf: { name: 'Tavgi' }
+        'uf': { 'name': 'Tavgi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nicobarese'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Palan'
         },
-        uf: { name: 'Pallan' }
+        'uf': { 'name': 'Pallan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shelta'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Urartian'
         },
-        uf: [
-          { name: 'Chaldean (Urartian)' },
-          { name: 'Khaldian' },
-          { name: 'Urartaean' },
-          { name: 'Urartic' },
-          { name: 'Vannic' }
+        'uf': [
+          { 'name': 'Chaldean (Urartian)' },
+          { 'name': 'Khaldian' },
+          { 'name': 'Urartaean' },
+          { 'name': 'Urartic' },
+          { 'name': 'Vannic' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yugh'
         },
-        uf: { name: 'Sym-Ketish' }
+        'uf': { 'name': 'Sym-Ketish' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yukaghir'
         },
-        uf: { name: 'Jukaghir' }
+        'uf': { 'name': 'Jukaghir' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/moh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/moh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mohawk'
     },
-    code: 'moh'
+    'code': 'moh'
   },
   {
-    uri: 'info:lc/vocabulary/languages/mdf',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mdf',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Moksha'
     },
-    code: 'mdf'
+    'code': 'mdf'
   },
   {
-    uri: 'info:lc/vocabulary/languages/mol',
-    name: 'Moldavian',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/mol',
+    'name': 'Moldavian',
+    'code': {
       '-status': 'obsolete',
       '#text': 'mol'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mkh',
-    name: 'Mon-Khmer (Other)',
-    code: 'mkh',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mkh',
+    'name': 'Mon-Khmer (Other)',
+    'code': 'mkh',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bahnar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Blang'
         },
-        uf: [
-          { name: 'Bulang' },
-          { name: 'Plang' },
-          { name: 'Pulang' },
-          { name: 'Samtao' }
+        'uf': [
+          { 'name': 'Bulang' },
+          { 'name': 'Plang' },
+          { 'name': 'Pulang' },
+          { 'name': 'Samtao' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chrau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cua'
         },
-        uf: [
-          { name: 'Bong Miew' },
-          { name: 'Kor' },
-          { name: 'Traw' }
+        'uf': [
+          { 'name': 'Bong Miew' },
+          { 'name': 'Kor' },
+          { 'name': 'Traw' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eastern Mnong'
         },
-        uf: { name: 'Mnong, Eastern' }
+        'uf': { 'name': 'Mnong, Eastern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hrê'
         },
-        uf: { name: 'Davak' }
+        'uf': { 'name': 'Davak' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jah Hut'
         },
-        uf: [
-          { name: 'Eastern Sakai' },
-          { name: 'Sakai, Eastern' }
+        'uf': [
+          { 'name': 'Eastern Sakai' },
+          { 'name': 'Sakai, Eastern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jeh'
         },
-        uf: [
-          { name: 'Die' },
-          { name: 'Yeh' }
+        'uf': [
+          { 'name': 'Die' },
+          { 'name': 'Yeh' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Katu'
         },
-        uf: [
-          { name: 'Attouat' },
-          { name: 'Khat' },
-          { name: 'Ta River Van Kieu' },
-          { name: 'Teu' },
-          { name: 'Thap' }
+        'uf': [
+          { 'name': 'Attouat' },
+          { 'name': 'Khat' },
+          { 'name': 'Ta River Van Kieu' },
+          { 'name': 'Teu' },
+          { 'name': 'Thap' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khmu\''
         },
-        uf: [
-          { name: 'Kamhmu' },
-          { name: 'Phouteng' }
+        'uf': [
+          { 'name': 'Kamhmu' },
+          { 'name': 'Phouteng' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Koho'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kui (Mon-Khmer)'
         },
-        uf: [
-          { name: 'Khmer, Old (Kui)' },
-          { name: 'Kuay' },
-          { name: 'Kuy' },
-          { name: 'Old Khmer (Kui)' },
-          { name: 'Suai' },
-          { name: 'Suay' }
+        'uf': [
+          { 'name': 'Khmer, Old (Kui)' },
+          { 'name': 'Kuay' },
+          { 'name': 'Kuy' },
+          { 'name': 'Old Khmer (Kui)' },
+          { 'name': 'Suai' },
+          { 'name': 'Suay' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Laven'
         },
-        uf: { name: 'Loven' }
+        'uf': { 'name': 'Loven' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lawa (Thailand)'
         },
-        uf: [
-          { name: 'La-oop' },
-          { name: 'Lava' },
-          { name: 'Lavua' },
-          { name: 'Luwa' }
+        'uf': [
+          { 'name': 'La-oop' },
+          { 'name': 'Lava' },
+          { 'name': 'Lavua' },
+          { 'name': 'Luwa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mah Meri'
         },
-        uf: [
-          { name: 'Besisi' },
-          { name: 'Cellate' }
+        'uf': [
+          { 'name': 'Besisi' },
+          { 'name': 'Cellate' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mon'
         },
-        uf: [
-          { name: 'Peguan' },
-          { name: 'Talaing' }
+        'uf': [
+          { 'name': 'Peguan' },
+          { 'name': 'Talaing' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Muong'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northern Khmer'
         },
-        uf: { name: 'Khmer, Northern' }
+        'uf': { 'name': 'Khmer, Northern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nyah Kur'
         },
-        uf: [
-          { name: 'Chao Bon' },
-          { name: 'Niakuol' }
+        'uf': [
+          { 'name': 'Chao Bon' },
+          { 'name': 'Niakuol' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pacoh'
         },
-        uf: [
-          { name: 'Bo' },
-          { name: 'River Van Kieu' }
+        'uf': [
+          { 'name': 'Bo' },
+          { 'name': 'River Van Kieu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rengao'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sedang'
         },
-        uf: [
-          { name: 'Cadong' },
-          { name: 'Dang (Sedang)' },
-          { name: 'Hadang' },
-          { name: 'Hdang' },
-          { name: 'Hotea' },
-          { name: 'Hoteang' },
-          { name: 'Kmrang' },
-          { name: 'Rotea' },
-          { name: 'Roteang' },
-          { name: 'Tang (Sedang)' },
-          { name: 'Xa' },
-          { name: 'Xodang' }
+        'uf': [
+          { 'name': 'Cadong' },
+          { 'name': 'Dang (Sedang)' },
+          { 'name': 'Hadang' },
+          { 'name': 'Hdang' },
+          { 'name': 'Hotea' },
+          { 'name': 'Hoteang' },
+          { 'name': 'Kmrang' },
+          { 'name': 'Rotea' },
+          { 'name': 'Roteang' },
+          { 'name': 'Tang (Sedang)' },
+          { 'name': 'Xa' },
+          { 'name': 'Xodang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Semai'
         },
-        uf: [
-          { name: 'Central Sakai' },
-          { name: 'Sakai, Central' },
-          { name: 'Senoi' }
+        'uf': [
+          { 'name': 'Central Sakai' },
+          { 'name': 'Sakai, Central' },
+          { 'name': 'Senoi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Semang'
         },
-        uf: [
-          { name: 'Kensiu' },
-          { name: 'Ngok Pa' }
+        'uf': [
+          { 'name': 'Kensiu' },
+          { 'name': 'Ngok Pa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Senoic languages'
         },
-        uf: [
-          { name: 'Aslian languages, Central' },
-          { name: 'Central Aslian languages' },
-          { name: 'Sakai languages' }
+        'uf': [
+          { 'name': 'Aslian languages, Central' },
+          { 'name': 'Central Aslian languages' },
+          { 'name': 'Sakai languages' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Srê'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Stieng'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Temiar'
         },
-        uf: [
-          { name: 'Northern Sakai' },
-          { name: 'Sakai, Northern' }
+        'uf': [
+          { 'name': 'Northern Sakai' },
+          { 'name': 'Sakai, Northern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wa'
         }
@@ -11805,53 +11805,53 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lol',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lol',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Mongo-Nkundu'
     },
-    code: 'lol',
-    uf: [
-      { name: 'Lolo (Congo)' },
-      { name: 'Lomongo' },
-      { name: 'Lonkundu' },
-      { name: 'Mongo' },
-      { name: 'Nkundu' }
+    'code': 'lol',
+    'uf': [
+      { 'name': 'Lolo (Congo)' },
+      { 'name': 'Lomongo' },
+      { 'name': 'Lonkundu' },
+      { 'name': 'Mongo' },
+      { 'name': 'Nkundu' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mon',
-    name: 'Mongolian',
-    code: 'mon',
-    uf: [
-      { name: 'Mongol' },
+    'uri': 'info:lc/vocabulary/languages/mon',
+    'name': 'Mongolian',
+    'code': 'mon',
+    'uf': [
+      { 'name': 'Mongol' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chahar'
         },
-        uf: { name: 'Čakhar' }
+        'uf': { 'name': 'Čakhar' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dariganga'
         },
-        uf: [
-          { name: 'Dar\'ganga' },
-          { name: 'Dariġangġ-a' },
-          { name: 'Darigangga' }
+        'uf': [
+          { 'name': 'Dar\'ganga' },
+          { 'name': 'Dariġangġ-a' },
+          { 'name': 'Darigangga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khalkha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ordos'
         }
@@ -11860,16 +11860,16 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mos',
-    name: 'Mooré',
-    code: 'mos',
-    uf: [
-      { name: 'Mole' },
-      { name: 'Moré' },
-      { name: 'Moshi' },
-      { name: 'Mossi' },
+    'uri': 'info:lc/vocabulary/languages/mos',
+    'name': 'Mooré',
+    'code': 'mos',
+    'uf': [
+      { 'name': 'Mole' },
+      { 'name': 'Moré' },
+      { 'name': 'Moshi' },
+      { 'name': 'Mossi' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yana (Burkina Faso and Togo)'
         }
@@ -11877,2780 +11877,2780 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/mul',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mul',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Multiple languages'
     },
-    code: 'mul'
+    'code': 'mul'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mun',
-    name: 'Munda (Other)',
-    code: 'mun',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mun',
+    'name': 'Munda (Other)',
+    'code': 'mun',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Asuri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bhumij'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ho'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kharia'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Korwa'
         },
-        uf: { name: 'Korava (Munda)' }
+        'uf': { 'name': 'Korava (Munda)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kurku'
         },
-        uf: [
-          { name: 'Bondeya' },
-          { name: 'Bopchi' },
-          { name: 'Kirku' },
-          { name: 'Korakū' },
-          { name: 'Korki' },
-          { name: 'Korku' },
-          { name: 'Kuri (India)' }
+        'uf': [
+          { 'name': 'Bondeya' },
+          { 'name': 'Bopchi' },
+          { 'name': 'Kirku' },
+          { 'name': 'Korakū' },
+          { 'name': 'Korki' },
+          { 'name': 'Korku' },
+          { 'name': 'Kuri (India)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mundari'
         },
-        uf: { name: 'Kohl' }
+        'uf': { 'name': 'Kohl' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nihali'
         },
-        uf: { name: 'Nahali' }
+        'uf': { 'name': 'Nahali' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sora'
         },
-        uf: [
-          { name: 'Sabara' },
-          { name: 'Saora' },
-          { name: 'Savara' },
-          { name: 'Sawara' }
+        'uf': [
+          { 'name': 'Sabara' },
+          { 'name': 'Saora' },
+          { 'name': 'Savara' },
+          { 'name': 'Sawara' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nah',
-    name: 'Nahuatl',
-    code: 'nah',
-    uf: [
-      { name: 'Aztec' },
-      { name: 'Mexican' },
+    'uri': 'info:lc/vocabulary/languages/nah',
+    'name': 'Nahuatl',
+    'code': 'nah',
+    'uf': [
+      { 'name': 'Aztec' },
+      { 'name': 'Mexican' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pipil'
         },
-        uf: { name: 'Nahuat' }
+        'uf': { 'name': 'Nahuat' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nau',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nau',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nauru'
     },
-    code: 'nau'
+    'code': 'nau'
   },
   {
-    uri: 'info:lc/vocabulary/languages/nav',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nav',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Navajo'
     },
-    code: 'nav'
+    'code': 'nav'
   },
   {
-    uri: 'info:lc/vocabulary/languages/nbl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nbl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ndebele (South Africa)'
     },
-    code: 'nbl',
-    uf: [
-      { name: 'Ndzundza' },
-      { name: 'Nrebele (South Africa)' },
-      { name: 'Transvaal Ndebele' }
+    'code': 'nbl',
+    'uf': [
+      { 'name': 'Ndzundza' },
+      { 'name': 'Nrebele (South Africa)' },
+      { 'name': 'Transvaal Ndebele' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nde',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nde',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ndebele (Zimbabwe)'
     },
-    code: 'nde',
-    uf: [
-      { name: 'Nrebele (Zimbabwe)' },
-      { name: 'Sindebele' },
-      { name: 'Tebele' }
+    'code': 'nde',
+    'uf': [
+      { 'name': 'Nrebele (Zimbabwe)' },
+      { 'name': 'Sindebele' },
+      { 'name': 'Tebele' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ndo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ndo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ndonga'
     },
-    code: 'ndo',
-    uf: [
-      { name: 'Ambo (Angola and Namibia)' },
-      { name: 'Oshindonga' },
-      { name: 'Oshiwambo' },
-      { name: 'Ovambo (Ndonga)' }
+    'code': 'ndo',
+    'uf': [
+      { 'name': 'Ambo (Angola and Namibia)' },
+      { 'name': 'Oshindonga' },
+      { 'name': 'Oshiwambo' },
+      { 'name': 'Ovambo (Ndonga)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nap',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nap',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Neapolitan Italian'
     },
-    code: 'nap'
+    'code': 'nap'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nep',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nep',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nepali'
     },
-    code: 'nep',
-    uf: [
-      { name: 'Gorkhali' },
-      { name: 'Gurkhali' },
-      { name: 'Khas' },
-      { name: 'Khaskura' },
-      { name: 'Lhotshammikha' },
-      { name: 'Naipali' },
-      { name: 'Nepalese' },
-      { name: 'Parbate' },
-      { name: 'Parbatiya' },
-      { name: 'Purbutti' },
+    'code': 'nep',
+    'uf': [
+      { 'name': 'Gorkhali' },
+      { 'name': 'Gurkhali' },
+      { 'name': 'Khas' },
+      { 'name': 'Khaskura' },
+      { 'name': 'Lhotshammikha' },
+      { 'name': 'Naipali' },
+      { 'name': 'Nepalese' },
+      { 'name': 'Parbate' },
+      { 'name': 'Parbatiya' },
+      { 'name': 'Purbutti' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baitadi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kumali'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Parvati'
         },
-        uf: { name: 'Parbati' }
+        'uf': { 'name': 'Parbati' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/new',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/new',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Newari'
     },
-    code: 'new'
+    'code': 'new'
   },
   {
-    uri: 'info:lc/vocabulary/languages/nwc',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nwc',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Newari, Old'
     },
-    code: 'nwc',
-    uf: { name: 'Old Newari' }
+    'code': 'nwc',
+    'uf': { 'name': 'Old Newari' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/nia',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nia',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nias'
     },
-    code: 'nia'
+    'code': 'nia'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nic',
-    name: 'Niger-Kordofanian (Other)',
-    code: 'nic',
-    uf: [
-      { name: 'Niger-Congo (Other)' },
+    'uri': 'info:lc/vocabulary/languages/nic',
+    'name': 'Niger-Kordofanian (Other)',
+    'code': 'nic',
+    'uf': [
+      { 'name': 'Niger-Congo (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abidji'
         },
-        uf: [
-          { name: 'Adidji' },
-          { name: 'Ari (Côte d\'Ivoire)' }
+        'uf': [
+          { 'name': 'Adidji' },
+          { 'name': 'Ari (Côte d\'Ivoire)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ahanta'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aja (Benin and Togo)'
         },
-        uf: { name: 'Adja' }
+        'uf': { 'name': 'Adja' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alladian'
         },
-        uf: [
-          { name: 'Aladian' },
-          { name: 'Aladyã' },
-          { name: 'Aladyan' },
-          { name: 'Alagia' },
-          { name: 'Alagian' },
-          { name: 'Alagya' },
-          { name: 'Alajan' },
-          { name: 'Alladyan' },
-          { name: 'Allagia' },
-          { name: 'Allagian language' }
+        'uf': [
+          { 'name': 'Aladian' },
+          { 'name': 'Aladyã' },
+          { 'name': 'Aladyan' },
+          { 'name': 'Alagia' },
+          { 'name': 'Alagian' },
+          { 'name': 'Alagya' },
+          { 'name': 'Alajan' },
+          { 'name': 'Alladyan' },
+          { 'name': 'Allagia' },
+          { 'name': 'Allagian language' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anufo'
         },
-        uf: { name: 'Chakosi' }
+        'uf': { 'name': 'Chakosi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anyi'
         },
-        uf: { name: 'Agni' }
+        'uf': { 'name': 'Agni' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Attie'
         },
-        uf: [
-          { name: 'Akye' },
-          { name: 'Kurobu' }
+        'uf': [
+          { 'name': 'Akye' },
+          { 'name': 'Kurobu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Avikam'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Awutu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Babungo'
         },
-        uf: { name: 'Ngo' }
+        'uf': { 'name': 'Ngo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bafut'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baka (Cameroon and Gabon)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balanta-Ganja'
         },
-        uf: [
-          { name: 'Alante (Senegal)' },
-          { name: 'Balanda (Senegal)' },
-          { name: 'Balant (Senegal)' },
-          { name: 'Balante (Senegal)' },
-          { name: 'Balãt' },
-          { name: 'Ballante (Senegal) ' },
-          { name: 'Belante (Senegal)' },
-          { name: 'Brassa (Senegal)' },
-          { name: 'Bulanda (Senegal)' },
-          { name: 'Fca' },
-          { name: 'Fjaa' },
-          { name: 'Fraase' }
+        'uf': [
+          { 'name': 'Alante (Senegal)' },
+          { 'name': 'Balanda (Senegal)' },
+          { 'name': 'Balant (Senegal)' },
+          { 'name': 'Balante (Senegal)' },
+          { 'name': 'Balãt' },
+          { 'name': 'Ballante (Senegal) ' },
+          { 'name': 'Belante (Senegal)' },
+          { 'name': 'Brassa (Senegal)' },
+          { 'name': 'Bulanda (Senegal)' },
+          { 'name': 'Fca' },
+          { 'name': 'Fjaa' },
+          { 'name': 'Fraase' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balanta-Kentohe'
         },
-        uf: [
-          { name: 'Alante (Balanta-Kentohe)' },
-          { name: 'Balanda (Balanta-Kentohe)' },
-          { name: 'Balant (Balanta-Kentohe)' },
-          { name: 'Balanta' },
-          { name: 'Balante (Balanta-Kentohe)' },
-          { name: 'Ballante (Balanta-Kentohe) ' },
-          { name: 'Belante (Balanta-Kentohe)' },
-          { name: 'Brassa (Balanta-Kentohe)' },
-          { name: 'Bulanda (Balanta-Kentohe)' },
-          { name: 'Frase' }
+        'uf': [
+          { 'name': 'Alante (Balanta-Kentohe)' },
+          { 'name': 'Balanda (Balanta-Kentohe)' },
+          { 'name': 'Balant (Balanta-Kentohe)' },
+          { 'name': 'Balanta' },
+          { 'name': 'Balante (Balanta-Kentohe)' },
+          { 'name': 'Ballante (Balanta-Kentohe) ' },
+          { 'name': 'Belante (Balanta-Kentohe)' },
+          { 'name': 'Brassa (Balanta-Kentohe)' },
+          { 'name': 'Bulanda (Balanta-Kentohe)' },
+          { 'name': 'Frase' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bamun'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bandial'
         },
-        uf: [
-          { name: 'Banjaal' },
-          { name: 'Eegima' },
-          { name: 'Eegimaa' }
+        'uf': [
+          { 'name': 'Banjaal' },
+          { 'name': 'Eegima' },
+          { 'name': 'Eegimaa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bariba'
         },
-        uf: [
-          { name: 'Bargu' },
-          { name: 'Berba (Benin and Nigeria)' }
+        'uf': [
+          { 'name': 'Bargu' },
+          { 'name': 'Berba (Benin and Nigeria)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bassari'
         },
-        uf: [
-          { name: 'Ayan' },
-          { name: 'Biyan' },
-          { name: 'Wo' }
+        'uf': [
+          { 'name': 'Ayan' },
+          { 'name': 'Biyan' },
+          { 'name': 'Wo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baule'
         },
-        uf: { name: 'Baoulé' }
+        'uf': { 'name': 'Baoulé' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bedik'
         },
-        uf: [
-          { name: 'Budik' },
-          { name: 'Tenda' }
+        'uf': [
+          { 'name': 'Budik' },
+          { 'name': 'Tenda' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bekwarra'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bena (Nigeria)'
         },
-        uf: [
-          { name: 'Binna' },
-          { name: 'Buna (Bena)' },
-          { name: 'Ebina (Bena)' },
-          { name: 'Ebuna (Bena)' },
-          { name: 'Gbinna' },
-          { name: 'Yangeru' },
-          { name: 'Yongor' },
-          { name: 'Yungur (Bena)' }
+        'uf': [
+          { 'name': 'Binna' },
+          { 'name': 'Buna (Bena)' },
+          { 'name': 'Ebina (Bena)' },
+          { 'name': 'Ebuna (Bena)' },
+          { 'name': 'Gbinna' },
+          { 'name': 'Yangeru' },
+          { 'name': 'Yongor' },
+          { 'name': 'Yungur (Bena)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Benue-Congo languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Biali'
         },
-        uf: [
-          { name: 'Berba (Benin and Burkina Faso)' },
-          { name: 'Bieri' }
+        'uf': [
+          { 'name': 'Berba (Benin and Burkina Faso)' },
+          { 'name': 'Bieri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bijago'
         },
-        uf: { name: 'Bidyogo' }
+        'uf': { 'name': 'Bidyogo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Birifor'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Birom'
         },
-        uf: [
-          { name: 'Berom' },
-          { name: 'Bouroum' },
-          { name: 'Burum (Nigeria)' },
-          { name: 'Kibo' },
-          { name: 'Kibyen' },
-          { name: 'Shosho' }
+        'uf': [
+          { 'name': 'Berom' },
+          { 'name': 'Bouroum' },
+          { 'name': 'Burum (Nigeria)' },
+          { 'name': 'Kibo' },
+          { 'name': 'Kibyen' },
+          { 'name': 'Shosho' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bissa'
         },
-        uf: { name: 'Bisa (Eastern Mande)' }
+        'uf': { 'name': 'Bisa (Eastern Mande)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Blowo'
         },
-        uf: [
-          { name: 'Blo' },
-          { name: 'Dan-blo' },
-          { name: 'Western Dan' }
+        'uf': [
+          { 'name': 'Blo' },
+          { 'name': 'Dan-blo' },
+          { 'name': 'Western Dan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bobo Fing'
         },
-        uf: [
-          { name: 'Black Bobo' },
-          { name: 'Bulse' },
-          { name: 'Finng' }
+        'uf': [
+          { 'name': 'Black Bobo' },
+          { 'name': 'Bulse' },
+          { 'name': 'Finng' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bokyi'
         },
-        uf: [
-          { name: 'Boki' },
-          { name: 'Byoki' },
-          { name: 'Nfua' },
-          { name: 'Nki (Benue-Congo)' },
-          { name: 'Okii' },
-          { name: 'Osikom' },
-          { name: 'Osukam' },
-          { name: 'Uki (Benue-Congo)' },
-          { name: 'Vaaneroki' }
+        'uf': [
+          { 'name': 'Boki' },
+          { 'name': 'Byoki' },
+          { 'name': 'Nfua' },
+          { 'name': 'Nki (Benue-Congo)' },
+          { 'name': 'Okii' },
+          { 'name': 'Osikom' },
+          { 'name': 'Osukam' },
+          { 'name': 'Uki (Benue-Congo)' },
+          { 'name': 'Vaaneroki' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Boomu'
         },
-        uf: { name: 'Bomu' }
+        'uf': { 'name': 'Bomu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bozo'
         },
-        uf: [
-          { name: 'Sorko' },
-          { name: 'Sorogo' }
+        'uf': [
+          { 'name': 'Sorko' },
+          { 'name': 'Sorogo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Brissa'
         },
-        uf: { name: 'Anufo (Côte d\'Ivoire)' }
+        'uf': { 'name': 'Anufo (Côte d\'Ivoire)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bua languages'
         },
-        uf: { name: 'Boua languages' }
+        'uf': { 'name': 'Boua languages' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Buli'
         },
-        uf: [
-          { name: 'Builsa' },
-          { name: 'Bulea' },
-          { name: 'Bulugu' },
-          { name: 'Guresha' },
-          { name: 'Kanjaga' }
+        'uf': [
+          { 'name': 'Builsa' },
+          { 'name': 'Bulea' },
+          { 'name': 'Bulugu' },
+          { 'name': 'Guresha' },
+          { 'name': 'Kanjaga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Busa'
         },
-        uf: { name: 'Boko' }
+        'uf': { 'name': 'Boko' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bwamu'
         },
-        uf: [
-          { name: 'Bobo Wule' },
-          { name: 'Bouamou' }
+        'uf': [
+          { 'name': 'Bobo Wule' },
+          { 'name': 'Bouamou' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ci Gbe'
         },
-        uf: [
-          { name: 'Ayizo-Ci' },
-          { name: 'Ci' },
-          { name: 'Cigbe' },
-          { name: 'Tchi' },
-          { name: 'Tschi' }
+        'uf': [
+          { 'name': 'Ayizo-Ci' },
+          { 'name': 'Ci' },
+          { 'name': 'Cigbe' },
+          { 'name': 'Tchi' },
+          { 'name': 'Tschi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cross River Mbembe'
         },
-        uf: [
-          { name: 'Ekokoma' },
-          { name: 'Ifunubwa' },
-          { name: 'Oderiga' },
-          { name: 'Ofunobwam' },
-          { name: 'Okam' },
-          { name: 'Wakande' }
+        'uf': [
+          { 'name': 'Ekokoma' },
+          { 'name': 'Ifunubwa' },
+          { 'name': 'Oderiga' },
+          { 'name': 'Ofunobwam' },
+          { 'name': 'Okam' },
+          { 'name': 'Wakande' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dagaare'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dagbani'
         },
-        uf: { name: 'Dagomba' }
+        'uf': { 'name': 'Dagomba' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dan (Côte d\'Ivoire)'
         },
-        uf: [
-          { name: 'Gio' },
-          { name: 'Yacouba' }
+        'uf': [
+          { 'name': 'Gio' },
+          { 'name': 'Yacouba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Degema'
         },
-        uf: [
-          { name: 'Atala' },
-          { name: 'Udekama' }
+        'uf': [
+          { 'name': 'Atala' },
+          { 'name': 'Udekama' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Denya'
         },
-        uf: [
-          { name: 'Agnang' },
-          { name: 'Anyah' },
-          { name: 'Anyan' },
-          { name: 'Anyang' },
-          { name: 'Eyan' },
-          { name: 'Nyang (Denya)' },
-          { name: 'Obonya' },
-          { name: 'Takamanda' }
+        'uf': [
+          { 'name': 'Agnang' },
+          { 'name': 'Anyah' },
+          { 'name': 'Anyan' },
+          { 'name': 'Anyang' },
+          { 'name': 'Eyan' },
+          { 'name': 'Nyang (Denya)' },
+          { 'name': 'Obonya' },
+          { 'name': 'Takamanda' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Diola'
         },
-        uf: [
-          { name: 'Dyola' },
-          { name: 'Yola' }
+        'uf': [
+          { 'name': 'Dyola' },
+          { 'name': 'Yola' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Djimini'
         },
-        uf: [
-          { name: 'Dyimini' },
-          { name: 'Gimini' },
-          { name: 'Jimini' },
-          { name: 'Jinmini' }
+        'uf': [
+          { 'name': 'Dyimini' },
+          { 'name': 'Gimini' },
+          { 'name': 'Jimini' },
+          { 'name': 'Jinmini' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dogon'
         },
-        uf: [
-          { name: 'Habe' },
-          { name: 'Tombo' }
+        'uf': [
+          { 'name': 'Habe' },
+          { 'name': 'Tombo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ebira'
         },
-        uf: [
-          { name: 'Egbira' },
-          { name: 'Igbira' }
+        'uf': [
+          { 'name': 'Egbira' },
+          { 'name': 'Igbira' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eggon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ejagham'
         },
-        uf: [
-          { name: 'Central Ekoi' },
-          { name: 'Ekwe' },
-          { name: 'Ezam' }
+        'uf': [
+          { 'name': 'Central Ekoi' },
+          { 'name': 'Ekwe' },
+          { 'name': 'Ezam' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ekpeye'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Engenni'
         },
-        uf: [
-          { name: 'Egene' },
-          { name: 'Ngene' }
+        'uf': [
+          { 'name': 'Egene' },
+          { 'name': 'Ngene' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Esuulaalu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Etsako'
         },
-        uf: [
-          { name: 'Afenmai' },
-          { name: 'Iyekhee' },
-          { name: 'Kukuruku' },
-          { name: 'Yekhee' }
+        'uf': [
+          { 'name': 'Afenmai' },
+          { 'name': 'Iyekhee' },
+          { 'name': 'Kukuruku' },
+          { 'name': 'Yekhee' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fali (Cameroon)'
         },
-        uf: { name: 'Falli' }
+        'uf': { 'name': 'Falli' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Falor'
         },
-        uf: { name: 'Palor' }
+        'uf': { 'name': 'Palor' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Farefare'
         },
-        uf: [
-          { name: 'Frafra' },
-          { name: 'Gurenne' },
-          { name: 'Gurne' },
-          { name: 'Gurune' },
-          { name: 'Nankani' },
-          { name: 'Nankanse' },
-          { name: 'Ninkare' }
+        'uf': [
+          { 'name': 'Frafra' },
+          { 'name': 'Gurenne' },
+          { 'name': 'Gurne' },
+          { 'name': 'Gurune' },
+          { 'name': 'Nankani' },
+          { 'name': 'Nankanse' },
+          { 'name': 'Ninkare' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gbagyi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gbandi'
         },
-        uf: { name: 'Bandi' }
+        'uf': { 'name': 'Bandi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gen-Gbe'
         },
-        uf: [
-          { name: 'Gẽ' },
-          { name: 'Mina (Benin and Togo)' }
+        'uf': [
+          { 'name': 'Gẽ' },
+          { 'name': 'Mina (Benin and Togo)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gikyode'
         },
-        uf: [
-          { name: 'Chode' },
-          { name: 'Kyode' }
+        'uf': [
+          { 'name': 'Chode' },
+          { 'name': 'Kyode' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gonja'
         },
-        uf: { name: 'Guang' }
+        'uf': { 'name': 'Guang' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gua'
         },
-        uf: { name: 'Gwa (Ghana)' }
+        'uf': { 'name': 'Gwa (Ghana)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gun-Gbe'
         },
-        uf: [
-          { name: 'Alada' },
-          { name: 'Egun' }
+        'uf': [
+          { 'name': 'Alada' },
+          { 'name': 'Egun' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gurma'
         },
-        uf: [
-          { name: 'Gourmantché' },
-          { name: 'Gulmance' }
+        'uf': [
+          { 'name': 'Gourmantché' },
+          { 'name': 'Gulmance' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guyuk'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gweetaawu'
         },
-        uf: [
-          { name: 'Dan-gouéta' },
-          { name: 'Eastern Dan' },
-          { name: 'Gouéta' },
-          { name: 'Gwétaawo' }
+        'uf': [
+          { 'name': 'Dan-gouéta' },
+          { 'name': 'Eastern Dan' },
+          { 'name': 'Gouéta' },
+          { 'name': 'Gwétaawo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hanga (Ghana)'
         },
-        uf: { name: 'Anga (Ghana)' }
+        'uf': { 'name': 'Anga (Ghana)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hõne'
         },
-        uf: { name: 'Jukun of Gwana' }
+        'uf': { 'name': 'Jukun of Gwana' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Idoma'
         },
-        uf: { name: 'Oturkpo' }
+        'uf': { 'name': 'Oturkpo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Igede'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Igo'
         },
-        uf: [
-          { name: 'Ahlon' },
-          { name: 'Anlo' }
+        'uf': [
+          { 'name': 'Ahlon' },
+          { 'name': 'Anlo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ikwere'
         },
-        uf: { name: 'Oratta-Ikwerri' }
+        'uf': { 'name': 'Oratta-Ikwerri' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Indenie'
         },
-        uf: [
-          { name: 'Ndenie' },
-          { name: 'Ndenye' },
-          { name: 'Ndinian' },
-          { name: 'Ndyenye' }
+        'uf': [
+          { 'name': 'Ndenie' },
+          { 'name': 'Ndenye' },
+          { 'name': 'Ndinian' },
+          { 'name': 'Ndyenye' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Itsekiri'
         },
-        uf: { name: 'Isekiri' }
+        'uf': { 'name': 'Isekiri' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Izere'
         },
-        uf: { name: 'Jarawa (Nigeria)' }
+        'uf': { 'name': 'Jarawa (Nigeria)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Izi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jju'
         },
-        uf: [
-          { name: 'Ju (Benue-Congo)' },
-          { name: 'Kaje' }
+        'uf': [
+          { 'name': 'Ju (Benue-Congo)' },
+          { 'name': 'Kaje' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jowulu'
         },
-        uf: [
-          { name: 'Jo' },
-          { name: 'Samogho (Jowulu)' },
-          { name: 'Samoighokan' }
+        'uf': [
+          { 'name': 'Jo' },
+          { 'name': 'Samogho (Jowulu)' },
+          { 'name': 'Samoighokan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jukun'
         },
-        uf: { name: 'Kurorofa' }
+        'uf': { 'name': 'Kurorofa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaansa'
         },
-        uf: [
-          { name: 'Gã (Burkina Faso)' },
-          { name: 'Gan (Burkina Faso)' },
-          { name: 'Gane (Burkina Faso)' },
-          { name: 'Kaan (Burkina Faso)' },
-          { name: 'Kaanse' },
-          { name: 'Kãasa (Burkina Faso)' },
-          { name: 'Kan (Burkina Faso)' }
+        'uf': [
+          { 'name': 'Gã (Burkina Faso)' },
+          { 'name': 'Gan (Burkina Faso)' },
+          { 'name': 'Gane (Burkina Faso)' },
+          { 'name': 'Kaan (Burkina Faso)' },
+          { 'name': 'Kaanse' },
+          { 'name': 'Kãasa (Burkina Faso)' },
+          { 'name': 'Kan (Burkina Faso)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kabiye'
         },
-        uf: [
-          { name: 'Kabre' },
-          { name: 'Kabye' }
+        'uf': [
+          { 'name': 'Kabre' },
+          { 'name': 'Kabye' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kagoro (Mali)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kagoro (Nigeria)'
         },
-        uf: { name: 'Gworok' }
+        'uf': { 'name': 'Gworok' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kana'
         },
-        uf: [
-          { name: 'Khana (Benue-Congo)' },
-          { name: 'Koana' },
-          { name: 'Ogoni (Kana)' }
+        'uf': [
+          { 'name': 'Khana (Benue-Congo)' },
+          { 'name': 'Koana' },
+          { 'name': 'Ogoni (Kana)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karang (Cameroon)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kasem'
         },
-        uf: [
-          { name: 'Kasena' },
-          { name: 'Kasim' },
-          { name: 'Kassem' },
-          { name: 'Kassene' }
+        'uf': [
+          { 'name': 'Kasena' },
+          { 'name': 'Kasim' },
+          { 'name': 'Kassem' },
+          { 'name': 'Kassene' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kassonke'
         },
-        uf: { name: 'Khassonke' }
+        'uf': { 'name': 'Khassonke' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kenyang'
         },
-        uf: [
-          { name: 'Banjangi' },
-          { name: 'Banyang (Cameroon)' },
-          { name: 'Banyangi' },
-          { name: 'Bayangi' },
-          { name: 'Manyang' },
-          { name: 'Nyang (Kenyang)' }
+        'uf': [
+          { 'name': 'Banjangi' },
+          { 'name': 'Banyang (Cameroon)' },
+          { 'name': 'Banyangi' },
+          { 'name': 'Bayangi' },
+          { 'name': 'Manyang' },
+          { 'name': 'Nyang (Kenyang)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kissi'
         },
-        uf: { name: 'Kisi (West Africa)' }
+        'uf': { 'name': 'Kisi (West Africa)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Konkomba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Konni'
         },
-        uf: { name: 'Koma (Ghana)' }
+        'uf': { 'name': 'Koma (Ghana)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kposo'
         },
-        uf: [
-          { name: 'Akposo' },
-          { name: 'Ikposo' }
+        'uf': [
+          { 'name': 'Akposo' },
+          { 'name': 'Ikposo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Krongo'
         },
-        uf: [
-          { name: 'Kadumodi' },
-          { name: 'Kurungu' }
+        'uf': [
+          { 'name': 'Kadumodi' },
+          { 'name': 'Kurungu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kulango'
         },
-        uf: [
-          { name: 'Koulango' },
-          { name: 'Kpelego' },
-          { name: 'Nabe' },
-          { name: 'Ngwala' },
-          { name: 'Nkurange' },
-          { name: 'Zazere' }
+        'uf': [
+          { 'name': 'Koulango' },
+          { 'name': 'Kpelego' },
+          { 'name': 'Nabe' },
+          { 'name': 'Ngwala' },
+          { 'name': 'Nkurange' },
+          { 'name': 'Zazere' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuo (Cameroon and Chad)'
         },
-        uf: [
-          { name: 'Ko (Cameroon and Chad)' },
-          { name: 'Koh' }
+        'uf': [
+          { 'name': 'Ko (Cameroon and Chad)' },
+          { 'name': 'Koh' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuranko'
         },
-        uf: { name: 'Koranko' }
+        'uf': { 'name': 'Koranko' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kurumba'
         },
-        uf: [
-          { name: 'Deforo' },
-          { name: 'Foulse' },
-          { name: 'Fulse' },
-          { name: 'Koromfe' },
-          { name: 'Kouroumba' },
-          { name: 'Kurumfe' },
-          { name: 'Lilse' }
+        'uf': [
+          { 'name': 'Deforo' },
+          { 'name': 'Foulse' },
+          { 'name': 'Fulse' },
+          { 'name': 'Koromfe' },
+          { 'name': 'Kouroumba' },
+          { 'name': 'Kurumfe' },
+          { 'name': 'Lilse' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kusaal'
         },
-        uf: { name: 'Kusasi' }
+        'uf': { 'name': 'Kusasi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuteb'
         },
-        uf: [
-          { name: 'Ati (Kuteb)' },
-          { name: 'Jompre' },
-          { name: 'Kutep' },
-          { name: 'Kutev' },
-          { name: 'Mbarike' },
-          { name: 'Zumper' }
+        'uf': [
+          { 'name': 'Ati (Kuteb)' },
+          { 'name': 'Jompre' },
+          { 'name': 'Kutep' },
+          { 'name': 'Kutev' },
+          { 'name': 'Mbarike' },
+          { 'name': 'Zumper' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwanja'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kweni'
         },
-        uf: { name: 'Gouro' }
+        'uf': { 'name': 'Gouro' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lefana'
         },
-        uf: [
-          { name: 'Bouem' },
-          { name: 'Buem' },
-          { name: 'Bwem' }
+        'uf': [
+          { 'name': 'Bouem' },
+          { 'name': 'Buem' },
+          { 'name': 'Bwem' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ligbi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Limba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Limbum'
         },
-        uf: [
-          { name: 'Llimbumi' },
-          { name: 'Ndzungle' },
-          { name: 'Njungene' },
-          { name: 'Nsugni' },
-          { name: 'Wimbum' },
-          { name: 'Zungle' }
+        'uf': [
+          { 'name': 'Llimbumi' },
+          { 'name': 'Ndzungle' },
+          { 'name': 'Njungene' },
+          { 'name': 'Nsugni' },
+          { 'name': 'Wimbum' },
+          { 'name': 'Zungle' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lobi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Loko'
         },
-        uf: { name: 'Landogo' }
+        'uf': { 'name': 'Landogo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Loma'
         },
-        uf: [
-          { name: 'Baru' },
-          { name: 'Buzi' },
-          { name: 'Lorma' }
+        'uf': [
+          { 'name': 'Baru' },
+          { 'name': 'Buzi' },
+          { 'name': 'Lorma' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Longuda'
         },
-        uf: { name: 'Nunguda' }
+        'uf': { 'name': 'Nunguda' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lorhon'
         },
-        uf: { name: 'Loghon' }
+        'uf': { 'name': 'Loghon' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lukpa'
         },
-        uf: [
-          { name: 'Dompago' },
-          { name: 'Legba' },
-          { name: 'Ligba' },
-          { name: 'Ligbe' },
-          { name: 'Likpa' },
-          { name: 'Logba (Benin and Togo)' },
-          { name: 'Lokpa' },
-          { name: 'Lugba' }
+        'uf': [
+          { 'name': 'Dompago' },
+          { 'name': 'Legba' },
+          { 'name': 'Ligba' },
+          { 'name': 'Ligbe' },
+          { 'name': 'Likpa' },
+          { 'name': 'Logba (Benin and Togo)' },
+          { 'name': 'Lokpa' },
+          { 'name': 'Lugba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lyele'
         },
-        uf: { name: 'Lele (Burkina Faso)' }
+        'uf': { 'name': 'Lele (Burkina Faso)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mamara'
         },
-        uf: [
-          { name: 'Bamana (Senufo)' },
-          { name: 'Mianka' },
-          { name: 'Minianka' },
-          { name: 'Minyanka' }
+        'uf': [
+          { 'name': 'Bamana (Senufo)' },
+          { 'name': 'Mianka' },
+          { 'name': 'Minianka' },
+          { 'name': 'Minyanka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mambila'
         },
-        uf: [
-          { name: 'Lagubi' },
-          { name: 'Nor' },
-          { name: 'Tagbo' },
-          { name: 'Torbi' }
+        'uf': [
+          { 'name': 'Lagubi' },
+          { 'name': 'Nor' },
+          { 'name': 'Tagbo' },
+          { 'name': 'Torbi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mampruli'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandjak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mankanya'
         },
-        uf: [
-          { name: 'Bola (Portuguese Guinea)' },
-          { name: 'Brame' },
-          { name: 'Bulama' }
+        'uf': [
+          { 'name': 'Bola (Portuguese Guinea)' },
+          { 'name': 'Brame' },
+          { 'name': 'Bulama' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mankon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mano'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mayogo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbili'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbum'
         },
-        uf: { name: 'Mbam' }
+        'uf': { 'name': 'Mbam' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mi Gangam'
         },
-        uf: [
-          { name: 'Dye' },
-          { name: 'Gangam' },
-          { name: 'Ngangan' }
+        'uf': [
+          { 'name': 'Dye' },
+          { 'name': 'Gangam' },
+          { 'name': 'Ngangan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Migili'
         },
-        uf: { name: 'Koro Lafia' }
+        'uf': { 'name': 'Koro Lafia' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mo (Côte d\'Ivoire and Ghana)'
         },
-        uf: [
-          { name: 'Buru (Côte d\'Ivoire and Ghana)' },
-          { name: 'Deg' },
-          { name: 'Mmfo' }
+        'uf': [
+          { 'name': 'Buru (Côte d\'Ivoire and Ghana)' },
+          { 'name': 'Deg' },
+          { 'name': 'Mmfo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mumuye'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mundang'
         },
-        uf: { name: 'Moundang' }
+        'uf': { 'name': 'Moundang' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mungaka'
         },
-        uf: [
-          { name: 'Bali (Cameroon)' },
-          { name: 'Ngaaka' }
+        'uf': [
+          { 'name': 'Bali (Cameroon)' },
+          { 'name': 'Ngaaka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mwan'
         },
-        uf: [
-          { name: 'Mona' },
-          { name: 'Mouan' },
-          { name: 'Muan' },
-          { name: 'Muana' },
-          { name: 'Mwa' }
+        'uf': [
+          { 'name': 'Mona' },
+          { 'name': 'Mouan' },
+          { 'name': 'Muan' },
+          { 'name': 'Muana' },
+          { 'name': 'Mwa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nafaanra'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nawuri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nchumburu'
         },
-        uf: [
-          { name: 'Chumburung' },
-          { name: 'Kyongborong' },
-          { name: 'Nchimburu' },
-          { name: 'Nchummuru' }
+        'uf': [
+          { 'name': 'Chumburung' },
+          { 'name': 'Kyongborong' },
+          { 'name': 'Nchimburu' },
+          { 'name': 'Nchummuru' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ndogo-Sere languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngbaka'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngbaka ma\'bo'
         },
-        uf: [
-          { name: 'Bwaka' },
-          { name: 'Ngbaka limba' }
+        'uf': [
+          { 'name': 'Bwaka' },
+          { 'name': 'Ngbaka limba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nirere'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ninzo'
         },
-        uf: [
-          { name: 'Akiza' },
-          { name: 'Amar Tita' },
-          { name: 'Ancha' },
-          { name: 'Fadan Wate' },
-          { name: 'Gbhu D Amar Randfa' },
-          { name: 'Hate (Ninzo)' },
-          { name: 'Incha' },
-          { name: 'Kwasu' },
-          { name: 'Ninzam' },
-          { name: 'Nunzo' },
-          { name: 'Sambe' }
+        'uf': [
+          { 'name': 'Akiza' },
+          { 'name': 'Amar Tita' },
+          { 'name': 'Ancha' },
+          { 'name': 'Fadan Wate' },
+          { 'name': 'Gbhu D Amar Randfa' },
+          { 'name': 'Hate (Ninzo)' },
+          { 'name': 'Incha' },
+          { 'name': 'Kwasu' },
+          { 'name': 'Ninzam' },
+          { 'name': 'Nunzo' },
+          { 'name': 'Sambe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nkonya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nomaante'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Noon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Noone'
         },
-        uf: { name: 'Noni' }
+        'uf': { 'name': 'Noni' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northern Bullom'
         },
-        uf: { name: 'Bullom, Northern' }
+        'uf': { 'name': 'Bullom, Northern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nunuma'
         },
-        uf: [
-          { name: 'Nibulu' },
-          { name: 'Nouni' }
+        'uf': [
+          { 'name': 'Nibulu' },
+          { 'name': 'Nouni' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nupe'
         },
-        uf: { name: 'Nope' }
+        'uf': { 'name': 'Nope' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ogbronuagum'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oko'
         },
-        uf: [
-          { name: 'Ogori' },
-          { name: 'Ogori-Magongo' },
-          { name: 'Ogori-Osayen' },
-          { name: 'Oko-Eni-Osayen' },
-          { name: 'Osanyen' },
-          { name: 'Osanyin' },
-          { name: 'Osayen' }
+        'uf': [
+          { 'name': 'Ogori' },
+          { 'name': 'Ogori-Magongo' },
+          { 'name': 'Ogori-Osayen' },
+          { 'name': 'Oko-Eni-Osayen' },
+          { 'name': 'Osanyen' },
+          { 'name': 'Osanyin' },
+          { 'name': 'Osayen' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oku'
         },
-        uf: [
-          { name: 'Bvukoo' },
-          { name: 'Ebkuo' },
-          { name: 'Ekpwo' },
-          { name: 'Kuo (Oku)' },
-          { name: 'Ukfwo' },
-          { name: 'Uku (Oku)' }
+        'uf': [
+          { 'name': 'Bvukoo' },
+          { 'name': 'Ebkuo' },
+          { 'name': 'Ekpwo' },
+          { 'name': 'Kuo (Oku)' },
+          { 'name': 'Ukfwo' },
+          { 'name': 'Uku (Oku)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oron'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pinyin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Safaliba'
         },
-        uf: [
-          { name: 'Safalaba' },
-          { name: 'Safalba' },
-          { name: 'Safali' }
+        'uf': [
+          { 'name': 'Safalaba' },
+          { 'name': 'Safalba' },
+          { 'name': 'Safali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Samo (West Africa)'
         },
-        uf: [
-          { name: 'Goe' },
-          { name: 'Matya' },
-          { name: 'Maya (Burkina Faso)' },
-          { name: 'Samogo-Sane' },
-          { name: 'San (Eastern Mande)' },
-          { name: 'Sane' }
+        'uf': [
+          { 'name': 'Goe' },
+          { 'name': 'Matya' },
+          { 'name': 'Maya (Burkina Faso)' },
+          { 'name': 'Samogo-Sane' },
+          { 'name': 'San (Eastern Mande)' },
+          { 'name': 'Sane' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sanwi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sembla'
         },
-        uf: [
-          { name: 'Sambla' },
-          { name: 'Samogho-Senku' },
-          { name: 'Samogo-Senku' },
-          { name: 'Seeku' },
-          { name: 'Sembila' },
-          { name: 'Senku' },
-          { name: 'Southern Samo (Western Mande)' }
+        'uf': [
+          { 'name': 'Sambla' },
+          { 'name': 'Samogho-Senku' },
+          { 'name': 'Samogo-Senku' },
+          { 'name': 'Seeku' },
+          { 'name': 'Sembila' },
+          { 'name': 'Senku' },
+          { 'name': 'Southern Samo (Western Mande)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Senari'
         },
-        uf: { name: 'Senufo' }
+        'uf': { 'name': 'Senufo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Senya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sherbro'
         },
-        uf: [
-          { name: 'Bullom, Southern' },
-          { name: 'Southern Bullom' }
+        'uf': [
+          { 'name': 'Bullom, Southern' },
+          { 'name': 'Southern Bullom' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sissala'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Somba'
         },
-        uf: [
-          { name: 'Betammadibe' },
-          { name: 'Ditammari' },
-          { name: 'Tamaba' }
+        'uf': [
+          { 'name': 'Betammadibe' },
+          { 'name': 'Ditammari' },
+          { 'name': 'Tamaba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tagbana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tampulma'
         },
-        uf: { name: 'Tamprusi' }
+        'uf': { 'name': 'Tamprusi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Téén'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tem'
         },
-        uf: [
-          { name: 'Cotocoli' },
-          { name: 'Kotokoli' },
-          { name: 'Tim' }
+        'uf': [
+          { 'name': 'Cotocoli' },
+          { 'name': 'Kotokoli' },
+          { 'name': 'Tim' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tigon Mbembe'
         },
-        uf: [
-          { name: 'Akonto' },
-          { name: 'Akwanto' },
-          { name: 'Noale' },
-          { name: 'Tigim' },
-          { name: 'Tigon' },
-          { name: 'Tigong' },
-          { name: 'Tigum' },
-          { name: 'Tigun' },
-          { name: 'Tikun' },
-          { name: 'Tukun' }
+        'uf': [
+          { 'name': 'Akonto' },
+          { 'name': 'Akwanto' },
+          { 'name': 'Noale' },
+          { 'name': 'Tigim' },
+          { 'name': 'Tigon' },
+          { 'name': 'Tigong' },
+          { 'name': 'Tigum' },
+          { 'name': 'Tigun' },
+          { 'name': 'Tikun' },
+          { 'name': 'Tukun' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tikar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tobote'
         },
-        uf: { name: 'Basari (Togo and Ghana)' }
+        'uf': { 'name': 'Basari (Togo and Ghana)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tofingbe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toma (Burkina Faso)'
         },
-        uf: [
-          { name: 'Makaa (Burkina Faso)' },
-          { name: 'Nyaana' }
+        'uf': [
+          { 'name': 'Makaa (Burkina Faso)' },
+          { 'name': 'Nyaana' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tura'
         },
-        uf: { name: 'Toura' }
+        'uf': { 'name': 'Toura' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tusia'
         },
-        uf: { name: 'Toussia' }
+        'uf': { 'name': 'Toussia' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tuwunro'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tyembara'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ukaan'
         },
-        uf: [
-          { name: 'Aika' },
-          { name: 'Anyaran' },
-          { name: 'Auga' },
-          { name: 'Ikan' },
-          { name: 'Kakumo' }
+        'uf': [
+          { 'name': 'Aika' },
+          { 'name': 'Anyaran' },
+          { 'name': 'Auga' },
+          { 'name': 'Ikan' },
+          { 'name': 'Kakumo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Urhobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vagala'
         },
-        uf: [
-          { name: 'Kira' },
-          { name: 'Konosarola' },
-          { name: 'Siti' }
+        'uf': [
+          { 'name': 'Kira' },
+          { 'name': 'Konosarola' },
+          { 'name': 'Siti' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vige'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Winyé'
         },
-        uf: [
-          { name: 'Kõ (Burkina Faso)' },
-          { name: 'Kols' },
-          { name: 'Kolsi' }
+        'uf': [
+          { 'name': 'Kõ (Burkina Faso)' },
+          { 'name': 'Kols' },
+          { 'name': 'Kolsi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yakö'
         },
-        uf: [
-          { name: 'Kö (Yakö)' },
-          { name: 'Lukö' }
+        'uf': [
+          { 'name': 'Kö (Yakö)' },
+          { 'name': 'Lukö' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yom'
         },
-        uf: [
-          { name: 'Kpilakpila' },
-          { name: 'Pila' },
-          { name: 'Pilapila' }
+        'uf': [
+          { 'name': 'Kpilakpila' },
+          { 'name': 'Pila' },
+          { 'name': 'Pilapila' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ssa',
-    name: 'Nilo-Saharan (Other)',
-    code: 'ssa',
-    uf: [
-      { name: 'Sub-Saharan African (Other)' },
+    'uri': 'info:lc/vocabulary/languages/ssa',
+    'name': 'Nilo-Saharan (Other)',
+    'code': 'ssa',
+    'uf': [
+      { 'name': 'Sub-Saharan African (Other)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Adhola'
         },
-        uf: [
-          { name: 'Dhopadhola' },
-          { name: 'Ludama' }
+        'uf': [
+          { 'name': 'Dhopadhola' },
+          { 'name': 'Ludama' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alur'
         },
-        uf: [
-          { name: 'Aloro' },
-          { name: 'Alua' },
-          { name: 'Alulu' },
-          { name: 'Aluru' },
-          { name: 'Dho Alur' },
-          { name: 'Jo Alur' },
-          { name: 'Lur (Alur)' },
-          { name: 'Luri (Alur)' }
+        'uf': [
+          { 'name': 'Aloro' },
+          { 'name': 'Alua' },
+          { 'name': 'Alulu' },
+          { 'name': 'Aluru' },
+          { 'name': 'Dho Alur' },
+          { 'name': 'Jo Alur' },
+          { 'name': 'Lur (Alur)' },
+          { 'name': 'Luri (Alur)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anuak'
         },
-        uf: { name: 'Yambo' }
+        'uf': { 'name': 'Yambo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aringa'
         },
-        uf: { name: 'Low Lugbara' }
+        'uf': { 'name': 'Low Lugbara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bagirmi'
         },
-        uf: { name: 'Barma' }
+        'uf': { 'name': 'Barma' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baka'
         },
-        uf: { name: 'Tara Baaka' }
+        'uf': { 'name': 'Tara Baaka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bari'
         },
-        uf: { name: 'Dzilio' }
+        'uf': { 'name': 'Dzilio' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Birri (Central African Republic)'
         },
-        uf: [
-          { name: 'Abiri' },
-          { name: 'Ambili' },
-          { name: 'Biri (Central African Republic)' },
-          { name: 'Bviri' },
-          { name: 'Viri language' }
+        'uf': [
+          { 'name': 'Abiri' },
+          { 'name': 'Ambili' },
+          { 'name': 'Biri (Central African Republic)' },
+          { 'name': 'Bviri' },
+          { 'name': 'Viri language' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bongo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bongo-Bagirmi languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bor (Lwo)'
         },
-        uf: { name: 'Belanda' }
+        'uf': { 'name': 'Belanda' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dazaga'
         },
-        uf: [
-          { name: 'Dasa' },
-          { name: 'Dasaga' },
-          { name: 'Daza (Nilo-Saharan)' },
-          { name: 'Dazagada' },
-          { name: 'Dazza' },
-          { name: 'Dazzaga' },
-          { name: 'Tebu (Dazaga)' },
-          { name: 'Tibbu (Dazaga)' },
-          { name: 'Toubou (Dazaga)' },
-          { name: 'Tubu (Dazaga)' }
+        'uf': [
+          { 'name': 'Dasa' },
+          { 'name': 'Dasaga' },
+          { 'name': 'Daza (Nilo-Saharan)' },
+          { 'name': 'Dazagada' },
+          { 'name': 'Dazza' },
+          { 'name': 'Dazzaga' },
+          { 'name': 'Tebu (Dazaga)' },
+          { 'name': 'Tibbu (Dazaga)' },
+          { 'name': 'Toubou (Dazaga)' },
+          { 'name': 'Tubu (Dazaga)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fur'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gambai'
         },
-        uf: [
-          { name: 'Kabba Laka' },
-          { name: 'Ngambai' },
-          { name: 'Sara Gambai' }
+        'uf': [
+          { 'name': 'Kabba Laka' },
+          { 'name': 'Ngambai' },
+          { 'name': 'Sara Gambai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ingassana'
         },
-        uf: [
-          { name: 'Gaam' },
-          { name: 'Ingessana' },
-          { name: 'Kamanidi' },
-          { name: 'Mamidza' },
-          { name: 'Memedja' },
-          { name: 'Metabi' },
-          { name: 'Muntabi' },
-          { name: 'Tabi (Ingassana)' }
+        'uf': [
+          { 'name': 'Gaam' },
+          { 'name': 'Ingessana' },
+          { 'name': 'Kamanidi' },
+          { 'name': 'Mamidza' },
+          { 'name': 'Memedja' },
+          { 'name': 'Metabi' },
+          { 'name': 'Muntabi' },
+          { 'name': 'Tabi (Ingassana)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jur Modo'
         },
-        uf: [
-          { name: 'Jur (Jur Modo)' },
-          { name: 'Modo' }
+        'uf': [
+          { 'name': 'Jur (Jur Modo)' },
+          { 'name': 'Modo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaba (Central Sudanic)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalenjin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kara (Central African Republic and Sudan)'
         },
-        uf: [
-          { name: 'Fer' },
-          { name: 'Gula (Central African Republic and Sudan)' },
-          { name: 'Yama' },
-          { name: 'Yamegi' }
+        'uf': [
+          { 'name': 'Fer' },
+          { 'name': 'Gula (Central African Republic and Sudan)' },
+          { 'name': 'Yama' },
+          { 'name': 'Yamegi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karamojong'
         },
-        uf: { name: 'Akarimojong' }
+        'uf': { 'name': 'Akarimojong' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kenga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kipsikis'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kreish'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kùláál'
         },
-        uf: { name: 'Gula (Lake Iro, Chad)' }
+        'uf': { 'name': 'Gula (Lake Iro, Chad)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kunama'
         },
-        uf: { name: 'Cunama' }
+        'uf': { 'name': 'Cunama' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lango (Uganda)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lendu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lese'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Logo'
         },
-        uf: [
-          { name: 'Logo Kuli' },
-          { name: 'Logoti' }
+        'uf': [
+          { 'name': 'Logo Kuli' },
+          { 'name': 'Logoti' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lotuko'
         },
-        uf: { name: 'Latuka' }
+        'uf': { 'name': 'Latuka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lugbara'
         },
-        uf: [
-          { name: 'Logbara' },
-          { name: 'Logbware' },
-          { name: 'Luguaret' },
-          { name: 'Lugware' }
+        'uf': [
+          { 'name': 'Logbara' },
+          { 'name': 'Logbware' },
+          { 'name': 'Luguaret' },
+          { 'name': 'Lugware' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lwo (Sudan)'
         },
-        uf: [
-          { name: 'Dhe Lwo' },
-          { name: 'Dyur' },
-          { name: 'Giur' },
-          { name: 'Jo Lwo' },
-          { name: 'Jur (Lwo (Sudan))' },
-          { name: 'Luo (Sudan)' }
+        'uf': [
+          { 'name': 'Dhe Lwo' },
+          { 'name': 'Dyur' },
+          { 'name': 'Giur' },
+          { 'name': 'Jo Lwo' },
+          { 'name': 'Jur (Lwo (Sudan))' },
+          { 'name': 'Luo (Sudan)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maban'
         },
-        uf: { name: 'Meban' }
+        'uf': { 'name': 'Meban' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maʾdi (Uganda and Sudan)'
         },
-        uf: { name: 'Madi-ti (Uganda and Sudan)' }
+        'uf': { 'name': 'Madi-ti (Uganda and Sudan)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Majingai'
         },
-        uf: [
-          { name: 'Midjinngay' },
-          { name: 'Moggingain' },
-          { name: 'Sara-Majingai' }
+        'uf': [
+          { 'name': 'Midjinngay' },
+          { 'name': 'Moggingain' },
+          { 'name': 'Sara-Majingai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mamvu'
         },
-        uf: [
-          { name: 'Momvu' },
-          { name: 'Monvu' },
-          { name: 'Tengo' }
+        'uf': [
+          { 'name': 'Momvu' },
+          { 'name': 'Monvu' },
+          { 'name': 'Tengo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mangbetu'
         },
-        uf: { name: 'Monbuttu' }
+        'uf': { 'name': 'Monbuttu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mbai (Moissala)'
         },
-        uf: [
-          { name: 'Moissala Mbai' },
-          { name: 'Sara Mbai (Moissala)' }
+        'uf': [
+          { 'name': 'Moissala Mbai' },
+          { 'name': 'Sara Mbai (Moissala)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moru'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Murle'
         },
-        uf: { name: 'Beir' }
+        'uf': { 'name': 'Beir' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nandi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nara'
         },
-        uf: [
-          { name: 'Barea' },
-          { name: 'Baria' },
-          { name: 'Barya' },
-          { name: 'Higir' },
-          { name: 'Kolkotta' },
-          { name: 'Koyta' },
-          { name: 'Mogoreb' },
-          { name: 'Morda' },
-          { name: 'Nera' },
-          { name: 'Nere' },
-          { name: 'Santora' }
+        'uf': [
+          { 'name': 'Barea' },
+          { 'name': 'Baria' },
+          { 'name': 'Barya' },
+          { 'name': 'Higir' },
+          { 'name': 'Kolkotta' },
+          { 'name': 'Koyta' },
+          { 'name': 'Mogoreb' },
+          { 'name': 'Morda' },
+          { 'name': 'Nera' },
+          { 'name': 'Nere' },
+          { 'name': 'Santora' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngama'
         },
-        uf: { name: 'Sara Ngama' }
+        'uf': { 'name': 'Sara Ngama' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ngiti'
         },
-        uf: [
-          { name: 'Druna' },
-          { name: 'Lendu, Southern' },
-          { name: 'Ndruna' },
-          { name: 'Southern Lendu' }
+        'uf': [
+          { 'name': 'Druna' },
+          { 'name': 'Lendu, Southern' },
+          { 'name': 'Ndruna' },
+          { 'name': 'Southern Lendu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nuer'
         },
-        uf: [
-          { name: 'Abigar' },
-          { name: 'Nath' }
+        'uf': [
+          { 'name': 'Abigar' },
+          { 'name': 'Nath' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Päri (Sudan)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Proto-Eastern Sudanic'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sabaot'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Samburu'
         },
-        uf: [
-          { name: 'Burkeneji' },
-          { name: 'Lokop' },
-          { name: 'Nkutuk' },
-          { name: 'Sambur' },
-          { name: 'Sampur' }
+        'uf': [
+          { 'name': 'Burkeneji' },
+          { 'name': 'Lokop' },
+          { 'name': 'Nkutuk' },
+          { 'name': 'Sambur' },
+          { 'name': 'Sampur' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sara'
         },
-        uf: { name: 'Majingai-Ngama' }
+        'uf': { 'name': 'Majingai-Ngama' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Suk'
         },
-        uf: { name: 'Pokot' }
+        'uf': { 'name': 'Pokot' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tedaga'
         },
-        uf: [
-          { name: 'Tebou' },
-          { name: 'Tebu (Tedaga)' },
-          { name: 'Teda' },
-          { name: 'Tedagada' },
-          { name: 'Tibbu (Tedaga)' },
-          { name: 'Tibu' },
-          { name: 'Toda (Africa)' },
-          { name: 'Todaga' },
-          { name: 'Todga' },
-          { name: 'Toubou (Tedaga)' },
-          { name: 'Tubu' },
-          { name: 'Tuda (Africa)' },
-          { name: 'Tuduga' }
+        'uf': [
+          { 'name': 'Tebou' },
+          { 'name': 'Tebu (Tedaga)' },
+          { 'name': 'Teda' },
+          { 'name': 'Tedagada' },
+          { 'name': 'Tibbu (Tedaga)' },
+          { 'name': 'Tibu' },
+          { 'name': 'Toda (Africa)' },
+          { 'name': 'Todaga' },
+          { 'name': 'Todga' },
+          { 'name': 'Toubou (Tedaga)' },
+          { 'name': 'Tubu' },
+          { 'name': 'Tuda (Africa)' },
+          { 'name': 'Tuduga' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Teso'
         },
-        uf: [
-          { name: 'Ateso' },
-          { name: 'Iteso' }
+        'uf': [
+          { 'name': 'Ateso' },
+          { 'name': 'Iteso' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toposa'
         },
-        uf: [
-          { name: 'Abo (Sudan)' },
-          { name: 'Akeroa' },
-          { name: 'Dabossa' },
-          { name: 'Huma (Sudan)' },
-          { name: 'Kare (Sudan)' },
-          { name: 'Khumi (Sudan)' },
-          { name: 'Taposa' }
+        'uf': [
+          { 'name': 'Abo (Sudan)' },
+          { 'name': 'Akeroa' },
+          { 'name': 'Dabossa' },
+          { 'name': 'Huma (Sudan)' },
+          { 'name': 'Kare (Sudan)' },
+          { 'name': 'Khumi (Sudan)' },
+          { 'name': 'Taposa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Turkana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Uduk'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yulu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zaghawa'
         },
-        uf: [
-          { name: 'Beri-aa' },
-          { name: 'Berri' },
-          { name: 'Kebadi' },
-          { name: 'Merida' },
-          { name: 'Soghaua' },
-          { name: 'Zeghawa' }
+        'uf': [
+          { 'name': 'Beri-aa' },
+          { 'name': 'Berri' },
+          { 'name': 'Kebadi' },
+          { 'name': 'Merida' },
+          { 'name': 'Soghaua' },
+          { 'name': 'Zeghawa' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/niu',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/niu',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Niuean'
     },
-    code: 'niu'
+    'code': 'niu'
   },
   {
-    uri: 'info:lc/vocabulary/languages/nqo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nqo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'N\'Ko'
     },
-    code: 'nqo'
+    'code': 'nqo'
   },
   {
-    uri: 'info:lc/vocabulary/languages/nog',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nog',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nogai'
     },
-    code: 'nog'
+    'code': 'nog'
   },
   {
-    uri: 'info:lc/vocabulary/languages/zxx',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zxx',
+    'name': {
       '-authorized': 'yes',
       '#text': 'No linguistic content'
     },
-    code: 'zxx'
+    'code': 'zxx'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nai',
-    name: 'North American Indian (Other)',
-    code: 'nai',
-    note: {
-      text: 'Use for the other languages of North America north of Mexico excluding the languages of the Azteco-Tanoan language phylum.'
+    'uri': 'info:lc/vocabulary/languages/nai',
+    'name': 'North American Indian (Other)',
+    'code': 'nai',
+    'note': {
+      'text': 'Use for the other languages of North America north of Mexico excluding the languages of the Azteco-Tanoan language phylum.'
     },
-    uf: [
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alabama'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arikara'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Atsugewi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Beothuk'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chickasaw'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chimariko'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chitimacha'
         },
-        uf: [
-          { name: 'Chetimacha' },
-          { name: 'Shetimasha' }
+        'uf': [
+          { 'name': 'Chetimacha' },
+          { 'name': 'Shetimasha' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chumash'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Coahuilteco'
         },
-        uf: { name: 'Tejano' }
+        'uf': { 'name': 'Tejano' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cocopa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Coos'
         },
-        uf: [
-          { name: 'Kaus' },
-          { name: 'Kwokwoos' }
+        'uf': [
+          { 'name': 'Kaus' },
+          { 'name': 'Kwokwoos' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eastern Pomo'
         },
-        uf: { name: 'Pomo, Eastern' }
+        'uf': { 'name': 'Pomo, Eastern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eyak'
         },
-        uf: { name: 'Ugalachmut' }
+        'uf': { 'name': 'Ugalachmut' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hualapai'
         },
-        uf: [
-          { name: 'Jaguallapai' },
-          { name: 'Mataveke-paya' },
-          { name: 'Walapai' }
+        'uf': [
+          { 'name': 'Jaguallapai' },
+          { 'name': 'Mataveke-paya' },
+          { 'name': 'Walapai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karok'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Keres'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kiliwa'
         },
-        uf: { name: 'Yukaliwa' }
+        'uf': { 'name': 'Yukaliwa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Konomihu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuitsh'
         },
-        uf: [
-          { name: 'Lower Umpqua' },
-          { name: 'Umpqua, Lower' }
+        'uf': [
+          { 'name': 'Lower Umpqua' },
+          { 'name': 'Umpqua, Lower' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kumiai'
         },
-        uf: [
-          { name: 'Campo' },
-          { name: 'Cochimi (Diegueño)' },
-          { name: 'Comeya' },
-          { name: 'Cuchimí' },
-          { name: 'Diegueño' },
-          { name: 'Digueño' },
-          { name: 'Iipay' },
-          { name: 'Kamia' },
-          { name: 'Kamiai' },
-          { name: 'Kamiyahi' },
-          { name: 'Kamiyai' },
-          { name: 'Ki-Miai' },
-          { name: 'Ko\'al' },
-          { name: 'Ku\'ahl' },
-          { name: 'Kumeyaai' },
-          { name: 'Kumeyaay' },
-          { name: 'Kumia' },
-          { name: 'Kw\'aal' },
-          { name: 'Quemayá' },
-          { name: 'Tiipay' },
-          { name: 'Tipai' }
+        'uf': [
+          { 'name': 'Campo' },
+          { 'name': 'Cochimi (Diegueño)' },
+          { 'name': 'Comeya' },
+          { 'name': 'Cuchimí' },
+          { 'name': 'Diegueño' },
+          { 'name': 'Digueño' },
+          { 'name': 'Iipay' },
+          { 'name': 'Kamia' },
+          { 'name': 'Kamiai' },
+          { 'name': 'Kamiyahi' },
+          { 'name': 'Kamiyai' },
+          { 'name': 'Ki-Miai' },
+          { 'name': 'Ko\'al' },
+          { 'name': 'Ku\'ahl' },
+          { 'name': 'Kumeyaai' },
+          { 'name': 'Kumeyaay' },
+          { 'name': 'Kumia' },
+          { 'name': 'Kw\'aal' },
+          { 'name': 'Quemayá' },
+          { 'name': 'Tiipay' },
+          { 'name': 'Tipai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maidu'
         },
-        uf: { name: 'Pujunan' }
+        'uf': { 'name': 'Pujunan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mikasuki'
         },
-        uf: { name: 'Mekusuky' }
+        'uf': { 'name': 'Mekusuky' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miwok languages'
         },
-        uf: [
-          { name: 'Mewan' },
-          { name: 'Moquelumnan' }
+        'uf': [
+          { 'name': 'Mewan' },
+          { 'name': 'Moquelumnan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mutsun'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nez Percé'
         },
-        uf: [
-          { name: 'Numipu' },
-          { name: 'Sahaptin' }
+        'uf': [
+          { 'name': 'Numipu' },
+          { 'name': 'Sahaptin' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northern Sierra Miwok'
         },
-        uf: { name: 'Miwok, Northern Sierra' }
+        'uf': { 'name': 'Miwok, Northern Sierra' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ohlone'
         },
-        uf: { name: 'Costanoan' }
+        'uf': { 'name': 'Costanoan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paipai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pawnee'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shoshoni'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southeastern Pomo'
         },
-        uf: { name: 'Pomo, Southeastern' }
+        'uf': { 'name': 'Pomo, Southeastern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Timucua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tlakluit'
         },
-        uf: [
-          { name: 'Echeloot' },
-          { name: 'Wishram' }
+        'uf': [
+          { 'name': 'Echeloot' },
+          { 'name': 'Wishram' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tonkawa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tunica'
         },
-        uf: [
-          { name: 'Tonican' },
-          { name: 'Yoron' },
-          { name: 'Yuron' }
+        'uf': [
+          { 'name': 'Tonican' },
+          { 'name': 'Yoron' },
+          { 'name': 'Yuron' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wappo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wichita'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wikchamni'
         },
-        uf: { name: 'Wükchamni' }
+        'uf': { 'name': 'Wükchamni' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wintu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wiyot'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yahi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yakama'
         },
-        uf: { name: 'Yakima' }
+        'uf': { 'name': 'Yakima' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yuchi'
         },
-        uf: { name: 'Uchee' }
+        'uf': { 'name': 'Uchee' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yuki'
         }
@@ -14658,222 +14658,222 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/frr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/frr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'North Frisian'
     },
-    code: 'frr',
-    uf: { name: 'Frisian, North' }
+    'code': 'frr',
+    'uf': { 'name': 'Frisian, North' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sme',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sme',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Northern Sami'
     },
-    code: 'sme',
-    uf: { name: 'Sami, Northern' }
+    'code': 'sme',
+    'uf': { 'name': 'Sami, Northern' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nso',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nso',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Northern Sotho'
     },
-    code: 'nso',
-    uf: [
-      { name: 'Pedi' },
-      { name: 'Sepedi' },
-      { name: 'Sotho, Northern' },
-      { name: 'Transvaal Sotho' },
+    'code': 'nso',
+    'uf': [
+      { 'name': 'Pedi' },
+      { 'name': 'Sepedi' },
+      { 'name': 'Sotho, Northern' },
+      { 'name': 'Transvaal Sotho' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pai (South Africa)'
         },
-        uf: { name: 'Eastern Sotho' }
+        'uf': { 'name': 'Eastern Sotho' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nor',
-    name: 'Norwegian',
-    code: 'nor',
-    uf: [
-      { name: 'Bokmål' },
-      { name: 'Dano-Norwegian' },
-      { name: 'Riksmål' },
+    'uri': 'info:lc/vocabulary/languages/nor',
+    'name': 'Norwegian',
+    'code': 'nor',
+    'uf': [
+      { 'name': 'Bokmål' },
+      { 'name': 'Dano-Norwegian' },
+      { 'name': 'Riksmål' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Trøndersk'
         },
-        uf: [
-          { name: 'Trønder' },
-          { name: 'Trøndesk' },
-          { name: 'Trøndsk' }
+        'uf': [
+          { 'name': 'Trønder' },
+          { 'name': 'Trøndesk' },
+          { 'name': 'Trøndsk' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nob',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nob',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Norwegian (Bokmål)'
     },
-    code: 'nob',
-    uf: [
-      { name: 'Bokmål' },
-      { name: 'Dano-Norwegian' },
-      { name: 'Riksmål' }
+    'code': 'nob',
+    'uf': [
+      { 'name': 'Bokmål' },
+      { 'name': 'Dano-Norwegian' },
+      { 'name': 'Riksmål' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nno',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nno',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Norwegian (Nynorsk)'
     },
-    code: 'nno',
-    uf: [
-      { name: 'Landsmaal' },
-      { name: 'Landsmål' },
-      { name: 'Nynorsk' }
+    'code': 'nno',
+    'uf': [
+      { 'name': 'Landsmaal' },
+      { 'name': 'Landsmål' },
+      { 'name': 'Nynorsk' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nub',
-    name: 'Nubian languages',
-    code: 'nub',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/nub',
+    'name': 'Nubian languages',
+    'code': 'nub',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dilling'
         },
-        uf: [
-          { name: 'Delen' },
-          { name: 'Warkimbe' }
+        'uf': [
+          { 'name': 'Delen' },
+          { 'name': 'Warkimbe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dongola-Kenuz'
         },
-        uf: { name: 'Kenuz' }
+        'uf': { 'name': 'Kenuz' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mahas-Fiyadikka'
         },
-        uf: [
-          { name: 'Fadicca' },
-          { name: 'Fiadidja' },
-          { name: 'Fiyadikka' },
-          { name: 'Nobiin' }
+        'uf': [
+          { 'name': 'Fadicca' },
+          { 'name': 'Fiadidja' },
+          { 'name': 'Fiyadikka' },
+          { 'name': 'Nobiin' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Midob'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Old Nubian (to 1300)'
         },
-        uf: { name: 'Nubian, Old' }
+        'uf': { 'name': 'Nubian, Old' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nym',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nym',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nyamwezi'
     },
-    code: 'nym'
+    'code': 'nym'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nya',
-    name: 'Nyanja',
-    code: 'nya',
-    uf: [
-      { name: 'Chinyanja' },
-      { name: 'Nyassa' },
+    'uri': 'info:lc/vocabulary/languages/nya',
+    'name': 'Nyanja',
+    'code': 'nya',
+    'uf': [
+      { 'name': 'Chinyanja' },
+      { 'name': 'Nyassa' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chewa'
         },
-        uf: { name: 'Cewa' }
+        'uf': { 'name': 'Cewa' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nyn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nyn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nyankole'
     },
-    code: 'nyn',
-    uf: [
-      { name: 'Lunyankole' },
-      { name: 'Nkole' },
-      { name: 'Runyankore' }
+    'code': 'nyn',
+    'uf': [
+      { 'name': 'Lunyankole' },
+      { 'name': 'Nkole' },
+      { 'name': 'Runyankore' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nyo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nyo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nyoro'
     },
-    code: 'nyo',
-    uf: [
-      { name: 'Lunyoro' },
-      { name: 'Urunyoro' }
+    'code': 'nyo',
+    'uf': [
+      { 'name': 'Lunyoro' },
+      { 'name': 'Urunyoro' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/nzi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nzi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nzima'
     },
-    code: 'nzi',
-    uf: [
-      { name: 'Nsima' },
-      { name: 'Nzema' },
-      { name: 'Zema' }
+    'code': 'nzi',
+    'uf': [
+      { 'name': 'Nsima' },
+      { 'name': 'Nzema' },
+      { 'name': 'Zema' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/oci',
-    name: 'Occitan (post-1500)',
-    code: 'oci',
-    uf: [
-      { name: 'Langue d\'oc (post-1500)' },
-      { name: 'Provençal, Modern (post-1500)' },
+    'uri': 'info:lc/vocabulary/languages/oci',
+    'name': 'Occitan (post-1500)',
+    'code': 'oci',
+    'uf': [
+      { 'name': 'Langue d\'oc (post-1500)' },
+      { 'name': 'Provençal, Modern (post-1500)' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Béarnais (post-1500)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gascon (post-1500)'
         }
@@ -14881,54 +14881,54 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/lan',
-    name: 'Occitan (post 1500)',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/lan',
+    'name': 'Occitan (post 1500)',
+    'code': {
       '-status': 'obsolete',
       '#text': 'lan'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/xal',
-    name: 'Oirat',
-    code: 'xal',
-    uf: [
-      { name: 'Oyrat' },
+    'uri': 'info:lc/vocabulary/languages/xal',
+    'name': 'Oirat',
+    'code': 'xal',
+    'uf': [
+      { 'name': 'Oyrat' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalmyk'
         },
-        uf: { name: 'Calmuck' }
+        'uf': { 'name': 'Calmuck' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zakhchin'
         },
-        uf: [
-          { name: 'Dzakhachin' },
-          { name: 'Jakhachin' },
-          { name: 'Jaqacin' },
-          { name: 'Zaxacin' }
+        'uf': [
+          { 'name': 'Dzakhachin' },
+          { 'name': 'Jakhachin' },
+          { 'name': 'Jaqacin' },
+          { 'name': 'Zaxacin' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/oji',
-    name: 'Ojibwa',
-    code: 'oji',
-    uf: [
-      { name: 'Anishinabe' },
-      { name: 'Chippewa' },
-      { name: 'Otchipwe' },
-      { name: 'Salteaux' },
-      { name: 'Saulteaux' },
+    'uri': 'info:lc/vocabulary/languages/oji',
+    'name': 'Ojibwa',
+    'code': 'oji',
+    'uf': [
+      { 'name': 'Anishinabe' },
+      { 'name': 'Chippewa' },
+      { 'name': 'Otchipwe' },
+      { 'name': 'Salteaux' },
+      { 'name': 'Saulteaux' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ottawa'
         }
@@ -14936,70 +14936,70 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/non',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/non',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Old Norse'
     },
-    code: 'non',
-    uf: [
-      { name: 'Altnordish' },
-      { name: 'Icelandic, Old (to 1550)' },
-      { name: 'Norse, Old' },
-      { name: 'Norse, Western' },
-      { name: 'Norwegian, Old (to 1350)' },
-      { name: 'Old Icelandic (to 1550)' },
-      { name: 'Old Norwegian (to 1350)' },
-      { name: 'Western Norse' }
+    'code': 'non',
+    'uf': [
+      { 'name': 'Altnordish' },
+      { 'name': 'Icelandic, Old (to 1550)' },
+      { 'name': 'Norse, Old' },
+      { 'name': 'Norse, Western' },
+      { 'name': 'Norwegian, Old (to 1350)' },
+      { 'name': 'Old Icelandic (to 1550)' },
+      { 'name': 'Old Norwegian (to 1350)' },
+      { 'name': 'Western Norse' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/peo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/peo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Old Persian (ca. 600-400 B.C.)'
     },
-    code: 'peo',
-    uf: { name: 'Persian, Old (ca. 600-400 B.C.)' }
+    'code': 'peo',
+    'uf': { 'name': 'Persian, Old (ca. 600-400 B.C.)' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ori',
-    name: 'Oriya',
-    code: 'ori',
-    uf: [
-      { name: 'Uriya' },
+    'uri': 'info:lc/vocabulary/languages/ori',
+    'name': 'Oriya',
+    'code': 'ori',
+    'uf': [
+      { 'name': 'Uriya' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Adiwasi Oriya'
         },
-        uf: [
-          { name: 'Adibasi Oriyā' },
-          { name: 'Ādivāsi Oriyā' },
-          { name: 'Desai' },
-          { name: 'Kotia' },
-          { name: 'Kotia Oriya' },
-          { name: 'Kotiya' },
-          { name: 'Tribal Oriya' }
+        'uf': [
+          { 'name': 'Adibasi Oriyā' },
+          { 'name': 'Ādivāsi Oriyā' },
+          { 'name': 'Desai' },
+          { 'name': 'Kotia' },
+          { 'name': 'Kotia Oriya' },
+          { 'name': 'Kotiya' },
+          { 'name': 'Tribal Oriya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bhatri'
         },
-        uf: [
-          { name: 'Basturia' },
-          { name: 'Bhatra' },
-          { name: 'Bhattra' },
-          { name: 'Bhattri' },
-          { name: 'Bhottada' },
-          { name: 'Bhottara' }
+        'uf': [
+          { 'name': 'Basturia' },
+          { 'name': 'Bhatra' },
+          { 'name': 'Bhattra' },
+          { 'name': 'Bhattri' },
+          { 'name': 'Bhottada' },
+          { 'name': 'Bhottara' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sambalpuri'
         }
@@ -15008,1439 +15008,1439 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/orm',
-    name: 'Oromo',
-    code: 'orm',
-    uf: [
-      { name: 'Afan' },
-      { name: 'Galla' },
-      { name: 'Gallinya' },
+    'uri': 'info:lc/vocabulary/languages/orm',
+    'name': 'Oromo',
+    'code': 'orm',
+    'uf': [
+      { 'name': 'Afan' },
+      { 'name': 'Galla' },
+      { 'name': 'Gallinya' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Boran'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Orma'
         },
-        uf: [
-          { name: 'Uardai' },
-          { name: 'Warday' }
+        'uf': [
+          { 'name': 'Uardai' },
+          { 'name': 'Warday' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gal',
-    name: 'Oromo',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/gal',
+    'name': 'Oromo',
+    'code': {
       '-status': 'obsolete',
       '#text': 'gal'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/osa',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/osa',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Osage'
     },
-    code: 'osa'
+    'code': 'osa'
   },
   {
-    uri: 'info:lc/vocabulary/languages/oss',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/oss',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ossetic'
     },
-    code: 'oss',
-    uf: [
-      { name: 'Āsī' },
-      { name: 'Oseti' },
-      { name: 'Ossete' },
-      { name: 'Ossetian' },
-      { name: 'Osi' },
-      { name: 'Ūsatī' }
+    'code': 'oss',
+    'uf': [
+      { 'name': 'Āsī' },
+      { 'name': 'Oseti' },
+      { 'name': 'Ossete' },
+      { 'name': 'Ossetian' },
+      { 'name': 'Osi' },
+      { 'name': 'Ūsatī' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/oto',
-    name: 'Otomian languages',
-    code: 'oto',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/oto',
+    'name': 'Otomian languages',
+    'code': 'oto',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chichimeca-Jonaz'
         },
-        uf: [
-          { name: 'Chichimeco' },
-          { name: 'Meco' },
-          { name: 'Pame de Chichimeca-Jonaz' }
+        'uf': [
+          { 'name': 'Chichimeco' },
+          { 'name': 'Meco' },
+          { 'name': 'Pame de Chichimeca-Jonaz' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Matlatzinca'
         },
-        uf: { name: 'Pirinda' }
+        'uf': { 'name': 'Pirinda' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mazahua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ocuiltec'
         },
-        uf: [
-          { name: 'Atzinca' },
-          { name: 'Maclatzinca' },
-          { name: 'Tlahuica' }
+        'uf': [
+          { 'name': 'Atzinca' },
+          { 'name': 'Maclatzinca' },
+          { 'name': 'Tlahuica' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Otomi'
         },
-        uf: [
-          { name: 'Hñahñu' },
-          { name: 'Othomi' }
+        'uf': [
+          { 'name': 'Hñahñu' },
+          { 'name': 'Othomi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pame'
         },
-        uf: { name: 'Chichimeca Pame' }
+        'uf': { 'name': 'Chichimeca Pame' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/pal',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pal',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pahlavi'
     },
-    code: 'pal',
-    uf: [
-      { name: 'Huzvaresh' },
-      { name: 'Middle Persian (Pahlavi)' },
-      { name: 'Parsi' },
-      { name: 'Pazend' },
-      { name: 'Pehlevi' },
-      { name: 'Persian, Middle (Pahlavi)' }
+    'code': 'pal',
+    'uf': [
+      { 'name': 'Huzvaresh' },
+      { 'name': 'Middle Persian (Pahlavi)' },
+      { 'name': 'Parsi' },
+      { 'name': 'Pazend' },
+      { 'name': 'Pehlevi' },
+      { 'name': 'Persian, Middle (Pahlavi)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/pau',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pau',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Palauan'
     },
-    code: 'pau',
-    uf: { name: 'Pelew' }
+    'code': 'pau',
+    'uf': { 'name': 'Pelew' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/pli',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pli',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pali'
     },
-    code: 'pli'
+    'code': 'pli'
   },
   {
-    uri: 'info:lc/vocabulary/languages/pam',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pam',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pampanga'
     },
-    code: 'pam',
-    uf: { name: 'Kapampangan' }
+    'code': 'pam',
+    'uf': { 'name': 'Kapampangan' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/pag',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pag',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pangasinan'
     },
-    code: 'pag'
+    'code': 'pag'
   },
   {
-    uri: 'info:lc/vocabulary/languages/pan',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pan',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Panjabi'
     },
-    code: 'pan',
-    uf: [
-      { name: 'Eastern Panjabi' },
-      { name: 'Punjabi' }
+    'code': 'pan',
+    'uf': [
+      { 'name': 'Eastern Panjabi' },
+      { 'name': 'Punjabi' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/pap',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pap',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Papiamento'
     },
-    code: 'pap'
+    'code': 'pap'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/paa',
-    name: 'Papuan (Other)',
-    code: 'paa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/paa',
+    'name': 'Papuan (Other)',
+    'code': 'paa',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abau'
         },
-        uf: { name: 'Green River' }
+        'uf': { 'name': 'Green River' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abulas'
         },
-        uf: [
-          { name: 'Ambulas' },
-          { name: 'Maprik' }
+        'uf': [
+          { 'name': 'Ambulas' },
+          { 'name': 'Maprik' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Agarabe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alamblak'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ama (Papua New Guinea)'
         },
-        uf: { name: 'Sawiyanu' }
+        'uf': { 'name': 'Sawiyanu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Amele'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ampale'
         },
-        uf: [
-          { name: 'Ampeeli' },
-          { name: 'Safeyoka' }
+        'uf': [
+          { 'name': 'Ampeeli' },
+          { 'name': 'Safeyoka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aneme Wake'
         },
-        uf: [
-          { name: 'Abia' },
-          { name: 'Musa, Upper' },
-          { name: 'Upper Musa' }
+        'uf': [
+          { 'name': 'Abia' },
+          { 'name': 'Musa, Upper' },
+          { 'name': 'Upper Musa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anggor'
         },
-        uf: [
-          { name: 'Bibriari' },
-          { name: 'Senagi' },
-          { name: 'Watapor' }
+        'uf': [
+          { 'name': 'Bibriari' },
+          { 'name': 'Senagi' },
+          { 'name': 'Watapor' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ankave'
         },
-        uf: { name: 'Angave' }
+        'uf': { 'name': 'Angave' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aomie'
         },
-        uf: { name: 'Omie' }
+        'uf': { 'name': 'Omie' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Asaro'
         },
-        uf: [
-          { name: 'Dano' },
-          { name: 'Upper Asaro' }
+        'uf': [
+          { 'name': 'Dano' },
+          { 'name': 'Upper Asaro' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Asmat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Au'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Auyana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Awa (Eastern Highlands Province, Papua New Guinea)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bahinemo'
         },
-        uf: [
-          { name: 'Gahom' },
-          { name: 'Wogu' }
+        'uf': [
+          { 'name': 'Gahom' },
+          { 'name': 'Wogu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baining'
         },
-        uf: [
-          { name: 'Kakat' },
-          { name: 'Makakat' },
-          { name: 'Maqaqet' },
-          { name: 'Qaqet' }
+        'uf': [
+          { 'name': 'Kakat' },
+          { 'name': 'Makakat' },
+          { 'name': 'Maqaqet' },
+          { 'name': 'Qaqet' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Barai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baruya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bauzi'
         },
-        uf: [
-          { name: 'Baudi' },
-          { name: 'Bauri' },
-          { name: 'Pauwi' }
+        'uf': [
+          { 'name': 'Baudi' },
+          { 'name': 'Bauri' },
+          { 'name': 'Pauwi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Benabena'
         },
-        uf: [
-          { name: 'Bena (Papua New Guinea)' },
-          { name: 'Bena-bena' }
+        'uf': [
+          { 'name': 'Bena (Papua New Guinea)' },
+          { 'name': 'Bena-bena' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Berik'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Biangai'
         },
-        uf: { name: 'Baingai' }
+        'uf': { 'name': 'Baingai' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bimin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Binumarien'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bisorio'
         },
-        uf: [
-          { name: 'Gadio' },
-          { name: 'Iniai' }
+        'uf': [
+          { 'name': 'Gadio' },
+          { 'name': 'Iniai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Blagar'
         },
-        uf: [
-          { name: 'Belagar' },
-          { name: 'Tarang' }
+        'uf': [
+          { 'name': 'Belagar' },
+          { 'name': 'Tarang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bom'
         },
-        uf: [
-          { name: 'Anjam' },
-          { name: 'Bogadjim' },
-          { name: 'Lalok' }
+        'uf': [
+          { 'name': 'Anjam' },
+          { 'name': 'Bogadjim' },
+          { 'name': 'Lalok' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Buin'
         },
-        uf: [
-          { name: 'Rugara' },
-          { name: 'Telei' }
+        'uf': [
+          { 'name': 'Rugara' },
+          { 'name': 'Telei' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bunak'
         },
-        uf: [
-          { name: 'Buna\' (Indonesia)' },
-          { name: 'Bunake' },
-          { name: 'Bunaq' }
+        'uf': [
+          { 'name': 'Buna\' (Indonesia)' },
+          { 'name': 'Bunake' },
+          { 'name': 'Bunaq' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Burum (Papua New Guinea)'
         },
-        uf: { name: 'Bulum' }
+        'uf': { 'name': 'Bulum' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chuave'
         },
-        uf: { name: 'Tjuave' }
+        'uf': { 'name': 'Tjuave' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Daga'
         },
-        uf: [
-          { name: 'Dimuga' },
-          { name: 'Nawp' }
+        'uf': [
+          { 'name': 'Dimuga' },
+          { 'name': 'Nawp' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Daribi'
         },
-        uf: [
-          { name: 'Elu' },
-          { name: 'Karimui' },
-          { name: 'Makarub' },
-          { name: 'Mikaru' }
+        'uf': [
+          { 'name': 'Elu' },
+          { 'name': 'Karimui' },
+          { 'name': 'Makarub' },
+          { 'name': 'Mikaru' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dedua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Duna'
         },
-        uf: { name: 'Yuna' }
+        'uf': { 'name': 'Yuna' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eipo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Enga'
         },
-        uf: { name: 'Tsaga' }
+        'uf': { 'name': 'Tsaga' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ese'
         },
-        uf: [
-          { name: 'Managalasi' },
-          { name: 'Managulasi' }
+        'uf': [
+          { 'name': 'Managalasi' },
+          { 'name': 'Managulasi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Faiwol'
         },
-        uf: { name: 'Fegolmin' }
+        'uf': { 'name': 'Fegolmin' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fasu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Folopa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fore'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gadsup'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gahuku'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Galela'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gimi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gogodala'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Golin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gope'
         },
-        uf: [
-          { name: 'Era River' },
-          { name: 'Kope' }
+        'uf': [
+          { 'name': 'Era River' },
+          { 'name': 'Kope' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gresi'
         },
-        uf: [
-          { name: 'Glesi' },
-          { name: 'Gresik' },
-          { name: 'Klesi' }
+        'uf': [
+          { 'name': 'Glesi' },
+          { 'name': 'Gresik' },
+          { 'name': 'Klesi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guhu-Samane'
         },
-        uf: { name: 'Mid-Waria' }
+        'uf': { 'name': 'Mid-Waria' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gwahatike'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gwedena'
         },
-        uf: { name: 'Umanakaina' }
+        'uf': { 'name': 'Umanakaina' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Halopa'
         },
-        uf: [
-          { name: 'Botelkude' },
-          { name: 'Nobonob' },
-          { name: 'Nupanob' }
+        'uf': [
+          { 'name': 'Botelkude' },
+          { 'name': 'Nobonob' },
+          { 'name': 'Nupanob' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huli'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iatmul'
         },
-        uf: { name: 'Big Sepik' }
+        'uf': { 'name': 'Big Sepik' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Imbongu'
         },
-        uf: [
-          { name: 'Au (Imbongu)' },
-          { name: 'Aua' },
-          { name: 'Awa (Imbongu)' },
-          { name: 'Ibo Ugu' },
-          { name: 'Imbo Ungo' },
-          { name: 'Imbo Ungu (Imbongu)' },
-          { name: 'Imbon Ggo' },
-          { name: 'Imbonggo' },
-          { name: 'Imbonggu' }
+        'uf': [
+          { 'name': 'Au (Imbongu)' },
+          { 'name': 'Aua' },
+          { 'name': 'Awa (Imbongu)' },
+          { 'name': 'Ibo Ugu' },
+          { 'name': 'Imbo Ungo' },
+          { 'name': 'Imbo Ungu (Imbongu)' },
+          { 'name': 'Imbon Ggo' },
+          { 'name': 'Imbonggo' },
+          { 'name': 'Imbonggu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Inanwatan'
         },
-        uf: { name: 'Suabo' }
+        'uf': { 'name': 'Suabo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Inoke'
         },
-        uf: { name: 'Yate (Papua New Guinea)' }
+        'uf': { 'name': 'Yate (Papua New Guinea)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Irumu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iwam'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iyo (Papua New Guinea)'
         },
-        uf: [
-          { name: 'Bure (Papua New Guinea)' },
-          { name: 'Nabu' },
-          { name: 'Naho' },
-          { name: 'Nahu' },
-          { name: 'Ndo (Papua New Guinea)' }
+        'uf': [
+          { 'name': 'Bure (Papua New Guinea)' },
+          { 'name': 'Nabu' },
+          { 'name': 'Naho' },
+          { 'name': 'Nahu' },
+          { 'name': 'Ndo (Papua New Guinea)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalabra'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalam'
         },
-        uf: { name: 'Karam' }
+        'uf': { 'name': 'Karam' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaluli'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kamano'
         },
-        uf: { name: 'Kafe' }
+        'uf': { 'name': 'Kafe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kamasau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kamtuk'
         },
-        uf: { name: 'Kemtuik' }
+        'uf': { 'name': 'Kemtuik' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kanite'
         },
-        uf: { name: 'Kemiju Jate' }
+        'uf': { 'name': 'Kemiju Jate' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kapauku'
         },
-        uf: { name: 'Ekagi' }
+        'uf': { 'name': 'Ekagi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kasua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kâte'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kelon'
         },
-        uf: [
-          { name: 'Kalong' },
-          { name: 'Kelong' },
-          { name: 'Klon' },
-          { name: 'Kolon' }
+        'uf': [
+          { 'name': 'Kalong' },
+          { 'name': 'Kelong' },
+          { 'name': 'Klon' },
+          { 'name': 'Kolon' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ketengban'
         },
-        uf: { name: 'Oktengban' }
+        'uf': { 'name': 'Oktengban' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kewa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kobon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Komba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Komunku'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kongara'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Korape'
         },
-        uf: [
-          { name: 'Kwarafe' },
-          { name: 'Okeina' }
+        'uf': [
+          { 'name': 'Kwarafe' },
+          { 'name': 'Okeina' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kosena'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kovai'
         },
-        uf: [
-          { name: 'Alngubin' },
-          { name: 'Kobai' },
-          { name: 'Kowai' },
-          { name: 'Umboi' }
+        'uf': [
+          { 'name': 'Alngubin' },
+          { 'name': 'Kobai' },
+          { 'name': 'Kowai' },
+          { 'name': 'Umboi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kunimaipa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwerba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lambau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lunambe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mai Brat'
         },
-        uf: { name: 'Mey Brat' }
+        'uf': { 'name': 'Mey Brat' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manambu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mape'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Meax'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Medlpa'
         },
-        uf: [
-          { name: 'Hagen' },
-          { name: 'Moglei' }
+        'uf': [
+          { 'name': 'Hagen' },
+          { 'name': 'Moglei' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Menya'
         },
-        uf: [
-          { name: 'Menyama' },
-          { name: 'Menye' }
+        'uf': [
+          { 'name': 'Menyama' },
+          { 'name': 'Menye' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mianmin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Migabac'
         },
-        uf: { name: 'Migaba\'' }
+        'uf': { 'name': 'Migaba\'' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miyemu'
         },
-        uf: [
-          { name: 'Bo Ung' },
-          { name: 'Miyam' },
-          { name: 'Miyem' },
-          { name: 'Tembalu' },
-          { name: 'Tembogia' },
-          { name: 'Tetalo' }
+        'uf': [
+          { 'name': 'Bo Ung' },
+          { 'name': 'Miyam' },
+          { 'name': 'Miyem' },
+          { 'name': 'Tembalu' },
+          { 'name': 'Tembogia' },
+          { 'name': 'Tetalo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Monumbo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mountain Arapesh'
         },
-        uf: [
-          { name: 'Arapesh, Mountain' },
-          { name: 'Bukiyup' }
+        'uf': [
+          { 'name': 'Arapesh, Mountain' },
+          { 'name': 'Bukiyup' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mountain Koiari'
         },
-        uf: { name: 'Koiali, Mountain' }
+        'uf': { 'name': 'Koiali, Mountain' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mpur (Indonesia)'
         },
-        uf: { name: 'Amberbaken' }
+        'uf': { 'name': 'Amberbaken' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mugil'
         },
-        uf: [
-          { name: 'Bargam' },
-          { name: 'Saker' }
+        'uf': [
+          { 'name': 'Bargam' },
+          { 'name': 'Saker' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nabak'
         },
-        uf: { name: 'Wain' }
+        'uf': { 'name': 'Wain' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nankina'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Narak'
         },
-        uf: [
-          { name: 'Gandja' },
-          { name: 'Kandawo' },
-          { name: 'Kol (Papua New Guinea)' }
+        'uf': [
+          { 'name': 'Gandja' },
+          { 'name': 'Kandawo' },
+          { 'name': 'Kol (Papua New Guinea)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nasioi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nek'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nii'
         },
-        uf: { name: 'Ek Nii' }
+        'uf': { 'name': 'Ek Nii' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Notu'
         },
-        uf: { name: 'Ewage' }
+        'uf': { 'name': 'Ewage' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oksapmin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Olo'
         },
-        uf: { name: 'Orlei' }
+        'uf': { 'name': 'Orlei' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ono'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Orokaiva'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Orokolo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Orya'
         },
-        uf: [
-          { name: 'Oria' },
-          { name: 'Uria' }
+        'uf': [
+          { 'name': 'Oria' },
+          { 'name': 'Uria' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pay'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pinai-Hagahai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Purari'
         },
-        uf: [
-          { name: 'Eurika' },
-          { name: 'Evora' },
-          { name: 'Iai (Papua New Guinea)' },
-          { name: 'Iare' },
-          { name: 'Kaimare' },
-          { name: 'Kaura (Papua New Guinea)' },
-          { name: 'Kipaia' },
-          { name: 'Koriki' },
-          { name: 'Maipua' },
-          { name: 'Namau' }
+        'uf': [
+          { 'name': 'Eurika' },
+          { 'name': 'Evora' },
+          { 'name': 'Iai (Papua New Guinea)' },
+          { 'name': 'Iare' },
+          { 'name': 'Kaimare' },
+          { 'name': 'Kaura (Papua New Guinea)' },
+          { 'name': 'Kipaia' },
+          { 'name': 'Koriki' },
+          { 'name': 'Maipua' },
+          { 'name': 'Namau' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rawa'
         },
-        uf: { name: 'Karo-Rawa' }
+        'uf': { 'name': 'Karo-Rawa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rotokas'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saberi'
         },
-        uf: [
-          { name: 'Isirawa' },
-          { name: 'Okwasar' }
+        'uf': [
+          { 'name': 'Isirawa' },
+          { 'name': 'Okwasar' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sahu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Samo (Western Province, Papua New Guinea)'
         },
-        uf: { name: 'Supei' }
+        'uf': { 'name': 'Supei' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sawos'
         },
-        uf: { name: 'Tshwosh' }
+        'uf': { 'name': 'Tshwosh' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Selepet'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sentani'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Siane'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Siroi'
         },
-        uf: [
-          { name: 'Pasa' },
-          { name: 'Suroi' }
+        'uf': [
+          { 'name': 'Pasa' },
+          { 'name': 'Suroi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Siwai'
         },
-        uf: { name: 'Motuna' }
+        'uf': { 'name': 'Motuna' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sona (Papua New Guinea)'
         },
-        uf: { name: 'Kanasi' }
+        'uf': { 'name': 'Kanasi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Suena'
         },
-        uf: [
-          { name: 'Yarawe' },
-          { name: 'Yema' }
+        'uf': [
+          { 'name': 'Yarawe' },
+          { 'name': 'Yema' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sulka'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tabla'
         },
-        uf: { name: 'Tanahmerah (Northeast Irian Jaya)' }
+        'uf': { 'name': 'Tanahmerah (Northeast Irian Jaya)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tairora'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tani'
         },
-        uf: [
-          { name: 'Miami (Papua New Guinea)' },
-          { name: 'Miani' },
-          { name: 'Suaru' }
+        'uf': [
+          { 'name': 'Miami (Papua New Guinea)' },
+          { 'name': 'Miani' },
+          { 'name': 'Suaru' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tauya'
         },
-        uf: { name: 'Inafosa' }
+        'uf': { 'name': 'Inafosa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Telefol'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tepera'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ternate'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tewa (Papuan)'
         },
-        uf: { name: 'Teiwa' }
+        'uf': { 'name': 'Teiwa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tifal'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Timbe'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toaripi'
         },
-        uf: { name: 'Motumotu' }
+        'uf': { 'name': 'Motumotu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tobelo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Umbu-Ungu'
         },
-        uf: [
-          { name: 'Gawigl' },
-          { name: 'Gawil' },
-          { name: 'Imbo-Ungu (Umbu-Ungu)' },
-          { name: 'Kakoli' },
-          { name: 'Kaugel (Umbu-Ungu)' },
-          { name: 'Kauil' },
-          { name: 'Ubu Ugu' },
-          { name: 'Umbongu' },
-          { name: 'Umbu' }
+        'uf': [
+          { 'name': 'Gawigl' },
+          { 'name': 'Gawil' },
+          { 'name': 'Imbo-Ungu (Umbu-Ungu)' },
+          { 'name': 'Kakoli' },
+          { 'name': 'Kaugel (Umbu-Ungu)' },
+          { 'name': 'Kauil' },
+          { 'name': 'Ubu Ugu' },
+          { 'name': 'Umbongu' },
+          { 'name': 'Umbu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Urii'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Usarufa'
         },
-        uf: [
-          { name: 'Usurufa' },
-          { name: 'Uturupa' }
+        'uf': [
+          { 'name': 'Usurufa' },
+          { 'name': 'Uturupa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Waffa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wantoat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Washkuk'
         },
-        uf: { name: 'Kwoma' }
+        'uf': { 'name': 'Kwoma' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wasi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Were'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'West Makian'
         },
-        uf: [
-          { name: 'Desite' },
-          { name: 'Makian, West' },
-          { name: 'Titinec' }
+        'uf': [
+          { 'name': 'Desite' },
+          { 'name': 'Makian, West' },
+          { 'name': 'Titinec' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wiru'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Woisika'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yabiyufa'
         },
-        uf: { name: 'Jafijufa' }
+        'uf': { 'name': 'Jafijufa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yagaria'
         },
-        uf: [
-          { name: 'Frigano Jate' },
-          { name: 'Kami (Papua New Guinea)' }
+        'uf': [
+          { 'name': 'Frigano Jate' },
+          { 'name': 'Kami (Papua New Guinea)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yangoru'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yareba'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yau'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yessan-Mayo'
         },
-        uf: { name: 'Mayo (New Guinea)' }
+        'uf': { 'name': 'Mayo (New Guinea)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yongkom'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yopno'
         },
-        uf: { name: 'Yupna' }
+        'uf': { 'name': 'Yupna' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yui'
         },
-        uf: { name: 'Salt-Yui' }
+        'uf': { 'name': 'Salt-Yui' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zia'
         }
@@ -16449,574 +16449,574 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/per',
-    name: 'Persian',
-    code: 'per',
-    uf: [
-      { name: 'Farsi' },
+    'uri': 'info:lc/vocabulary/languages/per',
+    'name': 'Persian',
+    'code': 'per',
+    'uf': [
+      { 'name': 'Farsi' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dari'
         },
-        uf: [
-          { name: 'Kabuli' },
-          { name: 'Kabuli-Persian' },
-          { name: 'Khorasani' }
+        'uf': [
+          { 'name': 'Kabuli' },
+          { 'name': 'Kabuli-Persian' },
+          { 'name': 'Khorasani' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/phi',
-    name: 'Philippine (Other)',
-    code: 'phi',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/phi',
+    'name': 'Philippine (Other)',
+    'code': 'phi',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abaknon'
         },
-        uf: [
-          { name: 'Capul' },
-          { name: 'Inabaknon' },
-          { name: 'Kapul' },
-          { name: 'Sama Abaknon' }
+        'uf': [
+          { 'name': 'Capul' },
+          { 'name': 'Inabaknon' },
+          { 'name': 'Kapul' },
+          { 'name': 'Sama Abaknon' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Agta'
         },
-        uf: [
-          { name: 'Cagayan Agta, Central' },
-          { name: 'Central Cagayan Agta' }
+        'uf': [
+          { 'name': 'Cagayan Agta, Central' },
+          { 'name': 'Central Cagayan Agta' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Agutaynon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aklanon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alangan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Amganad Ifugao'
         },
-        uf: { name: 'Ifugao, Amganad' }
+        'uf': { 'name': 'Ifugao, Amganad' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Atta'
         },
-        uf: { name: 'Northern Cagayan Negrito' }
+        'uf': { 'name': 'Northern Cagayan Negrito' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ayangan Ifugao'
         },
-        uf: { name: 'Ifugao, Ayangan' }
+        'uf': { 'name': 'Ifugao, Ayangan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bagobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balangao'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balangingì'
         },
-        uf: [
-          { name: 'Baangingi\'' },
-          { name: 'Bangingi' },
-          { name: 'Northern Sinama' },
-          { name: 'Sama Bangingì' },
-          { name: 'Sea Samal' },
-          { name: 'Sinama, Northern' }
+        'uf': [
+          { 'name': 'Baangingi\'' },
+          { 'name': 'Bangingi' },
+          { 'name': 'Northern Sinama' },
+          { 'name': 'Sama Bangingì' },
+          { 'name': 'Sea Samal' },
+          { 'name': 'Sinama, Northern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Banton'
         },
-        uf: { name: 'Bantuanon' }
+        'uf': { 'name': 'Bantuanon' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Batad Ifugao'
         },
-        uf: { name: 'Ifugao, Batad' }
+        'uf': { 'name': 'Ifugao, Batad' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bilaan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bolinao'
         },
-        uf: { name: 'Binubolinao' }
+        'uf': { 'name': 'Binubolinao' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bontoc'
         },
-        uf: { name: 'Finontok' }
+        'uf': { 'name': 'Finontok' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Botolan Sambal'
         },
-        uf: [
-          { name: 'Aeta Negrito' },
-          { name: 'Sambal Botolan' },
-          { name: 'Sambali Botolan' }
+        'uf': [
+          { 'name': 'Aeta Negrito' },
+          { 'name': 'Sambal Botolan' },
+          { 'name': 'Sambali Botolan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Caluyanun'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Central Bontoc'
         },
-        uf: { name: 'Bontoc, Central' }
+        'uf': { 'name': 'Bontoc, Central' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Central Subanen'
         },
-        uf: [
-          { name: 'Sindangan Subanun' },
-          { name: 'Subanen, Central' },
-          { name: 'Subanun, Sindangan' }
+        'uf': [
+          { 'name': 'Sindangan Subanun' },
+          { 'name': 'Subanen, Central' },
+          { 'name': 'Subanun, Sindangan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cuyunon'
         },
-        uf: { name: 'Kuyonon' }
+        'uf': { 'name': 'Kuyonon' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dumagat (Casiguran)'
         },
-        uf: [
-          { name: 'Agta (Casiguran)' },
-          { name: 'Casiguran Agta' },
-          { name: 'Casiguran Dumagat' }
+        'uf': [
+          { 'name': 'Agta (Casiguran)' },
+          { 'name': 'Casiguran Agta' },
+          { 'name': 'Casiguran Dumagat' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dumagat (Umirey)'
         },
-        uf: [
-          { name: 'Agta (Umirey)' },
-          { name: 'Dingalan Dumagat' },
-          { name: 'Umirey Agta' },
-          { name: 'Umirey Dumagat' }
+        'uf': [
+          { 'name': 'Agta (Umirey)' },
+          { 'name': 'Dingalan Dumagat' },
+          { 'name': 'Umirey Agta' },
+          { 'name': 'Umirey Dumagat' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eastern Bontoc'
         },
-        uf: { name: 'Bontoc, Eastern' }
+        'uf': { 'name': 'Bontoc, Eastern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eastern Ifugao'
         },
-        uf: { name: 'Ifugao, Eastern' }
+        'uf': { 'name': 'Ifugao, Eastern' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gaddang'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ibaloi'
         },
-        uf: [
-          { name: 'Benguet Igorot' },
-          { name: 'Nabaloi' }
+        'uf': [
+          { 'name': 'Benguet Igorot' },
+          { 'name': 'Nabaloi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ibanag'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ifugao'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ilongot'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Isinay'
         },
-        uf: { name: 'Inmeas' }
+        'uf': { 'name': 'Inmeas' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Isneg'
         },
-        uf: { name: 'Apayao' }
+        'uf': { 'name': 'Apayao' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Itawis'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Itbayat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ivatan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jama Mapun'
         },
-        uf: [
-          { name: 'Cagayanon' },
-          { name: 'Mapun' },
-          { name: 'Pullon Mapun' },
-          { name: 'Sama Mapun' }
+        'uf': [
+          { 'name': 'Cagayanon' },
+          { 'name': 'Mapun' },
+          { 'name': 'Pullon Mapun' },
+          { 'name': 'Sama Mapun' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ivatan'
         },
-        uf: [
-          { name: 'Batan' },
-          { name: 'Ibatan' }
+        'uf': [
+          { 'name': 'Batan' },
+          { 'name': 'Ibatan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalamian'
         },
-        uf: { name: 'Calamian' }
+        'uf': { 'name': 'Calamian' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalinga languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kankanay'
         },
-        uf: [
-          { name: 'Cancanai' },
-          { name: 'Lepanto-Igorot' }
+        'uf': [
+          { 'name': 'Cancanai' },
+          { 'name': 'Lepanto-Igorot' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kinaray-a'
         },
-        uf: [
-          { name: 'Antiqueno' },
-          { name: 'Binukidnon' },
-          { name: 'Hamtiknon' },
-          { name: 'Hinaraya' },
-          { name: 'Karay-a' }
+        'uf': [
+          { 'name': 'Antiqueno' },
+          { 'name': 'Binukidnon' },
+          { 'name': 'Hamtiknon' },
+          { 'name': 'Hinaraya' },
+          { 'name': 'Karay-a' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lower Tanudan Kalinga'
         },
-        uf: [
-          { name: 'Kalinga, Lower Tanudan' },
-          { name: 'Tanudan Kalinga, Lower' }
+        'uf': [
+          { 'name': 'Kalinga, Lower Tanudan' },
+          { 'name': 'Tanudan Kalinga, Lower' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Magindanao'
         },
-        uf: { name: 'Moro' }
+        'uf': { 'name': 'Moro' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mamanwa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mangyan'
         },
-        uf: { name: 'Iraya' }
+        'uf': { 'name': 'Iraya' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mansaka'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maranao'
         },
-        uf: { name: 'Moro' }
+        'uf': { 'name': 'Moro' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Masbateno'
         },
-        uf: { name: 'Minasbate' }
+        'uf': { 'name': 'Minasbate' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mayoyao Ifugao'
         },
-        uf: { name: 'Ifugao, Mayoyao' }
+        'uf': { 'name': 'Ifugao, Mayoyao' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Melebuganon'
         },
-        uf: [
-          { name: 'Milebuganon' },
-          { name: 'Molbog' }
+        'uf': [
+          { 'name': 'Milebuganon' },
+          { 'name': 'Molbog' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northern Kankanay'
         },
-        uf: [
-          { name: 'Bontoc, Western' },
-          { name: 'Kankanay, Northern' },
-          { name: 'Sagada-Igorot' },
-          { name: 'Western Bontoc' }
+        'uf': [
+          { 'name': 'Bontoc, Western' },
+          { 'name': 'Kankanay, Northern' },
+          { 'name': 'Sagada-Igorot' },
+          { 'name': 'Western Bontoc' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Palawano'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pangutaran Sama'
         },
-        uf: { name: 'Sama Pangutaran' }
+        'uf': { 'name': 'Sama Pangutaran' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sama Sibutu'
         },
-        uf: [
-          { name: 'Sibutu Sama' },
-          { name: 'Southern Sama' }
+        'uf': [
+          { 'name': 'Sibutu Sama' },
+          { 'name': 'Southern Sama' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sambali'
         },
-        uf: { name: 'Zambal' }
+        'uf': { 'name': 'Zambal' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southern Bontoc'
         },
-        uf: [
-          { name: 'Barlig Bontoc' },
-          { name: 'Bontoc, Southern' },
-          { name: 'Kadaklan Barlig Bontoc' }
+        'uf': [
+          { 'name': 'Barlig Bontoc' },
+          { 'name': 'Bontoc, Southern' },
+          { 'name': 'Kadaklan Barlig Bontoc' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southern Subanen'
         },
-        uf: [
-          { name: 'Lapuyan Subanen' },
-          { name: 'Margosatubig Subanun' },
-          { name: 'Subanen, Southern' }
+        'uf': [
+          { 'name': 'Lapuyan Subanen' },
+          { 'name': 'Margosatubig Subanun' },
+          { 'name': 'Subanen, Southern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Subanun'
         },
-        uf: { name: 'Subano' }
+        'uf': { 'name': 'Subano' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sulod'
         },
-        uf: { name: 'Mundu (Philippines)' }
+        'uf': { 'name': 'Mundu (Philippines)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sulu'
         },
-        uf: [
-          { name: 'Joloano' },
-          { name: 'Moro' },
-          { name: 'Sooloo' }
+        'uf': [
+          { 'name': 'Joloano' },
+          { 'name': 'Moro' },
+          { 'name': 'Sooloo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tagakaolo'
         },
-        uf: { name: 'Kalagan, Tagakaolo' }
+        'uf': { 'name': 'Kalagan, Tagakaolo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tagbanua'
         },
-        uf: [
-          { name: 'Aborlan Tagbanwa' },
-          { name: 'Apurahuano' }
+        'uf': [
+          { 'name': 'Aborlan Tagbanwa' },
+          { 'name': 'Apurahuano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tausug'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tboli'
         },
-        uf: [
-          { name: 'Tagabili' },
-          { name: 'Tiboli' }
+        'uf': [
+          { 'name': 'Tagabili' },
+          { 'name': 'Tiboli' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tina Sambal'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tiruray'
         },
-        uf: { name: 'Teduray' }
+        'uf': { 'name': 'Teduray' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tuwali'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Western Subanon'
         },
-        uf: [
-          { name: 'Siocan Subanon' },
-          { name: 'Subanon, Western' }
+        'uf': [
+          { 'name': 'Siocan Subanon' },
+          { 'name': 'Subanon, Western' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yakan'
         }
@@ -17025,71 +17025,71 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/phn',
-    name: 'Phoenician',
-    code: 'phn',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/phn',
+    'name': 'Phoenician',
+    'code': 'phn',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Punic'
       }
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/pon',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pon',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pohnpeian'
     },
-    code: 'pon',
-    uf: [
-      { name: 'Ponape' },
-      { name: 'Ponapean' }
+    'code': 'pon',
+    'uf': [
+      { 'name': 'Ponape' },
+      { 'name': 'Ponapean' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/pol',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pol',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Polish'
     },
-    code: 'pol'
+    'code': 'pol'
   },
   {
-    uri: 'info:lc/vocabulary/languages/por',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/por',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Portuguese'
     },
-    code: 'por'
+    'code': 'por'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/pra',
-    name: 'Prakrit languages',
-    code: 'pra',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/pra',
+    'name': 'Prakrit languages',
+    'code': 'pra',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gandhari Prakrit'
         },
-        uf: { name: 'Gandhari' }
+        'uf': { 'name': 'Gandhari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Magadhi Prakrit'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maharashtri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Śaurasēnī'
         }
@@ -17097,1754 +17097,1754 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/pro',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pro',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Provençal (to 1500)'
     },
-    code: 'pro',
-    uf: [
-      { name: 'Occitan, Old (to 1500)' },
-      { name: 'Old Occitan (to 1500)' },
-      { name: 'Old Provençal (to 1500)' }
+    'code': 'pro',
+    'uf': [
+      { 'name': 'Occitan, Old (to 1500)' },
+      { 'name': 'Old Occitan (to 1500)' },
+      { 'name': 'Old Provençal (to 1500)' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/pus',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pus',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pushto'
     },
-    code: 'pus',
-    uf: [
-      { name: 'Afghan' },
-      { name: 'Pakhto' },
-      { name: 'Pakkhto' },
-      { name: 'Pashto' },
-      { name: 'Pashtu' },
-      { name: 'Pukhtu' },
-      { name: 'Pukkhto' },
-      { name: 'Pukshto' },
-      { name: 'Pushtu' },
+    'code': 'pus',
+    'uf': [
+      { 'name': 'Afghan' },
+      { 'name': 'Pakhto' },
+      { 'name': 'Pakkhto' },
+      { 'name': 'Pashto' },
+      { 'name': 'Pashtu' },
+      { 'name': 'Pukhtu' },
+      { 'name': 'Pukkhto' },
+      { 'name': 'Pukshto' },
+      { 'name': 'Pushtu' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wanetsi'
         },
-        uf: [
-          { name: 'Vanechi' },
-          { name: 'Waneci' },
-          { name: 'Wanesi' },
-          { name: 'Wenetsi' }
+        'uf': [
+          { 'name': 'Vanechi' },
+          { 'name': 'Waneci' },
+          { 'name': 'Wanesi' },
+          { 'name': 'Wenetsi' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/que',
-    name: 'Quechua',
-    code: 'que',
-    uf: [
-      { name: 'Inca' },
-      { name: 'Kechua' },
-      { name: 'Quichua' },
-      { name: 'Runasimi' },
+    'uri': 'info:lc/vocabulary/languages/que',
+    'name': 'Quechua',
+    'code': 'que',
+    'uf': [
+      { 'name': 'Inca' },
+      { 'name': 'Kechua' },
+      { 'name': 'Quichua' },
+      { 'name': 'Runasimi' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huanca'
         },
-        uf: { name: 'Wanka' }
+        'uf': { 'name': 'Wanka' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ingano'
         },
-        uf: { name: 'Inga' }
+        'uf': { 'name': 'Inga' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/roh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/roh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Raeto-Romance'
     },
-    code: 'roh',
-    uf: [
-      { name: 'Rhaeto-Romance' },
-      { name: 'Romansh' },
-      { name: 'Rumansh' }
+    'code': 'roh',
+    'uf': [
+      { 'name': 'Rhaeto-Romance' },
+      { 'name': 'Romansh' },
+      { 'name': 'Rumansh' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/raj',
-    name: 'Rajasthani',
-    code: 'raj',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/raj',
+    'name': 'Rajasthani',
+    'code': 'raj',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bagri'
         },
-        uf: [
-          { name: 'Bagari' },
-          { name: 'Bahgri' },
-          { name: 'Baorias' }
+        'uf': [
+          { 'name': 'Bagari' },
+          { 'name': 'Bahgri' },
+          { 'name': 'Baorias' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gujuri'
         },
-        uf: [
-          { name: 'Gojari' },
-          { name: 'Gojri' },
-          { name: 'Gujar' },
-          { name: 'Gujari' },
-          { name: 'Gujer' },
-          { name: 'Gujjari' },
-          { name: 'Gujri (Gujuri)' }
+        'uf': [
+          { 'name': 'Gojari' },
+          { 'name': 'Gojri' },
+          { 'name': 'Gujar' },
+          { 'name': 'Gujari' },
+          { 'name': 'Gujer' },
+          { 'name': 'Gujjari' },
+          { 'name': 'Gujri (Gujuri)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Harauti'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jaipurī'
         },
-        uf: { name: 'Dhundhari' }
+        'uf': { 'name': 'Dhundhari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lambadi'
         },
-        uf: [
-          { name: 'Banjara' },
-          { name: 'Labhani' },
-          { name: 'Lamani' },
-          { name: 'Lambani' }
+        'uf': [
+          { 'name': 'Banjara' },
+          { 'name': 'Labhani' },
+          { 'name': 'Lamani' },
+          { 'name': 'Lambani' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Malvi'
         },
-        uf: [
-          { name: 'Malavi' },
-          { name: 'Mallow' },
-          { name: 'Malwi' },
-          { name: 'Ujjaini (Malvi)' }
+        'uf': [
+          { 'name': 'Malavi' },
+          { 'name': 'Mallow' },
+          { 'name': 'Malwi' },
+          { 'name': 'Ujjaini (Malvi)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nimadi'
         },
-        uf: [
-          { name: 'Nemadi' },
-          { name: 'Nimari' }
+        'uf': [
+          { 'name': 'Nemadi' },
+          { 'name': 'Nimari' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sondwari'
         },
-        uf: [
-          { name: 'Sondhavāṛī' },
-          { name: 'Sondhwadi' },
-          { name: 'Sondhwari' },
-          { name: 'Soudhwari' }
+        'uf': [
+          { 'name': 'Sondhavāṛī' },
+          { 'name': 'Sondhwadi' },
+          { 'name': 'Sondhwari' },
+          { 'name': 'Soudhwari' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wagdi'
         },
-        uf: [
-          { name: 'Vāgaḍī' },
-          { name: 'Vāgarī' },
-          { name: 'Vagdi' },
-          { name: 'Vaged' },
-          { name: 'Vageri' },
-          { name: 'Vagi' },
-          { name: 'Vagri' },
-          { name: 'Wagadi' },
-          { name: 'Waghari' },
-          { name: 'Wagholi' }
+        'uf': [
+          { 'name': 'Vāgaḍī' },
+          { 'name': 'Vāgarī' },
+          { 'name': 'Vagdi' },
+          { 'name': 'Vaged' },
+          { 'name': 'Vageri' },
+          { 'name': 'Vagi' },
+          { 'name': 'Vagri' },
+          { 'name': 'Wagadi' },
+          { 'name': 'Waghari' },
+          { 'name': 'Wagholi' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/rap',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/rap',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Rapanui'
     },
-    code: 'rap'
+    'code': 'rap'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/rar',
-    name: 'Rarotongan',
-    code: 'rar',
-    uf: [
-      { name: 'Cook Islands Maori' },
-      { name: 'Maori, Cook Islands' },
+    'uri': 'info:lc/vocabulary/languages/rar',
+    'name': 'Rarotongan',
+    'code': 'rar',
+    'uf': [
+      { 'name': 'Cook Islands Maori' },
+      { 'name': 'Maori, Cook Islands' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Manihiki Rarotongan'
         },
-        uf: { name: 'Rarotongan, Manihiki' }
+        'uf': { 'name': 'Rarotongan, Manihiki' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/roa',
-    name: 'Romance (Other)',
-    code: 'roa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/roa',
+    'name': 'Romance (Other)',
+    'code': 'roa',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Anglo-Norman'
         },
-        uf: [
-          { name: 'Anglo-French' },
-          { name: 'Norman-French' }
+        'uf': [
+          { 'name': 'Anglo-French' },
+          { 'name': 'Norman-French' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cajun French'
         },
-        uf: [
-          { name: 'Acadian (Louisiana)' },
-          { name: 'French, Cajun' },
-          { name: 'Louisiana Acadian' },
-          { name: 'Louisiana French' }
+        'uf': [
+          { 'name': 'Acadian (Louisiana)' },
+          { 'name': 'French, Cajun' },
+          { 'name': 'Louisiana Acadian' },
+          { 'name': 'Louisiana French' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Franco-Provençal'
         },
-        uf: { name: 'Arpitan' }
+        'uf': { 'name': 'Arpitan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Franco-Venetian'
         },
-        uf: { name: 'Franco-Italian' }
+        'uf': { 'name': 'Franco-Italian' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Italian, Old (to 1300)'
         },
-        uf: { name: 'Old Italian' }
+        'uf': { 'name': 'Old Italian' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ladin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Portuñol'
         },
-        uf: [
-          { name: 'Bayano' },
-          { name: 'Brasilero' },
-          { name: 'Brasilero' },
-          { name: 'Brazilero' },
-          { name: 'Fronteiriço' },
-          { name: 'Fronterizo' },
-          { name: 'Portanhol' },
-          { name: 'Portunhol' }
+        'uf': [
+          { 'name': 'Bayano' },
+          { 'name': 'Brasilero' },
+          { 'name': 'Brasilero' },
+          { 'name': 'Brazilero' },
+          { 'name': 'Fronteiriço' },
+          { 'name': 'Fronterizo' },
+          { 'name': 'Portanhol' },
+          { 'name': 'Portunhol' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Spanish, Old (to 1500)'
         },
-        uf: { name: 'Old Spanish' }
+        'uf': { 'name': 'Old Spanish' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/rom',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/rom',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Romani'
     },
-    code: 'rom',
-    uf: [
-      { name: 'Gipsy' },
-      { name: 'Gypsy' },
-      { name: 'Romany' },
-      { name: 'Rommany' },
+    'code': 'rom',
+    'uf': [
+      { 'name': 'Gipsy' },
+      { 'name': 'Gypsy' },
+      { 'name': 'Romany' },
+      { 'name': 'Rommany' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Caló (Romani)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalderash'
         },
-        uf: [
-          { name: 'Coppersmith' },
-          { name: 'Kaldaraš' },
-          { name: 'Kalderaš' },
-          { name: 'Kelderaš' },
-          { name: 'Kelderashícko' }
+        'uf': [
+          { 'name': 'Coppersmith' },
+          { 'name': 'Kaldaraš' },
+          { 'name': 'Kalderaš' },
+          { 'name': 'Kelderaš' },
+          { 'name': 'Kelderashícko' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lovari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nuri'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Spoitori'
         },
-        uf: { name: 'Spoitari' }
+        'uf': { 'name': 'Spoitari' }
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/rum',
-    name: 'Romanian',
-    code: 'rum',
-    uf: [
-      { name: 'Rumanian' },
+    'uri': 'info:lc/vocabulary/languages/rum',
+    'name': 'Romanian',
+    'code': 'rum',
+    'uf': [
+      { 'name': 'Rumanian' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Boyash'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Megleno-Romanian'
         },
-        uf: [
-          { name: 'Meglinite' },
-          { name: 'Meglinitic' },
-          { name: 'Moglenitic' },
-          { name: 'Viăhește' }
+        'uf': [
+          { 'name': 'Meglinite' },
+          { 'name': 'Meglinitic' },
+          { 'name': 'Moglenitic' },
+          { 'name': 'Viăhește' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moldovan'
         },
-        uf: [
-          { name: 'Moldavian' },
-          { name: 'Moldovean' },
-          { name: 'Moldovian' }
+        'uf': [
+          { 'name': 'Moldavian' },
+          { 'name': 'Moldovean' },
+          { 'name': 'Moldovian' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/run',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/run',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Rundi'
     },
-    code: 'run',
-    uf: { name: 'Kirundi' }
+    'code': 'run',
+    'uf': { 'name': 'Kirundi' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/rus',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/rus',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Russian'
     },
-    code: 'rus'
+    'code': 'rus'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sal',
-    name: 'Salishan languages',
-    code: 'sal',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sal',
+    'name': 'Salishan languages',
+    'code': 'sal',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bella Coola'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Colville'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Comox'
         },
-        uf: { name: 'Komuk' }
+        'uf': { 'name': 'Komuk' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cowlitz'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kalispel'
         },
-        uf: { name: 'Pend d\'Oreille' }
+        'uf': { 'name': 'Pend d\'Oreille' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lillooet'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ntlakyapamuk'
         },
-        uf: [
-          { name: 'Netlakapamuk' },
-          { name: 'Thompson' }
+        'uf': [
+          { 'name': 'Netlakapamuk' },
+          { 'name': 'Thompson' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Okanagan'
         },
-        uf: { name: 'Okinagan' }
+        'uf': { 'name': 'Okinagan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Quinault'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Salish'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sechelt'
         },
-        uf: { name: 'Seshelt' }
+        'uf': { 'name': 'Seshelt' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shuswap'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Squawmish'
         },
-        uf: { name: 'Skwamish' }
+        'uf': { 'name': 'Skwamish' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Stalo'
         },
-        uf: { name: 'Halkomelem' }
+        'uf': { 'name': 'Halkomelem' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sam',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sam',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Samaritan Aramaic'
     },
-    code: 'sam'
+    'code': 'sam'
   },
   {
-    uri: 'info:lc/vocabulary/languages/smi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/smi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sami'
     },
-    code: 'smi',
-    uf: { name: 'Lapp' }
+    'code': 'smi',
+    'uf': { 'name': 'Lapp' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/lap',
-    name: 'Sami',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/lap',
+    'name': 'Sami',
+    'code': {
       '-status': 'obsolete',
       '#text': 'lap'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/smo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/smo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Samoan'
     },
-    code: 'smo'
+    'code': 'smo'
   },
   {
-    uri: 'info:lc/vocabulary/languages/sao',
-    name: 'Samoan',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/sao',
+    'name': 'Samoan',
+    'code': {
       '-status': 'obsolete',
       '#text': 'sao'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sad',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sad',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sandawe'
     },
-    code: 'sad',
-    uf: [
-      { name: 'Kissandaui' },
-      { name: 'Wassandaui' }
+    'code': 'sad',
+    'uf': [
+      { 'name': 'Kissandaui' },
+      { 'name': 'Wassandaui' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sag',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sag',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sango (Ubangi Creole)'
     },
-    code: 'sag'
+    'code': 'sag'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/san',
-    name: 'Sanskrit',
-    code: 'san',
-    uf: [
-      { name: 'Sanscrit' },
+    'uri': 'info:lc/vocabulary/languages/san',
+    'name': 'Sanskrit',
+    'code': 'san',
+    'uf': [
+      { 'name': 'Sanscrit' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Buddhist Hybrid Sanskrit'
         },
-        uf: { name: 'Hybrid Sanskrit, Buddhist' }
+        'uf': { 'name': 'Hybrid Sanskrit, Buddhist' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Epigraphical Hybrid Sanskrit'
         },
-        uf: { name: 'Hybrid Sanskrit, Epigraphical' }
+        'uf': { 'name': 'Hybrid Sanskrit, Epigraphical' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vedic'
         },
-        uf: [
-          { name: 'Indic, Old' },
-          { name: 'Old Indic' },
-          { name: 'Vedic Sanskrit' }
+        'uf': [
+          { 'name': 'Indic, Old' },
+          { 'name': 'Old Indic' },
+          { 'name': 'Vedic Sanskrit' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sat',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sat',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Santali'
     },
-    code: 'sat',
-    uf: { name: 'Sonthal' }
+    'code': 'sat',
+    'uf': { 'name': 'Sonthal' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/srd',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/srd',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sardinian'
     },
-    code: 'srd'
+    'code': 'srd'
   },
   {
-    uri: 'info:lc/vocabulary/languages/sas',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sas',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sasak'
     },
-    code: 'sas'
+    'code': 'sas'
   },
   {
-    uri: 'info:lc/vocabulary/languages/sco',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sco',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Scots'
     },
-    code: 'sco',
-    uf: [
-      { name: 'Lallans' },
-      { name: 'Lowland Scots' },
-      { name: 'Scots (English)' },
-      { name: 'Scottish (Germanic)' }
+    'code': 'sco',
+    'uf': [
+      { 'name': 'Lallans' },
+      { 'name': 'Lowland Scots' },
+      { 'name': 'Scots (English)' },
+      { 'name': 'Scottish (Germanic)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gla',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gla',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Scottish Gaelic'
     },
-    code: 'gla',
-    uf: [
-      { name: 'Erse (Scottish Gaelic)' },
-      { name: 'Gaelic (Scots)' },
-      { name: 'Scots Gaelic' }
+    'code': 'gla',
+    'uf': [
+      { 'name': 'Erse (Scottish Gaelic)' },
+      { 'name': 'Gaelic (Scots)' },
+      { 'name': 'Scots Gaelic' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/gae',
-    name: 'Scottish Gaelix',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/gae',
+    'name': 'Scottish Gaelix',
+    'code': {
       '-status': 'obsolete',
       '#text': 'gae'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sel',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sel',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Selkup'
     },
-    code: 'sel',
-    uf: { name: 'Ostiak Samoyed' }
+    'code': 'sel',
+    'uf': { 'name': 'Ostiak Samoyed' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sem',
-    name: 'Semitic (Other)',
-    code: 'sem',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sem',
+    'name': 'Semitic (Other)',
+    'code': 'sem',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ammonite'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Canaanite'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Eblaite'
         },
-        uf: { name: 'Paleocanaanite' }
+        'uf': { 'name': 'Paleocanaanite' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gurage languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Harari'
         },
-        uf: [
-          { name: 'Adari' },
-          { name: 'Ararge' }
+        'uf': [
+          { 'name': 'Adari' },
+          { 'name': 'Ararge' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Inor'
         },
-        uf: { name: 'Ennemor' }
+        'uf': { 'name': 'Ennemor' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jibbali'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mahri'
         },
-        uf: { name: 'Mehri' }
+        'uf': { 'name': 'Mehri' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandean'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sabaean'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'South Arabic'
         },
-        uf: { name: 'Arabic, South' }
+        'uf': { 'name': 'Arabic, South' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wolane'
         },
-        uf: [
-          { name: 'Olane' },
-          { name: 'Walane' },
-          { name: 'Welene' },
-          { name: 'Weleni' }
+        'uf': [
+          { 'name': 'Olane' },
+          { 'name': 'Walane' },
+          { 'name': 'Welene' },
+          { 'name': 'Weleni' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zay'
         },
-        uf: [
-          { name: 'Gelilla' },
-          { name: 'Lak\'i (Ethiopia)' },
-          { name: 'Laqi' },
-          { name: 'Zai' },
-          { name: 'Zway' }
+        'uf': [
+          { 'name': 'Gelilla' },
+          { 'name': 'Lak\'i (Ethiopia)' },
+          { 'name': 'Laqi' },
+          { 'name': 'Zai' },
+          { 'name': 'Zway' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/srp',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/srp',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Serbian'
     },
-    code: 'srp'
+    'code': 'srp'
   },
   {
-    uri: 'info:lc/vocabulary/languages/scc',
-    name: 'Serbian',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/scc',
+    'name': 'Serbian',
+    'code': {
       '-status': 'obsolete',
       '#text': 'scc'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/srr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/srr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Serer'
     },
-    code: 'srr'
+    'code': 'srr'
   },
   {
-    uri: 'info:lc/vocabulary/languages/shn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/shn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Shan'
     },
-    code: 'shn'
+    'code': 'shn'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sna',
-    name: 'Shona',
-    code: 'sna',
-    uf: [
-      { name: 'China (Africa)' },
-      { name: 'Mashona' },
+    'uri': 'info:lc/vocabulary/languages/sna',
+    'name': 'Shona',
+    'code': 'sna',
+    'uf': [
+      { 'name': 'China (Africa)' },
+      { 'name': 'Mashona' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karanga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zezuru'
         },
-        uf: { name: 'Central Shona' }
+        'uf': { 'name': 'Central Shona' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sho',
-    name: 'Shona',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/sho',
+    'name': 'Shona',
+    'code': {
       '-status': 'obsolete',
       '#text': 'sho'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/iii',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/iii',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sichuan Yi'
     },
-    code: 'iii',
-    uf: { name: 'Yi, Sichuan' }
+    'code': 'iii',
+    'uf': { 'name': 'Yi, Sichuan' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/scn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/scn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sicilian Italian'
     },
-    code: 'scn',
-    uf: { name: 'Italian, Sicilian' }
+    'code': 'scn',
+    'uf': { 'name': 'Italian, Sicilian' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sid',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sid',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sidamo'
     },
-    code: 'sid'
+    'code': 'sid'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sgn',
-    name: 'Sign languages',
-    code: 'sgn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sgn',
+    'name': 'Sign languages',
+    'code': 'sgn',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'American Sign Language'
         },
-        uf: { name: 'Ameslan' }
+        'uf': { 'name': 'Ameslan' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Australasian Signed English'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Austrian Sign Language'
         },
-        uf: [
-          { name: 'ÖGS (Sign language)' },
-          { name: 'Österreichische Gebärdensprache' }
+        'uf': [
+          { 'name': 'ÖGS (Sign language)' },
+          { 'name': 'Österreichische Gebärdensprache' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'British Sign Language'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Czech Sign Language'
         },
-        uf: { name: 'Český znakový jazyk' }
+        'uf': { 'name': 'Český znakový jazyk' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Danish Sign Language'
         },
-        uf: { name: 'DSL (Danish Sign Language)' }
+        'uf': { 'name': 'DSL (Danish Sign Language)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Estonian Sign Language'
         },
-        uf: { name: 'ESL (Estonian Sign Language)' }
+        'uf': { 'name': 'ESL (Estonian Sign Language)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Flemish Sign Language'
         },
-        uf: [
-          { name: 'VGT (Sign language)' },
-          { name: 'Vlaamse Gebarentaal' }
+        'uf': [
+          { 'name': 'VGT (Sign language)' },
+          { 'name': 'Vlaamse Gebarentaal' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'French Belgian Sign Language'
         },
-        uf: [
-          { name: 'Belgian French Sign Language' },
-          { name: 'Langue des signes Belge Francophone' },
-          { name: 'Langue des signes française Belgique' },
-          { name: 'LSFB (Sign language)' }
+        'uf': [
+          { 'name': 'Belgian French Sign Language' },
+          { 'name': 'Langue des signes Belge Francophone' },
+          { 'name': 'Langue des signes française Belgique' },
+          { 'name': 'LSFB (Sign language)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guinea-Bissauan Language'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Icelandic Sign Language'
         },
-        uf: { name: 'ISL (Icelandic Sign Language)' }
+        'uf': { 'name': 'ISL (Icelandic Sign Language)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jordanian Sign Language'
         },
-        uf: [
-          { name: 'JSL (Sign Language)' },
-          { name: 'Lughat al-Ishāra al-Urdunia' }
+        'uf': [
+          { 'name': 'JSL (Sign Language)' },
+          { 'name': 'Lughat al-Ishāra al-Urdunia' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mauritian Sign Language'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Quebec Sign Language'
         },
-        uf: { name: 'Langue des signes québécoise' }
+        'uf': { 'name': 'Langue des signes québécoise' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/bla',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/bla',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Siksika'
     },
-    code: 'bla',
-    uf: { name: 'Blackfoot' }
+    'code': 'bla',
+    'uf': { 'name': 'Blackfoot' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/snd',
-    name: 'Sindhi',
-    code: 'snd',
-    uf: {
-      name: {
+    'uri': 'info:lc/vocabulary/languages/snd',
+    'name': 'Sindhi',
+    'code': 'snd',
+    'uf': {
+      'name': {
         '-authorized': 'yes',
         '#text': 'Kachchhi'
       },
-      uf: [
-        { name: 'Kacchī' },
-        { name: 'Kutchi' }
+      'uf': [
+        { 'name': 'Kacchī' },
+        { 'name': 'Kutchi' }
       ]
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sin',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sin',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sinhalese'
     },
-    code: 'sin',
-    uf: [
-      { name: 'Cingalese' },
-      { name: 'Singhala' },
-      { name: 'Singhalese' },
-      { name: 'Sinhala' }
+    'code': 'sin',
+    'uf': [
+      { 'name': 'Cingalese' },
+      { 'name': 'Singhala' },
+      { 'name': 'Singhalese' },
+      { 'name': 'Sinhala' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/snh',
-    name: 'Sinhalese',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/snh',
+    'name': 'Sinhalese',
+    'code': {
       '-status': 'obsolete',
       '#text': 'snh'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sit',
-    name: 'Sino-Tibetan (Other)',
-    code: 'sit',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sit',
+    'name': 'Sino-Tibetan (Other)',
+    'code': 'sit',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Abor'
         },
-        uf: [
-          { name: 'Adi' },
-          { name: 'Miri' },
-          { name: 'Miśing' }
+        'uf': [
+          { 'name': 'Adi' },
+          { 'name': 'Miri' },
+          { 'name': 'Miśing' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Achang'
         },
-        uf: [
-          { name: 'A-ch‘ang' },
-          { name: 'Atsang' }
+        'uf': [
+          { 'name': 'A-ch‘ang' },
+          { 'name': 'Atsang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Akha'
         },
-        uf: [
-          { name: 'Ahka' },
-          { name: 'Aini (Tibeto-Burman)' },
-          { name: 'Ak\'a' },
-          { name: 'Ekaw' },
-          { name: 'Hka Ko' },
-          { name: 'Ikaw' },
-          { name: 'Ikor' },
-          { name: 'Kaw' },
-          { name: 'Kha Ko' },
-          { name: 'Khako' },
-          { name: 'Khao Ikor' },
-          { name: 'Khao Kha Ko' },
-          { name: 'Ko (Tibeto-Burman)' },
-          { name: 'Yani' }
+        'uf': [
+          { 'name': 'Ahka' },
+          { 'name': 'Aini (Tibeto-Burman)' },
+          { 'name': 'Ak\'a' },
+          { 'name': 'Ekaw' },
+          { 'name': 'Hka Ko' },
+          { 'name': 'Ikaw' },
+          { 'name': 'Ikor' },
+          { 'name': 'Kaw' },
+          { 'name': 'Kha Ko' },
+          { 'name': 'Khako' },
+          { 'name': 'Khao Ikor' },
+          { 'name': 'Khao Kha Ko' },
+          { 'name': 'Ko (Tibeto-Burman)' },
+          { 'name': 'Yani' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Angami'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ao'
         },
-        uf: [
-          { name: 'Chungli' },
-          { name: 'Hatigorria' },
-          { name: 'Mongsen' },
-          { name: 'Zungi' },
-          { name: 'Zwingi' }
+        'uf': [
+          { 'name': 'Chungli' },
+          { 'name': 'Hatigorria' },
+          { 'name': 'Mongsen' },
+          { 'name': 'Zungi' },
+          { 'name': 'Zwingi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Apatani'
         },
-        uf: [
-          { name: 'Aka' },
-          { name: 'Apa Tanang' },
-          { name: 'Hruso' }
+        'uf': [
+          { 'name': 'Aka' },
+          { 'name': 'Apa Tanang' },
+          { 'name': 'Hruso' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arakanese'
         },
-        uf: [
-          { name: 'Maghi' },
-          { name: 'Rakhaing' }
+        'uf': [
+          { 'name': 'Maghi' },
+          { 'name': 'Rakhaing' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bai (China)'
         },
-        uf: [
-          { name: 'Min-chia' },
-          { name: 'Pai (China)' }
+        'uf': [
+          { 'name': 'Min-chia' },
+          { 'name': 'Pai (China)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Balti'
         },
-        uf: [
-          { name: 'Baltistani' },
-          { name: 'Bhotia of Baltistan' },
-          { name: 'Sbalti' }
+        'uf': [
+          { 'name': 'Baltistani' },
+          { 'name': 'Bhotia of Baltistan' },
+          { 'name': 'Sbalti' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bantawa'
         },
-        uf: [
-          { name: 'Bontawa' },
-          { name: 'Kirāta Rāī' }
+        'uf': [
+          { 'name': 'Bontawa' },
+          { 'name': 'Kirāta Rāī' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baram'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Belhariya'
         },
-        uf: [
-          { name: 'Athpagari' },
-          { name: 'Athpahariya' },
-          { name: 'Athpare (Belhariya)' },
-          { name: 'Athpariya (Belhariya)' },
-          { name: 'Belhare' },
-          { name: 'Belhāreor' }
+        'uf': [
+          { 'name': 'Athpagari' },
+          { 'name': 'Athpahariya' },
+          { 'name': 'Athpare (Belhariya)' },
+          { 'name': 'Athpariya (Belhariya)' },
+          { 'name': 'Belhare' },
+          { 'name': 'Belhāreor' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bodo'
         },
-        uf: [
-          { name: 'Bara (India and Nepal)' },
-          { name: 'Boro (India and Nepal)' },
-          { name: 'Kachari, Plains' },
-          { name: 'Mech' },
-          { name: 'Plains Kachari' }
+        'uf': [
+          { 'name': 'Bara (India and Nepal)' },
+          { 'name': 'Boro (India and Nepal)' },
+          { 'name': 'Kachari, Plains' },
+          { 'name': 'Mech' },
+          { 'name': 'Plains Kachari' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chamling'
         },
-        uf: { name: 'Camling' }
+        'uf': { 'name': 'Camling' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chang'
         },
-        uf: { name: 'Mojung' }
+        'uf': { 'name': 'Mojung' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chepang'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chinbon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chino'
         },
-        uf: { name: 'Jino' }
+        'uf': { 'name': 'Jino' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chothe Naga'
         },
-        uf: [
-          { name: 'Chawte' },
-          { name: 'Chothe' },
-          { name: 'Chowte' }
+        'uf': [
+          { 'name': 'Chawte' },
+          { 'name': 'Chothe' },
+          { 'name': 'Chowte' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dafla'
         },
-        uf: { name: 'Nisi' }
+        'uf': { 'name': 'Nisi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dänjong-kä'
         },
-        uf: [
-          { name: 'Bhotic of Sikkim' },
-          { name: 'Dé-jong ké' },
-          { name: 'Sikkim Bhotia' },
-          { name: 'Sikkimese' }
+        'uf': [
+          { 'name': 'Bhotic of Sikkim' },
+          { 'name': 'Dé-jong ké' },
+          { 'name': 'Sikkim Bhotia' },
+          { 'name': 'Sikkimese' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Deori'
         },
-        uf: [
-          { name: 'Chutia' },
-          { name: 'Chutiya' },
-          { name: 'Dari (India)' },
-          { name: 'Deori Chutiya' },
-          { name: 'Deuri' },
-          { name: 'Dewri' },
-          { name: 'Drori' }
+        'uf': [
+          { 'name': 'Chutia' },
+          { 'name': 'Chutiya' },
+          { 'name': 'Dari (India)' },
+          { 'name': 'Deori Chutiya' },
+          { 'name': 'Deuri' },
+          { 'name': 'Dewri' },
+          { 'name': 'Drori' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dhimal'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Digaro'
         },
-        uf: [
-          { name: 'Taraon' },
-          { name: 'Taying' }
+        'uf': [
+          { 'name': 'Taraon' },
+          { 'name': 'Taying' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dimasa'
         },
-        uf: [
-          { name: 'Cachari' },
-          { name: 'Hill Kachari' },
-          { name: 'Kachari' }
+        'uf': [
+          { 'name': 'Cachari' },
+          { 'name': 'Hill Kachari' },
+          { 'name': 'Kachari' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dungan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gallong'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Garo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gurung'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Haka Chin'
         },
-        uf: [
-          { name: 'Baungshè' },
-          { name: 'Chin, Haka' },
-          { name: 'Lai' }
+        'uf': [
+          { 'name': 'Baungshè' },
+          { 'name': 'Chin, Haka' },
+          { 'name': 'Lai' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hamr'
         },
-        uf: [
-          { name: 'Hamar' },
-          { name: 'Mhar' }
+        'uf': [
+          { 'name': 'Hamar' },
+          { 'name': 'Mhar' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jero'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kabui'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khaling'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khiamniungan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kok Borok'
         },
-        uf: [
-          { name: 'Mrung' },
-          { name: 'Tipura' },
-          { name: 'Tripuri' }
+        'uf': [
+          { 'name': 'Mrung' },
+          { 'name': 'Tipura' },
+          { 'name': 'Tripuri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Konyak'
         },
-        uf: { name: 'Kanyak' }
+        'uf': { 'name': 'Kanyak' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kuki'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kusunda'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ladakhi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lahu'
         },
-        uf: { name: 'Muhso' }
+        'uf': { 'name': 'Muhso' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Laizo (Burma)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lepcha'
         },
-        uf: { name: 'Rong' }
+        'uf': { 'name': 'Rong' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Limbu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lisu'
         },
-        uf: { name: 'Yawyin' }
+        'uf': { 'name': 'Yawyin' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lopa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Magar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Miju'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mikir'
         },
-        uf: { name: 'Karbi' }
+        'uf': { 'name': 'Karbi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mishmi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moklum'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Monpa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mün Chin'
         },
-        uf: { name: 'Chinbok' }
+        'uf': { 'name': 'Chinbok' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Naga languages'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Naxi'
         },
-        uf: { name: 'Moso' }
+        'uf': { 'name': 'Moso' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nocte'
         },
-        uf: [
-          { name: 'Borduaria' },
-          { name: 'Mohongia' },
-          { name: 'Paniduaria' }
+        'uf': [
+          { 'name': 'Borduaria' },
+          { 'name': 'Mohongia' },
+          { 'name': 'Paniduaria' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Padam'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paite'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pānkhū'
         },
-        uf: [
-          { name: 'Paang (Pānkhū)' },
-          { name: 'Pāṃkhoẏā' },
-          { name: 'Pang Khua' },
-          { name: 'Pang (Pānkhū)' },
-          { name: 'Pangkhu' },
-          { name: 'Pangkhua' },
-          { name: 'Pankho' },
-          { name: 'Panko' },
-          { name: 'Pankua' }
+        'uf': [
+          { 'name': 'Paang (Pānkhū)' },
+          { 'name': 'Pāṃkhoẏā' },
+          { 'name': 'Pang Khua' },
+          { 'name': 'Pang (Pānkhū)' },
+          { 'name': 'Pangkhu' },
+          { 'name': 'Pangkhua' },
+          { 'name': 'Pankho' },
+          { 'name': 'Panko' },
+          { 'name': 'Pankua' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rabha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rawang'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rgyalrong'
         },
-        uf: { name: 'Gyalrong' }
+        'uf': { 'name': 'Gyalrong' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rongmei'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sampang'
         },
-        uf: [
-          { name: 'Sāmpāṅ Rāī' },
-          { name: 'Sampang Rai' },
-          { name: 'Sampange Rai' },
-          { name: 'Sangpang Gîn' },
-          { name: 'Sangpang Gun' },
-          { name: 'Sangpang Kha' },
-          { name: 'Sangpang' }
+        'uf': [
+          { 'name': 'Sāmpāṅ Rāī' },
+          { 'name': 'Sampang Rai' },
+          { 'name': 'Sampange Rai' },
+          { 'name': 'Sangpang Gîn' },
+          { 'name': 'Sangpang Gun' },
+          { 'name': 'Sangpang Kha' },
+          { 'name': 'Sangpang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Singpho'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sunwar'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tamang'
         },
-        uf: { name: 'Murmi' }
+        'uf': { 'name': 'Murmi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tamu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tangkhul'
         },
-        uf: { name: 'Thankhul' }
+        'uf': { 'name': 'Thankhul' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tangsa'
         },
-        uf: { name: 'Tengsa' }
+        'uf': { 'name': 'Tengsa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tangut'
         },
-        uf: [
-          { name: 'Hsi-hsia' },
-          { name: 'Si-hia' },
-          { name: 'Xixia' }
+        'uf': [
+          { 'name': 'Hsi-hsia' },
+          { 'name': 'Si-hia' },
+          { 'name': 'Xixia' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tenyidie'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Thādo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Thakali'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Thami'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Thulung'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tiddim Chin'
         },
-        uf: [
-          { name: 'Chin, Tiddim' },
-          { name: 'Kamhau' },
-          { name: 'Sokte' }
+        'uf': [
+          { 'name': 'Chin, Tiddim' },
+          { 'name': 'Kamhau' },
+          { 'name': 'Sokte' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tshangla'
         },
-        uf: [
-          { name: 'Canglo Monba' },
-          { name: 'Cangluo Menba' },
-          { name: 'Cangluo Monba' },
-          { name: 'Central Monpa' },
-          { name: 'Dirang' },
-          { name: 'Dungsam' },
-          { name: 'Memba' },
-          { name: 'Menba (Tshangla)' },
-          { name: 'Monba' },
-          { name: 'Monpa (Tshangla)' },
-          { name: 'Motuo' },
-          { name: 'Motuo Menba' },
-          { name: 'Sangla' },
-          { name: 'Sarchapkkha' },
-          { name: 'Schachop' },
-          { name: 'Shachobiikha' },
-          { name: 'Shachopkha' },
-          { name: 'Sharchagpakha' },
-          { name: 'Sharchhop-kha' },
-          { name: 'Sharchopkha' },
-          { name: 'Tashigang' },
-          { name: 'Tsangla' },
-          { name: 'Tsangla Monba' },
-          { name: 'Tsanglo (Tshangla)' },
-          { name: 'Tshalingpa (Tshangla)' }
+        'uf': [
+          { 'name': 'Canglo Monba' },
+          { 'name': 'Cangluo Menba' },
+          { 'name': 'Cangluo Monba' },
+          { 'name': 'Central Monpa' },
+          { 'name': 'Dirang' },
+          { 'name': 'Dungsam' },
+          { 'name': 'Memba' },
+          { 'name': 'Menba (Tshangla)' },
+          { 'name': 'Monba' },
+          { 'name': 'Monpa (Tshangla)' },
+          { 'name': 'Motuo' },
+          { 'name': 'Motuo Menba' },
+          { 'name': 'Sangla' },
+          { 'name': 'Sarchapkkha' },
+          { 'name': 'Schachop' },
+          { 'name': 'Shachobiikha' },
+          { 'name': 'Shachopkha' },
+          { 'name': 'Sharchagpakha' },
+          { 'name': 'Sharchhop-kha' },
+          { 'name': 'Sharchopkha' },
+          { 'name': 'Tashigang' },
+          { 'name': 'Tsangla' },
+          { 'name': 'Tsangla Monba' },
+          { 'name': 'Tsanglo (Tshangla)' },
+          { 'name': 'Tshalingpa (Tshangla)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vaiphei'
         },
-        uf: [
-          { name: 'Bhaipei' },
-          { name: 'Veiphei' }
+        'uf': [
+          { 'name': 'Bhaipei' },
+          { 'name': 'Veiphei' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wambule'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wayu'
         },
-        uf: [
-          { name: 'Hayu' },
-          { name: 'Vayu' },
-          { name: 'Wayo' }
+        'uf': [
+          { 'name': 'Hayu' },
+          { 'name': 'Vayu' },
+          { 'name': 'Wayo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yao (Southeast Asia)'
         },
-        uf: { name: 'Mien' }
+        'uf': { 'name': 'Mien' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yi'
         },
-        uf: [
-          { name: 'Lolo (China)' },
-          { name: 'Nosu' }
+        'uf': [
+          { 'name': 'Lolo (China)' },
+          { 'name': 'Nosu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zang Zung'
         },
-        uf: { name: 'Zhang-Zhung' }
+        'uf': { 'name': 'Zhang-Zhung' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zangskari'
         }
@@ -18853,83 +18853,83 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sio',
-    name: 'Siouan (Other)',
-    code: 'sio',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sio',
+    'name': 'Siouan (Other)',
+    'code': 'sio',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Biloxi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chiwere'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Crow'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dhegiha'
         },
-        uf: { name: 'Cegiha' }
+        'uf': { 'name': 'Cegiha' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hidatsa'
         },
-        uf: { name: 'Grosventres (Hidatsa)' }
+        'uf': { 'name': 'Grosventres (Hidatsa)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ofo'
         },
-        uf: { name: 'Ofogoula' }
+        'uf': { 'name': 'Ofogoula' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Omaha'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Oto'
         },
-        uf: { name: 'Watoto' }
+        'uf': { 'name': 'Watoto' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tutelo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Winnebago'
         },
-        uf: { name: 'Hocak' }
+        'uf': { 'name': 'Hocak' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Woccon'
         }
@@ -18937,1639 +18937,1639 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sms',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sms',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Skolt Sami'
     },
-    code: 'sms',
-    uf: [
-      { name: 'Lapp, Russian' },
-      { name: 'Russian Lapp' },
-      { name: 'Sami, Skolt' }
+    'code': 'sms',
+    'uf': [
+      { 'name': 'Lapp, Russian' },
+      { 'name': 'Russian Lapp' },
+      { 'name': 'Sami, Skolt' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/den',
-    name: 'Slavey',
-    code: 'den',
-    uf: [
-      { name: 'Dené (Slavey)' },
-      { name: 'Dené Tha' },
-      { name: 'Ethchaottine' },
-      { name: 'Mackenzian' },
-      { name: 'North Slavey' },
-      { name: 'Slave' },
-      { name: 'Slavi' },
-      { name: 'South Slavey' },
+    'uri': 'info:lc/vocabulary/languages/den',
+    'name': 'Slavey',
+    'code': 'den',
+    'uf': [
+      { 'name': 'Dené (Slavey)' },
+      { 'name': 'Dené Tha' },
+      { 'name': 'Ethchaottine' },
+      { 'name': 'Mackenzian' },
+      { 'name': 'North Slavey' },
+      { 'name': 'Slave' },
+      { 'name': 'Slavi' },
+      { 'name': 'South Slavey' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kawchottine'
         },
-        uf: [
-          { name: 'Hare' },
-          { name: 'Peaux-de-Lièvre' }
+        'uf': [
+          { 'name': 'Hare' },
+          { 'name': 'Peaux-de-Lièvre' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sla',
-    name: 'Slavic (Other)',
-    code: 'sla',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sla',
+    'name': 'Slavic (Other)',
+    'code': 'sla',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Belarusian, Old (to 1700)'
         },
-        uf: { name: 'Old Belarusian' }
+        'uf': { 'name': 'Old Belarusian' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Čakavian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Carpatho-Rusyn'
         },
-        uf: [
-          { name: 'Carpathian (Carpatho-Rusyn)' },
-          { name: 'Carpatho-Russian' },
-          { name: 'Carpatho-Ruthenian' },
-          { name: 'Rusyn' },
-          { name: 'Ruthenian (Carpatho-Rusyn)' }
+        'uf': [
+          { 'name': 'Carpathian (Carpatho-Rusyn)' },
+          { 'name': 'Carpatho-Russian' },
+          { 'name': 'Carpatho-Ruthenian' },
+          { 'name': 'Rusyn' },
+          { 'name': 'Ruthenian (Carpatho-Rusyn)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Czech, Old (to 1500)'
         },
-        uf: { name: 'Old Czech' }
+        'uf': { 'name': 'Old Czech' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Polabian'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Russian, Old (to 1300)'
         },
-        uf: [
-          { name: 'East Slavic' },
-          { name: 'Old East Slavic' },
-          { name: 'Old Russian' }
+        'uf': [
+          { 'name': 'East Slavic' },
+          { 'name': 'Old East Slavic' },
+          { 'name': 'Old Russian' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Surzhyk'
         },
-        uf: { name: 'Suržyk' }
+        'uf': { 'name': 'Suržyk' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ukrainian, Old (ca. 1300-1700)'
         },
-        uf: { name: 'Old Ukrainian' }
+        'uf': { 'name': 'Old Ukrainian' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/slo',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/slo',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Slovak'
     },
-    code: 'slo'
+    'code': 'slo'
   },
   {
-    uri: 'info:lc/vocabulary/languages/slv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/slv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Slovenian'
     },
-    code: 'slv',
-    uf: { name: 'Windic (Slovenian)' }
+    'code': 'slv',
+    'uf': { 'name': 'Windic (Slovenian)' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sog',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sog',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sogdian'
     },
-    code: 'sog'
+    'code': 'sog'
   },
   {
-    uri: 'info:lc/vocabulary/languages/som',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/som',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Somali'
     },
-    code: 'som'
+    'code': 'som'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/son',
-    name: 'Songhai',
-    code: 'son',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/son',
+    'name': 'Songhai',
+    'code': 'son',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dendi'
         },
-        uf: { name: 'Dandawa' }
+        'uf': { 'name': 'Dandawa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zarma'
         },
-        uf: [
-          { name: 'Djerma' },
-          { name: 'Dyerma' },
-          { name: 'Zerma' }
+        'uf': [
+          { 'name': 'Djerma' },
+          { 'name': 'Dyerma' },
+          { 'name': 'Zerma' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/snk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/snk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Soninke'
     },
-    code: 'snk',
-    uf: { name: 'Sarakole' }
+    'code': 'snk',
+    'uf': { 'name': 'Sarakole' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/wen',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/wen',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sorbian (Other)'
     },
-    code: 'wen',
-    uf: { name: 'Wendic (Other)' }
+    'code': 'wen',
+    'uf': { 'name': 'Wendic (Other)' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/sot',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sot',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sotho'
     },
-    code: 'sot',
-    uf: [
-      { name: 'Sesuto' },
-      { name: 'Southern Sotho' },
-      { name: 'Suto' }
+    'code': 'sot',
+    'uf': [
+      { 'name': 'Sesuto' },
+      { 'name': 'Southern Sotho' },
+      { 'name': 'Suto' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sso',
-    name: 'Sotho',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/sso',
+    'name': 'Sotho',
+    'code': {
       '-status': 'obsolete',
       '#text': 'sso'
     }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sai',
-    name: 'South American Indian (Other)',
-    code: 'sai',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sai',
+    'name': 'South American Indian (Other)',
+    'code': 'sai',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Achagua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Achuar'
         },
-        uf: [
-          { name: 'Achuale' },
-          { name: 'Achuara Jivaro' },
-          { name: 'Jivaro, Achuara' }
+        'uf': [
+          { 'name': 'Achuale' },
+          { 'name': 'Achuara Jivaro' },
+          { 'name': 'Jivaro, Achuara' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Aguaruna'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Alacaluf'
         },
-        uf: { name: 'Kawesqar' }
+        'uf': { 'name': 'Kawesqar' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Amahuaca'
         },
-        uf: { name: 'Sayaco' }
+        'uf': { 'name': 'Sayaco' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Amuesha'
         },
-        uf: { name: 'Lorenzo' }
+        'uf': { 'name': 'Lorenzo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Andoque'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Apalai'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Apinagé'
         },
-        uf: [
-          { name: 'Apinajé' },
-          { name: 'Apinayé' }
+        'uf': [
+          { 'name': 'Apinajé' },
+          { 'name': 'Apinayé' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arabela'
         },
-        uf: { name: 'Chiripuno' }
+        'uf': { 'name': 'Chiripuno' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Araona'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arecuna'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Arekena'
         },
-        uf: [
-          { name: 'Guarequena' },
-          { name: 'Uarequena' },
-          { name: 'Warekena' }
+        'uf': [
+          { 'name': 'Guarequena' },
+          { 'name': 'Uarequena' },
+          { 'name': 'Warekena' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bakairi'
         },
-        uf: { name: 'Bacairi' }
+        'uf': { 'name': 'Bacairi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baniwa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Barasana del Norte'
         },
-        uf: [
-          { name: 'Bara (Colombia)' },
-          { name: 'Northern Barasano' }
+        'uf': [
+          { 'name': 'Bara (Colombia)' },
+          { 'name': 'Northern Barasano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Barasana del Sur'
         },
-        uf: [
-          { name: 'Bara (Colombia)' },
-          { name: 'Southern Barasano' }
+        'uf': [
+          { 'name': 'Bara (Colombia)' },
+          { 'name': 'Southern Barasano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bora'
         },
-        uf: { name: 'Boro (South America)' }
+        'uf': { 'name': 'Boro (South America)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bororo (Brazil)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cacua'
         },
-        uf: [
-          { name: 'Macú de cubeo' },
-          { name: 'Macú de desano' },
-          { name: 'Macú de guanano' }
+        'uf': [
+          { 'name': 'Macú de cubeo' },
+          { 'name': 'Macú de desano' },
+          { 'name': 'Macú de guanano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Caduveo'
         },
-        uf: { name: 'Kadiweu' }
+        'uf': { 'name': 'Kadiweu' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Caingua'
         },
-        uf: [
-          { name: 'Cayua' },
-          { name: 'Kaingua' },
-          { name: 'Kaiwa (Brazil)' }
+        'uf': [
+          { 'name': 'Cayua' },
+          { 'name': 'Kaingua' },
+          { 'name': 'Kaiwa (Brazil)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Callahuaya'
         },
-        uf: [
-          { name: 'Callawalla' },
-          { name: 'Callawaya' },
-          { name: 'Kallawaya' },
-          { name: 'Qollahuaya' }
+        'uf': [
+          { 'name': 'Callawalla' },
+          { 'name': 'Callawaya' },
+          { 'name': 'Kallawaya' },
+          { 'name': 'Qollahuaya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Campa'
         },
-        uf: [
-          { name: 'Ande' },
-          { name: 'Asheninca' }
+        'uf': [
+          { 'name': 'Ande' },
+          { 'name': 'Asheninca' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Camsa'
         },
-        uf: [
-          { name: 'Coche' },
-          { name: 'Kamentzá' },
-          { name: 'Kamsa' },
-          { name: 'Sebondoy' },
-          { name: 'Sibondoy' }
+        'uf': [
+          { 'name': 'Coche' },
+          { 'name': 'Kamentzá' },
+          { 'name': 'Kamsa' },
+          { 'name': 'Sebondoy' },
+          { 'name': 'Sibondoy' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Canamari (Tucanoan)'
         },
-        uf: { name: 'Kanamari (Tucanoan)' }
+        'uf': { 'name': 'Kanamari (Tucanoan)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cañari'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Candoshi'
         },
-        uf: [
-          { name: 'Kandoshi' },
-          { name: 'Morato' },
-          { name: 'Murato' },
-          { name: 'Shapra' }
+        'uf': [
+          { 'name': 'Kandoshi' },
+          { 'name': 'Morato' },
+          { 'name': 'Murato' },
+          { 'name': 'Shapra' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Canella'
         },
-        uf: { name: 'Kanela' }
+        'uf': { 'name': 'Kanela' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Capanahua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Caquinte'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Caraja'
         },
-        uf: { name: 'Karaja' }
+        'uf': { 'name': 'Karaja' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Carapana (Tucanoan)'
         },
-        uf: [
-          { name: 'Karapana (Tucanoan)' },
-          { name: 'Möchda (Tucanoan)' }
+        'uf': [
+          { 'name': 'Karapana (Tucanoan)' },
+          { 'name': 'Möchda (Tucanoan)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cashibo'
         },
-        uf: { name: 'Comabo' }
+        'uf': { 'name': 'Comabo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cashinawa'
         },
-        uf: [
-          { name: 'Kashinawa' },
-          { name: 'Sheminawa' }
+        'uf': [
+          { 'name': 'Kashinawa' },
+          { 'name': 'Sheminawa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Catio'
         },
-        uf: [
-          { name: 'Embena, Northern' },
-          { name: 'Epera, Northern' },
-          { name: 'Katio' },
-          { name: 'Northern Epera' }
+        'uf': [
+          { 'name': 'Embena, Northern' },
+          { 'name': 'Epera, Northern' },
+          { 'name': 'Katio' },
+          { 'name': 'Northern Epera' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cauqui'
         },
-        uf: [
-          { name: 'Jacaru' },
-          { name: 'Jaqaru' }
+        'uf': [
+          { 'name': 'Jacaru' },
+          { 'name': 'Jaqaru' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cavineño'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cayapa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cayapo'
         },
-        uf: { name: 'Kayapo' }
+        'uf': { 'name': 'Kayapo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chacobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chamacoco'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chamí'
         },
-        uf: { name: 'Embera Chamí' }
+        'uf': { 'name': 'Embera Chamí' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chamicuro'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chana (Uruguay)'
         },
-        uf: [
-          { name: 'Čaná' },
-          { name: 'Layuna' },
-          { name: 'Tšaná' },
-          { name: 'Tsaná-Bequá' },
-          { name: 'Tschaná' },
-          { name: 'Yaro' }
+        'uf': [
+          { 'name': 'Čaná' },
+          { 'name': 'Layuna' },
+          { 'name': 'Tšaná' },
+          { 'name': 'Tsaná-Bequá' },
+          { 'name': 'Tschaná' },
+          { 'name': 'Yaro' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chayahuita'
         },
-        uf: { name: 'Chawi' }
+        'uf': { 'name': 'Chawi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chimane'
         },
-        uf: [
-          { name: 'Nawazi-Moñtji' },
-          { name: 'Tsimane' }
+        'uf': [
+          { 'name': 'Nawazi-Moñtji' },
+          { 'name': 'Tsimane' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chipaya'
         },
-        uf: { name: 'Puquina (Chipaya)' }
+        'uf': { 'name': 'Puquina (Chipaya)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chiquito'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cholon'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chontaquiro'
         },
-        uf: [
-          { name: 'Chuntaquiro' },
-          { name: 'Piro (Arawakan)' },
-          { name: 'Simirenchi' }
+        'uf': [
+          { 'name': 'Chuntaquiro' },
+          { 'name': 'Piro (Arawakan)' },
+          { 'name': 'Simirenchi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Choroti'
         },
-        uf: { name: 'Yofuaha' }
+        'uf': { 'name': 'Yofuaha' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chulupí'
         },
-        uf: [
-          { name: 'Ashluslay' },
-          { name: 'Nivacle' }
+        'uf': [
+          { 'name': 'Ashluslay' },
+          { 'name': 'Nivacle' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cocama'
         },
-        uf: [
-          { name: 'Kokama' },
-          { name: 'Ucayale' }
+        'uf': [
+          { 'name': 'Kokama' },
+          { 'name': 'Ucayale' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cofán'
         },
-        uf: [
-          { name: 'A\'i' },
-          { name: 'Kofán' }
+        'uf': [
+          { 'name': 'A\'i' },
+          { 'name': 'Kofán' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Colorado'
         },
-        uf: [
-          { name: 'Tsacela' },
-          { name: 'Yumba' }
+        'uf': [
+          { 'name': 'Tsacela' },
+          { 'name': 'Yumba' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Coreguaje'
         },
-        uf: { name: 'Caqueta' }
+        'uf': { 'name': 'Caqueta' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cuaiquer'
         },
-        uf: [
-          { name: 'Coaiker' },
-          { name: 'Koaiker' }
+        'uf': [
+          { 'name': 'Coaiker' },
+          { 'name': 'Koaiker' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cubeo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cuiba'
         },
-        uf: { name: 'Cuiva' }
+        'uf': { 'name': 'Cuiva' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Culina'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cumana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cuna'
         },
-        uf: { name: 'Kuna' }
+        'uf': { 'name': 'Kuna' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Damana'
         },
-        uf: [
-          { name: 'Arosario' },
-          { name: 'Guamaca' },
-          { name: 'Malayo' },
-          { name: 'Maracasero' },
-          { name: 'Sanja' },
-          { name: 'Wiwa' }
+        'uf': [
+          { 'name': 'Arosario' },
+          { 'name': 'Guamaca' },
+          { 'name': 'Malayo' },
+          { 'name': 'Maracasero' },
+          { 'name': 'Sanja' },
+          { 'name': 'Wiwa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Desana'
         },
-        uf: { name: 'Wira' }
+        'uf': { 'name': 'Wira' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Emerillon'
         },
-        uf: [
-          { name: 'Mereo' },
-          { name: 'Teco (Tupi)' }
+        'uf': [
+          { 'name': 'Mereo' },
+          { 'name': 'Teco (Tupi)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Epena Saija'
         },
-        uf: [
-          { name: 'Saija' },
-          { name: 'Saixa' }
+        'uf': [
+          { 'name': 'Saija' },
+          { 'name': 'Saixa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ese Ejja'
         },
-        uf: [
-          { name: 'Chama (Tacanan)' },
-          { name: 'Guacanahua' },
-          { name: 'Guarayo (Tacanan)' },
-          { name: 'Huarayo (Tacanan)' },
-          { name: 'Tiatinagua' }
+        'uf': [
+          { 'name': 'Chama (Tacanan)' },
+          { 'name': 'Guacanahua' },
+          { 'name': 'Guarayo (Tacanan)' },
+          { 'name': 'Huarayo (Tacanan)' },
+          { 'name': 'Tiatinagua' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Fulnio'
         },
-        uf: [
-          { name: 'Carnijo' },
-          { name: 'Iate' },
-          { name: 'Yahthe' },
-          { name: 'Yate (Brazil)' }
+        'uf': [
+          { 'name': 'Carnijo' },
+          { 'name': 'Iate' },
+          { 'name': 'Yahthe' },
+          { 'name': 'Yate (Brazil)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gavião (Pará, Brazil)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Goajiro'
         },
-        uf: [
-          { name: 'Guajira' },
-          { name: 'Wayunaiki' },
-          { name: 'Wayuu' }
+        'uf': [
+          { 'name': 'Guajira' },
+          { 'name': 'Wayunaiki' },
+          { 'name': 'Wayuu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guahibo'
         },
-        uf: { name: 'Wa-jibi' }
+        'uf': { 'name': 'Wa-jibi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guanano'
         },
-        uf: [
-          { name: 'Anano' },
-          { name: 'Kotiria' },
-          { name: 'Uanana' },
-          { name: 'Wanana' }
+        'uf': [
+          { 'name': 'Anano' },
+          { 'name': 'Kotiria' },
+          { 'name': 'Uanana' },
+          { 'name': 'Wanana' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guarayo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guayabero'
         },
-        uf: { name: 'Jiw' }
+        'uf': { 'name': 'Jiw' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Guayaki'
         },
-        uf: [
-          { name: 'Ache' },
-          { name: 'Guaiaqui' },
-          { name: 'Guayaki-Ache' },
-          { name: 'Guoyagui' }
+        'uf': [
+          { 'name': 'Ache' },
+          { 'name': 'Guaiaqui' },
+          { 'name': 'Guayaki-Ache' },
+          { 'name': 'Guoyagui' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Hixkaryana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huambisa'
         },
-        uf: [
-          { name: 'Ssimaku' },
-          { name: 'Wambisa' }
+        'uf': [
+          { 'name': 'Ssimaku' },
+          { 'name': 'Wambisa' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Huao'
         },
-        uf: { name: 'Waorani' }
+        'uf': { 'name': 'Waorani' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ica'
         },
-        uf: [
-          { name: 'Arhuaco' },
-          { name: 'Aruaco' },
-          { name: 'Bintukua' },
-          { name: 'Ika (Chibchan)' },
-          { name: 'Ike' }
+        'uf': [
+          { 'name': 'Arhuaco' },
+          { 'name': 'Aruaco' },
+          { 'name': 'Bintukua' },
+          { 'name': 'Ika (Chibchan)' },
+          { 'name': 'Ike' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ipurina'
         },
-        uf: [
-          { name: 'Apurina' },
-          { name: 'Hypurina' },
-          { name: 'Jupurina' },
-          { name: 'Kangütü' },
-          { name: 'Kankiti' }
+        'uf': [
+          { 'name': 'Apurina' },
+          { 'name': 'Hypurina' },
+          { 'name': 'Jupurina' },
+          { 'name': 'Kangütü' },
+          { 'name': 'Kankiti' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Iquito'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Itonama'
         },
-        uf: { name: 'Machoto' }
+        'uf': { 'name': 'Machoto' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jaminaua'
         },
-        uf: [
-          { name: 'Nishinahua' },
-          { name: 'Yaminahua' }
+        'uf': [
+          { 'name': 'Nishinahua' },
+          { 'name': 'Yaminahua' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jaruára'
         },
-        uf: { name: 'Jarawara' }
+        'uf': { 'name': 'Jarawara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jupda'
         },
-        uf: [
-          { name: 'Hupde Maku' },
-          { name: 'Macú de tucano' }
+        'uf': [
+          { 'name': 'Hupde Maku' },
+          { 'name': 'Macú de tucano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kagaba'
         },
-        uf: { name: 'Cagaba' }
+        'uf': { 'name': 'Cagaba' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kaingang'
         },
-        uf: [
-          { name: 'Caingang' },
-          { name: 'Taven' }
+        'uf': [
+          { 'name': 'Caingang' },
+          { 'name': 'Taven' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kariri'
         },
-        uf: [
-          { name: 'Cariri' },
-          { name: 'Kiriri' }
+        'uf': [
+          { 'name': 'Cariri' },
+          { 'name': 'Kiriri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karitiana'
         },
-        uf: { name: 'Caritiana' }
+        'uf': { 'name': 'Caritiana' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lengua'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lule'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maca'
         },
-        uf: { name: 'Maka (Paraguay)' }
+        'uf': { 'name': 'Maka (Paraguay)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Machiguenga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Macuna'
         },
-        uf: { name: 'Buhágana' }
+        'uf': { 'name': 'Buhágana' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Macusi'
         },
-        uf: { name: 'Makushi' }
+        'uf': { 'name': 'Makushi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mamaindê'
         },
-        uf: { name: 'Tamainde' }
+        'uf': { 'name': 'Tamainde' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Masacali'
         },
-        uf: [
-          { name: 'Machacali' },
-          { name: 'Mashakali' },
-          { name: 'Maxakali' }
+        'uf': [
+          { 'name': 'Machacali' },
+          { 'name': 'Mashakali' },
+          { 'name': 'Maxakali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mascoi'
         },
-        uf: [
-          { name: 'Emok' },
-          { name: 'Machicui' },
-          { name: 'Toba-Emok' }
+        'uf': [
+          { 'name': 'Emok' },
+          { 'name': 'Machicui' },
+          { 'name': 'Toba-Emok' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mashco'
         },
-        uf: [
-          { name: 'Amarakaeri' },
-          { name: 'Harakmbet' }
+        'uf': [
+          { 'name': 'Amarakaeri' },
+          { 'name': 'Harakmbet' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mataco'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Maue'
         },
-        uf: [
-          { name: 'Andira' },
-          { name: 'Arapium' },
-          { name: 'Maragua' },
-          { name: 'Satere' }
+        'uf': [
+          { 'name': 'Andira' },
+          { 'name': 'Arapium' },
+          { 'name': 'Maragua' },
+          { 'name': 'Satere' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mayoruna'
         },
-        uf: { name: 'Matses' }
+        'uf': { 'name': 'Matses' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moguex'
         },
-        uf: [
-          { name: 'Cuambia' },
-          { name: 'Guambiano' }
+        'uf': [
+          { 'name': 'Cuambia' },
+          { 'name': 'Guambiano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mojo'
         },
-        uf: [
-          { name: 'Ignaciano' },
-          { name: 'Moxo' }
+        'uf': [
+          { 'name': 'Ignaciano' },
+          { 'name': 'Moxo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moro (South America)'
         },
-        uf: [
-          { name: 'Ayoré' },
-          { name: 'Ayoweo' }
+        'uf': [
+          { 'name': 'Ayoré' },
+          { 'name': 'Ayoweo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Moseten'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Motilon'
         },
-        uf: [
-          { name: 'Bari (Venezuela)' },
-          { name: 'Yupe' }
+        'uf': [
+          { 'name': 'Bari (Venezuela)' },
+          { 'name': 'Yupe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Muinane'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Munduruku'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Münkü'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Murui'
         },
-        uf: { name: 'Huitoto, Murui' }
+        'uf': { 'name': 'Huitoto, Murui' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nambicuara'
         },
-        uf: { name: 'Nhambicuara' }
+        'uf': { 'name': 'Nhambicuara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nomatsiguenga'
         },
-        uf: { name: 'Pangoa' }
+        'uf': { 'name': 'Pangoa' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ocaina'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Orejón'
         },
-        uf: [
-          { name: 'Coto (Tucanoan)' },
-          { name: 'Mai Huna' },
-          { name: 'Payagua' }
+        'uf': [
+          { 'name': 'Coto (Tucanoan)' },
+          { 'name': 'Mai Huna' },
+          { 'name': 'Payagua' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paez'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Palicur'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pamoa'
         },
-        uf: [
-          { name: 'Juna' },
-          { name: 'Oa' },
-          { name: 'Tatutapuyo' }
+        'uf': [
+          { 'name': 'Juna' },
+          { 'name': 'Oa' },
+          { 'name': 'Tatutapuyo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Panare'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Panobo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paraujano'
         },
-        uf: { name: 'Añún' }
+        'uf': { 'name': 'Añún' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Paressi'
         },
-        uf: { name: 'Ariti' }
+        'uf': { 'name': 'Ariti' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Patamona'
         },
-        uf: { name: 'Paramuni' }
+        'uf': { 'name': 'Paramuni' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pemón'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Piapoco'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Piaroa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pilaga'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Piratapuyo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Puinave'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Puquina'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Purupuru'
         },
-        uf: { name: 'Paumari' }
+        'uf': { 'name': 'Paumari' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Resigero'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Rikbaktsa'
         },
-        uf: [
-          { name: 'Aripaktsa' },
-          { name: 'Canoeiro' }
+        'uf': [
+          { 'name': 'Aripaktsa' },
+          { 'name': 'Canoeiro' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Saliva'
         },
-        uf: { name: 'Saliba (Colombia and Venezuela)' }
+        'uf': { 'name': 'Saliba (Colombia and Venezuela)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sanapaná'
         },
-        uf: [
-          { name: 'Lanapsua' },
-          { name: 'Quiativis' },
-          { name: 'Quilyacmoc' },
-          { name: 'Saapa' },
-          { name: 'Sanam' }
+        'uf': [
+          { 'name': 'Lanapsua' },
+          { 'name': 'Quiativis' },
+          { 'name': 'Quilyacmoc' },
+          { 'name': 'Saapa' },
+          { 'name': 'Sanam' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Secoya'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sharanahua'
         },
-        uf: [
-          { name: 'Chandinahua' },
-          { name: 'Marinahua' }
+        'uf': [
+          { 'name': 'Chandinahua' },
+          { 'name': 'Marinahua' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shipibo-Conibo'
         },
-        uf: [
-          { name: 'Conibo' },
-          { name: 'Sipibo' }
+        'uf': [
+          { 'name': 'Conibo' },
+          { 'name': 'Sipibo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Shuar'
         },
-        uf: [
-          { name: 'Jibaro, Shuar' },
-          { name: 'Jivaro, Shuar' },
-          { name: 'Xivaro, Shuar' }
+        'uf': [
+          { 'name': 'Jibaro, Shuar' },
+          { 'name': 'Jivaro, Shuar' },
+          { 'name': 'Xivaro, Shuar' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sicuane'
         },
-        uf: { name: 'Sikuani' }
+        'uf': { 'name': 'Sikuani' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sioni'
         },
-        uf: { name: 'Siona' }
+        'uf': { 'name': 'Siona' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Siriano'
         },
-        uf: { name: 'Chiranga' }
+        'uf': { 'name': 'Chiranga' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tacana (Bolivia)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tanimuca-Retuama'
         },
-        uf: [
-          { name: 'Letuana' },
-          { name: 'Retuara' },
-          { name: 'Ufaina' },
-          { name: 'Yahuna' }
+        'uf': [
+          { 'name': 'Letuana' },
+          { 'name': 'Retuara' },
+          { 'name': 'Ufaina' },
+          { 'name': 'Yahuna' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tapirapé'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tariana'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tenetehara'
         },
-        uf: [
-          { name: 'Asurini' },
-          { name: 'Guajajara' },
-          { name: 'Tembe' }
+        'uf': [
+          { 'name': 'Asurini' },
+          { 'name': 'Guajajara' },
+          { 'name': 'Tembe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tenharim'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Toba (Indian)'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Trio'
         },
-        uf: { name: 'Tiriyo' }
+        'uf': { 'name': 'Tiriyo' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tucano'
         },
-        uf: [
-          { name: 'Dagsexe' },
-          { name: 'Dase' },
-          { name: 'Tukano' }
+        'uf': [
+          { 'name': 'Dagsexe' },
+          { 'name': 'Dase' },
+          { 'name': 'Tukano' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tucuna'
         },
-        uf: { name: 'Ticuna' }
+        'uf': { 'name': 'Ticuna' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tunebo'
         },
-        uf: [
-          { name: 'Pedrazá' },
-          { name: 'Tame' }
+        'uf': [
+          { 'name': 'Pedrazá' },
+          { 'name': 'Tame' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tuyuca'
         },
-        uf: [
-          { name: 'Dochkafuara' },
-          { name: 'Tejuka' }
+        'uf': [
+          { 'name': 'Dochkafuara' },
+          { 'name': 'Tejuka' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Urarina'
         },
-        uf: [
-          { name: 'Itucale' },
-          { name: 'Shimacu' },
-          { name: 'Simacu' }
+        'uf': [
+          { 'name': 'Itucale' },
+          { 'name': 'Shimacu' },
+          { 'name': 'Simacu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Uru'
         },
-        uf: { name: 'Puquina (Uru)' }
+        'uf': { 'name': 'Puquina (Uru)' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Urubu'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Vilela'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Waiwai'
         },
-        uf: { name: 'Uaiuai' }
+        'uf': { 'name': 'Uaiuai' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Warao'
         },
-        uf: [
-          { name: 'Guarauno' },
-          { name: 'Warrau' }
+        'uf': [
+          { 'name': 'Guarauno' },
+          { 'name': 'Warrau' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Waunana'
         },
-        uf: [
-          { name: 'Chanco' },
-          { name: 'Chocama' },
-          { name: 'Noanama' }
+        'uf': [
+          { 'name': 'Chanco' },
+          { 'name': 'Chocama' },
+          { 'name': 'Noanama' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Wayampi'
         },
-        uf: [
-          { name: 'Guayapi' },
-          { name: 'Oiampi' },
-          { name: 'Waiapi' },
-          { name: 'Wayapi' }
+        'uf': [
+          { 'name': 'Guayapi' },
+          { 'name': 'Oiampi' },
+          { 'name': 'Waiapi' },
+          { 'name': 'Wayapi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Witoto'
         },
-        uf: { name: 'Huitoto' }
+        'uf': { 'name': 'Huitoto' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Xavante'
         },
-        uf: [
-          { name: 'Acuan-Shavante' },
-          { name: 'Akwẽ-Shavante' },
-          { name: 'Chavante Acuan' },
-          { name: 'Oti' },
-          { name: 'Shavante Akwe' }
+        'uf': [
+          { 'name': 'Acuan-Shavante' },
+          { 'name': 'Akwẽ-Shavante' },
+          { 'name': 'Chavante Acuan' },
+          { 'name': 'Oti' },
+          { 'name': 'Shavante Akwe' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yagua'
         },
-        uf: { name: 'Yegua' }
+        'uf': { 'name': 'Yegua' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yahgan'
         },
-        uf: { name: 'Jagane' }
+        'uf': { 'name': 'Jagane' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yanomamo'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yaruro'
         },
-        uf: [
-          { name: 'Hapotein' },
-          { name: 'Llaruro' },
-          { name: 'Pumé' },
-          { name: 'Yuapin' }
+        'uf': [
+          { 'name': 'Hapotein' },
+          { 'name': 'Llaruro' },
+          { 'name': 'Pumé' },
+          { 'name': 'Yuapin' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yecuana'
         },
-        uf: { name: 'Maquiritare' }
+        'uf': { 'name': 'Maquiritare' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yucuna'
         },
-        uf: { name: 'Matapi' }
+        'uf': { 'name': 'Matapi' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yunca'
         },
-        uf: [
-          { name: 'Chimu' },
-          { name: 'Mochica' }
+        'uf': [
+          { 'name': 'Chimu' },
+          { 'name': 'Mochica' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yupa'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yuruti'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zoró'
         }
@@ -20577,24 +20577,24 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sma',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sma',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Southern Sami'
     },
-    code: 'sma',
-    uf: { name: 'Sami, Southern' }
+    'code': 'sma',
+    'uf': { 'name': 'Sami, Southern' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/spa',
-    name: 'Spanish',
-    code: 'spa',
-    uf: [
-      { name: 'Castilian' },
-      { name: 'Chicano' },
+    'uri': 'info:lc/vocabulary/languages/spa',
+    'name': 'Spanish',
+    'code': 'spa',
+    'uf': [
+      { 'name': 'Castilian' },
+      { 'name': 'Chicano' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cheso'
         }
@@ -20602,67 +20602,67 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/srn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/srn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sranan'
     },
-    code: 'srn',
-    uf: { name: 'Taki-Taki' }
+    'code': 'srn',
+    'uf': { 'name': 'Taki-Taki' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/suk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/suk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sukuma'
     },
-    code: 'suk',
-    uf: [
-      { name: 'Gwe (Tanzania)' },
-      { name: 'Kesukuma' },
-      { name: 'Kisukuma' },
-      { name: 'Suku (Tanzania)' }
+    'code': 'suk',
+    'uf': [
+      { 'name': 'Gwe (Tanzania)' },
+      { 'name': 'Kesukuma' },
+      { 'name': 'Kisukuma' },
+      { 'name': 'Suku (Tanzania)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sux',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sux',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sumerian'
     },
-    code: 'sux'
+    'code': 'sux'
   },
   {
-    uri: 'info:lc/vocabulary/languages/sun',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sun',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Sundanese'
     },
-    code: 'sun'
+    'code': 'sun'
   },
   {
-    uri: 'info:lc/vocabulary/languages/sus',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sus',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Susu'
     },
-    code: 'sus',
-    uf: { name: 'Soso' }
+    'code': 'sus',
+    'uf': { 'name': 'Soso' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/swa',
-    name: 'Swahili',
-    code: 'swa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/swa',
+    'name': 'Swahili',
+    'code': 'swa',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kae'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kingwana'
         }
@@ -20670,511 +20670,511 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ssw',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ssw',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Swazi'
     },
-    code: 'ssw',
-    uf: { name: 'Siswati' }
+    'code': 'ssw',
+    'uf': { 'name': 'Siswati' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/swz',
-    name: 'Swazi',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/swz',
+    'name': 'Swazi',
+    'code': {
       '-status': 'obsolete',
       '#text': 'swz'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/swe',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/swe',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Swedish'
     },
-    code: 'swe'
+    'code': 'swe'
   },
   {
-    uri: 'info:lc/vocabulary/languages/gsw',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/gsw',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Swiss German'
     },
-    code: 'gsw',
-    uf: { name: 'German, Swiss' }
+    'code': 'gsw',
+    'uf': { 'name': 'German, Swiss' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/syc',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/syc',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Syriac'
     },
-    code: 'syc',
-    uf: { name: 'Classifical Syriac' }
+    'code': 'syc',
+    'uf': { 'name': 'Classifical Syriac' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/syr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/syr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Syriac, Modern'
     },
-    code: 'syr',
-    uf: { name: 'Neo-Syriac' }
+    'code': 'syr',
+    'uf': { 'name': 'Neo-Syriac' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tgl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tgl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tagalog'
     },
-    code: 'tgl',
-    uf: [
-      { name: 'Filipino (Tagalog)' },
-      { name: 'Pilipino' }
+    'code': 'tgl',
+    'uf': [
+      { 'name': 'Filipino (Tagalog)' },
+      { 'name': 'Pilipino' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tag',
-    name: 'Tagalog',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/tag',
+    'name': 'Tagalog',
+    'code': {
       '-status': 'obsolete',
       '#text': 'tag'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tah',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tah',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tahitian'
     },
-    code: 'tah'
+    'code': 'tah'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tai',
-    name: 'Tai (Other)',
-    code: 'tai',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tai',
+    'name': 'Tai (Other)',
+    'code': 'tai',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ahom'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Baha Buyang'
         },
-        uf: [
-          { name: 'Buyang (Baha Buyang)' },
-          { name: 'Buyang Zhuang (Baha Buyang)' },
-          { name: 'Guangnan Buyang' },
-          { name: 'Paha Buyang' },
-          { name: 'Western Buyang' }
+        'uf': [
+          { 'name': 'Buyang (Baha Buyang)' },
+          { 'name': 'Buyang Zhuang (Baha Buyang)' },
+          { 'name': 'Guangnan Buyang' },
+          { 'name': 'Paha Buyang' },
+          { 'name': 'Western Buyang' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Be'
         },
-        uf: { name: 'Ongbe' }
+        'uf': { 'name': 'Ongbe' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Black Tai'
         },
-        uf: [
-          { name: 'Tai, Black' },
-          { name: 'Tai Dam' },
-          { name: 'Tai Noir' }
+        'uf': [
+          { 'name': 'Tai, Black' },
+          { 'name': 'Tai Dam' },
+          { 'name': 'Tai Noir' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bouyei'
         },
-        uf: [
-          { name: 'Buyi (China and Vietnam)' },
-          { name: 'Dioi (China and Vietnam)' },
-          { name: 'Giáy' },
-          { name: 'Nhang' },
-          { name: 'Puyi' },
-          { name: 'Yay' }
+        'uf': [
+          { 'name': 'Buyi (China and Vietnam)' },
+          { 'name': 'Dioi (China and Vietnam)' },
+          { 'name': 'Giáy' },
+          { 'name': 'Nhang' },
+          { 'name': 'Puyi' },
+          { 'name': 'Yay' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cao Lan'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dong (China)'
         },
-        uf: [
-          { name: 'Gam (China)' },
-          { name: 'Kam (China)' },
-          { name: 'Tong (China)' },
-          { name: 'T‘ung' }
+        'uf': [
+          { 'name': 'Gam (China)' },
+          { 'name': 'Kam (China)' },
+          { 'name': 'Tong (China)' },
+          { 'name': 'T‘ung' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khün'
         },
-        uf: [
-          { name: 'Hkun' },
-          { name: 'Tai Khün' }
+        'uf': [
+          { 'name': 'Hkun' },
+          { 'name': 'Tai Khün' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lü'
         },
-        uf: [
-          { name: 'Lue' },
-          { name: 'Pai-i' },
-          { name: 'Tai Lü' }
+        'uf': [
+          { 'name': 'Lue' },
+          { 'name': 'Pai-i' },
+          { 'name': 'Tai Lü' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lungming'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northeastern Thai'
         },
-        uf: [
-          { name: 'Isaan' },
-          { name: 'Isan' },
-          { name: 'Issan' },
-          { name: 'Thai Isaan' },
-          { name: 'Thai Isan' },
-          { name: 'Thai, Northeastern' }
+        'uf': [
+          { 'name': 'Isaan' },
+          { 'name': 'Isan' },
+          { 'name': 'Issan' },
+          { 'name': 'Thai Isaan' },
+          { 'name': 'Thai Isan' },
+          { 'name': 'Thai, Northeastern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Northern Thai'
         },
-        uf: [
-          { name: 'Kam Mū̕ang' },
-          { name: 'Kammüang' },
-          { name: 'Kammyang' },
-          { name: 'Khon' },
-          { name: 'Khon Meang' },
-          { name: 'Khon Mung' },
-          { name: 'Khon Myang' },
-          { name: 'La Nya' },
-          { name: 'Lan Na' },
-          { name: 'Lan Na Thai' },
-          { name: 'Lanatai' },
-          { name: 'Lanna (Northern Thai)' },
-          { name: 'Lanna Thai' },
-          { name: 'Lannatai' },
-          { name: 'Lao, Western' },
-          { name: 'Mū̕ang' },
-          { name: 'Muang Lanna' },
-          { name: 'Mung' },
-          { name: 'Myang' },
-          { name: 'Payap' },
-          { name: 'Phayap' },
-          { name: 'Phuthai' },
-          { name: 'Phyap' },
-          { name: 'Tai Nya' },
-          { name: 'Tai Yon' },
-          { name: 'Tai Yuan' },
-          { name: 'Thai Yuan' },
-          { name: 'Western Lao' },
-          { name: 'Western Laotian' },
-          { name: 'Youanne' },
-          { name: 'Youon' },
-          { name: 'Yuan' }
+        'uf': [
+          { 'name': 'Kam Mū̕ang' },
+          { 'name': 'Kammüang' },
+          { 'name': 'Kammyang' },
+          { 'name': 'Khon' },
+          { 'name': 'Khon Meang' },
+          { 'name': 'Khon Mung' },
+          { 'name': 'Khon Myang' },
+          { 'name': 'La Nya' },
+          { 'name': 'Lan Na' },
+          { 'name': 'Lan Na Thai' },
+          { 'name': 'Lanatai' },
+          { 'name': 'Lanna (Northern Thai)' },
+          { 'name': 'Lanna Thai' },
+          { 'name': 'Lannatai' },
+          { 'name': 'Lao, Western' },
+          { 'name': 'Mū̕ang' },
+          { 'name': 'Muang Lanna' },
+          { 'name': 'Mung' },
+          { 'name': 'Myang' },
+          { 'name': 'Payap' },
+          { 'name': 'Phayap' },
+          { 'name': 'Phuthai' },
+          { 'name': 'Phyap' },
+          { 'name': 'Tai Nya' },
+          { 'name': 'Tai Yon' },
+          { 'name': 'Tai Yuan' },
+          { 'name': 'Thai Yuan' },
+          { 'name': 'Western Lao' },
+          { 'name': 'Western Laotian' },
+          { 'name': 'Youanne' },
+          { 'name': 'Youon' },
+          { 'name': 'Yuan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Southern Thai'
         },
-        uf: [
-          { name: 'Pak Thai' },
-          { name: 'Thai, Southern' }
+        'uf': [
+          { 'name': 'Pak Thai' },
+          { 'name': 'Thai, Southern' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tai Nüa'
         },
-        uf: [
-          { name: 'Dai Na' },
-          { name: 'Dehong Dai' },
-          { name: 'Shan, Yunnanese' },
-          { name: 'Tay Nüa' },
-          { name: 'Te-hung Tai' },
-          { name: 'Yunnanese Shan' }
+        'uf': [
+          { 'name': 'Dai Na' },
+          { 'name': 'Dehong Dai' },
+          { 'name': 'Shan, Yunnanese' },
+          { 'name': 'Tay Nüa' },
+          { 'name': 'Te-hung Tai' },
+          { 'name': 'Yunnanese Shan' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tay-Nung'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tho'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'White Tai'
         },
-        uf: { name: 'Tai, White' }
+        'uf': { 'name': 'Tai, White' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Ya'
         },
-        uf: [
-          { name: 'Tai Chung' },
-          { name: 'Tai Ya' }
+        'uf': [
+          { 'name': 'Tai Chung' },
+          { 'name': 'Tai Ya' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tgk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tgk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tajik'
     },
-    code: 'tgk',
-    uf: [
-      { name: 'Tadjik' },
-      { name: 'Tadzhik' }
+    'code': 'tgk',
+    'uf': [
+      { 'name': 'Tadjik' },
+      { 'name': 'Tadzhik' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/taj',
-    name: 'Tajik',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/taj',
+    'name': 'Tajik',
+    'code': {
       '-status': 'obsolete',
       '#text': 'taj'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tmh',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tmh',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tamashek'
     },
-    code: 'tmh',
-    uf: [
-      { name: 'Amazigh' },
-      { name: 'Kidal' },
-      { name: 'Kidal Tamasheq' },
-      { name: 'Tăhăggart' },
-      { name: 'Tahaggart Tamahaq' },
-      { name: 'Tahoua' },
-      { name: 'Tahoua Tamajeq' },
-      { name: 'Tajag' },
-      { name: 'Tamachek' },
-      { name: 'Tamahaq' },
-      { name: 'Tamajaq' },
-      { name: 'Tamajeq' },
-      { name: 'Tamashekin' },
-      { name: 'Tamasheq' },
-      { name: 'Tamashiqt' },
-      { name: 'Tawallammat Tamajaq' },
-      { name: 'Tawarek' },
-      { name: 'Tayart Tamajeq' },
-      { name: 'Temajaq' },
-      { name: 'Tewellemet' },
-      { name: 'Timbuktu' },
-      { name: 'Tomacheck' },
-      { name: 'Tomachek' },
-      { name: 'Touareg' },
-      { name: 'Touarègue' },
-      { name: 'Tourage' },
-      { name: 'Toureg' },
-      { name: 'Tuareg' }
+    'code': 'tmh',
+    'uf': [
+      { 'name': 'Amazigh' },
+      { 'name': 'Kidal' },
+      { 'name': 'Kidal Tamasheq' },
+      { 'name': 'Tăhăggart' },
+      { 'name': 'Tahaggart Tamahaq' },
+      { 'name': 'Tahoua' },
+      { 'name': 'Tahoua Tamajeq' },
+      { 'name': 'Tajag' },
+      { 'name': 'Tamachek' },
+      { 'name': 'Tamahaq' },
+      { 'name': 'Tamajaq' },
+      { 'name': 'Tamajeq' },
+      { 'name': 'Tamashekin' },
+      { 'name': 'Tamasheq' },
+      { 'name': 'Tamashiqt' },
+      { 'name': 'Tawallammat Tamajaq' },
+      { 'name': 'Tawarek' },
+      { 'name': 'Tayart Tamajeq' },
+      { 'name': 'Temajaq' },
+      { 'name': 'Tewellemet' },
+      { 'name': 'Timbuktu' },
+      { 'name': 'Tomacheck' },
+      { 'name': 'Tomachek' },
+      { 'name': 'Touareg' },
+      { 'name': 'Touarègue' },
+      { 'name': 'Tourage' },
+      { 'name': 'Toureg' },
+      { 'name': 'Tuareg' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tam',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tam',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tamil'
     },
-    code: 'tam'
+    'code': 'tam'
   },
   {
-    uri: 'info:lc/vocabulary/languages/tat',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tat',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tatar'
     },
-    code: 'tat'
+    'code': 'tat'
   },
   {
-    uri: 'info:lc/vocabulary/languages/tar',
-    name: 'Tatar',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/tar',
+    'name': 'Tatar',
+    'code': {
       '-status': 'obsolete',
       '#text': 'tar'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tel',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tel',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Telugu'
     },
-    code: 'tel',
-    uf: [
-      { name: 'Andhra' },
-      { name: 'Gentoo' },
-      { name: 'Telegu' }
+    'code': 'tel',
+    'uf': [
+      { 'name': 'Andhra' },
+      { 'name': 'Gentoo' },
+      { 'name': 'Telegu' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tem',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tem',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Temne'
     },
-    code: 'tem',
-    uf: { name: 'Timne' }
+    'code': 'tem',
+    'uf': { 'name': 'Timne' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ter',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ter',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Terena'
     },
-    code: 'ter'
+    'code': 'ter'
   },
   {
-    uri: 'info:lc/vocabulary/languages/tet',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tet',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tetum'
     },
-    code: 'tet',
-    uf: { name: 'Belu' }
+    'code': 'tet',
+    'uf': { 'name': 'Belu' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tha',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tha',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Thai'
     },
-    code: 'tha',
-    uf: { name: 'Siamese' }
+    'code': 'tha',
+    'uf': { 'name': 'Siamese' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tib',
-    name: 'Tibetan',
-    code: 'tib',
-    uf: [
-      { name: 'Bhotanta' },
+    'uri': 'info:lc/vocabulary/languages/tib',
+    'name': 'Tibetan',
+    'code': 'tib',
+    'uf': [
+      { 'name': 'Bhotanta' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Helambu Sherpa'
         },
-        uf: [
-          { name: 'Hyolmo' },
-          { name: 'Yohlmo' }
+        'uf': [
+          { 'name': 'Hyolmo' },
+          { 'name': 'Yohlmo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kagate'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Khams Tibetan'
         },
-        uf: [
-          { name: 'Kam' },
-          { name: 'Kang (Tibetan)' },
-          { name: 'Kham (China)' },
-          { name: 'Khamba (Tibetan)' },
-          { name: 'Khampa' },
-          { name: 'Khams' },
-          { name: 'Khams Bhotia' },
-          { name: 'Khams-Yal' }
+        'uf': [
+          { 'name': 'Kam' },
+          { 'name': 'Kang (Tibetan)' },
+          { 'name': 'Kham (China)' },
+          { 'name': 'Khamba (Tibetan)' },
+          { 'name': 'Khampa' },
+          { 'name': 'Khams' },
+          { 'name': 'Khams Bhotia' },
+          { 'name': 'Khams-Yal' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sherpa'
         },
-        uf: { name: 'Sharpa' }
+        'uf': { 'name': 'Sharpa' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tig',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tig',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tigré'
     },
-    code: 'tig'
+    'code': 'tig'
   },
   {
-    uri: 'info:lc/vocabulary/languages/tir',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tir',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tigrinya'
     },
-    code: 'tir',
-    uf: [
-      { name: 'Tigriña' },
-      { name: 'Tña' }
+    'code': 'tir',
+    'uf': [
+      { 'name': 'Tigriña' },
+      { 'name': 'Tña' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tiv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tiv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tiv'
     },
-    code: 'tiv'
+    'code': 'tiv'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tli',
-    name: 'Tlingit',
-    code: 'tli',
-    uf: [
-      { name: 'Koluschan' },
+    'uri': 'info:lc/vocabulary/languages/tli',
+    'name': 'Tlingit',
+    'code': 'tli',
+    'uf': [
+      { 'name': 'Koluschan' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tongass'
         }
@@ -21182,650 +21182,650 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tpi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tpi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tok Pisin'
     },
-    code: 'tpi',
-    uf: [
-      { name: 'Neo-Melanesian' },
-      { name: 'Pisin' }
+    'code': 'tpi',
+    'uf': [
+      { 'name': 'Neo-Melanesian' },
+      { 'name': 'Pisin' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tkl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tkl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tokelauan'
     },
-    code: 'tkl'
+    'code': 'tkl'
   },
   {
-    uri: 'info:lc/vocabulary/languages/tog',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tog',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tonga (Nyasa)'
     },
-    code: 'tog'
+    'code': 'tog'
   },
   {
-    uri: 'info:lc/vocabulary/languages/ton',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ton',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tongan'
     },
-    code: 'ton',
-    uf: { name: 'Tonga (Tonga Islands)' }
+    'code': 'ton',
+    'uf': { 'name': 'Tonga (Tonga Islands)' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tru',
-    name: 'Truk',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/tru',
+    'name': 'Truk',
+    'code': {
       '-status': 'obsolete',
       '#text': 'tru'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tsi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tsi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tsimshian'
     },
-    code: 'tsi',
-    uf: { name: 'Zimshīan' }
+    'code': 'tsi',
+    'uf': { 'name': 'Zimshīan' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tso',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tso',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tsonga'
     },
-    code: 'tso',
-    uf: [
-      { name: 'Changana' },
-      { name: 'Gwamba' },
-      { name: 'Shangaan' },
-      { name: 'Thonga' },
-      { name: 'Tonga (Tsonga)' },
-      { name: 'Xitsonga' }
+    'code': 'tso',
+    'uf': [
+      { 'name': 'Changana' },
+      { 'name': 'Gwamba' },
+      { 'name': 'Shangaan' },
+      { 'name': 'Thonga' },
+      { 'name': 'Tonga (Tsonga)' },
+      { 'name': 'Xitsonga' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tsn',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tsn',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tswana'
     },
-    code: 'tsn',
-    uf: [
-      { name: 'Bechuana' },
-      { name: 'Chuana' },
-      { name: 'Coana' },
-      { name: 'Cuana' },
-      { name: 'Cwana' },
-      { name: 'Sechuana' },
-      { name: 'Setswana' }
+    'code': 'tsn',
+    'uf': [
+      { 'name': 'Bechuana' },
+      { 'name': 'Chuana' },
+      { 'name': 'Coana' },
+      { 'name': 'Cuana' },
+      { 'name': 'Cwana' },
+      { 'name': 'Sechuana' },
+      { 'name': 'Setswana' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tsw',
-    name: 'Tswana',
-    code: {
+    'uri': 'info:lc/vocabulary/languages/tsw',
+    'name': 'Tswana',
+    'code': {
       '-status': 'obsolete',
       '#text': 'tsw'
     }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tum',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tum',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tumbuka'
     },
-    code: 'tum',
-    uf: { name: 'Tamboka' }
+    'code': 'tum',
+    'uf': { 'name': 'Tamboka' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tup',
-    name: 'Tupi languages',
-    code: 'tup',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tup',
+    'name': 'Tupi languages',
+    'code': 'tup',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Parintintin'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Tupi'
         },
-        uf: { name: 'Ñeengatú' }
+        'uf': { 'name': 'Ñeengatú' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tur',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tur',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Turkish'
     },
-    code: 'tur'
+    'code': 'tur'
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ota',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ota',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Turkish, Ottoman'
     },
-    code: 'ota',
-    uf: [
-      { name: 'Osmanli' },
-      { name: 'Ottoman Turkish' },
+    'code': 'ota',
+    'uf': [
+      { 'name': 'Osmanli' },
+      { 'name': 'Ottoman Turkish' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Karamanli'
         },
-        uf: [
-          { name: 'Karamanlı Türkçesi' },
-          { name: 'Karamanlıca' },
-          { name: 'Karamanlidic' },
-          { name: 'Karamanlidika' }
+        'uf': [
+          { 'name': 'Karamanlı Türkçesi' },
+          { 'name': 'Karamanlıca' },
+          { 'name': 'Karamanlidic' },
+          { 'name': 'Karamanlidika' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/tuk',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tuk',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Turkmen'
     },
-    code: 'tuk',
-    uf: { name: 'Turkoman' }
+    'code': 'tuk',
+    'uf': { 'name': 'Turkoman' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tvl',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tvl',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tuvaluan'
     },
-    code: 'tvl',
-    uf: { name: 'Ellicean' }
+    'code': 'tvl',
+    'uf': { 'name': 'Ellicean' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/tyv',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/tyv',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Tuvinian'
     },
-    code: 'tyv',
-    uf: [
-      { name: 'Soyot' },
-      { name: 'Tannu-Tuva' },
-      { name: 'Tuba' },
-      { name: 'Uriankhai' }
+    'code': 'tyv',
+    'uf': [
+      { 'name': 'Soyot' },
+      { 'name': 'Tannu-Tuva' },
+      { 'name': 'Tuba' },
+      { 'name': 'Uriankhai' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/twi',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/twi',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Twi'
     },
-    code: 'twi',
-    uf: [
-      { name: 'Akuapem' },
-      { name: 'Ashanti' },
-      { name: 'Chwee' },
-      { name: 'Odschi' },
-      { name: 'Tshi' }
+    'code': 'twi',
+    'uf': [
+      { 'name': 'Akuapem' },
+      { 'name': 'Ashanti' },
+      { 'name': 'Chwee' },
+      { 'name': 'Odschi' },
+      { 'name': 'Tshi' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/udm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/udm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Udmurt'
     },
-    code: 'udm',
-    uf: [
-      { name: 'Votiak' },
-      { name: 'Votyak' }
+    'code': 'udm',
+    'uf': [
+      { 'name': 'Votiak' },
+      { 'name': 'Votyak' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/uga',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/uga',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ugaritic'
     },
-    code: 'uga'
+    'code': 'uga'
   },
   {
-    uri: 'info:lc/vocabulary/languages/uig',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/uig',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Uighur'
     },
-    code: 'uig',
-    uf: [
-      { name: 'Eastern Turki' },
-      { name: 'Kashgar-Yarkend' },
-      { name: 'Turki, Eastern' },
-      { name: 'Uigur' },
-      { name: 'Uyghur' },
-      { name: 'Wighor' },
-      { name: 'Yarkend' }
+    'code': 'uig',
+    'uf': [
+      { 'name': 'Eastern Turki' },
+      { 'name': 'Kashgar-Yarkend' },
+      { 'name': 'Turki, Eastern' },
+      { 'name': 'Uigur' },
+      { 'name': 'Uyghur' },
+      { 'name': 'Wighor' },
+      { 'name': 'Yarkend' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/ukr',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ukr',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Ukrainian'
     },
-    code: 'ukr',
-    uf: { name: 'Ruthenian (Ukrainian)' }
+    'code': 'ukr',
+    'uf': { 'name': 'Ruthenian (Ukrainian)' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/umb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/umb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Umbundu'
     },
-    code: 'umb',
-    uf: [
-      { name: 'Benguela' },
-      { name: 'Mbundu (Benguela Province, Angola)' },
-      { name: 'Ovimbundu' },
-      { name: 'Quimbundo (Benguela Province, Angola)' },
-      { name: 'South Mbundu' }
+    'code': 'umb',
+    'uf': [
+      { 'name': 'Benguela' },
+      { 'name': 'Mbundu (Benguela Province, Angola)' },
+      { 'name': 'Ovimbundu' },
+      { 'name': 'Quimbundo (Benguela Province, Angola)' },
+      { 'name': 'South Mbundu' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/und',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/und',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Undetermined'
     },
-    code: 'und'
+    'code': 'und'
   },
   {
-    uri: 'info:lc/vocabulary/languages/hsb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/hsb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Upper Sorbian'
     },
-    code: 'hsb',
-    uf: [
-      { name: 'High Sorbian' },
-      { name: 'Sorbian, Upper' }
+    'code': 'hsb',
+    'uf': [
+      { 'name': 'High Sorbian' },
+      { 'name': 'Sorbian, Upper' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/urd',
-    name: 'Urdu',
-    code: 'urd',
-    uf: [
-      { name: 'Bihari (Urdu)' },
-      { name: 'Gujri (Urdu)' },
-      { name: 'Gurjari' },
-      { name: 'Islami' },
-      { name: 'Moorish (India)' },
-      { name: 'Undri' },
-      { name: 'Urudu' },
+    'uri': 'info:lc/vocabulary/languages/urd',
+    'name': 'Urdu',
+    'code': 'urd',
+    'uf': [
+      { 'name': 'Bihari (Urdu)' },
+      { 'name': 'Gujri (Urdu)' },
+      { 'name': 'Gurjari' },
+      { 'name': 'Islami' },
+      { 'name': 'Moorish (India)' },
+      { 'name': 'Undri' },
+      { 'name': 'Urudu' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Dakhini'
         },
-        uf: [
-          { name: 'Dakani' },
-          { name: 'Dakhani' },
-          { name: 'Dakhini Hindi' },
-          { name: 'Dakhini Hindustani' },
-          { name: 'Dakhini Urdu' },
-          { name: 'Dakhni' },
-          { name: 'Dakini' },
-          { name: 'Dakkani' },
-          { name: 'Dakkhani' },
-          { name: 'Deccan' },
-          { name: 'Dehlavi' },
-          { name: 'Gujari (Dakhini)' },
-          { name: 'Hindavi' }
+        'uf': [
+          { 'name': 'Dakani' },
+          { 'name': 'Dakhani' },
+          { 'name': 'Dakhini Hindi' },
+          { 'name': 'Dakhini Hindustani' },
+          { 'name': 'Dakhini Urdu' },
+          { 'name': 'Dakhni' },
+          { 'name': 'Dakini' },
+          { 'name': 'Dakkani' },
+          { 'name': 'Dakkhani' },
+          { 'name': 'Deccan' },
+          { 'name': 'Dehlavi' },
+          { 'name': 'Gujari (Dakhini)' },
+          { 'name': 'Hindavi' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/uzb',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/uzb',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Uzbek'
     },
-    code: 'uzb'
+    'code': 'uzb'
   },
   {
-    uri: 'info:lc/vocabulary/languages/vai',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/vai',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Vai'
     },
-    code: 'vai',
-    uf: { name: 'Vei' }
+    'code': 'vai',
+    'uf': { 'name': 'Vei' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/ven',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ven',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Venda'
     },
-    code: 'ven',
-    uf: [
-      { name: 'Tshivenda' },
-      { name: 'Wenda' }
+    'code': 'ven',
+    'uf': [
+      { 'name': 'Tshivenda' },
+      { 'name': 'Wenda' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/vie',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/vie',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Vietnamese'
     },
-    code: 'vie',
-    uf: { name: 'Annamese' }
+    'code': 'vie',
+    'uf': { 'name': 'Annamese' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/vol',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/vol',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Volapük'
     },
-    code: 'vol'
+    'code': 'vol'
   },
   {
-    uri: 'info:lc/vocabulary/languages/vot',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/vot',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Votic'
     },
-    code: 'vot',
-    uf: [
-      { name: 'Vatjan' },
-      { name: 'Vote' },
-      { name: 'Votian' },
-      { name: 'Votish' }
+    'code': 'vot',
+    'uf': [
+      { 'name': 'Vatjan' },
+      { 'name': 'Vote' },
+      { 'name': 'Votian' },
+      { 'name': 'Votish' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/wak',
-    name: 'Wakashan languages',
-    code: 'wak',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/wak',
+    'name': 'Wakashan languages',
+    'code': 'wak',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bella Bella'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Haisla'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Heiltsuk'
         },
-        uf: { name: 'Haeltzuk' }
+        'uf': { 'name': 'Haeltzuk' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kwakiutl'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nitinat'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nootka'
         },
-        uf: [
-          { name: 'Aht' },
-          { name: 'Noutka' },
-          { name: 'Nutka' },
-          { name: 'Nuuchahnulth' }
+        'uf': [
+          { 'name': 'Aht' },
+          { 'name': 'Noutka' },
+          { 'name': 'Nutka' },
+          { 'name': 'Nuuchahnulth' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/wln',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/wln',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Walloon'
     },
-    code: 'wln'
+    'code': 'wln'
   },
   {
-    uri: 'info:lc/vocabulary/languages/war',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/war',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Waray'
     },
-    code: 'war',
-    uf: [
-      { name: 'Leytean' },
-      { name: 'Samar-Leyte' },
-      { name: 'Samaron' }
+    'code': 'war',
+    'uf': [
+      { 'name': 'Leytean' },
+      { 'name': 'Samar-Leyte' },
+      { 'name': 'Samaron' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/was',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/was',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Washoe'
     },
-    code: 'was',
-    uf: [
-      { name: 'Washo' },
-      { name: 'Washoan' }
+    'code': 'was',
+    'uf': [
+      { 'name': 'Washo' },
+      { 'name': 'Washoan' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/wel',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/wel',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Welsh'
     },
-    code: 'wel',
-    uf: { name: 'Cymric' }
+    'code': 'wel',
+    'uf': { 'name': 'Cymric' }
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/him',
-    name: 'Western Pahari languages',
-    code: 'him',
-    uf: [
-      { name: 'Himachali' },
-      { name: 'Pahadi' },
-      { name: 'Pahari, Western' },
+    'uri': 'info:lc/vocabulary/languages/him',
+    'name': 'Western Pahari languages',
+    'code': 'him',
+    'uf': [
+      { 'name': 'Himachali' },
+      { 'name': 'Pahadi' },
+      { 'name': 'Pahari, Western' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bhadrawahi'
         },
-        uf: [
-          { name: 'Baderwali' },
-          { name: 'Badrohi' },
-          { name: 'Bahi' },
-          { name: 'Bhadarwahi' },
-          { name: 'Bhaderbhai Jamu' },
-          { name: 'Bhaderwali Pahari' },
-          { name: 'Bhadrava' },
-          { name: 'Bhadravāhī' },
-          { name: 'Bhadri' }
+        'uf': [
+          { 'name': 'Baderwali' },
+          { 'name': 'Badrohi' },
+          { 'name': 'Bahi' },
+          { 'name': 'Bhadarwahi' },
+          { 'name': 'Bhaderbhai Jamu' },
+          { 'name': 'Bhaderwali Pahari' },
+          { 'name': 'Bhadrava' },
+          { 'name': 'Bhadravāhī' },
+          { 'name': 'Bhadri' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bhalesi'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Bilaspuri'
         },
-        uf: [
-          { name: 'Bilāsapurī' },
-          { name: 'Bilaspuri Pahari' },
-          { name: 'Kahalurī' },
-          { name: 'Khalūrī' },
-          { name: 'Kehloori' },
-          { name: 'Kehloori Pahari' },
-          { name: 'Kehluri' },
-          { name: 'Pacchmi' }
+        'uf': [
+          { 'name': 'Bilāsapurī' },
+          { 'name': 'Bilaspuri Pahari' },
+          { 'name': 'Kahalurī' },
+          { 'name': 'Khalūrī' },
+          { 'name': 'Kehloori' },
+          { 'name': 'Kehloori Pahari' },
+          { 'name': 'Kehluri' },
+          { 'name': 'Pacchmi' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Chambeali'
         },
-        uf: [
-          { name: 'Cameali' },
-          { name: 'Chamaya' },
-          { name: 'Chambiali' },
-          { name: 'Chambiyali' },
-          { name: 'Chamiyali' },
-          { name: 'Chamiyali Pahari' },
-          { name: 'Chamya' }
+        'uf': [
+          { 'name': 'Cameali' },
+          { 'name': 'Chamaya' },
+          { 'name': 'Chambiali' },
+          { 'name': 'Chambiyali' },
+          { 'name': 'Chamiyali' },
+          { 'name': 'Chamiyali Pahari' },
+          { 'name': 'Chamya' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Gaddi'
         },
-        uf: [
-          { name: 'Bharmauri' },
-          { name: 'Bharmauri Bhadi' },
-          { name: 'Bharmouri' },
-          { name: 'Brahmauri' },
-          { name: 'Gaddhi' },
-          { name: 'Gaddyalali' },
-          { name: 'Gaddyali' },
-          { name: 'Gadhi' },
-          { name: 'Gadhiali' },
-          { name: 'Gadi' },
-          { name: 'Gadiali' },
-          { name: 'Gadiyali' },
-          { name: 'Pahari Bharmauri' },
-          { name: 'Panchi' },
-          { name: 'Panchi Brahmauri Rajput' }
+        'uf': [
+          { 'name': 'Bharmauri' },
+          { 'name': 'Bharmauri Bhadi' },
+          { 'name': 'Bharmouri' },
+          { 'name': 'Brahmauri' },
+          { 'name': 'Gaddhi' },
+          { 'name': 'Gaddyalali' },
+          { 'name': 'Gaddyali' },
+          { 'name': 'Gadhi' },
+          { 'name': 'Gadhiali' },
+          { 'name': 'Gadi' },
+          { 'name': 'Gadiali' },
+          { 'name': 'Gadiyali' },
+          { 'name': 'Pahari Bharmauri' },
+          { 'name': 'Panchi' },
+          { 'name': 'Panchi Brahmauri Rajput' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Jaunsari'
         },
-        uf: [
-          { name: 'Gaunsari' },
-          { name: 'Jansauri' },
-          { name: 'Jaunsauri' },
-          { name: 'Pahari (Jaunsari)' }
+        'uf': [
+          { 'name': 'Gaunsari' },
+          { 'name': 'Jansauri' },
+          { 'name': 'Jaunsauri' },
+          { 'name': 'Pahari (Jaunsari)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Kullu Pahari'
         },
-        uf: [
-          { name: 'Kauli' },
-          { name: 'Kullui' },
-          { name: 'Kulu' },
-          { name: 'Kulu Boli' },
-          { name: 'Kulu Pahari' },
-          { name: 'Kuluhi' },
-          { name: 'Kului' },
-          { name: 'Kulvi' },
-          { name: 'Kulwali' },
-          { name: 'Pahari Kullu' },
-          { name: 'Pahari (Kullu Pahari)' },
-          { name: 'Phari Kulu' }
+        'uf': [
+          { 'name': 'Kauli' },
+          { 'name': 'Kullui' },
+          { 'name': 'Kulu' },
+          { 'name': 'Kulu Boli' },
+          { 'name': 'Kulu Pahari' },
+          { 'name': 'Kuluhi' },
+          { 'name': 'Kului' },
+          { 'name': 'Kulvi' },
+          { 'name': 'Kulwali' },
+          { 'name': 'Pahari Kullu' },
+          { 'name': 'Pahari (Kullu Pahari)' },
+          { 'name': 'Phari Kulu' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Mandeali'
         },
-        uf: [
-          { name: 'Himachali (Mandeali)' },
-          { name: 'Mandi (Mandeali)' },
-          { name: 'Mandiali' },
-          { name: 'Pahari Mandiyali' }
+        'uf': [
+          { 'name': 'Himachali (Mandeali)' },
+          { 'name': 'Mandi (Mandeali)' },
+          { 'name': 'Mandiali' },
+          { 'name': 'Pahari Mandiyali' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sirmauri'
         },
-        uf: [
-          { name: 'Himachali (Sirmauri)' },
-          { name: 'Pahari (Sirmauri)' },
-          { name: 'Sirmouri' },
-          { name: 'Sirmuri' }
+        'uf': [
+          { 'name': 'Himachali (Sirmauri)' },
+          { 'name': 'Pahari (Sirmauri)' },
+          { 'name': 'Sirmouri' },
+          { 'name': 'Sirmuri' }
         ]
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/wal',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/wal',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Wolayta'
     },
-    code: 'wal',
-    uf: [
-      { name: 'Ometo' },
-      { name: 'Uallamo' },
-      { name: 'Walamo' }
+    'code': 'wal',
+    'uf': [
+      { 'name': 'Ometo' },
+      { 'name': 'Uallamo' },
+      { 'name': 'Walamo' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/wol',
-    name: 'Wolof',
-    code: 'wol',
-    uf: [
-      { name: 'Jaloof' },
-      { name: 'Jolof' },
-      { name: 'Ouolof' },
-      { name: 'Volof' },
-      { name: 'Yolof' },
+    'uri': 'info:lc/vocabulary/languages/wol',
+    'name': 'Wolof',
+    'code': 'wol',
+    'uf': [
+      { 'name': 'Jaloof' },
+      { 'name': 'Jolof' },
+      { 'name': 'Ouolof' },
+      { 'name': 'Volof' },
+      { 'name': 'Yolof' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Lebou'
         }
@@ -21833,234 +21833,234 @@ export const data = [
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/xho',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/xho',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Xhosa'
     },
-    code: 'xho',
-    uf: [
-      { name: 'isiXhosa' },
-      { name: 'Kafir' },
-      { name: 'Xosa' }
+    'code': 'xho',
+    'uf': [
+      { 'name': 'isiXhosa' },
+      { 'name': 'Kafir' },
+      { 'name': 'Xosa' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/sah',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/sah',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Yakut'
     },
-    code: 'sah',
-    uf: [
-      { name: 'Jakut' },
-      { name: 'Sakha' }
+    'code': 'sah',
+    'uf': [
+      { 'name': 'Jakut' },
+      { 'name': 'Sakha' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/yao',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/yao',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Yao (Africa)'
     },
-    code: 'yao',
-    uf: [
-      { name: 'Adjaua' },
-      { name: 'Ajawa' },
-      { name: 'Ayo' },
-      { name: 'Chi-yao' },
-      { name: 'Ciyao' },
-      { name: 'Djao' },
-      { name: 'Hiao' },
-      { name: 'Wayao' }
+    'code': 'yao',
+    'uf': [
+      { 'name': 'Adjaua' },
+      { 'name': 'Ajawa' },
+      { 'name': 'Ayo' },
+      { 'name': 'Chi-yao' },
+      { 'name': 'Ciyao' },
+      { 'name': 'Djao' },
+      { 'name': 'Hiao' },
+      { 'name': 'Wayao' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/yap',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/yap',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Yapese'
     },
-    code: 'yap'
+    'code': 'yap'
   },
   {
-    uri: 'info:lc/vocabulary/languages/yid',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/yid',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Yiddish'
     },
-    code: 'yid',
-    uf: [
-      { name: 'German Hebrew' },
-      { name: 'Hebreo-German' },
-      { name: 'Jewish' },
-      { name: 'Jiddisch' },
-      { name: 'Judaeo German (Yiddish)' },
-      { name: 'Judeo-German (Yiddish)' }
+    'code': 'yid',
+    'uf': [
+      { 'name': 'German Hebrew' },
+      { 'name': 'Hebreo-German' },
+      { 'name': 'Jewish' },
+      { 'name': 'Jiddisch' },
+      { 'name': 'Judaeo German (Yiddish)' },
+      { 'name': 'Judeo-German (Yiddish)' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/yor',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/yor',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Yoruba'
     },
-    code: 'yor',
-    uf: [
-      { name: 'Aku' },
-      { name: 'Eyo' },
-      { name: 'Nago' },
-      { name: 'Yariba' }
+    'code': 'yor',
+    'uf': [
+      { 'name': 'Aku' },
+      { 'name': 'Eyo' },
+      { 'name': 'Nago' },
+      { 'name': 'Yariba' }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ypk',
-    name: 'Yupik languages',
-    code: 'ypk',
-    uf: [
-      { name: 'Eskimo languages, Western' },
-      { name: 'Western Eskimo languages' },
+    'uri': 'info:lc/vocabulary/languages/ypk',
+    'name': 'Yupik languages',
+    'code': 'ypk',
+    'uf': [
+      { 'name': 'Eskimo languages, Western' },
+      { 'name': 'Western Eskimo languages' },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Central Yupik'
         },
-        uf: [
-          { name: 'Eskimo, West Alaska' },
-          { name: 'West Alaska Eskimo' }
+        'uf': [
+          { 'name': 'Eskimo, West Alaska' },
+          { 'name': 'West Alaska Eskimo' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Cup´ig'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Pacific Gulf Yupik'
         },
-        uf: [
-          { name: 'Aleut (Eskimo)' },
-          { name: 'Eskimo, South Alaska' },
-          { name: 'Sugpiak Eskimo' },
-          { name: 'Suk (Eskimo)' }
+        'uf': [
+          { 'name': 'Aleut (Eskimo)' },
+          { 'name': 'Eskimo, South Alaska' },
+          { 'name': 'Sugpiak Eskimo' },
+          { 'name': 'Suk (Eskimo)' }
         ]
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Sirinek'
         }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Yuit'
         },
-        uf: [
-          { name: 'Asiatic Eskimo' },
-          { name: 'Eskimo, Asiatic' },
-          { name: 'Saint Lawrence Island Yupik' },
-          { name: 'Siberian Yupik' }
+        'uf': [
+          { 'name': 'Asiatic Eskimo' },
+          { 'name': 'Eskimo, Asiatic' },
+          { 'name': 'Saint Lawrence Island Yupik' },
+          { 'name': 'Siberian Yupik' }
         ]
       }
     ]
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/znd',
-    name: 'Zande languages',
-    code: 'znd',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/znd',
+    'name': 'Zande languages',
+    'code': 'znd',
+    'uf': [
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Nzakara'
         },
-        uf: { name: 'Sakara' }
+        'uf': { 'name': 'Sakara' }
       },
       {
-        name: {
+        'name': {
           '-authorized': 'yes',
           '#text': 'Zande'
         },
-        uf: { name: 'Azande' }
+        'uf': { 'name': 'Azande' }
       }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/zap',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zap',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Zapotec'
     },
-    code: 'zap'
+    'code': 'zap'
   },
   {
-    uri: 'info:lc/vocabulary/languages/zza',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zza',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Zaza'
     },
-    code: 'zza',
-    uf: [
-      { name: 'Dimili' },
-      { name: 'Dimli' },
-      { name: 'Kirdki' },
-      { name: 'Kirmanjki' },
-      { name: 'Zazaki' }
+    'code': 'zza',
+    'uf': [
+      { 'name': 'Dimili' },
+      { 'name': 'Dimli' },
+      { 'name': 'Kirdki' },
+      { 'name': 'Kirmanjki' },
+      { 'name': 'Zazaki' }
     ]
   },
   {
-    uri: 'info:lc/vocabulary/languages/zen',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zen',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Zenaga'
     },
-    code: 'zen',
-    uf: { name: 'Senhadja' }
+    'code': 'zen',
+    'uf': { 'name': 'Senhadja' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/zha',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zha',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Zhuang'
     },
-    code: 'zha',
-    uf: { name: 'Chuang' }
+    'code': 'zha',
+    'uf': { 'name': 'Chuang' }
   },
   {
-    uri: 'info:lc/vocabulary/languages/zul',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zul',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Zulu'
     },
-    code: 'zul'
+    'code': 'zul'
   },
   {
-    uri: 'info:lc/vocabulary/languages/zun',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/zun',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Zuni'
     },
-    code: 'zun'
+    'code': 'zun'
   }
 ];
 
 const languages = {
 
-  selectOptions: selected => data.map(
+  'selectOptions': selected => data.map(
     l => ({
-      label: l.name['#text'] || l.name,
-      value: l.code,
-      selected: l.code === selected
+      'label': l.name['#text'] || l.name,
+      'value': l.code,
+      'selected': l.code === selected
     })
   ),
 
-  languageByCode: (code) => {
+  'languageByCode': (code) => {
     const lang = data.find(l => l.code === code);
     return (lang ? (lang.name['#text'] || lang.name) : null);
   }

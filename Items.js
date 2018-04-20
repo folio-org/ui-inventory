@@ -4,6 +4,11 @@ import _ from 'lodash';
 
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
+/**
+ * List items for display in the Holdings accordion in the main
+ * instance-details pane.
+ *
+ */
 class Items extends React.Component {
   static manifest = Object.freeze({
     items: {
@@ -18,14 +23,13 @@ class Items extends React.Component {
     this.editItemModeThisLayer = false;
   }
 
-  onSelectRow = (e, meta) => {
-    if (e) e.stopPropagation();
-    this.openItem(meta);
-  }
-
-  openItem(selectedItem) {
+  openItem = (e, selectedItem) => {
+    if (e) e.preventDefault();
     const itemId = selectedItem.id;
-    this.props.history.push(`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}${this.props.location.search}`);
+
+    this.props.parentMutator.query.update({
+      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`
+    });
   }
 
   render() {
@@ -34,7 +38,7 @@ class Items extends React.Component {
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': x => _.get(x, ['barcode']),
-      status: x => _.get(x, ['status', 'name']) || '--',
+      'status': x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };
     return (
@@ -43,7 +47,7 @@ class Items extends React.Component {
           id="list-items"
           contentData={itemRecords}
           rowMetadata={['id', 'holdingsRecordId']}
-          onRowClick={this.onSelectRow}
+          onRowClick={this.openItem}
           formatter={itemsFormatter}
           visibleColumns={['Item: barcode', 'status', 'Material Type']}
           ariaLabel="Items"
@@ -58,11 +62,9 @@ Items.propTypes = {
     items: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    query: PropTypes.object,
   }),
-  history: PropTypes.object,
-  location: PropTypes.shape({
-    search: PropTypes.string,
-  }),
+  parentMutator: PropTypes.object.isRequired,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
 };

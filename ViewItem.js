@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import Link from 'react-router-dom/Link';
 
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -16,6 +17,7 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
+import ViewMetaData from './ViewMetaData';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -50,7 +52,87 @@ class ViewItem extends React.Component {
       path: 'loan-types',
       records: 'loantypes',
     },
+    requests: {
+      type: 'okapi',
+      path: 'circulation/requests?query=(itemId==:{itemid}) sortby requestDate desc',
+      records: 'requests',
+    },
+    // there is no canonical method to retrieve an item's "current" loan.
+    // the top item, sorted by loan-date descending, is a best-effort.
+    loans: {
+      type: 'okapi',
+      path: 'circulation/loans?query=(itemId==!{itemId}) sortby loanDate/sort.descending&limit=1',
+      records: 'loans',
+    },
+    borrowerId: {},
+    borrower: {
+      type: 'okapi',
+      path: 'users?query=(id==%{borrowerId.query})',
+      records: 'users',
+    }
   });
+
+  /**
+   * If a loan is retrieved matching this item, retrieve the corresponding
+   * user record as well.
+   *
+   * I do not understand why it is necessary to check that loan.itemId matches
+   * itemid and that borrower.id matches userId; the latter values are those
+   * that are used in the manifest above and I can see that the correct
+   * queries are running in the browser's network inspector. And yet, if
+   * they are not checked, the values in nextProps.resources are always
+   * from a previous incarnation of this object.
+   *
+   * Likewise, if the borrower resource's path is defined to have a string
+   * substituted in rather than an object, it will always contain the value
+   * from the previous incarnation of the object. i.e. if the path is
+   *     users?query=(id==%{borrowerId})
+   * and we call
+   *     nextProps.mutator.borrowerId.replace(loan.userId);
+   * instead of
+   *     users?query=(id==%{ borrowerId.query })
+   * and
+   *     nextProps.mutator.borrowerId.replace({ query: loan.userId });
+   * then the value retrieved by nextProps.resources.borrower will always
+   * be that from the previous instance of this object.
+   *
+   * This smells like a dataKey issue in stripes-connect.
+   *
+   * dataKey, with a lower case "d",
+   * that rhymes with "t",
+   * that stands for "tap dancing" or maybe "tesseract" and also "thelonious"
+   * that rhymes with "felonious"
+   * and that stands for "funk!"
+   *
+   */
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const loanRecords = (nextProps.resources.loans || {}).records || [];
+    if ((!prevState.loan) && loanRecords.length === 1) {
+      const loan = loanRecords[0];
+      // FIXME: loan-status-check must be i18n friendly
+      if (nextProps.itemId === loan.itemId && loan.item.status.name !== 'Available') {
+        nextProps.mutator.borrowerId.replace({ query: loan.userId });
+
+        // don't choke while we migrate from metaData to metadata
+        loan.metadata = loan.metadata || loan.metaData;
+        return { loan };
+      }
+
+      // console.warn(`retrieved a loan.itemId ${loan.itemId} that did not match the item.itemid ${nextProps.itemid}`)
+    }
+
+    const borrowerRecords = (nextProps.resources.borrower || {}).records || [];
+    if (prevState.loan && (!prevState.borrower) && borrowerRecords.length === 1) {
+      const borrower = borrowerRecords[0];
+      if (prevState.loan.userId === borrower.id) {
+        return { borrower };
+      }
+
+      // console.warn('retrieved a borrower.id ${borrower.id} that did not match the loan.userId ${prevState.loan.userId}')
+    }
+
+    return null;
+  }
 
   constructor(props) {
     super(props);
@@ -58,9 +140,12 @@ class ViewItem extends React.Component {
       accordions: {
         itemAccordion: true,
       },
+      loan: null,
+      borrower: null,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   onClickEditItem = (e) => {
@@ -78,13 +163,15 @@ class ViewItem extends React.Component {
   }
 
   copyItem = (item) => {
-    const { location, history, resources: { holdingsRecords, instances1 } } = this.props;
+    const { resources: { holdingsRecords, instances1 } } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
     this.props.mutator.items.POST(item).then((data) => {
-      history.push(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}${location.search}`);
-      setTimeout(() => this.props.mutator.query.update({ layer: null }));
+      this.props.mutator.query.update({
+        _path: `/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`,
+        layer: null,
+      });
     });
   }
 
@@ -100,6 +187,7 @@ class ViewItem extends React.Component {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
       newState.copiedItem = _.omit(item, ['id', 'barcode']);
+      newState.copiedItem.status = { name: 'Available' };
       return newState;
     });
 
@@ -107,9 +195,9 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes },
+    const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes, requests },
       referenceTables,
-      okapi } = this.props;
+      okapi, stripes: { intl, formatDateTime } } = this.props;
 
     referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -119,6 +207,8 @@ class ViewItem extends React.Component {
     const instance = instances1.records[0];
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
+
+    const requestRecords = (requests || {}).records || [];
 
     const query = location.search ? queryString.parse(location.search) : {};
 
@@ -141,8 +231,26 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    let labelLocation = '';
+    if (holdingsRecord.permanentLocationId) {
+      const shelfLocation = referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id);
+      labelLocation = _.get(shelfLocation, ['name'], '');
+    }
     const labelCallNumber = holdingsRecord.callNumber || '';
+
+    let requestLink = 0;
+    if (requestRecords.length && item.barcode) {
+      requestLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+    }
+
+    let loanLink = item.status.name;
+    let borrowerLink = '-';
+    let itemStatusDate = '-';
+    if (this.state.loan && this.state.borrower) {
+      loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
+      borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
+      itemStatusDate = formatDateTime(_.get(this.state.loan, ['metadata', 'updatedDate']));
+    }
 
     return (
       <div>
@@ -184,6 +292,9 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
               <br />
+              { (item.metadata && item.metadata.createdDate) &&
+                <this.cViewMetaData metadata={item.metadata} />
+              }
               { (item.barcode) &&
                 <Row>
                   <Col sm={12}>
@@ -256,6 +367,35 @@ class ViewItem extends React.Component {
                 </Row>
               }
             </Accordion>
+            <Accordion
+              open={this.state.accordions.itemAvailabilityAccordion}
+              id="itemAvailabilityAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={intl.formatMessage({ id: 'ui-inventory.item.availability' })}
+            >
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value={loanLink} />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value={itemStatusDate} />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.requests' })} value={requestLink} />
+                </Col>
+              </Row>
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.borrower' })} value={borrowerLink} />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value={this.state.loan ? formatDateTime(this.state.loan.loanDate) : '-'} />
+                </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value={this.state.loan ? formatDateTime(this.state.loan.dueDate) : '-'} />
+                </Col>
+              </Row>
+            </Accordion>
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? query.layer === 'editItem' : false} label="Edit Item Dialog">
@@ -290,6 +430,10 @@ class ViewItem extends React.Component {
 }
 
 ViewItem.propTypes = {
+  stripes: PropTypes.shape({
+    intl: PropTypes.object.isRequired,
+    connect: PropTypes.func.isRequired,
+  }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -300,10 +444,16 @@ ViewItem.propTypes = {
     loanTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    requests: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    loans: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    borrower: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  history: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
