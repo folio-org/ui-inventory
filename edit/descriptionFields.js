@@ -5,11 +5,11 @@ import RepeatableField from '@folio/stripes-components/lib/structures/Repeatable
 const DescriptionFields = () => (
   <RepeatableField
     name="physicalDescriptions"
-    label="Descriptions"
+    label="Physical descriptions"
     addLabel="+ Add description"
     addButtonId="clickable-add-description"
     template={[{
-      label: 'Description',
+      label: 'Physical description',
       component: TextField,
     }]}
   />
