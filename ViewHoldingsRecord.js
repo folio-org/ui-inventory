@@ -149,7 +149,7 @@ class ViewHoldingsRecord extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="holdings" size="small" />&nbsp;<strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name + '&gt;' : null} {_.get(holdingsRecord, ['callNumber'], '')}</strong>&nbsp;
+                <AppIcon app="inventory" iconKey="holdings" size="small" />&nbsp;<strong>{holdingsRecord.permanentLocationId ? `${locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name}&gt;` : null} {_.get(holdingsRecord, ['callNumber'], '')}</strong>&nbsp;
                 <div>
                   {formatMsg({ id: 'ui-inventory.holdings' })}
                 </div>
@@ -250,6 +250,9 @@ class ViewHoldingsRecord extends React.Component {
 ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({

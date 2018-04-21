@@ -18,7 +18,7 @@ import renderStatements from './holdingsStatementFields';
 function validate(values, props) {
   const errors = {};
   if (!values.permanentLocationId) {
-    errors.permanentLocationId = props.formatMsg({ id: 'ui-inventory.selectToContinue'});
+    errors.permanentLocationId = props.formatMsg({ id: 'ui-inventory.selectToContinue' });
   }
 
   return errors;
@@ -35,6 +35,7 @@ class HoldingsForm extends React.Component {
     instance: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
     change: PropTypes.func,
+    formatMsg: PropTypes.func,
   };
 
   selectLocation(location) {

@@ -15,22 +15,22 @@ const ClassificationFields = ({ classificationTypes, formatMsg }) => {
   return (
     <RepeatableField
       name="classifications"
-      label={formatMsg({ id: "ui-inventory.classifications" })}
-      addLabel={formatMsg({ id: "ui-inventory.addClassifications" })}
+      label={formatMsg({ id: 'ui-inventory.classifications' })}
+      addLabel={formatMsg({ id: 'ui-inventory.addClassifications' })}
       addButtonId="clickable-add-classification"
       addDefaultItem={false}
       template={[
         {
-          label: formatMsg({ id: "ui-inventory.number" }),
+          label: formatMsg({ id: 'ui-inventory.number' }),
           name: 'classificationNumber',
           component: TextField,
           required: true,
         },
         {
-          label: formatMsg({ id: "ui-inventory.type" }),
+          label: formatMsg({ id: 'ui-inventory.type' }),
           name: 'classificationTypeId',
           component: Select,
-          dataOptions: [{ label: formatMsg({ id: "ui-inventory.selectClassification" }), value: '' }, ...classificationTypeOptions],
+          dataOptions: [{ label: formatMsg({ id: 'ui-inventory.selectClassification' }), value: '' }, ...classificationTypeOptions],
           required: true,
         },
       ]}
@@ -41,6 +41,7 @@ const ClassificationFields = ({ classificationTypes, formatMsg }) => {
 
 ClassificationFields.propTypes = {
   classificationTypes: PropTypes.arrayOf(PropTypes.object),
+  formatMsg: PropTypes.func,
 };
 
 export default ClassificationFields;

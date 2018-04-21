@@ -395,6 +395,9 @@ ViewInstance.propTypes = {
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({

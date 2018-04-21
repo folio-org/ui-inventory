@@ -20,7 +20,7 @@ const renderStatements = ({ fields, meta: { touched, error, submitFailed }, form
             name={statement}
             type="text"
             component={TextField}
-            label={index === 0 ? formatMsg({id: 'ui-inventory.holdingsStatement'}) : null}
+            label={index === 0 ? formatMsg({ id: 'ui-inventory.holdingsStatement' }) : null}
           />
         </Col>
         <Col sm={1}>
@@ -28,14 +28,14 @@ const renderStatements = ({ fields, meta: { touched, error, submitFailed }, form
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
-            title={formatMsg({ 'id': 'ui-inventory.removeStatement' }, { num: index + 1 })}
+            title={formatMsg({ id: 'ui-inventory.removeStatement' }, { num: index + 1 })}
             onClick={() => fields.remove(index)}
-          >{formatMsg({ 'id': 'ui-inventory.deleteStatement' })}
+          >{formatMsg({ id: 'ui-inventory.deleteStatement' })}
           </Button>
         </Col>
       </Row>)}
   </div>
 );
-renderStatements.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+renderStatements.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };
 
 export default renderStatements;

@@ -122,7 +122,7 @@ class ItemsPerHoldingsRecord extends React.Component {
           </Col>
         </Row>
         <br />
-        <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label={formatMsg({id: 'ui-inventory.addNewHoldingsDialog'})}>
+        <Layer key={`itemformlayer_${holdingsRecord.id}`} isOpen={addItemMode ? (addItemMode.mode && this.addItemModeThisLayer) : false} label={formatMsg({ id: 'ui-inventory.addNewHoldingsDialog' })}>
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}
             id={holdingsRecord.id}
@@ -171,6 +171,9 @@ ItemsPerHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   okapi: PropTypes.object,
   accordionToggle: PropTypes.func.isRequired,

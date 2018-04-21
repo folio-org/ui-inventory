@@ -67,7 +67,7 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'users?query=(id==%{borrowerId.query})',
       records: 'users',
-    }
+    },
   });
 
   /**
@@ -256,7 +256,7 @@ class ViewItem extends React.Component {
               <div style={{ textAlign: 'center' }}>
                 <AppIcon app="inventory" iconKey="item" size="small" /> {_.get(item, ['barcode'], '')}
                 <div>
-                  { formatMsg({ id: 'ui-inventory.itemDotStatus' }, {status: _.get(item, ['status', 'name'], '') }) }
+                  { formatMsg({ id: 'ui-inventory.itemDotStatus' }, { status: _.get(item, ['status', 'name'], '') }) }
                 </div>
               </div>
             }
@@ -266,12 +266,12 @@ class ViewItem extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                {formatMsg({ id:'ui-inventory.instance' })} {instance.title}
+                {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
                 <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
                 <div>
-                  { formatMsg({ id: 'ui-inventory.holdingsColon' }) + ` ${labelLocation} > ${labelCallNumber}`}
+                  { `${formatMsg({ id: 'ui-inventory.holdingsColon' })} ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </Col>
             </Row>

@@ -15,19 +15,19 @@ const IdentifierFields = ({ identifierTypes, formatMsg }) => {
   return (
     <RepeatableField
       name="identifiers"
-      label={formatMsg({ id: "ui-inventory.identifiers" })}
-      addLabel={formatMsg({ id: "ui-inventory.addIdentifier" })}
+      label={formatMsg({ id: 'ui-inventory.identifiers' })}
+      addLabel={formatMsg({ id: 'ui-inventory.addIdentifier' })}
       addButtonId="clickable-add-identifier"
       template={[
         {
           name: 'value',
-          label: formatMsg({ id: "ui-inventory.identifier" }),
+          label: formatMsg({ id: 'ui-inventory.identifier' }),
           component: TextField,
           required: true,
         },
         {
           name: 'identifierTypeId',
-          label: formatMsg({ id: "ui-inventory.type" }),
+          label: formatMsg({ id: 'ui-inventory.type' }),
           component: Select,
           dataOptions: [{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions],
           required: true,
@@ -40,6 +40,7 @@ const IdentifierFields = ({ identifierTypes, formatMsg }) => {
 
 IdentifierFields.propTypes = {
   identifierTypes: PropTypes.arrayOf(PropTypes.object),
+  formatMsg: PropTypes.func,
 };
 
 export default IdentifierFields;

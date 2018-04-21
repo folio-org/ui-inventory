@@ -20,7 +20,7 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
             name={pieceIdentifier}
             type="text"
             component={TextField}
-            label={index === 0 ? formatMsg({ id: 'ui-inventory.pieceIdentifier'}) : null}
+            label={index === 0 ? formatMsg({ id: 'ui-inventory.pieceIdentifier' }) : null}
           />
         </Col>
         <Col sm={1}>
@@ -36,6 +36,6 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
       </Row>)}
   </div>
 );
-renderPieceIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+renderPieceIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };
 
 export default renderPieceIdentifiers;

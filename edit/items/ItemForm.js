@@ -19,7 +19,7 @@ import renderPieceIdentifiers from './pieceIdentifierFields';
 
 function validate(values, props) {
   const errors = {};
-  const selectToContinueMsg = props.stripes.intl.formatMessage('ui-inventory.selectToContinue')
+  const selectToContinueMsg = props.stripes.intl.formatMessage('ui-inventory.selectToContinue');
 
   if (!(values.materialType && values.materialType.id)) {
     errors.materialType = { id: selectToContinueMsg };
@@ -40,7 +40,7 @@ function checkUniqueBarcode(okapi, barcode) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const barcodeTakenMsg = props.stripes.intl.formatMessage('ui-inventory.barcodeTaken')
+  const barcodeTakenMsg = props.stripes.intl.formatMessage('ui-inventory.barcodeTaken');
 
   if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
@@ -229,6 +229,9 @@ ItemForm.propTypes = {
   holdingsRecord: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
+  intl: {
+    formatMsg: PropTypes.func,
+  },
 };
 
 export default stripesForm({

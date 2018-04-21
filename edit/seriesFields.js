@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
 
 const SeriesFields = ({ formatMsg }) => (
   <RepeatableField
     name="series"
-    label={formatMsg({ id: "ui-inventory.seriesStatements" })}
-    addLabel={formatMsg({ id: "ui-inventory.addSeries" })}
+    label={formatMsg({ id: 'ui-inventory.seriesStatements' })}
+    addLabel={formatMsg({ id: 'ui-inventory.addSeries' })}
     addButtonId="clickable-add-series"
     template={[{
       component: TextField,
@@ -14,4 +15,5 @@ const SeriesFields = ({ formatMsg }) => (
   />
 );
 
+SeriesFields.propTypes = { formatMsg: PropTypes.func };
 export default SeriesFields;

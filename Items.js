@@ -28,7 +28,7 @@ class Items extends React.Component {
     const itemId = selectedItem.id;
 
     this.props.parentMutator.query.update({
-      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`
+      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`,
     });
   }
 
@@ -38,7 +38,7 @@ class Items extends React.Component {
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': x => _.get(x, ['barcode']),
-      'status': x => _.get(x, ['status', 'name']) || '--',
+      status: x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };
     return (
