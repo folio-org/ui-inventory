@@ -56,8 +56,8 @@ const filterConfig = [
 ];
 
 const GET_INSTANCES = gql`
-query allInstances ($cql: String) {
-  instances (cql: $cql) {
+query allInstances ($cql: String, $offset: Int, $limit: Int) {
+  instances (cql: $cql, offset: $offset, limit: $limit) {
     records {
      id,
      source,
@@ -361,8 +361,11 @@ const QueryFunction = makeQueryFunction(
 function makeVariables(props) {
   const parsedQuery = queryString.parse(props.location.search || '');
 
+  console.log(`  result-count=${props.resources.resultCount}`);
+
   return {
-    cql: QueryFunction(parsedQuery, props, props.resources, props.stripes.logger)
+    cql: QueryFunction(parsedQuery, props, props.resources, props.stripes.logger),
+    limit: props.resources.resultCount
   };
 }
 
