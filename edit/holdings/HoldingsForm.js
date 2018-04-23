@@ -15,11 +15,10 @@ import stripesForm from '@folio/stripes-form';
 import renderStatements from './holdingsStatementFields';
 
 // eslint-disable-next-line no-unused-vars
-function validate(values) {
+function validate(values, props) {
   const errors = {};
-
   if (!values.permanentLocationId) {
-    errors.permanentLocationId = 'Please select to continue';
+    errors.permanentLocationId = props.formatMsg({ id: 'ui-inventory.selectToContinue' });
   }
 
   return errors;
@@ -36,6 +35,7 @@ class HoldingsForm extends React.Component {
     instance: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
     change: PropTypes.func,
+    formatMsg: PropTypes.func,
   };
 
   selectLocation(location) {
@@ -53,10 +53,11 @@ class HoldingsForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
+    const formatMsg = this.props.formatMsg;
 
     /* Menus for Add Item workflow */
-    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
-    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
+    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
+    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
 
     const platformOptions = (referenceTables.platforms || []).map(l => ({
       label: l.name,
@@ -85,13 +86,13 @@ class HoldingsForm extends React.Component {
           >
             <Row>
               <Col sm={5} smOffset={1}>
-                <h2>Holdings Record</h2>
+                <h2>{formatMsg({ id: 'ui-inventory.holdingsRecord' })}</h2>
               </Col>
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
                 <Field
-                  label="Permanent Location"
+                  label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
                   name="permanentLocationId"
                   id="additem_permanentlocation"
                   component={LocationSelection}
@@ -104,15 +105,15 @@ class HoldingsForm extends React.Component {
             <Row>
               <Col sm={5} smOffset={1}>
                 <Field
-                  label="Platform"
+                  label={formatMsg({ id: 'ui-inventory.platform' })}
                   name="electronicLocation.platformId"
                   id="additem_platformid"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: 'Select platform', value: '' }, ...platformOptions]}
+                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectPlatform' }), value: '' }, ...platformOptions]}
                 />
                 <Field
-                  label="URI"
+                  label={formatMsg({ id: 'ui-inventory.uri' })}
                   name="electronicLocation.uri"
                   id="additem_uri"
                   component={TextField}
@@ -122,10 +123,10 @@ class HoldingsForm extends React.Component {
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
-                <Field label="Call number" name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
+                <Field label={formatMsg({ id: 'ui-inventory.callNumber' })} name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
               </Col>
             </Row>
-            <FieldArray name="holdingsStatements" component={renderStatements} />
+            <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
           </Pane>
         </Paneset>
       </form>

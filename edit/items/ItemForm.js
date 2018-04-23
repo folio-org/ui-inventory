@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray, SubmissionError } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -16,15 +17,16 @@ import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';
 
 
-function validate(values) {
+function validate(values, props) {
   const errors = {};
+  const selectToContinueMsg = props.stripes.intl.formatMessage('ui-inventory.selectToContinue');
 
   if (!(values.materialType && values.materialType.id)) {
-    errors.materialType = { id: 'Please select to continue' };
+    errors.materialType = { id: selectToContinueMsg };
   }
 
   if (!(values.permanentLoanType && values.permanentLoanType.id)) {
-    errors.permanentLoanType = { id: 'Please select to continue' };
+    errors.permanentLoanType = { id: selectToContinueMsg };
   }
 
   return errors;
@@ -38,6 +40,8 @@ function checkUniqueBarcode(okapi, barcode) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
+  const barcodeTakenMsg = props.stripes.intl.formatMessage('ui-inventory.barcodeTaken');
+
   if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
       // TODO: Should use stripes-connect (dispatching an action and update state)
@@ -47,7 +51,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
-              const error = new SubmissionError({ barcode: 'This barcode has already been taken' });
+              const error = new SubmissionError({ barcode: barcodeTakenMsg });
               reject(error);
             } else {
               resolve();
@@ -78,6 +82,7 @@ class ItemForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
+    const formatMsg = this.props.intl.formatMessage;
 
     /* Menus for Add Item workflow */
     const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create item</Button></PaneMenu>;
@@ -124,33 +129,35 @@ class ItemForm extends React.Component {
           >
             <Row>
               <Col sm={5} smOffset={1}>
-                <h2>Item Record</h2>
+                <h2>
+                  <FormattedMessage id="ui-inventory.itemRecord" />
+                </h2>
               </Col>
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                 <Field
-                  label="Material Type *"
+                  label={formatMsg({ id: 'ui-inventory.materialType' })}
                   name="materialType.id"
                   id="additem_materialType"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: 'Select material type', value: '' }, ...materialTypeOptions]}
+                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectMaterialType' }), value: '' }, ...materialTypeOptions]}
                 />
                 <Field
-                  label="Loan Type (Permanent) *"
+                  label={formatMsg({ id: 'ui-inventory.loanTypePermanent' })}
                   name="permanentLoanType.id"
                   id="additem_loanTypePerm"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: 'Select loan type', value: '' }, ...loanTypeOptions]}
+                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
                 />
-                <Field label="Barcode" name="barcode" id="additem_barcode" component={TextField} required fullWidth />
+                <Field label={formatMsg({ id: 'ui-inventory.barcode' })} name="barcode" id="additem_barcode" component={TextField} required fullWidth />
 
                 <Field
-                  label="Temporary Location"
-                  placeholder="Select temporary location"
+                  label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectTemporaryLocation' })}
                   name="temporaryLocation.id"
                   id="additem_location"
                   component={LocationSelection}
@@ -159,31 +166,31 @@ class ItemForm extends React.Component {
                 />
                 <LocationLookup temporary onLocationSelected={loc => this.selectLocation(loc)} />
 
-                <Field label="Status" name="status.name" id="additem_status" component={TextField} disabled fullWidth />
+                <Field label={formatMsg({ id: 'ui-inventory.status' })} name="status.name" id="additem_status" component={TextField} disabled fullWidth />
                 <Field
-                  label="Loan Type (Temporary)"
+                  label={formatMsg({ id: 'ui-inventory.loanTypeTemporary' })}
                   name="temporaryLoanType.id"
                   id="additem_loanTypeTemp"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: 'Select loan type', value: '' }, ...loanTypeOptions]}
+                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
                 />
                 <Field
-                  label="Enumeration"
+                  label={formatMsg({ id: 'ui-inventory.enumeration' })}
                   name="enumeration"
                   id="additem_enumeration"
                   component={TextField}
                   fullWidth
                 />
                 <Field
-                  label="Chronology"
+                  label={formatMsg({ id: 'ui-inventory.chronology' })}
                   name="chronology"
                   id="additem_chronology"
                   component={TextField}
                   fullWidth
                 />
                 <Field
-                  label="Number of pieces"
+                  label={formatMsg({ id: 'ui-inventory.numberOfPieces' })}
                   name="numberOfPieces"
                   id="additem_numberofpieces"
                   component={TextField}
@@ -192,12 +199,12 @@ class ItemForm extends React.Component {
             </Row>
             <Row>
               <Col sm={8} smOffset={1}>
-                <FieldArray name="notes" component={renderNotes} />
+                <FieldArray name="notes" component={renderNotes} formatMsg={formatMsg} />
               </Col>
             </Row>
             <Row>
               <Col sm={8} smOffset={1}>
-                <FieldArray name="pieceIdentifiers" component={renderPieceIdentifiers} />
+                <FieldArray name="pieceIdentifiers" component={renderPieceIdentifiers} formatMsg={formatMsg} />
               </Col>
             </Row>
 
@@ -222,6 +229,9 @@ ItemForm.propTypes = {
   holdingsRecord: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
+  intl: {
+    formatMsg: PropTypes.func,
+  },
 };
 
 export default stripesForm({

@@ -134,7 +134,7 @@ class ViewInstance extends React.Component {
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const selInstance = (selectedInstance || emptyObj).records || emptyArr;
 
-
+    const formatMsg = this.props.stripes.intl.formatMessage;
     const instance = (selInstance && id) ? selInstance.find(i => i.id === id) : null;
 
     const detailMenu = (
@@ -142,7 +142,7 @@ class ViewInstance extends React.Component {
         <IconButton
           id="clickable-copy-instance"
           onClick={() => onCopy(instance)}
-          title="Copy Instance"
+          title={formatMsg({ id: 'ui-inventory.copyInstance' })}
           icon="duplicate"
         />
         <IconButton
@@ -150,14 +150,14 @@ class ViewInstance extends React.Component {
           style={{ visibility: !instance ? 'hidden' : 'visible' }}
           href={this.craftLayerUrl('edit')}
           onClick={this.onClickEditInstance}
-          title="Edit Instance"
+          title={formatMsg({ id: 'ui-inventory.editInstance' })}
           icon="edit"
         />
         <IconButton
           id="clickable-show-notes"
           style={{ visibility: !instance ? 'hidden' : 'visible' }}
           onClick={this.props.notesToggle}
-          title="Show Notes"
+          title={formatMsg({ id: 'ui-inventory.showNotes' })}
           icon="comment"
         />
       </PaneMenu>
@@ -165,7 +165,7 @@ class ViewInstance extends React.Component {
 
     if (!instance) {
       return (
-        <Pane id="pane-instancedetails" defaultWidth={this.props.paneWidth} paneTitle="Instance Details" lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
+        <Pane id="pane-instancedetails" defaultWidth={this.props.paneWidth} paneTitle={formatMsg({ id: 'ui-inventory.instanceDetails' })} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
           <div style={{ paddingTop: '1rem' }}><Icon icon="spinner-ellipsis" width="100px" /></div>
         </Pane>
       );
@@ -184,10 +184,10 @@ class ViewInstance extends React.Component {
           id="clickable-new-holdings-record"
           href={this.craftLayerUrl('createHoldingsRecord')}
           onClick={this.onClickAddNewHoldingsRecord}
-          title="+ Holdings"
+          title={formatMsg({ id: 'ui-inventory.addHoldings' })}
           buttonStyle="primary"
           fullWidth
-        >+ Add holdings
+        >{formatMsg({ id: 'ui-inventory.addHoldings' })}
         </Button>
       </div>
     );
@@ -206,14 +206,14 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.instanceAccordion}
           id="instanceAccordion"
           onToggle={this.handleAccordionToggle}
-          label="Instance data"
+          label={formatMsg({ id: 'ui-inventory.instanceData' })}
         >
           { (instance.metadata && instance.metadata.createdDate) &&
             <this.cViewMetaData metadata={instance.metadata} />
           }
           <Row>
             <Col xs={12}>
-              <AppIcon app="inventory" iconKey="instance" size="small" /> Instance record <AppIcon app="inventory" iconKey="resource-type" size="small" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+              <AppIcon app="inventory" iconKey="instance" size="small" /> {formatMsg({ id: 'ui-inventory.instanceRecord' })} <AppIcon app="inventory" iconKey="resource-type" size="small" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
             </Col>
           </Row>
           <br />
@@ -227,112 +227,112 @@ class ViewInstance extends React.Component {
           <br />
           <Row>
             <Col xs={12}>
-              <KeyValue label="Instance ID" value={_.get(instance, ['id'], '')} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceId' })} value={_.get(instance, ['id'], '')} />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label="Metadata source" value="TBA" />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={formatMsg({ id: 'ui-inventory.tba' })} />
             </Col>
           </Row>
           { (instance.identifiers.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Resource identifier" value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.resourceIdentifier' })} value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
               </Col>
             </Row>
           }
           { (instance.instanceFormatId) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Format" value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
               </Col>
             </Row>
           }
           <Row>
             <Col xs={12}>
-              <KeyValue label="Resource title" value={_.get(instance, ['title'], '')} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceTitle' })} value={_.get(instance, ['title'], '')} />
             </Col>
           </Row>
           { (instance.alternativeTitles.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Alternative titles" value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.alternativeTitles' })} value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)} />
               </Col>
             </Row>
           }
           { (instance.contributors.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Contributor" value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.contributor' })} value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
               </Col>
             </Row>
           }
           { (instance.publication.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Publisher" value={formatters.publishersFormatter(instance)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.publisher' })} value={formatters.publishersFormatter(instance)} />
               </Col>
             </Row>
           }
           <Row>
             <Col xs={12}>
-              <KeyValue label="Resource type" value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceType' })} value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
             </Col>
           </Row>
           { (instance.physicalDescriptions.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Physical description" value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
               </Col>
             </Row>
           }
           { (instance.languages.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Language" value={formatters.languagesFormatter(instance)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.language' })} value={formatters.languagesFormatter(instance)} />
               </Col>
             </Row>
           }
           { (instance.subjects.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Subject headings" value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.subjectHeadings' })} value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
               </Col>
             </Row>
           }
           { (instance.classifications.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Classification" value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.classification' })} value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
               </Col>
             </Row>
           }
           { (instance.notes.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Notes" value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.notes' })} value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
               </Col>
             </Row>
           }
           { (!!instance.edition) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Edition" value={_.get(instance, ['edition'], '')} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['edition'], '')} />
               </Col>
             </Row>
           }
           { (instance.series.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="Series Statement" value={_.get(instance, ['series'], '')} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['series'], '')} />
               </Col>
             </Row>
           }
           { (instance.urls.length > 0) &&
             <Row>
               <Col xs={12}>
-                <KeyValue label="URLs" value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+                <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
               </Col>
             </Row>
           }
@@ -362,15 +362,16 @@ class ViewInstance extends React.Component {
         <Row>
           <Col sm={12}>{newHoldingsRecordButton}</Col>
         </Row>
-        <Layer isOpen={query.layer ? query.layer === 'edit' : false} label="Edit Instance Dialog">
+        <Layer isOpen={query.layer ? query.layer === 'edit' : false} label={formatMsg({ id: 'ui-inventory.editInstanceDialog' })}>
           <InstanceForm
             onSubmit={(record) => { this.update(record); }}
             initialValues={instance}
             onCancel={this.closeEditInstance}
             referenceTables={referenceTables}
+            stripes={stripes}
           />
         </Layer>
-        <Layer isOpen={query.layer ? query.layer === 'createHoldingsRecord' : false} label="Add New Holdings Dialog">
+        <Layer isOpen={query.layer ? query.layer === 'createHoldingsRecord' : false} label={formatMsg({ id: 'ui-inventory.addNewHoldingsDialog' })}>
           <HoldingsForm
             form={instance.id}
             id={instance.id}
@@ -379,6 +380,7 @@ class ViewInstance extends React.Component {
             onSubmit={(record) => { this.createHoldingsRecord(record); }}
             onCancel={this.onClickCloseNewHoldingsRecord}
             okapi={okapi}
+            formatMsg={formatMsg}
             instance={instance}
             referenceTables={referenceTables}
           />
@@ -393,6 +395,9 @@ ViewInstance.propTypes = {
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({

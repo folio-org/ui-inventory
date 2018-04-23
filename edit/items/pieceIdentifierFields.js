@@ -5,11 +5,11 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
 
-const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) => (
+const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }, formatMsg }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={5}>
-        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-notes" onClick={() => fields.push()}>Add piece identifier</Button>
+        <Button type="button" buttonStyle="fullWidth secondary" id="clickable-add-notes" onClick={() => fields.push()}>{formatMsg({ id: 'ui-inventory.addPieceIdentifier' })}</Button>
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
@@ -20,7 +20,7 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
             name={pieceIdentifier}
             type="text"
             component={TextField}
-            label={index === 0 ? 'Piece identifier' : null}
+            label={index === 0 ? formatMsg({ id: 'ui-inventory.pieceIdentifier' }) : null}
           />
         </Col>
         <Col sm={1}>
@@ -28,14 +28,14 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
-            title={`Remove identifier ${index + 1}`}
+            title={formatMsg({ id: 'ui-inventory.removeIdentifier' }, { num: index + 1 })}
             onClick={() => fields.remove(index)}
-          >Remove
+          >{formatMsg({ id: 'ui-inventory.remove' })}
           </Button>
         </Col>
       </Row>)}
   </div>
 );
-renderPieceIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+renderPieceIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };
 
 export default renderPieceIdentifiers;
