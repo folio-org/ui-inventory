@@ -272,9 +272,9 @@ class Instances extends React.Component {
     };
 
     const resultsFormatter = {
-      'publishers': r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
+      publishers: r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
-      'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
+      contributors: r => formatters.contributorsFormatter(r, contributorTypes),
     };
 
     return (<SearchAndSort
