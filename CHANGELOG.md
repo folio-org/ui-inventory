@@ -61,6 +61,8 @@
 * Set cloned item's status to Available. Fixes UIIN-142.
 * Changes section titles in Instance form. UIIN-72
 * Migrate to hierarchical location end-point. Fixes UIIN-127.
+* Handle "metaData" field case insensitively for compatibility. Fixes UIIN-159.
+* Only show item-availabilty for open loans. Refs UIIN-110.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
