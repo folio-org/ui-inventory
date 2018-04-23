@@ -9,7 +9,7 @@ import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction'
 import { stripesShape } from '@folio/stripes-core/src/Stripes'; // eslint-disable-line import/no-unresolved
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
-import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
+import { onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 
 import packageInfo from './package';
 import InstanceForm from './edit/InstanceForm';
@@ -282,7 +282,7 @@ class Instances extends React.Component {
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
       parentData={this.props.data}
-      apolloResource='instances'
+      apolloResource="instances"
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult
@@ -340,6 +340,9 @@ Instances.propTypes = {
       update: PropTypes.func,
     }),
   }).isRequired,
+  data: PropTypes.shape({
+    // No need to spell this out, since all we do is pass it into <SearchAndSort>
+  }),
 };
 
 
