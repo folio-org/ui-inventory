@@ -90,10 +90,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/afa',
-    name: 'Afroasiatic (Other)',
-    code: 'afa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/afa',
+    'name': 'Afroasiatic (Other)',
+    'code': 'afa',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -513,10 +513,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/alb',
-    name: 'Albanian',
-    code: 'alb',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/alb',
+    'name': 'Albanian',
+    'code': 'alb',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Calabrian Albanian'
@@ -535,10 +535,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/alg',
-    name: 'Algonquian (Other)',
-    code: 'alg',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/alg',
+    'name': 'Algonquian (Other)',
+    'code': 'alg',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -735,13 +735,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/alt',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/alt',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Altai'
     },
-    code: 'alt',
-    uf: [
+    'code': 'alt',
+    'uf': [
       { name: 'Oirat (Turkic)' },
       { name: 'Southern Altai' },
       {
@@ -754,10 +754,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tut',
-    name: 'Altaic (Other)',
-    code: 'tut',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tut',
+    'name': 'Altaic (Other)',
+    'code': 'tut',
+    'uf': [
       { name: 'Turko-Tataric (Other)' },
       {
         name: {
@@ -1022,10 +1022,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/apa',
-    name: 'Apache languages',
-    code: 'apa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/apa',
+    'name': 'Apache languages',
+    'code': 'apa',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -1048,10 +1048,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ara',
-    name: 'Arabic',
-    code: 'ara',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/ara',
+    'name': 'Arabic',
+    'code': 'ara',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Hassaniyya'
@@ -1112,13 +1112,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/arm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/arm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Armenian'
     },
-    code: 'arm',
-    uf: {
+    'code': 'arm',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Khayasa'
@@ -1140,10 +1140,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/art',
-    name: 'Artificial (Other)',
-    code: 'art',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/art',
+    'name': 'Artificial (Other)',
+    'code': 'art',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -1229,13 +1229,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/asm',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/asm',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Assamese'
     },
-    code: 'asm',
-    uf: [
+    'code': 'asm',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -1254,10 +1254,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ath',
-    name: 'Athapascan (Other)',
-    code: 'ath',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ath',
+    'name': 'Athapascan (Other)',
+    'code': 'ath',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -1363,10 +1363,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/aus',
-    name: 'Australian languages',
-    code: 'aus',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/aus',
+    'name': 'Australian languages',
+    'code': 'aus',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -2046,10 +2046,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/map',
-    name: 'Austronesian (Other)',
-    code: 'map',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/map',
+    'name': 'Austronesian (Other)',
+    'code': 'map',
+    'uf': [
       { name: 'Malayo-Polynesian (Other)' },
       {
         name: {
@@ -3577,10 +3577,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/aze',
-    name: 'Azerbaijani',
-    code: 'aze',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/aze',
+    'name': 'Azerbaijani',
+    'code': 'aze',
+    'uf': [
       { name: 'Azari' },
       { name: 'Azeri' },
       {
@@ -3610,10 +3610,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bat',
-    name: 'Baltic (Other)',
-    code: 'bat',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bat',
+    'name': 'Baltic (Other)',
+    'code': 'bat',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -3662,10 +3662,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bai',
-    name: 'Bamileke languages',
-    code: 'bai',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bai',
+    'name': 'Bamileke languages',
+    'code': 'bai',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -3708,10 +3708,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bad',
-    name: 'Banda languages',
-    code: 'bad',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bad',
+    'name': 'Banda languages',
+    'code': 'bad',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -3728,10 +3728,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bnt',
-    name: 'Bantu (Other)',
-    code: 'bnt',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bnt',
+    'name': 'Bantu (Other)',
+    'code': 'bnt',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -5077,10 +5077,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/btk',
-    name: 'Batak',
-    code: 'btk',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/btk',
+    'name': 'Batak',
+    'code': 'btk',
+    'uf': [
       { name: 'Batta (Sumatra)' },
       {
         name: {
@@ -5168,10 +5168,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ben',
-    name: 'Bengali',
-    code: 'ben',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ben',
+    'name': 'Bengali',
+    'code': 'ben',
+    'uf': [
       { name: 'Banga-Bhasa' },
       { name: 'Bangala' },
       { name: 'Bangla' },
@@ -5189,10 +5189,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ber',
-    name: 'Berber (Other)',
-    code: 'ber',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ber',
+    'name': 'Berber (Other)',
+    'code': 'ber',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -5245,10 +5245,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bho',
-    name: 'Bhojpuri',
-    code: 'bho',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bho',
+    'name': 'Bhojpuri',
+    'code': 'bho',
+    'uf': [
       { name: 'Bajpuri' },
       { name: 'Bhojapuri' },
       { name: 'Bhozpuri' },
@@ -5298,10 +5298,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/bih',
-    name: 'Bihari (Other)',
-    code: 'bih',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/bih',
+    'name': 'Bihari (Other)',
+    'code': 'bih',
+    'uf': [
       { name: 'Behari' },
       {
         name: {
@@ -5471,10 +5471,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cat',
-    name: 'Catalan',
-    code: 'cat',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cat',
+    'name': 'Catalan',
+    'code': 'cat',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -5493,10 +5493,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cau',
-    name: 'Caucasian (Other)',
-    code: 'cau',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cau',
+    'name': 'Caucasian (Other)',
+    'code': 'cau',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -5649,10 +5649,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cel',
-    name: 'Celtic (Other)',
-    code: 'cel',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cel',
+    'name': 'Celtic (Other)',
+    'code': 'cel',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -5695,13 +5695,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cai',
-    name: 'Central American Indian (Other)',
-    code: 'cai',
-    note: {
+    'uri': 'info:lc/vocabulary/languages/cai',
+    'name': 'Central American Indian (Other)',
+    'code': 'cai',
+    'note': {
       text: 'Use for the other languages of Central America and Mexico, as well as for the languages of the Azteco-Tanoan language phylum.'
     },
-    uf: [
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -6170,10 +6170,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cmc',
-    name: 'Chamic languages',
-    code: 'cmc',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cmc',
+    'name': 'Chamic languages',
+    'code': 'cmc',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -6385,10 +6385,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/crp',
-    name: 'Creoles and Pidgins (Other)',
-    code: 'crp',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/crp',
+    'name': 'Creoles and Pidgins (Other)',
+    'code': 'crp',
+    'uf': [
       { name: 'Pidgins' },
       {
         name: {
@@ -6481,10 +6481,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cpe',
-    name: 'Creoles and Pidgins, English-based (Other)',
-    code: 'cpe',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cpe',
+    'name': 'Creoles and Pidgins, English-based (Other)',
+    'code': 'cpe',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -6571,10 +6571,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cpf',
-    name: 'Creoles and Pidgins, French-based (Other)',
-    code: 'cpf',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cpf',
+    'name': 'Creoles and Pidgins, French-based (Other)',
+    'code': 'cpf',
+    'uf': [
       { name: 'French-based Creoles and Pidgins (Other)' },
       {
         name: {
@@ -6626,10 +6626,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cpp',
-    name: 'Creoles and Pidgins, Portuguese-based (Other)',
-    code: 'cpp',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cpp',
+    'name': 'Creoles and Pidgins, Portuguese-based (Other)',
+    'code': 'cpp',
+    'uf': [
       { name: 'Portuguese-based Creoles and Pidgins (Other)' },
       {
         name: {
@@ -6691,10 +6691,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/cus',
-    name: 'Cushitic (Other)',
-    code: 'cus',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/cus',
+    'name': 'Cushitic (Other)',
+    'code': 'cus',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -6789,10 +6789,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/dak',
-    name: 'Dakota',
-    code: 'dak',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/dak',
+    'name': 'Dakota',
+    'code': 'dak',
+    'uf': [
       { name: 'Sioux' },
       {
         name: {
@@ -6843,10 +6843,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/day',
-    name: 'Dayak',
-    code: 'day',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/day',
+    'name': 'Dayak',
+    'code': 'day',
+    'uf': [
       { name: 'Bidayuh' },
       { name: 'Bideyu' },
       { name: 'Dajak' },
@@ -6863,10 +6863,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/del',
-    name: 'Delaware',
-    code: 'del',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/del',
+    'name': 'Delaware',
+    'code': 'del',
+    'uf': [
       { name: 'Lenape' },
       { name: 'Lenni Lenape' },
       {
@@ -6901,10 +6901,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/doi',
-    name: 'Dogri',
-    code: 'doi',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/doi',
+    'name': 'Dogri',
+    'code': 'doi',
+    'uf': [
       { name: 'Dhogaryali' },
       { name: 'Dogari' },
       { name: 'Dogra' },
@@ -6937,10 +6937,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/dra',
-    name: 'Dravidian (Other)',
-    code: 'dra',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/dra',
+    'name': 'Dravidian (Other)',
+    'code': 'dra',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -7148,10 +7148,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/efi',
-    name: 'Efik',
-    code: 'efi',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/efi',
+    'name': 'Efik',
+    'code': 'efi',
+    'uf': [
       { name: 'Calabar' },
       {
         name: {
@@ -7259,10 +7259,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/est',
-    name: 'Estonian',
-    code: 'est',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/est',
+    'name': 'Estonian',
+    'code': 'est',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -7381,10 +7381,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/fiu',
-    name: 'Finno-Ugrian (Other)',
-    code: 'fiu',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/fiu',
+    'name': 'Finno-Ugrian (Other)',
+    'code': 'fiu',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -7455,10 +7455,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/fre',
-    name: 'French',
-    code: 'fre',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/fre',
+    'name': 'French',
+    'code': 'fre',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -7519,13 +7519,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/fry',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/fry',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Frisian'
     },
-    code: 'fry',
-    uf: [
+    'code': 'fry',
+    'uf': [
       { name: 'Friesian' },
       { name: 'West Frisian' },
       {
@@ -7559,10 +7559,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ful',
-    name: 'Fula',
-    code: 'ful',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ful',
+    'name': 'Fula',
+    'code': 'ful',
+    'uf': [
       { name: 'Adamawa' },
       { name: 'Fulah' },
       { name: 'Fulani' },
@@ -7649,10 +7649,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/geo',
-    name: 'Georgian',
-    code: 'geo',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/geo',
+    'name': 'Georgian',
+    'code': 'geo',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Ingilo'
@@ -7661,10 +7661,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ger',
-    name: 'German',
-    code: 'ger',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ger',
+    'name': 'German',
+    'code': 'ger',
+    'uf': [
       { name: 'Ashkenazic German' },
       { name: 'Hochdeutsch' },
       { name: 'Judaeo-German (German)' },
@@ -7718,10 +7718,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/gem',
-    name: 'Germanic (Other)',
-    code: 'gem',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/gem',
+    'name': 'Germanic (Other)',
+    'code': 'gem',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -7837,10 +7837,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/grc',
-    name: 'Greek, Ancient (to 1453)',
-    code: 'grc',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/grc',
+    'name': 'Greek, Ancient (to 1453)',
+    'code': 'grc',
+    'uf': [
       { name: 'Ancient Greek' },
       { name: 'Biblical Greek' },
       { name: 'Byzantine Greek' },
@@ -7888,10 +7888,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/gre',
-    name: 'Greek, Modern (1453- )',
-    code: 'gre',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/gre',
+    'name': 'Greek, Modern (1453- )',
+    'code': 'gre',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'East Cretan Greek'
@@ -7904,10 +7904,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/grn',
-    name: 'Guarani',
-    code: 'grn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/grn',
+    'name': 'Guarani',
+    'code': 'grn',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -7944,10 +7944,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/guj',
-    name: 'Gujarati',
-    code: 'guj',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/guj',
+    'name': 'Gujarati',
+    'code': 'guj',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -8073,10 +8073,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/her',
-    name: 'Herero',
-    code: 'her',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/her',
+    'name': 'Herero',
+    'code': 'her',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Himba'
@@ -8104,10 +8104,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/hin',
-    name: 'Hindi',
-    code: 'hin',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/hin',
+    'name': 'Hindi',
+    'code': 'hin',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -8233,10 +8233,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/hmn',
-    name: 'Hmong',
-    code: 'hmn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/hmn',
+    'name': 'Hmong',
+    'code': 'hmn',
+    'uf': [
       { name: 'Humung' },
       { name: 'Meo' },
       { name: 'Miao' },
@@ -8337,10 +8337,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ijo',
-    name: 'Ijo',
-    code: 'ijo',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ijo',
+    'name': 'Ijo',
+    'code': 'ijo',
+    'uf': [
       { name: 'Djo' },
       { name: 'Dzo' },
       { name: 'Ejo' },
@@ -8395,10 +8395,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/inc',
-    name: 'Indic (Other)',
-    code: 'inc',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/inc',
+    'name': 'Indic (Other)',
+    'code': 'inc',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -8835,10 +8835,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ine',
-    name: 'Indo-European (Other)',
-    code: 'ine',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ine',
+    'name': 'Indo-European (Other)',
+    'code': 'ine',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -8999,10 +8999,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/iku',
-    name: 'Inuktitut',
-    code: 'iku',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/iku',
+    'name': 'Inuktitut',
+    'code': 'iku',
+    'uf': [
       { name: 'Inuit' },
       {
         name: {
@@ -9033,10 +9033,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ira',
-    name: 'Iranian (Other)',
-    code: 'ira',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ira',
+    'name': 'Iranian (Other)',
+    'code': 'ira',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -9351,10 +9351,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/iro',
-    name: 'Iroquoian (Other)',
-    code: 'iro',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/iro',
+    'name': 'Iroquoian (Other)',
+    'code': 'iro',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -9402,10 +9402,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ita',
-    name: 'Italian',
-    code: 'ita',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ita',
+    'name': 'Italian',
+    'code': 'ita',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -9467,10 +9467,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/jpr',
-    name: 'Judeo-Persian',
-    code: 'jpr',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/jpr',
+    'name': 'Judeo-Persian',
+    'code': 'jpr',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Judeo-Tajik'
@@ -9515,10 +9515,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kal',
-    name: 'Kalâtdlisut',
-    code: 'kal',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kal',
+    'name': 'Kalâtdlisut',
+    'code': 'kal',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -9545,10 +9545,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kan',
-    name: 'Kannada',
-    code: 'kan',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kan',
+    'name': 'Kannada',
+    'code': 'kan',
+    'uf': [
       { name: 'Canarese' },
       { name: 'Kanarese' },
       {
@@ -9600,10 +9600,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kar',
-    name: 'Karen languages',
-    code: 'kar',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kar',
+    'name': 'Karen languages',
+    'code': 'kar',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -9703,10 +9703,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/khi',
-    name: 'Khoisan (Other)',
-    code: 'khi',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/khi',
+    'name': 'Khoisan (Other)',
+    'code': 'khi',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -9840,10 +9840,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kom',
-    name: 'Komi',
-    code: 'kom',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kom',
+    'name': 'Komi',
+    'code': 'kom',
+    'uf': [
       { name: 'Syryenian' },
       { name: 'Zyrian' },
       {
@@ -9857,10 +9857,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kon',
-    name: 'Kongo',
-    code: 'kon',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kon',
+    'name': 'Kongo',
+    'code': 'kon',
+    'uf': [
       { name: 'Congo' },
       { name: 'Kikongo' },
       {
@@ -9931,13 +9931,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kok',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kok',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Konkani'
     },
-    code: 'kok',
-    uf: [
+    'code': 'kok',
+    'uf': [
       { name: 'Concani' },
       { name: 'Komkani' },
       { name: 'Koṅkṇi' },
@@ -10015,10 +10015,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kro',
-    name: 'Kru (Other)',
-    code: 'kro',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/kro',
+    'name': 'Kru (Other)',
+    'code': 'kro',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -10202,13 +10202,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/kur',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/kur',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Kurdish'
     },
-    code: 'kur',
-    uf: [
+    'code': 'kur',
+    'uf': [
       { name: 'Kurmanji' },
       {
         name: {
@@ -10253,10 +10253,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/lad',
-    name: 'Ladino',
-    code: 'lad',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/lad',
+    'name': 'Ladino',
+    'code': 'lad',
+    'uf': [
       { name: 'Judeo-Spanish' },
       { name: 'Judesmo' },
       {
@@ -10276,10 +10276,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/lah',
-    name: 'Lahndā',
-    code: 'lah',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/lah',
+    'name': 'Lahndā',
+    'code': 'lah',
+    'uf': [
       { name: 'Jaṭkī' },
       { name: 'Lahndi' },
       { name: 'Panjabi, Western' },
@@ -10366,13 +10366,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/lav',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/lav',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Latvian'
     },
-    code: 'lav',
-    uf: [
+    'code': 'lav',
+    'uf': [
       { name: 'Lettish' },
       {
         name: {
@@ -10623,13 +10623,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mai',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mai',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Maithili'
     },
-    code: 'mai',
-    uf: [
+    'code': 'mai',
+    'uf': [
       { name: 'Apabhramsa (Maithili)' },
       { name: 'Bihari (Maithili)' },
       { name: 'Maitili' },
@@ -10661,10 +10661,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mlg',
-    name: 'Malagasy',
-    code: 'mlg',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mlg',
+    'name': 'Malagasy',
+    'code': 'mlg',
+    'uf': [
       { name: 'Hova' },
       { name: 'Madagascan' },
       { name: 'Malgache' },
@@ -10711,10 +10711,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/may',
-    name: 'Malay',
-    code: 'may',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/may',
+    'name': 'Malay',
+    'code': 'may',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Palembang Malay'
@@ -10723,10 +10723,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mal',
-    name: 'Malayalam',
-    code: 'mal',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mal',
+    'name': 'Malayalam',
+    'code': 'mal',
+    'uf': [
       { name: 'Malabar' },
       {
         name: {
@@ -10786,10 +10786,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mno',
-    name: 'Manobo languages',
-    code: 'mno',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mno',
+    'name': 'Manobo languages',
+    'code': 'mno',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -10906,10 +10906,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mao',
-    name: 'Maori',
-    code: 'mao',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/mao',
+    'name': 'Maori',
+    'code': 'mao',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'South Island Maori'
@@ -10931,13 +10931,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mar',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/mar',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Marathi'
     },
-    code: 'mar',
-    uf: [
+    'code': 'mar',
+    'uf': [
       { name: 'Mahratta' },
       { name: 'Mahratti' },
       { name: 'Murathee' },
@@ -11005,10 +11005,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mwr',
-    name: 'Marwari',
-    code: 'mwr',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mwr',
+    'name': 'Marwari',
+    'code': 'mwr',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -11055,10 +11055,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/myn',
-    name: 'Mayan languages',
-    code: 'myn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/myn',
+    'name': 'Mayan languages',
+    'code': 'myn',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -11312,10 +11312,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mis',
-    name: 'Miscellaneous languages',
-    code: 'mis',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mis',
+    'name': 'Miscellaneous languages',
+    'code': 'mis',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -11528,10 +11528,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mkh',
-    name: 'Mon-Khmer (Other)',
-    code: 'mkh',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mkh',
+    'name': 'Mon-Khmer (Other)',
+    'code': 'mkh',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -11821,10 +11821,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mon',
-    name: 'Mongolian',
-    code: 'mon',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mon',
+    'name': 'Mongolian',
+    'code': 'mon',
+    'uf': [
       { name: 'Mongol' },
       {
         name: {
@@ -11860,10 +11860,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mos',
-    name: 'Mooré',
-    code: 'mos',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mos',
+    'name': 'Mooré',
+    'code': 'mos',
+    'uf': [
       { name: 'Mole' },
       { name: 'Moré' },
       { name: 'Moshi' },
@@ -11886,10 +11886,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/mun',
-    name: 'Munda (Other)',
-    code: 'mun',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/mun',
+    'name': 'Munda (Other)',
+    'code': 'mun',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -12046,13 +12046,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nep',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nep',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Nepali'
     },
-    code: 'nep',
-    uf: [
+    'code': 'nep',
+    'uf': [
       { name: 'Gorkhali' },
       { name: 'Gurkhali' },
       { name: 'Khas' },
@@ -12111,10 +12111,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nic',
-    name: 'Niger-Kordofanian (Other)',
-    code: 'nic',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/nic',
+    'name': 'Niger-Kordofanian (Other)',
+    'code': 'nic',
+    'uf': [
       { name: 'Niger-Congo (Other)' },
       {
         name: {
@@ -13753,10 +13753,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ssa',
-    name: 'Nilo-Saharan (Other)',
-    code: 'ssa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ssa',
+    'name': 'Nilo-Saharan (Other)',
+    'code': 'ssa',
+    'uf': [
       { name: 'Sub-Saharan African (Other)' },
       {
         name: {
@@ -14315,13 +14315,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nai',
-    name: 'North American Indian (Other)',
-    code: 'nai',
-    note: {
+    'uri': 'info:lc/vocabulary/languages/nai',
+    'name': 'North American Indian (Other)',
+    'code': 'nai',
+    'note': {
       text: 'Use for the other languages of North America north of Mexico excluding the languages of the Azteco-Tanoan language phylum.'
     },
-    uf: [
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -14677,13 +14677,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nso',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/nso',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Northern Sotho'
     },
-    code: 'nso',
-    uf: [
+    'code': 'nso',
+    'uf': [
       { name: 'Pedi' },
       { name: 'Sepedi' },
       { name: 'Sotho, Northern' },
@@ -14699,10 +14699,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nor',
-    name: 'Norwegian',
-    code: 'nor',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/nor',
+    'name': 'Norwegian',
+    'code': 'nor',
+    'uf': [
       { name: 'Bokmål' },
       { name: 'Dano-Norwegian' },
       { name: 'Riksmål' },
@@ -14747,10 +14747,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nub',
-    name: 'Nubian languages',
-    code: 'nub',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/nub',
+    'name': 'Nubian languages',
+    'code': 'nub',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -14805,10 +14805,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/nya',
-    name: 'Nyanja',
-    code: 'nya',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/nya',
+    'name': 'Nyanja',
+    'code': 'nya',
+    'uf': [
       { name: 'Chinyanja' },
       { name: 'Nyassa' },
       {
@@ -14860,10 +14860,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/oci',
-    name: 'Occitan (post-1500)',
-    code: 'oci',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/oci',
+    'name': 'Occitan (post-1500)',
+    'code': 'oci',
+    'uf': [
       { name: 'Langue d\'oc (post-1500)' },
       { name: 'Provençal, Modern (post-1500)' },
       {
@@ -14890,10 +14890,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/xal',
-    name: 'Oirat',
-    code: 'xal',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/xal',
+    'name': 'Oirat',
+    'code': 'xal',
+    'uf': [
       { name: 'Oyrat' },
       {
         name: {
@@ -14918,10 +14918,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/oji',
-    name: 'Ojibwa',
-    code: 'oji',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/oji',
+    'name': 'Ojibwa',
+    'code': 'oji',
+    'uf': [
       { name: 'Anishinabe' },
       { name: 'Chippewa' },
       { name: 'Otchipwe' },
@@ -14964,10 +14964,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ori',
-    name: 'Oriya',
-    code: 'ori',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ori',
+    'name': 'Oriya',
+    'code': 'ori',
+    'uf': [
       { name: 'Uriya' },
       {
         name: {
@@ -15008,10 +15008,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/orm',
-    name: 'Oromo',
-    code: 'orm',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/orm',
+    'name': 'Oromo',
+    'code': 'orm',
+    'uf': [
       { name: 'Afan' },
       { name: 'Galla' },
       { name: 'Gallinya' },
@@ -15067,10 +15067,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/oto',
-    name: 'Otomian languages',
-    code: 'oto',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/oto',
+    'name': 'Otomian languages',
+    'code': 'oto',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -15197,10 +15197,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/paa',
-    name: 'Papuan (Other)',
-    code: 'paa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/paa',
+    'name': 'Papuan (Other)',
+    'code': 'paa',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -16449,10 +16449,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/per',
-    name: 'Persian',
-    code: 'per',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/per',
+    'name': 'Persian',
+    'code': 'per',
+    'uf': [
       { name: 'Farsi' },
       {
         name: {
@@ -16469,10 +16469,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/phi',
-    name: 'Philippine (Other)',
-    code: 'phi',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/phi',
+    'name': 'Philippine (Other)',
+    'code': 'phi',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -17025,10 +17025,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/phn',
-    name: 'Phoenician',
-    code: 'phn',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/phn',
+    'name': 'Phoenician',
+    'code': 'phn',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Punic'
@@ -17065,10 +17065,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/pra',
-    name: 'Prakrit languages',
-    code: 'pra',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/pra',
+    'name': 'Prakrit languages',
+    'code': 'pra',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -17111,13 +17111,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/pus',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/pus',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Pushto'
     },
-    code: 'pus',
-    uf: [
+    'code': 'pus',
+    'uf': [
       { name: 'Afghan' },
       { name: 'Pakhto' },
       { name: 'Pakkhto' },
@@ -17143,10 +17143,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/que',
-    name: 'Quechua',
-    code: 'que',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/que',
+    'name': 'Quechua',
+    'code': 'que',
+    'uf': [
       { name: 'Inca' },
       { name: 'Kechua' },
       { name: 'Quichua' },
@@ -17182,10 +17182,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/raj',
-    name: 'Rajasthani',
-    code: 'raj',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/raj',
+    'name': 'Rajasthani',
+    'code': 'raj',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -17301,10 +17301,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/rar',
-    name: 'Rarotongan',
-    code: 'rar',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/rar',
+    'name': 'Rarotongan',
+    'code': 'rar',
+    'uf': [
       { name: 'Cook Islands Maori' },
       { name: 'Maori, Cook Islands' },
       {
@@ -17318,10 +17318,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/roa',
-    name: 'Romance (Other)',
-    code: 'roa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/roa',
+    'name': 'Romance (Other)',
+    'code': 'roa',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -17398,13 +17398,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/rom',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/rom',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Romani'
     },
-    code: 'rom',
-    uf: [
+    'code': 'rom',
+    'uf': [
       { name: 'Gipsy' },
       { name: 'Gypsy' },
       { name: 'Romany' },
@@ -17451,10 +17451,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/rum',
-    name: 'Romanian',
-    code: 'rum',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/rum',
+    'name': 'Romanian',
+    'code': 'rum',
+    'uf': [
       { name: 'Rumanian' },
       {
         name: {
@@ -17506,10 +17506,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sal',
-    name: 'Salishan languages',
-    code: 'sal',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sal',
+    'name': 'Salishan languages',
+    'code': 'sal',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -17669,10 +17669,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/san',
-    name: 'Sanskrit',
-    code: 'san',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/san',
+    'name': 'Sanskrit',
+    'code': 'san',
+    'uf': [
       { name: 'Sanscrit' },
       {
         name: {
@@ -17772,10 +17772,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sem',
-    name: 'Semitic (Other)',
-    code: 'sem',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sem',
+    'name': 'Semitic (Other)',
+    'code': 'sem',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -17911,10 +17911,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sna',
-    name: 'Shona',
-    code: 'sna',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sna',
+    'name': 'Shona',
+    'code': 'sna',
+    'uf': [
       { name: 'China (Africa)' },
       { name: 'Mashona' },
       {
@@ -17968,10 +17968,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sgn',
-    name: 'Sign languages',
-    code: 'sgn',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sgn',
+    'name': 'Sign languages',
+    'code': 'sgn',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -18093,10 +18093,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/snd',
-    name: 'Sindhi',
-    code: 'snd',
-    uf: {
+    'uri': 'info:lc/vocabulary/languages/snd',
+    'name': 'Sindhi',
+    'code': 'snd',
+    'uf': {
       name: {
         '-authorized': 'yes',
         '#text': 'Kachchhi'
@@ -18131,10 +18131,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sit',
-    name: 'Sino-Tibetan (Other)',
-    code: 'sit',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sit',
+    'name': 'Sino-Tibetan (Other)',
+    'code': 'sit',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -18853,10 +18853,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sio',
-    name: 'Siouan (Other)',
-    code: 'sio',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sio',
+    'name': 'Siouan (Other)',
+    'code': 'sio',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -18951,10 +18951,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/den',
-    name: 'Slavey',
-    code: 'den',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/den',
+    'name': 'Slavey',
+    'code': 'den',
+    'uf': [
       { name: 'Dené (Slavey)' },
       { name: 'Dené Tha' },
       { name: 'Ethchaottine' },
@@ -18977,10 +18977,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sla',
-    name: 'Slavic (Other)',
-    code: 'sla',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sla',
+    'name': 'Slavic (Other)',
+    'code': 'sla',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -19082,10 +19082,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/son',
-    name: 'Songhai',
-    code: 'son',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/son',
+    'name': 'Songhai',
+    'code': 'son',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -19147,10 +19147,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/sai',
-    name: 'South American Indian (Other)',
-    code: 'sai',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/sai',
+    'name': 'South American Indian (Other)',
+    'code': 'sai',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -20587,10 +20587,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/spa',
-    name: 'Spanish',
-    code: 'spa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/spa',
+    'name': 'Spanish',
+    'code': 'spa',
+    'uf': [
       { name: 'Castilian' },
       { name: 'Chicano' },
       {
@@ -20651,10 +20651,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/swa',
-    name: 'Swahili',
-    code: 'swa',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/swa',
+    'name': 'Swahili',
+    'code': 'swa',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -20751,10 +20751,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tai',
-    name: 'Tai (Other)',
-    code: 'tai',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tai',
+    'name': 'Tai (Other)',
+    'code': 'tai',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -21092,10 +21092,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tib',
-    name: 'Tibetan',
-    code: 'tib',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tib',
+    'name': 'Tibetan',
+    'code': 'tib',
+    'uf': [
       { name: 'Bhotanta' },
       {
         name: {
@@ -21168,10 +21168,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tli',
-    name: 'Tlingit',
-    code: 'tli',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tli',
+    'name': 'Tlingit',
+    'code': 'tli',
+    'uf': [
       { name: 'Koluschan' },
       {
         name: {
@@ -21287,10 +21287,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/tup',
-    name: 'Tupi languages',
-    code: 'tup',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/tup',
+    'name': 'Tupi languages',
+    'code': 'tup',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -21316,13 +21316,13 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ota',
-    name: {
+    'uri': 'info:lc/vocabulary/languages/ota',
+    'name': {
       '-authorized': 'yes',
       '#text': 'Turkish, Ottoman'
     },
-    code: 'ota',
-    uf: [
+    'code': 'ota',
+    'uf': [
       { name: 'Osmanli' },
       { name: 'Ottoman Turkish' },
       {
@@ -21469,10 +21469,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/urd',
-    name: 'Urdu',
-    code: 'urd',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/urd',
+    'name': 'Urdu',
+    'code': 'urd',
+    'uf': [
       { name: 'Bihari (Urdu)' },
       { name: 'Gujri (Urdu)' },
       { name: 'Gurjari' },
@@ -21565,10 +21565,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/wak',
-    name: 'Wakashan languages',
-    code: 'wak',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/wak',
+    'name': 'Wakashan languages',
+    'code': 'wak',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
@@ -21658,10 +21658,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/him',
-    name: 'Western Pahari languages',
-    code: 'him',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/him',
+    'name': 'Western Pahari languages',
+    'code': 'him',
+    'uf': [
       { name: 'Himachali' },
       { name: 'Pahadi' },
       { name: 'Pahari, Western' },
@@ -21815,10 +21815,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/wol',
-    name: 'Wolof',
-    code: 'wol',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/wol',
+    'name': 'Wolof',
+    'code': 'wol',
+    'uf': [
       { name: 'Jaloof' },
       { name: 'Jolof' },
       { name: 'Ouolof' },
@@ -21915,10 +21915,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/ypk',
-    name: 'Yupik languages',
-    code: 'ypk',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/ypk',
+    'name': 'Yupik languages',
+    'code': 'ypk',
+    'uf': [
       { name: 'Eskimo languages, Western' },
       { name: 'Western Eskimo languages' },
       {
@@ -21971,10 +21971,10 @@ export const data = [
   },
   {
     '-type': 'collective',
-    uri: 'info:lc/vocabulary/languages/znd',
-    name: 'Zande languages',
-    code: 'znd',
-    uf: [
+    'uri': 'info:lc/vocabulary/languages/znd',
+    'name': 'Zande languages',
+    'code': 'znd',
+    'uf': [
       {
         name: {
           '-authorized': 'yes',
