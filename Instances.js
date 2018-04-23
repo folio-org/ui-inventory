@@ -358,18 +358,19 @@ const QueryFunction = makeQueryFunction(
 );
 
 
-function makeCQL(props) {
+function makeVariables(props) {
   const parsedQuery = queryString.parse(props.location.search || '');
-  return QueryFunction(parsedQuery, props, props.resources, props.stripes.logger);
+
+  return {
+    cql: QueryFunction(parsedQuery, props, props.resources, props.stripes.logger)
+  };
 }
 
 export default compose(
   graphql(GET_INSTANCES, {
     options: props => ({
       errorPolicy: 'all',
-      variables: {
-        cql: makeCQL(props),
-      },
+      variables: makeVariables(props)
     }),
   }),
 )(Instances);
