@@ -17,9 +17,9 @@ import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';
 
 
-function validate(values, props) {
+function validate(values) {
   const errors = {};
-  const selectToContinueMsg = props.stripes.intl.formatMessage('ui-inventory.selectToContinue');
+  const selectToContinueMsg = <FormattedMessage id="ui-inventory.selectToContinue" />;
 
   if (!(values.materialType && values.materialType.id)) {
     errors.materialType = { id: selectToContinueMsg };
@@ -229,9 +229,9 @@ ItemForm.propTypes = {
   holdingsRecord: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
-  intl: {
-    formatMsg: PropTypes.func,
-  },
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func,
+  }).isRequired,
 };
 
 export default stripesForm({
