@@ -16,7 +16,7 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
-import ViewMetaData from './ViewMetaData';
+import ViewMetadata from './ViewMetadata';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -52,7 +52,7 @@ class ViewHoldingsRecord extends React.Component {
       },
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cViewMetadata = props.stripes.connect(ViewMetadata);
   }
 
   // Edit Holdings records handlers
@@ -181,7 +181,7 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               <br />
               { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                <this.cViewMetadata metadata={holdingsRecord.metadata} />
               }
               <Row>
                 <Col sm={12}>
