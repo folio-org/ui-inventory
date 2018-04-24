@@ -40,7 +40,7 @@ function checkUniqueBarcode(okapi, barcode) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const barcodeTakenMsg = props.stripes.intl.formatMessage('ui-inventory.barcodeTaken');
+  const barcodeTakenMsg = props.intl.formatMessage('ui-inventory.barcodeTaken');
 
   if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
