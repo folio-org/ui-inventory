@@ -66,6 +66,7 @@
 * Add location-units and locations to Okapi interfaces. Fixes UIIN-171.
 * Correct use of i18n in validation function and props. Fixes UIIN-172.
 * Confirmation when assigning inactive location. Fixes UIIN-121.
+* Bah; metadata. One case to rule them all. Refs UIIN-159, CIRCSTORE-43.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
