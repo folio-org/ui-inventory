@@ -140,5 +140,8 @@
   "addPieceIdentifier": "Add piece identifier",
   "removeIdentifier": "Remove identifier {num}",
   "editItemDialog": "Edit Item Dialog",
-  "copyItemDialog": "Copy Item Dialog"
+  "copyItemDialog": "Copy Item Dialog",
+  "confirmLocation.selectBtn": "Select",
+  "confirmLocation.message": "This location has a status of inactive. Are you sure you want to select this location?",
+  "confirmLocation.header": "Inactive location"
 }
