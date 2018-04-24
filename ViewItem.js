@@ -423,6 +423,7 @@ class ViewItem extends React.Component {
             copy
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
+            intl={intl}
           />
         </Layer>
 
