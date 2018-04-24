@@ -11,6 +11,7 @@ import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelec
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
+import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
 
 import renderStatements from './holdingsStatementFields';
 
@@ -38,8 +39,39 @@ class HoldingsForm extends React.Component {
     formatMsg: PropTypes.func,
   };
 
+  constructor() {
+    super();
+    this.state = {
+      confirmLocation: false,
+    };
+  }
+
+  componentDidMount() {
+    const { initialValues } = this.props;
+    const prevLocation = initialValues.temporaryLocation || {};
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ prevLocation });
+  }
+
   selectLocation(location) {
-    this.props.change('permanentLocationId', location.id);
+    if (!location.id) return;
+
+    if (location.isActive) {
+      this.props.change('temporaryLocation.id', location.id);
+      this.setState({ prevLocation: location });
+    } else {
+      this.setState({ confirmLocation: true, location });
+    }
+  }
+
+  confirmLocation(confirm) {
+    const { location, prevLocation } = this.state;
+    const confirmLocation = false;
+    const value = (confirm) ? location.id : prevLocation.id;
+    const prevLoc = (confirm) ? location : prevLocation;
+
+    this.props.change('temporaryLocation.id', value);
+    this.setState({ confirmLocation, prevLocation: prevLoc });
   }
 
   render() {
@@ -54,6 +86,7 @@ class HoldingsForm extends React.Component {
       copy,
     } = this.props;
     const formatMsg = this.props.formatMsg;
+    const { confirmLocation } = this.state;
 
     /* Menus for Add Item workflow */
     const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
@@ -127,6 +160,14 @@ class HoldingsForm extends React.Component {
               </Col>
             </Row>
             <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
+            <ConfirmationModal
+              open={confirmLocation}
+              heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
+              message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
+              confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              onConfirm={() => { this.confirmLocation(true); }}
+              onCancel={() => { this.confirmLocation(false); }}
+            />
           </Pane>
         </Paneset>
       </form>
