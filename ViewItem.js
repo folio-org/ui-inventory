@@ -17,7 +17,7 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
-import ViewMetaData from './ViewMetaData';
+import ViewMetadata from './ViewMetadata';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -112,9 +112,6 @@ class ViewItem extends React.Component {
       // FIXME: loan-status-check must be i18n friendly
       if (nextProps.itemId === loan.itemId && loan.item.status.name !== 'Available') {
         nextProps.mutator.borrowerId.replace({ query: loan.userId });
-
-        // don't choke while we migrate from metaData to metadata
-        loan.metadata = loan.metadata || loan.metaData;
         return { loan };
       }
 
@@ -145,7 +142,7 @@ class ViewItem extends React.Component {
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cViewMetadata = props.stripes.connect(ViewMetadata);
   }
 
   onClickEditItem = (e) => {
@@ -294,7 +291,7 @@ class ViewItem extends React.Component {
               </Row>
               <br />
               { (item.metadata && item.metadata.createdDate) &&
-                <this.cViewMetaData metadata={item.metadata} />
+                <this.cViewMetadata metadata={item.metadata} />
               }
               { (item.barcode) &&
                 <Row>

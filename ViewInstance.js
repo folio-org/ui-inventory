@@ -24,7 +24,7 @@ import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
-import ViewMetaData from './ViewMetaData';
+import ViewMetadata from './ViewMetadata';
 
 const emptyObj = {};
 const emptyArr = [];
@@ -60,7 +60,7 @@ class ViewInstance extends React.Component {
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewItem = this.props.stripes.connect(ViewItem);
-    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
+    this.cViewMetadata = this.props.stripes.connect(ViewMetadata);
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
   }
@@ -209,7 +209,7 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.instanceData' })}
         >
           { (instance.metadata && instance.metadata.createdDate) &&
-            <this.cViewMetaData metadata={instance.metadata} />
+            <this.cViewMetadata metadata={instance.metadata} />
           }
           <Row>
             <Col xs={12}>
