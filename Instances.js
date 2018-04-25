@@ -98,6 +98,17 @@ query allInstances ($cql: String, $offset: Int, $limit: Int) {
 }
 `;
 
+const QueryFunction = makeQueryFunction(
+  'cql.allRecords=1',
+  'title="%{query.query}*" or contributors adj "\\"name\\": \\"%{query.query}*\\"" or identifiers adj "\\"value\\": \\"%{query.query}*\\""',
+  {
+    Title: 'title',
+    publishers: 'publication',
+    Contributors: 'contributors',
+  },
+  filterConfig,
+);
+
 
 const searchableIndexes = [
   { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
@@ -283,6 +294,7 @@ class Instances extends React.Component {
       parentMutator={this.props.mutator}
       parentData={this.props.data}
       apolloQuery={GET_INSTANCES}
+      queryFunction={QueryFunction}
       apolloResource="instances"
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
@@ -345,18 +357,6 @@ Instances.propTypes = {
     // No need to spell this out, since all we do is pass it into <SearchAndSort>
   }),
 };
-
-
-const QueryFunction = makeQueryFunction(
-  'cql.allRecords=1',
-  'title="%{query.query}*" or contributors adj "\\"name\\": \\"%{query.query}*\\"" or identifiers adj "\\"value\\": \\"%{query.query}*\\""',
-  {
-    Title: 'title',
-    publishers: 'publication',
-    Contributors: 'contributors',
-  },
-  filterConfig,
-);
 
 
 function makeVariables(props) {
