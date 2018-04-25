@@ -41,7 +41,7 @@ function checkUniqueBarcode(okapi, barcode) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const barcodeTakenMsg = props.intl.formatMessage('ui-inventory.barcodeTaken');
+  const barcodeTakenMsg = props.intl.formatMessage({ id: 'ui-inventory.barcodeTaken' });
 
   if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ class ItemForm extends React.Component {
     if (!location.id) return;
 
     if (location.isActive) {
-      this.props.change('temporaryLocation.id', location.id);
+      setTimeout(() => this.props.change('temporaryLocation.id', location.id));
       this.setState({ prevLocation: location });
     } else {
       this.setState({ confirmLocation: true, location });
@@ -97,7 +97,7 @@ class ItemForm extends React.Component {
     const value = (confirm) ? location.id : prevLocation.id;
     const prevLoc = (confirm) ? location : prevLocation;
 
-    this.props.change('temporaryLocation.id', value);
+    setTimeout(() => this.props.change('temporaryLocation.id', value));
     this.setState({ confirmLocation, prevLocation: prevLoc });
   }
 

@@ -57,8 +57,8 @@ class HoldingsForm extends React.Component {
     if (!location.id) return;
 
     if (location.isActive) {
-      this.props.change('temporaryLocation.id', location.id);
       this.setState({ prevLocation: location });
+      setTimeout(() => this.props.change('permanentLocationId', location.id));
     } else {
       this.setState({ confirmLocation: true, location });
     }
@@ -69,8 +69,7 @@ class HoldingsForm extends React.Component {
     const confirmLocation = false;
     const value = (confirm) ? location.id : prevLocation.id;
     const prevLoc = (confirm) ? location : prevLocation;
-
-    this.props.change('temporaryLocation.id', value);
+    setTimeout(() => this.props.change('permanentLocationId', value));
     this.setState({ confirmLocation, prevLocation: prevLoc });
   }
 
@@ -131,6 +130,7 @@ class HoldingsForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
+                  onChange={loc => this.selectLocation(loc)}
                 />
                 <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
               </Col>
