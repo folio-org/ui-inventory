@@ -74,14 +74,9 @@ module.exports.test = function test(uiTestCtx) {
       });
       it('should click "reset all" button', (done) => {
         nightmare
-          .evaluate(function evall2() {
-            const button = document.querySelectorAll('button > span');
-            button.forEach(function processUserItem(userItem) {
-              if (userItem.innerText === 'Reset all') {
-                userItem.click();
-              }
-            });
-          })
+          .wait(55)
+          .wait('#clickable-reset-all')
+          .click('#clickable-reset-all')
           .wait(5555)
           .then(done)
           .catch(done);
