@@ -28,7 +28,7 @@ class Items extends React.Component {
     const itemId = selectedItem.id;
 
     this.props.parentMutator.query.update({
-      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`
+      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`,
     });
   }
 

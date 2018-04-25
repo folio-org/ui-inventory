@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MetaSection from '@folio/stripes-components/lib/MetaSection';
 
-class ViewMetaData extends React.Component {
+class ViewMetadata extends React.Component {
   static manifest = Object.freeze({
     createdBy: {
       type: 'okapi',
@@ -54,4 +54,4 @@ class ViewMetaData extends React.Component {
   }
 }
 
-export default ViewMetaData;
+export default ViewMetadata;

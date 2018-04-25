@@ -16,7 +16,7 @@ import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
-import ViewMetaData from './ViewMetaData';
+import ViewMetadata from './ViewMetadata';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -52,7 +52,7 @@ class ViewHoldingsRecord extends React.Component {
       },
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cViewMetadata = props.stripes.connect(ViewMetadata);
   }
 
   // Edit Holdings records handlers
@@ -121,13 +121,14 @@ class ViewHoldingsRecord extends React.Component {
 
     const query = location.search ? queryString.parse(location.search) : {};
     const that = this;
+    const formatMsg = this.props.stripes.intl.formatMessage;
 
     const detailMenu = (
       <PaneMenu>
         <IconButton
           id="clickable-copy-holdingsrecord"
           onClick={() => this.onCopy(holdingsRecord)}
-          title="Copy Holding"
+          title={formatMsg({ id: 'ui-inventory.copyHolding' })}
           icon="duplicate"
         />
         <IconButton
@@ -136,21 +137,21 @@ class ViewHoldingsRecord extends React.Component {
           style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
           href={this.craftLayerUrl('editHoldingsRecord')}
           onClick={this.onClickEditHoldingsRecord}
-          title="Edit Holdings"
+          title={formatMsg({ id: 'ui-inventory.editHoldings' })}
         />
       </PaneMenu>
     );
 
     return (
       <div>
-        <Layer isOpen label="View Holdings Record">
+        <Layer isOpen label={formatMsg({ id: 'ui-inventory.viewHoldingsRecord' })} >
           <Pane
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="holdings" size="small" /> <strong>{holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}</strong>
+                <AppIcon app="inventory" iconKey="holdings" size="small" />&nbsp;<strong>{holdingsRecord.permanentLocationId ? `${locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name}&gt;` : null} {_.get(holdingsRecord, ['callNumber'], '')}</strong>&nbsp;
                 <div>
-                  Holdings
+                  {formatMsg({ id: 'ui-inventory.holdings' })}
                 </div>
               </div>
             }
@@ -160,7 +161,7 @@ class ViewHoldingsRecord extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                Instance: {instance.title}
+                {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
                 <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
@@ -171,16 +172,16 @@ class ViewHoldingsRecord extends React.Component {
               open={this.state.accordions.holdingsAccordion}
               id="holdingsAccordion"
               onToggle={this.handleAccordionToggle}
-              label="Holdings data"
+              label={formatMsg({ id: 'ui-inventory.holdingsData' })}
             >
               <Row>
                 <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="holdings" size="small" /> Holdings record
+                  <AppIcon app="inventory" iconKey="holdings" size="small" /> {formatMsg({ id: 'ui-inventory.holdingsRecord' })}
                 </Col>
               </Row>
               <br />
               { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                <this.cViewMetadata metadata={holdingsRecord.metadata} />
               }
               <Row>
                 <Col sm={12}>
@@ -191,49 +192,51 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               <Row>
                 <Col smOffset={1} sm={4}>
-                  <KeyValue label="Holdings ID" value={_.get(holdingsRecord, ['id'], '')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsId' })} value={_.get(holdingsRecord, ['id'], '')} />
                 </Col>
               </Row>
               { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
                 <Row>
                   <Col smOffset={1} sm={4}>
-                    <KeyValue label="Platform" value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.platform' })} value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
                   </Col>
                 </Row>
               }
               { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
                 <Row>
                   <Col smOffset={1} sm={4}>
-                    <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.uri' })} value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
                   </Col>
                 </Row>
               }
               { (holdingsRecord.holdingsStatements.length > 0) &&
                 <Row>
                   <Col smOffset={1} sm={4}>
-                    <KeyValue label="Holdings statements" value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsStatements' })} value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
                   </Col>
                 </Row>
               }
             </Accordion>
           </Pane>
         </Layer>
-        <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label="Edit Holdings Record Dialog">
+        <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.editHoldingsRecordDialog' })}>
           <HoldingsForm
             initialValues={holdingsRecord}
             onSubmit={(record) => { that.updateHoldingsRecord(record); }}
             onCancel={this.onClickCloseEditHoldingsRecord}
             okapi={okapi}
+            formatMsg={formatMsg}
             instance={instance}
             referenceTables={referenceTables}
           />
         </Layer>
-        <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label="Copy Holdings Record Dialog">
+        <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.copyHoldingsRecordDialog' })} >
           <HoldingsForm
             initialValues={this.state.copiedRecord}
             onSubmit={(record) => { that.copyHoldingsRecord(record); }}
             onCancel={this.onClickCloseEditHoldingsRecord}
             okapi={okapi}
+            formatMsg={formatMsg}
             instance={instance}
             copy
             referenceTables={referenceTables}
@@ -247,6 +250,9 @@ class ViewHoldingsRecord extends React.Component {
 ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }),
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({

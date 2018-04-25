@@ -5,7 +5,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Field } from 'redux-form';
 
-const renderStatements = ({ fields, meta: { touched, error, submitFailed } }) => (
+const renderStatements = ({ fields, meta: { touched, error, submitFailed }, formatMsg }) => (
   <div>
     <Row>
       <Col sm={2} smOffset={4}>
@@ -20,7 +20,7 @@ const renderStatements = ({ fields, meta: { touched, error, submitFailed } }) =>
             name={statement}
             type="text"
             component={TextField}
-            label={index === 0 ? 'Holdings Statement' : null}
+            label={index === 0 ? formatMsg({ id: 'ui-inventory.holdingsStatement' }) : null}
           />
         </Col>
         <Col sm={1}>
@@ -28,14 +28,14 @@ const renderStatements = ({ fields, meta: { touched, error, submitFailed } }) =>
           <Button
             buttonStyle="fullWidth secondary"
             type="button"
-            title={`Remove statement ${index + 1}`}
+            title={formatMsg({ id: 'ui-inventory.removeStatement' }, { num: index + 1 })}
             onClick={() => fields.remove(index)}
-          >Delete Statement
+          >{formatMsg({ id: 'ui-inventory.deleteStatement' })}
           </Button>
         </Col>
       </Row>)}
   </div>
 );
-renderStatements.propTypes = { fields: PropTypes.object, meta: PropTypes.object };
+renderStatements.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };
 
 export default renderStatements;

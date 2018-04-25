@@ -11,15 +11,15 @@ import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelec
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
+import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
 
 import renderStatements from './holdingsStatementFields';
 
 // eslint-disable-next-line no-unused-vars
-function validate(values) {
+function validate(values, props) {
   const errors = {};
-
   if (!values.permanentLocationId) {
-    errors.permanentLocationId = 'Please select to continue';
+    errors.permanentLocationId = props.formatMsg({ id: 'ui-inventory.selectToContinue' });
   }
 
   return errors;
@@ -36,10 +36,41 @@ class HoldingsForm extends React.Component {
     instance: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
     change: PropTypes.func,
+    formatMsg: PropTypes.func,
   };
 
+  constructor() {
+    super();
+    this.state = {
+      confirmLocation: false,
+    };
+  }
+
+  componentDidMount() {
+    const { initialValues } = this.props;
+    const prevLocation = initialValues.temporaryLocation || {};
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ prevLocation });
+  }
+
   selectLocation(location) {
-    this.props.change('permanentLocationId', location.id);
+    if (!location.id) return;
+
+    if (location.isActive) {
+      this.setState({ prevLocation: location });
+      setTimeout(() => this.props.change('permanentLocationId', location.id));
+    } else {
+      this.setState({ confirmLocation: true, location });
+    }
+  }
+
+  confirmLocation(confirm) {
+    const { location, prevLocation } = this.state;
+    const confirmLocation = false;
+    const value = (confirm) ? location.id : prevLocation.id;
+    const prevLoc = (confirm) ? location : prevLocation;
+    setTimeout(() => this.props.change('permanentLocationId', value));
+    this.setState({ confirmLocation, prevLocation: prevLoc });
   }
 
   render() {
@@ -53,10 +84,12 @@ class HoldingsForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
+    const formatMsg = this.props.formatMsg;
+    const { confirmLocation } = this.state;
 
     /* Menus for Add Item workflow */
-    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Holdings Record" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
-    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Holdings Record" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
+    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
+    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
 
     const platformOptions = (referenceTables.platforms || []).map(l => ({
       label: l.name,
@@ -85,18 +118,19 @@ class HoldingsForm extends React.Component {
           >
             <Row>
               <Col sm={5} smOffset={1}>
-                <h2>Holdings Record</h2>
+                <h2>{formatMsg({ id: 'ui-inventory.holdingsRecord' })}</h2>
               </Col>
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
                 <Field
-                  label="Permanent Location"
+                  label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
                   name="permanentLocationId"
                   id="additem_permanentlocation"
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
+                  onChange={loc => this.selectLocation(loc)}
                 />
                 <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
               </Col>
@@ -104,15 +138,15 @@ class HoldingsForm extends React.Component {
             <Row>
               <Col sm={5} smOffset={1}>
                 <Field
-                  label="Platform"
+                  label={formatMsg({ id: 'ui-inventory.platform' })}
                   name="electronicLocation.platformId"
                   id="additem_platformid"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: 'Select platform', value: '' }, ...platformOptions]}
+                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectPlatform' }), value: '' }, ...platformOptions]}
                 />
                 <Field
-                  label="URI"
+                  label={formatMsg({ id: 'ui-inventory.uri' })}
                   name="electronicLocation.uri"
                   id="additem_uri"
                   component={TextField}
@@ -122,10 +156,18 @@ class HoldingsForm extends React.Component {
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
-                <Field label="Call number" name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
+                <Field label={formatMsg({ id: 'ui-inventory.callNumber' })} name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
               </Col>
             </Row>
-            <FieldArray name="holdingsStatements" component={renderStatements} />
+            <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
+            <ConfirmationModal
+              open={confirmLocation}
+              heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
+              message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
+              confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              onConfirm={() => { this.confirmLocation(true); }}
+              onCancel={() => { this.confirmLocation(false); }}
+            />
           </Pane>
         </Paneset>
       </form>
