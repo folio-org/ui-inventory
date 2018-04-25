@@ -282,6 +282,7 @@ class Instances extends React.Component {
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
       parentData={this.props.data}
+      apolloQuery={GET_INSTANCES}
       apolloResource="instances"
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
@@ -361,11 +362,9 @@ const QueryFunction = makeQueryFunction(
 function makeVariables(props) {
   const parsedQuery = queryString.parse(props.location.search || '');
 
-  console.log(`  result-count=${props.resources.resultCount}`);
-
   return {
     cql: QueryFunction(parsedQuery, props, props.resources, props.stripes.logger),
-    limit: props.resources.resultCount
+    limit: INITIAL_RESULT_COUNT,
   };
 }
 
