@@ -42,15 +42,10 @@ module.exports.test = function test(uiTestCtx) {
       });
       it('should click "reset all" button', (done) => {
         nightmare
-          .evaluate(function evall2() {
-            const button = document.querySelectorAll('button > span');
-            button.forEach(function processUserItem(userItem) {
-              if (userItem.innerText === 'Reset all') {
-                userItem.click();
-              }
-            });
-          })
-          .wait(5555)
+          .wait(55)
+          .wait('#clickable-reset-all')
+          .wait(555)
+          .click('#clickable-reset-all')
           .then(done)
           .catch(done);
       });
@@ -77,7 +72,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait(55)
           .wait('#clickable-reset-all')
           .click('#clickable-reset-all')
-          .wait(5555)
+          .wait(555)
           .then(done)
           .catch(done);
       });
