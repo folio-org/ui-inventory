@@ -371,6 +371,7 @@ function makeVariables(props) {
 export default compose(
   graphql(GET_INSTANCES, {
     options: props => ({
+      notifyOnNetworkStatusChange: true,
       errorPolicy: 'all',
       variables: makeVariables(props)
     }),
