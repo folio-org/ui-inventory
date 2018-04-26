@@ -68,6 +68,7 @@
 * Confirmation when assigning inactive location. Fixes UIIN-121.
 * Bah; metadata. One case to rule them all. Refs UIIN-159, CIRCSTORE-43.
 * Fix holding and item forms. Fixes UIIN-174.
+* Try harder to derive an item's status-date. Refs UIIN-110.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

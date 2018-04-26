@@ -109,10 +109,18 @@ class ViewItem extends React.Component {
     const loanRecords = (nextProps.resources.loans || {}).records || [];
     if ((!prevState.loan) && loanRecords.length === 1) {
       const loan = loanRecords[0];
-      // FIXME: loan-status-check must be i18n friendly
-      if (nextProps.itemId === loan.itemId && loan.item.status.name !== 'Available') {
-        nextProps.mutator.borrowerId.replace({ query: loan.userId });
-        return { loan };
+      if (nextProps.itemId === loan.itemId) {
+        const nextState = {
+          loanStatusDate: _.get(loan, ['metadata', 'updatedDate']),
+        };
+
+        // FIXME: loan-status-check must be i18n friendly
+        if (loan.item.status.name !== 'Available') {
+          nextProps.mutator.borrowerId.replace({ query: loan.userId });
+          nextState.loan = loan;
+        }
+
+        return nextState;
       }
 
       // console.warn(`retrieved a loan.itemId ${loan.itemId} that did not match the item.itemid ${nextProps.itemid}`)
@@ -139,6 +147,7 @@ class ViewItem extends React.Component {
       },
       loan: null,
       borrower: null,
+      loanStatusDate: null,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -243,11 +252,14 @@ class ViewItem extends React.Component {
 
     let loanLink = item.status.name;
     let borrowerLink = '-';
-    let itemStatusDate = '-';
     if (this.state.loan && this.state.borrower) {
       loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
-      itemStatusDate = formatDateTime(_.get(this.state.loan, ['metadata', 'updatedDate']));
+    }
+
+    let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);
+    if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
+      itemStatusDate = this.state.loanStatusDate;
     }
 
     return (
@@ -376,7 +388,7 @@ class ViewItem extends React.Component {
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value={loanLink} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value={itemStatusDate} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value={formatDateTime(itemStatusDate)} />
                 </Col>
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.requests' })} value={requestLink} />
