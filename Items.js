@@ -24,7 +24,10 @@ class Items extends React.Component {
   }
 
   openItem = (e, selectedItem) => {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const itemId = selectedItem.id;
 
     this.props.parentMutator.query.update({
