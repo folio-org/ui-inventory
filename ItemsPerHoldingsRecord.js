@@ -7,6 +7,7 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Button from '@folio/stripes-components/lib/Button';
+import { Link } from 'react-router-dom';
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
@@ -70,13 +71,6 @@ class ItemsPerHoldingsRecord extends React.Component {
     this.onClickCloseNewItem();
   }
 
-  viewHoldingsRecord = () => {
-    this.props.mutator.query.update({
-      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`,
-    });
-  }
-
-
   render() {
     const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, accordionToggle, accordionStates } = this.props;
 
@@ -85,9 +79,10 @@ class ItemsPerHoldingsRecord extends React.Component {
     const referenceTables = this.props.referenceTables;
     referenceTables.loanTypes = loantypes;
     referenceTables.materialTypes = materialtypes;
+    const viewHoldingsPath = `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`;
 
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const viewHoldingsButton = <Button id="clickable-view-holdings" onClick={this.viewHoldingsRecord}>{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button>;
+    const viewHoldingsButton = <Link to={viewHoldingsPath}><Button id="clickable-view-holdings" >{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button></Link>;
     const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title={formatMsg({ id: 'ui-inventory.addItem' })} buttonStyle="primary paneHeaderNewButton">{formatMsg({ id: 'ui-inventory.addItem' })}</Button>;
     const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
