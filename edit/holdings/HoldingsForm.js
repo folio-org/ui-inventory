@@ -125,6 +125,7 @@ class HoldingsForm extends React.Component {
               <Col sm={5} smOffset={1}>
                 <Field
                   label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
                   name="permanentLocationId"
                   id="additem_permanentlocation"
                   component={LocationSelection}
@@ -165,6 +166,8 @@ class HoldingsForm extends React.Component {
               heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
               message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
               confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              buttonStyle="default"
+              cancelButtonStyle="primary"
               onConfirm={() => { this.confirmLocation(true); }}
               onCancel={() => { this.confirmLocation(false); }}
             />
