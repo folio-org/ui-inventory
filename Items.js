@@ -26,7 +26,8 @@ class Items extends React.Component {
 
   anchoredRowFormatter = (row) => (
     <div role="listitem" key={`row-${row.rowIndex}`}>
-      <Link to={`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${row.rowData.id}`}
+      <Link
+        to={`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${row.rowData.id}`}
         aria-label={row.labelStrings && row.labelStrings.join('...')}
         className={row.rowClass}
         {...row.rowProps}
