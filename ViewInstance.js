@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -33,7 +33,7 @@ const emptyObj = {};
 const emptyArr = [];
 
 const GET_INSTANCE = gql`
-query ($id: String) {
+query singleInstance ($id: String) {
   instance (id: $id) {
      id,
      source,
@@ -473,12 +473,11 @@ ViewInstance.propTypes = {
   paneWidth: PropTypes.string.isRequired,
   okapi: PropTypes.object,
 };
-// /
-export default compose(
-  graphql(GET_INSTANCE,
-    { options: viewInstanceProps => ({
-      variables: {
-        id: viewInstanceProps.match.params.id,
-      },
-    }) }),
-)(ViewInstance);
+
+export default graphql(GET_INSTANCE, {
+  options: props => ({
+    variables: {
+      id: props.match.params.id,
+    },
+  })
+})(ViewInstance);
