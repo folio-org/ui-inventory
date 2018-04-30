@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql, compose } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -368,12 +368,10 @@ function makeVariables(props) {
   };
 }
 
-export default compose(
-  graphql(GET_INSTANCES, {
-    options: props => ({
-      notifyOnNetworkStatusChange: true,
-      errorPolicy: 'all',
-      variables: makeVariables(props)
-    }),
+export default graphql(GET_INSTANCES, {
+  options: props => ({
+    notifyOnNetworkStatusChange: true,
+    errorPolicy: 'all',
+    variables: makeVariables(props)
   }),
-)(Instances);
+})(Instances);
