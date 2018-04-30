@@ -23,14 +23,18 @@ class Items extends React.Component {
     this.editItemModeThisLayer = false;
   }
 
-  openItem = (e, selectedItem) => {
-    if (e) e.preventDefault();
-    const itemId = selectedItem.id;
-
-    this.props.parentMutator.query.update({
-      _path: `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${itemId}`,
-    });
-  }
+  anchoredRowFormatter = (row) => (
+    <div role="listitem" key={`row-${row.rowIndex}`}>
+      <a
+        href={`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${row.rowData.id}`}
+        aria-label={row.labelStrings && row.labelStrings.join('...')}
+        className={row.rowClass}
+        {...row.rowProps}
+      >
+        {row.cells}
+      </a>
+    </div>
+  );
 
   render() {
     const { resources: { items } } = this.props;
@@ -47,11 +51,11 @@ class Items extends React.Component {
           id="list-items"
           contentData={itemRecords}
           rowMetadata={['id', 'holdingsRecordId']}
-          onRowClick={this.openItem}
           formatter={itemsFormatter}
           visibleColumns={['Item: barcode', 'status', 'Material Type']}
           ariaLabel="Items"
           containerRef={(ref) => { this.resultsList = ref; }}
+          rowFormatter={this.anchoredRowFormatter}
         />
       </div>);
   }
