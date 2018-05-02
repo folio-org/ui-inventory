@@ -25,9 +25,9 @@ import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
 import ViewMetadata from './ViewMetadata';
+import makeConnectedInstance from './ConnectedInstance';
 
 const emptyObj = {};
-const emptyArr = [];
 
 
 class ViewInstance extends React.Component {
@@ -130,12 +130,11 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { selectedInstance }, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
+    const { okapi, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
-    const selInstance = (selectedInstance || emptyObj).records || emptyArr;
-
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const instance = (selInstance && id) ? selInstance.find(i => i.id === id) : null;
+    const ci = makeConnectedInstance(this.props, this.props.stripes.logger);
+    const instance = ci.instance();
 
     const detailMenu = (
       <PaneMenu>
