@@ -2,6 +2,6 @@
 buildNPM {
   publishModDescriptor = 'yes'
   runLint = 'yes'
-  runTest = 'yes'
-  runRegression = 'no'
+  runTest = 'no'
+  runRegression = 'partial'
 }  
