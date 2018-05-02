@@ -241,7 +241,7 @@ InstanceForm.propTypes = {
   initialValues: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
-  stripes: { intl: { formatMsg: PropTypes.func } },
+  stripes: PropTypes.shape({ intl: PropTypes.shape({ formatMsg: PropTypes.func }) }),
 };
 
 export default stripesForm({
