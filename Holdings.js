@@ -18,11 +18,6 @@ class Holdings extends React.Component {
       path: 'holdings-storage/holdings?query=(instanceId=:{id})',
       resourceShouldRefresh: true,
     },
-    shelfLocations: {
-      type: 'okapi',
-      records: 'shelflocations',
-      path: 'shelf-locations',
-    },
     platforms: {
       type: 'okapi',
       records: 'platforms',
@@ -36,14 +31,12 @@ class Holdings extends React.Component {
   }
 
   render() {
-    const { resources: { holdings, shelfLocations, platforms }, referenceTables } = this.props;
+    const { resources: { holdings, platforms }, referenceTables } = this.props;
 
     if (!holdings || !holdings.hasLoaded
-        || !shelfLocations || !shelfLocations.hasLoaded
         || !platforms || !platforms.hasLoaded) return <div />;
 
     const holdingsRecords = holdings.records;
-    referenceTables.shelfLocations = (shelfLocations || {}).records || [];
     referenceTables.platforms = (platforms || {}).records || [];
 
     const that = this;
