@@ -1,22 +1,70 @@
 import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Settings from '@folio/stripes-components/lib/Settings';
 import MaterialTypesSettings from './MaterialTypesSettings';
 import LoanTypesSettings from './LoanTypesSettings';
+import FormatsSettings from './FormatsSettings';
+import ResourceTypesSettings from './ResourceTypesSettings';
+import ContributorTypesSettings from './ContributorTypesSettings';
 
-const pages = [
-  {
-    route: 'materialtypes',
-    label: 'Material Types',
-    component: MaterialTypesSettings,
-    perm: 'ui-inventory.settings.materialtypes',
-  },
-  {
-    route: 'loantypes',
-    label: 'Loan Types',
-    component: LoanTypesSettings,
-    perm: 'ui-inventory.settings.loantypes',
-  },
-];
+class InventorySettings extends React.Component {
+  static propTypes = {
+    stripes: PropTypes.shape({
+      intl: PropTypes.shape({
+        formatMessage: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
+  };
 
-export default props => <Settings {...props} pages={_.sortBy(pages, ['label'])} paneTitle="Inventory" />;
+  constructor(props) {
+    super(props);
+
+    const { formatMessage } = this.props.stripes.intl;
+
+    this.pages = [
+      {
+        route: 'materialtypes',
+        label: formatMessage({ id: 'ui-inventory.materialTypes.label' }),
+        component: MaterialTypesSettings,
+        perm: 'ui-inventory.settings.materialtypes',
+      },
+      {
+        route: 'loantypes',
+        label: formatMessage({ id: 'ui-inventory.loanTypes.label' }),
+        component: LoanTypesSettings,
+        perm: 'ui-inventory.settings.loantypes',
+      },
+      {
+        route: 'formats',
+        label: formatMessage({ id: 'ui-inventory.formats.label' }),
+        component: FormatsSettings,
+        perm: 'ui-inventory.settings.instance-formats',
+      },
+      {
+        route: 'resourcetypes',
+        label: formatMessage({ id: 'ui-inventory.resourceTypes.label' }),
+        component: ResourceTypesSettings,
+        perm: 'ui-inventory.settings.instance-types',
+      },
+      {
+        route: 'contributortypes',
+        label: formatMessage({ id: 'ui-inventory.contributorTypes.label' }),
+        component: ContributorTypesSettings,
+        perm: 'ui-inventory.settings.contributor-types',
+      },
+    ];
+  }
+
+  render() {
+    return (
+      <Settings
+        {...this.props}
+        pages={_.sortBy(this.pages, ['label'])}
+        paneTitle="Inventory"
+      />
+    );
+  }
+}
+
+export default InventorySettings;

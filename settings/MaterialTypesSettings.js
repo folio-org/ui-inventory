@@ -6,6 +6,9 @@ class MaterialTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
+      intl: PropTypes.shape({
+        formatMessage: PropTypes.func.isRequired,
+      }).isRequired,
     }).isRequired,
   };
 
@@ -15,14 +18,16 @@ class MaterialTypesSettings extends React.Component {
   }
 
   render() {
+    const { formatMessage } = this.props.stripes.intl;
+
     return (
       <this.connectedControlledVocab
         {...this.props}
         baseUrl="material-types"
         records="mtypes"
-        label="Material Types"
-        labelSingular="Material Type"
-        objectLabel="Items"
+        label={formatMessage({ id: 'ui-inventory.materialTypes' })}
+        labelSingular={formatMessage({ id: 'ui-inventory.materialType' })}
+        objectLabel={formatMessage({ id: 'ui-inventory.items' })}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="materialtypes"

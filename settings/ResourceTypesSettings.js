@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ControlledVocab from '@folio/stripes-smart-components/lib/ControlledVocab';
 
-class LoanTypesSettings extends React.Component {
+class FormatTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -23,18 +23,18 @@ class LoanTypesSettings extends React.Component {
     return (
       <this.connectedControlledVocab
         {...this.props}
-        baseUrl="loan-types"
-        records="loantypes"
-        label={formatMessage({ id: 'ui-inventory.loanTypes' })}
-        labelSingular={formatMessage({ id: 'ui-inventory.loanType' })}
-        objectLabel={formatMessage({ id: 'ui-inventory.loans' })}
+        baseUrl="instance-types"
+        records="instanceTypes"
+        label={formatMessage({ id: 'ui-inventory.resourceTypes' })}
+        labelSingular={formatMessage({ id: 'ui-inventory.resourceType' })}
+        objectLabel={formatMessage({ id: 'ui-inventory.instances' })}
         hiddenFields={['description', 'numberOfObjects']}
-        columnMapping={{ name: 'Loan Type' }}
+        columnMapping={{ name: 'Instance Types' }}
         nameKey="name"
-        id="loantypes"
+        id="instance-types"
       />
     );
   }
 }
 
-export default LoanTypesSettings;
+export default FormatTypesSettings;
