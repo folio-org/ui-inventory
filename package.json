@@ -124,7 +124,7 @@
   },
   "scripts": {
     "lint": "eslint *.js lib settings edit data test/ui-testing",
-    "test": "echo 'placeholder. no tests implemented'"
+    "test": "cd ../ui-testing; env FOLIO_UI_URL=http://localhost:3000 yarn test-module -o --run=inventory"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
