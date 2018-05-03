@@ -103,6 +103,7 @@ const QueryFunction = makeQueryFunction(
   'title="%{query.query}*" or contributors adj "\\"name\\": \\"%{query.query}*\\"" or identifiers adj "\\"value\\": \\"%{query.query}*\\""',
   {
     Title: 'title',
+    type: 'instanceTypeId',
     publishers: 'publication',
     Contributors: 'contributors',
   },
@@ -264,6 +265,7 @@ class Instances extends React.Component {
     };
 
     const resultsFormatter = {
+      'type': r => _.get(r.instanceType, 'name'),
       'publishers': r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
@@ -283,7 +285,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'contributors', 'publishers']}
+      visibleColumns={['title', 'type', 'contributors', 'publishers']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
