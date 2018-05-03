@@ -1,10 +1,15 @@
 import React from 'react';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import queryString from 'query-string';
+
+import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
 import { stripesShape } from '@folio/stripes-core/src/Stripes'; // eslint-disable-line import/no-unresolved
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
-import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
+import { onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 
 import packageInfo from './package';
 import InstanceForm from './edit/InstanceForm';
@@ -50,6 +55,62 @@ const filterConfig = [
   },
 ];
 
+const GET_INSTANCES = gql`
+query allInstances ($cql: String, $offset: Int, $limit: Int) {
+  instances (cql: $cql, offset: $offset, limit: $limit) {
+    records {
+     id,
+     source,
+     title,
+     alternativeTitles,
+     edition,
+     series,
+     identifiers { value, identifierTypeId,
+                   identifierType { name }
+                 },
+     contributors { name,
+                    contributorTypeId,
+                    contributorNameTypeId,
+                    primary,
+                    contributorType { name },
+                    contributorNameType { name }
+                  },
+     subjects,
+     classifications { classificationNumber,
+                       classificationTypeId,
+                       classificationType { name }
+                     },
+     publication { publisher,
+                   place,
+                   dateOfPublication },
+     urls,
+     instanceTypeId,
+     instanceType { name },
+     instanceFormatId,
+     instanceFormat {name},
+     physicalDescriptions,
+     languages,
+     notes,
+     metadata { updatedByUser { username } }
+    }
+    totalCount
+  }
+}
+`;
+
+const QueryFunction = makeQueryFunction(
+  'cql.allRecords=1',
+  'title="%{query.query}*" or contributors adj "\\"name\\": \\"%{query.query}*\\"" or identifiers adj "\\"value\\": \\"%{query.query}*\\""',
+  {
+    Title: 'title',
+    type: 'instanceTypeId',
+    publishers: 'publication',
+    Contributors: 'contributors',
+  },
+  filterConfig,
+);
+
+
 const searchableIndexes = [
   { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
   { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}*")` },
@@ -72,74 +133,6 @@ class Instances extends React.Component {
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    records: {
-      type: 'okapi',
-      records: 'instances',
-      recordsRequired: '%{resultCount}',
-      perRequest: 30,
-      path: 'instance-storage/instances',
-      GET: {
-        params: {
-          query: (...args) => {
-            /*
-              This code is not DRY as it is copied from makeQueryFunction in stripes-components.
-              This is necessary, as makeQueryFunction only references query parameters as a data source.
-              STRIPES-480 is intended to correct this and allow this query function to be replace with a call
-              to makeQueryFunction.
-              https://issues.folio.org/browse/STRIPES-480
-            */
-            const resourceData = args[2];
-            const sortMap = {
-              Title: 'title',
-              publishers: 'publication',
-              Contributors: 'contributors',
-            };
-
-            const index = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            const searchableIndex = searchableIndexes.find(idx => idx.value === index);
-
-            let makeQueryArgs = {};
-            if (index === 'isbn' || index === 'issn') {
-              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === index);
-              makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
-            }
-
-            let cql = searchableIndex.makeQuery(resourceData.query.query, makeQueryArgs);
-
-            const filterCql = filters2cql(filterConfig, resourceData.query.filters);
-            if (filterCql) {
-              if (cql) {
-                cql = `(${cql}) and ${filterCql}`;
-              } else {
-                cql = filterCql;
-              }
-            }
-
-            const { sort } = resourceData.query;
-            if (sort) {
-              const sortIndexes = sort.split(',').map((sort1) => {
-                let reverse = false;
-                if (sort1.startsWith('-')) {
-                  // eslint-disable-next-line no-param-reassign
-                  sort1 = sort1.substr(1);
-                  reverse = true;
-                }
-                let sortIndex = sortMap[sort1] || sort1;
-                if (reverse) {
-                  sortIndex = `${sortIndex.replace(' ', '/sort.descending ')}/sort.descending`;
-                }
-                return sortIndex;
-              });
-
-              cql += ` sortby ${sortIndexes.join(' ')}`;
-            }
-
-            return cql;
-          },
-        },
-        staticFallback: { params: {} },
-      },
-    },
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
@@ -273,6 +266,7 @@ class Instances extends React.Component {
     };
 
     const resultsFormatter = {
+      'type': r => _.get(r.instanceType, 'name'),
       'publishers': r => r.publication.map(p => `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}`).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
@@ -292,7 +286,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'contributors', 'publishers']}
+      visibleColumns={['title', 'type', 'contributors', 'publishers']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
@@ -301,6 +295,10 @@ class Instances extends React.Component {
       disableRecordCreation={false}
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
+      parentData={this.props.data}
+      apolloQuery={GET_INSTANCES}
+      queryFunction={QueryFunction}
+      apolloResource="instances"
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult
@@ -358,6 +356,25 @@ Instances.propTypes = {
       update: PropTypes.func,
     }),
   }).isRequired,
+  data: PropTypes.shape({
+    // No need to spell this out, since all we do is pass it into <SearchAndSort>
+  }),
 };
 
-export default Instances;
+
+function makeVariables(props) {
+  const parsedQuery = queryString.parse(props.location.search || '');
+
+  return {
+    cql: QueryFunction(parsedQuery, props, props.resources, props.stripes.logger),
+    limit: INITIAL_RESULT_COUNT,
+  };
+}
+
+export default graphql(GET_INSTANCES, {
+  options: props => ({
+    notifyOnNetworkStatusChange: true,
+    errorPolicy: 'all',
+    variables: makeVariables(props)
+  }),
+})(Instances);

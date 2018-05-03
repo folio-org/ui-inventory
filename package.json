@@ -124,7 +124,7 @@
   },
   "scripts": {
     "lint": "eslint *.js lib settings edit data test/ui-testing",
-    "test": "echo 'placeholder. no tests implemented'"
+    "test": "cd ../ui-testing; env FOLIO_UI_URL=http://localhost:3000 yarn test-module -o --run=inventory"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
@@ -141,6 +141,8 @@
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-form": "^0.8.1",
     "@folio/stripes-smart-components": "^1.4.7",
+    "graphql-tag": "^2.5.0",
+    "react-apollo": "^2.1.3",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
