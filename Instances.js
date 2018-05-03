@@ -172,8 +172,8 @@ class Instances extends React.Component {
     },
     locations: {
       type: 'okapi',
-      records: 'shelflocations',
-      path: 'shelf-locations?limit=100&query=cql.allRecords=1 sortby name',
+      records: 'locations',
+      path: 'locations?limit=100&query=cql.allRecords=1 sortby name',
     },
   });
 
@@ -259,7 +259,8 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
-    const shelfLocations = (resources.locations || emptyObj).records || emptyArr;
+    const locations = (resources.locations || emptyObj).records || emptyArr;
+    const locationsById = _.keyBy(locations, 'id');
 
     const referenceTables = {
       contributorTypes,
@@ -268,7 +269,7 @@ class Instances extends React.Component {
       classificationTypes,
       instanceTypes,
       instanceFormats,
-      shelfLocations,
+      locationsById,
     };
 
     const resultsFormatter = {

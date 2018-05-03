@@ -21,6 +21,7 @@ import ViewMetadata from './ViewMetadata';
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
     query: {},
+    locationQuery: {},
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
@@ -32,10 +33,9 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'instance-storage/instances/:{id}',
     },
-    shelfLocations: {
+    locations: {
       type: 'okapi',
-      records: 'shelflocations',
-      path: 'shelf-locations',
+      path: 'locations/%{locationQuery.id}',
     },
     platforms: {
       type: 'okapi',
@@ -43,6 +43,19 @@ class ViewHoldingsRecord extends React.Component {
       records: 'platforms',
     },
   });
+
+  static getDerivedStateFromProps(nextProps) {
+    const { resources } = nextProps;
+    const holdingsRecords = (resources.holdingsRecords || {}).records || [];
+    const locationQuery = resources.locationQuery;
+    const holding = holdingsRecords[0];
+
+    if (holding && (!locationQuery.id || locationQuery.id !== holding.permanentLocationId)) {
+      nextProps.mutator.locationQuery.update({ id: holding.permanentLocationId });
+    }
+
+    return null;
+  }
 
   constructor(props) {
     super(props);
@@ -106,17 +119,17 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { location, resources: { holdingsRecords, instances1, shelfLocations, platforms }, referenceTables, okapi } = this.props;
+    const { location, resources: { holdingsRecords, instances1, platforms, locations }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded
         || !instances1 || !instances1.hasLoaded
-        || !shelfLocations || !shelfLocations.hasLoaded
+        || !locations || !locations.hasLoaded
         || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
 
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
-    const locations = shelfLocations.records;
-    referenceTables.shelfLocations = locations;
+    const holdingLocation = locations.records[0];
+
     referenceTables.platforms = platforms.records;
 
     const query = location.search ? queryString.parse(location.search) : {};
@@ -149,7 +162,7 @@ class ViewHoldingsRecord extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="holdings" size="small" />&nbsp;<strong>{holdingsRecord.permanentLocationId ? `${locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name}&gt;` : null} {_.get(holdingsRecord, ['callNumber'], '')}</strong>&nbsp;
+                <AppIcon app="inventory" iconKey="holdings" size="small" />&nbsp;<strong>{holdingsRecord.permanentLocationId ? `${holdingLocation.name} >` : null} {_.get(holdingsRecord, ['callNumber'], '')}</strong>&nbsp;
                 <div>
                   {formatMsg({ id: 'ui-inventory.holdings' })}
                 </div>
@@ -186,7 +199,7 @@ class ViewHoldingsRecord extends React.Component {
               <Row>
                 <Col sm={12}>
                   <Headline size="medium" margin="medium">
-                    {holdingsRecord.permanentLocationId ? locations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
+                    {holdingsRecord.permanentLocationId ? holdingLocation.name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
                   </Headline>
                 </Col>
               </Row>
@@ -261,7 +274,7 @@ ViewHoldingsRecord.propTypes = {
     holdingsRecords: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    shelfLocations: PropTypes.shape({
+    locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     platforms: PropTypes.shape({
@@ -278,6 +291,7 @@ ViewHoldingsRecord.propTypes = {
       POST: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
+    locationQuery: PropTypes.object.isRequired,
   }),
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
 };
