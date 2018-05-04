@@ -29,7 +29,6 @@ class FormatTypesSettings extends React.Component {
         labelSingular={formatMessage({ id: 'ui-inventory.resourceType' })}
         objectLabel={formatMessage({ id: 'ui-inventory.instances' })}
         hiddenFields={['description', 'numberOfObjects']}
-        columnMapping={{ name: 'Instance Types' }}
         nameKey="name"
         id="instance-types"
       />

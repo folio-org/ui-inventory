@@ -29,7 +29,6 @@ class LoanTypesSettings extends React.Component {
         labelSingular={formatMessage({ id: 'ui-inventory.loanType' })}
         objectLabel={formatMessage({ id: 'ui-inventory.loans' })}
         hiddenFields={['description', 'numberOfObjects']}
-        columnMapping={{ name: 'Loan Type' }}
         nameKey="name"
         id="loantypes"
       />
