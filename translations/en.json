@@ -86,11 +86,11 @@
   "addUrl": "+ Add URL",
   "items": "Items",
   "addNewItemDialog": "Add New Item Dialog",
-  "loanTypes": "Loan Types",
-  "loanType": "Loan Type",
+  "loanTypes": "Loan types",
+  "loanType": "Loan type",
   "loans": "Loans",
-  "materialTypes": "Material Types",
-  "materialType": "Material Type",
+  "materialTypes": "Material types",
+  "materialType": "Material type",
   "holdingsHeader": "Holdings: {location} > {callNumber}",
   "viewHoldings": "View holdings",
   "holdingsRecord": "Holdings Record",
@@ -118,7 +118,7 @@
   "place": "Place",
   "date": "Date",
   "resourceType": "Resource type",
-  "resourcetypes": "Resource types",
+  "resourceTypes": "Resource types",
   "subjectHeadings": "Subject headings",
   "classification": "Classification",
   "seriesStatement": "Series Statement",
@@ -141,5 +141,5 @@
   "confirmLocation.message": "This location has a status of inactive. Are you sure you want to select this location?",
   "confirmLocation.header": "Inactive location",
   "contributorType": "Contributor type",
-  "contributortypes": "Contributor types"
+  "contributorTypes": "Contributor types"
 }

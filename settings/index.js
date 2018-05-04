@@ -25,31 +25,31 @@ class InventorySettings extends React.Component {
     this.pages = [
       {
         route: 'materialtypes',
-        label: formatMessage({ id: 'ui-inventory.materialTypes.label' }),
+        label: formatMessage({ id: 'ui-inventory.materialTypes' }),
         component: MaterialTypesSettings,
         perm: 'ui-inventory.settings.materialtypes',
       },
       {
         route: 'loantypes',
-        label: formatMessage({ id: 'ui-inventory.loanTypes.label' }),
+        label: formatMessage({ id: 'ui-inventory.loanTypes' }),
         component: LoanTypesSettings,
         perm: 'ui-inventory.settings.loantypes',
       },
       {
         route: 'formats',
-        label: formatMessage({ id: 'ui-inventory.formats.label' }),
+        label: formatMessage({ id: 'ui-inventory.formats' }),
         component: FormatsSettings,
         perm: 'ui-inventory.settings.instance-formats',
       },
       {
         route: 'resourcetypes',
-        label: formatMessage({ id: 'ui-inventory.resourceTypes.label' }),
+        label: formatMessage({ id: 'ui-inventory.resourceTypes' }),
         component: ResourceTypesSettings,
         perm: 'ui-inventory.settings.instance-types',
       },
       {
         route: 'contributortypes',
-        label: formatMessage({ id: 'ui-inventory.contributorTypes.label' }),
+        label: formatMessage({ id: 'ui-inventory.contributorTypes' }),
         component: ContributorTypesSettings,
         perm: 'ui-inventory.settings.contributor-types',
       },
