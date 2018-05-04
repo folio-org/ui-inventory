@@ -47,7 +47,7 @@
       "item-storage": "5.0",
       "loan-types": "2.0",
       "material-types": "2.0",
-      "shelf-locations": "1.0",
+      "locations": "2.0",
       "identifier-types": "1.0",
       "contributor-types": "1.0",
       "contributor-name-types": "1.1",
@@ -163,7 +163,7 @@
   },
   "scripts": {
     "lint": "eslint *.js lib settings edit data test/ui-testing",
-    "test": "echo 'placeholder. no tests implemented'"
+    "test": "cd ../ui-testing; env FOLIO_UI_URL=http://localhost:3000 yarn test-module -o --run=inventory"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

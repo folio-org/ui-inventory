@@ -37,11 +37,6 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'instance-storage/instances/:{id}',
     },
-    shelfLocations: {
-      type: 'okapi',
-      records: 'shelflocations',
-      path: 'shelf-locations',
-    },
     materialTypes: {
       type: 'okapi',
       path: 'material-types',
@@ -201,22 +196,25 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { location, resources: { items, holdingsRecords, instances1, shelfLocations, materialTypes, loanTypes, requests },
+    const { location, resources: { items, holdingsRecords, instances1, materialTypes, loanTypes, requests },
       referenceTables,
       okapi, stripes: { intl, formatDateTime } } = this.props;
 
     const formatMsg = intl.formatMessage;
-    referenceTables.shelfLocations = (shelfLocations || {}).records || [];
+
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
 
-    if (!items || !items.hasLoaded || !instances1 || !instances1.hasLoaded || !holdingsRecords || !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
+    if (!items || !items.hasLoaded || !instances1 ||
+      !instances1.hasLoaded || !holdingsRecords ||
+      !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
+
     const instance = instances1.records[0];
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
-
+    const { locationsById } = referenceTables;
+    const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
     const requestRecords = (requests || {}).records || [];
-
     const query = location.search ? queryString.parse(location.search) : {};
 
     const detailMenu = (
@@ -238,11 +236,7 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    let labelLocation = '';
-    if (holdingsRecord.permanentLocationId) {
-      const shelfLocation = referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id);
-      labelLocation = _.get(shelfLocation, ['name'], '');
-    }
+    const labelLocation = _.get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     let requestLink = 0;
