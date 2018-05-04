@@ -1,4 +1,5 @@
 import React from 'react';
+import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray, SubmissionError } from 'redux-form';
@@ -117,6 +118,8 @@ class ItemForm extends React.Component {
     const formatMsg = this.props.intl.formatMessage;
 
     const { confirmLocation } = this.state;
+    const { locationsById } = referenceTables;
+    const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
 
     /* Menus for Add Item workflow */
     const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create item</Button></PaneMenu>;
@@ -138,7 +141,7 @@ class ItemForm extends React.Component {
       selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
     }));
 
-    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (

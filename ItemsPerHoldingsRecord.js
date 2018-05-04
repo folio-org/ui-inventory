@@ -72,19 +72,20 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { okapi, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, accordionToggle, accordionStates } = this.props;
-
+    const { okapi, referenceTables, resources: { addItemMode, materialTypes, loanTypes }, instance, holdingsRecord, accordionToggle, accordionStates } = this.props;
+    const { locationsById } = referenceTables;
     const materialtypes = (materialTypes || {}).records || [];
     const loantypes = (loanTypes || {}).records || [];
-    const referenceTables = this.props.referenceTables;
+
     referenceTables.loanTypes = loantypes;
     referenceTables.materialTypes = materialtypes;
+
     const viewHoldingsPath = `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`;
 
     const formatMsg = this.props.stripes.intl.formatMessage;
     const viewHoldingsButton = <Link to={viewHoldingsPath}><Button id="clickable-view-holdings" >{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button></Link>;
     const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title={formatMsg({ id: 'ui-inventory.addItem' })} buttonStyle="primary paneHeaderNewButton">{formatMsg({ id: 'ui-inventory.addItem' })}</Button>;
-    const labelLocation = holdingsRecord.permanentLocationId ? referenceTables.shelfLocations.find(loc => holdingsRecord.permanentLocationId === loc.id).name : '';
+    const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
@@ -156,9 +157,6 @@ ItemsPerHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     loanTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    shelfLocations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
