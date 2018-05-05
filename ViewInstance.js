@@ -68,6 +68,14 @@ query singleInstance ($id: String) {
      languages,
      notes,
      metadata { updatedByUser { username } }
+     holdingsRecords {
+       id
+       instanceId
+       permanentLocationId
+       callNumber
+       holdingsStatements
+       metadata { createdByUserId updatedByUserId }
+     }
   }
 }
 `;
