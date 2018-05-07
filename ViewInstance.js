@@ -74,6 +74,22 @@ query singleInstance ($id: String) {
        permanentLocationId
        callNumber
        holdingsStatements
+       holdingsItems {
+         id
+         barcode
+         holdingsRecordId
+         links { self }
+         materialType { id name }
+         notes
+         metadata { updatedByUser { username } }
+         numberOfPieces
+         temporaryLoanType { id name }
+         permanentLoanType { id name }
+         permanentLocation { id name }
+         pieceIdentifiers
+         status { name }
+         title
+       }
        metadata { createdByUserId updatedByUserId }
      }
   }
