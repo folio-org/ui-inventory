@@ -72,6 +72,7 @@
 * Enable opening item view and holdings view in new tab. UIIN-147, UIIN-148.
 * Use a single handler for managing row-level links in MCL. Refs UIIN-122.
 * Replace shelf location references with locations. Fixes UIIN-182.
+* Added `code` and `source` fields to several settings pages. Fixes UIIN-149, UIIN-150, UIIN-151, UIIN-152,
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
