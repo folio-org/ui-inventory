@@ -28,6 +28,8 @@ class FormatTypesSettings extends React.Component {
         label={formatMessage({ id: 'ui-inventory.resourceTypes' })}
         labelSingular={formatMessage({ id: 'ui-inventory.resourceType' })}
         objectLabel={formatMessage({ id: 'ui-inventory.instances' })}
+        visibleFields={['name', 'code', 'source']}
+        readOnlyFields={['source']}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="instance-types"
