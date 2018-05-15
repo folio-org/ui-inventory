@@ -62,7 +62,7 @@
 * Changes section titles in Instance form. UIIN-72
 * Migrate to hierarchical location end-point. Fixes UIIN-127.
 * Handle "metaData" field case insensitively for compatibility. Fixes UIIN-159.
-* Only show item-availabilty for open loans. Refs UIIN-110.
+* Only show item-availability for open loans. Refs UIIN-110.
 * Add location-units and locations to Okapi interfaces. Fixes UIIN-171.
 * Correct use of i18n in validation function and props. Fixes UIIN-172.
 * Confirmation when assigning inactive location. Fixes UIIN-121.
