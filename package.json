@@ -109,6 +109,45 @@
           "settings.enabled"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-formats",
+        "displayName": "Settings (Inventory): Can create, edit and remove formats",
+        "subPermissions": [
+          "inventory-storage.instance-formats.collection.get",
+          "inventory-storage.instance-formats.item.delete",
+          "inventory-storage.instance-formats.item.get",
+          "inventory-storage.instance-formats.item.post",
+          "inventory-storage.instance-formats.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove resource types",
+        "subPermissions": [
+          "inventory-storage.instance-types.collection.get",
+          "inventory-storage.instance-types.item.delete",
+          "inventory-storage.instance-types.item.get",
+          "inventory-storage.instance-types.item.post",
+          "inventory-storage.instance-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.contributor-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove contributor types",
+        "subPermissions": [
+          "inventory-storage.contributor-types.collection.get",
+          "inventory-storage.contributor-types.item.delete",
+          "inventory-storage.contributor-types.item.get",
+          "inventory-storage.contributor-types.item.post",
+          "inventory-storage.contributor-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
       }
     ],
     "translations": {
@@ -140,7 +179,7 @@
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-form": "^0.8.1",
-    "@folio/stripes-smart-components": "^1.4.7",
+    "@folio/stripes-smart-components": "^1.4.14",
     "graphql-tag": "^2.5.0",
     "react-apollo": "^2.1.3",
     "lodash": "^4.17.4",
