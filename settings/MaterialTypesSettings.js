@@ -30,6 +30,7 @@ class MaterialTypesSettings extends React.Component {
         objectLabel={formatMessage({ id: 'ui-inventory.items' })}
         visibleFields={['name', 'source']}
         readOnlyFields={['source']}
+        itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="materialtypes"
