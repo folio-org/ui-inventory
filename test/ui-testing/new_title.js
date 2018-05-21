@@ -87,8 +87,6 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('input[name="notes[2]"]', notes[2])
           .wait(55)
           .click('#clickable-create-instance')
-          .wait('button[title^="Close"]')
-          .click('button[title^="Close"]')
           .wait('#clickable-new-holdings-record')
           .then(() => { done(); })
           .catch(done);
