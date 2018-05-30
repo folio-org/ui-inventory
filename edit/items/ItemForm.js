@@ -2,7 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray, SubmissionError } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -35,7 +35,7 @@ function validate(values) {
 }
 
 function checkUniqueBarcode(okapi, barcode) {
-  return fetch(`${okapi.url}/inventory/items?query=(barcode="${barcode}")`,
+  return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
     { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
       'X-Okapi-Token': okapi.token,
       'Content-Type': 'application/json' }) });
@@ -43,7 +43,6 @@ function checkUniqueBarcode(okapi, barcode) {
 
 function asyncValidate(values, dispatch, props, blurredField) {
   const barcodeTakenMsg = props.intl.formatMessage({ id: 'ui-inventory.barcodeTaken' });
-
   if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
       // TODO: Should use stripes-connect (dispatching an action and update state)
@@ -53,7 +52,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
-              const error = new SubmissionError({ barcode: barcodeTakenMsg });
+              const error = { barcode: barcodeTakenMsg };
               reject(error);
             } else {
               resolve();
