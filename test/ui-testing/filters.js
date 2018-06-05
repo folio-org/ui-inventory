@@ -6,7 +6,9 @@ module.exports.test = function uiTest(uiTestCtx) {
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
-    const filters = ['resource-Books', 'resource-Serials', 'resource-eBooks', 'language-English', 'language-Spanish', 'location-Annex'];
+    // Resource type filter test disabled as new resource types are being loaded.
+    //const filters = ['resource-Books', 'resource-Serials', 'resource-eBooks', 'language-English', 'language-Spanish', 'location-Annex'];
+    const filters = ['language-English', 'language-Spanish', 'location-Annex'];
     let hitCount = null;
     describe('Login > Open module "Inventory" > Get hit counts > Click filters > Logout', () => {
       before((done) => {
