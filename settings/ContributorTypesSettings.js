@@ -17,6 +17,9 @@ class FormatTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  suppressEdit = term => term.source === 'marcrelator';
+  suppressDelete = term => term.source === 'marcrelator';
+
   render() {
     const { formatMessage } = this.props.stripes.intl;
 
@@ -33,6 +36,8 @@ class FormatTypesSettings extends React.Component {
         itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
+        columnWidths={{ 'name': 300, 'code': 50 }}
+        actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
         id="contributor-types"
       />
     );
