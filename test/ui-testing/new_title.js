@@ -49,7 +49,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait(55)
           .insert('input[name="identifiers[1].value', isbn)
           .type('select[name="identifiers[1].identifierTypeId', 'ii')
-          .type('#select_instance_type', 'B')
+          .type('#select_instance_type', 'o')
           .click('#clickable-add-contributor')
           .insert('input[name="contributors[0].name"', contrib)
           .type('select[name="contributors[0].contributorNameTypeId"]', 'P')
