@@ -7,7 +7,7 @@ module.exports.test = function uiTest(uiTestCtx) {
 
     this.timeout(Number(config.test_timeout));
     // Resource type filter test disabled as new resource types are being loaded.
-    //const filters = ['resource-Books', 'resource-Serials', 'resource-eBooks', 'language-English', 'language-Spanish', 'location-Annex'];
+    // const filters = ['resource-Books', 'resource-Serials', 'resource-eBooks', 'language-English', 'language-Spanish', 'location-Annex'];
     const filters = ['language-English', 'language-Spanish', 'location-Annex'];
     let hitCount = null;
     describe('Login > Open module "Inventory" > Get hit counts > Click filters > Logout', () => {
