@@ -37,7 +37,7 @@ class FormatTypesSettings extends React.Component {
         itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
-        columnWidths={{ 'name': 300, 'code': 50 }}
+        // columnWidths={{ 'name': 300, 'code': 50 }}
         actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
         id="formats"
       />
