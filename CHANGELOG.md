@@ -73,6 +73,9 @@
 * Use a single handler for managing row-level links in MCL. Refs UIIN-122.
 * Replace shelf location references with locations. Fixes UIIN-182.
 * Added `code` and `source` fields to several settings pages. Fixes UIIN-149, UIIN-150, UIIN-151, UIIN-152,
+* Use exact match (double equal sign) for ID queries. UIIN-188. 
+* Fix uniqueness validation of Item bar-code. UIIN-189. 
+* Update to current users interface. Refs UIU-495.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

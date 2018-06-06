@@ -17,8 +17,12 @@ class FormatTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  suppressEdit = term => term.source === 'rdacarrier';
+  suppressDelete = term => term.source === 'rdacarrier';
+
   render() {
     const { formatMessage } = this.props.stripes.intl;
+
 
     return (
       <this.connectedControlledVocab
@@ -30,8 +34,11 @@ class FormatTypesSettings extends React.Component {
         objectLabel={formatMessage({ id: 'ui-inventory.instances' })}
         visibleFields={['name', 'code', 'source']}
         readOnlyFields={['source']}
+        itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
+        // columnWidths={{ 'name': 300, 'code': 50 }}
+        actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
         id="formats"
       />
     );

@@ -49,13 +49,13 @@
       "material-types": "2.0",
       "locations": "2.0",
       "identifier-types": "1.0",
-      "contributor-types": "1.0",
+      "contributor-types": "2.0",
       "contributor-name-types": "1.1",
-      "instance-formats": "1.0",
-      "instance-types": "1.0",
+      "instance-types": "2.0",
+      "instance-formats": "2.0",
       "classification-types": "1.0",
       "platforms": "1.0",
-      "users": "14.0",
+      "users": "15.0",
       "location-units": "1.1",
       "locations": "2.0",
       "circulation": "3.0"
@@ -177,7 +177,7 @@
     "webpack": "1.11.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^2.0.0",
+    "@folio/stripes-components": "^2.0.15",
     "@folio/stripes-form": "^0.8.1",
     "@folio/stripes-smart-components": "^1.4.14",
     "graphql-tag": "^2.5.0",
