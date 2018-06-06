@@ -13,7 +13,7 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import stripesForm from '@folio/stripes-form';
 import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
-import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
+import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 
 import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';
