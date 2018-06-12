@@ -56,9 +56,9 @@ const filterConfig = [
 ];
 
 const GET_INSTANCES = gql`
-query allInstances ($cql: String, $offset: Int, $limit: Int) {
-  instances (cql: $cql, offset: $offset, limit: $limit) {
-    records {
+query instance_storage_instances ($cql: String, $offset: Int, $limit: Int) {
+  instance_storage_instances (query: $cql, offset: $offset, limit: $limit) {
+    instances {
      id,
      source,
      title,
@@ -66,34 +66,34 @@ query allInstances ($cql: String, $offset: Int, $limit: Int) {
      edition,
      series,
      identifiers { value, identifierTypeId,
-                   identifierType { name }
+#                   identifierType { name }
                  },
      contributors { name,
                     contributorTypeId,
                     contributorNameTypeId,
                     primary,
-                    contributorType { name },
-                    contributorNameType { name }
+#                    contributorType { name },
+#                    contributorNameType { name }
                   },
      subjects,
      classifications { classificationNumber,
                        classificationTypeId,
-                       classificationType { name }
+#                       classificationType { name }
                      },
      publication { publisher,
                    place,
                    dateOfPublication },
      urls,
      instanceTypeId,
-     instanceType { name },
+#     instanceType { name },
      instanceFormatId,
-     instanceFormat {name},
+#     instanceFormat {name},
      physicalDescriptions,
      languages,
      notes,
-     metadata { updatedByUser { username } }
+#     metadata { updatedByUser { username } }
     }
-    totalCount
+    totalRecords
   }
 }
 `;
@@ -298,7 +298,8 @@ class Instances extends React.Component {
       parentData={this.props.data}
       apolloQuery={GET_INSTANCES}
       queryFunction={QueryFunction}
-      apolloResource="instances"
+      apolloResource="instance_storage_instances"
+      apolloRecordsKey="instances"
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult
