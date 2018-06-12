@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import Select from '@folio/stripes-components/lib/Select';
-import RepeatableField from '@folio/stripes-components/lib/structures/RepeatableField';
+import RepeatableField from '@folio/stripes-components/lib/RepeatableField';
 import languages from '../data/languages';
 
 const renderLanguageField = ({ field, fieldIndex }, formatMsg) => {
