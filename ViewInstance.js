@@ -33,8 +33,8 @@ import makeConnectedInstance from './ConnectedInstance';
 const emptyObj = {};
 
 const GET_INSTANCE = gql`
-query singleInstance ($id: String) {
-  instance (id: $id) {
+query singleInstance ($id: String!) {
+  instance_storage_instances_SINGLE (instanceId: $id) {
      id,
      source,
      title,
@@ -42,56 +42,56 @@ query singleInstance ($id: String) {
      edition,
      series,
      identifiers { value, identifierTypeId,
-                   identifierType { name }
+#                   identifierType { name }
                  },
      contributors { name,
                     contributorTypeId,
                     contributorNameTypeId,
                     primary,
-                    contributorType { name },
-                    contributorNameType { name }
+#                    contributorType { name },
+#                    contributorNameType { name }
                   },
      subjects,
      classifications { classificationNumber,
                        classificationTypeId,
-                       classificationType { name }
+#                       classificationType { name }
                      },
      publication { publisher,
                    place,
                    dateOfPublication },
      urls,
      instanceTypeId,
-     instanceType { name },
+#     instanceType { name },
      instanceFormatId,
-     instanceFormat {name},
+#     instanceFormat {name},
      physicalDescriptions,
      languages,
      notes,
-     metadata { updatedByUser { username } }
-     holdingsRecords {
-       id
-       instanceId
-       permanentLocationId
-       callNumber
-       holdingsStatements
-       holdingsItems {
-         id
-         barcode
-         holdingsRecordId
-         links { self }
-         materialType { id name }
-         notes
-         metadata { updatedByUser { username } }
-         numberOfPieces
-         temporaryLoanType { id name }
-         permanentLoanType { id name }
-         permanentLocation { id name }
-         pieceIdentifiers
-         status { name }
-         title
-       }
-       metadata { createdByUserId updatedByUserId }
-     }
+#     metadata { updatedByUser { username } }
+#     holdingsRecords {
+#       id
+#       instanceId
+#       permanentLocationId
+#       callNumber
+#       holdingsStatements
+#       holdingsItems {
+#         id
+#         barcode
+#         holdingsRecordId
+#         links { self }
+#         materialType { id name }
+#         notes
+#         metadata { updatedByUser { username } }
+#         numberOfPieces
+#         temporaryLoanType { id name }
+#         permanentLoanType { id name }
+#         permanentLocation { id name }
+#         pieceIdentifiers
+#         status { name }
+#         title
+#       }
+#       metadata { createdByUserId updatedByUserId }
+#    }
   }
 }
 `;
