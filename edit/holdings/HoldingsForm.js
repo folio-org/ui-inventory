@@ -11,7 +11,7 @@ import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelec
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
-import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
+import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 
 import renderStatements from './holdingsStatementFields';
 
