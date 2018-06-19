@@ -69,36 +69,62 @@ class ItemForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      confirmLocation: false,
+      confirmPermanentLocation: false,
+      confirmTemporaryLocation: false,
     };
   }
 
   componentDidMount() {
     const { initialValues } = this.props;
-    const prevLocation = initialValues.temporaryLocation || {};
+    const prevPermanentLocation = initialValues.permanentLocation || {};
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ prevLocation });
+    this.setState({ prevPermanentLocation });
+
+    const prevTemporaryLocation = initialValues.temporaryLocation || {};
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ prevTemporaryLocation });
   }
 
-  selectLocation(location) {
-    if (!location.id) return;
+  selectPermanentLocation(permanentLocation) {
+    if (!permanentLocation.id) return;
 
-    if (location.isActive) {
-      setTimeout(() => this.props.change('temporaryLocation.id', location.id));
-      this.setState({ prevLocation: location });
+    if (permanentLocation.isActive) {
+      setTimeout(() => this.props.change('permanentLocation.id', permanentLocation.id));
+      this.setState({ prevPermanentLocation: permanentLocation });
     } else {
-      this.setState({ confirmLocation: true, location });
+      this.setState({ confirmPermanentLocation: true, permanentLocation });
     }
   }
 
-  confirmLocation(confirm) {
-    const { location, prevLocation } = this.state;
-    const confirmLocation = false;
-    const value = (confirm) ? location.id : prevLocation.id;
-    const prevLoc = (confirm) ? location : prevLocation;
+  selectTemporaryLocation(temporaryLocation) {
+    if (!temporaryLocation.id) return;
+
+    if (temporaryLocation.isActive) {
+      setTimeout(() => this.props.change('temporaryLocation.id', temporaryLocation.id));
+      this.setState({ prevTemporaryLocation: temporaryLocation });
+    } else {
+      this.setState({ confirmTemporaryLocation: true, temporaryLocation });
+    }
+  }
+
+  confirmPermanentLocation(confirm) {
+    const { permanentLocation, prevPermanentLocation } = this.state;
+    const confirmPermanentLocation = false;
+    const value = (confirm) ? permanentLocation.id : prevPermanentLocation.id;
+    const prevPermanentLoc = (confirm) ? permanentLocation : prevPermanentLocation;
+
+    setTimeout(() => this.props.change('permanentLocation.id', value));
+    this.setState({ confirmPermanentLocation, prevPermanentLocation: prevPermanentLoc });
+  }
+
+  confirmTemporaryLocation(confirm) {
+    const { temporaryLocation, prevTemporaryLocation } = this.state;
+    const confirmTemporaryLocation = false;
+    const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
+    const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
 
     setTimeout(() => this.props.change('temporaryLocation.id', value));
-    this.setState({ confirmLocation, prevLocation: prevLoc });
+    this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
   render() {
@@ -116,7 +142,7 @@ class ItemForm extends React.Component {
     } = this.props;
     const formatMsg = this.props.intl.formatMessage;
 
-    const { confirmLocation } = this.state;
+    const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
     const { locationsById } = referenceTables;
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
 
@@ -190,6 +216,17 @@ class ItemForm extends React.Component {
                   dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
                 />
                 <Field label={formatMsg({ id: 'ui-inventory.barcode' })} name="barcode" id="additem_barcode" component={TextField} required fullWidth />
+                <Field
+                  label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
+                  name="permanentLocation.id"
+                  id="additem_permanentlocation"
+                  component={LocationSelection}
+                  fullWidth
+                  marginBottom0
+                  onChange={loc => this.selectPermanentLocation(loc)}
+                />
+                <LocationLookup temporary onLocationSelected={loc => this.selectPermanentLocation(loc)} />
 
                 <Field
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
@@ -199,9 +236,9 @@ class ItemForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectLocation(loc)}
+                  onChange={loc => this.selectTemporaryLocation(loc)}
                 />
-                <LocationLookup temporary onLocationSelected={loc => this.selectLocation(loc)} />
+                <LocationLookup temporary onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
 
                 <Field label={formatMsg({ id: 'ui-inventory.status' })} name="status.name" id="additem_status" component={TextField} disabled fullWidth />
                 <Field
@@ -246,15 +283,28 @@ class ItemForm extends React.Component {
             </Row>
 
             <ConfirmationModal
-              open={confirmLocation}
+              id="confirmPermanentLocationModal"
+              open={confirmPermanentLocation}
               heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
               message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
               confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
               buttonStyle="default"
               cancelButtonStyle="primary"
-              onConfirm={() => { this.confirmLocation(true); }}
-              onCancel={() => { this.confirmLocation(false); }}
+              onConfirm={() => { this.confirmPermanentLocation(true); }}
+              onCancel={() => { this.confirmPermanentLocation(false); }}
             />
+            <ConfirmationModal
+              id="confirmTemporaryLocationModal"
+              open={confirmTemporaryLocation}
+              heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
+              message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
+              confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              buttonStyle="default"
+              cancelButtonStyle="primary"
+              onConfirm={() => { this.confirmTemporaryLocation(true); }}
+              onCancel={() => { this.confirmTemporaryLocation(false); }}
+            />
+
           </Pane>
         </Paneset>
       </form>
