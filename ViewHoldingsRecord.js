@@ -50,6 +50,17 @@ class ViewHoldingsRecord extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      accordions: {
+        holdingsAccordion: true,
+      },
+    };
+    this.craftLayerUrl = craftLayerUrl.bind(this);
+    this.cViewMetadata = props.stripes.connect(ViewMetadata);
+  }
+
   static getDerivedStateFromProps(nextProps) {
     const { resources } = nextProps;
     const holdingsRecords = (resources.holdingsRecords || {}).records || [];
@@ -65,17 +76,6 @@ class ViewHoldingsRecord extends React.Component {
     }
 
     return null;
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      accordions: {
-        holdingsAccordion: true,
-      },
-    };
-    this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetadata = props.stripes.connect(ViewMetadata);
   }
 
   // Edit Holdings records handlers
@@ -229,8 +229,8 @@ class ViewHoldingsRecord extends React.Component {
                     <strong>{formatMsg({ id: 'ui-inventory.holdingsLocation' })}</strong>
                   </Col>
                 </Row>
-                <br/>
-                { ((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId )) &&
+                <br />
+                { ((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId)) &&
                   <Row>
                     <Col smOffset={0} sm={4}>
                       <KeyValue label={formatMsg({ id: 'ui-inventory.permanent' })} value={holdingsPermanentLocation.name} />
