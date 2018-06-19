@@ -33,7 +33,7 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'instance-storage/instances/:{id}',
     },
-    locations: {
+    permanentLocation: {
       type: 'okapi',
       path: 'locations/%{locationQuery.id}',
     },
@@ -119,16 +119,16 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { location, resources: { holdingsRecords, instances1, platforms, locations }, referenceTables, okapi } = this.props;
+    const { resources: { holdingsRecords, instances1, platforms, permanentLocation }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded
         || !instances1 || !instances1.hasLoaded
-        || !locations || !locations.hasLoaded
+        || !permanentLocation || !permanentLocation.hasLoaded
         || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
 
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
-    const holdingLocation = locations.records[0];
+    const holdingLocation = permanentLocation.records[0];
 
     referenceTables.platforms = platforms.records;
 
