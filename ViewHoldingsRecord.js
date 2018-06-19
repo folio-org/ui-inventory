@@ -119,7 +119,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { resources: { holdingsRecords, instances1, platforms, permanentLocation }, referenceTables, okapi } = this.props;
+    const { location, resources: { holdingsRecords, instances1, platforms, permanentLocation }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded
         || !instances1 || !instances1.hasLoaded
