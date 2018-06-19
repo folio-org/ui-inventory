@@ -90,7 +90,7 @@ class HoldingsForm extends React.Component {
   }
 
   confirmTemporaryLocation(confirm) {
-    const { temporarylocation, prevTemporaryLocation } = this.state;
+    const { temporaryLocation, prevTemporaryLocation } = this.state;
     const confirmTemporaryLocation = false;
     const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
     const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
@@ -111,7 +111,7 @@ class HoldingsForm extends React.Component {
       copy,
     } = this.props;
     const formatMsg = this.props.formatMsg;
-    const { confirmLocation } = this.state;
+    const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
 
     /* Menus for Add Item workflow */
     const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
@@ -203,14 +203,26 @@ class HoldingsForm extends React.Component {
             </Row>
             <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
             <ConfirmationModal
-              open={confirmLocation}
+              id="confirmPermanentLocationModal"
+              open={confirmPermanentLocation}
               heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
               message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
               confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
               buttonStyle="default"
               cancelButtonStyle="primary"
-              onConfirm={() => { this.confirmLocation(true); }}
-              onCancel={() => { this.confirmLocation(false); }}
+              onConfirm={() => { this.confirmPermanentLocation(true); }}
+              onCancel={() => { this.confirmPermanentLocation(false); }}
+            />
+            <ConfirmationModal
+              id="confirmTemporaryLocationModal"
+              open={confirmTemporaryLocation}
+              heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
+              message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
+              confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              buttonStyle="default"
+              cancelButtonStyle="primary"
+              onConfirm={() => { this.confirmTemporaryLocation(true); }}
+              onCancel={() => { this.confirmTemporaryLocation(false); }}
             />
           </Pane>
         </Paneset>
