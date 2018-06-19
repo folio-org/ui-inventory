@@ -42,36 +42,62 @@ class HoldingsForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      confirmLocation: false,
+      confirmPermanentLocation: false,
+      confirmTemporaryLocation: false,
     };
   }
 
   componentDidMount() {
     const { initialValues } = this.props;
-    const prevLocation = initialValues.temporaryLocation || {};
+    const prevPermanentLocation = initialValues.permanentLocation || {};
     // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ prevLocation });
+    this.setState({ prevPermanentLocation });
+
+    const prevTemporaryLocation = initialValues.temporaryLocation || {};
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({ prevTemporaryLocation });
   }
 
-  selectLocation(location) {
-    if (!location.id) return;
+  selectPermanentLocation(permanentLocation) {
+    if (!permanentLocation.id) return;
 
-    if (location.isActive) {
-      this.setState({ prevLocation: location });
-      setTimeout(() => this.props.change('permanentLocationId', location.id));
+    if (permanentLocation.isActive) {
+      this.setState({ prevPermanentLocation: permanentLocation });
+      setTimeout(() => this.props.change('permanentLocationId', permanentLocation.id));
     } else {
-      this.setState({ confirmLocation: true, location });
+      this.setState({ confirmPermanentLocation: true, permanentLocation });
     }
   }
 
-  confirmLocation(confirm) {
-    const { location, prevLocation } = this.state;
-    const confirmLocation = false;
-    const value = (confirm) ? location.id : prevLocation.id;
-    const prevLoc = (confirm) ? location : prevLocation;
-    setTimeout(() => this.props.change('permanentLocationId', value));
-    this.setState({ confirmLocation, prevLocation: prevLoc });
+  selectTemporaryLocation(temporaryLocation) {
+    if (!temporaryLocation.id) return;
+
+    if (temporaryLocation.isActive) {
+      this.setState({ prevTemporaryLocation: temporaryLocation });
+      setTimeout(() => this.props.change('temporaryLocationId', temporaryLocation.id));
+    } else {
+      this.setState({ confirmTemporaryLocation: true, temporaryLocation });
+    }
   }
+
+  confirmPermanentLocation(confirm) {
+    const { permanentLocation, prevPermanentLocation } = this.state;
+    const confirmPermanentLocation = false;
+    const value = (confirm) ? permanentLocation.id : prevPermanentLocation.id;
+    const prevPermanentLoc = (confirm) ? permanentLocation : prevPermanentLocation;
+    setTimeout(() => this.props.change('permanentLocationId', value));
+    this.setState({ confirmPermanentLocation, prevPermanentLocation: prevPermanentLoc });
+  }
+
+  confirmTemporaryLocation(confirm) {
+    const { temporarylocation, prevTemporaryLocation } = this.state;
+    const confirmTemporaryLocation = false;
+    const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
+    const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
+    setTimeout(() => this.props.change('temporaryLocationId', value));
+    this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
+  }
+
 
   render() {
     const {
@@ -131,9 +157,24 @@ class HoldingsForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectLocation(loc)}
+                  onChange={loc => this.selectPermanentLocation(loc)}
                 />
-                <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
+                <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
+              </Col>
+            </Row>
+            <Row >
+              <Col sm={5} smOffset={1}>
+                <Field
+                  label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectTemporaryLocation' })}
+                  name="temporaryLocationId"
+                  id="additem_temporarylocation"
+                  component={LocationSelection}
+                  fullWidth
+                  marginBottom0
+                  onChange={loc => this.selectTemporaryLocation(loc)}
+                />
+                <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
               </Col>
             </Row>
             <Row>

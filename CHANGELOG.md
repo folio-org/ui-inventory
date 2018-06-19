@@ -78,6 +78,7 @@
 * Update to current users interface. Refs UIU-495.
 * Update import paths for some stripes-components. Refs STCOM-277.
 * Refactor to avoid deprecated React lifecycle methods.
+* Add temporary location to HoldingsRecord form and details view. UIIN-194.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)
