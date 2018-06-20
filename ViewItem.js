@@ -213,7 +213,9 @@ class ViewItem extends React.Component {
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
     const { locationsById } = referenceTables;
-    const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
+    const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
+    const temporaryHoldingsLocation = locationsById[holdingsRecord.temporaryLocationId];
+
     const requestRecords = (requests || {}).records || [];
     const query = location.search ? queryString.parse(location.search) : {};
 
@@ -236,7 +238,7 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    const labelLocation = _.get(holdingLocation, ['name'], '');
+    const labelPermanentHoldingsLocation = _.get(permanentHoldingsLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     let requestLink = 0;
@@ -280,7 +282,7 @@ class ViewItem extends React.Component {
                 <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
                 <div>
-                  { `${formatMsg({ id: 'ui-inventory.holdingsColon' })} ${labelLocation} > ${labelCallNumber}`}
+                  { `${formatMsg({ id: 'ui-inventory.holdingsColon' })} ${labelPermanentHoldingsLocation} > ${labelCallNumber}`}
                 </div>
               </Col>
             </Row>
@@ -314,13 +316,6 @@ class ViewItem extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.itemId' })} value={_.get(item, ['id'], '')} />
                 </Col>
               </Row>
-              { (item.temporaryLocation) &&
-                <Row>
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], '')} />
-                  </Col>
-                </Row>
-              }
               { (item.permanentLoanType) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
@@ -399,6 +394,42 @@ class ViewItem extends React.Component {
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value={this.state.loan ? formatDateTime(this.state.loan.dueDate) : '-'} />
                 </Col>
               </Row>
+            </Accordion>
+            <Accordion
+              open={this.state.accordions.locationAccordion}
+              id="locationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.location' })}
+            >
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.holdingsLocation' })}</strong>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(permanentHoldingsLocation, ['name'], '')} />
+                </Col>
+                <Col sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(temporaryHoldingsLocation, ['name'], '')} />
+                </Col>
+              </Row>
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.itemLocation' })}</strong>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(item, ['permanentLocation', 'name'], 'Inherit from holdings')} />
+                </Col>
+                <Col sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], 'Inherit from holdings')} />
+                </Col>
+              </Row>
+              <br />
             </Accordion>
           </Pane>
         </Layer>

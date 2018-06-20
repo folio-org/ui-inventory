@@ -232,7 +232,7 @@ class ItemForm extends React.Component {
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
                   placeholder={formatMsg({ id: 'ui-inventory.selectTemporaryLocation' })}
                   name="temporaryLocation.id"
-                  id="additem_location"
+                  id="additem_temporarylocation"
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
