@@ -430,6 +430,17 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
               <br />
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.effectiveLocation' })}</strong>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  {_.get(item, ['effectiveLocation', 'name'], '')}
+                </Col>
+              </Row>
             </Accordion>
           </Pane>
         </Layer>
