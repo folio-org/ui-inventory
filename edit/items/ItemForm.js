@@ -81,7 +81,10 @@ class ItemForm extends React.Component {
   }
 
   selectLocation(location) {
-    if (!location.id) return;
+    if (!location) {
+      this.props.change('temporaryLocation', {});
+      return;
+    }
 
     if (location.isActive) {
       setTimeout(() => this.props.change('temporaryLocation.id', location.id));
@@ -199,7 +202,7 @@ class ItemForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectLocation(loc)}
+                  onSelect={loc => this.selectLocation(loc)}
                 />
                 <LocationLookup temporary onLocationSelected={loc => this.selectLocation(loc)} />
 

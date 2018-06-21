@@ -67,6 +67,21 @@ class ViewItem extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      accordions: {
+        itemAccordion: true,
+      },
+      loan: null,
+      borrower: null,
+      loanStatusDate: null,
+    };
+
+    this.craftLayerUrl = craftLayerUrl.bind(this);
+    this.cViewMetadata = props.stripes.connect(ViewMetadata);
+  }
+
   /**
    * If a loan is retrieved matching this item, retrieve the corresponding
    * user record as well.
@@ -132,21 +147,6 @@ class ViewItem extends React.Component {
     }
 
     return null;
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      accordions: {
-        itemAccordion: true,
-      },
-      loan: null,
-      borrower: null,
-      loanStatusDate: null,
-    };
-
-    this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetadata = props.stripes.connect(ViewMetadata);
   }
 
   onClickEditItem = (e) => {
