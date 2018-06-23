@@ -32,6 +32,7 @@ class HoldingsForm extends React.Component {
     submitting: PropTypes.bool,
     copy: PropTypes.bool,
     onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
     initialValues: PropTypes.object,
     instance: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
@@ -56,10 +57,26 @@ class HoldingsForm extends React.Component {
     const prevTemporaryLocation = initialValues.temporaryLocation || {};
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ prevTemporaryLocation });
+
+    this.onSave = this.onSave.bind(this);
+  }
+
+  onSave(data) {
+    if (!data.temporaryLocationId) {
+      delete data.temporaryLocationId;
+    }
+    if (!data.permanentLocationId) {
+      delete data.permanentLocationId;
+    }
+
+    this.props.onSubmit(data);
   }
 
   selectPermanentLocation(permanentLocation) {
-    if (!permanentLocation.id) return;
+    if (!permanentLocation) {
+      this.props.change('permanentLocationId', '');
+      return;
+    }
 
     if (permanentLocation.isActive) {
       this.setState({ prevPermanentLocation: permanentLocation });
@@ -70,7 +87,10 @@ class HoldingsForm extends React.Component {
   }
 
   selectTemporaryLocation(temporaryLocation) {
-    if (!temporaryLocation.id) return;
+    if (!temporaryLocation) {
+      this.props.change('temporaryLocationId', '');
+      return;
+    }
 
     if (temporaryLocation.isActive) {
       this.setState({ prevTemporaryLocation: temporaryLocation });
@@ -98,7 +118,6 @@ class HoldingsForm extends React.Component {
     this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
-
   render() {
     const {
       handleSubmit,
@@ -114,8 +133,8 @@ class HoldingsForm extends React.Component {
     const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
 
     /* Menus for Add Item workflow */
-    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create holdings record</Button></PaneMenu>;
-    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update holdings record</Button></PaneMenu>;
+    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit(this.onSave)}>Create holdings record</Button></PaneMenu>;
+    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit(this.onSave)}>Update holdings record</Button></PaneMenu>;
 
     const platformOptions = (referenceTables.platforms || []).map(l => ({
       label: l.name,
@@ -157,7 +176,7 @@ class HoldingsForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectPermanentLocation(loc)}
+                  onSelect={loc => this.selectPermanentLocation(loc)}
                 />
                 <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
               </Col>
@@ -172,7 +191,7 @@ class HoldingsForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectTemporaryLocation(loc)}
+                  onSelect={loc => this.selectTemporaryLocation(loc)}
                 />
                 <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
               </Col>

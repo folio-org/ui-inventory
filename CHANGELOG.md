@@ -81,6 +81,7 @@
 * Add temporary location to HoldingsRecord form and details view. UIIN-194.
 * Add item's permanent location to Item form and details view. UIIN-195.
 * Display effective location on Item details view. UIIN-196.
+* Enable un-setting a location. Fixes UIIN-198.
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

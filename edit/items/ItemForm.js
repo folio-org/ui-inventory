@@ -86,7 +86,10 @@ class ItemForm extends React.Component {
   }
 
   selectPermanentLocation(permanentLocation) {
-    if (!permanentLocation.id) return;
+    if (!permanentLocation) {
+      this.props.change('permanentLocation', {});
+      return;
+    }
 
     if (permanentLocation.isActive) {
       setTimeout(() => this.props.change('permanentLocation.id', permanentLocation.id));
@@ -97,11 +100,14 @@ class ItemForm extends React.Component {
   }
 
   selectTemporaryLocation(temporaryLocation) {
-    if (!temporaryLocation.id) return;
+    if (!temporaryLocation) {
+      this.props.change('temporaryLocation', {});
+      return;
+    }
 
     if (temporaryLocation.isActive) {
-      setTimeout(() => this.props.change('temporaryLocation.id', temporaryLocation.id));
       this.setState({ prevTemporaryLocation: temporaryLocation });
+      setTimeout(() => this.props.change('temporaryLocationId', temporaryLocation.id));
     } else {
       this.setState({ confirmTemporaryLocation: true, temporaryLocation });
     }
@@ -224,9 +230,9 @@ class ItemForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectPermanentLocation(loc)}
+                  onSelect={loc => this.selectPermanentLocation(loc)}
                 />
-                <LocationLookup temporary onLocationSelected={loc => this.selectPermanentLocation(loc)} />
+                <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
 
                 <Field
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
@@ -236,9 +242,9 @@ class ItemForm extends React.Component {
                   component={LocationSelection}
                   fullWidth
                   marginBottom0
-                  onChange={loc => this.selectTemporaryLocation(loc)}
+                  onSelect={loc => this.selectTemporaryLocation(loc)}
                 />
-                <LocationLookup temporary onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
+                <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
 
                 <Field label={formatMsg({ id: 'ui-inventory.status' })} name="status.name" id="additem_status" component={TextField} disabled fullWidth />
                 <Field
