@@ -65,6 +65,9 @@ class HoldingsForm extends React.Component {
     if (!data.temporaryLocationId) {
       delete data.temporaryLocationId;
     }
+    if (!data.permanentLocationId) {
+      delete data.permanentLocationId;
+    }
 
     this.props.onSubmit(data);
   }
