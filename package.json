@@ -13,7 +13,7 @@
   "main": "index.js",
   "stripes": {
     "type": "app",
-    "displayName": "Inventory",
+    "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
     "home": "/inventory?filters=&sort=Title",
     "hasSettings": true,
