@@ -8,7 +8,7 @@
 * Add item form, holdings form (UIIN-5, UIIN-20)
 * Add list of holdings records and items under instance view (UIIN-15,16,29,31,33)
 * Project renamed from ui-instances to ui-inventory. UIIN-17.
-* Update Okapi dependencies, inventory: 5.0, instance-storage 4.2, item-storage: 5.0
+* Update Okapi dependencies, inventory: 5.0 6.0, instance-storage 4.2, item-storage: 5.0
 * Add Okapi dependencies on reference tables
 * Use PropTypes, not React.PropTypes. STRIPES-427.
 * Validation. Fixes UIIN-19.
