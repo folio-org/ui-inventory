@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
+import TitleManager from '@folio/stripes-core/src/components/TitleManager';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
@@ -200,6 +201,7 @@ class ViewInstance extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
+        <TitleManager record={instance.title} />
         <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
         <Accordion
           open={this.state.accordions.instanceAccordion}
