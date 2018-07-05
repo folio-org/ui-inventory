@@ -13,11 +13,11 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
-import ViewMetadata from './ViewMetadata';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -79,7 +79,7 @@ class ViewItem extends React.Component {
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetadata = props.stripes.connect(ViewMetadata);
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   /**
@@ -299,7 +299,7 @@ class ViewItem extends React.Component {
               </Row>
               <br />
               { (item.metadata && item.metadata.createdDate) &&
-                <this.cViewMetadata metadata={item.metadata} />
+                <this.cViewMetaData metadata={item.metadata} />
               }
               { (item.barcode) &&
                 <Row>
