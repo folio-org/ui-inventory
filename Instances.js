@@ -179,33 +179,37 @@ class Instances extends React.Component {
 
     this.onChangeFilter = commonChangeFilter.bind(this);
     this.copyInstance = this.copyInstance.bind(this);
+
+    this.state = {};
   }
 
   /**
    * fill in the filter values
    */
-  componentWillUpdate() {
+  static getDerivedStateFromProps(props) {
     // resource types
-    const rt = (this.props.resources.instanceTypes || {}).records || [];
+    const rt = (props.resources.instanceTypes || {}).records || [];
     if (rt && rt.length) {
       const oldValuesLength = filterConfig[0].values.length;
       filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
-        const numFiltersLoaded = this.props.resources.numFiltersLoaded;
-        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
+        const numFiltersLoaded = props.resources.numFiltersLoaded;
+        props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
       }
     }
 
     // locations
-    const locations = (this.props.resources.locations || {}).records || [];
+    const locations = (props.resources.locations || {}).records || [];
     if (locations && locations.length) {
       const oldValuesLength = filterConfig[2].values.length;
       filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
-        const numFiltersLoaded = this.props.resources.numFiltersLoaded;
-        this.props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
+        const numFiltersLoaded = props.resources.numFiltersLoaded;
+        props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
       }
     }
+
+    return null;
   }
 
   onChangeIndex = (e) => {
