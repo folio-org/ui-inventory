@@ -106,8 +106,8 @@ class ItemForm extends React.Component {
     }
 
     if (temporaryLocation.isActive) {
+      setTimeout(() => this.props.change('temporaryLocation.id', temporaryLocation.id));
       this.setState({ prevTemporaryLocation: temporaryLocation });
-      setTimeout(() => this.props.change('temporaryLocationId', temporaryLocation.id));
     } else {
       this.setState({ confirmTemporaryLocation: true, temporaryLocation });
     }
