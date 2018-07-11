@@ -193,7 +193,7 @@ class HoldingsForm extends React.Component {
                   marginBottom0
                   onSelect={loc => this.selectTemporaryLocation(loc)}
                 />
-                <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
+                <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} isTemporaryLocation={true} />
               </Col>
             </Row>
             <Row>
