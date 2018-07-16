@@ -175,6 +175,12 @@ class Instances extends React.Component {
       records: 'locations',
       path: 'locations?limit=100&query=cql.allRecords=1 sortby name',
     },
+    instanceRelationshipTypes: {
+      type: 'okapi',
+      records: 'instanceRelationshipTypes',
+      path: 'instance-relationship-types?limit=100&query=cql.allRecords=1 sortby name',
+
+    }
   });
 
   constructor(props) {
@@ -255,10 +261,12 @@ class Instances extends React.Component {
         || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
         || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
         || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
-        || !resources.locations || !resources.locations.hasLoaded) return <div />;
+        || !resources.locations || !resources.locations.hasLoaded
+        || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
+    const instanceRelationshipTypes = (resources.instanceRelationshipTypes || emptyObj).records || emptyArr;    
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
@@ -269,6 +277,7 @@ class Instances extends React.Component {
     const referenceTables = {
       contributorTypes,
       contributorNameTypes,
+      instanceRelationshipTypes,
       identifierTypes,
       classificationTypes,
       instanceTypes,
