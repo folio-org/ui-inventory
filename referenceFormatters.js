@@ -31,9 +31,9 @@ export default {
 
   publishersFormatter: (r) => {
     const formatted = [];
-    if (r.publication && r.publication.length) {
+    if (r.publication && r.publication.length ) {
       r.publication.forEach((pub) => {
-        formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+        if (pub!==null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);
@@ -45,7 +45,7 @@ export default {
       for (let i = 0; i < r.languages.length; i += 1) {
         const languagecode = r.languages[i];
         const language = languagetable.find(lang => lang.code === languagecode);
-        formatted += (i > 0 ? ', ' : '') + (language.name['#text'] || language.name);
+        if (language) formatted += (i > 0 ? ', ' : '') + (language.name['#text'] || language.name);
       }
     }
     return formatted;
