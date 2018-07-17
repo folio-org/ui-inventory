@@ -47,21 +47,21 @@ function validate(values, props) {
     values.languages.forEach((item, i) => {
       if (!item) {
         errorList[i] = requiredSelectMessage;
-       }
+      }
     });
-    if (errorList.length) errors['languages'] = errorList;
+    if (errorList.length) errors.languages = errorList;
   }
 
   if (values.publication) {
     const errorList = [];
-    values['publication'].forEach((item, i) => {
+    values.publication.forEach((item, i) => {
       const entryErrors = {};
       if (!item || (!item.publisher && !item.dateOfPublication && !item.place)) {
-        entryErrors['publisher'] = requiredPublicationFieldMessage;
+        entryErrors.publisher = requiredPublicationFieldMessage;
         errorList[i] = entryErrors;
-       }
+      }
     });
-    if (errorList.length) errors['publication'] = errorList;
+    if (errorList.length) errors.publication = errorList;
   }
 
   // the list itself is not required, but if a list is present,
@@ -98,7 +98,6 @@ function validate(values, props) {
       }
     }
   });
-  console.log("errors: ", errors);
   return errors;
 }
 

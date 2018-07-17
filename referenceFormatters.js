@@ -31,9 +31,9 @@ export default {
 
   publishersFormatter: (r) => {
     const formatted = [];
-    if (r.publication && r.publication.length ) {
+    if (r.publication && r.publication.length) {
       r.publication.forEach((pub) => {
-        if (pub!==null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);
