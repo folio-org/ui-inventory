@@ -206,7 +206,7 @@ class ItemForm extends React.Component {
               <Col sm={5} smOffset={1}>
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.materialType' })}
+                  label={`${formatMsg({ id: 'ui-inventory.materialType' })} *`}
                   name="materialType.id"
                   id="additem_materialType"
                   component={Select}
@@ -214,7 +214,7 @@ class ItemForm extends React.Component {
                   dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectMaterialType' }), value: '' }, ...materialTypeOptions]}
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.loanTypePermanent' })}
+                  label={`${formatMsg({ id: 'ui-inventory.loanTypePermanent' })} *`}
                   name="permanentLoanType.id"
                   id="additem_loanTypePerm"
                   component={Select}

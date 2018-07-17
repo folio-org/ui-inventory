@@ -149,7 +149,7 @@ class InstanceForm extends React.Component {
                       <Row>
                         <Col sm={8}>
                           <Field
-                            label={formatMsg({ id: 'ui-inventory.title' })}
+                            label={`${formatMsg({ id: 'ui-inventory.title' })} *`}
                             name="title"
                             id="input_instance_title"
                             component={TextField}
@@ -176,7 +176,7 @@ class InstanceForm extends React.Component {
                             id="select_instance_type"
                             type="text"
                             component={Select}
-                            label={formatMsg({ id: 'ui-inventory.resourceType' })}
+                            label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
                             dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
                             required
                           />

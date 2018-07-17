@@ -21,13 +21,13 @@ const ClassificationFields = ({ classificationTypes, formatMsg }) => {
       addDefaultItem={false}
       template={[
         {
-          label: formatMsg({ id: 'ui-inventory.number' }),
+          label: `${formatMsg({ id: 'ui-inventory.number' })} *`,
           name: 'classificationNumber',
           component: TextField,
           required: true,
         },
         {
-          label: formatMsg({ id: 'ui-inventory.type' }),
+          label: `${formatMsg({ id: 'ui-inventory.type' })} *`,
           name: 'classificationTypeId',
           component: Select,
           dataOptions: [{ label: formatMsg({ id: 'ui-inventory.selectClassification' }), value: '' }, ...classificationTypeOptions],
