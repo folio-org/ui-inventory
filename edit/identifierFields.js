@@ -21,13 +21,13 @@ const IdentifierFields = ({ identifierTypes, formatMsg }) => {
       template={[
         {
           name: 'value',
-          label: formatMsg({ id: 'ui-inventory.identifier' }),
+          label: `${formatMsg({ id: 'ui-inventory.identifier' })} *`,
           component: TextField,
           required: true,
         },
         {
           name: 'identifierTypeId',
-          label: formatMsg({ id: 'ui-inventory.type' }),
+          label: `${formatMsg({ id: 'ui-inventory.type' })} *`,
           component: Select,
           dataOptions: [{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions],
           required: true,
