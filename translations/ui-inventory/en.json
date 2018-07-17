@@ -11,6 +11,7 @@
   "item.availability.dueDate": "Due date",
   "fillIn": "Please fill this in to continue",
   "selectToContinue": "Please select to continue",
+  "onePublicationFieldToContinue": "Please fill in one or more publication fields to continue",
   "barcodeTaken": "This barcode has already been taken",
   "createInstance": "Create Instance",
   "updateInstance": "Update Instance",

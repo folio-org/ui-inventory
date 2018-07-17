@@ -31,6 +31,7 @@ function validate(values, props) {
 
   const requiredTextMessage = formatMsg({ id: 'ui-inventory.fillIn' });
   const requiredSelectMessage = formatMsg({ id: 'ui-inventory.selectToContinue' });
+  const requiredPublicationFieldMessage = formatMsg({ id: 'ui-inventory.onePublicationFieldToContinue' });
 
   if (!values.title) {
     errors.title = requiredTextMessage;
@@ -38,6 +39,29 @@ function validate(values, props) {
 
   if (!values.instanceTypeId) {
     errors.instanceTypeId = requiredSelectMessage;
+  }
+
+  // Language not required, but must be not null if supplied
+  if (values.languages && values.languages.length) {
+    const errorList = [];
+    values.languages.forEach((item, i) => {
+      if (!item) {
+        errorList[i] = requiredSelectMessage;
+      }
+    });
+    if (errorList.length) errors.languages = errorList;
+  }
+
+  if (values.publication) {
+    const errorList = [];
+    values.publication.forEach((item, i) => {
+      const entryErrors = {};
+      if (!item || (!item.publisher && !item.dateOfPublication && !item.place)) {
+        entryErrors.publisher = requiredPublicationFieldMessage;
+        errorList[i] = entryErrors;
+      }
+    });
+    if (errorList.length) errors.publication = errorList;
   }
 
   // the list itself is not required, but if a list is present,
@@ -74,7 +98,6 @@ function validate(values, props) {
       }
     }
   });
-
   return errors;
 }
 
