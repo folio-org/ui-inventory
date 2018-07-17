@@ -56,7 +56,6 @@ function validate(values, props) {
     const errorList = [];
     values['publication'].forEach((item, i) => {
       const entryErrors = {};
-      console.log("item", item);
       if (!item || (!item.publisher && !item.dateOfPublication && !item.place)) {
         entryErrors['publisher'] = requiredPublicationFieldMessage;
         errorList[i] = entryErrors;
