@@ -24,6 +24,7 @@ import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import NoteFields from './noteFields';
 import LanguageFields from './languageFields';
+import ViewMetaData from "../../stripes-smart-components/lib/ViewMetaData";
 
 function validate(values, props) {
   const errors = {};
@@ -118,6 +119,7 @@ class InstanceForm extends React.Component {
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
+    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
   }
 
   onToggleSection({ id }) {
@@ -166,6 +168,9 @@ class InstanceForm extends React.Component {
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
 
+                { (initialValues.metadata && initialValues.metadata.createdDate) &&
+                <this.cViewMetaData metadata={initialValues.metadata} />
+                }
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>
