@@ -455,6 +455,7 @@ class ViewItem extends React.Component {
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
             intl={intl}
+            stripes={this.props.stripes}
           />
         </Layer>
         <Layer isOpen={query.layer === 'copyItem'} label="Copy Item Dialog">

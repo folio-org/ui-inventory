@@ -14,6 +14,7 @@ import stripesForm from '@folio/stripes-form';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 
 import renderStatements from './holdingsStatementFields';
+import ViewMetaData from "../../../stripes-smart-components/lib/ViewMetaData";
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -40,12 +41,13 @@ class HoldingsForm extends React.Component {
     formatMsg: PropTypes.func,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
     };
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   componentDidMount() {
@@ -168,6 +170,9 @@ class HoldingsForm extends React.Component {
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
+                { (initialValues.metadata && initialValues.metadata.createdDate) &&
+                <this.cViewMetaData metadata={initialValues.metadata} />
+                }
                 <Field
                   label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
                   placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
