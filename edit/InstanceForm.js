@@ -12,6 +12,7 @@ import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -24,7 +25,6 @@ import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import NoteFields from './noteFields';
 import LanguageFields from './languageFields';
-import ViewMetaData from '../../stripes-smart-components/lib/ViewMetaData';
 
 function validate(values, props) {
   const errors = {};
