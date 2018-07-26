@@ -12,6 +12,7 @@ import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import renderStatements from './holdingsStatementFields';
 
@@ -40,12 +41,13 @@ class HoldingsForm extends React.Component {
     formatMsg: PropTypes.func,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
     };
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   componentDidMount() {
@@ -168,6 +170,9 @@ class HoldingsForm extends React.Component {
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
+                { (initialValues.metadata && initialValues.metadata.createdDate) &&
+                <this.cViewMetaData metadata={initialValues.metadata} />
+                }
                 <Field
                   label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
                   placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
