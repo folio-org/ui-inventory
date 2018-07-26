@@ -39,6 +39,9 @@ class HoldingsForm extends React.Component {
     referenceTables: PropTypes.object.isRequired,
     change: PropTypes.func,
     formatMsg: PropTypes.func,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {
