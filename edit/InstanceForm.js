@@ -270,6 +270,7 @@ InstanceForm.propTypes = {
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
   stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
     intl: PropTypes.shape({
       formatMessage: PropTypes.func,
     }),
