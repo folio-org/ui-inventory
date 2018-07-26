@@ -14,7 +14,7 @@ import stripesForm from '@folio/stripes-form';
 import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
-import ViewMetaData from "../../../stripes-smart-components/lib/ViewMetaData";
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';

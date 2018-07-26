@@ -12,9 +12,9 @@ import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import { Field, FieldArray } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import renderStatements from './holdingsStatementFields';
-import ViewMetaData from "../../../stripes-smart-components/lib/ViewMetaData";
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
