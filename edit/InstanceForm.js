@@ -24,7 +24,7 @@ import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import NoteFields from './noteFields';
 import LanguageFields from './languageFields';
-import ViewMetaData from "../../stripes-smart-components/lib/ViewMetaData";
+import ViewMetaData from '../../stripes-smart-components/lib/ViewMetaData';
 
 function validate(values, props) {
   const errors = {};
