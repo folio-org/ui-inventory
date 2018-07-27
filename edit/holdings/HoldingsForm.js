@@ -169,8 +169,8 @@ class HoldingsForm extends React.Component {
             <Row >
               <Col sm={5} smOffset={1}>
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
+                  label={`${formatMsg({ id: 'ui-inventory.permanentLocation' })} *`}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
                   name="permanentLocationId"
                   id="additem_permanentlocation"
                   component={LocationSelection}
@@ -185,7 +185,7 @@ class HoldingsForm extends React.Component {
               <Col sm={5} smOffset={1}>
                 <Field
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectTemporaryLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
                   name="temporaryLocationId"
                   id="additem_temporarylocation"
                   component={LocationSelection}

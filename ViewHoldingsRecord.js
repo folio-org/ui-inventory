@@ -236,7 +236,7 @@ class ViewHoldingsRecord extends React.Component {
                       <KeyValue label={formatMsg({ id: 'ui-inventory.permanent' })} value={holdingsPermanentLocation.name} />
                     </Col>
                     <Col>
-                      <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : null} />
+                      <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'} />
                     </Col>
                   </Row>
 
