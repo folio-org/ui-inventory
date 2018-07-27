@@ -423,10 +423,10 @@ class ViewItem extends React.Component {
               <br />
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(item, ['permanentLocation', 'name'], 'Inherit from holdings')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(item, ['permanentLocation', 'name'], '-')} />
                 </Col>
                 <Col sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], 'Inherit from holdings')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], '-')} />
                 </Col>
               </Row>
               <br />

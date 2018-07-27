@@ -224,7 +224,7 @@ class ItemForm extends React.Component {
                 <Field label={formatMsg({ id: 'ui-inventory.barcode' })} name="barcode" id="additem_barcode" component={TextField} required fullWidth />
                 <Field
                   label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
                   name="permanentLocation.id"
                   id="additem_permanentlocation"
                   component={LocationSelection}
@@ -236,7 +236,7 @@ class ItemForm extends React.Component {
 
                 <Field
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectTemporaryLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
                   name="temporaryLocation.id"
                   id="additem_temporarylocation"
                   component={LocationSelection}
