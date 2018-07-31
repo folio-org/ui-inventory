@@ -35,7 +35,7 @@ module.exports.test = function uiTest(uiTestCtx) {
         nightmare
           .wait('#clickable-newinventory')
           .click('#clickable-newinventory')
-          .wait(55)
+          .wait(56)
           .insert('input[name=title]', title)
           .insert('#input_instance_edition', ed)
           .click('#clickable-add-series')
