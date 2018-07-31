@@ -470,6 +470,7 @@ class ViewItem extends React.Component {
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
             intl={intl}
+            stripes={this.props.stripes}
           />
         </Layer>
 
