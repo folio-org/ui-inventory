@@ -384,6 +384,7 @@ class ViewInstance extends React.Component {
             formatMsg={formatMsg}
             instance={instance}
             referenceTables={referenceTables}
+            stripes={stripes}
           />
         </Layer>
       </Pane>
