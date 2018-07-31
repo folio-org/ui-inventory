@@ -275,6 +275,7 @@ class ViewHoldingsRecord extends React.Component {
             formatMsg={formatMsg}
             instance={instance}
             referenceTables={referenceTables}
+            stripes={this.props.stripes}
           />
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.copyHoldingsRecordDialog' })} >

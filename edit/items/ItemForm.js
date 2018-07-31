@@ -14,6 +14,7 @@ import stripesForm from '@folio/stripes-form';
 import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';
@@ -66,12 +67,13 @@ function asyncValidate(values, dispatch, props, blurredField) {
 }
 
 class ItemForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
     };
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   componentDidMount() {
@@ -190,7 +192,7 @@ class ItemForm extends React.Component {
                 <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
                 <div>
-                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  &nbsp;{`Holdings: ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </div>
             }
@@ -204,6 +206,9 @@ class ItemForm extends React.Component {
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
+                { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
+                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                }
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                 <Field
                   label={`${formatMsg({ id: 'ui-inventory.materialType' })} *`}
@@ -334,6 +339,9 @@ ItemForm.propTypes = {
   copy: PropTypes.bool,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func,
+  }).isRequired,
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
   }).isRequired,
 };
 
