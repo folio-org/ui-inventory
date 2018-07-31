@@ -12,6 +12,7 @@ import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -118,6 +119,7 @@ class InstanceForm extends React.Component {
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
+    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
   }
 
   onToggleSection({ id }) {
@@ -166,6 +168,9 @@ class InstanceForm extends React.Component {
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
 
+                { (initialValues.metadata && initialValues.metadata.createdDate) &&
+                <this.cViewMetaData metadata={initialValues.metadata} />
+                }
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>
@@ -265,6 +270,7 @@ InstanceForm.propTypes = {
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
   stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
     intl: PropTypes.shape({
       formatMessage: PropTypes.func,
     }),
