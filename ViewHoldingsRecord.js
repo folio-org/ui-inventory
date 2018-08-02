@@ -12,11 +12,11 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
-import ViewMetadata from './ViewMetadata';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -58,7 +58,7 @@ class ViewHoldingsRecord extends React.Component {
       },
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetadata = props.stripes.connect(ViewMetadata);
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -211,7 +211,7 @@ class ViewHoldingsRecord extends React.Component {
             >
               <br />
               { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                <this.cViewMetadata metadata={holdingsRecord.metadata} />
+                <this.cViewMetaData metadata={holdingsRecord.metadata} />
               }
               <Row>
                 <Col smOffset={0} sm={4}>
@@ -236,7 +236,7 @@ class ViewHoldingsRecord extends React.Component {
                       <KeyValue label={formatMsg({ id: 'ui-inventory.permanent' })} value={holdingsPermanentLocation.name} />
                     </Col>
                     <Col>
-                      <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : null} />
+                      <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'} />
                     </Col>
                   </Row>
 
@@ -275,6 +275,7 @@ class ViewHoldingsRecord extends React.Component {
             formatMsg={formatMsg}
             instance={instance}
             referenceTables={referenceTables}
+            stripes={this.props.stripes}
           />
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.copyHoldingsRecordDialog' })} >

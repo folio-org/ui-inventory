@@ -14,6 +14,7 @@ import stripesForm from '@folio/stripes-form';
 import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';
@@ -66,12 +67,13 @@ function asyncValidate(values, dispatch, props, blurredField) {
 }
 
 class ItemForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
     };
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   componentDidMount() {
@@ -106,8 +108,8 @@ class ItemForm extends React.Component {
     }
 
     if (temporaryLocation.isActive) {
+      setTimeout(() => this.props.change('temporaryLocation.id', temporaryLocation.id));
       this.setState({ prevTemporaryLocation: temporaryLocation });
-      setTimeout(() => this.props.change('temporaryLocationId', temporaryLocation.id));
     } else {
       this.setState({ confirmTemporaryLocation: true, temporaryLocation });
     }
@@ -190,7 +192,7 @@ class ItemForm extends React.Component {
                 <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
                 }
                 <div>
-                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  &nbsp;{`Holdings: ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </div>
             }
@@ -204,9 +206,12 @@ class ItemForm extends React.Component {
             </Row>
             <Row >
               <Col sm={5} smOffset={1}>
+                { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
+                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                }
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.materialType' })}
+                  label={`${formatMsg({ id: 'ui-inventory.materialType' })} *`}
                   name="materialType.id"
                   id="additem_materialType"
                   component={Select}
@@ -214,7 +219,7 @@ class ItemForm extends React.Component {
                   dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectMaterialType' }), value: '' }, ...materialTypeOptions]}
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.loanTypePermanent' })}
+                  label={`${formatMsg({ id: 'ui-inventory.loanTypePermanent' })} *`}
                   name="permanentLoanType.id"
                   id="additem_loanTypePerm"
                   component={Select}
@@ -224,7 +229,7 @@ class ItemForm extends React.Component {
                 <Field label={formatMsg({ id: 'ui-inventory.barcode' })} name="barcode" id="additem_barcode" component={TextField} required fullWidth />
                 <Field
                   label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectPermanentLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
                   name="permanentLocation.id"
                   id="additem_permanentlocation"
                   component={LocationSelection}
@@ -236,7 +241,7 @@ class ItemForm extends React.Component {
 
                 <Field
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectTemporaryLocation' })}
+                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
                   name="temporaryLocation.id"
                   id="additem_temporarylocation"
                   component={LocationSelection}
@@ -334,6 +339,9 @@ ItemForm.propTypes = {
   copy: PropTypes.bool,
   intl: PropTypes.shape({
     formatMessage: PropTypes.func,
+  }).isRequired,
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
   }).isRequired,
 };
 

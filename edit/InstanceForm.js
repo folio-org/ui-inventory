@@ -12,6 +12,7 @@ import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -33,6 +34,7 @@ function validate(values, props) {
 
   const requiredTextMessage = formatMsg({ id: 'ui-inventory.fillIn' });
   const requiredSelectMessage = formatMsg({ id: 'ui-inventory.selectToContinue' });
+  const requiredPublicationFieldMessage = formatMsg({ id: 'ui-inventory.onePublicationFieldToContinue' });
 
   if (!values.title) {
     errors.title = requiredTextMessage;
@@ -40,6 +42,29 @@ function validate(values, props) {
 
   if (!values.instanceTypeId) {
     errors.instanceTypeId = requiredSelectMessage;
+  }
+
+  // Language not required, but must be not null if supplied
+  if (values.languages && values.languages.length) {
+    const errorList = [];
+    values.languages.forEach((item, i) => {
+      if (!item) {
+        errorList[i] = requiredSelectMessage;
+      }
+    });
+    if (errorList.length) errors.languages = errorList;
+  }
+
+  if (values.publication) {
+    const errorList = [];
+    values.publication.forEach((item, i) => {
+      const entryErrors = {};
+      if (!item || (!item.publisher && !item.dateOfPublication && !item.place)) {
+        entryErrors.publisher = requiredPublicationFieldMessage;
+        errorList[i] = entryErrors;
+      }
+    });
+    if (errorList.length) errors.publication = errorList;
   }
 
   // the list itself is not required, but if a list is present,
@@ -76,7 +101,6 @@ function validate(values, props) {
       }
     }
   });
-
   return errors;
 }
 
@@ -97,6 +121,7 @@ class InstanceForm extends React.Component {
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
+    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
   }
 
   onToggleSection({ id }) {
@@ -145,13 +170,16 @@ class InstanceForm extends React.Component {
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
 
+                { (initialValues.metadata && initialValues.metadata.createdDate) &&
+                <this.cViewMetaData metadata={initialValues.metadata} />
+                }
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>
                       <Row>
                         <Col sm={8}>
                           <Field
-                            label={formatMsg({ id: 'ui-inventory.title' })}
+                            label={`${formatMsg({ id: 'ui-inventory.title' })} *`}
                             name="title"
                             id="input_instance_title"
                             component={TextField}
@@ -179,7 +207,7 @@ class InstanceForm extends React.Component {
                             id="select_instance_type"
                             type="text"
                             component={Select}
-                            label={formatMsg({ id: 'ui-inventory.resourceType' })}
+                            label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
                             dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
                             required
                           />
@@ -245,6 +273,7 @@ InstanceForm.propTypes = {
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
   stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
     intl: PropTypes.shape({
       formatMessage: PropTypes.func,
     }),

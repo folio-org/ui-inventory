@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
+import TitleManager from '@folio/stripes-core/src/components/TitleManager';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
@@ -14,6 +15,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Headline from '@folio/stripes-components/lib/Headline';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
@@ -24,7 +26,6 @@ import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
-import ViewMetadata from './ViewMetadata';
 import makeConnectedInstance from './ConnectedInstance';
 
 const emptyObj = {};
@@ -60,7 +61,7 @@ class ViewInstance extends React.Component {
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewItem = this.props.stripes.connect(ViewItem);
-    this.cViewMetadata = this.props.stripes.connect(ViewMetadata);
+    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
   }
@@ -171,7 +172,7 @@ class ViewInstance extends React.Component {
     }
 
     const instanceSub = () => {
-      if (instance.publication && instance.publication.length > 0) {
+      if (instance.publication && instance.publication.length > 0 && instance.publication[0]) {
         return `${instance.publication[0].publisher}${instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}`;
       }
       return null;
@@ -200,6 +201,7 @@ class ViewInstance extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
+        <TitleManager record={instance.title} />
         <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
         <Accordion
           open={this.state.accordions.instanceAccordion}
@@ -208,7 +210,7 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.instanceData' })}
         >
           { (instance.metadata && instance.metadata.createdDate) &&
-            <this.cViewMetadata metadata={instance.metadata} />
+            <this.cViewMetaData metadata={instance.metadata} />
           }
           <Row>
             <Col xs={12}>

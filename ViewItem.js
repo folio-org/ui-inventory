@@ -13,11 +13,11 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
+import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
-import ViewMetadata from './ViewMetadata';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -79,7 +79,7 @@ class ViewItem extends React.Component {
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.cViewMetadata = props.stripes.connect(ViewMetadata);
+    this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
   /**
@@ -299,7 +299,7 @@ class ViewItem extends React.Component {
               </Row>
               <br />
               { (item.metadata && item.metadata.createdDate) &&
-                <this.cViewMetadata metadata={item.metadata} />
+                <this.cViewMetaData metadata={item.metadata} />
               }
               { (item.barcode) &&
                 <Row>
@@ -423,10 +423,10 @@ class ViewItem extends React.Component {
               <br />
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(item, ['permanentLocation', 'name'], 'Inherit from holdings')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(item, ['permanentLocation', 'name'], '-')} />
                 </Col>
                 <Col sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], 'Inherit from holdings')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(item, ['temporaryLocation', 'name'], '-')} />
                 </Col>
               </Row>
               <br />
@@ -455,6 +455,7 @@ class ViewItem extends React.Component {
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
             intl={intl}
+            stripes={this.props.stripes}
           />
         </Layer>
         <Layer isOpen={query.layer === 'copyItem'} label="Copy Item Dialog">
