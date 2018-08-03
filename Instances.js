@@ -306,7 +306,7 @@ class Instances extends React.Component {
       parentResources={this.props.resources}
       parentMutator={this.props.mutator}
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
-      path={`${this.props.match.path}/view/:id/:holdingsrecordid?/:itemid?`}
+      path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult
     />);
   }
