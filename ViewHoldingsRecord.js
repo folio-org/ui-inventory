@@ -288,6 +288,7 @@ class ViewHoldingsRecord extends React.Component {
             instance={instance}
             copy
             referenceTables={referenceTables}
+            stripes={this.props.stripes}
           />
         </Layer>
       </div>

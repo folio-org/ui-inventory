@@ -131,6 +131,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
             intl={this.props.stripes.intl}
+            stripes={this.props.stripes}
           />
         </Layer>
       </Accordion>);

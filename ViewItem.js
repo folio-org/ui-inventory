@@ -412,7 +412,7 @@ class ViewItem extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLocation' })} value={_.get(permanentHoldingsLocation, ['name'], '')} />
                 </Col>
                 <Col sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(temporaryHoldingsLocation, ['name'], '')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLocation' })} value={_.get(temporaryHoldingsLocation, ['name'], '-')} />
                 </Col>
               </Row>
               <Row>
@@ -470,6 +470,7 @@ class ViewItem extends React.Component {
             holdingsRecord={holdingsRecord}
             referenceTables={referenceTables}
             intl={intl}
+            stripes={this.props.stripes}
           />
         </Layer>
 
