@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
 
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-
 class ViewMarc extends React.Component {
   static manifest = Object.freeze({
     marcRecord: {
@@ -26,17 +24,17 @@ class ViewMarc extends React.Component {
     const fields010andUp = marcJSON.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
     const formattedFields001to009 = fields001to009.map((field) => {
       const key = Object.keys(field)[0];
-      return <tr key={'field' + key} id={'field' + key} ><td key={'cell' + key} id={'cell' + key} colSpan="3">{key} {field[key].replace(/\\/g, ' ')}</td></tr>;
+      return <tr key={'00field' + key} id={'00field' + key} ><td key={'cell' + key} id={'cell' + key} colSpan="3">{key} {field[key].replace(/\\/g, ' ')}</td></tr>;
     });
-    const formattedFields010andUp = fields010andUp.map((field) => {
+    const formattedFields010andUp = fields010andUp.map((field, index) => {
       const key = Object.keys(field)[0];
       const subFields = (field[key].subfields).map((subField) => {
         const subKey = Object.keys(subField)[0];
         return [<span key={'span' + subKey}>&#8225;</span>, subKey, ' ', subField[subKey], ' '];
       });
       return (
-        <tr key={'field' + key} id={'field' + key}>
-          <td key={'cell1' + key} id={'cell1' + key}>{key} {field[key].ind1.replace(/\\/g, ' ')} {field[key].ind2.replace(/\\/g, ' ')}</td><td key={'cell2' + key} id={'cell2' + key} style={{ 'wordWrap': 'break-word' }}>{subFields}</td>
+        <tr key={'field-' + key + '-' + index} >
+          <td key={'cell1-' + key + '-' + index} style={{ 'verticalAlign': 'top' }}>{key} {field[key].ind1.replace(/\\/g, ' ')} {field[key].ind2.replace(/\\/g, ' ')}</td><td key={'cell2-' + key + '-' + index} style={{ 'whiteSpace': 'pre-wrap' }}><div>{subFields}</div></td>
         </tr>
       );
     });
@@ -54,24 +52,20 @@ class ViewMarc extends React.Component {
             dismissible
             onClose={this.props.onClose}
           >
-            <Row>
-              <Col sm={9} smOffset={1}>
-                <h3>MARC source record</h3>
-                <div style={{ 'whiteSpace': 'pre',
-                              'fontFamily': 'courier' }}
-                >
-                  <table border="0" style={{ 'tableLayout': 'fixed' }}>
-                    <tbody>
-                      <tr key="leader" id="tr-leader">
-                        <td key="leader" id="td-leader" colSpan="4">{leader}</td>
-                      </tr>
-                      {formattedFields001to009}
-                      {formattedFields010andUp}
-                    </tbody>
-                  </table>
-                </div>
-              </Col>
-            </Row>
+            <div style={{ 'marginLeft': '20px' }}>
+              <h3>MARC source record</h3>
+              <div style={{ 'whiteSpace': 'pre', 'fontFamily': 'courier' }}>
+                <table border="0" style={{ 'tableLayout': 'fixed' }}>
+                  <tbody>
+                    <tr key="leader" id="tr-leader">
+                      <td key="leader" id="td-leader" colSpan="4">{leader}</td>
+                    </tr>
+                    {formattedFields001to009}
+                    {formattedFields010andUp}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </Pane>
         </Layer>
       </div>
