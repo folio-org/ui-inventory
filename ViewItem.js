@@ -49,7 +49,7 @@ class ViewItem extends React.Component {
     },
     requests: {
       type: 'okapi',
-      path: 'circulation/requests?query=(itemId==:{itemid}) sortby requestDate desc',
+      path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled") sortby requestDate desc',
       records: 'requests',
     },
     // there is no canonical method to retrieve an item's "current" loan.
