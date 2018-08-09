@@ -7,7 +7,7 @@ import Link from 'react-router-dom/Link';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
+import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
@@ -72,6 +72,8 @@ class ViewItem extends React.Component {
     this.state = {
       accordions: {
         itemAccordion: true,
+        itemAvailabilityAccordion: true,
+        locationAccordion: true,
       },
       loan: null,
       borrower: null,
@@ -184,6 +186,14 @@ class ViewItem extends React.Component {
     });
   }
 
+  handleExpandAll = (obj) => {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.accordions = obj;
+      return newState;
+    });
+  }
+
   onCopy(item) {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
@@ -275,6 +285,7 @@ class ViewItem extends React.Component {
             dismissible
             onClose={this.props.onCloseViewItem}
           >
+            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row center="xs">
               <Col sm={6}>
                 {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
