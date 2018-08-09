@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
+import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Headline from '@folio/stripes-components/lib/Headline';
@@ -118,6 +118,14 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  handleExpandAll = (obj) => {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.accordions = obj;
+      return newState;
+    });
+  }
+
   onCopy(record) {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
@@ -183,6 +191,7 @@ class ViewHoldingsRecord extends React.Component {
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
           >
+            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row center="xs">
               <Col sm={6}>
                 {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
