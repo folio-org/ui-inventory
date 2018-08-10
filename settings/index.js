@@ -23,23 +23,6 @@ class InventorySettings extends React.Component {
 
     this.sections = [
       {
-        label: formatMessage({ id: 'ui-inventory.items' }),
-        pages: [
-          {
-            route: 'loantypes',
-            label: formatMessage({ id: 'ui-inventory.loanTypes' }),
-            component: LoanTypesSettings,
-            perm: 'ui-inventory.settings.loantypes',
-          },
-          {
-            route: 'materialtypes',
-            label: formatMessage({ id: 'ui-inventory.materialTypes' }),
-            component: MaterialTypesSettings,
-            perm: 'ui-inventory.settings.materialtypes',
-          },
-        ]
-      },
-      {
         label: formatMessage({ id: 'ui-inventory.instances' }),
         pages: [
           {
@@ -59,6 +42,23 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.resourceTypes' }),
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.items' }),
+        pages: [
+          {
+            route: 'loantypes',
+            label: formatMessage({ id: 'ui-inventory.loanTypes' }),
+            component: LoanTypesSettings,
+            perm: 'ui-inventory.settings.loantypes',
+          },
+          {
+            route: 'materialtypes',
+            label: formatMessage({ id: 'ui-inventory.materialTypes' }),
+            component: MaterialTypesSettings,
+            perm: 'ui-inventory.settings.materialtypes',
           },
         ]
       }
