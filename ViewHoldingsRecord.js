@@ -191,7 +191,6 @@ class ViewHoldingsRecord extends React.Component {
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
           >
-            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row center="xs">
               <Col sm={6}>
                 {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
@@ -200,79 +199,94 @@ class ViewHoldingsRecord extends React.Component {
                 }
               </Col>
             </Row>
-            <Row>
-              <Col sm={12}>
-                <AppIcon app="inventory" iconKey="holdings" size="small" /> {formatMsg({ id: 'ui-inventory.holdingsRecord' })}
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={12}>
-                <Headline size="medium" margin="medium">
-                  {holdingsRecord.permanentLocationId ? holdingsPermanentLocation.name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
-                </Headline>
-              </Col>
-            </Row>
+            <hr />
+            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Accordion
-              open={this.state.accordions.holdingsAccordion}
-              id="holdingsAccordion"
+              open={this.state.accordions.administrativeAccordion}
+              id="administrativeAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.holdingsData' })}
+              label={formatMsg({ id: 'ui-inventory.administrativeData' })}
             >
-              <br />
               { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+              <this.cViewMetaData metadata={holdingsRecord.metadata} />
               }
               <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsId' })} value={_.get(holdingsRecord, ['id'], '')} />
+                <Col sm={12}>
+                  <AppIcon app="inventory" iconKey="holdings" size="small" /> {formatMsg({ id: 'ui-inventory.holdingsRecord' })}
                 </Col>
               </Row>
-              <Accordion
-                open={this.state.accordions.locationAccordion}
-                id="locationAccordion"
-                onToggle={this.handleAccordionToggle}
-                label={formatMsg({ id: 'ui-inventory.location' })}
-              >
+              <Row>
+                <Col sm={12}>
+                  <Headline size="samll" margin="small">
+                    {holdingsRecord.permanentLocationId ? holdingsPermanentLocation.name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
+                  </Headline>
+                </Col>
+              </Row>
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsHrid' })} value={_.get(holdingsRecord, ['id'], '')} />
+                </Col>
+              </Row>
+            </Accordion>
+            <Accordion
+              open={this.state.accordions.locationAccordion}
+              id="locationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.location' })}
+            >
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.holdingsLocation' })}</strong>
+                </Col>
+              </Row>
+              <br />
+              { ((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId)) &&
                 <Row>
                   <Col smOffset={0} sm={4}>
-                    <strong>{formatMsg({ id: 'ui-inventory.holdingsLocation' })}</strong>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.permanent' })} value={holdingsPermanentLocation.name} />
+                  </Col>
+                  <Col>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'} />
                   </Col>
                 </Row>
-                <br />
-                { ((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId)) &&
-                  <Row>
-                    <Col smOffset={0} sm={4}>
-                      <KeyValue label={formatMsg({ id: 'ui-inventory.permanent' })} value={holdingsPermanentLocation.name} />
-                    </Col>
-                    <Col>
-                      <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'} />
-                    </Col>
-                  </Row>
 
-                }
-              </Accordion>
-              { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
-                <Row>
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.platform' })} value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
-                  </Col>
-                </Row>
-              }
-              { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
-                <Row>
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.uri' })} value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
-                  </Col>
-                </Row>
-              }
-              { (holdingsRecord.holdingsStatements.length > 0) &&
-                <Row>
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsStatements' })} value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                  </Col>
-                </Row>
               }
             </Accordion>
+            <Accordion
+            open={this.state.accordions.holdingsAccordion}
+            id="holdingsAccordion"
+            onToggle={this.handleAccordionToggle}
+            label={formatMsg({ id: 'ui-inventory.holdings' })}
+            >
+              { (holdingsRecord.holdingsStatements.length > 0) &&
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsStatements' })} value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                </Col>
+              </Row>
+              }
+            </Accordion>
+            <Accordion
+              open={this.state.accordions.electronicAccessAccordion}
+              id="electronicAccessAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+            >
+              { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.uri' })} value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
+                </Col>
+              </Row>
+              }
+            </Accordion>
+            { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.platform' })} value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
+                </Col>
+              </Row>
+            }
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.editHoldingsRecordDialog' })}>
