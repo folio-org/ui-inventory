@@ -217,7 +217,7 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               <Row>
                 <Col sm={12}>
-                  <Headline size="samll" margin="small">
+                  <Headline size="small" margin="small">
                     {holdingsRecord.permanentLocationId ? holdingsPermanentLocation.name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
                   </Headline>
                 </Col>
