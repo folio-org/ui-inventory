@@ -10,11 +10,9 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Headline from '@folio/stripes-components/lib/Headline';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
 
 import ItemForm from './edit/items/ItemForm';
@@ -318,11 +316,11 @@ class ViewItem extends React.Component {
                 <Col xs={3}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.itemHrid' })} value={_.get(item, ['id'], '')} />
                 </Col>
-              { (item.barcode) &&
-                <Col xs={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
-                </Col>
-              }
+                { (item.barcode) &&
+                  <Col xs={3}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
+                  </Col>
+                }
               </Row>
             </Accordion>
             <Accordion
@@ -338,16 +336,16 @@ class ViewItem extends React.Component {
               </Row>
               <Row>
                 { (item.pieceIdentifiers) &&
-                    <Col smOffset={0} sm={4}>
-                      <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                    </Col>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
                 }
                 { (item.numberOfPieces) &&
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
-                </Col>
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
+                  </Col>
                 }
-                </Row>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.enumerationAccordion}
@@ -356,16 +354,16 @@ class ViewItem extends React.Component {
               label={formatMsg({ id: 'ui-inventory.enumerationData' })}
             >
               <Row>
-              { (item.enumeration) &&
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
-                </Col>
-              }
-              { (item.chronology) &&
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
-                </Col>
-              }
+                { (item.enumeration) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
+                  </Col>
+                }
+                { (item.chronology) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
+                  </Col>
+                }
               </Row>
             </Accordion>
             <Accordion
@@ -394,16 +392,16 @@ class ViewItem extends React.Component {
               label={intl.formatMessage({ id: 'ui-inventory.item.availability' })}
             >
               <Row>
-              { (item.permanentLoanType) &&
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
-                </Col>
-              }
-              { (item.temporaryLoanType) &&
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
-                </Col>
-              }
+                { (item.permanentLoanType) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
+                  </Col>
+                }
+                { (item.temporaryLoanType) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
+                  </Col>
+                }
               </Row>
               <Row>
                 <Col smOffset={0} sm={4}>
