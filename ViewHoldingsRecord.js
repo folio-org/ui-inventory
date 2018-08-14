@@ -280,13 +280,6 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               }
             </Accordion>
-            { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.platformId) &&
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.platform' })} value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], '') ? platforms.records.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId']) === platform.id).name : null} />
-                </Col>
-              </Row>
-            }
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.editHoldingsRecordDialog' })}>
