@@ -253,10 +253,10 @@ class ViewHoldingsRecord extends React.Component {
               }
             </Accordion>
             <Accordion
-            open={this.state.accordions.holdingsAccordion}
-            id="holdingsAccordion"
-            onToggle={this.handleAccordionToggle}
-            label={formatMsg({ id: 'ui-inventory.holdings' })}
+              open={this.state.accordions.holdingsAccordion}
+              id="holdingsAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.holdings' })}
             >
               { (holdingsRecord.holdingsStatements.length > 0) &&
               <Row>
