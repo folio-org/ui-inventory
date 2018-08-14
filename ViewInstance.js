@@ -222,11 +222,11 @@ class ViewInstance extends React.Component {
         </Row>
         <br />
         <Row>
-        <Col xs={12}>
-          <Headline size="small" margin="small">
-            {instance.title}
-          </Headline>
-        </Col>
+          <Col xs={12}>
+            <Headline size="small" margin="small">
+              {instance.title}
+            </Headline>
+          </Col>
         </Row>
         <Accordion
           open={this.state.accordions.instanceAccordion}
@@ -246,11 +246,11 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           <Row>
-          { (instance.series.length > 0) &&
+            { (instance.series.length > 0) &&
               <Col xs={12}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['series'], '')} />
               </Col>
-          }
+            }
           </Row>
         </Accordion>
         <Accordion
@@ -285,122 +285,122 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
         }
-      </Accordion>
-      <Accordion
-        open={this.state.accordions.contributors}
-        id="contributorsAccordion"
-        onToggle={this.handleAccordionToggle}
-        label={formatMsg({ id: 'ui-inventory.contributors' })}
-      >
-        { (instance.contributors.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.contributor' })} value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
-          </Col>
-        </Row>
-        }
-      </Accordion>
-      <Accordion
-        open={this.state.accordions.descriptiveData}
-        id="descriptiveAccordion"
-        onToggle={this.handleAccordionToggle}
-        label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
-      >
-        { (instance.publication.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.publisher' })} value={formatters.publishersFormatter(instance)} />
-          </Col>
-        </Row>
-        }
-        <Row>
-        { (!!instance.edition) &&
-          <Col xs={3}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['edition'], '')} />
-          </Col>
-        }
-        { (instance.physicalDescriptions.length > 0) &&
-          <Col xs={3}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
-          </Col>
-        }
-        </Row>
-        <Row>
-          <Col xs={3}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.resourceType' })} value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
-          </Col>
-        </Row>
-        <Row>
-        { (instance.instanceFormatId) &&
-          <Col xs={3}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
-          </Col>
-        }
-        </Row>
-        { (instance.languages.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.language' })} value={formatters.languagesFormatter(instance)} />
-          </Col>
-        </Row>
-        }
-      </Accordion>
-      <Accordion
-        open={this.state.accordions.notes}
-        id="notesAccordion"
-        onToggle={this.handleAccordionToggle}
-        label={formatMsg({ id: 'ui-inventory.notes' })}
-      >
-        { (instance.notes.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.notes' })} value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
-          </Col>
-        </Row>
-        }
-      </Accordion>
-      <Accordion
-        open={this.state.accordions.electronicAccess}
-        id="electronicAccessAccordion"
-        onToggle={this.handleAccordionToggle}
-        label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
-      >
-        { (instance.urls.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
-          </Col>
-        </Row>
-        }
-      </Accordion>
-      <Accordion
-        open={this.state.accordions.subjects}
-        id="subjectsAccordion"
-        onToggle={this.handleAccordionToggle}
-        label={formatMsg({ id: 'ui-inventory.subjects' })}
-      >
-        { (instance.subjects.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.subjectHeadings' })} value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
-          </Col>
-        </Row>
-        }
-      </Accordion>
-      <Accordion
-        open={this.state.accordions.classification}
-        id="classificationAccordion"
-        onToggle={this.handleAccordionToggle}
-        label={formatMsg({ id: 'ui-inventory.classification' })}
-      >
-        { (instance.classifications.length > 0) &&
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={formatMsg({ id: 'ui-inventory.classification' })} value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
-          </Col>
-        </Row>
-        }
-      </Accordion>
+        </Accordion>
+        <Accordion
+          open={this.state.accordions.contributors}
+          id="contributorsAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.contributors' })}
+        >
+          { (instance.contributors.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.contributor' })} value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
+            </Col>
+          </Row>
+          }
+        </Accordion>
+        <Accordion
+          open={this.state.accordions.descriptiveData}
+          id="descriptiveAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
+        >
+          { (instance.publication.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.publisher' })} value={formatters.publishersFormatter(instance)} />
+            </Col>
+          </Row>
+          }
+          <Row>
+            { (!!instance.edition) &&
+              <Col xs={3}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['edition'], '')} />
+              </Col>
+            }
+            { (instance.physicalDescriptions.length > 0) &&
+              <Col xs={3}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+              </Col>
+            }
+          </Row>
+          <Row>
+            <Col xs={3}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceType' })} value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+            </Col>
+          </Row>
+          <Row>
+            { (instance.instanceFormatId) &&
+              <Col xs={3}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+              </Col>
+            }
+          </Row>
+          { (instance.languages.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.language' })} value={formatters.languagesFormatter(instance)} />
+            </Col>
+          </Row>
+          }
+        </Accordion>
+        <Accordion
+          open={this.state.accordions.notes}
+          id="notesAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.notes' })}
+        >
+          { (instance.notes.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.notes' })} value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+            </Col>
+          </Row>
+          }
+        </Accordion>
+        <Accordion
+          open={this.state.accordions.electronicAccess}
+          id="electronicAccessAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+        >
+          { (instance.urls.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+            </Col>
+          </Row>
+          }
+        </Accordion>
+        <Accordion
+          open={this.state.accordions.subjects}
+          id="subjectsAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.subjects' })}
+        >
+          { (instance.subjects.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.subjectHeadings' })} value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
+            </Col>
+          </Row>
+          }
+        </Accordion>
+        <Accordion
+          open={this.state.accordions.classification}
+          id="classificationAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.classification' })}
+        >
+          { (instance.classifications.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.classification' })} value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
+            </Col>
+          </Row>
+          }
+        </Accordion>
         { (!holdingsrecordid && !itemid) ?
           <Switch>
             <Route
