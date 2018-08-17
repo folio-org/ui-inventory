@@ -119,8 +119,9 @@
   "updateHoldingsRecord": "Update Holdings Record",
   "copyHolding": "Copy Holding",
   "editHoldings": "Edit Holdings",
-  "instanceData": "Instance data",
+  "instanceData": "Administrative data",
   "instanceId": "Instance ID",
+  "instanceHrid": "Instance HRID",
   "metadataSource": "Metadata source",
   "tba": "TBA",
   "resourceIdentifier": "Resource identifier",
@@ -153,5 +154,6 @@
   "confirmLocation.message": "This location has a status of inactive. Are you sure you want to select this location?",
   "confirmLocation.header": "Inactive location",
   "contributorType": "Contributor type",
-  "contributorTypes": "Contributor types"
+  "contributorTypes": "Contributor types",
+  "electronicAccess": "Electronic access"
 }
