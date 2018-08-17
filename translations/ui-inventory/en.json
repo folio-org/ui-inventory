@@ -109,6 +109,7 @@
   "viewHoldingsRecord": "View Holdings Record",
   "holdingsData": "Holdings data",
   "holdingsId": "Holdings ID",
+  "holdingsHrid": "Holdings HRID",
   "holdingsStatement": "Holdings Statement",
   "holdingsStatements": "Holdings statements",
   "removeStatement": "Remove statement {num}",
@@ -155,5 +156,6 @@
   "confirmLocation.header": "Inactive location",
   "contributorType": "Contributor type",
   "contributorTypes": "Contributor types",
-  "electronicAccess": "Electronic access"
+  "electronicAccess": "Electronic Access",
+  "administrativeData": "Administrative data"
 }
