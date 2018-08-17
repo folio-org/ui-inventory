@@ -38,7 +38,7 @@ class ViewInstance extends React.Component {
     query: {},
     selectedInstance: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{id}',
+      path: 'inventory/instances/:{id}',
       clear: false,
     },
     holdings: {

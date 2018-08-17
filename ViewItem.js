@@ -35,7 +35,7 @@ class ViewItem extends React.Component {
     },
     instances1: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{id}',
+      path: 'inventory/instances/:{id}',
     },
     materialTypes: {
       type: 'okapi',

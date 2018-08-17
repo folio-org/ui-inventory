@@ -77,7 +77,7 @@ class Instances extends React.Component {
       records: 'instances',
       recordsRequired: '%{resultCount}',
       perRequest: 30,
-      path: 'instance-storage/instances',
+      path: 'inventory/instances',
       GET: {
         params: {
           query: (...args) => {
