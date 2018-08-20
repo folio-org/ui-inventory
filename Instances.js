@@ -62,6 +62,11 @@ const searchableIndexes = [
 ];
 
 class Instances extends React.Component {
+  static defaultProps = {
+    browseOnly: false,
+    showSingleResult: true,
+  }
+
   static manifest = Object.freeze({
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
     query: {
@@ -148,7 +153,7 @@ class Instances extends React.Component {
     contributorTypes: {
       type: 'okapi',
       records: 'contributorTypes',
-      path: 'contributor-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'contributor-types?limit=400&query=cql.allRecords=1 sortby name',
     },
     contributorNameTypes: {
       type: 'okapi',
@@ -247,7 +252,7 @@ class Instances extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { resources, showSingleResult, browseOnly } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
         || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
@@ -307,7 +312,9 @@ class Instances extends React.Component {
       parentMutator={this.props.mutator}
       detailProps={{ referenceTables, onCopy: this.copyInstance }}
       path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-      showSingleResult
+      showSingleResult={showSingleResult}
+      browseOnly={browseOnly}
+      onSelectRow={this.props.onSelectRow}
     />);
   }
 }
@@ -362,6 +369,9 @@ Instances.propTypes = {
       update: PropTypes.func,
     }),
   }).isRequired,
+  showSingleResult: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+  browseOnly: PropTypes.bool,
+  onSelectRow: PropTypes.func,
 };
 
 export default Instances;
