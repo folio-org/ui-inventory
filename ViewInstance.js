@@ -271,6 +271,25 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           }
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.indexTitle' })} value={_.get(instance, ['indexTitle'], '')} />
+            </Col>
+          </Row>
+          { (instance.precedingTitle.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.precedingTitle' })} value={formatters.precedingTitlesFormatter(instance)} />
+            </Col>
+          </Row>
+          }
+          { (instance.succeedingTitle.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.succeedingTitle' })} value={formatters.succeedingTitlesFormatter(instance)} />
+            </Col>
+          </Row>
+          }
         </Accordion>
         <Accordion
           open={this.state.accordions.identifiers}

@@ -21,6 +21,8 @@ import IdentifierFields from './identifierFields';
 import SubjectFields from './subjectFields';
 import ClassificationFields from './classificationFields';
 import PublicationFields from './publicationFields';
+import PrecedingTitleFields from "./precedingTitleFields";
+import SucceedingTitleFields from "./succeedingTitleFields";
 import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import NoteFields from './noteFields';
@@ -33,6 +35,9 @@ function validate(values, props) {
   const requiredTextMessage = formatMsg({ id: 'ui-inventory.fillIn' });
   const requiredSelectMessage = formatMsg({ id: 'ui-inventory.selectToContinue' });
   const requiredPublicationFieldMessage = formatMsg({ id: 'ui-inventory.onePublicationFieldToContinue' });
+  const requiredPrecedingTitleFieldMessage = formatMsg({ id: 'ui-inventory.onePrecedingTitleFieldToContinue' });
+  const requiredSucceedingTitleFieldMessage = formatMsg({ id: 'ui-inventory.oneSucceedingTitleFieldToContinue' });
+
 
   if (!values.title) {
     errors.title = requiredTextMessage;
@@ -57,12 +62,36 @@ function validate(values, props) {
     const errorList = [];
     values.publication.forEach((item, i) => {
       const entryErrors = {};
-      if (!item || (!item.publisher && !item.dateOfPublication && !item.place)) {
+      if (!item || (!item.publisher && !item.dateOfPublication && !item.place && !item.role)) {
         entryErrors.publisher = requiredPublicationFieldMessage;
         errorList[i] = entryErrors;
       }
     });
     if (errorList.length) errors.publication = errorList;
+  }
+
+  if (values.precedingTitle) {
+    const errorList = [];
+    values.publication.forEach((item, i) => {
+      const entryErrors = {};
+      if (!item || (!item.title && !item.issn && !item.isbn)) {
+        entryErrors.precedingTitle = requiredPrecedingTitleFieldMessage;
+        errorList[i] = entryErrors;
+      }
+    });
+    if (errorList.length) errors.precedingTitle = errorList;
+  }
+
+  if (values.succeedingTitle) {
+    const errorList = [];
+    values.publication.forEach((item, i) => {
+      const entryErrors = {};
+      if (!item || (!item.title && !item.issn && !item.isbn)) {
+        entryErrors.succeedingTitle = requiredSucceedingTitleFieldMessage;
+        errorList[i] = entryErrors;
+      }
+    });
+    if (errorList.length) errors.succeedingTitle = errorList;
   }
 
   // the list itself is not required, but if a list is present,
@@ -167,17 +196,23 @@ class InstanceForm extends React.Component {
           <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
             <Row>
               <Col sm={12}><Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
-
-                { (initialValues.metadata && initialValues.metadata.createdDate) &&
-                <this.cViewMetaData metadata={initialValues.metadata} />
-                }
-                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.administrativeData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.administrativeDataAccordion} id="administrativeDataAccordion">
+                  { (initialValues.metadata && initialValues.metadata.createdDate) &&
+                  <this.cViewMetaData metadata={initialValues.metadata} />
+                  }
+                  <Row>
+                    <Col sm={9}>
+                      <SeriesFields formatMsg={formatMsg} />
+                    </Col>
+                  </Row>
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.titleAccordion} id="titleAccordion">
                   <Row>
                     <Col sm={9}>
                       <Row>
                         <Col sm={8}>
                           <Field
-                            label={`${formatMsg({ id: 'ui-inventory.title' })} *`}
+                            label={`${formatMsg({ id: 'ui-inventory.resourceTitle' })} *`}
                             name="title"
                             id="input_instance_title"
                             component={TextField}
@@ -196,20 +231,45 @@ class InstanceForm extends React.Component {
                         </Col>
                       </Row>
                       <AlternativeTitles formatMsg={formatMsg} />
-                      <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
                       <Row>
                         <Col sm={8}>
-                          <Field
-                            name="instanceTypeId"
-                            id="select_instance_type"
-                            type="text"
-                            component={Select}
-                            label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
-                            dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
-                            required
-                          />
+                          <Field label={formatMsg({ id: 'ui-inventory.indexTitle' })} name="indexTitle" id="input_instance_indexTitle" component={TextField} fullWidth />
                         </Col>
                       </Row>
+                      <PrecedingTitleFields formatMsg={formatMsg} />
+                      <SucceedingTitleFields formatMsg={formatMsg} />
+                    </Col>
+                  </Row>
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.identifiers' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.identifiersAccordion} id="identifiersAccordion">
+                  <IdentifierFields identifierTypes={referenceTables.identifierTypes} formatMsg={formatMsg} />
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.contributors' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.contributionsAccordion} id="contributionsAccordion">
+                  <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.descriptiveData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.desctiptiveDataAccordion} id="desctiptiveDataAccordion">
+                  <Row>
+                    <Col sm={9}>
+                      <PublicationFields formatMsg={formatMsg} />
+                      <Row>
+                        <Col sm={8}>
+                          <Field label={formatMsg({ id: 'ui-inventory.edition' })} name="edition" id="input_instance_edition" component={TextField} fullWidth />
+                        </Col>
+                      </Row>
+                      <DescriptionFields formatMsg={formatMsg} />
+                      <Row>
+                      <Col sm={8}>
+                        <Field
+                          name="instanceTypeId"
+                          id="select_instance_type"
+                          type="text"
+                          component={Select}
+                          label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
+                          required
+                        />
+                      </Col>
+                    </Row>
                       <Row>
                         <Col sm={8}>
                           <Field
@@ -221,34 +281,21 @@ class InstanceForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <IdentifierFields identifierTypes={referenceTables.identifierTypes} formatMsg={formatMsg} />
-                    </Col>
-                  </Row>
-                </Accordion>
-                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.descriptiveData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection2} id="instanceSection2">
-                  <Row>
-                    <Col sm={9}>
-                      <PublicationFields formatMsg={formatMsg} />
-                      <Row>
-                        <Col sm={8}>
-                          <Field label={formatMsg({ id: 'ui-inventory.edition' })} name="edition" id="input_instance_edition" component={TextField} fullWidth />
-                        </Col>
-                      </Row>
-                      <DescriptionFields formatMsg={formatMsg} />
                       <LanguageFields formatMsg={formatMsg} />
-                      <URLFields formatMsg={formatMsg} />
                     </Col>
                   </Row>
                 </Accordion>
-                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.contentData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection3} id="instanceSection3">
-                  <Row>
-                    <Col sm={9}>
-                      <SeriesFields formatMsg={formatMsg} />
-                      <SubjectFields formatMsg={formatMsg} />
-                      <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
-                      <NoteFields formatMsg={formatMsg} />
-                    </Col>
-                  </Row>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.notes' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.notesAccordion} id="notesAccordion">
+                  <NoteFields formatMsg={formatMsg} />
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.electronicAccess' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.electronicAccessAccordion} id="electronicAccessAccordion">
+                  <URLFields formatMsg={formatMsg} />
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.subjects' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.subjectsAccordion} id="subjectsAccordion">
+                  <SubjectFields formatMsg={formatMsg} />
+                </Accordion>
+                <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.classification' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.classificationAccordion} id="classificationAccordion">
+                  <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
                 </Accordion>
               </Col>
             </Row>

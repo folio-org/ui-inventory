@@ -33,7 +33,27 @@ export default {
     const formatted = [];
     if (r.publication && r.publication.length) {
       r.publication.forEach((pub) => {
-        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+        if (pub !== null) formatted.push(`${pub.publisher}${pub.role ? `, ${pub.role}` : ''}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+      });
+    }
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
+  },
+
+  precedingTitlesFormatter: (r) => {
+    const formatted = [];
+    if (r.precedingTitle && r.precedingTitle.length) {
+      r.precedingTitle.forEach((pre) => {
+        if (pre !== null) formatted.push(`${pre.Title}${pre.issn ? `, ${pre.issn}` : ''}${pre.isbn ? `, ${pre.isbn}` : ''}`);
+      });
+    }
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
+  },
+
+  succeedingTitlesFormatter: (r) => {
+    const formatted = [];
+    if (r.succeedingTitle && r.succeedingTitle.length) {
+      r.succeedingTitle.forEach((pre) => {
+        if (pre !== null) formatted.push(`${pre.Title}${pre.issn ? `, ${pre.issn}` : ''}${pre.isbn ? `, ${pre.isbn}` : ''}`);
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);
