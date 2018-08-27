@@ -29,6 +29,10 @@ class ItemsPerHoldingsRecord extends React.Component {
     loanTypes: {
       type: 'okapi',
       path: 'loan-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '40',
+      },
       records: 'loantypes',
     },
     items: {
