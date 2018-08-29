@@ -52,8 +52,18 @@ export default {
   succeedingTitlesFormatter: (r) => {
     const formatted = [];
     if (r.succeedingTitle && r.succeedingTitle.length) {
-      r.succeedingTitle.forEach((pre) => {
-        if (pre !== null) formatted.push(`${pre.Title}${pre.issn ? `, ${pre.issn}` : ''}${pre.isbn ? `, ${pre.isbn}` : ''}`);
+      r.succeedingTitle.forEach((suc) => {
+        if (suc !== null) formatted.push(`${suc.Title}${suc.issn ? `, ${suc.issn}` : ''}${suc.isbn ? `, ${suc.isbn}` : ''}`);
+      });
+    }
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
+  },
+
+  urlsFormatter: (r) => {
+    const formatted = [];
+    if (r.url && r.url.length) {
+      r.url.forEach((url) => {
+        if (url !== null) formatted.push(`${url.urlRelationship}${url.url ? `, ${url.url}` : ''}${url.linkText ? `, ${rul.linkText}` : ''}${url.materialsSpecified ? `, ${rul.materialsSpecified}` : ''}${url.urlPublicNote ? `, ${rul.urlPublicNote}` : ''}`);
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);

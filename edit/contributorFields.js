@@ -28,11 +28,6 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
       addButtonId="clickable-add-contributor"
       template={[
         {
-          label: 'Name',
-          name: 'name',
-          component: TextField,
-        },
-        {
           label: 'Name Type *',
           name: 'contributorNameTypeId',
           component: Select,
@@ -40,9 +35,9 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           required: true,
         },
         {
-          label: 'Primary',
-          name: 'primary',
-          component: Checkbox,
+          label: 'Name',
+          name: 'name',
+          component: TextField,
         },
         {
           label: 'Type',
@@ -54,6 +49,11 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
           label: 'Type, free text',
           name: 'contributorTypeText',
           component: TextField,
+        },
+        {
+          label: 'Primary',
+          name: 'primary',
+          component: Checkbox,
         },
       ]}
       newItemTemplate={{ name: '', contributorNameTypeId: '', primary: '', contributorTypeId: '', contributorTypeText: '' }}

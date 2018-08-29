@@ -276,6 +276,13 @@ class ViewInstance extends React.Component {
               <KeyValue label={formatMsg({ id: 'ui-inventory.indexTitle' })} value={_.get(instance, ['indexTitle'], '')} />
             </Col>
           </Row>
+          { (!!instance.seriesStatement) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['seriesStatement'], '')} />
+            </Col>
+          </Row>
+          }
           { (instance.precedingTitle.length > 0) &&
           <Row>
             <Col xs={12}>
@@ -338,11 +345,11 @@ class ViewInstance extends React.Component {
                 <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['edition'], '')} />
               </Col>
             }
-            { (instance.physicalDescriptions.length > 0) &&
-              <Col xs={3}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
-              </Col>
-            }
+            {/*{ (instance.physicalDescriptions.length > 0) &&*/}
+              {/*<Col xs={3}>*/}
+                {/*<KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />*/}
+              {/*</Col>*/}
+            {/*}*/}
           </Row>
           <Row>
             <Col xs={3}>
@@ -384,13 +391,13 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
         >
-          { (instance.urls.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
-            </Col>
-          </Row>
-          }
+          {/*{ (instance.urls.length > 0) &&*/}
+          {/*<Row>*/}
+            {/*<Col xs={12}>*/}
+              {/*<KeyValue label={formatMsg({ id: 'ui-inventory.url' })} value={formatters.urlsFormatter(instance)} />*/}
+            {/*</Col>*/}
+          {/*</Row>*/}
+          {/*}*/}
         </Accordion>
         <Accordion
           open={this.state.accordions.subjects}

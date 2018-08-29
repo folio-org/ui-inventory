@@ -236,6 +236,11 @@ class InstanceForm extends React.Component {
                           <Field label={formatMsg({ id: 'ui-inventory.indexTitle' })} name="indexTitle" id="input_instance_indexTitle" component={TextField} fullWidth />
                         </Col>
                       </Row>
+                      <Row>
+                        <Col sm={8}>
+                          {/*<Field label={formatMsg({ id: 'ui-inventory.seriesStatement' })} name="seriesStatement" id="input_instance_seriesStatement" component={TextField} fullWidth />*/}
+                        </Col>
+                      </Row>
                       <PrecedingTitleFields formatMsg={formatMsg} />
                       <SucceedingTitleFields formatMsg={formatMsg} />
                     </Col>
@@ -289,7 +294,7 @@ class InstanceForm extends React.Component {
                   <NoteFields formatMsg={formatMsg} />
                 </Accordion>
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.electronicAccess' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.electronicAccessAccordion} id="electronicAccessAccordion">
-                  <URLFields formatMsg={formatMsg} />
+                  {/*<URLFields formatMsg={formatMsg} />*/}
                 </Accordion>
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.subjects' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.subjectsAccordion} id="subjectsAccordion">
                   <SubjectFields formatMsg={formatMsg} />

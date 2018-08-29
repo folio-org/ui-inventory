@@ -166,5 +166,9 @@
   "contributorTypes": "Contributor types",
   "isbn": "ISBN",
   "issn": "ISSN",
-  "electronicAccess": "Electronic access"
+  "electronicAccess": "Electronic access",
+  "urlRelationship": "URL relationship",
+  "linkText": "Link text",
+  "materialsSpecified": "Materials specified",
+  "urlPublicNotes": "URL public notes"
 }
