@@ -4,7 +4,7 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import RepeatableField from '@folio/stripes-components/lib/RepeatableField';
 
-const ContainingInstanceFields = ({ instanceRelationshipTypes, formatMsg }) => {
+const ChildInstanceFields = ({ instanceRelationshipTypes, formatMsg }) => {
   const relationshipOptions = instanceRelationshipTypes.map(
     it => ({
       label: it.name,
@@ -14,32 +14,32 @@ const ContainingInstanceFields = ({ instanceRelationshipTypes, formatMsg }) => {
 
   return (
     <RepeatableField
-      name="containingInstances"
-      label="Containing instances"
-      addLabel="+ Add containing instance"
-      addButtonId="clickable-add-containinginstance"
+      name="childInstances"
+      label="Child instances"
+      addLabel="+ Add child instance"
+      addButtonId="clickable-add-childinstance"
       template={[
         {
-          label: 'Containing instance',
-          name: 'instanceId',
+          label: 'Child instance',
+          name: 'subInstanceId',
           component: TextField,
         },
         {
           label: 'Type of Relation *',
-          name: 'relationshipTypeId',
+          name: 'instanceRelationshipTypeId',
           component: Select,
           dataOptions: [{ label: 'Select type', value: '' }, ...relationshipOptions],
           required: true,
         },
       ]}
-      newItemTemplate={{ relatedInstanceId: '', relationshipTypeId: '' }}
+      newItemTemplate={{ subInstanceId: '', relationshipTypeId: '' }}
     />
   );
 };
 
-ContainingInstanceFields.propTypes = {
+ChildInstanceFields.propTypes = {
   instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object),
   formatMsg: PropTypes.func,
 };
 
-export default ContainingInstanceFields;
+export default ChildInstanceFields;

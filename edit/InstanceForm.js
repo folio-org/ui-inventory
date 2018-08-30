@@ -25,8 +25,8 @@ import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import NoteFields from './noteFields';
 import LanguageFields from './languageFields';
-import ContainedInstanceFields from './containedInstanceFields';
-import ContainingInstanceFields from './containingInstanceFields';
+import ChildInstanceFields from './childInstanceFields';
+import ParentInstanceFields from './parentInstanceFields';
 
 function validate(values, props) {
   const errors = {};
@@ -197,7 +197,8 @@ class InstanceForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <ContainingInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
+                      <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
+                      <ChildInstanceFields  instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                       <AlternativeTitles formatMsg={formatMsg} />
                       <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
                       <Row>
