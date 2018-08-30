@@ -20,12 +20,13 @@ const ChildInstanceFields = ({ instanceRelationshipTypes, formatMsg }) => {
       addButtonId="clickable-add-childinstance"
       template={[
         {
-          label: 'Child instance',
+          label: 'Child instance *',
           name: 'subInstanceId',
           component: TextField,
+          required: true,
         },
         {
-          label: 'Type of Relation *',
+          label: 'Type of relation *',
           name: 'instanceRelationshipTypeId',
           component: Select,
           dataOptions: [{ label: 'Select type', value: '' }, ...relationshipOptions],
