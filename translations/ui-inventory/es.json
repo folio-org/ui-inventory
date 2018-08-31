@@ -1,6 +1,6 @@
 {
-    "inventory.label": "Bestand",
-    "resultCount": "{count, number} {count, plural, one {Datensatz} other {Datensätze}} gefunden",
+    "inventory.label": "Inventory",
+    "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
     "item.availability": "Availability",
     "item.availability.itemStatus": "Item status",
     "item.availability.itemStatusDate": "Item status date",
@@ -156,7 +156,7 @@
     "itemCallNumber": "Item Call number",
     "holdingsNotes": "Holdings notes",
     "electronicAccess": "Electronic Access",
-    "meta.title": "Bestand",
+    "meta.title": "Inventory",
     "location": "Location",
     "callNumber": "Call number",
     "title": "Title",
