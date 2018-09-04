@@ -291,6 +291,7 @@ class Instances extends React.Component {
     };
 
     const resultsFormatter = {
+      'relation': r => formatters.relationsFormatter(r, instanceRelationshipTypes),
       'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
@@ -310,7 +311,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'contributors', 'publishers']}
+      visibleColumns={['title', 'relation', 'contributors', 'publishers']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
@@ -323,7 +324,7 @@ class Instances extends React.Component {
       path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult={showSingleResult}
       browseOnly={browseOnly}
-      onSelectRow={this.props.onSelectRow}
+      
     />);
   }
 }
@@ -380,7 +381,6 @@ Instances.propTypes = {
   }).isRequired,
   showSingleResult: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   browseOnly: PropTypes.bool,
-  onSelectRow: PropTypes.func,
 };
 
 export default Instances;
