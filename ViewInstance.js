@@ -58,6 +58,14 @@ class ViewInstance extends React.Component {
     this.state = {
       accordions: {
         instanceAccordion: true,
+        titleAccordion: true,
+        descriptiveAccordion: true,
+        notesAccordion: true,
+        identifiersAccordion: true,
+        classificationAccordion: true,
+        electronicAccessAccordion: true,
+        contributorsAccordion: true,
+        subjectsAccordion: true,
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -254,7 +262,7 @@ class ViewInstance extends React.Component {
           </Row>
         </Accordion>
         <Accordion
-          open={this.state.accordions.titleData}
+          open={this.state.accordions.titleAccordion}
           id="titleAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.titleData' })}
@@ -273,7 +281,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.identifiers}
+          open={this.state.accordions.identifiersAccordion}
           id="identifiersAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.identifiers' })}
@@ -287,7 +295,7 @@ class ViewInstance extends React.Component {
         }
         </Accordion>
         <Accordion
-          open={this.state.accordions.contributors}
+          open={this.state.accordions.contributorsAccordion}
           id="contributorsAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.contributors' })}
@@ -301,7 +309,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.descriptiveData}
+          open={this.state.accordions.descriptiveAccordion}
           id="descriptiveAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
@@ -346,7 +354,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.notes}
+          open={this.state.accordions.notesAccordion}
           id="notesAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.notes' })}
@@ -360,7 +368,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.electronicAccess}
+          open={this.state.accordions.electronicAccessAccordion}
           id="electronicAccessAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
@@ -374,7 +382,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.subjects}
+          open={this.state.accordions.subjectsAccordion}
           id="subjectsAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.subjects' })}
@@ -388,7 +396,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.classification}
+          open={this.state.accordions.classificationAccordion}
           id="classificationAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.classification' })}
