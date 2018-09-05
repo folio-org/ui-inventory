@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [1.2.0]
+
+* Fix toggle accordion feature after new accordions added. (UIIN-279) 
+
 ## [1.1.0](https://github.com/folio-org/ui-inventory/tree/v1.1.0) (2018-09-05)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v1.0.0...v1.1.0)
 
@@ -89,9 +93,9 @@
 * Retrieve up to 40 loan-types for editing dropdown, and sort them by name. Fixes UIIN-213.
 * Increase the contributor-type limit from 100 to 400. Fixes UIIN-215.
 * Provide defaults for props used by plugin-find-instance. Refs UIIN-217.
-* Bug fixes with no separate change log entry: 
+* Bug fixes with no separate change log entry:
     UIIN-53, UIIN-64, UIIN-67, UIIN-68, UIIN-76, UIIN-77, UIIN-102, UIIN-175,
-    UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221, 
+    UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221,
 * Basic tests for ui-instances. UIIN-7
 * Edit Holding Associated with Instance v1. UIIN-39
 * Regression test for holdings - add/edit. UIIN-43
@@ -102,7 +106,7 @@
 * Generate CQL query and pass it to graphQL. UIIN-94
 * View Holdings record. Implement metadata component. UIIN-98
 * View Items record. Implement the metadata component. UIIN-99
-* Permission Set for Contributor Type CRUD. UIIN-156 
+* Permission Set for Contributor Type CRUD. UIIN-156
 * Permission Set for Resource Types CRUD. UIIN-157
 * Permission Set for Formats CRUD. UIIN-158
 * Change labels in Instance form. UIIN-164
