@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [1.1.0](IN PROGRESS)
+## [1.1.0](https://github.com/folio-org/ui-inventory/tree/v1.1.0) (2018-09-05)
+[Full Changelog](https://github.com/folio-org/ui-items/compare/v1.0.0...v1.1.0)
 
 * Add instance record metadata (created date and updated date) (UIIN-28)
 * Remove creators field (UIIN-30)
