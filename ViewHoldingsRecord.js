@@ -55,6 +55,9 @@ class ViewHoldingsRecord extends React.Component {
     this.state = {
       accordions: {
         holdingsAccordion: true,
+        administrativeAccordion: true,
+        locationAccordion: true,
+        electronicAccessAccordion: true,
       },
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
