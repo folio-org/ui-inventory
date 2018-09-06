@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -166,7 +166,7 @@
     "test": "cd ../ui-testing; env FOLIO_UI_URL=http://localhost:3000 yarn test-module -o --run=inventory"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^1.1.0",
+    "@folio/eslint-config-stripes": "^3.1.0",
     "@folio/stripes-cli": "^1.2.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^8.2.0",
