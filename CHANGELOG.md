@@ -1,14 +1,14 @@
 # Change history for ui-inventory
 
-## [1.2.0] IN PROGRESS
+## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
 
-## [1.1.1] IN PROGRESS
 * Fix toggle accordion feature after new accordions added. (UIIN-279) 
 * Update dependency on eslint-config-stripes (UIIN-280)
 * Update core Stripes dependencies (UIIN-278)
 
 ## [1.1.0](https://github.com/folio-org/ui-inventory/tree/v1.1.0) (2018-09-05)
-[Full Changelog](https://github.com/folio-org/ui-items/compare/v1.0.0...v1.1.0)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.0.0...v1.1.0)
 
 * Add instance record metadata (created date and updated date) (UIIN-28)
 * Remove creators field (UIIN-30)
