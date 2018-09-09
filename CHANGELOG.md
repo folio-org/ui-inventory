@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [1.2.0] Unreleased
+
+* Update oOkapi dependency, circulation: 4.0
+
 ## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
 
