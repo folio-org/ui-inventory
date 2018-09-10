@@ -311,7 +311,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'relation', 'contributors', 'publishers']}
+      visibleColumns={['title', 'contributors', 'publishers', 'relation']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
