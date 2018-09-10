@@ -202,7 +202,8 @@ class InstanceForm extends React.Component {
         <Paneset isRoot>
           <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
             <Row>
-              <Col sm={12}><Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
+              <Col sm={12}>
+                <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
 
                 { (initialValues.metadata && initialValues.metadata.createdDate) &&
                 <this.cViewMetaData metadata={initialValues.metadata} />
@@ -314,7 +315,7 @@ class InstanceForm extends React.Component {
                         </Col>
                       </Row>
                       <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
-                      <ChildInstanceFields  instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
+                      <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                       <AlternativeTitles formatMsg={formatMsg} />
                       <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
                       <Row>

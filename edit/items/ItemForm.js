@@ -189,10 +189,17 @@ class ItemForm extends React.Component {
               <div style={{ textAlign: 'center' }}>
                 <em>{instance.title}</em>
                 {(instance.publication && instance.publication.length > 0) &&
-                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
+                <span>
+                  <em>, </em>
+                  <em>
+                    {instance.publication[0].publisher}
+                    {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                  </em>
+                </span>
                 }
                 <div>
-                  &nbsp;{`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  &nbsp;
+                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </div>
             }
@@ -204,7 +211,7 @@ class ItemForm extends React.Component {
                 </h2>
               </Col>
             </Row>
-            <Row >
+            <Row>
               <Col sm={5} smOffset={1}>
                 { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
                 <this.cViewMetaData metadata={holdingsRecord.metadata} />

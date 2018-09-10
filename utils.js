@@ -8,5 +8,9 @@ export function formatDate(dateStr) {
 
 export function formatDateTime(dateStr) {
   if (!dateStr) return dateStr;
-  return (<span><FormattedDate value={dateStr} /> <FormattedTime value={dateStr} /></span>);
+  return (<span>
+    <FormattedDate value={dateStr} />
+    {' '}
+    <FormattedTime value={dateStr} />
+          </span>);
 }
