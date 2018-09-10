@@ -236,6 +236,21 @@ class ViewInstance extends React.Component {
             </Headline>
           </Col>
         </Row>
+        { (instance.childInstances.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+            </Col>
+          </Row>
+        }
+        { (instance.parentInstances.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+            </Col>
+          </Row>
+        }
+
         <Accordion
           open={this.state.accordions.instanceAccordion}
           id="instanceAccordion"
