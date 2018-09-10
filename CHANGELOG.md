@@ -4,7 +4,7 @@
 
 * Add preliminary display of Instance relationships (UIIN-145)
 * Upgrade Okapi dependencies for Instance relationships, inventory: 6.3, instance-storage 4.5, instance-relationship-types 1.0 (UIIN-145)
-* Update Okapi dependency, circulation: 4.0
+* Update Okapi dependency, circulation: 3.0 4.0
 
 ## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
