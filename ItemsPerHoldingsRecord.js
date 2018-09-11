@@ -98,11 +98,13 @@ class ItemsPerHoldingsRecord extends React.Component {
         id={holdingsRecord.id}
         onToggle={accordionToggle}
         label={formatMsg({ id: 'ui-inventory.holdingsHeader' }, { location: labelLocation, callNumber: labelCallNumber })}
-        displayWhenOpen={<div>
-          {viewHoldingsButton}
-          {' '}
-          {newItemButton}
-                         </div>}
+        displayWhenOpen={(
+          <div>
+            {viewHoldingsButton}
+            {' '}
+            {newItemButton}
+          </div>
+        )}
       >
         <Row>
           { holdingsRecord.permanentLocationId ?

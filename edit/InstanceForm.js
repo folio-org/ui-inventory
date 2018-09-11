@@ -242,7 +242,7 @@ class InstanceForm extends React.Component {
                           name="hrid"
                           type="text"
                           component={TextField}
-                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' }) } *`}
+                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })} *`}
                           required
                         />
                       </Col>

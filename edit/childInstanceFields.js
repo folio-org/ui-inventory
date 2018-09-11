@@ -4,7 +4,7 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import RepeatableField from '@folio/stripes-components/lib/RepeatableField';
 
-const ChildInstanceFields = ({ instanceRelationshipTypes, formatMsg }) => {
+const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
   const relationshipOptions = instanceRelationshipTypes.map(
     it => ({
       label: it.name,
@@ -40,7 +40,6 @@ const ChildInstanceFields = ({ instanceRelationshipTypes, formatMsg }) => {
 
 ChildInstanceFields.propTypes = {
   instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object),
-  formatMsg: PropTypes.func,
 };
 
 export default ChildInstanceFields;

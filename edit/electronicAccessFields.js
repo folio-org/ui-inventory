@@ -10,32 +10,32 @@ const ElectronicAccessFields = ({ formatMsg }) => (
     addLabel={formatMsg({ id: 'ui-inventory.addElectronicAccess' })}
     addButtonId="clickable-add-electronicaccess"
     template={[
-        {
-          name: 'relationship',
-          label: formatMsg({ id: 'ui-inventory.urlRelationship'}),
-          component: TextField,
-        },
-        {
-          name: 'uri',
-          label: formatMsg({ id: 'ui-inventory.uri' }),
-          component: TextField,
-        },
-        {
-          name: 'linkText',
-          label: formatMsg({ id: 'ui-inventory.linkText'}),
-          component: TextField,
-        },
-        {
-          name: 'materialsSpecification',
-          label: formatMsg({ id: 'ui-inventory.materialsSpecification' }),
-          component: TextField,
-        },
-        {
-          name: 'publicNote',
-          label: formatMsg({ id: 'ui-inventory.urlPublicNote' }),
-          component: TextField,
-        },
-      ]}
+      {
+        name: 'relationship',
+        label: formatMsg({ id: 'ui-inventory.urlRelationship' }),
+        component: TextField,
+      },
+      {
+        name: 'uri',
+        label: formatMsg({ id: 'ui-inventory.uri' }),
+        component: TextField,
+      },
+      {
+        name: 'linkText',
+        label: formatMsg({ id: 'ui-inventory.linkText' }),
+        component: TextField,
+      },
+      {
+        name: 'materialsSpecification',
+        label: formatMsg({ id: 'ui-inventory.materialsSpecification' }),
+        component: TextField,
+      },
+      {
+        name: 'publicNote',
+        label: formatMsg({ id: 'ui-inventory.urlPublicNote' }),
+        component: TextField,
+      },
+    ]}
   />
 );
 

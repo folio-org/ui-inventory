@@ -291,7 +291,7 @@ class Instances extends React.Component {
         || !resources.catalogingLevels || !resources.catalogingLevels.hasLoaded
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
-        ) return <div />;
+    ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
