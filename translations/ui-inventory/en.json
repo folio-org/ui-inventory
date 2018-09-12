@@ -133,6 +133,7 @@
   "instanceStatusTerm": "Instance status term",
   "instanceStatusCode": "Instance status code",
   "instanceStatusSource": "Instance status source",
+  "electronicAccess": "Electronic access",
   "urlRelationship": "Relationship",
   "linkText": "Link text",
   "urlPublicNote": "URL public note",
@@ -173,6 +174,5 @@
   "administrativeData": "Administrative data",
   "itemNotes": "Item notes",
   "itemCallNumber": "Item Call number",
-  "holdingsNotes": "Holdings notes",
-  "electronicAccess": "Electronic Access"
+  "holdingsNotes": "Holdings notes"
 }
