@@ -24,6 +24,7 @@ import PublicationFields from './publicationFields';
 import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import NoteFields from './noteFields';
+import ElectronicAccessFields from './electronicAccessFields';
 import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
@@ -251,6 +252,7 @@ class InstanceForm extends React.Component {
                       <SubjectFields formatMsg={formatMsg} />
                       <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
                       <NoteFields formatMsg={formatMsg} />
+                      <ElectronicAccessFields formatMsg={formatMsg} />
                     </Col>
                   </Row>
                 </Accordion>
