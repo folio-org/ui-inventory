@@ -415,10 +415,10 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
         >
-          { (instance.urls.length > 0) &&
+          { (instance.electronicAccess.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance)} />
             </Col>
           </Row>
           }

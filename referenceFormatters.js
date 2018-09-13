@@ -40,6 +40,16 @@ export default {
     return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
+  electronicAccessFormatter: (r) => {
+    const formatted = [];
+    if (r.electronicAccess && r.electronicAccess.length) {
+      r.electronicAccess.forEach((ea) => {
+        if (ea !== null) formatted.push(`${ea.relationship}; ${ea.uri}; ${ea.linkText}; ${ea.materialsSpecification}; ${ea.publicNote}`);
+      });
+    }
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
+  },
+
   languagesFormatter: (r) => {
     let formatted = '';
     if (r.languages && r.languages.length) {
