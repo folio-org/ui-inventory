@@ -284,12 +284,12 @@ class ViewInstance extends React.Component {
           </Row>
           <Row>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={_.get(instance, ['statusId'], '')} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })} value={_.get(instance, ['modeOfIssuanceId'], '')} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })} value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)} />
             </Col>
           </Row>
         </Accordion>

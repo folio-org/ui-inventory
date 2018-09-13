@@ -300,7 +300,7 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
-    const instanceStatuses = (resources.instanceStatutes || emptyObj).records || emptyArr;
+    const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const catalogingLevels = (resources.catalogingLevels || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;

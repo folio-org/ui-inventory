@@ -74,6 +74,30 @@ export default {
     return formatted;
   },
 
+  modesOfIssuanceFormatter: (r, modesOfIssuance) => {
+    let formatted = '';
+    if (r.modeOfIssuanceId) {
+      const qualifier = modesOfIssuance.find(type => type.id === r.modeOfIssuanceId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
+  instanceStatusesFormatter: (r, instanceStatuses) => {
+    let formatted = '';
+    console.log(r.statusId);
+    console.log(instanceStatuses);
+    if (r.statusId) {
+      const qualifier = instanceStatuses.find(type => type.id === r.statusId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
   classificationsFormatter: (r, classificationTypes) => {
     const formatted = [];
     if (r.classifications && r.classifications.length) {
