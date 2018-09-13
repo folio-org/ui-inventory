@@ -34,7 +34,7 @@ export default {
     const formatted = [];
     if (r.publication && r.publication.length) {
       r.publication.forEach((pub) => {
-        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''} ${pub.role ? ` (Role: ${pub.role})` : ''}`);
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);
