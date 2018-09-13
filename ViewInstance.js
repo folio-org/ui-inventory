@@ -384,6 +384,14 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           }
+          <Row>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.publicationFrequency' })} value={_.get(instance, ['publicationFrequency'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+            </Col>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.publicationRange' })} value={_.get(instance, ['publicationRange'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+            </Col>
+          </Row>
         </Accordion>
         <Accordion
           open={this.state.accordions.notesAccordion}
