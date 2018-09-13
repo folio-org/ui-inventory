@@ -156,11 +156,36 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
+    const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses.map(
+      it => ({
+        label: `${it.name} (${it.source}: ${it.code})`,
+        value: it.id,
+        selected: it.id === initialValues.instanceFormatId,
+      }),
+    ) : [];
+
+
     const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
       it => ({
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceFormatId,
+      }),
+    ) : [];
+
+    const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.modeOfIssuanceId,
+      }),
+    ) : [];
+
+    const catalogingLevelOptions = referenceTables.catalogingLevels ? referenceTables.catalogingLevels.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.catalogingLevelId,
       }),
     ) : [];
 
@@ -178,31 +203,70 @@ class InstanceForm extends React.Component {
                 <this.cViewMetaData metadata={initialValues.metadata} />
                 }
                 <Row>
-                  <Col>
-                    <Field
-                      label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
-                      name="discoverySuppress"
-                      id="input_discovery_suppress"
-                      component={Checkbox}
-                    />
-                  </Col>
-                  <Col>
-                    <Field
-                      label={`${formatMsg({ id: 'ui-inventory.staffSuppress' })}`}
-                      name="staffSuppress"
-                      id="input_staff_suppress"
-                      component={Checkbox}
-                    />
-                  </Col>
-                  <Col>
-                    <Field
-                      label={`${formatMsg({ id: 'ui-inventory.previouslyHeld' })}`}
-                      name="previouslyHeld"
-                      id="input_previously_held"
-                      component={Checkbox}
-                    />
+                  <Col sm={9}>
+                    <Row>
+                      <Col>
+                        <Field
+                          label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                          name="discoverySuppress"
+                          id="input_discovery_suppress"
+                          component={Checkbox}
+                        />
+                      </Col>
+                      <Col>
+                        <Field
+                          label={`${formatMsg({ id: 'ui-inventory.staffSuppress' })}`}
+                          name="staffSuppress"
+                          id="input_staff_suppress"
+                          component={Checkbox}
+                        />
+                      </Col>
+                      <Col>
+                        <Field
+                          label={`${formatMsg({ id: 'ui-inventory.previouslyHeld' })}`}
+                          name="previouslyHeld"
+                          id="input_previously_held"
+                          component={Checkbox}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={8}>
+                        <Field
+                          name="statusId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.instanceStatus' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectInstanceStatus' }), value: '' }, ...instanceStatusOptions]}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={8}>
+                        <Field
+                          name="modeOfIssuanceId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectModeOfIssuance' }), value: '' }, ...modeOfIssuanceOptions]}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={8}>
+                        <Field
+                          name="catalogingLevelId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
+                        />
+                      </Col>
+                    </Row>
+
                   </Col>
                 </Row>
+
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>
