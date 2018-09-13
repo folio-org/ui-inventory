@@ -13,7 +13,7 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
-    {fields.map((pieceIdentifier, index) =>
+    {fields.map((pieceIdentifier, index) => (
       <Row key={index}>
         <Col sm={6}>
           <Field
@@ -30,10 +30,12 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
             type="button"
             title={formatMsg({ id: 'ui-inventory.removeIdentifier' }, { num: index + 1 })}
             onClick={() => fields.remove(index)}
-          >{formatMsg({ id: 'ui-inventory.remove' })}
+          >
+            {formatMsg({ id: 'ui-inventory.remove' })}
           </Button>
         </Col>
-      </Row>)}
+      </Row>
+    ))}
   </div>
 );
 renderPieceIdentifiers.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };

@@ -156,7 +156,11 @@ export default {
     const formatted = [];
     if (r.parentInstances && r.parentInstances.length) {
       const viewRelatedInstanceLink = `/inventory/view/${r.parentInstances[0].superInstanceId}/${location.search}`;
-      formatted.push(<Link to={viewRelatedInstanceLink}>{r.parentInstances[0].superInstanceId} (M)</Link>);
+      formatted.push(
+        <Link to={viewRelatedInstanceLink}>
+          {`${r.parentInstances[0].superInstanceId} (M)`}
+        </Link>
+      );
     }
     return formatted.map((elem, i) => <div key={i}>{elem}</div>);
   },

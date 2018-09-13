@@ -203,12 +203,13 @@ class ViewInstance extends React.Component {
           title={formatMsg({ id: 'ui-inventory.addHoldings' })}
           buttonStyle="primary"
           fullWidth
-        >{formatMsg({ id: 'ui-inventory.addHoldings' })}
+        >
+          {formatMsg({ id: 'ui-inventory.addHoldings' })}
         </Button>
       </div>
     );
     const viewSourceLink = `${location.pathname.replace('/view/', '/viewsource/')}${location.search}`;
-    const viewSourceButton = <Link to={viewSourceLink}><Button id="clickable-view-source" >{formatMsg({ id: 'ui-inventory.viewSource' })}</Button></Link>;
+    const viewSourceButton = <Link to={viewSourceLink}><Button id="clickable-view-source">{formatMsg({ id: 'ui-inventory.viewSource' })}</Button></Link>;
 
     return instance ? (
       <Pane
@@ -224,7 +225,13 @@ class ViewInstance extends React.Component {
         <hr />
         <Row>
           <Col xs={12}>
-            <AppIcon app="inventory" iconKey="instance" size="small" /> {formatMsg({ id: 'ui-inventory.instanceRecord' })} <AppIcon app="inventory" iconKey="resource-type" size="small" /> {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+            <AppIcon app="inventory" iconKey="instance" size="small" />
+            {' '}
+            {formatMsg({ id: 'ui-inventory.instanceRecord' })}
+            {' '}
+            <AppIcon app="inventory" iconKey="resource-type" size="small" />
+            {' '}
+            {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
             { (!!instance.sourceRecordFormat) && <span style={{ 'float': 'right' }}>{viewSourceButton}</span> }
           </Col>
         </Row>

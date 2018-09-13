@@ -280,7 +280,9 @@ class ViewItem extends React.Component {
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="item" size="small" /> {_.get(item, ['barcode'], '')}
+                <AppIcon app="inventory" iconKey="item" size="small" />
+                {' '}
+                {_.get(item, ['barcode'], '')}
                 <div>
                   { formatMsg({ id: 'ui-inventory.itemDotStatus' }, { status: _.get(item, ['status', 'name'], '') }) }
                 </div>
@@ -292,9 +294,17 @@ class ViewItem extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
+                {formatMsg({ id: 'ui-inventory.instance' })}
+                {' '}
+                {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
-                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
+                <span>
+                  <em>, </em>
+                  <em>
+                    {instance.publication[0].publisher}
+                    {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                  </em>
+                </span>
                 }
                 <div>
                   { `${formatMsg({ id: 'ui-inventory.holdingsColon' })} ${labelPermanentHoldingsLocation} > ${labelCallNumber}`}
@@ -315,7 +325,17 @@ class ViewItem extends React.Component {
               }
               <Row>
                 <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="item" size="small" /> {formatMsg({ id: 'ui-inventory.itemRecord' })} <AppIcon app="inventory" iconKey="material-type" size="small" /> {_.get(item, ['materialType', 'name'], '')} <AppIcon app="inventory" iconKey="item-status" size="small" /> {_.get(item, ['status', 'name'], '')}
+                  <AppIcon app="inventory" iconKey="item" size="small" />
+                  {' '}
+                  {formatMsg({ id: 'ui-inventory.itemRecord' })}
+                  {' '}
+                  <AppIcon app="inventory" iconKey="material-type" size="small" />
+                  {' '}
+                  {_.get(item, ['materialType', 'name'], '')}
+                  {' '}
+                  <AppIcon app="inventory" iconKey="item-status" size="small" />
+                  {' '}
+                  {_.get(item, ['status', 'name'], '')}
                 </Col>
               </Row>
               <br />

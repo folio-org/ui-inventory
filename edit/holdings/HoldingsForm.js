@@ -160,7 +160,10 @@ class HoldingsForm extends React.Component {
                 <strong>{instance.title}</strong>
                 {(instance.publication && instance.publication.length > 0) &&
                   <div>
-                    <em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em>
+                    <em>
+                      {instance.publication[0].publisher}
+                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                    </em>
                   </div>
                 }
               </div>
@@ -171,7 +174,7 @@ class HoldingsForm extends React.Component {
                 <h2>{formatMsg({ id: 'ui-inventory.holdingsRecord' })}</h2>
               </Col>
             </Row>
-            <Row >
+            <Row>
               <Col sm={5} smOffset={1}>
                 { (initialValues.metadata && initialValues.metadata.createdDate) &&
                 <this.cViewMetaData metadata={initialValues.metadata} />
@@ -189,7 +192,7 @@ class HoldingsForm extends React.Component {
                 <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
               </Col>
             </Row>
-            <Row >
+            <Row>
               <Col sm={5} smOffset={1}>
                 <Field
                   label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
@@ -223,7 +226,7 @@ class HoldingsForm extends React.Component {
                 />
               </Col>
             </Row>
-            <Row >
+            <Row>
               <Col sm={5} smOffset={1}>
                 <Field label={formatMsg({ id: 'ui-inventory.callNumber' })} name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
               </Col>

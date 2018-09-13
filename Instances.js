@@ -291,11 +291,11 @@ class Instances extends React.Component {
         || !resources.catalogingLevels || !resources.catalogingLevels.hasLoaded
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
-        ) return <div />;
+    ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
-    const instanceRelationshipTypes = (resources.instanceRelationshipTypes || emptyObj).records || emptyArr;    
+    const instanceRelationshipTypes = (resources.instanceRelationshipTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
@@ -356,7 +356,7 @@ class Instances extends React.Component {
       path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult={showSingleResult}
       browseOnly={browseOnly}
-      
+
     />);
   }
 }

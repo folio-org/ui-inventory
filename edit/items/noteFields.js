@@ -13,7 +13,7 @@ const renderNotes = ({ fields, meta: { touched, error, submitFailed }, formatMsg
         {(touched || submitFailed) && error && <span>{error}</span>}
       </Col>
     </Row>
-    {fields.map((note, index) =>
+    {fields.map((note, index) => (
       <Row key={index}>
         <Col sm={6}>
           <Field
@@ -30,10 +30,12 @@ const renderNotes = ({ fields, meta: { touched, error, submitFailed }, formatMsg
             type="button"
             title={formatMsg({ id: 'ui-inventory.removeNotes' }, { num: index + 1 })}
             onClick={() => fields.remove(index)}
-          >{formatMsg({ id: 'ui-inventory.remove' })}
+          >
+            {formatMsg({ id: 'ui-inventory.remove' })}
           </Button>
         </Col>
-      </Row>)}
+      </Row>
+    ))}
   </div>
 );
 renderNotes.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };

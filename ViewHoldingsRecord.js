@@ -179,12 +179,18 @@ class ViewHoldingsRecord extends React.Component {
 
     return (
       <div>
-        <Layer isOpen label={formatMsg({ id: 'ui-inventory.viewHoldingsRecord' })} >
+        <Layer isOpen label={formatMsg({ id: 'ui-inventory.viewHoldingsRecord' })}>
           <Pane
             defaultWidth={this.props.paneWidth}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <AppIcon app="inventory" iconKey="holdings" size="small" />&nbsp;<strong>{holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} >` : null} {_.get(holdingsRecord, ['callNumber'], '')}</strong>&nbsp;
+                <AppIcon app="inventory" iconKey="holdings" size="small" />
+                <strong>
+                  {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} >` : null}
+                  {' '}
+                  {_.get(holdingsRecord, ['callNumber'], '')}
+                </strong>
+&nbsp;
                 <div>
                   {formatMsg({ id: 'ui-inventory.holdings' })}
                 </div>
@@ -196,9 +202,17 @@ class ViewHoldingsRecord extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                {formatMsg({ id: 'ui-inventory.instance' })} {instance.title}
+                {formatMsg({ id: 'ui-inventory.instance' })}
+                {' '}
+                {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
-                <span><em>, </em><em>{instance.publication[0].publisher}{instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}</em></span>
+                <span>
+                  <em>, </em>
+                  <em>
+                    {instance.publication[0].publisher}
+                    {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                  </em>
+                </span>
                 }
               </Col>
             </Row>
@@ -215,13 +229,18 @@ class ViewHoldingsRecord extends React.Component {
               }
               <Row>
                 <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="holdings" size="small" /> {formatMsg({ id: 'ui-inventory.holdingsRecord' })}
+                  <AppIcon app="inventory" iconKey="holdings" size="small" />
+                  {' '}
+                  {formatMsg({ id: 'ui-inventory.holdingsRecord' })}
                 </Col>
               </Row>
               <Row>
                 <Col sm={12}>
                   <Headline size="small" margin="small">
-                    {holdingsRecord.permanentLocationId ? holdingsPermanentLocation.name : null} &gt; {_.get(holdingsRecord, ['callNumber'], '')}
+                    {holdingsRecord.permanentLocationId ? holdingsPermanentLocation.name : null}
+                    {' '}
+&gt;
+                    {_.get(holdingsRecord, ['callNumber'], '')}
                   </Headline>
                 </Col>
               </Row>
@@ -297,7 +316,7 @@ class ViewHoldingsRecord extends React.Component {
             stripes={this.props.stripes}
           />
         </Layer>
-        <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.copyHoldingsRecordDialog' })} >
+        <Layer isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.copyHoldingsRecordDialog' })}>
           <HoldingsForm
             initialValues={this.state.copiedRecord}
             onSubmit={(record) => { that.copyHoldingsRecord(record); }}

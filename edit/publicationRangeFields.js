@@ -10,9 +10,9 @@ const PublicationRangeFields = ({ formatMsg }) => (
     addLabel={formatMsg({ id: 'ui-inventory.addPublicationRange' })}
     addButtonId="clickable-add-publicationfrequency"
     template={[{
-        label: formatMsg({ id: 'ui-inventory.publicationRange' }),
-        component: TextField,
-      }]}
+      label: formatMsg({ id: 'ui-inventory.publicationRange' }),
+      component: TextField,
+    }]}
   />
 );
 
