@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+
+* Add API dependencies `statistical-code-types` 1.0, `cataloging-levels` 1.0, `modes-of-issuance` 1.0, `instance-statuses` 1.0
+* Update API dependencies `inventory` 6.4, `instance-storage` 4.6
+
 ## [1.2.0] Unreleased
 
 * Add preliminary display of Instance relationships (UIIN-145)

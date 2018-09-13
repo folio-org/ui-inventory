@@ -74,6 +74,28 @@ export default {
     return formatted;
   },
 
+  modesOfIssuanceFormatter: (r, modesOfIssuance) => {
+    let formatted = '';
+    if (r.modeOfIssuanceId) {
+      const qualifier = modesOfIssuance.find(type => type.id === r.modeOfIssuanceId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
+  instanceStatusesFormatter: (r, instanceStatuses) => {
+    let formatted = '';
+    if (r.statusId) {
+      const qualifier = instanceStatuses.find(type => type.id === r.statusId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
   classificationsFormatter: (r, classificationTypes) => {
     const formatted = [];
     if (r.classifications && r.classifications.length) {
@@ -103,7 +125,7 @@ export default {
     if (r.childInstances && r.childInstances.length) {
       r.childInstances.forEach((instance) => {
         const viewRelatedInstanceLink = `/inventory/view/${instance.subInstanceId}/${location.search}`;
-        formatted.push(<Link to={viewRelatedInstanceLink}>${instance.subInstanceId}</Link>);
+        formatted.push(<Link to={viewRelatedInstanceLink}>{instance.subInstanceId}</Link>);
       });
     }
     return formatted.map((elem, i) => <div key={i}>{elem}</div>);
@@ -113,7 +135,7 @@ export default {
     const formatted = [];
     if (r.parentInstances && r.parentInstances.length) {
       const viewRelatedInstanceLink = `/inventory/view/${r.parentInstances[0].superInstanceId}/${location.search}`;
-      formatted.push(<Link to={viewRelatedInstanceLink}>${r.parentInstances[0].superInstanceId} (M)</Link>);
+      formatted.push(<Link to={viewRelatedInstanceLink}>{r.parentInstances[0].superInstanceId} (M)</Link>);
     }
     return formatted.map((elem, i) => <div key={i}>{elem}</div>);
   },

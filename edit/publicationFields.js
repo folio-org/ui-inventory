@@ -16,6 +16,11 @@ const PublicationFields = ({ formatMsg }) => (
           component: TextField,
         },
         {
+          name: 'role',
+          label: formatMsg({ id: 'ui-inventory.publisherRole' }),
+          component: TextField,
+        },
+        {
           name: 'place',
           label: formatMsg({ id: 'ui-inventory.place' }),
           component: TextField,

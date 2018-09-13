@@ -262,10 +262,10 @@ class ViewInstance extends React.Component {
           }
           <Row>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['id'], '')} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['hrid'], '')} />
             </Col>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={formatMsg({ id: 'ui-inventory.tba' })} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={_.get(instance, ['source'], '')} />
             </Col>
           </Row>
           <Row>
@@ -274,6 +274,23 @@ class ViewInstance extends React.Component {
                 <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['series'], '')} />
               </Col>
             }
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogedDate' })} value={_.get(instance, ['catalogedDate'], '')} />
+            </Col>
+            <Col xs={6}>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })} value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)} />
+            </Col>
           </Row>
         </Accordion>
         <Accordion
