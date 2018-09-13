@@ -14,6 +14,7 @@ import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
+import Datepicker from '@folio/stripes-components/lib/Datepicker';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -244,6 +245,24 @@ class InstanceForm extends React.Component {
                           required
                         />
                       </Col>
+                      <Col sm={2}>
+                        <Field
+                          name="catalogingLevelId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          name="catalogedDate"
+                          dateFormat="YYYY-MM-DD"
+                          backendDateStandard="YYYY-MM-DD"
+                          component={Datepicker}
+                          label={formatMsg({ id: 'ui-inventory.catalogedDate' })}
+                        />
+                      </Col>
                     </Row>
                     <Row>
                       <Col sm={8}>
@@ -267,18 +286,6 @@ class InstanceForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <Row>
-                      <Col sm={8}>
-                        <Field
-                          name="catalogingLevelId"
-                          type="text"
-                          component={Select}
-                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
-                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
-                        />
-                      </Col>
-                    </Row>
-
                   </Col>
                 </Row>
 

@@ -96,6 +96,17 @@ export default {
     return formatted;
   },
 
+  catalogingLevelsFormatter: (r, catalogingLevels) => {
+    let formatted = '';
+    if (r.catalogingLevelId) {
+      const qualifier = catalogingLevels.find(type => type.id === r.catalogingLevelId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
   classificationsFormatter: (r, classificationTypes) => {
     const formatted = [];
     if (r.classifications && r.classifications.length) {
