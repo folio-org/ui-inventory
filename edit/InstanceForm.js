@@ -7,6 +7,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
+import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import { Field } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
@@ -176,6 +177,32 @@ class InstanceForm extends React.Component {
                 { (initialValues.metadata && initialValues.metadata.createdDate) &&
                 <this.cViewMetaData metadata={initialValues.metadata} />
                 }
+                <Row>
+                  <Col>
+                    <Field
+                      label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                      name="discoverySuppress"
+                      id="input_discovery_suppress"
+                      component={Checkbox}
+                    />
+                  </Col>
+                  <Col>
+                    <Field
+                      label={`${formatMsg({ id: 'ui-inventory.staffSuppress' })}`}
+                      name="staffSuppress"
+                      id="input_staff_suppress"
+                      component={Checkbox}
+                    />
+                  </Col>
+                  <Col>
+                    <Field
+                      label={`${formatMsg({ id: 'ui-inventory.previouslyHeld' })}`}
+                      name="previouslyHeld"
+                      id="input_previously_held"
+                      component={Checkbox}
+                    />
+                  </Col>
+                </Row>
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>

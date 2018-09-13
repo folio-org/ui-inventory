@@ -26,7 +26,9 @@
   "instance": "Instance:",
   "holdings": "Holdings",
   "holdingsColon": "Holdings:",
-
+  "staffSuppress": "Staff suppress",
+  "discoverySuppress": "Suppress from discovery",
+  "previouslyHeld": "Previously held",
   "alternativeTitles": "Alternative titles",
   "addAlternativeTitles": "+ Add alternative title",
   "classifications": "Classifications",
@@ -138,6 +140,7 @@
   "instanceStatusCode": "Instance status code",
   "instanceStatusSource": "Instance status source",
   "electronicAccess": "Electronic access",
+  "addElectronicAccess": "+ Add electronic access",
   "urlRelationship": "Relationship",
   "linkText": "Link text",
   "urlPublicNote": "URL public note",
