@@ -44,6 +44,10 @@ function validate(values, props) {
     errors.title = requiredTextMessage;
   }
 
+  if (!values.hrid) {
+    errors.hrid = requiredTextMessage;
+  }
+
   if (!values.instanceTypeId) {
     errors.instanceTypeId = requiredSelectMessage;
   }
@@ -227,6 +231,17 @@ class InstanceForm extends React.Component {
                           name="previouslyHeld"
                           id="input_previously_held"
                           component={Checkbox}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={2}>
+                        <Field
+                          name="hrid"
+                          type="text"
+                          component={TextField}
+                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' }) } *`}
+                          required
                         />
                       </Col>
                     </Row>
