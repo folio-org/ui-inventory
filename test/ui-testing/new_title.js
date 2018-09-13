@@ -37,6 +37,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .click('#clickable-newinventory')
           .wait(55)
           .insert('input[name=title]', title)
+          .insert('input[name=hrid]', id)
           .insert('#input_instance_edition', ed)
           .click('#clickable-add-series')
           .insert('input[name="series[0]"]', series)
