@@ -1,14 +1,18 @@
 # Change history for ui-inventory
 
 
+
+## [1.2.0](https://github.com/folio-org/ui-inventory/tree/v1.2.0) (2018-09-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.1...v1.2.0)
+
 * Add API dependencies `statistical-code-types` 1.0, `cataloging-levels` 1.0, `modes-of-issuance` 1.0, `instance-statuses` 1.0
 * Update API dependencies `inventory` 6.4, `instance-storage` 4.6
-
-## [1.2.0] Unreleased
-
 * Add preliminary display of Instance relationships (UIIN-145)
 * Upgrade Okapi dependencies for Instance relationships, inventory: 6.3, instance-storage 4.5, instance-relationship-types 1.0 (UIIN-145)
 * Update Okapi dependency, circulation: 3.0 4.0
+* Add properties publisher role, publication frequency, publication range to Instance details, form (UIIN-227)
+* Add properties HRID, instance status, date status updated, cataloged date, previously held, staff suppress, discovery suppress, mode of issuance, cataloging level to Instance details and/or form (UIIN-223)
+* Add electronic access properties to Instance details and form (UIIN-229)
 
 ## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
