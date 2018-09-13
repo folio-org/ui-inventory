@@ -87,8 +87,6 @@ export default {
 
   instanceStatusesFormatter: (r, instanceStatuses) => {
     let formatted = '';
-    console.log(r.statusId);
-    console.log(instanceStatuses);
     if (r.statusId) {
       const qualifier = instanceStatuses.find(type => type.id === r.statusId);
       if (qualifier) {
