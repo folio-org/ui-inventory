@@ -14,6 +14,7 @@ import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
+import Datepicker from '@folio/stripes-components/lib/Datepicker';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -42,6 +43,10 @@ function validate(values, props) {
 
   if (!values.title) {
     errors.title = requiredTextMessage;
+  }
+
+  if (!values.hrid) {
+    errors.hrid = requiredTextMessage;
   }
 
   if (!values.instanceTypeId) {
@@ -231,6 +236,35 @@ class InstanceForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
+                      <Col sm={2}>
+                        <Field
+                          name="hrid"
+                          type="text"
+                          component={TextField}
+                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' }) } *`}
+                          required
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          name="catalogingLevelId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          name="catalogedDate"
+                          dateFormat="YYYY-MM-DD"
+                          backendDateStandard="YYYY-MM-DD"
+                          component={Datepicker}
+                          label={formatMsg({ id: 'ui-inventory.catalogedDate' })}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
                       <Col sm={8}>
                         <Field
                           name="statusId"
@@ -252,18 +286,6 @@ class InstanceForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <Row>
-                      <Col sm={8}>
-                        <Field
-                          name="catalogingLevelId"
-                          type="text"
-                          component={Select}
-                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
-                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
-                        />
-                      </Col>
-                    </Row>
-
                   </Col>
                 </Row>
 

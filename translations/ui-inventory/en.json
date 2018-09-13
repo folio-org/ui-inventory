@@ -142,6 +142,7 @@
   "instanceStatusTerm": "Instance status term",
   "instanceStatusCode": "Instance status code",
   "instanceStatusSource": "Instance status source",
+  "instanceStatusUpdatedDate": "Status updated date",
   "catalogingLevel": "Cataloging level",
   "selectCatalogingLevel": "Select level",
   "electronicAccess": "Electronic access",

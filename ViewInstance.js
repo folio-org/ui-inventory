@@ -261,11 +261,17 @@ class ViewInstance extends React.Component {
             <this.cViewMetaData metadata={instance.metadata} />
           }
           <Row>
-            <Col xs={6}>
+            <Col xs={2}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['hrid'], '')} />
             </Col>
-            <Col xs={6}>
+            <Col xs={2}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={_.get(instance, ['source'], '')} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogingLevel' })} value={formatters.catalogingLevelsFormatter(instance, referenceTables.catalogingLevels)} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogedDate' })} value={_.get(instance, ['catalogedDate'], '')} />
             </Col>
           </Row>
           <Row>
@@ -276,15 +282,11 @@ class ViewInstance extends React.Component {
             }
           </Row>
           <Row>
-            <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogedDate' })} value={_.get(instance, ['catalogedDate'], '')} />
-            </Col>
-            <Col xs={6}>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
+            <Col xs={4}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusUpdatedDate' })} value={_.get(instance, ['statusUpdatedDate'], '')} />
             </Col>
           </Row>
           <Row>
@@ -413,10 +415,10 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
         >
-          { (instance.urls.length > 0) &&
+          { (instance.electronicAccess.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance)} />
             </Col>
           </Row>
           }
