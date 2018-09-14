@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## 1.3.0 (IN PROGRESS)
+
+* Update to stripes-form 0.9.0. Refs STRIPES-555.
+
+
 ## [1.2.1](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)
 
@@ -20,7 +25,7 @@
 ## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
 
-* Fix toggle accordion feature after new accordions added. (UIIN-279) 
+* Fix toggle accordion feature after new accordions added. (UIIN-279)
 * Update dependency on eslint-config-stripes (UIIN-280)
 * Update core Stripes dependencies (UIIN-278)
 
