@@ -113,7 +113,33 @@ function validate(values, props) {
   return errors;
 }
 
-function asyncValidate(/* values, dispatch, props, blurredField */) {
+function checkUniqueHrid(okapi, hrid) {
+  return fetch(`${okapi.url}/inventory/instances?query=(hrid=="${hrid}")`,
+    { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
+      'X-Okapi-Token': okapi.token,
+      'Content-Type': 'application/json' }) });
+}
+
+function asyncValidate(values, dispatch, props, blurredField) {
+  const hridTakenMsg = props.stripes.intl.formatMessage({ id: 'ui-inventory.hridTaken' });
+  if (blurredField === 'hrid' && values.hrid !== props.initialValues.hrid) {
+    return new Promise((resolve, reject) => {
+      checkUniqueHrid(props.stripes.okapi, values.hrid).then((response) => {
+        if (response.status >= 400) {
+          //
+        } else {
+          response.json().then((json) => {
+            if (json.totalRecords > 0) {
+              const error = { hrid: hridTakenMsg };
+              reject(error);
+            } else {
+              resolve();
+            }
+          });
+        }
+      });
+    });
+  }
   return new Promise(resolve => resolve());
 }
 
@@ -405,5 +431,7 @@ export default stripesForm({
   form: 'instanceForm',
   validate,
   asyncValidate,
+  asyncBlurFields: ['hrid'],
   navigationCheck: true,
+  enableReinitialize: true,
 })(InstanceForm);
