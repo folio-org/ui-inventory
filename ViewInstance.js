@@ -224,15 +224,17 @@ class ViewInstance extends React.Component {
         <hr />
         <Row>
           <Col xs={12}>
-            <Layout className="flex padding-bottom-gutter">
-              <AppIcon
-                app="inventory"
-                iconKey="instance"
-                size="small"
-              >
-                { formatMsg({ id: 'ui-inventory.instanceRecord' }) }
-              </AppIcon>
-              <Layout className="margin-start-gutter display-flex flex-align-items-center">
+            <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
+              <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                <AppIcon
+                  app="inventory"
+                  iconKey="instance"
+                  size="small"
+                >
+                  { formatMsg({ id: 'ui-inventory.instanceRecord' }) }
+                </AppIcon>
+              </Layout>
+              <Layout className="margin-end-gutter display-flex flex-align-items-center">
                 <AppIcon
                   app="inventory"
                   iconKey="resource-type"
@@ -249,7 +251,7 @@ class ViewInstance extends React.Component {
             </Layout>
           </Col>
         </Row>
-        <Headline size="medium" margin="small">
+        <Headline size="medium" margin="medium">
           {instance.title}
         </Headline>
         <Accordion
