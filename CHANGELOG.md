@@ -88,7 +88,6 @@
 * Retrieve up to 40 loan-types for editing dropdown, and sort them by name. Fixes UIIN-213.
 * Increase the contributor-type limit from 100 to 400. Fixes UIIN-215.
 * Provide defaults for props used by plugin-find-instance. Refs UIIN-217.
-* Added columnMapping and translated strings for the Instances MCL (SearchAndSort).
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

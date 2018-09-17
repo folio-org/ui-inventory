@@ -252,7 +252,7 @@ class Instances extends React.Component {
   }
 
   render() {
-    const { resources, showSingleResult, browseOnly, stripes: { intl } } = this.props;
+    const { resources, showSingleResult, browseOnly } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
         || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
@@ -302,11 +302,6 @@ class Instances extends React.Component {
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
       visibleColumns={['title', 'contributors', 'publishers']}
-      columnMapping={{
-        title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-        contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-        publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-      }}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
