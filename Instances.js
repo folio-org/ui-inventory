@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { injectIntl, intlShape } from 'react-intl';
 import { stripesShape } from '@folio/stripes-core/src/Stripes'; // eslint-disable-line import/no-unresolved
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
@@ -277,7 +278,7 @@ class Instances extends React.Component {
   }
 
   render() {
-    const { resources, showSingleResult, browseOnly, stripes: { intl } } = this.props;
+    const { resources, showSingleResult, browseOnly, intl } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
         || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
@@ -362,12 +363,12 @@ class Instances extends React.Component {
       path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult={showSingleResult}
       browseOnly={browseOnly}
-
     />);
   }
 }
 
 Instances.propTypes = {
+  intl: intlShape.isRequired,
   stripes: stripesShape.isRequired,
   resources: PropTypes.shape({
     records: PropTypes.shape({
@@ -421,4 +422,4 @@ Instances.propTypes = {
   browseOnly: PropTypes.bool,
 };
 
-export default Instances;
+export default injectIntl(Instances);
