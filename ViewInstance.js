@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
