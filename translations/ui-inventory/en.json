@@ -1,6 +1,9 @@
 {
   "meta.title": "Inventory",
   "inventory.label": "Inventory",
+  "instances.columns.title": "Title",
+  "instances.columns.contributors": "Contributors",
+  "instances.columns.publishers": "Publishers",
   "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "item.availability": "Loan data and availability",
   "item.availability.itemStatus": "Item status",
