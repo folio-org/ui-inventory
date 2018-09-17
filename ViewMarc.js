@@ -24,7 +24,15 @@ class ViewMarc extends React.Component {
     const fields010andUp = marcJSON.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
     const formattedFields001to009 = fields001to009.map((field) => {
       const key = Object.keys(field)[0];
-      return <tr key={'00field' + key} id={'00field' + key} ><td key={'cell' + key} id={'cell' + key} colSpan="3">{key} {field[key].replace(/\\/g, ' ')}</td></tr>;
+      return (
+        <tr key={'00field' + key} id={'00field' + key}>
+          <td key={'cell' + key} id={'cell' + key} colSpan="3">
+            {key}
+            {' '}
+            {field[key].replace(/\\/g, ' ')}
+          </td>
+        </tr>
+      );
     });
     const formattedFields010andUp = fields010andUp.map((field, index) => {
       const key = Object.keys(field)[0];
@@ -33,8 +41,15 @@ class ViewMarc extends React.Component {
         return [<span key={'span' + subKey}>&#8225;</span>, subKey, ' ', subField[subKey], ' '];
       });
       return (
-        <tr key={'field-' + key + '-' + index} >
-          <td key={'cell1-' + key + '-' + index} style={{ 'verticalAlign': 'top' }}>{key} {field[key].ind1.replace(/\\/g, ' ')} {field[key].ind2.replace(/\\/g, ' ')}</td><td key={'cell2-' + key + '-' + index} style={{ 'whiteSpace': 'pre-wrap' }}><div>{subFields}</div></td>
+        <tr key={'field-' + key + '-' + index}>
+          <td key={'cell1-' + key + '-' + index} style={{ 'verticalAlign': 'top' }}>
+            {key}
+            {' '}
+            {field[key].ind1.replace(/\\/g, ' ')}
+            {' '}
+            {field[key].ind2.replace(/\\/g, ' ')}
+          </td>
+          <td key={'cell2-' + key + '-' + index} style={{ 'whiteSpace': 'pre-wrap' }}><div>{subFields}</div></td>
         </tr>
       );
     });

@@ -29,8 +29,8 @@ const LanguageFields = ({ formatMsg }) => (
     addLabel={formatMsg({ id: 'ui-inventory.addLanguage' })}
     addButtonId="clickable-add-language"
     template={[{
-        render(fieldObj) { return renderLanguageField(fieldObj, formatMsg); },
-      }]}
+      render(fieldObj) { return renderLanguageField(fieldObj, formatMsg); },
+    }]}
   />
 );
 LanguageFields.propTypes = { formatMsg: PropTypes.func };

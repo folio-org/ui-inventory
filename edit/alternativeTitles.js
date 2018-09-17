@@ -10,9 +10,9 @@ const AlternativeTitles = ({ formatMsg }) => (
     addLabel={formatMsg({ id: 'ui-inventory.addAlternativeTitles' })}
     addButtonId="clickable-add-alternativeTitle"
     template={[{
-        label: 'Alternative title',
-        component: TextField,
-      }]}
+      label: 'Alternative title',
+      component: TextField,
+    }]}
   />
 );
 

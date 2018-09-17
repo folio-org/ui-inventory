@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { data as languagetable } from './data/languages';
 
 
@@ -33,7 +34,17 @@ export default {
     const formatted = [];
     if (r.publication && r.publication.length) {
       r.publication.forEach((pub) => {
-        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''}`);
+        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''} ${pub.role ? ` (Role: ${pub.role})` : ''}`);
+      });
+    }
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
+  },
+
+  electronicAccessFormatter: (r) => {
+    const formatted = [];
+    if (r.electronicAccess && r.electronicAccess.length) {
+      r.electronicAccess.forEach((ea) => {
+        if (ea !== null) formatted.push(`${ea.relationship}; ${ea.uri}; ${ea.linkText}; ${ea.materialsSpecification}; ${ea.publicNote}`);
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);
@@ -73,6 +84,39 @@ export default {
     return formatted;
   },
 
+  modesOfIssuanceFormatter: (r, modesOfIssuance) => {
+    let formatted = '';
+    if (r.modeOfIssuanceId) {
+      const qualifier = modesOfIssuance.find(type => type.id === r.modeOfIssuanceId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
+  instanceStatusesFormatter: (r, instanceStatuses) => {
+    let formatted = '';
+    if (r.statusId) {
+      const qualifier = instanceStatuses.find(type => type.id === r.statusId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
+  catalogingLevelsFormatter: (r, catalogingLevels) => {
+    let formatted = '';
+    if (r.catalogingLevelId) {
+      const qualifier = catalogingLevels.find(type => type.id === r.catalogingLevelId);
+      if (qualifier) {
+        formatted = qualifier.name;
+      }
+    }
+    return formatted;
+  },
+
   classificationsFormatter: (r, classificationTypes) => {
     const formatted = [];
     if (r.classifications && r.classifications.length) {
@@ -83,4 +127,42 @@ export default {
     }
     return formatted.sort().map((c, i) => <div key={i}>{c}</div>);
   },
+
+  relationsFormatter: (r, instanceRelationshipTypes) => {
+    let formatted = '';
+    if (r.childInstances && r.childInstances.length) {
+      const relationship = instanceRelationshipTypes.find(irt => irt.id === r.childInstances[0].instanceRelationshipTypeId);
+      formatted = relationship.name + ' (M)';
+    }
+    if (r.parentInstances && r.parentInstances.length) {
+      const relationship = instanceRelationshipTypes.find(irt => irt.id === r.parentInstances[0].instanceRelationshipTypeId);
+      formatted = relationship.name;
+    }
+    return formatted;
+  },
+
+  childInstancesFormatter: (r, instanceRelationshipTypes, location) => {
+    const formatted = [];
+    if (r.childInstances && r.childInstances.length) {
+      r.childInstances.forEach((instance) => {
+        const viewRelatedInstanceLink = `/inventory/view/${instance.subInstanceId}/${location.search}`;
+        formatted.push(<Link to={viewRelatedInstanceLink}>{instance.subInstanceId}</Link>);
+      });
+    }
+    return formatted.map((elem, i) => <div key={i}>{elem}</div>);
+  },
+
+  parentInstancesFormatter: (r, instanceRelationshipTypes, location) => {
+    const formatted = [];
+    if (r.parentInstances && r.parentInstances.length) {
+      const viewRelatedInstanceLink = `/inventory/view/${r.parentInstances[0].superInstanceId}/${location.search}`;
+      formatted.push(
+        <Link to={viewRelatedInstanceLink}>
+          {`${r.parentInstances[0].superInstanceId} (M)`}
+        </Link>
+      );
+    }
+    return formatted.map((elem, i) => <div key={i}>{elem}</div>);
+  },
+
 };

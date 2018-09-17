@@ -1,6 +1,35 @@
 # Change history for ui-inventory
 
-## [1.1.0](IN PROGRESS)
+## [1.3.0] Unreleased
+
+* Validate HRID for uniqueness in Instance form UIIN-288
+
+## [1.2.1](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)
+
+* Update regression test following introduction of required `hrid` (UIIN-290)
+
+## [1.2.0](https://github.com/folio-org/ui-inventory/tree/v1.2.0) (2018-09-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.1...v1.2.0)
+
+* Add API dependencies `statistical-code-types` 1.0, `cataloging-levels` 1.0, `modes-of-issuance` 1.0, `instance-statuses` 1.0
+* Update API dependencies `inventory` 6.4, `instance-storage` 4.6
+* Add preliminary display of Instance relationships (UIIN-145)
+* Upgrade Okapi dependencies for Instance relationships, inventory: 6.3, instance-storage 4.5, instance-relationship-types 1.0 (UIIN-145)
+* Update Okapi dependency, circulation: 3.0 4.0
+* Add properties publisher role, publication frequency, publication range to Instance details, form (UIIN-227)
+* Add properties HRID, instance status, date status updated, cataloged date, previously held, staff suppress, discovery suppress, mode of issuance, cataloging level to Instance details and/or form (UIIN-223)
+* Add electronic access properties to Instance details and form (UIIN-229)
+
+## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
+
+* Fix toggle accordion feature after new accordions added. (UIIN-279) 
+* Update dependency on eslint-config-stripes (UIIN-280)
+* Update core Stripes dependencies (UIIN-278)
+
+## [1.1.0](https://github.com/folio-org/ui-inventory/tree/v1.1.0) (2018-09-05)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.0.0...v1.1.0)
 
 * Add instance record metadata (created date and updated date) (UIIN-28)
 * Remove creators field (UIIN-30)
@@ -88,6 +117,34 @@
 * Retrieve up to 40 loan-types for editing dropdown, and sort them by name. Fixes UIIN-213.
 * Increase the contributor-type limit from 100 to 400. Fixes UIIN-215.
 * Provide defaults for props used by plugin-find-instance. Refs UIIN-217.
+* Bug fixes with no separate change log entry:
+    UIIN-53, UIIN-64, UIIN-67, UIIN-68, UIIN-76, UIIN-77, UIIN-102, UIIN-175,
+    UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221,
+* Basic tests for ui-instances. UIIN-7
+* Edit Holding Associated with Instance v1. UIIN-39
+* Regression test for holdings - add/edit. UIIN-43
+* Regression test for items - add/edit. UIIN-44
+* When listing contributor names, separate with ";". UIIN-65
+* Limit sorting to single-column (at a time). UIIN-66
+* Design graphQL schema and resolvers for inventory. UIIN-75
+* Generate CQL query and pass it to graphQL. UIIN-94
+* View Holdings record. Implement metadata component. UIIN-98
+* View Items record. Implement the metadata component. UIIN-99
+* Permission Set for Contributor Type CRUD. UIIN-156
+* Permission Set for Resource Types CRUD. UIIN-157
+* Permission Set for Formats CRUD. UIIN-158
+* Change labels in Instance form. UIIN-164
+* Add accordions to detailed view of the Instance Record. UIIN-166
+* Set up testing for ui-inventory. UIIN-184
+* Relocate language files. UIIN-186
+* Replace location value "inherit from holding" with "-" in Item Record. UIIN-218
+* Add "Select location" to Temporary Location Menu in Holding Record. UIIN-219
+* Request count for an item should only include open requests. UIIN-241
+* Apply expand/collapse all accordions toggle to the Instance detail. UIIN-244
+* Aplly expand/collapse all accordions toggle to Holdings detail. UIIN-245
+* apply expand/collapse all accordions toggle to Item detail. UIIN-246
+* Use /inventory/instance endpoint, rather than storage, for instances. UIIN-263
+
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
 [Full Changelog](https://github.com/folio-org/ui-items/compare/v0.0.1...v1.0.0)

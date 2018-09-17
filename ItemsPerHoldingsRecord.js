@@ -29,6 +29,10 @@ class ItemsPerHoldingsRecord extends React.Component {
     loanTypes: {
       type: 'okapi',
       path: 'loan-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '40',
+      },
       records: 'loantypes',
     },
     items: {
@@ -83,7 +87,7 @@ class ItemsPerHoldingsRecord extends React.Component {
     const viewHoldingsPath = `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`;
 
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const viewHoldingsButton = <Link to={viewHoldingsPath}><Button id="clickable-view-holdings" >{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button></Link>;
+    const viewHoldingsButton = <Link to={viewHoldingsPath}><Button id="clickable-view-holdings">{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button></Link>;
     const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title={formatMsg({ id: 'ui-inventory.addItem' })} buttonStyle="primary paneHeaderNewButton">{formatMsg({ id: 'ui-inventory.addItem' })}</Button>;
     const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
@@ -94,7 +98,13 @@ class ItemsPerHoldingsRecord extends React.Component {
         id={holdingsRecord.id}
         onToggle={accordionToggle}
         label={formatMsg({ id: 'ui-inventory.holdingsHeader' }, { location: labelLocation, callNumber: labelCallNumber })}
-        displayWhenOpen={<div>{viewHoldingsButton} {newItemButton}</div>}
+        displayWhenOpen={(
+          <div>
+            {viewHoldingsButton}
+            {' '}
+            {newItemButton}
+          </div>
+        )}
       >
         <Row>
           { holdingsRecord.permanentLocationId ?
@@ -104,9 +114,9 @@ class ItemsPerHoldingsRecord extends React.Component {
               <KeyValue
                 label="Platform"
                 value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], null) ?
-                       (referenceTables.platforms.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId'], '') === platform.id).name)
-                       :
-                       null}
+                  (referenceTables.platforms.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId'], '') === platform.id).name)
+                  :
+                  null}
               />
               <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
             </Col>

@@ -43,8 +43,7 @@ class Holdings extends React.Component {
 
     return (
       <div>
-        {holdingsRecords.map(record =>
-          <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />)}
+        {holdingsRecords.map(record => <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />)}
       </div>
     );
   }
