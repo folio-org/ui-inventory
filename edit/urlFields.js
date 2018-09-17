@@ -10,9 +10,9 @@ const URLFields = ({ formatMsg }) => (
     addLabel={formatMsg({ id: 'ui-inventory.addUrl' })}
     addButtonId="clickable-add-url"
     template={[{
-        label: formatMsg({ id: 'ui-inventory.url' }),
-        component: TextField,
-      }]}
+      label: formatMsg({ id: 'ui-inventory.url' }),
+      component: TextField,
+    }]}
   />
 );
 URLFields.propTypes = { formatMsg: PropTypes.func };

@@ -180,6 +180,31 @@ class Instances extends React.Component {
       records: 'locations',
       path: 'locations?limit=100&query=cql.allRecords=1 sortby name',
     },
+    instanceRelationshipTypes: {
+      type: 'okapi',
+      records: 'instanceRelationshipTypes',
+      path: 'instance-relationship-types?limit=100&query=cql.allRecords=1 sortby name',
+    },
+    instanceStatuses: {
+      type: 'okapi',
+      records: 'instanceStatuses',
+      path: 'instance-statuses?limit=100&query=cql.allRecords=1 sortby name',
+    },
+    catalogingLevels: {
+      type: 'okapi',
+      records: 'catalogingLevels',
+      path: 'cataloging-levels?limit=100&query=cql.allRecords=1 sortby name',
+    },
+    modesOfIssuance: {
+      type: 'okapi',
+      records: 'issuanceModes',
+      path: 'modes-of-issuance?limit=100&query=cql.allRecords=1 sortby name',
+    },
+    statisticalCodeTypes: {
+      type: 'okapi',
+      records: 'statisticalCodeTypes',
+      path: 'statistical-code-types?limit=100&query=cql.allRecords=1 sortby name',
+    },
   });
 
   constructor(props) {
@@ -260,28 +285,45 @@ class Instances extends React.Component {
         || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
         || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
         || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
-        || !resources.locations || !resources.locations.hasLoaded) return <div />;
+        || !resources.locations || !resources.locations.hasLoaded
+        || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
+        || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
+        || !resources.catalogingLevels || !resources.catalogingLevels.hasLoaded
+        || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
+        || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
+    ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
+    const instanceRelationshipTypes = (resources.instanceRelationshipTypes || emptyObj).records || emptyArr;
     const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
+    const catalogingLevels = (resources.catalogingLevels || emptyObj).records || emptyArr;
+    const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
+    const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
 
     const referenceTables = {
       contributorTypes,
       contributorNameTypes,
+      instanceRelationshipTypes,
       identifierTypes,
       classificationTypes,
       instanceTypes,
       instanceFormats,
+      instanceStatuses,
+      catalogingLevels,
+      modesOfIssuance,
+      statisticalCodeTypes,
       locationsById,
     };
 
     const resultsFormatter = {
+      'relation': r => formatters.relationsFormatter(r, instanceRelationshipTypes),
       'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
@@ -301,7 +343,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'contributors', 'publishers']}
+      visibleColumns={['title', 'contributors', 'publishers', 'relation']}
       columnWidths={{ title: '40%' }}
       resultsFormatter={resultsFormatter}
       onCreate={this.createInstance}
@@ -314,7 +356,7 @@ class Instances extends React.Component {
       path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
       showSingleResult={showSingleResult}
       browseOnly={browseOnly}
-      onSelectRow={this.props.onSelectRow}
+
     />);
   }
 }
@@ -371,7 +413,6 @@ Instances.propTypes = {
   }).isRequired,
   showSingleResult: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   browseOnly: PropTypes.bool,
-  onSelectRow: PropTypes.func,
 };
 
 export default Instances;

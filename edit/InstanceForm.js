@@ -7,12 +7,14 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
+import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import { Field } from 'redux-form';
 import stripesForm from '@folio/stripes-form';
 import Select from '@folio/stripes-components/lib/Select';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import Headline from '@folio/stripes-components/lib/Headline';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
+import Datepicker from '@folio/stripes-components/lib/Datepicker';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -23,8 +25,13 @@ import ClassificationFields from './classificationFields';
 import PublicationFields from './publicationFields';
 import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
+import PublicationFrequencyFields from './publicationFrequencyFields';
+import PublicationRangeFields from './publicationRangeFields';
 import NoteFields from './noteFields';
+import ElectronicAccessFields from './electronicAccessFields';
 import LanguageFields from './languageFields';
+import ChildInstanceFields from './childInstanceFields';
+import ParentInstanceFields from './parentInstanceFields';
 
 function validate(values, props) {
   const errors = {};
@@ -36,6 +43,10 @@ function validate(values, props) {
 
   if (!values.title) {
     errors.title = requiredTextMessage;
+  }
+
+  if (!values.hrid) {
+    errors.hrid = requiredTextMessage;
   }
 
   if (!values.instanceTypeId) {
@@ -102,7 +113,33 @@ function validate(values, props) {
   return errors;
 }
 
-function asyncValidate(/* values, dispatch, props, blurredField */) {
+function checkUniqueHrid(okapi, hrid) {
+  return fetch(`${okapi.url}/inventory/instances?query=(hrid=="${hrid}")`,
+    { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
+      'X-Okapi-Token': okapi.token,
+      'Content-Type': 'application/json' }) });
+}
+
+function asyncValidate(values, dispatch, props, blurredField) {
+  const hridTakenMsg = props.stripes.intl.formatMessage({ id: 'ui-inventory.hridTaken' });
+  if (blurredField === 'hrid' && values.hrid !== props.initialValues.hrid) {
+    return new Promise((resolve, reject) => {
+      checkUniqueHrid(props.stripes.okapi, values.hrid).then((response) => {
+        if (response.status >= 400) {
+          //
+        } else {
+          response.json().then((json) => {
+            if (json.totalRecords > 0) {
+              const error = { hrid: hridTakenMsg };
+              reject(error);
+            } else {
+              resolve();
+            }
+          });
+        }
+      });
+    });
+  }
   return new Promise(resolve => resolve());
 }
 
@@ -150,11 +187,36 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
+    const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses.map(
+      it => ({
+        label: `${it.name} (${it.source}: ${it.code})`,
+        value: it.id,
+        selected: it.id === initialValues.instanceFormatId,
+      }),
+    ) : [];
+
+
     const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
       it => ({
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceFormatId,
+      }),
+    ) : [];
+
+    const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.modeOfIssuanceId,
+      }),
+    ) : [];
+
+    const catalogingLevelOptions = referenceTables.catalogingLevels ? referenceTables.catalogingLevels.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.catalogingLevelId,
       }),
     ) : [];
 
@@ -166,11 +228,94 @@ class InstanceForm extends React.Component {
         <Paneset isRoot>
           <Pane defaultWidth="100%" dismissible onClose={onCancel} lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu} paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}>
             <Row>
-              <Col sm={12}><Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
+              <Col sm={12}>
+                <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
 
                 { (initialValues.metadata && initialValues.metadata.createdDate) &&
                 <this.cViewMetaData metadata={initialValues.metadata} />
                 }
+                <Row>
+                  <Col sm={9}>
+                    <Row>
+                      <Col>
+                        <Field
+                          label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                          name="discoverySuppress"
+                          id="input_discovery_suppress"
+                          component={Checkbox}
+                        />
+                      </Col>
+                      <Col>
+                        <Field
+                          label={`${formatMsg({ id: 'ui-inventory.staffSuppress' })}`}
+                          name="staffSuppress"
+                          id="input_staff_suppress"
+                          component={Checkbox}
+                        />
+                      </Col>
+                      <Col>
+                        <Field
+                          label={`${formatMsg({ id: 'ui-inventory.previouslyHeld' })}`}
+                          name="previouslyHeld"
+                          id="input_previously_held"
+                          component={Checkbox}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={2}>
+                        <Field
+                          name="hrid"
+                          type="text"
+                          component={TextField}
+                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })} *`}
+                          required
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          name="catalogingLevelId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          name="catalogedDate"
+                          dateFormat="YYYY-MM-DD"
+                          backendDateStandard="YYYY-MM-DD"
+                          component={Datepicker}
+                          label={formatMsg({ id: 'ui-inventory.catalogedDate' })}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={8}>
+                        <Field
+                          name="statusId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.instanceStatus' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectInstanceStatus' }), value: '' }, ...instanceStatusOptions]}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={8}>
+                        <Field
+                          name="modeOfIssuanceId"
+                          type="text"
+                          component={Select}
+                          label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })}
+                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectModeOfIssuance' }), value: '' }, ...modeOfIssuanceOptions]}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection1} id="instanceSection1">
                   <Row>
                     <Col sm={9}>
@@ -195,6 +340,8 @@ class InstanceForm extends React.Component {
                           />
                         </Col>
                       </Row>
+                      <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
+                      <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                       <AlternativeTitles formatMsg={formatMsg} />
                       <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
                       <Row>
@@ -237,6 +384,8 @@ class InstanceForm extends React.Component {
                       <DescriptionFields formatMsg={formatMsg} />
                       <LanguageFields formatMsg={formatMsg} />
                       <URLFields formatMsg={formatMsg} />
+                      <PublicationFrequencyFields formatMsg={formatMsg} />
+                      <PublicationRangeFields formatMsg={formatMsg} />
                     </Col>
                   </Row>
                 </Accordion>
@@ -247,6 +396,7 @@ class InstanceForm extends React.Component {
                       <SubjectFields formatMsg={formatMsg} />
                       <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
                       <NoteFields formatMsg={formatMsg} />
+                      <ElectronicAccessFields formatMsg={formatMsg} />
                     </Col>
                   </Row>
                 </Accordion>
@@ -281,5 +431,7 @@ export default stripesForm({
   form: 'instanceForm',
   validate,
   asyncValidate,
+  asyncBlurFields: ['hrid'],
   navigationCheck: true,
+  enableReinitialize: true,
 })(InstanceForm);

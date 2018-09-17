@@ -10,9 +10,9 @@ const DescriptionFields = ({ formatMsg }) => (
     addLabel={formatMsg({ id: 'ui-inventory.addDescription' })}
     addButtonId="clickable-add-description"
     template={[{
-        label: formatMsg({ id: 'ui-inventory.physicalDescription' }),
-        component: TextField,
-      }]}
+      label: formatMsg({ id: 'ui-inventory.physicalDescription' }),
+      component: TextField,
+    }]}
   />
 );
 

@@ -59,6 +59,14 @@ class ViewInstance extends React.Component {
     this.state = {
       accordions: {
         instanceAccordion: true,
+        titleAccordion: true,
+        descriptiveAccordion: true,
+        notesAccordion: true,
+        identifiersAccordion: true,
+        classificationAccordion: true,
+        electronicAccessAccordion: true,
+        contributorsAccordion: true,
+        subjectsAccordion: true,
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -254,6 +262,20 @@ class ViewInstance extends React.Component {
         <Headline size="medium" margin="medium">
           {instance.title}
         </Headline>
+        { (instance.childInstances.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+            </Col>
+          </Row>
+        }
+        { (instance.parentInstances.length > 0) &&
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+            </Col>
+          </Row>
+        }
         <Accordion
           open={this.state.accordions.instanceAccordion}
           id="instanceAccordion"
@@ -264,11 +286,17 @@ class ViewInstance extends React.Component {
             <this.cViewMetaData metadata={instance.metadata} />
           }
           <Row>
-            <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['id'], '')} />
+            <Col xs={2}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['hrid'], '')} />
             </Col>
-            <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={formatMsg({ id: 'ui-inventory.tba' })} />
+            <Col xs={2}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={_.get(instance, ['source'], '')} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogingLevel' })} value={formatters.catalogingLevelsFormatter(instance, referenceTables.catalogingLevels)} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogedDate' })} value={_.get(instance, ['catalogedDate'], '')} />
             </Col>
           </Row>
           <Row>
@@ -278,9 +306,22 @@ class ViewInstance extends React.Component {
               </Col>
             }
           </Row>
+          <Row>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusUpdatedDate' })} value={_.get(instance, ['statusUpdatedDate'], '')} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })} value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)} />
+            </Col>
+          </Row>
         </Accordion>
         <Accordion
-          open={this.state.accordions.titleData}
+          open={this.state.accordions.titleAccordion}
           id="titleAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.titleData' })}
@@ -299,7 +340,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.identifiers}
+          open={this.state.accordions.identifiersAccordion}
           id="identifiersAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.identifiers' })}
@@ -313,7 +354,7 @@ class ViewInstance extends React.Component {
         }
         </Accordion>
         <Accordion
-          open={this.state.accordions.contributors}
+          open={this.state.accordions.contributorsAccordion}
           id="contributorsAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.contributors' })}
@@ -327,7 +368,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.descriptiveData}
+          open={this.state.accordions.descriptiveAccordion}
           id="descriptiveAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
@@ -370,9 +411,17 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           }
+          <Row>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.publicationFrequency' })} value={_.get(instance, ['publicationFrequency'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+            </Col>
+            <Col xs={6}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.publicationRange' })} value={_.get(instance, ['publicationRange'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+            </Col>
+          </Row>
         </Accordion>
         <Accordion
-          open={this.state.accordions.notes}
+          open={this.state.accordions.notesAccordion}
           id="notesAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.notes' })}
@@ -386,21 +435,21 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.electronicAccess}
+          open={this.state.accordions.electronicAccessAccordion}
           id="electronicAccessAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
         >
-          { (instance.urls.length > 0) &&
+          { (instance.electronicAccess.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.urls' })} value={_.get(instance, ['urls'], []).map((url, i) => <div key={i}>{url}</div>)} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance)} />
             </Col>
           </Row>
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.subjects}
+          open={this.state.accordions.subjectsAccordion}
           id="subjectsAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.subjects' })}
@@ -414,7 +463,7 @@ class ViewInstance extends React.Component {
           }
         </Accordion>
         <Accordion
-          open={this.state.accordions.classification}
+          open={this.state.accordions.classificationAccordion}
           id="classificationAccordion"
           onToggle={this.handleAccordionToggle}
           label={formatMsg({ id: 'ui-inventory.classification' })}
