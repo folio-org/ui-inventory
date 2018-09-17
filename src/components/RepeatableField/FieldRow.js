@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 import { Field } from 'redux-form';
 
-import injectIntl from '../InjectIntl';
-import Button from '../Button';
-import Layout from '../Layout';
-import Icon from '../Icon';
-import { Row, Col } from '../LayoutGrid';
+import injectIntl from '@folio/stripes-components/lib/InjectIntl';
+import Button from '@folio/stripes-components/lib/Button';
+import Layout from '@folio/stripes-components/lib/Layout';
+import Icon from '@folio/stripes-components/lib/Icon';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import omit from '@folio/stripes-components/util/omitProps';
+import SRStatus from '@folio/stripes-components/lib/SRStatus';
 import css from './RepeatableField.css';
-import omit from '../../util/omitProps';
-import SRStatus from '../SRStatus';
 
 const FieldRowPropTypes = {
   addButtonId: PropTypes.string,
