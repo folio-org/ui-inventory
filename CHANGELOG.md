@@ -2,6 +2,7 @@
 
 ## [1.3.0] Unreleased
 
+* Make HRID optional in Instance form (UIIN-304)
 * Validate HRID for uniqueness in Instance form UIIN-288
 * Update `stripes-form` dependency to v1.0.0
 

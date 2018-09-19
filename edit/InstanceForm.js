@@ -45,10 +45,6 @@ function validate(values, props) {
     errors.title = requiredTextMessage;
   }
 
-  if (!values.hrid) {
-    errors.hrid = requiredTextMessage;
-  }
-
   if (!values.instanceTypeId) {
     errors.instanceTypeId = requiredSelectMessage;
   }
@@ -268,8 +264,7 @@ class InstanceForm extends React.Component {
                           name="hrid"
                           type="text"
                           component={TextField}
-                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })} *`}
-                          required
+                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })}`}
                         />
                       </Col>
                       <Col sm={2}>
