@@ -14,7 +14,6 @@ module.exports.test = function uiTest(uiTestCtx) {
     const contrib = 'Moritz Küng';
     const subjects = ['Venlet, Richard -- Exhibitions', 'Installations (Art) -- Exhibitions', 'Installations (Art)'];
     const pub = { publisher: 'MUHKA', place: 'Antwerpen', date: '©2002' };
-    const url = 'http://www.worldcat.org/title/00/oclc/921279647';
     const desc = '230 pages : chiefly illustrations (some color) ; 28 cm + 1 folded sheet';
     const lang = ['dut', 'eng'];
     const notes = ['Catalog of two exhibitions, "Paramount basics" held at the 25th Biennale of São Paulo, 23 March-2 June 2002, and "Paramount basics (extended)," held at MUHKA, Museum van Hedendaagse Kunst Antwerpen, 21 September-24 November 2002.', 'Cover title.', 'Includes folded sheet of list of works in the exhibition held at MUHKA.'];
@@ -65,9 +64,6 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('input[name="publication[0].publisher"]', pub.publisher)
           .insert('input[name="publication[0].place"]', pub.place)
           .insert('input[name="publication[0].dateOfPublication"]', pub.date)
-          .click('#clickable-add-url')
-          .wait(55)
-          .insert('input[name="urls[0]"]', url)
           .click('#clickable-add-description')
           .wait(55)
           .insert('input[name="physicalDescriptions[0]"]', desc)
