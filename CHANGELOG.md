@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [1.3.0] Unreleased
+
+* Make `instance.hrid` optional (UIIN-304)
+
 ## [1.2.1](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)
 
