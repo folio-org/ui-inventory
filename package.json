@@ -171,7 +171,7 @@
     "test": "cd ../ui-testing; env FOLIO_UI_URL=http://localhost:3000 yarn test-module -o --run=inventory"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^3.2.0",
+    "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes-cli": "^1.4.0",
     "@folio/stripes-connect": "^3.2.0",
     "@folio/stripes-core": "^2.11.0",
@@ -181,12 +181,11 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "webpack": "^4.10.2"
+    "redux": "^4.0.0"
   },
   "dependencies": {
     "@folio/stripes-components": "^3.0.8",
-    "@folio/stripes-form": "^0.8.2",
+    "@folio/stripes-form": "^1.0.0",
     "@folio/stripes-smart-components": "^1.5.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",

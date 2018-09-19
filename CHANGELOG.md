@@ -2,7 +2,9 @@
 
 ## [1.3.0] Unreleased
 
-* Make `instance.hrid` optional (UIIN-304)
+* Make HRID optional in Instance form (UIIN-304)
+* Validate HRID for uniqueness in Instance form UIIN-288
+* Update `stripes-form` dependency to v1.0.0
 
 ## [1.2.1](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)
@@ -24,7 +26,7 @@
 ## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
 
-* Fix toggle accordion feature after new accordions added. (UIIN-279) 
+* Fix toggle accordion feature after new accordions added. (UIIN-279)
 * Update dependency on eslint-config-stripes (UIIN-280)
 * Update core Stripes dependencies (UIIN-278)
 

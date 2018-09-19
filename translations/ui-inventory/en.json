@@ -1,6 +1,10 @@
 {
   "meta.title": "Inventory",
   "inventory.label": "Inventory",
+  "instances.columns.title": "Title",
+  "instances.columns.contributors": "Contributors",
+  "instances.columns.publishers": "Publishers",
+  "instances.columns.relation": "Relation",
   "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "item.availability": "Loan data and availability",
   "item.availability.itemStatus": "Item status",
@@ -13,6 +17,7 @@
   "selectToContinue": "Please select to continue",
   "onePublicationFieldToContinue": "Please fill in one or more publication fields to continue",
   "barcodeTaken": "This barcode has already been taken",
+  "hridTaken": "This HRID has already been taken",
   "createInstance": "Create Instance",
   "updateInstance": "Update Instance",
   "itemRecord": "Item Record",
