@@ -208,14 +208,6 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const catalogingLevelOptions = referenceTables.catalogingLevels ? referenceTables.catalogingLevels.map(
-      it => ({
-        label: it.name,
-        value: it.id,
-        selected: it.id === initialValues.catalogingLevelId,
-      }),
-    ) : [];
-
     /* Menus for Add Instance workflow */
     const addInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-instance" type="submit" title={formatMsg({ id: 'ui-inventory.createInstance' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>{formatMsg({ id: 'ui-inventory.createInstance' })}</Button></PaneMenu>;
     const editInstanceLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-instance" type="submit" title={formatMsg({ id: 'ui-inventory.updateInstance' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>{formatMsg({ id: 'ui-inventory.updateInstance' })}</Button></PaneMenu>;
@@ -265,15 +257,6 @@ class InstanceForm extends React.Component {
                           type="text"
                           component={TextField}
                           label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })}`}
-                        />
-                      </Col>
-                      <Col sm={2}>
-                        <Field
-                          name="catalogingLevelId"
-                          type="text"
-                          component={Select}
-                          label={formatMsg({ id: 'ui-inventory.catalogingLevel' })}
-                          dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectCatalogingLevel' }), value: '' }, ...catalogingLevelOptions]}
                         />
                       </Col>
                       <Col sm={2}>

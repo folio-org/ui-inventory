@@ -5,6 +5,8 @@
 * Make HRID optional in Instance form (UIIN-304)
 * Validate HRID for uniqueness in Instance form UIIN-288
 * Update `stripes-form` dependency to v1.0.0
+* Remove cataloging level (UIIN-312)
+* Remove API dependency on `cataloging-levels` (UIIN-312)
 
 ## [1.2.1](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)

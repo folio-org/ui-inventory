@@ -191,11 +191,6 @@ class Instances extends React.Component {
       records: 'instanceStatuses',
       path: 'instance-statuses?limit=100&query=cql.allRecords=1 sortby name',
     },
-    catalogingLevels: {
-      type: 'okapi',
-      records: 'catalogingLevels',
-      path: 'cataloging-levels?limit=100&query=cql.allRecords=1 sortby name',
-    },
     modesOfIssuance: {
       type: 'okapi',
       records: 'issuanceModes',
@@ -289,7 +284,6 @@ class Instances extends React.Component {
         || !resources.locations || !resources.locations.hasLoaded
         || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
         || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
-        || !resources.catalogingLevels || !resources.catalogingLevels.hasLoaded
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
     ) return <div />;
@@ -302,7 +296,6 @@ class Instances extends React.Component {
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
-    const catalogingLevels = (resources.catalogingLevels || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
@@ -317,7 +310,6 @@ class Instances extends React.Component {
       instanceTypes,
       instanceFormats,
       instanceStatuses,
-      catalogingLevels,
       modesOfIssuance,
       statisticalCodeTypes,
       locationsById,
