@@ -45,10 +45,6 @@ function validate(values, props) {
     errors.title = requiredTextMessage;
   }
 
-  if (!values.hrid) {
-    errors.hrid = requiredTextMessage;
-  }
-
   if (!values.instanceTypeId) {
     errors.instanceTypeId = requiredSelectMessage;
   }
@@ -113,7 +109,33 @@ function validate(values, props) {
   return errors;
 }
 
-function asyncValidate(/* values, dispatch, props, blurredField */) {
+function checkUniqueHrid(okapi, hrid) {
+  return fetch(`${okapi.url}/inventory/instances?query=(hrid=="${hrid}")`,
+    { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
+      'X-Okapi-Token': okapi.token,
+      'Content-Type': 'application/json' }) });
+}
+
+function asyncValidate(values, dispatch, props, blurredField) {
+  const hridTakenMsg = props.stripes.intl.formatMessage({ id: 'ui-inventory.hridTaken' });
+  if (blurredField === 'hrid' && values.hrid !== props.initialValues.hrid) {
+    return new Promise((resolve, reject) => {
+      checkUniqueHrid(props.stripes.okapi, values.hrid).then((response) => {
+        if (response.status >= 400) {
+          //
+        } else {
+          response.json().then((json) => {
+            if (json.totalRecords > 0) {
+              const error = { hrid: hridTakenMsg };
+              reject(error);
+            } else {
+              resolve();
+            }
+          });
+        }
+      });
+    });
+  }
   return new Promise(resolve => resolve());
 }
 
@@ -242,8 +264,7 @@ class InstanceForm extends React.Component {
                           name="hrid"
                           type="text"
                           component={TextField}
-                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })} *`}
-                          required
+                          label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })}`}
                         />
                       </Col>
                       <Col sm={2}>
@@ -405,5 +426,7 @@ export default stripesForm({
   form: 'instanceForm',
   validate,
   asyncValidate,
+  asyncBlurFields: ['hrid'],
   navigationCheck: true,
+  enableReinitialize: true,
 })(InstanceForm);
