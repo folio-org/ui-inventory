@@ -360,13 +360,13 @@ class ViewInstance extends React.Component {
           </Row>
           }
           <Row>
-            { (!!instance.edition) &&
-              <Col xs={3}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['edition'], '')} />
+            { (instance.editions.length > 0) &&
+              <Col xs={6}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['editions'], []).map((edition, i) => <div key={i}>{edition}</div>)} />
               </Col>
             }
             { (instance.physicalDescriptions.length > 0) &&
-              <Col xs={3}>
+              <Col xs={6}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
               </Col>
             }
