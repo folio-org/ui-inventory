@@ -96,7 +96,7 @@ module.exports.test = function uiTest(uiTestCtx) {
       it('should find new title in list ', (done) => {
         nightmare
           .wait('#list-inventory')
-          .xclick('//div[@role="presentation"][.="title"]')
+          // .xclick('//div[@role="presentation"][.="title"]')
           .wait(3000)
           .evaluate((titl) => {
             const sel = `#list-inventory div[role="listitem"]:nth-child(1) > a > div[title="${titl}"]`;
