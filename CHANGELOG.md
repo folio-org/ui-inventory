@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 1.2.3 (IN PROGRESS)
+
+* More stable inventory-search tests. Refs UIIN-306.
+
 ## [1.2.2](https://github.com/folio-org/ui-inventory/tree/v1.2.2) (2018-09-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.2.2)
 

@@ -27,7 +27,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#input-inventory-search')
           .click('#input-inventory-search')
           .insert('#input-inventory-search', title)
-          .wait('#clickable-input-inventory-search-clear-field')
+          .wait('#clickable-reset-all')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${title}"]`)
           /* .evaluate(function evall(title2) {
             const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
@@ -55,7 +55,7 @@ module.exports.test = function test(uiTestCtx) {
           .select('#input-inventory-search-qindex', 'title')
           .wait(55)
           .insert('#input-inventory-search', title)
-          .wait('#clickable-input-inventory-search-clear-field')
+          .wait('#clickable-reset-all')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${title}"]`)
           /* .evaluate(function evall(title2) {
             const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
@@ -82,7 +82,7 @@ module.exports.test = function test(uiTestCtx) {
           .select('#input-inventory-search-qindex', 'contributor')
           .wait(55)
           .insert('#input-inventory-search', authorName)
-          .wait('#clickable-input-inventory-search-clear-field')
+          .wait('#clickable-reset-all')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${authorName}"]`)
           .then(done)
           .catch(done);
