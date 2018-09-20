@@ -7,8 +7,19 @@
 * Update `stripes-form` dependency to v1.0.0
 * Remove cataloging level (UIIN-312)
 * Remove API dependency on `cataloging-levels` (UIIN-312)
+* More stable inventory-search tests. Refs UIIN-306.
 
-## [1.2.1](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
+## [1.2.3 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.3) (2018-09-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.2...v1.2.3)
+
+* More stable inventory-search tests. Refs UIIN-306.
+
+## [1.2.2 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.2) (2018-09-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.2.2)
+
+* Update to stripes-form 0.9.0. Refs STRIPES-555.
+
+## [1.2.1 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)
 
 * Update regression test following introduction of required `hrid` (UIIN-290)
