@@ -23,7 +23,6 @@ import IdentifierFields from './identifierFields';
 import SubjectFields from './subjectFields';
 import ClassificationFields from './classificationFields';
 import PublicationFields from './publicationFields';
-import URLFields from './urlFields';
 import DescriptionFields from './descriptionFields';
 import PublicationFrequencyFields from './publicationFrequencyFields';
 import PublicationRangeFields from './publicationRangeFields';
@@ -361,7 +360,6 @@ class InstanceForm extends React.Component {
                       </Row>
                       <DescriptionFields formatMsg={formatMsg} />
                       <LanguageFields formatMsg={formatMsg} />
-                      <URLFields formatMsg={formatMsg} />
                       <PublicationFrequencyFields formatMsg={formatMsg} />
                       <PublicationRangeFields formatMsg={formatMsg} />
                     </Col>

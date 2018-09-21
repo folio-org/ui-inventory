@@ -1,9 +1,9 @@
 # Change history for ui-inventory
 
 ## [1.3.0] Unreleased
-
+* Remove `instance.urls` from Instance form (UIIN-303)
 * Make HRID optional in Instance form (UIIN-304)
-* Validate HRID for uniqueness in Instance form UIIN-288
+* Validate HRID for uniqueness in Instance form (UIIN-288)
 * Update `stripes-form` dependency to v1.0.0
 * Remove cataloging level (UIIN-312)
 * Remove API dependency on `cataloging-levels` (UIIN-312)
