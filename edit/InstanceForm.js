@@ -18,6 +18,7 @@ import Datepicker from '@folio/stripes-components/lib/Datepicker';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
+import EditionFields from './editionFields';
 import ContributorFields from './contributorFields';
 import IdentifierFields from './identifierFields';
 import SubjectFields from './subjectFields';
@@ -353,11 +354,7 @@ class InstanceForm extends React.Component {
                   <Row>
                     <Col sm={9}>
                       <PublicationFields formatMsg={formatMsg} />
-                      <Row>
-                        <Col sm={8}>
-                          <Field label={formatMsg({ id: 'ui-inventory.edition' })} name="edition" id="input_instance_edition" component={TextField} fullWidth />
-                        </Col>
-                      </Row>
+                      <EditionFields formatMsg={formatMsg} />
                       <DescriptionFields formatMsg={formatMsg} />
                       <LanguageFields formatMsg={formatMsg} />
                       <PublicationFrequencyFields formatMsg={formatMsg} />
