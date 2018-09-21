@@ -185,7 +185,5 @@
     "addElectronicAccess": "+ Adicionar acesso eletrônico",
     "instanceStatus": "Instance status term",
     "selectInstanceStatus": "Select instance status",
-    "selectModeOfIssuance": "Select mode of issuance",
-    "catalogingLevel": "Cataloging level",
-    "selectCatalogingLevel": "Select level"
+    "selectModeOfIssuance": "Select mode of issuance"
 }

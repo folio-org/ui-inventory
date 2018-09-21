@@ -275,9 +275,6 @@ class ViewInstance extends React.Component {
               <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={_.get(instance, ['source'], '')} />
             </Col>
             <Col xs={4}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.catalogingLevel' })} value={formatters.catalogingLevelsFormatter(instance, referenceTables.catalogingLevels)} />
-            </Col>
-            <Col xs={4}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.catalogedDate' })} value={_.get(instance, ['catalogedDate'], '')} />
             </Col>
           </Row>
