@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
-import RepeatableField from '@folio/stripes-components/lib/RepeatableField';
+import RepeatableField from '../src/components/RepeatableField';
 
 const IdentifierFields = ({ identifierTypes, formatMsg }) => {
   const identifierTypeOptions = identifierTypes.map(

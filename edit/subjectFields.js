@@ -1,7 +1,7 @@
 import React from 'react';
-import TextField from '@folio/stripes-components/lib/TextField';
-import RepeatableField from '@folio/stripes-components/lib/RepeatableField';
 import PropTypes from 'prop-types';
+import TextField from '@folio/stripes-components/lib/TextField';
+import RepeatableField from '../src/components/RepeatableField';
 
 const SubjectFields = ({ formatMsg }) => (
   <RepeatableField
