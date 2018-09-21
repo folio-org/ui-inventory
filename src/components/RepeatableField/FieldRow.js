@@ -145,24 +145,15 @@ class FieldRow extends React.Component {
       return (
         <div ref={this.props.containerRef}>
           <SRStatus ref={(ref) => { this.srstatus = ref; }} />
-          <fieldset>
+          <fieldset className={css.RFFieldset}>
             <legend id={this._arrayId} className={css.RFLegend}>{this.props.label}</legend>
-            <Row>
-              <Col xs={12} sm={8}>
-                <Row>
-                  <Col xs={10}>
-                    <Button
-                      fullWidth
-                      style={{ marginBottom: '12px' }}
-                      onClick={() => { this.props.onAddField(fields); }}
-                      id={this.addButtonId}
-                    >
-                      {this.props.addLabel ? this.props.addLabel : `+ Add ${this.props.label}`}
-                    </Button>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
+            <Button
+              style={{ marginBottom: '12px' }}
+              onClick={() => { this.props.onAddField(fields); }}
+              id={this.addButtonId}
+            >
+              {this.props.addLabel ? this.props.addLabel : `+ Add ${this.props.label}`}
+            </Button>
           </fieldset>
         </div>
       );
@@ -170,7 +161,7 @@ class FieldRow extends React.Component {
     return (
       <div ref={this.props.containerRef}>
         <SRStatus ref={(ref) => { this.srstatus = ref; }} />
-        <fieldset>
+        <fieldset className={css.RFFieldset}>
           <legend id={this._arrayId} className={css.RFLegend}>{this.props.label}</legend>
 
           {fields.map((f, fieldIndex) => (
@@ -179,48 +170,42 @@ class FieldRow extends React.Component {
               style={{ width: '100%' }}
               ref={(ref) => { this.refIfLastRow(ref, fieldIndex); }}
             >
-              <Row bottom="xs">
-                <Col xs={12} sm={8}>
+
+              <Row>
+                <Col xs={10}>
                   <Row>
-                    <Col xs={10}>
-                      <Row>
-                        {this.props.template.map((t, i) => (
-                          <Col xs key={`field-${i}`}>
-                            {this.renderControl(fields, f, fieldIndex, t, i)}
-                          </Col>
-                        ))}
-                      </Row>
-                    </Col>
-                    <Col xs={2}>
-                      <Layout className={fieldIndex === 0 ? 'marginTopLabelSpacer' : ''}>
-                        <Button
-                          buttonStyle="link"
-                          style={{ padding: 0, marginBottom: '12px' }}
-                          onClick={() => { this.handleRemove(fieldIndex, f); }}
-                          title={this.props.intl.formatMessage(
-                            { id: 'stripes-components.removeFields' },
-                            { item: this.props.label, num: fieldIndex + 1 }
-                          )}
-                        >
-                          <Icon icon="trashBin" />
-                        </Button>
-                      </Layout>
-                    </Col>
+                    {this.props.template.map((t, i) => (
+                      <Col xs key={`field-${i}`}>
+                        {this.renderControl(fields, f, fieldIndex, t, i)}
+                      </Col>
+                    ))}
                   </Row>
                 </Col>
-                <Col xs={12} sm={4}>
-                  {fieldIndex === fields.length - 1 &&
+                <Col xs={2}>
+                  <Layout className={fieldIndex === 0 ? 'marginTopLabelSpacer' : ''}>
                     <Button
-                      fullWidth
-                      style={{ marginBottom: '12px' }}
-                      onClick={() => { this.props.onAddField(fields); }}
-                      id={this.addButtonId}
+                      buttonStyle="link"
+                      style={{ padding: 0, marginBottom: '12px' }}
+                      onClick={() => { this.handleRemove(fieldIndex, f); }}
+                      title={this.props.intl.formatMessage(
+                        { id: 'stripes-components.removeFields' },
+                        { item: this.props.label, num: fieldIndex + 1 }
+                      )}
                     >
-                      {addLabel}
+                      <Icon icon="trashBin" />
                     </Button>
-                  }
+                  </Layout>
                 </Col>
               </Row>
+
+              {fieldIndex === fields.length - 1 &&
+                <Button
+                  onClick={() => { this.props.onAddField(fields); }}
+                  id={this.addButtonId}
+                >
+                  {addLabel}
+                </Button>
+              }
             </div>
           ))}
         </fieldset>
