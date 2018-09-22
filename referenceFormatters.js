@@ -47,7 +47,7 @@ export default {
         if (ea !== null) {
           let relationshipName = '';
           if (ea.relationship) {
-            const relationship = electronicAccessRelationships.find(ear => ear.id === ea.relationship);
+            const relationship = electronicAccessRelationships.find(ear => ear.id === ea.relationshipId);
             if (relationship) {
               relationshipName = relationship.name;
             }

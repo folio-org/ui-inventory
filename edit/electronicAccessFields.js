@@ -20,7 +20,7 @@ const ElectronicAccessFields = ({ formatMsg, electronicAccessRelationships }) =>
       addButtonId="clickable-add-electronicaccess"
       template={[
         {
-          name: 'relationship',
+          name: 'relationshipId',
           label: formatMsg({ id: 'ui-inventory.urlRelationship' }),
           component: Select,
           dataOptions: [{ label: 'Select type', value: '' }, ...relationshipOptions],
