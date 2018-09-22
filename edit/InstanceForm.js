@@ -369,7 +369,7 @@ class InstanceForm extends React.Component {
                       <SubjectFields formatMsg={formatMsg} />
                       <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
                       <NoteFields formatMsg={formatMsg} />
-                      <ElectronicAccessFields formatMsg={formatMsg} />
+                      <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
                     </Col>
                   </Row>
                 </Accordion>
