@@ -9,6 +9,7 @@
 * Remove API dependency on `cataloging-levels` (UIIN-312)
 * More stable inventory-search tests. Refs UIIN-306.
 * Remove `instance.edition` add `instance.editions` (UIIN-299)
+* Add electronic access relationship reference data (UIIN-316)
 
 ## [1.2.3 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.3) (2018-09-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.2...v1.2.3)
