@@ -422,7 +422,7 @@ class ViewInstance extends React.Component {
           { (instance.electronicAccess.length > 0) &&
           <Row>
             <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance)} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance, referenceTables.electronicAccessRelationships)} />
             </Col>
           </Row>
           }
