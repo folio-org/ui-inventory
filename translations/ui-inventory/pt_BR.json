@@ -183,7 +183,17 @@
     "discoverySuppress": "Suprimir da ferramenta de descoberta",
     "previouslyHeld": "Anteriormente realizada",
     "addElectronicAccess": "+ Adicionar acesso eletrônico",
-    "instanceStatus": "Instance status term",
-    "selectInstanceStatus": "Select instance status",
-    "selectModeOfIssuance": "Select mode of issuance"
+    "instanceStatus": "Termo do status da instância",
+    "selectInstanceStatus": "Selecione o status da instância",
+    "selectModeOfIssuance": "Selecione o modo de emissão",
+    "catalogingLevel": "Nível de catalogação",
+    "selectCatalogingLevel": "Selecione o nível",
+    "instanceStatusUpdatedDate": "Data de atualização do status",
+    "hridTaken": "Este HRID já foi usado",
+    "instances.columns.title": "Título",
+    "instances.columns.contributors": "Colaboradores",
+    "instances.columns.publishers": "Editores",
+    "instances.columns.relation": "Relação",
+    "editions": "Edições",
+    "addEdition": "+ Adicionar edição"
 }
