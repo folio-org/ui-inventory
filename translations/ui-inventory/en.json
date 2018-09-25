@@ -70,6 +70,7 @@
   "identifiers": "Identifiers",
   "addIdentifier": "+ Add identifier",
   "title": "Title",
+  "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
   "formats": "Formats",
   "format": "Format",

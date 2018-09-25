@@ -303,6 +303,17 @@ class InstanceForm extends React.Component {
                     </Col>
                     <Col xs={12} sm={6}>
                       <Field
+                        name="source"
+                        type="text"
+                        component={TextField}
+                        disabled
+                        label={`${formatMsg({ id: 'ui-inventory.metadataSource' })} *`}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12} sm={6}>
+                      <Field
                         name="catalogedDate"
                         dateFormat="YYYY-MM-DD"
                         backendDateStandard="YYYY-MM-DD"
@@ -341,6 +352,13 @@ class InstanceForm extends React.Component {
                     component="input"
                   />
                   <AlternativeTitles formatMsg={formatMsg} />
+                  <Field
+                    label={`${formatMsg({ id: 'ui-inventory.indexTitle' })} *`}
+                    name="indexTitle"
+                    id="input_index_title"
+                    component={TextField}
+                    fullWidth
+                  />
                   <SeriesFields formatMsg={formatMsg} />
                 </Accordion>
                 <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.identifiers' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection03} id="instanceSection03">
