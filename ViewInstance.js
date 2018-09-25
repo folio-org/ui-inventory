@@ -181,6 +181,14 @@ class ViewInstance extends React.Component {
       'Free text': x => _.get(x, ['contributorTypeText']),
     };
 
+    const electronicAccessRowFormatter = {
+      'URL relationship': x => _.get(x, ['relationship']),
+      'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+      'Link text': x => _.get(x, ['linkText']),
+      'Materials specified': x => _.get(x, ['materialsSpecification']),
+      'URL public note': x => _.get(x, ['publicNote']),
+    };
+
     const detailMenu = (
       <PaneMenu>
         <IconButton
@@ -475,11 +483,14 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
         >
           { (instance.electronicAccess.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-electronic-access"
+              contentData={instance.electronicAccess}
+              visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specifiec', 'URL public note']}
+              formatter={electronicAccessRowFormatter}
+              ariaLabel="Electronic access"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
         </Accordion>
         <Accordion
