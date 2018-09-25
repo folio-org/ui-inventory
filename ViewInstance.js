@@ -165,6 +165,11 @@ class ViewInstance extends React.Component {
       'Resource identifier': x => _.get(x, ['value']) || '--',
     };
 
+    const classificationsRowFormatter = {
+      'Classification identifier type': x => this.refLookup(referenceTables.classificationTypes, _.get(x, ['classificationTypeId'])).name,
+      'Classification': x => _.get(x, ['classificationNumber']) || '--',
+    };
+
     const publicationRowFormatter = {
       'Publisher': x => _.get(x, ['publisher']),
       'Publisher role': x => _.get(x, ['role']),
@@ -422,6 +427,7 @@ class ViewInstance extends React.Component {
               containerRef={(ref) => { this.resultsList = ref; }}
             />
           }
+          <br />
           <Row>
             { (instance.editions && instance.editions.length > 0) &&
               <Col xs={6}>
@@ -514,11 +520,15 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.classification' })}
         >
           { (instance.classifications.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.classification' })} value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-classifications"
+              contentData={instance.classifications}
+              rowMetadata={['classificationTypeId']}
+              visibleColumns={['Classification identifier type', 'Classification']}
+              formatter={classificationsRowFormatter}
+              ariaLabel="Classifications"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
         </Accordion>
         { (!holdingsrecordid && !itemid) ?
