@@ -17,6 +17,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Headline from '@folio/stripes-components/lib/Headline';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
@@ -153,6 +154,11 @@ class ViewInstance extends React.Component {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const ci = makeConnectedInstance(this.props, this.props.stripes.logger);
     const instance = ci.instance();
+
+    const identifiersRowFormatter = {
+      'Resource identifier type': x => referenceTables.identifierTypes.find(it => it.id === _.get(x, ['identifierTypeId'])).name,
+      'Resource identifier': x => _.get(x, ['value']) || '--',
+    };
 
     const detailMenu = (
       <PaneMenu>
@@ -343,11 +349,15 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.identifiers' })}
         >
           { (instance.identifiers.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceIdentifier' })} value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-identifiers"
+              contentData={instance.identifiers}
+              rowMetadata={['identifierTypeId']}
+              visibleColumns={['Resource identifier type', 'Resource identifier']}
+              formatter={identifiersRowFormatter}
+              ariaLabel="Identifiers"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
         }
         </Accordion>
         <Accordion
