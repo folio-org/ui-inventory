@@ -148,6 +148,11 @@ class ViewInstance extends React.Component {
     });
   }
 
+  refLookup = (referenceTable, id) => {
+    const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+    return ref || {};
+  }
+
   render() {
     const { okapi, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
@@ -156,8 +161,24 @@ class ViewInstance extends React.Component {
     const instance = ci.instance();
 
     const identifiersRowFormatter = {
-      'Resource identifier type': x => referenceTables.identifierTypes.find(it => it.id === _.get(x, ['identifierTypeId'])).name,
+      'Resource identifier type': x => this.refLookup(referenceTables.identifierTypes, _.get(x, ['identifierTypeId'])).name,
       'Resource identifier': x => _.get(x, ['value']) || '--',
+    };
+
+    const publicationRowFormatter = {
+      'Publisher': x => _.get(x, ['publisher']),
+      'Publisher role': x => _.get(x, ['role']),
+      'Place of publication': x => _.get(x, ['place']),
+      'Publication date': x => _.get(x, ['dateOfPublication']),
+    };
+
+    const contributorsRowFormatter = {
+      'Name type': x => this.refLookup(referenceTables.contributorNameTypes, _.get(x, ['contributorNameTypeId'])).name,
+      'Name': x => _.get(x, ['name']),
+      'Type': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).name,
+      'Code': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).code,
+      'Source': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).source,
+      'Free text': x => _.get(x, ['contributorTypeText']),
     };
 
     const detailMenu = (
@@ -367,11 +388,14 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.contributors' })}
         >
           { (instance.contributors.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.contributor' })} value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-contributors"
+              contentData={instance.contributors}
+              visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
+              formatter={contributorsRowFormatter}
+              ariaLabel="Contributors"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
         </Accordion>
         <Accordion
@@ -381,11 +405,14 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
         >
           { (instance.publication.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.publisher' })} value={formatters.publishersFormatter(instance)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-publication"
+              contentData={instance.publication}
+              visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
+              formatter={publicationRowFormatter}
+              ariaLabel="Publication"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
           <Row>
             { (instance.editions && instance.editions.length > 0) &&
