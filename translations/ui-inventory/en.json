@@ -162,6 +162,7 @@
   "publisherRole": "Publisher role",
   "place": "Place",
   "date": "Date",
+  "dateOfPublication": "Date of publication",
   "resourceType": "Resource type",
   "resourceTypes": "Resource types",
   "subjectHeadings": "Subject headings",
@@ -191,5 +192,6 @@
   "administrativeData": "Administrative data",
   "itemNotes": "Item notes",
   "itemCallNumber": "Item Call number",
-  "holdingsNotes": "Holdings notes"
+  "holdingsNotes": "Holdings notes",
+  "otherRelatedInstances": "Other related instances"
 }

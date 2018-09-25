@@ -27,7 +27,7 @@ const PublicationFields = ({ formatMsg }) => (
       },
       {
         name: 'dateOfPublication',
-        label: formatMsg({ id: 'ui-inventory.date' }),
+        label: formatMsg({ id: 'ui-inventory.dateOfPublication' }),
         component: TextField,
       },
     ]}
