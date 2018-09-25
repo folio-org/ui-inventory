@@ -158,6 +158,7 @@ class InstanceForm extends React.Component {
         instanceSection09: true,
         instanceSection10: true,
         instanceSection11: true,
+        instanceSection12: true,
       },
     };
 
@@ -404,6 +405,8 @@ class InstanceForm extends React.Component {
                 <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.otherRelatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection11">
+              </Accordion>
+              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.instanceRelationships' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection12">
                 <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                 <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
               </Accordion>
