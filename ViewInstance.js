@@ -68,6 +68,7 @@ class ViewInstance extends React.Component {
         electronicAccessAccordion: true,
         contributorsAccordion: true,
         subjectsAccordion: true,
+        analyticsAccordion: true,
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -302,20 +303,6 @@ class ViewInstance extends React.Component {
         <Headline size="medium" margin="medium">
           {instance.title}
         </Headline>
-        { (instance.childInstances.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
-            </Col>
-          </Row>
-        }
-        { (instance.parentInstances.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
-            </Col>
-          </Row>
-        }
         <Accordion
           open={this.state.accordions.instanceAccordion}
           id="instanceAccordion"
@@ -600,6 +587,27 @@ class ViewInstance extends React.Component {
             stripes={stripes}
           />
         </Layer>
+        <Accordion
+          open={this.state.accordions.analyticsAccordion}
+          id="analyticsAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.instanceRelationships' })}
+        >
+          { (instance.childInstances.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+              </Col>
+            </Row>
+          }
+          { (instance.parentInstances.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+              </Col>
+            </Row>
+          }
+        </Accordion>
       </Pane>
     ) : null;
   }
