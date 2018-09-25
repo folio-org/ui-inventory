@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
@@ -11,6 +11,7 @@ import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accord
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Layer from '@folio/stripes-components/lib/Layer';
+import Layout from '@folio/stripes-components/lib/Layout';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
@@ -195,21 +196,27 @@ class ViewInstance extends React.Component {
     };
 
     const newHoldingsRecordButton = (
-      <div>
-        <Button
-          id="clickable-new-holdings-record"
-          href={this.craftLayerUrl('createHoldingsRecord')}
-          onClick={this.onClickAddNewHoldingsRecord}
-          title={formatMsg({ id: 'ui-inventory.addHoldings' })}
-          buttonStyle="primary"
-          fullWidth
-        >
-          {formatMsg({ id: 'ui-inventory.addHoldings' })}
-        </Button>
-      </div>
+      <Button
+        id="clickable-new-holdings-record"
+        href={this.craftLayerUrl('createHoldingsRecord')}
+        onClick={this.onClickAddNewHoldingsRecord}
+        title={formatMsg({ id: 'ui-inventory.addHoldings' })}
+        buttonStyle="primary"
+        fullWidth
+      >
+        {formatMsg({ id: 'ui-inventory.addHoldings' })}
+      </Button>
     );
     const viewSourceLink = `${location.pathname.replace('/view/', '/viewsource/')}${location.search}`;
-    const viewSourceButton = <Link to={viewSourceLink}><Button id="clickable-view-source">{formatMsg({ id: 'ui-inventory.viewSource' })}</Button></Link>;
+    const viewSourceButton = (
+      <Button
+        to={viewSourceLink}
+        id="clickable-view-source"
+        marginBottom0
+      >
+        {formatMsg({ id: 'ui-inventory.viewSource' })}
+      </Button>
+    );
 
     return instance ? (
       <Pane
@@ -225,24 +232,36 @@ class ViewInstance extends React.Component {
         <hr />
         <Row>
           <Col xs={12}>
-            <AppIcon app="inventory" iconKey="instance" size="small" />
-            {' '}
-            {formatMsg({ id: 'ui-inventory.instanceRecord' })}
-            {' '}
-            <AppIcon app="inventory" iconKey="resource-type" size="small" />
-            {' '}
-            {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
-            { (!!instance.sourceRecordFormat) && <span style={{ 'float': 'right' }}>{viewSourceButton}</span> }
+            <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
+              <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                <AppIcon
+                  app="inventory"
+                  iconKey="instance"
+                  size="small"
+                >
+                  { formatMsg({ id: 'ui-inventory.instanceRecord' }) }
+                </AppIcon>
+              </Layout>
+              <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                <AppIcon
+                  app="inventory"
+                  iconKey="resource-type"
+                  size="small"
+                >
+                  {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+                </AppIcon>
+              </Layout>
+              { (!!instance.sourceRecordFormat) && (
+                <Layout className="margin-start-auto">
+                  {viewSourceButton}
+                </Layout>
+              ) }
+            </Layout>
           </Col>
         </Row>
-        <br />
-        <Row>
-          <Col xs={12}>
-            <Headline size="small" margin="small">
-              {instance.title}
-            </Headline>
-          </Col>
-        </Row>
+        <Headline size="medium" margin="medium">
+          {instance.title}
+        </Headline>
         { (instance.childInstances.length > 0) &&
           <Row>
             <Col xs={12}>
@@ -257,7 +276,6 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
         }
-
         <Accordion
           open={this.state.accordions.instanceAccordion}
           id="instanceAccordion"
