@@ -7,7 +7,7 @@ import { stripesShape } from '@folio/stripes-core/src/Stripes'; // eslint-disabl
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
 
-import packageInfo from './package';
+import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
