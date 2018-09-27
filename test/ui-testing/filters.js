@@ -28,7 +28,6 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait(1111)
           .evaluate(() => {
             let count = document.querySelector('p[title*="records found"]').title;
-            console.log(`found ${count} records!!!`)
             count = count.replace(/^(\d+).+/, '$1');
             return count;
           })
