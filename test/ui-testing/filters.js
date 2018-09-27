@@ -22,12 +22,13 @@ module.exports.test = function uiTest(uiTestCtx) {
           .use(openApp(nightmare, config, done, 'inventory', testVersion))
           .then(result => result);
       });
-      it('should find hit count with no filters applied ', (done) => {
+      it('should find hit count with no filters applied', (done) => {
         nightmare
-          .wait('p[title*="Records found"]:not([title^="0 "]')
+          .wait('p[title*="records found"]:not([title^="0 "]')
           .wait(1111)
           .evaluate(() => {
-            let count = document.querySelector('p[title*="Records found"]').title;
+            let count = document.querySelector('p[title*="records found"]').title;
+            console.log(`found ${count} records!!!`)
             count = count.replace(/^(\d+).+/, '$1');
             return count;
           })
@@ -40,10 +41,16 @@ module.exports.test = function uiTest(uiTestCtx) {
       filters.forEach((filter) => {
         it(`should click ${filter} and change hit count`, (done) => {
           nightmare
+            .wait('#input-inventory-search')
+            .type('#input-inventory-search', 0)
+            .wait('#clickable-reset-all')
+            .click('#clickable-reset-all')
+            .wait(`#clickable-filter-${filter}`)
             .click(`#clickable-filter-${filter}`)
-            .wait(`p[title*="Record"]:not([title^="${hitCount} "]`)
+            .wait('#clickable-reset-all')
+            .wait(`p[title*="record"]:not([title^="${hitCount} "]`)
             .click(`#clickable-filter-${filter}`)
-            .wait(`p[title="${hitCount} Records found"]`)
+            .wait(`p[title="${hitCount} records found"]`)
             .then(done)
             .catch(done);
         });
