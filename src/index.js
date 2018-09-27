@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
+import { hot } from 'react-hot-loader';
 import Instances from './Instances';
 import Settings from './settings';
 
@@ -52,4 +53,4 @@ How did you get to
   }
 }
 
-export default InstancesRouting;
+export default hot(module)(InstancesRouting);
