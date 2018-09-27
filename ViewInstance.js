@@ -188,7 +188,7 @@ class ViewInstance extends React.Component {
     };
 
     const electronicAccessRowFormatter = {
-      'URL relationship': x => _.get(x, ['relationship']),
+      'URL relationship': x => _.get(x, ['relationship']) || '',
       'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
       'Link text': x => _.get(x, ['linkText']) || '',
       'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
@@ -480,7 +480,7 @@ class ViewInstance extends React.Component {
             <MultiColumnList
               id="list-electronic-access"
               contentData={instance.electronicAccess}
-              visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specifiec', 'URL public note']}
+              visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
               formatter={electronicAccessRowFormatter}
               ariaLabel="Electronic access"
               containerRef={(ref) => { this.resultsList = ref; }}
