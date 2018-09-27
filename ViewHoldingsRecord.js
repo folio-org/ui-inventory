@@ -71,10 +71,12 @@ class ViewHoldingsRecord extends React.Component {
     const temporaryLocationQuery = resources.temporaryLocationQuery;
     const holding = holdingsRecords[0];
 
-    if (holding && (!permanentLocationQuery.id || permanentLocationQuery.id !== holding.permanentLocationId)) {
+    if (holding && holding.permanentLocationId
+      && (!permanentLocationQuery.id || permanentLocationQuery.id !== holding.permanentLocationId)) {
       nextProps.mutator.permanentLocationQuery.update({ id: holding.permanentLocationId });
     }
-    if (holding && holding.temporaryLocationId && (!temporaryLocationQuery.id || temporaryLocationQuery.id !== holding.temporaryLocationId)) {
+    if (holding && holding.temporaryLocationId
+      && (!temporaryLocationQuery.id || temporaryLocationQuery.id !== holding.temporaryLocationId)) {
       nextProps.mutator.temporaryLocationQuery.update({ id: holding.temporaryLocationId });
     }
 
@@ -142,14 +144,17 @@ class ViewHoldingsRecord extends React.Component {
   render() {
     const { location, resources: { holdingsRecords, instances1, platforms, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
 
-    if (!holdingsRecords || !holdingsRecords.hasLoaded
-        || !instances1 || !instances1.hasLoaded
-        || !permanentLocation || !permanentLocation.hasLoaded
-        || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
+    if (!holdingsRecords || !holdingsRecords.hasLoaded) return <div>Awaiting resources</div>;
 
     const holdingsRecord = holdingsRecords.records[0];
+
+    if (!instances1 || !instances1.hasLoaded
+        || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
+        || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))
+        || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
+
     const instance = instances1.records[0];
-    const holdingsPermanentLocation = permanentLocation.records[0];
+    const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
 
     referenceTables.platforms = platforms.records;
