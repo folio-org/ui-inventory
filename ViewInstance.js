@@ -172,10 +172,10 @@ class ViewInstance extends React.Component {
     };
 
     const publicationRowFormatter = {
-      'Publisher': x => _.get(x, ['publisher']),
-      'Publisher role': x => _.get(x, ['role']),
-      'Place of publication': x => _.get(x, ['place']),
-      'Publication date': x => _.get(x, ['dateOfPublication']),
+      'Publisher': x => _.get(x, ['publisher']) || '',
+      'Publisher role': x => _.get(x, ['role']) || '',
+      'Place of publication': x => _.get(x, ['place']) || '',
+      'Publication date': x => _.get(x, ['dateOfPublication']) || '',
     };
 
     const contributorsRowFormatter = {
@@ -184,15 +184,15 @@ class ViewInstance extends React.Component {
       'Type': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).name,
       'Code': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).code,
       'Source': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).source,
-      'Free text': x => _.get(x, ['contributorTypeText']),
+      'Free text': x => _.get(x, ['contributorTypeText']) || '',
     };
 
     const electronicAccessRowFormatter = {
       'URL relationship': x => _.get(x, ['relationship']),
       'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
-      'Link text': x => _.get(x, ['linkText']),
-      'Materials specified': x => _.get(x, ['materialsSpecification']),
-      'URL public note': x => _.get(x, ['publicNote']),
+      'Link text': x => _.get(x, ['linkText']) || '',
+      'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+      'URL public note': x => _.get(x, ['publicNote']) || '',
     };
 
     const detailMenu = (
@@ -394,6 +394,7 @@ class ViewInstance extends React.Component {
               visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
               formatter={contributorsRowFormatter}
               ariaLabel="Contributors"
+              autosize
               containerRef={(ref) => { this.resultsList = ref; }}
             />
           }
