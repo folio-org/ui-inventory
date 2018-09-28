@@ -185,5 +185,15 @@
     "addElectronicAccess": "+ Add electronic access",
     "instanceStatus": "Instance status term",
     "selectInstanceStatus": "Select instance status",
-    "selectModeOfIssuance": "Select mode of issuance"
+    "selectModeOfIssuance": "Select mode of issuance",
+    "catalogingLevel": "Cataloging level",
+    "selectCatalogingLevel": "Select level",
+    "instanceStatusUpdatedDate": "Status updated date",
+    "hridTaken": "This HRID has already been taken",
+    "instances.columns.title": "Title",
+    "instances.columns.contributors": "Contributors",
+    "instances.columns.publishers": "Publishers",
+    "instances.columns.relation": "Relation",
+    "editions": "Editions",
+    "addEdition": "+ Add edition"
 }

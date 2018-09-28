@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
-import RepeatableField from '../src/components/RepeatableField';
+import RepeatableField from '../components/RepeatableField';
 
-const ParentInstanceFields = ({ instanceRelationshipTypes }) => {
+const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
   const relationshipOptions = instanceRelationshipTypes.map(
     it => ({
       label: it.name,
@@ -14,15 +14,16 @@ const ParentInstanceFields = ({ instanceRelationshipTypes }) => {
 
   return (
     <RepeatableField
-      name="parentInstances"
-      label="Parent instances"
-      addLabel="+ Add parent instance"
-      addButtonId="clickable-add-parentinstance"
+      name="childInstances"
+      label="Child instances"
+      addLabel="+ Add child instance"
+      addButtonId="clickable-add-childinstance"
       template={[
         {
-          label: 'Parent instance *',
-          name: 'superInstanceId',
+          label: 'Child instance *',
+          name: 'subInstanceId',
           component: TextField,
+          required: true,
         },
         {
           label: 'Type of relation *',
@@ -32,13 +33,13 @@ const ParentInstanceFields = ({ instanceRelationshipTypes }) => {
           required: true,
         },
       ]}
-      newItemTemplate={{ superInstanceId: '', instanceRelationshipTypeId: '' }}
+      newItemTemplate={{ subInstanceId: '', relationshipTypeId: '' }}
     />
   );
 };
 
-ParentInstanceFields.propTypes = {
-  instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object)
+ChildInstanceFields.propTypes = {
+  instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default ParentInstanceFields;
+export default ChildInstanceFields;

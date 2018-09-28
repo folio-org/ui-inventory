@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
@@ -11,11 +11,13 @@ import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accord
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Layer from '@folio/stripes-components/lib/Layer';
+import Layout from '@folio/stripes-components/lib/Layout';
 import Button from '@folio/stripes-components/lib/Button';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Headline from '@folio/stripes-components/lib/Headline';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
@@ -66,6 +68,7 @@ class ViewInstance extends React.Component {
         electronicAccessAccordion: true,
         contributorsAccordion: true,
         subjectsAccordion: true,
+        analyticsAccordion: true,
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -146,12 +149,51 @@ class ViewInstance extends React.Component {
     });
   }
 
+  refLookup = (referenceTable, id) => {
+    const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+    return ref || {};
+  }
+
   render() {
     const { okapi, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
     const query = location.search ? queryString.parse(location.search) : emptyObj;
     const formatMsg = this.props.stripes.intl.formatMessage;
     const ci = makeConnectedInstance(this.props, this.props.stripes.logger);
     const instance = ci.instance();
+
+    const identifiersRowFormatter = {
+      'Resource identifier type': x => this.refLookup(referenceTables.identifierTypes, _.get(x, ['identifierTypeId'])).name,
+      'Resource identifier': x => _.get(x, ['value']) || '--',
+    };
+
+    const classificationsRowFormatter = {
+      'Classification identifier type': x => this.refLookup(referenceTables.classificationTypes, _.get(x, ['classificationTypeId'])).name,
+      'Classification': x => _.get(x, ['classificationNumber']) || '--',
+    };
+
+    const publicationRowFormatter = {
+      'Publisher': x => _.get(x, ['publisher']) || '',
+      'Publisher role': x => _.get(x, ['role']) || '',
+      'Place of publication': x => _.get(x, ['place']) || '',
+      'Publication date': x => _.get(x, ['dateOfPublication']) || '',
+    };
+
+    const contributorsRowFormatter = {
+      'Name type': x => this.refLookup(referenceTables.contributorNameTypes, _.get(x, ['contributorNameTypeId'])).name,
+      'Name': x => _.get(x, ['name']),
+      'Type': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).name,
+      'Code': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).code,
+      'Source': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).source,
+      'Free text': x => _.get(x, ['contributorTypeText']) || '',
+    };
+
+    const electronicAccessRowFormatter = {
+      'URL relationship': x => _.get(x, ['relationship']) || '',
+      'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+      'Link text': x => _.get(x, ['linkText']) || '',
+      'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+      'URL public note': x => _.get(x, ['publicNote']) || '',
+    };
 
     const detailMenu = (
       <PaneMenu>
@@ -195,21 +237,27 @@ class ViewInstance extends React.Component {
     };
 
     const newHoldingsRecordButton = (
-      <div>
-        <Button
-          id="clickable-new-holdings-record"
-          href={this.craftLayerUrl('createHoldingsRecord')}
-          onClick={this.onClickAddNewHoldingsRecord}
-          title={formatMsg({ id: 'ui-inventory.addHoldings' })}
-          buttonStyle="primary"
-          fullWidth
-        >
-          {formatMsg({ id: 'ui-inventory.addHoldings' })}
-        </Button>
-      </div>
+      <Button
+        id="clickable-new-holdings-record"
+        href={this.craftLayerUrl('createHoldingsRecord')}
+        onClick={this.onClickAddNewHoldingsRecord}
+        title={formatMsg({ id: 'ui-inventory.addHoldings' })}
+        buttonStyle="primary"
+        fullWidth
+      >
+        {formatMsg({ id: 'ui-inventory.addHoldings' })}
+      </Button>
     );
     const viewSourceLink = `${location.pathname.replace('/view/', '/viewsource/')}${location.search}`;
-    const viewSourceButton = <Link to={viewSourceLink}><Button id="clickable-view-source">{formatMsg({ id: 'ui-inventory.viewSource' })}</Button></Link>;
+    const viewSourceButton = (
+      <Button
+        to={viewSourceLink}
+        id="clickable-view-source"
+        marginBottom0
+      >
+        {formatMsg({ id: 'ui-inventory.viewSource' })}
+      </Button>
+    );
 
     return instance ? (
       <Pane
@@ -225,39 +273,36 @@ class ViewInstance extends React.Component {
         <hr />
         <Row>
           <Col xs={12}>
-            <AppIcon app="inventory" iconKey="instance" size="small" />
-            {' '}
-            {formatMsg({ id: 'ui-inventory.instanceRecord' })}
-            {' '}
-            <AppIcon app="inventory" iconKey="resource-type" size="small" />
-            {' '}
-            {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
-            { (!!instance.sourceRecordFormat) && <span style={{ 'float': 'right' }}>{viewSourceButton}</span> }
+            <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
+              <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                <AppIcon
+                  app="inventory"
+                  iconKey="instance"
+                  size="small"
+                >
+                  { formatMsg({ id: 'ui-inventory.instanceRecord' }) }
+                </AppIcon>
+              </Layout>
+              <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                <AppIcon
+                  app="inventory"
+                  iconKey="resource-type"
+                  size="small"
+                >
+                  {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+                </AppIcon>
+              </Layout>
+              { (!!instance.sourceRecordFormat) && (
+                <Layout className="margin-start-auto">
+                  {viewSourceButton}
+                </Layout>
+              ) }
+            </Layout>
           </Col>
         </Row>
-        <br />
-        <Row>
-          <Col xs={12}>
-            <Headline size="small" margin="small">
-              {instance.title}
-            </Headline>
-          </Col>
-        </Row>
-        { (instance.childInstances.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
-            </Col>
-          </Row>
-        }
-        { (instance.parentInstances.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
-            </Col>
-          </Row>
-        }
-
+        <Headline size="medium" margin="medium">
+          {instance.title}
+        </Headline>
         <Accordion
           open={this.state.accordions.instanceAccordion}
           id="instanceAccordion"
@@ -325,11 +370,15 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.identifiers' })}
         >
           { (instance.identifiers.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceIdentifier' })} value={formatters.identifiersFormatter(instance, referenceTables.identifierTypes)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-identifiers"
+              contentData={instance.identifiers}
+              rowMetadata={['identifierTypeId']}
+              visibleColumns={['Resource identifier type', 'Resource identifier']}
+              formatter={identifiersRowFormatter}
+              ariaLabel="Identifiers"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
         }
         </Accordion>
         <Accordion
@@ -339,11 +388,15 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.contributors' })}
         >
           { (instance.contributors.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.contributor' })} value={formatters.contributorsFormatter(instance, referenceTables.contributorTypes)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-contributors"
+              contentData={instance.contributors}
+              visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
+              formatter={contributorsRowFormatter}
+              ariaLabel="Contributors"
+              autosize
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
         </Accordion>
         <Accordion
@@ -353,12 +406,16 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
         >
           { (instance.publication.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.publisher' })} value={formatters.publishersFormatter(instance)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-publication"
+              contentData={instance.publication}
+              visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
+              formatter={publicationRowFormatter}
+              ariaLabel="Publication"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
+          <br />
           <Row>
             { (instance.editions && instance.editions.length > 0) &&
               <Col xs={6}>
@@ -420,11 +477,14 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
         >
           { (instance.electronicAccess.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.electronicAccess' })} value={formatters.electronicAccessFormatter(instance, referenceTables.electronicAccessRelationships)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-electronic-access"
+              contentData={instance.electronicAccess}
+              visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+              formatter={electronicAccessRowFormatter}
+              ariaLabel="Electronic access"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
         </Accordion>
         <Accordion
@@ -448,11 +508,15 @@ class ViewInstance extends React.Component {
           label={formatMsg({ id: 'ui-inventory.classification' })}
         >
           { (instance.classifications.length > 0) &&
-          <Row>
-            <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.classification' })} value={formatters.classificationsFormatter(instance, referenceTables.classificationTypes)} />
-            </Col>
-          </Row>
+            <MultiColumnList
+              id="list-classifications"
+              contentData={instance.classifications}
+              rowMetadata={['classificationTypeId']}
+              visibleColumns={['Classification identifier type', 'Classification']}
+              formatter={classificationsRowFormatter}
+              ariaLabel="Classifications"
+              containerRef={(ref) => { this.resultsList = ref; }}
+            />
           }
         </Accordion>
         { (!holdingsrecordid && !itemid) ?
@@ -524,6 +588,27 @@ class ViewInstance extends React.Component {
             stripes={stripes}
           />
         </Layer>
+        <Accordion
+          open={this.state.accordions.analyticsAccordion}
+          id="analyticsAccordion"
+          onToggle={this.handleAccordionToggle}
+          label={formatMsg({ id: 'ui-inventory.instanceRelationships' })}
+        >
+          { (instance.childInstances.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+              </Col>
+            </Row>
+          }
+          { (instance.parentInstances.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+              </Col>
+            </Row>
+          }
+        </Accordion>
       </Pane>
     ) : null;
   }

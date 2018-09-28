@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
 import Checkbox from '@folio/stripes-components/lib/Checkbox';
-import RepeatableField from '../src/components/RepeatableField';
+import RepeatableField from '../components/RepeatableField';
 
 const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
   const contributorNameTypeOptions = contributorNameTypes.map(

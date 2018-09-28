@@ -1,6 +1,12 @@
 # Change history for ui-inventory
 
-## [1.3.0] Unreleased
+## 1.4.0 (IN PROGRESS)
+
+* Fix case-sensitive tests. Fixes UIIN-329.
+* Add electronic access relationship reference data (UIIN-316)
+
+## [1.3.0](https://github.com/folio-org/ui-inventory/tree/v1.3.0) (2018-09-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.3.0)
 * Remove `instance.urls` from Instance form (UIIN-303)
 * Make HRID optional in Instance form (UIIN-304)
 * Validate HRID for uniqueness in Instance form (UIIN-288)
@@ -9,7 +15,7 @@
 * Remove API dependency on `cataloging-levels` (UIIN-312)
 * More stable inventory-search tests. Refs UIIN-306.
 * Remove `instance.edition` add `instance.editions` (UIIN-299)
-* Add electronic access relationship reference data (UIIN-316)
+* Move files into src directory
 
 ## [1.2.3 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.3) (2018-09-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.2...v1.2.3)

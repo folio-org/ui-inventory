@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Select from '@folio/stripes-components/lib/Select';
-import RepeatableField from '../src/components/RepeatableField';
+import RepeatableField from '../components/RepeatableField';
 
 const ElectronicAccessFields = ({ formatMsg, electronicAccessRelationships }) => {
   const relationshipOptions = electronicAccessRelationships.map(
