@@ -198,12 +198,6 @@ class ViewInstance extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <IconButton
-          id="clickable-copy-instance"
-          onClick={() => onCopy(instance)}
-          title={formatMsg({ id: 'ui-inventory.copyInstance' })}
-          icon="duplicate"
-        />
-        <IconButton
           id="clickable-edit-instance"
           style={{ visibility: !instance ? 'hidden' : 'visible' }}
           href={this.craftLayerUrl('edit')}
@@ -260,6 +254,15 @@ class ViewInstance extends React.Component {
         lastMenu={detailMenu}
         dismissible
         onClose={this.props.onClose}
+        actionMenuItems={[{
+          label: formatMsg({ id: 'ui-inventory.editInstance' }),
+          href: this.craftLayerUrl('edit'),
+          onClick: this.onClickEditInstance,
+        }, {
+          id: 'clickable-copy-instance',
+          onClick: () => onCopy(instance),
+          label: formatMsg({ id: 'ui-inventory.copyInstance' })
+        }]}
       >
         <TitleManager record={instance.title} />
         <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>

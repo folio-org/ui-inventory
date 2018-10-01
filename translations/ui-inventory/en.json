@@ -194,5 +194,6 @@
   "itemCallNumber": "Item call number",
   "holdingsNotes": "Holdings notes",
   "otherRelatedInstances": "Other related instances",
-  "instanceRelationships": "Instance relationships"
+  "instanceRelationships": "Instance relationships",
+  "copyItem": "Copy item"
 }
