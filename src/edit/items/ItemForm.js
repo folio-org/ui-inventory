@@ -155,8 +155,36 @@ class ItemForm extends React.Component {
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
 
     /* Menus for Add Item workflow */
-    const addItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title="Create New Item" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Create item</Button></PaneMenu>;
-    const editItemLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title="Update Item" disabled={(pristine || submitting) && !copy} onClick={handleSubmit}>Update item</Button></PaneMenu>;
+    const addItemLastMenu = (
+      <PaneMenu>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-create-item"
+          type="submit"
+          title="Create New Item"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          Create item
+        </Button>
+      </PaneMenu>
+    );
+    const editItemLastMenu = (
+      <PaneMenu>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-update-item"
+          type="submit"
+          title="Update Item"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          Update item
+        </Button>
+      </PaneMenu>
+    );
 
     const materialTypeOptions = referenceTables.materialTypes ?
       referenceTables.materialTypes.map((t) => {
@@ -233,7 +261,14 @@ class ItemForm extends React.Component {
                   fullWidth
                   dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
                 />
-                <Field label={formatMsg({ id: 'ui-inventory.barcode' })} name="barcode" id="additem_barcode" component={TextField} required fullWidth />
+                <Field
+                  label={formatMsg({ id: 'ui-inventory.barcode' })}
+                  name="barcode"
+                  id="additem_barcode"
+                  component={TextField}
+                  required
+                  fullWidth
+                />
                 <Field
                   label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
                   placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}

@@ -138,8 +138,36 @@ class HoldingsForm extends React.Component {
     const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
 
     /* Menus for Add Item workflow */
-    const addHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-create-item" type="submit" title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit(this.onSave)}>Create holdings record</Button></PaneMenu>;
-    const editHoldingsLastMenu = <PaneMenu><Button buttonStyle="primary paneHeaderNewButton" id="clickable-update-item" type="submit" title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })} disabled={(pristine || submitting) && !copy} onClick={handleSubmit(this.onSave)}>Update holdings record</Button></PaneMenu>;
+    const addHoldingsLastMenu = (
+      <PaneMenu>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-create-item"
+          type="submit"
+          title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })}
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit(this.onSave)}
+          marginBottom0
+        >
+          Create holdings record
+        </Button>
+      </PaneMenu>
+    );
+    const editHoldingsLastMenu = (
+      <PaneMenu>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-update-item"
+          type="submit"
+          title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })}
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit(this.onSave)}
+          marginBottom0
+        >
+          Update holdings record
+        </Button>
+      </PaneMenu>
+    );
 
     const platformOptions = (referenceTables.platforms || []).map(l => ({
       label: l.name,
@@ -228,7 +256,13 @@ class HoldingsForm extends React.Component {
             </Row>
             <Row>
               <Col sm={5} smOffset={1}>
-                <Field label={formatMsg({ id: 'ui-inventory.callNumber' })} name="callNumber" id="additem_callnumber" component={TextField} fullWidth />
+                <Field
+                  label={formatMsg({ id: 'ui-inventory.callNumber' })}
+                  name="callNumber"
+                  id="additem_callnumber"
+                  component={TextField}
+                  fullWidth
+                />
               </Col>
             </Row>
             <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
