@@ -394,7 +394,6 @@ class ViewInstance extends React.Component {
               visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
               formatter={contributorsRowFormatter}
               ariaLabel="Contributors"
-              autosize
               containerRef={(ref) => { this.resultsList = ref; }}
             />
           }
