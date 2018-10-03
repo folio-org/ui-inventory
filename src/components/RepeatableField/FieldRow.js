@@ -1,16 +1,17 @@
 import React from 'react';
-import { intlShape } from 'react-intl';
+import { intlShape, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 import { Field } from 'redux-form';
-
-import injectIntl from '@folio/stripes-components/lib/InjectIntl';
-import Button from '@folio/stripes-components/lib/Button';
-import Layout from '@folio/stripes-components/lib/Layout';
-import Icon from '@folio/stripes-components/lib/Icon';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import omit from '@folio/stripes-components/util/omitProps';
-import SRStatus from '@folio/stripes-components/lib/SRStatus';
+import {
+  Button,
+  Layout,
+  Icon,
+  Row,
+  Col,
+  omitProps,
+  SRStatus,
+} from '@folio/stripes/components';
 import css from './RepeatableField.css';
 
 const FieldRowPropTypes = {
@@ -110,7 +111,7 @@ class FieldRow extends React.Component {
       return template.render({ fields, field, fieldIndex, templateIndex });
     }
 
-    const { name, label, ...rest } = omit(template, ['component', 'render']);
+    const { name, label, ...rest } = omitProps(template, ['component', 'render']);
     const labelProps = {};
     if (fieldIndex === 0) {
       labelProps.label = label;

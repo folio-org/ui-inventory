@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@folio/stripes-components/lib/TextField';
-import Select from '@folio/stripes-components/lib/Select';
-import Checkbox from '@folio/stripes-components/lib/Checkbox';
+import { TextField, Select, Checkbox } from '@folio/stripes/components';
 import RepeatableField from '../components/RepeatableField';
 
 const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {

@@ -3,17 +3,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
+import {
+  Pane,
+  PaneMenu,
+  Row,
+  Col,
+  Accordion,
+  ExpandAllButton,
+  KeyValue,
+  Layer,
+  IconButton,
+  AppIcon,
+  craftLayerUrl,
+} from '@folio/stripes/components';
 
-import Layer from '@folio/stripes-components/lib/Layer';
-import Pane from '@folio/stripes-components/lib/Pane';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import IconButton from '@folio/stripes-components/lib/IconButton';
-import AppIcon from '@folio/stripes-components/lib/AppIcon';
-import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import ItemForm from './edit/items/ItemForm';
 
