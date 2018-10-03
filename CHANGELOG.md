@@ -4,6 +4,8 @@
 
 * Fix case-sensitive tests. Fixes UIIN-329.
 * Remove notes helper app
+* Conform imports for stripes v1.0.0 usage.
+* Add dependency to stripes v1.0.0 to package.json.
 
 ## [1.3.0](https://github.com/folio-org/ui-inventory/tree/v1.3.0) (2018-09-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.3.0)
