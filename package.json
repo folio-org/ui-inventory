@@ -192,11 +192,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes-components": "*",
-    "@folio/stripes-form": "*",
-    "@folio/stripes-smart-components": "*",
-    "@folio/stripes-connect": "*",
-    "@folio/stripes-core": "*",
+    "@folio/stripes": "^1.0.0",
     "react": "*"
   }
 }
