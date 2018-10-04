@@ -13,7 +13,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
+import { craftLayerUrl } from './utils';
 
 import ItemForm from './edit/items/ItemForm';
 
@@ -246,7 +246,7 @@ class ViewItem extends React.Component {
           icon="edit"
           id="clickable-edit-item"
           style={{ visibility: !item ? 'hidden' : 'visible' }}
-          href={this.craftLayerUrl('editItem')}
+          href={this.craftLayerUrl('editItem', location)}
           onClick={this.onClickEditItem}
           title="Edit Item"
         />
