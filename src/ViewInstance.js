@@ -434,9 +434,9 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           <Row>
-            { (instance.instanceFormatIds && instance.instanceFormatIds.length >0) &&
-              <Col xs={3}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={_.get(instance, ['instanceFormatIds'], []).map((id, i) => <div key={i}>{this.refLookup(referenceTables.instanceFormats,id).name}</div>)} />
+            { (instance.instanceFormatIds && instance.instanceFormatIds.length > 0) &&
+              <Col xs={6}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={_.get(instance, ['instanceFormatIds'], []).map((formatId, i) => <div key={i}>{this.refLookup(referenceTables.instanceFormats, formatId).name}</div>)} />
               </Col>
             }
           </Row>
