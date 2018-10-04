@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
-import TitleManager from '@folio/stripes-core/src/components/TitleManager';
+import { TitleManager } from '@folio/stripes/core';
 import {
   Pane,
   PaneMenu,
