@@ -14,7 +14,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
-import craftLayerUrl from '@folio/stripes-components/util/craftLayerUrl';
+import { craftLayerUrl } from './utils';
 
 import HoldingsForm from './edit/holdings/HoldingsForm';
 

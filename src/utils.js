@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
+import includes from 'lodash/includes';
 
 export function formatDate(dateStr) {
   if (!dateStr) return dateStr;
@@ -15,4 +16,9 @@ export function formatDateTime(dateStr) {
       <FormattedTime value={dateStr} />
     </span>
   );
+}
+
+export function craftLayerUrl(mode, location) {
+  const url = location.pathname + location.search;
+  return includes(url, '?') ? `${url}&layer=${mode}` : `${url}?layer=${mode}`;
 }
