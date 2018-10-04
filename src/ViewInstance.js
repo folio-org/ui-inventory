@@ -21,10 +21,9 @@ import {
   Icon,
   Headline,
   MultiColumnList,
-  craftLayerUrl,
 } from '@folio/stripes/components';
-
 import { ViewMetaData } from '@folio/stripes/smart-components';
+import { craftLayerUrl } from './utils';
 
 import formatters from './referenceFormatters';
 
@@ -209,7 +208,7 @@ class ViewInstance extends React.Component {
         <IconButton
           id="clickable-edit-instance"
           style={{ visibility: !instance ? 'hidden' : 'visible' }}
-          href={this.craftLayerUrl('edit')}
+          href={this.craftLayerUrl('edit', location)}
           onClick={this.onClickEditInstance}
           title={formatMsg({ id: 'ui-inventory.editInstance' })}
           icon="edit"
@@ -235,7 +234,7 @@ class ViewInstance extends React.Component {
     const newHoldingsRecordButton = (
       <Button
         id="clickable-new-holdings-record"
-        href={this.craftLayerUrl('createHoldingsRecord')}
+        href={this.craftLayerUrl('createHoldingsRecord', location)}
         onClick={this.onClickAddNewHoldingsRecord}
         title={formatMsg({ id: 'ui-inventory.addHoldings' })}
         buttonStyle="primary"

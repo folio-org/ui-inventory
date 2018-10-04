@@ -14,10 +14,11 @@ import {
   Layer,
   IconButton,
   AppIcon,
-  craftLayerUrl,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
+
+import { craftLayerUrl } from './utils';
 
 import ItemForm from './edit/items/ItemForm';
 
@@ -250,7 +251,7 @@ class ViewItem extends React.Component {
           icon="edit"
           id="clickable-edit-item"
           style={{ visibility: !item ? 'hidden' : 'visible' }}
-          href={this.craftLayerUrl('editItem')}
+          href={this.craftLayerUrl('editItem', location)}
           onClick={this.onClickEditItem}
           title="Edit Item"
         />

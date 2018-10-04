@@ -14,9 +14,9 @@ import {
   Headline,
   IconButton,
   AppIcon,
-  craftLayerUrl
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
+import { craftLayerUrl } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 
 class ViewHoldingsRecord extends React.Component {
