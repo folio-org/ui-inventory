@@ -211,13 +211,6 @@ class ViewInstance extends React.Component {
           title={formatMsg({ id: 'ui-inventory.editInstance' })}
           icon="edit"
         />
-        <IconButton
-          id="clickable-show-notes"
-          style={{ visibility: !instance ? 'hidden' : 'visible' }}
-          onClick={this.props.notesToggle}
-          title={formatMsg({ id: 'ui-inventory.showNotes' })}
-          icon="comment"
-        />
       </PaneMenu>
     );
 
@@ -394,7 +387,6 @@ class ViewInstance extends React.Component {
               visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
               formatter={contributorsRowFormatter}
               ariaLabel="Contributors"
-              autosize
               containerRef={(ref) => { this.resultsList = ref; }}
             />
           }
@@ -650,7 +642,6 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
-  notesToggle: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
   okapi: PropTypes.object,
 };
