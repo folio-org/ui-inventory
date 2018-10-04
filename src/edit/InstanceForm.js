@@ -382,7 +382,7 @@ class InstanceForm extends React.Component {
                 <NoteFields formatMsg={formatMsg} />
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.electronicAccess' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection08} id="instanceSection08">
-                <ElectronicAccessFields formatMsg={formatMsg} />
+                <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.subjects' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection09} id="instanceSection09">
                 <SubjectFields formatMsg={formatMsg} />

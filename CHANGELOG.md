@@ -4,6 +4,8 @@
 
 * Remove `instance.instanceFormatId`, add `instance.instanceFormatIds` (UIIN-330)
 * Fix case-sensitive tests. Fixes UIIN-329.
+* Add electronic access relationship reference data (UIIN-316)
+* Requires: `inventory` interface (7.0) and `instance-storage` interface (5.0) (UIIN-316)
 * Remove notes helper app (STRIPES-558)
 * Copy `craftLayerUrl()` from `stripes-components` (Part of FOLIO-1547)
 

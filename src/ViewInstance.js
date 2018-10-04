@@ -188,7 +188,7 @@ class ViewInstance extends React.Component {
     };
 
     const electronicAccessRowFormatter = {
-      'URL relationship': x => _.get(x, ['relationship']) || '',
+      'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
       'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
       'Link text': x => _.get(x, ['linkText']) || '',
       'Materials specified': x => _.get(x, ['materialsSpecification']) || '',

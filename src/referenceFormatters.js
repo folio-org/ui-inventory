@@ -40,11 +40,20 @@ export default {
     return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
-  electronicAccessFormatter: (r) => {
+  electronicAccessFormatter: (r, electronicAccessRelationships) => {
     const formatted = [];
     if (r.electronicAccess && r.electronicAccess.length) {
       r.electronicAccess.forEach((ea) => {
-        if (ea !== null) formatted.push(`${ea.relationship}; ${ea.uri}; ${ea.linkText}; ${ea.materialsSpecification}; ${ea.publicNote}`);
+        if (ea !== null) {
+          let relationshipName = '';
+          if (ea.relationship) {
+            const relationship = electronicAccessRelationships.find(ear => ear.id === ea.relationshipId);
+            if (relationship) {
+              relationshipName = relationship.name;
+            }
+          }
+          formatted.push(`${relationshipName}; ${ea.uri}; ${ea.linkText}; ${ea.materialsSpecification}; ${ea.publicNote}`);
+        }
       });
     }
     return formatted.map((p, i) => <div key={i}>{p}</div>);
