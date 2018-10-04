@@ -195,5 +195,9 @@
     "instances.columns.publishers": "Publishers",
     "instances.columns.relation": "Relation",
     "editions": "Editions",
-    "addEdition": "+ Add edition"
+    "addEdition": "+ Add edition",
+    "indexTitle": "Index title",
+    "dateOfPublication": "Date of publication",
+    "otherRelatedInstances": "Other related instances",
+    "instanceRelationships": "Instance relationships"
 }
