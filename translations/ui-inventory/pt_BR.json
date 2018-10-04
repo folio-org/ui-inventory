@@ -195,5 +195,9 @@
     "instances.columns.publishers": "Editores",
     "instances.columns.relation": "Relação",
     "editions": "Edições",
-    "addEdition": "+ Adicionar edição"
+    "addEdition": "+ Adicionar edição",
+    "indexTitle": "Título do índice",
+    "dateOfPublication": "Data da publicação",
+    "otherRelatedInstances": "Outras instâncias relacionadas",
+    "instanceRelationships": "Relacionamentos de instâncias"
 }

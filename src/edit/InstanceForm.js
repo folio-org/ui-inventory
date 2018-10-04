@@ -33,6 +33,7 @@ import PublicationFrequencyFields from './publicationFrequencyFields';
 import PublicationRangeFields from './publicationRangeFields';
 import NoteFields from './noteFields';
 import ElectronicAccessFields from './electronicAccessFields';
+import InstanceFormatFields from './instanceFormatFields';
 import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
@@ -201,15 +202,6 @@ class InstanceForm extends React.Component {
     const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses.map(
       it => ({
         label: `${it.name} (${it.source}: ${it.code})`,
-        value: it.id,
-        selected: it.id === initialValues.instanceFormatId,
-      }),
-    ) : [];
-
-
-    const instanceFormatOptions = referenceTables.instanceFormats ? referenceTables.instanceFormats.map(
-      it => ({
-        label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceFormatId,
       }),
@@ -385,13 +377,7 @@ class InstanceForm extends React.Component {
                   dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
                   required
                 />
-                <Field
-                  name="instanceFormatId"
-                  type="text"
-                  component={Select}
-                  label={formatMsg({ id: 'ui-inventory.format' })}
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectFormat' }), value: '' }, ...instanceFormatOptions]}
-                />
+                <InstanceFormatFields instanceFormats={referenceTables.instanceFormats} formatMsg={formatMsg} />
                 <LanguageFields formatMsg={formatMsg} />
                 <PublicationFrequencyFields formatMsg={formatMsg} />
                 <PublicationRangeFields formatMsg={formatMsg} />
@@ -400,7 +386,7 @@ class InstanceForm extends React.Component {
                 <NoteFields formatMsg={formatMsg} />
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.electronicAccess' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection08} id="instanceSection08">
-                <ElectronicAccessFields formatMsg={formatMsg} />
+                <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.subjects' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection09} id="instanceSection09">
                 <SubjectFields formatMsg={formatMsg} />

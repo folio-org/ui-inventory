@@ -190,7 +190,7 @@ class ViewInstance extends React.Component {
     };
 
     const electronicAccessRowFormatter = {
-      'URL relationship': x => _.get(x, ['relationship']) || '',
+      'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
       'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
       'Link text': x => _.get(x, ['linkText']) || '',
       'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
@@ -428,9 +428,9 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           <Row>
-            { (instance.instanceFormatId) &&
-              <Col xs={3}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={formatters.instanceFormatsFormatter(instance, referenceTables.instanceFormats)} />
+            { (instance.instanceFormatIds && instance.instanceFormatIds.length > 0) &&
+              <Col xs={6}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={_.get(instance, ['instanceFormatIds'], []).map((formatId, i) => <div key={i}>{this.refLookup(referenceTables.instanceFormats, formatId).name}</div>)} />
               </Col>
             }
           </Row>

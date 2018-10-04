@@ -196,6 +196,11 @@ class Instances extends React.Component {
       records: 'issuanceModes',
       path: 'modes-of-issuance?limit=100&query=cql.allRecords=1 sortby name',
     },
+    electronicAccessRelationships: {
+      type: 'okapi',
+      records: 'electronicAccessRelationships',
+      path: 'electronic-access-relationships?limit=100&query=cql.allRecords=1 sortby name',
+    },
     statisticalCodeTypes: {
       type: 'okapi',
       records: 'statisticalCodeTypes',
@@ -285,6 +290,7 @@ class Instances extends React.Component {
         || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
         || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
+        || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
     ) return <div />;
 
@@ -297,6 +303,7 @@ class Instances extends React.Component {
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
+    const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
@@ -311,6 +318,7 @@ class Instances extends React.Component {
       instanceFormats,
       instanceStatuses,
       modesOfIssuance,
+      electronicAccessRelationships,
       statisticalCodeTypes,
       locationsById,
     };
