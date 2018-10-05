@@ -199,5 +199,9 @@
     "indexTitle": "Index title",
     "dateOfPublication": "Date of publication",
     "otherRelatedInstances": "Other related instances",
-    "instanceRelationships": "Instance relationships"
+    "instanceRelationships": "Instance relationships",
+    "instanceFormat": "Format",
+    "instanceFormats": "Formats",
+    "addInstanceFormat": "+ Add format",
+    "selectInstanceFormat": "Select format"
 }
