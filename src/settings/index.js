@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Settings } from '@folio/stripes-smart-components';
+import { Settings } from '@folio/stripes/smart-components';
 import MaterialTypesSettings from './MaterialTypesSettings';
 import LoanTypesSettings from './LoanTypesSettings';
 import FormatsSettings from './FormatsSettings';

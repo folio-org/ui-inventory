@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import Layer from '@folio/stripes-components/lib/Layer';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import Button from '@folio/stripes-components/lib/Button';
+import {
+  Accordion,
+  Layer,
+  Row,
+  Col,
+  KeyValue,
+  Button,
+} from '@folio/stripes/components';
 import { Link } from 'react-router-dom';
 
 import Items from './Items';
@@ -107,7 +110,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         )}
       >
         <Row>
-          { holdingsRecord.permanentLocationId ?
+          {holdingsRecord.permanentLocationId ?
             null
             :
             <Col sm={5}>

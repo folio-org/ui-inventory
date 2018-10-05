@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@folio/stripes-components/lib/TextField';
-import Select from '@folio/stripes-components/lib/Select';
+import { TextField, Select } from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
 const ClassificationFields = ({ classificationTypes, formatMsg }) => {

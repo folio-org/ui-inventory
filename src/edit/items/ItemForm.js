@@ -3,18 +3,23 @@ import { get } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray } from 'redux-form';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import Pane from '@folio/stripes-components/lib/Pane';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Button from '@folio/stripes-components/lib/Button';
-import Select from '@folio/stripes-components/lib/Select';
-import TextField from '@folio/stripes-components/lib/TextField';
-import stripesForm from '@folio/stripes-form';
-import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
-import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
-import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
-import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
+import {
+  Paneset,
+  Pane,
+  PaneMenu,
+  Row,
+  Col,
+  Button,
+  TextField,
+  Select,
+  ConfirmationModal,
+} from '@folio/stripes/components';
+import stripesForm from '@folio/stripes/form';
+import {
+  LocationSelection,
+  LocationLookup,
+  ViewMetaData,
+} from '@folio/stripes/smart-components';
 
 import renderNotes from './noteFields';
 import renderPieceIdentifiers from './pieceIdentifierFields';

@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cloneDeep from 'lodash/cloneDeep';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import Pane from '@folio/stripes-components/lib/Pane';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Button from '@folio/stripes-components/lib/Button';
-import TextField from '@folio/stripes-components/lib/TextField';
-import Checkbox from '@folio/stripes-components/lib/Checkbox';
+import {
+  Accordion,
+  Paneset,
+  Pane,
+  PaneMenu,
+  Row,
+  Col,
+  Button,
+  TextField,
+  Select,
+  Checkbox,
+  Headline,
+  Datepicker,
+} from '@folio/stripes/components';
+
 import { Field } from 'redux-form';
-import stripesForm from '@folio/stripes-form';
-import Select from '@folio/stripes-components/lib/Select';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import Headline from '@folio/stripes-components/lib/Headline';
-import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-import Datepicker from '@folio/stripes-components/lib/Datepicker';
+import stripesForm from '@folio/stripes/form';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';

@@ -2,20 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import queryString from 'query-string';
-
-import Layer from '@folio/stripes-components/lib/Layer';
-import Pane from '@folio/stripes-components/lib/Pane';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Headline from '@folio/stripes-components/lib/Headline';
-import IconButton from '@folio/stripes-components/lib/IconButton';
-import AppIcon from '@folio/stripes-components/lib/AppIcon';
-import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-
+import {
+  Layer,
+  Pane,
+  PaneMenu,
+  Row,
+  Col,
+  Accordion,
+  ExpandAllButton,
+  KeyValue,
+  Headline,
+  IconButton,
+  AppIcon,
+} from '@folio/stripes/components';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 import { craftLayerUrl } from './utils';
-
 import HoldingsForm from './edit/holdings/HoldingsForm';
 
 class ViewHoldingsRecord extends React.Component {

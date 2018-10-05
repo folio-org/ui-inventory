@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import Layer from '@folio/stripes-components/lib/Layer';
-import Pane from '@folio/stripes-components/lib/Pane';
+import { Pane, Layer } from '@folio/stripes/components';
 
 class ViewMarc extends React.Component {
   static manifest = Object.freeze({

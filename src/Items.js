@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Link from 'react-router-dom/Link';
 
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import { MultiColumnList } from '@folio/stripes/components';
 
 /**
  * List items for display in the Holdings accordion in the main

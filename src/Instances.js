@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { injectIntl, intlShape } from 'react-intl';
-import { stripesShape } from '@folio/stripes-core/src/Stripes'; // eslint-disable-line import/no-unresolved
+import { stripesShape } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
 
-import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
-import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes-components/lib/FilterGroups';
+import { SearchAndSort } from '@folio/stripes/smart-components';
+import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';

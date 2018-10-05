@@ -8,6 +8,7 @@
 * Requires: `inventory` interface (7.0) and `instance-storage` interface (5.0) (UIIN-316)
 * Remove notes helper app (STRIPES-558)
 * Copy `craftLayerUrl()` from `stripes-components` (Part of FOLIO-1547)
+* Add dependency to stripes v1.0.0 to package.json. (Part of FOLIO-1547)
 
 ## [1.3.0](https://github.com/folio-org/ui-inventory/tree/v1.3.0) (2018-09-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.3.0)

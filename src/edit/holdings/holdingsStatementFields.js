@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Button from '@folio/stripes-components/lib/Button';
-import TextField from '@folio/stripes-components/lib/TextField';
+import {
+  Row,
+  Col,
+  Button,
+  TextField,
+} from '@folio/stripes/components';
 import { Field } from 'redux-form';
 
 const renderStatements = ({ fields, meta: { touched, error, submitFailed }, formatMsg }) => (
