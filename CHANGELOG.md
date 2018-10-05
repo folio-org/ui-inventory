@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 1.4.0 (IN PROGRESS)
+## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)
 
 * Remove `instance.instanceFormatId`, add `instance.instanceFormatIds` (UIIN-330)
 * Fix case-sensitive tests. Fixes UIIN-329.
@@ -12,6 +13,7 @@
 
 ## [1.3.0](https://github.com/folio-org/ui-inventory/tree/v1.3.0) (2018-09-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.3.0)
+
 * Remove `instance.urls` from Instance form (UIIN-303)
 * Make HRID optional in Instance form (UIIN-304)
 * Validate HRID for uniqueness in Instance form (UIIN-288)
