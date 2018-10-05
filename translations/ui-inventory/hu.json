@@ -199,5 +199,9 @@
     "indexTitle": "Index cím",
     "dateOfPublication": "Kiadás dátuma",
     "otherRelatedInstances": "További kapcsolódó példányok",
-    "instanceRelationships": "Példány kapcsolatok"
+    "instanceRelationships": "Példány kapcsolatok",
+    "instanceFormat": "Format",
+    "instanceFormats": "Formats",
+    "addInstanceFormat": "+ Add format",
+    "selectInstanceFormat": "Select format"
 }

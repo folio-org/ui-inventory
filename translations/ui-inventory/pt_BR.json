@@ -199,5 +199,9 @@
     "indexTitle": "Título do índice",
     "dateOfPublication": "Data da publicação",
     "otherRelatedInstances": "Outras instâncias relacionadas",
-    "instanceRelationships": "Relacionamentos de instâncias"
+    "instanceRelationships": "Relacionamentos de instâncias",
+    "instanceFormat": "Formato",
+    "instanceFormats": "Formatos",
+    "addInstanceFormat": "+ Adicionar formato",
+    "selectInstanceFormat": "Selecione o formato"
 }
