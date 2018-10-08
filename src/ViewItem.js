@@ -242,12 +242,6 @@ class ViewItem extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <IconButton
-          id="clickable-copy-item"
-          onClick={() => this.onCopy(item)}
-          title="Copy Item"
-          icon="duplicate"
-        />
-        <IconButton
           icon="edit"
           id="clickable-edit-item"
           style={{ visibility: !item ? 'hidden' : 'visible' }}
@@ -296,6 +290,15 @@ class ViewItem extends React.Component {
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewItem}
+            actionMenuItems={[{
+              label: formatMsg({ id: 'ui-inventory.editItem' }),
+              href: this.craftLayerUrl('editItem'),
+              onClick: this.onClickEditItem,
+            }, {
+              id: 'clickable-copy-item',
+              onClick: () => this.onCopy(item),
+              label: formatMsg({ id: 'ui-inventory.copyItem' })
+            }]}
           >
             <Row center="xs">
               <Col sm={6}>

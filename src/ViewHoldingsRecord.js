@@ -167,12 +167,6 @@ class ViewHoldingsRecord extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <IconButton
-          id="clickable-copy-holdingsrecord"
-          onClick={() => this.onCopy(holdingsRecord)}
-          title={formatMsg({ id: 'ui-inventory.copyHolding' })}
-          icon="duplicate"
-        />
-        <IconButton
           icon="edit"
           id="clickable-edit-holdingsrecord"
           style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
@@ -205,6 +199,15 @@ class ViewHoldingsRecord extends React.Component {
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
+            actionMenuItems={[{
+              label: formatMsg({ id: 'ui-inventory.editHoldings' }),
+              href: this.craftLayerUrl('editHoldingsRecord'),
+              onClick: this.onClickEditHoldingsRecord,
+            }, {
+              id: 'clickable-copy-holdingsrecord',
+              onClick: () => this.onCopy(holdingsRecord),
+              label: formatMsg({ id: 'ui-inventory.copyHolding' })
+            }]}
           >
             <Row center="xs">
               <Col sm={6}>
