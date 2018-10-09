@@ -19,6 +19,9 @@ export function formatDateTime(dateStr) {
 }
 
 export function craftLayerUrl(mode, location) {
-  const url = location.pathname + location.search;
-  return includes(url, '?') ? `${url}&layer=${mode}` : `${url}?layer=${mode}`;
+  if (location) {
+    const url = location.pathname + location.search;
+    return includes(url, '?') ? `${url}&layer=${mode}` : `${url}?layer=${mode}`;
+  }
+  return null;
 }
