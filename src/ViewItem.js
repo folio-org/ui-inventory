@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
+import { FormattedTime } from 'react-intl';
 import {
   Pane,
   PaneMenu,
@@ -218,7 +219,7 @@ class ViewItem extends React.Component {
   render() {
     const { location, resources: { items, holdingsRecords, instances1, materialTypes, loanTypes, requests },
       referenceTables,
-      okapi, stripes: { intl, formatDateTime } } = this.props;
+      okapi, stripes: { intl } } = this.props;
 
     const formatMsg = intl.formatMessage;
 
@@ -443,7 +444,9 @@ class ViewItem extends React.Component {
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatus' })} value={loanLink} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })} value={formatDateTime(itemStatusDate)} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.itemStatusDate' })}>
+                    {itemStatusDate ? <FormattedTime value={itemStatusDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                  </KeyValue>
                 </Col>
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.requests' })} value={requestLink} />
@@ -454,10 +457,14 @@ class ViewItem extends React.Component {
                   <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.borrower' })} value={borrowerLink} />
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })} value={this.state.loan ? formatDateTime(this.state.loan.loanDate) : '-'} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.loanDate' })}>
+                    {this.state.loan ? <FormattedTime value={this.state.loan.loanDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                  </KeyValue>
                 </Col>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })} value={this.state.loan ? formatDateTime(this.state.loan.dueDate) : '-'} />
+                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.item.availability.dueDate' })}>
+                    {this.state.loan ? <FormattedTime value={this.state.loan.dueDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                  </KeyValue>
                 </Col>
               </Row>
             </Accordion>
