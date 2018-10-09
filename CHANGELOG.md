@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 1.5.0 (IN PROGRESS)
+
+* Fix `craftLayerUrl()` loading state (FOLIO-1547)
+
 ## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)
 
