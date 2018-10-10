@@ -9,7 +9,7 @@ const renderLanguageField = ({ field, fieldIndex }, formatMsg) => {
   const languageOptions = languages.selectOptions(field);
   return (
     <Field
-      label={fieldIndex === 0 ? formatMsg({ id: 'ui-inventory.language' }) : null}
+      label={fieldIndex === 0 ? `${formatMsg({ id: 'ui-inventory.language' })} *` : null}
       name={`${field}`}
       component={Select}
       dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLanguage' }), value: '' }, ...languageOptions]}

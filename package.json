@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.0.3",
+  "version": "1.1.1",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -19,29 +19,29 @@
     "hasSettings": true,
     "queryResource": "query",
     "icons": [
-     {
-       "name": "app",
-       "alt": "View and manage instance records, holdings records and item records",
-       "title": "Inventory"
-     },
-     {
-       "name": "holdings",
-       "alt": "",
-       "title": "Holding"
-     },
-     {
-       "name": "item",
-       "alt": "",
-       "title": "Item"
-     },
-     {
-       "name": "instance",
-       "alt": "",
-       "title": "Instance"
-     }
+      {
+        "name": "app",
+        "alt": "View and manage instance records, holdings records and item records",
+        "title": "Inventory"
+      },
+      {
+        "name": "holdings",
+        "alt": "",
+        "title": "Holding"
+      },
+      {
+        "name": "item",
+        "alt": "",
+        "title": "Item"
+      },
+      {
+        "name": "instance",
+        "alt": "",
+        "title": "Instance"
+      }
     ],
     "okapiInterfaces": {
-      "inventory": "5.0 6.0",
+      "inventory": "6.1",
       "instance-storage": "4.2",
       "holdings-storage": "1.3",
       "item-storage": "5.3",
@@ -49,15 +49,14 @@
       "material-types": "2.0",
       "locations": "2.0",
       "identifier-types": "1.0",
-      "contributor-types": "1.0 2.0",
+      "contributor-types": "2.0",
       "contributor-name-types": "1.1",
-      "instance-types": "1.0 2.0",
-      "instance-formats": "1.0 2.0",
+      "instance-types": "2.0",
+      "instance-formats": "2.0",
       "classification-types": "1.0",
       "platforms": "1.0",
       "users": "15.0",
       "location-units": "1.1",
-      "locations": "2.0",
       "circulation": "3.0"
     },
     "permissionSets": [
@@ -162,26 +161,28 @@
     }
   },
   "scripts": {
+    "start": "stripes serve",
     "lint": "eslint *.js lib settings edit data test/ui-testing",
     "test": "cd ../ui-testing; env FOLIO_UI_URL=http://localhost:3000 yarn test-module -o --run=inventory"
   },
   "devDependencies": {
+    "@folio/eslint-config-stripes": "^3.1.0",
+    "@folio/stripes-cli": "^1.3.0",
     "babel-core": "^6.17.0",
-    "babel-eslint": "^7.0.0",
+    "babel-eslint": "^8.2.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-2": "^6.16.0",
     "babel-register": "^6.18.0",
     "eslint": "^4.8.0",
-    "@folio/eslint-config-stripes": "^1.1.0",
     "webpack": "1.11.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^2.1.5",
-    "@folio/stripes-form": "^0.8.1",
-    "@folio/stripes-smart-components": "^1.4.19",
     "graphql-tag": "^2.5.0",
     "react-apollo": "^2.1.3",
+    "@folio/stripes-components": "^3.0.8",
+    "@folio/stripes-form": "^0.8.2",
+    "@folio/stripes-smart-components": "^1.5.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
@@ -190,8 +191,8 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes-connect": "^3.1.0",
-    "@folio/stripes-core": "^2.7.0",
+    "@folio/stripes-connect": "^3.2.0",
+    "@folio/stripes-core": "^2.11.0",
     "react": "*"
   }
 }
