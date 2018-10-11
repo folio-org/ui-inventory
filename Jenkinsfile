@@ -1,8 +1,8 @@
 
 buildNPM {
   publishModDescriptor = 'yes'
-  stripesPlatform = 'platform-core'
-  runRegression = 'none'
   runLint = 'yes'
+  runSonarqube = true
+  runRegression = 'none'
   runTest = 'no'
 }
