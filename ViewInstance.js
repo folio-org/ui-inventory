@@ -4,9 +4,6 @@ import { Link, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-
 import TitleManager from '@folio/stripes-core/src/components/TitleManager';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -34,70 +31,6 @@ import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 
 const emptyObj = {};
-
-const GET_INSTANCE = gql`
-query singleInstance ($id: String!) {
-  instance_storage_instances_SINGLE (instanceId: $id) {
-     id,
-     source,
-     title,
-     alternativeTitles,
-     edition,
-     series,
-     identifiers { value, identifierTypeId,
-#                   identifierType { name }
-                 },
-     contributors { name,
-                    contributorTypeId,
-                    contributorNameTypeId,
-                    primary,
-#                    contributorType { name },
-#                    contributorNameType { name }
-                  },
-     subjects,
-     classifications { classificationNumber,
-                       classificationTypeId,
-#                       classificationType { name }
-                     },
-     publication { publisher,
-                   place,
-                   dateOfPublication },
-     urls,
-     instanceTypeId,
-#     instanceType { name },
-     instanceFormatId,
-#     instanceFormat {name},
-     physicalDescriptions,
-     languages,
-     notes,
-#     metadata { updatedByUser { username } }
-#     holdingsRecords {
-#       id
-#       instanceId
-#       permanentLocationId
-#       callNumber
-#       holdingsStatements
-#       holdingsItems {
-#         id
-#         barcode
-#         holdingsRecordId
-#         links { self }
-#         materialType { id name }
-#         notes
-#         metadata { updatedByUser { username } }
-#         numberOfPieces
-#         temporaryLoanType { id name }
-#         permanentLoanType { id name }
-#         permanentLocation { id name }
-#         pieceIdentifiers
-#         status { name }
-#         title
-#       }
-#       metadata { createdByUserId updatedByUserId }
-#    }
-  }
-}
-`;
 
 
 class ViewInstance extends React.Component {
@@ -591,10 +524,4 @@ ViewInstance.propTypes = {
   okapi: PropTypes.object,
 };
 
-export default graphql(GET_INSTANCE, {
-  options: props => ({
-    variables: {
-      id: props.match.params.id,
-    },
-  })
-})(ViewInstance);
+export default ViewInstance;
