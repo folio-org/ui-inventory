@@ -332,10 +332,19 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={4}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
+            <Col xs={3}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} 
+                        value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).name} />
             </Col>
-            <Col xs={4}>
+            <Col xs={3}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusCode' })} 
+                        value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).code} />
+            </Col>
+            <Col cs={3}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusSource' })} 
+                        value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).source} />
+            </Col>
+            <Col xs={3}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusUpdatedDate' })} value={_.get(instance, ['statusUpdatedDate'], '')} />
             </Col>
           </Row>
