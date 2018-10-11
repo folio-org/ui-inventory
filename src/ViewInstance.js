@@ -311,6 +311,16 @@ class ViewInstance extends React.Component {
             <this.cViewMetaData metadata={instance.metadata} />
           }
           <Row>
+            <Col xs={12}>
+              {instance.discoverySuppress && formatMsg({ id: 'ui-inventory.discoverySuppress' })}
+              {instance.discoverySuppress && instance.staffSuppress && '|'}
+              {instance.staffSuppress && formatMsg({ id: 'ui-inventory.staffSuppress' })}
+              {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
+              {instance.previouslyHeld && formatMsg({ id: 'ui-inventory.previouslyHeld' })}
+            </Col>
+          </Row>
+          { (instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br /> }
+          <Row>
             <Col xs={2}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['hrid'], '')} />
             </Col>
