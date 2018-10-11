@@ -314,7 +314,6 @@ class Instances extends React.Component {
     };
 
     const resultsFormatter = {
-      'type': r => _.get(r.instanceType, 'name'),
       'relation': r => formatters.relationsFormatter(r, instanceRelationshipTypes),
       'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
@@ -335,7 +334,7 @@ class Instances extends React.Component {
       viewRecordComponent={ViewInstance}
       editRecordComponent={InstanceForm}
       newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'type', 'contributors', 'publishers', 'relation']}
+      visibleColumns={['title', 'contributors', 'publishers', 'relation']}
       columnMapping={{
         title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
         contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
