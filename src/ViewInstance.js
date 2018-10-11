@@ -322,13 +322,6 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           <Row>
-            { (instance.series.length > 0) &&
-              <Col xs={12}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['series'], '')} />
-              </Col>
-            }
-          </Row>
-          <Row>
             <Col xs={4}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
             </Col>
@@ -360,6 +353,18 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           }
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={formatMsg({ id: 'ui-inventory.indexTitle' })} value={_.get(instance, ['indexTitle'], '')} />
+            </Col>
+          </Row>
+          <Row>
+            { (instance.series.length > 0) &&
+              <Col xs={12}>
+                <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['series'], '')} />
+              </Col>
+            }
+          </Row>
         </Accordion>
         <Accordion
           open={this.state.accordions.identifiersAccordion}
