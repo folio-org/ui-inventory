@@ -333,16 +333,22 @@ class ViewInstance extends React.Component {
           </Row>
           <Row>
             <Col xs={3}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} 
-                        value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).name} />
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })}
+                value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).name}
+              />
             </Col>
             <Col xs={3}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusCode' })} 
-                        value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).code} />
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.instanceStatusCode' })}
+                value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).code}
+              />
             </Col>
             <Col cs={3}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusSource' })} 
-                        value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).source} />
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.instanceStatusSource' })}
+                value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).source}
+              />
             </Col>
             <Col xs={3}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusUpdatedDate' })} value={_.get(instance, ['statusUpdatedDate'], '')} />
@@ -451,7 +457,22 @@ class ViewInstance extends React.Component {
           </Row>
           <Row>
             <Col xs={3}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceType' })} value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.resourceTypeTerm' })}
+                value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).name}
+              />
+            </Col>
+            <Col xs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.resourceTypeCode' })}
+                value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).code}
+              />
+            </Col>
+            <Col cs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.resourceTypeSource' })}
+                value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).source}
+              />
             </Col>
           </Row>
           <Row>
