@@ -1,9 +1,67 @@
 # Change history for ui-inventory
 
+## 1.5.0 (IN PROGRESS)
+
+* Fix `craftLayerUrl()` loading state (FOLIO-1547)
+* Replace `formatDateTime()` with `<FormattedTime>` (STCOR-267)
+* Instance view: Add `indexTitle` (UIIN-348)
+* Instance view: Add staff and discovery suppress, previously held (UIIN-343)
+
+## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)
+
+* Remove `instance.instanceFormatId`, add `instance.instanceFormatIds` (UIIN-330)
+* Fix case-sensitive tests. Fixes UIIN-329.
+* Add electronic access relationship reference data (UIIN-316)
+* Requires: `inventory` interface (7.0) and `instance-storage` interface (5.0) (UIIN-316)
+* Remove notes helper app (STRIPES-558)
+* Copy `craftLayerUrl()` from `stripes-components` (Part of FOLIO-1547)
+* Add dependency to stripes v1.0.0 to package.json. (Part of FOLIO-1547)
+
+## [1.3.0](https://github.com/folio-org/ui-inventory/tree/v1.3.0) (2018-09-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.3.0)
+
+* Remove `instance.urls` from Instance form (UIIN-303)
+* Make HRID optional in Instance form (UIIN-304)
+* Validate HRID for uniqueness in Instance form (UIIN-288)
+* Update `stripes-form` dependency to v1.0.0
+* Remove cataloging level (UIIN-312)
+* Remove API dependency on `cataloging-levels` (UIIN-312)
+* More stable inventory-search tests. Refs UIIN-306.
+* Remove `instance.edition` add `instance.editions` (UIIN-299)
+* Move files into src directory
+
+## [1.2.3 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.3) (2018-09-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.2...v1.2.3)
+
+* More stable inventory-search tests. Refs UIIN-306.
+
+## [1.2.2 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.2) (2018-09-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.1...v1.2.2)
+
+* Update to stripes-form 0.9.0. Refs STRIPES-555.
+
+## [1.2.1 (hot fix)](https://github.com/folio-org/ui-inventory/tree/v1.2.1) (2018-09-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.2.0...v1.2.1)
+
+* Update regression test following introduction of required `hrid` (UIIN-290)
+
+## [1.2.0](https://github.com/folio-org/ui-inventory/tree/v1.2.0) (2018-09-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.1...v1.2.0)
+
+* Add API dependencies `statistical-code-types` 1.0, `cataloging-levels` 1.0, `modes-of-issuance` 1.0, `instance-statuses` 1.0
+* Update API dependencies `inventory` 6.4, `instance-storage` 4.6
+* Add preliminary display of Instance relationships (UIIN-145)
+* Upgrade Okapi dependencies for Instance relationships, inventory: 6.3, instance-storage 4.5, instance-relationship-types 1.0 (UIIN-145)
+* Update Okapi dependency, circulation: 3.0 4.0
+* Add properties publisher role, publication frequency, publication range to Instance details, form (UIIN-227)
+* Add properties HRID, instance status, date status updated, cataloged date, previously held, staff suppress, discovery suppress, mode of issuance, cataloging level to Instance details and/or form (UIIN-223)
+* Add electronic access properties to Instance details and form (UIIN-229)
+
 ## [1.1.1](https://github.com/folio-org/ui-inventory/tree/v1.1.1) (2018-09-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.1.0...v1.1.1)
 
-* Fix toggle accordion feature after new accordions added. (UIIN-279) 
+* Fix toggle accordion feature after new accordions added. (UIIN-279)
 * Update dependency on eslint-config-stripes (UIIN-280)
 * Update core Stripes dependencies (UIIN-278)
 
