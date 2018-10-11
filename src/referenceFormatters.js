@@ -104,17 +104,6 @@ export default {
     return formatted;
   },
 
-  instanceStatusesFormatter: (r, instanceStatuses) => {
-    let formatted = '';
-    if (r.statusId) {
-      const qualifier = instanceStatuses.find(type => type.id === r.statusId);
-      if (qualifier) {
-        formatted = qualifier.name;
-      }
-    }
-    return formatted;
-  },
-
   classificationsFormatter: (r, classificationTypes) => {
     const formatted = [];
     if (r.classifications && r.classifications.length) {
