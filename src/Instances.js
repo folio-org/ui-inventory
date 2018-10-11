@@ -4,12 +4,11 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import queryString from 'query-string';
-import makeQueryFunction from '@folio/stripes-components/util/makeQueryFunction';
 import { injectIntl, intlShape } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
 
-import { SearchAndSort } from '@folio/stripes/smart-components';
-import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
+import { SearchAndSort, makeQueryFunction } from '@folio/stripes/smart-components';
+import { onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
@@ -438,4 +437,4 @@ export default graphql(GET_INSTANCES, {
     errorPolicy: 'all',
     variables: makeVariables(props)
   }),
-})(Instances);
+})(injectIntl(Instances));
