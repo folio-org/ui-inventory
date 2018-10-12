@@ -197,6 +197,28 @@ class ViewInstance extends React.Component {
       'URL public note': x => _.get(x, ['publicNote']) || '',
     };
 
+    const formatsRowFormatter = {
+      'Category': x => {
+        const term = this.refLookup(referenceTables.instanceFormats, x.id).name;
+        if (term && term.split('--').length === 2) {
+          return term.split('--')[0];
+        } else {
+          return '';
+        }
+      },
+      'Term': x => {
+        const term = this.refLookup(referenceTables.instanceFormats, x.id).name;
+        if (term && term.split('--').length === 2) {
+          return term.split('--')[1];
+        } else {
+          return term;
+        }
+      },
+      'Code': x => this.refLookup(referenceTables.instanceFormats, x.id).code,
+      'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
+    };
+
+
     const detailMenu = (
       <PaneMenu>
         <IconButton
@@ -332,10 +354,25 @@ class ViewInstance extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={4}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })} value={formatters.instanceStatusesFormatter(instance, referenceTables.instanceStatuses)} />
+            <Col xs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })}
+                value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).name}
+              />
             </Col>
-            <Col xs={4}>
+            <Col xs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.instanceStatusCode' })}
+                value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).code}
+              />
+            </Col>
+            <Col cs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.instanceStatusSource' })}
+                value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).source}
+              />
+            </Col>
+            <Col xs={3}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusUpdatedDate' })} value={_.get(instance, ['statusUpdatedDate'], '')} />
             </Col>
           </Row>
@@ -442,14 +479,34 @@ class ViewInstance extends React.Component {
           </Row>
           <Row>
             <Col xs={3}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceType' })} value={formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)} />
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.resourceTypeTerm' })}
+                value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).name}
+              />
+            </Col>
+            <Col xs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.resourceTypeCode' })}
+                value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).code}
+              />
+            </Col>
+            <Col cs={3}>
+              <KeyValue
+                label={formatMsg({ id: 'ui-inventory.resourceTypeSource' })}
+                value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).source}
+              />
             </Col>
           </Row>
           <Row>
             { (instance.instanceFormatIds && instance.instanceFormatIds.length > 0) &&
-              <Col xs={6}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={_.get(instance, ['instanceFormatIds'], []).map((formatId, i) => <div key={i}>{this.refLookup(referenceTables.instanceFormats, formatId).name}</div>)} />
-              </Col>
+              <MultiColumnList
+                id="list-formats"
+                contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
+                visibleColumns={['Category', 'Term', 'Code', 'Source']}
+                formatter={formatsRowFormatter}
+                ariaLabel="Formats"
+                containerRef={(ref) => { this.resultsList = ref; }}
+              />
             }
           </Row>
           { (instance.languages.length > 0) &&
