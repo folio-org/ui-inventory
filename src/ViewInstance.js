@@ -197,6 +197,28 @@ class ViewInstance extends React.Component {
       'URL public note': x => _.get(x, ['publicNote']) || '',
     };
 
+    const formatsRowFormatter = {
+      'Category': x => {
+        const term = this.refLookup(referenceTables.instanceFormats, x.id).name;
+        if (term && term.split('--').length === 2) {
+          return term.split('--')[0];
+        } else {
+          return '';
+        }
+      },
+      'Term': x => {
+        const term = this.refLookup(referenceTables.instanceFormats, x.id).name;
+        if (term && term.split('--').length === 2) {
+          return term.split('--')[1];
+        } else {
+          return term;
+        }
+      },
+      'Code': x => this.refLookup(referenceTables.instanceFormats, x.id).code,
+      'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
+    };
+
+
     const detailMenu = (
       <PaneMenu>
         <IconButton
@@ -477,9 +499,14 @@ class ViewInstance extends React.Component {
           </Row>
           <Row>
             { (instance.instanceFormatIds && instance.instanceFormatIds.length > 0) &&
-              <Col xs={6}>
-                <KeyValue label={formatMsg({ id: 'ui-inventory.format' })} value={_.get(instance, ['instanceFormatIds'], []).map((formatId, i) => <div key={i}>{this.refLookup(referenceTables.instanceFormats, formatId).name}</div>)} />
-              </Col>
+              <MultiColumnList
+                id="list-formats"
+                contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
+                visibleColumns={['Category', 'Term', 'Code', 'Source']}
+                formatter={formatsRowFormatter}
+                ariaLabel="Formats"
+                containerRef={(ref) => { this.resultsList = ref; }}
+              />
             }
           </Row>
           { (instance.languages.length > 0) &&
