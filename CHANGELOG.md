@@ -2,6 +2,7 @@
 
 ## 1.5.0 (IN PROGRESS)
 
+* Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)
 * Fix `craftLayerUrl()` loading state (FOLIO-1547)
 * Replace `formatDateTime()` with `<FormattedTime>` (STCOR-267)
 * Instance view: Add `indexTitle` (UIIN-348)
