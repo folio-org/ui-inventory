@@ -347,7 +347,7 @@ class ViewInstance extends React.Component {
               <KeyValue label={formatMsg({ id: 'ui-inventory.instanceHrid' })} value={_.get(instance, ['hrid'], '')} />
             </Col>
             <Col xs={2}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={_.get(instance, ['source'], '')} />
+              <KeyValue label={formatMsg({ id: 'ui-inventory.metadataSource' })} value={(instance.sourceRecordFormat ? _.get(instance, ['source'], '') : 'FOLIO')} />
             </Col>
             <Col xs={4}>
               <KeyValue label={formatMsg({ id: 'ui-inventory.catalogedDate' })} value={_.get(instance, ['catalogedDate'], '')} />
