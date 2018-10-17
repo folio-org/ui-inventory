@@ -2,7 +2,7 @@
 
 ## 1.5.0 (IN PROGRESS)
 
-* Add accordions, holdings record detail view (UIIN-168)
+* Add accordions, holdings record view, holdings record form (UIIN-168, UIIN-274)
 * Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)
 * Fix `craftLayerUrl()` loading state (FOLIO-1547)
 * Replace `formatDateTime()` with `<FormattedTime>` (STCOR-267)
