@@ -305,15 +305,13 @@ class ViewHoldingsRecord extends React.Component {
               id="accordion04"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
-            >
-            </Accordion>
+            />
             <Accordion
               open={this.state.accordions.accordion05}
               id="accordion05"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.acquisitions' })}
-            >
-            </Accordion>
+            />
             <Accordion
               open={this.state.accordions.accordion06}
               id="accordion06"
@@ -333,8 +331,7 @@ class ViewHoldingsRecord extends React.Component {
               id="accordion07"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.receivingHistory' })}
-            >
-            </Accordion>
+            />
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false} label={formatMsg({ id: 'ui-inventory.editHoldingsRecordDialog' })}>
