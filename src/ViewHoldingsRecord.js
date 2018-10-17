@@ -55,10 +55,13 @@ class ViewHoldingsRecord extends React.Component {
     super(props);
     this.state = {
       accordions: {
-        holdingsAccordion: true,
-        administrativeAccordion: true,
-        locationAccordion: true,
-        electronicAccessAccordion: true,
+        accordion01: true,
+        accordion02: true,
+        accordion03: true,
+        accordion04: true,
+        accordion05: true,
+        accordion06: true,
+        accordion07: true,
       },
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -228,8 +231,8 @@ class ViewHoldingsRecord extends React.Component {
             <hr />
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Accordion
-              open={this.state.accordions.administrativeAccordion}
-              id="administrativeAccordion"
+              open={this.state.accordions.accordion01}
+              id="accordion01"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.administrativeData' })}
             >
@@ -260,10 +263,10 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.locationAccordion}
-              id="locationAccordion"
+              open={this.state.accordions.accordion02}
+              id="accordion02"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.location' })}
+              label={formatMsg({ id: 'ui-inventory.locations' })}
             >
               <Row>
                 <Col smOffset={0} sm={4}>
@@ -284,10 +287,10 @@ class ViewHoldingsRecord extends React.Component {
               }
             </Accordion>
             <Accordion
-              open={this.state.accordions.holdingsAccordion}
-              id="holdingsAccordion"
+              open={this.state.accordions.accordion03}
+              id="accordion03"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.holdings' })}
+              label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
             >
               { (holdingsRecord.holdingsStatements.length > 0) &&
               <Row>
@@ -298,8 +301,22 @@ class ViewHoldingsRecord extends React.Component {
               }
             </Accordion>
             <Accordion
-              open={this.state.accordions.electronicAccessAccordion}
-              id="electronicAccessAccordion"
+              open={this.state.accordions.accordion04}
+              id="accordion04"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.notes' })}
+            >
+            </Accordion>
+            <Accordion
+              open={this.state.accordions.accordion05}
+              id="accordion05"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.acquisitions' })}
+            >
+            </Accordion>
+            <Accordion
+              open={this.state.accordions.accordion06}
+              id="accordion06"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
@@ -310,6 +327,13 @@ class ViewHoldingsRecord extends React.Component {
                 </Col>
               </Row>
               }
+            </Accordion>
+            <Accordion
+              open={this.state.accordions.accordion07}
+              id="accordion07"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.receivingHistory' })}
+            >
             </Accordion>
           </Pane>
         </Layer>
