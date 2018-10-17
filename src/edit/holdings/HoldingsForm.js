@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import {
   Paneset,
   Pane,
@@ -155,7 +156,6 @@ class HoldingsForm extends React.Component {
       return newState;
     });
   }
-
 
   render() {
     const {
