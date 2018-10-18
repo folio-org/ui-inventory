@@ -330,40 +330,43 @@ class Instances extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
     };
 
-    return (<SearchAndSort
-      packageInfo={packageInfo}
-      objectName="inventory"
-      maxSortKeys={1}
-      searchableIndexes={searchableIndexes}
-      selectedIndex={_.get(this.props.resources.query, 'qindex')}
-      searchableIndexesPlaceholder={null}
-      onChangeIndex={this.onChangeIndex}
-      filterConfig={filterConfig}
-      initialResultCount={INITIAL_RESULT_COUNT}
-      resultCountIncrement={RESULT_COUNT_INCREMENT}
-      viewRecordComponent={ViewInstance}
-      editRecordComponent={InstanceForm}
-      newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-      visibleColumns={['title', 'contributors', 'publishers', 'relation']}
-      columnMapping={{
-        title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-        contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-        publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-        relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      }}
-      columnWidths={{ title: '40%' }}
-      resultsFormatter={resultsFormatter}
-      onCreate={this.createInstance}
-      viewRecordPerms="inventory-storage.instances.item.get"
-      newRecordPerms="inventory-storage.instances.item.post"
-      disableRecordCreation={false}
-      parentResources={this.props.resources}
-      parentMutator={this.props.mutator}
-      detailProps={{ referenceTables, onCopy: this.copyInstance }}
-      path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-      showSingleResult={showSingleResult}
-      browseOnly={browseOnly}
-    />);
+    return (
+      <div data-test-inventory-instances>
+        <SearchAndSort
+          packageInfo={packageInfo}
+          objectName="inventory"
+          maxSortKeys={1}
+          searchableIndexes={searchableIndexes}
+          selectedIndex={_.get(this.props.resources.query, 'qindex')}
+          searchableIndexesPlaceholder={null}
+          onChangeIndex={this.onChangeIndex}
+          filterConfig={filterConfig}
+          initialResultCount={INITIAL_RESULT_COUNT}
+          resultCountIncrement={RESULT_COUNT_INCREMENT}
+          viewRecordComponent={ViewInstance}
+          editRecordComponent={InstanceForm}
+          newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+          visibleColumns={['title', 'contributors', 'publishers', 'relation']}
+          columnMapping={{
+            title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
+            contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
+            publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+            relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+          }}
+          columnWidths={{ title: '40%' }}
+          resultsFormatter={resultsFormatter}
+          onCreate={this.createInstance}
+          viewRecordPerms="inventory-storage.instances.item.get"
+          newRecordPerms="inventory-storage.instances.item.post"
+          disableRecordCreation={false}
+          parentResources={this.props.resources}
+          parentMutator={this.props.mutator}
+          detailProps={{ referenceTables, onCopy: this.copyInstance }}
+          path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
+          showSingleResult={showSingleResult}
+          browseOnly={browseOnly}
+        />
+      </div>);
   }
 }
 
