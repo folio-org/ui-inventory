@@ -2,6 +2,7 @@
 
 ## 1.5.0 (IN PROGRESS)
 
+* Requires `locations` interface 3.0 (UIIN-357)
 * Add accordions, holdings record view, holdings record form (UIIN-168, UIIN-274)
 * Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)
 * Fix `craftLayerUrl()` loading state (FOLIO-1547)
