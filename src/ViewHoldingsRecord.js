@@ -14,6 +14,7 @@ import {
   Headline,
   IconButton,
   AppIcon,
+  MultiColumnList,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import { craftLayerUrl } from './utils';
@@ -292,12 +293,46 @@ class ViewHoldingsRecord extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
             >
+              <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfItems' })} value={_.get(holdingsRecord, ['numberOfItems'], [])} />
               { (holdingsRecord.holdingsStatements.length > 0) &&
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsStatements' })} value={_.get(holdingsRecord, ['holdingsStatements'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                </Col>
-              </Row>
+                <MultiColumnList
+                  id="list-holdingsstatements"
+                  contentData={holdingsRecord.holdingsStatements.map((stmt) => { return { 'statement': stmt }; })}
+                  visibleColumns={['Holdings statement', 'Holdings statement note']}
+                  formatter={{
+                    'Holdings statement': x => _.get(x, ['statement']) || '',
+                    'Holdings statement note': x => _.get(x, ['note']) || '',
+                  }}
+                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatements' })}
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                />
+              }
+              { (holdingsRecord.holdingsStatementsForSupplements.length > 0) &&
+                <MultiColumnList
+                  id="list-holdingsstatementsforsupplements"
+                  contentData={holdingsRecord.holdingsStatementsForSupplements}
+                  visibleColumns={['Holdings statement for supplements', 'Holdings statement for supplements note']}
+                  formatter={{
+                    'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
+                    'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
+                  }}
+                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatementsForSupplements' })}
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                />
+              }
+
+              { (holdingsRecord.holdingsStatementsForIndexes.length > 0) &&
+                <MultiColumnList
+                  id="list-holdingsstatementsforindexes"
+                  contentData={holdingsRecord.holdingsStatementsForIndexes}
+                  visibleColumns={['Holdings statement for indexes', 'Holdings statement for indexes note']}
+                  formatter={{
+                    'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
+                    'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
+                  }}
+                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatementsForIndexes' })}
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                />
               }
             </Accordion>
             <Accordion

@@ -129,6 +129,7 @@
   "materialType": "Material type",
   "holdingsHeader": "Holdings: {location} > {callNumber}",
   "holdingsDetails": "Holdings details",
+  "numberOfItems": "Number of items",
   "acquisitions": "Acquisitions",
   "receivingHistory": "Receiving history",
   "viewHoldings": "View holdings",
