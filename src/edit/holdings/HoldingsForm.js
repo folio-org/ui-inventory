@@ -23,7 +23,9 @@ import { Field, FieldArray } from 'redux-form';
 
 import stripesForm from '@folio/stripes/form';
 
-import renderStatements from './holdingsStatementFields';
+import HoldingsStatementFields from './holdingsStatementFields';
+import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
+import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -322,7 +324,21 @@ class HoldingsForm extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
             >
-              <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
+              <Row>
+                <Col>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.numberOfItems' })}
+                    name="numberOfItems"
+                    id=""
+                    id="edititem_barcode"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+              <HoldingsStatementFields formatMsg={formatMsg} />
+              <HoldingsStatementForSupplementsFields formatMsg={formatMsg} />
+              <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion04}

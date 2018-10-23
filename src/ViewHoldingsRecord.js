@@ -316,7 +316,7 @@ class ViewHoldingsRecord extends React.Component {
                     'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
                     'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
                   }}
-                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatementsForSupplements' })}
+                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatementForSupplements' })}
                   containerRef={(ref) => { this.resultsList = ref; }}
                 />
               }
@@ -330,7 +330,7 @@ class ViewHoldingsRecord extends React.Component {
                     'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
                     'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
                   }}
-                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatementsForIndexes' })}
+                  ariaLabel={formatMsg({ id: 'ui-inventory.holdingsStatementForIndexes' })}
                   containerRef={(ref) => { this.resultsList = ref; }}
                 />
               }
