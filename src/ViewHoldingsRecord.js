@@ -259,7 +259,10 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsHrid' })} value={_.get(holdingsRecord, ['id'], '')} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsHrid' })} value={_.get(holdingsRecord, ['hrid'], '')} />
+                </Col>
+                <Col>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.formerHoldingsId' })} value={_.get(holdingsRecord, ['formerIds'], []).map((hid, i) => <div key={i}>{hid}</div>)} />
                 </Col>
               </Row>
             </Accordion>
