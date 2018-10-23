@@ -26,6 +26,8 @@ import stripesForm from '@folio/stripes/form';
 import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
 import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
+import ElectronicAccessFields from '../electronicAccessFields';
+
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -358,25 +360,7 @@ class HoldingsForm extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
-              <Row>
-                <Col sm={5} smOffset={1}>
-                  <Field
-                    label={formatMsg({ id: 'ui-inventory.platform' })}
-                    name="electronicLocation.platformId"
-                    id="additem_platformid"
-                    component={Select}
-                    fullWidth
-                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectPlatform' }), value: '' }, ...platformOptions]}
-                  />
-                  <Field
-                    label={formatMsg({ id: 'ui-inventory.uri' })}
-                    name="electronicLocation.uri"
-                    id="additem_uri"
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
+              <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion07}
