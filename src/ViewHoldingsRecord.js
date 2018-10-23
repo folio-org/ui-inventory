@@ -146,6 +146,11 @@ class ViewHoldingsRecord extends React.Component {
     this.props.mutator.query.update({ layer: 'copyHoldingsRecord' });
   }
 
+  refLookup = (referenceTable, id) => {
+    const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+    return ref || {};
+  }
+
   render() {
     const { location, resources: { holdingsRecords, instances1, platforms, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
 
@@ -356,12 +361,21 @@ class ViewHoldingsRecord extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
-              { (holdingsRecord.electronicLocation && holdingsRecord.electronicLocation.uri) &&
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.uri' })} value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
-                </Col>
-              </Row>
+              { (holdingsRecord.electronicAccess.length > 0) &&
+                <MultiColumnList
+                  id="list-electronic-access"
+                  contentData={holdingsRecord.electronicAccess}
+                  visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                  formatter={{
+                    'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
+                    'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+                    'Link text': x => _.get(x, ['linkText']) || '',
+                    'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+                    'URL public note': x => _.get(x, ['publicNote']) || '',
+                  }}
+                  ariaLabel="Electronic access"
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                />
               }
             </Accordion>
             <Accordion
