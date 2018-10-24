@@ -28,6 +28,8 @@ module.exports.test = function test(uiTestCtx) {
           .click('#input-inventory-search')
           .insert('#input-inventory-search', title)
           .wait('#clickable-reset-all')
+          .wait('button[type=submit]')
+          .click('button[type=submit]')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${title}"]`)
           /* .evaluate(function evall(title2) {
             const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
@@ -42,9 +44,7 @@ module.exports.test = function test(uiTestCtx) {
       });
       it('should click "reset all" button', (done) => {
         nightmare
-          .wait(55)
           .wait('#clickable-reset-all')
-          .wait(555)
           .click('#clickable-reset-all')
           .then(done)
           .catch(done);
@@ -56,6 +56,8 @@ module.exports.test = function test(uiTestCtx) {
           .wait(55)
           .insert('#input-inventory-search', title)
           .wait('#clickable-reset-all')
+          .wait('button[type=submit]')
+          .click('button[type=submit]')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${title}"]`)
           /* .evaluate(function evall(title2) {
             const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
@@ -78,11 +80,11 @@ module.exports.test = function test(uiTestCtx) {
       });
       it(`should search for contributor: ${authorName}`, (done) => {
         nightmare
-          .wait(55)
           .select('#input-inventory-search-qindex', 'contributor')
-          .wait(55)
           .insert('#input-inventory-search', authorName)
           .wait('#clickable-reset-all')
+          .wait('button[type=submit]')
+          .click('button[type=submit]')
           .wait(`#list-inventory div[role="listitem"] div[role="gridcell"][title*="${authorName}"]`)
           .then(done)
           .catch(done);
