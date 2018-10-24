@@ -292,8 +292,38 @@ class ViewHoldingsRecord extends React.Component {
                     <KeyValue label={formatMsg({ id: 'ui-inventory.temporary' })} value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'} />
                   </Col>
                 </Row>
-
               }
+              <Row>
+                <Col sm={2}>
+                  <KeyValue label="Shelving order" value={holdingsRecord.shelvingOrder} />
+                </Col>
+                <Col>
+                  <KeyValue label="Shelving title" value={holdingsRecord.shelvingTitle} />
+                </Col>
+              </Row>
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.holdingsCallNumber' })}</strong>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumber' })} value={holdingsRecord.copyNumber} />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberType' })} value="" />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })} value={holdingsRecord.callNumberPrefix} />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumber' })} value={holdingsRecord.callNumber} />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberSuffix' })} value={holdingsRecord.callNumberSuffix} />
+                </Col>
+              </Row>
+
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion03}
