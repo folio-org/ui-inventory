@@ -11,7 +11,6 @@ import {
   Col,
   Button,
   TextField,
-  Select,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -19,7 +18,7 @@ import {
   LocationLookup,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'redux-form';
 
 import stripesForm from '@folio/stripes/form';
 
@@ -207,12 +206,6 @@ class HoldingsForm extends React.Component {
       </PaneMenu>
     );
 
-    const platformOptions = (referenceTables.platforms || []).map(l => ({
-      label: l.name,
-      value: l.id,
-      selected: initialValues.electronicLocation ? initialValues.electronicLocation.platformId === l.id : false,
-    }));
-
     return (
       <form>
         <Paneset isRoot>
@@ -331,8 +324,7 @@ class HoldingsForm extends React.Component {
                   <Field
                     label={formatMsg({ id: 'ui-inventory.numberOfItems' })}
                     name="numberOfItems"
-                    id=""
-                    id="edititem_barcode"
+                    id="edititem_numberofitems"
                     component={TextField}
                     fullWidth
                   />
