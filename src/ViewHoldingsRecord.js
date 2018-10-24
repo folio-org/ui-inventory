@@ -295,10 +295,10 @@ class ViewHoldingsRecord extends React.Component {
               }
               <Row>
                 <Col sm={2}>
-                  <KeyValue label="Shelving order" value={holdingsRecord.shelvingOrder} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.shelvingOrder' })} value={holdingsRecord.shelvingOrder} />
                 </Col>
                 <Col>
-                  <KeyValue label="Shelving title" value={holdingsRecord.shelvingTitle} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.shelvingTitle' })} value={holdingsRecord.shelvingTitle} />
                 </Col>
               </Row>
               <Row>

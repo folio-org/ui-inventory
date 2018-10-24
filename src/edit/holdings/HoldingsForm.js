@@ -11,6 +11,7 @@ import {
   Col,
   Button,
   TextField,
+  Select,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -230,7 +231,7 @@ class HoldingsForm extends React.Component {
           >
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row>
-              <Col sm={5} smOffset={1}>
+              <Col sm={5}>
                 <h2>{formatMsg({ id: 'ui-inventory.holdingsRecord' })}</h2>
               </Col>
             </Row>
@@ -247,7 +248,7 @@ class HoldingsForm extends React.Component {
               label={formatMsg({ id: 'ui-inventory.locations' })}
             >
               <Row>
-                <Col sm={5} smOffset={1}>
+                <Col sm={5}>
                   { (initialValues.metadata && initialValues.metadata.createdDate) &&
                   <this.cViewMetaData metadata={initialValues.metadata} />
                   }
@@ -262,6 +263,19 @@ class HoldingsForm extends React.Component {
                     onSelect={loc => this.selectPermanentLocation(loc)}
                   />
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
+                </Col>
+                <Col sm={5}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
+                    placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
+                    name="temporaryLocationId"
+                    id="additem_temporarylocation"
+                    component={LocationSelection}
+                    fullWidth
+                    marginBottom0
+                    onSelect={loc => this.selectTemporaryLocation(loc)}
+                  />
+                  <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} isTemporaryLocation />
                 </Col>
               </Row>
               <ConfirmationModal
@@ -287,26 +301,67 @@ class HoldingsForm extends React.Component {
                 onCancel={() => { this.confirmTemporaryLocation(false); }}
               />
               <Row>
-                <Col sm={5} smOffset={1}>
+                <Col sm={5}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                    placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
-                    name="temporaryLocationId"
-                    id="additem_temporarylocation"
-                    component={LocationSelection}
+                    label={formatMsg({ id: 'ui-inventory.shelvingOrder' })}
+                    name="shelvingOrder"
+                    id="additem_shelvingorder"
+                    component={TextField}
                     fullWidth
-                    marginBottom0
-                    onSelect={loc => this.selectTemporaryLocation(loc)}
                   />
-                  <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} isTemporaryLocation />
+                </Col>
+                <Col sm={5}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.shelvingTitle' })}
+                    name="shelvingTitle"
+                    id="additem_shelvingtitle"
+                    component={TextField}
+                    fullWidth
+                  />
                 </Col>
               </Row>
               <Row>
-                <Col sm={5} smOffset={1}>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.copyNumber' })}
+                    name="copyNumber"
+                    id="additem_copynumber"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.callNumberType' })}
+                    name="callNumberTypeId"
+                    id="additem_callnumbertype"
+                    component={Select}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })}
+                    name="callNumberPrefix"
+                    id="additem_callnumberprefix"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.callNumber' })}
                     name="callNumber"
                     id="additem_callnumber"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.callNumberSuffix' })}
+                    name="callNumberSuffix"
+                    id="additem_callnumbersuffix"
                     component={TextField}
                     fullWidth
                   />

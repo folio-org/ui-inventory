@@ -65,6 +65,8 @@
   "selectPlatform": "Select platform",
   "platform": "Platform",
   "uri": "URI",
+  "shelvingOrder": "Shelving order",
+  "shelvingTitle": "Shelving title",
   "holdingsCallNumber": "Holdings call number",
   "copyNumber": "Copy number",
   "callNumberType": "Call number type",
