@@ -317,7 +317,7 @@ class ViewHoldingsRecord extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumber' })} value={holdingsRecord.copyNumber} />
                 </Col>
                 <Col sm={2}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberType' })} value="" />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberType' })} value="not implemented" />
                 </Col>
                 <Col sm={2}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })} value={holdingsRecord.callNumberPrefix} />
@@ -384,7 +384,54 @@ class ViewHoldingsRecord extends React.Component {
               id="accordion04"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
-            />
+            >
+              <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.holdingsNotes' })}</strong>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.publicNote' })} value={_.get(holdingsRecord, ['publicNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.nonPublicNote' })} value={_.get(holdingsRecord, ['nonPublicNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.actionNote' })} value={_.get(holdingsRecord, ['actionNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.reproductionNote' })} value={_.get(holdingsRecord, ['reproductionNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.binding' })} value={_.get(holdingsRecord, ['bindingNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.provenance' })} value={_.get(holdingsRecord, ['provenanceNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNote' })} value={_.get(holdingsRecord, ['copyNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })} value="not implemented" />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })} value={_.get(holdingsRecord, ['acquisitionFormats'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.electronicBookplate' })} value={_.get(holdingsRecord, ['electronicBookplateNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.receiptStatus' })} value="not implemented" />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.accordion05}
               id="accordion05"

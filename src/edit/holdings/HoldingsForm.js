@@ -435,7 +435,116 @@ class HoldingsForm extends React.Component {
               id="accordion04"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
-            />
+            >
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="publicNotes"
+                    label={formatMsg({ id: 'ui-inventory.publicNote' })}
+                    addButtonId="clickable-add-publicnote"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="nonPublicNotes"
+                    label={formatMsg({ id: 'ui-inventory.nonPublicNote' })}
+                    addButtonId="clickable-add-publicnote"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="actionNotes"
+                    label={formatMsg({ id: 'ui-inventory.actionNote' })}
+                    addButtonId="clickable-add-actionnote"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="reproductionNotes"
+                    label={formatMsg({ id: 'ui-inventory.reproductionNote' })}
+                    addButtonId="clickable-add-reproductionnote"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="bindingNotes"
+                    label={formatMsg({ id: 'ui-inventory.binding' })}
+                    addButtonId="clickable-add-binding"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="provenanceNotes"
+                    label={formatMsg({ id: 'ui-inventory.provenance' })}
+                    addButtonId="clickable-add-provenance"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="copyNotes"
+                    label={formatMsg({ id: 'ui-inventory.copyNotes' })}
+                    addButtonId="clickable-add-copynote"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="acquisitionFormats"
+                    label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
+                    addButtonId="clickable-add-acquisitionFormat"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="electronicBookplateNotes"
+                    label={formatMsg({ id: 'ui-inventory.electronicBookplate' })}
+                    addButtonId="clickable-add-electronicbookplatenote"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.accordion05}
               id="accordion05"
