@@ -269,7 +269,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="formerIds"
-                    label={formatMsg({ id: 'ui-inventory.formerHoldingsId' })}
                     addButtonId="clickable-add-formerholdingsid"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.formerHoldingsId' }),
@@ -441,7 +440,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="publicNotes"
-                    label={formatMsg({ id: 'ui-inventory.publicNote' })}
                     addLabel="+Add"
                     addButtonId="clickable-add-publicnote"
                     template={[{
@@ -455,7 +453,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="nonPublicNotes"
-                    label={formatMsg({ id: 'ui-inventory.nonPublicNote' })}
                     addButtonId="clickable-add-publicnote"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.nonPublicNote' }),
@@ -468,7 +465,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="actionNotes"
-                    label={formatMsg({ id: 'ui-inventory.actionNote' })}
                     addButtonId="clickable-add-actionnote"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.actionNote' }),
@@ -481,7 +477,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="reproductionNotes"
-                    label={formatMsg({ id: 'ui-inventory.reproductionNote' })}
                     addButtonId="clickable-add-reproductionnote"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.reproductionNote' }),
@@ -494,7 +489,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="bindingNotes"
-                    label={formatMsg({ id: 'ui-inventory.binding' })}
                     addButtonId="clickable-add-binding"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.binding' }),
@@ -507,7 +501,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="provenanceNotes"
-                    label={formatMsg({ id: 'ui-inventory.provenance' })}
                     addButtonId="clickable-add-provenance"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.provenance' }),
@@ -520,7 +513,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="copyNotes"
-                    label={formatMsg({ id: 'ui-inventory.copyNotes' })}
                     addButtonId="clickable-add-copynote"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.copyNotes' }),
@@ -533,7 +525,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="acquisitionFormats"
-                    label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
                     addButtonId="clickable-add-acquisitionFormat"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.acquisitionFormat' }),
@@ -546,7 +537,6 @@ class HoldingsForm extends React.Component {
                 <Col sm={10}>
                   <RepeatableField
                     name="electronicBookplateNotes"
-                    label={formatMsg({ id: 'ui-inventory.electronicBookplate' })}
                     addButtonId="clickable-add-electronicbookplatenote"
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.electronicBookplate' }),
