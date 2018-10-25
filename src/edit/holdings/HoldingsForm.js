@@ -12,6 +12,7 @@ import {
   Button,
   TextField,
   Select,
+  Checkbox,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -22,6 +23,9 @@ import {
 import { Field } from 'redux-form';
 
 import stripesForm from '@folio/stripes/form';
+
+import RepeatableField from '../../components/RepeatableField';
+
 
 import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
@@ -240,7 +244,40 @@ class HoldingsForm extends React.Component {
               id="accordion01"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.administrativeData' })}
-            />
+            >
+              <Row>
+                <Col sm={4}>
+                  <Field
+                    label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                    name="discoverySuppress"
+                    id="input_discovery_suppress"
+                    component={Checkbox}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    name="hrid"
+                    type="text"
+                    component={TextField}
+                    label={`${formatMsg({ id: 'ui-inventory.holdingsHrid' })}`}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="formerIds"
+                    label={formatMsg({ id: 'ui-inventory.formerHoldingsId' })}
+                    addButtonId="clickable-add-formerholdingsid"
+                    template={[{
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.accordion02}
               id="accordion02"
@@ -248,7 +285,7 @@ class HoldingsForm extends React.Component {
               label={formatMsg({ id: 'ui-inventory.locations' })}
             >
               <Row>
-                <Col sm={5}>
+                <Col sm={4}>
                   { (initialValues.metadata && initialValues.metadata.createdDate) &&
                   <this.cViewMetaData metadata={initialValues.metadata} />
                   }
@@ -264,7 +301,7 @@ class HoldingsForm extends React.Component {
                   />
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
                 </Col>
-                <Col sm={5}>
+                <Col sm={4}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
                     placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
@@ -301,7 +338,7 @@ class HoldingsForm extends React.Component {
                 onCancel={() => { this.confirmTemporaryLocation(false); }}
               />
               <Row>
-                <Col sm={5}>
+                <Col sm={4}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.shelvingOrder' })}
                     name="shelvingOrder"
@@ -310,7 +347,7 @@ class HoldingsForm extends React.Component {
                     fullWidth
                   />
                 </Col>
-                <Col sm={5}>
+                <Col sm={4}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.shelvingTitle' })}
                     name="shelvingTitle"
@@ -375,7 +412,7 @@ class HoldingsForm extends React.Component {
               label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
             >
               <Row>
-                <Col>
+                <Col sm={8}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.numberOfItems' })}
                     name="numberOfItems"
@@ -385,9 +422,13 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
-              <HoldingsStatementFields formatMsg={formatMsg} />
-              <HoldingsStatementForSupplementsFields formatMsg={formatMsg} />
-              <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
+              <Row>
+                <Col sm={10}>
+                  <HoldingsStatementFields formatMsg={formatMsg} />
+                  <HoldingsStatementForSupplementsFields formatMsg={formatMsg} />
+                  <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion04}

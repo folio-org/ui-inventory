@@ -263,6 +263,12 @@ class ViewHoldingsRecord extends React.Component {
                 </Col>
               </Row>
               <Row>
+                <Col xs={12}>
+                  {holdingsRecord.discoverySuppress && formatMsg({ id: 'ui-inventory.discoverySuppress' })}
+                </Col>
+              </Row>
+              <br />
+              <Row>
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.holdingsHrid' })} value={_.get(holdingsRecord, ['hrid'], '')} />
                 </Col>
