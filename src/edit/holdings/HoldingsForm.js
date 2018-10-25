@@ -272,6 +272,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.formerHoldingsId' })}
                     addButtonId="clickable-add-formerholdingsid"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.formerHoldingsId' }),
                       component: TextField,
                     }]}
                   />
@@ -441,8 +442,10 @@ class HoldingsForm extends React.Component {
                   <RepeatableField
                     name="publicNotes"
                     label={formatMsg({ id: 'ui-inventory.publicNote' })}
+                    addLabel="+Add"
                     addButtonId="clickable-add-publicnote"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.publicNote' }),
                       component: TextField,
                     }]}
                   />
@@ -455,6 +458,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.nonPublicNote' })}
                     addButtonId="clickable-add-publicnote"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.nonPublicNote' }),
                       component: TextField,
                     }]}
                   />
@@ -467,6 +471,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.actionNote' })}
                     addButtonId="clickable-add-actionnote"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.actionNote' }),
                       component: TextField,
                     }]}
                   />
@@ -479,6 +484,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.reproductionNote' })}
                     addButtonId="clickable-add-reproductionnote"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.reproductionNote' }),
                       component: TextField,
                     }]}
                   />
@@ -491,6 +497,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.binding' })}
                     addButtonId="clickable-add-binding"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.binding' }),
                       component: TextField,
                     }]}
                   />
@@ -503,6 +510,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.provenance' })}
                     addButtonId="clickable-add-provenance"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.provenance' }),
                       component: TextField,
                     }]}
                   />
@@ -515,6 +523,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.copyNotes' })}
                     addButtonId="clickable-add-copynote"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.copyNotes' }),
                       component: TextField,
                     }]}
                   />
@@ -527,6 +536,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
                     addButtonId="clickable-add-acquisitionFormat"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.acquisitionFormat' }),
                       component: TextField,
                     }]}
                   />
@@ -539,6 +549,7 @@ class HoldingsForm extends React.Component {
                     label={formatMsg({ id: 'ui-inventory.electronicBookplate' })}
                     addButtonId="clickable-add-electronicbookplatenote"
                     template={[{
+                      label: formatMsg({ id: 'ui-inventory.electronicBookplate' }),
                       component: TextField,
                     }]}
                   />
