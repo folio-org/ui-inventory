@@ -203,5 +203,13 @@
     "instanceFormat": "Formato",
     "instanceFormats": "Formatos",
     "addInstanceFormat": "+ Adicionar formato",
-    "selectInstanceFormat": "Selecione o formato"
+    "selectInstanceFormat": "Selecione o formato",
+    "copyItem": "Copiar item",
+    "resourceTypeTerm": "Termo do tipo de recurso",
+    "resourceTypeCode": "Código do tipo de recurso",
+    "resourceTypeSource": "Fonte do tipo de recurso",
+    "locations": "Localizações",
+    "holdingsDetails": "Detalhes do acervo",
+    "acquisitions": "Aquisições",
+    "receivingHistory": "Histórico de recebimento"
 }

@@ -126,7 +126,7 @@
     "temporaryLoantype": "Vorläufiger Ausleihtyp",
     "pieceIdentifier": "Stückidentifier",
     "pieceIdentifiers": "Stückidentifier",
-    "addPieceIdentifier": "Stückidentifier hinzuügen",
+    "addPieceIdentifier": "Stückidentifier hinzufügen",
     "removeIdentifier": "Identifier entfernen",
     "editItemDialog": "Dialogfenster Exemplar bearbeiten",
     "copyItemDialog": "Dialogfenster Exemplardatensatz kopieren",
@@ -203,5 +203,13 @@
     "instanceFormat": "Format",
     "instanceFormats": "Formats",
     "addInstanceFormat": "+ Add format",
-    "selectInstanceFormat": "Select format"
+    "selectInstanceFormat": "Select format",
+    "copyItem": "Copy item",
+    "resourceTypeTerm": "Resource type term",
+    "resourceTypeCode": "Resource type code",
+    "resourceTypeSource": "Resource type source",
+    "locations": "Locations",
+    "holdingsDetails": "Holdings details",
+    "acquisitions": "Acquisitions",
+    "receivingHistory": "Receiving history"
 }
