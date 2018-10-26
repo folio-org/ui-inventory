@@ -392,43 +392,67 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               <Row>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.publicNote' })} value={_.get(holdingsRecord, ['publicNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.publicNote' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'note' && !note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
                 </Col>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.nonPublicNote' })} value={_.get(holdingsRecord, ['nonPublicNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.nonPublicNote' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'note' && note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
                 </Col>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.actionNote' })} value={_.get(holdingsRecord, ['actionNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.reproductionNote' })} value={_.get(holdingsRecord, ['reproductionNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
-                </Col>
-                <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.binding' })} value={_.get(holdingsRecord, ['bindingNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
-                </Col>
-                <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.provenance' })} value={_.get(holdingsRecord, ['provenanceNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
-                </Col>
-                <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNote' })} value={_.get(holdingsRecord, ['copyNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.actionNote' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'action note') return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })} value="not implemented" />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.reproductionNote' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'reproduction') return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
                 </Col>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })} value={_.get(holdingsRecord, ['acquisitionFormats'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.binding' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'binding') return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.provenance' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'provenance') return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.copyNotes' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'copy note') return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.electronicBookplate' })} value={_.get(holdingsRecord, ['electronicBookplateNotes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })} value={_.get(holdingsRecord, ['acquisitionMethod'], '')} />
                 </Col>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.receiptStatus' })} value="not implemented" />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })} value={_.get(holdingsRecord, ['acquisitionFormat'], '')} />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.electronicBookplate' })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'electronic bookplate') return <div key={i}>{note.note}</div>; else return ''; })}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.receiptStatus' })} value={_.get(holdingsRecord, ['receiptStatus'], '')} />
                 </Col>
               </Row>
             </Accordion>

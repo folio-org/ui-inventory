@@ -437,111 +437,62 @@ class HoldingsForm extends React.Component {
               label={formatMsg({ id: 'ui-inventory.notes' })}
             >
               <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="publicNotes"
-                    addLabel="+Add"
-                    addButtonId="clickable-add-publicnote"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.publicNote' }),
-                      component: TextField,
-                    }]}
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
+                    name="acquisitionFormat"
+                    id="edit_acquisitionformat"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })}
+                    name="acquisitionMethod"
+                    id="edit_acquisitionmethod"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.receiptStatus' })}
+                    name="receiptStatus"
+                    id="edit_receiptstatus"
+                    component={TextField}
                   />
                 </Col>
               </Row>
               <Row>
                 <Col sm={10}>
                   <RepeatableField
-                    name="nonPublicNotes"
-                    addButtonId="clickable-add-publicnote"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.nonPublicNote' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="actionNotes"
-                    addButtonId="clickable-add-actionnote"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.actionNote' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="reproductionNotes"
-                    addButtonId="clickable-add-reproductionnote"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.reproductionNote' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="bindingNotes"
-                    addButtonId="clickable-add-binding"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.binding' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="provenanceNotes"
-                    addButtonId="clickable-add-provenance"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.provenance' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="copyNotes"
-                    addButtonId="clickable-add-copynote"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.copyNotes' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="acquisitionFormats"
-                    addButtonId="clickable-add-acquisitionFormat"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.acquisitionFormat' }),
-                      component: TextField,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="electronicBookplateNotes"
-                    addButtonId="clickable-add-electronicbookplatenote"
-                    template={[{
-                      label: formatMsg({ id: 'ui-inventory.electronicBookplate' }),
-                      component: TextField,
-                    }]}
+                    name="notes"
+                    addButtonId="clickable-add-note"
+                    template={[
+                      {
+                        name: 'type',
+                        label: formatMsg({ id: 'ui-inventory.noteType' }),
+                        component: Select,
+                        dataOptions: [{ label: 'Select type', value: '' }, 
+                                      { label: 'Action note', value: 'action note'},
+                                      { label: 'Binding', value: 'binding'},
+                                      { label: 'Copy note', value: 'copy note'},
+                                      { label: 'Electronic bookplace', value: 'electronic bookplate'},
+                                      { label: 'Note', value: 'note'},
+                                      { label: 'Provenance', value: 'provenance'},
+                                      { label: 'Reproduction', value: 'reproduction'},
+                                     ],
+                      },
+                      {
+                        name: 'note',
+                        label: formatMsg({ id: 'ui-inventory.note' }),
+                        component: TextField,
+                      },
+                      {
+                        name: 'staffOnly',
+                        label: formatMsg({ id: 'ui-inventory.staffOnly' }),
+                        component: Checkbox,
+                      }
+                    ]}
                   />
                 </Col>
               </Row>
