@@ -1,54 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Row,
-  Col,
-  Button,
-  TextField,
-} from '@folio/stripes/components';
-import { Field } from 'redux-form';
+import { TextField } from '@folio/stripes/components';
+import RepeatableField from '../../components/RepeatableField';
 
-const renderStatements = ({ fields, meta: { touched, error, submitFailed }, formatMsg }) => (
-  <div>
-    <Row>
-      <Col sm={2} smOffset={4}>
-        <Button
-          type="button"
-          buttonStyle="fullWidth secondary"
-          id="clickable-add-statement"
-          onClick={() => fields.push()}
-        >
-          Add Holdings Statement
-        </Button>
-        {(touched || submitFailed) && error && <span>{error}</span>}
-      </Col>
-    </Row>
-    {fields.map((statement, index) => (
-      <Row key={index}>
-        <Col sm={5} smOffset={1}>
-          <Field
-            name={statement}
-            type="text"
-            component={TextField}
-            label={index === 0 ? formatMsg({ id: 'ui-inventory.holdingsStatement' }) : null}
-          />
-        </Col>
-        <Col sm={1}>
-          {index === 0 ? <br /> : null}
-          <Button
-            buttonStyle="fullWidth secondary"
-            type="button"
-            title={formatMsg({ id: 'ui-inventory.removeStatement' }, { num: index + 1 })}
-            onClick={() => fields.remove(index)}
-          >
-            {formatMsg({ id: 'ui-inventory.deleteStatement' })}
-          </Button>
-        </Col>
-      </Row>
-    ))}
-  </div>
+const HoldingsStatementFields = ({ formatMsg }) => (
+  <RepeatableField
+    name="holdingsStatements"
+    label={formatMsg({ id: 'ui-inventory.holdingsStatements' })}
+    addLabel="+Add"
+    addButtonId="clickable-add-holdingsstatement"
+    template={[{
+      label: formatMsg({ id: 'ui-inventory.holdingsStatement' }),
+      component: TextField,
+    }]}
+  />
 );
 
-renderStatements.propTypes = { fields: PropTypes.object, meta: PropTypes.object, formatMsg: PropTypes.func };
-
-export default renderStatements;
+HoldingsStatementFields.propTypes = { formatMsg: PropTypes.func };
+export default HoldingsStatementFields;

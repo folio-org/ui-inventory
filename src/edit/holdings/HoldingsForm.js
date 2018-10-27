@@ -12,6 +12,7 @@ import {
   Button,
   TextField,
   Select,
+  Checkbox,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import {
@@ -19,11 +20,18 @@ import {
   LocationLookup,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'redux-form';
 
 import stripesForm from '@folio/stripes/form';
 
-import renderStatements from './holdingsStatementFields';
+import RepeatableField from '../../components/RepeatableField';
+
+
+import HoldingsStatementFields from './holdingsStatementFields';
+import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
+import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
+import ElectronicAccessFields from '../electronicAccessFields';
+
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -203,12 +211,6 @@ class HoldingsForm extends React.Component {
       </PaneMenu>
     );
 
-    const platformOptions = (referenceTables.platforms || []).map(l => ({
-      label: l.name,
-      value: l.id,
-      selected: initialValues.electronicLocation ? initialValues.electronicLocation.platformId === l.id : false,
-    }));
-
     return (
       <form>
         <Paneset isRoot>
@@ -233,7 +235,7 @@ class HoldingsForm extends React.Component {
           >
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row>
-              <Col sm={5} smOffset={1}>
+              <Col sm={5}>
                 <h2>{formatMsg({ id: 'ui-inventory.holdingsRecord' })}</h2>
               </Col>
             </Row>
@@ -242,7 +244,40 @@ class HoldingsForm extends React.Component {
               id="accordion01"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.administrativeData' })}
-            />
+            >
+              <Row>
+                <Col sm={4}>
+                  <Field
+                    label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                    name="discoverySuppress"
+                    id="input_discovery_suppress"
+                    component={Checkbox}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    name="hrid"
+                    type="text"
+                    component={TextField}
+                    label={`${formatMsg({ id: 'ui-inventory.holdingsHrid' })}`}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="formerIds"
+                    addButtonId="clickable-add-formerholdingsid"
+                    template={[{
+                      label: formatMsg({ id: 'ui-inventory.formerHoldingsId' }),
+                      component: TextField,
+                    }]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.accordion02}
               id="accordion02"
@@ -250,7 +285,7 @@ class HoldingsForm extends React.Component {
               label={formatMsg({ id: 'ui-inventory.locations' })}
             >
               <Row>
-                <Col sm={5} smOffset={1}>
+                <Col sm={4}>
                   { (initialValues.metadata && initialValues.metadata.createdDate) &&
                   <this.cViewMetaData metadata={initialValues.metadata} />
                   }
@@ -265,6 +300,19 @@ class HoldingsForm extends React.Component {
                     onSelect={loc => this.selectPermanentLocation(loc)}
                   />
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
+                </Col>
+                <Col sm={4}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
+                    placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
+                    name="temporaryLocationId"
+                    id="additem_temporarylocation"
+                    component={LocationSelection}
+                    fullWidth
+                    marginBottom0
+                    onSelect={loc => this.selectTemporaryLocation(loc)}
+                  />
+                  <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} isTemporaryLocation />
                 </Col>
               </Row>
               <ConfirmationModal
@@ -290,26 +338,67 @@ class HoldingsForm extends React.Component {
                 onCancel={() => { this.confirmTemporaryLocation(false); }}
               />
               <Row>
-                <Col sm={5} smOffset={1}>
+                <Col sm={4}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                    placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
-                    name="temporaryLocationId"
-                    id="additem_temporarylocation"
-                    component={LocationSelection}
+                    label={formatMsg({ id: 'ui-inventory.shelvingOrder' })}
+                    name="shelvingOrder"
+                    id="additem_shelvingorder"
+                    component={TextField}
                     fullWidth
-                    marginBottom0
-                    onSelect={loc => this.selectTemporaryLocation(loc)}
                   />
-                  <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} isTemporaryLocation />
+                </Col>
+                <Col sm={4}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.shelvingTitle' })}
+                    name="shelvingTitle"
+                    id="additem_shelvingtitle"
+                    component={TextField}
+                    fullWidth
+                  />
                 </Col>
               </Row>
               <Row>
-                <Col sm={5} smOffset={1}>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.copyNumber' })}
+                    name="copyNumber"
+                    id="additem_copynumber"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.callNumberType' })}
+                    name="callNumberTypeId"
+                    id="additem_callnumbertype"
+                    component={Select}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })}
+                    name="callNumberPrefix"
+                    id="additem_callnumberprefix"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.callNumber' })}
                     name="callNumber"
                     id="additem_callnumber"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.callNumberSuffix' })}
+                    name="callNumberSuffix"
+                    id="additem_callnumbersuffix"
                     component={TextField}
                     fullWidth
                   />
@@ -322,14 +411,93 @@ class HoldingsForm extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
             >
-              <FieldArray name="holdingsStatements" component={renderStatements} formatMsg={formatMsg} />
+              <Row>
+                <Col sm={8}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.numberOfItems' })}
+                    name="numberOfItems"
+                    id="edititem_numberofitems"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <HoldingsStatementFields formatMsg={formatMsg} />
+                  <HoldingsStatementForSupplementsFields formatMsg={formatMsg} />
+                  <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion04}
               id="accordion04"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
-            />
+            >
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
+                    name="acquisitionFormat"
+                    id="edit_acquisitionformat"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })}
+                    name="acquisitionMethod"
+                    id="edit_acquisitionmethod"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.receiptStatus' })}
+                    name="receiptStatus"
+                    id="edit_receiptstatus"
+                    component={TextField}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="notes"
+                    addButtonId="clickable-add-note"
+                    template={[
+                      {
+                        name: 'type',
+                        label: formatMsg({ id: 'ui-inventory.noteType' }),
+                        component: Select,
+                        dataOptions: [
+                          { label: 'Select type', value: '' },
+                          { label: 'Action note', value: 'action note' },
+                          { label: 'Binding', value: 'binding' },
+                          { label: 'Copy note', value: 'copy note' },
+                          { label: 'Electronic bookplace', value: 'electronic bookplate' },
+                          { label: 'Note', value: 'note' },
+                          { label: 'Provenance', value: 'provenance' },
+                          { label: 'Reproduction', value: 'reproduction' },
+                        ],
+                      },
+                      {
+                        name: 'note',
+                        label: formatMsg({ id: 'ui-inventory.note' }),
+                        component: TextField,
+                      },
+                      {
+                        name: 'staffOnly',
+                        label: formatMsg({ id: 'ui-inventory.staffOnly' }),
+                        component: Checkbox,
+                      }
+                    ]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.accordion05}
               id="accordion05"
@@ -342,25 +510,7 @@ class HoldingsForm extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
-              <Row>
-                <Col sm={5} smOffset={1}>
-                  <Field
-                    label={formatMsg({ id: 'ui-inventory.platform' })}
-                    name="electronicLocation.platformId"
-                    id="additem_platformid"
-                    component={Select}
-                    fullWidth
-                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectPlatform' }), value: '' }, ...platformOptions]}
-                  />
-                  <Field
-                    label={formatMsg({ id: 'ui-inventory.uri' })}
-                    name="electronicLocation.uri"
-                    id="additem_uri"
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
+              <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion07}
