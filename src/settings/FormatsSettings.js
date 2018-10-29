@@ -40,6 +40,7 @@ class FormatTypesSettings extends React.Component {
         // columnWidths={{ 'name': 300, 'code': 50 }}
         actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
         id="formats"
+        sortby="name"
       />
     );
   }
