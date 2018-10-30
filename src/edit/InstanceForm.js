@@ -355,7 +355,7 @@ class InstanceForm extends React.Component {
                 <AlternativeTitles formatMsg={formatMsg} />
                 <Col sm={10}>
                   <Field
-                    label={`${formatMsg({ id: 'ui-inventory.indexTitle' })} *`}
+                    label={`${formatMsg({ id: 'ui-inventory.indexTitle' })}`}
                     name="indexTitle"
                     id="input_index_title"
                     component={TextField}
