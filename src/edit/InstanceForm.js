@@ -38,8 +38,6 @@ import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
 
-import css from './InstanceForm.css';
-
 function validate(values, props) {
   const errors = {};
   const formatMsg = props.stripes.intl.formatMessage;
