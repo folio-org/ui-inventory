@@ -11,6 +11,7 @@ const EditionFields = ({ formatMsg }) => (
     addButtonId="clickable-add-edition"
     template={[{
       component: TextField,
+      label: formatMsg({ id: 'ui-inventory.edition' }),
     }]}
   />
 );

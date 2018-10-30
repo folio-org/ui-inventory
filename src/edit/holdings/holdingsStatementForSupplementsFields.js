@@ -6,7 +6,7 @@ import RepeatableField from '../../components/RepeatableField';
 const HoldingsStatementForSupplementsFields = ({ formatMsg }) => (
   <RepeatableField
     name="holdingsStatementsForSupplements"
-    addLabel="+Add"
+    addLabel={formatMsg({ id: 'ui-inventory.addHoldingsStatementForSupplements' })}
     addButtonId="clickable-add-holdingsstatementforsupplements"
     template={[
       {

@@ -7,7 +7,7 @@ const HoldingsStatementFields = ({ formatMsg }) => (
   <RepeatableField
     name="holdingsStatements"
     label={formatMsg({ id: 'ui-inventory.holdingsStatements' })}
-    addLabel="+Add"
+    addLabel={formatMsg({ id: 'ui-inventory.addHoldingsStatement' })}
     addButtonId="clickable-add-holdingsstatement"
     template={[{
       label: formatMsg({ id: 'ui-inventory.holdingsStatement' }),
