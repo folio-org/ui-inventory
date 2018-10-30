@@ -6,11 +6,11 @@ import RepeatableField from '../components/RepeatableField';
 const SubjectFields = ({ formatMsg }) => (
   <RepeatableField
     name="subjects"
-    label={formatMsg({ id: 'ui-inventory.subjects' })}
     addLabel={formatMsg({ id: 'ui-inventory.addSubject' })}
     addButtonId="clickable-add-subject"
     template={[{
       component: TextField,
+      label: formatMsg({ id: 'ui-inventory.subjects' }),
     }]}
   />
 );

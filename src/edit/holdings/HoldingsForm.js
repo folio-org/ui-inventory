@@ -256,7 +256,7 @@ class HoldingsForm extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm={8}>
+                <Col sm={4}>
                   <Field
                     name="hrid"
                     type="text"
@@ -270,6 +270,7 @@ class HoldingsForm extends React.Component {
                   <RepeatableField
                     name="formerIds"
                     addButtonId="clickable-add-formerholdingsid"
+                    addLabel={formatMsg({ id: 'ui-inventory.addFormerHoldingsId' })}
                     template={[{
                       label: formatMsg({ id: 'ui-inventory.formerHoldingsId' }),
                       component: TextField,
@@ -412,7 +413,7 @@ class HoldingsForm extends React.Component {
               label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
             >
               <Row>
-                <Col sm={8}>
+                <Col sm={4}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.numberOfItems' })}
                     name="numberOfItems"

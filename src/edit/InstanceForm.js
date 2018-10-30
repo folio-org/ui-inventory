@@ -38,8 +38,6 @@ import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
 
-import css from './InstanceForm.css';
-
 function validate(values, props) {
   const errors = {};
   const formatMsg = props.stripes.intl.formatMessage;
@@ -256,14 +254,14 @@ class InstanceForm extends React.Component {
             lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu}
             paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}
           >
-            <div className={css.instanceForm}>
+            <div>
               <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.administrativeData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection01} id="instanceSection01">
                 { (initialValues.metadata && initialValues.metadata.createdDate) &&
                   <this.cViewMetaData metadata={initialValues.metadata} />
                 }
                 <Row>
-                  <Col xs={12} sm={4}>
+                  <Col sm={3}>
                     <Field
                       label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
                       name="discoverySuppress"
@@ -271,7 +269,7 @@ class InstanceForm extends React.Component {
                       component={Checkbox}
                     />
                   </Col>
-                  <Col xs={12} sm={4}>
+                  <Col sm={3}>
                     <Field
                       label={`${formatMsg({ id: 'ui-inventory.staffSuppress' })}`}
                       name="staffSuppress"
@@ -279,7 +277,7 @@ class InstanceForm extends React.Component {
                       component={Checkbox}
                     />
                   </Col>
-                  <Col xs={12} sm={4}>
+                  <Col sm={3}>
                     <Field
                       label={`${formatMsg({ id: 'ui-inventory.previouslyHeld' })}`}
                       name="previouslyHeld"
@@ -290,7 +288,7 @@ class InstanceForm extends React.Component {
                 </Row>
                 <br />
                 <Row>
-                  <Col xs={12} sm={6}>
+                  <Col xs={10} sm={5}>
                     <Field
                       name="hrid"
                       type="text"
@@ -298,7 +296,7 @@ class InstanceForm extends React.Component {
                       label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })}`}
                     />
                   </Col>
-                  <Col xs={12} sm={6}>
+                  <Col xs={10} sm={5}>
                     <Field
                       name="source"
                       type="text"
@@ -309,7 +307,7 @@ class InstanceForm extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={12} sm={6}>
+                  <Col xs={10} sm={5}>
                     <Field
                       name="catalogedDate"
                       dateFormat="YYYY-MM-DD"
@@ -319,43 +317,51 @@ class InstanceForm extends React.Component {
                     />
                   </Col>
                 </Row>
-                <Field
-                  name="statusId"
-                  type="text"
-                  component={Select}
-                  label={formatMsg({ id: 'ui-inventory.instanceStatus' })}
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectInstanceStatus' }), value: '' }, ...instanceStatusOptions]}
-                />
-                <Field
-                  name="modeOfIssuanceId"
-                  type="text"
-                  component={Select}
-                  label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })}
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectModeOfIssuance' }), value: '' }, ...modeOfIssuanceOptions]}
-                />
+                <Col sm={10}>
+                  <Field
+                    name="statusId"
+                    type="text"
+                    component={Select}
+                    label={formatMsg({ id: 'ui-inventory.instanceStatus' })}
+                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectInstanceStatus' }), value: '' }, ...instanceStatusOptions]}
+                  />
+                </Col>
+                <Col sm={10}>
+                  <Field
+                    name="modeOfIssuanceId"
+                    type="text"
+                    component={Select}
+                    label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })}
+                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectModeOfIssuance' }), value: '' }, ...modeOfIssuanceOptions]}
+                  />
+                </Col>
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection02} id="instanceSection02">
-                <Field
-                  label={`${formatMsg({ id: 'ui-inventory.resourceTitle' })} *`}
-                  name="title"
-                  id="input_instance_title"
-                  component={TextField}
-                  fullWidth
-                  required
-                />
+                <Col sm={10}>
+                  <Field
+                    label={`${formatMsg({ id: 'ui-inventory.resourceTitle' })} *`}
+                    name="title"
+                    id="input_instance_title"
+                    component={TextField}
+                    fullWidth
+                    required
+                  />
+                </Col>
                 <Field
                   type="hidden"
                   name="source"
                   component="input"
                 />
                 <AlternativeTitles formatMsg={formatMsg} />
-                <Field
-                  label={`${formatMsg({ id: 'ui-inventory.indexTitle' })} *`}
-                  name="indexTitle"
-                  id="input_index_title"
-                  component={TextField}
-                  fullWidth
-                />
+                <Col sm={10}>
+                  <Field
+                    label={`${formatMsg({ id: 'ui-inventory.indexTitle' })} *`}
+                    name="indexTitle"
+                    id="input_index_title"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
                 <SeriesFields formatMsg={formatMsg} />
               </Accordion>
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.identifiers' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection03} id="instanceSection03">
@@ -368,15 +374,17 @@ class InstanceForm extends React.Component {
                 <PublicationFields formatMsg={formatMsg} />
                 <EditionFields formatMsg={formatMsg} />
                 <DescriptionFields formatMsg={formatMsg} />
-                <Field
-                  name="instanceTypeId"
-                  id="select_instance_type"
-                  type="text"
-                  component={Select}
-                  label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
-                  required
-                />
+                <Col sm={10}>
+                  <Field
+                    name="instanceTypeId"
+                    id="select_instance_type"
+                    type="text"
+                    component={Select}
+                    label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
+                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
+                    required
+                  />
+                </Col>
                 <InstanceFormatFields instanceFormats={referenceTables.instanceFormats} formatMsg={formatMsg} />
                 <LanguageFields formatMsg={formatMsg} />
                 <PublicationFrequencyFields formatMsg={formatMsg} />
