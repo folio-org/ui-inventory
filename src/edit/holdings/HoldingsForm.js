@@ -468,6 +468,7 @@ class HoldingsForm extends React.Component {
                   <RepeatableField
                     name="notes"
                     addButtonId="clickable-add-note"
+                    addLabel={formatMsg({ id: 'ui-inventory.addNote' })}
                     template={[
                       {
                         name: 'type',
@@ -478,7 +479,7 @@ class HoldingsForm extends React.Component {
                           { label: 'Action note', value: 'action note' },
                           { label: 'Binding', value: 'binding' },
                           { label: 'Copy note', value: 'copy note' },
-                          { label: 'Electronic bookplace', value: 'electronic bookplate' },
+                          { label: 'Electronic bookplate', value: 'electronic bookplate' },
                           { label: 'Note', value: 'note' },
                           { label: 'Provenance', value: 'provenance' },
                           { label: 'Reproduction', value: 'reproduction' },
