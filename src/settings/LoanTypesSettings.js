@@ -31,6 +31,7 @@ class LoanTypesSettings extends React.Component {
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="loantypes"
+        sortby="name"
       />
     );
   }

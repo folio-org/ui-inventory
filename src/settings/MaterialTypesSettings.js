@@ -34,6 +34,7 @@ class MaterialTypesSettings extends React.Component {
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="materialtypes"
+        sortby="name"
       />
     );
   }
