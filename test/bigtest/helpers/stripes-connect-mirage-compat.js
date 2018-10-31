@@ -1,3 +1,4 @@
+/* eslint-disable-next-line import/no-extraneous-dependencies */
 import FakeXMLHttpRequest from 'fake-xml-http-request';
 
 /**
