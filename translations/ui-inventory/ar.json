@@ -242,9 +242,9 @@
     "acquisitionMethod": "Acquisition method",
     "acquisitionFormat": "Acquisition format",
     "electronicBookplate": "Electronic bookplate",
-    "add": "+ Add",
-    "addFormerHoldingsId": "+ Add former holdings ID",
-    "addHoldingsStatement": "+ Add holdings statement",
-    "addHoldingsStatementForIndexes": "+ Add holdings statement for indexes",
-    "addHoldingsStatementForSupplements": "+ Add holdings statement for supplements"
+    "add": "+ إضافة",
+    "addFormerHoldingsId": "+ إضافة معرّف المقتنيات السابق",
+    "addHoldingsStatement": "+ إضافة بيان المقتنيات",
+    "addHoldingsStatementForIndexes": "+ إضافة بيان المقتنيات للفهارس",
+    "addHoldingsStatementForSupplements": "+إضافة بيان المقتنيات للمكملات"
 }
