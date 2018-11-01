@@ -404,7 +404,7 @@ class InstanceForm extends React.Component {
               </Accordion>
               {/* <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.otherRelatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection11">
               </Accordion> */}
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.instanceRelationships' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection12">
+              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.relatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection12">
                 <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                 <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
               </Accordion>

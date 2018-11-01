@@ -661,7 +661,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.analyticsAccordion}
           id="analyticsAccordion"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.instanceRelationships' })}
+          label={formatMsg({ id: 'ui-inventory.relatedInstances' })}
         >
           { (instance.childInstances.length > 0) &&
             <Row>
