@@ -242,6 +242,6 @@
   "itemNotes": "Item notes",
   "itemCallNumber": "Item call number",
   "otherRelatedInstances": "Other related instances",
-  "instanceRelationships": "Instance relationships",
+  "relatedInstances": "Related instances",
   "copyItem": "Copy item"
 }
