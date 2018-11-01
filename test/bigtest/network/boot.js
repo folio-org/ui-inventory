@@ -1,10 +1,6 @@
 import startMirage from '@folio/stripes-core/test/bigtest/network/start';
 import mirageOptions from '.';
 
-// can be removed when this PR is merged and released.
-// https://github.com/pretenderjs/FakeXMLHttpRequest/pull/43
-import '../helpers/stripes-connect-mirage-compat';
-
 /**
 * Start mirage to handle requests in development and production. Note
 * that this file will _not_ be include in the build at all if mirage
