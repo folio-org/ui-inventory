@@ -110,7 +110,7 @@ class Instances extends React.Component {
               makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
             }
 
-            let cql = searchableIndex.makeQuery(resourceData.query.query, makeQueryArgs);
+            let cql = searchableIndex.makeQuery(resourceData.query.query || '', makeQueryArgs);
 
             const filterCql = filters2cql(filterConfig, resourceData.query.filters);
             if (filterCql) {
