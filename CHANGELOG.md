@@ -11,6 +11,7 @@
 * Instance view: Add staff and discovery suppress, previously held (UIIN-343)
 * Click "search" button in tests (STCOM-354)
 * Provide `sortby` key for `<ControlledVocab>`. Refs STSMACOM-139.
+* Default term to empty string in cases when query is undefined. Fixes UIIN-371.
 
 ## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)
