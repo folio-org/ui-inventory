@@ -1,8 +1,7 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray } from 'redux-form';
 import {
   Paneset,
   Pane,
@@ -10,24 +9,14 @@ import {
   Row,
   Col,
   Button,
-  TextField,
-  Select,
-  Checkbox,
   Accordion,
   ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
-import RepeatableField from '../../components/RepeatableField';
 import {
-  LocationSelection,
-  LocationLookup,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-
-import renderNotes from './noteFields';
-import renderPieceIdentifiers from './pieceIdentifierFields';
-
 
 function validate(values) {
   const errors = {};
@@ -135,9 +124,17 @@ class ItemForm extends React.Component {
     }
   }
 
+  handleAccordionToggle = ({ id }) => {
+    this.setState((state) => {
+      const newState = cloneDeep(state);
+      newState.accordions[id] = !newState.accordions[id];
+      return newState;
+    });
+  }
+
   handleExpandAll = (obj) => {
     this.setState((curState) => {
-      const newState = _.cloneDeep(curState);
+      const newState = cloneDeep(curState);
       newState.accordions = obj;
       return newState;
     });
@@ -215,25 +212,24 @@ class ItemForm extends React.Component {
       </PaneMenu>
     );
 
-    const materialTypeOptions = referenceTables.materialTypes ?
-      referenceTables.materialTypes.map((t) => {
-        let selectedValue;
-        if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
-        return {
-          label: t.name,
-          value: t.id,
-          selected: selectedValue,
-        };
-      }) : [];
-    const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
-      label: t.name,
-      value: t.id,
-      selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
-    }));
+    // const materialTypeOptions = referenceTables.materialTypes ?
+    //   referenceTables.materialTypes.map((t) => {
+    //     let selectedValue;
+    //     if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
+    //     return {
+    //       label: t.name,
+    //       value: t.id,
+    //       selected: selectedValue,
+    //     };
+    //   }) : [];
+    // const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
+    //   label: t.name,
+    //   value: t.id,
+    //   selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
+    // }));
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
-    const { item } = this.props;
 
     return (
       <form>
@@ -245,7 +241,11 @@ class ItemForm extends React.Component {
             lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <em>Edit {instance.title}</em>
+                <em>
+                  Edit
+                  {' '}
+                  {instance.title}
+                </em>
                 {(instance.publication && instance.publication.length > 0) &&
                 <span>
                   <em>, </em>
@@ -283,25 +283,25 @@ class ItemForm extends React.Component {
             />
             <Accordion
               open={this.state.accordions.conditionsAccordion}
-              id="notesAccordion"
+              id="conditionsAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.conditions' })}
             />
             <Accordion
               open={this.state.accordions.notesAccordion}
-              id="itemAvailabilityAccordion"
+              id="notesAccordion"
               onToggle={this.handleAccordionToggle}
               label={intl.formatMessage({ id: 'ui-inventory.notes' })}
             />
             <Accordion
               open={this.state.accordions.loanDataAccordion}
-              id="locationAccordion"
+              id="loanDataAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.item.availability' })}
             />
             <Accordion
               open={this.state.accordions.acquisitionsAccordion}
-              id="notesAccordion"
+              id="acquisitionsAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.acquisitions' })}
             />
@@ -313,7 +313,7 @@ class ItemForm extends React.Component {
             />
             <Accordion
               open={this.state.accordions.electronicAccordion}
-              id="locationAccordion"
+              id="electronicAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             />
