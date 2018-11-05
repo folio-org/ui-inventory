@@ -212,22 +212,6 @@ class ItemForm extends React.Component {
       </PaneMenu>
     );
 
-    // const materialTypeOptions = referenceTables.materialTypes ?
-    //   referenceTables.materialTypes.map((t) => {
-    //     let selectedValue;
-    //     if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
-    //     return {
-    //       label: t.name,
-    //       value: t.id,
-    //       selected: selectedValue,
-    //     };
-    //   }) : [];
-    // const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
-    //   label: t.name,
-    //   value: t.id,
-    //   selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
-    // }));
-
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
 
