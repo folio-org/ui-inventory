@@ -12,9 +12,13 @@ import {
   Button,
   TextField,
   Select,
+  Checkbox,
+  Accordion,
+  ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
+import RepeatableField from '../../components/RepeatableField';
 import {
   LocationSelection,
   LocationLookup,
@@ -75,6 +79,17 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      accordions: {
+        itemAccordion: true,
+        conditionsAccordion: true,
+        locationAccordion: true,
+        administrativeAccordion: true,
+        enumerationAccordion: true,
+        notesAccordion: true,
+        loanDataAccordion: true,
+        acquisitionsAccordion: true,
+        electronicAccordion: true,
+      },
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
     };
@@ -120,6 +135,14 @@ class ItemForm extends React.Component {
     }
   }
 
+  handleExpandAll = (obj) => {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.accordions = obj;
+      return newState;
+    });
+  }
+
   confirmPermanentLocation(confirm) {
     const { permanentLocation, prevPermanentLocation } = this.state;
     const confirmPermanentLocation = false;
@@ -152,8 +175,9 @@ class ItemForm extends React.Component {
       holdingsRecord,
       referenceTables,
       copy,
+      intl,
     } = this.props;
-    const formatMsg = this.props.intl.formatMessage;
+    const formatMsg = intl.formatMessage;
 
     const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
     const { locationsById } = referenceTables;
@@ -209,6 +233,7 @@ class ItemForm extends React.Component {
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
+    const { item } = this.props;
 
     return (
       <form>
@@ -220,7 +245,7 @@ class ItemForm extends React.Component {
             lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
             paneTitle={
               <div style={{ textAlign: 'center' }}>
-                <em>{instance.title}</em>
+                <em>Edit {instance.title}</em>
                 {(instance.publication && instance.publication.length > 0) &&
                 <span>
                   <em>, </em>
@@ -237,109 +262,61 @@ class ItemForm extends React.Component {
               </div>
             }
           >
-            <Row>
-              <Col sm={5} smOffset={1}>
-                <h2>
-                  <FormattedMessage id="ui-inventory.itemRecord" />
-                </h2>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={5} smOffset={1}>
-                { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                }
-                {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
-                <Field
-                  label={`${formatMsg({ id: 'ui-inventory.materialType' })} *`}
-                  name="materialType.id"
-                  id="additem_materialType"
-                  component={Select}
-                  fullWidth
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectMaterialType' }), value: '' }, ...materialTypeOptions]}
-                />
-                <Field
-                  label={`${formatMsg({ id: 'ui-inventory.loanTypePermanent' })} *`}
-                  name="permanentLoanType.id"
-                  id="additem_loanTypePerm"
-                  component={Select}
-                  fullWidth
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
-                />
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.barcode' })}
-                  name="barcode"
-                  id="additem_barcode"
-                  component={TextField}
-                  required
-                  fullWidth
-                />
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
-                  name="permanentLocation.id"
-                  id="additem_permanentlocation"
-                  component={LocationSelection}
-                  fullWidth
-                  marginBottom0
-                  onSelect={loc => this.selectPermanentLocation(loc)}
-                />
-                <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
-
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
-                  name="temporaryLocation.id"
-                  id="additem_temporarylocation"
-                  component={LocationSelection}
-                  fullWidth
-                  marginBottom0
-                  onSelect={loc => this.selectTemporaryLocation(loc)}
-                />
-                <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
-
-                <Field label={formatMsg({ id: 'ui-inventory.status' })} name="status.name" id="additem_status" component={TextField} disabled fullWidth />
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.loanTypeTemporary' })}
-                  name="temporaryLoanType.id"
-                  id="additem_loanTypeTemp"
-                  component={Select}
-                  fullWidth
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
-                />
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.enumeration' })}
-                  name="enumeration"
-                  id="additem_enumeration"
-                  component={TextField}
-                  fullWidth
-                />
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.chronology' })}
-                  name="chronology"
-                  id="additem_chronology"
-                  component={TextField}
-                  fullWidth
-                />
-                <Field
-                  label={formatMsg({ id: 'ui-inventory.numberOfPieces' })}
-                  name="numberOfPieces"
-                  id="additem_numberofpieces"
-                  component={TextField}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={8} smOffset={1}>
-                <FieldArray name="notes" component={renderNotes} formatMsg={formatMsg} />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={8} smOffset={1}>
-                <FieldArray name="pieceIdentifiers" component={renderPieceIdentifiers} formatMsg={formatMsg} />
-              </Col>
-            </Row>
-
+            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
+            <Accordion
+              open={this.state.accordions.administrativeAccordion}
+              id="administrativeAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.administrativeData' })}
+            />
+            <Accordion
+              open={this.state.accordions.itemAccordion}
+              id="itemAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.itemData' })}
+            />
+            <Accordion
+              open={this.state.accordions.enumerationAccordion}
+              id="enumerationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.enumerationData' })}
+            />
+            <Accordion
+              open={this.state.accordions.conditionsAccordion}
+              id="notesAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.conditions' })}
+            />
+            <Accordion
+              open={this.state.accordions.notesAccordion}
+              id="itemAvailabilityAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={intl.formatMessage({ id: 'ui-inventory.notes' })}
+            />
+            <Accordion
+              open={this.state.accordions.loanDataAccordion}
+              id="locationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.item.availability' })}
+            />
+            <Accordion
+              open={this.state.accordions.acquisitionsAccordion}
+              id="notesAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.acquisitions' })}
+            />
+            <Accordion
+              open={this.state.accordions.locationAccordion}
+              id="locationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.location' })}
+            />
+            <Accordion
+              open={this.state.accordions.electronicAccordion}
+              id="locationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+            />
             <ConfirmationModal
               id="confirmPermanentLocationModal"
               open={confirmPermanentLocation}
