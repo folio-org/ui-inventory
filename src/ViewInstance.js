@@ -61,16 +61,17 @@ class ViewInstance extends React.Component {
 
     this.state = {
       accordions: {
-        instanceAccordion: true,
-        titleAccordion: true,
-        descriptiveAccordion: true,
-        notesAccordion: true,
-        identifiersAccordion: true,
-        classificationAccordion: true,
-        electronicAccessAccordion: true,
-        contributorsAccordion: true,
-        subjectsAccordion: true,
-        analyticsAccordion: true,
+        acc01: true,
+        acc02: true,
+        acc03: true,
+        acc04: true,
+        acc05: true,
+        acc06: true,
+        acc07: true,
+        acc08: true,
+        acc09: true,
+        acc10: true,
+        acc11: true,
       },
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -325,8 +326,8 @@ class ViewInstance extends React.Component {
             {instance.title}
           </Headline>
           <Accordion
-            open={this.state.accordions.instanceAccordion}
-            id="instanceAccordion"
+            open={this.state.accordions.acc01}
+            id="acc01"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.instanceData' })}
           >
@@ -384,8 +385,8 @@ class ViewInstance extends React.Component {
             </Row>
           </Accordion>
           <Accordion
-            open={this.state.accordions.titleAccordion}
-            id="titleAccordion"
+            open={this.state.accordions.acc02}
+            id="acc02"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.titleData' })}
           >
@@ -415,8 +416,8 @@ class ViewInstance extends React.Component {
             </Row>
           </Accordion>
           <Accordion
-            open={this.state.accordions.identifiersAccordion}
-            id="identifiersAccordion"
+            open={this.state.accordions.acc03}
+            id="acc03"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.identifiers' })}
           >
@@ -433,8 +434,8 @@ class ViewInstance extends React.Component {
         }
           </Accordion>
           <Accordion
-            open={this.state.accordions.contributorsAccordion}
-            id="contributorsAccordion"
+            open={this.state.accordions.acc04}
+            id="acc04"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.contributors' })}
           >
@@ -450,8 +451,8 @@ class ViewInstance extends React.Component {
           }
           </Accordion>
           <Accordion
-            open={this.state.accordions.descriptiveAccordion}
-            id="descriptiveAccordion"
+            open={this.state.accordions.acc05}
+            id="acc05"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
           >
@@ -527,8 +528,8 @@ class ViewInstance extends React.Component {
             </Row>
           </Accordion>
           <Accordion
-            open={this.state.accordions.notesAccordion}
-            id="notesAccordion"
+            open={this.state.accordions.acc06}
+            id="acc06"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.notes' })}
           >
@@ -541,8 +542,8 @@ class ViewInstance extends React.Component {
           }
           </Accordion>
           <Accordion
-            open={this.state.accordions.electronicAccessAccordion}
-            id="electronicAccessAccordion"
+            open={this.state.accordions.acc07}
+            id="acc07"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
           >
@@ -558,8 +559,8 @@ class ViewInstance extends React.Component {
           }
           </Accordion>
           <Accordion
-            open={this.state.accordions.subjectsAccordion}
-            id="subjectsAccordion"
+            open={this.state.accordions.acc08}
+            id="acc08"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.subjects' })}
           >
@@ -572,8 +573,8 @@ class ViewInstance extends React.Component {
           }
           </Accordion>
           <Accordion
-            open={this.state.accordions.classificationAccordion}
-            id="classificationAccordion"
+            open={this.state.accordions.acc09}
+            id="acc09"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.classification' })}
           >
@@ -589,6 +590,28 @@ class ViewInstance extends React.Component {
             />
           }
           </Accordion>
+          <Accordion
+            open={this.state.accordions.acc10}
+            id="acc10"
+            onToggle={this.handleAccordionToggle}
+            label={formatMsg({ id: 'ui-inventory.instanceRelationshipsAnalyticsBoundWith' })}
+          >
+            { (instance.childInstances.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+              </Col>
+            </Row>
+          }
+            { (instance.parentInstances.length > 0) &&
+            <Row>
+              <Col xs={12}>
+                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+              </Col>
+            </Row>
+          }
+          </Accordion>
+
           { (!holdingsrecordid && !itemid) ?
             <Switch>
               <Route
@@ -659,26 +682,11 @@ class ViewInstance extends React.Component {
             />
           </Layer>
           <Accordion
-            open={this.state.accordions.analyticsAccordion}
-            id="analyticsAccordion"
+            open={this.state.accordions.acc11}
+            id="acc11"
             onToggle={this.handleAccordionToggle}
             label={formatMsg({ id: 'ui-inventory.relatedInstances' })}
-          >
-            { (instance.childInstances.length > 0) &&
-            <Row>
-              <Col xs={12}>
-                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
-              </Col>
-            </Row>
-          }
-            { (instance.parentInstances.length > 0) &&
-            <Row>
-              <Col xs={12}>
-                <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
-              </Col>
-            </Row>
-          }
-          </Accordion>
+          />
         </Pane>
       </div>
     ) : null;
