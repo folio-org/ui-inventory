@@ -39,6 +39,7 @@
   "classifications": "Classifications",
   "addClassifications": "+ Add classification",
   "selectClassification": "Select classification type",
+  "instanceRelationshipsAnalyticsBoundWith": "Instance relationships (analytics and bound-with)",
   "number": "Number",
   "type": "Type",
   "contributors": "Contributors",
