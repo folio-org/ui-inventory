@@ -70,6 +70,7 @@ class InventorySettings extends React.Component {
             route: 'URLrelationship',
             label: formatMessage({ id: 'ui-inventory.URLrelationship' }),
             component: URLRelationshipSettings,
+            perm: 'ui-inventory.settings.electronic-access-relationships',
           },
         ]
       }
