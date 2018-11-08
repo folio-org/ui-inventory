@@ -7,6 +7,7 @@ import FormatsSettings from './FormatsSettings';
 import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
+import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 
 class InventorySettings extends React.Component {
   static propTypes = {
@@ -37,6 +38,12 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.formats' }),
             component: FormatsSettings,
             perm: 'ui-inventory.settings.instance-formats',
+          },
+          {
+            route: 'instanceStatusTypes',
+            label: formatMessage({ id: 'ui-inventory.instanceStatusTypes' }),
+            component: InstanceStatusTypesSettings,
+            perm: 'ui-inventory.settings.instance-statuses',
           },
           {
             route: 'resourcetypes',

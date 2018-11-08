@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -135,6 +135,19 @@
           "inventory-storage.electronic-access-relationships.item.get",
           "inventory-storage.electronic-access-relationships.item.post",
           "inventory-storage.electronic-access-relationships.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-statuses",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
+        "subPermissions": [
+          "inventory-storage.instance-statuses.collection.get",
+          "inventory-storage.instance-statuses.item.delete",
+          "inventory-storage.instance-statuses.item.get",
+          "inventory-storage.instance-statuses.item.post",
+          "inventory-storage.instance-statuses.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
