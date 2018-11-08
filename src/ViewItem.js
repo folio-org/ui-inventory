@@ -292,13 +292,13 @@ class ViewItem extends React.Component {
             dismissible
             onClose={this.props.onCloseViewItem}
             actionMenuItems={[{
-              label: formatMsg({ id: 'ui-inventory.editItem' }),
+              label: formatMsg({ id: 'ui-inventory.edit' }),
               href: this.craftLayerUrl('editItem'),
               onClick: this.onClickEditItem,
             }, {
               id: 'clickable-copy-item',
               onClick: () => this.onCopy(item),
-              label: formatMsg({ id: 'ui-inventory.copyItem' })
+              label: formatMsg({ id: 'ui-inventory.duplicate' })
             }]}
           >
             <Row center="xs">

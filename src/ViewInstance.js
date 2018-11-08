@@ -281,13 +281,13 @@ class ViewInstance extends React.Component {
           dismissible
           onClose={this.props.onClose}
           actionMenuItems={[{
-            label: formatMsg({ id: 'ui-inventory.editInstance' }),
+            label: formatMsg({ id: 'ui-inventory.edit' }),
             href: this.craftLayerUrl('edit'),
             onClick: this.onClickEditInstance,
           }, {
             id: 'clickable-copy-instance',
             onClick: () => onCopy(instance),
-            label: formatMsg({ id: 'ui-inventory.copyInstance' })
+            label: formatMsg({ id: 'ui-inventory.duplicate' })
           }]}
         >
           <TitleManager record={instance.title} />

@@ -209,13 +209,13 @@ class ViewHoldingsRecord extends React.Component {
             dismissible
             onClose={this.props.onCloseViewHoldingsRecord}
             actionMenuItems={[{
-              label: formatMsg({ id: 'ui-inventory.editHoldings' }),
+              label: formatMsg({ id: 'ui-inventory.edit' }),
               href: this.craftLayerUrl('editHoldingsRecord'),
               onClick: this.onClickEditHoldingsRecord,
             }, {
               id: 'clickable-copy-holdingsrecord',
               onClick: () => this.onCopy(holdingsRecord),
-              label: formatMsg({ id: 'ui-inventory.copyHolding' })
+              label: formatMsg({ id: 'ui-inventory.duplicate' })
             }]}
           >
             <Row center="xs">
