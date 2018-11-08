@@ -249,7 +249,5 @@
   "itemCallNumber": "Item call number",
   "otherRelatedInstances": "Other related instances",
   "relatedInstances": "Related instances",
-  "copyItem": "Copy item",
-  "edit": "Edit",
-  "duplicate": "Duplicate"
+  "copyItem": "Copy item"
 }
