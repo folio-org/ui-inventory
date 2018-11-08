@@ -127,6 +127,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.electronic-access-relationships",
+        "displayName": "Settings (Inventory): Can create, edit and remove URL relationships",
+        "subPermissions": [
+          "inventory-storage.electronic-access-relationships.collection.get",
+          "inventory-storage.electronic-access-relationships.item.delete",
+          "inventory-storage.electronic-access-relationships.item.get",
+          "inventory-storage.electronic-access-relationships.item.post",
+          "inventory-storage.electronic-access-relationships.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-statuses",
         "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
         "subPermissions": [

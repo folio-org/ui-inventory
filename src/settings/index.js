@@ -6,6 +6,7 @@ import LoanTypesSettings from './LoanTypesSettings';
 import FormatsSettings from './FormatsSettings';
 import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
+import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 
 class InventorySettings extends React.Component {
@@ -66,6 +67,17 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.materialTypes' }),
             component: MaterialTypesSettings,
             perm: 'ui-inventory.settings.materialtypes',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.instanceHoldingsItem' }),
+        pages: [
+          {
+            route: 'URLrelationship',
+            label: formatMessage({ id: 'ui-inventory.URLrelationship' }),
+            component: URLRelationshipSettings,
+            perm: 'ui-inventory.settings.electronic-access-relationships',
           },
         ]
       }
