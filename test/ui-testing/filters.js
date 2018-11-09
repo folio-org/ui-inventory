@@ -24,12 +24,9 @@ module.exports.test = function uiTest(uiTestCtx) {
       });
       it('should find hit count with no filters applied', (done) => {
         nightmare
-          .wait('p[title*="records found"]:not([title^="0 "]')
-          .wait(1111)
+          .wait('#list-inventory')
           .evaluate(() => {
-            let count = document.querySelector('p[title*="records found"]').title;
-            count = count.replace(/^(\d+).+/, '$1');
-            return count;
+            return document.querySelector('#list-inventory').getAttribute('data-total-count');
           })
           .then((result) => {
             done();
@@ -46,10 +43,9 @@ module.exports.test = function uiTest(uiTestCtx) {
             .click('#clickable-reset-all')
             .wait(`#clickable-filter-${filter}`)
             .click(`#clickable-filter-${filter}`)
-            .wait('#clickable-reset-all')
-            .wait(`p[title*="record"]:not([title^="${hitCount} "]`)
-            .click(`#clickable-filter-${filter}`)
-            .wait(`p[title="${hitCount} records found"]`)
+            .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
+            .click('#clickable-reset-all')
+            .wait(`#list-inventory[data-total-count^="${hitCount}"]`)
             .then(done)
             .catch(done);
         });
