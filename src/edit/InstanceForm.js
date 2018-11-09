@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
 import cloneDeep from 'lodash/cloneDeep';
+import { FormattedMessage } from 'react-intl';
+
+import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
   Paneset,
@@ -15,10 +19,7 @@ import {
   Headline,
   Datepicker,
 } from '@folio/stripes/components';
-
-import { Field } from 'redux-form';
 import stripesForm from '@folio/stripes/form';
-import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -167,6 +168,13 @@ class InstanceForm extends React.Component {
 
     this.onToggleSection = this.onToggleSection.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
+    this.paneHeaderDropdownItems = [
+      {
+        id: 'cancel-instance-edition',
+        label: <FormattedMessage id="ui-inventory.cancel" />,
+        onClick: props.onCancel,
+      }
+    ];
   }
 
   onToggleSection({ id }) {
@@ -175,6 +183,20 @@ class InstanceForm extends React.Component {
       newState.sections[id] = !curState.sections[id];
       return newState;
     });
+  }
+
+  getPaneTitle() {
+    const {
+      initialValues,
+    } = this.props;
+
+    const titleTranslationKey = initialValues.id ? 'ui-inventory.editInstance' : 'ui-inventory.newInstance';
+
+    return (
+      <span data-test-header-title>
+        <FormattedMessage id={titleTranslationKey} />
+      </span>
+    );
   }
 
   render() {
@@ -229,6 +251,7 @@ class InstanceForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     const editInstanceLastMenu = (
       <PaneMenu>
         <Button
@@ -244,15 +267,17 @@ class InstanceForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     return (
-      <form>
+      <form data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
             lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu}
-            paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}
+            paneTitle={this.getPaneTitle()}
+            actionMenuItems={this.paneHeaderDropdownItems}
           >
             <div>
               <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>

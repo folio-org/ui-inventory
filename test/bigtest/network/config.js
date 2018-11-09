@@ -132,4 +132,24 @@ export default function configure() {
   this.get('/addresstypes', {});
   this.get('/users/:id', {});
   this.get('/perms/users/:id/permissions', {});
+
+  this.get('/holdings-types', {
+    holdingsTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/holdings-note-types', {
+    holdingsNoteTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/ill-policies', {
+    illPolicies: [],
+    totalRecords: 0
+  });
+
+  this.get('/call-number-types', {
+    callNumberTypes: [],
+    totalRecords: 0
+  });
 }
