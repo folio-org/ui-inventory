@@ -378,6 +378,21 @@ class ViewHoldingsRecord extends React.Component {
                   containerRef={(ref) => { this.resultsList = ref; }}
                 />
               }
+              <Row>
+                <Col sm={3} />
+                <Col sm={3}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}
+                    value={_.get(holdingsRecord, ['digitizationPolicy'], '')}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.retentionPolicy' })}
+                    value={_.get(holdingsRecord, ['retentionPolicy'], '')}
+                  />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion04}
@@ -438,10 +453,16 @@ class ViewHoldingsRecord extends React.Component {
               </Row>
               <Row>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })} value={_.get(holdingsRecord, ['acquisitionMethod'], '')} />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })}
+                    value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
+                  />
                 </Col>
                 <Col sm={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })} value={_.get(holdingsRecord, ['acquisitionFormat'], '')} />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
+                    value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
+                  />
                 </Col>
               </Row>
               <Row>

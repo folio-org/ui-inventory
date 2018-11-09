@@ -165,6 +165,8 @@
   "addHoldingsStatementForSupplements": "+ Add holdings statement for supplements",
   "holdingsStatementForSupplementsNote": "Holdings statement for supplements note",
   "holdingsStatementsForSupplementsNote": "Holdings statements for supplements notes",
+  "digitizationPolicy": "Digitization policy",
+  "retentionPolicy": "Retention policy",
   "removeStatement": "Remove statement {num}",
   "deleteStatement": "Delete statement",
   "noteType": "Note type",
