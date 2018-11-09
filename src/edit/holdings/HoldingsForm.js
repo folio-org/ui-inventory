@@ -431,8 +431,7 @@ class HoldingsForm extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm={3}>
-                </Col>
+                <Col sm={3} />
                 <Col sm={3}>
                   <Field
                     label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}

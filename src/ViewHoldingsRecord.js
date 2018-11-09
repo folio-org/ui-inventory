@@ -379,8 +379,7 @@ class ViewHoldingsRecord extends React.Component {
                 />
               }
               <Row>
-                <Col sm={3}>
-                </Col>
+                <Col sm={3} />
                 <Col sm={3}>
                   <KeyValue
                     label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}
