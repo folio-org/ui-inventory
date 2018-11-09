@@ -29,7 +29,8 @@ class URLRelationshipSettings extends React.Component {
         labelSingular={formatMessage({ id: 'ui-inventory.urlRelationshipTerm' })}
         objectLabel={formatMessage({ id: 'ui-inventory.URLrelationship' })}
         visibleFields={['name', 'source']}
-        itemTemplate={{ source: 'folio' }}
+        readOnlyFields={['source']}
+        itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="electronicAccessRelationships"
