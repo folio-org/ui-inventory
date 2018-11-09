@@ -430,6 +430,26 @@ class HoldingsForm extends React.Component {
                   <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
                 </Col>
               </Row>
+              <Row>
+                <Col sm={3}>
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}
+                    name="digitizationPolicy"
+                    id="edit_digitizationpolicy"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.retentionPolicy' })}
+                    name="retentionPolicy"
+                    id="edit_retentionpolicy"
+                    component={TextField}
+                  />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion04}
