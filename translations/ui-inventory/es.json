@@ -246,5 +246,16 @@
     "addFormerHoldingsId": "+ Add former holdings ID",
     "addHoldingsStatement": "+ Add holdings statement",
     "addHoldingsStatementForIndexes": "+ Add holdings statement for indexes",
-    "addHoldingsStatementForSupplements": "+ Add holdings statement for supplements"
+    "addHoldingsStatementForSupplements": "+ Add holdings statement for supplements",
+    "relatedInstances": "Related instances",
+    "instanceRelationshipsAnalyticsBoundWith": "Instance relationships (analytics and bound-with)",
+    "instanceStatusTypes": "Instance status types",
+    "instanceStatusType": "Instance status type",
+    "instanceHoldingsItem": "Instances, Holdings, Items",
+    "URLrelationship": "URL Relationship",
+    "urlRelationshipTerm": "URL Relationship term",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "digitizationPolicy": "Digitization policy",
+    "retentionPolicy": "Retention policy"
 }
