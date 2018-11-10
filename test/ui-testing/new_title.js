@@ -94,13 +94,12 @@ module.exports.test = function uiTest(uiTestCtx) {
       it('should find new title in list ', (done) => {
         nightmare
           .wait('#list-inventory')
-          // .xclick('//div[@role="presentation"][.="title"]')
-          .wait(3000)
-          .evaluate((titl) => {
-            const sel = `#list-inventory div[role="listitem"]:nth-child(1) > a > div[title="${titl}"]`;
-            const ti = document.querySelector(sel);
-            if (ti === null) {
-              throw new Error(`Can't find newly created title (${titl}) at top of sorted list with selector: ${sel}`);
+          .evaluate((name) => {
+            const node = Array.from(
+              document.querySelectorAll('#list-inventory div[role="listitem"]:nth-child(1) > a > div')
+            ).find(e => e.textContent === name);
+            if (!node) {
+              throw new Error(`Can't find newly created title (${name}) at top of sorted list`);
             }
           }, title)
           .then(() => { done(); })
