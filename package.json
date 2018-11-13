@@ -106,6 +106,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.statistical-code-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove statistical code types",
+        "subPermissions": [
+          "inventory-storage.statistical-code-types.collection.get",
+          "inventory-storage.statistical-code-types.item.delete",
+          "inventory-storage.statistical-code-types.item.get",
+          "inventory-storage.statistical-code-types.item.post",
+          "inventory-storage.statistical-code-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "settings.inventory.enabled",
         "displayName": "Settings (Inventory): display list of settings pages",
         "subPermissions": [

@@ -61,6 +61,8 @@
   "permanent": "Permanent",
   "temporary": "Temporary",
   "selectPermanenLocation": "Select permanent location",
+  "statisticalCodeTypes": "Statistical code types",
+  "statisticalCodeType": "Statistical code type",
   "selectTemporaryLocation": "Select temporary location",
   "selectLocation": "Select location",
   "inheritFromHoldings": "Inherit from holdings",
