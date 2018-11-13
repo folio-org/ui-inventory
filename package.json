@@ -180,7 +180,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.call-number-types",
-        "displayName": "Settings (Inventory): Can create, edit and remove contributor types",
+        "displayName": "Settings (Inventory): Can create, edit and remove call number types",
         "subPermissions": [
           "inventory-storage.call-number-types.collection.get",
           "inventory-storage.call-number-types.item.delete",
