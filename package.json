@@ -179,6 +179,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.ill-policies",
+        "displayName": "Settings (Inventory): Can create, edit and remove resource types",
+        "subPermissions": [
+          "inventory-storage.ill-policies.collection.get",
+          "inventory-storage.ill-policies.item.delete",
+          "inventory-storage.ill-policies.item.get",
+          "inventory-storage.ill-policies.item.post",
+          "inventory-storage.ill-policies.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.contributor-types",
         "displayName": "Settings (Inventory): Can create, edit and remove contributor types",
         "subPermissions": [
