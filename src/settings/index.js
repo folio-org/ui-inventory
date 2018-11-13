@@ -63,12 +63,6 @@ class InventorySettings extends React.Component {
             component: HoldingsTypeSettings,
             perm: 'ui-inventory.settings.holdings-types',
           },
-          // {
-          //   route: 'materialtypes',
-          //   label: formatMessage({ id: 'ui-inventory.ILLPolicy' }),
-          //   component: MaterialTypesSettings,
-          //   perm: 'ui-inventory.settings.materialtypes',
-          // },
         ]
       },
       {
