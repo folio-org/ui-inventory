@@ -140,6 +140,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.holdings-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove holdings types",
+        "subPermissions": [
+          "inventory-storage.holdings-types.collection.get",
+          "inventory-storage.holdings-types.item.delete",
+          "inventory-storage.holdings-types.item.get",
+          "inventory-storage.holdings-types.item.post",
+          "inventory-storage.holdings-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-statuses",
         "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
         "subPermissions": [

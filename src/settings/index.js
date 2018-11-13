@@ -8,6 +8,7 @@ import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
+import HoldingsTypeSettings from './HoldingsTypeSettings';
 
 class InventorySettings extends React.Component {
   static propTypes = {
@@ -51,6 +52,23 @@ class InventorySettings extends React.Component {
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
           },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.holdings' }),
+        pages: [
+          {
+            route: 'holdingsTypes',
+            label: formatMessage({ id: 'ui-inventory.holdingsTypes' }),
+            component: HoldingsTypeSettings,
+            perm: 'ui-inventory.settings.holdings-types',
+          },
+          // {
+          //   route: 'materialtypes',
+          //   label: formatMessage({ id: 'ui-inventory.ILLPolicy' }),
+          //   component: MaterialTypesSettings,
+          //   perm: 'ui-inventory.settings.materialtypes',
+          // },
         ]
       },
       {
