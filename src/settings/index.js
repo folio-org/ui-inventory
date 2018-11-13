@@ -9,6 +9,7 @@ import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 import HoldingsTypeSettings from './HoldingsTypeSettings';
+import ILLPolicy from './ILLPolicy';
 
 class InventorySettings extends React.Component {
   static propTypes = {
@@ -62,6 +63,12 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.holdingsTypes' }),
             component: HoldingsTypeSettings,
             perm: 'ui-inventory.settings.holdings-types',
+          },
+          {
+            route: 'ILLPolicy',
+            label: formatMessage({ id: 'ui-inventory.ILLPolicy' }),
+            component: ILLPolicy,
+            perm: 'ui-inventory.settings.ill-policies',
           },
         ]
       },
