@@ -167,7 +167,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.instance-types",
-        "displayName": "Settings (Inventory): Can create, edit and remove resource types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance types",
         "subPermissions": [
           "inventory-storage.instance-types.collection.get",
           "inventory-storage.instance-types.item.delete",
@@ -180,7 +180,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.ill-policies",
-        "displayName": "Settings (Inventory): Can create, edit and remove resource types",
+        "displayName": "Settings (Inventory): Can create, edit and remove ill policies",
         "subPermissions": [
           "inventory-storage.ill-policies.collection.get",
           "inventory-storage.ill-policies.item.delete",

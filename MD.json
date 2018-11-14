@@ -1,0 +1,146 @@
+{
+  "id": "folio_inventory-1.4.2",
+  "name": "Inventory manager",
+  "permissionSets": [
+    {
+      "permissionName": "module.inventory.enabled",
+      "displayName": "UI: Inventory module is enabled"
+    },
+    {
+      "permissionName": "ui-inventory.all-permissions.TEMPORARY",
+      "displayName": "Inventory: <temporary> all perms including UI",
+      "description": "Some subperms to support enabling/using the Inventory app",
+      "subPermissions": [
+        "module.inventory.enabled",
+        "inventory-storage.all",
+        "inventory.all"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.materialtypes",
+      "displayName": "Settings (Inventory): Can create, edit and remove material types",
+      "subPermissions": [
+        "inventory-storage.material-types.collection.get",
+        "inventory-storage.material-types.item.delete",
+        "inventory-storage.material-types.item.get",
+        "inventory-storage.material-types.item.post",
+        "inventory-storage.material-types.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.loantypes",
+      "displayName": "Settings (Inventory): Can create, edit and remove loan types",
+      "subPermissions": [
+        "inventory-storage.loan-types.collection.get",
+        "inventory-storage.loan-types.item.delete",
+        "inventory-storage.loan-types.item.get",
+        "inventory-storage.loan-types.item.post",
+        "inventory-storage.loan-types.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "settings.inventory.enabled",
+      "displayName": "Settings (Inventory): display list of settings pages",
+      "subPermissions": [
+        "settings.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.instance-formats",
+      "displayName": "Settings (Inventory): Can create, edit and remove formats",
+      "subPermissions": [
+        "inventory-storage.instance-formats.collection.get",
+        "inventory-storage.instance-formats.item.delete",
+        "inventory-storage.instance-formats.item.get",
+        "inventory-storage.instance-formats.item.post",
+        "inventory-storage.instance-formats.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.electronic-access-relationships",
+      "displayName": "Settings (Inventory): Can create, edit and remove URL relationships",
+      "subPermissions": [
+        "inventory-storage.electronic-access-relationships.collection.get",
+        "inventory-storage.electronic-access-relationships.item.delete",
+        "inventory-storage.electronic-access-relationships.item.get",
+        "inventory-storage.electronic-access-relationships.item.post",
+        "inventory-storage.electronic-access-relationships.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.holdings-types",
+      "displayName": "Settings (Inventory): Can create, edit and remove holdings types",
+      "subPermissions": [
+        "inventory-storage.holdings-types.collection.get",
+        "inventory-storage.holdings-types.item.delete",
+        "inventory-storage.holdings-types.item.get",
+        "inventory-storage.holdings-types.item.post",
+        "inventory-storage.holdings-types.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.instance-statuses",
+      "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
+      "subPermissions": [
+        "inventory-storage.instance-statuses.collection.get",
+        "inventory-storage.instance-statuses.item.delete",
+        "inventory-storage.instance-statuses.item.get",
+        "inventory-storage.instance-statuses.item.post",
+        "inventory-storage.instance-statuses.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.instance-types",
+      "displayName": "Settings (Inventory): Can create, edit and remove instance types",
+      "subPermissions": [
+        "inventory-storage.instance-types.collection.get",
+        "inventory-storage.instance-types.item.delete",
+        "inventory-storage.instance-types.item.get",
+        "inventory-storage.instance-types.item.post",
+        "inventory-storage.instance-types.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.ill-policies",
+      "displayName": "Settings (Inventory): Can create, edit and remove ill policies",
+      "subPermissions": [
+        "inventory-storage.ill-policies.collection.get",
+        "inventory-storage.ill-policies.item.delete",
+        "inventory-storage.ill-policies.item.get",
+        "inventory-storage.ill-policies.item.post",
+        "inventory-storage.ill-policies.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    },
+    {
+      "permissionName": "ui-inventory.settings.contributor-types",
+      "displayName": "Settings (Inventory): Can create, edit and remove contributor types",
+      "subPermissions": [
+        "inventory-storage.contributor-types.collection.get",
+        "inventory-storage.contributor-types.item.delete",
+        "inventory-storage.contributor-types.item.get",
+        "inventory-storage.contributor-types.item.post",
+        "inventory-storage.contributor-types.item.put",
+        "settings.inventory.enabled"
+      ],
+      "visible": true
+    }
+  ]
+}
