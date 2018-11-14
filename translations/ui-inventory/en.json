@@ -138,6 +138,8 @@
   "loanType": "Loan type",
   "loans": "Loans",
   "materialTypes": "Material types",
+  "alternativeTitleTypes": "Alternative Title Types",
+  "alternativeTitleType": "Alternative Title Type",
   "materialType": "Material type",
   "holdingsHeader": "Holdings: {location} > {callNumber}",
   "holdingsDetails": "Holdings details",
