@@ -8,6 +8,7 @@ import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
+import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 
@@ -92,6 +93,17 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.URLrelationship' }),
             component: URLRelationshipSettings,
             perm: 'ui-inventory.settings.electronic-access-relationships',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.holdingsItems' }),
+        pages: [
+          {
+            route: 'callNumberTypes',
+            label: formatMessage({ id: 'ui-inventory.callNumberTypes' }),
+            component: CallNumberTypes,
+            perm: 'ui-inventory.settings.call-number-types',
           },
         ]
       }

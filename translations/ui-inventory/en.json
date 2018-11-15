@@ -135,6 +135,8 @@
   "addUrl": "+ Add URL",
   "items": "Items",
   "instanceHoldingsItem": "Instances, Holdings, Items",
+  "callNumberTypes": "Call number types",
+  "holdingsItems": "Holdings, Items",
   "addNewItemDialog": "Add new item dialog",
   "loanTypes": "Loan types",
   "loanType": "Loan type",
