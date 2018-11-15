@@ -153,6 +153,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.holdings-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove holdings types",
+        "subPermissions": [
+          "inventory-storage.holdings-types.collection.get",
+          "inventory-storage.holdings-types.item.delete",
+          "inventory-storage.holdings-types.item.get",
+          "inventory-storage.holdings-types.item.post",
+          "inventory-storage.holdings-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-statuses",
         "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
         "subPermissions": [
@@ -180,13 +193,26 @@
       },
       {
         "permissionName": "ui-inventory.settings.instance-types",
-        "displayName": "Settings (Inventory): Can create, edit and remove resource types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance types",
         "subPermissions": [
           "inventory-storage.instance-types.collection.get",
           "inventory-storage.instance-types.item.delete",
           "inventory-storage.instance-types.item.get",
           "inventory-storage.instance-types.item.post",
           "inventory-storage.instance-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.ill-policies",
+        "displayName": "Settings (Inventory): Can create, edit and remove ill policies",
+        "subPermissions": [
+          "inventory-storage.ill-policies.collection.get",
+          "inventory-storage.ill-policies.item.delete",
+          "inventory-storage.ill-policies.item.get",
+          "inventory-storage.ill-policies.item.post",
+          "inventory-storage.ill-policies.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true

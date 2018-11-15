@@ -8,6 +8,8 @@ import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
+import HoldingsTypeSettings from './HoldingsTypeSettings';
+import ILLPolicy from './ILLPolicy';
 import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
@@ -59,6 +61,23 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.resourceTypes' }),
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.holdings' }),
+        pages: [
+          {
+            route: 'holdingsTypes',
+            label: formatMessage({ id: 'ui-inventory.holdingsTypes' }),
+            component: HoldingsTypeSettings,
+            perm: 'ui-inventory.settings.holdings-types',
+          },
+          {
+            route: 'ILLPolicy',
+            label: formatMessage({ id: 'ui-inventory.ILLPolicy' }),
+            component: ILLPolicy,
+            perm: 'ui-inventory.settings.ill-policies',
           },
         ]
       },
