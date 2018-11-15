@@ -106,6 +106,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.statistical-code-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove statistical code types",
+        "subPermissions": [
+          "inventory-storage.statistical-code-types.collection.get",
+          "inventory-storage.statistical-code-types.item.delete",
+          "inventory-storage.statistical-code-types.item.get",
+          "inventory-storage.statistical-code-types.item.post",
+          "inventory-storage.statistical-code-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "settings.inventory.enabled",
         "displayName": "Settings (Inventory): display list of settings pages",
         "subPermissions": [
@@ -166,6 +179,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.alternative-title-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove alternative title types",
+        "subPermissions": [
+          "inventory-storage.alternative-title-types.collection.get",
+          "inventory-storage.alternative-title-types.item.delete",
+          "inventory-storage.alternative-title-types.item.get",
+          "inventory-storage.alternative-title-types.item.post",
+          "inventory-storage.alternative-title-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-types",
         "displayName": "Settings (Inventory): Can create, edit and remove instance types",
         "subPermissions": [
@@ -200,6 +226,19 @@
           "inventory-storage.contributor-types.item.get",
           "inventory-storage.contributor-types.item.post",
           "inventory-storage.contributor-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.call-number-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove call number types",
+        "subPermissions": [
+          "inventory-storage.call-number-types.collection.get",
+          "inventory-storage.call-number-types.item.delete",
+          "inventory-storage.call-number-types.item.get",
+          "inventory-storage.call-number-types.item.post",
+          "inventory-storage.call-number-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
