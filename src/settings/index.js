@@ -8,6 +8,7 @@ import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
+import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 
 class InventorySettings extends React.Component {
@@ -80,6 +81,12 @@ class InventorySettings extends React.Component {
       {
         label: formatMessage({ id: 'ui-inventory.instanceHoldingsItem' }),
         pages: [
+          {
+            route: 'statisticalCodeTypes',
+            label: formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
+            component: StatisticalCodeTypes,
+            perm: 'ui-inventory.settings.statistical-code-types',
+          },
           {
             route: 'URLrelationship',
             label: formatMessage({ id: 'ui-inventory.URLrelationship' }),
