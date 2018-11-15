@@ -8,6 +8,7 @@ import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
+import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 
 class InventorySettings extends React.Component {
   static propTypes = {
@@ -27,6 +28,12 @@ class InventorySettings extends React.Component {
       {
         label: formatMessage({ id: 'ui-inventory.instances' }),
         pages: [
+          {
+            route: 'alternativeTitleTypes',
+            label: formatMessage({ id: 'ui-inventory.alternativeTitleTypes' }),
+            component: AlternativeTitleTypesSettings,
+            perm: 'ui-inventory.settings.alternative-title-types',
+          },
           {
             route: 'contributortypes',
             label: formatMessage({ id: 'ui-inventory.contributorTypes' }),

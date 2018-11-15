@@ -153,6 +153,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.alternative-title-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove alternative title types",
+        "subPermissions": [
+          "inventory-storage.alternative-title-types.collection.get",
+          "inventory-storage.alternative-title-types.item.delete",
+          "inventory-storage.alternative-title-types.item.get",
+          "inventory-storage.alternative-title-types.item.post",
+          "inventory-storage.alternative-title-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-types",
         "displayName": "Settings (Inventory): Can create, edit and remove resource types",
         "subPermissions": [
