@@ -211,6 +211,14 @@ class HoldingsForm extends React.Component {
       </PaneMenu>
     );
 
+    const holdingsNoteTypeOptions = referenceTables.holdingsNoteTypes ? referenceTables.holdingsNoteTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.holdingsNoteTypeId,
+      }),
+    ) : [];
+
     return (
       <form>
         <Paneset isRoot>
@@ -490,19 +498,10 @@ class HoldingsForm extends React.Component {
                     addLabel={formatMsg({ id: 'ui-inventory.addNote' })}
                     template={[
                       {
-                        name: 'type',
+                        name: 'holdingsNoteTypeId',
                         label: formatMsg({ id: 'ui-inventory.noteType' }),
                         component: Select,
-                        dataOptions: [
-                          { label: 'Select type', value: '' },
-                          { label: 'Action note', value: 'action note' },
-                          { label: 'Binding', value: 'binding' },
-                          { label: 'Copy note', value: 'copy note' },
-                          { label: 'Electronic bookplate', value: 'electronic bookplate' },
-                          { label: 'Note', value: 'note' },
-                          { label: 'Provenance', value: 'provenance' },
-                          { label: 'Reproduction', value: 'reproduction' },
-                        ],
+                        dataOptions: [{ label: 'Select type', value: '' }, ...holdingsNoteTypeOptions],
                       },
                       {
                         name: 'note',

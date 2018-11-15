@@ -44,7 +44,26 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'locations/%{temporaryLocationQuery.id}',
     },
-
+    illPolicies: {
+      type: 'okapi',
+      path: 'ill-policies',
+      records: 'illPolicies',
+    },
+    holdingsTypes: {
+      type: 'okapi',
+      path: 'holdings-types',
+      records: 'holdingsTypes',
+    },
+    callNumberTypes: {
+      type: 'okapi',
+      path: 'call-number-types',
+      records: 'callNumberTypes',
+    },
+    holdingsNoteTypes: {
+      type: 'okapi',
+      path: 'holdings-note-types',
+      records: 'holdingsNoteTypes',
+    },
     platforms: {
       type: 'okapi',
       path: 'platforms',
@@ -152,7 +171,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { location, resources: { holdingsRecords, instances1, platforms, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
+    const { location, resources: { holdingsRecords, instances1, platforms, illPolicies, holdingsTypes, callNumberTypes, holdingsNoteTypes, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) return <div>Awaiting resources</div>;
 
@@ -161,12 +180,20 @@ class ViewHoldingsRecord extends React.Component {
     if (!instances1 || !instances1.hasLoaded
         || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
         || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))
+        || !illPolicies || !illPolicies.hasLoaded
+        || !holdingsTypes || !holdingsTypes.hasLoaded
+        || !callNumberTypes || !callNumberTypes.hasLoaded
+        || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded
         || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
 
     const instance = instances1.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
 
+    referenceTables.illPolicies = illPolicies.records;
+    referenceTables.holdingsTypes = holdingsTypes.records;
+    referenceTables.callNumberTypes = callNumberTypes.records;
+    referenceTables.holdingsNoteTypes = holdingsNoteTypes.records;
     referenceTables.platforms = platforms.records;
 
     const query = location.search ? queryString.parse(location.search) : {};
@@ -276,6 +303,14 @@ class ViewHoldingsRecord extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.formerHoldingsId' })} value={_.get(holdingsRecord, ['formerIds'], []).map((hid, i) => <div key={i}>{hid}</div>)} />
                 </Col>
               </Row>
+              <Row>
+                <Col sm={4}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.holdingsType' })}
+                    value={this.refLookup(referenceTables.holdingsTypes, _.get(holdingsRecord, ['holdingsTypeId'])).name}
+                  />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion02}
@@ -317,7 +352,10 @@ class ViewHoldingsRecord extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumber' })} value={holdingsRecord.copyNumber} />
                 </Col>
                 <Col sm={2}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberType' })} value="not implemented" />
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.callNumberType' })}
+                    value={this.refLookup(referenceTables.callNumberTypes, _.get(holdingsRecord, ['callNumberTypeId'])).name}
+                  />
                 </Col>
                 <Col sm={2}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })} value={holdingsRecord.callNumberPrefix} />
@@ -379,7 +417,12 @@ class ViewHoldingsRecord extends React.Component {
                 />
               }
               <Row>
-                <Col sm={3} />
+                <Col sm={3}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.illPolicy' })}
+                    value={this.refLookup(referenceTables.illPolicies, _.get(holdingsRecord, ['illPolicyId'])).name}
+                  />
+                </Col>
                 <Col sm={3}>
                   <KeyValue
                     label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}
@@ -409,13 +452,13 @@ class ViewHoldingsRecord extends React.Component {
                 <Col sm={3}>
                   <KeyValue
                     label={formatMsg({ id: 'ui-inventory.publicNote' })}
-                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'note' && !note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'Note' && !note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
                   />
                 </Col>
                 <Col sm={3}>
                   <KeyValue
                     label={formatMsg({ id: 'ui-inventory.nonPublicNote' })}
-                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'note' && note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
+                    value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'Note' && note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
                   />
                 </Col>
                 <Col sm={3}>
@@ -565,6 +608,12 @@ ViewHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     temporaryLocation: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    illPolicies: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    holdingsTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     platforms: PropTypes.shape({
