@@ -180,7 +180,7 @@ class Instances extends React.Component {
       type: 'okapi',
       records: 'alternativeTitleTypes',
       path: 'alternative-title-types?limit=100&query=cql.allRecords=1 sortby name',
-    }
+    },
     locations: {
       type: 'okapi',
       records: 'locations',
