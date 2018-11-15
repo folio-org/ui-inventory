@@ -9,6 +9,8 @@ import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
+import StatisticalCodeTypes from './StatisticalCodeTypes';
+import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 
 class InventorySettings extends React.Component {
   static propTypes = {
@@ -28,6 +30,12 @@ class InventorySettings extends React.Component {
       {
         label: formatMessage({ id: 'ui-inventory.instances' }),
         pages: [
+          {
+            route: 'alternativeTitleTypes',
+            label: formatMessage({ id: 'ui-inventory.alternativeTitleTypes' }),
+            component: AlternativeTitleTypesSettings,
+            perm: 'ui-inventory.settings.alternative-title-types',
+          },
           {
             route: 'contributortypes',
             label: formatMessage({ id: 'ui-inventory.contributorTypes' }),
@@ -74,6 +82,12 @@ class InventorySettings extends React.Component {
       {
         label: formatMessage({ id: 'ui-inventory.instanceHoldingsItem' }),
         pages: [
+          {
+            route: 'statisticalCodeTypes',
+            label: formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
+            component: StatisticalCodeTypes,
+            perm: 'ui-inventory.settings.statistical-code-types',
+          },
           {
             route: 'URLrelationship',
             label: formatMessage({ id: 'ui-inventory.URLrelationship' }),
