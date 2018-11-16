@@ -271,7 +271,7 @@ class ViewInstance extends React.Component {
       </Button>
     );
 
-    return instance ? (
+    return (
       <div data-test-instance-details>
         <Pane
           defaultWidth={this.props.paneWidth}
@@ -689,7 +689,7 @@ class ViewInstance extends React.Component {
           />
         </Pane>
       </div>
-    ) : null;
+    );
   }
 }
 

@@ -1,1 +1,1 @@
-export { default } from './ConnectedInstance';
+export { default } from './makeConnectedInstance';

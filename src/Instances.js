@@ -227,7 +227,7 @@ class Instances extends React.Component {
   static getDerivedStateFromProps(props) {
     // resource types
     const rt = (props.resources.instanceTypes || {}).records || [];
-    if (rt && rt.length) {
+    if (rt.length) {
       const oldValuesLength = filterConfig[0].values.length;
       filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
@@ -238,7 +238,7 @@ class Instances extends React.Component {
 
     // locations
     const locations = (props.resources.locations || {}).records || [];
-    if (locations && locations.length) {
+    if (locations.length) {
       const oldValuesLength = filterConfig[2].values.length;
       filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
