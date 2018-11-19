@@ -50,6 +50,9 @@ export default function configure() {
   this.get('/statistical-code-types');
   this.get('/statistical-code-types/:id');
 
+  this.get('/statistical-codes');
+  this.get('/statistical-codes/:id');
+
 
   this.get('/inventory/instances', (schema /* , request */) => {
     return schema.instances.all();

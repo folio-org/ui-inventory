@@ -206,6 +206,11 @@ class Instances extends React.Component {
       records: 'statisticalCodeTypes',
       path: 'statistical-code-types?limit=100&query=cql.allRecords=1 sortby name',
     },
+    statisticalCodes: {
+      type: 'okapi',
+      records: 'statisticalCodes',
+      path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby name',
+    }
   });
 
   constructor(props) {
@@ -292,6 +297,7 @@ class Instances extends React.Component {
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
         || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
+        || !resources.statisticalCodes || ! resources.statisticalCodes.hasLoaded
     ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -305,6 +311,7 @@ class Instances extends React.Component {
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
+    const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
 
@@ -320,6 +327,7 @@ class Instances extends React.Component {
       modesOfIssuance,
       electronicAccessRelationships,
       statisticalCodeTypes,
+      statisticalCodes,
       locationsById,
     };
 
