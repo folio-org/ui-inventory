@@ -22,7 +22,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import renderNotes from './renderNotes';
-import renderPieceIdentifiers from './renderPieceIdentifiers';
+import PieceIdentifiers from './PieceIdentifiers';
 
 
 function validate(values) {
@@ -381,7 +381,7 @@ class ItemForm extends React.Component {
               >
                 <FieldArray
                   name="pieceIdentifiers"
-                  component={renderPieceIdentifiers}
+                  component={PieceIdentifiers}
                 />
               </Col>
             </Row>

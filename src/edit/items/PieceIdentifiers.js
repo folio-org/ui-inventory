@@ -4,8 +4,9 @@ import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col, Button, TextField } from '@folio/stripes/components';
 
-const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) => {
+const PieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) => {
   const handleAddIdentifier = () => fields.push();
+  const errorIsVisible = touched || submitFailed;
 
   return (
     <div>
@@ -22,7 +23,11 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
           >
             <FormattedMessage id="ui-inventory.addPieceIdentifier" />
           </Button>
-          {(touched || submitFailed) && error && <span>{error}</span>}
+          {errorIsVisible && error &&
+            <span>
+              {error}
+            </span>
+          }
         </Col>
       </Row>
       {fields.map((pieceIdentifier, index) => (
@@ -59,7 +64,7 @@ const renderPieceIdentifiers = ({ fields, meta: { touched, error, submitFailed }
   );
 };
 
-renderPieceIdentifiers.propTypes = {
+PieceIdentifiers.propTypes = {
   fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
@@ -72,7 +77,7 @@ renderPieceIdentifiers.propTypes = {
   }),
 };
 
-renderPieceIdentifiers.defaultProps = {
+PieceIdentifiers.defaultProps = {
   meta: {
     touched: false,
     error: '',
@@ -80,4 +85,4 @@ renderPieceIdentifiers.defaultProps = {
   },
 };
 
-export default renderPieceIdentifiers;
+export default PieceIdentifiers;

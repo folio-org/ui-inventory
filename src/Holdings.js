@@ -42,7 +42,7 @@ class Holdings extends React.Component {
     const isResourcesLoading = !holdings || !holdings.hasLoaded || !platforms || !platforms.hasLoaded;
 
     if (isResourcesLoading) {
-      return <div />;
+      return null;
     }
 
     const holdingsRecords = holdings.records;
