@@ -297,7 +297,7 @@ class Instances extends React.Component {
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
         || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
-        || !resources.statisticalCodes || ! resources.statisticalCodes.hasLoaded
+        || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
     ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
