@@ -176,6 +176,11 @@ class Instances extends React.Component {
       records: 'classificationTypes',
       path: 'classification-types?limit=100&query=cql.allRecords=1 sortby name',
     },
+    alternativeTitleTypes: {
+      type: 'okapi',
+      records: 'alternativeTitleTypes',
+      path: 'alternative-title-types?limit=100&query=cql.allRecords=1 sortby name',
+    },
     locations: {
       type: 'okapi',
       records: 'locations',
@@ -291,6 +296,7 @@ class Instances extends React.Component {
         || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
         || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
         || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
+        || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
         || !resources.locations || !resources.locations.hasLoaded
         || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
         || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
@@ -307,6 +313,7 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const alternativeTitleTypes = (resources.alternativeTitleTypes || emptyObj).records || emptyArr;
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
@@ -323,6 +330,7 @@ class Instances extends React.Component {
       classificationTypes,
       instanceTypes,
       instanceFormats,
+      alternativeTitleTypes,
       instanceStatuses,
       modesOfIssuance,
       electronicAccessRelationships,
