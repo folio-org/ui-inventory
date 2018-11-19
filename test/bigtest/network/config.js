@@ -55,6 +55,11 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.get('/alternative-title-types', {
+    alternativeTitleTypes: [],
+    totalRecords: 0
+  });
+
   this.get('/inventory/instances', (schema /* , request */) => {
     return schema.instances.all();
   });
