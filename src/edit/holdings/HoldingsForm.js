@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
 import {
   Paneset,
   Pane,
@@ -77,6 +78,13 @@ class HoldingsForm extends React.Component {
       },
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.paneHeaderDropdownItems = [
+      {
+        id: 'cancel-holdings-creation',
+        label: <FormattedMessage id="ui-inventory.cancel" />,
+        onClick: props.onCancel
+      }
+    ];
   }
 
   componentDidMount() {
@@ -195,6 +203,7 @@ class HoldingsForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     const editHoldingsLastMenu = (
       <PaneMenu>
         <Button
@@ -219,16 +228,21 @@ class HoldingsForm extends React.Component {
       }),
     ) : [];
 
+    const holdingsPageType = initialValues.id ? 'edit' : 'create';
+
     return (
-      <form>
+      <form data-test-holdings-page-type={holdingsPageType}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
-            lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu}
+            lastMenu={holdingsPageType === 'edit' ? editHoldingsLastMenu : addHoldingsLastMenu}
             paneTitle={
-              <div style={{ textAlign: 'center' }}>
+              <div
+                style={{ textAlign: 'center' }}
+                data-test-header-title
+              >
                 <strong>{instance.title}</strong>
                 {(instance.publication && instance.publication.length > 0) &&
                   <div>
@@ -240,6 +254,7 @@ class HoldingsForm extends React.Component {
                 }
               </div>
             }
+            actionMenuItems={this.paneHeaderDropdownItems}
           >
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row>

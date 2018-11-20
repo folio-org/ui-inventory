@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import queryString from 'query-string';
 
 import { TitleManager } from '@folio/stripes/core';
@@ -34,8 +35,6 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
-
-const emptyObj = {};
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -158,10 +157,20 @@ class ViewInstance extends React.Component {
   }
 
   render() {
-    const { okapi, match: { params: { id, holdingsrecordid, itemid } }, location, referenceTables, stripes, onCopy } = this.props;
-    const query = location.search ? queryString.parse(location.search) : emptyObj;
-    const formatMsg = this.props.stripes.intl.formatMessage;
-    const ci = makeConnectedInstance(this.props, this.props.stripes.logger);
+    const {
+      okapi,
+      match: { params: { id, holdingsrecordid, itemid } },
+      location,
+      referenceTables,
+      stripes,
+      onClose,
+      onCopy,
+      paneWidth,
+    } = this.props;
+
+    const query = location.search ? queryString.parse(location.search) : {};
+    const formatMsg = stripes.intl.formatMessage;
+    const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
     const identifiersRowFormatter = {
@@ -219,7 +228,6 @@ class ViewInstance extends React.Component {
       'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
     };
 
-
     const detailMenu = (
       <PaneMenu>
         <IconButton
@@ -235,7 +243,14 @@ class ViewInstance extends React.Component {
 
     if (!instance) {
       return (
-        <Pane id="pane-instancedetails" defaultWidth={this.props.paneWidth} paneTitle={formatMsg({ id: 'ui-inventory.instanceDetails' })} lastMenu={detailMenu} dismissible onClose={this.props.onClose}>
+        <Pane
+          id="pane-instancedetails"
+          defaultWidth={paneWidth}
+          paneTitle={<FormattedMessage id="ui-inventory.editInstance" />}
+          lastMenu={detailMenu}
+          dismissible
+          onClose={onClose}
+        >
           <div style={{ paddingTop: '1rem' }}><Icon icon="spinner-ellipsis" width="100px" /></div>
         </Pane>
       );
@@ -274,21 +289,25 @@ class ViewInstance extends React.Component {
     return (
       <div data-test-instance-details>
         <Pane
-          defaultWidth={this.props.paneWidth}
-          paneTitle={instance.title}
+          defaultWidth={paneWidth}
+          paneTitle={<span data-test-header-title>{instance.title}</span>}
           paneSub={instanceSub()}
           lastMenu={detailMenu}
           dismissible
-          onClose={this.props.onClose}
-          actionMenuItems={[{
-            label: formatMsg({ id: 'ui-inventory.editInstance' }),
-            href: this.craftLayerUrl('edit'),
-            onClick: this.onClickEditInstance,
-          }, {
-            id: 'clickable-copy-instance',
-            onClick: () => onCopy(instance),
-            label: formatMsg({ id: 'ui-inventory.copyInstance' })
-          }]}
+          onClose={onClose}
+          actionMenuItems={[
+            {
+              id: 'edit-instance',
+              label: <FormattedMessage id="ui-inventory.editInstance" />,
+              href: this.craftLayerUrl('edit'),
+              onClick: this.onClickEditInstance,
+            },
+            {
+              id: 'copy-instance',
+              onClick: () => onCopy(instance),
+              label: <FormattedMessage id="ui-inventory.duplicateInstance" />,
+            }
+          ]}
         >
           <TitleManager record={instance.title} />
           <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
@@ -315,9 +334,9 @@ class ViewInstance extends React.Component {
                   </AppIcon>
                 </Layout>
                 { (!!instance.sourceRecordFormat) && (
-                <Layout className="margin-start-auto">
-                  {viewSourceButton}
-                </Layout>
+                  <Layout className="margin-start-auto">
+                    {viewSourceButton}
+                  </Layout>
                 ) }
               </Layout>
             </Col>
@@ -333,7 +352,7 @@ class ViewInstance extends React.Component {
           >
             { (instance.metadata && instance.metadata.createdDate) &&
             <this.cViewMetaData metadata={instance.metadata} />
-          }
+            }
             <Row>
               <Col xs={12}>
                 {instance.discoverySuppress && formatMsg({ id: 'ui-inventory.discoverySuppress' })}
@@ -401,7 +420,7 @@ class ViewInstance extends React.Component {
                 <KeyValue label={formatMsg({ id: 'ui-inventory.alternativeTitles' })} value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)} />
               </Col>
             </Row>
-          }
+            }
             <Row>
               <Col xs={12}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.indexTitle' })} value={_.get(instance, ['indexTitle'], '')} />
@@ -412,7 +431,7 @@ class ViewInstance extends React.Component {
               <Col xs={12}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.seriesStatement' })} value={_.get(instance, ['series'], '')} />
               </Col>
-            }
+              }
             </Row>
           </Accordion>
           <Accordion
@@ -431,7 +450,7 @@ class ViewInstance extends React.Component {
               ariaLabel="Identifiers"
               containerRef={(ref) => { this.resultsList = ref; }}
             />
-        }
+            }
           </Accordion>
           <Accordion
             open={this.state.accordions.acc04}
@@ -448,7 +467,7 @@ class ViewInstance extends React.Component {
               ariaLabel="Contributors"
               containerRef={(ref) => { this.resultsList = ref; }}
             />
-          }
+            }
           </Accordion>
           <Accordion
             open={this.state.accordions.acc05}
@@ -465,19 +484,19 @@ class ViewInstance extends React.Component {
               ariaLabel="Publication"
               containerRef={(ref) => { this.resultsList = ref; }}
             />
-          }
+            }
             <br />
             <Row>
               { (instance.editions && instance.editions.length > 0) &&
               <Col xs={6}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.edition' })} value={_.get(instance, ['editions'], []).map((edition, i) => <div key={i}>{edition}</div>)} />
               </Col>
-            }
+              }
               { (instance.physicalDescriptions.length > 0) &&
               <Col xs={6}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.physicalDescription' })} value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
               </Col>
-            }
+              }
             </Row>
             <Row>
               <Col xs={3}>
@@ -509,7 +528,7 @@ class ViewInstance extends React.Component {
                 ariaLabel="Formats"
                 containerRef={(ref) => { this.resultsList = ref; }}
               />
-            }
+              }
             </Row>
             { (instance.languages.length > 0) &&
             <Row>
@@ -517,7 +536,7 @@ class ViewInstance extends React.Component {
                 <KeyValue label={formatMsg({ id: 'ui-inventory.language' })} value={formatters.languagesFormatter(instance)} />
               </Col>
             </Row>
-          }
+            }
             <Row>
               <Col xs={6}>
                 <KeyValue label={formatMsg({ id: 'ui-inventory.publicationFrequency' })} value={_.get(instance, ['publicationFrequency'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
@@ -539,7 +558,7 @@ class ViewInstance extends React.Component {
                 <KeyValue label={formatMsg({ id: 'ui-inventory.notes' })} value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
               </Col>
             </Row>
-          }
+            }
           </Accordion>
           <Accordion
             open={this.state.accordions.acc07}
@@ -556,7 +575,7 @@ class ViewInstance extends React.Component {
               ariaLabel="Electronic access"
               containerRef={(ref) => { this.resultsList = ref; }}
             />
-          }
+            }
           </Accordion>
           <Accordion
             open={this.state.accordions.acc08}
@@ -570,7 +589,7 @@ class ViewInstance extends React.Component {
                 <KeyValue label={formatMsg({ id: 'ui-inventory.subjectHeadings' })} value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)} />
               </Col>
             </Row>
-          }
+            }
           </Accordion>
           <Accordion
             open={this.state.accordions.acc09}
@@ -588,7 +607,7 @@ class ViewInstance extends React.Component {
               ariaLabel="Classifications"
               containerRef={(ref) => { this.resultsList = ref; }}
             />
-          }
+            }
           </Accordion>
           <Accordion
             open={this.state.accordions.acc10}
@@ -602,14 +621,14 @@ class ViewInstance extends React.Component {
                 <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
               </Col>
             </Row>
-          }
+            }
             { (instance.parentInstances.length > 0) &&
             <Row>
               <Col xs={12}>
                 <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
               </Col>
             </Row>
-          }
+            }
           </Accordion>
 
           { (!holdingsrecordid && !itemid) ?
