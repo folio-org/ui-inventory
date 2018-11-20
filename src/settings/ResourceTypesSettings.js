@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
-class FormatTypesSettings extends React.Component {
+class ResourceTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -45,4 +45,4 @@ class FormatTypesSettings extends React.Component {
   }
 }
 
-export default FormatTypesSettings;
+export default ResourceTypesSettings;

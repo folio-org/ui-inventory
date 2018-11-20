@@ -31,19 +31,32 @@ class Holdings extends React.Component {
   }
 
   render() {
-    const { resources: { holdings, platforms }, referenceTables } = this.props;
+    const {
+      resources: {
+        holdings,
+        platforms,
+      },
+      referenceTables,
+    } = this.props;
 
-    if (!holdings || !holdings.hasLoaded
-        || !platforms || !platforms.hasLoaded) return <div />;
+    const isResourcesLoading = !holdings || !holdings.hasLoaded || !platforms || !platforms.hasLoaded;
+
+    if (isResourcesLoading) {
+      return null;
+    }
 
     const holdingsRecords = holdings.records;
-    referenceTables.platforms = (platforms || {}).records || [];
-
-    const that = this;
+    referenceTables.platforms = platforms.records || [];
 
     return (
       <div>
-        {holdingsRecords.map(record => <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />)}
+        {holdingsRecords.map(record => (
+          <this.cItems
+            key={`items_${record.id}`}
+            holdingsRecord={record}
+            {...this.props}
+          />
+        ))}
       </div>
     );
   }
