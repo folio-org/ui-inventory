@@ -2,6 +2,7 @@
 
 ## 1.5.0 (IN PROGRESS)
 
+* No longer requires `platforms` interface (UIIN-388)
 * Requires `locations` interface 3.0 (UIIN-357)
 * Add accordions, holdings record view, holdings record form (UIIN-168, UIIN-274)
 * Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)

@@ -18,11 +18,6 @@ class Holdings extends React.Component {
       path: 'holdings-storage/holdings?query=(instanceId==:{id})',
       resourceShouldRefresh: true,
     },
-    platforms: {
-      type: 'okapi',
-      records: 'platforms',
-      path: 'platforms',
-    },
   });
 
   constructor(props) {
@@ -34,19 +29,16 @@ class Holdings extends React.Component {
     const {
       resources: {
         holdings,
-        platforms,
       },
-      referenceTables,
     } = this.props;
 
-    const isResourcesLoading = !holdings || !holdings.hasLoaded || !platforms || !platforms.hasLoaded;
+    const isResourcesLoading = !holdings || !holdings.hasLoaded;
 
     if (isResourcesLoading) {
       return null;
     }
 
     const holdingsRecords = holdings.records;
-    referenceTables.platforms = platforms.records || [];
 
     return (
       <div>
@@ -68,7 +60,6 @@ Holdings.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }),
-  referenceTables: PropTypes.object.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,

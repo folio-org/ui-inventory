@@ -7,7 +7,6 @@ import {
   Layer,
   Row,
   Col,
-  KeyValue,
   Button,
 } from '@folio/stripes/components';
 import { Link } from 'react-router-dom';
@@ -109,22 +108,6 @@ class ItemsPerHoldingsRecord extends React.Component {
           </div>
         )}
       >
-        <Row>
-          {holdingsRecord.permanentLocationId ?
-            null
-            :
-            <Col sm={5}>
-              <KeyValue
-                label="Platform"
-                value={_.get(holdingsRecord, ['electronicLocation', 'platformId'], null) ?
-                  (referenceTables.platforms.find(platform => _.get(holdingsRecord, ['electronicLocation', 'platformId'], '') === platform.id).name)
-                  :
-                  null}
-              />
-              <KeyValue label="URI" value={_.get(holdingsRecord, ['electronicLocation', 'uri'], '')} />
-            </Col>
-          }
-        </Row>
         <Row>
           <Col sm={12}>
             <this.cItems holdingsRecord={holdingsRecord} instance={instance} parentMutator={this.props.mutator} />
