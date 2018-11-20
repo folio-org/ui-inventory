@@ -30,7 +30,6 @@ class Holdings extends React.Component {
       resources: {
         holdings,
       },
-      referenceTables,
     } = this.props;
 
     const isResourcesLoading = !holdings || !holdings.hasLoaded;
@@ -61,7 +60,6 @@ Holdings.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }),
-  referenceTables: PropTypes.object.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
