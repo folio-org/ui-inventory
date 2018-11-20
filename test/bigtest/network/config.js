@@ -70,8 +70,6 @@ export default function configure() {
   this.get('/locations');
   this.get('/locations/:id');
 
-  this.get('/platforms', { platforms: [], totalRecords: 0 });
-
   // item-storage
   this.get('/service-points', {
     servicepoints: [],

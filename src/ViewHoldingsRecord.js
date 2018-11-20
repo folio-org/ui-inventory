@@ -65,11 +65,6 @@ class ViewHoldingsRecord extends React.Component {
       path: 'holdings-note-types',
       records: 'holdingsNoteTypes',
     },
-    platforms: {
-      type: 'okapi',
-      path: 'platforms',
-      records: 'platforms',
-    },
   });
 
   constructor(props) {
@@ -122,7 +117,6 @@ class ViewHoldingsRecord extends React.Component {
   updateHoldingsRecord = (holdingsRecord) => {
     const holdings = holdingsRecord;
     if (holdings.permanentLocationId === '') delete holdings.permanentLocationId;
-    if (holdings.platformId === '') delete holdings.platformId;
     this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
       this.onClickCloseEditHoldingsRecord();
     });
@@ -194,7 +188,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-    const { location, resources: { holdingsRecords, instances1, platforms, illPolicies, holdingsTypes, callNumberTypes, holdingsNoteTypes, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
+    const { location, resources: { holdingsRecords, instances1, illPolicies, holdingsTypes, callNumberTypes, holdingsNoteTypes, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) return <div>Awaiting resources</div>;
 
@@ -206,8 +200,7 @@ class ViewHoldingsRecord extends React.Component {
         || !illPolicies || !illPolicies.hasLoaded
         || !holdingsTypes || !holdingsTypes.hasLoaded
         || !callNumberTypes || !callNumberTypes.hasLoaded
-        || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded
-        || !platforms || !platforms.hasLoaded) return <div>Awaiting resources</div>;
+        || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded) return <div>Awaiting resources</div>;
 
     const instance = instances1.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
@@ -217,7 +210,6 @@ class ViewHoldingsRecord extends React.Component {
     referenceTables.holdingsTypes = holdingsTypes.records;
     referenceTables.callNumberTypes = callNumberTypes.records;
     referenceTables.holdingsNoteTypes = holdingsNoteTypes.records;
-    referenceTables.platforms = platforms.records;
 
     const query = location.search ? queryString.parse(location.search) : {};
     const that = this;
@@ -633,9 +625,6 @@ ViewHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     holdingsTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    platforms: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
