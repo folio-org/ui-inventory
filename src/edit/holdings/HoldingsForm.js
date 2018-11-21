@@ -170,7 +170,7 @@ class HoldingsForm extends React.Component {
 
   getActionMenu() {
     const { onCancel } = this.props;
-    return () => (
+    return (
       <Fragment>
         <Button buttonStyle="dropdownItem" id="cancel-holdings-creation" onClick={onCancel}>
           <Icon icon="hollowX">

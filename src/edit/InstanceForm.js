@@ -196,7 +196,7 @@ class InstanceForm extends React.Component {
 
   getActionMenu() {
     const { onCancel } = this.props;
-    return () => (
+    return (
       <Fragment>
         <Button buttonStyle="dropdownItem" id="cancel-instance-edition" onClick={onCancel}>
           <Icon icon="hollowX">
