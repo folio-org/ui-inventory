@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import cloneDeep from 'lodash/cloneDeep';
@@ -13,6 +13,7 @@ import {
   Row,
   Col,
   Button,
+  Icon,
   TextField,
   Select,
   Checkbox,
@@ -167,14 +168,8 @@ class InstanceForm extends React.Component {
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
+    this.getActionMenu = this.getActionMenu.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
-    this.paneHeaderDropdownItems = [
-      {
-        id: 'cancel-instance-edition',
-        label: <FormattedMessage id="ui-inventory.cancel" />,
-        onClick: props.onCancel,
-      }
-    ];
   }
 
   onToggleSection({ id }) {
@@ -196,6 +191,19 @@ class InstanceForm extends React.Component {
       <span data-test-header-title>
         <FormattedMessage id={titleTranslationKey} />
       </span>
+    );
+  }
+
+  getActionMenu() {
+    const { onCancel } = this.props;
+    return () => (
+      <Fragment>
+        <Button buttonStyle="dropdownItem" id="cancel-instance-edition" onClick={onCancel}>
+          <Icon icon="hollowX">
+            <FormattedMessage id="ui-inventory.cancel" />
+          </Icon>
+        </Button>
+      </Fragment>
     );
   }
 
@@ -277,7 +285,7 @@ class InstanceForm extends React.Component {
             onClose={onCancel}
             lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu}
             paneTitle={this.getPaneTitle()}
-            actionMenuItems={this.paneHeaderDropdownItems}
+            actionMenu={this.getActionMenu()}
           >
             <div>
               <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>

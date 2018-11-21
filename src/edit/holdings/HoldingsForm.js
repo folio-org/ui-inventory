@@ -79,6 +79,7 @@ class HoldingsForm extends React.Component {
       },
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   componentDidMount() {
