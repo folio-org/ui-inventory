@@ -150,4 +150,7 @@ export default function configure() {
     callNumberTypes: [],
     totalRecords: 0
   });
+
+  this.get('/material-types');
+  this.get('/loan-types');
 }
