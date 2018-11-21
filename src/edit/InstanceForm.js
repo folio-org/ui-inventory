@@ -285,7 +285,7 @@ class InstanceForm extends React.Component {
             onClose={onCancel}
             lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu}
             paneTitle={this.getPaneTitle()}
-            actionMenu={this.getActionMenu()}
+            actionMenu={this.getActionMenu}
           >
             <div>
               <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>

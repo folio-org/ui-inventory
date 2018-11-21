@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -16,6 +16,8 @@ import {
   IconButton,
   AppIcon,
   MultiColumnList,
+  Icon,
+  Button,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import { craftLayerUrl } from './utils';
@@ -82,6 +84,7 @@ class ViewHoldingsRecord extends React.Component {
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.getPaneHeaderActionMenu = this.getPaneHeaderActionMenu.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -165,26 +168,42 @@ class ViewHoldingsRecord extends React.Component {
     return ref || {};
   }
 
-  getPaneHeaderDropdownItems = () => {
+  getPaneHeaderActionMenu({ onToggle }) {
     const {
       resources,
     } = this.props;
 
     const firstRecordOfHoldings = resources.holdingsRecords.records[0];
 
-    return [
-      {
-        id: 'edit-holdings',
-        label: <FormattedMessage id="ui-inventory.editHoldings" />,
-        href: this.craftLayerUrl('editHoldingsRecord'),
-        onClick: this.onClickEditHoldingsRecord,
-      },
-      {
-        id: 'copy-holdings',
-        label: <FormattedMessage id="ui-inventory.duplicateHoldings" />,
-        onClick: () => this.onCopy(firstRecordOfHoldings),
-      }
-    ];
+    return (
+      <Fragment>
+        <Button
+          id="edit-holdings"
+          onClick={() => {
+            onToggle();
+            this.onClickEditHoldingsRecord();
+          }}
+          href={this.craftLayerUrl('editHoldingsRecord')}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editHoldings" />
+          </Icon>
+        </Button>
+        <Button
+          id="copy-holdings"
+          onClick={() => {
+            onToggle();
+            this.onCopy(firstRecordOfHoldings);
+          }}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.duplicateHoldings" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
   }
 
   render() {
@@ -254,7 +273,7 @@ class ViewHoldingsRecord extends React.Component {
               lastMenu={detailMenu}
               dismissible
               onClose={this.props.onCloseViewHoldingsRecord}
-              actionMenuItems={this.getPaneHeaderDropdownItems()}
+              actionMenu={this.getPaneHeaderActionMenu}
             >
               <Row center="xs">
                 <Col sm={6}>

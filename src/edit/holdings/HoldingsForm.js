@@ -262,7 +262,7 @@ class HoldingsForm extends React.Component {
                 }
               </div>
             }
-            actionMenu={this.getActionMenu()}
+            actionMenu={this.getActionMenu}
           >
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row>
