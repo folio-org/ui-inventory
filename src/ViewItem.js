@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
-import { FormattedTime } from 'react-intl';
+import { FormattedTime, FormattedMessage } from 'react-intl';
 import {
   Pane,
   PaneMenu,
@@ -15,6 +15,8 @@ import {
   Layer,
   IconButton,
   AppIcon,
+  Button,
+  Icon,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -93,6 +95,7 @@ class ViewItem extends React.Component {
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   /**
@@ -216,6 +219,37 @@ class ViewItem extends React.Component {
     this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
+  getActionMenu({ onToggle }, item) {
+    return (
+      <Fragment>
+        <Button
+          href={this.craftLayerUrl('editItem')}
+          onClick={() => {
+            onToggle();
+            this.onClickEditItem();
+          }}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editItem" />
+          </Icon>
+        </Button>
+        <Button
+          id="clickable-copy-item"
+          onClick={() => {
+            onToggle();
+            this.onCopy(item);
+          }}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.copyItem" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  }
+
   render() {
     const { location, resources: { items, holdingsRecords, instances1, materialTypes, loanTypes, requests },
       referenceTables,
@@ -291,15 +325,7 @@ class ViewItem extends React.Component {
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewItem}
-            actionMenuItems={[{
-              label: formatMsg({ id: 'ui-inventory.editItem' }),
-              href: this.craftLayerUrl('editItem'),
-              onClick: this.onClickEditItem,
-            }, {
-              id: 'clickable-copy-item',
-              onClick: () => this.onCopy(item),
-              label: formatMsg({ id: 'ui-inventory.copyItem' })
-            }]}
+            actionMenu={actionMenuProps => this.getActionMenu(actionMenuProps, item)}
           >
             <Row center="xs">
               <Col sm={6}>
