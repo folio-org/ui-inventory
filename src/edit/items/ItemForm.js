@@ -84,6 +84,13 @@ class ItemForm extends React.Component {
       confirmTemporaryLocation: false,
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    /* eslint-disable quote-props */
+    this.actionMenuItems = [{
+      'data-test-inventory-cancel-item-edit-action': true,
+      label: <FormattedMessage id="ui-inventory.cancel" />,
+      onClick: props.onCancel,
+    }];
+    /* eslint-enable quote-props */
   }
 
   componentDidMount() {
@@ -228,7 +235,7 @@ class ItemForm extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
-      <form>
+      <form data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
@@ -236,7 +243,10 @@ class ItemForm extends React.Component {
             onClose={onCancel}
             lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
             paneTitle={
-              <div style={{ textAlign: 'center' }}>
+              <div
+                style={{ textAlign: 'center' }}
+                data-test-header-title
+              >
                 <em>{instance.title}</em>
                 {(instance.publication && instance.publication.length > 0) &&
                   <span>
@@ -248,11 +258,11 @@ class ItemForm extends React.Component {
                   </span>
                 }
                 <div>
-                  &nbsp;
-                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  {` Holdings: ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </div>
             }
+            actionMenuItems={this.actionMenuItems}
           >
             <Row>
               <Col
@@ -408,7 +418,6 @@ class ItemForm extends React.Component {
               onConfirm={() => { this.confirmTemporaryLocation(true); }}
               onCancel={() => { this.confirmTemporaryLocation(false); }}
             />
-
           </Pane>
         </Paneset>
       </form>

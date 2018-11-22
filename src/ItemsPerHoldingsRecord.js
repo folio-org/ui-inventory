@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
@@ -9,7 +9,6 @@ import {
   Col,
   Button,
 } from '@folio/stripes/components';
-import { Link } from 'react-router-dom';
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
@@ -66,15 +65,41 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   onClickCloseNewItem = (e) => {
+    const { mutator } = this.props;
+
     if (e) e.preventDefault();
-    this.props.mutator.addItemMode.replace({ mode: false });
-    this.addItemModeThisLayer = false;
+
+    mutator.addItemMode.replace({ mode: false });
+    mutator.query.update({ layer: null });
   }
 
   createItem = (item) => {
-    // POST item record
     this.props.mutator.items.POST(item);
     this.onClickCloseNewItem();
+  }
+
+  renderButtonsGroup = () => {
+    const {
+      instance,
+      holdingsRecord,
+    } = this.props;
+
+    return (
+      <div>
+        <Button
+          to={{ pathname: `/inventory/view/${instance.id}/${holdingsRecord.id}` }}
+          style={{ marginRight: '5px' }}
+        >
+          <FormattedMessage id="ui-inventory.viewHoldings" />
+        </Button>
+        <Button
+          onClick={this.onClickAddNewItem}
+          buttonStyle="primary paneHeaderNewButton"
+        >
+          <FormattedMessage id="ui-inventory.addItem" />
+        </Button>
+      </div>
+    );
   }
 
   render() {
@@ -86,11 +111,7 @@ class ItemsPerHoldingsRecord extends React.Component {
     referenceTables.loanTypes = loantypes;
     referenceTables.materialTypes = materialtypes;
 
-    const viewHoldingsPath = `/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}`;
-
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const viewHoldingsButton = <Link to={viewHoldingsPath}><Button id="clickable-view-holdings">{formatMsg({ id: 'ui-inventory.viewHoldings' })}</Button></Link>;
-    const newItemButton = <Button id="clickable-new-item" onClick={this.onClickAddNewItem} title={formatMsg({ id: 'ui-inventory.addItem' })} buttonStyle="primary paneHeaderNewButton">{formatMsg({ id: 'ui-inventory.addItem' })}</Button>;
     const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
 
@@ -100,13 +121,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         id={holdingsRecord.id}
         onToggle={accordionToggle}
         label={formatMsg({ id: 'ui-inventory.holdingsHeader' }, { location: labelLocation, callNumber: labelCallNumber })}
-        displayWhenOpen={(
-          <div>
-            {viewHoldingsButton}
-            {' '}
-            {newItemButton}
-          </div>
-        )}
+        displayWhenOpen={this.renderButtonsGroup()}
       >
         <Row>
           <Col sm={12}>
