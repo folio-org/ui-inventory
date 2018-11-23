@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -79,7 +79,6 @@ class HoldingsForm extends React.Component {
       },
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   componentDidMount() {
@@ -168,16 +167,14 @@ class HoldingsForm extends React.Component {
     });
   }
 
-  getActionMenu() {
+  getActionMenu = () => {
     const { onCancel } = this.props;
     return (
-      <Fragment>
-        <Button buttonStyle="dropdownItem" id="cancel-holdings-creation" onClick={onCancel}>
-          <Icon icon="hollowX">
-            <FormattedMessage id="ui-inventory.cancel" />
-          </Icon>
-        </Button>
-      </Fragment>
+      <Button buttonStyle="dropdownItem" id="cancel-holdings-creation" onClick={onCancel}>
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
     );
   }
 

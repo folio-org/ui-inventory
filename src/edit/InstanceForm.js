@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import cloneDeep from 'lodash/cloneDeep';
@@ -168,7 +168,6 @@ class InstanceForm extends React.Component {
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
-    this.getActionMenu = this.getActionMenu.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
   }
 
@@ -194,16 +193,14 @@ class InstanceForm extends React.Component {
     );
   }
 
-  getActionMenu() {
+  getActionMenu = () => {
     const { onCancel } = this.props;
     return (
-      <Fragment>
-        <Button buttonStyle="dropdownItem" id="cancel-instance-edition" onClick={onCancel}>
-          <Icon icon="hollowX">
-            <FormattedMessage id="ui-inventory.cancel" />
-          </Icon>
-        </Button>
-      </Fragment>
+      <Button buttonStyle="dropdownItem" id="cancel-instance-edition" onClick={onCancel}>
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
     );
   }
 

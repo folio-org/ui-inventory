@@ -95,7 +95,6 @@ class ViewItem extends React.Component {
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   /**
@@ -219,7 +218,10 @@ class ViewItem extends React.Component {
     this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
-  getActionMenu({ onToggle }, item) {
+  getActionMenu = ({ onToggle }) => {
+    const { resources: { items } } = this.props;
+    const item = items.records[0];
+
     return (
       <Fragment>
         <Button
@@ -325,7 +327,7 @@ class ViewItem extends React.Component {
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewItem}
-            actionMenu={actionMenuProps => this.getActionMenu(actionMenuProps, item)}
+            actionMenu={this.getActionMenu}
           >
             <Row center="xs">
               <Col sm={6}>

@@ -80,7 +80,6 @@ class ViewInstance extends React.Component {
     this.cViewMarc = this.props.stripes.connect(ViewMarc);
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
-    this.getActionMenu = this.getActionMenu.bind(this);
   }
 
   // Edit Instance Handlers
@@ -157,7 +156,7 @@ class ViewInstance extends React.Component {
     return ref || {};
   }
 
-  getActionMenu({ onToggle }, instance) {
+  getActionMenu = ({ onToggle }, instance) => {
     const { onCopy } = this.props;
     return (
       <Fragment>
