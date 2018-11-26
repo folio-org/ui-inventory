@@ -95,12 +95,14 @@ class ItemsPerHoldingsRecord extends React.Component {
     return (
       <div>
         <Button
+          id="clickable-view-holdings"
           to={{ pathname: `/inventory/view/${instance.id}/${holdingsRecord.id}` }}
           style={{ marginRight: '5px' }}
         >
           <FormattedMessage id="ui-inventory.viewHoldings" />
         </Button>
         <Button
+          id="clickable-new-item"
           onClick={this.onClickAddNewItem}
           buttonStyle="primary paneHeaderNewButton"
         >
