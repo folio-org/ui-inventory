@@ -28,7 +28,9 @@ class StatisticalCodeTypes extends React.Component {
         label={formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
         labelSingular={formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
         objectLabel={formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
-        visibleFields={['name']}
+        visibleFields={['name', 'source']}
+        readOnlyFields={['source']}
+        itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="StatisticalCodeTypes"
