@@ -3,7 +3,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
-import { FormattedTime, FormattedMessage } from 'react-intl';
+import {
+  FormattedTime,
+  FormattedMessage,
+} from 'react-intl';
 import {
   Pane,
   PaneMenu,
@@ -219,8 +222,8 @@ class ViewItem extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { resources: { items } } = this.props;
-    const item = items.records[0];
+    const { resources } = this.props;
+    const firstItem = _.get(resources, 'items.records[0]');
 
     return (
       <Fragment>
@@ -231,6 +234,7 @@ class ViewItem extends React.Component {
             this.onClickEditItem();
           }}
           buttonStyle="dropdownItem"
+          data-test-inventory-edit-item-action
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-inventory.editItem" />
@@ -240,9 +244,10 @@ class ViewItem extends React.Component {
           id="clickable-copy-item"
           onClick={() => {
             onToggle();
-            this.onCopy(item);
+            this.onCopy(firstItem);
           }}
           buttonStyle="dropdownItem"
+          data-test-inventory-duplicate-item-action
         >
           <Icon icon="duplicate">
             <FormattedMessage id="ui-inventory.copyItem" />
@@ -253,9 +258,21 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { location, resources: { items, holdingsRecords, instances1, materialTypes, loanTypes, requests },
+    const {
+      location,
+      resources: {
+        items,
+        holdingsRecords,
+        instances1,
+        materialTypes,
+        loanTypes,
+        requests,
+      },
       referenceTables,
-      okapi, stripes: { intl } } = this.props;
+      okapi,
+      paneWidth,
+      stripes: { intl },
+    } = this.props;
 
     const formatMsg = intl.formatMessage;
 
@@ -313,9 +330,10 @@ class ViewItem extends React.Component {
       <div>
         <Layer isOpen label="View Item">
           <Pane
-            defaultWidth={this.props.paneWidth}
+            data-test-item-view-page
+            defaultWidth={paneWidth}
             paneTitle={
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: 'center' }} data-test-header-title>
                 <AppIcon app="inventory" iconKey="item" size="small" />
                 {' '}
                 {_.get(item, ['barcode'], '')}
@@ -335,13 +353,13 @@ class ViewItem extends React.Component {
                 {' '}
                 {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
-                <span>
-                  <em>, </em>
-                  <em>
-                    {instance.publication[0].publisher}
-                    {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                  </em>
-                </span>
+                  <span>
+                    <em>, </em>
+                    <em>
+                      {instance.publication[0].publisher}
+                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                    </em>
+                  </span>
                 }
                 <div>
                   { `${formatMsg({ id: 'ui-inventory.holdingsColon' })} ${labelPermanentHoldingsLocation} > ${labelCallNumber}`}
@@ -381,9 +399,9 @@ class ViewItem extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.itemHrid' })} value={_.get(item, ['id'], '')} />
                 </Col>
                 { (item.barcode) &&
-                  <Col xs={3}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
-                  </Col>
+                <Col xs={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
+                </Col>
                 }
               </Row>
             </Accordion>
@@ -400,14 +418,14 @@ class ViewItem extends React.Component {
               </Row>
               <Row>
                 { (item.pieceIdentifiers) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                </Col>
                 }
                 { (item.numberOfPieces) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
+                </Col>
                 }
               </Row>
             </Accordion>
@@ -419,14 +437,14 @@ class ViewItem extends React.Component {
             >
               <Row>
                 { (item.enumeration) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
+                </Col>
                 }
                 { (item.chronology) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
+                </Col>
                 }
               </Row>
             </Accordion>
@@ -457,14 +475,14 @@ class ViewItem extends React.Component {
             >
               <Row>
                 { (item.permanentLoanType) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
+                </Col>
                 }
                 { (item.temporaryLoanType) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
+                </Col>
                 }
               </Row>
               <Row>
@@ -573,7 +591,6 @@ class ViewItem extends React.Component {
             stripes={this.props.stripes}
           />
         </Layer>
-
       </div>
     );
   }

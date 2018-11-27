@@ -146,8 +146,8 @@
   "loanType": "Loan type",
   "loans": "Loans",
   "materialTypes": "Material types",
-  "alternativeTitleTypes": "Alternative Title Types",
-  "alternativeTitleType": "Alternative Title Type",
+  "alternativeTitleTypes": "Alternative title types",
+  "alternativeTitleType": "Alternative title type",
   "materialType": "Material type",
   "materialTypeRequired": "Material type *",
   "holdingsHeader": "Holdings: {location} > {callNumber}",
@@ -216,7 +216,7 @@
   "electronicAccess": "Electronic access",
   "addElectronicAccess": "+ Add electronic access",
   "urlRelationship": "Relationship",
-  "URLrelationship": "URL Relationship",
+  "URLrelationship": "URL relationship",
   "urlRelationshipTerm": "URL Relationship term",
   "linkText": "Link text",
   "urlPublicNote": "URL public note",
@@ -263,5 +263,6 @@
   "itemCallNumber": "Item call number",
   "otherRelatedInstances": "Other related instances",
   "relatedInstances": "Related instances",
-  "copyItem": "Copy item"
+  "duplicateItem": "Duplicate item",
+  "editItem": "Edit item"
 }
