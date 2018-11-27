@@ -10,6 +10,7 @@ import {
   Row,
   Col,
   Button,
+  Icon,
   TextField,
   Select,
   ConfirmationModal,
@@ -84,13 +85,6 @@ class ItemForm extends React.Component {
       confirmTemporaryLocation: false,
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    /* eslint-disable quote-props */
-    this.actionMenuItems = [{
-      'data-test-inventory-cancel-item-edit-action': true,
-      label: <FormattedMessage id="ui-inventory.cancel" />,
-      onClick: props.onCancel,
-    }];
-    /* eslint-enable quote-props */
   }
 
   componentDidMount() {
@@ -150,6 +144,24 @@ class ItemForm extends React.Component {
 
     setTimeout(() => this.props.change('temporaryLocation.id', value));
     this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
+  }
+
+  getActionMenu = ({ onToggle }) => {
+    const { onCancel } = this.props;
+    return (
+      <Button
+        data-test-inventory-cancel-item-edit-action
+        buttonStyle="dropdownItem"
+        onClick={() => {
+          onCancel();
+          onToggle();
+        }}
+      >
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
+    );
   }
 
   render() {
@@ -262,7 +274,7 @@ class ItemForm extends React.Component {
                 </div>
               </div>
             }
-            actionMenuItems={this.actionMenuItems}
+            actionMenu={this.getActionMenu}
           >
             <Row>
               <Col
