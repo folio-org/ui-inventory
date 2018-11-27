@@ -94,7 +94,7 @@ class ViewInstance extends React.Component {
     this.props.mutator.query.update({ layer: 'createHoldingsRecord' });
   }
 
-  update(instance) {
+  update = (instance) => {
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.closeEditInstance();
     });
