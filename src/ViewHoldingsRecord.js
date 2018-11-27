@@ -84,7 +84,6 @@ class ViewHoldingsRecord extends React.Component {
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    this.getPaneHeaderActionMenu = this.getPaneHeaderActionMenu.bind(this);
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -168,7 +167,7 @@ class ViewHoldingsRecord extends React.Component {
     return ref || {};
   }
 
-  getPaneHeaderActionMenu({ onToggle }) {
+  getPaneHeaderActionMenu = ({ onToggle }) => {
     const {
       resources,
     } = this.props;
