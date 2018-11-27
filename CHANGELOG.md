@@ -14,6 +14,7 @@
 * Provide `sortby` key for `<ControlledVocab>`. Refs STSMACOM-139.
 * Default term to empty string in cases when query is undefined. Fixes UIIN-371.
 * Support circulation v5.0, requiring service-point information on loans. Refs UIIN-383.
+* Removed deprecated actionMenuItems-prop. Fixes UIIN-393.
 
 ## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)

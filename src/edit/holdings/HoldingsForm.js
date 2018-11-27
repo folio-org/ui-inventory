@@ -11,6 +11,7 @@ import {
   Row,
   Col,
   Button,
+  Icon,
   TextField,
   Select,
   Checkbox,
@@ -78,13 +79,6 @@ class HoldingsForm extends React.Component {
       },
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    this.paneHeaderDropdownItems = [
-      {
-        id: 'cancel-holdings-creation',
-        label: <FormattedMessage id="ui-inventory.cancel" />,
-        onClick: props.onCancel
-      }
-    ];
   }
 
   componentDidMount() {
@@ -173,6 +167,17 @@ class HoldingsForm extends React.Component {
     });
   }
 
+  getActionMenu = () => {
+    const { onCancel } = this.props;
+    return (
+      <Button buttonStyle="dropdownItem" id="cancel-holdings-creation" onClick={onCancel}>
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
+    );
+  }
+
   render() {
     const {
       handleSubmit,
@@ -254,7 +259,7 @@ class HoldingsForm extends React.Component {
                 }
               </div>
             }
-            actionMenuItems={this.paneHeaderDropdownItems}
+            actionMenu={this.getActionMenu}
           >
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row>

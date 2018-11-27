@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
@@ -18,6 +18,8 @@ import {
   Layer,
   IconButton,
   AppIcon,
+  Button,
+  Icon,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -219,25 +221,41 @@ class ViewItem extends React.Component {
     this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
-  /* eslint-disable quote-props */
-  getActionMenuItems = () => {
-    const firstItem = _.get(this.props.resources, 'items.records[0]');
+  getActionMenu = ({ onToggle }) => {
+    const { resources } = this.props;
+    const firstItem = _.get(resources, 'items.records[0]');
 
-    return [
-      {
-        'data-test-inventory-edit-item-action': true,
-        label: <FormattedMessage id="ui-inventory.editItem" />,
-        href: this.craftLayerUrl('editItem'),
-        onClick: this.onClickEditItem,
-      },
-      {
-        'data-test-inventory-duplicate-item-action': true,
-        onClick: () => this.onCopy(firstItem),
-        label: <FormattedMessage id="ui-inventory.duplicateItem" />
-      }
-    ];
-  };
-  /* eslint-enable quote-props */
+    return (
+      <Fragment>
+        <Button
+          href={this.craftLayerUrl('editItem')}
+          onClick={() => {
+            onToggle();
+            this.onClickEditItem();
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-edit-item-action
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editItem" />
+          </Icon>
+        </Button>
+        <Button
+          id="clickable-copy-item"
+          onClick={() => {
+            onToggle();
+            this.onCopy(firstItem);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-duplicate-item-action
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.copyItem" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  }
 
   render() {
     const {
@@ -327,7 +345,7 @@ class ViewItem extends React.Component {
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewItem}
-            actionMenuItems={this.getActionMenuItems()}
+            actionMenu={this.getActionMenu}
           >
             <Row center="xs">
               <Col sm={6}>

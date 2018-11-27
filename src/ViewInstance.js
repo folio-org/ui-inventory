@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -150,6 +150,39 @@ class ViewInstance extends React.Component {
     return ref || {};
   }
 
+  getActionMenu = instance => ({ onToggle }) => {
+    const { onCopy } = this.props;
+    return (
+      <Fragment>
+        <Button
+          id="edit-instance"
+          href={this.craftLayerUrl('edit')}
+          onClick={() => {
+            onToggle();
+            this.onClickEditInstance();
+          }}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editInstance" />
+          </Icon>
+        </Button>
+        <Button
+          id="copy-instance"
+          onClick={() => {
+            onToggle();
+            onCopy(instance);
+          }}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.duplicateInstance" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  }
+
   render() {
     const {
       okapi,
@@ -158,7 +191,6 @@ class ViewInstance extends React.Component {
       referenceTables,
       stripes,
       onClose,
-      onCopy,
       paneWidth,
     } = this.props;
 
@@ -329,19 +361,7 @@ class ViewInstance extends React.Component {
         lastMenu={detailMenu}
         dismissible
         onClose={onClose}
-        actionMenuItems={[
-          {
-            id: 'edit-instance',
-            label: <FormattedMessage id="ui-inventory.editInstance" />,
-            href: this.craftLayerUrl('edit'),
-            onClick: this.onClickEditInstance,
-          },
-          {
-            id: 'copy-instance',
-            onClick: () => onCopy(instance),
-            label: <FormattedMessage id="ui-inventory.duplicateInstance" />,
-          }
-        ]}
+        actionMenu={this.getActionMenu(instance)}
       >
         <TitleManager record={instance.title} />
         <Row end="xs">
