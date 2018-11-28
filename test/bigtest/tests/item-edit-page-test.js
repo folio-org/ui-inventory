@@ -23,7 +23,7 @@ describe('ItemEditPage', () => {
     title: 'ADVANCING RESEARCH',
     holdingsRecordId: holdings.id,
     barcode: 337,
-    pieceIdentifiers: [],
+    copyNumbers: [],
     notes: [],
     materialType: {
       id: '1a54b431-2e4f-452d-9cae-9cee66c9a892',
