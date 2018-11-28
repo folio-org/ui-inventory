@@ -4,8 +4,8 @@ import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col, Button, TextField } from '@folio/stripes/components';
 
-const PieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) => {
-  const handleAddIdentifier = () => fields.push();
+const CopyNumbers = ({ fields, meta: { touched, error, submitFailed } }) => {
+  const handleAddCopyNumber = () => fields.push();
   const errorIsVisible = touched || submitFailed;
 
   return (
@@ -19,9 +19,9 @@ const PieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =>
             type="button"
             buttonStyle="fullWidth secondary"
             id="clickable-add-notes"
-            onClick={handleAddIdentifier}
+            onClick={handleAddCopyNumber}
           >
-            <FormattedMessage id="ui-inventory.addPieceIdentifier" />
+            <FormattedMessage id="ui-inventory.addCopyNumber" />
           </Button>
           {errorIsVisible && error &&
             <span>
@@ -30,20 +30,20 @@ const PieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =>
           }
         </Col>
       </Row>
-      {fields.map((pieceIdentifier, index) => (
-        <Row key={pieceIdentifier}>
+      {fields.map((copyNumber, index) => (
+        <Row key={copyNumber}>
           <Col sm={6}>
             <Field
-              name={pieceIdentifier}
+              name={copyNumber}
               type="text"
               component={TextField}
-              label={index === 0 ? <FormattedMessage id="ui-inventory.pieceIdentifier" /> : null}
+              label={index === 0 ? <FormattedMessage id="ui-inventory.copyNumber" /> : null}
             />
           </Col>
           <Col sm={1}>
             {index === 0 ? <br /> : null}
             <FormattedMessage
-              id="ui-inventory.removeIdentifier"
+              id="ui-inventory.removeCopyNumber"
               values={{ num: index + 1 }}
             >
               {title => (
@@ -64,7 +64,7 @@ const PieceIdentifiers = ({ fields, meta: { touched, error, submitFailed } }) =>
   );
 };
 
-PieceIdentifiers.propTypes = {
+CopyNumbers.propTypes = {
   fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
@@ -77,7 +77,7 @@ PieceIdentifiers.propTypes = {
   }),
 };
 
-PieceIdentifiers.defaultProps = {
+CopyNumbers.defaultProps = {
   meta: {
     touched: false,
     error: '',
@@ -85,4 +85,4 @@ PieceIdentifiers.defaultProps = {
   },
 };
 
-export default PieceIdentifiers;
+export default CopyNumbers;

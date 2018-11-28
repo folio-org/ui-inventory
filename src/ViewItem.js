@@ -417,9 +417,9 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
               <Row>
-                { (item.pieceIdentifiers) &&
+                { (item.copyNumbers) &&
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumbers' })} value={_.get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)} />
                 </Col>
                 }
                 { (item.numberOfPieces) &&

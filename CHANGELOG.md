@@ -2,6 +2,8 @@
 
 ## 1.5.0 (IN PROGRESS)
 
+* Renames `pieceIdentifiers`to `copyNumbers` (UIIN-397)
+* Adapts to changed structure of alternative titles (UIIN-345)
 * Adapts to changed structure of holdings statements (UIIN-234)
 * No longer requires `platforms` interface (UIIN-388)
 * Requires `locations` interface 3.0 (UIIN-357)
