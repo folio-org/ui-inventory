@@ -209,6 +209,11 @@ class ViewInstance extends React.Component {
       'Classification': x => _.get(x, ['classificationNumber']) || '--',
     };
 
+    const alternativeTitlesRowFormatter = {
+      'Alternative title type': x => this.refLookup(referenceTables.alternativeTitleTypes, _.get(x, ['alternativeTitleTypeId'])).name,
+      'Alternative title': x => _.get(x, ['alternativeTitle']) || '--',
+    };
+
     const publicationRowFormatter = {
       'Publisher': x => _.get(x, ['publisher']) || '',
       'Publisher role': x => _.get(x, ['role']) || '',
@@ -487,14 +492,15 @@ class ViewInstance extends React.Component {
           </Row>
           {
             instance.alternativeTitles.length > 0 && (
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={formatMsg({ id: 'ui-inventory.alternativeTitles' })}
-                    value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)}
-                  />
-                </Col>
-              </Row>
+              <MultiColumnList
+                id="list-alternative-titles"
+                contentData={instance.alternativeTitles}
+                rowMetadata={['alternativeTitleTypeId']}
+                visibleColumns={['Alternative title type', 'Alternative title']}
+                formatter={alternativeTitlesRowFormatter}
+                ariaLabel="Alternative titles"
+                containerRef={(ref) => { this.resultsList = ref; }}
+              />
             )
           }
           <Row>
