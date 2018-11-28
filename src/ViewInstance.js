@@ -96,7 +96,7 @@ class ViewInstance extends React.Component {
 
   update = (instance) => {
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
-      this.closeEditInstance();
+      this.onCancelHandler();
     });
   }
 
