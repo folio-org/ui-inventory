@@ -164,6 +164,7 @@
   "formerHoldingsId": "Former holdings ID",
   "addFormerHoldingsId": "+ Add former holdings ID",
   "holdingsStatement": "Holdings statement",
+  "holdingsStatementNote": "Holdings statement note",
   "holdingsStatements": "Holdings statements",
   "addHoldingsStatement": "+ Add holdings statement",
   "holdingsStatementForIndexes": "Holdings statement for indexes",
