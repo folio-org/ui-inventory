@@ -407,7 +407,7 @@ class ViewHoldingsRecord extends React.Component {
                 { (holdingsRecord.holdingsStatements.length > 0) &&
                   <MultiColumnList
                     id="list-holdingsstatements"
-                    contentData={holdingsRecord.holdingsStatements.map((stmt) => { return { 'statement': stmt }; })}
+                    contentData={holdingsRecord.holdingsStatements}
                     visibleColumns={['Holdings statement', 'Holdings statement note']}
                     formatter={{
                       'Holdings statement': x => _.get(x, ['statement']) || '',
