@@ -382,7 +382,7 @@ class InstanceForm extends React.Component {
                   name="source"
                   component="input"
                 />
-                <AlternativeTitles formatMsg={formatMsg} />
+                <AlternativeTitles alternativeTitleTypes={referenceTables.alternativeTitleTypes} formatMsg={formatMsg} />
                 <Col sm={10}>
                   <Field
                     label={`${formatMsg({ id: 'ui-inventory.indexTitle' })}`}

@@ -209,6 +209,11 @@ class ViewInstance extends React.Component {
       'Classification': x => _.get(x, ['classificationNumber']) || '--',
     };
 
+    const alternativeTitlesRowFormatter = {
+      'Alternative title type': x => this.refLookup(referenceTables.alternativeTitleTypes, _.get(x, ['alternativeTitleTypeId'])).name,
+      'Alternative title': x => _.get(x, ['alternativeTitle']) || '--',
+    };
+
     const publicationRowFormatter = {
       'Publisher': x => _.get(x, ['publisher']) || '',
       'Publisher role': x => _.get(x, ['role']) || '',
