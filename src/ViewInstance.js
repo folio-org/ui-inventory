@@ -492,14 +492,15 @@ class ViewInstance extends React.Component {
           </Row>
           {
             instance.alternativeTitles.length > 0 && (
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={formatMsg({ id: 'ui-inventory.alternativeTitles' })}
-                    value={_.get(instance, ['alternativeTitles'], []).map((title, i) => <div key={i}>{title}</div>)}
-                  />
-                </Col>
-              </Row>
+              <MultiColumnList
+                id="list-alternative-titles"
+                contentData={instance.alternativeTitles}
+                rowMetadata={['alternativeTitleTypeId']}
+                visibleColumns={['Alternative title type', 'Alternative title']}
+                formatter={alternativeTitlesRowFormatter}
+                ariaLabel="Alternative titles"
+                containerRef={(ref) => { this.resultsList = ref; }}
+              />
             )
           }
           <Row>

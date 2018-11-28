@@ -37,5 +37,9 @@ const AlternativeTitles = ({ alternativeTitleTypes, formatMsg }) => {
   );
 };
 
-AlternativeTitles.propTypes = { formatMsg: PropTypes.func };
+AlternativeTitles.propTypes = {
+  formatMsg: PropTypes.func,
+  alternativeTitleTypes: PropTypes.arrayOf(PropTypes.object),
+};
+
 export default AlternativeTitles;
