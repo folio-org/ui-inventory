@@ -96,11 +96,11 @@ class ViewInstance extends React.Component {
 
   update = (instance) => {
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
-      this.onCancelHandler();
+      this.resetLayerQueryParam();
     });
   }
 
-  onCancelHandler = (e) => {
+  resetLayerQueryParam = (e) => {
     if (e) e.preventDefault();
     this.props.mutator.query.update({ layer: null });
   }
@@ -124,7 +124,7 @@ class ViewInstance extends React.Component {
     // POST holdings record
     this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
     this.props.mutator.holdings.POST(holdingsRecord).then(() => {
-      this.onCancelHandler();
+      this.resetLayerQueryParam();
     });
   }
 
@@ -289,7 +289,7 @@ class ViewInstance extends React.Component {
           <InstanceForm
             onSubmit={this.update}
             initialValues={instance}
-            onCancel={this.onCancelHandler}
+            onCancel={this.resetLayerQueryParam}
             referenceTables={referenceTables}
             stripes={stripes}
           />
@@ -309,7 +309,7 @@ class ViewInstance extends React.Component {
             key={instance.id}
             initialValues={{ instanceId: instance.id }}
             onSubmit={this.createHoldingsRecord}
-            onCancel={this.onCancelHandler}
+            onCancel={this.resetLayerQueryParam}
             okapi={okapi}
             formatMsg={formatMsg}
             instance={instance}
