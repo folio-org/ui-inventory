@@ -150,7 +150,7 @@ class ViewInstance extends React.Component {
     return ref || {};
   }
 
-  getActionMenu = instance => ({ onToggle }) => {
+  createActionMenuGetter = instance => ({ onToggle }) => {
     const { onCopy } = this.props;
     return (
       <Fragment>
@@ -366,7 +366,7 @@ class ViewInstance extends React.Component {
         lastMenu={detailMenu}
         dismissible
         onClose={onClose}
-        actionMenu={this.getActionMenu(instance)}
+        actionMenu={this.createActionMenuGetter(instance)}
       >
         <TitleManager record={instance.title} />
         <Row end="xs">
