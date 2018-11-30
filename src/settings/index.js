@@ -7,6 +7,7 @@ import FormatsSettings from './FormatsSettings';
 import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
 import URLRelationshipSettings from './URLRelationshipSettings';
+import StatisticalCodeSettings from './StatisticalCodeSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 import HoldingsTypeSettings from './HoldingsTypeSettings';
 import ILLPolicy from './ILLPolicy';
@@ -101,6 +102,12 @@ class InventorySettings extends React.Component {
       {
         label: formatMessage({ id: 'ui-inventory.instanceHoldingsItem' }),
         pages: [
+          {
+            route: 'StatisticalCodeSettings',
+            label: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
+            component: StatisticalCodeSettings,
+            perm: 'ui-inventory.settings.statistical-codes',
+          },
           {
             route: 'statisticalCodeTypes',
             label: formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
