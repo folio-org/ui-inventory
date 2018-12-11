@@ -161,7 +161,7 @@ class ViewItem extends React.Component {
         return { borrower };
       }
 
-      // console.warn('retrieved a borrower.id ${borrower.id} that did not match the loan.userId ${prevState.loan.userId}')
+      // console.warn('Retrieved a borrower.id ${borrower.id} that did not match the loan.userId ${prevState.loan.userId}')
     }
 
     return null;
