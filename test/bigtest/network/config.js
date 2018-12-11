@@ -153,4 +153,5 @@ export default function configure() {
 
   this.get('/material-types');
   this.get('/loan-types');
+  this.get('/item-note-types');
 }
