@@ -419,7 +419,11 @@ class ViewItem extends React.Component {
               <Row>
                 { (item.copyNumbers) &&
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumbers' })} value={_.get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumbers' })}>
+                    <ul>
+                      {_.get(item, ['copyNumbers'], []).map((line, i) => <li key={i}>{line}</li>)}
+                    </ul>
+                  </KeyValue>
                 </Col>
                 }
                 { (item.numberOfPieces) &&
@@ -462,7 +466,11 @@ class ViewItem extends React.Component {
               { (item.notes.length > 0) &&
               <Row>
                 <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemPublicNote' })} value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemPublicNote' })}>
+                    <ul>
+                      {_.get(item, ['notes'], []).map((line, i) => <li key={i}>{line}</li>)}
+                    </ul>
+                  </KeyValue>
                 </Col>
               </Row>
               }
