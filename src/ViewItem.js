@@ -60,6 +60,11 @@ class ViewItem extends React.Component {
       },
       records: 'loantypes',
     },
+    itemNoteTypes: {
+      type: 'okapi',
+      path: 'item-note-types',
+      records: 'itemNoteTypes',
+    },
     requests: {
       type: 'okapi',
       path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled") sortby requestDate desc',
@@ -266,6 +271,7 @@ class ViewItem extends React.Component {
         instances1,
         materialTypes,
         loanTypes,
+        itemNoteTypes,
         requests,
       },
       referenceTables,
@@ -278,10 +284,15 @@ class ViewItem extends React.Component {
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
+    referenceTables.itemNoteTypes = (itemNoteTypes || {}).records || [];
 
     if (!items || !items.hasLoaded || !instances1 ||
       !instances1.hasLoaded || !holdingsRecords ||
       !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
+
+    if (!loanTypes || !loanTypes.hasLoaded ||
+        !materialTypes || !materialTypes.hasLoaded ||
+        !itemNoteTypes || !itemNoteTypes.hasLoaded) return <div>Waiting for resources</div>;
 
     const instance = instances1.records[0];
     const item = items.records[0];
@@ -325,6 +336,30 @@ class ViewItem extends React.Component {
     if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
       itemStatusDate = this.state.loanStatusDate;
     }
+
+    const layoutNotes = (noteTypes, notes) => {
+      const table = [];
+      let cols = [];
+      noteTypes
+        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .map((noteType, i) => {
+          cols.push(
+            <Col key={i} sm={3}>
+              <KeyValue
+                label={noteType.name}
+                value={_.get(item, ['notes'], []).map((note, j) => { if (note.itemNoteTypeId === noteType.id) return <div key={j}>{note.note}</div>; else return ''; })}
+              />
+            </Col>
+          );
+          if ((i + 1) % 4 === 0) {
+            table.push(<Row>{cols}</Row>);
+            cols = [];
+          }
+          return cols;
+        });
+      if (cols.length) table.push(<Row>{cols}</Row>);
+      return table;
+    };
 
     return (
       <div>
@@ -454,18 +489,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
             >
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>{formatMsg({ id: 'ui-inventory.itemNotes' })}</strong>
-                </Col>
-              </Row>
-              { (item.notes.length > 0) &&
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemPublicNote' })} value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                </Col>
-              </Row>
-              }
+              {layoutNotes(referenceTables.itemNoteTypes, _.get(item, ['notes'], []))}
             </Accordion>
             <Accordion
               open={this.state.accordions.itemAvailabilityAccordion}
