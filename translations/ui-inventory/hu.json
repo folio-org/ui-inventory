@@ -275,5 +275,15 @@
     "newInstance": "New instance",
     "duplicateHoldings": "Duplicate holdings",
     "duplicateItem": "Duplicate item",
-    "editItem": "Edit item"
+    "editItem": "Edit item",
+    "holdingsStatementNote": "Holdings statement note",
+    "alternativeTitle": "Alternative title",
+    "copyNumbers": "Copy numbers",
+    "addCopyNumber": "Add copy number",
+    "removeCopyNumbre": "Remove copy number {num}",
+    "code": "code",
+    "statisticalCodes": "Statistical codes",
+    "statisticalCode": "Statistical code",
+    "statisticalCodeNames": "Statistical code names",
+    "selectStatisticalCode": "Select statistical code type"
 }

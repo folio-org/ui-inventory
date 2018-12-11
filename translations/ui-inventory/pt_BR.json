@@ -179,8 +179,8 @@
     "addPublicationFrequency": "+ Adicionar frequência",
     "addPublicationRange": "+ Adicionar intervalo",
     "publicationRange": "Intervalo de publicação",
-    "staffSuppress": "Suprimir às equipes",
-    "discoverySuppress": "Suprimir da ferramenta de descoberta",
+    "staffSuppress": "Ocultar para a equipe",
+    "discoverySuppress": "Ocultar na ferramenta de descoberta",
     "previouslyHeld": "Anteriormente realizada",
     "addElectronicAccess": "+ Adicionar acesso eletrônico",
     "instanceStatus": "Termo do status da instância",
@@ -275,5 +275,15 @@
     "newInstance": "Nova instância",
     "duplicateHoldings": "Duplicar acervo",
     "duplicateItem": "Duplicar item",
-    "editItem": "Editar item"
+    "editItem": "Editar item",
+    "holdingsStatementNote": "Nota de declaração de acervo",
+    "alternativeTitle": "Título alternativo",
+    "copyNumbers": "Números de exemplares",
+    "addCopyNumber": "Adicionar número de exemplar",
+    "removeCopyNumbre": "Remover número de exemplar {num}",
+    "code": "código",
+    "statisticalCodes": "Códigos estatísticos",
+    "statisticalCode": "Código estatístico",
+    "statisticalCodeNames": "Nomes de códigos estatísticos",
+    "selectStatisticalCode": "Selecione o tipo de código estatístico"
 }
