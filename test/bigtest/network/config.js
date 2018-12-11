@@ -141,6 +141,11 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.get('/item-note-types', {
+    itemNoteTypes: [],
+    totalRecords: 0
+  });
+
   this.get('/ill-policies', {
     illPolicies: [],
     totalRecords: 0
@@ -153,5 +158,4 @@ export default function configure() {
 
   this.get('/material-types');
   this.get('/loan-types');
-  this.get('/item-note-types');
 }
