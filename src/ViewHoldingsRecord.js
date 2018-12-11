@@ -246,6 +246,31 @@ class ViewHoldingsRecord extends React.Component {
       </PaneMenu>
     );
 
+    const layoutNotes = (noteTypes, notes) => {
+      const table = [];
+      let cols = [];
+      noteTypes
+        .filter((noteType) => notes.find(note => note.holdingsNoteTypeId === noteType.id))
+        .map((noteType, i) => {
+          cols.push(
+            <Col key={i} sm={3}>
+              <KeyValue
+                label={noteType.name}
+                value={_.get(holdingsRecord, ['notes'], []).map((note, j) => { if (note.holdingsNoteTypeId === noteType.id) return <div key={j}>{note.note}</div>; else return ''; })}
+              />
+            </Col>
+          );
+          if ((i + 1) % 4 === 0) {
+            table.push(<Row>{cols}</Row>);
+            cols = [];
+          }
+          return cols;
+        });
+      if (cols.length) table.push(<Row>{cols}</Row>);
+      return table;
+    };
+
+
     return (
       <div>
         <Layer isOpen label={formatMsg({ id: 'ui-inventory.viewHoldingsRecord' })}>
@@ -471,57 +496,7 @@ class ViewHoldingsRecord extends React.Component {
                 onToggle={this.handleAccordionToggle}
                 label={formatMsg({ id: 'ui-inventory.notes' })}
               >
-                <Row>
-                  <Col smOffset={0} sm={4}>
-                    <strong>{formatMsg({ id: 'ui-inventory.holdingsNotes' })}</strong>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.publicNote' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'Note' && !note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.nonPublicNote' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'Note' && note.staffOnly) return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.actionNote' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'action note') return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.reproductionNote' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'reproduction') return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.binding' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'binding') return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.provenance' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'provenance') return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.copyNotes' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'copy note') return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
-                </Row>
+                {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
                 <Row>
                   <Col sm={3}>
                     <KeyValue
@@ -537,12 +512,6 @@ class ViewHoldingsRecord extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={formatMsg({ id: 'ui-inventory.electronicBookplate' })}
-                      value={_.get(holdingsRecord, ['notes'], []).map((note, i) => { if (note.type === 'electronic bookplate') return <div key={i}>{note.note}</div>; else return ''; })}
-                    />
-                  </Col>
                   <Col sm={3}>
                     <KeyValue label={formatMsg({ id: 'ui-inventory.receiptStatus' })} value={_.get(holdingsRecord, ['receiptStatus'], '')} />
                   </Col>
