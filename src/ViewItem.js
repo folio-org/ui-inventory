@@ -426,6 +426,22 @@ class ViewItem extends React.Component {
               </Col>
             </Row>
             <hr />
+            <Row>
+              <Col sm={12}>
+                <AppIcon app="inventory" iconKey="item" size="small" />
+                {' '}
+                {formatMsg({ id: 'ui-inventory.itemRecord' })}
+                {' '}
+                <AppIcon app="inventory" iconKey="material-type" size="small" />
+                {' '}
+                {_.get(item, ['materialType', 'name'], '')}
+                {' '}
+                <AppIcon app="inventory" iconKey="item-status" size="small" />
+                {' '}
+                {_.get(item, ['status', 'name'], '')}
+              </Col>
+            </Row>
+            <br />
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <br />
             <Accordion
@@ -438,29 +454,28 @@ class ViewItem extends React.Component {
               <this.cViewMetaData metadata={item.metadata} />
               }
               <Row>
-                <Col sm={12}>
-                  <AppIcon app="inventory" iconKey="item" size="small" />
-                  {' '}
-                  {formatMsg({ id: 'ui-inventory.itemRecord' })}
-                  {' '}
-                  <AppIcon app="inventory" iconKey="material-type" size="small" />
-                  {' '}
-                  {_.get(item, ['materialType', 'name'], '')}
-                  {' '}
-                  <AppIcon app="inventory" iconKey="item-status" size="small" />
-                  {' '}
-                  {_.get(item, ['status', 'name'], '')}
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col xs={3}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemHrid' })} value={_.get(item, ['id'], '')} />
+                <Col xs={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemHrid' })} value={_.get(item, ['hrid'], '')} />
                 </Col>
                 { (item.barcode) &&
-                <Col xs={3}>
+                <Col xs={2}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
                 </Col>
+                }
+                { (item.accessionNumber) &&
+                <Col xs={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.accessionNumber' })} value={_.get(item, ['accessionNumber'], '')} />
+                </Col>
+                }
+              </Row>
+              <Row>
+                <Col xs={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemIdentifier' })} value={_.get(item, ['itemIdentifier'], '')} />
+                </Col>
+                { (item.formerIds && item.formerIds.length > 0) &&
+                  <Col smOffset={0} sm={2}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.formerId' })} value={_.get(item, ['formerIds'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
                 }
               </Row>
             </Accordion>
@@ -503,7 +518,7 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
               <Row>
-                { (item.copyNumbers) &&
+                { (item.copyNumbers && item.copyNumbers.length > 0) &&
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumbers' })} value={_.get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)} />
                 </Col>
@@ -641,7 +656,7 @@ class ViewItem extends React.Component {
               open={accordions.acc07}
               id="acc07"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.location' })}
+              label={formatMsg({ id: 'ui-inventory.locations' })}
             >
               <Row>
                 <Col smOffset={0} sm={4}>
