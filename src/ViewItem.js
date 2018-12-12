@@ -151,7 +151,8 @@ class ViewItem extends React.Component {
         };
 
         // FIXME: loan-status-check must be i18n friendly
-        if (loan.item.status.name !== 'Available') {
+        const itemStatus = loan.item.status.name;
+        if (itemStatus !== 'Available' && itemStatus !== 'Awaiting pickup' && itemStatus !== 'In transit') {
           nextProps.mutator.borrowerId.replace({ query: loan.userId });
           nextState.loan = loan;
         }
@@ -333,6 +334,9 @@ class ViewItem extends React.Component {
     if (this.state.loan && this.state.borrower) {
       loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
+    }
+    if (loanLink === 'Awaiting pickup') {
+      loanLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
     let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);
