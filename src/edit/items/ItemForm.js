@@ -1,5 +1,5 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray } from 'redux-form';
@@ -9,10 +9,12 @@ import {
   PaneMenu,
   Row,
   Col,
+  Accordion,
   Button,
   Icon,
   TextField,
   Select,
+  ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
@@ -81,6 +83,17 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      accordions: {
+        itemAccordion: true,
+        conditionsAccordion: true,
+        locationAccordion: true,
+        administrativeAccordion: true,
+        enumerationAccordion: true,
+        notesAccordion: true,
+        loanDataAccordion: true,
+        acquisitionsAccordion: true,
+        electronicAccordion: true,
+      },
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
     };
@@ -124,6 +137,22 @@ class ItemForm extends React.Component {
     } else {
       this.setState({ confirmTemporaryLocation: true, temporaryLocation });
     }
+  }
+
+  handleAccordionToggle = ({ id }) => {
+    this.setState((state) => {
+      const newState = cloneDeep(state);
+      newState.accordions[id] = !newState.accordions[id];
+      return newState;
+    });
+  }
+
+  handleExpandAll = (obj) => {
+    this.setState((curState) => {
+      const newState = cloneDeep(curState);
+      newState.accordions = obj;
+      return newState;
+    });
   }
 
   confirmPermanentLocation(confirm) {
@@ -276,6 +305,7 @@ class ItemForm extends React.Component {
             }
             actionMenu={this.getActionMenu}
           >
+
             <Row>
               <Col
                 sm={5}
@@ -407,7 +437,61 @@ class ItemForm extends React.Component {
                 />
               </Col>
             </Row>
-
+            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
+            <Accordion
+              open={this.state.accordions.administrativeAccordion}
+              id="administrativeAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.administrativeData' })}
+            />
+            <Accordion
+              open={this.state.accordions.itemAccordion}
+              id="itemAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.itemData' })}
+            />
+            <Accordion
+              open={this.state.accordions.enumerationAccordion}
+              id="enumerationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.enumerationData' })}
+            />
+            <Accordion
+              open={this.state.accordions.conditionsAccordion}
+              id="conditionsAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.conditions' })}
+            />
+            <Accordion
+              open={this.state.accordions.notesAccordion}
+              id="notesAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.notes' })}
+            />
+            <Accordion
+              open={this.state.accordions.loanDataAccordion}
+              id="loanDataAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.item.availability' })}
+            />
+            <Accordion
+              open={this.state.accordions.acquisitionsAccordion}
+              id="acquisitionsAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.acquisitions' })}
+            />
+            <Accordion
+              open={this.state.accordions.locationAccordion}
+              id="locationAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.location' })}
+            />
+            <Accordion
+              open={this.state.accordions.electronicAccordion}
+              id="electronicAccordion"
+              onToggle={this.handleAccordionToggle}
+              label={formatMessage({ id: 'ui-inventory.electronicAccess' })}
+            />
             <ConfirmationModal
               id="confirmPermanentLocationModal"
               open={confirmPermanentLocation}

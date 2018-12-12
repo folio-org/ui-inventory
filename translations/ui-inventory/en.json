@@ -233,6 +233,7 @@
   "contributor": "Contributor",
   "publisher": "Publisher",
   "publisherRole": "Publisher role",
+  "conditions": "Conditions",
   "place": "Place",
   "date": "Date",
   "dateOfPublication": "Date of publication",
