@@ -1,24 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+
 import { Select } from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const renderInstanceFormatField = ({ field, fieldIndex }, formatMsg, instanceFormats) => {
-  const instanceFormatOptions = instanceFormats ? instanceFormats.map(
-    it => ({
+const renderInstanceFormatField = ({ field, fieldIndex }, instanceFormats) => {
+  const instanceFormatOptions = instanceFormats
+    ? instanceFormats.map(it => ({
       label: it.name,
       value: it.id,
-    }),
-  ) : [];
+    }))
+    : [];
+
+  const label = fieldIndex === 0
+    ? (
+      <FormattedMessage id="ui-inventory.instanceFormat">
+        {message => message + ' *'}
+      </FormattedMessage>
+    )
+    : null;
 
   return (
-    <Field
-      label={fieldIndex === 0 ? `${formatMsg({ id: 'ui-inventory.instanceFormat' })} *` : null}
-      name={`${field}`}
-      component={Select}
-      dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectInstanceFormat' }), value: '' }, ...instanceFormatOptions]}
-    />
+    <FormattedMessage id="ui-inventory.selectInstanceFormat">
+      {placeholder => (
+        <Field
+          label={label}
+          name={field}
+          component={Select}
+          placeholder={placeholder}
+          dataOptions={instanceFormatOptions}
+        />
+      )}
+    </FormattedMessage>
   );
 };
 
@@ -27,20 +43,19 @@ renderInstanceFormatField.propTypes = {
   fieldIndex: PropTypes.number,
 };
 
-const InstanceFormatFields = ({ formatMsg, instanceFormats }) => (
+const InstanceFormatFields = ({ instanceFormats }) => (
   <RepeatableField
     name="instanceFormatIds"
-    label={formatMsg({ id: 'ui-inventory.instanceFormats' })}
-    addLabel={formatMsg({ id: 'ui-inventory.addInstanceFormat' })}
+    label={<FormattedMessage id="ui-inventory.instanceFormats" />}
+    addLabel={<FormattedMessage id="ui-inventory.addInstanceFormat" />}
     addButtonId="clickable-add-instanceformat"
     template={[{
-      render(fieldObj) { return renderInstanceFormatField(fieldObj, formatMsg, instanceFormats); },
+      render(fieldObj) { return renderInstanceFormatField(fieldObj, instanceFormats); },
     }]}
   />
 );
 
 InstanceFormatFields.propTypes = {
-  formatMsg: PropTypes.func,
   instanceFormats: PropTypes.arrayOf(PropTypes.object),
 };
 

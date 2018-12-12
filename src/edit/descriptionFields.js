@@ -1,20 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { TextField } from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const DescriptionFields = ({ formatMsg }) => (
+const DescriptionFields = () => (
   <RepeatableField
     name="physicalDescriptions"
-    label={formatMsg({ id: 'ui-inventory.physicalDescriptions' })}
-    addLabel={formatMsg({ id: 'ui-inventory.addDescription' })}
+    label={<FormattedMessage id="ui-inventory.physicalDescriptions" />}
+    addLabel={<FormattedMessage id="ui-inventory.addDescription" />}
     addButtonId="clickable-add-description"
     template={[{
-      label: formatMsg({ id: 'ui-inventory.physicalDescription' }),
+      label: <FormattedMessage id="ui-inventory.physicalDescription" />,
       component: TextField,
     }]}
   />
 );
 
-DescriptionFields.propTypes = { formatMsg: PropTypes.func };
 export default DescriptionFields;

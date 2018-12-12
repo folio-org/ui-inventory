@@ -1,9 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Select, Checkbox } from '@folio/stripes/components';
+import {
+  FormattedMessage,
+  intlShape,
+  injectIntl,
+} from 'react-intl';
+
+import {
+  TextField,
+  Select,
+  Checkbox,
+} from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
+const ContributorFields = ({
+  contributorNameTypes,
+  contributorTypes,
+  intl: { formatMessage },
+}) => {
   const contributorNameTypeOptions = contributorNameTypes.map(
     it => ({
       label: it.name,
@@ -21,40 +36,52 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
   return (
     <RepeatableField
       name="contributors"
-      label="Contributors"
-      addLabel="+ Add contributor"
+      label={<FormattedMessage id="ui-inventory.contributors" />}
+      addLabel={<FormattedMessage id="ui-inventory.addContributor" />}
       addButtonId="clickable-add-contributor"
       template={[
         {
-          label: 'Name',
+          label: <FormattedMessage id="ui-inventory.name" />,
           name: 'name',
           component: TextField,
         },
         {
-          label: 'Name Type *',
+          label: (
+            <FormattedMessage id="ui-inventory.nameType">
+              {(message) => message + ' *'}
+            </FormattedMessage>
+          ),
           name: 'contributorNameTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select type', value: '' }, ...contributorNameTypeOptions],
+          placeholder: formatMessage({ id: 'ui-inventory.selectType' }),
+          dataOptions: contributorNameTypeOptions,
           required: true,
         },
         {
-          label: 'Primary',
+          label: <FormattedMessage id="ui-inventory.primary" />,
           name: 'primary',
           component: Checkbox,
         },
         {
-          label: 'Type',
+          label: <FormattedMessage id="ui-inventory.type" />,
           name: 'contributorTypeId',
           component: Select,
-          dataOptions: [{ label: 'Select type', value: '' }, ...contributorTypeOptions],
+          placeholder: formatMessage({ id: 'ui-inventory.selectType' }),
+          dataOptions: contributorTypeOptions,
         },
         {
-          label: 'Type, free text',
+          label: <FormattedMessage id="ui-inventory.typeFreeText" />,
           name: 'contributorTypeText',
           component: TextField,
         },
       ]}
-      newItemTemplate={{ name: '', contributorNameTypeId: '', primary: '', contributorTypeId: '', contributorTypeText: '' }}
+      newItemTemplate={{
+        name: '',
+        contributorNameTypeId: '',
+        primary: '',
+        contributorTypeId: '',
+        contributorTypeText: '',
+      }}
     />
   );
 };
@@ -62,6 +89,7 @@ const ContributorFields = ({ contributorNameTypes, contributorTypes }) => {
 ContributorFields.propTypes = {
   contributorNameTypes: PropTypes.arrayOf(PropTypes.object),
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
+  intl: intlShape.isRequired,
 };
 
-export default ContributorFields;
+export default injectIntl(ContributorFields);

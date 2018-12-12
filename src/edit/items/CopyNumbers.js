@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Row, Col, Button, TextField } from '@folio/stripes/components';
+
+import {
+  Row,
+  Col,
+  Button,
+  TextField,
+} from '@folio/stripes/components';
 
 const CopyNumbers = ({ fields, meta: { touched, error, submitFailed } }) => {
   const handleAddCopyNumber = () => fields.push();

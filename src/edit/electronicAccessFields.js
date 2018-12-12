@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { TextField, Select } from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const ElectronicAccessFields = ({ formatMsg, electronicAccessRelationships }) => {
-  const relationshipOptions = electronicAccessRelationships.map(
+const ElectronicAccessFields = ({ relationship }) => {
+  const relationshipOptions = relationship.map(
     it => ({
       label: it.name,
       value: it.id,
@@ -12,45 +15,49 @@ const ElectronicAccessFields = ({ formatMsg, electronicAccessRelationships }) =>
   );
 
   return (
-    <RepeatableField
-      name="electronicAccess"
-      label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
-      addLabel={formatMsg({ id: 'ui-inventory.addElectronicAccess' })}
-      addButtonId="clickable-add-electronicaccess"
-      template={[
-        {
-          name: 'relationshipId',
-          label: formatMsg({ id: 'ui-inventory.urlRelationship' }),
-          component: Select,
-          dataOptions: [{ label: 'Select type', value: '' }, ...relationshipOptions],
-        },
-        {
-          name: 'uri',
-          label: formatMsg({ id: 'ui-inventory.uri' }),
-          component: TextField,
-        },
-        {
-          name: 'linkText',
-          label: formatMsg({ id: 'ui-inventory.linkText' }),
-          component: TextField,
-        },
-        {
-          name: 'materialsSpecification',
-          label: formatMsg({ id: 'ui-inventory.materialsSpecification' }),
-          component: TextField,
-        },
-        {
-          name: 'publicNote',
-          label: formatMsg({ id: 'ui-inventory.urlPublicNote' }),
-          component: TextField,
-        },
-      ]}
-    />
+    <FormattedMessage id="ui-inventory.selectType">
+      {placeholder => (
+        <RepeatableField
+          name="electronicAccess"
+          label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+          addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
+          addButtonId="clickable-add-electronicaccess"
+          template={[
+            {
+              name: 'relationshipId',
+              label: <FormattedMessage id="ui-inventory.urlRelationship" />,
+              component: Select,
+              placeholder,
+              dataOptions: relationshipOptions,
+            },
+            {
+              name: 'uri',
+              label: <FormattedMessage id="ui-inventory.uri" />,
+              component: TextField,
+            },
+            {
+              name: 'linkText',
+              label: <FormattedMessage id="ui-inventory.linkText" />,
+              component: TextField,
+            },
+            {
+              name: 'materialsSpecification',
+              label: <FormattedMessage id="ui-inventory.materialsSpecification" />,
+              component: TextField,
+            },
+            {
+              name: 'publicNote',
+              label: <FormattedMessage id="ui-inventory.urlPublicNote" />,
+              component: TextField,
+            },
+          ]}
+        />
+      )}
+    </FormattedMessage>
   );
 };
 
 ElectronicAccessFields.propTypes = {
-  formatMsg: PropTypes.func,
-  electronicAccessRelationships: PropTypes.arrayOf(PropTypes.object)
+  relationship: PropTypes.arrayOf(PropTypes.object),
 };
 export default ElectronicAccessFields;

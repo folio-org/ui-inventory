@@ -1,20 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { TextField } from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const PublicationRangeFields = ({ formatMsg }) => (
+const PublicationRangeFields = () => (
   <RepeatableField
     name="publicationRange"
-    label={formatMsg({ id: 'ui-inventory.publicationRange' })}
-    addLabel={formatMsg({ id: 'ui-inventory.addPublicationRange' })}
+    label={<FormattedMessage id="ui-inventory.publicationRange" />}
+    addLabel={<FormattedMessage id="ui-inventory.addPublicationRange" />}
     addButtonId="clickable-add-publicationfrequency"
     template={[{
-      label: formatMsg({ id: 'ui-inventory.publicationRange' }),
+      label: <FormattedMessage id="ui-inventory.publicationRange" />,
       component: TextField,
     }]}
   />
 );
 
-PublicationRangeFields.propTypes = { formatMsg: PropTypes.func };
 export default PublicationRangeFields;
