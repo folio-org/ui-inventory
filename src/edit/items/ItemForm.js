@@ -15,6 +15,7 @@ import {
   TextField,
   Select,
   Checkbox,
+  Datepicker,
   ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
@@ -460,7 +461,57 @@ class ItemForm extends React.Component {
               id="conditionsAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMessage({ id: 'ui-inventory.conditions' })}
-            />
+            >
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    name="numberOfMissingPieces"
+                    id="input_number_of_missing_pieces"
+                    component={TextField}
+                    label={`${formatMessage({ id: 'ui-inventory.numberOfMissingPieces' })}`}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    name="missingPieces"
+                    id="input_missing_pieces"
+                    component={TextField}
+                    label={`${formatMessage({ id: 'ui-inventory.missingPieces' })}`}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    name="missingPiecesDate"
+                    id="input_missing_pieces_date"
+                    dateFormat="YYYY-MM-DD"
+                    backendDateStandard="YYYY-MM-DD"
+                    component={Datepicker}
+                    label={`${formatMessage({ id: 'ui-inventory.date' })}`}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    name="itemDamagedStatusId"
+                    id="input_item_damaged_status_id"
+                    component={Select}
+                    dataOptions={[{ label: 'Select status', value: '' }, '']}
+                    label={`${formatMessage({ id: 'ui-inventory.itemDamagedStatus' })}`}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    name="itemDamagedStatusDate"
+                    id="input_missing_pieces_date"
+                    dateFormat="YYYY-MM-DD"
+                    backendDateStandard="YYYY-MM-DD"
+                    component={Datepicker}
+                    label={`${formatMessage({ id: 'ui-inventory.date' })}`}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.notesAccordion}
               id="notesAccordion"
