@@ -17,6 +17,7 @@ import {
   KeyValue,
   Layer,
   IconButton,
+  MultiColumnList,
   AppIcon,
   Button,
   Icon,
@@ -96,6 +97,7 @@ class ViewItem extends React.Component {
         enumerationAccordion: true,
         notesAccordion: true,
         accordion10: true,
+        accordion06: true,
       },
       loan: null,
       borrower: null,
@@ -337,6 +339,11 @@ class ViewItem extends React.Component {
     if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
       itemStatusDate = this.state.loanStatusDate;
     }
+
+    const refLookup = (referenceTable, id) => {
+      const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+      return ref || {};
+    };
 
     const layoutNotes = (noteTypes, notes) => {
       const table = [];
@@ -611,6 +618,30 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
             </Accordion>
+            <Accordion
+              open={this.state.accordions.accordion06}
+              id="accordion06"
+              onToggle={this.handleAccordionToggle}
+              label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+            >
+              {(item.electronicAccess.length > 0) &&
+                <MultiColumnList
+                  id="list-electronic-access"
+                  contentData={item.electronicAccess}
+                  visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                  formatter={{
+                    'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
+                    'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+                    'Link text': x => _.get(x, ['linkText']) || '',
+                    'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+                    'URL public note': x => _.get(x, ['publicNote']) || '',
+                  }}
+                  ariaLabel="Electronic access"
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                />
+              }
+            </Accordion>
+
           </Pane>
         </Layer>
         <Layer isOpen={query.layer ? query.layer === 'editItem' : false} label="Edit Item Dialog">
