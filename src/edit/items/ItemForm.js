@@ -27,6 +27,7 @@ import {
 
 import RepeatableField from '../../components/RepeatableField';
 
+import ElectronicAccessFields from '../electronicAccessFields';
 import CopyNumbers from './CopyNumbers';
 
 
@@ -209,6 +210,7 @@ class ItemForm extends React.Component {
         materialTypes,
         loanTypes = [],
         itemNoteTypes,
+        electronicAccessRelationships,
       },
       copy,
       intl: { formatMessage },
@@ -518,7 +520,9 @@ class ItemForm extends React.Component {
               id="electronicAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMessage({ id: 'ui-inventory.electronicAccess' })}
-            />
+            >
+              <ElectronicAccessFields electronicAccessRelationships={electronicAccessRelationships} formatMsg={formatMessage} />
+            </Accordion>
             <ConfirmationModal
               id="confirmPermanentLocationModal"
               open={confirmPermanentLocation}
