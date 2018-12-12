@@ -407,20 +407,6 @@ class ItemForm extends React.Component {
                   dataOptions={loanTypeOptions}
                 />
                 <Field
-                  label={<FormattedMessage id="ui-inventory.enumeration" />}
-                  name="enumeration"
-                  id="additem_enumeration"
-                  component={TextField}
-                  fullWidth
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.chronology" />}
-                  name="chronology"
-                  id="additem_chronology"
-                  component={TextField}
-                  fullWidth
-                />
-                <Field
                   label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
                   name="numberOfPieces"
                   id="additem_numberofpieces"
@@ -457,7 +443,50 @@ class ItemForm extends React.Component {
               id="enumerationAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMessage({ id: 'ui-inventory.enumerationData' })}
-            />
+            >
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.enumeration" />}
+                    name="enumeration"
+                    id="additem_enumeration"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.volume" />}
+                    name="volume"
+                    id="additem_volume"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.chronology" />}
+                    name="chronology"
+                    id="additem_chronology"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={6}>
+                  <RepeatableField
+                    name="yearCaption"
+                    addButtonId="clickable-add-year-caption"
+                    addLabel={formatMessage({ id: 'ui-inventory.addYearCaption' })}
+                    template={[{
+                      component: TextField,
+                      label: formatMessage({ id: 'ui-inventory.yearCaption' }),
+                    }]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.conditionsAccordion}
               id="conditionsAccordion"

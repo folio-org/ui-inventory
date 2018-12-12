@@ -488,10 +488,22 @@ class ViewItem extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
                 </Col>
                 }
+                { (item.volume) &&
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.volume' })} value={_.get(item, ['volume'], '')} />
+                </Col>
+                }
                 { (item.chronology) &&
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
                 </Col>
+                }
+              </Row>
+              <Row>
+                { (item.yearCaption && item.yearCaption.length > 0) &&
+                  <Col smOffset={0} sm={8}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.yearCaption' })} value={_.get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
                 }
               </Row>
             </Accordion>
@@ -502,23 +514,33 @@ class ViewItem extends React.Component {
               label={formatMsg({ id: 'ui-inventory.conditions' })}
             >
               <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.numberOfMissingPieces' })} value={_.get(item, ['numberOfMissingPieces'], '')} />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.missingPieces' })} value={_.get(item, ['missingPieces'], '')} />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['missingPiecesDate'], '')} />
-                </Col>
+                { (item.numberOfMissingPieces) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.numberOfMissingPieces' })} value={_.get(item, ['numberOfMissingPieces'], '')} />
+                  </Col>
+                }
+                { (item.missingPieces) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.missingPieces' })} value={_.get(item, ['missingPieces'], '')} />
+                  </Col>
+                }
+                { (item.missingPiecesDate) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['missingPiecesDate'], '')} />
+                  </Col>
+                }
               </Row>
               <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.itemDamagedStatus' })} value="" />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['itemDamagedStatusDate'], '')} />
-                </Col>
+                { (item.itemDamagedStatus) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.itemDamagedStatus' })} value="" />
+                  </Col>
+                }
+                { (item.itemDamagedStatusDate) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['itemDamagedStatusDate'], '')} />
+                  </Col>
+                }
               </Row>
             </Accordion>
             <Accordion
