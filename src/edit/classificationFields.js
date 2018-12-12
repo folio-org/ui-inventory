@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Select } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  TextField,
+  Select,
+} from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
-const ClassificationFields = ({ classificationTypes, formatMsg }) => {
+const ClassificationFields = ({ classificationTypes }) => {
   const classificationTypeOptions = classificationTypes.map(
     it => ({
       label: it.name,
@@ -13,35 +18,47 @@ const ClassificationFields = ({ classificationTypes, formatMsg }) => {
   );
 
   return (
-    <RepeatableField
-      name="classifications"
-      label={formatMsg({ id: 'ui-inventory.classifications' })}
-      addLabel={formatMsg({ id: 'ui-inventory.addClassifications' })}
-      addButtonId="clickable-add-classification"
-      addDefaultItem={false}
-      template={[
-        {
-          label: `${formatMsg({ id: 'ui-inventory.number' })} *`,
-          name: 'classificationNumber',
-          component: TextField,
-          required: true,
-        },
-        {
-          label: `${formatMsg({ id: 'ui-inventory.type' })} *`,
-          name: 'classificationTypeId',
-          component: Select,
-          dataOptions: [{ label: formatMsg({ id: 'ui-inventory.selectClassification' }), value: '' }, ...classificationTypeOptions],
-          required: true,
-        },
-      ]}
-      newItemTemplate={{ classificationNumber: '', classificationTypeId: '' }}
-    />
+    <FormattedMessage id="ui-inventory.selectClassification">
+      {placeholder => (
+        <RepeatableField
+          name="classifications"
+          label={<FormattedMessage id="ui-inventory.classifications" />}
+          addLabel={<FormattedMessage id="ui-inventory.addClassifications" />}
+          addButtonId="clickable-add-classification"
+          addDefaultItem={false}
+          template={[
+            {
+              label: (
+                <FormattedMessage id="ui-inventory.number">
+                  {(message) => message + ' *'}
+                </FormattedMessage>
+              ),
+              name: 'classificationNumber',
+              component: TextField,
+              required: true,
+            },
+            {
+              label: (
+                <FormattedMessage id="ui-inventory.type">
+                  {(message) => message + ' *'}
+                </FormattedMessage>
+              ),
+              name: 'classificationTypeId',
+              component: Select,
+              placeholder,
+              dataOptions: classificationTypeOptions,
+              required: true,
+            },
+          ]}
+          newItemTemplate={{ classificationNumber: '', classificationTypeId: '' }}
+        />
+      )}
+    </FormattedMessage>
   );
 };
 
 ClassificationFields.propTypes = {
   classificationTypes: PropTypes.arrayOf(PropTypes.object),
-  formatMsg: PropTypes.func,
 };
 
 export default ClassificationFields;

@@ -40,13 +40,11 @@ import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
 
-function validate(values, props) {
+function validate(values) {
   const errors = {};
-  const formatMsg = props.stripes.intl.formatMessage;
-
-  const requiredTextMessage = formatMsg({ id: 'ui-inventory.fillIn' });
-  const requiredSelectMessage = formatMsg({ id: 'ui-inventory.selectToContinue' });
-  const requiredPublicationFieldMessage = formatMsg({ id: 'ui-inventory.onePublicationFieldToContinue' });
+  const requiredTextMessage = <FormattedMessage id="ui-inventory.fillIn" />;
+  const requiredSelectMessage = <FormattedMessage id="ui-inventory.selectToContinue" />;
+  const requiredPublicationFieldMessage = <FormattedMessage id="ui-inventory.onePublicationFieldToContinue" />;
 
   if (!values.title) {
     errors.title = requiredTextMessage;
@@ -118,13 +116,16 @@ function validate(values, props) {
 
 function checkUniqueHrid(okapi, hrid) {
   return fetch(`${okapi.url}/inventory/instances?query=(hrid=="${hrid}")`,
-    { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
-      'Content-Type': 'application/json' }) });
+    {
+      headers: Object.assign({}, {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json'
+      })
+    });
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const hridTakenMsg = props.stripes.intl.formatMessage({ id: 'ui-inventory.hridTaken' });
   if (blurredField === 'hrid' && values.hrid !== props.initialValues.hrid) {
     return new Promise((resolve, reject) => {
       checkUniqueHrid(props.stripes.okapi, values.hrid).then((response) => {
@@ -133,7 +134,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
-              const error = { hrid: hridTakenMsg };
+              const error = { hrid: <FormattedMessage id="ui-inventory.hridTaken" /> };
               reject(error);
             } else {
               resolve();
@@ -195,8 +196,13 @@ class InstanceForm extends React.Component {
 
   getActionMenu = () => {
     const { onCancel } = this.props;
+
     return (
-      <Button buttonStyle="dropdownItem" id="cancel-instance-edition" onClick={onCancel}>
+      <Button
+        buttonStyle="dropdownItem"
+        id="cancel-instance-edition"
+        onClick={onCancel}
+      >
         <Icon icon="hollowX">
           <FormattedMessage id="ui-inventory.cancel" />
         </Icon>
@@ -214,7 +220,6 @@ class InstanceForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
-    const formatMsg = this.props.stripes.intl.formatMessage;
 
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
       it => ({
@@ -247,12 +252,12 @@ class InstanceForm extends React.Component {
           buttonStyle="primary paneHeaderNewButton"
           id="clickable-create-instance"
           type="submit"
-          title={formatMsg({ id: 'ui-inventory.createInstance' })}
+          title={<FormattedMessage id="ui-inventory.createInstance" />}
           disabled={(pristine || submitting) && !copy}
           onClick={handleSubmit}
           marginBottom0
         >
-          {formatMsg({ id: 'ui-inventory.createInstance' })}
+          <FormattedMessage id="ui-inventory.createInstance" />
         </Button>
       </PaneMenu>
     );
@@ -263,12 +268,12 @@ class InstanceForm extends React.Component {
           buttonStyle="primary paneHeaderNewButton"
           id="clickable-update-instance"
           type="submit"
-          title={formatMsg({ id: 'ui-inventory.updateInstance' })}
+          title={<FormattedMessage id="ui-inventory.updateInstance" />}
           disabled={(pristine || submitting) && !copy}
           onClick={handleSubmit}
           marginBottom0
         >
-          {formatMsg({ id: 'ui-inventory.updateInstance' })}
+          <FormattedMessage id="ui-inventory.updateInstance" />
         </Button>
       </PaneMenu>
     );
@@ -285,15 +290,29 @@ class InstanceForm extends React.Component {
             actionMenu={this.getActionMenu}
           >
             <div>
-              <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.administrativeData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection01} id="instanceSection01">
-                { (initialValues.metadata && initialValues.metadata.createdDate) &&
+              <Headline
+                size="large"
+                tag="h3"
+              >
+                <FormattedMessage id="ui-inventory.instanceRecord" />
+              </Headline>
+              <Accordion
+                label={
+                  <h3>
+                    <FormattedMessage id="ui-inventory.administrativeData" />
+                  </h3>
+                }
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection01}
+                id="instanceSection01"
+              >
+                {(initialValues.metadata && initialValues.metadata.createdDate) &&
                   <this.cViewMetaData metadata={initialValues.metadata} />
                 }
                 <Row>
                   <Col sm={3}>
                     <Field
-                      label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                      label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
                       name="discoverySuppress"
                       id="input_discovery_suppress"
                       component={Checkbox}
@@ -301,7 +320,7 @@ class InstanceForm extends React.Component {
                   </Col>
                   <Col sm={3}>
                     <Field
-                      label={`${formatMsg({ id: 'ui-inventory.staffSuppress' })}`}
+                      label={<FormattedMessage id="ui-inventory.staffSuppress" />}
                       name="staffSuppress"
                       id="input_staff_suppress"
                       component={Checkbox}
@@ -309,7 +328,7 @@ class InstanceForm extends React.Component {
                   </Col>
                   <Col sm={3}>
                     <Field
-                      label={`${formatMsg({ id: 'ui-inventory.previouslyHeld' })}`}
+                      label={<FormattedMessage id="ui-inventory.previouslyHeld" />}
                       name="previouslyHeld"
                       id="input_previously_held"
                       component={Checkbox}
@@ -318,12 +337,15 @@ class InstanceForm extends React.Component {
                 </Row>
                 <br />
                 <Row>
-                  <Col xs={10} sm={5}>
+                  <Col
+                    xs={10}
+                    sm={5}
+                  >
                     <Field
                       name="hrid"
                       type="text"
                       component={TextField}
-                      label={`${formatMsg({ id: 'ui-inventory.instanceHrid' })}`}
+                      label={<FormattedMessage id="ui-inventory.instanceHrid" />}
                     />
                   </Col>
                   <Col xs={10} sm={5}>
@@ -332,44 +354,74 @@ class InstanceForm extends React.Component {
                       type="text"
                       component={TextField}
                       disabled
-                      label={`${formatMsg({ id: 'ui-inventory.metadataSource' })} *`}
+                      label={(
+                        <FormattedMessage id="ui-inventory.metadataSource">
+                          {message => message + ' *'}
+                        </FormattedMessage>
+                      )}
                     />
                   </Col>
                 </Row>
                 <Row>
-                  <Col xs={10} sm={5}>
+                  <Col
+                    xs={10}
+                    sm={5}
+                  >
                     <Field
                       name="catalogedDate"
                       dateFormat="YYYY-MM-DD"
                       backendDateStandard="YYYY-MM-DD"
                       component={Datepicker}
-                      label={formatMsg({ id: 'ui-inventory.catalogedDate' })}
+                      label={<FormattedMessage id="ui-inventory.catalogedDate" />}
                     />
                   </Col>
                 </Row>
                 <Col sm={10}>
-                  <Field
-                    name="statusId"
-                    type="text"
-                    component={Select}
-                    label={formatMsg({ id: 'ui-inventory.instanceStatus' })}
-                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectInstanceStatus' }), value: '' }, ...instanceStatusOptions]}
-                  />
+                  <FormattedMessage id="ui-inventory.selectInstanceStatus">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.instanceStatus" />}
+                        name="statusId"
+                        type="text"
+                        component={Select}
+                        placeholder={placeholder}
+                        dataOptions={instanceStatusOptions}
+                      />
+                    )}
+                  </FormattedMessage>
                 </Col>
                 <Col sm={10}>
-                  <Field
-                    name="modeOfIssuanceId"
-                    type="text"
-                    component={Select}
-                    label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })}
-                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectModeOfIssuance' }), value: '' }, ...modeOfIssuanceOptions]}
-                  />
+                  <FormattedMessage id="ui-inventory.selectModeOfIssuance">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+                        name="modeOfIssuanceId"
+                        type="text"
+                        component={Select}
+                        placeholder={placeholder}
+                        dataOptions={modeOfIssuanceOptions}
+                      />
+                    )}
+                  </FormattedMessage>
                 </Col>
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.titleData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection02} id="instanceSection02">
+              <Accordion
+                label={
+                  <h3>
+                    <FormattedMessage id="ui-inventory.titleData" />
+                  </h3>
+                }
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection02}
+                id="instanceSection02"
+              >
                 <Col sm={10}>
                   <Field
-                    label={`${formatMsg({ id: 'ui-inventory.resourceTitle' })} *`}
+                    label={(
+                      <FormattedMessage id="ui-inventory.resourceTitle">
+                        {message => message + ' *'}
+                      </FormattedMessage>
+                    )}
                     name="title"
                     id="input_instance_title"
                     component={TextField}
@@ -382,61 +434,153 @@ class InstanceForm extends React.Component {
                   name="source"
                   component="input"
                 />
-                <AlternativeTitles alternativeTitleTypes={referenceTables.alternativeTitleTypes} formatMsg={formatMsg} />
+                <AlternativeTitles alternativeTitleTypes={referenceTables.alternativeTitleTypes} />
                 <Col sm={10}>
                   <Field
-                    label={`${formatMsg({ id: 'ui-inventory.indexTitle' })}`}
+                    label={<FormattedMessage id="ui-inventory.indexTitle" />}
                     name="indexTitle"
                     id="input_index_title"
                     component={TextField}
                     fullWidth
                   />
                 </Col>
-                <SeriesFields formatMsg={formatMsg} />
+                <SeriesFields />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.identifiers' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection03} id="instanceSection03">
-                <IdentifierFields identifierTypes={referenceTables.identifierTypes} formatMsg={formatMsg} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.identifiers" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection03}
+                id="instanceSection03"
+              >
+                <IdentifierFields identifierTypes={referenceTables.identifierTypes} />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.contributors' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection04} id="instanceSection04">
-                <ContributorFields contributorNameTypes={referenceTables.contributorNameTypes} contributorTypes={referenceTables.contributorTypes} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.contributors" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection04}
+                id="instanceSection04"
+              >
+                <ContributorFields
+                  contributorNameTypes={referenceTables.contributorNameTypes}
+                  contributorTypes={referenceTables.contributorTypes}
+                />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.descriptiveData' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection05} id="instanceSection05">
-                <PublicationFields formatMsg={formatMsg} />
-                <EditionFields formatMsg={formatMsg} />
-                <DescriptionFields formatMsg={formatMsg} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.descriptiveData" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection05}
+                id="instanceSection05"
+              >
+                <PublicationFields />
+                <EditionFields />
+                <DescriptionFields />
                 <Col sm={10}>
-                  <Field
-                    name="instanceTypeId"
-                    id="select_instance_type"
-                    type="text"
-                    component={Select}
-                    label={`${formatMsg({ id: 'ui-inventory.resourceType' })} *`}
-                    dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectResourceType' }), value: '' }, ...instanceTypeOptions]}
-                    required
-                  />
+                  <FormattedMessage id="ui-inventory.selectResourceType">
+                    {placeholder => (
+                      <Field
+                        label={(
+                          <FormattedMessage id="ui-inventory.resourceType">
+                            {message => message + ' *'}
+                          </FormattedMessage>
+                        )}
+                        name="instanceTypeId"
+                        id="select_instance_type"
+                        type="text"
+                        component={Select}
+                        placeholder={placeholder}
+                        dataOptions={instanceTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
                 </Col>
-                <InstanceFormatFields instanceFormats={referenceTables.instanceFormats} formatMsg={formatMsg} />
-                <LanguageFields formatMsg={formatMsg} />
-                <PublicationFrequencyFields formatMsg={formatMsg} />
-                <PublicationRangeFields formatMsg={formatMsg} />
+                <InstanceFormatFields instanceFormats={referenceTables.instanceFormats} />
+                <LanguageFields />
+                <PublicationFrequencyFields />
+                <PublicationRangeFields />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.notes' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection07} id="instanceSection07">
-                <NoteFields formatMsg={formatMsg} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.notes" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection07}
+                id="instanceSection07"
+              >
+                <NoteFields />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.electronicAccess' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection08} id="instanceSection08">
-                <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.electronicAccess" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection08}
+                id="instanceSection08"
+              >
+                <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.subjects' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection09} id="instanceSection09">
-                <SubjectFields formatMsg={formatMsg} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.subjects" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection09}
+                id="instanceSection09"
+              >
+                <SubjectFields />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.classifications' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection10} id="instanceSection10">
-                <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.classifications" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection10}
+                id="instanceSection10"
+              >
+                <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.instanceRelationshipsAnalyticsBoundWith' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection11">
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.instanceRelationshipsAnalyticsBoundWith" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection11}
+                id="instanceSection11"
+              >
                 <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                 <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
               </Accordion>
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.relatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection12} id="instanceSection12" />
+              <Accordion
+                label={(
+                  <h3>
+                    <FormattedMessage id="ui-inventory.relatedInstances" />
+                  </h3>
+                )}
+                onToggle={this.onToggleSection}
+                open={this.state.sections.instanceSection12}
+                id="instanceSection12"
+              />
             </div>
           </Pane>
         </Paneset>
@@ -457,9 +601,6 @@ InstanceForm.propTypes = {
   copy: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
-    intl: PropTypes.shape({
-      formatMessage: PropTypes.func,
-    }),
   }),
 };
 

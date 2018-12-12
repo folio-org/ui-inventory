@@ -1,27 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { TextField } from '@folio/stripes/components';
+
 import RepeatableField from '../../components/RepeatableField';
 
-const HoldingsStatementForSupplementsFields = ({ formatMsg }) => (
+const HoldingsStatementForSupplementsFields = () => (
   <RepeatableField
     name="holdingsStatementsForSupplements"
-    addLabel={formatMsg({ id: 'ui-inventory.addHoldingsStatementForSupplements' })}
+    addLabel={<FormattedMessage id="ui-inventory.addHoldingsStatementForSupplements" />}
     addButtonId="clickable-add-holdingsstatementforsupplements"
     template={[
       {
         name: 'statement',
-        label: formatMsg({ id: 'ui-inventory.holdingsStatementForSupplements' }),
+        label: <FormattedMessage id="ui-inventory.holdingsStatementForSupplements" />,
         component: TextField,
       },
       {
         name: 'note',
-        label: formatMsg({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
+        label: <FormattedMessage id="ui-inventory.holdingsStatementForSupplementsNote" />,
         component: TextField,
       },
     ]}
   />
 );
 
-HoldingsStatementForSupplementsFields.propTypes = { formatMsg: PropTypes.func };
 export default HoldingsStatementForSupplementsFields;

@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Select } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  TextField,
+  Select,
+} from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
 const ParentInstanceFields = ({ instanceRelationshipTypes }) => {
@@ -12,32 +18,37 @@ const ParentInstanceFields = ({ instanceRelationshipTypes }) => {
   );
 
   return (
-    <RepeatableField
-      name="parentInstances"
-      label="Parent instances"
-      addLabel="+ Add parent instance"
-      addButtonId="clickable-add-parentinstance"
-      template={[
-        {
-          label: 'Parent instance *',
-          name: 'superInstanceId',
-          component: TextField,
-        },
-        {
-          label: 'Type of relation *',
-          name: 'instanceRelationshipTypeId',
-          component: Select,
-          dataOptions: [{ label: 'Select type', value: '' }, ...relationshipOptions],
-          required: true,
-        },
-      ]}
-      newItemTemplate={{ superInstanceId: '', instanceRelationshipTypeId: '' }}
-    />
+    <FormattedMessage id="ui-inventory.selectType">
+      {placeholder => (
+        <RepeatableField
+          name="parentInstances"
+          label={<FormattedMessage id="ui-inventory.parentInstances" />}
+          addLabel={<FormattedMessage id="ui-inventory.addParentInstance" />}
+          addButtonId="clickable-add-parentinstance"
+          template={[
+            {
+              label: <FormattedMessage id="ui-inventory.parentInstancesRequired" />,
+              name: 'superInstanceId',
+              component: TextField,
+            },
+            {
+              label: <FormattedMessage id="ui-inventory.typeOfRelationRequired" />,
+              name: 'instanceRelationshipTypeId',
+              component: Select,
+              placeholder,
+              dataOptions: relationshipOptions,
+              required: true,
+            },
+          ]}
+          newItemTemplate={{ superInstanceId: '', instanceRelationshipTypeId: '' }}
+        />
+      )}
+    </FormattedMessage>
   );
 };
 
 ParentInstanceFields.propTypes = {
-  instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object)
+  instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default ParentInstanceFields;
