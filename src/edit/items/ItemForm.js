@@ -91,15 +91,15 @@ class ItemForm extends React.Component {
     super(props);
     this.state = {
       accordions: {
-        itemAccordion: true,
-        conditionsAccordion: true,
-        locationAccordion: true,
-        administrativeAccordion: true,
-        enumerationAccordion: true,
-        notesAccordion: true,
-        loanDataAccordion: true,
-        acquisitionsAccordion: true,
-        electronicAccordion: true,
+        acc01: true,
+        acc02: true,
+        acc03: true,
+        acc04: true,
+        acc05: true,
+        acc06: true,
+        acc07: true,
+        acc08: true,
+        acc09: true,
       },
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
@@ -441,20 +441,6 @@ class ItemForm extends React.Component {
                   )}
                 </FormattedMessage>
                 <Field
-                  label={<FormattedMessage id="ui-inventory.enumeration" />}
-                  name="enumeration"
-                  id="additem_enumeration"
-                  component={TextField}
-                  fullWidth
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.chronology" />}
-                  name="chronology"
-                  id="additem_chronology"
-                  component={TextField}
-                  fullWidth
-                />
-                <Field
                   label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
                   name="numberOfPieces"
                   id="additem_numberofpieces"
@@ -482,26 +468,73 @@ class ItemForm extends React.Component {
               </Col>
             </Row>
             <Accordion
-              open={accordions.administrativeAccordion}
-              id="administrativeAccordion"
+              open={accordions.acc01}
+              id="acc01"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
             />
             <Accordion
-              open={accordions.itemAccordion}
-              id="itemAccordion"
+              open={accordions.acc02}
+              id="acc02"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.itemData" />}
             />
             <Accordion
-              open={accordions.enumerationAccordion}
-              id="enumerationAccordion"
+              open={accordions.acc03}
+              id="acc03"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.enumerationData" />}
-            />
+            >
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.enumeration" />}
+                    name="enumeration"
+                    id="additem_enumeration"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.volume" />}
+                    name="volume"
+                    id="additem_volume"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.chronology" />}
+                    name="chronology"
+                    id="additem_chronology"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={6}>
+                  <RepeatableField
+                    name="yearCaption"
+                    addButtonId="clickable-add-year-caption"
+                    addLabel={<FormattedMessage id="ui-inventory.addYearCaption" />}
+                    template={[{
+                      component: TextField,
+                      label: (
+                        <FormattedMessage id="ui-inventory.yearCaption">
+                          {(message) => message + ' *'}
+                        </FormattedMessage>
+                      )
+                    }]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
-              open={accordions.conditionsAccordion}
-              id="conditionsAccordion"
+              open={accordions.acc04}
+              id="acc04"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.conditions" />}
             >
@@ -560,8 +593,8 @@ class ItemForm extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={accordions.notesAccordion}
-              id="notesAccordion"
+              open={accordions.acc05}
+              id="acc05"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.notes" />}
             >
@@ -594,26 +627,26 @@ class ItemForm extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={accordions.loanDataAccordion}
-              id="loanDataAccordion"
+              open={accordions.acc06}
+              id="acc06"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.item.availability" />}
             />
             <Accordion
-              open={accordions.acquisitionsAccordion}
-              id="acquisitionsAccordion"
+              open={accordions.acc07}
+              id="acc07"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.acquisitions" />}
             />
             <Accordion
-              open={accordions.locationAccordion}
-              id="locationAccordion"
+              open={accordions.acc08}
+              id="acc08"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.location" />}
             />
             <Accordion
-              open={accordions.electronicAccordion}
-              id="electronicAccordion"
+              open={accordions.acc09}
+              id="acc09"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.electronicAccess" />}
             >

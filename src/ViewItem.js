@@ -90,14 +90,14 @@ class ViewItem extends React.Component {
     super(props);
     this.state = {
       accordions: {
-        itemAccordion: true,
-        itemAvailabilityAccordion: true,
-        locationAccordion: true,
-        administrativeAccordion: true,
-        enumerationAccordion: true,
-        notesAccordion: true,
-        accordion10: true,
-        accordion06: true,
+        acc01: true,
+        acc02: true,
+        acc03: true,
+        acc04: true,
+        acc05: true,
+        acc06: true,
+        acc07: true,
+        acc08: true,
       },
       loan: null,
       borrower: null,
@@ -284,6 +284,10 @@ class ViewItem extends React.Component {
       stripes: { intl },
     } = this.props;
 
+    const {
+      accordions,
+    } = this.state;
+
     const formatMsg = intl.formatMessage;
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -417,8 +421,8 @@ class ViewItem extends React.Component {
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <br />
             <Accordion
-              open={this.state.accordions.administrativeAccordion}
-              id="administrativeAccordion"
+              open={accordions.acc01}
+              id="acc01"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.administrativeData' })}
             >
@@ -453,8 +457,8 @@ class ViewItem extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.itemAccordion}
-              id="itemAccordion"
+              open={accordions.acc02}
+              id="acc02"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.itemData' })}
             >
@@ -477,8 +481,8 @@ class ViewItem extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.enumerationAccordion}
-              id="enumerationAccordion"
+              open={accordions.acc03}
+              id="acc03"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.enumerationData' })}
             >
@@ -488,50 +492,72 @@ class ViewItem extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
                 </Col>
                 }
+                { (item.volume) &&
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.volume' })} value={_.get(item, ['volume'], '')} />
+                </Col>
+                }
                 { (item.chronology) &&
                 <Col smOffset={0} sm={4}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
                 </Col>
                 }
               </Row>
+              <Row>
+                { (item.yearCaption && item.yearCaption.length > 0) &&
+                  <Col smOffset={0} sm={8}>
+                    <KeyValue label={formatMsg({ id: 'ui-inventory.yearCaption' })} value={_.get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                  </Col>
+                }
+              </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion10}
-              id="accordion10"
+              open={accordions.acc04}
+              id="acc04"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.conditions' })}
             >
               <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.numberOfMissingPieces' })} value={_.get(item, ['numberOfMissingPieces'], '')} />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.missingPieces' })} value={_.get(item, ['missingPieces'], '')} />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['missingPiecesDate'], '')} />
-                </Col>
+                { (item.numberOfMissingPieces) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.numberOfMissingPieces' })} value={_.get(item, ['numberOfMissingPieces'], '')} />
+                  </Col>
+                }
+                { (item.missingPieces) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.missingPieces' })} value={_.get(item, ['missingPieces'], '')} />
+                  </Col>
+                }
+                { (item.missingPiecesDate) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['missingPiecesDate'], '')} />
+                  </Col>
+                }
               </Row>
               <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.itemDamagedStatus' })} value="" />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['itemDamagedStatusDate'], '')} />
-                </Col>
+                { (item.itemDamagedStatus) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.itemDamagedStatus' })} value="" />
+                  </Col>
+                }
+                { (item.itemDamagedStatusDate) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue label={intl.formatMessage({ id: 'ui-inventory.date' })} value={_.get(item, ['itemDamagedStatusDate'], '')} />
+                  </Col>
+                }
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.notesAccordion}
-              id="notesAccordion"
+              open={accordions.acc05}
+              id="acc05"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
             >
               {layoutNotes(referenceTables.itemNoteTypes, _.get(item, ['notes'], []))}
             </Accordion>
             <Accordion
-              open={this.state.accordions.itemAvailabilityAccordion}
-              id="itemAvailabilityAccordion"
+              open={accordions.acc06}
+              id="acc06"
               onToggle={this.handleAccordionToggle}
               label={intl.formatMessage({ id: 'ui-inventory.item.availability' })}
             >
@@ -577,8 +603,8 @@ class ViewItem extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.locationAccordion}
-              id="locationAccordion"
+              open={accordions.acc07}
+              id="acc07"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.location' })}
             >
@@ -623,8 +649,8 @@ class ViewItem extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion06}
-              id="accordion06"
+              open={accordions.acc08}
+              id="acc08"
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
