@@ -14,6 +14,7 @@ import {
   Icon,
   TextField,
   Select,
+  Checkbox,
   ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
@@ -24,7 +25,8 @@ import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
 
-import renderNotes from './renderNotes';
+import RepeatableField from '../../components/RepeatableField';
+
 import CopyNumbers from './CopyNumbers';
 
 
@@ -206,6 +208,7 @@ class ItemForm extends React.Component {
         locationsById,
         materialTypes,
         loanTypes = [],
+        itemNoteTypes,
       },
       copy,
       intl: { formatMessage },
@@ -271,6 +274,14 @@ class ItemForm extends React.Component {
       value: t.id,
       selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
     }));
+
+    const itemNoteTypeOptions = itemNoteTypes ? itemNoteTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.itemNoteTypeId,
+      }),
+    ) : [];
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
@@ -420,18 +431,6 @@ class ItemForm extends React.Component {
                 smOffset={1}
               >
                 <FieldArray
-                  name="notes"
-                  component={renderNotes}
-                  formatMsg={formatMessage}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col
-                sm={8}
-                smOffset={1}
-              >
-                <FieldArray
                   name="copyNumbers"
                   component={CopyNumbers}
                 />
@@ -467,7 +466,35 @@ class ItemForm extends React.Component {
               id="notesAccordion"
               onToggle={this.handleAccordionToggle}
               label={formatMessage({ id: 'ui-inventory.notes' })}
-            />
+            >
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="notes"
+                    addButtonId="clickable-add-note"
+                    addLabel={<FormattedMessage id="ui-inventory.addNote" />}
+                    template={[
+                      {
+                        name: 'itemNoteTypeId',
+                        label: <FormattedMessage id="ui-inventory.noteType" />,
+                        component: Select,
+                        dataOptions: [{ label: 'Select type', value: '' }, ...itemNoteTypeOptions],
+                      },
+                      {
+                        name: 'note',
+                        label: <FormattedMessage id="ui-inventory.note" />,
+                        component: TextField,
+                      },
+                      {
+                        name: 'staffOnly',
+                        label: <FormattedMessage id="ui-inventory.staffOnly" />,
+                        component: Checkbox,
+                      }
+                    ]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={this.state.accordions.loanDataAccordion}
               id="loanDataAccordion"
