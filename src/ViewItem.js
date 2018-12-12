@@ -61,6 +61,11 @@ class ViewItem extends React.Component {
       },
       records: 'loantypes',
     },
+    callNumberTypes: {
+      type: 'okapi',
+      path: 'call-number-types',
+      records: 'callNumberTypes',
+    },
     itemNoteTypes: {
       type: 'okapi',
       path: 'item-note-types',
@@ -277,6 +282,7 @@ class ViewItem extends React.Component {
         loanTypes,
         itemNoteTypes,
         requests,
+        callNumberTypes,
       },
       referenceTables,
       okapi,
@@ -293,6 +299,7 @@ class ViewItem extends React.Component {
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
     referenceTables.itemNoteTypes = (itemNoteTypes || {}).records || [];
+    referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
 
     if (!items || !items.hasLoaded || !instances1 ||
       !instances1.hasLoaded || !holdingsRecords ||
@@ -300,7 +307,8 @@ class ViewItem extends React.Component {
 
     if (!loanTypes || !loanTypes.hasLoaded ||
         !materialTypes || !materialTypes.hasLoaded ||
-        !itemNoteTypes || !itemNoteTypes.hasLoaded) return <div>Waiting for resources</div>;
+        !itemNoteTypes || !itemNoteTypes.hasLoaded ||
+        !callNumberTypes || !callNumberTypes.hasLoaded) return <div>Waiting for resources</div>;
 
     const instance = instances1.records[0];
     const item = items.records[0];
@@ -464,7 +472,34 @@ class ViewItem extends React.Component {
             >
               <Row>
                 <Col smOffset={0} sm={4}>
+                  <strong>{formatMsg({ id: 'ui-inventory.materialType' })}</strong>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <KeyValue value={_.get(item, ['materialType', 'name'], '')} />
+                </Col>
+              </Row>
+              <Row>
+                <Col smOffset={0} sm={4}>
                   <strong>{formatMsg({ id: 'ui-inventory.itemCallNumber' })}</strong>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={2}>
+                  <KeyValue
+                    label={formatMsg({ id: 'ui-inventory.callNumberType' })}
+                    value={refLookup(referenceTables.callNumberTypes, _.get(item, ['itemLevelCallNumberTypeId'])).name}
+                  />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })} value={item.itemLevelCallNumberPrefix} />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumber' })} value={item.itemLevelCallNumber} />
+                </Col>
+                <Col sm={2}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.callNumberSuffix' })} value={item.itemLevelCallNumberSuffix} />
                 </Col>
               </Row>
               <Row>
