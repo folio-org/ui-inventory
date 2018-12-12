@@ -360,80 +360,6 @@ class ItemForm extends React.Component {
                   <this.cViewMetaData metadata={holdingsRecord.metadata} />
                 }
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
-                <FormattedMessage id="ui-inventory.selectLoanType">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
-                      placeholder={placeholder}
-                      name="permanentLoanType.id"
-                      id="additem_loanTypePerm"
-                      component={Select}
-                      fullWidth
-                      dataOptions={loanTypeOptions}
-                    />
-                  )}
-                </FormattedMessage>
-                <Field
-                  label={<FormattedMessage id="ui-inventory.barcode" />}
-                  name="barcode"
-                  id="additem_barcode"
-                  component={TextField}
-                  required
-                  fullWidth
-                />
-                <FormattedMessage id="ui-inventory.selectLocation">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                      placeholder={placeholder}
-                      name="permanentLocation.id"
-                      id="additem_permanentlocation"
-                      component={LocationSelection}
-                      fullWidth
-                      marginBottom0
-                      onSelect={loc => this.selectPermanentLocation(loc)}
-                    />
-                  )}
-                </FormattedMessage>
-                <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
-
-                <FormattedMessage id="ui-inventory.selectLocation">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                      placeholder={placeholder}
-                      name="temporaryLocation.id"
-                      id="additem_temporarylocation"
-                      component={LocationSelection}
-                      fullWidth
-                      marginBottom0
-                      onSelect={this.onSelectHandler}
-                    />
-                  )}
-                </FormattedMessage>
-                <LocationLookup onLocationSelected={this.onSelectHandler} />
-
-                <Field
-                  label={<FormattedMessage id="ui-inventory.status" />}
-                  name="status.name"
-                  id="additem_status"
-                  component={TextField}
-                  disabled
-                  fullWidth
-                />
-                <FormattedMessage id="ui-inventory.selectLoanType">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
-                      placeholder={placeholder}
-                      name="temporaryLoanType.id"
-                      id="additem_loanTypeTemp"
-                      component={Select}
-                      fullWidth
-                      dataOptions={loanTypeOptions}
-                    />
-                  )}
-                </FormattedMessage>
               </Col>
             </Row>
             <Row end="xs">
@@ -449,7 +375,67 @@ class ItemForm extends React.Component {
               id="acc01"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
-            />
+            >
+              <Row>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.itemHrid" />}
+                    name="hrid"
+                    id="additem_hrid"
+                    component={TextField}
+                    required
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.barcode" />}
+                    name="barcode"
+                    id="additem_barcode"
+                    component={TextField}
+                    required
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.accessionNumber" />}
+                    name="accessionNumber"
+                    id="additem_accessionnumber"
+                    component={TextField}
+                    required
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
+                    name="itemIdentifier"
+                    id="additem_itemidentifier"
+                    component={TextField}
+                    required
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <RepeatableField
+                    name="formerIds"
+                    addButtonId="clickable-add-former-id"
+                    addLabel={<FormattedMessage id="ui-inventory.addFormerId" />}
+                    template={[{
+                      component: TextField,
+                      label: (
+                        <FormattedMessage id="ui-inventory.formerId">
+                          {(message) => message }
+                        </FormattedMessage>
+                      )
+                    }]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={accordions.acc02}
               id="acc02"
@@ -483,7 +469,7 @@ class ItemForm extends React.Component {
                       component: TextField,
                       label: (
                         <FormattedMessage id="ui-inventory.copyNumber">
-                          {(message) => message + ' *'}
+                          {(message) => message}
                         </FormattedMessage>
                       )
                     }]}
@@ -705,7 +691,54 @@ class ItemForm extends React.Component {
               id="acc06"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.item.availability" />}
-            />
+            >
+              <Row>
+                <Col sm={6}>
+                  <FormattedMessage id="ui-inventory.selectLoanType">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
+                        placeholder={placeholder}
+                        name="permanentLoanType.id"
+                        id="additem_loanTypePerm"
+                        component={Select}
+                        fullWidth
+                        dataOptions={loanTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={6}>
+                  <FormattedMessage id="ui-inventory.selectLoanType">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
+                        placeholder={placeholder}
+                        name="temporaryLoanType.id"
+                        id="additem_loanTypeTemp"
+                        component={Select}
+                        fullWidth
+                        dataOptions={loanTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.status" />}
+                    name="status.name"
+                    id="additem_status"
+                    component={TextField}
+                    disabled
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={accordions.acc07}
               id="acc07"
@@ -716,8 +749,45 @@ class ItemForm extends React.Component {
               open={accordions.acc08}
               id="acc08"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.location" />}
-            />
+              label={<FormattedMessage id="ui-inventory.locations" />}
+            >
+              <Row>
+                <Col sm={4}>
+                  <FormattedMessage id="ui-inventory.selectLocation">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                        placeholder={placeholder}
+                        name="permanentLocation.id"
+                        id="additem_permanentlocation"
+                        component={LocationSelection}
+                        fullWidth
+                        marginBottom0
+                        onSelect={loc => this.selectPermanentLocation(loc)}
+                      />
+                    )}
+                  </FormattedMessage>
+                  <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
+                </Col>
+                <Col sm={4}>
+                  <FormattedMessage id="ui-inventory.selectLocation">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                        placeholder={placeholder}
+                        name="temporaryLocation.id"
+                        id="additem_temporarylocation"
+                        component={LocationSelection}
+                        fullWidth
+                        marginBottom0
+                        onSelect={this.onSelectHandler}
+                      />
+                    )}
+                  </FormattedMessage>
+                  <LocationLookup onLocationSelected={this.onSelectHandler} />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={accordions.acc09}
               id="acc09"
