@@ -1,9 +1,12 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
-import { FormattedTime } from 'react-intl';
+import {
+  FormattedTime,
+  FormattedMessage,
+} from 'react-intl';
 import {
   Pane,
   PaneMenu,
@@ -15,6 +18,8 @@ import {
   Layer,
   IconButton,
   AppIcon,
+  Button,
+  Icon,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -54,6 +59,11 @@ class ViewItem extends React.Component {
         limit: '40',
       },
       records: 'loantypes',
+    },
+    itemNoteTypes: {
+      type: 'okapi',
+      path: 'item-note-types',
+      records: 'itemNoteTypes',
     },
     requests: {
       type: 'okapi',
@@ -216,19 +226,73 @@ class ViewItem extends React.Component {
     this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
+  getActionMenu = ({ onToggle }) => {
+    const { resources } = this.props;
+    const firstItem = _.get(resources, 'items.records[0]');
+
+    return (
+      <Fragment>
+        <Button
+          href={this.craftLayerUrl('editItem')}
+          onClick={() => {
+            onToggle();
+            this.onClickEditItem();
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-edit-item-action
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editItem" />
+          </Icon>
+        </Button>
+        <Button
+          id="clickable-copy-item"
+          onClick={() => {
+            onToggle();
+            this.onCopy(firstItem);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-duplicate-item-action
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.copyItem" />
+          </Icon>
+        </Button>
+      </Fragment>
+    );
+  }
+
   render() {
-    const { location, resources: { items, holdingsRecords, instances1, materialTypes, loanTypes, requests },
+    const {
+      location,
+      resources: {
+        items,
+        holdingsRecords,
+        instances1,
+        materialTypes,
+        loanTypes,
+        itemNoteTypes,
+        requests,
+      },
       referenceTables,
-      okapi, stripes: { intl } } = this.props;
+      okapi,
+      paneWidth,
+      stripes: { intl },
+    } = this.props;
 
     const formatMsg = intl.formatMessage;
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
+    referenceTables.itemNoteTypes = (itemNoteTypes || {}).records || [];
 
     if (!items || !items.hasLoaded || !instances1 ||
       !instances1.hasLoaded || !holdingsRecords ||
       !holdingsRecords.hasLoaded) return <div>Waiting for resources</div>;
+
+    if (!loanTypes || !loanTypes.hasLoaded ||
+        !materialTypes || !materialTypes.hasLoaded ||
+        !itemNoteTypes || !itemNoteTypes.hasLoaded) return <div>Waiting for resources</div>;
 
     const instance = instances1.records[0];
     const item = items.records[0];
@@ -273,13 +337,38 @@ class ViewItem extends React.Component {
       itemStatusDate = this.state.loanStatusDate;
     }
 
+    const layoutNotes = (noteTypes, notes) => {
+      const table = [];
+      let cols = [];
+      noteTypes
+        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .map((noteType, i) => {
+          cols.push(
+            <Col key={i} sm={3}>
+              <KeyValue
+                label={noteType.name}
+                value={_.get(item, ['notes'], []).map((note, j) => { if (note.itemNoteTypeId === noteType.id) return <div key={j}>{note.note}</div>; else return ''; })}
+              />
+            </Col>
+          );
+          if ((i + 1) % 4 === 0) {
+            table.push(<Row>{cols}</Row>);
+            cols = [];
+          }
+          return cols;
+        });
+      if (cols.length) table.push(<Row>{cols}</Row>);
+      return table;
+    };
+
     return (
       <div>
         <Layer isOpen label="View Item">
           <Pane
-            defaultWidth={this.props.paneWidth}
+            data-test-item-view-page
+            defaultWidth={paneWidth}
             paneTitle={
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: 'center' }} data-test-header-title>
                 <AppIcon app="inventory" iconKey="item" size="small" />
                 {' '}
                 {_.get(item, ['barcode'], '')}
@@ -291,15 +380,7 @@ class ViewItem extends React.Component {
             lastMenu={detailMenu}
             dismissible
             onClose={this.props.onCloseViewItem}
-            actionMenuItems={[{
-              label: formatMsg({ id: 'ui-inventory.editItem' }),
-              href: this.craftLayerUrl('editItem'),
-              onClick: this.onClickEditItem,
-            }, {
-              id: 'clickable-copy-item',
-              onClick: () => this.onCopy(item),
-              label: formatMsg({ id: 'ui-inventory.copyItem' })
-            }]}
+            actionMenu={this.getActionMenu}
           >
             <Row center="xs">
               <Col sm={6}>
@@ -307,13 +388,13 @@ class ViewItem extends React.Component {
                 {' '}
                 {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
-                <span>
-                  <em>, </em>
-                  <em>
-                    {instance.publication[0].publisher}
-                    {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                  </em>
-                </span>
+                  <span>
+                    <em>, </em>
+                    <em>
+                      {instance.publication[0].publisher}
+                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                    </em>
+                  </span>
                 }
                 <div>
                   { `${formatMsg({ id: 'ui-inventory.holdingsColon' })} ${labelPermanentHoldingsLocation} > ${labelCallNumber}`}
@@ -353,9 +434,9 @@ class ViewItem extends React.Component {
                   <KeyValue label={formatMsg({ id: 'ui-inventory.itemHrid' })} value={_.get(item, ['id'], '')} />
                 </Col>
                 { (item.barcode) &&
-                  <Col xs={3}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
-                  </Col>
+                <Col xs={3}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemBarcode' })} value={_.get(item, ['barcode'], '')} />
+                </Col>
                 }
               </Row>
             </Accordion>
@@ -371,15 +452,15 @@ class ViewItem extends React.Component {
                 </Col>
               </Row>
               <Row>
-                { (item.pieceIdentifiers) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.pieceIdentifiers' })} value={_.get(item, ['pieceIdentifiers'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                  </Col>
+                { (item.copyNumbers) &&
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.copyNumbers' })} value={_.get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)} />
+                </Col>
                 }
                 { (item.numberOfPieces) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.numberOfPieces' })} value={_.get(item, ['numberOfPieces'], '')} />
+                </Col>
                 }
               </Row>
             </Accordion>
@@ -391,14 +472,14 @@ class ViewItem extends React.Component {
             >
               <Row>
                 { (item.enumeration) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.enumeration' })} value={_.get(item, ['enumeration'], '')} />
+                </Col>
                 }
                 { (item.chronology) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.chronology' })} value={_.get(item, ['chronology'], '')} />
+                </Col>
                 }
               </Row>
             </Accordion>
@@ -408,18 +489,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.notes' })}
             >
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>{formatMsg({ id: 'ui-inventory.itemNotes' })}</strong>
-                </Col>
-              </Row>
-              { (item.notes.length > 0) &&
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.itemPublicNote' })} value={_.get(item, ['notes'], []).map((line, i) => <div key={i}>{line}</div>)} />
-                </Col>
-              </Row>
-              }
+              {layoutNotes(referenceTables.itemNoteTypes, _.get(item, ['notes'], []))}
             </Accordion>
             <Accordion
               open={this.state.accordions.itemAvailabilityAccordion}
@@ -429,14 +499,14 @@ class ViewItem extends React.Component {
             >
               <Row>
                 { (item.permanentLoanType) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.permanentLoantype' })} value={_.get(item, ['permanentLoanType', 'name'], '')} />
+                </Col>
                 }
                 { (item.temporaryLoanType) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
-                  </Col>
+                <Col smOffset={0} sm={4}>
+                  <KeyValue label={formatMsg({ id: 'ui-inventory.temporaryLoantype' })} value={_.get(item, ['temporaryLoanType', 'name'], '')} />
+                </Col>
                 }
               </Row>
               <Row>
@@ -545,7 +615,6 @@ class ViewItem extends React.Component {
             stripes={this.props.stripes}
           />
         </Layer>
-
       </div>
     );
   }

@@ -50,6 +50,15 @@ export default function configure() {
   this.get('/statistical-code-types');
   this.get('/statistical-code-types/:id');
 
+  this.get('/statistical-codes', {
+    statisticalCodes: [],
+    totalRecords: 0
+  });
+
+  this.get('/alternative-title-types', {
+    alternativeTitleTypes: [],
+    totalRecords: 0
+  });
 
   this.get('/inventory/instances', (schema /* , request */) => {
     return schema.instances.all();
@@ -60,8 +69,6 @@ export default function configure() {
 
   this.get('/locations');
   this.get('/locations/:id');
-
-  this.get('/platforms', { platforms: [], totalRecords: 0 });
 
   // item-storage
   this.get('/service-points', {
@@ -123,4 +130,32 @@ export default function configure() {
   this.get('/addresstypes', {});
   this.get('/users/:id', {});
   this.get('/perms/users/:id/permissions', {});
+
+  this.get('/holdings-types', {
+    holdingsTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/holdings-note-types', {
+    holdingsNoteTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/item-note-types', {
+    itemNoteTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/ill-policies', {
+    illPolicies: [],
+    totalRecords: 0
+  });
+
+  this.get('/call-number-types', {
+    callNumberTypes: [],
+    totalRecords: 0
+  });
+
+  this.get('/material-types');
+  this.get('/loan-types');
 }

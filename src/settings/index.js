@@ -6,6 +6,14 @@ import LoanTypesSettings from './LoanTypesSettings';
 import FormatsSettings from './FormatsSettings';
 import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
+import URLRelationshipSettings from './URLRelationshipSettings';
+import StatisticalCodeSettings from './StatisticalCodeSettings';
+import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
+import HoldingsTypeSettings from './HoldingsTypeSettings';
+import ILLPolicy from './ILLPolicy';
+import CallNumberTypes from './CallNumberTypes';
+import StatisticalCodeTypes from './StatisticalCodeTypes';
+import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 
 class InventorySettings extends React.Component {
   static propTypes = {
@@ -26,6 +34,12 @@ class InventorySettings extends React.Component {
         label: formatMessage({ id: 'ui-inventory.instances' }),
         pages: [
           {
+            route: 'alternativeTitleTypes',
+            label: formatMessage({ id: 'ui-inventory.alternativeTitleTypes' }),
+            component: AlternativeTitleTypesSettings,
+            perm: 'ui-inventory.settings.alternative-title-types',
+          },
+          {
             route: 'contributortypes',
             label: formatMessage({ id: 'ui-inventory.contributorTypes' }),
             component: ContributorTypesSettings,
@@ -38,10 +52,33 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.instance-formats',
           },
           {
+            route: 'instanceStatusTypes',
+            label: formatMessage({ id: 'ui-inventory.instanceStatusTypes' }),
+            component: InstanceStatusTypesSettings,
+            perm: 'ui-inventory.settings.instance-statuses',
+          },
+          {
             route: 'resourcetypes',
             label: formatMessage({ id: 'ui-inventory.resourceTypes' }),
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.holdings' }),
+        pages: [
+          {
+            route: 'holdingsTypes',
+            label: formatMessage({ id: 'ui-inventory.holdingsTypes' }),
+            component: HoldingsTypeSettings,
+            perm: 'ui-inventory.settings.holdings-types',
+          },
+          {
+            route: 'ILLPolicy',
+            label: formatMessage({ id: 'ui-inventory.ILLPolicy' }),
+            component: ILLPolicy,
+            perm: 'ui-inventory.settings.ill-policies',
           },
         ]
       },
@@ -59,6 +96,40 @@ class InventorySettings extends React.Component {
             label: formatMessage({ id: 'ui-inventory.materialTypes' }),
             component: MaterialTypesSettings,
             perm: 'ui-inventory.settings.materialtypes',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.instanceHoldingsItem' }),
+        pages: [
+          {
+            route: 'StatisticalCodeSettings',
+            label: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
+            component: StatisticalCodeSettings,
+            perm: 'ui-inventory.settings.statistical-codes',
+          },
+          {
+            route: 'statisticalCodeTypes',
+            label: formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
+            component: StatisticalCodeTypes,
+            perm: 'ui-inventory.settings.statistical-code-types',
+          },
+          {
+            route: 'URLrelationship',
+            label: formatMessage({ id: 'ui-inventory.URLrelationship' }),
+            component: URLRelationshipSettings,
+            perm: 'ui-inventory.settings.electronic-access-relationships',
+          },
+        ]
+      },
+      {
+        label: formatMessage({ id: 'ui-inventory.holdingsItems' }),
+        pages: [
+          {
+            route: 'callNumberTypes',
+            label: formatMessage({ id: 'ui-inventory.callNumberTypes' }),
+            component: CallNumberTypes,
+            perm: 'ui-inventory.settings.call-number-types',
           },
         ]
       }

@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
 import cloneDeep from 'lodash/cloneDeep';
+import { FormattedMessage } from 'react-intl';
+
+import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
   Paneset,
@@ -9,16 +13,14 @@ import {
   Row,
   Col,
   Button,
+  Icon,
   TextField,
   Select,
   Checkbox,
   Headline,
   Datepicker,
 } from '@folio/stripes/components';
-
-import { Field } from 'redux-form';
 import stripesForm from '@folio/stripes/form';
-import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
@@ -177,6 +179,31 @@ class InstanceForm extends React.Component {
     });
   }
 
+  getPaneTitle() {
+    const {
+      initialValues,
+    } = this.props;
+
+    const titleTranslationKey = initialValues.id ? 'ui-inventory.editInstance' : 'ui-inventory.newInstance';
+
+    return (
+      <span data-test-header-title>
+        <FormattedMessage id={titleTranslationKey} />
+      </span>
+    );
+  }
+
+  getActionMenu = () => {
+    const { onCancel } = this.props;
+    return (
+      <Button buttonStyle="dropdownItem" id="cancel-instance-edition" onClick={onCancel}>
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
+    );
+  }
+
   render() {
     const {
       handleSubmit,
@@ -229,6 +256,7 @@ class InstanceForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     const editInstanceLastMenu = (
       <PaneMenu>
         <Button
@@ -244,15 +272,17 @@ class InstanceForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     return (
-      <form>
+      <form data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
             lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu}
-            paneTitle={initialValues.id ? 'Edit Instance' : 'New Instance'}
+            paneTitle={this.getPaneTitle()}
+            actionMenu={this.getActionMenu}
           >
             <div>
               <Headline size="large" tag="h3">{formatMsg({ id: 'ui-inventory.instanceRecord' })}</Headline>
@@ -352,7 +382,7 @@ class InstanceForm extends React.Component {
                   name="source"
                   component="input"
                 />
-                <AlternativeTitles formatMsg={formatMsg} />
+                <AlternativeTitles alternativeTitleTypes={referenceTables.alternativeTitleTypes} formatMsg={formatMsg} />
                 <Col sm={10}>
                   <Field
                     label={`${formatMsg({ id: 'ui-inventory.indexTitle' })}`}
@@ -402,12 +432,11 @@ class InstanceForm extends React.Component {
               <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.classifications' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection10} id="instanceSection10">
                 <ClassificationFields classificationTypes={referenceTables.classificationTypes} formatMsg={formatMsg} />
               </Accordion>
-              {/* <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.otherRelatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection11">
-              </Accordion> */}
-              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.relatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection12">
+              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.instanceRelationshipsAnalyticsBoundWith' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection11} id="instanceSection11">
                 <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
                 <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
               </Accordion>
+              <Accordion label={<h3>{formatMsg({ id: 'ui-inventory.relatedInstances' })}</h3>} onToggle={this.onToggleSection} open={this.state.sections.instanceSection12} id="instanceSection12" />
             </div>
           </Pane>
         </Paneset>

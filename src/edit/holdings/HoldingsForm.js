@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { FormattedMessage } from 'react-intl';
 import {
   Paneset,
   Pane,
@@ -10,6 +11,7 @@ import {
   Row,
   Col,
   Button,
+  Icon,
   TextField,
   Select,
   Checkbox,
@@ -165,6 +167,17 @@ class HoldingsForm extends React.Component {
     });
   }
 
+  getActionMenu = () => {
+    const { onCancel } = this.props;
+    return (
+      <Button buttonStyle="dropdownItem" id="cancel-holdings-creation" onClick={onCancel}>
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
+    );
+  }
+
   render() {
     const {
       handleSubmit,
@@ -195,6 +208,7 @@ class HoldingsForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     const editHoldingsLastMenu = (
       <PaneMenu>
         <Button
@@ -211,16 +225,29 @@ class HoldingsForm extends React.Component {
       </PaneMenu>
     );
 
+    const holdingsNoteTypeOptions = referenceTables.holdingsNoteTypes ? referenceTables.holdingsNoteTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.holdingsNoteTypeId,
+      }),
+    ) : [];
+
+    const holdingsPageType = initialValues.id ? 'edit' : 'create';
+
     return (
-      <form>
+      <form data-test-holdings-page-type={holdingsPageType}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
-            lastMenu={initialValues.id ? editHoldingsLastMenu : addHoldingsLastMenu}
+            lastMenu={holdingsPageType === 'edit' ? editHoldingsLastMenu : addHoldingsLastMenu}
             paneTitle={
-              <div style={{ textAlign: 'center' }}>
+              <div
+                style={{ textAlign: 'center' }}
+                data-test-header-title
+              >
                 <strong>{instance.title}</strong>
                 {(instance.publication && instance.publication.length > 0) &&
                   <div>
@@ -232,6 +259,7 @@ class HoldingsForm extends React.Component {
                 }
               </div>
             }
+            actionMenu={this.getActionMenu}
           >
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
             <Row>
@@ -430,6 +458,25 @@ class HoldingsForm extends React.Component {
                   <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
                 </Col>
               </Row>
+              <Row>
+                <Col sm={3} />
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}
+                    name="digitizationPolicy"
+                    id="edit_digitizationpolicy"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={formatMsg({ id: 'ui-inventory.retentionPolicy' })}
+                    name="retentionPolicy"
+                    id="edit_retentionpolicy"
+                    component={TextField}
+                  />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={this.state.accordions.accordion04}
@@ -471,19 +518,10 @@ class HoldingsForm extends React.Component {
                     addLabel={formatMsg({ id: 'ui-inventory.addNote' })}
                     template={[
                       {
-                        name: 'type',
+                        name: 'holdingsNoteTypeId',
                         label: formatMsg({ id: 'ui-inventory.noteType' }),
                         component: Select,
-                        dataOptions: [
-                          { label: 'Select type', value: '' },
-                          { label: 'Action note', value: 'action note' },
-                          { label: 'Binding', value: 'binding' },
-                          { label: 'Copy note', value: 'copy note' },
-                          { label: 'Electronic bookplate', value: 'electronic bookplate' },
-                          { label: 'Note', value: 'note' },
-                          { label: 'Provenance', value: 'provenance' },
-                          { label: 'Reproduction', value: 'reproduction' },
-                        ],
+                        dataOptions: [{ label: 'Select type', value: '' }, ...holdingsNoteTypeOptions],
                       },
                       {
                         name: 'note',

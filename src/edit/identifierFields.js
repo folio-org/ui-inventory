@@ -22,20 +22,20 @@ const IdentifierFields = ({ identifierTypes, formatMsg }) => {
       addButtonId="clickable-add-identifier"
       template={[
         {
-          name: 'value',
-          label: `${formatMsg({ id: 'ui-inventory.identifier' })} *`,
-          component: TextField,
-          required: true,
-        },
-        {
           name: 'identifierTypeId',
           label: `${formatMsg({ id: 'ui-inventory.type' })} *`,
           component: Select,
           dataOptions: [{ label: 'Select identifier type', value: '' }, ...identifierTypeOptions],
           required: true,
         },
+        {
+          name: 'value',
+          label: `${formatMsg({ id: 'ui-inventory.identifier' })} *`,
+          component: TextField,
+          required: true,
+        }
       ]}
-      newItemTemplate={{ value: '', identifierTypeId: '' }}
+      newItemTemplate={{ identifierTypeId: '', value: '' }}
     />
   );
 };

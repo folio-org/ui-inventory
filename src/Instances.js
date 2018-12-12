@@ -176,6 +176,11 @@ class Instances extends React.Component {
       records: 'classificationTypes',
       path: 'classification-types?limit=100&query=cql.allRecords=1 sortby name',
     },
+    alternativeTitleTypes: {
+      type: 'okapi',
+      records: 'alternativeTitleTypes',
+      path: 'alternative-title-types?limit=100&query=cql.allRecords=1 sortby name',
+    },
     locations: {
       type: 'okapi',
       records: 'locations',
@@ -206,6 +211,11 @@ class Instances extends React.Component {
       records: 'statisticalCodeTypes',
       path: 'statistical-code-types?limit=100&query=cql.allRecords=1 sortby name',
     },
+    statisticalCodes: {
+      type: 'okapi',
+      records: 'statisticalCodes',
+      path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby name',
+    }
   });
 
   constructor(props) {
@@ -227,7 +237,7 @@ class Instances extends React.Component {
   static getDerivedStateFromProps(props) {
     // resource types
     const rt = (props.resources.instanceTypes || {}).records || [];
-    if (rt && rt.length) {
+    if (rt.length) {
       const oldValuesLength = filterConfig[0].values.length;
       filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
@@ -238,7 +248,7 @@ class Instances extends React.Component {
 
     // locations
     const locations = (props.resources.locations || {}).records || [];
-    if (locations && locations.length) {
+    if (locations.length) {
       const oldValuesLength = filterConfig[2].values.length;
       filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
       if (oldValuesLength === 0) {
@@ -286,12 +296,14 @@ class Instances extends React.Component {
         || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
         || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
         || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
+        || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
         || !resources.locations || !resources.locations.hasLoaded
         || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
         || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
         || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
         || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
         || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
+        || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
     ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -301,10 +313,12 @@ class Instances extends React.Component {
     const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
     const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
     const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
+    const alternativeTitleTypes = (resources.alternativeTitleTypes || emptyObj).records || emptyArr;
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
+    const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
 
@@ -316,10 +330,12 @@ class Instances extends React.Component {
       classificationTypes,
       instanceTypes,
       instanceFormats,
+      alternativeTitleTypes,
       instanceStatuses,
       modesOfIssuance,
       electronicAccessRelationships,
       statisticalCodeTypes,
+      statisticalCodes,
       locationsById,
     };
 

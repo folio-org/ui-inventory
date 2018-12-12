@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
-class FormatTypesSettings extends React.Component {
+class ResourceTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -30,7 +30,7 @@ class FormatTypesSettings extends React.Component {
         records="instanceTypes"
         label={formatMessage({ id: 'ui-inventory.resourceTypes' })}
         labelSingular={formatMessage({ id: 'ui-inventory.resourceType' })}
-        objectLabel={formatMessage({ id: 'ui-inventory.instances' })}
+        objectLabel={formatMessage({ id: 'ui-inventory.resourceTypes' })}
         visibleFields={['name', 'code', 'source']}
         readOnlyFields={['source']}
         itemTemplate={{ source: 'local' }}
@@ -45,4 +45,4 @@ class FormatTypesSettings extends React.Component {
   }
 }
 
-export default FormatTypesSettings;
+export default ResourceTypesSettings;

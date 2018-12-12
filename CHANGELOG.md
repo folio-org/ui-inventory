@@ -2,6 +2,10 @@
 
 ## 1.5.0 (IN PROGRESS)
 
+* Renames `pieceIdentifiers`to `copyNumbers` (UIIN-397)
+* Adapts to changed structure of alternative titles (UIIN-345)
+* Adapts to changed structure of holdings statements (UIIN-234)
+* No longer requires `platforms` interface (UIIN-388)
 * Requires `locations` interface 3.0 (UIIN-357)
 * Add accordions, holdings record view, holdings record form (UIIN-168, UIIN-274)
 * Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)
@@ -12,6 +16,8 @@
 * Click "search" button in tests (STCOM-354)
 * Provide `sortby` key for `<ControlledVocab>`. Refs STSMACOM-139.
 * Default term to empty string in cases when query is undefined. Fixes UIIN-371.
+* Support circulation v5.0, requiring service-point information on loans. Refs UIIN-383.
+* Removed deprecated actionMenuItems-prop. Fixes UIIN-393.
 
 ## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)

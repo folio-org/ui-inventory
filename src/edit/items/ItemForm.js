@@ -11,6 +11,7 @@ import {
   Col,
   Accordion,
   Button,
+  Icon,
   TextField,
   Select,
   ExpandAllButton,
@@ -23,8 +24,8 @@ import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
 
-import renderNotes from './noteFields';
-import renderPieceIdentifiers from './pieceIdentifierFields';
+import renderNotes from './renderNotes';
+import CopyNumbers from './CopyNumbers';
 
 
 function validate(values) {
@@ -44,13 +45,18 @@ function validate(values) {
 
 function checkUniqueBarcode(okapi, barcode) {
   return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
-    { headers: Object.assign({}, { 'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
-      'Content-Type': 'application/json' }) });
+    {
+      headers: Object.assign({}, {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json',
+      })
+    });
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const barcodeTakenMsg = props.intl.formatMessage({ id: 'ui-inventory.barcodeTaken' });
+  const barcodeTakenMsg = <FormattedMessage id="ui-inventory.barcodeTaken" />;
+
   if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
       // TODO: Should use stripes-connect (dispatching an action and update state)
@@ -169,24 +175,47 @@ class ItemForm extends React.Component {
     this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
+  getActionMenu = ({ onToggle }) => {
+    const { onCancel } = this.props;
+    return (
+      <Button
+        data-test-inventory-cancel-item-edit-action
+        buttonStyle="dropdownItem"
+        onClick={() => {
+          onCancel();
+          onToggle();
+        }}
+      >
+        <Icon icon="hollowX">
+          <FormattedMessage id="ui-inventory.cancel" />
+        </Icon>
+      </Button>
+    );
+  }
+
   render() {
     const {
       handleSubmit,
-      reset, // eslint-disable-line no-unused-vars
       pristine,
       submitting,
       onCancel,
       initialValues,
       instance,
       holdingsRecord,
-      referenceTables,
+      referenceTables: {
+        locationsById,
+        materialTypes,
+        loanTypes = [],
+      },
       copy,
-      intl,
+      intl: { formatMessage },
     } = this.props;
-    const formatMsg = intl.formatMessage;
 
-    const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
-    const { locationsById } = referenceTables;
+    const {
+      confirmPermanentLocation,
+      confirmTemporaryLocation,
+    } = this.state;
+
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
 
     /* Menus for Add Item workflow */
@@ -205,6 +234,7 @@ class ItemForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
     const editItemLastMenu = (
       <PaneMenu>
         <Button
@@ -221,17 +251,22 @@ class ItemForm extends React.Component {
       </PaneMenu>
     );
 
-    const materialTypeOptions = referenceTables.materialTypes ?
-      referenceTables.materialTypes.map((t) => {
+    const materialTypeOptions = materialTypes ?
+      materialTypes.map((t) => {
         let selectedValue;
-        if (initialValues.materialType) { selectedValue = initialValues.materialType.id === t.id; }
+
+        if (initialValues.materialType) {
+          selectedValue = initialValues.materialType.id === t.id;
+        }
+
         return {
           label: t.name,
           value: t.id,
           selected: selectedValue,
         };
       }) : [];
-    const loanTypeOptions = (referenceTables.loanTypes || []).map(t => ({
+
+    const loanTypeOptions = loanTypes.map(t => ({
       label: t.name,
       value: t.id,
       selected: (initialValues.loanType) ? initialValues.loanType.id === t.id : false,
@@ -241,7 +276,7 @@ class ItemForm extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
-      <form>
+      <form data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
@@ -249,56 +284,67 @@ class ItemForm extends React.Component {
             onClose={onCancel}
             lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
             paneTitle={
-              <div style={{ textAlign: 'center' }}>
+              <div
+                style={{ textAlign: 'center' }}
+                data-test-header-title
+              >
                 <em>{instance.title}</em>
                 {(instance.publication && instance.publication.length > 0) &&
-                <span>
-                  <em>, </em>
-                  <em>
-                    {instance.publication[0].publisher}
-                    {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                  </em>
-                </span>
+                  <span>
+                    <em>, </em>
+                    <em>
+                      {instance.publication[0].publisher}
+                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                    </em>
+                  </span>
                 }
                 <div>
-                  &nbsp;
-                  {`Holdings: ${labelLocation} > ${labelCallNumber}`}
+                  {` Holdings: ${labelLocation} > ${labelCallNumber}`}
                 </div>
               </div>
             }
+            actionMenu={this.getActionMenu}
           >
 
             <Row>
-              <Col sm={5} smOffset={1}>
+              <Col
+                sm={5}
+                smOffset={1}
+              >
                 <h2>
                   <FormattedMessage id="ui-inventory.itemRecord" />
                 </h2>
               </Col>
             </Row>
             <Row>
-              <Col sm={5} smOffset={1}>
-                { (holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                <this.cViewMetaData metadata={holdingsRecord.metadata} />
+              <Col
+                sm={5}
+                smOffset={1}
+              >
+                {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
+                  <this.cViewMetaData metadata={holdingsRecord.metadata} />
                 }
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                 <Field
-                  label={`${formatMsg({ id: 'ui-inventory.materialType' })} *`}
+                  label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
+                  placeholder={formatMessage({ id: 'ui-inventory.selectMaterialType' })}
                   name="materialType.id"
                   id="additem_materialType"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectMaterialType' }), value: '' }, ...materialTypeOptions]}
+                  dataOptions={materialTypeOptions}
                 />
                 <Field
-                  label={`${formatMsg({ id: 'ui-inventory.loanTypePermanent' })} *`}
+                  label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
+                  placeholder={formatMessage({ id: 'ui-inventory.selectLoanType' })}
                   name="permanentLoanType.id"
                   id="additem_loanTypePerm"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
+                  dataOptions={loanTypeOptions}
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.barcode' })}
+                  label={<FormattedMessage id="ui-inventory.barcode" />}
                   name="barcode"
                   id="additem_barcode"
                   component={TextField}
@@ -306,8 +352,8 @@ class ItemForm extends React.Component {
                   fullWidth
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.permanentLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
+                  label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                  placeholder={formatMessage({ id: 'ui-inventory.selectLocation' })}
                   name="permanentLocation.id"
                   id="additem_permanentlocation"
                   component={LocationSelection}
@@ -318,8 +364,8 @@ class ItemForm extends React.Component {
                 <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
 
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                  placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
+                  label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                  placeholder={formatMessage({ id: 'ui-inventory.selectLocation' })}
                   name="temporaryLocation.id"
                   id="additem_temporarylocation"
                   component={LocationSelection}
@@ -329,31 +375,39 @@ class ItemForm extends React.Component {
                 />
                 <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} />
 
-                <Field label={formatMsg({ id: 'ui-inventory.status' })} name="status.name" id="additem_status" component={TextField} disabled fullWidth />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.loanTypeTemporary' })}
+                  label={<FormattedMessage id="ui-inventory.status" />}
+                  name="status.name"
+                  id="additem_status"
+                  component={TextField}
+                  disabled
+                  fullWidth
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
+                  placeholder={formatMessage({ id: 'ui-inventory.selectLoanType' })}
                   name="temporaryLoanType.id"
                   id="additem_loanTypeTemp"
                   component={Select}
                   fullWidth
-                  dataOptions={[{ label: formatMsg({ id: 'ui-inventory.selectLoanType' }), value: '' }, ...loanTypeOptions]}
+                  dataOptions={loanTypeOptions}
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.enumeration' })}
+                  label={<FormattedMessage id="ui-inventory.enumeration" />}
                   name="enumeration"
                   id="additem_enumeration"
                   component={TextField}
                   fullWidth
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.chronology' })}
+                  label={<FormattedMessage id="ui-inventory.chronology" />}
                   name="chronology"
                   id="additem_chronology"
                   component={TextField}
                   fullWidth
                 />
                 <Field
-                  label={formatMsg({ id: 'ui-inventory.numberOfPieces' })}
+                  label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
                   name="numberOfPieces"
                   id="additem_numberofpieces"
                   component={TextField}
@@ -361,13 +415,26 @@ class ItemForm extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col sm={8} smOffset={1}>
-                <FieldArray name="notes" component={renderNotes} formatMsg={formatMsg} />
+              <Col
+                sm={8}
+                smOffset={1}
+              >
+                <FieldArray
+                  name="notes"
+                  component={renderNotes}
+                  formatMsg={formatMessage}
+                />
               </Col>
             </Row>
             <Row>
-              <Col sm={8} smOffset={1}>
-                <FieldArray name="pieceIdentifiers" component={renderPieceIdentifiers} formatMsg={formatMsg} />
+              <Col
+                sm={8}
+                smOffset={1}
+              >
+                <FieldArray
+                  name="copyNumbers"
+                  component={CopyNumbers}
+                />
               </Col>
             </Row>
             <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
@@ -375,62 +442,62 @@ class ItemForm extends React.Component {
               open={this.state.accordions.administrativeAccordion}
               id="administrativeAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.administrativeData' })}
+              label={formatMessage({ id: 'ui-inventory.administrativeData' })}
             />
             <Accordion
               open={this.state.accordions.itemAccordion}
               id="itemAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.itemData' })}
+              label={formatMessage({ id: 'ui-inventory.itemData' })}
             />
             <Accordion
               open={this.state.accordions.enumerationAccordion}
               id="enumerationAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.enumerationData' })}
+              label={formatMessage({ id: 'ui-inventory.enumerationData' })}
             />
             <Accordion
               open={this.state.accordions.conditionsAccordion}
               id="conditionsAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.conditions' })}
+              label={formatMessage({ id: 'ui-inventory.conditions' })}
             />
             <Accordion
               open={this.state.accordions.notesAccordion}
               id="notesAccordion"
               onToggle={this.handleAccordionToggle}
-              label={intl.formatMessage({ id: 'ui-inventory.notes' })}
+              label={formatMessage({ id: 'ui-inventory.notes' })}
             />
             <Accordion
               open={this.state.accordions.loanDataAccordion}
               id="loanDataAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.item.availability' })}
+              label={formatMessage({ id: 'ui-inventory.item.availability' })}
             />
             <Accordion
               open={this.state.accordions.acquisitionsAccordion}
               id="acquisitionsAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.acquisitions' })}
+              label={formatMessage({ id: 'ui-inventory.acquisitions' })}
             />
             <Accordion
               open={this.state.accordions.locationAccordion}
               id="locationAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.location' })}
+              label={formatMessage({ id: 'ui-inventory.location' })}
             />
             <Accordion
               open={this.state.accordions.electronicAccordion}
               id="electronicAccordion"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+              label={formatMessage({ id: 'ui-inventory.electronicAccess' })}
             />
             <ConfirmationModal
               id="confirmPermanentLocationModal"
               open={confirmPermanentLocation}
-              heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
-              message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
-              confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              heading={formatMessage({ id: 'ui-inventory.confirmLocation.header' })}
+              message={formatMessage({ id: 'ui-inventory.confirmLocation.message' })}
+              confirmLabel={formatMessage({ id: 'ui-inventory.confirmLocation.selectBtn' })}
               buttonStyle="default"
               cancelButtonStyle="primary"
               onConfirm={() => { this.confirmPermanentLocation(true); }}
@@ -439,15 +506,14 @@ class ItemForm extends React.Component {
             <ConfirmationModal
               id="confirmTemporaryLocationModal"
               open={confirmTemporaryLocation}
-              heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
-              message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
-              confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+              heading={formatMessage({ id: 'ui-inventory.confirmLocation.header' })}
+              message={formatMessage({ id: 'ui-inventory.confirmLocation.message' })}
+              confirmLabel={formatMessage({ id: 'ui-inventory.confirmLocation.selectBtn' })}
               buttonStyle="default"
               cancelButtonStyle="primary"
               onConfirm={() => { this.confirmTemporaryLocation(true); }}
               onCancel={() => { this.confirmTemporaryLocation(false); }}
             />
-
           </Pane>
         </Paneset>
       </form>
@@ -459,7 +525,6 @@ ItemForm.propTypes = {
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newItem: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func,
   change: PropTypes.func,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,

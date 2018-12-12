@@ -18,11 +18,6 @@ class Holdings extends React.Component {
       path: 'holdings-storage/holdings?query=(instanceId==:{id})',
       resourceShouldRefresh: true,
     },
-    platforms: {
-      type: 'okapi',
-      records: 'platforms',
-      path: 'platforms',
-    },
   });
 
   constructor(props) {
@@ -31,19 +26,29 @@ class Holdings extends React.Component {
   }
 
   render() {
-    const { resources: { holdings, platforms }, referenceTables } = this.props;
+    const {
+      resources: {
+        holdings,
+      },
+    } = this.props;
 
-    if (!holdings || !holdings.hasLoaded
-        || !platforms || !platforms.hasLoaded) return <div />;
+    const isResourcesLoading = !holdings || !holdings.hasLoaded;
+
+    if (isResourcesLoading) {
+      return null;
+    }
 
     const holdingsRecords = holdings.records;
-    referenceTables.platforms = (platforms || {}).records || [];
-
-    const that = this;
 
     return (
       <div>
-        {holdingsRecords.map(record => <that.cItems key={`items_${record.id}`} holdingsRecord={record} {...that.props} />)}
+        {holdingsRecords.map(record => (
+          <this.cItems
+            key={`items_${record.id}`}
+            holdingsRecord={record}
+            {...this.props}
+          />
+        ))}
       </div>
     );
   }
@@ -55,7 +60,6 @@ Holdings.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }),
-  referenceTables: PropTypes.object.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
