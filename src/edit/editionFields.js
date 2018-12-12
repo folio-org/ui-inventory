@@ -1,20 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { TextField } from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const EditionFields = ({ formatMsg }) => (
+const EditionFields = () => (
   <RepeatableField
     name="editions"
-    label={formatMsg({ id: 'ui-inventory.editions' })}
-    addLabel={formatMsg({ id: 'ui-inventory.addEdition' })}
+    label={<FormattedMessage id="ui-inventory.editions" />}
+    addLabel={<FormattedMessage id="ui-inventory.addEdition" />}
     addButtonId="clickable-add-edition"
     template={[{
       component: TextField,
-      label: formatMsg({ id: 'ui-inventory.edition' }),
+      label: <FormattedMessage id="ui-inventory.edition" />,
     }]}
   />
 );
 
-EditionFields.propTypes = { formatMsg: PropTypes.func };
 export default EditionFields;

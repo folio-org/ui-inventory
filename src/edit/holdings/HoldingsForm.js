@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'redux-form';
+
 import {
   Paneset,
   Pane,
@@ -17,29 +19,28 @@ import {
   Checkbox,
   ConfirmationModal,
 } from '@folio/stripes/components';
+
 import {
   LocationSelection,
   LocationLookup,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-import { Field } from 'redux-form';
 
 import stripesForm from '@folio/stripes/form';
 
 import RepeatableField from '../../components/RepeatableField';
-
-
+import ElectronicAccessFields from '../electronicAccessFields';
 import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
 import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
-import ElectronicAccessFields from '../electronicAccessFields';
-
+import Note from './note';
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
   const errors = {};
+
   if (!values.permanentLocationId) {
-    errors.permanentLocationId = props.formatMsg({ id: 'ui-inventory.selectToContinue' });
+    errors.permanentLocationId = <FormattedMessage id="ui-inventory.selectToContinue" />;
   }
 
   return errors;
@@ -57,7 +58,6 @@ class HoldingsForm extends React.Component {
     instance: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
     change: PropTypes.func,
-    formatMsg: PropTypes.func,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -65,6 +65,7 @@ class HoldingsForm extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       confirmPermanentLocation: false,
       confirmTemporaryLocation: false,
@@ -106,35 +107,43 @@ class HoldingsForm extends React.Component {
   }
 
   selectPermanentLocation(permanentLocation) {
+    const { change } = this.props;
+
     if (!permanentLocation) {
-      this.props.change('permanentLocationId', '');
+      change('permanentLocationId', '');
       return;
     }
 
     if (permanentLocation.isActive) {
       this.setState({ prevPermanentLocation: permanentLocation });
-      setTimeout(() => this.props.change('permanentLocationId', permanentLocation.id));
+      setTimeout(() => change('permanentLocationId', permanentLocation.id));
     } else {
       this.setState({ confirmPermanentLocation: true, permanentLocation });
     }
   }
 
   selectTemporaryLocation(temporaryLocation) {
+    const { change } = this.props;
+
     if (!temporaryLocation) {
-      this.props.change('temporaryLocationId', '');
+      change('temporaryLocationId', '');
       return;
     }
 
     if (temporaryLocation.isActive) {
       this.setState({ prevTemporaryLocation: temporaryLocation });
-      setTimeout(() => this.props.change('temporaryLocationId', temporaryLocation.id));
+      setTimeout(() => change('temporaryLocationId', temporaryLocation.id));
     } else {
       this.setState({ confirmTemporaryLocation: true, temporaryLocation });
     }
   }
 
   confirmPermanentLocation(confirm) {
-    const { permanentLocation, prevPermanentLocation } = this.state;
+    const {
+      permanentLocation,
+      prevPermanentLocation,
+    } = this.state;
+
     const confirmPermanentLocation = false;
     const value = (confirm) ? permanentLocation.id : prevPermanentLocation.id;
     const prevPermanentLoc = (confirm) ? permanentLocation : prevPermanentLocation;
@@ -143,7 +152,11 @@ class HoldingsForm extends React.Component {
   }
 
   confirmTemporaryLocation(confirm) {
-    const { temporaryLocation, prevTemporaryLocation } = this.state;
+    const {
+      temporaryLocation,
+      prevTemporaryLocation,
+    } = this.state;
+
     const confirmTemporaryLocation = false;
     const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
     const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
@@ -153,30 +166,39 @@ class HoldingsForm extends React.Component {
 
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
-      const newState = _.cloneDeep(state);
+      const newState = cloneDeep(state);
       newState.accordions[id] = !newState.accordions[id];
+
       return newState;
     });
   }
 
   handleExpandAll = (obj) => {
     this.setState((curState) => {
-      const newState = _.cloneDeep(curState);
+      const newState = cloneDeep(curState);
       newState.accordions = obj;
+
       return newState;
     });
   }
 
   getActionMenu = () => {
     const { onCancel } = this.props;
+
     return (
-      <Button buttonStyle="dropdownItem" id="cancel-holdings-creation" onClick={onCancel}>
-        <Icon icon="hollowX">
+      <Button
+        buttonStyle="dropdownItem"
+        id="cancel-holdings-creation"
+        onClick={onCancel}
+      >
+        <Icon icon="times-circle">
           <FormattedMessage id="ui-inventory.cancel" />
         </Icon>
       </Button>
     );
   }
+
+  onSelectLocationHandler = loc => this.selectTemporaryLocation(loc);
 
   render() {
     const {
@@ -189,49 +211,63 @@ class HoldingsForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
-    const formatMsg = this.props.formatMsg;
-    const { confirmPermanentLocation, confirmTemporaryLocation } = this.state;
+
+    const {
+      accordions,
+      confirmPermanentLocation,
+      confirmTemporaryLocation,
+    } = this.state;
 
     /* Menus for Add Item workflow */
     const addHoldingsLastMenu = (
       <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-item"
-          type="submit"
-          title={formatMsg({ id: 'ui-inventory.createHoldingsRecord' })}
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit(this.onSave)}
-          marginBottom0
-        >
-          Create holdings record
-        </Button>
+        <FormattedMessage id="ui-inventory.createNewHoldingsRecord">
+          {title => (
+            <Button
+              buttonStyle="primary paneHeaderNewButton"
+              id="clickable-create-item"
+              type="submit"
+              title={title}
+              disabled={(pristine || submitting) && !copy}
+              onClick={handleSubmit(this.onSave)}
+              marginBottom0
+            >
+              <FormattedMessage id="ui-inventory.createHoldingsRecord" />
+            </Button>
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
     const editHoldingsLastMenu = (
       <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-update-item"
-          type="submit"
-          title={formatMsg({ id: 'ui-inventory.updateHoldingsRecord' })}
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit(this.onSave)}
-          marginBottom0
-        >
-          Update holdings record
-        </Button>
+        <FormattedMessage id="ui-inventory.updateHoldingsRecord">
+          {title => (
+            <Button
+              buttonStyle="primary paneHeaderNewButton"
+              id="clickable-update-item"
+              type="submit"
+              title={title}
+              disabled={(pristine || submitting) && !copy}
+              onClick={handleSubmit(this.onSave)}
+              marginBottom0
+            >
+              <FormattedMessage id="ui-inventory.updateHoldingsRecord" />
+            </Button>
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
-    const holdingsNoteTypeOptions = referenceTables.holdingsNoteTypes ? referenceTables.holdingsNoteTypes.map(
-      it => ({
-        label: it.name,
-        value: it.id,
-        selected: it.id === initialValues.holdingsNoteTypeId,
-      }),
-    ) : [];
+    const holdingsNoteTypeOptions = referenceTables.holdingsNoteTypes
+      ? referenceTables.holdingsNoteTypes.map(
+        it => ({
+          label: it.name,
+          value: it.id,
+          selected: it.id === initialValues.holdingsNoteTypeId,
+        }),
+      )
+      : [];
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
 
@@ -253,7 +289,10 @@ class HoldingsForm extends React.Component {
                   <div>
                     <em>
                       {instance.publication[0].publisher}
-                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                      {instance.publication[0].dateOfPublication
+                        ? `, ${instance.publication[0].dateOfPublication}`
+                        : null
+                      }
                     </em>
                   </div>
                 }
@@ -261,22 +300,31 @@ class HoldingsForm extends React.Component {
             }
             actionMenu={this.getActionMenu}
           >
-            <Row end="xs"><Col xs><ExpandAllButton accordionStatus={this.state.accordions} onToggle={this.handleExpandAll} /></Col></Row>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton
+                  accordionStatus={accordions}
+                  onToggle={this.handleExpandAll}
+                />
+              </Col>
+            </Row>
             <Row>
               <Col sm={5}>
-                <h2>{formatMsg({ id: 'ui-inventory.holdingsRecord' })}</h2>
+                <h2>
+                  <FormattedMessage id="ui-inventory.holdingsRecord" />
+                </h2>
               </Col>
             </Row>
             <Accordion
-              open={this.state.accordions.accordion01}
+              open={accordions.accordion01}
               id="accordion01"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.administrativeData' })}
+              label={<FormattedMessage id="ui-inventory.administrativeData" />}
             >
               <Row>
                 <Col sm={4}>
                   <Field
-                    label={`${formatMsg({ id: 'ui-inventory.discoverySuppress' })}`}
+                    label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
                     name="discoverySuppress"
                     id="input_discovery_suppress"
                     component={Checkbox}
@@ -289,7 +337,7 @@ class HoldingsForm extends React.Component {
                     name="hrid"
                     type="text"
                     component={TextField}
-                    label={`${formatMsg({ id: 'ui-inventory.holdingsHrid' })}`}
+                    label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
                   />
                 </Col>
               </Row>
@@ -298,9 +346,9 @@ class HoldingsForm extends React.Component {
                   <RepeatableField
                     name="formerIds"
                     addButtonId="clickable-add-formerholdingsid"
-                    addLabel={formatMsg({ id: 'ui-inventory.addFormerHoldingsId' })}
+                    addLabel={<FormattedMessage id="ui-inventory.addFormerHoldingsId" />}
                     template={[{
-                      label: formatMsg({ id: 'ui-inventory.formerHoldingsId' }),
+                      label: <FormattedMessage id="ui-inventory.formerHoldingsId" />,
                       component: TextField,
                     }]}
                   />
@@ -308,48 +356,64 @@ class HoldingsForm extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion02}
+              open={accordions.accordion02}
               id="accordion02"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.locations' })}
+              label={<FormattedMessage id="ui-inventory.locations" />}
             >
               <Row>
                 <Col sm={4}>
-                  { (initialValues.metadata && initialValues.metadata.createdDate) &&
-                  <this.cViewMetaData metadata={initialValues.metadata} />
+                  {(initialValues.metadata && initialValues.metadata.createdDate) &&
+                    <this.cViewMetaData metadata={initialValues.metadata} />
                   }
-                  <Field
-                    label={`${formatMsg({ id: 'ui-inventory.permanentLocation' })} *`}
-                    placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
-                    name="permanentLocationId"
-                    id="additem_permanentlocation"
-                    component={LocationSelection}
-                    fullWidth
-                    marginBottom0
-                    onSelect={loc => this.selectPermanentLocation(loc)}
-                  />
+                  <FormattedMessage id="ui-inventory.selectLocation">
+                    {placeholder => (
+                      <Field
+                        label={(
+                          <FormattedMessage id="ui-inventory.permanentLocation">
+                            {(message) => message + ' *'}
+                          </FormattedMessage>
+                        )}
+                        placeholder={placeholder}
+                        name="permanentLocationId"
+                        id="additem_permanentlocation"
+                        component={LocationSelection}
+                        fullWidth
+                        marginBottom0
+                        onSelect={loc => this.selectPermanentLocation(loc)}
+
+                      />
+                    )}
+                  </FormattedMessage>
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
                 </Col>
                 <Col sm={4}>
-                  <Field
-                    label={formatMsg({ id: 'ui-inventory.temporaryLocation' })}
-                    placeholder={formatMsg({ id: 'ui-inventory.selectLocation' })}
-                    name="temporaryLocationId"
-                    id="additem_temporarylocation"
-                    component={LocationSelection}
-                    fullWidth
-                    marginBottom0
-                    onSelect={loc => this.selectTemporaryLocation(loc)}
+                  <FormattedMessage id="ui-inventory.selectLocation">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                        placeholder={placeholder}
+                        name="temporaryLocationId"
+                        id="additem_temporarylocation"
+                        component={LocationSelection}
+                        fullWidth
+                        marginBottom0
+                        onSelect={this.onSelectLocationHandler}
+                      />
+                    )}
+                  </FormattedMessage>
+                  <LocationLookup
+                    onLocationSelected={this.onSelectLocationHandler}
+                    isTemporaryLocation
                   />
-                  <LocationLookup onLocationSelected={loc => this.selectTemporaryLocation(loc)} isTemporaryLocation />
                 </Col>
               </Row>
               <ConfirmationModal
                 id="confirmPermanentLocationModal"
                 open={confirmPermanentLocation}
-                heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
-                message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
-                confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+                heading={<FormattedMessage id="ui-inventory.confirmLocation.header" />}
+                message={<FormattedMessage id="ui-inventory.confirmLocation.message" />}
+                confirmLabel={<FormattedMessage id="ui-inventory.confirmLocation.selectBtn" />}
                 buttonStyle="default"
                 cancelButtonStyle="primary"
                 onConfirm={() => { this.confirmPermanentLocation(true); }}
@@ -358,9 +422,9 @@ class HoldingsForm extends React.Component {
               <ConfirmationModal
                 id="confirmTemporaryLocationModal"
                 open={confirmTemporaryLocation}
-                heading={formatMsg({ id: 'ui-inventory.confirmLocation.header' })}
-                message={formatMsg({ id: 'ui-inventory.confirmLocation.message' })}
-                confirmLabel={formatMsg({ id: 'ui-inventory.confirmLocation.selectBtn' })}
+                heading={<FormattedMessage id="ui-inventory.confirmLocation.header" />}
+                message={<FormattedMessage id="ui-inventory.confirmLocation.message" />}
+                confirmLabel={<FormattedMessage id="ui-inventory.confirmLocation.selectBtn" />}
                 buttonStyle="default"
                 cancelButtonStyle="primary"
                 onConfirm={() => { this.confirmTemporaryLocation(true); }}
@@ -369,7 +433,7 @@ class HoldingsForm extends React.Component {
               <Row>
                 <Col sm={4}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.shelvingOrder' })}
+                    label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
                     name="shelvingOrder"
                     id="additem_shelvingorder"
                     component={TextField}
@@ -378,7 +442,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={4}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.shelvingTitle' })}
+                    label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
                     name="shelvingTitle"
                     id="additem_shelvingtitle"
                     component={TextField}
@@ -389,7 +453,7 @@ class HoldingsForm extends React.Component {
               <Row>
                 <Col sm={2}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.copyNumber' })}
+                    label={<FormattedMessage id="ui-inventory.copyNumber" />}
                     name="copyNumber"
                     id="additem_copynumber"
                     component={TextField}
@@ -398,7 +462,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={2}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.callNumberType' })}
+                    label={<FormattedMessage id="ui-inventory.callNumberType" />}
                     name="callNumberTypeId"
                     id="additem_callnumbertype"
                     component={Select}
@@ -407,7 +471,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={2}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.callNumberPrefix' })}
+                    label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
                     name="callNumberPrefix"
                     id="additem_callnumberprefix"
                     component={TextField}
@@ -416,7 +480,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={2}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.callNumber' })}
+                    label={<FormattedMessage id="ui-inventory.callNumber" />}
                     name="callNumber"
                     id="additem_callnumber"
                     component={TextField}
@@ -425,7 +489,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={2}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.callNumberSuffix' })}
+                    label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
                     name="callNumberSuffix"
                     id="additem_callnumbersuffix"
                     component={TextField}
@@ -435,15 +499,15 @@ class HoldingsForm extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion03}
+              open={accordions.accordion03}
               id="accordion03"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.holdingsDetails' })}
+              label={<FormattedMessage id="ui-inventory.holdingsDetails" />}
             >
               <Row>
                 <Col sm={4}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.numberOfItems' })}
+                    label={<FormattedMessage id="ui-inventory.numberOfItems" />}
                     name="numberOfItems"
                     id="edititem_numberofitems"
                     component={TextField}
@@ -453,16 +517,16 @@ class HoldingsForm extends React.Component {
               </Row>
               <Row>
                 <Col sm={10}>
-                  <HoldingsStatementFields formatMsg={formatMsg} />
-                  <HoldingsStatementForSupplementsFields formatMsg={formatMsg} />
-                  <HoldingsStatementForIndexesFields formatMsg={formatMsg} />
+                  <HoldingsStatementFields />
+                  <HoldingsStatementForSupplementsFields />
+                  <HoldingsStatementForIndexesFields />
                 </Col>
               </Row>
               <Row>
                 <Col sm={3} />
                 <Col sm={3}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.digitizationPolicy' })}
+                    label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
                     name="digitizationPolicy"
                     id="edit_digitizationpolicy"
                     component={TextField}
@@ -470,7 +534,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={3}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.retentionPolicy' })}
+                    label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
                     name="retentionPolicy"
                     id="edit_retentionpolicy"
                     component={TextField}
@@ -479,15 +543,15 @@ class HoldingsForm extends React.Component {
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion04}
+              open={accordions.accordion04}
               id="accordion04"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.notes' })}
+              label={<FormattedMessage id="ui-inventory.notes" />}
             >
               <Row>
                 <Col sm={3}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.acquisitionFormat' })}
+                    label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
                     name="acquisitionFormat"
                     id="edit_acquisitionformat"
                     component={TextField}
@@ -495,7 +559,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={3}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.acquisitionMethod' })}
+                    label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
                     name="acquisitionMethod"
                     id="edit_acquisitionmethod"
                     component={TextField}
@@ -503,7 +567,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={3}>
                   <Field
-                    label={formatMsg({ id: 'ui-inventory.receiptStatus' })}
+                    label={<FormattedMessage id="ui-inventory.receiptStatus" />}
                     name="receiptStatus"
                     id="edit_receiptstatus"
                     component={TextField}
@@ -512,51 +576,29 @@ class HoldingsForm extends React.Component {
               </Row>
               <Row>
                 <Col sm={10}>
-                  <RepeatableField
-                    name="notes"
-                    addButtonId="clickable-add-note"
-                    addLabel={formatMsg({ id: 'ui-inventory.addNote' })}
-                    template={[
-                      {
-                        name: 'holdingsNoteTypeId',
-                        label: formatMsg({ id: 'ui-inventory.noteType' }),
-                        component: Select,
-                        dataOptions: [{ label: 'Select type', value: '' }, ...holdingsNoteTypeOptions],
-                      },
-                      {
-                        name: 'note',
-                        label: formatMsg({ id: 'ui-inventory.note' }),
-                        component: TextField,
-                      },
-                      {
-                        name: 'staffOnly',
-                        label: formatMsg({ id: 'ui-inventory.staffOnly' }),
-                        component: Checkbox,
-                      }
-                    ]}
-                  />
+                  <Note noteTypeOptions={holdingsNoteTypeOptions} />
                 </Col>
               </Row>
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion05}
+              open={accordions.accordion05}
               id="accordion05"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.acquisitions' })}
+              label={<FormattedMessage id="ui-inventory.acquisitions" />}
             />
             <Accordion
-              open={this.state.accordions.accordion06}
+              open={accordions.accordion06}
               id="accordion06"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
             >
-              <ElectronicAccessFields electronicAccessRelationships={referenceTables.electronicAccessRelationships} formatMsg={formatMsg} />
+              <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
             </Accordion>
             <Accordion
-              open={this.state.accordions.accordion07}
+              open={accordions.accordion07}
               id="accordion07"
               onToggle={this.handleAccordionToggle}
-              label={formatMsg({ id: 'ui-inventory.receivingHistory' })}
+              label={<FormattedMessage id="ui-inventory.receivingHistory" />}
             />
           </Pane>
         </Paneset>

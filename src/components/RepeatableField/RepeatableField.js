@@ -7,8 +7,8 @@ import FieldRow from './FieldRow';
 const RepeatableFieldPropTypes = {
   addButtonId: PropTypes.string,
   addDefaultItem: PropTypes.bool,
-  addLabel: PropTypes.string,
-  label: PropTypes.string,
+  addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   name: PropTypes.string.isRequired,
   newItemTemplate: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   template: PropTypes.oneOfType([

@@ -628,7 +628,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
-              {(item.electronicAccess.length > 0) &&
+              {item.electronicAccess && item.electronicAccess.length &&
                 <MultiColumnList
                   id="list-electronic-access"
                   contentData={item.electronicAccess}

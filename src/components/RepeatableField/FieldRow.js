@@ -18,12 +18,12 @@ const FieldRowPropTypes = {
   addButtonId: PropTypes.string,
   addDefault: PropTypes.func,
   addDefaultItem: PropTypes.bool,
-  addLabel: PropTypes.string,
+  addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   containerRef: PropTypes.func,
   fields: PropTypes.object,
   formatter: PropTypes.func,
   intl: intlShape.isRequired,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
   lastRowRef: PropTypes.func,
   newItemTemplate: PropTypes.object,
   onAddField: PropTypes.func,
@@ -193,7 +193,7 @@ class FieldRow extends React.Component {
                         { item: this.props.label, num: fieldIndex + 1 }
                       )}
                     >
-                      <Icon icon="trashBin" />
+                      <Icon icon="trash" />
                     </Button>
                   </Layout>
                 </Col>

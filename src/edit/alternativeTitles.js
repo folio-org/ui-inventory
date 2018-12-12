@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Select } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  TextField,
+  Select,
+} from '@folio/stripes/components';
+
 import RepeatableField from '../components/RepeatableField';
 
-const AlternativeTitles = ({ alternativeTitleTypes, formatMsg }) => {
+const AlternativeTitles = ({ alternativeTitleTypes }) => {
   const alternativeTitleTypeOptions = alternativeTitleTypes.map(
     it => ({
       label: it.name,
@@ -12,33 +18,45 @@ const AlternativeTitles = ({ alternativeTitleTypes, formatMsg }) => {
   );
 
   return (
-    <RepeatableField
-      name="alternativeTitles"
-      label={formatMsg({ id: 'ui-inventory.alternativeTitles' })}
-      addLabel={formatMsg({ id: 'ui-inventory.addAlternativeTitles' })}
-      addButtonId="clickable-add-alternativeTitle"
-      template={[
-        {
-          name: 'alternativeTitleTypeId',
-          label: `${formatMsg({ id: 'ui-inventory.type' })} *`,
-          component: Select,
-          dataOptions: [{ label: 'Select alternative title type', value: '' }, ...alternativeTitleTypeOptions],
-          required: true,
-        },
-        {
-          name: 'alternativeTitle',
-          label: `${formatMsg({ id: 'ui-inventory.alternativeTitle' })} *`,
-          component: TextField,
-          required: true,
-        }
-      ]}
-      newItemTemplate={{ alternativeTitleTypeId: '', alternativeTitle: '' }}
-    />
+    <FormattedMessage id="ui-inventory.selectAlternativeTitleType">
+      {placeholder => (
+        <RepeatableField
+          name="alternativeTitles"
+          label={<FormattedMessage id="ui-inventory.alternativeTitles" />}
+          addLabel={<FormattedMessage id="ui-inventory.addAlternativeTitles" />}
+          addButtonId="clickable-add-alternativeTitle"
+          template={[
+            {
+              name: 'alternativeTitleTypeId',
+              label: (
+                <FormattedMessage id="ui-inventory.type">
+                  {(message) => message + ' *'}
+                </FormattedMessage>
+              ),
+              component: Select,
+              placeholder,
+              dataOptions: alternativeTitleTypeOptions,
+              required: true,
+            },
+            {
+              name: 'alternativeTitle',
+              label: (
+                <FormattedMessage id="ui-inventory.alternativeTitle">
+                  {(message) => message + ' *'}
+                </FormattedMessage>
+              ),
+              component: TextField,
+              required: true,
+            }
+          ]}
+          newItemTemplate={{ alternativeTitleTypeId: '', alternativeTitle: '' }}
+        />
+      )}
+    </FormattedMessage>
   );
 };
 
 AlternativeTitles.propTypes = {
-  formatMsg: PropTypes.func,
   alternativeTitleTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
