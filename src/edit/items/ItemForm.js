@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Field,
-  FieldArray,
 } from 'redux-form';
 
 import {
@@ -33,7 +32,6 @@ import {
 import RepeatableField from '../../components/RepeatableField';
 
 import ElectronicAccessFields from '../electronicAccessFields';
-import CopyNumbers from './CopyNumbers';
 
 function validate(values) {
   const errors = {};
@@ -217,6 +215,7 @@ class ItemForm extends React.Component {
         loanTypes = [],
         itemNoteTypes,
         electronicAccessRelationships,
+        callNumberTypes,
       },
       copy,
     } = this.props;
@@ -292,6 +291,14 @@ class ItemForm extends React.Component {
       }),
     ) : [];
 
+    const callNumberTypeOptions = callNumberTypes ? callNumberTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.callNumberTypeId,
+      }),
+    ) : [];
+
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
 
@@ -353,19 +360,6 @@ class ItemForm extends React.Component {
                   <this.cViewMetaData metadata={holdingsRecord.metadata} />
                 }
                 {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
-                <FormattedMessage id="ui-inventory.selectMaterialType">
-                  {placeholder => (
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
-                      placeholder={placeholder}
-                      name="materialType.id"
-                      id="additem_materialType"
-                      component={Select}
-                      fullWidth
-                      dataOptions={materialTypeOptions}
-                    />
-                  )}
-                </FormattedMessage>
                 <FormattedMessage id="ui-inventory.selectLoanType">
                   {placeholder => (
                     <Field
@@ -440,23 +434,6 @@ class ItemForm extends React.Component {
                     />
                   )}
                 </FormattedMessage>
-                <Field
-                  label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                  name="numberOfPieces"
-                  id="additem_numberofpieces"
-                  component={TextField}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col
-                sm={8}
-                smOffset={1}
-              >
-                <FieldArray
-                  name="copyNumbers"
-                  component={CopyNumbers}
-                />
               </Col>
             </Row>
             <Row end="xs">
@@ -478,7 +455,104 @@ class ItemForm extends React.Component {
               id="acc02"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.itemData" />}
-            />
+            >
+              <Row>
+                <Col sm={3}>
+                  <FormattedMessage id="ui-inventory.selectMaterialType">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
+                        placeholder={placeholder}
+                        name="materialType.id"
+                        id="additem_materialType"
+                        component={Select}
+                        fullWidth
+                        dataOptions={materialTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <RepeatableField
+                    name="copyNumbers"
+                    addButtonId="clickable-add-copy-number"
+                    addLabel={<FormattedMessage id="ui-inventory.addCopyNumber" />}
+                    template={[{
+                      component: TextField,
+                      label: (
+                        <FormattedMessage id="ui-inventory.copyNumber">
+                          {(message) => message + ' *'}
+                        </FormattedMessage>
+                      )
+                    }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={2}>
+                  <FormattedMessage id="ui-inventory.selectCallNumberType">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                        placeholder={placeholder}
+                        name="itemLevelCallNumberTypeId"
+                        id="additem_callnumbertype"
+                        component={Select}
+                        fullWidth
+                        dataOptions={callNumberTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
+                    name="itemLevelCallNumberPrefix"
+                    id="additem_callnumberprefix"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.callNumber" />}
+                    name="itemLevelCallNumber"
+                    id="additem_callnumber"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+                <Col sm={2}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
+                    name="itemLevelCallNumberSuffix"
+                    id="additem_callnumbersuffix"
+                    component={TextField}
+                    fullWidth
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
+                    name="numberOfPieces"
+                    id="additem_numberofpieces"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
+                    name="descriptionOfPieces"
+                    id="input_descriptionofpieces"
+                    component={TextField}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
             <Accordion
               open={accordions.acc03}
               id="acc03"
