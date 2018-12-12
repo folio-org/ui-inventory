@@ -151,7 +151,8 @@ class ViewItem extends React.Component {
         };
 
         // FIXME: loan-status-check must be i18n friendly
-        if (loan.item.status.name !== 'Available' && loan.item.status.name !== 'Awaiting pickup' && loan.item.status.name !== 'In transit') {
+        const itemStatus = loan.item.status.name;
+        if (itemStatus !== 'Available' && itemStatus !== 'Awaiting pickup' && itemStatus !== 'In transit') {
           nextProps.mutator.borrowerId.replace({ query: loan.userId });
           nextState.loan = loan;
         }
