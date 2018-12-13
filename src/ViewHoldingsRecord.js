@@ -12,7 +12,6 @@ import {
   Accordion,
   ExpandAllButton,
   KeyValue,
-  Headline,
   IconButton,
   AppIcon,
   MultiColumnList,
@@ -327,23 +326,6 @@ class ViewHoldingsRecord extends React.Component {
                 <this.cViewMetaData metadata={holdingsRecord.metadata} />
                 }
                 <Row>
-                  <Col sm={12}>
-                    <AppIcon app="inventory" iconKey="holdings" size="small" />
-                    {' '}
-                    {formatMsg({ id: 'ui-inventory.holdingsRecord' })}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm={12}>
-                    <Headline size="small" margin="small">
-                      {holdingsRecord.permanentLocationId ? holdingsPermanentLocation.name : null}
-                      {' '}
-                      &gt;
-                      {_.get(holdingsRecord, ['callNumber'], '')}
-                    </Headline>
-                  </Col>
-                </Row>
-                <Row>
                   <Col xs={12}>
                     {holdingsRecord.discoverySuppress && formatMsg({ id: 'ui-inventory.discoverySuppress' })}
                   </Col>
@@ -365,6 +347,25 @@ class ViewHoldingsRecord extends React.Component {
                     />
                   </Col>
                 </Row>
+                <Row>
+                  {(holdingsRecord.statisticalCodeIds && holdingsRecord.statisticalCodeIds.length > 0) &&
+                    <MultiColumnList
+                      id="list-statistical-codes"
+                      contentData={holdingsRecord.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                      visibleColumns={['Statistical code type', 'Statistical code']}
+                      formatter={{
+                        'Statistical code type':
+                          x => this.refLookup(referenceTables.statisticalCodeTypes,
+                            this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                        'Statistical code':
+                          x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                      }}
+                      ariaLabel="Statistical codes"
+                      containerRef={(ref) => { this.resultsList = ref; }}
+                    />
+                  }
+                </Row>
+
               </Accordion>
               <Accordion
                 open={this.state.accordions.accordion02}
