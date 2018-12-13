@@ -214,7 +214,7 @@ class Instances extends React.Component {
     statisticalCodes: {
       type: 'okapi',
       records: 'statisticalCodes',
-      path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby statisticalCodeTypeId',
     }
   });
 

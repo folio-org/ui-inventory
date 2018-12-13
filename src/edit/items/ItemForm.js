@@ -216,6 +216,8 @@ class ItemForm extends React.Component {
         itemNoteTypes,
         electronicAccessRelationships,
         callNumberTypes,
+        statisticalCodes,
+        statisticalCodeTypes,
       },
       copy,
     } = this.props;
@@ -261,6 +263,11 @@ class ItemForm extends React.Component {
       </PaneMenu>
     );
 
+    const refLookup = (referenceTable, id) => {
+      const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+      return ref || {};
+    };
+
     const materialTypeOptions = materialTypes
       ? materialTypes.map((t) => {
         let selectedValue;
@@ -296,6 +303,14 @@ class ItemForm extends React.Component {
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.callNumberTypeId,
+      }),
+    ) : [];
+
+    const statisticalCodeOptions = statisticalCodes ? statisticalCodes.map(
+      it => ({
+        label: refLookup(statisticalCodeTypes, it.statisticalCodeTypeId).name + ':    ' + it.code + ' - ' + it.name,
+        value: it.id,
+        selected: it.id === initialValues.statisticalCodeId,
       }),
     ) : [];
 
@@ -432,6 +447,22 @@ class ItemForm extends React.Component {
                         </FormattedMessage>
                       )
                     }]}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="statisticalCodeIds"
+                    addButtonId="clickable-add-statistical-code"
+                    addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
+                    template={[
+                      {
+                        label: <FormattedMessage id="ui-inventory.statisticalCode" />,
+                        component: Select,
+                        dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
+                      }
+                    ]}
                   />
                 </Col>
               </Row>
