@@ -298,6 +298,13 @@ class HoldingsForm extends React.Component {
       }),
     ) : [];
 
+    const illPolicyOptions = referenceTables.illPolicies ? referenceTables.illPolicies.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.illPolicyId,
+      }),
+    ) : [];
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
 
@@ -587,12 +594,30 @@ class HoldingsForm extends React.Component {
               <Row>
                 <Col sm={10}>
                   <HoldingsStatementFields />
+                  <br />
                   <HoldingsStatementForSupplementsFields />
+                  <br />
                   <HoldingsStatementForIndexesFields />
+                  <br />
                 </Col>
               </Row>
+              <br />
               <Row>
-                <Col sm={3} />
+                <Col sm={3}>
+                  <FormattedMessage id="ui-inventory.selectIllPolicy">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.illPolicy" />}
+                        placeholder={placeholder}
+                        name="illPolicyId"
+                        id="additem_illpolicy"
+                        component={Select}
+                        fullWidth
+                        dataOptions={illPolicyOptions}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Col>
                 <Col sm={3}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
