@@ -357,6 +357,10 @@ class ViewInstance extends React.Component {
       );
     }
 
+    const fauxHrid = (hrid) => {
+      return hrid.indexOf("-") === -1 ? hrid : hrid.substr(0,hrid.indexOf("-"));
+    }
+
     return (
       <Pane
         data-test-instance-details
@@ -433,7 +437,7 @@ class ViewInstance extends React.Component {
             <Col xs={2}>
               <KeyValue
                 label={formatMsg({ id: 'ui-inventory.instanceHrid' })}
-                value={_.get(instance, ['hrid'], '')}
+                value={fauxHrid(_.get(instance, ['hrid'], ''))}
               />
             </Col>
             <Col xs={2}>
