@@ -366,17 +366,6 @@ class ItemForm extends React.Component {
                 </h2>
               </Col>
             </Row>
-            <Row>
-              <Col
-                sm={5}
-                smOffset={1}
-              >
-                {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                  <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                }
-                {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
-              </Col>
-            </Row>
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton
@@ -391,6 +380,28 @@ class ItemForm extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
             >
+              <Row>
+                <Col
+                  sm={5}
+                  smOffset={1}
+                >
+                  {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
+                    <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                  }
+                  {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+                    name="discoverySuppress"
+                    id="input_discovery_suppress"
+                    component={Checkbox}
+                  />
+                </Col>
+              </Row>
+              <br />
               <Row>
                 <Col sm={2}>
                   <Field

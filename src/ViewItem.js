@@ -454,6 +454,12 @@ class ViewItem extends React.Component {
               <this.cViewMetaData metadata={item.metadata} />
               }
               <Row>
+                <Col xs={12}>
+                  {instance.discoverySuppress && formatMsg({ id: 'ui-inventory.discoverySuppress' })}
+                </Col>
+              </Row>
+              {instance.discoverySuppress && <br />}
+              <Row>
                 <Col xs={2}>
                   <KeyValue label={formatMsg({ id: 'ui-inventory.itemHrid' })} value={_.get(item, ['hrid'], '')} />
                 </Col>
@@ -722,7 +728,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
             >
-              {item.electronicAccess && item.electronicAccess.length &&
+              {(item.electronicAccess && item.electronicAccess.length > 0) &&
                 <MultiColumnList
                   id="list-electronic-access"
                   contentData={item.electronicAccess}
