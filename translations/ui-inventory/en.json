@@ -243,6 +243,7 @@
   "instanceData": "Administrative data",
   "instanceId": "Instance ID",
   "instanceHrid": "Instance HRID",
+  "addStatisticalCode": "Add statistical code",
   "instanceStatus": "Instance status term",
   "selectInstanceStatus": "Select instance status",
   "modeOfIssuance": "Mode of issuance",

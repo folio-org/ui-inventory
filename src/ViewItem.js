@@ -478,6 +478,24 @@ class ViewItem extends React.Component {
                   </Col>
                 }
               </Row>
+              <Row>
+                {item.statisticalCodeIds && item.statisticalCodeIds.length &&
+                  <MultiColumnList
+                    id="list-statistical-codes"
+                    contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                    visibleColumns={['Statistical code type', 'Statistical code']}
+                    formatter={{
+                      'Statistical code type':
+                        x => refLookup(referenceTables.statisticalCodeTypes,
+                          refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                      'Statistical code':
+                        x => refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                    }}
+                    ariaLabel="Statistical codes"
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                }
+              </Row>
             </Accordion>
             <Accordion
               open={accordions.acc02}
