@@ -358,8 +358,8 @@ class ViewInstance extends React.Component {
     }
 
     const fauxHrid = (hrid) => {
-      return hrid.indexOf("-") === -1 ? hrid : hrid.substr(0,hrid.indexOf("-"));
-    }
+      return hrid.indexOf('-'') === -1 ? hrid : hrid.substr(0, hrid.indexOf('-''));
+    };
 
     return (
       <Pane
