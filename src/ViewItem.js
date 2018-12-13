@@ -485,7 +485,7 @@ class ViewItem extends React.Component {
                 }
               </Row>
               <Row>
-                {item.statisticalCodeIds && item.statisticalCodeIds.length &&
+                {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) &&
                   <MultiColumnList
                     id="list-statistical-codes"
                     contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}

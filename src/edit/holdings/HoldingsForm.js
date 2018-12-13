@@ -259,6 +259,11 @@ class HoldingsForm extends React.Component {
       </PaneMenu>
     );
 
+    const refLookup = (referenceTable, id) => {
+      const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+      return ref || {};
+    };
+
     const holdingsNoteTypeOptions = referenceTables.holdingsNoteTypes
       ? referenceTables.holdingsNoteTypes.map(
         it => ({
@@ -268,6 +273,15 @@ class HoldingsForm extends React.Component {
         }),
       )
       : [];
+
+    const statisticalCodeOptions = referenceTables.statisticalCodes ? referenceTables.statisticalCodes.map(
+      it => ({
+        label: refLookup(referenceTables.statisticalCodeTypes, it.statisticalCodeTypeId).name + ':    ' + it.code + ' - ' + it.name,
+        value: it.id,
+        selected: it.id === initialValues.statisticalCodeId,
+      }),
+    ) : [];
+
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
 
@@ -321,6 +335,9 @@ class HoldingsForm extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
             >
+              {(initialValues.metadata && initialValues.metadata.createdDate) &&
+                <this.cViewMetaData metadata={initialValues.metadata} />
+              }
               <Row>
                 <Col sm={4}>
                   <Field
@@ -354,6 +371,23 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="statisticalCodeIds"
+                    addButtonId="clickable-add-statistical-code"
+                    addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
+                    template={[
+                      {
+                        label: <FormattedMessage id="ui-inventory.statisticalCode" />,
+                        component: Select,
+                        dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
+                      }
+                    ]}
+                  />
+                </Col>
+              </Row>
+
             </Accordion>
             <Accordion
               open={accordions.accordion02}
@@ -363,9 +397,6 @@ class HoldingsForm extends React.Component {
             >
               <Row>
                 <Col sm={4}>
-                  {(initialValues.metadata && initialValues.metadata.createdDate) &&
-                    <this.cViewMetaData metadata={initialValues.metadata} />
-                  }
                   <FormattedMessage id="ui-inventory.selectLocation">
                     {placeholder => (
                       <Field
