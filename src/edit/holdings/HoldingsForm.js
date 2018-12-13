@@ -274,6 +274,22 @@ class HoldingsForm extends React.Component {
       )
       : [];
 
+    const callNumberTypeOptions = referenceTables.callNumberTypes ? referenceTables.callNumberTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.callNumberTypeId,
+      }),
+    ) : [];
+
+    const holdingsTypeOptions = referenceTables.holdingsTypes ? referenceTables.holdingsTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.holdingsTypeId,
+      }),
+    ) : [];
+
     const statisticalCodeOptions = referenceTables.statisticalCodes ? referenceTables.statisticalCodes.map(
       it => ({
         label: refLookup(referenceTables.statisticalCodeTypes, it.statisticalCodeTypeId).name + ':    ' + it.code + ' - ' + it.name,
@@ -372,6 +388,23 @@ class HoldingsForm extends React.Component {
                 </Col>
               </Row>
               <Row>
+                <Col sm={4}>
+                  <FormattedMessage id="ui-inventory.selectHoldingsType">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.holdingsType" />}
+                        placeholder={placeholder}
+                        name="holdingsTypeId"
+                        id="additem_holdingstype"
+                        component={Select}
+                        fullWidth
+                        dataOptions={holdingsTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Col>
+              </Row>
+              <Row>
                 <Col sm={10}>
                   <RepeatableField
                     name="statisticalCodeIds"
@@ -387,7 +420,6 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
-
             </Accordion>
             <Accordion
               open={accordions.accordion02}
@@ -492,13 +524,19 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
                 <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                    name="callNumberTypeId"
-                    id="additem_callnumbertype"
-                    component={Select}
-                    fullWidth
-                  />
+                  <FormattedMessage id="ui-inventory.selectCallNumberType">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                        placeholder={placeholder}
+                        name="callNumberTypeId"
+                        id="additem_callnumbertype"
+                        component={Select}
+                        fullWidth
+                        dataOptions={callNumberTypeOptions}
+                      />
+                    )}
+                  </FormattedMessage>
                 </Col>
                 <Col sm={2}>
                   <Field
