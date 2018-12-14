@@ -12,7 +12,6 @@
 * Requires `holdings-storage` interface 3.0
 * Requires `item-storage` interface 7.0
 * Requires `item-note-types` interface 1.0
-* Requires `locations` interface 3.0
 * Requires `statistical-codes` interface 1.0
 * Requires `alternative-title-types` interface 1.0
 * Requires `holdings-types` interface 1.0
