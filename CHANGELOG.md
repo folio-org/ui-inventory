@@ -2,7 +2,6 @@
 
 ## 1.6.0 IN PROGRESS
 
-
 ## [1.5.0](https://github.com/folio-org/ui-inventory/tree/v1.5.0) (2018-12-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.4.0...v1.5.0)
 
