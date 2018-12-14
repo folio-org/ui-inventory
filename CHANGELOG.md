@@ -1,23 +1,41 @@
 # Change history for ui-inventory
 
-## 1.5.0 (IN PROGRESS)
+## [1.5.0](https://github.com/folio-org/ui-inventory/tree/v1.5.0) (2018-12-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.4.0...v1.5.0)
 
+* Requires `locations` interface 3.0
+* Requires `inventory` interface 8.0
+* Requires `instance-storage` interface 6.0
+* Requires `holdings-storage` interface 3.0
+* Requires `item-storage` interface 7.0
+* Requires `item-note-types` interface 1.0
+* Requires `locations` interface 3.0
+* Requires `statistical-codes` interface 1.0
+* Requires `alternative-title-types` interface 1.0
+* Requires `holdings-types` interface 1.0
+* Requires `call-number-types` interface 1.0
+* Requires `electronic-access-relationships` interface 1.0
+* Requires `ill-policies` interface 1.0
+* Requires `holdings-note-types` interface 1.0
+* Requires `circulation` interface 4.0 5.0
 * Renames `pieceIdentifiers`to `copyNumbers` (UIIN-397)
 * Adapts to changed structure of alternative titles (UIIN-345)
 * Adapts to changed structure of holdings statements (UIIN-234)
 * No longer requires `platforms` interface (UIIN-388)
-* Requires `locations` interface 3.0 (UIIN-357)
-* Add accordions, holdings record view, holdings record form (UIIN-168, UIIN-274)
+* Add accordions to views and forms for instance, holdings, item (UIIN-166 UIIN-168, UIIN-170, UIIN-273, UIIN-274, UIIN-275, UIIN-298)
+* Add settings pages for controlled vocabularies: electronic access types, statistical code types, alternative title types, instance status types, holdings types, ILL policies, call number types, statistical codes (UIIN-301, UIIN-302, UIIN-362, UIIN-374, UIIN-376, UIIN-377, UIIN-378, UIIN-385)
+* Extend holdings record - view and form (UIIN-232, UIIN-233, UIIN-234, UIIN-235, UIIN-236, UIIN-238, UIIN-386)
+* Extend instance record - view and form (UIIN-328, UIIN-342, UIIN-343, UIIN-344, UIIN-345, UIIN-348, UIIN-364, UIIN-366, UIIN-367)
+* Extend item record - view and form (UIIN-239, UIIN-250, UIIN-251, UIIN-253, UIIN-256) 
 * Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)
 * Fix `craftLayerUrl()` loading state (FOLIO-1547)
 * Replace `formatDateTime()` with `<FormattedTime>` (STCOR-267)
-* Instance view: Add `indexTitle` (UIIN-348)
-* Instance view: Add staff and discovery suppress, previously held (UIIN-343)
 * Click "search" button in tests (STCOM-354)
 * Provide `sortby` key for `<ControlledVocab>`. Refs STSMACOM-139.
 * Default term to empty string in cases when query is undefined. Fixes UIIN-371.
 * Support circulation v5.0, requiring service-point information on loans. Refs UIIN-383.
 * Removed deprecated actionMenuItems-prop. Fixes UIIN-393.
+* Display of item information in Inventory for items with no open loans (UIIN-409)
 
 ## [1.4.0](https://github.com/folio-org/ui-inventory/tree/v1.4.0) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.3.0...v1.4.0)
