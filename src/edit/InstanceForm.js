@@ -22,6 +22,8 @@ import {
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
+import RepeatableField from '../components/RepeatableField';
+
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
 import EditionFields from './editionFields';
@@ -221,6 +223,11 @@ class InstanceForm extends React.Component {
       copy,
     } = this.props;
 
+    const refLookup = (referenceTable, id) => {
+      const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+      return ref || {};
+    };
+
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
       it => ({
         label: it.name,
@@ -242,6 +249,14 @@ class InstanceForm extends React.Component {
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.modeOfIssuanceId,
+      }),
+    ) : [];
+
+    const statisticalCodeOptions = referenceTables.statisticalCodes ? referenceTables.statisticalCodes.map(
+      it => ({
+        label: refLookup(referenceTables.statisticalCodeTypes, it.statisticalCodeTypeId).name + ':    ' + it.code + ' - ' + it.name,
+        value: it.id,
+        selected: it.id === initialValues.statisticalCodeId,
       }),
     ) : [];
 
@@ -404,6 +419,22 @@ class InstanceForm extends React.Component {
                     )}
                   </FormattedMessage>
                 </Col>
+                <Row>
+                  <Col sm={10}>
+                    <RepeatableField
+                      name="statisticalCodeIds"
+                      addButtonId="clickable-add-statistical-code"
+                      addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
+                      template={[
+                        {
+                          label: <FormattedMessage id="ui-inventory.statisticalCode" />,
+                          component: Select,
+                          dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
+                        }
+                      ]}
+                    />
+                  </Col>
+                </Row>
               </Accordion>
               <Accordion
                 label={
