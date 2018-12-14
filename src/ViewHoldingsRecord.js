@@ -205,6 +205,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
+
     const { location, resources: { holdingsRecords, instances1, illPolicies, holdingsTypes, callNumberTypes, holdingsNoteTypes, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) return <div>Awaiting resources</div>;
@@ -268,7 +269,6 @@ class ViewHoldingsRecord extends React.Component {
       if (cols.length) table.push(<Row>{cols}</Row>);
       return table;
     };
-
 
     return (
       <div>
@@ -552,7 +552,23 @@ class ViewHoldingsRecord extends React.Component {
                 id="accordion07"
                 onToggle={this.handleAccordionToggle}
                 label={formatMsg({ id: 'ui-inventory.receivingHistory' })}
-              />
+              >
+                {(holdingsRecord.receivingHistory
+                  && holdingsRecord.receivingHistory.entries
+                  && holdingsRecord.receivingHistory.entries.length > 0) &&
+                  <MultiColumnList
+                    id="list-retrieving-history"
+                    contentData={holdingsRecord.receivingHistory.entries}
+                    visibleColumns={['Enumeration', 'Chronology']}
+                    formatter={{
+                      'Enumeration': x => x.enumeration,
+                      'Chronology': x => x.chronology,
+                    }}
+                    ariaLabel="Receiving history"
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                }
+              </Accordion>
             </Pane>
           </div>
         </Layer>
