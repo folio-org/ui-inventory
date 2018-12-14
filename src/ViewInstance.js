@@ -481,6 +481,24 @@ class ViewInstance extends React.Component {
               <KeyValue label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })} value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)} />
             </Col>
           </Row>
+          <Row>
+            {(instance.statisticalCodeIds && instance.statisticalCodeIds.length > 0) &&
+              <MultiColumnList
+                id="list-statistical-codes"
+                contentData={instance.statisticalCodeIds.map((codeId) => { return { 'codeId': codeId }; })}
+                visibleColumns={['Statistical code type', 'Statistical code']}
+                formatter={{
+                  'Statistical code type':
+                    x => this.refLookup(referenceTables.statisticalCodeTypes,
+                      this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                  'Statistical code':
+                    x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                }}
+                ariaLabel="Statistical codes"
+                containerRef={(ref) => { this.resultsList = ref; }}
+              />
+            }
+          </Row>
         </Accordion>
 
         <Accordion
