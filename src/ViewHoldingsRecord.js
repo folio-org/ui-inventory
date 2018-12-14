@@ -205,7 +205,6 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   render() {
-
     const { location, resources: { holdingsRecords, instances1, illPolicies, holdingsTypes, callNumberTypes, holdingsNoteTypes, permanentLocation, temporaryLocation }, referenceTables, okapi } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) return <div>Awaiting resources</div>;
