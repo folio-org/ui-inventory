@@ -693,7 +693,34 @@ class HoldingsForm extends React.Component {
               id="accordion07"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.receivingHistory" />}
-            />
+            >
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="receivingHistory.entries"
+                    addButtonId="clickable-add-statistical-code"
+                    addLabel={<FormattedMessage id="ui-inventory.addReceivingHistory" />}
+                    template={[
+                      {
+                        name: 'publicDisplay',
+                        label: <FormattedMessage id="ui-inventory.publicDisplay" />,
+                        component: Checkbox
+                      },
+                      {
+                        name: 'enumeration',
+                        label: <FormattedMessage id="ui-inventory.enumeration" />,
+                        component: TextField
+                      },
+                      {
+                        name: 'chronology',
+                        label: <FormattedMessage id="ui-inventory.chronology" />,
+                        component: TextField
+                      },
+                    ]}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
           </Pane>
         </Paneset>
       </form>

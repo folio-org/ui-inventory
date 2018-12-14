@@ -269,7 +269,6 @@ class ViewHoldingsRecord extends React.Component {
       return table;
     };
 
-
     return (
       <div>
         <Layer isOpen label={formatMsg({ id: 'ui-inventory.viewHoldingsRecord' })}>
@@ -552,7 +551,23 @@ class ViewHoldingsRecord extends React.Component {
                 id="accordion07"
                 onToggle={this.handleAccordionToggle}
                 label={formatMsg({ id: 'ui-inventory.receivingHistory' })}
-              />
+              >
+                {(holdingsRecord.receivingHistory
+                  && holdingsRecord.receivingHistory.entries
+                  && holdingsRecord.receivingHistory.entries.length > 0) &&
+                  <MultiColumnList
+                    id="list-retrieving-history"
+                    contentData={holdingsRecord.receivingHistory.entries}
+                    visibleColumns={['Enumeration', 'Chronology']}
+                    formatter={{
+                      'Enumeration': x => x.enumeration,
+                      'Chronology': x => x.chronology,
+                    }}
+                    ariaLabel="Receiving history"
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                }
+              </Accordion>
             </Pane>
           </div>
         </Layer>

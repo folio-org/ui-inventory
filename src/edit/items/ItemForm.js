@@ -359,7 +359,6 @@ class ItemForm extends React.Component {
             <Row>
               <Col
                 sm={5}
-                smOffset={1}
               >
                 <h2>
                   <FormattedMessage id="ui-inventory.itemRecord" />
@@ -383,7 +382,6 @@ class ItemForm extends React.Component {
               <Row>
                 <Col
                   sm={5}
-                  smOffset={1}
                 >
                   {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
                     <this.cViewMetaData metadata={holdingsRecord.metadata} />
