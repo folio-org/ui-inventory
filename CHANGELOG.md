@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 1.5.1 IN PROGRESS
+## [1.5.1](https://github.com/folio-org/ui-inventory/tree/v1.5.1) (2018-12-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.5.1)
 
 * Fix null pointer bug (UIIN-412)
 
