@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Button,
+  Icon,
 } from '@folio/stripes/components';
 
 import Items from './Items';
@@ -106,7 +107,9 @@ class ItemsPerHoldingsRecord extends React.Component {
           onClick={this.onClickAddNewItem}
           buttonStyle="primary paneHeaderNewButton"
         >
-          <FormattedMessage id="ui-inventory.addItem" />
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-inventory.addItem" />
+          </Icon>
         </Button>
       </div>
     );
