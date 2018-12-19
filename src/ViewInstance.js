@@ -299,11 +299,12 @@ class ViewInstance extends React.Component {
         id="clickable-new-holdings-record"
         href={this.craftLayerUrl('createHoldingsRecord', location)}
         onClick={this.onClickAddNewHoldingsRecord}
-        title={formatMsg({ id: 'ui-inventory.addHoldings' })}
         buttonStyle="primary"
         fullWidth
       >
-        {formatMsg({ id: 'ui-inventory.addHoldings' })}
+        <Icon icon="plus-sign">
+          {formatMsg({ id: 'ui-inventory.addHoldings' })}
+        </Icon>
       </Button>
     );
     const viewSourceLink = `${location.pathname.replace('/view/', '/viewsource/')}${location.search}`;

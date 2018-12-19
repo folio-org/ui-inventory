@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Select } from '@folio/stripes/components';
+import {
+  Icon,
+  Select,
+} from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 import languages from '../data/languages';
@@ -42,7 +45,11 @@ const LanguageFields = () => (
   <RepeatableField
     name="languages"
     label={<FormattedMessage id="ui-inventory.languages" />}
-    addLabel={<FormattedMessage id="ui-inventory.addLanguage" />}
+    addLabel={
+      <Icon icon="plus-sign">
+        <FormattedMessage id="ui-inventory.addLanguage" />
+      </Icon>
+    }
     addButtonId="clickable-add-language"
     template={[{
       render(fieldObj) { return renderLanguageField(fieldObj); },

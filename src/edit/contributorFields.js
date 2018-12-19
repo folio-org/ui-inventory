@@ -7,6 +7,7 @@ import {
 } from 'react-intl';
 
 import {
+  Icon,
   TextField,
   Select,
   Checkbox,
@@ -37,7 +38,11 @@ const ContributorFields = ({
     <RepeatableField
       name="contributors"
       label={<FormattedMessage id="ui-inventory.contributors" />}
-      addLabel={<FormattedMessage id="ui-inventory.addContributor" />}
+      addLabel={
+        <Icon icon="plus-sign">
+          <FormattedMessage id="ui-inventory.addContributors" />
+        </Icon>
+      }
       addButtonId="clickable-add-contributor"
       template={[
         {

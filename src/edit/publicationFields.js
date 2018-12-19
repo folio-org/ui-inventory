@@ -1,7 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { TextField } from '@folio/stripes/components';
+import {
+  Icon,
+  TextField,
+} from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -9,7 +12,11 @@ const PublicationFields = () => (
   <RepeatableField
     name="publication"
     label={<FormattedMessage id="ui-inventory.publications" />}
-    addLabel={<FormattedMessage id="ui-inventory.addPublication" />}
+    addLabel={
+      <Icon icon="plus-sign">
+        <FormattedMessage id="ui-inventory.addPublication" />
+      </Icon>
+    }
     addButtonId="clickable-add-publication"
     template={[
       {
