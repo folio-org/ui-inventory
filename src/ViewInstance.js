@@ -183,6 +183,10 @@ class ViewInstance extends React.Component {
     );
   }
 
+  fauxHrid = (hrid) => {
+    return (!hrid || hrid.indexOf('-') === -1) ? hrid : hrid.substr(0, hrid.indexOf('-'));
+  };
+
   render() {
     const {
       okapi,
@@ -195,7 +199,6 @@ class ViewInstance extends React.Component {
     } = this.props;
 
     const query = location.search ? queryString.parse(location.search) : {};
-    const formatMsg = stripes.intl.formatMessage;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -261,14 +264,18 @@ class ViewInstance extends React.Component {
 
     const detailMenu = (
       <PaneMenu>
-        <IconButton
-          id="clickable-edit-instance"
-          style={{ visibility: !instance ? 'hidden' : 'visible' }}
-          href={this.craftLayerUrl('edit', location)}
-          onClick={this.onClickEditInstance}
-          title={formatMsg({ id: 'ui-inventory.editInstance' })}
-          icon="edit"
-        />
+        <FormattedMessage id="ui-inventory.editInstance">
+          {title => (
+            <IconButton
+              id="clickable-edit-instance"
+              style={{ visibility: !instance ? 'hidden' : 'visible' }}
+              href={this.craftLayerUrl('edit', location)}
+              onClick={this.onClickEditInstance}
+              title={title}
+              icon="edit"
+            />
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
@@ -282,7 +289,12 @@ class ViewInstance extends React.Component {
           dismissible
           onClose={onClose}
         >
-          <div style={{ paddingTop: '1rem' }}><Icon icon="spinner-ellipsis" width="100px" /></div>
+          <div style={{ paddingTop: '1rem' }}>
+            <Icon
+              icon="spinner-ellipsis"
+              width="100px"
+            />
+          </div>
         </Pane>
       );
     }
@@ -295,17 +307,20 @@ class ViewInstance extends React.Component {
     };
 
     const newHoldingsRecordButton = (
-      <Button
-        id="clickable-new-holdings-record"
-        href={this.craftLayerUrl('createHoldingsRecord', location)}
-        onClick={this.onClickAddNewHoldingsRecord}
-        buttonStyle="primary"
-        fullWidth
-      >
-        <Icon icon="plus-sign">
-          {formatMsg({ id: 'ui-inventory.addHoldings' })}
-        </Icon>
-      </Button>
+      <FormattedMessage id="ui-inventory.addHoldings">
+        {ariaLabel => (
+          <Button
+            id="clickable-new-holdings-record"
+            href={this.craftLayerUrl('createHoldingsRecord', location)}
+            onClick={this.onClickAddNewHoldingsRecord}
+            ariaLabel={ariaLabel}
+            buttonStyle="primary"
+            fullWidth
+          >
+            <FormattedMessage id="ui-inventory.addHoldings" />
+          </Button>
+        )}
+      </FormattedMessage>
     );
     const viewSourceLink = `${location.pathname.replace('/view/', '/viewsource/')}${location.search}`;
     const viewSourceButton = (
@@ -314,7 +329,7 @@ class ViewInstance extends React.Component {
         id="clickable-view-source"
         marginBottom0
       >
-        {formatMsg({ id: 'ui-inventory.viewSource' })}
+        <FormattedMessage id="ui-inventory.viewSource" />
       </Button>
     );
 
@@ -322,7 +337,7 @@ class ViewInstance extends React.Component {
       return (
         <Layer
           isOpen
-          label={formatMsg({ id: 'ui-inventory.editInstanceDialog' })}
+          label={<FormattedMessage id="ui-inventory.editInstanceDialog" />}
         >
           <InstanceForm
             onSubmit={this.update}
@@ -339,7 +354,7 @@ class ViewInstance extends React.Component {
       return (
         <Layer
           isOpen
-          label={formatMsg({ id: 'ui-inventory.addNewHoldingsDialog' })}
+          label={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
         >
           <HoldingsForm
             form={instance.id}
@@ -349,7 +364,6 @@ class ViewInstance extends React.Component {
             onSubmit={this.createHoldingsRecord}
             onCancel={this.resetLayerQueryParam}
             okapi={okapi}
-            formatMsg={formatMsg}
             instance={instance}
             referenceTables={referenceTables}
             stripes={stripes}
@@ -357,10 +371,6 @@ class ViewInstance extends React.Component {
         </Layer>
       );
     }
-
-    const fauxHrid = (hrid) => {
-      return (!hrid || hrid.indexOf('-') === -1) ? hrid : hrid.substr(0, hrid.indexOf('-'));
-    };
 
     return (
       <Pane
@@ -392,7 +402,7 @@ class ViewInstance extends React.Component {
                   iconKey="instance"
                   size="small"
                 >
-                  { formatMsg({ id: 'ui-inventory.instanceRecord' }) }
+                  <FormattedMessage id="ui-inventory.instanceRecord" />
                 </AppIcon>
               </Layout>
               <Layout className="margin-end-gutter display-flex flex-align-items-center">
@@ -414,42 +424,46 @@ class ViewInstance extends React.Component {
             </Layout>
           </Col>
         </Row>
-        <Headline size="medium" margin="medium">
+        <Headline
+          size="medium"
+          margin="medium"
+        >
           {instance.title}
         </Headline>
+
         <Accordion
           open={this.state.accordions.acc01}
           id="acc01"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.instanceData' })}
+          label={<FormattedMessage id="ui-inventory.instanceData" />}
         >
           {(instance.metadata && instance.metadata.createdDate) && <this.cViewMetaData metadata={instance.metadata} />}
           <Row>
             <Col xs={12}>
-              {instance.discoverySuppress && formatMsg({ id: 'ui-inventory.discoverySuppress' })}
+              {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
               {instance.discoverySuppress && instance.staffSuppress && '|'}
-              {instance.staffSuppress && formatMsg({ id: 'ui-inventory.staffSuppress' })}
+              {instance.staffSuppress && <FormattedMessage id="ui-inventory.staffSuppress" />}
               {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
-              {instance.previouslyHeld && formatMsg({ id: 'ui-inventory.previouslyHeld' })}
+              {instance.previouslyHeld && <FormattedMessage id="ui-inventory.previouslyHeld" />}
             </Col>
           </Row>
-          { (instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br /> }
+          {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
           <Row>
             <Col xs={2}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.instanceHrid' })}
-                value={fauxHrid(_.get(instance, ['hrid'], ''))}
+                label={<FormattedMessage id="ui-inventory.instanceHrid" />}
+                value={this.fauxHrid(_.get(instance, ['hrid'], ''))}
               />
             </Col>
             <Col xs={2}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.metadataSource' })}
+                label={<FormattedMessage id="ui-inventory.metadataSource" />}
                 value={(instance.sourceRecordFormat ? _.get(instance, ['source'], '') : 'FOLIO')}
               />
             </Col>
             <Col xs={4}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.catalogedDate' })}
+                label={<FormattedMessage id="ui-inventory.catalogedDate" />}
                 value={_.get(instance, ['catalogedDate'], '')}
               />
             </Col>
@@ -457,47 +471,57 @@ class ViewInstance extends React.Component {
           <Row>
             <Col xs={3}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.instanceStatusTerm' })}
+                label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
                 value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).name}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.instanceStatusCode' })}
+                label={<FormattedMessage id="ui-inventory.instanceStatusCode" />}
                 value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).code}
               />
             </Col>
             <Col cs={3}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.instanceStatusSource' })}
+                label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
                 value={this.refLookup(referenceTables.instanceStatuses, _.get(instance, ['statusId'])).source}
               />
             </Col>
             <Col xs={3}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.instanceStatusUpdatedDate' })} value={_.get(instance, ['statusUpdatedDate'], '')} />
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.instanceStatusUpdatedDate" />}
+                value={_.get(instance, ['statusUpdatedDate'], '')}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.modeOfIssuance' })} value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)} />
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+                value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)}
+              />
             </Col>
           </Row>
           <Row>
             {(instance.statisticalCodeIds && instance.statisticalCodeIds.length > 0) &&
-              <MultiColumnList
-                id="list-statistical-codes"
-                contentData={instance.statisticalCodeIds.map((codeId) => { return { 'codeId': codeId }; })}
-                visibleColumns={['Statistical code type', 'Statistical code']}
-                formatter={{
-                  'Statistical code type':
-                    x => this.refLookup(referenceTables.statisticalCodeTypes,
-                      this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
-                  'Statistical code':
-                    x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
-                }}
-                ariaLabel="Statistical codes"
-                containerRef={(ref) => { this.resultsList = ref; }}
-              />
+              <FormattedMessage id="ui-inventory.statisticalCodes">
+                {ariaLabel => (
+                  <MultiColumnList
+                    id="list-statistical-codes"
+                    contentData={instance.statisticalCodeIds.map((codeId) => { return { 'codeId': codeId }; })}
+                    visibleColumns={['Statistical code type', 'Statistical code']}
+                    formatter={{
+                      'Statistical code type':
+                        x => this.refLookup(referenceTables.statisticalCodeTypes,
+                          this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                      'Statistical code':
+                        x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                    }}
+                    ariaLabel={ariaLabel}
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                )}
+              </FormattedMessage>
             }
           </Row>
         </Accordion>
@@ -506,29 +530,39 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc02}
           id="acc02"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.titleData' })}
+          label={<FormattedMessage id="ui-inventory.titleData" />}
         >
           <Row>
             <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.resourceTitle' })} value={_.get(instance, ['title'], '')} />
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.resourceTitle" />}
+                value={_.get(instance, ['title'], '')}
+              />
             </Col>
           </Row>
           {
             instance.alternativeTitles.length > 0 && (
-              <MultiColumnList
-                id="list-alternative-titles"
-                contentData={instance.alternativeTitles}
-                rowMetadata={['alternativeTitleTypeId']}
-                visibleColumns={['Alternative title type', 'Alternative title']}
-                formatter={alternativeTitlesRowFormatter}
-                ariaLabel="Alternative titles"
-                containerRef={(ref) => { this.resultsList = ref; }}
-              />
+              <FormattedMessage id="ui-inventory.alternativeTitles">
+                {ariaLabel => (
+                  <MultiColumnList
+                    id="list-alternative-titles"
+                    contentData={instance.alternativeTitles}
+                    rowMetadata={['alternativeTitleTypeId']}
+                    visibleColumns={['Alternative title type', 'Alternative title']}
+                    formatter={alternativeTitlesRowFormatter}
+                    ariaLabel={ariaLabel}
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                )}
+              </FormattedMessage>
             )
           }
           <Row>
             <Col xs={12}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.indexTitle' })} value={_.get(instance, ['indexTitle'], '')} />
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.indexTitle" />}
+                value={_.get(instance, ['indexTitle'], '')}
+              />
             </Col>
           </Row>
           <Row>
@@ -536,7 +570,7 @@ class ViewInstance extends React.Component {
               instance.series.length > 0 && (
                 <Col xs={12}>
                   <KeyValue
-                    label={formatMsg({ id: 'ui-inventory.seriesStatement' })}
+                    label={<FormattedMessage id="ui-inventory.seriesStatement" />}
                     value={_.get(instance, ['series'], '')}
                   />
                 </Col>
@@ -549,19 +583,23 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc03}
           id="acc03"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.identifiers' })}
+          label={<FormattedMessage id="ui-inventory.identifiers" />}
         >
           {
             instance.identifiers.length > 0 && (
-              <MultiColumnList
-                id="list-identifiers"
-                contentData={instance.identifiers}
-                rowMetadata={['identifierTypeId']}
-                visibleColumns={['Resource identifier type', 'Resource identifier']}
-                formatter={identifiersRowFormatter}
-                ariaLabel="Identifiers"
-                containerRef={(ref) => { this.resultsList = ref; }}
-              />
+              <FormattedMessage id="ui-inventory.identifiers">
+                {ariaLabel => (
+                  <MultiColumnList
+                    id="list-identifiers"
+                    contentData={instance.identifiers}
+                    rowMetadata={['identifierTypeId']}
+                    visibleColumns={['Resource identifier type', 'Resource identifier']}
+                    formatter={identifiersRowFormatter}
+                    ariaLabel={ariaLabel}
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                )}
+              </FormattedMessage>
             )
           }
         </Accordion>
@@ -570,18 +608,22 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc04}
           id="acc04"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.contributors' })}
+          label={<FormattedMessage id="ui-inventory.contributors" />}
         >
           {
             instance.contributors.length > 0 && (
-              <MultiColumnList
-                id="list-contributors"
-                contentData={instance.contributors}
-                visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
-                formatter={contributorsRowFormatter}
-                ariaLabel="Contributors"
-                containerRef={(ref) => { this.resultsList = ref; }}
-              />
+              <FormattedMessage id="ui-inventory.contributors">
+                {ariaLabel => (
+                  <MultiColumnList
+                    id="list-contributors"
+                    contentData={instance.contributors}
+                    visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
+                    formatter={contributorsRowFormatter}
+                    ariaLabel={ariaLabel}
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                )}
+              </FormattedMessage>
             )
           }
         </Accordion>
@@ -590,18 +632,22 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc05}
           id="acc05"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.descriptiveData' })}
+          label={<FormattedMessage id="ui-inventory.descriptiveData" />}
         >
           {
             instance.publication.length > 0 && (
-              <MultiColumnList
-                id="list-publication"
-                contentData={instance.publication}
-                visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
-                formatter={publicationRowFormatter}
-                ariaLabel="Publication"
-                containerRef={(ref) => { this.resultsList = ref; }}
-              />
+              <FormattedMessage id="ui-inventory.publication">
+                {ariaLabel => (
+                  <MultiColumnList
+                    id="list-publication"
+                    contentData={instance.publication}
+                    visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
+                    formatter={publicationRowFormatter}
+                    ariaLabel={ariaLabel}
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                )}
+              </FormattedMessage>
             )
           }
           <br />
@@ -610,7 +656,7 @@ class ViewInstance extends React.Component {
               (instance.editions && instance.editions.length > 0) && (
                 <Col xs={6}>
                   <KeyValue
-                    label={formatMsg({ id: 'ui-inventory.edition' })}
+                    label={<FormattedMessage id="ui-inventory.edition" />}
                     value={_.get(instance, ['editions'], []).map((edition, i) => <div key={i}>{edition}</div>)}
                   />
                 </Col>
@@ -620,7 +666,7 @@ class ViewInstance extends React.Component {
               (instance.physicalDescriptions.length > 0) && (
                 <Col xs={6}>
                   <KeyValue
-                    label={formatMsg({ id: 'ui-inventory.physicalDescription' })}
+                    label={<FormattedMessage id="ui-inventory.physicalDescription" />}
                     value={_.get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)}
                   />
                 </Col>
@@ -631,19 +677,19 @@ class ViewInstance extends React.Component {
           <Row>
             <Col xs={3}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.resourceTypeTerm' })}
+                label={<FormattedMessage id="ui-inventory.resourceTypeTerm" />}
                 value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).name}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.resourceTypeCode' })}
+                label={<FormattedMessage id="ui-inventory.resourceTypeCode" />}
                 value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).code}
               />
             </Col>
             <Col cs={3}>
               <KeyValue
-                label={formatMsg({ id: 'ui-inventory.resourceTypeSource' })}
+                label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
                 value={this.refLookup(referenceTables.instanceTypes, _.get(instance, ['instanceTypeId'])).source}
               />
             </Col>
@@ -652,14 +698,18 @@ class ViewInstance extends React.Component {
           <Row>
             {
               (instance.instanceFormatIds && instance.instanceFormatIds.length > 0) && (
-                <MultiColumnList
-                  id="list-formats"
-                  contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
-                  visibleColumns={['Category', 'Term', 'Code', 'Source']}
-                  formatter={formatsRowFormatter}
-                  ariaLabel="Formats"
-                  containerRef={(ref) => { this.resultsList = ref; }}
-                />
+                <FormattedMessage id="ui-inventory.formats">
+                  {ariaLabel => (
+                    <MultiColumnList
+                      id="list-formats"
+                      contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
+                      visibleColumns={['Category', 'Term', 'Code', 'Source']}
+                      formatter={formatsRowFormatter}
+                      ariaLabel={ariaLabel}
+                      containerRef={(ref) => { this.resultsList = ref; }}
+                    />
+                  )}
+                </FormattedMessage>
               )
             }
           </Row>
@@ -667,17 +717,26 @@ class ViewInstance extends React.Component {
             instance.languages.length > 0 && (
               <Row>
                 <Col xs={12}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.language' })} value={formatters.languagesFormatter(instance)} />
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.language" />}
+                    value={formatters.languagesFormatter(instance)}
+                  />
                 </Col>
               </Row>
             )
           }
           <Row>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.publicationFrequency' })} value={_.get(instance, ['publicationFrequency'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
+                value={_.get(instance, ['publicationFrequency'], []).map((desc, i) => <div key={i}>{desc}</div>)}
+              />
             </Col>
             <Col xs={6}>
-              <KeyValue label={formatMsg({ id: 'ui-inventory.publicationRange' })} value={_.get(instance, ['publicationRange'], []).map((desc, i) => <div key={i}>{desc}</div>)} />
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.publicationRange" />}
+                value={_.get(instance, ['publicationRange'], []).map((desc, i) => <div key={i}>{desc}</div>)}
+              />
             </Col>
           </Row>
         </Accordion>
@@ -686,13 +745,16 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc06}
           id="acc06"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.notes' })}
+          label={<FormattedMessage id="ui-inventory.notes" />}
         >
           {
             instance.notes.length > 0 && (
               <Row>
                 <Col xs={12}>
-                  <KeyValue label={formatMsg({ id: 'ui-inventory.notes' })} value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)} />
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.notes" />}
+                    мalue={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
+                  />
                 </Col>
               </Row>
             )
@@ -703,18 +765,22 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc07}
           id="acc07"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.electronicAccess' })}
+          label={<FormattedMessage id="ui-inventory.electronicAccess" />}
         >
           {
             instance.electronicAccess.length > 0 && (
-              <MultiColumnList
-                id="list-electronic-access"
-                contentData={instance.electronicAccess}
-                visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                formatter={electronicAccessRowFormatter}
-                ariaLabel="Electronic access"
-                containerRef={(ref) => { this.resultsList = ref; }}
-              />
+              <FormattedMessage id="ui-inventory.electronicAccess">
+                {ariaLabel => (
+                  <MultiColumnList
+                    id="list-electronic-access"
+                    contentData={instance.electronicAccess}
+                    visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                    formatter={electronicAccessRowFormatter}
+                    ariaLabel={ariaLabel}
+                    containerRef={(ref) => { this.resultsList = ref; }}
+                  />
+                )}
+              </FormattedMessage>
             )
           }
         </Accordion>
@@ -723,14 +789,14 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc08}
           id="acc08"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.subjects' })}
+          label={<FormattedMessage id="ui-inventory.subjects" />}
         >
           {
             instance.subjects.length > 0 && (
               <Row>
                 <Col xs={12}>
                   <KeyValue
-                    label={formatMsg({ id: 'ui-inventory.subjectHeadings' })}
+                    label={<FormattedMessage id="ui-inventory.subjectHeadings" />}
                     value={_.get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)}
                   />
                 </Col>
@@ -743,18 +809,22 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc09}
           id="acc09"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.classification' })}
+          label={<FormattedMessage id="ui-inventory.classification" />}
         >
-          { (instance.classifications.length > 0) &&
-          <MultiColumnList
-            id="list-classifications"
-            contentData={instance.classifications}
-            rowMetadata={['classificationTypeId']}
-            visibleColumns={['Classification identifier type', 'Classification']}
-            formatter={classificationsRowFormatter}
-            ariaLabel="Classifications"
-            containerRef={(ref) => { this.resultsList = ref; }}
-          />
+          {(instance.classifications.length > 0) &&
+            <FormattedMessage id="ui-inventory.classifications">
+              {ariaLabel => (
+                <MultiColumnList
+                  id="list-classifications"
+                  contentData={instance.classifications}
+                  rowMetadata={['classificationTypeId']}
+                  visibleColumns={['Classification identifier type', 'Classification']}
+                  formatter={classificationsRowFormatter}
+                  ariaLabel={ariaLabel}
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                />
+              )}
+            </FormattedMessage>
           }
         </Accordion>
 
@@ -762,13 +832,16 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc10}
           id="acc10"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.instanceRelationshipsAnalyticsBoundWith' })}
+          label={<FormattedMessage id="ui-inventory.instanceRelationshipsAnalyticsBoundWith" />}
         >
           {
             instance.childInstances.length > 0 && (
               <Row>
                 <Col xs={12}>
-                  <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'} value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+                  <KeyValue
+                    label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'}
+                    value={formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)}
+                  />
                 </Col>
               </Row>
             )
@@ -777,7 +850,10 @@ class ViewInstance extends React.Component {
             instance.parentInstances.length > 0 && (
               <Row>
                 <Col xs={12}>
-                  <KeyValue label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name} value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)} />
+                  <KeyValue
+                    label={referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name}
+                    value={formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)}
+                  />
                 </Col>
               </Row>
             )
@@ -857,7 +933,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc11}
           id="acc11"
           onToggle={this.handleAccordionToggle}
-          label={formatMsg({ id: 'ui-inventory.relatedInstances' })}
+          label={<FormattedMessage id="ui-inventory.relatedInstances" />}
         />
       </Pane>
     );
@@ -869,9 +945,6 @@ ViewInstance.propTypes = {
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
-    intl: PropTypes.shape({
-      formatMessage: PropTypes.func.isRequired,
-    }),
   }).isRequired,
   resources: PropTypes.shape({
     selectedInstance: PropTypes.shape({

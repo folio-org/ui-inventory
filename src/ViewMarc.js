@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Pane, Layer } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  Pane,
+  Layer,
+} from '@folio/stripes/components';
 
 class ViewMarc extends React.Component {
   static manifest = Object.freeze({
@@ -12,11 +17,22 @@ class ViewMarc extends React.Component {
   });
 
   render() {
-    const { resources: { marcRecord }, instance } = this.props;
+    const {
+      resources: { marcRecord },
+      instance,
+      paneWidth,
+      onClose,
+    } = this.props;
 
-    if (!marcRecord || !marcRecord.hasLoaded) return <div>Fetching MARC record</div>;
+    if (!marcRecord || !marcRecord.hasLoaded) {
+      return (
+        <div>
+          <FormattedMessage id="ui-inventory.fetchingMarcRecord" />
+        </div>
+      );
+    }
+
     const marcJSON = marcRecord.records[0];
-
     const leader = `LEADER ${marcJSON.leader}`;
     const fields001to009 = marcJSON.fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
     const fields010andUp = marcJSON.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
@@ -54,24 +70,41 @@ class ViewMarc extends React.Component {
 
     return (
       <div>
-        <Layer isOpen label="View MARC source">
+        <Layer
+          isOpen
+          label={<FormattedMessage id="ui-inventory.viewMarcSource" />}
+        >
           <Pane
             paneTitle={
               <div style={{ textAlign: 'center' }}>
                 {_.get(instance, ['title'], '')}
               </div>
             }
-            defaultWidth={this.props.paneWidth}
+            defaultWidth={paneWidth}
             dismissible
-            onClose={this.props.onClose}
+            onClose={onClose}
           >
             <div style={{ 'marginLeft': '20px' }}>
-              <h3>MARC source record</h3>
+              <h3>
+                <FormattedMessage id="ui-inventory.marcSourceRecord" />
+              </h3>
               <div style={{ 'whiteSpace': 'pre', 'fontFamily': 'courier' }}>
-                <table border="0" style={{ 'tableLayout': 'fixed' }}>
+                <table
+                  border="0"
+                  style={{ 'tableLayout': 'fixed' }}
+                >
                   <tbody>
-                    <tr key="leader" id="tr-leader">
-                      <td key="leader" id="td-leader" colSpan="4">{leader}</td>
+                    <tr
+                      key="leader"
+                      id="tr-leader"
+                    >
+                      <td
+                        key="leader"
+                        id="td-leader"
+                        colSpan="4"
+                      >
+                        {leader}
+                      </td>
                     </tr>
                     {formattedFields001to009}
                     {formattedFields010andUp}

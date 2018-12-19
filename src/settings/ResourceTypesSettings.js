@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
 class ResourceTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.shape({
-        formatMessage: PropTypes.func.isRequired,
-      }).isRequired,
     }).isRequired,
   };
 
   constructor(props) {
     super(props);
+
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
@@ -21,16 +21,14 @@ class ResourceTypesSettings extends React.Component {
   suppressDelete = term => term.source === 'rdacontent';
 
   render() {
-    const { formatMessage } = this.props.stripes.intl;
-
     return (
       <this.connectedControlledVocab
         {...this.props}
         baseUrl="instance-types"
         records="instanceTypes"
-        label={formatMessage({ id: 'ui-inventory.resourceTypes' })}
-        labelSingular={formatMessage({ id: 'ui-inventory.resourceType' })}
-        objectLabel={formatMessage({ id: 'ui-inventory.resourceTypes' })}
+        label={<FormattedMessage id="ui-inventory.resourceTypes" />}
+        labelSingular={<FormattedMessage id="ui-inventory.resourceType" />}
+        objectLabel={<FormattedMessage id="ui-inventory.resourceTypes" />}
         visibleFields={['name', 'code', 'source']}
         readOnlyFields={['source']}
         itemTemplate={{ source: 'local' }}

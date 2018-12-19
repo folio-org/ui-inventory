@@ -191,7 +191,7 @@ class ItemForm extends React.Component {
           onToggle();
         }}
       >
-        <Icon icon="hollowX">
+        <Icon icon="times-circle">
           <FormattedMessage id="ui-inventory.cancel" />
         </Icon>
       </Button>

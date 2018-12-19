@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { injectIntl, intlShape } from 'react-intl';
-import { stripesShape } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+} from 'react-intl';
 
+import { stripesShape } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
@@ -16,7 +20,6 @@ const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 const emptyObj = {};
 const emptyArr = [];
-
 
 const languages = [
   { code: 'eng', name: 'English' },
@@ -32,19 +35,19 @@ const languages = [
 // as those are pulled from the backend
 const filterConfig = [
   {
-    label: 'Resource Type',
+    label: <FormattedMessage id="ui-inventory.instances.resourceType" />,
     name: 'resource',
     cql: 'instanceTypeId',
     values: [],
   },
   {
-    label: 'Language',
+    label: <FormattedMessage id="ui-inventory.instances.language" />,
     name: 'language',
     cql: 'languages',
     values: languages.map(rec => ({ name: rec.name, cql: rec.code })),
   },
   {
-    label: 'Location',
+    label: <FormattedMessage id="ui-inventory.instances.location" />,
     name: 'location',
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
@@ -291,19 +294,19 @@ class Instances extends React.Component {
     const { resources, showSingleResult, browseOnly, intl } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
-        || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
-        || !resources.identifierTypes || !resources.identifierTypes.hasLoaded
-        || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
-        || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
-        || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
-        || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
-        || !resources.locations || !resources.locations.hasLoaded
-        || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
-        || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
-        || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
-        || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
-        || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
-        || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
+      || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
+      || !resources.identifierTypes || !resources.identifierTypes.hasLoaded
+      || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
+      || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
+      || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
+      || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
+      || !resources.locations || !resources.locations.hasLoaded
+      || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
+      || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
+      || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
+      || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
+      || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
+      || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
     ) return <div />;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;

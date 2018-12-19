@@ -56,6 +56,7 @@ describe('ItemViewPage', () => {
       this.server.get('/inventory/items/:id', item);
 
       this.visit(`/inventory/view/${instance.id}/${holdings.id}/${item.id}`);
+      await ItemViewPage.whenLoaded();
     });
 
     it('displays the title in the pane header', () => {
