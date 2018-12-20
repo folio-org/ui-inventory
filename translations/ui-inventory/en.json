@@ -62,6 +62,7 @@
   "childInstance": "Child instance",
   "typeOfRelation": "Type of relation",
   "createItem": "Create item",
+  "createNewItem": "Create New Item",
   "updateItem": "Update item",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
   "waitingForResources": "Waiting for resources",

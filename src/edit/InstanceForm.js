@@ -264,12 +264,12 @@ class InstanceForm extends React.Component {
     const addInstanceLastMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.createInstance">
-          {title => (
+          {ariaLabel => (
             <Button
               buttonStyle="primary paneHeaderNewButton"
               id="clickable-create-instance"
               type="submit"
-              title={title}
+              ariaLabel={ariaLabel}
               disabled={(pristine || submitting) && !copy}
               onClick={handleSubmit}
               marginBottom0
@@ -284,12 +284,12 @@ class InstanceForm extends React.Component {
     const editInstanceLastMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.updateInstance">
-          {title => (
+          {ariaLabel => (
             <Button
               buttonStyle="primary paneHeaderNewButton"
               id="clickable-update-instance"
               type="submit"
-              title={title}
+              ariaLabel={ariaLabel}
               disabled={(pristine || submitting) && !copy}
               onClick={handleSubmit}
               marginBottom0

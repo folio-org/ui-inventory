@@ -324,14 +324,14 @@ class ViewItem extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editItem">
-          {title => (
+          {ariaLabel => (
             <IconButton
               icon="edit"
               id="clickable-edit-item"
               style={{ visibility: !item ? 'hidden' : 'visible' }}
               href={this.craftLayerUrl('editItem', location)}
               onClick={this.onClickEditItem}
-              title={title}
+              ariaLabel={ariaLabel}
             />
           )}
         </FormattedMessage>

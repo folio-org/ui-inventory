@@ -233,33 +233,41 @@ class ItemForm extends React.Component {
     /* Menus for Add Item workflow */
     const addItemLastMenu = (
       <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-item"
-          type="submit"
-          title="Create New Item"
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="ui-inventory.createItem" />
-        </Button>
+        <FormattedMessage id="ui-inventory.createNewItem">
+          {ariaLabel => (
+            <Button
+              buttonStyle="primary paneHeaderNewButton"
+              id="clickable-create-item"
+              type="submit"
+              ariaLabel={ariaLabel}
+              disabled={(pristine || submitting) && !copy}
+              onClick={handleSubmit}
+              marginBottom0
+            >
+              <FormattedMessage id="ui-inventory.createItem" />
+            </Button>
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
     const editItemLastMenu = (
       <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-update-item"
-          type="submit"
-          title="Update Item"
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="ui-inventory.updateItem" />
-        </Button>
+        <FormattedMessage id="ui-inventory.updateItem">
+          {ariaLabel => (
+            <Button
+              buttonStyle="primary paneHeaderNewButton"
+              id="clickable-update-item"
+              type="submit"
+              ariaLabel={ariaLabel}
+              disabled={(pristine || submitting) && !copy}
+              onClick={handleSubmit}
+              marginBottom0
+            >
+              <FormattedMessage id="ui-inventory.updateItem" />
+            </Button>
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
@@ -452,7 +460,7 @@ class ItemForm extends React.Component {
                       component: TextField,
                       label: (
                         <FormattedMessage id="ui-inventory.formerId">
-                          {(message) => message }
+                          {(message) => message}
                         </FormattedMessage>
                       )
                     }]}

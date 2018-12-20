@@ -222,12 +222,12 @@ class HoldingsForm extends React.Component {
     const addHoldingsLastMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.createNewHoldingsRecord">
-          {title => (
+          {ariaLabel => (
             <Button
               buttonStyle="primary paneHeaderNewButton"
               id="clickable-create-item"
               type="submit"
-              title={title}
+              ariaLabel={ariaLabel}
               disabled={(pristine || submitting) && !copy}
               onClick={handleSubmit(this.onSave)}
               marginBottom0
@@ -242,12 +242,12 @@ class HoldingsForm extends React.Component {
     const editHoldingsLastMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.updateHoldingsRecord">
-          {title => (
+          {ariaLabel => (
             <Button
               buttonStyle="primary paneHeaderNewButton"
               id="clickable-update-item"
               type="submit"
-              title={title}
+              ariaLabel={ariaLabel}
               disabled={(pristine || submitting) && !copy}
               onClick={handleSubmit(this.onSave)}
               marginBottom0

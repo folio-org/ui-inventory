@@ -265,13 +265,13 @@ class ViewInstance extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editInstance">
-          {title => (
+          {ariaLabel => (
             <IconButton
               id="clickable-edit-instance"
               style={{ visibility: !instance ? 'hidden' : 'visible' }}
               href={this.craftLayerUrl('edit', location)}
               onClick={this.onClickEditInstance}
-              title={title}
+              ariaLabel={ariaLabel}
               icon="edit"
             />
           )}

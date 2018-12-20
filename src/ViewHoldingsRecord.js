@@ -253,14 +253,14 @@ class ViewHoldingsRecord extends React.Component {
     const detailMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editHoldings">
-          {title => (
+          {ariaLabel => (
             <IconButton
               icon="edit"
               id="clickable-edit-holdingsrecord"
               style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
               href={this.craftLayerUrl('editHoldingsRecord')}
               onClick={this.onClickEditHoldingsRecord}
-              title={title}
+              ariaLabel={ariaLabel}
             />
           )}
         </FormattedMessage>
