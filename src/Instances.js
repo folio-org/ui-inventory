@@ -10,6 +10,7 @@ import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripe
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
+import Filters from './filters/filters';
 import formatters from './referenceFormatters';
 
 const INITIAL_RESULT_COUNT = 30;
@@ -228,7 +229,9 @@ class Instances extends React.Component {
     this.onChangeFilter = commonChangeFilter.bind(this);
     this.copyInstance = this.copyInstance.bind(this);
 
-    this.state = {};
+    this.state = {
+      activeFilters: {},
+    };
   }
 
   /**
@@ -265,8 +268,45 @@ class Instances extends React.Component {
     this.props.mutator.query.update({ qindex });
   }
 
-  updateFilters(filters) { // provided for onChangeFilter
-    this.props.mutator.query.update({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
+  getActiveFilters() {
+    const filtersString = this.props.resources.query.filters || '';
+
+    if (filtersString.length === 0) {
+      return undefined;
+    }
+
+    return filtersString
+      .split(',')
+      .reduce((resultFilters, currentFilter) => {
+        const [filterName, filterValue] = currentFilter.split('.');
+        
+        if (!Array.isArray(resultFilters[filterName])) {
+          resultFilters[filterName] = [];
+        }
+
+        resultFilters[filterName].push(filterValue);
+
+        return resultFilters;
+      }, {});
+  }
+
+  onFilterChangeHandler = ({ name, values }) => {
+    this.setState((prevState) => ({
+      activeFilters: {
+        ...prevState.activeFilters,
+        [name]: values,
+      }
+    }), () => {
+      const { activeFilters } = this.state;
+
+      const newFiltersString = Object.keys(activeFilters).map((filterName) => {
+        return activeFilters[filterName].map((filterValue) => {
+          return `${filterName}.${filterValue}`;
+        }).join(',');
+      }).join(',');
+
+      this.props.mutator.query.update({ filters: newFiltersString });
+    });
   }
 
   closeNewInstance = (e) => {
@@ -381,6 +421,18 @@ class Instances extends React.Component {
           path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
           showSingleResult={showSingleResult}
           browseOnly={browseOnly}
+          
+          onFilterChange={this.onFilterChangeHandler}
+          renderFilters={
+            (onChange) => {
+              return (
+                <Filters
+                  activeFilters={this.getActiveFilters()}
+                  onChange={onChange}
+                />
+              );
+            }
+          }
         />
       </div>);
   }
