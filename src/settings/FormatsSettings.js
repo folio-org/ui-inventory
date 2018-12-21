@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
 class FormatSettings extends React.Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -21,6 +26,8 @@ class FormatSettings extends React.Component {
   suppressDelete = term => term.source === 'rdacarrier';
 
   render() {
+    const { intl: { formatMessage } } = this.props;
+
     return (
       <this.connectedControlledVocab
         {...this.props}
@@ -30,6 +37,11 @@ class FormatSettings extends React.Component {
         labelSingular={<FormattedMessage id="ui-inventory.format" />}
         objectLabel={<FormattedMessage id="ui-inventory.instances" />}
         visibleFields={['name', 'code', 'source']}
+        columnMapping={{
+          name: formatMessage({ id: 'ui-inventory.name' }),
+          code: formatMessage({ id: 'ui-inventory.code' }),
+          source: formatMessage({ id: 'ui-inventory.source' }),
+        }}
         readOnlyFields={['source']}
         itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
@@ -43,4 +55,4 @@ class FormatSettings extends React.Component {
   }
 }
 
-export default FormatSettings;
+export default injectIntl(FormatSettings);

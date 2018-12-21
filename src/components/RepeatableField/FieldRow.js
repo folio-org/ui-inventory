@@ -212,7 +212,7 @@ class FieldRow extends React.Component {
                           buttonStyle="link"
                           style={{ padding: 0, marginBottom: '12px' }}
                           onClick={() => { this.handleRemove(fieldIndex, f); }}
-                          ariaLabel={ariaLabel}
+                          aria-label={ariaLabel}
                         >
                           <Icon icon="trash" />
                         </Button>

@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
 class URLRelationshipSettings extends React.Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -18,6 +23,8 @@ class URLRelationshipSettings extends React.Component {
   }
 
   render() {
+    const { intl: { formatMessage } } = this.props;
+
     return (
       <this.connectedControlledVocab
         {...this.props}
@@ -27,6 +34,10 @@ class URLRelationshipSettings extends React.Component {
         labelSingular={<FormattedMessage id="ui-inventory.urlRelationshipTerm" />}
         objectLabel={<FormattedMessage id="ui-inventory.URLrelationship" />}
         visibleFields={['name', 'source']}
+        columnMapping={{
+          name: formatMessage({ id: 'ui-inventory.name' }),
+          source: formatMessage({ id: 'ui-inventory.source' }),
+        }}
         readOnlyFields={['source']}
         itemTemplate={{ source: 'local' }}
         hiddenFields={['description', 'numberOfObjects']}
@@ -38,4 +49,4 @@ class URLRelationshipSettings extends React.Component {
   }
 }
 
-export default URLRelationshipSettings;
+export default injectIntl(URLRelationshipSettings);

@@ -239,7 +239,7 @@ class ItemForm extends React.Component {
               buttonStyle="primary paneHeaderNewButton"
               id="clickable-create-item"
               type="submit"
-              ariaLabel={ariaLabel}
+              aria-label={ariaLabel}
               disabled={(pristine || submitting) && !copy}
               onClick={handleSubmit}
               marginBottom0
@@ -259,7 +259,7 @@ class ItemForm extends React.Component {
               buttonStyle="primary paneHeaderNewButton"
               id="clickable-update-item"
               type="submit"
-              ariaLabel={ariaLabel}
+              aria-label={ariaLabel}
               disabled={(pristine || submitting) && !copy}
               onClick={handleSubmit}
               marginBottom0

@@ -6,6 +6,8 @@ import Link from 'react-router-dom/Link';
 import {
   FormattedTime,
   FormattedMessage,
+  injectIntl,
+  intlShape,
 } from 'react-intl';
 
 import {
@@ -271,6 +273,33 @@ class ViewItem extends React.Component {
     );
   }
 
+  isAwaitingResource = () => {
+    const {
+      items,
+      holdingsRecords,
+      instances1,
+      materialTypes,
+      loanTypes,
+      itemNoteTypes,
+      callNumberTypes,
+    } = this.props.resources;
+
+    if (!items || !items.hasLoaded || !instances1 ||
+      !instances1.hasLoaded || !holdingsRecords ||
+      !holdingsRecords.hasLoaded) {
+      return true;
+    }
+
+    if (!loanTypes || !loanTypes.hasLoaded ||
+      !materialTypes || !materialTypes.hasLoaded ||
+      !itemNoteTypes || !itemNoteTypes.hasLoaded ||
+      !callNumberTypes || !callNumberTypes.hasLoaded) {
+      return true;
+    }
+
+    return false;
+  };
+
   render() {
     const {
       location,
@@ -287,6 +316,7 @@ class ViewItem extends React.Component {
       referenceTables,
       okapi,
       paneWidth,
+      intl: { formatMessage },
     } = this.props;
 
     const {
@@ -298,16 +328,7 @@ class ViewItem extends React.Component {
     referenceTables.itemNoteTypes = (itemNoteTypes || {}).records || [];
     referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
 
-    if (!items || !items.hasLoaded || !instances1 ||
-      !instances1.hasLoaded || !holdingsRecords ||
-      !holdingsRecords.hasLoaded) {
-      return <FormattedMessage id="ui-inventory.waitingForResources" />;
-    }
-
-    if (!loanTypes || !loanTypes.hasLoaded ||
-      !materialTypes || !materialTypes.hasLoaded ||
-      !itemNoteTypes || !itemNoteTypes.hasLoaded ||
-      !callNumberTypes || !callNumberTypes.hasLoaded) {
+    if (this.isAwaitingResource()) {
       return <FormattedMessage id="ui-inventory.waitingForResources" />;
     }
 
@@ -552,6 +573,10 @@ class ViewItem extends React.Component {
                         id="list-statistical-codes"
                         contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
                         visibleColumns={['Statistical code type', 'Statistical code']}
+                        columnMapping={{
+                          'Statistical code type': formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                          'Statistical code': formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                        }}
                         formatter={{
                           'Statistical code type':
                             x => refLookup(referenceTables.statisticalCodeTypes,
@@ -878,6 +903,13 @@ class ViewItem extends React.Component {
                       id="list-electronic-access"
                       contentData={item.electronicAccess}
                       visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                      columnMapping={{
+                        'URL relationship': formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                        'URI': formatMessage({ id: 'ui-inventory.uri' }),
+                        'Link text': formatMessage({ id: 'ui-inventory.linkText' }),
+                        'Materials specified': formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                        'URL public note': formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                      }}
                       formatter={{
                         'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
                         'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
@@ -934,6 +966,7 @@ class ViewItem extends React.Component {
 }
 
 ViewItem.propTypes = {
+  intl: intlShape.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
@@ -953,6 +986,18 @@ ViewItem.propTypes = {
     loans: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    items: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    holdingsRecords: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    itemNoteTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    callNumberTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
     borrower: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
@@ -969,4 +1014,4 @@ ViewItem.propTypes = {
   onCloseViewItem: PropTypes.func.isRequired,
 };
 
-export default ViewItem;
+export default injectIntl(ViewItem);

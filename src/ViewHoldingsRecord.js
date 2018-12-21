@@ -1,7 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 import queryString from 'query-string';
 
 import {
@@ -206,6 +210,37 @@ class ViewHoldingsRecord extends React.Component {
     );
   }
 
+  isAwaitingResource = () => {
+    const {
+      holdingsRecords,
+      instances1,
+      illPolicies,
+      holdingsTypes,
+      callNumberTypes,
+      holdingsNoteTypes,
+      permanentLocation,
+      temporaryLocation,
+    } = this.props.resources;
+
+    if (!holdingsRecords || !holdingsRecords.hasLoaded) {
+      return true;
+    }
+
+    const holdingsRecord = holdingsRecords.records[0];
+
+    if (!instances1 || !instances1.hasLoaded
+      || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
+      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))
+      || !illPolicies || !illPolicies.hasLoaded
+      || !holdingsTypes || !holdingsTypes.hasLoaded
+      || !callNumberTypes || !callNumberTypes.hasLoaded
+      || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded) {
+      return true;
+    }
+
+    return false;
+  };
+
   render() {
     const {
       location,
@@ -221,25 +256,15 @@ class ViewHoldingsRecord extends React.Component {
       },
       referenceTables,
       okapi,
+      intl: { formatMessage },
     } = this.props;
 
-    if (!holdingsRecords || !holdingsRecords.hasLoaded) {
-      return <FormattedMessage id="ui-inventory.holdingsRecord.awaitingResources" />;
-    }
-
-    const holdingsRecord = holdingsRecords.records[0];
-
-    if (!instances1 || !instances1.hasLoaded
-      || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
-      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))
-      || !illPolicies || !illPolicies.hasLoaded
-      || !holdingsTypes || !holdingsTypes.hasLoaded
-      || !callNumberTypes || !callNumberTypes.hasLoaded
-      || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded) {
+    if (this.isAwaitingResource()) {
       return <FormattedMessage id="ui-inventory.holdingsRecord.awaitingResources" />;
     }
 
     const instance = instances1.records[0];
+    const holdingsRecord = holdingsRecords.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
 
@@ -408,6 +433,10 @@ class ViewHoldingsRecord extends React.Component {
                           id="list-statistical-codes"
                           contentData={holdingsRecord.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
                           visibleColumns={['Statistical code type', 'Statistical code']}
+                          columnMapping={{
+                            'Statistical code type': formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                            'Statistical code': formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                          }}
                           formatter={{
                             'Statistical code type':
                               x => this.refLookup(referenceTables.statisticalCodeTypes,
@@ -531,6 +560,10 @@ class ViewHoldingsRecord extends React.Component {
                         id="list-holdingsstatements"
                         contentData={holdingsRecord.holdingsStatements}
                         visibleColumns={['Holdings statement', 'Holdings statement note']}
+                        columnMapping={{
+                          'Holdings statement': formatMessage({ id: 'ui-inventory.holdingsStatement' }),
+                          'Holdings statement note': formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
+                        }}
                         formatter={{
                           'Holdings statement': x => _.get(x, ['statement']) || '',
                           'Holdings statement note': x => _.get(x, ['note']) || '',
@@ -548,6 +581,10 @@ class ViewHoldingsRecord extends React.Component {
                         id="list-holdingsstatementsforsupplements"
                         contentData={holdingsRecord.holdingsStatementsForSupplements}
                         visibleColumns={['Holdings statement for supplements', 'Holdings statement for supplements note']}
+                        columnMapping={{
+                          'Holdings statement for supplements': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
+                          'Holdings statement for supplements note': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
+                        }}
                         formatter={{
                           'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
                           'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
@@ -566,6 +603,10 @@ class ViewHoldingsRecord extends React.Component {
                         id="list-holdingsstatementsforindexes"
                         contentData={holdingsRecord.holdingsStatementsForIndexes}
                         visibleColumns={['Holdings statement for indexes', 'Holdings statement for indexes note']}
+                        columnMapping={{
+                          'Holdings statement for indexes': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
+                          'Holdings statement for indexes note': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
+                        }}
                         formatter={{
                           'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
                           'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
@@ -646,6 +687,13 @@ class ViewHoldingsRecord extends React.Component {
                         id="list-electronic-access"
                         contentData={holdingsRecord.electronicAccess}
                         visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                        columnMapping={{
+                          'URL relationship': formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                          'URI': formatMessage({ id: 'ui-inventory.uri' }),
+                          'Link text': formatMessage({ id: 'ui-inventory.linkText' }),
+                          'Materials specified': formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                          'URL public note': formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                        }}
                         formatter={{
                           'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
                           'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
@@ -675,6 +723,10 @@ class ViewHoldingsRecord extends React.Component {
                         id="list-retrieving-history"
                         contentData={holdingsRecord.receivingHistory.entries}
                         visibleColumns={['Enumeration', 'Chronology']}
+                        columnMapping={{
+                          'Enumeration': formatMessage({ id: 'ui-inventory.enumeration' }),
+                          'Chronology': formatMessage({ id: 'ui-inventory.chronology' }),
+                        }}
                         formatter={{
                           'Enumeration': x => x.enumeration,
                           'Chronology': x => x.chronology,
@@ -724,6 +776,7 @@ class ViewHoldingsRecord extends React.Component {
 }
 
 ViewHoldingsRecord.propTypes = {
+  intl: intlShape.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
@@ -749,6 +802,12 @@ ViewHoldingsRecord.propTypes = {
     holdingsTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    callNumberTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    holdingsNoteTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
@@ -767,4 +826,4 @@ ViewHoldingsRecord.propTypes = {
 };
 
 
-export default ViewHoldingsRecord;
+export default injectIntl(ViewHoldingsRecord);

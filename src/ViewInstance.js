@@ -2,7 +2,12 @@ import _ from 'lodash';
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
+
 import queryString from 'query-string';
 
 import { TitleManager } from '@folio/stripes/core';
@@ -196,6 +201,7 @@ class ViewInstance extends React.Component {
       stripes,
       onClose,
       paneWidth,
+      intl: { formatMessage },
     } = this.props;
 
     const query = location.search ? queryString.parse(location.search) : {};
@@ -313,7 +319,7 @@ class ViewInstance extends React.Component {
             id="clickable-new-holdings-record"
             href={this.craftLayerUrl('createHoldingsRecord', location)}
             onClick={this.onClickAddNewHoldingsRecord}
-            ariaLabel={ariaLabel}
+            aria-label={ariaLabel}
             buttonStyle="primary"
             fullWidth
           >
@@ -510,6 +516,10 @@ class ViewInstance extends React.Component {
                     id="list-statistical-codes"
                     contentData={instance.statisticalCodeIds.map((codeId) => { return { 'codeId': codeId }; })}
                     visibleColumns={['Statistical code type', 'Statistical code']}
+                    columnMapping={{
+                      'Statistical code type': formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                      'Statistical code': formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                    }}
                     formatter={{
                       'Statistical code type':
                         x => this.refLookup(referenceTables.statisticalCodeTypes,
@@ -549,6 +559,10 @@ class ViewInstance extends React.Component {
                     contentData={instance.alternativeTitles}
                     rowMetadata={['alternativeTitleTypeId']}
                     visibleColumns={['Alternative title type', 'Alternative title']}
+                    columnMapping={{
+                      'Alternative title type': formatMessage({ id: 'ui-inventory.alternativeTitleType' }),
+                      'Alternative title': formatMessage({ id: 'ui-inventory.alternativeTitle' }),
+                    }}
                     formatter={alternativeTitlesRowFormatter}
                     ariaLabel={ariaLabel}
                     containerRef={(ref) => { this.resultsList = ref; }}
@@ -594,6 +608,10 @@ class ViewInstance extends React.Component {
                     contentData={instance.identifiers}
                     rowMetadata={['identifierTypeId']}
                     visibleColumns={['Resource identifier type', 'Resource identifier']}
+                    columnMapping={{
+                      'Resource identifier type': formatMessage({ id: 'ui-inventory.resourceIdentifierType' }),
+                      'Resource identifier': formatMessage({ id: 'ui-inventory.resourceIdentifier' }),
+                    }}
                     formatter={identifiersRowFormatter}
                     ariaLabel={ariaLabel}
                     containerRef={(ref) => { this.resultsList = ref; }}
@@ -618,6 +636,14 @@ class ViewInstance extends React.Component {
                     id="list-contributors"
                     contentData={instance.contributors}
                     visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
+                    columnMapping={{
+                      'Name type': formatMessage({ id: 'ui-inventory.nameType' }),
+                      'Name': formatMessage({ id: 'ui-inventory.name' }),
+                      'Type': formatMessage({ id: 'ui-inventory.type' }),
+                      'Code': formatMessage({ id: 'ui-inventory.code' }),
+                      'Source': formatMessage({ id: 'ui-inventory.source' }),
+                      'Free text': formatMessage({ id: 'ui-inventory.freeText' }),
+                    }}
                     formatter={contributorsRowFormatter}
                     ariaLabel={ariaLabel}
                     containerRef={(ref) => { this.resultsList = ref; }}
@@ -642,6 +668,12 @@ class ViewInstance extends React.Component {
                     id="list-publication"
                     contentData={instance.publication}
                     visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
+                    columnMapping={{
+                      'Publisher': formatMessage({ id: 'ui-inventory.publisher' }),
+                      'Publisher role': formatMessage({ id: 'ui-inventory.publisherRole' }),
+                      'Place of publication': formatMessage({ id: 'ui-inventory.placeOfPublication' }),
+                      'Publication date': formatMessage({ id: 'ui-inventory.publisherDate' }),
+                    }}
                     formatter={publicationRowFormatter}
                     ariaLabel={ariaLabel}
                     containerRef={(ref) => { this.resultsList = ref; }}
@@ -704,6 +736,12 @@ class ViewInstance extends React.Component {
                       id="list-formats"
                       contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
                       visibleColumns={['Category', 'Term', 'Code', 'Source']}
+                      columnMapping={{
+                        'Category': formatMessage({ id: 'ui-inventory.category' }),
+                        'Term': formatMessage({ id: 'ui-inventory.term' }),
+                        'Code': formatMessage({ id: 'ui-inventory.code' }),
+                        'Source': formatMessage({ id: 'ui-inventory.source' }),
+                      }}
                       formatter={formatsRowFormatter}
                       ariaLabel={ariaLabel}
                       containerRef={(ref) => { this.resultsList = ref; }}
@@ -775,6 +813,13 @@ class ViewInstance extends React.Component {
                     id="list-electronic-access"
                     contentData={instance.electronicAccess}
                     visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                    columnMapping={{
+                      'URL relationship': formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                      'URI': formatMessage({ id: 'ui-inventory.uri' }),
+                      'Link text': formatMessage({ id: 'ui-inventory.linkText' }),
+                      'Materials specified': formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                      'URL public note': formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                    }}
                     formatter={electronicAccessRowFormatter}
                     ariaLabel={ariaLabel}
                     containerRef={(ref) => { this.resultsList = ref; }}
@@ -819,6 +864,10 @@ class ViewInstance extends React.Component {
                   contentData={instance.classifications}
                   rowMetadata={['classificationTypeId']}
                   visibleColumns={['Classification identifier type', 'Classification']}
+                  columnMapping={{
+                    'Classification identifier type': formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
+                    'Classification': formatMessage({ id: 'ui-inventory.classification' }),
+                  }}
                   formatter={classificationsRowFormatter}
                   ariaLabel={ariaLabel}
                   containerRef={(ref) => { this.resultsList = ref; }}
@@ -941,6 +990,7 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
+  intl: intlShape.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
@@ -977,4 +1027,4 @@ ViewInstance.propTypes = {
   okapi: PropTypes.object,
 };
 
-export default ViewInstance;
+export default injectIntl(ViewInstance);

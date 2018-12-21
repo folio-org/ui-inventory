@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Link from 'react-router-dom/Link';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 
 import { MultiColumnList } from '@folio/stripes/components';
 
@@ -38,31 +43,46 @@ class Items extends React.Component {
   );
 
   render() {
-    const { resources: { items } } = this.props;
-    if (!items || !items.hasLoaded) return <div />;
+    const {
+      resources: { items },
+      intl: { formatMessage },
+    } = this.props;
+
+    if (!items || !items.hasLoaded) return null;
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': x => _.get(x, ['barcode']),
       'status': x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };
+
     return (
       <div>
-        <MultiColumnList
-          id="list-items"
-          contentData={itemRecords}
-          rowMetadata={['id', 'holdingsRecordId']}
-          formatter={itemsFormatter}
-          visibleColumns={['Item: barcode', 'status', 'Material Type']}
-          ariaLabel="Items"
-          containerRef={(ref) => { this.resultsList = ref; }}
-          rowFormatter={this.anchoredRowFormatter}
-        />
+        <FormattedMessage id="ui-inventory.items">
+          {ariaLabel => (
+            <MultiColumnList
+              id="list-items"
+              contentData={itemRecords}
+              rowMetadata={['id', 'holdingsRecordId']}
+              formatter={itemsFormatter}
+              visibleColumns={['Item: barcode', 'status', 'Material Type']}
+              columnMapping={{
+                'Item: barcode': formatMessage({ id: 'ui-inventory.item.barcode' }),
+                'status': formatMessage({ id: 'ui-inventory.status' }),
+                'Material Type': formatMessage({ id: 'ui-inventory.materialType' }),
+              }}
+              ariaLabel={ariaLabel}
+              containerRef={(ref) => { this.resultsList = ref; }}
+              rowFormatter={this.anchoredRowFormatter}
+            />
+          )}
+        </FormattedMessage>
       </div>);
   }
 }
 
 Items.propTypes = {
+  intl: intlShape.isRequired,
   resources: PropTypes.shape({
     items: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -74,4 +94,4 @@ Items.propTypes = {
   holdingsRecord: PropTypes.object.isRequired,
 };
 
-export default Items;
+export default injectIntl(Items);

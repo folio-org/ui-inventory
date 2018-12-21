@@ -92,7 +92,8 @@ class StatisticalCodeSettings extends React.Component {
         columnMapping={{
           code: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
           name: formatMessage({ id: 'ui-inventory.statisticalCodeNames' }),
-          statisticalCodeTypeId: formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })
+          statisticalCodeTypeId: formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
+          source: formatMessage({ id: 'ui-inventory.source' }),
         }}
         readOnlyFields={['source']}
         itemTemplate={{ source: 'local' }}
