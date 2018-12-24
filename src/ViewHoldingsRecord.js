@@ -1,11 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import {
-  FormattedMessage,
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import queryString from 'query-string';
 
 import {
@@ -24,6 +20,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
+import { IntlConsumer } from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
@@ -256,7 +253,6 @@ class ViewHoldingsRecord extends React.Component {
       },
       referenceTables,
       okapi,
-      intl: { formatMessage },
     } = this.props;
 
     if (this.isAwaitingResource()) {
@@ -426,30 +422,34 @@ class ViewHoldingsRecord extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  {(holdingsRecord.statisticalCodeIds && holdingsRecord.statisticalCodeIds.length > 0) &&
-                    <FormattedMessage id="ui-inventory.statisticalCodes">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-statistical-codes"
-                          contentData={holdingsRecord.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
-                          visibleColumns={['Statistical code type', 'Statistical code']}
-                          columnMapping={{
-                            'Statistical code type': formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                            'Statistical code': formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                          }}
-                          formatter={{
-                            'Statistical code type':
-                              x => this.refLookup(referenceTables.statisticalCodeTypes,
-                                this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
-                            'Statistical code':
-                              x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
-                          }}
-                          ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
-                        />
+                  {(holdingsRecord.statisticalCodeIds && holdingsRecord.statisticalCodeIds.length > 0) && (
+                    <IntlConsumer>
+                      {intl => (
+                        <FormattedMessage id="ui-inventory.statisticalCodes">
+                          {ariaLabel => (
+                            <MultiColumnList
+                              id="list-statistical-codes"
+                              contentData={holdingsRecord.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                              visibleColumns={['Statistical code type', 'Statistical code']}
+                              columnMapping={{
+                                'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                                'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                              }}
+                              formatter={{
+                                'Statistical code type':
+                                  x => this.refLookup(referenceTables.statisticalCodeTypes,
+                                    this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                                'Statistical code':
+                                  x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                              }}
+                              ariaLabel={ariaLabel}
+                              containerRef={(ref) => { this.resultsList = ref; }}
+                            />
+                          )}
+                        </FormattedMessage>
                       )}
-                    </FormattedMessage>
-                  }
+                    </IntlConsumer>
+                  )}
                 </Row>
 
               </Accordion>
@@ -553,70 +553,82 @@ class ViewHoldingsRecord extends React.Component {
                   label={<FormattedMessage id="ui-inventory.numberOfItems" />}
                   value={_.get(holdingsRecord, ['numberOfItems'], [])}
                 />
-                {(holdingsRecord.holdingsStatements.length > 0) &&
-                  <FormattedMessage id="ui-inventory.holdingsStatements">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-holdingsstatements"
-                        contentData={holdingsRecord.holdingsStatements}
-                        visibleColumns={['Holdings statement', 'Holdings statement note']}
-                        columnMapping={{
-                          'Holdings statement': formatMessage({ id: 'ui-inventory.holdingsStatement' }),
-                          'Holdings statement note': formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
-                        }}
-                        formatter={{
-                          'Holdings statement': x => _.get(x, ['statement']) || '',
-                          'Holdings statement note': x => _.get(x, ['note']) || '',
-                        }}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
+                {(holdingsRecord.holdingsStatements.length > 0) && (
+                  <IntlConsumer>
+                    {intl => (
+                      <FormattedMessage id="ui-inventory.holdingsStatements">
+                        {ariaLabel => (
+                          <MultiColumnList
+                            id="list-holdingsstatements"
+                            contentData={holdingsRecord.holdingsStatements}
+                            visibleColumns={['Holdings statement', 'Holdings statement note']}
+                            columnMapping={{
+                              'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
+                              'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
+                            }}
+                            formatter={{
+                              'Holdings statement': x => _.get(x, ['statement']) || '',
+                              'Holdings statement note': x => _.get(x, ['note']) || '',
+                            }}
+                            ariaLabel={ariaLabel}
+                            containerRef={(ref) => { this.resultsList = ref; }}
+                          />
+                        )}
+                      </FormattedMessage>
                     )}
-                  </FormattedMessage>
-                }
-                {(holdingsRecord.holdingsStatementsForSupplements.length > 0) &&
-                  <FormattedMessage id="ui-inventory.holdingsStatementForSupplements">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-holdingsstatementsforsupplements"
-                        contentData={holdingsRecord.holdingsStatementsForSupplements}
-                        visibleColumns={['Holdings statement for supplements', 'Holdings statement for supplements note']}
-                        columnMapping={{
-                          'Holdings statement for supplements': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
-                          'Holdings statement for supplements note': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
-                        }}
-                        formatter={{
-                          'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
-                          'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
-                        }}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
+                  </IntlConsumer>
+                )}
+                {(holdingsRecord.holdingsStatementsForSupplements.length > 0) && (
+                  <IntlConsumer>
+                    {intl => (
+                      <FormattedMessage id="ui-inventory.holdingsStatementForSupplements">
+                        {ariaLabel => (
+                          <MultiColumnList
+                            id="list-holdingsstatementsforsupplements"
+                            contentData={holdingsRecord.holdingsStatementsForSupplements}
+                            visibleColumns={['Holdings statement for supplements', 'Holdings statement for supplements note']}
+                            columnMapping={{
+                              'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
+                              'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
+                            }}
+                            formatter={{
+                              'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
+                              'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
+                            }}
+                            ariaLabel={ariaLabel}
+                            containerRef={(ref) => { this.resultsList = ref; }}
+                          />
+                        )}
+                      </FormattedMessage>
                     )}
-                  </FormattedMessage>
-                }
+                  </IntlConsumer>
+                )}
 
-                {(holdingsRecord.holdingsStatementsForIndexes.length > 0) &&
-                  <FormattedMessage id="ui-inventory.holdingsStatementForIndexes">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-holdingsstatementsforindexes"
-                        contentData={holdingsRecord.holdingsStatementsForIndexes}
-                        visibleColumns={['Holdings statement for indexes', 'Holdings statement for indexes note']}
-                        columnMapping={{
-                          'Holdings statement for indexes': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
-                          'Holdings statement for indexes note': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
-                        }}
-                        formatter={{
-                          'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
-                          'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
-                        }}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
+                {(holdingsRecord.holdingsStatementsForIndexes.length > 0) && (
+                  <IntlConsumer>
+                    {intl => (
+                      <FormattedMessage id="ui-inventory.holdingsStatementForIndexes">
+                        {ariaLabel => (
+                          <MultiColumnList
+                            id="list-holdingsstatementsforindexes"
+                            contentData={holdingsRecord.holdingsStatementsForIndexes}
+                            visibleColumns={['Holdings statement for indexes', 'Holdings statement for indexes note']}
+                            columnMapping={{
+                              'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
+                              'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
+                            }}
+                            formatter={{
+                              'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
+                              'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
+                            }}
+                            ariaLabel={ariaLabel}
+                            containerRef={(ref) => { this.resultsList = ref; }}
+                          />
+                        )}
+                      </FormattedMessage>
                     )}
-                  </FormattedMessage>
-                }
+                  </IntlConsumer>
+                )}
                 <Row>
                   <Col sm={3}>
                     <KeyValue
@@ -680,33 +692,37 @@ class ViewHoldingsRecord extends React.Component {
                 onToggle={this.handleAccordionToggle}
                 label={<FormattedMessage id="ui-inventory.electronicAccess" />}
               >
-                {(holdingsRecord.electronicAccess.length > 0) &&
-                  <FormattedMessage id="ui-inventory.electronicAccess">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-electronic-access"
-                        contentData={holdingsRecord.electronicAccess}
-                        visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                        columnMapping={{
-                          'URL relationship': formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                          'URI': formatMessage({ id: 'ui-inventory.uri' }),
-                          'Link text': formatMessage({ id: 'ui-inventory.linkText' }),
-                          'Materials specified': formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                          'URL public note': formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                        }}
-                        formatter={{
-                          'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
-                          'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
-                          'Link text': x => _.get(x, ['linkText']) || '',
-                          'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
-                          'URL public note': x => _.get(x, ['publicNote']) || '',
-                        }}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
+                {(holdingsRecord.electronicAccess.length > 0) && (
+                  <IntlConsumer>
+                    {intl => (
+                      <FormattedMessage id="ui-inventory.electronicAccess">
+                        {ariaLabel => (
+                          <MultiColumnList
+                            id="list-electronic-access"
+                            contentData={holdingsRecord.electronicAccess}
+                            visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                            columnMapping={{
+                              'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                              'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                              'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                              'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                              'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                            }}
+                            formatter={{
+                              'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
+                              'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+                              'Link text': x => _.get(x, ['linkText']) || '',
+                              'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+                              'URL public note': x => _.get(x, ['publicNote']) || '',
+                            }}
+                            ariaLabel={ariaLabel}
+                            containerRef={(ref) => { this.resultsList = ref; }}
+                          />
+                        )}
+                      </FormattedMessage>
                     )}
-                  </FormattedMessage>
-                }
+                  </IntlConsumer>
+                )}
               </Accordion>
               <Accordion
                 open={this.state.accordions.accordion07}
@@ -716,26 +732,32 @@ class ViewHoldingsRecord extends React.Component {
               >
                 {(holdingsRecord.receivingHistory
                   && holdingsRecord.receivingHistory.entries
-                  && holdingsRecord.receivingHistory.entries.length > 0) &&
-                  <FormattedMessage id="ui-inventory.receivingHistory">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-retrieving-history"
-                        contentData={holdingsRecord.receivingHistory.entries}
-                        visibleColumns={['Enumeration', 'Chronology']}
-                        columnMapping={{
-                          'Enumeration': formatMessage({ id: 'ui-inventory.enumeration' }),
-                          'Chronology': formatMessage({ id: 'ui-inventory.chronology' }),
-                        }}
-                        formatter={{
-                          'Enumeration': x => x.enumeration,
-                          'Chronology': x => x.chronology,
-                        }}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
-                    )}
-                  </FormattedMessage>
+                  && holdingsRecord.receivingHistory.entries.length > 0)
+                  && (
+                    <IntlConsumer>
+                      {intl => (
+                        <FormattedMessage id="ui-inventory.receivingHistory">
+                          {ariaLabel => (
+                            <MultiColumnList
+                              id="list-retrieving-history"
+                              contentData={holdingsRecord.receivingHistory.entries}
+                              visibleColumns={['Enumeration', 'Chronology']}
+                              columnMapping={{
+                                'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
+                                'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+                              }}
+                              formatter={{
+                                'Enumeration': x => x.enumeration,
+                                'Chronology': x => x.chronology,
+                              }}
+                              ariaLabel={ariaLabel}
+                              containerRef={(ref) => { this.resultsList = ref; }}
+                            />
+                          )}
+                        </FormattedMessage>
+                      )}
+                    </IntlConsumer>
+                  )
                 }
               </Accordion>
             </Pane>
@@ -776,7 +798,6 @@ class ViewHoldingsRecord extends React.Component {
 }
 
 ViewHoldingsRecord.propTypes = {
-  intl: intlShape.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
@@ -826,4 +847,4 @@ ViewHoldingsRecord.propTypes = {
 };
 
 
-export default injectIntl(ViewHoldingsRecord);
+export default ViewHoldingsRecord;

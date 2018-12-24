@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedMessage,
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
+import { IntlConsumer } from '@folio/stripes/core';
 
 class AlternativeTitleTypesSettings extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -23,30 +19,32 @@ class AlternativeTitleTypesSettings extends React.Component {
   }
 
   render() {
-    const { intl: { formatMessage } } = this.props;
-
     return (
-      <this.connectedControlledVocab
-        {...this.props}
-        baseUrl="alternative-title-types"
-        records="alternativeTitleTypes"
-        label={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
-        labelSingular={<FormattedMessage id="ui-inventory.alternativeTitleType" />}
-        objectLabel={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
-        visibleFields={['name', 'source']}
-        columnMapping={{
-          name: formatMessage({ id: 'ui-inventory.name' }),
-          source: formatMessage({ id: 'ui-inventory.source' }),
-        }}
-        readOnlyFields={['source']}
-        itemTemplate={{ source: 'local' }}
-        hiddenFields={['description', 'numberOfObjects']}
-        nameKey="name"
-        id="alternative-title-types"
-        sortby="name"
-      />
+      <IntlConsumer>
+        {intl => (
+          <this.connectedControlledVocab
+            {...this.props}
+            baseUrl="alternative-title-types"
+            records="alternativeTitleTypes"
+            label={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
+            labelSingular={<FormattedMessage id="ui-inventory.alternativeTitleType" />}
+            objectLabel={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
+            visibleFields={['name', 'source']}
+            columnMapping={{
+              name: intl.formatMessage({ id: 'ui-inventory.name' }),
+              source: intl.formatMessage({ id: 'ui-inventory.source' }),
+            }}
+            readOnlyFields={['source']}
+            itemTemplate={{ source: 'local' }}
+            hiddenFields={['description', 'numberOfObjects']}
+            nameKey="name"
+            id="alternative-title-types"
+            sortby="name"
+          />
+        )}
+      </IntlConsumer>
     );
   }
 }
 
-export default injectIntl(AlternativeTitleTypesSettings);
+export default AlternativeTitleTypesSettings;

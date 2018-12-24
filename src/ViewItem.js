@@ -6,8 +6,6 @@ import Link from 'react-router-dom/Link';
 import {
   FormattedTime,
   FormattedMessage,
-  injectIntl,
-  intlShape,
 } from 'react-intl';
 
 import {
@@ -27,6 +25,7 @@ import {
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
+import { IntlConsumer } from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
 import ItemForm from './edit/items/ItemForm';
@@ -316,7 +315,6 @@ class ViewItem extends React.Component {
       referenceTables,
       okapi,
       paneWidth,
-      intl: { formatMessage },
     } = this.props;
 
     const {
@@ -566,30 +564,34 @@ class ViewItem extends React.Component {
                 }
               </Row>
               <Row>
-                {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) &&
-                  <FormattedMessage id="ui-inventory.statisticalCodes">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-statistical-codes"
-                        contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
-                        visibleColumns={['Statistical code type', 'Statistical code']}
-                        columnMapping={{
-                          'Statistical code type': formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                          'Statistical code': formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                        }}
-                        formatter={{
-                          'Statistical code type':
-                            x => refLookup(referenceTables.statisticalCodeTypes,
-                              refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
-                          'Statistical code':
-                            x => refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
-                        }}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
+                {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
+                  <IntlConsumer>
+                    {intl => (
+                      <FormattedMessage id="ui-inventory.statisticalCodes">
+                        {ariaLabel => (
+                          <MultiColumnList
+                            id="list-statistical-codes"
+                            contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                            visibleColumns={['Statistical code type', 'Statistical code']}
+                            columnMapping={{
+                              'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                              'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                            }}
+                            formatter={{
+                              'Statistical code type':
+                                x => refLookup(referenceTables.statisticalCodeTypes,
+                                  refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                              'Statistical code':
+                                x => refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                            }}
+                            ariaLabel={ariaLabel}
+                            containerRef={(ref) => { this.resultsList = ref; }}
+                          />
+                        )}
+                      </FormattedMessage>
                     )}
-                  </FormattedMessage>
-                }
+                  </IntlConsumer>
+                )}
               </Row>
             </Accordion>
             <Accordion
@@ -896,33 +898,37 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.electronicAccess" />}
             >
-              {(item.electronicAccess && item.electronicAccess.length > 0) &&
-                <FormattedMessage id="ui-inventory.electronicAccess">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-electronic-access"
-                      contentData={item.electronicAccess}
-                      visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                      columnMapping={{
-                        'URL relationship': formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                        'URI': formatMessage({ id: 'ui-inventory.uri' }),
-                        'Link text': formatMessage({ id: 'ui-inventory.linkText' }),
-                        'Materials specified': formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                        'URL public note': formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                      }}
-                      formatter={{
-                        'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
-                        'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
-                        'Link text': x => _.get(x, ['linkText']) || '',
-                        'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
-                        'URL public note': x => _.get(x, ['publicNote']) || '',
-                      }}
-                      ariaLabel={ariaLabel}
-                      containerRef={(ref) => { this.resultsList = ref; }}
-                    />
+              {(item.electronicAccess && item.electronicAccess.length > 0) && (
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.electronicAccess">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-electronic-access"
+                          contentData={item.electronicAccess}
+                          visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                          columnMapping={{
+                            'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                            'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                            'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                            'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                            'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                          }}
+                          formatter={{
+                            'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
+                            'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+                            'Link text': x => _.get(x, ['linkText']) || '',
+                            'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+                            'URL public note': x => _.get(x, ['publicNote']) || '',
+                          }}
+                          ariaLabel={ariaLabel}
+                          containerRef={(ref) => { this.resultsList = ref; }}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              }
+                </IntlConsumer>
+              )}
             </Accordion>
 
           </Pane>
@@ -966,7 +972,6 @@ class ViewItem extends React.Component {
 }
 
 ViewItem.propTypes = {
-  intl: intlShape.isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
@@ -1014,4 +1019,4 @@ ViewItem.propTypes = {
   onCloseViewItem: PropTypes.func.isRequired,
 };
 
-export default injectIntl(ViewItem);
+export default ViewItem;

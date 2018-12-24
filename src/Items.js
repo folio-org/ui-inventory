@@ -2,13 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Link from 'react-router-dom/Link';
-import {
-  FormattedMessage,
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { MultiColumnList } from '@folio/stripes/components';
+import { IntlConsumer } from '@folio/stripes/core';
 
 /**
  * List items for display in the Holdings accordion in the main
@@ -45,7 +42,6 @@ class Items extends React.Component {
   render() {
     const {
       resources: { items },
-      intl: { formatMessage },
     } = this.props;
 
     if (!items || !items.hasLoaded) return null;
@@ -58,31 +54,34 @@ class Items extends React.Component {
 
     return (
       <div>
-        <FormattedMessage id="ui-inventory.items">
-          {ariaLabel => (
-            <MultiColumnList
-              id="list-items"
-              contentData={itemRecords}
-              rowMetadata={['id', 'holdingsRecordId']}
-              formatter={itemsFormatter}
-              visibleColumns={['Item: barcode', 'status', 'Material Type']}
-              columnMapping={{
-                'Item: barcode': formatMessage({ id: 'ui-inventory.item.barcode' }),
-                'status': formatMessage({ id: 'ui-inventory.status' }),
-                'Material Type': formatMessage({ id: 'ui-inventory.materialType' }),
-              }}
-              ariaLabel={ariaLabel}
-              containerRef={(ref) => { this.resultsList = ref; }}
-              rowFormatter={this.anchoredRowFormatter}
-            />
+        <IntlConsumer>
+          {intl => (
+            <FormattedMessage id="ui-inventory.items">
+              {ariaLabel => (
+                <MultiColumnList
+                  id="list-items"
+                  contentData={itemRecords}
+                  rowMetadata={['id', 'holdingsRecordId']}
+                  formatter={itemsFormatter}
+                  visibleColumns={['Item: barcode', 'status', 'Material Type']}
+                  columnMapping={{
+                    'Item: barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
+                    'status': intl.formatMessage({ id: 'ui-inventory.status' }),
+                    'Material Type': intl.formatMessage({ id: 'ui-inventory.materialType' }),
+                  }}
+                  ariaLabel={ariaLabel}
+                  containerRef={(ref) => { this.resultsList = ref; }}
+                  rowFormatter={this.anchoredRowFormatter}
+                />
+              )}
+            </FormattedMessage>
           )}
-        </FormattedMessage>
+        </IntlConsumer>
       </div>);
   }
 }
 
 Items.propTypes = {
-  intl: intlShape.isRequired,
   resources: PropTypes.shape({
     items: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -94,4 +93,4 @@ Items.propTypes = {
   holdingsRecord: PropTypes.object.isRequired,
 };
 
-export default injectIntl(Items);
+export default Items;

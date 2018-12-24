@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedMessage,
-  injectIntl,
-  intlShape,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
+import { IntlConsumer } from '@folio/stripes/core';
 
 class FormatSettings extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -26,33 +22,35 @@ class FormatSettings extends React.Component {
   suppressDelete = term => term.source === 'rdacarrier';
 
   render() {
-    const { intl: { formatMessage } } = this.props;
-
     return (
-      <this.connectedControlledVocab
-        {...this.props}
-        baseUrl="instance-formats"
-        records="instanceFormats"
-        label={<FormattedMessage id="ui-inventory.formats" />}
-        labelSingular={<FormattedMessage id="ui-inventory.format" />}
-        objectLabel={<FormattedMessage id="ui-inventory.instances" />}
-        visibleFields={['name', 'code', 'source']}
-        columnMapping={{
-          name: formatMessage({ id: 'ui-inventory.name' }),
-          code: formatMessage({ id: 'ui-inventory.code' }),
-          source: formatMessage({ id: 'ui-inventory.source' }),
-        }}
-        readOnlyFields={['source']}
-        itemTemplate={{ source: 'local' }}
-        hiddenFields={['description', 'numberOfObjects']}
-        nameKey="name"
-        // columnWidths={{ 'name': 300, 'code': 50 }}
-        actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
-        id="formats"
-        sortby="name"
-      />
+      <IntlConsumer>
+        {intl => (
+          <this.connectedControlledVocab
+            {...this.props}
+            baseUrl="instance-formats"
+            records="instanceFormats"
+            label={<FormattedMessage id="ui-inventory.formats" />}
+            labelSingular={<FormattedMessage id="ui-inventory.format" />}
+            objectLabel={<FormattedMessage id="ui-inventory.instances" />}
+            visibleFields={['name', 'code', 'source']}
+            columnMapping={{
+              name: intl.formatMessage({ id: 'ui-inventory.name' }),
+              code: intl.formatMessage({ id: 'ui-inventory.code' }),
+              source: intl.formatMessage({ id: 'ui-inventory.source' }),
+            }}
+            readOnlyFields={['source']}
+            itemTemplate={{ source: 'local' }}
+            hiddenFields={['description', 'numberOfObjects']}
+            nameKey="name"
+            // columnWidths={{ 'name': 300, 'code': 50 }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            id="formats"
+            sortby="name"
+          />
+        )}
+      </IntlConsumer>
     );
   }
 }
 
-export default injectIntl(FormatSettings);
+export default FormatSettings;
