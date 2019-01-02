@@ -239,14 +239,6 @@ class ViewItem extends React.Component {
     this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
-  onNewRequest(item) {
-    this.props.mutator.query.update({
-      _path: '/requests',
-      layer: 'create',
-      itemBarcode: item.barcode,
-    });
-  }
-
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
@@ -280,11 +272,7 @@ class ViewItem extends React.Component {
           </Icon>
         </Button>
         <Button
-          href={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
-          onClick={() => {
-            onToggle();
-            this.onNewRequest(firstItem);
-          }}
+          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
           buttonStyle="dropdownItem"
           data-test-inventory-create-request-action
         >
