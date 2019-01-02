@@ -236,7 +236,6 @@ class ViewItem extends React.Component {
   }
 
   onNewRequest(item) {
-    console.log('onNewRequest clicked');
     this.props.mutator.query.update({
       _path: `/requests`,
       layer: 'create',
