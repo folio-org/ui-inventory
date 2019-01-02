@@ -80,7 +80,7 @@ class ViewItem extends React.Component {
     // the top item, sorted by loan-date descending, is a best-effort.
     loans: {
       type: 'okapi',
-      path: 'circulation/loans?query=(itemId==!{itemId}) sortby loanDate/sort.descending&limit=1',
+      path: 'circulation/loans?query=(itemId==!{itemId})&limit=1 sortby loanDate/sort.descending',
       records: 'loans',
     },
     borrowerId: {},
@@ -235,6 +235,15 @@ class ViewItem extends React.Component {
     this.props.mutator.query.update({ layer: 'copyItem' });
   }
 
+  onNewRequest(item) {
+    console.log('onNewRequest clicked');
+    this.props.mutator.query.update({
+      _path: `/requests`,
+      layer: 'create',
+      itemBarcode: item.barcode,
+    });
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
@@ -267,6 +276,20 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.copyItem" />
           </Icon>
         </Button>
+        <Button
+          href={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
+          onClick={() => {
+            onToggle();
+            this.onNewRequest(firstItem);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-create-request-action
+        >
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-inventory.newRequest" />
+          </Icon>
+        </Button>
+
       </Fragment>
     );
   }
