@@ -237,7 +237,7 @@ class ViewItem extends React.Component {
 
   onNewRequest(item) {
     this.props.mutator.query.update({
-      _path: `/requests`,
+      _path: '/requests',
       layer: 'create',
       itemBarcode: item.barcode,
     });
