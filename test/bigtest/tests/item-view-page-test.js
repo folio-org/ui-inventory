@@ -67,6 +67,10 @@ describe('ItemViewPage', () => {
         await ItemViewPage.headerDropdown.click();
       });
 
+      it('should show a new request menu item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
+      });
+
       describe('clicking on edit', () => {
         beforeEach(async () => {
           await ItemViewPage.headerDropdownMenu.clickEdit();

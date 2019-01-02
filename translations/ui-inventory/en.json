@@ -299,6 +299,7 @@
   "editItemDialog": "Edit item dialog",
   "copyItemDialog": "Copy item dialog",
   "copyItem": "Copy item",
+  "newRequest": "New Request",
   "confirmLocation.selectBtn": "Select",
   "confirmLocation.message": "This location has a status of inactive. Are you sure you want to select this location?",
   "confirmLocation.header": "Inactive location",

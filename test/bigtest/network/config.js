@@ -156,6 +156,12 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/material-types');
-  this.get('/loan-types');
+  this.get('/material-types', {
+    mtypes: [],
+    totalRecords: 0
+  });
+  this.get('/loan-types', {
+    loantypes: [],
+    totalRecords: 0
+  });
 }

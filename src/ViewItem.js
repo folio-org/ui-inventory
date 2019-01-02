@@ -80,7 +80,11 @@ class ViewItem extends React.Component {
     // the top item, sorted by loan-date descending, is a best-effort.
     loans: {
       type: 'okapi',
-      path: 'circulation/loans?query=(itemId==!{itemId}) sortby loanDate/sort.descending&limit=1',
+      path: 'circulation/loans',
+      params: {
+        query: 'itemId==!{itemId} sortby loanDate/sort.descending',
+        limit: '1',
+      },
       records: 'loans',
     },
     borrowerId: {},
@@ -267,6 +271,16 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.copyItem" />
           </Icon>
         </Button>
+        <Button
+          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
+          buttonStyle="dropdownItem"
+          data-test-inventory-create-request-action
+        >
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-inventory.newRequest" />
+          </Icon>
+        </Button>
+
       </Fragment>
     );
   }
