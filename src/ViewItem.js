@@ -80,7 +80,11 @@ class ViewItem extends React.Component {
     // the top item, sorted by loan-date descending, is a best-effort.
     loans: {
       type: 'okapi',
-      path: 'circulation/loans?query=(itemId==!{itemId})&limit=1 sortby loanDate/sort.descending',
+      path: 'circulation/loans',
+      params: {
+        query: 'itemId==!{itemId} sortby loanDate/sort.descending',
+        limit: '1',
+      },
       records: 'loans',
     },
     borrowerId: {},
