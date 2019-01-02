@@ -288,7 +288,7 @@ class Instances extends React.Component {
   }
 
   render() {
-    const { resources, showSingleResult, browseOnly, intl } = this.props;
+    const { resources, showSingleResult, browseOnly, intl, onSelectRow, disableRecordCreation, visibleColumns } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
         || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
@@ -362,7 +362,7 @@ class Instances extends React.Component {
           viewRecordComponent={ViewInstance}
           editRecordComponent={InstanceForm}
           newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-          visibleColumns={['title', 'contributors', 'publishers', 'relation']}
+          visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
           columnMapping={{
             title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
             contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
@@ -374,13 +374,14 @@ class Instances extends React.Component {
           onCreate={this.createInstance}
           viewRecordPerms="inventory-storage.instances.item.get"
           newRecordPerms="inventory-storage.instances.item.post"
-          disableRecordCreation={false}
+          disableRecordCreation={disableRecordCreation || false}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           detailProps={{ referenceTables, onCopy: this.copyInstance }}
           path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
           showSingleResult={showSingleResult}
           browseOnly={browseOnly}
+          onSelectRow={onSelectRow}
         />
       </div>);
   }
@@ -439,6 +440,9 @@ Instances.propTypes = {
   }).isRequired,
   showSingleResult: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   browseOnly: PropTypes.bool,
+  disableRecordCreation: PropTypes.bool,
+  onSelectRow: PropTypes.func,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default injectIntl(Instances);
