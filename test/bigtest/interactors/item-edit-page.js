@@ -1,5 +1,6 @@
 import {
   interactor,
+  isPresent,
   clickable,
   text,
 } from '@bigtest/interactor';
@@ -13,6 +14,11 @@ import {
 }
 
 @interactor class ItemEditPage {
+  isLoaded = isPresent('[data-test-header-title]');
+  whenLoaded() {
+    return this.when(() => this.isLoaded);
+  }
+
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();

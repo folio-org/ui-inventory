@@ -46,7 +46,7 @@ describe('ItemEditPage', () => {
     }
   };
 
-  beforeEach(function () {
+  beforeEach(async function () {
     instance = this.server.create('instance', {
       title: 'ADVANCING RESEARCH',
     });
@@ -55,6 +55,7 @@ describe('ItemEditPage', () => {
     this.server.get('/inventory/items/:id', item);
 
     this.visit(`/inventory/view/${instance.id}/${holdings.id}/${item.id}?layer=editItem`);
+    await ItemEditPage.whenLoaded();
   });
 
   it('displays a title in the pane header', () => {
