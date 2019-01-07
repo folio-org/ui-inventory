@@ -1,8 +1,13 @@
 # Change history for ui-inventory
 
-## 1.5.1 (IN PROGRESS)
+## 1.5.2 (IN PROGRESS)
 
 * Correctly show instance-edit checkbox status. Fixes UIIN-417
+
+## [1.5.1](https://github.com/folio-org/ui-inventory/tree/v1.5.1) (2018-12-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.5.1)
+
+* Fix null pointer bug (UIIN-412)
 
 ## [1.5.0](https://github.com/folio-org/ui-inventory/tree/v1.5.0) (2018-12-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.4.0...v1.5.0)
@@ -13,7 +18,6 @@
 * Requires `holdings-storage` interface 3.0
 * Requires `item-storage` interface 7.0
 * Requires `item-note-types` interface 1.0
-* Requires `locations` interface 3.0
 * Requires `statistical-codes` interface 1.0
 * Requires `alternative-title-types` interface 1.0
 * Requires `holdings-types` interface 1.0
