@@ -1,8 +1,9 @@
 import React from 'react';
-import { intlShape, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
 import { Field } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+
 import {
   Button,
   Layout,
@@ -12,6 +13,7 @@ import {
   omitProps,
   SRStatus,
 } from '@folio/stripes/components';
+
 import css from './RepeatableField.css';
 
 const FieldRowPropTypes = {
@@ -22,7 +24,6 @@ const FieldRowPropTypes = {
   containerRef: PropTypes.func,
   fields: PropTypes.object,
   formatter: PropTypes.func,
-  intl: intlShape.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
   lastRowRef: PropTypes.func,
   newItemTemplate: PropTypes.object,
@@ -52,7 +53,7 @@ class FieldRow extends React.Component {
   componentDidUpdate() {
     const {
       fields,
-      label
+      label,
     } = this.props;
 
     if (this.action) {
@@ -133,49 +134,67 @@ class FieldRow extends React.Component {
   }
 
   render() {
-    const { fields, intl } = this.props;
-    let addLabel = intl.formatMessage(
-      { id: 'stripes-components.addNewField' },
-      { item: this.props.label }
-    );
-    if (this.props.addLabel) {
-      addLabel = this.props.addLabel;
-    }
+    const {
+      addDefaultItem,
+      addLabel,
+      containerRef,
+      fields,
+      label,
+      onAddField,
+      template,
+    } = this.props;
 
-    if (this.props.fields.length === 0 && !this.props.addDefaultItem) {
+    const legend = (
+      <legend
+        id={this._arrayId}
+        className={css.RFLegend}
+      >
+        {label}
+      </legend>
+    );
+
+    const handleButtonClick = () => { onAddField(fields); };
+
+    if (fields.length === 0 && !addDefaultItem) {
       return (
-        <div ref={this.props.containerRef}>
+        <div ref={containerRef}>
           <SRStatus ref={(ref) => { this.srstatus = ref; }} />
           <fieldset className={css.RFFieldset}>
-            <legend id={this._arrayId} className={css.RFLegend}>{this.props.label}</legend>
+            {legend}
             <Button
               style={{ marginBottom: '12px' }}
-              onClick={() => { this.props.onAddField(fields); }}
+              onClick={handleButtonClick}
               id={this.addButtonId}
             >
-              {this.props.addLabel ? this.props.addLabel : `+ Add ${this.props.label}`}
+              {addLabel || (
+                <Icon icon="plus-sign">
+                  <FormattedMessage
+                    id="ui-inventory.addLabel"
+                    values={{ label }}
+                  />
+                </Icon>
+              )}
             </Button>
           </fieldset>
         </div>
       );
     }
     return (
-      <div ref={this.props.containerRef}>
+      <div ref={containerRef}>
         <SRStatus ref={(ref) => { this.srstatus = ref; }} />
         <fieldset className={css.RFFieldset}>
-          <legend id={this._arrayId} className={css.RFLegend}>{this.props.label}</legend>
+          {legend}
 
           {fields.map((f, fieldIndex) => (
             <div
-              key={`${this.props.label}-${fieldIndex}`}
+              key={`${label}-${fieldIndex}`}
               style={{ width: '100%' }}
               ref={(ref) => { this.refIfLastRow(ref, fieldIndex); }}
             >
-
               <Row>
                 <Col xs={10}>
                   <Row>
-                    {this.props.template.map((t, i) => (
+                    {template.map((t, i) => (
                       <Col xs key={`field-${i}`}>
                         {this.renderControl(fields, f, fieldIndex, t, i)}
                       </Col>
@@ -184,27 +203,35 @@ class FieldRow extends React.Component {
                 </Col>
                 <Col xs={2}>
                   <Layout className={fieldIndex === 0 ? 'marginTopLabelSpacer' : ''}>
-                    <Button
-                      buttonStyle="link"
-                      style={{ padding: 0, marginBottom: '12px' }}
-                      onClick={() => { this.handleRemove(fieldIndex, f); }}
-                      title={this.props.intl.formatMessage(
-                        { id: 'stripes-components.removeFields' },
-                        { item: this.props.label, num: fieldIndex + 1 }
-                      )}
+                    <FormattedMessage
+                      id="stripes-components.removeFields"
+                      values={{ item: label, num: fieldIndex + 1 }}
                     >
-                      <Icon icon="trash" />
-                    </Button>
+                      {ariaLabel => (
+                        <Button
+                          buttonStyle="link"
+                          style={{ padding: 0, marginBottom: '12px' }}
+                          onClick={() => { this.handleRemove(fieldIndex, f); }}
+                          aria-label={ariaLabel}
+                        >
+                          <Icon icon="trash" />
+                        </Button>
+                      )}
+                    </FormattedMessage>
                   </Layout>
                 </Col>
               </Row>
 
               {fieldIndex === fields.length - 1 &&
                 <Button
-                  onClick={() => { this.props.onAddField(fields); }}
+                  onClick={handleButtonClick}
                   id={this.addButtonId}
                 >
-                  {addLabel}
+                  {addLabel || (
+                    <FormattedMessage
+                      id="stripes-components.addNewField"
+                      values={{ item: label }}
+                    />)}
                 </Button>
               }
             </div>
@@ -217,4 +244,4 @@ class FieldRow extends React.Component {
 
 FieldRow.propTypes = FieldRowPropTypes;
 
-export default injectIntl(FieldRow);
+export default FieldRow;

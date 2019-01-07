@@ -1,33 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
 class LoanTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.shape({
-        formatMessage: PropTypes.func.isRequired,
-      }).isRequired,
     }).isRequired,
   };
 
   constructor(props) {
     super(props);
+
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
   render() {
-    const { formatMessage } = this.props.stripes.intl;
-
     return (
       <this.connectedControlledVocab
         {...this.props}
         baseUrl="loan-types"
         records="loantypes"
-        label={formatMessage({ id: 'ui-inventory.loanTypes' })}
-        labelSingular={formatMessage({ id: 'ui-inventory.loanType' })}
-        objectLabel={formatMessage({ id: 'ui-inventory.loans' })}
+        label={<FormattedMessage id="ui-inventory.loanTypes" />}
+        labelSingular={<FormattedMessage id="ui-inventory.loanType" />}
+        objectLabel={<FormattedMessage id="ui-inventory.loans" />}
         hiddenFields={['description', 'numberOfObjects']}
         nameKey="name"
         id="loantypes"

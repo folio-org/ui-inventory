@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import { Select } from '@folio/stripes/components';
+import {
+  Icon,
+  Select,
+} from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -47,7 +50,11 @@ const InstanceFormatFields = ({ instanceFormats }) => (
   <RepeatableField
     name="instanceFormatIds"
     label={<FormattedMessage id="ui-inventory.instanceFormats" />}
-    addLabel={<FormattedMessage id="ui-inventory.addInstanceFormat" />}
+    addLabel={
+      <Icon icon="plus-sign">
+        <FormattedMessage id="ui-inventory.addInstanceFormat" />
+      </Icon>
+    }
     addButtonId="clickable-add-instanceformat"
     template={[{
       render(fieldObj) { return renderInstanceFormatField(fieldObj, instanceFormats); },

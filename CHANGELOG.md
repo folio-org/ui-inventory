@@ -1,8 +1,14 @@
 # Change history for ui-inventory
 
-## 1.5.1 (IN PROGRESS)
+## 1.6.0 (IN PROGRESS)
 
-* Correctly show instance-edit checkbox status. Fixes UIIN-417
+* Create new request from item record. Fixes UIIN-410.
+* Correctly show instance-edit checkbox status. Fixes UIIN-417.
+
+## [1.5.1](https://github.com/folio-org/ui-inventory/tree/v1.5.1) (2018-12-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.5.1)
+
+* Fix null pointer bug (UIIN-412)
 
 ## [1.5.0](https://github.com/folio-org/ui-inventory/tree/v1.5.0) (2018-12-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.4.0...v1.5.0)
@@ -13,7 +19,6 @@
 * Requires `holdings-storage` interface 3.0
 * Requires `item-storage` interface 7.0
 * Requires `item-note-types` interface 1.0
-* Requires `locations` interface 3.0
 * Requires `statistical-codes` interface 1.0
 * Requires `alternative-title-types` interface 1.0
 * Requires `holdings-types` interface 1.0
@@ -30,7 +35,7 @@
 * Add settings pages for controlled vocabularies: electronic access types, statistical code types, alternative title types, instance status types, holdings types, ILL policies, call number types, statistical codes (UIIN-301, UIIN-302, UIIN-362, UIIN-374, UIIN-376, UIIN-377, UIIN-378, UIIN-385)
 * Extend holdings record - view and form (UIIN-232, UIIN-233, UIIN-234, UIIN-235, UIIN-236, UIIN-238, UIIN-386)
 * Extend instance record - view and form (UIIN-328, UIIN-342, UIIN-343, UIIN-344, UIIN-345, UIIN-348, UIIN-364, UIIN-366, UIIN-367)
-* Extend item record - view and form (UIIN-239, UIIN-250, UIIN-251, UIIN-253, UIIN-256) 
+* Extend item record - view and form (UIIN-239, UIIN-250, UIIN-251, UIIN-253, UIIN-256)
 * Display 'FOLIO' for 'Metadata source' whenever there is no 'sourceRecordFormat' (UIIN-353)
 * Fix `craftLayerUrl()` loading state (FOLIO-1547)
 * Replace `formatDateTime()` with `<FormattedTime>` (STCOR-267)

@@ -205,7 +205,7 @@ class InstanceForm extends React.Component {
         id="cancel-instance-edition"
         onClick={onCancel}
       >
-        <Icon icon="hollowX">
+        <Icon icon="times-circle">
           <FormattedMessage id="ui-inventory.cancel" />
         </Icon>
       </Button>
@@ -263,33 +263,41 @@ class InstanceForm extends React.Component {
     /* Menus for Add Instance workflow */
     const addInstanceLastMenu = (
       <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-instance"
-          type="submit"
-          title={<FormattedMessage id="ui-inventory.createInstance" />}
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="ui-inventory.createInstance" />
-        </Button>
+        <FormattedMessage id="ui-inventory.createInstance">
+          {ariaLabel => (
+            <Button
+              buttonStyle="primary paneHeaderNewButton"
+              id="clickable-create-instance"
+              type="submit"
+              aria-label={ariaLabel}
+              disabled={(pristine || submitting) && !copy}
+              onClick={handleSubmit}
+              marginBottom0
+            >
+              <FormattedMessage id="ui-inventory.createInstance" />
+            </Button>
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
     const editInstanceLastMenu = (
       <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-update-instance"
-          type="submit"
-          title={<FormattedMessage id="ui-inventory.updateInstance" />}
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="ui-inventory.updateInstance" />
-        </Button>
+        <FormattedMessage id="ui-inventory.updateInstance">
+          {ariaLabel => (
+            <Button
+              buttonStyle="primary paneHeaderNewButton"
+              id="clickable-update-instance"
+              type="submit"
+              aria-label={ariaLabel}
+              disabled={(pristine || submitting) && !copy}
+              onClick={handleSubmit}
+              marginBottom0
+            >
+              <FormattedMessage id="ui-inventory.updateInstance" />
+            </Button>
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
 
