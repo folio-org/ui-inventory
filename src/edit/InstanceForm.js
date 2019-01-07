@@ -331,6 +331,7 @@ class InstanceForm extends React.Component {
                       name="discoverySuppress"
                       id="input_discovery_suppress"
                       component={Checkbox}
+                      type="checkbox"
                     />
                   </Col>
                   <Col sm={3}>
@@ -339,6 +340,7 @@ class InstanceForm extends React.Component {
                       name="staffSuppress"
                       id="input_staff_suppress"
                       component={Checkbox}
+                      type="checkbox"
                     />
                   </Col>
                   <Col sm={3}>
@@ -347,6 +349,7 @@ class InstanceForm extends React.Component {
                       name="previouslyHeld"
                       id="input_previously_held"
                       component={Checkbox}
+                      type="checkbox"
                     />
                   </Col>
                 </Row>
