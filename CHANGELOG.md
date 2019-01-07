@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 1.5.2 (IN PROGRESS)
+## [1.5.2](https://github.com/folio-org/ui-inventory/tree/v1.5.2) (2019-01-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.1...v1.5.2)
 
 * Correctly show instance-edit checkbox status. Fixes UIIN-417
 
