@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { injectIntl, intlShape } from 'react-intl';
-import { stripesShape } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
+import { FormattedMessage } from 'react-intl';
 
+import {
+  stripesShape,
+  IntlConsumer,
+} from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
@@ -16,7 +19,6 @@ const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 const emptyObj = {};
 const emptyArr = [];
-
 
 const languages = [
   { code: 'eng', name: 'English' },
@@ -32,19 +34,19 @@ const languages = [
 // as those are pulled from the backend
 const filterConfig = [
   {
-    label: 'Resource Type',
+    label: <FormattedMessage id="ui-inventory.instances.resourceType" />,
     name: 'resource',
     cql: 'instanceTypeId',
     values: [],
   },
   {
-    label: 'Language',
+    label: <FormattedMessage id="ui-inventory.instances.language" />,
     name: 'language',
     cql: 'languages',
     values: languages.map(rec => ({ name: rec.name, cql: rec.code })),
   },
   {
-    label: 'Location',
+    label: <FormattedMessage id="ui-inventory.instances.location" />,
     name: 'location',
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
@@ -288,23 +290,30 @@ class Instances extends React.Component {
   }
 
   render() {
-    const { resources, showSingleResult, browseOnly, intl, onSelectRow, disableRecordCreation, visibleColumns } = this.props;
+    const {
+      resources,
+      showSingleResult,
+      browseOnly,
+      onSelectRow,
+      disableRecordCreation,
+      visibleColumns,
+    } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
-        || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
-        || !resources.identifierTypes || !resources.identifierTypes.hasLoaded
-        || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
-        || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
-        || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
-        || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
-        || !resources.locations || !resources.locations.hasLoaded
-        || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
-        || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
-        || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
-        || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
-        || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
-        || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
-    ) return <div />;
+      || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
+      || !resources.identifierTypes || !resources.identifierTypes.hasLoaded
+      || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
+      || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
+      || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
+      || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
+      || !resources.locations || !resources.locations.hasLoaded
+      || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
+      || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
+      || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
+      || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
+      || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
+      || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
+    ) return null;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
     const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
@@ -348,47 +357,50 @@ class Instances extends React.Component {
 
     return (
       <div data-test-inventory-instances>
-        <SearchAndSort
-          packageInfo={packageInfo}
-          objectName="inventory"
-          maxSortKeys={1}
-          searchableIndexes={searchableIndexes}
-          selectedIndex={_.get(this.props.resources.query, 'qindex')}
-          searchableIndexesPlaceholder={null}
-          onChangeIndex={this.onChangeIndex}
-          filterConfig={filterConfig}
-          initialResultCount={INITIAL_RESULT_COUNT}
-          resultCountIncrement={RESULT_COUNT_INCREMENT}
-          viewRecordComponent={ViewInstance}
-          editRecordComponent={InstanceForm}
-          newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-          visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
-          columnMapping={{
-            title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-            contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-            publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-            relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-          }}
-          columnWidths={{ title: '40%' }}
-          resultsFormatter={resultsFormatter}
-          onCreate={this.createInstance}
-          viewRecordPerms="inventory-storage.instances.item.get"
-          newRecordPerms="inventory-storage.instances.item.post"
-          disableRecordCreation={disableRecordCreation || false}
-          parentResources={this.props.resources}
-          parentMutator={this.props.mutator}
-          detailProps={{ referenceTables, onCopy: this.copyInstance }}
-          path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-          showSingleResult={showSingleResult}
-          browseOnly={browseOnly}
-          onSelectRow={onSelectRow}
-        />
+        <IntlConsumer>
+          {intl => (
+            <SearchAndSort
+              packageInfo={packageInfo}
+              objectName="inventory"
+              maxSortKeys={1}
+              searchableIndexes={searchableIndexes}
+              selectedIndex={_.get(this.props.resources.query, 'qindex')}
+              searchableIndexesPlaceholder={null}
+              onChangeIndex={this.onChangeIndex}
+              filterConfig={filterConfig}
+              initialResultCount={INITIAL_RESULT_COUNT}
+              resultCountIncrement={RESULT_COUNT_INCREMENT}
+              viewRecordComponent={ViewInstance}
+              editRecordComponent={InstanceForm}
+              newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+              visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
+              columnMapping={{
+                title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
+                contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
+                publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+                relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+              }}
+              columnWidths={{ title: '40%' }}
+              resultsFormatter={resultsFormatter}
+              onCreate={this.createInstance}
+              viewRecordPerms="inventory-storage.instances.item.get"
+              newRecordPerms="inventory-storage.instances.item.post"
+              disableRecordCreation={disableRecordCreation || false}
+              parentResources={this.props.resources}
+              parentMutator={this.props.mutator}
+              detailProps={{ referenceTables, onCopy: this.copyInstance }}
+              path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
+              showSingleResult={showSingleResult}
+              browseOnly={browseOnly}
+              onSelectRow={onSelectRow}
+            />
+          )}
+        </IntlConsumer>
       </div>);
   }
 }
 
 Instances.propTypes = {
-  intl: intlShape.isRequired,
   stripes: stripesShape.isRequired,
   resources: PropTypes.shape({
     records: PropTypes.shape({
@@ -445,4 +457,4 @@ Instances.propTypes = {
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default injectIntl(Instances);
+export default Instances;

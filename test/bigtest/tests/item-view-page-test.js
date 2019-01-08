@@ -56,6 +56,7 @@ describe('ItemViewPage', () => {
       this.server.get('/inventory/items/:id', item);
 
       this.visit(`/inventory/view/${instance.id}/${holdings.id}/${item.id}`);
+      await ItemViewPage.whenLoaded();
     });
 
     it('displays the title in the pane header', () => {
@@ -65,6 +66,10 @@ describe('ItemViewPage', () => {
     describe('pane header dropdown menu', () => {
       beforeEach(async () => {
         await ItemViewPage.headerDropdown.click();
+      });
+
+      it('should show a new request menu item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
       });
 
       describe('clicking on edit', () => {
