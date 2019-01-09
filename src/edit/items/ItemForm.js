@@ -790,6 +790,41 @@ class ItemForm extends React.Component {
                   />
                 </Col>
               </Row>
+              <Row>
+                <Col sm={10}>
+                  <RepeatableField
+                    name="circulationNotes"
+                    addButtonId="clickable-add-note"
+                    addLabel={
+                      <Icon icon="plus-sign">
+                        <FormattedMessage id="ui-inventory.addCirculationNote" />
+                      </Icon>
+                    }
+                    template={[
+                      {
+                        name: 'noteType',
+                        label: <FormattedMessage id="ui-inventory.noteType" />,
+                        component: Select,
+                        dataOptions: [
+                          { label: 'Select type', value: '' },
+                          { label: 'Check in note', value: 'Check in' },
+                          { label: 'Check out note', value: 'Check out' }
+                        ],
+                      },
+                      {
+                        name: 'note',
+                        label: <FormattedMessage id="ui-inventory.note" />,
+                        component: TextField,
+                      },
+                      {
+                        name: 'staffOnly',
+                        label: <FormattedMessage id="ui-inventory.staffOnly" />,
+                        component: Checkbox,
+                      }
+                    ]}
+                  />
+                </Col>
+              </Row>
             </Accordion>
             <Accordion
               open={accordions.acc07}
