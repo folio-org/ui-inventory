@@ -171,6 +171,7 @@
   "itemPublicNote": "Item public note",
   "addNote": "Add note",
   "addNotes": "Add Notes",
+  "addCirculationNote": "Add check in / check out note",
   "removeNotes": "Remove notes {num}",
   "remove": "Remove",
   "publications": "Publications",

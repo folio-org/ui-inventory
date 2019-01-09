@@ -428,6 +428,36 @@ class ViewItem extends React.Component {
       return table;
     };
 
+    const layoutCirculationNotes = (noteTypes, notes) => {
+      const table = [];
+      let cols = [];
+      noteTypes
+        .filter((noteType) => notes.find(note => note.noteType === noteType))
+        .map((noteType, i) => {
+          cols.push(
+            <Col key={i} sm={3}>
+              <KeyValue
+                label={`${noteType} note`}
+                value={_.get(item, ['circulationNotes'], []).map((note, j) => {
+                  if (note.noteType === noteType) {
+                    return <div key={j}>{note.note}</div>;
+                  }
+                  return null;
+                })}
+              />
+            </Col>
+          );
+          if ((i + 1) % 4 === 0) {
+            table.push(<Row>{cols}</Row>);
+            cols = [];
+          }
+          return cols;
+        });
+      if (cols.length) table.push(<Row>{cols}</Row>);
+      return table;
+    };
+
+
     return (
       <div>
         <Layer
@@ -841,6 +871,7 @@ class ViewItem extends React.Component {
                   </KeyValue>
                 </Col>
               </Row>
+              {layoutCirculationNotes(['Check in', 'Check out'], _.get(item, ['circulationNotes'], []))}
             </Accordion>
             <Accordion
               open={accordions.acc07}
