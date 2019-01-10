@@ -1,7 +1,7 @@
 {
     "inventory.label": "Inventory",
     "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
-    "item.loanAndAvailability": "Loan and availability",
+    "item.availability": "Availability",
     "item.availability.itemStatus": "Item status",
     "item.availability.itemStatusDate": "Item status date",
     "item.availability.requests": "Requests",
@@ -68,7 +68,6 @@
     "note": "Note",
     "addNote": "+ Add note",
     "addNotes": "Add Notes",
-    "addCirculationNote": "Add check in / check out note",
     "removeNotes": "Remove Notes {num}",
     "remove": "Remove",
     "publications": "Publications",
@@ -198,7 +197,7 @@
     "editions": "Editions",
     "addEdition": "+ Add edition",
     "indexTitle": "Index title",
-    "dateOfPublication": "Publication date",
+    "dateOfPublication": "Date of publication",
     "otherRelatedInstances": "Other related instances",
     "instanceRelationships": "Instance relationships",
     "instanceFormat": "Format",
@@ -345,8 +344,10 @@
     "resourceIdentifierType": "Resource identifier type",
     "publication": "Publication",
     "placeOfPublication": "Place of publication",
-    "publisherDate": "Publication date",
+    "publisherDate": "Publisher date",
     "classificationIdentifierType": "Classification identifier type",
     "error.noMatch.oops": "Uh-oh!",
-    "error.noMatch.how": "How did you get to {location}?"
+    "error.noMatch.how": "How did you get to {location}?",
+    "addCirculationNote": "Add check in / check out note",
+    "item.loanAndAvailability": "Loan and availability"
 }
