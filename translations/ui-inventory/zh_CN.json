@@ -347,5 +347,7 @@
     "publisherDate": "出版日期",
     "classificationIdentifierType": "分类标识符类型",
     "error.noMatch.oops": "Uh-oh!",
-    "error.noMatch.how": "你是怎么到{location} ？"
+    "error.noMatch.how": "你是怎么到{location} ？",
+    "addCirculationNote": "添加借出/归还备注",
+    "item.loanAndAvailability": "借阅和可用性"
 }

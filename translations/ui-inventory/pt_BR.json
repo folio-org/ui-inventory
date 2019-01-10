@@ -347,5 +347,7 @@
     "publisherDate": "Data da editora",
     "classificationIdentifierType": "Tipo de identificador de classificação",
     "error.noMatch.oops": "Ops!",
-    "error.noMatch.how": "Como você chegou em {location}?"
+    "error.noMatch.how": "Como você chegou em {location}?",
+    "addCirculationNote": "Adicionar nota de devolução / empréstimo",
+    "item.loanAndAvailability": "Empréstimo e disponibilidade"
 }
