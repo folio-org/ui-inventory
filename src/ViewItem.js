@@ -814,7 +814,7 @@ class ViewItem extends React.Component {
               open={accordions.acc06}
               id="acc06"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.item.availability" />}
+              label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
             >
               <Row>
                 {(item.permanentLoanType) &&

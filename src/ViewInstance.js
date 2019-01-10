@@ -186,10 +186,6 @@ class ViewInstance extends React.Component {
     );
   }
 
-  fauxHrid = (hrid) => {
-    return (!hrid || hrid.indexOf('-') === -1) ? hrid : hrid.substr(0, hrid.indexOf('-'));
-  };
-
   render() {
     const {
       okapi,
@@ -455,7 +451,7 @@ class ViewInstance extends React.Component {
             <Col xs={2}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-                value={this.fauxHrid(_.get(instance, ['hrid'], ''))}
+                value={_.get(instance, ['hrid'], '')}
               />
             </Col>
             <Col xs={2}>
@@ -687,7 +683,7 @@ class ViewInstance extends React.Component {
                           'Publisher': intl.formatMessage({ id: 'ui-inventory.publisher' }),
                           'Publisher role': intl.formatMessage({ id: 'ui-inventory.publisherRole' }),
                           'Place of publication': intl.formatMessage({ id: 'ui-inventory.placeOfPublication' }),
-                          'Publication date': intl.formatMessage({ id: 'ui-inventory.publisherDate' }),
+                          'Publication date': intl.formatMessage({ id: 'ui-inventory.dateOfPublication' }),
                         }}
                         formatter={publicationRowFormatter}
                         ariaLabel={ariaLabel}
