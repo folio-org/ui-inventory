@@ -414,6 +414,7 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.itemHrid" />}
                     name="hrid"
                     id="additem_hrid"
+                    disabled
                     component={TextField}
                     required
                     fullWidth

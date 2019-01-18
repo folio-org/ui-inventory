@@ -376,6 +376,7 @@ class HoldingsForm extends React.Component {
                   <Field
                     name="hrid"
                     type="text"
+                    disabled
                     component={TextField}
                     label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
                   />
