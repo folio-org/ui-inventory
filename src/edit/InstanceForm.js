@@ -116,39 +116,6 @@ function validate(values) {
   return errors;
 }
 
-function checkUniqueHrid(okapi, hrid) {
-  return fetch(`${okapi.url}/inventory/instances?query=(hrid=="${hrid}")`,
-    {
-      headers: Object.assign({}, {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json'
-      })
-    });
-}
-
-function asyncValidate(values, dispatch, props, blurredField) {
-  if (blurredField === 'hrid' && values.hrid !== props.initialValues.hrid) {
-    return new Promise((resolve, reject) => {
-      checkUniqueHrid(props.stripes.okapi, values.hrid).then((response) => {
-        if (response.status >= 400) {
-          //
-        } else {
-          response.json().then((json) => {
-            if (json.totalRecords > 0) {
-              const error = { hrid: <FormattedMessage id="ui-inventory.hridTaken" /> };
-              reject(error);
-            } else {
-              resolve();
-            }
-          });
-        }
-      });
-    });
-  }
-  return new Promise(resolve => resolve());
-}
-
 class InstanceForm extends React.Component {
   constructor(props) {
     super(props);
@@ -370,6 +337,7 @@ class InstanceForm extends React.Component {
                     <Field
                       name="hrid"
                       type="text"
+                      disabled
                       component={TextField}
                       label={<FormattedMessage id="ui-inventory.instanceHrid" />}
                     />
@@ -649,8 +617,6 @@ InstanceForm.propTypes = {
 export default stripesForm({
   form: 'instanceForm',
   validate,
-  asyncValidate,
-  asyncBlurFields: ['hrid'],
   navigationCheck: true,
   enableReinitialize: true,
 })(InstanceForm);
