@@ -232,7 +232,7 @@ class ViewItem extends React.Component {
   onCopy(item) {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
-      newState.copiedItem = _.omit(item, ['id', 'barcode']);
+      newState.copiedItem = _.omit(item, ['id', 'hrid', 'barcode']);
       newState.copiedItem.status = { name: 'Available' };
       return newState;
     });

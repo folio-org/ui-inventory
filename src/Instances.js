@@ -278,7 +278,7 @@ class Instances extends React.Component {
   }
 
   copyInstance(instance) {
-    this.setState({ copiedInstance: _.omit(instance, ['id']) });
+    this.setState({ copiedInstance: _.omit(instance, ['id', 'hrid']) });
     this.props.mutator.query.update({ layer: 'create' });
   }
 
