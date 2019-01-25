@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 1.6.0 (IN PROGRESS)
+## [1.6.0](https://github.com/folio-org/ui-inventory/tree/v1.6.0) (2019-01-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.6.0)
 
 * Create new request from item record. Fixes UIIN-410.
 * Correctly show instance-edit checkbox status. Fixes UIIN-417.
