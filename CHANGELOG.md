@@ -5,6 +5,7 @@
 * Create new request from item record. Fixes UIIN-410.
 * Correctly show instance-edit checkbox status. Fixes UIIN-417.
 * Don't copy HRID on duplicating records, disable editing of HRID. UIIN-431, UIIN-450.
+* Upgrade to stripes v2.0.0.
 
 ## [1.5.1](https://github.com/folio-org/ui-inventory/tree/v1.5.1) (2018-12-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.5.1)

@@ -286,9 +286,9 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^1.0.0",
+    "@folio/stripes": "^2.0.0",
     "@folio/stripes-cli": "^1.5.0",
-    "@folio/stripes-core": "^2.15.5",
+    "@folio/stripes-core": "^3.0.1",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
@@ -309,7 +309,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^1.0.0",
+    "@folio/stripes": "^2.0.0",
     "react": "*"
   }
 }
