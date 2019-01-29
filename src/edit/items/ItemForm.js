@@ -404,6 +404,7 @@ class ItemForm extends React.Component {
                     name="discoverySuppress"
                     id="input_discovery_suppress"
                     component={Checkbox}
+                    type="checkbox"
                   />
                 </Col>
               </Row>
@@ -733,6 +734,7 @@ class ItemForm extends React.Component {
                         name: 'staffOnly',
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
+                        type: 'checkbox',
                       }
                     ]}
                   />
