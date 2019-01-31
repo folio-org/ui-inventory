@@ -34,17 +34,7 @@ const ClassificationFields = ({ classificationTypes }) => {
           template={[
             {
               label: (
-                <FormattedMessage id="ui-inventory.number">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
-              name: 'classificationNumber',
-              component: TextField,
-              required: true,
-            },
-            {
-              label: (
-                <FormattedMessage id="ui-inventory.type">
+                <FormattedMessage id="ui-inventory.classificationIdentifierType">
                   {(message) => message + ' *'}
                 </FormattedMessage>
               ),
@@ -52,6 +42,16 @@ const ClassificationFields = ({ classificationTypes }) => {
               component: Select,
               placeholder,
               dataOptions: classificationTypeOptions,
+              required: true,
+            },
+            {
+              label: (
+                <FormattedMessage id="ui-inventory.classification">
+                  {(message) => message + ' *'}
+                </FormattedMessage>
+              ),
+              name: 'classificationNumber',
+              component: TextField,
               required: true,
             },
           ]}
