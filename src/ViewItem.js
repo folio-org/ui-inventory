@@ -411,7 +411,7 @@ class ViewItem extends React.Component {
                 label={noteType.name}
                 value={_.get(item, ['notes'], []).map((note, j) => {
                   if (note.itemNoteTypeId === noteType.id) {
-                    return <div key={j}>{note.note}</div>;
+                    return <div key={j}>{note.note} {(note.staffOnly ? '(staff only)' : '')}</div>;
                   }
                   return null;
                 })}
@@ -440,7 +440,7 @@ class ViewItem extends React.Component {
                 label={`${noteType} note`}
                 value={_.get(item, ['circulationNotes'], []).map((note, j) => {
                   if (note.noteType === noteType) {
-                    return <div key={j}>{note.note}</div>;
+                    return <div key={j}>{note.note} {(note.staffOnly ? '(staff only)' : '')}</div>;
                   }
                   return null;
                 })}
@@ -871,7 +871,7 @@ class ViewItem extends React.Component {
                   </KeyValue>
                 </Col>
               </Row>
-              {layoutCirculationNotes(['Check in', 'Check out'], _.get(item, ['circulationNotes'], []))}
+              {layoutCirculationNotes(['Check out', 'Check in'], _.get(item, ['circulationNotes'], []))}
             </Accordion>
             <Accordion
               open={accordions.acc07}
