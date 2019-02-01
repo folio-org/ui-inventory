@@ -1,5 +1,5 @@
 {
-    "inventory.label": "库存",
+    "inventory.label": "典藏",
     "resultCount": "{count, number} {count, plural, one {已找到记录} other {已找到记录}}",
     "item.availability": "可用性",
     "item.availability.itemStatus": "单件状态",
@@ -156,7 +156,7 @@
     "itemCallNumber": "单件索书号",
     "holdingsNotes": "馆藏附注",
     "electronicAccess": "电子访问入口",
-    "meta.title": "库存",
+    "meta.title": "典藏",
     "location": "位置",
     "callNumber": "索书号",
     "title": "题名",
