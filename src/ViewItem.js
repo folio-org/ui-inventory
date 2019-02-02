@@ -691,7 +691,7 @@ class ViewItem extends React.Component {
               </Row>
               <Row>
                 {(item.copyNumbers && item.copyNumbers.length > 0) &&
-                  <Col smOffset={0} sm={4}>
+                  <Col smOffset={0} sm={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.copyNumbers" />}
                       value={_.get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)}
@@ -699,13 +699,19 @@ class ViewItem extends React.Component {
                   </Col>
                 }
                 {(item.numberOfPieces) &&
-                  <Col smOffset={0} sm={4}>
+                  <Col smOffset={0} sm={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                      value={_.get(item, ['numberOfPieces'], '')}
+                      value={_.get(item, ['numberOfPieces'], '-')}
                     />
                   </Col>
                 }
+                <Col smOffset={0} sm={4}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
+                    value={_.get(item, ['descriptionOfPieces'], '-')}
+                  />
+                </Col>
               </Row>
             </Accordion>
             <Accordion
