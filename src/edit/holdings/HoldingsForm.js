@@ -440,6 +440,14 @@ class HoldingsForm extends React.Component {
               label={<FormattedMessage id="ui-inventory.locations" />}
             >
               <Row>
+                <Col smOffset={0} sm={4}>
+                  <strong>
+                    <FormattedMessage id="ui-inventory.holdingsLocation" />
+                  </strong>
+                </Col>
+              </Row>
+              <br />
+              <Row>
                 <Col sm={4}>
                   <FormattedMessage id="ui-inventory.selectLocation">
                     {placeholder => (
@@ -525,6 +533,17 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
+              <Row>
+                <Col
+                  smOffset={0}
+                  sm={4}
+                >
+                  <strong>
+                    <FormattedMessage id="ui-inventory.holdingsCallNumber" />
+                  </strong>
+                </Col>
+              </Row>
+              <br />
               <Row>
                 <Col sm={2}>
                   <Field
