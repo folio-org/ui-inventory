@@ -4,6 +4,7 @@
 
 * Add description of pieces to item detail screen. Fixes UIIN-447.
 * Update BigTest interactors to reflect MCL aria changes. Refs STRIPES-597.
+* Move `AppIcon` import to `@folio/stripes/core`. Refs STCOM-411.
 
 ## [1.6.0](https://github.com/folio-org/ui-inventory/tree/v1.6.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.6.0)
