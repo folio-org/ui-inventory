@@ -403,32 +403,32 @@ class ViewItem extends React.Component {
       return noteTypes
         .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
         .map((noteType, i) => {
-          return(
-              <Row key={i}>
-                <Col xs={1}>
-                  <KeyValue
-                    label='Staff only'
-                    value={_.get(item, ['notes'], []).map((note, j) => {
-                      if (note.itemNoteTypeId === noteType.id) {
-                        return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
-                      }
-                      return null;
-                    })}
-                  />
-                </Col>
-                <Col xs={11}>
-                  <KeyValue
-                    label={noteType.name}
-                    value={_.get(item, ['notes'], []).map((note, j) => {
-                      if (note.itemNoteTypeId === noteType.id) {
-                        return <div key={j}>{note.note}</div>;
-                      }
-                      return null;
-                    })}
-                  />
-                </Col>
-              </Row>
-            );
+          return (
+            <Row key={i}>
+              <Col xs={1}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-inventory.staffOnly" />}
+                  value={_.get(item, ['notes'], []).map((note, j) => {
+                    if (note.itemNoteTypeId === noteType.id) {
+                      return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+                    }
+                    return null;
+                  })}
+                />
+              </Col>
+              <Col xs={11}>
+                <KeyValue
+                  label={noteType.name}
+                  value={_.get(item, ['notes'], []).map((note, j) => {
+                    if (note.itemNoteTypeId === noteType.id) {
+                      return <div key={j}>{note.note}</div>;
+                    }
+                    return null;
+                  })}
+                />
+              </Col>
+            </Row>
+          );
         });
     };
 
@@ -440,7 +440,7 @@ class ViewItem extends React.Component {
             <Row key={i}>
               <Col xs={1}>
                 <KeyValue
-                  label='Staff only'
+                  label={<FormattedMessage id="ui-inventory.staffOnly" />}
                   value={_.get(item, ['circulationNotes'], []).map((note, j) => {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
