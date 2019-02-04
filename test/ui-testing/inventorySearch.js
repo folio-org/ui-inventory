@@ -6,6 +6,13 @@ module.exports.test = function test(uiTestCtx) {
 
     this.timeout(Number(config.test_timeout));
 
+    const contentWait = (t) => {
+      const re = new RegExp(t, 'i');
+      return !!(Array.from(
+        document.querySelectorAll('#list-inventory div[role="row"] > a > div')
+      ).find(e => re.test(e.textContent)));
+    };
+
     describe('Login > Click Inventory > Enter Search Term > Wait for Results > Confirm search term at top of results > Click Reset All > Wait for results pan to change state > Logout\n', () => {
       const title = 'California';
       const authorName = 'Huntley, Henry Veel';
@@ -44,15 +51,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
-          .wait(`a[aria-label*="Title: ${title}"]`)
-          /* .evaluate(function evall(title2) {
-            const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
-            console.log(`list contains: ${list} and title is ${title2} `);
-
-            if (list !== title2) {
-              throw new Error('First item not matched');
-            }
-          }, title) */
+          .wait(contentWait, title)
           .then(done)
           .catch(done);
       });
@@ -74,7 +73,8 @@ module.exports.test = function test(uiTestCtx) {
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
-          .wait(`a[aria-label*="Title: ${title}"]`)
+          .wait(contentWait, title)
+
           /* .evaluate(function evall(title2) {
             const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
             // console.log(`list contains: ${list} and title is ${title2} `);
@@ -101,7 +101,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
-          .wait(`a[aria-label*="${authorName}"]`)
+          .wait(contentWait, authorName)
           .then(done)
           .catch(done);
       });

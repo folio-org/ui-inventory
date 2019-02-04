@@ -96,7 +96,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('#list-inventory')
           .evaluate((name) => {
             const node = Array.from(
-              document.querySelectorAll('#list-inventory div[role="listitem"]:nth-child(1) > a > div')
+              document.querySelectorAll('#list-inventory div[role="row"][aria-rowindex="2"] > a > div')
             ).find(e => e.textContent === name);
             if (!node) {
               throw new Error(`Can't find newly created title (${name}) at top of sorted list`);
