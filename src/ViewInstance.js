@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import queryString from 'query-string';
 
 import {
+  AppIcon,
   TitleManager,
   IntlConsumer,
 } from '@folio/stripes/core';
@@ -22,7 +23,6 @@ import {
   Layer,
   Layout,
   IconButton,
-  AppIcon,
   Icon,
   Headline,
   MultiColumnList,

@@ -19,13 +19,15 @@ import {
   Layer,
   IconButton,
   MultiColumnList,
-  AppIcon,
   Button,
   Icon,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  AppIcon,
+  IntlConsumer
+} from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
 import ItemForm from './edit/items/ItemForm';

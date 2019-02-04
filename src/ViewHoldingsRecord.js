@@ -14,13 +14,15 @@ import {
   ExpandAllButton,
   KeyValue,
   IconButton,
-  AppIcon,
   MultiColumnList,
   Icon,
   Button,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  AppIcon,
+  IntlConsumer
+} from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
