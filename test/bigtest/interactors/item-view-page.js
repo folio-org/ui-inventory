@@ -20,6 +20,10 @@ import {
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
+
+  whenLoaded() {
+    return this.when(() => this.isLoaded);
+  }
 }
 
 export default new ItemViewPage('[data-test-item-view-page]');
