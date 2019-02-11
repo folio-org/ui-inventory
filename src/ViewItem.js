@@ -17,7 +17,7 @@ import {
   ExpandAllButton,
   KeyValue,
   Layer,
-  IconButton,
+  PaneHeaderIconButton,
   MultiColumnList,
   Button,
   Icon,
@@ -360,7 +360,7 @@ class ViewItem extends React.Component {
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editItem">
           {ariaLabel => (
-            <IconButton
+            <PaneHeaderIconButton
               icon="edit"
               id="clickable-edit-item"
               style={{ visibility: !item ? 'hidden' : 'visible' }}

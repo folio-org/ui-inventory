@@ -22,7 +22,7 @@ import {
   KeyValue,
   Layer,
   Layout,
-  IconButton,
+  PaneHeaderIconButton,
   Icon,
   Headline,
   MultiColumnList,
@@ -265,7 +265,7 @@ class ViewInstance extends React.Component {
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editInstance">
           {ariaLabel => (
-            <IconButton
+            <PaneHeaderIconButton
               id="clickable-edit-instance"
               style={{ visibility: !instance ? 'hidden' : 'visible' }}
               href={this.craftLayerUrl('edit', location)}

@@ -13,7 +13,7 @@ import {
   Accordion,
   ExpandAllButton,
   KeyValue,
-  IconButton,
+  PaneHeaderIconButton,
   MultiColumnList,
   Icon,
   Button,
@@ -277,7 +277,7 @@ class ViewHoldingsRecord extends React.Component {
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editHoldings">
           {ariaLabel => (
-            <IconButton
+            <PaneHeaderIconButton
               icon="edit"
               id="clickable-edit-holdingsrecord"
               style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
