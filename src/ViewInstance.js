@@ -89,7 +89,6 @@ class ViewInstance extends React.Component {
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
-    console.log(this.props);
     this.props.updateLocation({ layer: 'edit' });
   }
 
