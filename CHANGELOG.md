@@ -7,6 +7,7 @@
 * Move `AppIcon` import to `@folio/stripes/core`. Refs STCOM-411.
 * Add subheadings to the Locations accordion on holding record view. Fixes UIIN-416.
 * Update integration tests to accommodate MCL aria changes. Fixes UIIN-474.
+* Update circulation OKAPI interface to v6.0. Part of UICIRC-164.
 
 ## [1.6.0](https://github.com/folio-org/ui-inventory/tree/v1.6.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.6.0)
