@@ -13,6 +13,7 @@ import {
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
+import withlocation from './withLocation';
 
 /**
  * Accordion wrapper for an individual Holdings record on the instance-view
@@ -68,7 +69,7 @@ class ItemsPerHoldingsRecord extends React.Component {
 
     mutator.addItemMode.replace({ mode: true });
     this.addItemModeThisLayer = true;
-    mutator.query.update({ layer: 'createItem' });
+    this.props.updateLocation({ layer: 'createItem' });
   };
 
   onClickCloseNewItem = (e) => {
@@ -78,7 +79,7 @@ class ItemsPerHoldingsRecord extends React.Component {
 
     mutator.addItemMode.replace({ mode: false });
     this.addItemModeThisLayer = false;
-    mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   createItem = (item) => {
@@ -230,6 +231,7 @@ ItemsPerHoldingsRecord.propTypes = {
   okapi: PropTypes.object,
   accordionToggle: PropTypes.func.isRequired,
   accordionStates: PropTypes.object.isRequired,
+  updateLocation: PropTypes.func,
 };
 
-export default ItemsPerHoldingsRecord;
+export default withlocation(ItemsPerHoldingsRecord);

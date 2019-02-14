@@ -14,6 +14,7 @@ import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
+import withLocation from './withLocation';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -264,22 +265,23 @@ class Instances extends React.Component {
 
   onChangeIndex = (e) => {
     const qindex = e.target.value;
-    this.props.mutator.query.update({ qindex });
+    this.props.updateLocation({ qindex });
   }
 
-  updateFilters(filters) { // provided for onChangeFilter
-    this.props.mutator.query.update({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
+  updateFilters(prevFilters) { // provided for onChangeFilter
+    const filters = Object.keys(prevFilters).filter(key => filters[key]).join(',');
+    this.props.updateLocation({ filters });
   }
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
-    this.props.mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   copyInstance(instance) {
     this.setState({ copiedInstance: _.omit(instance, ['id', 'hrid']) });
-    this.props.mutator.query.update({ layer: 'create' });
+    this.props.updateLocation({ layer: 'create' });
   }
 
   createInstance = (instance) => {
@@ -455,6 +457,7 @@ Instances.propTypes = {
   disableRecordCreation: PropTypes.bool,
   onSelectRow: PropTypes.func,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
+  updateLocation: PropTypes.func,
 };
 
-export default Instances;
+export default withLocation(Instances);
