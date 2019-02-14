@@ -1075,8 +1075,8 @@ ViewItem.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
-  updateLocation: PropTypes.func,
-  goTo: PropTypes.func,
+  updateLocation: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
 };
 
 export default withLocation(ViewItem);

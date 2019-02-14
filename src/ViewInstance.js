@@ -1049,7 +1049,7 @@ ViewInstance.propTypes = {
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
-  updateLocation: PropTypes.func,
+  updateLocation: PropTypes.func.isRequired,
   okapi: PropTypes.object,
 };
 

@@ -12,7 +12,7 @@ function withLocation(WrappedComponent) {
     static propTypes = {
       location: PropTypes.shape({
         pathname: PropTypes.string.isRequired,
-        search: PropTypes.string,
+        search: PropTypes.string.isRequired,
       }).isRequired,
       history: PropTypes.shape({
         push: PropTypes.func.isRequired,

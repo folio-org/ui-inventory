@@ -457,7 +457,7 @@ Instances.propTypes = {
   disableRecordCreation: PropTypes.bool,
   onSelectRow: PropTypes.func,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
-  updateLocation: PropTypes.func,
+  updateLocation: PropTypes.func.isRequired,
 };
 
 export default withLocation(Instances);

@@ -844,8 +844,8 @@ ViewHoldingsRecord.propTypes = {
     temporaryLocationQuery: PropTypes.object.isRequired,
   }),
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
-  updateLocation: PropTypes.func,
-  goTo: PropTypes.func,
+  updateLocation: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
 };
 
 

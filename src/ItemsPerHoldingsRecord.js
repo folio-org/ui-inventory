@@ -231,7 +231,7 @@ ItemsPerHoldingsRecord.propTypes = {
   okapi: PropTypes.object,
   accordionToggle: PropTypes.func.isRequired,
   accordionStates: PropTypes.object.isRequired,
-  updateLocation: PropTypes.func,
+  updateLocation: PropTypes.func.isRequired,
 };
 
 export default withlocation(ItemsPerHoldingsRecord);
