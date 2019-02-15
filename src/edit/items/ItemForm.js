@@ -22,6 +22,7 @@ import {
   ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import stripesForm from '@folio/stripes/form';
 import {
   LocationSelection,
@@ -256,7 +257,7 @@ class ItemForm extends React.Component {
         <FormattedMessage id="ui-inventory.updateItem">
           {ariaLabel => (
             <Button
-              buttonStyle="primary paneHeaderNewButton"
+              buttonStyle="primary"
               id="clickable-update-item"
               type="submit"
               aria-label={ariaLabel}
@@ -334,6 +335,7 @@ class ItemForm extends React.Component {
             onClose={onCancel}
             lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
             actionMenu={this.getActionMenu}
+            appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
               <span data-test-header-title>
                 {instance.title}

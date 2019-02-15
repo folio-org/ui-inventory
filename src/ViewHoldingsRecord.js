@@ -336,15 +336,11 @@ class ViewHoldingsRecord extends React.Component {
               appIcon={<AppIcon app="inventory" iconKey="holdings" />}
               paneTitle={
                 <span data-test-header-title>
-                  <FormattedMessage id="ui-inventory.holdings" />
-                </span>
-              }
-              paneSub={
-                <Fragment>
                   {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} >` : null}
                   {' '}
                   {_.get(holdingsRecord, ['callNumber'], '')}
-                </Fragment>
+                  <FormattedMessage id="ui-inventory.holdings" />
+                </span>
               }
               lastMenu={detailMenu}
               dismissible

@@ -20,6 +20,8 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 
+import { AppIcon } from '@folio/stripes-core';
+
 import {
   LocationSelection,
   LocationLookup,
@@ -244,7 +246,7 @@ class HoldingsForm extends React.Component {
         <FormattedMessage id="ui-inventory.updateHoldingsRecord">
           {ariaLabel => (
             <Button
-              buttonStyle="primary paneHeaderNewButton"
+              buttonStyle="primary"
               id="clickable-update-item"
               type="submit"
               aria-label={ariaLabel}
@@ -313,6 +315,7 @@ class HoldingsForm extends React.Component {
         <Paneset isRoot>
           <Pane
             actionMenu={this.getActionMenu}
+            appIcon={<AppIcon app="inventory" iconKey="holdings" />}
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
