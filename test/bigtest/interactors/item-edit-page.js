@@ -20,6 +20,7 @@ import {
   }
 
   title = text('[data-test-header-title]');
+  sub = text('[data-test-header-sub]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
 }

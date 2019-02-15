@@ -59,7 +59,11 @@ describe('ItemEditPage', () => {
   });
 
   it('displays a title in the pane header', () => {
-    expect(ItemEditPage.title).to.equal(`${instance.title} Holdings: > ${holdings.callNumber}`);
+    expect(ItemEditPage.title).to.equal(`${instance.title}`);
+  });
+
+  it('displays a sub in the pane header', () => {
+    expect(ItemEditPage.sub).to.equal(`Holdings: > ${holdings.callNumber}`);
   });
 
   describe('pane header menu', () => {
