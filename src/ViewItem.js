@@ -31,6 +31,7 @@ import {
 
 import { craftLayerUrl } from './utils';
 import ItemForm from './edit/items/ItemForm';
+import withLocation from './withLocation';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -190,12 +191,12 @@ class ViewItem extends React.Component {
 
   onClickEditItem = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: 'editItem' });
+    this.props.updateLocation({ layer: 'editItem' });
   }
 
   onClickCloseEditItem = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   saveItem = (item) => {
@@ -208,10 +209,7 @@ class ViewItem extends React.Component {
     const instance = instances1.records[0];
 
     this.props.mutator.items.POST(item).then((data) => {
-      this.props.mutator.query.update({
-        _path: `/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`,
-        layer: null,
-      });
+      this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   }
 
@@ -239,7 +237,7 @@ class ViewItem extends React.Component {
       return newState;
     });
 
-    this.props.mutator.query.update({ layer: 'copyItem' });
+    this.props.updateLocation({ layer: 'copyItem' });
   }
 
   getActionMenu = ({ onToggle }) => {
@@ -1077,6 +1075,8 @@ ViewItem.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
+  updateLocation: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
 };
 
-export default ViewItem;
+export default withLocation(ViewItem);
