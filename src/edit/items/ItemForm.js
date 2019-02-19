@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -22,6 +22,7 @@ import {
   ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import stripesForm from '@folio/stripes/form';
 import {
   LocationSelection,
@@ -256,7 +257,7 @@ class ItemForm extends React.Component {
         <FormattedMessage id="ui-inventory.updateItem">
           {ariaLabel => (
             <Button
-              buttonStyle="primary paneHeaderNewButton"
+              buttonStyle="primary"
               id="clickable-update-item"
               type="submit"
               aria-label={ariaLabel}
@@ -334,34 +335,32 @@ class ItemForm extends React.Component {
             onClose={onCancel}
             lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
             actionMenu={this.getActionMenu}
+            appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
-              <div
-                style={{ textAlign: 'center' }}
-                data-test-header-title
-              >
-                <em>{instance.title}</em>
+              <span data-test-header-title>
+                {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
-                  <span>
-                    <em>, </em>
-                    <em>
-                      {instance.publication[0].publisher}
-                      {instance.publication[0].dateOfPublication
-                        ? `, ${instance.publication[0].dateOfPublication}`
-                        : null
-                      }
-                    </em>
-                  </span>
+                  <Fragment>
+                    {', '}
+                    {instance.publication[0].publisher}
+                    {instance.publication[0].dateOfPublication
+                      ? `, ${instance.publication[0].dateOfPublication}`
+                      : null
+                    }
+                  </Fragment>
                 }
-                <div>
-                  <FormattedMessage
-                    id="ui-inventory.holdingsTitle"
-                    values={{
-                      location: labelLocation,
-                      callNumber: labelCallNumber,
-                    }}
-                  />
-                </div>
-              </div>
+              </span>
+            }
+            paneSub={
+              <span data-test-header-sub>
+                <FormattedMessage
+                  id="ui-inventory.holdingsTitle"
+                  values={{
+                    location: labelLocation,
+                    callNumber: labelCallNumber,
+                  }}
+                />
+              </span>
             }
           >
             <Row>

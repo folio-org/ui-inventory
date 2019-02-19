@@ -474,23 +474,15 @@ class ViewItem extends React.Component {
           <Pane
             data-test-item-view-page
             defaultWidth={paneWidth}
+            appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
-              <div
-                style={{ textAlign: 'center' }}
-                data-test-header-title
-              >
-                <AppIcon
-                  app="inventory"
-                  iconKey="item"
-                  size="small"
-                />
-                {' '}
+              <span data-test-header-title>
                 {_.get(item, ['barcode'], '')}
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
                   values={{ status: _.get(item, ['status', 'name'], '') }}
                 />
-              </div>
+              </span>
             }
             lastMenu={detailMenu}
             dismissible

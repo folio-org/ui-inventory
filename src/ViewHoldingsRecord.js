@@ -331,26 +331,13 @@ class ViewHoldingsRecord extends React.Component {
           <div data-test-holdings-view-page>
             <Pane
               defaultWidth={this.props.paneWidth}
+              appIcon={<AppIcon app="inventory" iconKey="holdings" />}
               paneTitle={
-                <div
-                  style={{ textAlign: 'center' }}
-                  data-test-header-title
-                >
-                  <AppIcon
-                    app="inventory"
-                    iconKey="holdings"
-                    size="small"
-                  />
-                  <strong>
-                    {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} >` : null}
-                    {' '}
-                    {_.get(holdingsRecord, ['callNumber'], '')}
-                  </strong>
-                  &nbsp;
-                  <div>
-                    <FormattedMessage id="ui-inventory.holdings" />
-                  </div>
-                </div>
+                <span data-test-header-title>
+                  {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} > ` : null}
+                  {_.get(holdingsRecord, ['callNumber'], '')}
+                  <FormattedMessage id="ui-inventory.holdings" />
+                </span>
               }
               lastMenu={detailMenu}
               dismissible

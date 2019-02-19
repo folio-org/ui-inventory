@@ -75,11 +75,7 @@ class ViewMarc extends React.Component {
           label={<FormattedMessage id="ui-inventory.viewMarcSource" />}
         >
           <Pane
-            paneTitle={
-              <div style={{ textAlign: 'center' }}>
-                {_.get(instance, ['title'], '')}
-              </div>
-            }
+            paneTitle={_.get(instance, ['title'], '')}
             defaultWidth={paneWidth}
             dismissible
             onClose={onClose}
