@@ -251,18 +251,18 @@ class ViewItem extends React.Component {
     const newItem = _.cloneDeep(item);
     _.set(newItem, ['status', 'name'], 'Missing');
 
-    const newRequestRecord = _.cloneDeep(requestRecords);
-    if (newRequestRecord.length) {
-      const itemStatus = _.get(newRequestRecord[0], ['item', 'status']);
-      const holdShelfExpirationDate = _.get(newRequestRecord[0], ['holdShelfExpirationDate']);
+    if (requestRecords.length) {
+      const newRequestRecord = _.cloneDeep(requestRecords[0]);
+      const itemStatus = _.get(newRequestRecord, ['item', 'status']);
+      const holdShelfExpirationDate = _.get(newRequestRecord, ['holdShelfExpirationDate']);
       if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
-        this.props.mutator.requestOnItem.replace({ id: newRequestRecord[0].id });
-        _.set(newRequestRecord[0], ['status'], 'Open - Not yet filled');
+        this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
+        _.set(newRequestRecord, ['status'], 'Open - Not yet filled');
+        this.props.mutator.requests.PUT(newRequestRecord);
       }
     }
 
     this.props.mutator.items.PUT(newItem)
-      .then(() => this.props.mutator.requests.PUT(newRequestRecord[0]))
       .then(() => this.setState({ itemMissing: false }));
   }
 
