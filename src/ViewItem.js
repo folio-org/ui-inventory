@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedTime,
   FormattedMessage,
@@ -21,6 +22,7 @@ import {
   MultiColumnList,
   Button,
   Icon,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -79,6 +81,9 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled") sortby requestDate desc',
       records: 'requests',
+      PUT: {
+        path: 'circulation/requests/%{requestOnItem.id}'
+      },
     },
     // there is no canonical method to retrieve an item's "current" loan.
     // the top item, sorted by loan-date descending, is a best-effort.
@@ -97,6 +102,7 @@ class ViewItem extends React.Component {
       path: 'users?query=(id==%{borrowerId.query})',
       records: 'users',
     },
+    requestOnItem: {},
   });
 
   constructor(props) {
@@ -115,6 +121,7 @@ class ViewItem extends React.Component {
       loan: null,
       borrower: null,
       loanStatusDate: null,
+      itemMissing: false,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -240,9 +247,33 @@ class ViewItem extends React.Component {
     this.props.updateLocation({ layer: 'copyItem' });
   }
 
+  handleConfirm = (item, requestRecords) => {
+    const newItem = _.cloneDeep(item);
+    _.set(newItem, ['status', 'name'], 'Missing');
+
+    const newRequestRecord = _.cloneDeep(requestRecords);
+    if (newRequestRecord.length) {
+      const itemStatus = _.get(newRequestRecord[0], ['item', 'status']);
+      const holdShelfExpirationDate = _.get(newRequestRecord[0], ['holdShelfExpirationDate']);
+      if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
+        this.props.mutator.requestOnItem.replace({ id: newRequestRecord[0].id });
+        _.set(newRequestRecord[0], ['status'], 'Open - Not yet filled');
+      }
+    }
+
+    this.props.mutator.items.PUT(newItem)
+      .then(() => this.props.mutator.requests.PUT(newRequestRecord[0]))
+      .then(() => this.setState({ itemMissing: false }));
+  }
+
+  hideMissingModal = () => {
+    this.setState({ itemMissing: false });
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
+    const status = _.get(firstItem, ['status', 'name']);
 
     return (
       <Fragment>
@@ -281,7 +312,23 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.newRequest" />
           </Icon>
         </Button>
+        {
+          (status === 'Available' || status === 'In transit' || status === 'Awaiting pickup') &&
+          <Button
+            id="clickable-missing-item"
+            onClick={() => {
+              onToggle();
+              this.setState({ itemMissing: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-mark-as-missing-item
+          >
+            <Icon icon="archive">
+              <FormattedMessage id="ui-inventory.markAsMissing" />
+            </Icon>
+          </Button>
 
+        }
       </Fragment>
     );
   }
@@ -465,8 +512,27 @@ class ViewItem extends React.Component {
         });
     };
 
+    const message = (
+      <SafeHTMLMessage
+        id="ui-inventory.missingModal.message"
+        values={{
+          title: item.title,
+          barcode: item.barcode,
+          materialType: _.upperFirst(_.get(item, ['materialType', 'name'], ''))
+        }}
+      />
+    );
+
     return (
       <div>
+        <ConfirmationModal
+          open={this.state.itemMissing}
+          heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
+          message={message}
+          onConfirm={() => this.handleConfirm(item, requestRecords)}
+          onCancel={this.hideMissingModal}
+          confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
+        />
         <Layer
           isOpen
           label={<FormattedMessage id="ui-inventory.viewItem" />}
@@ -1063,6 +1129,12 @@ ViewItem.propTypes = {
     items: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
+    }),
+    requests: PropTypes.shape({
+      PUT: PropTypes.func.isRequired,
+    }),
+    requestOnItem: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
   }),
