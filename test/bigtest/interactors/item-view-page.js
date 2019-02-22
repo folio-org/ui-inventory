@@ -13,6 +13,8 @@ import {
   clickEdit = clickable('[data-test-inventory-edit-item-action]');
   clickDuplicate = clickable('[data-test-inventory-duplicate-item-action]');
   hasNewRequestItem = isPresent('[data-test-inventory-create-request-action]');
+  hasMarkAsMissing = isPresent('[data-test-mark-as-missing-item]');
+  clickMarkAsMissing = clickable('[data-test-mark-as-missing-item]');
 }
 
 @interactor class ItemViewPage {
@@ -20,6 +22,7 @@ import {
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
+  hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
 
   whenLoaded() {
     return this.when(() => this.isLoaded);

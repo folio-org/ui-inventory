@@ -300,6 +300,7 @@
     "sinon": "^7.0.0"
   },
   "dependencies": {
+    "@folio/react-intl-safe-html": "^1.0.200010",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
