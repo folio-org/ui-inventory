@@ -72,6 +72,10 @@ describe('ItemViewPage', () => {
         expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
       });
 
+      it('should show a mark as missing item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.true;
+      });
+
       describe('clicking on edit', () => {
         beforeEach(async () => {
           await ItemViewPage.headerDropdownMenu.clickEdit();
@@ -89,6 +93,16 @@ describe('ItemViewPage', () => {
 
         it('should redirect to item create page', () => {
           expect(ItemCreatePage.$root).to.exist;
+        });
+      });
+
+      describe('clicking on mark as missing', () => {
+        beforeEach(async () => {
+          await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
+        });
+
+        it('should open a missing confirmation modal', () => {
+          expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
         });
       });
     });

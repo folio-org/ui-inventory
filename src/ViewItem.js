@@ -526,12 +526,13 @@ class ViewItem extends React.Component {
     return (
       <div>
         <ConfirmationModal
+          data-test-missingConfirmation-modal
           open={this.state.itemMissing}
           heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
           message={message}
           onConfirm={() => this.handleConfirm(item, requestRecords)}
           onCancel={this.hideMissingModal}
-          confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
+          confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}    
         />
         <Layer
           isOpen
