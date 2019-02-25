@@ -349,5 +349,9 @@
     "error.noMatch.oops": "Ops!",
     "error.noMatch.how": "Como você chegou em {location}?",
     "addCirculationNote": "Adicionar nota de devolução / empréstimo",
-    "item.loanAndAvailability": "Empréstimo e disponibilidade"
+    "item.loanAndAvailability": "Empréstimo e disponibilidade",
+    "markAsMissing": "Marcar como desaparecido",
+    "missingModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode} ) será marcado como <strong>desaparecido</strong>.",
+    "missingModal.heading": "Confirmar item como desaparecido",
+    "missingModal.confirm": "Confirmar"
 }

@@ -349,5 +349,9 @@
     "error.noMatch.oops": "Uh-oh!",
     "error.noMatch.how": "How did you get to {location}?",
     "addCirculationNote": "Add check in / check out note",
-    "item.loanAndAvailability": "Loan and availability"
+    "item.loanAndAvailability": "Loan and availability",
+    "markAsMissing": "Mark as Missing",
+    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
+    "missingModal.heading": "Confirm item as missing",
+    "missingModal.confirm": "Confirm"
 }
