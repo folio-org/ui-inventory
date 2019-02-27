@@ -350,8 +350,8 @@
     "error.noMatch.how": "كيف وصلت إلى {location} ؟",
     "addCirculationNote": "إضافة ملاحظة إعارة/ رد",
     "item.loanAndAvailability": "الإعارة والتوافر",
-    "markAsMissing": "Mark as Missing",
-    "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
-    "missingModal.heading": "Confirm item as missing",
-    "missingModal.confirm": "Confirm"
+    "markAsMissing": "الإشارة إليه كمفقود",
+    "missingModal.message": "<strong>{title} ({materialType})</strong> (الباركود:{barcode}) سيتم الإشارة إليه كـ <strong> مفقود</strong> ",
+    "missingModal.heading": "تأكيد المادة كمفقودة",
+    "missingModal.confirm": "تأكيد"
 }
