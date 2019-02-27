@@ -79,7 +79,7 @@ class ViewItem extends React.Component {
     },
     requests: {
       type: 'okapi',
-      path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled") sortby requestDate desc',
+      path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled" or "Open - In transit") sortby requestDate desc',
       records: 'requests',
       PUT: {
         path: 'circulation/requests/%{requestOnItem.id}'
