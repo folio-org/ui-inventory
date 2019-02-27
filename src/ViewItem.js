@@ -323,7 +323,7 @@ class ViewItem extends React.Component {
             buttonStyle="dropdownItem"
             data-test-mark-as-missing-item
           >
-            <Icon icon="archive">
+            <Icon icon="flag">
               <FormattedMessage id="ui-inventory.markAsMissing" />
             </Icon>
           </Button>
