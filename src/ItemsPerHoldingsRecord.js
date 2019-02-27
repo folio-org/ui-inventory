@@ -84,8 +84,8 @@ class ItemsPerHoldingsRecord extends React.Component {
 
   createItem = (item) => {
     // POST item record
-    this.props.mutator.items.POST(item);
-    this.onClickCloseNewItem();
+    this.props.mutator.items.POST(item)
+      .then(() => this.onClickCloseNewItem());
   }
 
   renderButtonsGroup = () => {
