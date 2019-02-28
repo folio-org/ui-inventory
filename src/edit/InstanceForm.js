@@ -429,7 +429,7 @@ class InstanceForm extends React.Component {
                   <Field
                     label={(
                       <FormattedMessage id="ui-inventory.resourceTitle">
-                        {message => message + ' *'}
+                        {message => message}
                       </FormattedMessage>
                     )}
                     name="title"
@@ -502,12 +502,13 @@ class InstanceForm extends React.Component {
                       <Field
                         label={(
                           <FormattedMessage id="ui-inventory.resourceType">
-                            {message => message + ' *'}
+                            {message => message}
                           </FormattedMessage>
                         )}
                         name="instanceTypeId"
                         id="select_instance_type"
                         type="text"
+                        required
                         component={Select}
                         placeholder={placeholder}
                         dataOptions={instanceTypeOptions}

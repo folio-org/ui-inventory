@@ -416,7 +416,6 @@ class ItemForm extends React.Component {
                     id="additem_hrid"
                     disabled
                     component={TextField}
-                    required
                     fullWidth
                   />
                 </Col>
@@ -426,7 +425,6 @@ class ItemForm extends React.Component {
                     name="barcode"
                     id="additem_barcode"
                     component={TextField}
-                    required
                     fullWidth
                   />
                 </Col>
@@ -436,7 +434,6 @@ class ItemForm extends React.Component {
                     name="accessionNumber"
                     id="additem_accessionnumber"
                     component={TextField}
-                    required
                     fullWidth
                   />
                 </Col>
@@ -446,7 +443,6 @@ class ItemForm extends React.Component {
                     name="itemIdentifier"
                     id="additem_itemidentifier"
                     component={TextField}
-                    required
                     fullWidth
                   />
                 </Col>
