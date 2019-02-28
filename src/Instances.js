@@ -218,7 +218,28 @@ class Instances extends React.Component {
       type: 'okapi',
       records: 'statisticalCodes',
       path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby statisticalCodeTypeId',
-    }
+    },
+    illPolicies: {
+      type: 'okapi',
+      path: 'ill-policies',
+      records: 'illPolicies',
+    },
+    holdingsTypes: {
+      type: 'okapi',
+      path: 'holdings-types',
+      records: 'holdingsTypes',
+    },
+    callNumberTypes: {
+      type: 'okapi',
+      path: 'call-number-types',
+      records: 'callNumberTypes',
+    },
+    holdingsNoteTypes: {
+      type: 'okapi',
+      path: 'holdings-note-types',
+      records: 'holdingsNoteTypes',
+    },
+
   });
 
   constructor(props) {
@@ -315,6 +336,10 @@ class Instances extends React.Component {
       || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
       || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
       || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
+      || !resources.illPolicies || !resources.illPolicies.hasLoaded
+      || !resources.holdingsTypes || !resources.holdingsTypes.hasLoaded
+      || !resources.callNumberTypes || !resources.callNumberTypes.hasLoaded
+      || !resources.holdingsNoteTypes || !resources.holdingsNoteTypes.hasLoaded
     ) return null;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -330,6 +355,10 @@ class Instances extends React.Component {
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
+    const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
+    const holdingsTypes = (resources.holdingsTypes || emptyObj).records || emptyArr;
+    const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
+    const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
 
@@ -347,6 +376,10 @@ class Instances extends React.Component {
       electronicAccessRelationships,
       statisticalCodeTypes,
       statisticalCodes,
+      illPolicies,
+      holdingsTypes,
+      callNumberTypes,
+      holdingsNoteTypes,
       locationsById,
     };
 
