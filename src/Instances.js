@@ -358,7 +358,7 @@ class Instances extends React.Component {
     const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
     const holdingsTypes = (resources.holdingsTypes || emptyObj).records || emptyArr;
     const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
-    const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr; 
+    const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
 
