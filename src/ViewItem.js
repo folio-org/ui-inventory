@@ -422,8 +422,9 @@ class ViewItem extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     let requestLink = 0;
+    const requestFiltersLink = 'requestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit%2CrequestStatus.Open%20-%20Not%20yet%20filled';
     if (requestRecords.length && item.barcode) {
-      requestLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
     }
 
     let loanLink = item.status.name;
@@ -433,7 +434,7 @@ class ViewItem extends React.Component {
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
     }
     if (loanLink === 'Awaiting pickup') {
-      loanLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
+      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
     let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);
