@@ -9,6 +9,7 @@ import {
 } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
@@ -384,6 +385,15 @@ class Instances extends React.Component {
     };
 
     const resultsFormatter = {
+      'title': ({ title }) => (
+        <AppIcon
+          size="small"
+          app="inventory"
+          iconKey="instance"
+        >
+          {title}
+        </AppIcon>
+      ),
       'relation': r => formatters.relationsFormatter(r, instanceRelationshipTypes),
       'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
