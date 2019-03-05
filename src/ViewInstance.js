@@ -38,6 +38,7 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewItem from './ViewItem';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
+import withLocation from './withLocation';
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -88,13 +89,13 @@ class ViewInstance extends React.Component {
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: 'edit' });
+    this.props.updateLocation({ layer: 'edit' });
   }
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
     this.log('clicked "add new holdings record"');
-    this.props.mutator.query.update({ layer: 'createHoldingsRecord' });
+    this.props.updateLocation({ layer: 'createHoldingsRecord' });
   }
 
   update = (instance) => {
@@ -105,22 +106,22 @@ class ViewInstance extends React.Component {
 
   resetLayerQueryParam = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
+    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
   }
 
   closeViewMarc = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
+    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
   }
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ _path: `/inventory/view/${this.props.match.params.id}` });
+    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
   }
 
   createHoldingsRecord = (holdingsRecord) => {
@@ -1048,7 +1049,8 @@ ViewInstance.propTypes = {
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
+  updateLocation: PropTypes.func.isRequired,
   okapi: PropTypes.object,
 };
 
-export default ViewInstance;
+export default withLocation(ViewInstance);

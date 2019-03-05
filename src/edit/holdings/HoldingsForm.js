@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -19,6 +19,8 @@ import {
   Checkbox,
   ConfirmationModal,
 } from '@folio/stripes/components';
+
+import { AppIcon } from '@folio/stripes-core';
 
 import {
   LocationSelection,
@@ -244,7 +246,7 @@ class HoldingsForm extends React.Component {
         <FormattedMessage id="ui-inventory.updateHoldingsRecord">
           {ariaLabel => (
             <Button
-              buttonStyle="primary paneHeaderNewButton"
+              buttonStyle="primary"
               id="clickable-update-item"
               type="submit"
               aria-label={ariaLabel}
@@ -312,30 +314,28 @@ class HoldingsForm extends React.Component {
       <form data-test-holdings-page-type={holdingsPageType}>
         <Paneset isRoot>
           <Pane
+            actionMenu={this.getActionMenu}
+            appIcon={<AppIcon app="inventory" iconKey="holdings" />}
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
             lastMenu={holdingsPageType === 'edit' ? editHoldingsLastMenu : addHoldingsLastMenu}
             paneTitle={
-              <div
-                style={{ textAlign: 'center' }}
-                data-test-header-title
-              >
-                <strong>{instance.title}</strong>
-                {(instance.publication && instance.publication.length > 0) &&
-                  <div>
-                    <em>
-                      {instance.publication[0].publisher}
-                      {instance.publication[0].dateOfPublication
-                        ? `, ${instance.publication[0].dateOfPublication}`
-                        : null
-                      }
-                    </em>
-                  </div>
-                }
-              </div>
+              <span data-test-header-title>
+                {instance.title}
+              </span>
             }
-            actionMenu={this.getActionMenu}
+            paneSub={
+              (instance.publication && instance.publication.length > 0) ?
+                <Fragment>
+                  {instance.publication[0].publisher}
+                  {instance.publication[0].dateOfPublication
+                    ? `, ${instance.publication[0].dateOfPublication}`
+                    : null
+                  }
+                </Fragment>
+                : null
+            }
           >
             <Row end="xs">
               <Col xs>

@@ -68,7 +68,7 @@
       "holdings-note-types": "1.0",
       "users": "15.0",
       "location-units": "1.1",
-      "circulation": "4.0 5.0"
+      "circulation": "4.0 5.0 6.0 7.0"
     },
     "permissionSets": [
       {
@@ -300,11 +300,13 @@
     "sinon": "^7.0.0"
   },
   "dependencies": {
+    "@folio/react-intl-safe-html": "^1.0.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.3.0",
+    "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "redux-form": "^7.0.3"
   },

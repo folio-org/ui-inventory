@@ -13,6 +13,7 @@ import {
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
+import withlocation from './withLocation';
 
 /**
  * Accordion wrapper for an individual Holdings record on the instance-view
@@ -23,6 +24,7 @@ class ItemsPerHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
     query: {},
     addItemMode: { initialValue: { mode: false } },
+    addItemForHoldingsRecordId: {},
     materialTypes: {
       type: 'okapi',
       path: 'material-types',
@@ -58,17 +60,13 @@ class ItemsPerHoldingsRecord extends React.Component {
   }
 
   // Add Item handlers
-  onClickAddNewItem = (e) => {
+  onClickAddNewItem = (holdingsRecordId) => {
     const { mutator } = this.props;
 
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
     mutator.addItemMode.replace({ mode: true });
+    mutator.addItemForHoldingsRecordId.replace({ holdingsRecordId });
     this.addItemModeThisLayer = true;
-    mutator.query.update({ layer: 'createItem' });
+    this.props.updateLocation({ layer: 'createItem' });
   };
 
   onClickCloseNewItem = (e) => {
@@ -78,13 +76,14 @@ class ItemsPerHoldingsRecord extends React.Component {
 
     mutator.addItemMode.replace({ mode: false });
     this.addItemModeThisLayer = false;
-    mutator.query.update({ layer: null });
+    mutator.addItemForHoldingsRecordId.replace({});
+    this.props.updateLocation({ layer: null });
   }
 
   createItem = (item) => {
     // POST item record
-    this.props.mutator.items.POST(item);
-    this.onClickCloseNewItem();
+    this.props.mutator.items.POST(item)
+      .then(() => this.onClickCloseNewItem());
   }
 
   renderButtonsGroup = () => {
@@ -104,7 +103,9 @@ class ItemsPerHoldingsRecord extends React.Component {
         </Button>
         <Button
           id="clickable-new-item"
-          onClick={this.onClickAddNewItem}
+          onClick={() => {
+            this.onClickAddNewItem(holdingsRecord.id);
+          }}
           buttonStyle="primary paneHeaderNewButton"
         >
           <Icon icon="plus-sign">
@@ -123,6 +124,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         materialTypes,
         loanTypes,
         query,
+        addItemForHoldingsRecordId,
       },
       instance,
       holdingsRecord,
@@ -141,7 +143,8 @@ class ItemsPerHoldingsRecord extends React.Component {
     const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
 
-    if (query.layer === 'createItem') {
+    if (query.layer === 'createItem'
+      && addItemForHoldingsRecordId.holdingsRecordId === holdingsRecord.id) {
       return (
         <Layer
           key={`itemformlayer_${holdingsRecord.id}`}
@@ -230,6 +233,7 @@ ItemsPerHoldingsRecord.propTypes = {
   okapi: PropTypes.object,
   accordionToggle: PropTypes.func.isRequired,
   accordionStates: PropTypes.object.isRequired,
+  updateLocation: PropTypes.func.isRequired,
 };
 
-export default ItemsPerHoldingsRecord;
+export default withlocation(ItemsPerHoldingsRecord);

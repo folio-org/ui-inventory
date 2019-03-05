@@ -26,6 +26,7 @@ import {
 
 import { craftLayerUrl } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
+import withLocation from './withLocation';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -112,12 +113,12 @@ class ViewHoldingsRecord extends React.Component {
   // Edit Holdings records handlers
   onClickEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: 'editHoldingsRecord' });
+    this.props.updateLocation({ layer: 'editHoldingsRecord' });
   }
 
   onClickCloseEditHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   updateHoldingsRecord = (holdingsRecord) => {
@@ -133,10 +134,7 @@ class ViewHoldingsRecord extends React.Component {
     const instance = instances1.records[0];
 
     this.props.mutator.holdingsRecords.POST(holdingsRecord).then((data) => {
-      this.props.mutator.query.update({
-        _path: `/inventory/view/${instance.id}/${data.id}`,
-        layer: null,
-      });
+      this.props.goTo(`/inventory/view/${instance.id}/${data.id}`);
     });
   }
 
@@ -163,7 +161,7 @@ class ViewHoldingsRecord extends React.Component {
       return newState;
     });
 
-    this.props.mutator.query.update({ layer: 'copyHoldingsRecord' });
+    this.props.updateLocation({ layer: 'copyHoldingsRecord' });
   }
 
   refLookup = (referenceTable, id) => {
@@ -333,26 +331,13 @@ class ViewHoldingsRecord extends React.Component {
           <div data-test-holdings-view-page>
             <Pane
               defaultWidth={this.props.paneWidth}
+              appIcon={<AppIcon app="inventory" iconKey="holdings" />}
               paneTitle={
-                <div
-                  style={{ textAlign: 'center' }}
-                  data-test-header-title
-                >
-                  <AppIcon
-                    app="inventory"
-                    iconKey="holdings"
-                    size="small"
-                  />
-                  <strong>
-                    {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} >` : null}
-                    {' '}
-                    {_.get(holdingsRecord, ['callNumber'], '')}
-                  </strong>
-                  &nbsp;
-                  <div>
-                    <FormattedMessage id="ui-inventory.holdings" />
-                  </div>
-                </div>
+                <span data-test-header-title>
+                  {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} > ` : null}
+                  {_.get(holdingsRecord, ['callNumber'], '')}
+                  <FormattedMessage id="ui-inventory.holdings" />
+                </span>
               }
               lastMenu={detailMenu}
               dismissible
@@ -846,7 +831,9 @@ ViewHoldingsRecord.propTypes = {
     temporaryLocationQuery: PropTypes.object.isRequired,
   }),
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
+  updateLocation: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
 };
 
 
-export default ViewHoldingsRecord;
+export default withLocation(ViewHoldingsRecord);

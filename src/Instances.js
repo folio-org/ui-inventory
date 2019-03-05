@@ -14,6 +14,7 @@ import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
+import withLocation from './withLocation';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -217,7 +218,28 @@ class Instances extends React.Component {
       type: 'okapi',
       records: 'statisticalCodes',
       path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby statisticalCodeTypeId',
-    }
+    },
+    illPolicies: {
+      type: 'okapi',
+      path: 'ill-policies',
+      records: 'illPolicies',
+    },
+    holdingsTypes: {
+      type: 'okapi',
+      path: 'holdings-types',
+      records: 'holdingsTypes',
+    },
+    callNumberTypes: {
+      type: 'okapi',
+      path: 'call-number-types',
+      records: 'callNumberTypes',
+    },
+    holdingsNoteTypes: {
+      type: 'okapi',
+      path: 'holdings-note-types',
+      records: 'holdingsNoteTypes',
+    },
+
   });
 
   constructor(props) {
@@ -264,22 +286,23 @@ class Instances extends React.Component {
 
   onChangeIndex = (e) => {
     const qindex = e.target.value;
-    this.props.mutator.query.update({ qindex });
+    this.props.updateLocation({ qindex });
   }
 
-  updateFilters(filters) { // provided for onChangeFilter
-    this.props.mutator.query.update({ filters: Object.keys(filters).filter(key => filters[key]).join(',') });
+  updateFilters(prevFilters) { // provided for onChangeFilter
+    const filters = Object.keys(prevFilters).filter(key => filters[key]).join(',');
+    this.props.updateLocation({ filters });
   }
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
-    this.props.mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   copyInstance(instance) {
     this.setState({ copiedInstance: _.omit(instance, ['id', 'hrid']) });
-    this.props.mutator.query.update({ layer: 'create' });
+    this.props.updateLocation({ layer: 'create' });
   }
 
   createInstance = (instance) => {
@@ -313,6 +336,10 @@ class Instances extends React.Component {
       || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
       || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
       || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
+      || !resources.illPolicies || !resources.illPolicies.hasLoaded
+      || !resources.holdingsTypes || !resources.holdingsTypes.hasLoaded
+      || !resources.callNumberTypes || !resources.callNumberTypes.hasLoaded
+      || !resources.holdingsNoteTypes || !resources.holdingsNoteTypes.hasLoaded
     ) return null;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -328,6 +355,10 @@ class Instances extends React.Component {
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
+    const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
+    const holdingsTypes = (resources.holdingsTypes || emptyObj).records || emptyArr;
+    const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
+    const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = _.keyBy(locations, 'id');
 
@@ -345,6 +376,10 @@ class Instances extends React.Component {
       electronicAccessRelationships,
       statisticalCodeTypes,
       statisticalCodes,
+      illPolicies,
+      holdingsTypes,
+      callNumberTypes,
+      holdingsNoteTypes,
       locationsById,
     };
 
@@ -455,6 +490,7 @@ Instances.propTypes = {
   disableRecordCreation: PropTypes.bool,
   onSelectRow: PropTypes.func,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
+  updateLocation: PropTypes.func.isRequired,
 };
 
-export default Instances;
+export default withLocation(Instances);

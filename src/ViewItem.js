@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedTime,
   FormattedMessage,
@@ -21,6 +22,7 @@ import {
   MultiColumnList,
   Button,
   Icon,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -31,6 +33,7 @@ import {
 
 import { craftLayerUrl } from './utils';
 import ItemForm from './edit/items/ItemForm';
+import withLocation from './withLocation';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -76,8 +79,11 @@ class ViewItem extends React.Component {
     },
     requests: {
       type: 'okapi',
-      path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled") sortby requestDate desc',
+      path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled" or "Open - In transit") sortby requestDate desc',
       records: 'requests',
+      PUT: {
+        path: 'circulation/requests/%{requestOnItem.id}'
+      },
     },
     // there is no canonical method to retrieve an item's "current" loan.
     // the top item, sorted by loan-date descending, is a best-effort.
@@ -96,6 +102,7 @@ class ViewItem extends React.Component {
       path: 'users?query=(id==%{borrowerId.query})',
       records: 'users',
     },
+    requestOnItem: {},
   });
 
   constructor(props) {
@@ -114,6 +121,7 @@ class ViewItem extends React.Component {
       loan: null,
       borrower: null,
       loanStatusDate: null,
+      itemMissing: false,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -190,12 +198,12 @@ class ViewItem extends React.Component {
 
   onClickEditItem = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: 'editItem' });
+    this.props.updateLocation({ layer: 'editItem' });
   }
 
   onClickCloseEditItem = (e) => {
     if (e) e.preventDefault();
-    this.props.mutator.query.update({ layer: null });
+    this.props.updateLocation({ layer: null });
   }
 
   saveItem = (item) => {
@@ -208,10 +216,7 @@ class ViewItem extends React.Component {
     const instance = instances1.records[0];
 
     this.props.mutator.items.POST(item).then((data) => {
-      this.props.mutator.query.update({
-        _path: `/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`,
-        layer: null,
-      });
+      this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   }
 
@@ -239,12 +244,36 @@ class ViewItem extends React.Component {
       return newState;
     });
 
-    this.props.mutator.query.update({ layer: 'copyItem' });
+    this.props.updateLocation({ layer: 'copyItem' });
+  }
+
+  handleConfirm = (item, requestRecords) => {
+    const newItem = _.cloneDeep(item);
+    _.set(newItem, ['status', 'name'], 'Missing');
+
+    if (requestRecords.length) {
+      const newRequestRecord = _.cloneDeep(requestRecords[0]);
+      const itemStatus = _.get(newRequestRecord, ['item', 'status']);
+      const holdShelfExpirationDate = _.get(newRequestRecord, ['holdShelfExpirationDate']);
+      if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
+        this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
+        _.set(newRequestRecord, ['status'], 'Open - Not yet filled');
+        this.props.mutator.requests.PUT(newRequestRecord);
+      }
+    }
+
+    this.props.mutator.items.PUT(newItem)
+      .then(() => this.setState({ itemMissing: false }));
+  }
+
+  hideMissingModal = () => {
+    this.setState({ itemMissing: false });
   }
 
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
+    const status = _.get(firstItem, ['status', 'name']);
 
     return (
       <Fragment>
@@ -283,7 +312,23 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.newRequest" />
           </Icon>
         </Button>
+        {
+          (status === 'Available' || status === 'In transit' || status === 'Awaiting pickup') &&
+          <Button
+            id="clickable-missing-item"
+            onClick={() => {
+              onToggle();
+              this.setState({ itemMissing: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-mark-as-missing-item
+          >
+            <Icon icon="flag">
+              <FormattedMessage id="ui-inventory.markAsMissing" />
+            </Icon>
+          </Button>
 
+        }
       </Fragment>
     );
   }
@@ -377,8 +422,9 @@ class ViewItem extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     let requestLink = 0;
+    const requestFiltersLink = 'requestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit%2CrequestStatus.Open%20-%20Not%20yet%20filled';
     if (requestRecords.length && item.barcode) {
-      requestLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
     }
 
     let loanLink = item.status.name;
@@ -388,7 +434,7 @@ class ViewItem extends React.Component {
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
     }
     if (loanLink === 'Awaiting pickup') {
-      loanLink = <Link to={`/requests?filters=&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
+      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
     let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);
@@ -467,8 +513,28 @@ class ViewItem extends React.Component {
         });
     };
 
+    const message = (
+      <SafeHTMLMessage
+        id="ui-inventory.missingModal.message"
+        values={{
+          title: item.title,
+          barcode: item.barcode,
+          materialType: _.upperFirst(_.get(item, ['materialType', 'name'], ''))
+        }}
+      />
+    );
+
     return (
       <div>
+        <ConfirmationModal
+          data-test-missingConfirmation-modal
+          open={this.state.itemMissing}
+          heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
+          message={message}
+          onConfirm={() => this.handleConfirm(item, requestRecords)}
+          onCancel={this.hideMissingModal}
+          confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
+        />
         <Layer
           isOpen
           label={<FormattedMessage id="ui-inventory.viewItem" />}
@@ -476,23 +542,15 @@ class ViewItem extends React.Component {
           <Pane
             data-test-item-view-page
             defaultWidth={paneWidth}
+            appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
-              <div
-                style={{ textAlign: 'center' }}
-                data-test-header-title
-              >
-                <AppIcon
-                  app="inventory"
-                  iconKey="item"
-                  size="small"
-                />
-                {' '}
+              <span data-test-header-title>
                 {_.get(item, ['barcode'], '')}
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
                   values={{ status: _.get(item, ['status', 'name'], '') }}
                 />
-              </div>
+              </span>
             }
             lastMenu={detailMenu}
             dismissible
@@ -1074,9 +1132,17 @@ ViewItem.propTypes = {
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
     }),
+    requests: PropTypes.shape({
+      PUT: PropTypes.func.isRequired,
+    }),
+    requestOnItem: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
+    }),
     query: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
+  updateLocation: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
 };
 
-export default ViewItem;
+export default withLocation(ViewItem);
