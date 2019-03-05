@@ -5,7 +5,7 @@ import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 
 import { MultiColumnList } from '@folio/stripes/components';
-import { IntlConsumer } from '@folio/stripes/core';
+import { IntlConsumer, AppIcon } from '@folio/stripes/core';
 
 /**
  * List items for display in the Holdings accordion in the main
@@ -48,7 +48,11 @@ class Items extends React.Component {
     if (!items || !items.hasLoaded) return null;
     const itemRecords = items.records;
     const itemsFormatter = {
-      'Item: barcode': x => _.get(x, ['barcode']),
+      'Item: barcode': x => (
+        <AppIcon app="inventory" iconKey="item" size="small">
+          {_.get(x, ['barcode'])}
+        </AppIcon>
+      ),
       'status': x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };
