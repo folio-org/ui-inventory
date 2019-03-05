@@ -285,6 +285,7 @@ class ViewInstance extends React.Component {
           id="pane-instancedetails"
           defaultWidth={paneWidth}
           paneTitle={<FormattedMessage id="ui-inventory.editInstance" />}
+          appIcon={<AppIcon app="inventory" iconKey="instance" />}
           lastMenu={detailMenu}
           dismissible
           onClose={onClose}
@@ -378,6 +379,7 @@ class ViewInstance extends React.Component {
         defaultWidth={paneWidth}
         paneTitle={<span data-test-header-title>{instance.title}</span>}
         paneSub={instanceSub()}
+        appIcon={<AppIcon app="inventory" iconKey="instance" />}
         lastMenu={detailMenu}
         dismissible
         onClose={onClose}
