@@ -546,6 +546,7 @@ class ViewItem extends React.Component {
             paneTitle={
               <span data-test-header-title>
                 {_.get(item, ['barcode'], '')}
+                {' '}
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
                   values={{ status: _.get(item, ['status', 'name'], '') }}
