@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 1.7.0 (https://github.com/folio-org/ui-inventory/tree/v1.7.0) (2019-03-15)
+## [1.7.0](https://github.com/folio-org/ui-inventory/tree/v1.7.0) (2019-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.6.0...v1.7.0)
 
 * Supports `circulation` interface 7.0 UIIN-491
