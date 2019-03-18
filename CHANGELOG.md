@@ -1,14 +1,14 @@
 # Change history for ui-inventory
 
-## 1.7.0 (IN PROGRESS)
+## [1.7.0](https://github.com/folio-org/ui-inventory/tree/v1.7.0) (2019-03-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.6.0...v1.7.0)
 
-* Add description of pieces to item detail screen. Fixes UIIN-447.
+* Supports `circulation` interface 7.0 UIIN-491
 * Update BigTest interactors to reflect MCL aria changes. Refs STRIPES-597.
 * Move `AppIcon` import to `@folio/stripes/core`. Refs STCOM-411.
-* Add subheadings to the Locations accordion on holding record view. Fixes UIIN-416.
 * Update integration tests to accommodate MCL aria changes. Fixes UIIN-474.
-* Update circulation OKAPI interface to v6.0. Part of UICIRC-164.
-* Update circulation OKAPI interface to v7.0. Part of UIIN-491.
+* Bug-fixes: Action menu not closing (UIIN-488), pieces descriptions missing (UIIN-447), subheadings missing (UIIN-416), pop-up not closing (UIIN-488), cannot create new item (UIIN-497), double asterisks on mandatory fields (UIIN-493), items attached to wrong holdings records (UIIN-492), missing select lists (UIIN-456), check boxes not updating right (UIIN-417)
+* Include "Open - In transit" when accessing requests from item record (UIIN-358)
 
 ## [1.6.0](https://github.com/folio-org/ui-inventory/tree/v1.6.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.5.0...v1.6.0)

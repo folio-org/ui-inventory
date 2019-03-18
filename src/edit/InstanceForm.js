@@ -163,14 +163,18 @@ class InstanceForm extends React.Component {
     );
   }
 
-  getActionMenu = () => {
+  getActionMenu = ({ onToggle }) => {
     const { onCancel } = this.props;
+    const cancel = () => {
+      onToggle();
+      onCancel();
+    };
 
     return (
       <Button
         buttonStyle="dropdownItem"
         id="cancel-instance-edition"
-        onClick={onCancel}
+        onClick={cancel}
       >
         <Icon icon="times-circle">
           <FormattedMessage id="ui-inventory.cancel" />
