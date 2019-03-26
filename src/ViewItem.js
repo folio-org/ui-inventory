@@ -554,9 +554,8 @@ class ViewItem extends React.Component {
       <SafeHTMLMessage
         id="ui-inventory.confirmItemDeleteModal.message"
         values={{
-          title: item.title,
-          barcode: item.barcode,
-          materialType: _.upperFirst(_.get(item, ['materialType', 'name'], ''))
+          hrid: item.hrid,
+          barcode: item.barcode
         }}
       />
     );

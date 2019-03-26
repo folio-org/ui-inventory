@@ -178,7 +178,7 @@
   "missingModal.heading": "Confirm item as missing",
   "missingModal.confirm": "Confirm",
   "deleteItem": "Delete Item",
-  "confirmItemDeleteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>deleted</strong>.",
+  "confirmItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> has no dependencies and will be <strong>deleted</strong>.",
   "confirmItemDeleteModal.heading": "Confirm deletion of item",
   "confirmItemDeleteModal.confirm": "Confirm",
   "publications": "Publications",
