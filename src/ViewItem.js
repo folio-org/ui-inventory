@@ -121,7 +121,8 @@ class ViewItem extends React.Component {
       loan: null,
       borrower: null,
       loanStatusDate: null,
-      itemMissing: false,
+      itemMissingModal: false,
+      confirmItemDeleteModal: false,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -220,6 +221,14 @@ class ViewItem extends React.Component {
     });
   }
 
+  deleteItem = (item) => {
+    const { resources: { holdingsRecords, instances1 } } = this.props;
+    const holdingsRecord = holdingsRecords.records[0];
+    const instance = instances1.records[0];
+    this.props.onCloseViewItem();
+    this.props.mutator.items.DELETE(item);
+  }
+
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
@@ -263,11 +272,15 @@ class ViewItem extends React.Component {
     }
 
     this.props.mutator.items.PUT(newItem)
-      .then(() => this.setState({ itemMissing: false }));
+      .then(() => this.setState({ itemMissingModal: false }));
   }
 
   hideMissingModal = () => {
-    this.setState({ itemMissing: false });
+    this.setState({ itemMissingModal: false });
+  }
+
+  hideConfirmItemDeleteModal = () => {
+    this.setState({ confirmItemDeleteModal: false });
   }
 
   getActionMenu = ({ onToggle }) => {
@@ -304,6 +317,19 @@ class ViewItem extends React.Component {
           </Icon>
         </Button>
         <Button
+          id="clickable-delete-item"
+          onClick={() => {
+            onToggle();
+            this.setState({ confirmItemDeleteModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-item-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteItem" />
+          </Icon>
+        </Button>
+        <Button
           to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
           buttonStyle="dropdownItem"
           data-test-inventory-create-request-action
@@ -318,7 +344,7 @@ class ViewItem extends React.Component {
             id="clickable-missing-item"
             onClick={() => {
               onToggle();
-              this.setState({ itemMissing: true });
+              this.setState({ itemMissingModal: true });
             }}
             buttonStyle="dropdownItem"
             data-test-mark-as-missing-item
@@ -513,9 +539,20 @@ class ViewItem extends React.Component {
         });
     };
 
-    const message = (
+    const missingModalMessage = (
       <SafeHTMLMessage
         id="ui-inventory.missingModal.message"
+        values={{
+          title: item.title,
+          barcode: item.barcode,
+          materialType: _.upperFirst(_.get(item, ['materialType', 'name'], ''))
+        }}
+      />
+    );
+
+    const confirmItemDeleteModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.confirmItemDeleteModal.message"
         values={{
           title: item.title,
           barcode: item.barcode,
@@ -528,12 +565,21 @@ class ViewItem extends React.Component {
       <div>
         <ConfirmationModal
           data-test-missingConfirmation-modal
-          open={this.state.itemMissing}
+          open={this.state.itemMissingModal}
           heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
-          message={message}
+          message={missingModalMessage}
           onConfirm={() => this.handleConfirm(item, requestRecords)}
           onCancel={this.hideMissingModal}
           confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
+        />
+        <ConfirmationModal
+          data-test-deleteConfirmation-modal
+          open={this.state.confirmItemDeleteModal}
+          heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+          message={confirmItemDeleteModalMessage}
+          onConfirm={() => { this.deleteItem(item); }}
+          onCancel={this.hideConfirmItemDeleteModal}
+          confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
         />
         <Layer
           isOpen
@@ -1131,6 +1177,7 @@ ViewItem.propTypes = {
     items: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
+      DELETE: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
