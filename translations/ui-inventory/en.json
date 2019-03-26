@@ -181,6 +181,7 @@
   "confirmItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> has no dependencies and will be <strong>deleted</strong>.",
   "confirmItemDeleteModal.heading": "Confirm deletion of item",
   "confirmItemDeleteModal.confirm": "Confirm",
+  "noItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> is {status} and cannot be deleted",
   "publications": "Publications",
   "addPublication": "Add publication",
   "seriesStatements": "Series statements",

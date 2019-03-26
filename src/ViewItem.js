@@ -23,6 +23,7 @@ import {
   Button,
   Icon,
   ConfirmationModal,
+  Modal,
 } from '@folio/stripes/components';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -123,6 +124,7 @@ class ViewItem extends React.Component {
       loanStatusDate: null,
       itemMissingModal: false,
       confirmItemDeleteModal: false,
+      noItemDeleteModal: false,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -283,6 +285,10 @@ class ViewItem extends React.Component {
     this.setState({ confirmItemDeleteModal: false });
   }
 
+  hideNoItemDeleteModal = () => {
+    this.setState({ noItemDeleteModal: false });
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
@@ -316,19 +322,38 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.copyItem" />
           </Icon>
         </Button>
-        <Button
-          id="clickable-delete-item"
-          onClick={() => {
-            onToggle();
-            this.setState({ confirmItemDeleteModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-item-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteItem" />
-          </Icon>
-        </Button>
+        {
+          (status !== 'Checked out') &&
+            <Button
+              id="clickable-delete-item"
+              onClick={() => {
+                onToggle();
+                this.setState({ confirmItemDeleteModal: true });
+              }}
+              buttonStyle="dropdownItem"
+              data-test-inventory-delete-item-action
+            >
+              <Icon icon="trash">
+                <FormattedMessage id="ui-inventory.deleteItem" />
+              </Icon>
+            </Button>
+        }
+        {
+          (status === 'Checked out') &&
+            <Button
+              id="clickable-delete-item"
+              onClick={() => {
+                onToggle();
+                this.setState({ noItemDeleteModal: true });
+              }}
+              buttonStyle="dropdownItem"
+              data-test-inventory-no-delete-item-action
+            >
+              <Icon icon="trash">
+                <FormattedMessage id="ui-inventory.deleteItem" />
+              </Icon>
+            </Button>
+        }
         <Button
           to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
           buttonStyle="dropdownItem"
@@ -560,6 +585,23 @@ class ViewItem extends React.Component {
       />
     );
 
+    const noItemDeleteModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.noItemDeleteModal.message"
+        values={{
+          hrid: item.hrid,
+          barcode: item.barcode,
+          status: item.status.name
+        }}
+      />
+    );
+
+    const noItemDeleteFooter = (
+      <Button onClick={this.hideNoItemDeleteModal}>
+        <FormattedMessage id="stripes-core.button.back" />
+      </Button>
+    );
+
     return (
       <div>
         <ConfirmationModal
@@ -580,6 +622,13 @@ class ViewItem extends React.Component {
           onCancel={this.hideConfirmItemDeleteModal}
           confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
         />
+        <Modal
+          label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+          open={this.state.noItemDeleteModal}
+          footer={noItemDeleteFooter}
+        >
+          {noItemDeleteModalMessage}
+        </Modal>
         <Layer
           isOpen
           label={<FormattedMessage id="ui-inventory.viewItem" />}
