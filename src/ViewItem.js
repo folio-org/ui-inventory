@@ -224,9 +224,6 @@ class ViewItem extends React.Component {
   }
 
   deleteItem = (item) => {
-    const { resources: { holdingsRecords, instances1 } } = this.props;
-    const holdingsRecord = holdingsRecords.records[0];
-    const instance = instances1.records[0];
     this.props.onCloseViewItem();
     this.props.mutator.items.DELETE(item);
   }
