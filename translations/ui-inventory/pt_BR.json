@@ -1,5 +1,5 @@
 {
-    "inventory.label": "Estoque",
+    "inventory.label": "Acervo",
     "resultCount": "{count, number} {count, plural, one {registro encontrado} other {registros encontrados}}",
     "item.availability": "Disponibilidade",
     "item.availability.itemStatus": "Status do item",
@@ -156,7 +156,7 @@
     "itemCallNumber": "Número de chamada do item",
     "holdingsNotes": "Notas de acervo",
     "electronicAccess": "Acesso eletrônico",
-    "meta.title": "Estoque",
+    "meta.title": "Acervo",
     "location": "Localização",
     "callNumber": "Número de chamada",
     "title": "Título",
