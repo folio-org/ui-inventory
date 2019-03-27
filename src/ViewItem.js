@@ -286,6 +286,14 @@ class ViewItem extends React.Component {
     this.setState({ noItemDeleteModal: false });
   }
 
+  canDeleteItem = (item) => {
+    if (item.status.name === 'Checked out') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
@@ -319,38 +327,20 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.copyItem" />
           </Icon>
         </Button>
-        {
-          (status !== 'Checked out') &&
-            <Button
-              id="clickable-delete-item"
-              onClick={() => {
-                onToggle();
-                this.setState({ confirmItemDeleteModal: true });
-              }}
-              buttonStyle="dropdownItem"
-              data-test-inventory-delete-item-action
-            >
-              <Icon icon="trash">
-                <FormattedMessage id="ui-inventory.deleteItem" />
-              </Icon>
-            </Button>
-        }
-        {
-          (status === 'Checked out') &&
-            <Button
-              id="clickable-delete-item"
-              onClick={() => {
-                onToggle();
-                this.setState({ noItemDeleteModal: true });
-              }}
-              buttonStyle="dropdownItem"
-              data-test-inventory-no-delete-item-action
-            >
-              <Icon icon="trash">
-                <FormattedMessage id="ui-inventory.deleteItem" />
-              </Icon>
-            </Button>
-        }
+        <Button
+          id="clickable-delete-item"
+          onClick={() => {
+            onToggle();
+            this.setState(this.canDeleteItem(firstItem) ?
+              { confirmItemDeleteModal: true } : { noItemDeleteModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-item-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteItem" />
+          </Icon>
+        </Button>
         <Button
           to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
           buttonStyle="dropdownItem"
