@@ -236,7 +236,7 @@ class Instances extends React.Component {
     },
     holdingsNoteTypes: {
       type: 'okapi',
-      path: 'holdings-note-types?limit=1000&query=cql.allRecords=1 sortby',
+      path: 'holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'holdingsNoteTypes',
     },
 
