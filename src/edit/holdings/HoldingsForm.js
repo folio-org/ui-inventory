@@ -520,6 +520,7 @@ class HoldingsForm extends React.Component {
                     name="shelvingOrder"
                     id="additem_shelvingorder"
                     component={TextField}
+                    disabled
                     fullWidth
                   />
                 </Col>
