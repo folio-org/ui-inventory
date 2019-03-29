@@ -3,8 +3,6 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import ItemViewPage from '../interactors/item-view-page';
-import ItemEditPage from '../interactors/item-edit-page';
-import ItemCreatePage from '../interactors/item-create-page';
 
 describe('ItemViewPage', () => {
   setupApplication();
@@ -19,7 +17,7 @@ describe('ItemViewPage', () => {
     const item = {
       id: '7fd93634-a3f5-4a7a-9db2-1c6dc4bd6b65',
       status : {
-        name: 'Available',
+        name: 'Checked out',
       },
       title: '14 cows for America',
       holdingsRecordId: '5f6d50f1-e3bf-4c04-8621-4e3dc3d9b543',
@@ -68,45 +66,13 @@ describe('ItemViewPage', () => {
         await ItemViewPage.headerDropdown.click();
       });
 
-      it('should show a new request menu item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
-      });
-
-      it('should show a mark as missing item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.true;
-      });
-
-      it('should show a delete item menu item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.true;
-      });
-
-      describe('clicking on edit', () => {
+      describe('clicking on delete for a checked out item', () => {
         beforeEach(async () => {
-          await ItemViewPage.headerDropdownMenu.clickEdit();
+          await ItemViewPage.headerDropdownMenu.clickDelete();
         });
 
-        it('should redirect to item edit page', () => {
-          expect(ItemEditPage.$root).to.exist;
-        });
-      });
-
-      describe('clicking on duplicate', () => {
-        beforeEach(async () => {
-          await ItemViewPage.headerDropdownMenu.clickDuplicate();
-        });
-
-        it('should redirect to item create page', () => {
-          expect(ItemCreatePage.$root).to.exist;
-        });
-      });
-
-      describe('clicking on mark as missing', () => {
-        beforeEach(async () => {
-          await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
-        });
-
-        it('should open a missing confirmation modal', () => {
-          expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
+        it('should open no delete modal', () => {
+          expect(ItemViewPage.noDeleteItemModal.hasBackButton).to.be.true;
         });
       });
     });

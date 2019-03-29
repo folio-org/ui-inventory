@@ -584,7 +584,10 @@ class ViewItem extends React.Component {
     );
 
     const noItemDeleteFooter = (
-      <Button onClick={this.hideNoItemDeleteModal}>
+      <Button
+        data-test-no-delete-item-back-action
+        onClick={this.hideNoItemDeleteModal}
+      >
         <FormattedMessage id="stripes-core.button.back" />
       </Button>
     );
@@ -601,7 +604,7 @@ class ViewItem extends React.Component {
           confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
         />
         <ConfirmationModal
-          data-test-deleteConfirmation-modal
+          data-test-deleteconfirmation-modal
           open={this.state.confirmItemDeleteModal}
           heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
           message={confirmItemDeleteModalMessage}
@@ -610,6 +613,8 @@ class ViewItem extends React.Component {
           confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
         />
         <Modal
+          id="my-id"
+          data-test-nodeleteitem-modal
           label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
           open={this.state.noItemDeleteModal}
           footer={noItemDeleteFooter}
