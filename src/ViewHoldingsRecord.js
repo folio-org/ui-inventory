@@ -103,11 +103,11 @@ class ViewHoldingsRecord extends React.Component {
     const temporaryLocationQuery = resources.temporaryLocationQuery;
     const holding = holdingsRecords[0];
 
-    if (holding && holding.permanentLocationId
+    if (holding && holding.permanentLocationId && permanentLocationQuery
       && (!permanentLocationQuery.id || permanentLocationQuery.id !== holding.permanentLocationId)) {
       nextProps.mutator.permanentLocationQuery.update({ id: holding.permanentLocationId });
     }
-    if (holding && holding.temporaryLocationId
+    if (holding && holding.temporaryLocationId && temporaryLocationQuery
       && (!temporaryLocationQuery.id || temporaryLocationQuery.id !== holding.temporaryLocationId)) {
       nextProps.mutator.temporaryLocationQuery.update({ id: holding.temporaryLocationId });
     }
