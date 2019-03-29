@@ -362,7 +362,7 @@ class ViewHoldingsRecord extends React.Component {
         id="ui-inventory.confirmHoldingsRecordDeleteModal.message"
         values={{
           hrid: holdingsRecord.hrid,
-          location: holdingsPermanentLocation.name
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
         }}
       />
     );
@@ -372,7 +372,7 @@ class ViewHoldingsRecord extends React.Component {
         id="ui-inventory.noHoldingsRecordDeleteModal.message"
         values={{
           hrid: holdingsRecord.hrid,
-          location: holdingsPermanentLocation.name
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
         }}
       />
     );
