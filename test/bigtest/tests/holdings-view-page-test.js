@@ -61,5 +61,15 @@ describe('HoldingsViewPage', () => {
         expect(HoldingsCreatePage.$root).to.exist;
       });
     });
+
+    describe('clicking on delete', () => {
+      beforeEach(async () => {
+        await HoldingsViewPage.headerDropdownMenu.clickDelete();
+      });
+
+      it('should open delete confirmation modal', () => {
+        expect(HoldingsViewPage.hasConfirmDeleteModal).to.exist;
+      });
+    });
   });
 });

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import queryString from 'query-string';
 
 import {
@@ -17,6 +18,8 @@ import {
   MultiColumnList,
   Icon,
   Button,
+  Modal,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
@@ -86,6 +89,8 @@ class ViewHoldingsRecord extends React.Component {
         accordion06: true,
         accordion07: true,
       },
+      confirmHoldingsRecordDeleteModal: false,
+      noHoldingsRecordDeleteModal: false,
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
@@ -138,6 +143,11 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  deleteHoldingsRecord = (holdingsRecord) => {
+    this.props.onCloseViewHoldingsRecord();
+    this.props.mutator.holdingsRecords.DELETE(holdingsRecord);
+  }
+
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
@@ -164,6 +174,18 @@ class ViewHoldingsRecord extends React.Component {
     this.props.updateLocation({ layer: 'copyHoldingsRecord' });
   }
 
+  hideConfirmHoldingsRecordDeleteModal = () => {
+    this.setState({ confirmHoldingsRecordDeleteModal: false });
+  }
+
+  hideNoHoldingsRecordDeleteModal = () => {
+    this.setState({ noHoldingsRecordDeleteModal: false });
+  }
+
+  canDeleteHoldingsRecord = () => {
+    return true;
+  }
+
   refLookup = (referenceTable, id) => {
     const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
     return ref || {};
@@ -178,6 +200,20 @@ class ViewHoldingsRecord extends React.Component {
 
     return (
       <Fragment>
+        <Button
+          id="clickable-delete-holdingsrecord"
+          onClick={() => {
+            onToggle();
+            this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
+              { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-holdingsrecord-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
+          </Icon>
+        </Button>
         <Button
           id="edit-holdings"
           onClick={() => {
@@ -321,9 +357,51 @@ class ViewHoldingsRecord extends React.Component {
         });
     };
 
+    const confirmHoldingsRecordDeleteModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.confirmHoldingsRecordDeleteModal.message"
+        values={{
+          hrid: holdingsRecord.hrid,
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
+        }}
+      />
+    );
+
+    const noHoldingsRecordDeleteModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.noHoldingsRecordDeleteModal.message"
+        values={{
+          hrid: holdingsRecord.hrid,
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
+        }}
+      />
+    );
+
+    const noHoldingsRecordDeleteFooter = (
+      <Button onClick={this.hideNoHoldingsRecordDeleteModal}>
+        <FormattedMessage id="stripes-core.button.back" />
+      </Button>
+    );
 
     return (
       <div>
+        <ConfirmationModal
+          data-test-delete-confirmation-modal
+          open={this.state.confirmHoldingsRecordDeleteModal}
+          heading={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
+          message={confirmHoldingsRecordDeleteModalMessage}
+          onConfirm={() => { this.deleteHoldingsRecord(holdingsRecord); }}
+          onCancel={this.hideConfirmHoldingsRecordDeleteModal}
+          confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+        />
+        <Modal
+          data-test-no-delete-holdingsrecord-modal
+          label={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
+          open={this.state.noHoldingsRecordDeleteModal}
+          footer={noHoldingsRecordDeleteFooter}
+        >
+          {noHoldingsRecordDeleteModalMessage}
+        </Modal>
         <Layer
           isOpen
           label={<FormattedMessage id="ui-inventory.viewHoldingsRecord" />}
@@ -825,6 +903,7 @@ ViewHoldingsRecord.propTypes = {
     holdingsRecords: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
+      DELETE: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
     permanentLocationQuery: PropTypes.object.isRequired,

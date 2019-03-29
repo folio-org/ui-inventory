@@ -613,7 +613,6 @@ class ViewItem extends React.Component {
           confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
         />
         <Modal
-          id="my-id"
           data-test-nodeleteitem-modal
           label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
           open={this.state.noItemDeleteModal}
