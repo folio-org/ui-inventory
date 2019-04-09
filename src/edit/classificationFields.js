@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { IntlConsumer } from '@folio/stripes/core';
 import {
   Icon,
   TextField,
@@ -19,8 +20,8 @@ const ClassificationFields = ({ classificationTypes }) => {
   );
 
   return (
-    <FormattedMessage id="ui-inventory.selectClassification">
-      {placeholder => (
+    <IntlConsumer>
+      {intl => (
         <RepeatableField
           name="classifications"
           label={<FormattedMessage id="ui-inventory.classifications" />}
@@ -33,23 +34,15 @@ const ClassificationFields = ({ classificationTypes }) => {
           addDefaultItem={false}
           template={[
             {
-              label: (
-                <FormattedMessage id="ui-inventory.classificationIdentifierType">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
               name: 'classificationTypeId',
               component: Select,
-              placeholder,
+              placeholder: intl.formatMessage({ id: 'ui-inventory.selectClassification' }),
               dataOptions: classificationTypeOptions,
               required: true,
             },
             {
-              label: (
-                <FormattedMessage id="ui-inventory.classification">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: intl.formatMessage({ id: 'ui-inventory.classification' }),
               name: 'classificationNumber',
               component: TextField,
               required: true,
@@ -58,7 +51,7 @@ const ClassificationFields = ({ classificationTypes }) => {
           newItemTemplate={{ classificationNumber: '', classificationTypeId: '' }}
         />
       )}
-    </FormattedMessage>
+    </IntlConsumer>
   );
 };
 
