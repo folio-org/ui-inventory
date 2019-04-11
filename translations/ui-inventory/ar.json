@@ -353,5 +353,15 @@
     "markAsMissing": "الإشارة إليه كمفقود",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (الباركود:{barcode}) سيتم الإشارة إليه كـ <strong> مفقود</strong> ",
     "missingModal.heading": "تأكيد المادة كمفقودة",
-    "missingModal.confirm": "تأكيد"
+    "missingModal.confirm": "تأكيد",
+    "deleteItem": "حذف المادة",
+    "confirmItemDeleteModal.message": "HRID المادة <strong>{hrid}، الباركود {barcode}</strong> ليس لها أي تبعيات وسيتم <strong>حذفها</strong>.",
+    "confirmItemDeleteModal.heading": "تأكيد حذف المادة",
+    "confirmItemDeleteModal.confirm": "تأكيد",
+    "noItemDeleteModal.message": "HRID المادة <strong>{hrid}، الباركود {barcode}</strong> هي {status} ولا يمكن حذفها",
+    "deleteHoldingsRecord": "حذف تسجيلة المقتنيات",
+    "confirmHoldingsRecordDeleteModal.message": "HRID لتسجيلة المقتنيات <strong>{hrid}</strong>، الموقع <strong>{location}</strong> ليس لها أي تسجلات مواد مرتبطة بها أو أي تبعيات أخرى وسيتم <strong>حذفها</strong>.",
+    "confirmHoldingsRecordDeleteModal.heading": "تأكيد حذف تسجيلة المقتنيات",
+    "confirmHoldingsRecordDeleteModal.confirm": "تأكيد",
+    "noHoldingsRecordDeleteModal.message": "HRID لتسجيلة المقتنيات <strong>{hrid}</strong>، الموقع <strong>{location}</strong>  لها تبعيات ولا يمكن حذفها"
 }

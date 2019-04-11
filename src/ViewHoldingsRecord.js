@@ -55,26 +55,6 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'locations/%{temporaryLocationQuery.id}',
     },
-    illPolicies: {
-      type: 'okapi',
-      path: 'ill-policies',
-      records: 'illPolicies',
-    },
-    holdingsTypes: {
-      type: 'okapi',
-      path: 'holdings-types',
-      records: 'holdingsTypes',
-    },
-    callNumberTypes: {
-      type: 'okapi',
-      path: 'call-number-types',
-      records: 'callNumberTypes',
-    },
-    holdingsNoteTypes: {
-      type: 'okapi',
-      path: 'holdings-note-types',
-      records: 'holdingsNoteTypes',
-    },
   });
 
   constructor(props) {
@@ -103,11 +83,11 @@ class ViewHoldingsRecord extends React.Component {
     const temporaryLocationQuery = resources.temporaryLocationQuery;
     const holding = holdingsRecords[0];
 
-    if (holding && holding.permanentLocationId
+    if (holding && holding.permanentLocationId && permanentLocationQuery
       && (!permanentLocationQuery.id || permanentLocationQuery.id !== holding.permanentLocationId)) {
       nextProps.mutator.permanentLocationQuery.update({ id: holding.permanentLocationId });
     }
-    if (holding && holding.temporaryLocationId
+    if (holding && holding.temporaryLocationId && temporaryLocationQuery
       && (!temporaryLocationQuery.id || temporaryLocationQuery.id !== holding.temporaryLocationId)) {
       nextProps.mutator.temporaryLocationQuery.update({ id: holding.temporaryLocationId });
     }
@@ -247,13 +227,16 @@ class ViewHoldingsRecord extends React.Component {
     const {
       holdingsRecords,
       instances1,
-      illPolicies,
-      holdingsTypes,
-      callNumberTypes,
-      holdingsNoteTypes,
       permanentLocation,
       temporaryLocation,
     } = this.props.resources;
+
+    const {
+      holdingsTypes,
+      holdingsNoteTypes,
+      illPolicies,
+      callNumberTypes,
+    } = this.props.parentResources;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) {
       return true;
@@ -280,12 +263,14 @@ class ViewHoldingsRecord extends React.Component {
       resources: {
         holdingsRecords,
         instances1,
-        illPolicies,
-        holdingsTypes,
-        callNumberTypes,
-        holdingsNoteTypes,
         permanentLocation,
         temporaryLocation,
+      },
+      parentResources: {
+        holdingsTypes,
+        holdingsNoteTypes,
+        illPolicies,
+        callNumberTypes,
       },
       referenceTables,
       okapi,
@@ -866,6 +851,20 @@ ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
+  parentResources: PropTypes.shape({
+    holdingsTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    illPolicies: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    callNumberTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    holdingsNoteTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+  }),
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -880,18 +879,6 @@ ViewHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     temporaryLocation: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    illPolicies: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    callNumberTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsNoteTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
