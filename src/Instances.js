@@ -153,7 +153,7 @@ class Instances extends React.Component {
     identifierTypes: {
       type: 'okapi',
       records: 'identifierTypes',
-      path: 'identifier-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
     contributorTypes: {
       type: 'okapi',
@@ -163,81 +163,81 @@ class Instances extends React.Component {
     contributorNameTypes: {
       type: 'okapi',
       records: 'contributorNameTypes',
-      path: 'contributor-name-types?limit=100&query=cql.allRecords=1 sortby ordering',
+      path: 'contributor-name-types?limit=1000&query=cql.allRecords=1 sortby ordering',
     },
     instanceFormats: {
       type: 'okapi',
       records: 'instanceFormats',
-      path: 'instance-formats?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'instance-formats?limit=1000&query=cql.allRecords=1 sortby name',
     },
     instanceTypes: {
       type: 'okapi',
       records: 'instanceTypes',
-      path: 'instance-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'instance-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
     classificationTypes: {
       type: 'okapi',
       records: 'classificationTypes',
-      path: 'classification-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'classification-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
     alternativeTitleTypes: {
       type: 'okapi',
       records: 'alternativeTitleTypes',
-      path: 'alternative-title-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'alternative-title-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
     locations: {
       type: 'okapi',
       records: 'locations',
-      path: 'locations?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'locations?limit=1000&query=cql.allRecords=1 sortby name',
     },
     instanceRelationshipTypes: {
       type: 'okapi',
       records: 'instanceRelationshipTypes',
-      path: 'instance-relationship-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
     instanceStatuses: {
       type: 'okapi',
       records: 'instanceStatuses',
-      path: 'instance-statuses?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
     },
     modesOfIssuance: {
       type: 'okapi',
       records: 'issuanceModes',
-      path: 'modes-of-issuance?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'modes-of-issuance?limit=1000&query=cql.allRecords=1 sortby name',
     },
     electronicAccessRelationships: {
       type: 'okapi',
       records: 'electronicAccessRelationships',
-      path: 'electronic-access-relationships?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
     },
     statisticalCodeTypes: {
       type: 'okapi',
       records: 'statisticalCodeTypes',
-      path: 'statistical-code-types?limit=100&query=cql.allRecords=1 sortby name',
+      path: 'statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
     statisticalCodes: {
       type: 'okapi',
       records: 'statisticalCodes',
-      path: 'statistical-codes?limit=100&query=cql.allRecords=1 sortby statisticalCodeTypeId',
+      path: 'statistical-codes?limit=1000&query=cql.allRecords=1 sortby statisticalCodeTypeId',
     },
     illPolicies: {
       type: 'okapi',
-      path: 'ill-policies',
+      path: 'ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'illPolicies',
     },
     holdingsTypes: {
       type: 'okapi',
-      path: 'holdings-types',
+      path: 'holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'holdingsTypes',
     },
     callNumberTypes: {
       type: 'okapi',
-      path: 'call-number-types',
+      path: 'call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'callNumberTypes',
     },
     holdingsNoteTypes: {
       type: 'okapi',
-      path: 'holdings-note-types',
+      path: 'holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'holdingsNoteTypes',
     },
 

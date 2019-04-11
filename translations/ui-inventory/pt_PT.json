@@ -353,5 +353,15 @@
     "markAsMissing": "Mark as Missing",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
     "missingModal.heading": "Confirm item as missing",
-    "missingModal.confirm": "Confirm"
+    "missingModal.confirm": "Confirm",
+    "deleteItem": "Delete Item",
+    "confirmItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> has no dependencies and will be <strong>deleted</strong>.",
+    "confirmItemDeleteModal.heading": "Confirm deletion of item",
+    "confirmItemDeleteModal.confirm": "Confirm",
+    "noItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> is {status} and cannot be deleted",
+    "deleteHoldingsRecord": "Delete holdings record",
+    "confirmHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong>, location <strong>{location}</strong> has no item records associated or other dependencies and will be <strong>deleted</strong>.",
+    "confirmHoldingsRecordDeleteModal.heading": "Confirm deletion of holdings record",
+    "confirmHoldingsRecordDeleteModal.confirm": "Confirm",
+    "noHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong>, location <strong>{location}</strong> has dependents and cannot be deleted"
 }

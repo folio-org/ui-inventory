@@ -353,5 +353,15 @@
     "markAsMissing": "Marcar como desaparecido",
     "missingModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode} ) será marcado como <strong>desaparecido</strong>.",
     "missingModal.heading": "Confirmar item como desaparecido",
-    "missingModal.confirm": "Confirmar"
+    "missingModal.confirm": "Confirmar",
+    "deleteItem": "Excluir item",
+    "confirmItemDeleteModal.message": "O item HRID <strong>{hrid}, código de barras {barcode}</strong> não tem dependências e será <strong>excluído</strong>.",
+    "confirmItemDeleteModal.heading": "Confirme a exclusão do item",
+    "confirmItemDeleteModal.confirm": "Confirmar",
+    "noItemDeleteModal.message": "O item HRID <strong>{hrid}, código de barras {barcode}</strong> é {status} e não pode ser excluído",
+    "deleteHoldingsRecord": "Excluir registro de holdings",
+    "confirmHoldingsRecordDeleteModal.message": "Registros de holdigns HRID <strong>{hrid}</strong>, localização <strong>{location}</strong> não tem registros de itens associados ou outras dependências e serão <strong>excluídos</strong>.",
+    "confirmHoldingsRecordDeleteModal.heading": "Confirme a exclusão do registro de holdings",
+    "confirmHoldingsRecordDeleteModal.confirm": "Confirmar",
+    "noHoldingsRecordDeleteModal.message": "Registro de holdings HRID <strong>{hrid}</strong>, localização <strong>{location}</strong> tem dependentes e não pode ser excluído"
 }

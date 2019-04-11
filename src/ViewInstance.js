@@ -811,7 +811,7 @@ class ViewInstance extends React.Component {
                 <Col xs={12}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.notes" />}
-                    мalue={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
+                    value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
                   />
                 </Col>
               </Row>
