@@ -6,7 +6,7 @@ import InstanceViewPage from '../interactors/instance-view-page';
 import InstanceEditPage from '../interactors/instance-edit-page';
 import InstanceCreatePage from '../interactors/instance-create-page';
 
-describe.only('InstanceViewPage', () => {
+describe('InstanceViewPage', () => {
   setupApplication();
 
   beforeEach(async function () {
@@ -177,29 +177,35 @@ describe.only('InstanceViewPage', () => {
     expect(InstanceViewPage.title).to.equal('ADVANCING RESEARCH');
   });
 
-  // describe('pane header dropdown menu', () => {
-  //   beforeEach(async () => {
-  //     await InstanceViewPage.headerDropdown.click();
-  //   });
+  describe('pane header dropdown menu', () => {
+    beforeEach(async () => {
+      await InstanceViewPage.headerDropdown.click();
+    });
 
-  //   describe('clicking on edit', () => {
-  //     beforeEach(async () => {
-  //       await InstanceViewPage.headerDropdownMenu.clickEdit();
-  //     });
+    describe('clicking on edit', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.headerDropdownMenu.clickEdit();
+      });
 
-  //     it('should redirect to instance edit page', () => {
-  //       expect(InstanceEditPage.$root).to.exist;
-  //     });
-  //   });
+      it('should redirect to instance edit page', () => {
+        expect(InstanceEditPage.$root).to.exist;
+      });
+    });
 
-  //   describe('clicking on duplicate', () => {
-  //     beforeEach(async () => {
-  //       await InstanceViewPage.headerDropdownMenu.clickDuplicate();
-  //     });
+    describe('clicking on duplicate', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.headerDropdownMenu.clickDuplicate();
+      });
 
-  //     it('should redirect to instance create page', () => {
-  //       expect(InstanceCreatePage.$root).to.exist;
-  //     });
-  //   });
-  // });
+      it('should redirect to instance create page', () => {
+        expect(InstanceCreatePage.$root).to.exist;
+      });
+    });
+  });
+
+  describe('items per holdings', () => {
+    it('should render an app icon for each item in the items list', () => {
+      expect(InstanceViewPage.items.itemsHasAppIcon).to.be.true;
+    });
+  });
 });

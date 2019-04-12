@@ -49,16 +49,18 @@ class Items extends React.Component {
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': x => (
-        <AppIcon app="inventory" iconKey="item" size="small">
-          {_.get(x, ['barcode'])}
-        </AppIcon>
+        <span data-test-items-app-icon>
+          <AppIcon app="inventory" iconKey="item" size="small">
+            {_.get(x, ['barcode'])}
+          </AppIcon>
+        </span>
       ),
       'status': x => _.get(x, ['status', 'name']) || '--',
       'Material Type': x => _.get(x, ['materialType', 'name']),
     };
 
     return (
-      <div>
+      <div data-test-items>
         <IntlConsumer>
           {intl => (
             <FormattedMessage id="ui-inventory.items">
