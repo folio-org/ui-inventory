@@ -71,8 +71,9 @@ describe('ItemViewPage', () => {
           await ItemViewPage.headerDropdownMenu.clickDelete();
         });
 
-        it('should open delete confirmation modal', () => {
-          expect(ItemViewPage.hasConfirmDeleteModal).to.exist;
+        it('should open delete confirmation modal and not cannot-delete modal', () => {
+          expect(ItemViewPage.cannotDeleteModal.isPresent).to.be.false;
+          expect(ItemViewPage.confirmDeleteModal.isPresent).to.be.true;
         });
       });
     });

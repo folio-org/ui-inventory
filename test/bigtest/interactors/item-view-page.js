@@ -5,6 +5,8 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
+import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor'; // eslint-disable-line
+
 @interactor class HeaderDropdown {
   click = clickable('button');
 }
@@ -19,19 +21,14 @@ import {
   clickDelete = clickable('[data-test-inventory-delete-item-action]');
 }
 
-@interactor class NoDeleteItemModal {
-  hasBackButton = isPresent('[data-test-no-delete-item-back-action]');
-}
-
 @interactor class ItemViewPage {
   title = text('[data-test-header-title]');
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  noDeleteItemModal = new NoDeleteItemModal();
   hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
-  hasConfirmDeleteModal = isPresent('[data-test-deleteconfirmation-modal]');
-  hasNoDeleteItemModal = isPresent('[data-test-nodeleteitem-modal]');
+  cannotDeleteModal = new ConfirmationModalInteractor('#cannotDeleteModal');
+  confirmDeleteModal = new ConfirmationModalInteractor('#confirmDeleteModal');
 
   whenLoaded() {
     return this.when(() => this.isLoaded);

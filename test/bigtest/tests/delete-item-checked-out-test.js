@@ -71,8 +71,9 @@ describe('ItemViewPage', () => {
           await ItemViewPage.headerDropdownMenu.clickDelete();
         });
 
-        it('should open no delete modal', () => {
-          expect(ItemViewPage.noDeleteItemModal.hasBackButton).to.be.true;
+        it('should open cannot-delete modal and not confirm-delete modal', () => {
+          expect(ItemViewPage.cannotDeleteModal.isPresent).to.be.true;
+          expect(ItemViewPage.confirmDeleteModal.isPresent).to.be.false;
         });
       });
     });
