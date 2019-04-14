@@ -83,7 +83,6 @@ describe('ItemViewPage', () => {
           expect(ItemViewPage.confirmDeleteItemModal.isPresent).to.be.false;
         });
       });
-
     });
   });
 });
