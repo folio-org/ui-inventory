@@ -5,6 +5,10 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
+import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor'; // eslint-disable-line
+import ModalInteractor from '@folio/stripes-components/lib/Modal/tests/interactor'; // eslint-disable-line
+import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor'; // eslint-disable-line
+
 @interactor class HeaderDropdown {
   click = clickable('button');
 }
@@ -19,20 +23,15 @@ import {
   clickDelete = clickable('[data-test-inventory-delete-item-action]');
 }
 
-@interactor class NoDeleteItemModal {
-  hasBackButton = isPresent('[data-test-no-delete-item-back-action]');
-}
-
 @interactor class ItemViewPage {
   title = text('[data-test-header-title]');
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  noDeleteItemModal = new NoDeleteItemModal();
   hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
-  hasConfirmDeleteModal = isPresent('[data-test-deleteconfirmation-modal]');
-  hasNoDeleteItemModal = isPresent('[data-test-nodeleteitem-modal]');
-
+  cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
+  cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
+  confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');
   whenLoaded() {
     return this.when(() => this.isLoaded);
   }
