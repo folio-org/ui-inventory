@@ -61,21 +61,29 @@ describe('ItemViewPage', () => {
       expect(ItemViewPage.title).to.equal(`${item.barcode}Item . ${item.status.name}`);
     });
 
-    describe('pane header dropdown menu', () => {
+    describe('pane header dropdown menu, click delete', () => {
       beforeEach(async () => {
         await ItemViewPage.headerDropdown.click();
+        await ItemViewPage.headerDropdownMenu.clickDelete();
       });
 
-      describe('clicking on delete for an available item', () => {
+      it('should open delete confirmation modal and not cannot-delete modal', () => {
+        expect(ItemViewPage.cannotDeleteItemModal.isPresent).to.be.false;
+        expect(ItemViewPage.confirmDeleteItemModal.isPresent).to.be.true;
+      });
+
+      describe('confirm-delete-item modal disappears', () => {
         beforeEach(async () => {
+          await ItemViewPage.headerDropdown.click();
           await ItemViewPage.headerDropdownMenu.clickDelete();
+          await ItemViewPage.confirmDeleteItemModal.cancelButton.click();
         });
 
-        it('should open delete confirmation modal and not cannot-delete modal', () => {
-          expect(ItemViewPage.cannotDeleteModal.isPresent).to.be.false;
-          expect(ItemViewPage.confirmDeleteModal.isPresent).to.be.true;
+        it('when cancel button is clicked', () => {
+          expect(ItemViewPage.confirmDeleteItemModal.isPresent).to.be.false;
         });
       });
+
     });
   });
 });
