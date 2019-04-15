@@ -123,8 +123,8 @@ class ViewItem extends React.Component {
       borrower: null,
       loanStatusDate: null,
       itemMissingModal: false,
-      confirmItemDeleteModal: false,
-      noItemDeleteModal: false,
+      confirmDeleteItemModal: false,
+      cannotDeleteItemModal: false,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -278,12 +278,12 @@ class ViewItem extends React.Component {
     this.setState({ itemMissingModal: false });
   }
 
-  hideConfirmItemDeleteModal = () => {
-    this.setState({ confirmItemDeleteModal: false });
+  hideconfirmDeleteItemModal = () => {
+    this.setState({ confirmDeleteItemModal: false });
   }
 
-  hideNoItemDeleteModal = () => {
-    this.setState({ noItemDeleteModal: false });
+  hideCannotDeleteItemModal = () => {
+    this.setState({ cannotDeleteItemModal: false });
   }
 
   canDeleteItem = (item) => {
@@ -332,7 +332,7 @@ class ViewItem extends React.Component {
           onClick={() => {
             onToggle();
             this.setState(this.canDeleteItem(firstItem) ?
-              { confirmItemDeleteModal: true } : { noItemDeleteModal: true });
+              { confirmDeleteItemModal: true } : { cannotDeleteItemModal: true });
           }}
           buttonStyle="dropdownItem"
           data-test-inventory-delete-item-action
@@ -562,7 +562,7 @@ class ViewItem extends React.Component {
       />
     );
 
-    const confirmItemDeleteModalMessage = (
+    const confirmDeleteItemModalMessage = (
       <SafeHTMLMessage
         id="ui-inventory.confirmItemDeleteModal.message"
         values={{
@@ -572,7 +572,7 @@ class ViewItem extends React.Component {
       />
     );
 
-    const noItemDeleteModalMessage = (
+    const cannotDeleteItemModalMessage = (
       <SafeHTMLMessage
         id="ui-inventory.noItemDeleteModal.message"
         values={{
@@ -583,10 +583,10 @@ class ViewItem extends React.Component {
       />
     );
 
-    const noItemDeleteFooter = (
+    const cannotDeleteItemFooter = (
       <Button
-        data-test-no-delete-item-back-action
-        onClick={this.hideNoItemDeleteModal}
+        data-test-cannot-delete-item-back-action
+        onClick={this.hideCannotDeleteItemModal}
       >
         <FormattedMessage id="stripes-core.button.back" />
       </Button>
@@ -604,21 +604,23 @@ class ViewItem extends React.Component {
           confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
         />
         <ConfirmationModal
-          data-test-deleteconfirmation-modal
-          open={this.state.confirmItemDeleteModal}
+          id="confirmDeleteItemModal"
+          data-test-confirm-delete-item-modal
+          open={this.state.confirmDeleteItemModal}
           heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-          message={confirmItemDeleteModalMessage}
+          message={confirmDeleteItemModalMessage}
           onConfirm={() => { this.deleteItem(item); }}
-          onCancel={this.hideConfirmItemDeleteModal}
+          onCancel={this.hideconfirmDeleteItemModal}
           confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
         />
         <Modal
-          data-test-nodeleteitem-modal
+          id="cannotDeleteItemModal"
+          data-test-cannot-delete-item-modal
           label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-          open={this.state.noItemDeleteModal}
-          footer={noItemDeleteFooter}
+          open={this.state.cannotDeleteItemModal}
+          footer={cannotDeleteItemFooter}
         >
-          {noItemDeleteModalMessage}
+          {cannotDeleteItemModalMessage}
         </Modal>
         <Layer
           isOpen
