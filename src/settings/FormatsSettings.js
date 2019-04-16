@@ -21,6 +21,17 @@ class FormatSettings extends React.Component {
   suppressEdit = term => term.source === 'rdacarrier';
   suppressDelete = term => term.source === 'rdacarrier';
 
+  validate = (item) => {
+    const errors = {};
+    if (!item.code) {
+      errors.code = <FormattedMessage id="ui-inventory.fillIn" />;
+    }
+    if (!item.name) {
+      errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
+    }
+    return errors;
+  }
+
   render() {
     return (
       <IntlConsumer>
@@ -30,7 +41,7 @@ class FormatSettings extends React.Component {
             baseUrl="instance-formats"
             records="instanceFormats"
             label={<FormattedMessage id="ui-inventory.formats" />}
-            labelSingular={<FormattedMessage id="ui-inventory.format" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.format' })}
             objectLabel={<FormattedMessage id="ui-inventory.instances" />}
             visibleFields={['name', 'code', 'source']}
             columnMapping={{
@@ -46,6 +57,7 @@ class FormatSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="formats"
             sortby="name"
+            validate={this.validate}
           />
         )}
       </IntlConsumer>

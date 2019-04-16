@@ -30,7 +30,7 @@ class ResourceTypesSettings extends React.Component {
             baseUrl="instance-types"
             records="instanceTypes"
             label={<FormattedMessage id="ui-inventory.resourceTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.resourceType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.resourceType' })}
             objectLabel={<FormattedMessage id="ui-inventory.resourceTypes" />}
             visibleFields={['name', 'code', 'source']}
             columnMapping={{

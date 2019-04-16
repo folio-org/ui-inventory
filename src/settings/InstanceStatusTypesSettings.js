@@ -30,7 +30,7 @@ class InstanceStatusTypesSettings extends React.Component {
             baseUrl="instance-statuses"
             records="instanceStatuses"
             label={<FormattedMessage id="ui-inventory.instanceStatusTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.instanceStatusType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceStatusType' })}
             objectLabel={<FormattedMessage id="ui-inventory.contributors" />}
             visibleFields={['name', 'code', 'source']}
             columnMapping={{

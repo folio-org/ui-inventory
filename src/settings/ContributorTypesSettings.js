@@ -20,6 +20,16 @@ class ContributorTypesSettings extends React.Component {
 
   suppressEdit = term => term.source === 'marcrelator';
   suppressDelete = term => term.source === 'marcrelator';
+  validate = (item) => {
+    const errors = {};
+    if (!item.code) {
+      errors.code = <FormattedMessage id="ui-inventory.fillIn" />;
+    }
+    if (!item.name) {
+      errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
+    }
+    return errors;
+  }
 
   render() {
     return (
@@ -30,7 +40,7 @@ class ContributorTypesSettings extends React.Component {
             baseUrl="contributor-types"
             records="contributorTypes"
             label={<FormattedMessage id="ui-inventory.contributorTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.contributorType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.contributorType' })}
             objectLabel={<FormattedMessage id="ui-inventory.contributors" />}
             visibleFields={['name', 'code', 'source']}
             columnMapping={{
@@ -46,6 +56,7 @@ class ContributorTypesSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="contributor-types"
             sortby="name"
+            validate={this.validate}
           />
         )}
       </IntlConsumer>

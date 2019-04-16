@@ -27,7 +27,7 @@ class AlternativeTitleTypesSettings extends React.Component {
             baseUrl="alternative-title-types"
             records="alternativeTitleTypes"
             label={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.alternativeTitleType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' })}
             objectLabel={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

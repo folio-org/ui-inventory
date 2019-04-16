@@ -27,7 +27,7 @@ class ILLPolicy extends React.Component {
             baseUrl="ill-policies"
             records="illPolicies"
             label={<FormattedMessage id="ui-inventory.ILLPolicy" />}
-            labelSingular={<FormattedMessage id="ui-inventory.ILLPolicy" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.ILLPolicy' })}
             objectLabel={<FormattedMessage id="ui-inventory.ILLPolicy" />}
             visibleFields={['name', 'source']}
             columnMapping={{

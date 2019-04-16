@@ -27,7 +27,7 @@ class URLRelationshipSettings extends React.Component {
             baseUrl="electronic-access-relationships"
             records="electronicAccessRelationships"
             label={<FormattedMessage id="ui-inventory.URLrelationship" />}
-            labelSingular={<FormattedMessage id="ui-inventory.urlRelationshipTerm" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.urlRelationshipTerm' })}
             objectLabel={<FormattedMessage id="ui-inventory.URLrelationship" />}
             visibleFields={['name', 'source']}
             columnMapping={{

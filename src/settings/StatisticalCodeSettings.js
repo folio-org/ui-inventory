@@ -34,6 +34,20 @@ class StatisticalCodeSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  validate = (item) => {
+    const errors = {};
+    if (!item.code) {
+      errors.code = <FormattedMessage id="ui-inventory.fillIn" />;
+    }
+    if (!item.name) {
+      errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
+    }
+    if (!item.statisticalCodeTypeId) {
+      errors.name = <FormattedMessage id="ui-inventory.selectToContinue" />;
+    }
+    return errors;
+  }
+
   render() {
     const statisticalCodeTypes = _.get(this.props.resources, ['statisticalCodeTypes', 'records'], []);
     const statisticalCodeTypesOptions = (statisticalCodeTypes).map(statisticalCodeType => (
@@ -83,7 +97,7 @@ class StatisticalCodeSettings extends React.Component {
             formatter={formatter}
             fieldComponents={fieldComponents}
             label={<FormattedMessage id="ui-inventory.statisticalCodes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.statisticalCode" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
             objectLabel={<FormattedMessage id="ui-inventory.statisticalCodes" />}
             visibleFields={['code', 'name', 'statisticalCodeTypeId', 'source']}
             columnMapping={{
