@@ -389,7 +389,7 @@ class ViewHoldingsRecord extends React.Component {
         </Modal>
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.viewHoldingsRecord" />}
+          contentLabel={<FormattedMessage id="ui-inventory.viewHoldingsRecord" />}
         >
           <div data-test-holdings-view-page>
             <Pane
@@ -815,7 +815,7 @@ class ViewHoldingsRecord extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false}
-          label={<FormattedMessage id="ui-inventory.editHoldingsRecordDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.editHoldingsRecordDialog" />}
         >
           <HoldingsForm
             initialValues={holdingsRecord}
@@ -829,7 +829,7 @@ class ViewHoldingsRecord extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false}
-          label={<FormattedMessage id="ui-inventory.copyHoldingsRecordDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.copyHoldingsRecordDialog" />}
         >
           <HoldingsForm
             initialValues={this.state.copiedRecord}
