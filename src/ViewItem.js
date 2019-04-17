@@ -57,6 +57,10 @@ class ViewItem extends React.Component {
     materialTypes: {
       type: 'okapi',
       path: 'material-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
       records: 'mtypes',
     },
     loanTypes: {
@@ -64,18 +68,26 @@ class ViewItem extends React.Component {
       path: 'loan-types',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '40',
+        limit: '1000',
       },
       records: 'loantypes',
     },
     callNumberTypes: {
       type: 'okapi',
       path: 'call-number-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
       records: 'callNumberTypes',
     },
     itemNoteTypes: {
       type: 'okapi',
       path: 'item-note-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
       records: 'itemNoteTypes',
     },
     requests: {
