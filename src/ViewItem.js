@@ -624,7 +624,7 @@ class ViewItem extends React.Component {
         </Modal>
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.viewItem" />}
+          contentLabel={<FormattedMessage id="ui-inventory.viewItem" />}
         >
           <Pane
             data-test-item-view-page
@@ -1140,7 +1140,7 @@ class ViewItem extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer ? query.layer === 'editItem' : false}
-          label={<FormattedMessage id="ui-inventory.editItemDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.editItemDialog" />}
         >
           <ItemForm
             form={`itemform_${item.id}`}
@@ -1156,7 +1156,7 @@ class ViewItem extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer === 'copyItem'}
-          label={<FormattedMessage id="ui-inventory.copyItemDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.copyItemDialog" />}
         >
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}
