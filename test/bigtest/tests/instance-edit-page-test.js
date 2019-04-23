@@ -15,7 +15,7 @@ describe('InstanceEditPage', () => {
   });
 
   it('displays the instance title in the pane header', () => {
-    expect(InstanceEditPage.title).to.equal('Edit instance');
+    expect(InstanceEditPage.title).to.equal('Edit');
   });
 
   describe('pane header dropdown menu', () => {
