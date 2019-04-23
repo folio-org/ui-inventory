@@ -181,20 +181,6 @@ class ViewHoldingsRecord extends React.Component {
     return (
       <Fragment>
         <Button
-          id="clickable-delete-holdingsrecord"
-          onClick={() => {
-            onToggle();
-            this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
-              { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-holdingsrecord-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
-          </Icon>
-        </Button>
-        <Button
           id="edit-holdings"
           onClick={() => {
             onToggle();
@@ -217,6 +203,20 @@ class ViewHoldingsRecord extends React.Component {
         >
           <Icon icon="duplicate">
             <FormattedMessage id="ui-inventory.duplicateHoldings" />
+          </Icon>
+        </Button>
+        <Button
+          id="clickable-delete-holdingsrecord"
+          onClick={() => {
+            onToggle();
+            this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
+              { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-holdingsrecord-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
           </Icon>
         </Button>
       </Fragment>

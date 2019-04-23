@@ -353,15 +353,6 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.deleteItem" />
           </Icon>
         </Button>
-        <Button
-          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
-          buttonStyle="dropdownItem"
-          data-test-inventory-create-request-action
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.newRequest" />
-          </Icon>
-        </Button>
         {
           (status === 'Available' || status === 'In transit' || status === 'Awaiting pickup') &&
           <Button
@@ -379,6 +370,15 @@ class ViewItem extends React.Component {
           </Button>
 
         }
+        <Button
+          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
+          buttonStyle="dropdownItem"
+          data-test-inventory-create-request-action
+        >
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-inventory.newRequest" />
+          </Icon>
+        </Button>
       </Fragment>
     );
   }
