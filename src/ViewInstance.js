@@ -338,7 +338,7 @@ class ViewInstance extends React.Component {
       return (
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.editInstanceDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.editInstanceDialog" />}
         >
           <InstanceForm
             onSubmit={this.update}
@@ -355,7 +355,7 @@ class ViewInstance extends React.Component {
       return (
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
         >
           <HoldingsForm
             form={instance.id}

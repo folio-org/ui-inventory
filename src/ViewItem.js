@@ -57,6 +57,10 @@ class ViewItem extends React.Component {
     materialTypes: {
       type: 'okapi',
       path: 'material-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
       records: 'mtypes',
     },
     loanTypes: {
@@ -64,18 +68,26 @@ class ViewItem extends React.Component {
       path: 'loan-types',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '40',
+        limit: '1000',
       },
       records: 'loantypes',
     },
     callNumberTypes: {
       type: 'okapi',
       path: 'call-number-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
       records: 'callNumberTypes',
     },
     itemNoteTypes: {
       type: 'okapi',
       path: 'item-note-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
       records: 'itemNoteTypes',
     },
     requests: {
@@ -341,15 +353,6 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.deleteItem" />
           </Icon>
         </Button>
-        <Button
-          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
-          buttonStyle="dropdownItem"
-          data-test-inventory-create-request-action
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.newRequest" />
-          </Icon>
-        </Button>
         {
           (status === 'Available' || status === 'In transit' || status === 'Awaiting pickup') &&
           <Button
@@ -367,6 +370,15 @@ class ViewItem extends React.Component {
           </Button>
 
         }
+        <Button
+          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
+          buttonStyle="dropdownItem"
+          data-test-inventory-create-request-action
+        >
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-inventory.newRequest" />
+          </Icon>
+        </Button>
       </Fragment>
     );
   }
@@ -624,7 +636,7 @@ class ViewItem extends React.Component {
         </Modal>
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.viewItem" />}
+          contentLabel={<FormattedMessage id="ui-inventory.viewItem" />}
         >
           <Pane
             data-test-item-view-page
@@ -1141,7 +1153,7 @@ class ViewItem extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer ? query.layer === 'editItem' : false}
-          label={<FormattedMessage id="ui-inventory.editItemDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.editItemDialog" />}
         >
           <ItemForm
             form={`itemform_${item.id}`}
@@ -1157,7 +1169,7 @@ class ViewItem extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer === 'copyItem'}
-          label={<FormattedMessage id="ui-inventory.copyItemDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.copyItemDialog" />}
         >
           <ItemForm
             form={`itemform_${holdingsRecord.id}`}
