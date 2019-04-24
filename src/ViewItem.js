@@ -35,6 +35,7 @@ import {
 import { craftLayerUrl } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
+import { itemStatuses } from './constants';
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -298,18 +299,35 @@ class ViewItem extends React.Component {
     this.setState({ cannotDeleteItemModal: false });
   }
 
-  canDeleteItem = (item) => {
-    if (item.status.name === 'Checked out') {
-      return false;
-    } else {
-      return true;
+  canDeleteItem = (item, request) => {
+    const itemStatus = _.get(item, 'status.name');
+    const { CHECKED_OUT, ON_ORDER } = itemStatuses;
+    let messageId;
+    if (itemStatus === CHECKED_OUT) {
+      messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
+    } else if (itemStatus === ON_ORDER) {
+      messageId = 'ui-inventory.noItemDeleteModal.onOrderMessage';
+    } else if (request) {
+      messageId = 'ui-inventory.noItemDeleteModal.requestMessage';
     }
+
+    const state = (messageId) ?
+      {
+        cannotDeleteItemModal: true,
+        cannotDeleteItemModalMessageId: messageId,
+      } :
+      {
+        confirmDeleteItemModal: true,
+      };
+
+    this.setState(state);
   }
 
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
     const status = _.get(firstItem, ['status', 'name']);
+    const request = _.get(resources, 'requests.records[0]');
 
     return (
       <Fragment>
@@ -343,8 +361,7 @@ class ViewItem extends React.Component {
           id="clickable-delete-item"
           onClick={() => {
             onToggle();
-            this.setState(this.canDeleteItem(firstItem) ?
-              { confirmDeleteItemModal: true } : { cannotDeleteItemModal: true });
+            this.canDeleteItem(firstItem, request);
           }}
           buttonStyle="dropdownItem"
           data-test-inventory-delete-item-action
@@ -430,6 +447,8 @@ class ViewItem extends React.Component {
 
     const {
       accordions,
+      cannotDeleteItemModalMessageId,
+      cannotDeleteItemModal,
     } = this.state;
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -584,17 +603,6 @@ class ViewItem extends React.Component {
       />
     );
 
-    const cannotDeleteItemModalMessage = (
-      <SafeHTMLMessage
-        id="ui-inventory.noItemDeleteModal.message"
-        values={{
-          hrid: item.hrid,
-          barcode: item.barcode,
-          status: item.status.name
-        }}
-      />
-    );
-
     const cannotDeleteItemFooter = (
       <Button
         data-test-cannot-delete-item-back-action
@@ -625,15 +633,24 @@ class ViewItem extends React.Component {
           onCancel={this.hideconfirmDeleteItemModal}
           confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
         />
-        <Modal
-          id="cannotDeleteItemModal"
-          data-test-cannot-delete-item-modal
-          label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-          open={this.state.cannotDeleteItemModal}
-          footer={cannotDeleteItemFooter}
-        >
-          {cannotDeleteItemModalMessage}
-        </Modal>
+        {cannotDeleteItemModal &&
+          <Modal
+            id="cannotDeleteItemModal"
+            data-test-cannot-delete-item-modal
+            label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+            open={cannotDeleteItemModal}
+            footer={cannotDeleteItemFooter}
+          >
+            <SafeHTMLMessage
+              id={cannotDeleteItemModalMessageId}
+              values={{
+                hrid: item.hrid,
+                barcode: item.barcode,
+                status: item.status.name
+              }}
+            />
+          </Modal>
+        }
         <Layer
           isOpen
           contentLabel={<FormattedMessage id="ui-inventory.viewItem" />}
