@@ -91,7 +91,7 @@ class ViewInstance extends React.Component {
     const dateOfPublication = _.get(instance, 'publication[0].dateOfPublication', '');
     let publisherAndDate = publisher;
 
-    publisherAndDate = (publisher) ? `, ${dateOfPublication}` : publisherAndDate;
+    publisherAndDate += (publisher) ? `, ${dateOfPublication}` : publisherAndDate;
 
     return publisherAndDate;
   }
