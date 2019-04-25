@@ -661,10 +661,12 @@ class ViewItem extends React.Component {
             appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
               <span data-test-header-title>
-                {_.get(item, ['barcode'], '')}
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
-                  values={{ status: _.get(item, ['status', 'name'], '') }}
+                  values={{
+                    barcode: _.get(item, 'barcode', ''),
+                    status: _.get(item, 'status.name', '')
+                  }}
                 />
               </span>
             }
