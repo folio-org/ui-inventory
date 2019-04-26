@@ -6,7 +6,8 @@ import {
   Icon,
   TextField,
   Select,
-  Checkbox,
+  RadioButton,
+  Label,
 } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
@@ -61,11 +62,6 @@ const ContributorFields = ({
               required: true,
             },
             {
-              label: <FormattedMessage id="ui-inventory.primary" />,
-              name: 'primary',
-              component: Checkbox,
-            },
-            {
               label: <FormattedMessage id="ui-inventory.type" />,
               name: 'contributorTypeId',
               component: Select,
@@ -77,11 +73,25 @@ const ContributorFields = ({
               name: 'contributorTypeText',
               component: TextField,
             },
+            {
+              name: 'primary',
+              label: intl.formatMessage({ id: 'ui-inventory.primary' }),
+              component: ({ label, ...rest }) => (
+                <div>
+                  { label && <Label>{label}</Label>}
+                  <RadioButton
+                    {...rest}
+                    aria-label={intl.formatMessage({ id: 'ui-inventory.primary' })}
+                    inline
+                  />
+                </div>
+              ),
+            },
           ]}
           newItemTemplate={{
             name: '',
             contributorNameTypeId: '',
-            primary: '',
+            primary: false,
             contributorTypeId: '',
             contributorTypeText: '',
           }}
