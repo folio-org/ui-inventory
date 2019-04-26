@@ -397,9 +397,13 @@ class ViewHoldingsRecord extends React.Component {
               appIcon={<AppIcon app="inventory" iconKey="holdings" />}
               paneTitle={
                 <span data-test-header-title>
-                  {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} > ` : null}
-                  {_.get(holdingsRecord, ['callNumber'], '')}
-                  <FormattedMessage id="ui-inventory.holdings" />
+                  <FormattedMessage
+                    id="ui-inventory.holdingRecord"
+                    values={{
+                      location: _.get(holdingsPermanentLocation, 'name', ''),
+                      callNumber: _.get(holdingsRecord, 'callNumber', '')
+                    }}
+                  />
                 </span>
               }
               lastMenu={detailMenu}
