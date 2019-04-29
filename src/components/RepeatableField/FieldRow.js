@@ -128,6 +128,7 @@ class FieldRow extends React.Component {
         fullWidth
         {...labelProps}
         data-key={fieldIndex}
+        fields={fields}
         {...rest}
       />
     );

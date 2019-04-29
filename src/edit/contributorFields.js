@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
+import { change } from 'redux-form';
 import {
   Icon,
   TextField,
@@ -10,7 +10,6 @@ import {
   Label,
 } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
-
 import RepeatableField from '../components/RepeatableField';
 
 const ContributorFields = ({
@@ -76,16 +75,35 @@ const ContributorFields = ({
             {
               name: 'primary',
               label: intl.formatMessage({ id: 'ui-inventory.primary' }),
-              component: ({ label, ...rest }) => (
-                <div>
-                  { label && <Label>{label}</Label>}
-                  <RadioButton
-                    {...rest}
-                    aria-label={intl.formatMessage({ id: 'ui-inventory.primary' })}
-                    inline
-                  />
-                </div>
-              ),
+              component: ({ label, meta, input, fields, ...rest }) => {
+                const handleChange = (currentInput) => () => {
+                  // Find the index of the current primary contributor
+                  const currentPrimaryIndex = fields.getAll().findIndex(field => field.primary === true);
+
+                  // Remove primary flag from current primary contributor
+                  if (currentPrimaryIndex > 0) {
+                    meta.dispatch(change(meta.form, `contributors[${currentPrimaryIndex}].primary`, false, true, false));
+                  }
+
+                  // Set primary flag for current field
+                  currentInput.onChange(true);
+                };
+
+                return (
+                  <div>
+                    { label && <Label>{label}</Label>}
+                    <RadioButton
+                      meta={meta}
+                      {...rest}
+                      name="primary"
+                      onChange={handleChange(input)}
+                      checked={input.value === true}
+                      aria-label={intl.formatMessage({ id: 'ui-inventory.primary' })}
+                      inline
+                    />
+                  </div>
+                );
+              }
             },
           ]}
           newItemTemplate={{
