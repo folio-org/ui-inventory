@@ -19,7 +19,7 @@
     "showNotes": "Mostrar notas",
     "instanceDetails": "Detalhes da instância",
     "addHoldings": "Adicionar acervo",
-    "itemDotStatus": "Item . {status}",
+    "itemDotStatus": "Registro de item {barcode} {status}",
     "instances": "Instâncias",
     "instance": "Instância: ",
     "holdings": "Acervo",
@@ -366,5 +366,7 @@
     "noHoldingsRecordDeleteModal.message": "Registro de holdings HRID <strong>{hrid}</strong>, localização <strong>{location}</strong> tem dependentes e não pode ser excluído",
     "noItemDeleteModal.checkoutMessage": "O item HRID <strong>{hrid}</strong> com o código de barras <strong>{barcode}</strong> está emprestado e não pode ser excluído até que seja devolvido e o status do item estiver 'Disponível'",
     "noItemDeleteModal.requestMessage": "O item HRID <strong>{hrid}</strong> com código de barras <strong>{barcode}</strong> está associado a um pedido que foi preenchido ou um pedido cancelado.",
-    "noItemDeleteModal.orderMessage": "O item HRID <strong>{hrid}</strong> com código de barras <strong>{barcode}</strong> está com um pedido de compra e não pode ser excluído até que a depência com o aplicativo de pedidos de compra seja limpa e o registro de pedido seja excluído ou o item for recebido e o status do item estiver 'Disponível'"
+    "noItemDeleteModal.orderMessage": "O item HRID <strong>{hrid}</strong> com código de barras <strong>{barcode}</strong> está em um pedido e não pode ser <strong>excluído</strong> até que todas as dependências do aplicativo Pedidos tenham sido apagadas. Se você quiser continuar com a exclusão do registro do item, vá para o aplicativo Pedidos e limpe as dependências.",
+    "holdingRecord": "Registo de holding {location} {callNumber}",
+    "instanceRecordTitle": "Registro de instância {title} {publisherAndDate}"
 }

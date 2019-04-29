@@ -366,5 +366,7 @@
     "noHoldingsRecordDeleteModal.message": "HRID لتسجيلة المقتنيات <strong>{hrid}</strong>، الموقع <strong>{location}</strong>  لها تبعيات ولا يمكن حذفها",
     "noItemDeleteModal.checkoutMessage": "HRID المادة <strong>{hrid}</strong> بباركود <strong>{barcode}</strong> معارة ويمكن ردها مرة أخرى، وحالة المادة هي 'متاحة' ",
     "noItemDeleteModal.requestMessage": "HRID المادة <strong>{hrid}</strong> بباركود <strong>{barcode}</strong> له طلب مرتبط به. تم استيفاء الطلب أو إلغاؤه.",
-    "noItemDeleteModal.orderMessage": "HRID المادة <strong>{hrid}</strong> بباركود <strong>{barcode}</strong> قيد الطلب ولا يمكن حذفها حتى يتم مسح تبعيتها لتطبيق الطلب، وتكون تسجيلة الطلبية قد حذفت، أو تم استلام المادة وحالة المادة هي 'متاحة' "
+    "noItemDeleteModal.orderMessage": "HRID المادة <strong>{hrid}</strong> بباركود <strong>{barcode}</strong> قيد الطلب ولا يمكن حذفها حتى يتم مسح تبعيتها لتطبيق الطلب، وتكون تسجيلة الطلبية قد حذفت، أو تم استلام المادة وحالة المادة هي 'متاحة' ",
+    "holdingRecord": "تسجيلة المقتنيات {location} {callNumber}",
+    "instanceRecordTitle": "تسجيلة الوعاء {title} {publisherAndDate}"
 }
