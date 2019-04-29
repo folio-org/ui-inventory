@@ -44,5 +44,9 @@ export default Factory.extend({
       }
       contributor.contributorNameTypeId = contributorNameTypeId;
     });
+
+    const holding = server.create('holding');
+    instance.holdings = [holding];
+    instance.save();
   }
 });

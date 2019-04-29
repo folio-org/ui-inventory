@@ -32,4 +32,17 @@ describe('Instances', () => {
       expect(inventory.instance.isVisible).to.equal(true);
     });
   });
+
+  describe.only('search by barcode', function () {
+    beforeEach(async function () {
+      const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
+      await inventory.chooseFilter('Barcode');
+      await inventory.fillFilter(item.barcode);
+      await inventory.clickSearch();
+    });
+
+    it('should find instance with given barcode', () => {
+      expect(inventory.instances().length).to.be.equal(1);
+    });
+  });
 });
