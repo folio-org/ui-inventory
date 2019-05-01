@@ -23,6 +23,34 @@ describe('InstanceEditPage', () => {
       await InstanceEditPage.headerDropdown.click();
     });
 
+    describe('clicking on add-format', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.clickAddFormatButton.click();
+      });
+
+      it('should show the select-format select menu', () => {
+        expect(InstanceEditPage.selectFormat).to.exist;
+      });
+
+      it('should show the select-format select menu', () => {
+        expect(InstanceEditPage.selectFormat.firstOptionText).to.equal('Select format');
+      });
+    });
+
+    describe('clicking on add-language', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.clickAddLanguageButton.click();
+      });
+
+      it('should show the select-format select menu', () => {
+        expect(InstanceEditPage.selectLanguage).to.exist;
+      });
+
+      it('should show the select-format select menu', () => {
+        expect(InstanceEditPage.selectLanguage.firstOptionText).to.equal('Select language');
+      });
+    });
+
     describe('clicking on cancel', () => {
       beforeEach(async () => {
         await InstanceEditPage.headerDropdownMenu.clickCancel();
