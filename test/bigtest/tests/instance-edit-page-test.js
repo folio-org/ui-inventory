@@ -5,7 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import InstanceEditPage from '../interactors/instance-edit-page';
 import InstanceViewPage from '../interactors/instance-view-page';
 
-describe('InstanceEditPage', () => {
+describe.only('InstanceEditPage', () => {
   setupApplication();
 
   beforeEach(async function () {
@@ -21,6 +21,14 @@ describe('InstanceEditPage', () => {
   describe('pane header dropdown menu', () => {
     beforeEach(async () => {
       await InstanceEditPage.headerDropdown.click();
+    });
+
+    it('should not show the select-format select menu', () => {
+      expect(InstanceEditPage.selectFormat.exists).to.be.false;
+    });
+
+    it('should not show the select-language select menu', () => {
+      expect(InstanceEditPage.selectLanguage.exists).to.be.false;
     });
 
     describe('clicking on add-format', () => {
@@ -42,11 +50,11 @@ describe('InstanceEditPage', () => {
         await InstanceEditPage.clickAddLanguageButton.click();
       });
 
-      it('should show the select-format select menu', () => {
+      it('should show the select-language select menu', () => {
         expect(InstanceEditPage.selectLanguage).to.exist;
       });
 
-      it('should show the select-format select menu', () => {
+      it('should show the select-language select menu', () => {
         expect(InstanceEditPage.selectLanguage.firstOptionText).to.equal('Select language');
       });
     });

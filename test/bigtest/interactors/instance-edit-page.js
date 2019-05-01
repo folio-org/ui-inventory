@@ -3,6 +3,7 @@ import {
   clickable,
   text,
   selectable,
+  isPresent
 } from '@bigtest/interactor';
 
 @interactor class HeaderDropdown {
@@ -18,6 +19,7 @@ import {
 }
 
 @interactor class SelectFormat {
+  exists = isPresent('select[name="instanceFormatIds[0]"]')
   select = selectable('select[name="instanceFormatIds[0]"]');
   firstOptionText = text('select[name="instanceFormatIds[0]"] option:nth-of-type(1)')
 }
@@ -27,6 +29,7 @@ import {
 }
 
 @interactor class SelectLanguage {
+  exists = isPresent('select[name="languages[0]"]');
   select = selectable('select[name="languages[0]"]');
   firstOptionText = text('select[name="languages[0]"] option:nth-of-type(1)')
 }
