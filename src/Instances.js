@@ -55,14 +55,15 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}*" or contributors adj "\\"name\\": \\"${term}*\\"" or identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}*")` },
-  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}*")` },
-  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}*\\"")` },
-  { label: '- ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
-  { label: '- ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}*\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\"*"` },
-  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}*\\"")` },
-  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}*")` },
+  { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}" or contributors adj "\\"name\\": \\"${term}\\"" or identifiers adj "\\"value\\": \\"${term}\\"")` },
+  { label: 'Barcode', value: 'item.barcode', makeQuery: term => `(item.barcode=="${term}")` },
+  { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}")` },
+  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}")` },
+  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}\\"")` },
+  { label: '- ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
+  { label: '- ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
+  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}\\"")` },
+  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}")` },
 ];
 
 class Instances extends React.Component {

@@ -3,8 +3,6 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import ItemViewPage from '../interactors/item-view-page';
-import ItemEditPage from '../interactors/item-edit-page';
-import ItemCreatePage from '../interactors/item-create-page';
 
 describe('ItemViewPage', () => {
   setupApplication();
@@ -52,8 +50,10 @@ describe('ItemViewPage', () => {
         title: 'ADVANCING RESEARCH',
       });
 
+      const request = this.server.create('request');
       this.server.get('/holdings-storage/holdings/:id', holdings);
       this.server.get('/inventory/items/:id', item);
+      this.server.get('/circulation/requests', { totalRecords: 1, requests: [request.toJSON()] });
 
       this.visit(`/inventory/view/${instance.id}/${holdings.id}/${item.id}`);
       await ItemViewPage.whenLoaded();
@@ -63,50 +63,26 @@ describe('ItemViewPage', () => {
       expect(ItemViewPage.title).to.equal(`Item record ${item.barcode} ${item.status.name}`);
     });
 
-    describe('pane header dropdown menu', () => {
+    describe('pane header dropdown menu, click delete', () => {
       beforeEach(async () => {
         await ItemViewPage.headerDropdown.click();
+        await ItemViewPage.headerDropdownMenu.clickDelete();
       });
 
-      it('should show a new request menu item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
+      it('should open cannot-delete-item modal and not confirm-delete modal', () => {
+        expect(ItemViewPage.cannotDeleteItemModal.isPresent).to.be.true;
+        expect(ItemViewPage.confirmDeleteItemModal.isPresent).to.be.false;
       });
 
-      it('should show a mark as missing item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.true;
-      });
-
-      it('should show a delete item menu item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.true;
-      });
-
-      describe('clicking on edit', () => {
+      describe('cannot-delete-item modal disappears', () => {
         beforeEach(async () => {
-          await ItemViewPage.headerDropdownMenu.clickEdit();
+          await ItemViewPage.headerDropdown.click();
+          await ItemViewPage.headerDropdownMenu.clickDelete();
+          await ItemViewPage.cannotDeleteItemModalBackButton.click();
         });
 
-        it('should redirect to item edit page', () => {
-          expect(ItemEditPage.$root).to.exist;
-        });
-      });
-
-      describe('clicking on duplicate', () => {
-        beforeEach(async () => {
-          await ItemViewPage.headerDropdownMenu.clickDuplicate();
-        });
-
-        it('should redirect to item create page', () => {
-          expect(ItemCreatePage.$root).to.exist;
-        });
-      });
-
-      describe('clicking on mark as missing', () => {
-        beforeEach(async () => {
-          await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
-        });
-
-        it('should open a missing confirmation modal', () => {
-          expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
+        it('when back button is clicked', () => {
+          expect(ItemViewPage.cannotDeleteItemModal.isPresent).to.be.false;
         });
       });
     });

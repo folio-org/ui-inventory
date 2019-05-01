@@ -86,6 +86,16 @@ class ViewInstance extends React.Component {
     this.craftLayerUrl = craftLayerUrl.bind(this);
   }
 
+  getPublisherAndDate(instance) {
+    const publisher = _.get(instance, 'publication[0].publisher', '');
+    const dateOfPublication = _.get(instance, 'publication[0].dateOfPublication', '');
+    let publisherAndDate = publisher;
+
+    publisherAndDate += (publisher) ? `, ${dateOfPublication}` : publisherAndDate;
+
+    return publisherAndDate;
+  }
+
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
@@ -337,7 +347,7 @@ class ViewInstance extends React.Component {
       return (
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.editInstanceDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.editInstanceDialog" />}
         >
           <InstanceForm
             onSubmit={this.update}
@@ -354,7 +364,7 @@ class ViewInstance extends React.Component {
       return (
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
         >
           <HoldingsForm
             form={instance.id}
@@ -376,7 +386,18 @@ class ViewInstance extends React.Component {
       <Pane
         data-test-instance-details
         defaultWidth={paneWidth}
-        paneTitle={<span data-test-header-title>{instance.title}</span>}
+        appIcon={<AppIcon app="inventory" iconKey="instance" />}
+        paneTitle={
+          <span data-test-header-title>
+            <FormattedMessage
+              id="ui-inventory.instanceRecordTitle"
+              values={{
+                title: instance.title,
+                publisherAndDate: this.getPublisherAndDate(instance),
+              }}
+            />
+          </span>
+        }
         paneSub={instanceSub()}
         lastMenu={detailMenu}
         dismissible
@@ -809,7 +830,7 @@ class ViewInstance extends React.Component {
                 <Col xs={12}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.notes" />}
-                    мalue={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
+                    value={_.get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
                   />
                 </Col>
               </Row>

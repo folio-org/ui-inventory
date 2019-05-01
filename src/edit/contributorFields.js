@@ -78,7 +78,7 @@ const ContributorFields = ({
           newItemTemplate={{
             name: '',
             contributorNameTypeId: '',
-            primary: '',
+            primary: false,
             contributorTypeId: '',
             contributorTypeText: '',
           }}
