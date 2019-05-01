@@ -711,6 +711,13 @@ class ViewHoldingsRecord extends React.Component {
                 label={<FormattedMessage id="ui-inventory.notes" />}
               >
                 {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
+              </Accordion>
+              <Accordion
+                open={this.state.accordions.accordion05}
+                id="accordion05"
+                onToggle={this.handleAccordionToggle}
+                label={<FormattedMessage id="ui-inventory.acquisitions" />}
+              >
                 <Row>
                   <Col sm={3}>
                     <KeyValue
@@ -724,8 +731,6 @@ class ViewHoldingsRecord extends React.Component {
                       value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
                     />
                   </Col>
-                </Row>
-                <Row>
                   <Col sm={3}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.receiptStatus" />}
@@ -734,12 +739,6 @@ class ViewHoldingsRecord extends React.Component {
                   </Col>
                 </Row>
               </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion05}
-                id="accordion05"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.acquisitions" />}
-              />
               <Accordion
                 open={this.state.accordions.accordion06}
                 id="accordion06"
