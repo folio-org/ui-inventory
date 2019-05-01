@@ -5,7 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import InstanceEditPage from '../interactors/instance-edit-page';
 import InstanceViewPage from '../interactors/instance-view-page';
 
-describe.only('InstanceEditPage', () => {
+describe('InstanceEditPage', () => {
   setupApplication();
 
   beforeEach(async function () {
@@ -24,38 +24,60 @@ describe.only('InstanceEditPage', () => {
     });
 
     it('should not show the select-format select menu', () => {
-      expect(InstanceEditPage.selectFormat.exists).to.be.false;
+      expect(InstanceEditPage.formats.formatMenu).to.be.false;
+    });
+
+    it('should not show the classifications select menu', () => {
+      expect(InstanceEditPage.languages.languageMenu).to.be.false;
     });
 
     it('should not show the select-language select menu', () => {
-      expect(InstanceEditPage.selectLanguage.exists).to.be.false;
+      expect(InstanceEditPage.classifications.idTypeMenu).to.be.false;
+    });
+
+    describe('clicking on add-classification', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.classifications.clickAddButton();
+      });
+
+      it('should show the classification identifier type menu', () => {
+        expect(InstanceEditPage.classifications.idTypeMenu).to.be.true;
+      });
+
+      it('the first option to be ""', () => {
+        expect(InstanceEditPage.classifications.firstOptionText).to.equal('Select classification type');
+      });
+
+      it('the first option to be disabled', () => {
+        expect(InstanceEditPage.classifications.firstOptionIsDisabled).to.be.true;
+      });
     });
 
     describe('clicking on add-format', () => {
       beforeEach(async () => {
-        await InstanceEditPage.clickAddFormatButton.click();
+        await InstanceEditPage.formats.clickAddButton();
       });
 
       it('should show the select-format select menu', () => {
-        expect(InstanceEditPage.selectFormat).to.exist;
+        expect(InstanceEditPage.formats.formatMenu).to.be.true;
       });
 
       it('should show the select-format select menu', () => {
-        expect(InstanceEditPage.selectFormat.firstOptionText).to.equal('Select format');
+        expect(InstanceEditPage.formats.firstOptionText).to.equal('Select format');
       });
     });
 
     describe('clicking on add-language', () => {
       beforeEach(async () => {
-        await InstanceEditPage.clickAddLanguageButton.click();
+        await InstanceEditPage.languages.clickAddButton();
       });
 
       it('should show the select-language select menu', () => {
-        expect(InstanceEditPage.selectLanguage).to.exist;
+        expect(InstanceEditPage.languages.languageMenu).to.be.true;
       });
 
       it('should show the select-language select menu', () => {
-        expect(InstanceEditPage.selectLanguage.firstOptionText).to.equal('Select language');
+        expect(InstanceEditPage.languages.firstOptionText).to.equal('Select language');
       });
     });
 
