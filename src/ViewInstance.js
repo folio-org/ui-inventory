@@ -345,40 +345,48 @@ class ViewInstance extends React.Component {
 
     if (query.layer === 'edit') {
       return (
-        <Layer
-          isOpen
-          contentLabel={<FormattedMessage id="ui-inventory.editInstanceDialog" />}
-        >
-          <InstanceForm
-            onSubmit={this.update}
-            initialValues={instance}
-            onCancel={this.resetLayerQueryParam}
-            referenceTables={referenceTables}
-            stripes={stripes}
-          />
-        </Layer>
+        <IntlConsumer>
+          {(intl) => (
+            <Layer
+              isOpen
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.editInstanceDialog' })}
+            >
+              <InstanceForm
+                onSubmit={this.update}
+                initialValues={instance}
+                onCancel={this.resetLayerQueryParam}
+                referenceTables={referenceTables}
+                stripes={stripes}
+              />
+            </Layer>
+          )}
+        </IntlConsumer>
       );
     }
 
     if (query.layer === 'createHoldingsRecord') {
       return (
-        <Layer
-          isOpen
-          contentLabel={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
-        >
-          <HoldingsForm
-            form={instance.id}
-            id={instance.id}
-            key={instance.id}
-            initialValues={{ instanceId: instance.id }}
-            onSubmit={this.createHoldingsRecord}
-            onCancel={this.resetLayerQueryParam}
-            okapi={okapi}
-            instance={instance}
-            referenceTables={referenceTables}
-            stripes={stripes}
-          />
-        </Layer>
+        <IntlConsumer>
+          {(intl) => (
+            <Layer
+              isOpen
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.addNewHoldingsDialog' })}
+            >
+              <HoldingsForm
+                form={instance.id}
+                id={instance.id}
+                key={instance.id}
+                initialValues={{ instanceId: instance.id }}
+                onSubmit={this.createHoldingsRecord}
+                onCancel={this.resetLayerQueryParam}
+                okapi={okapi}
+                instance={instance}
+                referenceTables={referenceTables}
+                stripes={stripes}
+              />
+            </Layer>
+          )}
+        </IntlConsumer>
       );
     }
 
