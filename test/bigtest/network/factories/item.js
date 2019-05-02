@@ -1,4 +1,4 @@
-import { faker, association } from '@bigtest/mirage';
+import { faker } from '@bigtest/mirage';
 
 import Factory from './application';
 

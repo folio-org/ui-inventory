@@ -408,7 +408,6 @@ class ViewInstance extends React.Component {
           </span>
         }
         paneSub={instanceSub()}
-        appIcon={<AppIcon app="inventory" iconKey="instance" />}
         lastMenu={detailMenu}
         dismissible
         onClose={onClose}
