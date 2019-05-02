@@ -49,9 +49,7 @@ const ContributorFields = ({
               component: TextField,
             },
             {
-              label: (
-                <FormattedMessage id="ui-inventory.nameType" />
-              ),
+              label: <FormattedMessage id="ui-inventory.nameType" />,
               name: 'contributorNameTypeId',
               component: Select,
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectType' }),

@@ -33,11 +33,7 @@ const AlternativeTitles = ({ alternativeTitleTypes }) => {
           template={[
             {
               name: 'alternativeTitleTypeId',
-              label: (
-                <FormattedMessage id="ui-inventory.type">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: <FormattedMessage id="ui-inventory.type" />,
               component: Select,
               placeholder,
               dataOptions: alternativeTitleTypeOptions,
@@ -45,11 +41,7 @@ const AlternativeTitles = ({ alternativeTitleTypes }) => {
             },
             {
               name: 'alternativeTitle',
-              label: (
-                <FormattedMessage id="ui-inventory.alternativeTitle">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: <FormattedMessage id="ui-inventory.alternativeTitle" />,
               component: TextField,
               required: true,
             }

@@ -240,7 +240,7 @@
     "copyNotes": "Copy notes",
     "receiptStatus": "Receipt status",
     "acquisitionMethod": "Acquisition method",
-    "acquisitionFormat": "Acquisition format",
+    "acquisitionFormat": "Order format",
     "electronicBookplate": "Electronic bookplate",
     "add": "Add",
     "addFormerHoldingsId": "Add former holdings ID",
@@ -366,5 +366,7 @@
     "noHoldingsRecordDeleteModal.message": "Registro de tenencia HRID <strong> {hrid} </strong> , ubicación <strong> {location} </strong> tiene dependencias y no se puede eliminar",
     "noItemDeleteModal.checkoutMessage": "El ítem HRID <strong> {hrid} </strong> con código de barras <strong> {barcode} </strong> está prestado y no se puede eliminar hasta que se devuelva de nuevo y el estado del ítem sea \"Disponible\"",
     "noItemDeleteModal.requestMessage": "El ítem HRID <strong>{hrid}</strong> con código de barras <strong>{barcode}</strong> tiene una solicitud asociada, la solicitud ha sido rellenada o la solicitud ha sido cancelada.",
-    "noItemDeleteModal.orderMessage": "El ítem HRID <strong> {hrid} </strong> con el código de barras <strong> {barcode} </strong> está en petición y no se puede eliminar hasta que se borre la dependencia con la app de pedidos, y tal vez se elimine el registro de pedido o se reciba el ítem y el estado del ítem sea 'Disponible'"
+    "noItemDeleteModal.orderMessage": "El ítem HRID <strong> {hrid} </strong> con el código de barras <strong> {barcode} </strong> está en petición y no se puede eliminar hasta que se borre la dependencia con la app de pedidos, y tal vez se elimine el registro de pedido o se reciba el ítem y el estado del ítem sea 'Disponible'",
+    "holdingRecord": "Registro de fondo: {location} > {callNumber}",
+    "instanceRecordTitle": "Registro de instancia {title} {publisherAndDate}"
 }

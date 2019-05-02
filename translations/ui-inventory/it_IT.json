@@ -19,7 +19,7 @@
     "showNotes": "Mostra note",
     "instanceDetails": "Dettagli dell'istanza",
     "addHoldings": "Aggiungi holdings",
-    "itemDotStatus": "Item . {status}",
+    "itemDotStatus": "Item record {barcode} {status}",
     "instances": "Istanze",
     "instance": "Istanza:",
     "holdings": "Holdings",
@@ -240,7 +240,7 @@
     "copyNotes": "Copy notes",
     "receiptStatus": "Receipt status",
     "acquisitionMethod": "Acquisition method",
-    "acquisitionFormat": "Acquisition format",
+    "acquisitionFormat": "Order format",
     "electronicBookplate": "Electronic bookplate",
     "add": "Aggiungi",
     "addFormerHoldingsId": "Aggiungere l'ID di copia precedente",
@@ -366,5 +366,7 @@
     "noHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong>, location <strong>{location}</strong> has dependents and cannot be deleted",
     "noItemDeleteModal.checkoutMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is checked out and can not be deleted until checked in again, and item status is 'Available'",
     "noItemDeleteModal.requestMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> has a request associated the request has been fullfilled, or the request has been cancelled.",
-    "noItemDeleteModal.orderMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is on order and can not be deleted until depencency with the order app is cleared, and the order record maybe is deleted, or the item is received and the item status is 'Available'"
+    "noItemDeleteModal.orderMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is on order and cannot be <strong>deleted</strong> until all dependencies with the Order app have been cleared. If you want to continue with the deletion of the item record, go to the Order app and clear the dependencies.",
+    "holdingRecord": "Holding record {location} {callNumber}",
+    "instanceRecordTitle": "Instance record {title} {publisherAndDate}"
 }
