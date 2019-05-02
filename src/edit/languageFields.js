@@ -25,6 +25,7 @@ const renderLanguageField = ({ field, fieldIndex }) => {
           placeholder={placeholder}
           dataOptions={languageOptions}
           required
+          data-test-language-field-count={fieldIndex}
         />
       )}
     </FormattedMessage>

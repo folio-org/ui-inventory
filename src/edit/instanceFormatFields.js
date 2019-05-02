@@ -30,6 +30,7 @@ const renderInstanceFormatField = ({ field, fieldIndex }, instanceFormats) => {
           placeholder={placeholder}
           dataOptions={instanceFormatOptions}
           required
+          data-test-instance-format-field-count={fieldIndex}
         />
       )}
     </FormattedMessage>
