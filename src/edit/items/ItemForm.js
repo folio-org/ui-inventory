@@ -627,11 +627,7 @@ class ItemForm extends React.Component {
                     addLabel={<FormattedMessage id="ui-inventory.addYearCaption" />}
                     template={[{
                       component: TextField,
-                      label: (
-                        <FormattedMessage id="ui-inventory.yearCaption">
-                          {(message) => message + ' *'}
-                        </FormattedMessage>
-                      )
+                      label: <FormattedMessage id="ui-inventory.yearCaption" />
                     }]}
                   />
                 </Col>
