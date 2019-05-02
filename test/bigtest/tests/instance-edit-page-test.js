@@ -5,7 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import InstanceEditPage from '../interactors/instance-edit-page';
 import InstanceViewPage from '../interactors/instance-view-page';
 
-describe.only('InstanceEditPage', () => {
+describe('InstanceEditPage', () => {
   setupApplication();
 
   beforeEach(async function () {
