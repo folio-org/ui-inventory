@@ -241,6 +241,7 @@ class ViewInstance extends React.Component {
       'Code': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).code,
       'Source': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).source,
       'Free text': x => _.get(x, ['contributorTypeText']) || '',
+      'Primary': ({ primary }) => primary && <FormattedMessage id="ui-inventory.primary" />
     };
 
     const electronicAccessRowFormatter = {
@@ -664,7 +665,7 @@ class ViewInstance extends React.Component {
                       <MultiColumnList
                         id="list-contributors"
                         contentData={instance.contributors}
-                        visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
+                        visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text', 'Primary']}
                         columnMapping={{
                           'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
                           'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
@@ -672,6 +673,7 @@ class ViewInstance extends React.Component {
                           'Code': intl.formatMessage({ id: 'ui-inventory.code' }),
                           'Source': intl.formatMessage({ id: 'ui-inventory.source' }),
                           'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
+                          'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
                         }}
                         formatter={contributorsRowFormatter}
                         ariaLabel={ariaLabel}
