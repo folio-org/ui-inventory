@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { change } from 'redux-form';
@@ -6,7 +6,7 @@ import {
   Icon,
   TextField,
   Select,
-  RadioButton,
+  Button,
   Label,
 } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
@@ -71,33 +71,28 @@ const ContributorFields = ({
             {
               name: 'primary',
               label: intl.formatMessage({ id: 'ui-inventory.primary' }),
-              component: ({ label, meta, input, fields, ...rest }) => {
-                const handleChange = (currentInput) => () => {
-                  // Find the index of the current primary contributor
-                  const currentPrimaryIndex = fields.getAll().findIndex(field => field.primary);
-
-                  // Remove primary flag from current primary contributor
-                  if (currentPrimaryIndex > 0) {
-                    meta.dispatch(change(meta.form, `contributors[${currentPrimaryIndex}].primary`, false, true, false));
-                  }
+              component: ({ label, meta, input, fields }) => { /* eslint-disable-line react/prop-types */
+                const isPrimary = input.value === true;
+                const handleChange = () => {
+                  // Reset other primary fields
+                  fields.forEach(fieldName => meta.dispatch(change(meta.form, `${fieldName}.primary`, false)));
 
                   // Set primary flag for current field
-                  currentInput.onChange(true);
+                  input.onChange(true);
                 };
 
                 return (
-                  <div>
+                  <Fragment>
                     { label && <Label>{label}</Label>}
-                    <RadioButton
-                      meta={meta}
-                      {...rest}
-                      name="primary"
-                      onChange={handleChange(input)}
-                      checked={input.value === true}
-                      aria-label={intl.formatMessage({ id: 'ui-inventory.primary' })}
-                      inline
-                    />
-                  </div>
+                    <Button
+                      buttonStyle={isPrimary ? 'primary' : 'default'}
+                      onClick={!isPrimary ? handleChange : null}
+                      type="button"
+                      fullWidth
+                    >
+                      {isPrimary ? <FormattedMessage id="ui-inventory.primary" /> : 'Make primary'}
+                    </Button>
+                  </Fragment>
                 );
               }
             },
