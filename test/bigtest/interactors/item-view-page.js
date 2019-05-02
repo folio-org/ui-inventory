@@ -24,7 +24,8 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
 }
 
 @interactor class ItemViewPage {
-  title = text('[data-test-header-title]');
+  title = text('[data-test-header-item-title]');
+  isLoaded = isPresent('[data-test-header-item-title]');
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();

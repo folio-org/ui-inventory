@@ -5,6 +5,12 @@
 * Retrieve 1000 items from lookup tables. Refs UIIN-413.
 * Fix alphabetical order of lookup tables. Fixes UIIN-421.
 * Don't append wildcards to search terms. Fixes UIIN-481.
+* Provide the correct a11y props to `<Layer>`s.
+* Add missing order-by clauses to item-record lookup tables. Fixes UIIN-522.
+* Send `contributors.type.primary` as correct type. Refs MODINV-117.
+* Add ability to search by barcode. Part of UIIN-143.
+* Move acquisitions items to the acquisitions accordion. Fixes UIIN-506.
+* Remove duplicate asterisks from required fields. Fixes UIIN-490.
 * Add missing validation for some CV items.
 
 ## [1.7.0](https://github.com/folio-org/ui-inventory/tree/v1.7.0) (2019-03-15)
