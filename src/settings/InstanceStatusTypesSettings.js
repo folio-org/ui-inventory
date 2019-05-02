@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import validateNameAndCode from './validateNameAndCode';
+
 class InstanceStatusTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -45,6 +47,7 @@ class InstanceStatusTypesSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="instanceStatus-types"
             sortby="name"
+            validate={validateNameAndCode}
           />
         )}
       </IntlConsumer>

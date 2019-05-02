@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import validateNameAndCode from './validateNameAndCode';
+
 class ContributorTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -20,16 +22,6 @@ class ContributorTypesSettings extends React.Component {
 
   suppressEdit = term => term.source === 'marcrelator';
   suppressDelete = term => term.source === 'marcrelator';
-  validate = (item) => {
-    const errors = {};
-    if (!item.code) {
-      errors.code = <FormattedMessage id="ui-inventory.fillIn" />;
-    }
-    if (!item.name) {
-      errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
-    }
-    return errors;
-  }
 
   render() {
     return (
@@ -56,7 +48,7 @@ class ContributorTypesSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="contributor-types"
             sortby="name"
-            validate={this.validate}
+            validate={validateNameAndCode}
           />
         )}
       </IntlConsumer>

@@ -8,6 +8,8 @@ import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import validateNameAndCode from './validateNameAndCode';
+
 class StatisticalCodeSettings extends React.Component {
   static manifest = Object.freeze({
     statisticalCodeTypes: {
@@ -35,13 +37,7 @@ class StatisticalCodeSettings extends React.Component {
   }
 
   validate = (item) => {
-    const errors = {};
-    if (!item.code) {
-      errors.code = <FormattedMessage id="ui-inventory.fillIn" />;
-    }
-    if (!item.name) {
-      errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
-    }
+    const errors = validateNameAndCode(item);
     if (!item.statisticalCodeTypeId) {
       errors.name = <FormattedMessage id="ui-inventory.selectToContinue" />;
     }
