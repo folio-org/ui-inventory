@@ -50,9 +50,7 @@ const ContributorFields = ({
             },
             {
               label: (
-                <FormattedMessage id="ui-inventory.nameType">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
+                <FormattedMessage id="ui-inventory.nameType" />
               ),
               name: 'contributorNameTypeId',
               component: Select,
@@ -78,7 +76,7 @@ const ContributorFields = ({
               component: ({ label, meta, input, fields, ...rest }) => {
                 const handleChange = (currentInput) => () => {
                   // Find the index of the current primary contributor
-                  const currentPrimaryIndex = fields.getAll().findIndex(field => field.primary === true);
+                  const currentPrimaryIndex = fields.getAll().findIndex(field => field.primary);
 
                   // Remove primary flag from current primary contributor
                   if (currentPrimaryIndex > 0) {
