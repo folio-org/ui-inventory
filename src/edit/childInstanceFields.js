@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { IntlConsumer } from '@folio/stripes/core';
 import {
   TextField,
   Select,
@@ -18,8 +19,8 @@ const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
   );
 
   return (
-    <FormattedMessage id="ui-inventory.selectType">
-      {placeholder => (
+    <IntlConsumer>
+      {intl => (
         <RepeatableField
           name="childInstances"
           label={<FormattedMessage id="ui-inventory.childInstances" />}
@@ -27,24 +28,16 @@ const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
           addButtonId="clickable-add-childinstance"
           template={[
             {
-              label: (
-                <FormattedMessage id="ui-inventory.childInstance">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: intl.formatMessage({ id: 'ui-inventory.childInstance' }),
               name: 'subInstanceId',
               component: TextField,
               required: true,
             },
             {
-              label: (
-                <FormattedMessage id="ui-inventory.typeOfRelation">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: intl.formatMessage({ id: 'ui-inventory.typeOfRelation' }),
               name: 'instanceRelationshipTypeId',
               component: Select,
-              placeholder,
+              placeholder: intl.formatMessage({ id: 'ui-inventory.selectType' }),
               dataOptions: relationshipOptions,
               required: true,
             },
@@ -52,7 +45,7 @@ const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
           newItemTemplate={{ subInstanceId: '', relationshipTypeId: '' }}
         />
       )}
-    </FormattedMessage>
+    </IntlConsumer>
   );
 };
 

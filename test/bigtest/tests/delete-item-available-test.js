@@ -58,7 +58,7 @@ describe('ItemViewPage', () => {
     });
 
     it('displays the title in the pane header', () => {
-      expect(ItemViewPage.title).to.equal(`${item.barcode} Item . ${item.status.name}`);
+      expect(ItemViewPage.title).to.equal(`Item record ${item.barcode} ${item.status.name}`);
     });
 
     describe('pane header dropdown menu, click delete', () => {

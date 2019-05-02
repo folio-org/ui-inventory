@@ -352,11 +352,8 @@ class InstanceForm extends React.Component {
                       type="text"
                       component={TextField}
                       disabled
-                      label={(
-                        <FormattedMessage id="ui-inventory.metadataSource">
-                          {message => message + ' *'}
-                        </FormattedMessage>
-                      )}
+                      label={<FormattedMessage id="ui-inventory.metadataSource" />}
+                      required
                     />
                   </Col>
                 </Row>

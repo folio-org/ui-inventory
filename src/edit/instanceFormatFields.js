@@ -18,13 +18,7 @@ const renderInstanceFormatField = ({ field, fieldIndex }, instanceFormats) => {
     }))
     : [];
 
-  const label = fieldIndex === 0
-    ? (
-      <FormattedMessage id="ui-inventory.instanceFormat">
-        {message => message + ' *'}
-      </FormattedMessage>
-    )
-    : null;
+  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.instanceFormat" /> : null;
 
   return (
     <FormattedMessage id="ui-inventory.selectInstanceFormat">
@@ -35,6 +29,8 @@ const renderInstanceFormatField = ({ field, fieldIndex }, instanceFormats) => {
           component={Select}
           placeholder={placeholder}
           dataOptions={instanceFormatOptions}
+          required
+          data-test-instance-format-field-count={fieldIndex}
         />
       )}
     </FormattedMessage>

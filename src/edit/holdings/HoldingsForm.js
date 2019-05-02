@@ -20,7 +20,7 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes-core';
+import { AppIcon, IntlConsumer } from '@folio/stripes-core';
 
 import {
   LocationSelection,
@@ -449,25 +449,21 @@ class HoldingsForm extends React.Component {
               <br />
               <Row>
                 <Col sm={4}>
-                  <FormattedMessage id="ui-inventory.selectLocation">
-                    {placeholder => (
+                  <IntlConsumer>
+                    {intl => (
                       <Field
-                        label={(
-                          <FormattedMessage id="ui-inventory.permanentLocation">
-                            {(message) => message + ' *'}
-                          </FormattedMessage>
-                        )}
-                        placeholder={placeholder}
+                        label={intl.formatMessage({ id: 'ui-inventory.permanentLocation' })}
+                        placeholder={intl.formatMessage({ id: 'ui-inventory.selectLocation' })}
                         name="permanentLocationId"
                         id="additem_permanentlocation"
                         component={LocationSelection}
                         fullWidth
                         marginBottom0
                         onSelect={loc => this.selectPermanentLocation(loc)}
-
+                        required
                       />
                     )}
-                  </FormattedMessage>
+                  </IntlConsumer>
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
                 </Col>
                 <Col sm={4}>

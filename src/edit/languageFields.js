@@ -13,13 +13,7 @@ import languages from '../data/languages';
 
 const renderLanguageField = ({ field, fieldIndex }) => {
   const languageOptions = languages.selectOptions(field);
-  const label = fieldIndex === 0
-    ? (
-      <FormattedMessage id="ui-inventory.language">
-        {message => message + ' *'}
-      </FormattedMessage>
-    )
-    : null;
+  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.language" /> : null;
 
   return (
     <FormattedMessage id="ui-inventory.selectLanguage">
@@ -30,6 +24,8 @@ const renderLanguageField = ({ field, fieldIndex }) => {
           component={Select}
           placeholder={placeholder}
           dataOptions={languageOptions}
+          required
+          data-test-language-field-count={fieldIndex}
         />
       )}
     </FormattedMessage>

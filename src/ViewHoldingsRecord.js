@@ -397,9 +397,13 @@ class ViewHoldingsRecord extends React.Component {
               appIcon={<AppIcon app="inventory" iconKey="holdings" />}
               paneTitle={
                 <span data-test-header-title>
-                  {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} > ` : null}
-                  {_.get(holdingsRecord, ['callNumber'], '')}
-                  <FormattedMessage id="ui-inventory.holdings" />
+                  <FormattedMessage
+                    id="ui-inventory.holdingRecord"
+                    values={{
+                      location: _.get(holdingsPermanentLocation, 'name', ''),
+                      callNumber: _.get(holdingsRecord, 'callNumber', '')
+                    }}
+                  />
                 </span>
               }
               lastMenu={detailMenu}
@@ -707,6 +711,13 @@ class ViewHoldingsRecord extends React.Component {
                 label={<FormattedMessage id="ui-inventory.notes" />}
               >
                 {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
+              </Accordion>
+              <Accordion
+                open={this.state.accordions.accordion05}
+                id="accordion05"
+                onToggle={this.handleAccordionToggle}
+                label={<FormattedMessage id="ui-inventory.acquisitions" />}
+              >
                 <Row>
                   <Col sm={3}>
                     <KeyValue
@@ -720,8 +731,6 @@ class ViewHoldingsRecord extends React.Component {
                       value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
                     />
                   </Col>
-                </Row>
-                <Row>
                   <Col sm={3}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.receiptStatus" />}
@@ -730,12 +739,6 @@ class ViewHoldingsRecord extends React.Component {
                   </Col>
                 </Row>
               </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion05}
-                id="accordion05"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.acquisitions" />}
-              />
               <Accordion
                 open={this.state.accordions.accordion06}
                 id="accordion06"

@@ -18,7 +18,7 @@ describe('InstanceViewPage', () => {
   });
 
   it('displays the instance title in the pane header', () => {
-    expect(InstanceViewPage.title).to.equal('ADVANCING RESEARCH');
+    expect(InstanceViewPage.title).to.equal('Instance record ADVANCING RESEARCH');
   });
 
   describe('pane header dropdown menu', () => {

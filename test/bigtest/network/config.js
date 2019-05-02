@@ -60,9 +60,23 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/inventory/instances', (schema /* , request */) => {
-    return schema.instances.all();
+  this.get('/inventory/instances', ({ instances, holdings, items }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      const { field, term } = cqlParser.tree;
+
+      if (field === 'item.barcode' && term) {
+        const item = items.where({ barcode: term }).models[0];
+        const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
+
+        return instances.where({ id: holding.instanceId });
+      }
+    }
+
+    return instances.all();
   });
+
   this.get('/inventory/instances/:id', (schema, { params }) => {
     return schema.instances.find(params.id);
   });

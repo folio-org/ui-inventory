@@ -329,6 +329,10 @@ class ViewItem extends React.Component {
     const status = _.get(firstItem, ['status', 'name']);
     const request = _.get(resources, 'requests.records[0]');
 
+    const newRequestLink = firstItem.barcode
+      ? `/requests?itemBarcode=${firstItem.barcode}&layer=create`
+      : `/requests?itemId=${firstItem.id}&layer=create`;
+
     return (
       <Fragment>
         <Button
@@ -388,7 +392,7 @@ class ViewItem extends React.Component {
 
         }
         <Button
-          to={`/requests?itemBarcode=${firstItem.barcode}&layer=create`}
+          to={newRequestLink}
           buttonStyle="dropdownItem"
           data-test-inventory-create-request-action
         >
@@ -665,7 +669,10 @@ class ViewItem extends React.Component {
                 {' '}
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
-                  values={{ status: _.get(item, ['status', 'name'], '') }}
+                  values={{
+                    barcode: _.get(item, 'barcode', ''),
+                    status: _.get(item, 'status.name', '')
+                  }}
                 />
               </span>
             }
