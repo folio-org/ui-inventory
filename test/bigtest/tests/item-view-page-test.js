@@ -80,7 +80,7 @@ describe('ItemViewPage', () => {
     });
   });
 
-  describe.only('visiting the paged item view page', () => {
+  describe('visiting the paged item view page', () => {
     beforeEach(async function () {
       const instance = this.server.create(
         'instance',
