@@ -103,7 +103,6 @@ export default function configure() {
   });
 
   this.get('/inventory/items/:id', ({ items }, { params }) => {
-    console.log('find item', params.id, items);
     return items.find(params.id);
   });
 
