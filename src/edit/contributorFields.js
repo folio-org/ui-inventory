@@ -90,7 +90,7 @@ const ContributorFields = ({
                       type="button"
                       fullWidth
                     >
-                      {isPrimary ? <FormattedMessage id="ui-inventory.primary" /> : 'Make primary'}
+                      <FormattedMessage id={`ui-inventory.${isPrimary ? 'primary' : 'makePrimary'}`} />
                     </Button>
                   </Fragment>
                 );
