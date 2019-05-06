@@ -5,6 +5,7 @@ import {
   isPresent,
   property,
   attribute,
+  count,
 } from '@bigtest/interactor';
 
 @interactor class HeaderDropdown {
@@ -28,6 +29,13 @@ import {
 @interactor class Languages {
   firstOptionText = text('option:nth-of-type(1)')
   firstOptionIsDisabled = property('option:nth-of-type(1)', 'disabled');
+}
+
+@interactor class Contributors {
+  contributorCount = count('[data-test-repeater-field-row]')
+  makeFirstContributorPrimary = clickable('button[data-test-edit-instance-contributors-primary-button]');
+  firstContributorIsPrimary = isPresent('button[data-test-edit-instance-contributors-primary-button][class*=primary---]')
+  clickAddNewContributor = clickable('#clickable-add-contributor');
 }
 
 @interactor class Foo { }
@@ -57,6 +65,8 @@ import {
   firstLanguageLabelId = attribute('[data-test-language-field-count="0"]', 'aria-labelledby');
   secondLanguageFieldExists = isPresent('[data-test-language-field-count="1"]');
   secondLanguageLabelId = attribute('[data-test-language-field-count="1"]', 'aria-labelledby');
+
+  contributors = new Contributors();
 
   // The BigTest documentation shows examples like
   //   let input = new Interactor('input');

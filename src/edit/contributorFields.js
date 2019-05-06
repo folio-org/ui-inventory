@@ -85,6 +85,7 @@ const ContributorFields = ({
                   <Fragment>
                     { label && <Label>{label}</Label>}
                     <Button
+                      data-test-edit-instance-contributors-primary-button
                       buttonStyle={isPrimary ? 'primary' : 'default'}
                       onClick={!isPrimary ? handleChange : null}
                       type="button"

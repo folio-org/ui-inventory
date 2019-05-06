@@ -188,6 +188,7 @@ class FieldRow extends React.Component {
 
           {fields.map((f, fieldIndex) => (
             <div
+              data-test-repeater-field-row
               key={`${label}-${fieldIndex}`}
               style={{ width: '100%' }}
               ref={(ref) => { this.refIfLastRow(ref, fieldIndex); }}
