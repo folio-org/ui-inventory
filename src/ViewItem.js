@@ -664,9 +664,7 @@ class ViewItem extends React.Component {
             defaultWidth={paneWidth}
             appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
-              <span data-test-header-title>
-                {_.get(item, ['barcode'], '')}
-                {' '}
+              <span data-test-header-item-title>
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
                   values={{
