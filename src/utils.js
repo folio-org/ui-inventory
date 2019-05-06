@@ -10,10 +10,10 @@ export function craftLayerUrl(mode, location) { // eslint-disable-line import/pr
 }
 
 export function canMarkItemAsMissing(item) {
-  return [
+  return includes([
     itemStatuses.AVAILABLE,
     itemStatuses.IN_TRANSIT,
     itemStatuses.AWAITING_PICKUP,
     itemStatuses.PAGED
-  ].indexOf(get(item, 'status.name')) > -1;
+  ], get(item, 'status.name'));
 }
