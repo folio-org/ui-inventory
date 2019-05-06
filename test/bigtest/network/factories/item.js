@@ -30,5 +30,6 @@ export default Factory.extend({
   effectiveLocation: {
     id: faker.random.uuid(),
     name: 'Main Library'
-  }
+  },
+  links: {},
 });

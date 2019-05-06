@@ -1,4 +1,5 @@
-import includes from 'lodash/includes';
+import { includes, get } from 'lodash';
+import { itemStatuses } from './constants';
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
@@ -6,4 +7,13 @@ export function craftLayerUrl(mode, location) { // eslint-disable-line import/pr
     return includes(url, '?') ? `${url}&layer=${mode}` : `${url}?layer=${mode}`;
   }
   return null;
+}
+
+export function canMarkItemAsMissing(item) {
+  return includes([
+    itemStatuses.AVAILABLE,
+    itemStatuses.IN_TRANSIT,
+    itemStatuses.AWAITING_PICKUP,
+    itemStatuses.PAGED
+  ], get(item, 'status.name'));
 }

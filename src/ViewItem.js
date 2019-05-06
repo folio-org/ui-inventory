@@ -32,7 +32,7 @@ import {
   IntlConsumer
 } from '@folio/stripes/core';
 
-import { craftLayerUrl } from './utils';
+import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import { itemStatuses } from './constants';
@@ -326,7 +326,6 @@ class ViewItem extends React.Component {
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
-    const status = _.get(firstItem, ['status', 'name']);
     const request = _.get(resources, 'requests.records[0]');
 
     const newRequestLink = firstItem.barcode
@@ -375,7 +374,7 @@ class ViewItem extends React.Component {
           </Icon>
         </Button>
         {
-          (status === 'Available' || status === 'In transit' || status === 'Awaiting pickup') &&
+          canMarkItemAsMissing(firstItem) &&
           <Button
             id="clickable-missing-item"
             onClick={() => {
@@ -389,7 +388,6 @@ class ViewItem extends React.Component {
               <FormattedMessage id="ui-inventory.markAsMissing" />
             </Icon>
           </Button>
-
         }
         <Button
           to={newRequestLink}
