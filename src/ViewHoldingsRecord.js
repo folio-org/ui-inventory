@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import queryString from 'query-string';
 
 import {
@@ -17,6 +18,8 @@ import {
   MultiColumnList,
   Icon,
   Button,
+  Modal,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
@@ -52,26 +55,6 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'locations/%{temporaryLocationQuery.id}',
     },
-    illPolicies: {
-      type: 'okapi',
-      path: 'ill-policies',
-      records: 'illPolicies',
-    },
-    holdingsTypes: {
-      type: 'okapi',
-      path: 'holdings-types',
-      records: 'holdingsTypes',
-    },
-    callNumberTypes: {
-      type: 'okapi',
-      path: 'call-number-types',
-      records: 'callNumberTypes',
-    },
-    holdingsNoteTypes: {
-      type: 'okapi',
-      path: 'holdings-note-types',
-      records: 'holdingsNoteTypes',
-    },
   });
 
   constructor(props) {
@@ -86,6 +69,8 @@ class ViewHoldingsRecord extends React.Component {
         accordion06: true,
         accordion07: true,
       },
+      confirmHoldingsRecordDeleteModal: false,
+      noHoldingsRecordDeleteModal: false,
     };
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
@@ -98,11 +83,11 @@ class ViewHoldingsRecord extends React.Component {
     const temporaryLocationQuery = resources.temporaryLocationQuery;
     const holding = holdingsRecords[0];
 
-    if (holding && holding.permanentLocationId
+    if (holding && holding.permanentLocationId && permanentLocationQuery
       && (!permanentLocationQuery.id || permanentLocationQuery.id !== holding.permanentLocationId)) {
       nextProps.mutator.permanentLocationQuery.update({ id: holding.permanentLocationId });
     }
-    if (holding && holding.temporaryLocationId
+    if (holding && holding.temporaryLocationId && temporaryLocationQuery
       && (!temporaryLocationQuery.id || temporaryLocationQuery.id !== holding.temporaryLocationId)) {
       nextProps.mutator.temporaryLocationQuery.update({ id: holding.temporaryLocationId });
     }
@@ -138,6 +123,11 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  deleteHoldingsRecord = (holdingsRecord) => {
+    this.props.onCloseViewHoldingsRecord();
+    this.props.mutator.holdingsRecords.DELETE(holdingsRecord);
+  }
+
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = _.cloneDeep(state);
@@ -164,6 +154,18 @@ class ViewHoldingsRecord extends React.Component {
     this.props.updateLocation({ layer: 'copyHoldingsRecord' });
   }
 
+  hideConfirmHoldingsRecordDeleteModal = () => {
+    this.setState({ confirmHoldingsRecordDeleteModal: false });
+  }
+
+  hideNoHoldingsRecordDeleteModal = () => {
+    this.setState({ noHoldingsRecordDeleteModal: false });
+  }
+
+  canDeleteHoldingsRecord = () => {
+    return true;
+  }
+
   refLookup = (referenceTable, id) => {
     const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
     return ref || {};
@@ -178,6 +180,20 @@ class ViewHoldingsRecord extends React.Component {
 
     return (
       <Fragment>
+        <Button
+          id="clickable-delete-holdingsrecord"
+          onClick={() => {
+            onToggle();
+            this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
+              { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-holdingsrecord-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
+          </Icon>
+        </Button>
         <Button
           id="edit-holdings"
           onClick={() => {
@@ -211,13 +227,16 @@ class ViewHoldingsRecord extends React.Component {
     const {
       holdingsRecords,
       instances1,
-      illPolicies,
-      holdingsTypes,
-      callNumberTypes,
-      holdingsNoteTypes,
       permanentLocation,
       temporaryLocation,
     } = this.props.resources;
+
+    const {
+      holdingsTypes,
+      holdingsNoteTypes,
+      illPolicies,
+      callNumberTypes,
+    } = this.props.parentResources;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) {
       return true;
@@ -244,12 +263,14 @@ class ViewHoldingsRecord extends React.Component {
       resources: {
         holdingsRecords,
         instances1,
-        illPolicies,
-        holdingsTypes,
-        callNumberTypes,
-        holdingsNoteTypes,
         permanentLocation,
         temporaryLocation,
+      },
+      parentResources: {
+        holdingsTypes,
+        holdingsNoteTypes,
+        illPolicies,
+        callNumberTypes,
       },
       referenceTables,
       okapi,
@@ -321,12 +342,54 @@ class ViewHoldingsRecord extends React.Component {
         });
     };
 
+    const confirmHoldingsRecordDeleteModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.confirmHoldingsRecordDeleteModal.message"
+        values={{
+          hrid: holdingsRecord.hrid,
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
+        }}
+      />
+    );
+
+    const noHoldingsRecordDeleteModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.noHoldingsRecordDeleteModal.message"
+        values={{
+          hrid: holdingsRecord.hrid,
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
+        }}
+      />
+    );
+
+    const noHoldingsRecordDeleteFooter = (
+      <Button onClick={this.hideNoHoldingsRecordDeleteModal}>
+        <FormattedMessage id="stripes-core.button.back" />
+      </Button>
+    );
 
     return (
       <div>
+        <ConfirmationModal
+          data-test-delete-confirmation-modal
+          open={this.state.confirmHoldingsRecordDeleteModal}
+          heading={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
+          message={confirmHoldingsRecordDeleteModalMessage}
+          onConfirm={() => { this.deleteHoldingsRecord(holdingsRecord); }}
+          onCancel={this.hideConfirmHoldingsRecordDeleteModal}
+          confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+        />
+        <Modal
+          data-test-no-delete-holdingsrecord-modal
+          label={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
+          open={this.state.noHoldingsRecordDeleteModal}
+          footer={noHoldingsRecordDeleteFooter}
+        >
+          {noHoldingsRecordDeleteModalMessage}
+        </Modal>
         <Layer
           isOpen
-          label={<FormattedMessage id="ui-inventory.viewHoldingsRecord" />}
+          contentLabel={<FormattedMessage id="ui-inventory.viewHoldingsRecord" />}
         >
           <div data-test-holdings-view-page>
             <Pane
@@ -334,9 +397,13 @@ class ViewHoldingsRecord extends React.Component {
               appIcon={<AppIcon app="inventory" iconKey="holdings" />}
               paneTitle={
                 <span data-test-header-title>
-                  {holdingsRecord.permanentLocationId ? `${holdingsPermanentLocation.name} > ` : null}
-                  {_.get(holdingsRecord, ['callNumber'], '')}
-                  <FormattedMessage id="ui-inventory.holdings" />
+                  <FormattedMessage
+                    id="ui-inventory.holdingRecord"
+                    values={{
+                      location: _.get(holdingsPermanentLocation, 'name', ''),
+                      callNumber: _.get(holdingsRecord, 'callNumber', '')
+                    }}
+                  />
                 </span>
               }
               lastMenu={detailMenu}
@@ -644,6 +711,13 @@ class ViewHoldingsRecord extends React.Component {
                 label={<FormattedMessage id="ui-inventory.notes" />}
               >
                 {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
+              </Accordion>
+              <Accordion
+                open={this.state.accordions.accordion05}
+                id="accordion05"
+                onToggle={this.handleAccordionToggle}
+                label={<FormattedMessage id="ui-inventory.acquisitions" />}
+              >
                 <Row>
                   <Col sm={3}>
                     <KeyValue
@@ -657,8 +731,6 @@ class ViewHoldingsRecord extends React.Component {
                       value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
                     />
                   </Col>
-                </Row>
-                <Row>
                   <Col sm={3}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.receiptStatus" />}
@@ -667,12 +739,6 @@ class ViewHoldingsRecord extends React.Component {
                   </Col>
                 </Row>
               </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion05}
-                id="accordion05"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.acquisitions" />}
-              />
               <Accordion
                 open={this.state.accordions.accordion06}
                 id="accordion06"
@@ -752,7 +818,7 @@ class ViewHoldingsRecord extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false}
-          label={<FormattedMessage id="ui-inventory.editHoldingsRecordDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.editHoldingsRecordDialog" />}
         >
           <HoldingsForm
             initialValues={holdingsRecord}
@@ -766,7 +832,7 @@ class ViewHoldingsRecord extends React.Component {
         </Layer>
         <Layer
           isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false}
-          label={<FormattedMessage id="ui-inventory.copyHoldingsRecordDialog" />}
+          contentLabel={<FormattedMessage id="ui-inventory.copyHoldingsRecordDialog" />}
         >
           <HoldingsForm
             initialValues={this.state.copiedRecord}
@@ -788,6 +854,20 @@ ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
+  parentResources: PropTypes.shape({
+    holdingsTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    illPolicies: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    callNumberTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    holdingsNoteTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+  }),
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
@@ -804,18 +884,6 @@ ViewHoldingsRecord.propTypes = {
     temporaryLocation: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    illPolicies: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    callNumberTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsNoteTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
@@ -825,6 +893,7 @@ ViewHoldingsRecord.propTypes = {
     holdingsRecords: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
+      DELETE: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
     permanentLocationQuery: PropTypes.object.isRequired,

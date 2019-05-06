@@ -49,11 +49,7 @@ const ContributorFields = ({
               component: TextField,
             },
             {
-              label: (
-                <FormattedMessage id="ui-inventory.nameType">
-                  {(message) => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: <FormattedMessage id="ui-inventory.nameType" />,
               name: 'contributorNameTypeId',
               component: Select,
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectType' }),
@@ -64,6 +60,7 @@ const ContributorFields = ({
               label: <FormattedMessage id="ui-inventory.primary" />,
               name: 'primary',
               component: Checkbox,
+              type: 'checkbox',
             },
             {
               label: <FormattedMessage id="ui-inventory.type" />,
@@ -81,7 +78,7 @@ const ContributorFields = ({
           newItemTemplate={{
             name: '',
             contributorNameTypeId: '',
-            primary: '',
+            primary: false,
             contributorTypeId: '',
             contributorTypeText: '',
           }}

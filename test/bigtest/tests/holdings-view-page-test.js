@@ -34,7 +34,7 @@ describe('HoldingsViewPage', () => {
   });
 
   it('displays the title in the pane header', () => {
-    expect(HoldingsViewPage.title).to.equal('Holdings');
+    expect(HoldingsViewPage.title).to.equal('Holding record');
   });
 
   describe('pane header dropdown menu', () => {
@@ -59,6 +59,16 @@ describe('HoldingsViewPage', () => {
 
       it('should redirect to holdings create page', () => {
         expect(HoldingsCreatePage.$root).to.exist;
+      });
+    });
+
+    describe('clicking on delete', () => {
+      beforeEach(async () => {
+        await HoldingsViewPage.headerDropdownMenu.clickDelete();
+      });
+
+      it('should open delete confirmation modal', () => {
+        expect(HoldingsViewPage.hasConfirmDeleteModal).to.exist;
       });
     });
   });

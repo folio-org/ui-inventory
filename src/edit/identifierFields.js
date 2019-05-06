@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { IntlConsumer } from '@folio/stripes/core';
 import {
   Icon,
   Select,
@@ -19,8 +20,8 @@ const IdentifierFields = ({ identifierTypes }) => {
   );
 
   return (
-    <FormattedMessage id="ui-inventory.selectIdentifierType">
-      {placeholder => (
+    <IntlConsumer>
+      {intl => (
         <RepeatableField
           name="identifiers"
           label={<FormattedMessage id="ui-inventory.identifiers" />}
@@ -33,23 +34,15 @@ const IdentifierFields = ({ identifierTypes }) => {
           template={[
             {
               name: 'identifierTypeId',
-              label: (
-                <FormattedMessage id="ui-inventory.type">
-                  {message => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: intl.formatMessage({ id: 'ui-inventory.type' }),
               component: Select,
-              placeholder,
+              placeholder: intl.formatMessage({ id: 'ui-inventory.selectIdentifierType' }),
               dataOptions: identifierTypeOptions,
               required: true,
             },
             {
               name: 'value',
-              label: (
-                <FormattedMessage id="ui-inventory.identifier">
-                  {message => message + ' *'}
-                </FormattedMessage>
-              ),
+              label: intl.formatMessage({ id: 'ui-inventory.identifier' }),
               component: TextField,
               required: true,
             }
@@ -57,7 +50,7 @@ const IdentifierFields = ({ identifierTypes }) => {
           newItemTemplate={{ identifierTypeId: '', value: '' }}
         />
       )}
-    </FormattedMessage>
+    </IntlConsumer>
   );
 };
 
