@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 
@@ -51,12 +51,12 @@ class Items extends React.Component {
       'Item: barcode': x => (
         <span data-test-items-app-icon>
           <AppIcon app="inventory" iconKey="item" size="small">
-            {_.get(x, ['barcode'])}
+            {get(x, ['barcode'])}
           </AppIcon>
         </span>
       ),
-      'status': x => _.get(x, ['status', 'name']) || '--',
-      'Material Type': x => _.get(x, ['materialType', 'name']),
+      'status': x => get(x, ['status', 'name']) || '--',
+      'Material Type': x => get(x, ['materialType', 'name']),
     };
 
     return (
