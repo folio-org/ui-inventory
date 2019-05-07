@@ -11,7 +11,7 @@ describe('Instances', () => {
   const inventory = new InventoryInteractor();
 
   beforeEach(async function () {
-    this.server.createList('instance', 25);
+    this.server.createList('instance', 25, 'withHoldingAndItem');
     this.visit('/inventory');
   });
 
