@@ -1,4 +1,4 @@
-import { faker } from '@bigtest/mirage';
+import { faker, trait } from '@bigtest/mirage';
 
 import Factory from './application';
 
@@ -15,9 +15,19 @@ export default Factory.extend({
   notes: [],
   statisticalCodeIds: [],
 
-  afterCreate(instance, server) {
-    const item = server.create('item');
-    instance.items = [item];
-    instance.save();
-  }
+  withItem: trait({
+    afterCreate(holding, server) {
+      const item = server.create('item');
+      holding.items = [item];
+      item.save();
+    }
+  }),
+
+  withPagedItem: trait({
+    afterCreate(holding, server) {
+      const item = server.create('item', { status: { name: 'Paged' } });
+      holding.items = [item];
+      item.save();
+    }
+  })
 });

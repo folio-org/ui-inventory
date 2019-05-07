@@ -102,6 +102,10 @@ export default function configure() {
     }
   });
 
+  this.get('/inventory/items/:id', ({ items }, { params }) => {
+    return items.find(params.id);
+  });
+
   this.get('/circulation/loans', ({ loans }, request) => {
     if (request.queryParams.query) {
       const cqlParser = new CQLParser();
@@ -127,6 +131,10 @@ export default function configure() {
   this.get('/holdings-storage/holdings', {
     holdingsRecords: [],
     totalRecords: 0
+  });
+
+  this.get('/holdings-storage/holdings/:id', ({ holdings }, { params }) => {
+    return holdings.find(params.id);
   });
 
   this.get('/circulation/requests', {

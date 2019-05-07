@@ -1,4 +1,4 @@
-import { faker } from '@bigtest/mirage';
+import { faker, trait } from '@bigtest/mirage';
 
 import Factory from './application';
 
@@ -44,9 +44,21 @@ export default Factory.extend({
       }
       contributor.contributorNameTypeId = contributorNameTypeId;
     });
+  },
 
-    const holding = server.create('holding');
-    instance.holdings = [holding];
-    instance.save();
-  }
+  withHoldingAndItem: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding', 'withItem');
+      instance.holdings = [holding];
+      instance.save();
+    }
+  }),
+
+  withHoldingAndPagedItem: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding', 'withPagedItem');
+      instance.holdings = [holding];
+      instance.save();
+    }
+  })
 });
