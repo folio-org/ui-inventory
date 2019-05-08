@@ -60,5 +60,17 @@ export default Factory.extend({
       instance.holdings = [holding];
       instance.save();
     }
+  }),
+
+  withHoldingAndInProcessItem: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding');
+      const item = server.create('item', { status: { name: 'In process' } });
+
+      holding.items = [item];
+      holding.save();
+      instance.holdings = [holding];
+      instance.save();
+    }
   })
 });
