@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -93,7 +93,7 @@ class ItemsPerHoldingsRecord extends React.Component {
     } = this.props;
 
     return (
-      <div>
+      <Fragment>
         <Button
           id="clickable-view-holdings"
           to={{ pathname: `/inventory/view/${instance.id}/${holdingsRecord.id}` }}
@@ -112,7 +112,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             <FormattedMessage id="ui-inventory.addItem" />
           </Icon>
         </Button>
-      </div>
+      </Fragment>
     );
   }
 
