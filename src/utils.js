@@ -14,6 +14,7 @@ export function canMarkItemAsMissing(item) {
     itemStatuses.AVAILABLE,
     itemStatuses.IN_TRANSIT,
     itemStatuses.AWAITING_PICKUP,
-    itemStatuses.PAGED
+    itemStatuses.PAGED,
+    itemStatuses.IN_PROCESS
   ], get(item, 'status.name'));
 }
