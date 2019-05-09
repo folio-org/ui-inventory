@@ -139,7 +139,7 @@ describe('InstanceEditPage', () => {
   /**
    * Contributors
    */
-  describe.only('clicking on "add contributor"', () => {
+  describe('clicking on "add contributor"', () => {
     const previousContributorCount = InstanceEditPage.contributors.contributorCount;
 
     beforeEach(async () => {
