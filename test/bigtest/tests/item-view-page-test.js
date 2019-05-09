@@ -106,4 +106,31 @@ describe('ItemViewPage', () => {
       });
     });
   });
+
+  describe('visiting the in proccess item view page', () => {
+    beforeEach(async function () {
+      const instance = this.server.create(
+        'instance',
+        'withHoldingAndInProcessItem',
+        {
+          title: 'ADVANCING RESEARCH',
+        }
+      );
+      const holding = this.server.schema.instances.first().holdings.models[0];
+      const item = holding.items.models[0].attrs;
+
+      this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
+      await ItemViewPage.whenLoaded();
+    });
+
+    describe('clicking on mark as missing', () => {
+      beforeEach(async () => {
+        await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
+      });
+
+      it('should open a missing confirmation modal', () => {
+        expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
+      });
+    });
+  });
 });

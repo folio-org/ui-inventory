@@ -13,6 +13,7 @@ describe('InstanceViewPage', () => {
     const instance = this.server.create('instance', {
       title: 'ADVANCING RESEARCH',
     });
+
     this.visit(`/inventory/view/${instance.id}`);
   });
 
@@ -43,6 +44,12 @@ describe('InstanceViewPage', () => {
       it('should redirect to instance create page', () => {
         expect(InstanceCreatePage.$root).to.exist;
       });
+    });
+  });
+
+  describe('items per holdings', () => {
+    it('should render an app icon for each item in the items list', () => {
+      expect(InstanceViewPage.items.itemsHasAppIcon).to.be.true;
     });
   });
 });
