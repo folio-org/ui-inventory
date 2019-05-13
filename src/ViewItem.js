@@ -491,21 +491,23 @@ class ViewItem extends React.Component {
 
     const labelPermanentHoldingsLocation = _.get(permanentHoldingsLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
+    const itemIdOrBarcode = item.barcode || item.id;
 
     let requestLink = 0;
     const requestFiltersLink = 'requestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit%2CrequestStatus.Open%20-%20Not%20yet%20filled';
-    if (requestRecords.length && item.barcode) {
-      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+    if (requestRecords.length && itemIdOrBarcode) {
+      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
     }
 
     let loanLink = item.status.name;
     let borrowerLink = '-';
+
     if (this.state.loan && this.state.borrower) {
       loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
     }
     if (loanLink === 'Awaiting pickup') {
-      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
+      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
     let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);
