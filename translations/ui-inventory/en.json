@@ -350,5 +350,15 @@
   "relatedInstances": "Related instances",
   "duplicateItem": "Duplicate",
   "error.noMatch.oops": "Uh-oh!",
-  "error.noMatch.how": "How did you get to {location}?"
+  "error.noMatch.how": "How did you get to {location}?",
+
+  "searchableIndexes.all": "All (title, contributor, identifier)",
+  "searchableIndexes.barcode": "Barcode",
+  "searchableIndexes.instanceId": "Instance ID",
+  "searchableIndexes.title": "Title",
+  "searchableIndexes.identifier": "Identifier",
+  "searchableIndexes.isbn": "- ISBN",
+  "searchableIndexes.issn": "- ISSN",
+  "searchableIndexes.contributor": "Contributor",
+  "searchableIndexes.subject": "Subject"
 }

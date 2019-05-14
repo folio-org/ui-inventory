@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  intlShape,
+  injectIntl
+} from 'react-intl';
 
 import {
   stripesShape,
@@ -56,15 +60,15 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}" or contributors adj "\\"name\\": \\"${term}\\"" or identifiers adj "\\"value\\": \\"${term}\\"")` },
-  { label: 'Barcode', value: 'item.barcode', makeQuery: term => `(item.barcode=="${term}")` },
-  { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}")` },
-  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}")` },
-  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}\\"")` },
-  { label: '- ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
-  { label: '- ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
-  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}\\"")` },
-  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}")` },
+  { label: 'all', value: 'all', makeQuery: term => `(title="${term}" or contributors adj "\\"name\\": \\"${term}\\"" or identifiers adj "\\"value\\": \\"${term}\\"")` },
+  { label: 'barcode', value: 'item.barcode', makeQuery: term => `(item.barcode=="${term}")` },
+  { label: 'instanceId', value: 'id', makeQuery: term => `(id="${term}")` },
+  { label: 'title', value: 'title', makeQuery: term => `(title="${term}")` },
+  { label: 'identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}\\"")` },
+  { label: 'isbn', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
+  { label: 'issn', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
+  { label: 'contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}\\"")` },
+  { label: 'subject', value: 'subject', makeQuery: term => `(subjects="${term}")` },
 ];
 
 class Instances extends React.Component {
@@ -322,6 +326,7 @@ class Instances extends React.Component {
       onSelectRow,
       disableRecordCreation,
       visibleColumns,
+      intl: { formatMessage },
     } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
@@ -401,6 +406,15 @@ class Instances extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
     };
 
+    const translatedSearchableIndexes = searchableIndexes.map(i => {
+      const { value, label, ...rest } = i;
+      return {
+        label: formatMessage({ id: `ui-inventory.searchableIndexes.${label}` }),
+        value,
+        ...rest
+      };
+    });
+
     return (
       <div data-test-inventory-instances>
         <IntlConsumer>
@@ -409,7 +423,7 @@ class Instances extends React.Component {
               packageInfo={packageInfo}
               objectName="inventory"
               maxSortKeys={1}
-              searchableIndexes={searchableIndexes}
+              searchableIndexes={translatedSearchableIndexes}
               selectedIndex={_.get(this.props.resources.query, 'qindex')}
               searchableIndexesPlaceholder={null}
               onChangeIndex={this.onChangeIndex}
@@ -447,6 +461,7 @@ class Instances extends React.Component {
 }
 
 Instances.propTypes = {
+  intl: intlShape,
   stripes: stripesShape.isRequired,
   resources: PropTypes.shape({
     records: PropTypes.shape({
@@ -504,4 +519,4 @@ Instances.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default withLocation(Instances);
+export default withLocation(injectIntl(Instances));
