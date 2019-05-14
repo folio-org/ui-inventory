@@ -23,6 +23,10 @@ describe('Instances', () => {
     expect(inventory.instances().length).to.be.gte(5);
   });
 
+  it('has a search filter with an "all" option', function () {
+    expect(inventory.filter.all).to.equal('All (title, contributor, identifier)');
+  });
+
   describe('clicking on the first item', function () {
     beforeEach(async function () {
       await inventory.instances(0).click();
