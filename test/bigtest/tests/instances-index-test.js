@@ -27,6 +27,38 @@ describe('Instances', () => {
     expect(inventory.filter.all).to.equal('All (title, contributor, identifier)');
   });
 
+  it('has a search filter with a "barcode" option', function () {
+    expect(inventory.filter.barcode).to.equal('Barcode');
+  });
+
+  it('has a search filter with an "instance ID" option', function () {
+    expect(inventory.filter.instanceId).to.equal('Instance ID');
+  });
+
+  it('has a search filter with a "title" option', function () {
+    expect(inventory.filter.title).to.equal('Title');
+  });
+
+  it('has a search filter with an "identifier" option', function () {
+    expect(inventory.filter.identifier).to.equal('Identifier');
+  });
+
+  it('has a search filter with an "isbn" option', function () {
+    expect(inventory.filter.isbn).to.equal('- ISBN');
+  });
+
+  it('has a search filter with an "issn" option', function () {
+    expect(inventory.filter.issn).to.equal('- ISSN');
+  });
+
+  it('has a search filter with a "contributor" option', function () {
+    expect(inventory.filter.contributor).to.equal('Contributor');
+  });
+
+  it('has a search filter with a "subject" option', function () {
+    expect(inventory.filter.subject).to.equal('Subject');
+  });
+
   describe('clicking on the first item', function () {
     beforeEach(async function () {
       await inventory.instances(0).click();
