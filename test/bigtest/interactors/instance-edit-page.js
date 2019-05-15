@@ -33,8 +33,8 @@ import {
 
 @interactor class Contributors {
   contributorCount = count('[data-test-repeater-field-row]')
-  makeFirstContributorPrimary = clickable('button[data-test-edit-instance-contributors-primary-button]');
-  firstContributorIsPrimary = isPresent('button[data-test-edit-instance-contributors-primary-button][class*=primary---]')
+  makeFirstContributorPrimary = clickable('button[data-test-primary-toggle-button]');
+  firstContributorIsPrimary = isPresent('button[data-test-primary-toggle-button][class*=primary---]')
   clickAddNewContributor = clickable('#clickable-add-contributor');
 }
 

@@ -1,16 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { change } from 'redux-form';
 import {
   Icon,
   TextField,
   Select,
-  Button,
-  Label,
 } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 import RepeatableField from '../components/RepeatableField';
+import PrimaryToggleButton from './components/PrimaryToggleButton';
 
 const ContributorFields = ({
   contributorNameTypes,
@@ -71,31 +69,7 @@ const ContributorFields = ({
             {
               name: 'primary',
               label: intl.formatMessage({ id: 'ui-inventory.primary' }),
-              component: ({ label, meta, input, fields }) => { /* eslint-disable-line react/prop-types */
-                const isPrimary = input.value === true;
-                const handleChange = () => {
-                  // Reset other primary fields
-                  fields.forEach(fieldName => meta.dispatch(change(meta.form, `${fieldName}.primary`, false)));
-
-                  // Set primary flag for current field
-                  input.onChange(true);
-                };
-
-                return (
-                  <Fragment>
-                    { label && <Label>{label}</Label>}
-                    <Button
-                      data-test-edit-instance-contributors-primary-button
-                      buttonStyle={isPrimary ? 'primary' : 'default'}
-                      onClick={!isPrimary ? handleChange : null}
-                      type="button"
-                      fullWidth
-                    >
-                      <FormattedMessage id={`ui-inventory.${isPrimary ? 'primary' : 'makePrimary'}`} />
-                    </Button>
-                  </Fragment>
-                );
-              }
+              component: PrimaryToggleButton,
             },
           ]}
           newItemTemplate={{
