@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 
 const PrimaryToggleButton = ({ label, meta: { dispatch, form }, input: { value, onChange }, fields }) => {
   const isPrimary = value === true;
-  const handleChange = () => {
+  const handleClick = () => {
     if (isPrimary) {
       return;
     }
@@ -28,7 +28,7 @@ const PrimaryToggleButton = ({ label, meta: { dispatch, form }, input: { value, 
       <Button
         data-test-primary-toggle-button
         buttonStyle={isPrimary ? 'primary' : 'default'}
-        onClick={handleChange}
+        onClick={handleClick}
         type="button"
         fullWidth
       >
