@@ -135,4 +135,29 @@ describe('InstanceEditPage', () => {
       });
     });
   });
+
+  /**
+   * Contributors
+   */
+  describe('clicking on "add contributor"', () => {
+    const previousContributorCount = InstanceEditPage.contributors.contributorCount;
+
+    beforeEach(async () => {
+      await InstanceEditPage.contributors.clickAddNewContributor();
+    });
+
+    it('should increase number of contributors', () => {
+      expect(InstanceEditPage.contributors.contributorCount).to.be.gt(previousContributorCount);
+    });
+
+    describe('clicking "make primary" on first contributor', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.contributors.makeFirstContributorPrimary();
+      });
+
+      it('should change the button style to "primary"', () => {
+        expect(InstanceEditPage.contributors.firstContributorIsPrimary).to.be.true;
+      });
+    });
+  });
 });
