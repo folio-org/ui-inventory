@@ -5,6 +5,7 @@ import { Settings } from '@folio/stripes/smart-components';
 
 import MaterialTypesSettings from './MaterialTypesSettings';
 import LoanTypesSettings from './LoanTypesSettings';
+import ItemNoteTypesSettings from './ItemNoteTypesSettings';
 import FormatsSettings from './FormatsSettings';
 import ResourceTypesSettings from './ResourceTypesSettings';
 import ContributorTypesSettings from './ContributorTypesSettings';
@@ -13,6 +14,7 @@ import StatisticalCodeSettings from './StatisticalCodeSettings';
 import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 import HoldingsTypeSettings from './HoldingsTypeSettings';
 import ILLPolicy from './ILLPolicy';
+import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
@@ -72,6 +74,13 @@ class InventorySettings extends React.Component {
             component: ILLPolicy,
             perm: 'ui-inventory.settings.ill-policies',
           },
+          {
+            route: 'holdingsNoteTypes',
+            label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
+            component: HoldingsNoteTypesSettings,
+            perm: 'ui-inventory.settings.holdings-note-types',
+          },
+
         ]
       },
       {
@@ -88,6 +97,12 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.materialTypes" />,
             component: MaterialTypesSettings,
             perm: 'ui-inventory.settings.materialtypes',
+          },
+          {
+            route: 'itemNoteTypes',
+            label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
+            component: ItemNoteTypesSettings,
+            perm: 'ui-inventory.settings.item-note-types',
           },
         ]
       },
