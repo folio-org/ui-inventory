@@ -27,12 +27,12 @@ describe('Resource types (instance types)', () => {
       source : 'rdacontent'
     });
   });
-  describe('viewing resource type list', () => {
+  describe('viewing resource types list', () => {
     beforeEach(function () {
       this.visit('/settings/inventory/resourcetypes');
     });
 
-    it('has a resource type list', () => {
+    it('has a resource types list', () => {
       expect(InstanceTypes.hasList).to.be.true;
     });
 

@@ -55,10 +55,8 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/alternative-title-types', {
-    alternativeTitleTypes: [],
-    totalRecords: 0
-  });
+  this.get('/alternative-title-types');
+  this.get('/statistical-title-types/:id');
 
   this.get('/inventory/instances', ({ instances, holdings, items }, request) => {
     if (request.queryParams.query) {
