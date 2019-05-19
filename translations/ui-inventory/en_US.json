@@ -368,5 +368,6 @@
     "noItemDeleteModal.requestMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> has a request associated the request has been fulfilled, or the request has been cancelled.",
     "noItemDeleteModal.orderMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is on order and cannot be <strong>deleted</strong> until all dependencies with the Order app have been cleared. If you want to continue with the deletion of the item record, go to the Order app and clear the dependencies.",
     "holdingRecord": "Holding record {location} {callNumber}",
-    "instanceRecordTitle": "Instance record {title} {publisherAndDate}"
+    "instanceRecordTitle": "Instance record {title} {publisherAndDate}",
+    "makePrimary": "Make primary"
 }

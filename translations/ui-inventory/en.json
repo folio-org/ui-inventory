@@ -63,6 +63,7 @@
   "freeText": "Free text",
   "nameType": "Name Type",
   "primary": "Primary",
+  "makePrimary": "Make primary",
   "childInstances": "Child instances",
   "addChildInstance": "Add child instance",
   "childInstance": "Child instance",
