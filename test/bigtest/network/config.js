@@ -291,15 +291,11 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/holdings-note-types', {
-    holdingsNoteTypes: [],
-    totalRecords: 0
-  });
+  this.get('/holdings-note-types');
+  this.get('/holdings-note-types/:id');
 
-  this.get('/item-note-types', {
-    itemNoteTypes: [],
-    totalRecords: 0
-  });
+  this.get('/item-note-types');
+  this.get('/item-note-types/:id');
 
   this.get('/ill-policies', {
     illPolicies: [],
