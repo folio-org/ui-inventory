@@ -9,4 +9,4 @@ import {
   rowCount = count('[class^="editListRow---"]');
 }
 
-export default new AlternativeTitleTypes('form');
+export default new AlternativeTitleTypes();
