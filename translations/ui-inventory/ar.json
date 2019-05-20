@@ -369,5 +369,7 @@
     "noItemDeleteModal.orderMessage": "HRID المادة <strong>{hrid}</strong> بباركود <strong>{barcode}</strong> قيد الطلب ولا يمكن <strong>حذفها</strong> حتى يتم مسح تبعيتها لتطبيق الطلبيات. إذا أردت الاستمرار في حذف تسجيلة المادة، اذهب إلى تطبيق الطلبيات وقم بمسح كل التبعيات.",
     "holdingRecord": "تسجيلة المقتنيات {location} {callNumber}",
     "instanceRecordTitle": "تسجيلة الوعاء {title} {publisherAndDate}",
-    "makePrimary": "Make primary"
+    "makePrimary": "اجعله الرئيسي",
+    "holdingsNoteTypes": "أنواع ملاحظات المقتنيات",
+    "itemNoteTypes": "أنواع ملاحظات المادة"
 }

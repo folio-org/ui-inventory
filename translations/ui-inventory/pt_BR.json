@@ -369,5 +369,7 @@
     "noItemDeleteModal.orderMessage": "O item HRID <strong>{hrid}</strong> com código de barras <strong>{barcode}</strong> está em um pedido e não pode ser <strong>excluído</strong> até que todas as dependências do aplicativo Pedidos tenham sido apagadas. Se você quiser continuar com a exclusão do registro do item, vá para o aplicativo Pedidos e limpe as dependências.",
     "holdingRecord": "Registo de holding {location} {callNumber}",
     "instanceRecordTitle": "Registro de instância {title} {publisherAndDate}",
-    "makePrimary": "Make primary"
+    "makePrimary": "Tornar primário",
+    "holdingsNoteTypes": "Tipos de notas de holdings",
+    "itemNoteTypes": "Tipos de notas de item"
 }
