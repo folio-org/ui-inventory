@@ -22,7 +22,7 @@ import {
   KeyValue,
   Layer,
   Layout,
-  IconButton,
+  PaneHeaderIconButton,
   Icon,
   Headline,
   MultiColumnList,
@@ -241,6 +241,7 @@ class ViewInstance extends React.Component {
       'Code': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).code,
       'Source': x => this.refLookup(referenceTables.contributorTypes, _.get(x, ['contributorTypeId'])).source,
       'Free text': x => _.get(x, ['contributorTypeText']) || '',
+      'Primary': ({ primary }) => primary && <FormattedMessage id="ui-inventory.primary" />
     };
 
     const electronicAccessRowFormatter = {
@@ -276,7 +277,7 @@ class ViewInstance extends React.Component {
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editInstance">
           {ariaLabel => (
-            <IconButton
+            <PaneHeaderIconButton
               id="clickable-edit-instance"
               style={{ visibility: !instance ? 'hidden' : 'visible' }}
               href={this.craftLayerUrl('edit', location)}
@@ -295,6 +296,7 @@ class ViewInstance extends React.Component {
           id="pane-instancedetails"
           defaultWidth={paneWidth}
           paneTitle={<FormattedMessage id="ui-inventory.editInstance" />}
+          appIcon={<AppIcon app="inventory" iconKey="instance" />}
           lastMenu={detailMenu}
           dismissible
           onClose={onClose}
@@ -672,7 +674,7 @@ class ViewInstance extends React.Component {
                       <MultiColumnList
                         id="list-contributors"
                         contentData={instance.contributors}
-                        visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text']}
+                        visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text', 'Primary']}
                         columnMapping={{
                           'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
                           'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
@@ -680,6 +682,7 @@ class ViewInstance extends React.Component {
                           'Code': intl.formatMessage({ id: 'ui-inventory.code' }),
                           'Source': intl.formatMessage({ id: 'ui-inventory.source' }),
                           'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
+                          'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
                         }}
                         formatter={contributorsRowFormatter}
                         ariaLabel={ariaLabel}

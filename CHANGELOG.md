@@ -1,16 +1,28 @@
 # Change history for ui-inventory
 
-## 1.8.0 (IN PROGRESS)
+## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.7.0...v1.8.0)
 
+* New icons for Instance, Holdings, Items. UIIN-133.
 * Retrieve 1000 items from lookup tables. Refs UIIN-413.
 * Fix alphabetical order of lookup tables. Fixes UIIN-421.
 * Don't append wildcards to search terms. Fixes UIIN-481.
 * Provide the correct a11y props to `<Layer>`s.
+* Use item id instead of barcode when creating new request. UIREQ-253.
 * Add missing order-by clauses to item-record lookup tables. Fixes UIIN-522.
 * Send `contributors.type.primary` as correct type. Refs MODINV-117.
 * Add ability to search by barcode. Part of UIIN-143.
 * Move acquisitions items to the acquisitions accordion. Fixes UIIN-506.
+* Holdings and Item record. Relabel acquisition fields. UIIN-507.
 * Remove duplicate asterisks from required fields. Fixes UIIN-490.
+* Add ability to mark Paged items as missing. Part of UIIN-555.
+* Mark In process items as missing. Part of UIIN-560.
+* Item records, delete confirmation modal. UIIN-335.
+* Item record deletes, check dependencies in other modules. UIIN-534.
+* Holdings records, delete confirmation modal. UIIN-334.
+* Align menu item labels across pages. UIIN-524.
+* Fixes to language inconsistencies. UIIN-521.
+* Other bug fixes: UIIN-432, UIIN-479, UIIN-510, UIIN-513, UIIN-536, UIIN-556
 * Add missing validation for some CV items.
 
 ## [1.7.0](https://github.com/folio-org/ui-inventory/tree/v1.7.0) (2019-03-15)

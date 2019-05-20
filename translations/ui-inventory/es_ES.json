@@ -368,5 +368,6 @@
     "noItemDeleteModal.requestMessage": "El ítem HRID <strong>{hrid}</strong> con código de barras <strong>{barcode}</strong> tiene una solicitud asociada, la solicitud ha sido rellenada o la solicitud ha sido cancelada.",
     "noItemDeleteModal.orderMessage": "El ítem HRID <strong> {hrid} </strong> con el código de barras <strong> {barcode} </strong> está en petición y no se puede eliminar hasta que se borre la dependencia con la app de pedidos, y tal vez se elimine el registro de pedido o se reciba el ítem y el estado del ítem sea 'Disponible'",
     "holdingRecord": "Registro de fondo: {location} > {callNumber}",
-    "instanceRecordTitle": "Registro de instancia {title} {publisherAndDate}"
+    "instanceRecordTitle": "Registro de instancia {title} {publisherAndDate}",
+    "makePrimary": "Make primary"
 }

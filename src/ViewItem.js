@@ -18,7 +18,7 @@ import {
   ExpandAllButton,
   KeyValue,
   Layer,
-  IconButton,
+  PaneHeaderIconButton,
   MultiColumnList,
   Button,
   Icon,
@@ -32,7 +32,7 @@ import {
   IntlConsumer
 } from '@folio/stripes/core';
 
-import { craftLayerUrl } from './utils';
+import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import { itemStatuses } from './constants';
@@ -326,7 +326,6 @@ class ViewItem extends React.Component {
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
     const firstItem = _.get(resources, 'items.records[0]');
-    const status = _.get(firstItem, ['status', 'name']);
     const request = _.get(resources, 'requests.records[0]');
 
     const newRequestLink = firstItem.barcode
@@ -375,7 +374,7 @@ class ViewItem extends React.Component {
           </Icon>
         </Button>
         {
-          (status === 'Available' || status === 'In transit' || status === 'Awaiting pickup') &&
+          canMarkItemAsMissing(firstItem) &&
           <Button
             id="clickable-missing-item"
             onClick={() => {
@@ -389,7 +388,6 @@ class ViewItem extends React.Component {
               <FormattedMessage id="ui-inventory.markAsMissing" />
             </Icon>
           </Button>
-
         }
         <Button
           to={newRequestLink}
@@ -478,7 +476,7 @@ class ViewItem extends React.Component {
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editItem">
           {ariaLabel => (
-            <IconButton
+            <PaneHeaderIconButton
               icon="edit"
               id="clickable-edit-item"
               style={{ visibility: !item ? 'hidden' : 'visible' }}
@@ -493,21 +491,23 @@ class ViewItem extends React.Component {
 
     const labelPermanentHoldingsLocation = _.get(permanentHoldingsLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
+    const itemIdOrBarcode = item.barcode || item.id;
 
     let requestLink = 0;
     const requestFiltersLink = 'requestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit%2CrequestStatus.Open%20-%20Not%20yet%20filled';
-    if (requestRecords.length && item.barcode) {
-      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+    if (requestRecords.length && itemIdOrBarcode) {
+      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
     }
 
     let loanLink = item.status.name;
     let borrowerLink = '-';
+
     if (this.state.loan && this.state.borrower) {
       loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
     }
     if (loanLink === 'Awaiting pickup') {
-      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.barcode}&sort=Request%20Date`}>{loanLink}</Link>;
+      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
     let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);

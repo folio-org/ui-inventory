@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import {
   Icon,
   TextField,
   Select,
-  Checkbox,
 } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
-
 import RepeatableField from '../components/RepeatableField';
+import PrimaryToggleButton from './components/PrimaryToggleButton';
 
 const ContributorFields = ({
   contributorNameTypes,
@@ -57,12 +55,6 @@ const ContributorFields = ({
               required: true,
             },
             {
-              label: <FormattedMessage id="ui-inventory.primary" />,
-              name: 'primary',
-              component: Checkbox,
-              type: 'checkbox',
-            },
-            {
               label: <FormattedMessage id="ui-inventory.type" />,
               name: 'contributorTypeId',
               component: Select,
@@ -73,6 +65,11 @@ const ContributorFields = ({
               label: <FormattedMessage id="ui-inventory.typeFreeText" />,
               name: 'contributorTypeText',
               component: TextField,
+            },
+            {
+              name: 'primary',
+              label: intl.formatMessage({ id: 'ui-inventory.primary' }),
+              component: PrimaryToggleButton,
             },
           ]}
           newItemTemplate={{

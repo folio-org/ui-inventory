@@ -1,4 +1,4 @@
-import { faker, association } from '@bigtest/mirage';
+import { faker } from '@bigtest/mirage';
 
 import Factory from './application';
 
@@ -30,5 +30,6 @@ export default Factory.extend({
   effectiveLocation: {
     id: faker.random.uuid(),
     name: 'Main Library'
-  }
+  },
+  links: {},
 });
