@@ -664,19 +664,31 @@ class HoldingsForm extends React.Component {
               label={<FormattedMessage id="ui-inventory.notes" />}
             >
               <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                    name="acquisitionFormat"
-                    id="edit_acquisitionformat"
-                    component={TextField}
-                  />
+                <Col sm={10}>
+                  <Note noteTypeOptions={holdingsNoteTypeOptions} />
                 </Col>
+              </Row>
+            </Accordion>
+            <Accordion
+              open={accordions.accordion05}
+              id="accordion05"
+              onToggle={this.handleAccordionToggle}
+              label={<FormattedMessage id="ui-inventory.acquisitions" />}
+            >
+              <Row>
                 <Col sm={3}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
                     name="acquisitionMethod"
                     id="edit_acquisitionmethod"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+                    name="acquisitionFormat"
+                    id="edit_acquisitionformat"
                     component={TextField}
                   />
                 </Col>
@@ -689,18 +701,7 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
-              <Row>
-                <Col sm={10}>
-                  <Note noteTypeOptions={holdingsNoteTypeOptions} />
-                </Col>
-              </Row>
             </Accordion>
-            <Accordion
-              open={accordions.accordion05}
-              id="accordion05"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.acquisitions" />}
-            />
             <Accordion
               open={accordions.accordion06}
               id="accordion06"
