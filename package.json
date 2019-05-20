@@ -262,6 +262,32 @@
           "settings.inventory.enabled"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.holdings-note-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove holdings note types",
+        "subPermissions": [
+          "inventory-storage.holdings-note-types.collection.get",
+          "inventory-storage.holdings-note-types.item.delete",
+          "inventory-storage.holdings-note-types.item.get",
+          "inventory-storage.holdings-note-types.item.post",
+          "inventory-storage.holdings-note-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.item-note-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove item note types",
+        "subPermissions": [
+          "inventory-storage.item-note-types.collection.get",
+          "inventory-storage.item-note-types.item.delete",
+          "inventory-storage.item-note-types.item.get",
+          "inventory-storage.item-note-types.item.post",
+          "inventory-storage.item-note-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
       }
     ],
     "translations": {
