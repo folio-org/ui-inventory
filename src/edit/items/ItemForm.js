@@ -61,17 +61,20 @@ function checkUniqueBarcode(okapi, barcode) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const barcodeTakenMsg = <FormattedMessage id="ui-inventory.barcodeTaken" />;
+  const { barcode } = values;
 
-  if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
+  if (blurredField === 'barcode'
+    && barcode
+    && barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
       // TODO: Should use stripes-connect (dispatching an action and update state)
-      checkUniqueBarcode(props.okapi, values.barcode).then((response) => {
+      checkUniqueBarcode(props.okapi, barcode).then((response) => {
         if (response.status >= 400) {
           //
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
+              const barcodeTakenMsg = <FormattedMessage id="ui-inventory.barcodeTaken" />;
               const error = { barcode: barcodeTakenMsg };
               reject(error);
             } else {
