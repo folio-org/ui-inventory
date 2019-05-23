@@ -223,6 +223,10 @@ class ViewItem extends React.Component {
   }
 
   saveItem = (item) => {
+    if (!item.barcode) {
+      delete item.barcode;
+    }
+
     this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
   }
 
