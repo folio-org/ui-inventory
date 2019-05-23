@@ -306,7 +306,7 @@ class ViewItem extends React.Component {
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
     } else if (itemStatus === ON_ORDER) {
-      messageId = 'ui-inventory.noItemDeleteModal.onOrderMessage';
+      messageId = 'ui-inventory.noItemDeleteModal.orderMessage';
     } else if (request) {
       messageId = 'ui-inventory.noItemDeleteModal.requestMessage';
     }
