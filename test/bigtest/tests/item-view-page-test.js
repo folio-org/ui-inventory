@@ -28,7 +28,6 @@ describe('ItemViewPage', () => {
     });
 
     it('displays the title in the pane header', () => {
-      console.log('ItemViewPage.title', ItemViewPage.title);
       expect(ItemViewPage.title).to.equal(`Item record ${item.barcode} ${item.status.name}`);
     });
 
