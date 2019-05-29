@@ -170,7 +170,6 @@ class ViewHoldingsRecord extends React.Component {
 
   canDeleteHoldingsRecord = () => {
     const itemCount = _.get(this.props.resources, 'items.records.length', 0);
-    console.log('item', itemCount, _.get(this.props.resources, 'items.records'));
     return (itemCount === 0);
   }
 
