@@ -2,7 +2,8 @@ import {
   interactor,
   clickable,
   isPresent,
-  text,
+  isVisible,
+  text
 } from '@bigtest/interactor';
 
 @interactor class HeaderDropdown {
@@ -20,8 +21,11 @@ import {
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  hasConfirmDeleteModal = isPresent('[data-test-delete-confirmation-modal]');
-  hasNoDeleteHoldingsRecordModal = isPresent('[data-test-no-delete-holdingsrecord-modal]');
+  confirmDeleteModalIsVisible = isVisible('#data-test-delete-confirmation-modal');
+  noDeleteHoldingsRecordModalIsVisible = isVisible('[data-test-no-delete-holdingsrecord-modal]');
+
+  confirmDeleteModalIsPresent = isPresent('#data-test-delete-confirmation-modal');
+  noDeleteHoldingsRecordModalIsPresent = isPresent('[data-test-no-delete-holdingsrecord-modal]');
 }
 
-export default new HoldingsViewPage('[data-test-holdings-view-page]');
+export default new HoldingsViewPage();

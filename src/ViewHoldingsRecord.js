@@ -43,6 +43,12 @@ class ViewHoldingsRecord extends React.Component {
         path: 'holdings-storage/holdings',
       },
     },
+    items: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory/items?query=(holdingsRecordId==:{holdingsrecordid})&limit=5000',
+      resourceShouldRefresh: true,
+    },
     instances1: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
@@ -163,7 +169,9 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   canDeleteHoldingsRecord = () => {
-    return true;
+    const itemCount = _.get(this.props.resources, 'items.records.length', 0);
+    console.log('item', itemCount, _.get(this.props.resources, 'items.records'));
+    return (itemCount === 0);
   }
 
   refLookup = (referenceTable, id) => {
@@ -265,6 +273,7 @@ class ViewHoldingsRecord extends React.Component {
         instances1,
         permanentLocation,
         temporaryLocation,
+        items,
       },
       parentResources: {
         holdingsTypes,
@@ -284,6 +293,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
+    const itemCount = _.get(items, 'records.length', 0);
 
     referenceTables.illPolicies = illPolicies.records;
     referenceTables.holdingsTypes = holdingsTypes.records;
@@ -352,26 +362,31 @@ class ViewHoldingsRecord extends React.Component {
       />
     );
 
+    const noHoldingsRecordDeleteModalMessageId = itemCount > 1
+      ? 'ui-inventory.itemsOnHoldingsRecordDeleteModal.message'
+      : 'ui-inventory.itemOnHoldingsRecordDeleteModal.message';
+
     const noHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
-        id="ui-inventory.noHoldingsRecordDeleteModal.message"
+        id={noHoldingsRecordDeleteModalMessageId}
         values={{
           hrid: holdingsRecord.hrid,
-          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
+          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null),
+          itemCount,
         }}
       />
     );
 
     const noHoldingsRecordDeleteFooter = (
       <Button onClick={this.hideNoHoldingsRecordDeleteModal}>
-        <FormattedMessage id="stripes-core.button.back" />
+        <FormattedMessage id="stripes-core.button.cancel" />
       </Button>
     );
 
     return (
       <div>
         <ConfirmationModal
-          data-test-delete-confirmation-modal
+          id="data-test-delete-confirmation-modal"
           open={this.state.confirmHoldingsRecordDeleteModal}
           heading={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
           message={confirmHoldingsRecordDeleteModalMessage}
@@ -870,6 +885,9 @@ ViewHoldingsRecord.propTypes = {
   }),
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    items: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     holdingsRecords: PropTypes.shape({
