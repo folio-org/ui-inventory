@@ -17,7 +17,11 @@ class Items extends React.Component {
     items: {
       type: 'okapi',
       records: 'items',
-      path: 'inventory/items?query=(holdingsRecordId==!{holdingsRecord.id})&limit=5000',
+      path: 'inventory/items',
+      params: {
+        query: 'holdingsRecordId==!{holdingsRecord.id}',
+        limit: '5000',
+      },
       resourceShouldRefresh: true,
     },
   });

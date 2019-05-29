@@ -10,10 +10,9 @@ describe('InstanceViewPage', () => {
   setupApplication();
 
   beforeEach(async function () {
-    const instance = this.server.create('instance', {
+    const instance = this.server.create('instance', 'withHoldingAndItem', {
       title: 'ADVANCING RESEARCH',
     });
-
     this.visit(`/inventory/view/${instance.id}`);
   });
 

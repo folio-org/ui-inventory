@@ -93,7 +93,7 @@ export default function defaultScenario(server) {
 
   // instances
 
-  server.create('instance', {
+  server.create('instance', 'withHoldingAndItem', {
     'title': 'ADVANCING LIBRARY EDUCATION: TECHNOLOGICAL INNOVATION AND INSTRUCTIONAL DESIGN',
     'source': 'Local',
     'instanceType': TACTILE_TEXT,
