@@ -163,8 +163,6 @@ export default function configure() {
       cqlParser.parse(request.queryParams.query);
       const { field, term } = cqlParser.tree;
 
-      console.log(field, term);
-
       return items.where({ [field]: term });
     }
 

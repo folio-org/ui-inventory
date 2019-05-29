@@ -46,7 +46,11 @@ class ViewHoldingsRecord extends React.Component {
     items: {
       type: 'okapi',
       records: 'items',
-      path: 'inventory/items?query=(holdingsRecordId==:{holdingsrecordid})&limit=5000',
+      path: 'inventory/items',
+      params: {
+        query: '(holdingsRecordId==:{holdingsrecordid})',
+        limit: '5000',
+      },
       resourceShouldRefresh: true,
     },
     instances1: {

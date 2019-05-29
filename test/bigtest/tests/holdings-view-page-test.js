@@ -24,7 +24,7 @@ describe('HoldingsViewPage', () => {
     });
 
     it('displays the title in the pane header', () => {
-      expect(HoldingsViewPage.title).to.equal('Holding record');
+      expect(HoldingsViewPage.title).to.equal('Instance record Holding record');
     });
 
     describe('pane header dropdown menu', () => {
