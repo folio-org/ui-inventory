@@ -4,7 +4,7 @@ import Factory from './application';
 
 export default Factory.extend({
   id: faker.random.uuid(),
-  permanentLocationId: faker.random.uuid(),
+  permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
   hrid: () => Math.floor(Math.random() * 90000000) + 10000000,
   electronicAccess: [],
   formerIds: [],
@@ -19,6 +19,7 @@ export default Factory.extend({
     afterCreate(holding, server) {
       const item = server.create('item');
       holding.items = [item];
+      holding.save();
       item.save();
     }
   }),
@@ -27,7 +28,7 @@ export default Factory.extend({
     afterCreate(holding, server) {
       const item = server.create('item', { status: { name: 'Paged' } });
       holding.items = [item];
-      item.save();
+      holding.save();
     }
   })
 });

@@ -186,6 +186,8 @@
   "confirmHoldingsRecordDeleteModal.heading": "Confirm deletion of holdings record",
   "confirmHoldingsRecordDeleteModal.confirm": "Confirm",
   "noHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong>, location <strong>{location}</strong> has dependents and cannot be deleted",
+  "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be able to continue deletion of this holdings record, the associated item record must be deleted.",
+  "itemsOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>{itemCount}</strong> associated item records. To be able to continue deletion of this holdings record, all associated item records must be deleted.",
   "deleteItem": "Delete",
   "confirmItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> has no dependencies and will be <strong>deleted</strong>.",
   "confirmItemDeleteModal.heading": "Confirm deletion of item",
