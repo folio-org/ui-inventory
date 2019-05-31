@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 1.9.0 (IN PROGRESS)
+
+* `Save` buttons are labeled consistently with other apps. Refs UIIN-530.
+
 ## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.7.0...v1.8.0)
 
