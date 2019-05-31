@@ -389,7 +389,7 @@ class ViewHoldingsRecord extends React.Component {
     return (
       <div>
         <ConfirmationModal
-          id="data-test-delete-confirmation-modal"
+          id="delete-confirmation-modal"
           open={this.state.confirmHoldingsRecordDeleteModal}
           heading={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
           message={confirmHoldingsRecordDeleteModalMessage}

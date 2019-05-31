@@ -21,10 +21,9 @@ import {
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  confirmDeleteModalIsVisible = isVisible('#data-test-delete-confirmation-modal');
+  confirmDeleteModalIsVisible = isVisible('#delete-confirmation-modal');
+  confirmDeleteModalIsPresent = isPresent('#delete-confirmation-modal');
   noDeleteHoldingsRecordModalIsVisible = isVisible('[data-test-no-delete-holdingsrecord-modal]');
-
-  confirmDeleteModalIsPresent = isPresent('#data-test-delete-confirmation-modal');
   noDeleteHoldingsRecordModalIsPresent = isPresent('[data-test-no-delete-holdingsrecord-modal]');
 }
 
