@@ -489,7 +489,7 @@ class ViewInstance extends React.Component {
             <Col xs={2}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.metadataSource" />}
-                value={(instance.sourceRecordFormat ? _.get(instance, ['source'], '') : 'FOLIO')}
+                value={_.get(instance, ['source'], '')}
               />
             </Col>
             <Col xs={4}>

@@ -3,6 +3,7 @@
 *.swo
 artifacts
 node_modules
+.idea
 yarn.lock
 ModuleDescriptor.json
 yarn-error.log
