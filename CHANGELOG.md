@@ -3,6 +3,10 @@
 ## 1.9.0 (In Progress)
 
 * Check for dependencies when deleting holding record. Part of UIIN-550.
+* Show link to request for items without barcode. UIREQ-253.
+* Layout of primary contributor flag. UIIN-503.
+* Settings pages for note types. UIIN-453.
+* Bug fixes: UIIN-568
 
 ## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.7.0...v1.8.0)
