@@ -44,7 +44,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
-          .wait(`#list-inventory[data-total-count]`)
+          .wait('#list-inventory[data-total-count]')
           .wait(contentWait, title)
           .then(done)
           .catch(done);
@@ -67,7 +67,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
-          .wait(`#list-inventory[data-total-count]`)
+          .wait('#list-inventory[data-total-count]')
           .wait(contentWait, title)
 
           /* .evaluate(function evall(title2) {
@@ -96,7 +96,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
-          .wait(`#list-inventory[data-total-count]`)
+          .wait('#list-inventory[data-total-count]')
           .wait(contentWait, authorName)
           .then(done)
           .catch(done);

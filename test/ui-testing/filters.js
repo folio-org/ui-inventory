@@ -9,7 +9,6 @@ module.exports.test = function uiTest(uiTestCtx) {
     // Resource type filter test disabled as new resource types are being loaded.
     // const filters = ['resource-books', 'resource-serials', 'resource-ebooks', 'language-english', 'language-spanish', 'location-annex'];
     const filters = ['language-english', 'language-spanish', 'location-annex'];
-    let hitCount = null;
     describe('Login > Open module "Inventory" > Get hit counts > Click filters > Logout', () => {
       before((done) => {
         login(nightmare, config, done); // logs in with the default admin credentials
@@ -38,7 +37,7 @@ module.exports.test = function uiTest(uiTestCtx) {
             .click('#clickable-reset-all')
             .wait(`#clickable-filter-${filter}`)
             .click(`#clickable-filter-${filter}`)
-            .wait(`#list-inventory[data-total-count]`)
+            .wait('#list-inventory[data-total-count]')
             .click('#clickable-reset-all')
             .wait('#paneHeaderpane-results-subtitle')
             .wait('span[class^="noResultsMessageLabel"]')
