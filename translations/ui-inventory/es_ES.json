@@ -369,9 +369,9 @@
     "noItemDeleteModal.orderMessage": "El ítem HRID <strong> {hrid} </strong> con el código de barras <strong> {barcode} </strong> está en petición y no se puede eliminar hasta que se borre la dependencia con la app de pedidos, y tal vez se elimine el registro de pedido o se reciba el ítem y el estado del ítem sea 'Disponible'",
     "holdingRecord": "Registro de fondo: {location} > {callNumber}",
     "instanceRecordTitle": "Registro de instancia {title} {publisherAndDate}",
-    "makePrimary": "Make primary",
-    "holdingsNoteTypes": "Holdings note types",
-    "itemNoteTypes": "Item note types",
-    "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be able to continue deletion of this holdings record, the associated item record must be deleted.",
-    "itemsOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>{itemCount}</strong> associated item records. To be able to continue deletion of this holdings record, all associated item records must be deleted."
+    "makePrimary": "Hacer primaria",
+    "holdingsNoteTypes": "Tipos de nota de fondos",
+    "itemNoteTypes": "Tipos de nota de item",
+    "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be ato continue deletion of this holdings record, the associated item record must be deleted.",
+    "itemsOnHoldingsRecordDeleteModal.message": "El registro de fondos HRID <strong>{hrid}</strong> con localización <strong>{location}</strong> tiene <strong>{itemCount}</strong> registros de item asociados. Para continuar con la eliminación de este registro de fondos, todos los registros de item asociados deben ser borrados."
 }
