@@ -22,20 +22,15 @@ module.exports.test = function uiTest(uiTestCtx) {
           .use(openApp(nightmare, config, done, 'inventory', testVersion))
           .then(result => result);
       });
-      it('should find hit count with no filters applied', (done) => {
+      it('should find "no results" message with no filters applied', (done) => {
         nightmare
-          .wait('#list-inventory')
-          .evaluate(() => {
-            return document.querySelector('#list-inventory').getAttribute('data-total-count');
-          })
-          .then((result) => {
-            done();
-            hitCount = result;
-          })
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
           .catch(done);
       });
       filters.forEach((filter) => {
-        it(`should click ${filter} and change hit count`, (done) => {
+        it(`should click ${filter} and find hit count`, (done) => {
           nightmare
             .wait('#input-inventory-search')
             .type('#input-inventory-search', 0)
@@ -43,9 +38,10 @@ module.exports.test = function uiTest(uiTestCtx) {
             .click('#clickable-reset-all')
             .wait(`#clickable-filter-${filter}`)
             .click(`#clickable-filter-${filter}`)
-            .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
+            .wait(`#list-inventory[data-total-count]`)
             .click('#clickable-reset-all')
-            .wait(`#list-inventory[data-total-count^="${hitCount}"]`)
+            .wait('#paneHeaderpane-results-subtitle')
+            .wait('span[class^="noResultsMessageLabel"]')
             .then(done)
             .catch(done);
         });
