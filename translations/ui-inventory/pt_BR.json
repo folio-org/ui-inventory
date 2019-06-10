@@ -4,7 +4,7 @@
     "item.availability": "Disponibilidade",
     "item.availability.itemStatus": "Status do item",
     "item.availability.itemStatusDate": "Data de status do item",
-    "item.availability.requests": "Solicitações de compra",
+    "item.availability.requests": "Requisições",
     "item.availability.borrower": "Usuário que está emprestando",
     "item.availability.loanDate": "Data do empréstimo",
     "item.availability.dueDate": "Data de vencimento",
