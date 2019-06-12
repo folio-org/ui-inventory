@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   stripesShape,
-  IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
 import {
@@ -59,15 +62,15 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'All (title, contributor, identifier)', value: 'all', queryTemplate: 'title="%{query.query}" or contributors adj "\\"name\\": \\"%{query.query}\\"" or identifiers adj "\\"value\\": \\"%{query.query}\\""' },
-  { label: 'Barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'Instance ID', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'Title', value: 'title', queryTemplate: 'title="%{query.query}"' },
-  { label: 'Identifier', value: 'identifier', queryTemplate: 'identifiers adj "\\"value\\": \\"%{query.query}\\""' },
-  { label: '- ISBN', value: 'isbn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
-  { label: '- ISSN', value: 'issn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
-  { label: 'Contributor', value: 'contributor', queryTemplate: 'contributors adj "\\"name\\": \\"%{query.query}\\""' },
-  { label: 'Subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors adj "\\"name\\": \\"%{query.query}\\"" or identifiers adj "\\"value\\": \\"%{query.query}\\""' },
+  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
+  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
+  { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers adj "\\"value\\": \\"%{query.query}\\""' },
+  { label: 'ui-inventory.search.isbn', value: 'isbn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
+  { label: 'ui-inventory.search.issn', value: 'issn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors adj "\\"name\\": \\"%{query.query}\\""' },
+  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
 ];
 
 class Instances extends React.Component {
@@ -303,6 +306,7 @@ class Instances extends React.Component {
       onSelectRow,
       disableRecordCreation,
       visibleColumns,
+      intl,
     } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
@@ -382,47 +386,49 @@ class Instances extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
     };
 
+    const formattedSearchableIndexes = searchableIndexes.map(index => {
+      const label = intl.formatMessage({ id: index.label });
+
+      return { ...index, label };
+    });
+
     return (
       <div data-test-inventory-instances>
-        <IntlConsumer>
-          {intl => (
-            <SearchAndSort
-              packageInfo={packageInfo}
-              objectName="inventory"
-              maxSortKeys={1}
-              searchableIndexes={searchableIndexes}
-              selectedIndex={_.get(this.props.resources.query, 'qindex')}
-              searchableIndexesPlaceholder={null}
-              onChangeIndex={this.onChangeIndex}
-              filterConfig={filterConfig}
-              initialResultCount={INITIAL_RESULT_COUNT}
-              resultCountIncrement={RESULT_COUNT_INCREMENT}
-              viewRecordComponent={ViewInstance}
-              editRecordComponent={InstanceForm}
-              newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-              visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
-              columnMapping={{
-                title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-                contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-                publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-                relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-              }}
-              columnWidths={{ title: '40%' }}
-              resultsFormatter={resultsFormatter}
-              onCreate={this.createInstance}
-              viewRecordPerms="inventory-storage.instances.item.get"
-              newRecordPerms="inventory-storage.instances.item.post"
-              disableRecordCreation={disableRecordCreation || false}
-              parentResources={this.props.resources}
-              parentMutator={this.props.mutator}
-              detailProps={{ referenceTables, onCopy: this.copyInstance }}
-              path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-              showSingleResult={showSingleResult}
-              browseOnly={browseOnly}
-              onSelectRow={onSelectRow}
-            />
-          )}
-        </IntlConsumer>
+        <SearchAndSort
+          packageInfo={packageInfo}
+          objectName="inventory"
+          maxSortKeys={1}
+          searchableIndexes={formattedSearchableIndexes}
+          selectedIndex={_.get(this.props.resources.query, 'qindex')}
+          searchableIndexesPlaceholder={null}
+          onChangeIndex={this.onChangeIndex}
+          filterConfig={filterConfig}
+          initialResultCount={INITIAL_RESULT_COUNT}
+          resultCountIncrement={RESULT_COUNT_INCREMENT}
+          viewRecordComponent={ViewInstance}
+          editRecordComponent={InstanceForm}
+          newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+          visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
+          columnMapping={{
+            title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
+            contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
+            publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+            relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+          }}
+          columnWidths={{ title: '40%' }}
+          resultsFormatter={resultsFormatter}
+          onCreate={this.createInstance}
+          viewRecordPerms="inventory-storage.instances.item.get"
+          newRecordPerms="inventory-storage.instances.item.post"
+          disableRecordCreation={disableRecordCreation || false}
+          parentResources={this.props.resources}
+          parentMutator={this.props.mutator}
+          detailProps={{ referenceTables, onCopy: this.copyInstance }}
+          path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
+          showSingleResult={showSingleResult}
+          browseOnly={browseOnly}
+          onSelectRow={onSelectRow}
+        />
       </div>);
   }
 }
@@ -483,6 +489,7 @@ Instances.propTypes = {
   onSelectRow: PropTypes.func,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
   updateLocation: PropTypes.func.isRequired,
+  intl: intlShape,
 };
 
-export default withLocation(Instances);
+export default injectIntl(withLocation(Instances));
