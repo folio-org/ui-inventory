@@ -1,7 +1,16 @@
 # Change history for ui-inventory
 
-## 1.9.0 (IN PROGRESS)
+## 1.9.0 (In Progress)
 
+* Check for dependencies when deleting holding record. Part of UIIN-550.
+* Show link to request for items without barcode. UIREQ-253.
+* Layout of primary contributor flag. UIIN-503.
+* Settings pages for note types. UIIN-453.
+* Bug fixes: UIIN-568
+* Remove results display by default (no search queries or filters). UIIN-79
+* Handle spelling issue for ILL policies. UIIN-516
+* Change accordion header value to Condition. Fix UIIN-576
+* Add validation to alternative title. Fixes UIIN-496.
 * `Save` buttons are labeled consistently with other apps. Refs UIIN-530.
 
 ## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)

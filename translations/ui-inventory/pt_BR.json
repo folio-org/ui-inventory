@@ -4,7 +4,7 @@
     "item.availability": "Disponibilidade",
     "item.availability.itemStatus": "Status do item",
     "item.availability.itemStatusDate": "Data de status do item",
-    "item.availability.requests": "Solicitações de compra",
+    "item.availability.requests": "Requisições",
     "item.availability.borrower": "Usuário que está emprestando",
     "item.availability.loanDate": "Data do empréstimo",
     "item.availability.dueDate": "Data de vencimento",
@@ -371,5 +371,8 @@
     "instanceRecordTitle": "Registro de instância {title} {publisherAndDate}",
     "makePrimary": "Tornar primário",
     "holdingsNoteTypes": "Tipos de notas de holdings",
-    "itemNoteTypes": "Tipos de notas de item"
+    "itemNoteTypes": "Tipos de notas de item",
+    "itemOnHoldingsRecordDeleteModal.message": "Registros de holdings HRID <strong>{hrid}</strong> com a localização <strong>{location}</strong> tem <strong>um</strong> registro de item associado. Para poder continuar com a exclusão desse registro de holdings, o registro do item associado deve ser excluído.",
+    "itemsOnHoldingsRecordDeleteModal.message": "O registro de holdings HRID <strong>{hrid}</strong> com o localização <strong>{location}</strong> tem registros de itens associados <strong>{itemCount}</strong>. Para poder continuar com a exclusão desse registro de holdings, todos os registros de itens associados devem ser excluídos.",
+    "condition": "Condição"
 }

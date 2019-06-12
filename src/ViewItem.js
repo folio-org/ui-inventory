@@ -954,7 +954,7 @@ class ViewItem extends React.Component {
               open={accordions.acc04}
               id="acc04"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.conditions" />}
+              label={<FormattedMessage id="ui-inventory.condition" />}
             >
               <Row>
                 {(item.numberOfMissingPieces) &&

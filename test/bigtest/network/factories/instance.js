@@ -46,6 +46,14 @@ export default Factory.extend({
     });
   },
 
+  withHolding: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding');
+      instance.holdings = [holding];
+      instance.save();
+    }
+  }),
+
   withHoldingAndItem: trait({
     afterCreate(instance, server) {
       const holding = server.create('holding', 'withItem');

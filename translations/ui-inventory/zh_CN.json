@@ -371,5 +371,8 @@
     "instanceRecordTitle": "Instance record {title} {publisherAndDate}",
     "makePrimary": "Make primary",
     "holdingsNoteTypes": "Holdings note types",
-    "itemNoteTypes": "Item note types"
+    "itemNoteTypes": "Item note types",
+    "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be able to continue deletion of this holdings record, the associated item record must be deleted.",
+    "itemsOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>{itemCount}</strong> associated item records. To be able to continue deletion of this holdings record, all associated item records must be deleted.",
+    "condition": "Condition"
 }

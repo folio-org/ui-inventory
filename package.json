@@ -226,7 +226,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.ill-policies",
-        "displayName": "Settings (Inventory): Can create, edit and remove ill policies",
+        "displayName": "Settings (Inventory): Can create, edit and remove ILL policies",
         "subPermissions": [
           "inventory-storage.ill-policies.collection.get",
           "inventory-storage.ill-policies.item.delete",

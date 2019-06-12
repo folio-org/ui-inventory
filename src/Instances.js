@@ -6,10 +6,13 @@ import { FormattedMessage } from 'react-intl';
 import {
   stripesShape,
   IntlConsumer,
+  AppIcon,
 } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
-import { SearchAndSort } from '@folio/stripes/smart-components';
-import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes-core';
+import {
+  SearchAndSort,
+  makeQueryFunction,
+} from '@folio/stripes/smart-components';
+import { onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
@@ -56,15 +59,15 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}" or contributors adj "\\"name\\": \\"${term}\\"" or identifiers adj "\\"value\\": \\"${term}\\"")` },
-  { label: 'Barcode', value: 'item.barcode', makeQuery: term => `(item.barcode=="${term}")` },
-  { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}")` },
-  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}")` },
-  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}\\"")` },
-  { label: '- ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
-  { label: '- ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
-  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}\\"")` },
-  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}")` },
+  { label: 'All (title, contributor, identifier)', value: 'all', queryTemplate: 'title="%{query.query}" or contributors adj "\\"name\\": \\"%{query.query}\\"" or identifiers adj "\\"value\\": \\"%{query.query}\\""' },
+  { label: 'Barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
+  { label: 'Instance ID', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'Title', value: 'title', queryTemplate: 'title="%{query.query}"' },
+  { label: 'Identifier', value: 'identifier', queryTemplate: 'identifiers adj "\\"value\\": \\"%{query.query}\\""' },
+  { label: '- ISBN', value: 'isbn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
+  { label: '- ISSN', value: 'issn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
+  { label: 'Contributor', value: 'contributor', queryTemplate: 'contributors adj "\\"name\\": \\"%{query.query}\\""' },
+  { label: 'Subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
 ];
 
 class Instances extends React.Component {
@@ -92,61 +95,39 @@ class Instances extends React.Component {
       GET: {
         params: {
           query: (...args) => {
-            /*
-              This code is not DRY as it is copied from makeQueryFunction in stripes-components.
-              This is necessary, as makeQueryFunction only references query parameters as a data source.
-              STRIPES-480 is intended to correct this and allow this query function to be replace with a call
-              to makeQueryFunction.
-              https://issues.folio.org/browse/STRIPES-480
-            */
-            const resourceData = args[2];
-            const sortMap = {
-              Title: 'title',
-              publishers: 'publication',
-              Contributors: 'contributors',
-            };
+            const [
+              queryParams,
+              pathComponents,
+              resourceData,
+              logger
+            ] = args;
+            const queryIndex = resourceData.query.qindex ? resourceData.query.qindex : 'all';
+            const searchableIndex = searchableIndexes.find(idx => idx.value === queryIndex);
+            let queryTemplate = '';
 
-            const index = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            const searchableIndex = searchableIndexes.find(idx => idx.value === index);
+            if (queryIndex === 'isbn' || queryIndex === 'issn') {
+              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === queryIndex);
+              const identifierTypeId = identifierType ? identifierType.id : 'identifier-type-not-found';
 
-            let makeQueryArgs = {};
-            if (index === 'isbn' || index === 'issn') {
-              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === index);
-              makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
+              queryTemplate = _.template(searchableIndex.queryTemplate)({ identifierTypeId });
+            } else {
+              queryTemplate = searchableIndex.queryTemplate;
             }
 
-            let cql = searchableIndex.makeQuery(resourceData.query.query || '', makeQueryArgs);
+            resourceData.query = { ...resourceData.query, qindex: '' };
 
-            const filterCql = filters2cql(filterConfig, resourceData.query.filters);
-            if (filterCql) {
-              if (cql) {
-                cql = `(${cql}) and ${filterCql}`;
-              } else {
-                cql = filterCql;
-              }
-            }
-
-            const { sort } = resourceData.query;
-            if (sort) {
-              const sortIndexes = sort.split(',').map((sort1) => {
-                let reverse = false;
-                if (sort1.startsWith('-')) {
-                  // eslint-disable-next-line no-param-reassign
-                  sort1 = sort1.substr(1);
-                  reverse = true;
-                }
-                let sortIndex = sortMap[sort1] || sort1;
-                if (reverse) {
-                  sortIndex = `${sortIndex.replace(' ', '/sort.descending ')}/sort.descending`;
-                }
-                return sortIndex;
-              });
-
-              cql += ` sortby ${sortIndexes.join(' ')}`;
-            }
-
-            return cql;
-          },
+            return makeQueryFunction(
+              'cql.allRecords=1',
+              queryTemplate,
+              {
+                Title: 'title',
+                publishers: 'publication',
+                Contributors: 'contributors',
+              },
+              filterConfig,
+              2
+            )(queryParams, pathComponents, resourceData, logger);
+          }
         },
         staticFallback: { params: {} },
       },
