@@ -373,5 +373,6 @@
     "holdingsNoteTypes": "Tipos de nota de fondos",
     "itemNoteTypes": "Tipos de nota de item",
     "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be ato continue deletion of this holdings record, the associated item record must be deleted.",
-    "itemsOnHoldingsRecordDeleteModal.message": "El registro de fondos HRID <strong>{hrid}</strong> con localización <strong>{location}</strong> tiene <strong>{itemCount}</strong> registros de item asociados. Para continuar con la eliminación de este registro de fondos, todos los registros de item asociados deben ser borrados."
+    "itemsOnHoldingsRecordDeleteModal.message": "El registro de fondos HRID <strong>{hrid}</strong> con localización <strong>{location}</strong> tiene <strong>{itemCount}</strong> registros de item asociados. Para continuar con la eliminación de este registro de fondos, todos los registros de item asociados deben ser borrados.",
+    "condition": "Condition"
 }
