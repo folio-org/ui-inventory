@@ -374,5 +374,9 @@
     "itemNoteTypes": "أنواع ملاحظات المادة",
     "itemOnHoldingsRecordDeleteModal.message": "HRID تسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> بها تسجيلة مادة <strong>واحدة</strong> مرتبطة بها. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف تسجيلة المادة المرتبطة بها.",
     "itemsOnHoldingsRecordDeleteModal.message": "HRID تسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> له <strong>{itemCount}</strong> تسجيلة مادة مرتبطة بها. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف جميع تسجيلات المواد المرتبطة بها.",
-    "condition": "شرط"
+    "condition": "شرط",
+    "search.isbn": "- ISBN",
+    "search.issn": "- ISSN",
+    "search.all": "All (title, contributor, identifier)",
+    "subject": "Subject"
 }
