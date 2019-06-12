@@ -3,6 +3,7 @@
 ## 1.9.0 (In Progress)
 
 * Check for dependencies when deleting holding record. Part of UIIN-550.
+* Updated checkbox to render label vertically in item notes form (UIIN-559)
 * Show link to request for items without barcode. UIREQ-253.
 * Layout of primary contributor flag. UIIN-503.
 * Settings pages for note types. UIIN-453.
