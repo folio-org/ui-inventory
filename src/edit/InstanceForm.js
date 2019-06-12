@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep, isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -65,6 +65,28 @@ function validate(values) {
       }
     });
     if (errorList.length) errors.languages = errorList;
+  }
+
+
+  if (values.alternativeTitles && values.alternativeTitles.length) {
+    const errorList = [];
+    values.alternativeTitles.forEach((item, i) => {
+      const error = {};
+
+      if (!item.alternativeTitleTypeId) {
+        error.alternativeTitleTypeId = requiredSelectMessage;
+      }
+
+      if (!item.alternativeTitleTypeId) {
+        error.alternativeTitle = requiredTextMessage;
+      }
+
+      if (!isEmpty(error)) {
+        errorList[i] = error;
+      }
+    });
+
+    if (errorList.length) errors.alternativeTitles = errorList;
   }
 
   if (values.publication) {
