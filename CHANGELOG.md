@@ -1,13 +1,14 @@
 # Change history for ui-inventory
 
-## 1.9.0 (In Progress)
+## [1.9.0](https://github.com/folio-org/ui-inventory/tree/v1.9.0) (2019-06-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.8.0...v1.9.0)
 
 * Check for dependencies when deleting holding record. Part of UIIN-550.
-* Updated checkbox to render label vertically in item notes form (UIIN-559)
+* Update notes checkbox to render label vertically in item and holdings forms (UIIN-559)
 * Show link to request for items without barcode. UIREQ-253.
 * Layout of primary contributor flag. UIIN-503.
 * Settings pages for note types. UIIN-453.
-* Bug fixes: UIIN-568
+* Bug fixes: UIIN-568, UIIN-427
 * Remove results display by default (no search queries or filters). UIIN-79
 * Handle spelling issue for ILL policies. UIIN-516
 * Change accordion header value to Condition. Fix UIIN-576
