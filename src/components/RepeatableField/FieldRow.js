@@ -196,11 +196,15 @@ class FieldRow extends React.Component {
               <Row>
                 <Col xs={10}>
                   <Row>
-                    {template.map((t, i) => (
-                      <Col xs key={`field-${i}`}>
-                        {this.renderControl(fields, f, fieldIndex, t, i)}
-                      </Col>
-                    ))}
+                    {template.map((t, i) => {
+                      const { columnSize } = t;
+                      const colSizes = typeof columnSize === 'object' ? columnSize : { xs: true };
+                      return (
+                        <Col {...colSizes} key={`field-${i}`}>
+                          {this.renderControl(fields, f, fieldIndex, t, i)}
+                        </Col>
+                      );
+                    })}
                   </Row>
                 </Col>
                 <Col xs={2}>
