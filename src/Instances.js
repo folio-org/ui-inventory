@@ -67,8 +67,8 @@ const searchableIndexes = [
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
   { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers adj "\\"value\\": \\"%{query.query}\\""' },
-  { label: 'ui-inventory.search.isbn', value: 'isbn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
-  { label: 'ui-inventory.search.issn', value: 'issn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
+  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
+  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors adj "\\"name\\": \\"%{query.query}\\""' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
 ];
@@ -387,7 +387,8 @@ class Instances extends React.Component {
     };
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
-      const label = intl.formatMessage({ id: index.label });
+      const { prefix = '' } = index;
+      const label = prefix + intl.formatMessage({ id: index.label });
 
       return { ...index, label };
     });

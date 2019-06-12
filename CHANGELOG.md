@@ -13,7 +13,7 @@
 * Handle spelling issue for ILL policies. UIIN-516
 * Change accordion header value to Condition. Fix UIIN-576
 * Add validation to alternative title. Fixes UIIN-496.
-* Replaced hardcoded translations of search indexes by formatted messages. Fixes UIIN-595
+* Replace hardcoded translations of search indexes by formatted messages. Fixes UIIN-595
 
 ## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.7.0...v1.8.0)
