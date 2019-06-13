@@ -100,19 +100,19 @@ class ViewInstance extends React.Component {
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
     this.props.updateLocation({ layer: 'edit' });
-  }
+  };
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
     this.log('clicked "add new holdings record"');
     this.props.updateLocation({ layer: 'createHoldingsRecord' });
-  }
+  };
 
   update = (instance) => {
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.resetLayerQueryParam();
     });
-  }
+  };
 
   resetLayerQueryParam = (e) => {
     if (e) e.preventDefault();
@@ -165,7 +165,10 @@ class ViewInstance extends React.Component {
   }
 
   createActionMenuGetter = instance => ({ onToggle }) => {
-    const { onCopy } = this.props;
+    const {
+      location,
+      onCopy
+    } = this.props;
     return (
       <Fragment>
         <Button
@@ -193,6 +196,17 @@ class ViewInstance extends React.Component {
             <FormattedMessage id="ui-inventory.duplicateInstance" />
           </Icon>
         </Button>
+        {_.get(instance, ['source'], '') === 'MARC' &&
+          <Button
+            to={`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`}
+            id="clickable-view-source"
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="document">
+              <FormattedMessage id="ui-inventory.viewSource" />
+            </Icon>
+          </Button>
+        }
       </Fragment>
     );
   }
@@ -334,16 +348,6 @@ class ViewInstance extends React.Component {
         )}
       </FormattedMessage>
     );
-    const viewSourceLink = `${location.pathname.replace('/view/', '/viewsource/')}${location.search}`;
-    const viewSourceButton = (
-      <Button
-        to={viewSourceLink}
-        id="clickable-view-source"
-        marginBottom0
-      >
-        <FormattedMessage id="ui-inventory.viewSource" />
-      </Button>
-    );
 
     if (query.layer === 'edit') {
       return (
@@ -445,13 +449,6 @@ class ViewInstance extends React.Component {
                   {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
                 </AppIcon>
               </Layout>
-              {
-                !!instance.sourceRecordFormat && (
-                  <Layout className="margin-start-auto">
-                    {viewSourceButton}
-                  </Layout>
-                )
-              }
             </Layout>
           </Col>
         </Row>
