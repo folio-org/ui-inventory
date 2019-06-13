@@ -20,7 +20,6 @@ describe('Mirage', () => {
   check('instance-relationship-type', 'name');
   check('instance-status', 'name', 'code', 'source');
   check('electronic-access-relationship', 'name');
-  check('statistical-code-type', 'name');
 });
 
 function check(entityName, ...fields) {

@@ -203,7 +203,7 @@ class Instances extends React.Component {
     statisticalCodes: {
       type: 'okapi',
       records: 'statisticalCodes',
-      path: 'statistical-codes?limit=1000&query=cql.allRecords=1 sortby statisticalCodeTypeId',
+      path: 'statistical-codes?limit=1000&query=cql.allRecords=1 sortby name',
     },
     illPolicies: {
       type: 'okapi',

@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## 2.0.0 (In Progress)
+* Handle display order of Statistical codes different in instance edit dropdown. Fixes UIIN-573.
+
 ## [1.9.0](https://github.com/folio-org/ui-inventory/tree/v1.9.0) (2019-06-12)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.8.0...v1.9.0)
 

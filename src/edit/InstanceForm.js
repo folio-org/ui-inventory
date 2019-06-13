@@ -245,13 +245,15 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const statisticalCodeOptions = referenceTables.statisticalCodes ? referenceTables.statisticalCodes.map(
-      it => ({
-        label: refLookup(referenceTables.statisticalCodeTypes, it.statisticalCodeTypeId).name + ':    ' + it.code + ' - ' + it.name,
-        value: it.id,
-        selected: it.id === initialValues.statisticalCodeId,
-      }),
-    ) : [];
+    const statisticalCodeOptions = referenceTables.statisticalCodes
+      .map(
+        code => ({
+          label: refLookup(referenceTables.statisticalCodeTypes, code.statisticalCodeTypeId).name + ':    ' + code.code + ' - ' + code.name,
+          value: code.id,
+          selected: code.id === initialValues.statisticalCodeId,
+        })
+      )
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     /* Menus for Add Instance workflow */
     const addInstanceLastMenu = (
