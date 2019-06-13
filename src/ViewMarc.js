@@ -12,7 +12,7 @@ class ViewMarc extends React.Component {
   static manifest = Object.freeze({
     marcRecord: {
       type: 'okapi',
-      path: 'instance-storage/instances/:{id}/source-record/marc-json',
+      path: 'source-storage/formattedRecords/:{id}?identifier=INSTANCE',
     }
   });
 
@@ -32,7 +32,7 @@ class ViewMarc extends React.Component {
       );
     }
 
-    const marcJSON = marcRecord.records[0];
+    const marcJSON = marcRecord.records[0].parsedRecord.content;
     const leader = `LEADER ${marcJSON.leader}`;
     const fields001to009 = marcJSON.fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
     const fields010andUp = marcJSON.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
