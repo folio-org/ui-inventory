@@ -378,5 +378,7 @@
     "search.isbn": "- ISBN",
     "search.issn": "- ISSN",
     "search.all": "All (title, contributor, identifier)",
-    "subject": "Subject"
+    "subject": "Subject",
+    "isbn": "ISBN",
+    "issn": "ISSN"
 }
