@@ -79,7 +79,6 @@ class ViewInstance extends React.Component {
     };
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
-    this.cViewItem = this.props.stripes.connect(ViewItem);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.cViewMarc = this.props.stripes.connect(ViewMarc);
 
@@ -1018,7 +1017,7 @@ class ViewInstance extends React.Component {
         {
           (holdingsrecordid && itemid)
             ? (
-              <this.cViewItem
+              <ViewItem
                 id={id}
                 holdingsRecordId={holdingsrecordid}
                 itemId={itemid}
