@@ -377,6 +377,8 @@
     "condition": "شرط",
     "search.isbn": "- ISBN",
     "search.issn": "- ISSN",
-    "search.all": "All (title, contributor, identifier)",
-    "subject": "Subject"
+    "search.all": "الكل (العنوان، المساهم، المعرّف)",
+    "subject": "الموضوع",
+    "isbn": "ISBN",
+    "issn": "ISSN"
 }
