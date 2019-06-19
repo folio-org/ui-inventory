@@ -9,33 +9,34 @@ import {
 } from '@folio/stripes/components';
 
 class ViewMarc extends React.Component {
-  static manifest = Object.freeze({
-    marcRecord: {
-      type: 'okapi',
-      path: 'source-storage/formattedRecords/:{id}?identifier=INSTANCE',
+  componentDidUpdate() {
+    const {
+      marcRecord,
+      onClose,
+    } = this.props;
+
+    if (!marcRecord) {
+      onClose();
     }
-  });
+  }
 
   render() {
     const {
-      resources: { marcRecord },
       instance,
+      marcRecord,
       paneWidth,
       onClose,
     } = this.props;
 
-    if (!marcRecord || !marcRecord.hasLoaded) {
-      return (
-        <div>
-          <FormattedMessage id="ui-inventory.fetchingMarcRecord" />
-        </div>
-      );
+    if (!marcRecord) {
+      return null;
     }
 
-    const marcJSON = marcRecord.records[0].parsedRecord.content;
+    const marcJSON = marcRecord.parsedRecord.content;
+    const { fields } = marcJSON;
     const leader = `LEADER ${marcJSON.leader}`;
-    const fields001to009 = marcJSON.fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
-    const fields010andUp = marcJSON.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
+    const fields001to009 = fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
+    const fields010andUp = fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
     const formattedFields001to009 = fields001to009.map((field) => {
       const key = Object.keys(field)[0];
       return (
@@ -117,13 +118,9 @@ class ViewMarc extends React.Component {
 
 ViewMarc.propTypes = {
   instance: PropTypes.object,
+  marcRecord: PropTypes.object,
   paneWidth: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  resources: PropTypes.shape({
-    marcRecord: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }).isRequired,
 };
 
 export default ViewMarc;
