@@ -728,6 +728,7 @@ class ItemForm extends React.Component {
                         name: 'staffOnly',
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
+                        type: 'checkbox',
                         inline: true,
                         vertical: true,
                         columnSize: {
@@ -823,6 +824,12 @@ class ItemForm extends React.Component {
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
                         type: 'checkbox',
+                        inline: true,
+                        vertical: true,
+                        columnSize: {
+                          xs: 3,
+                          lg: 2,
+                        }
                       }
                     ]}
                   />
