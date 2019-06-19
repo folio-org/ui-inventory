@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -9,14 +9,32 @@ import {
 } from '@folio/stripes/components';
 
 class ViewMarc extends React.Component {
-  componentDidUpdate() {
+  static manifest = Object.freeze({
+    query: {},
+    marcRecord: {
+      type: 'okapi',
+      path: 'source-storage/formattedRecords/:{id}?identifier=INSTANCE',
+      accumulate: true,
+      throwErrors: false,
+    },
+  });
+
+  state = { marcRecord: null };
+
+  componentDidMount() {
     const {
       marcRecord,
+      mutator: { marcRecord: connection },
       onClose,
     } = this.props;
 
     if (!marcRecord) {
-      onClose();
+      connection.GET()
+        .then(data => this.setState({ marcRecord: data }))
+        .catch(error => {
+          console.error('MARC record getting ERROR: ', error);
+          onClose();
+        });
     }
   }
 
@@ -27,12 +45,13 @@ class ViewMarc extends React.Component {
       paneWidth,
       onClose,
     } = this.props;
+    const { marcRecord: stateMarcRecord } = this.state;
 
-    if (!marcRecord) {
+    if (!marcRecord && !stateMarcRecord) {
       return null;
     }
 
-    const marcJSON = marcRecord.parsedRecord.content;
+    const marcJSON = (marcRecord || stateMarcRecord).parsedRecord.content;
     const { fields } = marcJSON;
     const leader = `LEADER ${marcJSON.leader}`;
     const fields001to009 = fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
@@ -76,7 +95,7 @@ class ViewMarc extends React.Component {
           label={<FormattedMessage id="ui-inventory.viewMarcSource" />}
         >
           <Pane
-            paneTitle={_.get(instance, ['title'], '')}
+            paneTitle={get(instance, ['title'], '')}
             defaultWidth={paneWidth}
             dismissible
             onClose={onClose}
@@ -121,6 +140,12 @@ ViewMarc.propTypes = {
   marcRecord: PropTypes.object,
   paneWidth: PropTypes.string,
   onClose: PropTypes.func.isRequired,
+  mutator: PropTypes.shape({
+    marcRecord: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }),
+    query: PropTypes.object.isRequired,
+  }),
 };
 
 export default ViewMarc;
