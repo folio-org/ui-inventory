@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## IN PROGRESS
+
+# Fix item details retaining loan data for closed loan. Part of UIIN-484.
+
 ## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
 
