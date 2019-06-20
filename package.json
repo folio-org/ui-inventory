@@ -126,14 +126,6 @@
         "visible": true
       },
       {
-        "permissionName": "settings.inventory.enabled",
-        "displayName": "Settings (Inventory): display list of settings pages",
-        "subPermissions": [
-          "settings.enabled"
-        ],
-        "visible": true
-      },
-      {
         "permissionName": "ui-inventory.settings.instance-formats",
         "displayName": "Settings (Inventory): Can create, edit and remove formats",
         "subPermissions": [
