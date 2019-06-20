@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -10,32 +10,52 @@ import {
 
 class ViewMarc extends React.Component {
   static manifest = Object.freeze({
+    query: {},
     marcRecord: {
       type: 'okapi',
       path: 'source-storage/formattedRecords/:{id}?identifier=INSTANCE',
-    }
+      accumulate: true,
+      throwErrors: false,
+    },
   });
 
-  render() {
+  state = { marcRecord: null };
+
+  componentDidMount() {
     const {
-      resources: { marcRecord },
-      instance,
-      paneWidth,
+      marcRecord,
+      mutator: { marcRecord: connection },
       onClose,
     } = this.props;
 
-    if (!marcRecord || !marcRecord.hasLoaded) {
-      return (
-        <div>
-          <FormattedMessage id="ui-inventory.fetchingMarcRecord" />
-        </div>
-      );
+    if (!marcRecord) {
+      connection.GET()
+        .then(data => this.setState({ marcRecord: data }))
+        .catch(error => {
+          console.error('MARC record getting ERROR: ', error);
+          onClose();
+        });
+    }
+  }
+
+  render() {
+    const {
+      instance,
+      marcRecord,
+      paneWidth,
+      onClose,
+    } = this.props;
+    const { marcRecord: stateMarcRecord } = this.state;
+
+    if (!marcRecord && !stateMarcRecord) {
+      return null;
     }
 
-    const marcJSON = marcRecord.records[0].parsedRecord.content;
+    const marcJSON = (marcRecord || stateMarcRecord).parsedRecord.content;
+    const { fields } = marcJSON;
     const leader = `LEADER ${marcJSON.leader}`;
-    const fields001to009 = marcJSON.fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
-    const fields010andUp = marcJSON.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
+    const fields001to009 = fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
+    const fields010andUp = fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
     const formattedFields001to009 = fields001to009.map((field) => {
       const key = Object.keys(field)[0];
       return (
@@ -75,7 +95,7 @@ class ViewMarc extends React.Component {
           label={<FormattedMessage id="ui-inventory.viewMarcSource" />}
         >
           <Pane
-            paneTitle={_.get(instance, ['title'], '')}
+            paneTitle={get(instance, ['title'], '')}
             defaultWidth={paneWidth}
             dismissible
             onClose={onClose}
@@ -117,13 +137,15 @@ class ViewMarc extends React.Component {
 
 ViewMarc.propTypes = {
   instance: PropTypes.object,
+  marcRecord: PropTypes.object,
   paneWidth: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  resources: PropTypes.shape({
+  mutator: PropTypes.shape({
     marcRecord: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
+      GET: PropTypes.func.isRequired,
     }),
-  }).isRequired,
+    query: PropTypes.object.isRequired,
+  }),
 };
 
 export default ViewMarc;
