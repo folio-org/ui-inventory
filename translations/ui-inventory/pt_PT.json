@@ -380,5 +380,6 @@
     "search.all": "All (title, contributor, identifier)",
     "subject": "Subject",
     "isbn": "ISBN",
-    "issn": "ISSN"
+    "issn": "ISSN",
+    "marcSourceRecord.notFoundError": "Cannot find MARC bibliographic record for \"{name}\" instance!"
 }

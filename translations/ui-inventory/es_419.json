@@ -339,7 +339,7 @@
     "waitingForResources": "Waiting for resources",
     "fetchingMarcRecord": "Fetching MARC record",
     "viewMarcSource": "View MARC source",
-    "marcSourceRecord": "MARC source record",
+    "marcSourceRecord": "MARC bibliographic record",
     "item.barcode": "Item: barcode",
     "resourceIdentifierType": "Resource identifier type",
     "publication": "Publication",
@@ -380,5 +380,6 @@
     "search.all": "All (title, contributor, identifier)",
     "subject": "Subject",
     "isbn": "ISBN",
-    "issn": "ISSN"
+    "issn": "ISSN",
+    "marcSourceRecord.notFoundError": "Cannot find MARC bibliographic record for \"{name}\" instance!"
 }

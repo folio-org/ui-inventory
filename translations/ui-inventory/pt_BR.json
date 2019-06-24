@@ -339,7 +339,7 @@
     "waitingForResources": "Aguardando por recursos",
     "fetchingMarcRecord": "Buscando registro MARC",
     "viewMarcSource": "Ver fonte MARC",
-    "marcSourceRecord": "Registro de origem MARC",
+    "marcSourceRecord": "Registro bibliográfico MARC",
     "item.barcode": "Item: código de barras",
     "resourceIdentifierType": "Tipo de identificador de recurso",
     "publication": "Publicação",
@@ -380,5 +380,6 @@
     "search.all": "Tudo (título, contribuidor, identificador)",
     "subject": "Assunto",
     "isbn": "ISBN",
-    "issn": "ISSN"
+    "issn": "ISSN",
+    "marcSourceRecord.notFoundError": "Não é possível encontrar o registro bibliográfico MARC para a instância \"{name}\"!"
 }
