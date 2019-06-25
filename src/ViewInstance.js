@@ -300,7 +300,7 @@ class ViewInstance extends React.Component {
       'Code': x => this.refLookup(referenceTables.contributorTypes, get(x, ['contributorTypeId'])).code,
       'Source': x => this.refLookup(referenceTables.contributorTypes, get(x, ['contributorTypeId'])).source,
       'Free text': x => get(x, ['contributorTypeText']) || '',
-      'Primary': ({ primary }) => primary && <FormattedMessage id="ui-inventory.primary" />
+      'Primary': ({ primary }) => (primary ? <FormattedMessage id="ui-inventory.primary" /> : '')
     };
 
     const electronicAccessRowFormatter = {
