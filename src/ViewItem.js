@@ -900,14 +900,6 @@ class ViewItem extends React.Component {
                     />
                   </Col>
                 }
-                {(item.volume) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.volume" />}
-                      value={get(item, ['volume'], '')}
-                    />
-                  </Col>
-                }
                 {(item.chronology) &&
                   <Col smOffset={0} sm={4}>
                     <KeyValue
@@ -916,6 +908,16 @@ class ViewItem extends React.Component {
                     />
                   </Col>
                 }
+              </Row>
+              <Row>
+               {(item.volume) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.volume" />}
+                      value={get(item, ['volume'], '')}
+                    />
+                  </Col>
+               }
               </Row>
               <Row>
                 {(item.yearCaption && item.yearCaption.length > 0) &&
