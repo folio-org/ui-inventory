@@ -910,14 +910,14 @@ class ViewItem extends React.Component {
                 }
               </Row>
               <Row>
-               {(item.volume) &&
+                {(item.volume) &&
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.volume" />}
                       value={get(item, ['volume'], '')}
                     />
                   </Col>
-               }
+                }
               </Row>
               <Row>
                 {(item.yearCaption && item.yearCaption.length > 0) &&
