@@ -900,19 +900,21 @@ class ViewItem extends React.Component {
                     />
                   </Col>
                 }
-                {(item.volume) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.volume" />}
-                      value={get(item, ['volume'], '')}
-                    />
-                  </Col>
-                }
                 {(item.chronology) &&
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.chronology" />}
                       value={get(item, ['chronology'], '')}
+                    />
+                  </Col>
+                }
+              </Row>
+              <Row>
+                {(item.volume) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.volume" />}
+                      value={get(item, ['volume'], '')}
                     />
                   </Col>
                 }
