@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## 1.10.1 (https://github.com/folio-org/ui-inventory/tree/v1.10.1) (2019-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.10.0...v1.10.1)
+
+* Bugfixes, `View source` button. UIIN-603.
+
 ## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
 
