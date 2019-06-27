@@ -70,6 +70,12 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
+    blockedFields: {
+      type: 'okapi',
+      path: 'inventory/config/instances/blocked-fields',
+      clear: false,
+      throwErrors: false,
+    },
   });
 
   constructor(props) {
@@ -406,9 +412,11 @@ class ViewInstance extends React.Component {
               <InstanceForm
                 onSubmit={this.update}
                 initialValues={instance}
-                onCancel={this.resetLayerQueryParam}
+                instanceSource={get(instance, ['source'])}
                 referenceTables={referenceTables}
                 stripes={stripes}
+                match={this.props.match}
+                onCancel={this.resetLayerQueryParam}
               />
             </Layer>
           )}
