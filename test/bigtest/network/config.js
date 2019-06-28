@@ -360,4 +360,12 @@ export default function configure() {
     loantypes: [],
     totalRecords: 0
   });
+
+  this.get('/source-storage/formattedRecords', {
+    records: [],
+    totalRecords: 0
+  });
+  this.get('/source-storage/formattedRecords/:id');
+
+  this.get('/inventory/config/instances/blocked-fields');
 }

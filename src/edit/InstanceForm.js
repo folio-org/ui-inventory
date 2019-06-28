@@ -170,10 +170,20 @@ class InstanceForm extends React.Component {
         instanceSection11: true,
         instanceSection12: true,
       },
+      blockables: [],
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
+  }
+
+  componentDidMount() {
+    const { resources: { blockedFields } } = this.props;
+    if (!blockedFields) return;
+    const { records } = blockedFields;
+    if (!records || !records.length) return;
+    const { blockedFields: blockables } = records[0];
+    this.setState({ blockables });
   }
 
   onToggleSection({ id }) {
@@ -219,14 +229,9 @@ class InstanceForm extends React.Component {
   };
 
   isFieldBlocked = fieldName => {
-    const {
-      instanceSource,
-      resources: { blockedFields },
-    } = this.props;
-    const { records } = blockedFields;
-    const { blockedFields: blockables } = records[0];
-
-    if (instanceSource !== 'MARC' || !blockedFields || blockedFields.failed || !blockables || !blockables.length) return false;
+    const { instanceSource } = this.props;
+    const { blockables } = this.state;
+    if (instanceSource !== 'MARC' || !blockables || !blockables.length) return false;
     return blockables.includes(fieldName);
   };
 
@@ -748,7 +753,10 @@ InstanceForm.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }),
-  instanceSource: PropTypes.string.isRequired,
+  instanceSource: PropTypes.string,
+};
+InstanceForm.defaultProps = {
+  instanceSource: 'FOLIO',
 };
 
 export default stripesForm({
