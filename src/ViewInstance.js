@@ -109,6 +109,19 @@ class ViewInstance extends React.Component {
     this.calloutRef = createRef();
   }
 
+  componentDidMount() {
+    this.getMARCRecord();
+  }
+
+  getMARCRecord = () => {
+    const { mutator } = this.props;
+    mutator.marcRecord.GET()
+      .then(data => this.setState({ marcRecord: data }))
+      .catch(error => {
+        console.error('MARC record getting ERROR: ', error);
+      });
+  };
+
   getPublisherAndDate = instance => {
     const publisher = get(instance, 'publication[0].publisher', '');
     const dateOfPublication = get(instance, 'publication[0].dateOfPublication', '');
@@ -158,32 +171,6 @@ class ViewInstance extends React.Component {
     this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
   };
 
-  getMARCRecord = (e, instance) => {
-    if (e) e.preventDefault();
-    const { location } = this.props;
-    this.props.mutator.marcRecord.GET()
-      .then(data => {
-        this.setState(state => {
-          return { ...state, marcRecord: data };
-        }, () => {
-          this.props.goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
-        });
-      })
-      .catch(error => {
-        const message = (
-          <FormattedMessage
-            id="ui-inventory.marcSourceRecord.notFoundError"
-            values={{ name: instance.title }}
-          />
-        );
-        console.error('MARC record getting ERROR: ', error);
-        this.calloutRef.current.sendCallout({
-          type: 'error',
-          message,
-        });
-      });
-  };
-
   createHoldingsRecord = (holdingsRecord) => {
     // POST holdings record
     this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
@@ -209,6 +196,29 @@ class ViewInstance extends React.Component {
     });
   };
 
+  handleViewSource = (e, instance) => {
+    if (e) e.preventDefault();
+    const { location } = this.props;
+    const {
+      marcRecord,
+      goTo,
+    } = this.state;
+    if (!marcRecord) {
+      const message = (
+        <FormattedMessage
+          id="ui-inventory.marcSourceRecord.notFoundError"
+          values={{ name: instance.title }}
+        />
+      );
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message,
+      });
+      return;
+    }
+    goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
+  };
+
   refLookup = (referenceTable, id) => {
     const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
     return ref || {};
@@ -216,6 +226,7 @@ class ViewInstance extends React.Component {
 
   createActionMenuGetter = instance => ({ onToggle }) => {
     const { onCopy } = this.props;
+    const { marcRecord } = this.state;
     return (
       <Fragment>
         <Button
@@ -249,8 +260,9 @@ class ViewInstance extends React.Component {
             buttonStyle="dropdownItem"
             onClick={(e) => {
               onToggle();
-              this.getMARCRecord(e, instance);
+              this.handleViewSource(e, instance);
             }}
+            disabled={!marcRecord}
           >
             <Icon icon="document">
               <FormattedMessage id="ui-inventory.viewSource" />
