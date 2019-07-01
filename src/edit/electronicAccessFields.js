@@ -10,13 +10,17 @@ import {
 
 import RepeatableField from '../components/RepeatableField';
 
-const ElectronicAccessFields = ({ relationship }) => {
-  const relationshipOptions = relationship.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+const ElectronicAccessFields = props => {
+  const {
+    relationship,
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+  const relationshipOptions = relationship.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   return (
     <FormattedMessage id="ui-inventory.selectType">
@@ -37,28 +41,35 @@ const ElectronicAccessFields = ({ relationship }) => {
               component: Select,
               placeholder,
               dataOptions: relationshipOptions,
+              disabled: !canEdit,
             },
             {
               name: 'uri',
               label: <FormattedMessage id="ui-inventory.uri" />,
               component: TextField,
+              disabled: !canEdit,
             },
             {
               name: 'linkText',
               label: <FormattedMessage id="ui-inventory.linkText" />,
               component: TextField,
+              disabled: !canEdit,
             },
             {
               name: 'materialsSpecification',
               label: <FormattedMessage id="ui-inventory.materialsSpecification" />,
               component: TextField,
+              disabled: !canEdit,
             },
             {
               name: 'publicNote',
               label: <FormattedMessage id="ui-inventory.urlPublicNote" />,
               component: TextField,
+              disabled: !canEdit,
             },
           ]}
+          canAdd={canAdd}
+          canDelete={canDelete}
         />
       )}
     </FormattedMessage>
@@ -67,5 +78,15 @@ const ElectronicAccessFields = ({ relationship }) => {
 
 ElectronicAccessFields.propTypes = {
   relationship: PropTypes.arrayOf(PropTypes.object),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
 };
+
+ElectronicAccessFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
+};
+
 export default ElectronicAccessFields;

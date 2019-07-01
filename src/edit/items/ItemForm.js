@@ -154,7 +154,7 @@ class ItemForm extends React.Component {
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
-  }
+  };
 
   handleExpandAll = (obj) => {
     this.setState((curState) => {
@@ -162,7 +162,7 @@ class ItemForm extends React.Component {
       newState.accordions = obj;
       return newState;
     });
-  }
+  };
 
   confirmPermanentLocation(confirm) {
     const { permanentLocation, prevPermanentLocation } = this.state;
@@ -200,7 +200,7 @@ class ItemForm extends React.Component {
         </Icon>
       </Button>
     );
-  }
+  };
 
   onSelectHandler = loc => this.selectTemporaryLocation(loc);
 

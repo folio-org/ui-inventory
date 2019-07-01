@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 import { cloneDeep, isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
+import { stripesConnect } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -138,7 +139,19 @@ function validate(values) {
   return errors;
 }
 
+@stripesConnect
 class InstanceForm extends React.Component {
+  static manifest = Object.freeze({
+    query: {},
+    blockedFields: {
+      type: 'okapi',
+      path: 'inventory/config/instances/blocked-fields',
+      clear: false,
+      accumulate: true,
+      throwErrors: false,
+    },
+  });
+
   constructor(props) {
     super(props);
 
@@ -157,10 +170,20 @@ class InstanceForm extends React.Component {
         instanceSection11: true,
         instanceSection12: true,
       },
+      blockables: [],
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
+  }
+
+  componentDidMount() {
+    const { resources: { blockedFields } } = this.props;
+    if (!blockedFields) return;
+    const { records } = blockedFields;
+    if (!records || !records.length) return;
+    const { blockedFields: blockables } = records[0];
+    this.setState({ blockables });
   }
 
   onToggleSection({ id }) {
@@ -203,7 +226,14 @@ class InstanceForm extends React.Component {
         </Icon>
       </Button>
     );
-  }
+  };
+
+  isFieldBlocked = fieldName => {
+    const { instanceSource } = this.props;
+    const { blockables } = this.state;
+    if (instanceSource !== 'MARC' || !blockables || !blockables.length) return false;
+    return blockables.includes(fieldName);
+  };
 
   render() {
     const {
@@ -335,6 +365,7 @@ class InstanceForm extends React.Component {
                       id="input_discovery_suppress"
                       component={Checkbox}
                       type="checkbox"
+                      disabled={this.isFieldBlocked('discoverySuppress')}
                     />
                   </Col>
                   <Col sm={3}>
@@ -344,6 +375,7 @@ class InstanceForm extends React.Component {
                       id="input_staff_suppress"
                       component={Checkbox}
                       type="checkbox"
+                      disabled={this.isFieldBlocked('staffSuppress')}
                     />
                   </Col>
                   <Col sm={3}>
@@ -353,6 +385,7 @@ class InstanceForm extends React.Component {
                       id="input_previously_held"
                       component={Checkbox}
                       type="checkbox"
+                      disabled={this.isFieldBlocked('previouslyHeld')}
                     />
                   </Col>
                 </Row>
@@ -392,6 +425,7 @@ class InstanceForm extends React.Component {
                       backendDateStandard="YYYY-MM-DD"
                       component={Datepicker}
                       label={<FormattedMessage id="ui-inventory.catalogedDate" />}
+                      disabled={this.isFieldBlocked('catalogedDate')}
                     />
                   </Col>
                 </Row>
@@ -405,6 +439,7 @@ class InstanceForm extends React.Component {
                         component={Select}
                         placeholder={placeholder}
                         dataOptions={instanceStatusOptions}
+                        disabled={this.isFieldBlocked('statusId')}
                       />
                     )}
                   </FormattedMessage>
@@ -419,6 +454,7 @@ class InstanceForm extends React.Component {
                         component={Select}
                         placeholder={placeholder}
                         dataOptions={modeOfIssuanceOptions}
+                        disabled={this.isFieldBlocked('modeOfIssuanceId')}
                       />
                     )}
                   </FormattedMessage>
@@ -433,9 +469,13 @@ class InstanceForm extends React.Component {
                         {
                           label: <FormattedMessage id="ui-inventory.statisticalCode" />,
                           component: Select,
-                          dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
+                          dataOptions: [{
+                            label: 'Select code', value: '',
+                          }, ...statisticalCodeOptions],
+                          disabled: this.isFieldBlocked('statisticalCodeIds'),
                         }
                       ]}
+                      canAdd={this.isFieldBlocked('statisticalCodeIds')}
                     />
                   </Col>
                 </Row>
@@ -462,6 +502,7 @@ class InstanceForm extends React.Component {
                     component={TextField}
                     fullWidth
                     required
+                    disabled={this.isFieldBlocked('title')}
                   />
                 </Col>
                 <Field
@@ -477,9 +518,10 @@ class InstanceForm extends React.Component {
                     id="input_index_title"
                     component={TextField}
                     fullWidth
+                    disabled={this.isFieldBlocked('indexTitle')}
                   />
                 </Col>
-                <SeriesFields />
+                <SeriesFields canAdd={!this.isFieldBlocked('series')} />
               </Accordion>
               <Accordion
                 label={(
@@ -491,7 +533,12 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection03}
                 id="instanceSection03"
               >
-                <IdentifierFields identifierTypes={referenceTables.identifierTypes} />
+                <IdentifierFields
+                  identifierTypes={referenceTables.identifierTypes}
+                  canAdd={!this.isFieldBlocked('identifiers')}
+                  canEdit={!this.isFieldBlocked('identifiers')}
+                  canDelete={!this.isFieldBlocked('identifiers')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -506,6 +553,9 @@ class InstanceForm extends React.Component {
                 <ContributorFields
                   contributorNameTypes={referenceTables.contributorNameTypes}
                   contributorTypes={referenceTables.contributorTypes}
+                  canAdd={!this.isFieldBlocked('contributors')}
+                  canEdit={!this.isFieldBlocked('contributors')}
+                  canDelete={!this.isFieldBlocked('contributors')}
                 />
               </Accordion>
               <Accordion
@@ -518,9 +568,21 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection05}
                 id="instanceSection05"
               >
-                <PublicationFields />
-                <EditionFields />
-                <DescriptionFields />
+                <PublicationFields
+                  canAdd={!this.isFieldBlocked('publication')}
+                  canEdit={!this.isFieldBlocked('publication')}
+                  canDelete={!this.isFieldBlocked('publication')}
+                />
+                <EditionFields
+                  canAdd={!this.isFieldBlocked('editions')}
+                  canEdit={!this.isFieldBlocked('editions')}
+                  canDelete={!this.isFieldBlocked('editions')}
+                />
+                <DescriptionFields
+                  canAdd={!this.isFieldBlocked('physicalDescriptions')}
+                  canEdit={!this.isFieldBlocked('physicalDescriptions')}
+                  canDelete={!this.isFieldBlocked('physicalDescriptions')}
+                />
                 <Col sm={10}>
                   <FormattedMessage id="ui-inventory.selectResourceType">
                     {placeholder => (
@@ -537,14 +599,32 @@ class InstanceForm extends React.Component {
                         component={Select}
                         placeholder={placeholder}
                         dataOptions={instanceTypeOptions}
+                        disabled={this.isFieldBlocked('instanceTypeId')}
                       />
                     )}
                   </FormattedMessage>
                 </Col>
-                <InstanceFormatFields instanceFormats={referenceTables.instanceFormats} />
-                <LanguageFields />
-                <PublicationFrequencyFields />
-                <PublicationRangeFields />
+                <InstanceFormatFields
+                  instanceFormats={referenceTables.instanceFormats}
+                  canAdd={!this.isFieldBlocked('instanceFormatIds')}
+                  canEdit={!this.isFieldBlocked('instanceFormatIds')}
+                  canDelete={!this.isFieldBlocked('instanceFormatIds')}
+                />
+                <LanguageFields
+                  canAdd={!this.isFieldBlocked('languages')}
+                  canEdit={!this.isFieldBlocked('languages')}
+                  canDelete={!this.isFieldBlocked('languages')}
+                />
+                <PublicationFrequencyFields
+                  canAdd={!this.isFieldBlocked('publicationFrequency')}
+                  canEdit={!this.isFieldBlocked('publicationFrequency')}
+                  canDelete={!this.isFieldBlocked('publicationFrequency')}
+                />
+                <PublicationRangeFields
+                  canAdd={!this.isFieldBlocked('publicationRange')}
+                  canEdit={!this.isFieldBlocked('publicationRange')}
+                  canDelete={!this.isFieldBlocked('publicationRange')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -556,7 +636,11 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection07}
                 id="instanceSection07"
               >
-                <NoteFields />
+                <NoteFields
+                  canAdd={!this.isFieldBlocked('notes')}
+                  canEdit={!this.isFieldBlocked('notes')}
+                  canDelete={!this.isFieldBlocked('notes')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -564,11 +648,16 @@ class InstanceForm extends React.Component {
                     <FormattedMessage id="ui-inventory.electronicAccess" />
                   </h3>
                 )}
-                onToggle={this.onToggleSection}
+                onToggle={!this.onToggleSection}
                 open={this.state.sections.instanceSection08}
                 id="instanceSection08"
               >
-                <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
+                <ElectronicAccessFields
+                  relationship={referenceTables.electronicAccessRelationships}
+                  canAdd={!this.isFieldBlocked('electronicAccess')}
+                  canEdit={!this.isFieldBlocked('electronicAccess')}
+                  canDelete={!this.isFieldBlocked('electronicAccess')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -580,7 +669,11 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection09}
                 id="instanceSection09"
               >
-                <SubjectFields />
+                <SubjectFields
+                  canAdd={!this.isFieldBlocked('subjects')}
+                  canEdit={!this.isFieldBlocked('subjects')}
+                  canDelete={!this.isFieldBlocked('subjects')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -592,7 +685,12 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection10}
                 id="instanceSection10"
               >
-                <ClassificationFields classificationTypes={referenceTables.classificationTypes} />
+                <ClassificationFields
+                  classificationTypes={referenceTables.classificationTypes}
+                  canAdd={!this.isFieldBlocked('classifications')}
+                  canEdit={!this.isFieldBlocked('classifications')}
+                  canDelete={!this.isFieldBlocked('classifications')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -604,8 +702,18 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection11}
                 id="instanceSection11"
               >
-                <ParentInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
-                <ChildInstanceFields instanceRelationshipTypes={referenceTables.instanceRelationshipTypes} />
+                <ParentInstanceFields
+                  instanceRelationshipTypes={referenceTables.instanceRelationshipTypes}
+                  canAdd={!this.isFieldBlocked('parentInstances')}
+                  canEdit={!this.isFieldBlocked('parentInstances')}
+                  canDelete={!this.isFieldBlocked('publicInstances')}
+                />
+                <ChildInstanceFields
+                  instanceRelationshipTypes={referenceTables.instanceRelationshipTypes}
+                  canAdd={!this.isFieldBlocked('childInstances')}
+                  canEdit={!this.isFieldBlocked('childInstances')}
+                  canDelete={!this.isFieldBlocked('childInstances')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -637,7 +745,18 @@ InstanceForm.propTypes = {
   copy: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    locale: PropTypes.string.isRequired,
+    logger: PropTypes.object.isRequired,
+  }).isRequired,
+  resources: PropTypes.shape({
+    blockedFields: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
   }),
+  instanceSource: PropTypes.string,
+};
+InstanceForm.defaultProps = {
+  instanceSource: 'FOLIO',
 };
 
 export default stripesForm({
