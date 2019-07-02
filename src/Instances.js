@@ -408,7 +408,7 @@ class Instances extends React.Component {
           resultCountIncrement={RESULT_COUNT_INCREMENT}
           viewRecordComponent={ViewInstance}
           editRecordComponent={InstanceForm}
-          newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
+          newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'FOLIO' }}
           visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
           columnMapping={{
             title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),

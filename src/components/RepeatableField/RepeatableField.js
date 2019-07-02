@@ -4,22 +4,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import { FieldArray } from 'redux-form';
 import FieldRow from './FieldRow';
 
-const RepeatableFieldPropTypes = {
-  addButtonId: PropTypes.string,
-  addDefaultItem: PropTypes.bool,
-  addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  name: PropTypes.string.isRequired,
-  newItemTemplate: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  template: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.object),
-  ]),
-};
-
-const contextTypes = {
-  _reduxForm: PropTypes.object,
-};
-
 class RepeatableField extends React.Component {
   constructor(props) {
     super(props);
@@ -48,7 +32,7 @@ class RepeatableField extends React.Component {
     return (
       <Component input={input} meta={meta} {...rest} />
     );
-  }
+  };
 
   addDefaultField(fields) {
     if (this.props.newItemTemplate) {
@@ -68,27 +52,63 @@ class RepeatableField extends React.Component {
   }
 
   render() {
+    const {
+      name,
+      template,
+      label,
+      newItemTemplate,
+      addDefaultItem,
+      addLabel,
+      addButtonId,
+      canAdd,
+      canEdit,
+      canDelete,
+    } = this.props;
+
     return (
       <FieldArray
-        name={this.props.name}
+        name={name}
         component={FieldRow}
         onAddField={this.handleAddField}
         formatter={this.buildComponentFromTemplate}
-        template={this.props.template}
+        template={template}
         containerRef={(ref) => { this.container = ref; }}
-        label={this.props.label}
-        newItemTemplate={this.props.newItemTemplate}
+        label={label}
+        newItemTemplate={newItemTemplate}
         addDefault={this.addDefaultField}
-        addDefaultItem={this.props.addDefaultItem}
-        addLabel={this.props.addLabel}
-        addButtonId={this.props.addButtonId}
+        addDefaultItem={addDefaultItem}
+        addLabel={addLabel}
+        addButtonId={addButtonId}
+        canAdd={canAdd}
+        canEdit={canEdit}
+        canDelete={canDelete}
         lastRowRef={(ref) => { this.lastRow = ref; }}
       />
     );
   }
 }
 
-RepeatableField.propTypes = RepeatableFieldPropTypes;
-RepeatableField.contextTypes = contextTypes;
+RepeatableField.propTypes = {
+  addButtonId: PropTypes.string,
+  addDefaultItem: PropTypes.bool,
+  addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  name: PropTypes.string.isRequired,
+  newItemTemplate: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  template: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+  ]),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+RepeatableField.contextTypes = {
+  _reduxForm: PropTypes.object,
+};
+RepeatableField.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
+};
 
 export default RepeatableField;

@@ -10,13 +10,17 @@ import {
 
 import RepeatableField from '../components/RepeatableField';
 
-const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
-  const relationshipOptions = instanceRelationshipTypes.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+const ChildInstanceFields = props => {
+  const {
+    instanceRelationshipTypes,
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+  const relationshipOptions = instanceRelationshipTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   return (
     <IntlConsumer>
@@ -32,6 +36,7 @@ const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
               name: 'subInstanceId',
               component: TextField,
               required: true,
+              disabled: !canEdit,
             },
             {
               label: intl.formatMessage({ id: 'ui-inventory.typeOfRelation' }),
@@ -40,9 +45,12 @@ const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectType' }),
               dataOptions: relationshipOptions,
               required: true,
+              disabled: !canEdit,
             },
           ]}
           newItemTemplate={{ subInstanceId: '', relationshipTypeId: '' }}
+          canAdd={canAdd}
+          canDelete={canDelete}
         />
       )}
     </IntlConsumer>
@@ -51,6 +59,14 @@ const ChildInstanceFields = ({ instanceRelationshipTypes }) => {
 
 ChildInstanceFields.propTypes = {
   instanceRelationshipTypes: PropTypes.arrayOf(PropTypes.object),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+ChildInstanceFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
 };
 
 export default ChildInstanceFields;
