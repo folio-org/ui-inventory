@@ -25,6 +25,10 @@ import {
   confirmDeleteModalIsPresent = isPresent('#delete-confirmation-modal');
   noDeleteHoldingsRecordModalIsVisible = isVisible('[data-test-no-delete-holdingsrecord-modal]');
   noDeleteHoldingsRecordModalIsPresent = isPresent('[data-test-no-delete-holdingsrecord-modal]');
+  whenLoaded() {
+    return this.timeout(6000).when(() => this.isLoaded);
+  }
+
 }
 
 export default new HoldingsViewPage();
