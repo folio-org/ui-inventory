@@ -9,7 +9,6 @@ import {
 import { IntlConsumer } from '@folio/stripes/core';
 import RepeatableField from '../components/RepeatableField';
 import PrimaryToggleButton from './components/PrimaryToggleButton';
-import AlternativeTitles from './alternativeTitles';
 
 const ContributorFields = props => {
   const {

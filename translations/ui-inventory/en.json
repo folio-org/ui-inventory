@@ -327,6 +327,7 @@
   "subjectHeadings": "Subject headings",
   "classification": "Classification",
   "classificationIdentifierType": "Classification identifier type",
+  "classificationIdentifierTypes": "Classification identifier types",
   "seriesStatement": "Series Statement",
   "editInstanceDialog": "Edit instance dialog",
   "addNewHoldingsDialog": "Add new holdings dialog",

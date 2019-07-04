@@ -19,7 +19,7 @@ import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 import IdentifierTypesSettings from './IdentifierTypesSettings';
-
+import ClassificationTypesSettings from './ClassificationTypesSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -34,6 +34,12 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
             component: AlternativeTitleTypesSettings,
             perm: 'ui-inventory.settings.alternative-title-types',
+          },
+          {
+            route: 'classificationTypes',
+            label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
+            component: ClassificationTypesSettings,
+            perm: 'ui-inventory.settings.classification-types',
           },
           {
             route: 'contributortypes',

@@ -15,9 +15,6 @@ import {
 
 @interactor class ItemEditPage {
   isLoaded = isPresent('[data-test-header-title]');
-  whenLoaded() {
-    return this.when(() => this.isLoaded);
-  }
 
   title = text('[data-test-header-title]');
   sub = text('[data-test-header-sub]');
@@ -26,7 +23,6 @@ import {
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);
   }
-
 }
 
 export default new ItemEditPage('[data-test-item-page-type="edit"]');
