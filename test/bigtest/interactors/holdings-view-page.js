@@ -28,7 +28,6 @@ import {
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);
   }
-
 }
 
 export default new HoldingsViewPage();
