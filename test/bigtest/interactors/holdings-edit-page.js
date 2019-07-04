@@ -1,6 +1,7 @@
 import {
   interactor,
   clickable,
+  isPresent,
   text,
 } from '@bigtest/interactor';
 
@@ -13,9 +14,14 @@ import {
 }
 
 @interactor class HoldingsEditPage {
+  isLoaded = isPresent('[data-test-header-title]');
+
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
+  whenLoaded() {
+    return this.timeout(6000).when(() => this.isLoaded);
+  }
 }
 
 export default new HoldingsEditPage('[data-test-holdings-page-type="edit"]');

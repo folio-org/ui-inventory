@@ -18,6 +18,10 @@ import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
+import IdentifierTypesSettings from './IdentifierTypesSettings';
+import ClassificationTypesSettings from './ClassificationTypesSettings';
+import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
+import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -34,6 +38,12 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.alternative-title-types',
           },
           {
+            route: 'classificationTypes',
+            label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
+            component: ClassificationTypesSettings,
+            perm: 'ui-inventory.settings.classification-types',
+          },
+          {
             route: 'contributortypes',
             label: <FormattedMessage id="ui-inventory.contributorTypes" />,
             component: ContributorTypesSettings,
@@ -46,16 +56,35 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.instance-formats',
           },
           {
+            route: 'identifierTypes',
+            label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
+            component: IdentifierTypesSettings,
+            perm: 'ui-inventory.settings.identifier-types',
+          },
+          {
             route: 'instanceStatusTypes',
             label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
             component: InstanceStatusTypesSettings,
             perm: 'ui-inventory.settings.instance-statuses',
           },
           {
+            route: 'modesOfIssuance',
+            label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
+            component: ModesOfIssuanceSettings,
+            perm: 'ui-inventory.settings.modes-of-issuance',
+          },
+
+          {
             route: 'resourcetypes',
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
+          },
+          {
+            route: 'instanceNoteTypes',
+            label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
+            component: InstanceNoteTypesSettings,
+            perm: 'ui-inventory.settings.instance-note-types',
           },
         ]
       },

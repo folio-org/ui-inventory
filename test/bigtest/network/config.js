@@ -336,6 +336,9 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.get('/instance-note-types');
+  this.get('/instance-note-types/:id');
+
   this.get('/holdings-note-types');
   this.get('/holdings-note-types/:id');
 

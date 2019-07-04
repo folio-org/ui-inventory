@@ -34,7 +34,7 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');
   whenLoaded() {
-    return this.timeout(3000).when(() => this.isLoaded);
+    return this.timeout(6000).when(() => this.isLoaded);
   }
 }
 

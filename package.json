@@ -165,6 +165,32 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.classification-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance classification types",
+        "subPermissions": [
+          "inventory-storage.classification-types.collection.get",
+          "inventory-storage.classification-types.item.delete",
+          "inventory-storage.classification-types.item.get",
+          "inventory-storage.classification-types.item.post",
+          "inventory-storage.classification-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.identifier-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance identifier types",
+        "subPermissions": [
+          "inventory-storage.identifier-types.collection.get",
+          "inventory-storage.identifier-types.item.delete",
+          "inventory-storage.identifier-types.item.get",
+          "inventory-storage.identifier-types.item.post",
+          "inventory-storage.identifier-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-statuses",
         "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
         "subPermissions": [
@@ -212,6 +238,32 @@
           "inventory-storage.instance-types.item.get",
           "inventory-storage.instance-types.item.post",
           "inventory-storage.instance-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.modes-of-issuance",
+        "displayName": "Settings (Inventory): Can create, edit and remove locally defined modes of issuance",
+        "subPermissions": [
+          "inventory-storage.modes-of-issuance.collection.get",
+          "inventory-storage.modes-of-issuance.item.delete",
+          "inventory-storage.modes-of-issuance.item.get",
+          "inventory-storage.modes-of-issuance.item.post",
+          "inventory-storage.modes-of-issuance.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-note-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance note types",
+        "subPermissions": [
+          "inventory-storage.instance-note-types.collection.get",
+          "inventory-storage.instance-note-types.item.delete",
+          "inventory-storage.instance-note-types.item.get",
+          "inventory-storage.instance-note-types.item.post",
+          "inventory-storage.instance-note-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
