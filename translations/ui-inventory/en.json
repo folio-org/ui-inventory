@@ -310,6 +310,7 @@
   "materialsSpecification": "Materials specified",
   "resourceIdentifier": "Resource identifier",
   "resourceIdentifierType": "Resource identifier type",
+  "resourceIdentifierTypes": "Resource identifier types",
   "resourceTitle": "Resource title",
   "contributor": "Contributor",
   "publication": "Publication",

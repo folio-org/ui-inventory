@@ -165,6 +165,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.identifier-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance identifier types",
+        "subPermissions": [
+          "inventory-storage.identifier-types.collection.get",
+          "inventory-storage.identifier-types.item.delete",
+          "inventory-storage.identifier-types.item.get",
+          "inventory-storage.identifier-types.item.post",
+          "inventory-storage.identifier-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-statuses",
         "displayName": "Settings (Inventory): Can create, edit and remove instance statuses",
         "subPermissions": [

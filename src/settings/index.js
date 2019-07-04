@@ -18,6 +18,8 @@ import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
+import IdentifierTypesSettings from './IdentifierTypesSettings';
+
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -44,6 +46,12 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.formats" />,
             component: FormatsSettings,
             perm: 'ui-inventory.settings.instance-formats',
+          },
+          {
+            route: 'identifierTypes',
+            label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
+            component: IdentifierTypesSettings,
+            perm: 'ui-inventory.settings.identifier-types',
           },
           {
             route: 'instanceStatusTypes',
