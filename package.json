@@ -256,6 +256,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.instance-note-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance note types",
+        "subPermissions": [
+          "inventory-storage.instance-note-types.collection.get",
+          "inventory-storage.instance-note-types.item.delete",
+          "inventory-storage.instance-note-types.item.get",
+          "inventory-storage.instance-note-types.item.post",
+          "inventory-storage.instance-note-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.ill-policies",
         "displayName": "Settings (Inventory): Can create, edit and remove ILL policies",
         "subPermissions": [

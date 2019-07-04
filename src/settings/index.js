@@ -21,6 +21,7 @@ import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 import IdentifierTypesSettings from './IdentifierTypesSettings';
 import ClassificationTypesSettings from './ClassificationTypesSettings';
 import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
+import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -72,11 +73,18 @@ class InventorySettings extends React.Component {
             component: ModesOfIssuanceSettings,
             perm: 'ui-inventory.settings.modes-of-issuance',
           },
+
           {
             route: 'resourcetypes',
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
+          },
+          {
+            route: 'instanceNoteTypes',
+            label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
+            component: InstanceNoteTypesSettings,
+            perm: 'ui-inventory.settings.instance-note-types',
           },
         ]
       },
