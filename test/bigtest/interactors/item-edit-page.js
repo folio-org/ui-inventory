@@ -23,6 +23,10 @@ import {
   sub = text('[data-test-header-sub]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
+  whenLoaded() {
+    return this.timeout(6000).when(() => this.isLoaded);
+  }
+
 }
 
 export default new ItemEditPage('[data-test-item-page-type="edit"]');
