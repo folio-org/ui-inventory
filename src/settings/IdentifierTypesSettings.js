@@ -18,8 +18,8 @@ class IdentifierTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdacontent';
-  suppressDelete = term => term.source === 'rdacontent';
+  suppressEdit = term => term.source === 'folio';
+  suppressDelete = term => term.source === 'folio';
 
   render() {
     return (

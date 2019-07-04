@@ -243,6 +243,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.modes-of-issuance",
+        "displayName": "Settings (Inventory): Can create, edit and remove locally defined modes of issuance",
+        "subPermissions": [
+          "inventory-storage.modes-of-issuance.collection.get",
+          "inventory-storage.modes-of-issuance.item.delete",
+          "inventory-storage.modes-of-issuance.item.get",
+          "inventory-storage.modes-of-issuance.item.post",
+          "inventory-storage.modes-of-issuance.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.ill-policies",
         "displayName": "Settings (Inventory): Can create, edit and remove ILL policies",
         "subPermissions": [

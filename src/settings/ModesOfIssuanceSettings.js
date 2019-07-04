@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
-class ClassificationTypesSettings extends React.Component {
+class ModesOfIssuanceSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -18,8 +18,8 @@ class ClassificationTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'folio';
-  suppressDelete = term => term.source === 'folio';
+  suppressEdit = term => term.source === 'rdamodeissue';
+  suppressDelete = term => term.source === 'rdamodeissue';
 
   render() {
     return (
@@ -27,11 +27,11 @@ class ClassificationTypesSettings extends React.Component {
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
-            baseUrl="classification-types"
-            records="classificationTypes"
-            label={<FormattedMessage id="ui-inventory.classificationIdentifierTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.classificationIdentifierType" />}
-            objectLabel={<FormattedMessage id="ui-inventory.classificationIdentifierTypes" />}
+            baseUrl="modes-of-issuance"
+            records="issuanceModes"
+            label={<FormattedMessage id="ui-inventory.modesOfIssuance" />}
+            labelSingular={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+            objectLabel={<FormattedMessage id="ui-inventory.modesOfIssuance" />}
             visibleFields={['name', 'source']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
@@ -43,7 +43,7 @@ class ClassificationTypesSettings extends React.Component {
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
-            id="classification-types"
+            id="modes-of-issuance"
             sortby="name"
           />
         )}
@@ -52,4 +52,4 @@ class ClassificationTypesSettings extends React.Component {
   }
 }
 
-export default ClassificationTypesSettings;
+export default ModesOfIssuanceSettings;

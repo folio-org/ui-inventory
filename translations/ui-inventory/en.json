@@ -292,6 +292,7 @@
   "instanceStatus": "Instance status term",
   "selectInstanceStatus": "Select instance status",
   "modeOfIssuance": "Mode of issuance",
+  "modesOfIssuance": "Modes of issuance",
   "selectModeOfIssuance": "Select mode of issuance",
   "metadataSource": "Metadata source",
   "tba": "TBA",

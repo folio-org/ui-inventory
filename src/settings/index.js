@@ -20,6 +20,7 @@ import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 import IdentifierTypesSettings from './IdentifierTypesSettings';
 import ClassificationTypesSettings from './ClassificationTypesSettings';
+import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -64,6 +65,12 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
             component: InstanceStatusTypesSettings,
             perm: 'ui-inventory.settings.instance-statuses',
+          },
+          {
+            route: 'modesOfIssuance',
+            label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
+            component: ModesOfIssuanceSettings,
+            perm: 'ui-inventory.settings.modes-of-issuance',
           },
           {
             route: 'resourcetypes',
