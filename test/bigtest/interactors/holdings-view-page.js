@@ -18,6 +18,8 @@ import {
 }
 
 @interactor class HoldingsViewPage {
+  isLoaded = isPresent('[data-test-header-title]');
+
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
