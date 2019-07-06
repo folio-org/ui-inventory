@@ -227,7 +227,7 @@ class HoldingsForm extends React.Component {
           {ariaLabel => (
             <Button
               buttonStyle="primary paneHeaderNewButton"
-              id="clickable-create-item"
+              id="clickable-create-holdings-record"
               type="submit"
               aria-label={ariaLabel}
               disabled={(pristine || submitting) && !copy}
