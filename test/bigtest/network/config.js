@@ -21,6 +21,9 @@ export default function configure() {
   this.get('/instance-formats');
   this.get('/instance-formats/:id');
 
+  this.get('/nature-of-content-terms');
+  this.get('/nature-of-content-terms/:id');
+
   this.get('/instance-statuses');
   this.get('/instance-statuses/:id');
 
