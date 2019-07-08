@@ -57,10 +57,10 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.instance-formats',
           },
           {
-            route: 'identifierTypes',
-            label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
-            component: IdentifierTypesSettings,
-            perm: 'ui-inventory.settings.identifier-types',
+            route: 'instanceNoteTypes',
+            label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
+            component: InstanceNoteTypesSettings,
+            perm: 'ui-inventory.settings.instance-note-types',
           },
           {
             route: 'instanceStatusTypes',
@@ -81,22 +81,28 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.nature-of-content-terms',
           },
           {
+            route: 'identifierTypes',
+            label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
+            component: IdentifierTypesSettings,
+            perm: 'ui-inventory.settings.identifier-types',
+          },
+          {
             route: 'resourcetypes',
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
             perm: 'ui-inventory.settings.instance-types',
-          },
-          {
-            route: 'instanceNoteTypes',
-            label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
-            component: InstanceNoteTypesSettings,
-            perm: 'ui-inventory.settings.instance-note-types',
           },
         ]
       },
       {
         label: <FormattedMessage id="ui-inventory.holdings" />,
         pages: [
+          {
+            route: 'holdingsNoteTypes',
+            label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
+            component: HoldingsNoteTypesSettings,
+            perm: 'ui-inventory.settings.holdings-note-types',
+          },
           {
             route: 'holdingsTypes',
             label: <FormattedMessage id="ui-inventory.holdingsTypes" />,
@@ -109,18 +115,17 @@ class InventorySettings extends React.Component {
             component: ILLPolicy,
             perm: 'ui-inventory.settings.ill-policies',
           },
-          {
-            route: 'holdingsNoteTypes',
-            label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
-            component: HoldingsNoteTypesSettings,
-            perm: 'ui-inventory.settings.holdings-note-types',
-          },
-
         ]
       },
       {
         label: <FormattedMessage id="ui-inventory.items" />,
         pages: [
+          {
+            route: 'itemNoteTypes',
+            label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
+            component: ItemNoteTypesSettings,
+            perm: 'ui-inventory.settings.item-note-types',
+          },
           {
             route: 'loantypes',
             label: <FormattedMessage id="ui-inventory.loanTypes" />,
@@ -133,28 +138,22 @@ class InventorySettings extends React.Component {
             component: MaterialTypesSettings,
             perm: 'ui-inventory.settings.materialtypes',
           },
-          {
-            route: 'itemNoteTypes',
-            label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
-            component: ItemNoteTypesSettings,
-            perm: 'ui-inventory.settings.item-note-types',
-          },
         ]
       },
       {
         label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
         pages: [
           {
-            route: 'StatisticalCodeSettings',
-            label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
-            component: StatisticalCodeSettings,
-            perm: 'ui-inventory.settings.statistical-codes',
-          },
-          {
             route: 'statisticalCodeTypes',
             label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
             component: StatisticalCodeTypes,
             perm: 'ui-inventory.settings.statistical-code-types',
+          },
+          {
+            route: 'StatisticalCodeSettings',
+            label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
+            component: StatisticalCodeSettings,
+            perm: 'ui-inventory.settings.statistical-codes',
           },
           {
             route: 'URLrelationship',
