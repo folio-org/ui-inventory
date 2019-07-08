@@ -118,6 +118,7 @@ class ViewInstance extends React.Component {
     mutator.marcRecord.GET()
       .then(data => this.setState({ marcRecord: data }))
       .catch(error => {
+        // eslint-disable-next-line no-console
         console.error('MARC record getting ERROR: ', error);
       });
   };
@@ -198,11 +199,12 @@ class ViewInstance extends React.Component {
 
   handleViewSource = (e, instance) => {
     if (e) e.preventDefault();
-    const { location } = this.props;
     const {
-      marcRecord,
+      location,
       goTo,
-    } = this.state;
+    } = this.props;
+    const { marcRecord } = this.state;
+
     if (!marcRecord) {
       const message = (
         <FormattedMessage
