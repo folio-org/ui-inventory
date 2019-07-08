@@ -29,7 +29,6 @@ const renderInstanceFormatField = ({ field, fieldIndex, canEdit }, instanceForma
           component={Select}
           placeholder={placeholder}
           dataOptions={instanceFormatOptions}
-          required
           data-test-instance-format-field-count={fieldIndex}
           disabled={!canEdit}
         />
