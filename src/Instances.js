@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import {
+  omit,
+  keyBy,
+  get,
+  template,
+  isEmpty,
+} from 'lodash';
 import {
   injectIntl,
   intlShape,
@@ -62,14 +68,14 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors adj "\\"name\\": \\"%{query.query}\\"" or identifiers adj "\\"value\\": \\"%{query.query}\\""' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors =/@value "%{query.query}" or identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
-  { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers adj "\\"value\\": \\"%{query.query}\\""' },
-  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
-  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers == "*\\"value\\": \\"%{query.query}\\", \\"identifierTypeId\\": \\"<%= identifierTypeId %>\\""' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors adj "\\"name\\": \\"%{query.query}\\""' },
+  { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
+  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@value "%{query.query}' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
 ];
 
@@ -112,7 +118,7 @@ class Instances extends React.Component {
               const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === queryIndex);
               const identifierTypeId = identifierType ? identifierType.id : 'identifier-type-not-found';
 
-              queryTemplate = _.template(searchableIndex.queryTemplate)({ identifierTypeId });
+              queryTemplate = template(searchableIndex.queryTemplate)({ identifierTypeId });
             } else {
               queryTemplate = searchableIndex.queryTemplate;
             }
@@ -275,6 +281,18 @@ class Instances extends React.Component {
     this.props.updateLocation({ qindex });
   }
 
+  onFilterChange = (e) => {
+    console.log(e)
+    //
+    // // if we're clearing the filters, clear the query index too
+    if (isEmpty(e)) {
+      this.props.updateLocation({ qindex: 'all' });
+    }
+
+    // const qindex = e.target.value;
+    // this.props.updateLocation({ qindex });
+  }
+
   updateFilters(prevFilters) { // provided for onChangeFilter
     const filters = Object.keys(prevFilters).filter(key => filters[key]).join(',');
     this.props.updateLocation({ filters });
@@ -287,7 +305,7 @@ class Instances extends React.Component {
   }
 
   copyInstance(instance) {
-    this.setState({ copiedInstance: _.omit(instance, ['id', 'hrid']) });
+    this.setState({ copiedInstance: omit(instance, ['id', 'hrid']) });
     this.props.updateLocation({ layer: 'create' });
   }
 
@@ -347,7 +365,7 @@ class Instances extends React.Component {
     const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
     const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
-    const locationsById = _.keyBy(locations, 'id');
+    const locationsById = keyBy(locations, 'id');
 
     const referenceTables = {
       contributorTypes,
@@ -400,9 +418,10 @@ class Instances extends React.Component {
           objectName="inventory"
           maxSortKeys={1}
           searchableIndexes={formattedSearchableIndexes}
-          selectedIndex={_.get(this.props.resources.query, 'qindex')}
+          selectedIndex={get(this.props.resources.query, 'qindex')}
           searchableIndexesPlaceholder={null}
           onChangeIndex={this.onChangeIndex}
+          filterChangeCallback={this.onFilterChange}
           filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
