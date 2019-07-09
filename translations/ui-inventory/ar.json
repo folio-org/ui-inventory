@@ -381,5 +381,12 @@
     "subject": "الموضوع",
     "isbn": "ISBN",
     "issn": "ISSN",
-    "marcSourceRecord.notFoundError": "لا يمكن العثور على تسجيلة مارك البيبلوغرافية للوعاء \"{name}\"!"
+    "marcSourceRecord.notFoundError": "لا يمكن العثور على تسجيلة مارك البيبلوغرافية للوعاء \"{name}\"!",
+    "instanceNoteTypes": "أنواع ملاحظة الوعاء",
+    "modesOfIssuance": "أوضاع الإصدار",
+    "resourceIdentifierTypes": "أنواع معرّف المورد",
+    "classificationIdentifierTypes": "أنواع معرّفات التصنيف",
+    "instanceNoteType": "نوع ملاحظة الوعاء",
+    "natureOfContentTerms": "طبيعة مصطلحات المحتوى",
+    "natureOfContentTerm": "طبيعة مصطلح المحتوى"
 }
