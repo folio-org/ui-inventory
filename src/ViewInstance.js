@@ -352,6 +352,39 @@ class ViewInstance extends React.Component {
       'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
     };
 
+    const layoutNotes = (noteTypes, notes) => {
+      return noteTypes
+        .filter((noteType) => notes.find(note => note.instanceNoteTypeId === noteType.id))
+        .map((noteType, i) => {
+          return (
+            <Row key={i}>
+              <Col xs={2}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-inventory.staffOnly" />}
+                  value={get(instance, ['notes'], []).map((note, j) => {
+                    if (note.instanceNoteTypeId === noteType.id) {
+                      return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+                    }
+                    return null;
+                  })}
+                />
+              </Col>
+              <Col xs={10}>
+                <KeyValue
+                  label={noteType.name}
+                  value={get(instance, ['notes'], []).map((note, j) => {
+                    if (note.instanceNoteTypeId === noteType.id) {
+                      return <div key={j}>{note.note}</div>;
+                    }
+                    return null;
+                  })}
+                />
+              </Col>
+            </Row>
+          );
+        });
+    };
+
     const detailMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editInstance">
@@ -900,18 +933,7 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.notes" />}
         >
-          {
-            instance.notes.length > 0 && (
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.notes" />}
-                    value={get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
-                  />
-                </Col>
-              </Row>
-            )
-          }
+          {layoutNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []))}
         </Accordion>
 
         <Accordion
