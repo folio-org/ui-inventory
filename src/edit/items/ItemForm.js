@@ -154,7 +154,7 @@ class ItemForm extends React.Component {
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
-  }
+  };
 
   handleExpandAll = (obj) => {
     this.setState((curState) => {
@@ -162,7 +162,7 @@ class ItemForm extends React.Component {
       newState.accordions = obj;
       return newState;
     });
-  }
+  };
 
   confirmPermanentLocation(confirm) {
     const { permanentLocation, prevPermanentLocation } = this.state;
@@ -200,7 +200,7 @@ class ItemForm extends React.Component {
         </Icon>
       </Button>
     );
-  }
+  };
 
   onSelectHandler = loc => this.selectTemporaryLocation(loc);
 
@@ -595,18 +595,20 @@ class ItemForm extends React.Component {
                 </Col>
                 <Col sm={3}>
                   <Field
-                    label={<FormattedMessage id="ui-inventory.volume" />}
-                    name="volume"
-                    id="additem_volume"
+                    label={<FormattedMessage id="ui-inventory.chronology" />}
+                    name="chronology"
+                    id="additem_chronology"
                     component={TextField}
                     fullWidth
                   />
                 </Col>
+              </Row>
+              <Row>
                 <Col sm={3}>
                   <Field
-                    label={<FormattedMessage id="ui-inventory.chronology" />}
-                    name="chronology"
-                    id="additem_chronology"
+                    label={<FormattedMessage id="ui-inventory.volume" />}
+                    name="volume"
+                    id="additem_volume"
                     component={TextField}
                     fullWidth
                   />
@@ -719,6 +721,12 @@ class ItemForm extends React.Component {
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
                         type: 'checkbox',
+                        inline: true,
+                        vertical: true,
+                        columnSize: {
+                          xs: 3,
+                          lg: 2,
+                        }
                       }
                     ]}
                   />
@@ -808,6 +816,12 @@ class ItemForm extends React.Component {
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
                         type: 'checkbox',
+                        inline: true,
+                        vertical: true,
+                        columnSize: {
+                          xs: 3,
+                          lg: 2,
+                        }
                       }
                     ]}
                   />

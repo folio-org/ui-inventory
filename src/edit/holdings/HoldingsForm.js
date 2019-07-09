@@ -225,7 +225,7 @@ class HoldingsForm extends React.Component {
       <PaneMenu>
         <Button
           buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-item"
+          id="clickable-create-holdings-record"
           type="submit"
           disabled={(pristine || submitting) && !copy}
           onClick={handleSubmit(this.onSave)}

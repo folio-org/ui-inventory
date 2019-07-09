@@ -16,21 +16,6 @@ import {
 
 import css from './RepeatableField.css';
 
-const FieldRowPropTypes = {
-  addButtonId: PropTypes.string,
-  addDefault: PropTypes.func,
-  addDefaultItem: PropTypes.bool,
-  addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  containerRef: PropTypes.func,
-  fields: PropTypes.object,
-  formatter: PropTypes.func,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
-  lastRowRef: PropTypes.func,
-  newItemTemplate: PropTypes.object,
-  onAddField: PropTypes.func,
-  template: PropTypes.arrayOf(PropTypes.object),
-};
-
 class FieldRow extends React.Component {
   constructor(props) {
     super(props);
@@ -138,6 +123,9 @@ class FieldRow extends React.Component {
     const {
       addDefaultItem,
       addLabel,
+      canAdd,
+      canEdit,
+      canDelete,
       containerRef,
       fields,
       label,
@@ -166,6 +154,7 @@ class FieldRow extends React.Component {
               style={{ marginBottom: '12px' }}
               onClick={handleButtonClick}
               id={this.addButtonId}
+              disabled={!canAdd}
             >
               {addLabel || (
                 <Icon icon="plus-sign">
@@ -196,11 +185,15 @@ class FieldRow extends React.Component {
               <Row>
                 <Col xs={10}>
                   <Row>
-                    {template.map((t, i) => (
-                      <Col xs key={`field-${i}`}>
-                        {this.renderControl(fields, f, fieldIndex, t, i)}
-                      </Col>
-                    ))}
+                    {template.map((t, i) => {
+                      const { columnSize } = t;
+                      const colSizes = typeof columnSize === 'object' ? columnSize : { xs: true };
+                      return (
+                        <Col {...colSizes} key={`field-${i}`}>
+                          {this.renderControl(fields, f, fieldIndex, t, i)}
+                        </Col>
+                      );
+                    })}
                   </Row>
                 </Col>
                 <Col xs={2}>
@@ -215,6 +208,7 @@ class FieldRow extends React.Component {
                           style={{ padding: 0, marginBottom: '12px' }}
                           onClick={() => { this.handleRemove(fieldIndex, f); }}
                           aria-label={ariaLabel}
+                          disabled={!canDelete}
                         >
                           <Icon icon="trash" />
                         </Button>
@@ -223,11 +217,11 @@ class FieldRow extends React.Component {
                   </Layout>
                 </Col>
               </Row>
-
               {fieldIndex === fields.length - 1 &&
                 <Button
                   onClick={handleButtonClick}
                   id={this.addButtonId}
+                  disabled={!canAdd}
                 >
                   {addLabel || (
                     <FormattedMessage
@@ -244,6 +238,28 @@ class FieldRow extends React.Component {
   }
 }
 
-FieldRow.propTypes = FieldRowPropTypes;
+FieldRow.propTypes = {
+  addButtonId: PropTypes.string,
+  addDefault: PropTypes.func,
+  addDefaultItem: PropTypes.bool,
+  addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+  containerRef: PropTypes.func,
+  fields: PropTypes.object,
+  formatter: PropTypes.func,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.node]),
+  lastRowRef: PropTypes.func,
+  newItemTemplate: PropTypes.object,
+  onAddField: PropTypes.func,
+  template: PropTypes.arrayOf(PropTypes.object),
+};
+
+FieldRow.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
+};
 
 export default FieldRow;

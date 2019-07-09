@@ -11,13 +11,17 @@ import {
 
 import RepeatableField from '../components/RepeatableField';
 
-const ClassificationFields = ({ classificationTypes }) => {
-  const classificationTypeOptions = classificationTypes.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+const ClassificationFields = props => {
+  const {
+    classificationTypes,
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+  const classificationTypeOptions = classificationTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   return (
     <IntlConsumer>
@@ -40,15 +44,19 @@ const ClassificationFields = ({ classificationTypes }) => {
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectClassification' }),
               dataOptions: classificationTypeOptions,
               required: true,
+              disabled: !canEdit,
             },
             {
               label: intl.formatMessage({ id: 'ui-inventory.classification' }),
               name: 'classificationNumber',
               component: TextField,
               required: true,
+              disabled: !canEdit,
             },
           ]}
           newItemTemplate={{ classificationNumber: '', classificationTypeId: '' }}
+          canAdd={canAdd}
+          canDelete={canDelete}
         />
       )}
     </IntlConsumer>
@@ -57,6 +65,14 @@ const ClassificationFields = ({ classificationTypes }) => {
 
 ClassificationFields.propTypes = {
   classificationTypes: PropTypes.arrayOf(PropTypes.object),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+ClassificationFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
 };
 
 export default ClassificationFields;

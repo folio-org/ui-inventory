@@ -21,6 +21,9 @@ export default function configure() {
   this.get('/instance-formats');
   this.get('/instance-formats/:id');
 
+  this.get('/nature-of-content-terms');
+  this.get('/nature-of-content-terms/:id');
+
   this.get('/instance-statuses');
   this.get('/instance-statuses/:id');
 
@@ -47,12 +50,35 @@ export default function configure() {
   this.get('/electronic-access-relationships');
   this.get('/electronic-access-relationships/:id');
 
-  this.get('/statistical-code-types');
+  this.get('/statistical-code-types', {
+    statisticalCodeTypes : [{
+      id : '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
+      name : 'RECM (Record management)',
+      source : 'folio'
+    }, {
+      id : 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
+      name : 'SERM (Serial management)',
+      source : 'folio'
+    }],
+    totalRecords : 2
+  });
   this.get('/statistical-code-types/:id');
 
   this.get('/statistical-codes', {
-    statisticalCodes: [],
-    totalRecords: 0
+    statisticalCodes: [{
+      id : 'c7a32c50-ea7c-43b7-87ab-d134c8371330',
+      code : 'ASER',
+      name : 'Active serial',
+      statisticalCodeTypeId : 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
+      source : 'UC'
+    }, {
+      id : 'b6b46869-f3c1-4370-b603-29774a1e42b1',
+      code : 'arch',
+      name : 'Archives (arch)',
+      statisticalCodeTypeId : '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
+      source : 'UC'
+    }],
+    totalRecords: 2
   });
 
   this.get('/alternative-title-types');
@@ -313,6 +339,9 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.get('/instance-note-types');
+  this.get('/instance-note-types/:id');
+
   this.get('/holdings-note-types');
   this.get('/holdings-note-types/:id');
 
@@ -337,4 +366,12 @@ export default function configure() {
     loantypes: [],
     totalRecords: 0
   });
+
+  this.get('/source-storage/formattedRecords', {
+    records: [],
+    totalRecords: 0
+  });
+  this.get('/source-storage/formattedRecords/:id');
+
+  this.get('/inventory/config/instances/blocked-fields');
 }

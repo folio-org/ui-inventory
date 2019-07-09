@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.8.0",
+  "version": "1.11.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -126,14 +126,6 @@
         "visible": true
       },
       {
-        "permissionName": "settings.inventory.enabled",
-        "displayName": "Settings (Inventory): display list of settings pages",
-        "subPermissions": [
-          "settings.enabled"
-        ],
-        "visible": true
-      },
-      {
         "permissionName": "ui-inventory.settings.instance-formats",
         "displayName": "Settings (Inventory): Can create, edit and remove formats",
         "subPermissions": [
@@ -168,6 +160,32 @@
           "inventory-storage.holdings-types.item.get",
           "inventory-storage.holdings-types.item.post",
           "inventory-storage.holdings-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.classification-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance classification types",
+        "subPermissions": [
+          "inventory-storage.classification-types.collection.get",
+          "inventory-storage.classification-types.item.delete",
+          "inventory-storage.classification-types.item.get",
+          "inventory-storage.classification-types.item.post",
+          "inventory-storage.classification-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.identifier-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance identifier types",
+        "subPermissions": [
+          "inventory-storage.identifier-types.collection.get",
+          "inventory-storage.identifier-types.item.delete",
+          "inventory-storage.identifier-types.item.get",
+          "inventory-storage.identifier-types.item.post",
+          "inventory-storage.identifier-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
@@ -220,6 +238,45 @@
           "inventory-storage.instance-types.item.get",
           "inventory-storage.instance-types.item.post",
           "inventory-storage.instance-types.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.nature-of-content-terms",
+        "displayName": "Settings (Inventory): Can create, edit and remove locally defined content terms",
+        "subPermissions": [
+          "inventory-storage.nature-of-content-terms.collection.get",
+          "inventory-storage.nature-of-content-terms.item.delete",
+          "inventory-storage.nature-of-content-terms.item.get",
+          "inventory-storage.nature-of-content-terms.item.post",
+          "inventory-storage.nature-of-content-terms.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.modes-of-issuance",
+        "displayName": "Settings (Inventory): Can create, edit and remove locally defined modes of issuance",
+        "subPermissions": [
+          "inventory-storage.modes-of-issuance.collection.get",
+          "inventory-storage.modes-of-issuance.item.delete",
+          "inventory-storage.modes-of-issuance.item.get",
+          "inventory-storage.modes-of-issuance.item.post",
+          "inventory-storage.modes-of-issuance.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-note-types",
+        "displayName": "Settings (Inventory): Can create, edit and remove instance note types",
+        "subPermissions": [
+          "inventory-storage.instance-note-types.collection.get",
+          "inventory-storage.instance-note-types.item.delete",
+          "inventory-storage.instance-note-types.item.get",
+          "inventory-storage.instance-note-types.item.post",
+          "inventory-storage.instance-note-types.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
@@ -312,7 +369,7 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^2.0.0",
+    "@folio/stripes": "^2.7.0",
     "@folio/stripes-cli": "^1.5.0",
     "@folio/stripes-core": "^3.0.1",
     "babel-eslint": "^9.0.0",

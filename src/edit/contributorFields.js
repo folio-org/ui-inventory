@@ -10,23 +10,23 @@ import { IntlConsumer } from '@folio/stripes/core';
 import RepeatableField from '../components/RepeatableField';
 import PrimaryToggleButton from './components/PrimaryToggleButton';
 
-const ContributorFields = ({
-  contributorNameTypes,
-  contributorTypes,
-}) => {
-  const contributorNameTypeOptions = contributorNameTypes.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+const ContributorFields = props => {
+  const {
+    contributorNameTypes,
+    contributorTypes,
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+  const contributorNameTypeOptions = contributorNameTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
-  const contributorTypeOptions = contributorTypes.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+  const contributorTypeOptions = contributorTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   return (
     <IntlConsumer>
@@ -36,7 +36,7 @@ const ContributorFields = ({
           label={<FormattedMessage id="ui-inventory.contributors" />}
           addLabel={
             <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addContributors" />
+              <FormattedMessage id="ui-inventory.addContributor" />
             </Icon>
           }
           addButtonId="clickable-add-contributor"
@@ -45,31 +45,32 @@ const ContributorFields = ({
               label: <FormattedMessage id="ui-inventory.name" />,
               name: 'name',
               component: TextField,
-            },
-            {
+              disabled: !canEdit,
+            }, {
               label: <FormattedMessage id="ui-inventory.nameType" />,
               name: 'contributorNameTypeId',
               component: Select,
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectType' }),
               dataOptions: contributorNameTypeOptions,
               required: true,
-            },
-            {
+              disabled: !canEdit,
+            }, {
               label: <FormattedMessage id="ui-inventory.type" />,
               name: 'contributorTypeId',
               component: Select,
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectType' }),
               dataOptions: contributorTypeOptions,
-            },
-            {
+              disabled: !canEdit,
+            }, {
               label: <FormattedMessage id="ui-inventory.typeFreeText" />,
               name: 'contributorTypeText',
               component: TextField,
-            },
-            {
+              disabled: !canEdit,
+            }, {
               name: 'primary',
               label: intl.formatMessage({ id: 'ui-inventory.primary' }),
               component: PrimaryToggleButton,
+              disabled: !canEdit,
             },
           ]}
           newItemTemplate={{
@@ -79,6 +80,8 @@ const ContributorFields = ({
             contributorTypeId: '',
             contributorTypeText: '',
           }}
+          canAdd={canAdd}
+          canDelete={canDelete}
         />
       )}
     </IntlConsumer>
@@ -88,6 +91,14 @@ const ContributorFields = ({
 ContributorFields.propTypes = {
   contributorNameTypes: PropTypes.arrayOf(PropTypes.object),
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+ContributorFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
 };
 
 export default ContributorFields;

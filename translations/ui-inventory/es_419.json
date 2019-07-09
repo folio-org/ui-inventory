@@ -339,7 +339,7 @@
     "waitingForResources": "Waiting for resources",
     "fetchingMarcRecord": "Fetching MARC record",
     "viewMarcSource": "View MARC source",
-    "marcSourceRecord": "MARC source record",
+    "marcSourceRecord": "MARC bibliographic record",
     "item.barcode": "Item: barcode",
     "resourceIdentifierType": "Resource identifier type",
     "publication": "Publication",
@@ -374,5 +374,12 @@
     "itemNoteTypes": "Tipos de nota de item",
     "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be ato continue deletion of this holdings record, the associated item record must be deleted.",
     "itemsOnHoldingsRecordDeleteModal.message": "El registro de fondos HRID <strong>{hrid}</strong> con localización <strong>{location}</strong> tiene <strong>{itemCount}</strong> registros de item asociados. Para continuar con la eliminación de este registro de fondos, todos los registros de item asociados deben ser borrados.",
-    "condition": "Condition"
+    "condition": "Condition",
+    "search.isbn": "- ISBN",
+    "search.issn": "- ISSN",
+    "search.all": "All (title, contributor, identifier)",
+    "subject": "Subject",
+    "isbn": "ISBN",
+    "issn": "ISSN",
+    "marcSourceRecord.notFoundError": "Cannot find MARC bibliographic record for \"{name}\" instance!"
 }

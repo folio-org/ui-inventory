@@ -18,6 +18,11 @@ import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
+import IdentifierTypesSettings from './IdentifierTypesSettings';
+import ClassificationTypesSettings from './ClassificationTypesSettings';
+import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
+import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
+import NatureOfContentTermsSettings from './NatureOfContentTermsSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -34,6 +39,12 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.alternative-title-types',
           },
           {
+            route: 'classificationTypes',
+            label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
+            component: ClassificationTypesSettings,
+            perm: 'ui-inventory.settings.classification-types',
+          },
+          {
             route: 'contributortypes',
             label: <FormattedMessage id="ui-inventory.contributorTypes" />,
             component: ContributorTypesSettings,
@@ -46,10 +57,34 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.instance-formats',
           },
           {
+            route: 'instanceNoteTypes',
+            label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
+            component: InstanceNoteTypesSettings,
+            perm: 'ui-inventory.settings.instance-note-types',
+          },
+          {
             route: 'instanceStatusTypes',
             label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
             component: InstanceStatusTypesSettings,
             perm: 'ui-inventory.settings.instance-statuses',
+          },
+          {
+            route: 'modesOfIssuance',
+            label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
+            component: ModesOfIssuanceSettings,
+            perm: 'ui-inventory.settings.modes-of-issuance',
+          },
+          {
+            route: 'natureOfContentTerms',
+            label: <FormattedMessage id="ui-inventory.natureOfContentTerms" />,
+            component: NatureOfContentTermsSettings,
+            perm: 'ui-inventory.settings.nature-of-content-terms',
+          },
+          {
+            route: 'identifierTypes',
+            label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
+            component: IdentifierTypesSettings,
+            perm: 'ui-inventory.settings.identifier-types',
           },
           {
             route: 'resourcetypes',
@@ -63,6 +98,12 @@ class InventorySettings extends React.Component {
         label: <FormattedMessage id="ui-inventory.holdings" />,
         pages: [
           {
+            route: 'holdingsNoteTypes',
+            label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
+            component: HoldingsNoteTypesSettings,
+            perm: 'ui-inventory.settings.holdings-note-types',
+          },
+          {
             route: 'holdingsTypes',
             label: <FormattedMessage id="ui-inventory.holdingsTypes" />,
             component: HoldingsTypeSettings,
@@ -74,18 +115,17 @@ class InventorySettings extends React.Component {
             component: ILLPolicy,
             perm: 'ui-inventory.settings.ill-policies',
           },
-          {
-            route: 'holdingsNoteTypes',
-            label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
-            component: HoldingsNoteTypesSettings,
-            perm: 'ui-inventory.settings.holdings-note-types',
-          },
-
         ]
       },
       {
         label: <FormattedMessage id="ui-inventory.items" />,
         pages: [
+          {
+            route: 'itemNoteTypes',
+            label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
+            component: ItemNoteTypesSettings,
+            perm: 'ui-inventory.settings.item-note-types',
+          },
           {
             route: 'loantypes',
             label: <FormattedMessage id="ui-inventory.loanTypes" />,
@@ -98,28 +138,22 @@ class InventorySettings extends React.Component {
             component: MaterialTypesSettings,
             perm: 'ui-inventory.settings.materialtypes',
           },
-          {
-            route: 'itemNoteTypes',
-            label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
-            component: ItemNoteTypesSettings,
-            perm: 'ui-inventory.settings.item-note-types',
-          },
         ]
       },
       {
         label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
         pages: [
           {
-            route: 'StatisticalCodeSettings',
-            label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
-            component: StatisticalCodeSettings,
-            perm: 'ui-inventory.settings.statistical-codes',
-          },
-          {
             route: 'statisticalCodeTypes',
             label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
             component: StatisticalCodeTypes,
             perm: 'ui-inventory.settings.statistical-code-types',
+          },
+          {
+            route: 'StatisticalCodeSettings',
+            label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
+            component: StatisticalCodeSettings,
+            perm: 'ui-inventory.settings.statistical-codes',
           },
           {
             route: 'URLrelationship',

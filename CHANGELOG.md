@@ -1,16 +1,32 @@
 # Change history for ui-inventory
 
-## 1.9.0 (In Progress)
+## 1.11.0 (IN PROGRESS)
+
+* Fix item details retaining loan data for closed loan. Part of UIIN-484.
+* Do not attempt to manually set the read-only HRID field in tests. Refs UIIN-557.
+* Remove unnecessary permissions. Refs UIORG-150.
+* Use new array-search syntax for identifiers, contributors. Fixes UIIN-618, UIIN-621, UIIN-623, UIIN-624.
+
+## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
+
+* Add link to MARC record source from SRS. UIIN-590.
+* Handle display order of Statistical codes different in instance edit dropdown. UIIN-573.
+
+## [1.9.0](https://github.com/folio-org/ui-inventory/tree/v1.9.0) (2019-06-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.8.0...v1.9.0)
 
 * Check for dependencies when deleting holding record. Part of UIIN-550.
+* Update notes checkbox to render label vertically in item and holdings forms (UIIN-559)
 * Show link to request for items without barcode. UIREQ-253.
 * Layout of primary contributor flag. UIIN-503.
 * Settings pages for note types. UIIN-453.
-* Bug fixes: UIIN-568
+* Bug fixes: UIIN-568, UIIN-427
 * Remove results display by default (no search queries or filters). UIIN-79
 * Handle spelling issue for ILL policies. UIIN-516
 * Change accordion header value to Condition. Fix UIIN-576
 * Add validation to alternative title. Fixes UIIN-496.
+* Replace hardcoded translations of search indexes by formatted messages. Fixes UIIN-595
 * `Save` buttons are labeled consistently with other apps. Refs UIIN-530.
 
 ## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)

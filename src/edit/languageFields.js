@@ -11,7 +11,7 @@ import {
 import RepeatableField from '../components/RepeatableField';
 import languages from '../data/languages';
 
-const renderLanguageField = ({ field, fieldIndex }) => {
+const renderLanguageField = ({ field, fieldIndex, canEdit }) => {
   const languageOptions = languages.selectOptions(field);
   const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.language" /> : null;
 
@@ -26,6 +26,7 @@ const renderLanguageField = ({ field, fieldIndex }) => {
           dataOptions={languageOptions}
           required
           data-test-language-field-count={fieldIndex}
+          disabled={!canEdit}
         />
       )}
     </FormattedMessage>
@@ -35,23 +36,47 @@ const renderLanguageField = ({ field, fieldIndex }) => {
 renderLanguageField.propTypes = {
   field: PropTypes.object,
   fieldIndex: PropTypes.number,
+  canEdit: PropTypes.bool,
+};
+renderLanguageField.defaultProps = {
+  canEdit: true,
 };
 
-const LanguageFields = () => (
-  <RepeatableField
-    name="languages"
-    label={<FormattedMessage id="ui-inventory.languages" />}
-    addLabel={
-      <Icon icon="plus-sign">
-        <FormattedMessage id="ui-inventory.addLanguage" />
-      </Icon>
-    }
-    addButtonId="clickable-add-language"
-    template={[{
-      render(fieldObj) { return renderLanguageField(fieldObj); },
-    }]}
-  />
-);
+const LanguageFields = props => {
+  const {
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
 
+  return (
+    <RepeatableField
+      name="languages"
+      label={<FormattedMessage id="ui-inventory.languages" />}
+      addLabel={
+        <Icon icon="plus-sign">
+          <FormattedMessage id="ui-inventory.addLanguage" />
+        </Icon>
+      }
+      addButtonId="clickable-add-language"
+      template={[{
+        render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit }); },
+      }]}
+      canAdd={canAdd}
+      canDelete={canDelete}
+    />
+  );
+};
+
+LanguageFields.propTypes = {
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+LanguageFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
+};
 
 export default LanguageFields;

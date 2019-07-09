@@ -339,7 +339,7 @@
     "waitingForResources": "Aguardando por recursos",
     "fetchingMarcRecord": "Buscando registro MARC",
     "viewMarcSource": "Ver fonte MARC",
-    "marcSourceRecord": "Registro de origem MARC",
+    "marcSourceRecord": "Registro bibliográfico MARC",
     "item.barcode": "Item: código de barras",
     "resourceIdentifierType": "Tipo de identificador de recurso",
     "publication": "Publicação",
@@ -374,5 +374,12 @@
     "itemNoteTypes": "Tipos de notas de item",
     "itemOnHoldingsRecordDeleteModal.message": "Registros de holdings HRID <strong>{hrid}</strong> com a localização <strong>{location}</strong> tem <strong>um</strong> registro de item associado. Para poder continuar com a exclusão desse registro de holdings, o registro do item associado deve ser excluído.",
     "itemsOnHoldingsRecordDeleteModal.message": "O registro de holdings HRID <strong>{hrid}</strong> com o localização <strong>{location}</strong> tem registros de itens associados <strong>{itemCount}</strong>. Para poder continuar com a exclusão desse registro de holdings, todos os registros de itens associados devem ser excluídos.",
-    "condition": "Condição"
+    "condition": "Condição",
+    "search.isbn": "- ISBN",
+    "search.issn": "- ISSN",
+    "search.all": "Tudo (título, contribuidor, identificador)",
+    "subject": "Assunto",
+    "isbn": "ISBN",
+    "issn": "ISSN",
+    "marcSourceRecord.notFoundError": "Não é possível encontrar o registro bibliográfico MARC para a instância \"{name}\"!"
 }

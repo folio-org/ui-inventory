@@ -10,13 +10,17 @@ import {
 
 import RepeatableField from '../components/RepeatableField';
 
-const AlternativeTitles = ({ alternativeTitleTypes }) => {
-  const alternativeTitleTypeOptions = alternativeTitleTypes.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+const AlternativeTitles = props => {
+  const {
+    alternativeTitleTypes,
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+  const alternativeTitleTypeOptions = alternativeTitleTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   return (
     <FormattedMessage id="ui-inventory.selectAlternativeTitleType">
@@ -38,15 +42,19 @@ const AlternativeTitles = ({ alternativeTitleTypes }) => {
               placeholder,
               dataOptions: alternativeTitleTypeOptions,
               required: true,
+              disabled: !canEdit
             },
             {
               name: 'alternativeTitle',
               label: <FormattedMessage id="ui-inventory.alternativeTitle" />,
               component: TextField,
               required: true,
+              disabled: !canEdit
             }
           ]}
           newItemTemplate={{ alternativeTitleTypeId: '', alternativeTitle: '' }}
+          canAdd={canAdd}
+          canDelete={canDelete}
         />
       )}
     </FormattedMessage>
@@ -55,6 +63,14 @@ const AlternativeTitles = ({ alternativeTitleTypes }) => {
 
 AlternativeTitles.propTypes = {
   alternativeTitleTypes: PropTypes.arrayOf(PropTypes.object),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+AlternativeTitles.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
 };
 
 export default AlternativeTitles;
