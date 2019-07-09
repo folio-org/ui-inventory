@@ -288,41 +288,31 @@ class InstanceForm extends React.Component {
     /* Menus for Add Instance workflow */
     const addInstanceLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.createInstance">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary paneHeaderNewButton"
-              id="clickable-create-instance"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.createInstance" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-create-instance"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
     const editInstanceLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.updateInstance">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary paneHeaderNewButton"
-              id="clickable-update-instance"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.updateInstance" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-update-instance"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
