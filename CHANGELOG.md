@@ -5,6 +5,7 @@
 * Fix item details retaining loan data for closed loan. Part of UIIN-484.
 * Do not attempt to manually set the read-only HRID field in tests. Refs UIIN-557.
 * Remove unnecessary permissions. Refs UIORG-150.
+* Use new array-search syntax for identifiers, contributors. Fixes UIIN-618, UIIN-621, UIIN-623, UIIN-624.
 
 ## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
