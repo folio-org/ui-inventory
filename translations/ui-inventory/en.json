@@ -71,6 +71,7 @@
   "createItem": "Create item",
   "createNewItem": "Create New Item",
   "updateItem": "Update item",
+  "instanceTitle": "Instance: {title}.",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
   "waitingForResources": "Waiting for resources",
   "fetchingMarcRecord": "Fetching MARC record",
