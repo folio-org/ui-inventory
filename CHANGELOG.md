@@ -2,6 +2,13 @@
 
 ## 1.11.0 (IN PROGRESS)
 
+* Requires `inventory` interface 9.0
+* Requires `instance-storage` interface 7.0
+* Requires `instance-note-types` interface 1.0
+* Requires `nature-of-content-terms` interface 1.0
+* Requires `identifier-types` interface 1.1
+* Requires `contributor-name-types` interface 1.2
+* Requires `classification-types` interface 1.1
 * Fix item details retaining loan data for closed loan. Part of UIIN-484.
 * Do not attempt to manually set the read-only HRID field in tests. Refs UIIN-557.
 * Remove unnecessary permissions. Refs UIORG-150.
