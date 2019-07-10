@@ -772,13 +772,11 @@ class ViewInstance extends React.Component {
                       <MultiColumnList
                         id="list-contributors"
                         contentData={instance.contributors}
-                        visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text', 'Primary']}
+                        visibleColumns={['Name type', 'Name', 'Type', 'Free text', 'Primary']}
                         columnMapping={{
                           'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
                           'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
                           'Type': intl.formatMessage({ id: 'ui-inventory.type' }),
-                          'Code': intl.formatMessage({ id: 'ui-inventory.code' }),
-                          'Source': intl.formatMessage({ id: 'ui-inventory.source' }),
                           'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
                           'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
                         }}
