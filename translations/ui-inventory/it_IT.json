@@ -274,7 +274,7 @@
     "cancel": "Cancel",
     "newInstance": "New instance",
     "duplicateHoldings": "Duplicate",
-    "duplicateItem": "Duplica elemento",
+    "duplicateItem": "Duplica",
     "editItem": "Modifica elemento",
     "holdingsStatementNote": "Nota informativa sulle copie",
     "alternativeTitle": "Titolo alternativo",
@@ -388,5 +388,6 @@
     "classificationIdentifierTypes": "Classification identifier types",
     "instanceNoteType": "Instance note type",
     "natureOfContentTerms": "Nature of content",
-    "natureOfContentTerm": "Nature of content"
+    "natureOfContentTerm": "Nature of content",
+    "instanceTitle": "Instance: {title}."
 }

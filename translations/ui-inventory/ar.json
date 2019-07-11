@@ -388,5 +388,6 @@
     "classificationIdentifierTypes": "أنواع معرّفات التصنيف",
     "instanceNoteType": "نوع ملاحظة الوعاء",
     "natureOfContentTerms": "طبيعة مصطلحات المحتوى",
-    "natureOfContentTerm": "طبيعة مصطلح المحتوى"
+    "natureOfContentTerm": "طبيعة مصطلح المحتوى",
+    "instanceTitle": "الوعاء: {title}."
 }
