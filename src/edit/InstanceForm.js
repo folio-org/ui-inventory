@@ -499,8 +499,14 @@ class InstanceForm extends React.Component {
                   type="hidden"
                   name="source"
                   component="input"
+                  disabled={this.isFieldBlocked('source')}
                 />
-                <AlternativeTitles alternativeTitleTypes={referenceTables.alternativeTitleTypes} />
+                <AlternativeTitles
+                  alternativeTitleTypes={referenceTables.alternativeTitleTypes}
+                  canAdd={!this.isFieldBlocked('alternativeTitles')}
+                  canEdit={!this.isFieldBlocked('alternativeTitles')}
+                  canDelete={!this.isFieldBlocked('alternativeTitles')}
+                />
                 <Col sm={10}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.indexTitle" />}
@@ -509,9 +515,15 @@ class InstanceForm extends React.Component {
                     component={TextField}
                     fullWidth
                     disabled={this.isFieldBlocked('indexTitle')}
+                    canEdit={!this.isFieldBlocked('indexTitle')}
+                    canDelete={!this.isFieldBlocked('indexTitle')}
                   />
                 </Col>
-                <SeriesFields canAdd={!this.isFieldBlocked('series')} />
+                <SeriesFields
+                  canAdd={!this.isFieldBlocked('series')}
+                  canEdit={!this.isFieldBlocked('series')}
+                  canDelete={!this.isFieldBlocked('series')}
+                />
               </Accordion>
               <Accordion
                 label={(
