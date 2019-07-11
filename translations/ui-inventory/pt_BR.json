@@ -386,7 +386,8 @@
     "modesOfIssuance": "Modos de emissão",
     "resourceIdentifierTypes": "Tipos de identificador de recurso",
     "classificationIdentifierTypes": "Tipos de identificador de classificação",
-    "instanceNoteType": "Instance note type",
-    "natureOfContentTerms": "Nature of content",
-    "natureOfContentTerm": "Nature of content"
+    "instanceNoteType": "Tipo de nota de instância",
+    "natureOfContentTerms": "Natureza do conteúdo",
+    "natureOfContentTerm": "Natureza do conteúdo",
+    "instanceTitle": "Instância: {title}."
 }
