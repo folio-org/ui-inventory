@@ -195,6 +195,15 @@ class Instances extends React.Component {
       records: 'issuanceModes',
       path: 'modes-of-issuance?limit=1000&query=cql.allRecords=1 sortby name',
     },
+    instanceNoteTypes: {
+      type: 'okapi',
+      path: 'instance-note-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
+      records: 'instanceNoteTypes',
+    },
     electronicAccessRelationships: {
       type: 'okapi',
       records: 'electronicAccessRelationships',
@@ -326,6 +335,7 @@ class Instances extends React.Component {
       || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
       || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
       || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
+      || !resources.instanceNoteTypes || !resources.instanceNoteTypes.hasLoaded
       || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
       || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
       || !resources.illPolicies || !resources.illPolicies.hasLoaded
@@ -345,6 +355,7 @@ class Instances extends React.Component {
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
+    const instanceNoteTypes = resources.instanceNoteTypes.records;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
     const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
@@ -366,6 +377,7 @@ class Instances extends React.Component {
       instanceStatuses,
       modesOfIssuance,
       electronicAccessRelationships,
+      instanceNoteTypes,
       statisticalCodeTypes,
       statisticalCodes,
       illPolicies,

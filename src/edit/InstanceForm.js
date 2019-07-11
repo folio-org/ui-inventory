@@ -642,6 +642,7 @@ class InstanceForm extends React.Component {
                   canAdd={!this.isFieldBlocked('notes')}
                   canEdit={!this.isFieldBlocked('notes')}
                   canDelete={!this.isFieldBlocked('notes')}
+                  instanceNoteTypes={referenceTables.instanceNoteTypes}
                 />
               </Accordion>
               <Accordion
