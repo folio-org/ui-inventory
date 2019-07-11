@@ -29,6 +29,7 @@ import {
   KeyValue,
   Layer,
   Layout,
+  List,
   PaneHeaderIconButton,
   Icon,
   Headline,
@@ -715,8 +716,9 @@ class ViewInstance extends React.Component {
               instance.series.length > 0 && (
                 <Col xs={12}>
                   <KeyValue
+                    items={instance.series}
+                    value={<List items={instance.series} listStyle="bullets" />}
                     label={<FormattedMessage id="ui-inventory.seriesStatement" />}
-                    value={get(instance, ['series'], '')}
                   />
                 </Col>
               )
