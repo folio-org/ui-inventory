@@ -355,7 +355,7 @@ class Instances extends React.Component {
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
-    const instanceNoteTypes = (resources.instanceNoteTypes || emptyObj).records || emptyArr;
+    const instanceNoteTypes = resources.instanceNoteTypes.records;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
     const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
