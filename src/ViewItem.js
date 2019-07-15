@@ -667,7 +667,7 @@ class ViewItem extends React.Component {
                 {(instance.publication && instance.publication.length > 0) &&
                   <span>
                     <em>
-                      {instance.publication[0].publisher}
+                      {` ${instance.publication[0].publisher}`}
                       {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
                     </em>
                   </span>
