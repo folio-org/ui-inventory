@@ -1,6 +1,6 @@
 {
     "inventory.label": "Bestand",
-    "resultCount": "{count, number} {count, plural, ein {Datensatz} weitere {Datensätze}} gefunden",
+    "resultCount": "{count, number} {count, plural, one {Datensatz} other {Datensätze}} gefunden",
     "item.availability": "Verfügbarkeit",
     "item.availability.itemStatus": "Exemplarstatus",
     "item.availability.itemStatusDate": "Datum Exemplarstatus",
