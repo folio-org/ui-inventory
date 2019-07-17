@@ -7,6 +7,8 @@ import { FormattedMessage } from 'react-intl';
 import { MultiColumnList } from '@folio/stripes/components';
 import { IntlConsumer, AppIcon } from '@folio/stripes/core';
 
+import withLocation from './withLocation';
+
 /**
  * List items for display in the Holdings accordion in the main
  * instance-details pane.
@@ -29,12 +31,14 @@ class Items extends React.Component {
   constructor(props) {
     super(props);
     this.editItemModeThisLayer = false;
+    this.searchParams = this.props.getSearchParams();
   }
 
   anchoredRowFormatter = (row) => (
+
     <div role="listitem" key={`row-${row.rowIndex}`}>
       <Link
-        to={`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${row.rowData.id}`}
+        to={`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${row.rowData.id}?${this.searchParams}`}
         aria-label={row.labelStrings && row.labelStrings.join('...')}
         className={row.rowClass}
         {...row.rowProps}
@@ -104,4 +108,4 @@ Items.propTypes = {
   holdingsRecord: PropTypes.object.isRequired,
 };
 
-export default Items;
+export default withLocation(Items);
