@@ -8,7 +8,8 @@ import { withRouter } from 'react-router';
 const searchParams = [
   'filters',
   'query',
-  'sort'
+  'sort',
+  'qindex',
 ];
 
 function withLocation(WrappedComponent) {
