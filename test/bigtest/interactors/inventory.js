@@ -19,4 +19,8 @@ export default @interactor class InventoryInteractor {
 
   fillSearchField = fillable('#input-inventory-search');
   clickSearch = clickable('[data-test-search-and-sort-submit]');
+
+  openInstance = clickable('[role=row] a');
+  openItem = clickable('[data-test-items] a');
+  closeItem = clickable('[data-test-item-view-page] button:first-child')
 }

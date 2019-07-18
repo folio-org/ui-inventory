@@ -45,6 +45,7 @@ const ContributorFields = props => {
               label: <FormattedMessage id="ui-inventory.name" />,
               name: 'name',
               component: TextField,
+              required: true,
               disabled: !canEdit,
             }, {
               label: <FormattedMessage id="ui-inventory.nameType" />,

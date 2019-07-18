@@ -465,7 +465,7 @@ class InstanceForm extends React.Component {
                           disabled: this.isFieldBlocked('statisticalCodeIds'),
                         }
                       ]}
-                      canAdd={this.isFieldBlocked('statisticalCodeIds')}
+                      canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                     />
                   </Col>
                 </Row>

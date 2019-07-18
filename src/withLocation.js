@@ -1,10 +1,16 @@
-import omitBy from 'lodash/omitBy';
-import isNil from 'lodash/isNil';
+import { isNil, omitBy, pickBy, includes } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
+
+const searchParams = [
+  'filters',
+  'query',
+  'sort',
+  'qindex',
+];
 
 function withLocation(WrappedComponent) {
   class Location extends React.Component {
@@ -37,11 +43,20 @@ function withLocation(WrappedComponent) {
       history.push(url);
     }
 
+    getSearchParams = () => {
+      const { location } = this.props;
+      const { search } = location;
+      const params = pickBy(parse(search), (_, key) => includes(searchParams, key));
+
+      return stringify(params);
+    }
+
     render() {
       return (
         <WrappedComponent
           updateLocation={this.updateLocation}
           goTo={this.goTo}
+          getSearchParams={this.getSearchParams}
           {...this.props}
         />
       );

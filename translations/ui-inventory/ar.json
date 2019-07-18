@@ -375,11 +375,11 @@
     "itemOnHoldingsRecordDeleteModal.message": "رقم التعريف القابل للقراءة بشريًا لتسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> له تسجيلة مادة <strong>واحدة</strong> مرتبطة به. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف تسجيلة المادة المرتبطة به.",
     "itemsOnHoldingsRecordDeleteModal.message": "رقم التعريف القابل للقراءة بشريًا لتسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> له <strong>{itemCount}</strong> تسجيلة مادة مرتبطة به. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف جميع تسجيلات المواد المرتبطة به.",
     "condition": "شرط",
-    "search.isbn": "- ISBN",
+    "search.isbn": "- ردمك",
     "search.issn": "- ISSN",
     "search.all": "الكل (العنوان، المساهم، المعرّف)",
     "subject": "الموضوع",
-    "isbn": "ISBN",
+    "isbn": "ردمك",
     "issn": "ISSN",
     "marcSourceRecord.notFoundError": "لا يمكن العثور على تسجيلة مارك البيبلوغرافية للوعاء \"{name}\"!",
     "instanceNoteTypes": "أنواع ملاحظة الوعاء",
@@ -389,5 +389,7 @@
     "instanceNoteType": "نوع ملاحظة الوعاء",
     "natureOfContentTerms": "طبيعة مصطلحات المحتوى",
     "natureOfContentTerm": "طبيعة مصطلح المحتوى",
-    "instanceTitle": "الوعاء: {title}."
+    "instanceTitle": "الوعاء: {title}.",
+    "items.damageStatus.damaged": "Damaged",
+    "items.damageStatus.notdamaged": "Not damaged"
 }

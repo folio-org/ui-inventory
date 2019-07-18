@@ -159,7 +159,8 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
+    const { goTo, getSearchParams, match: { params: { id } } } = this.props;
+    goTo(`/inventory/view/${id}?${getSearchParams()}`);
   };
 
   closeViewMarc = (e) => {
