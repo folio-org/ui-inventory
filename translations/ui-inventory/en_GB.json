@@ -389,5 +389,7 @@
     "instanceNoteType": "Instance note type",
     "natureOfContentTerms": "Nature of content",
     "natureOfContentTerm": "Nature of content",
-    "instanceTitle": "Instance: {title}."
+    "instanceTitle": "Instance: {title}.",
+    "items.damageStatus.damaged": "Damaged",
+    "items.damageStatus.notdamaged": "Not damaged"
 }
