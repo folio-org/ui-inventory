@@ -204,6 +204,10 @@ class ItemForm extends React.Component {
 
   onSelectHandler = loc => this.selectTemporaryLocation(loc);
 
+  setItemDamagedStatusDate = () => {
+    this.props.change('itemDamagedStatusDate', new Date());
+  }
+
   render() {
     const {
       handleSubmit,
@@ -682,6 +686,7 @@ class ItemForm extends React.Component {
                         id="input_item_damaged_status_id"
                         component={Select}
                         placeholder={placeholder}
+                        onChange={this.setItemDamagedStatusDate}
                         label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
                       >
                         {itemDamageOptions}
