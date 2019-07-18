@@ -14,6 +14,7 @@
 * Remove unnecessary permissions. Refs UIORG-150.
 * Use new array-search syntax for identifiers, contributors. Fixes UIIN-618, UIIN-621, UIIN-623, UIIN-624.
 * Change series format. Part of UIIN-606.
+* Mark contributor name field as required. Part of UIIN-620.
 
 ## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
