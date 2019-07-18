@@ -390,6 +390,6 @@
     "natureOfContentTerms": "طبيعة مصطلحات المحتوى",
     "natureOfContentTerm": "طبيعة مصطلح المحتوى",
     "instanceTitle": "الوعاء: {title}.",
-    "items.damageStatus.damaged": "Damaged",
-    "items.damageStatus.notdamaged": "Not damaged"
+    "items.damageStatus.damaged": "تالفة",
+    "items.damageStatus.notdamaged": "غير تالفة"
 }

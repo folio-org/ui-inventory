@@ -390,6 +390,6 @@
     "natureOfContentTerms": "Nature of content",
     "natureOfContentTerm": "Nature of content",
     "instanceTitle": "Instance: {title}.",
-    "items.damageStatus.damaged": "Damaged",
-    "items.damageStatus.notdamaged": "Not damaged"
+    "items.damageStatus.damaged": "损坏",
+    "items.damageStatus.notdamaged": "未损坏"
 }
