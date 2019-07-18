@@ -727,9 +727,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
             >
-              {(item.metadata && item.metadata.createdDate) &&
-                <this.cViewMetaData metadata={item.metadata} />
-              }
+              <this.cViewMetaData metadata={item.metadata} />
               <Row>
                 <Col xs={12}>
                   {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}

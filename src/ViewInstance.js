@@ -568,7 +568,7 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceData" />}
         >
-          {(instance.metadata && instance.metadata.createdDate) && <this.cViewMetaData metadata={instance.metadata} />}
+          <this.cViewMetaData metadata={instance.metadata} />
           <Row>
             <Col xs={12}>
               {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}

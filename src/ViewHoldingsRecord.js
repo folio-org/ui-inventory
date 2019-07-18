@@ -459,9 +459,7 @@ class ViewHoldingsRecord extends React.Component {
                 onToggle={this.handleAccordionToggle}
                 label={<FormattedMessage id="ui-inventory.administrativeData" />}
               >
-                {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                  <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                }
+                <this.cViewMetaData metadata={holdingsRecord.metadata} />
                 <Row>
                   <Col xs={12}>
                     {holdingsRecord.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
