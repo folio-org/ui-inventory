@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
+import { IntlConsumer } from '@folio/stripes/core';
 
 class LoanTypesSettings extends React.Component {
   static propTypes = {
@@ -19,18 +20,22 @@ class LoanTypesSettings extends React.Component {
 
   render() {
     return (
-      <this.connectedControlledVocab
-        {...this.props}
-        baseUrl="loan-types"
-        records="loantypes"
-        label={<FormattedMessage id="ui-inventory.loanTypes" />}
-        labelSingular={<FormattedMessage id="ui-inventory.loanType" />}
-        objectLabel={<FormattedMessage id="ui-inventory.loans" />}
-        hiddenFields={['description', 'numberOfObjects']}
-        nameKey="name"
-        id="loantypes"
-        sortby="name"
-      />
+      <IntlConsumer>
+        {intl => (
+          <this.connectedControlledVocab
+            {...this.props}
+            baseUrl="loan-types"
+            records="loantypes"
+            label={<FormattedMessage id="ui-inventory.loanTypes" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.loanType' })}
+            objectLabel={<FormattedMessage id="ui-inventory.loans" />}
+            hiddenFields={['description', 'numberOfObjects']}
+            nameKey="name"
+            id="loantypes"
+            sortby="name"
+          />
+        )}
+      </IntlConsumer>
     );
   }
 }

@@ -27,7 +27,7 @@ class StatisticalCodeTypes extends React.Component {
             baseUrl="statistical-code-types"
             records="statisticalCodeTypes"
             label={<FormattedMessage id="ui-inventory.statisticalCodeTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.statisticalCodeTypes" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
             objectLabel={<FormattedMessage id="ui-inventory.statisticalCodeTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

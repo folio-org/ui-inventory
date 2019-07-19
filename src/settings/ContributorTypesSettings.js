@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import validateNameAndCode from './validateNameAndCode';
+
 class ContributorTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -30,7 +32,7 @@ class ContributorTypesSettings extends React.Component {
             baseUrl="contributor-types"
             records="contributorTypes"
             label={<FormattedMessage id="ui-inventory.contributorTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.contributorType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.contributorType' })}
             objectLabel={<FormattedMessage id="ui-inventory.contributors" />}
             visibleFields={['name', 'code', 'source']}
             columnMapping={{
@@ -46,6 +48,7 @@ class ContributorTypesSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="contributor-types"
             sortby="name"
+            validate={validateNameAndCode}
           />
         )}
       </IntlConsumer>

@@ -27,7 +27,7 @@ class CallNumberTypes extends React.Component {
             baseUrl="call-number-types"
             records="callNumberTypes"
             label={<FormattedMessage id="ui-inventory.callNumberTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.callNumberType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.callNumberType' })}
             objectLabel={<FormattedMessage id="ui-inventory.callNumberTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

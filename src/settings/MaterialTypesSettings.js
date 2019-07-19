@@ -27,7 +27,7 @@ class MaterialTypesSettings extends React.Component {
             baseUrl="material-types"
             records="mtypes"
             label={<FormattedMessage id="ui-inventory.materialTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.materialType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.materialType' })}
             objectLabel={<FormattedMessage id="ui-inventory.items" />}
             visibleFields={['name', 'source']}
             columnMapping={{

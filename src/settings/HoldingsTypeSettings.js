@@ -27,7 +27,7 @@ class HoldingsTypeSettings extends React.Component {
             baseUrl="holdings-types"
             records="holdingsTypes"
             label={<FormattedMessage id="ui-inventory.holdingsTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.holdingsType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.holdingsType' })}
             objectLabel={<FormattedMessage id="ui-inventory.holdingsTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

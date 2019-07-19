@@ -8,6 +8,8 @@ import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import validateNameAndCode from './validateNameAndCode';
+
 class StatisticalCodeSettings extends React.Component {
   static manifest = Object.freeze({
     statisticalCodeTypes: {
@@ -32,6 +34,14 @@ class StatisticalCodeSettings extends React.Component {
     super(props);
 
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
+  }
+
+  validate = (item) => {
+    const errors = validateNameAndCode(item);
+    if (!item.statisticalCodeTypeId) {
+      errors.name = <FormattedMessage id="ui-inventory.selectToContinue" />;
+    }
+    return errors;
   }
 
   render() {
@@ -83,7 +93,7 @@ class StatisticalCodeSettings extends React.Component {
             formatter={formatter}
             fieldComponents={fieldComponents}
             label={<FormattedMessage id="ui-inventory.statisticalCodes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.statisticalCode" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
             objectLabel={<FormattedMessage id="ui-inventory.statisticalCodes" />}
             visibleFields={['code', 'name', 'statisticalCodeTypeId', 'source']}
             columnMapping={{

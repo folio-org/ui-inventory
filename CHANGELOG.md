@@ -62,6 +62,7 @@
 * Align menu item labels across pages. UIIN-524.
 * Fixes to language inconsistencies. UIIN-521.
 * Other bug fixes: UIIN-432, UIIN-479, UIIN-510, UIIN-513, UIIN-536, UIIN-556
+* Add missing validation for some CV items.
 
 ## [1.7.0](https://github.com/folio-org/ui-inventory/tree/v1.7.0) (2019-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.6.0...v1.7.0)

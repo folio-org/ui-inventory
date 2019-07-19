@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import validateNameAndCode from './validateNameAndCode';
+
 class FormatSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -30,7 +32,7 @@ class FormatSettings extends React.Component {
             baseUrl="instance-formats"
             records="instanceFormats"
             label={<FormattedMessage id="ui-inventory.formats" />}
-            labelSingular={<FormattedMessage id="ui-inventory.format" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.format' })}
             objectLabel={<FormattedMessage id="ui-inventory.instances" />}
             visibleFields={['name', 'code', 'source']}
             columnMapping={{
@@ -46,6 +48,7 @@ class FormatSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="formats"
             sortby="name"
+            validate={validateNameAndCode}
           />
         )}
       </IntlConsumer>
