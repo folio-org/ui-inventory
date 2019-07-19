@@ -12,6 +12,7 @@ import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
+  FormattedDate,
   FormattedTime,
   FormattedMessage,
 } from 'react-intl';
@@ -959,11 +960,11 @@ class ViewItem extends React.Component {
                 }
               </Row>
               <Row>
-                {(item.itemDamagedStatus) &&
+                {(item.itemDamagedStatusId) &&
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                      value=""
+                      value={item.itemDamagedStatusId}
                     />
                   </Col>
                 }
@@ -971,7 +972,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.date" />}
-                      value={get(item, ['itemDamagedStatusDate'], '')}
+                      value={<FormattedDate value={item.itemDamagedStatusDate} />}
                     />
                   </Col>
                 }
