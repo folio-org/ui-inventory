@@ -11,13 +11,17 @@ import {
 
 import RepeatableField from '../components/RepeatableField';
 
-const IdentifierFields = ({ identifierTypes }) => {
-  const identifierTypeOptions = identifierTypes.map(
-    it => ({
-      label: it.name,
-      value: it.id,
-    }),
-  );
+const IdentifierFields = props => {
+  const {
+    identifierTypes,
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+  const identifierTypeOptions = identifierTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   return (
     <IntlConsumer>
@@ -39,15 +43,19 @@ const IdentifierFields = ({ identifierTypes }) => {
               placeholder: intl.formatMessage({ id: 'ui-inventory.selectIdentifierType' }),
               dataOptions: identifierTypeOptions,
               required: true,
+              disabled: !canEdit,
             },
             {
               name: 'value',
               label: intl.formatMessage({ id: 'ui-inventory.identifier' }),
               component: TextField,
               required: true,
+              disabled: !canEdit,
             }
           ]}
           newItemTemplate={{ identifierTypeId: '', value: '' }}
+          canAdd={canAdd}
+          canDelete={canDelete}
         />
       )}
     </IntlConsumer>
@@ -56,6 +64,14 @@ const IdentifierFields = ({ identifierTypes }) => {
 
 IdentifierFields.propTypes = {
   identifierTypes: PropTypes.arrayOf(PropTypes.object),
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
+};
+IdentifierFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+  canDelete: true,
 };
 
 export default IdentifierFields;

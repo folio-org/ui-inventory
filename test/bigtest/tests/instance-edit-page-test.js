@@ -79,7 +79,7 @@ describe('InstanceEditPage', () => {
 
         it('should have a first label', () => {
           const id = InstanceEditPage.firstFormatLabelId;
-          expect(InstanceEditPage.newI(id).text).to.equal('Format*');
+          expect(InstanceEditPage.newI(id).text).to.equal('Format');
         });
 
         it('should not have a second label', () => {

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import ItemViewPage from '../interactors/item-view-page';
 
-describe('ItemViewPage', () => {
+describe('Delete item checked out', () => {
   setupApplication();
 
   describe('visiting the item view page', () => {

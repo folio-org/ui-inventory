@@ -1,6 +1,6 @@
 /* global Nightmare describe it before after */
 module.exports.test = function test(uiTestCtx) {
-  describe('Module test: inventory:inventorySearch', function startTest() {
+  describe('Module test: inventory:search', function startTest() {
     const { config, helpers: { login, openApp, logout }, meta: { testVersion } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
@@ -16,7 +16,6 @@ module.exports.test = function test(uiTestCtx) {
     describe('Login > Click Inventory > Enter Search Term > Wait for Results > Confirm search term at top of results > Click Reset All > Wait for results pan to change state > Logout\n', () => {
       const title = 'California';
       const authorName = 'Huntley, Henry Veel';
-      let hitCount = 0;
       before((done) => {
         login(nightmare, config, done); // logs in with the default admin credentials
       });
@@ -28,16 +27,11 @@ module.exports.test = function test(uiTestCtx) {
           .use(openApp(nightmare, config, done, 'inventory', testVersion))
           .then(result => result);
       });
-      it('should find hit count with no filters applied', (done) => {
+      it('should find "no results" message with no filters applied', (done) => {
         nightmare
-          .wait('#list-inventory')
-          .evaluate(() => {
-            return document.querySelector('#list-inventory').getAttribute('data-total-count');
-          })
-          .then((result) => {
-            done();
-            hitCount = result;
-          })
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
           .catch(done);
       });
       it(`should search for: "${title}"`, (done) => {
@@ -50,7 +44,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
-          .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
+          .wait('#list-inventory[data-total-count]')
           .wait(contentWait, title)
           .then(done)
           .catch(done);
@@ -59,7 +53,8 @@ module.exports.test = function test(uiTestCtx) {
         nightmare
           .wait('#clickable-reset-all')
           .click('#clickable-reset-all')
-          .wait(`#list-inventory[data-total-count^="${hitCount}"]`)
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
           .then(done)
           .catch(done);
       });
@@ -72,7 +67,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
-          .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
+          .wait('#list-inventory[data-total-count]')
           .wait(contentWait, title)
 
           /* .evaluate(function evall(title2) {
@@ -89,7 +84,8 @@ module.exports.test = function test(uiTestCtx) {
         nightmare
           .wait('#clickable-reset-all')
           .click('#clickable-reset-all')
-          .wait(`#list-inventory[data-total-count^="${hitCount}"]`)
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
           .then(done)
           .catch(done);
       });
@@ -100,7 +96,7 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
-          .wait(`#list-inventory:not([data-total-count^="${hitCount}"])`)
+          .wait('#list-inventory[data-total-count]')
           .wait(contentWait, authorName)
           .then(done)
           .catch(done);

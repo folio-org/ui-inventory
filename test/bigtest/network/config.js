@@ -21,6 +21,9 @@ export default function configure() {
   this.get('/instance-formats');
   this.get('/instance-formats/:id');
 
+  this.get('/nature-of-content-terms');
+  this.get('/nature-of-content-terms/:id');
+
   this.get('/instance-statuses');
   this.get('/instance-statuses/:id');
 
@@ -47,12 +50,35 @@ export default function configure() {
   this.get('/electronic-access-relationships');
   this.get('/electronic-access-relationships/:id');
 
-  this.get('/statistical-code-types');
+  this.get('/statistical-code-types', {
+    statisticalCodeTypes : [{
+      id : '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
+      name : 'RECM (Record management)',
+      source : 'folio'
+    }, {
+      id : 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
+      name : 'SERM (Serial management)',
+      source : 'folio'
+    }],
+    totalRecords : 2
+  });
   this.get('/statistical-code-types/:id');
 
   this.get('/statistical-codes', {
-    statisticalCodes: [],
-    totalRecords: 0
+    statisticalCodes: [{
+      id : 'c7a32c50-ea7c-43b7-87ab-d134c8371330',
+      code : 'ASER',
+      name : 'Active serial',
+      statisticalCodeTypeId : 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
+      source : 'UC'
+    }, {
+      id : 'b6b46869-f3c1-4370-b603-29774a1e42b1',
+      code : 'arch',
+      name : 'Archives (arch)',
+      statisticalCodeTypeId : '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
+      source : 'UC'
+    }],
+    totalRecords: 2
   });
 
   this.get('/alternative-title-types');
@@ -149,7 +175,7 @@ export default function configure() {
     ],
     totalRecords : 5,
   });
-  this.get('/locations/:id');
+  this.get('/locations/:id', {});
 
   // item-storage
   this.get('/service-points', {
@@ -157,59 +183,71 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/inventory/items', {
-    items: [
-      {
-        id: '7abd8dfe-0234-4256-b2e6-539499999cac',
-        status: {
-          name: 'Checked out',
-        },
-        title: '14 cows for America',
-        hrid: 'it00000168',
-        contributorNames: [
-          {
-            name: 'Deedy, Carmen Agra.',
+  this.get('/inventory/items', ({ items }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      const { field, term } = cqlParser.tree;
+
+      if (field && term) {
+        return items.where({ [field]: term });
+      }
+    }
+
+    return {
+      items: [
+        {
+          id: '7abd8dfe-0234-4256-b2e6-539499999cac',
+          status: {
+            name: 'Checked out',
           },
-          {
-            name: 'Naiyomah, Wilson Kimeli.',
+          title: '14 cows for America',
+          hrid: 'it00000168',
+          contributorNames: [
+            {
+              name: 'Deedy, Carmen Agra.',
+            },
+            {
+              name: 'Naiyomah, Wilson Kimeli.',
+            },
+            {
+              name: 'Gonzalez, Thomas',
+            },
+          ],
+          formerIds: [],
+          discoverySuppress: null,
+          holdingsRecordId: '44a21d17-a666-4f34-b24d-644f8ed1537b',
+          barcode: '5860825104574',
+          copyNumbers: [],
+          notes: [],
+          circulationNotes: [],
+          numberOfPieces: '3',
+          yearCaption: [],
+          electronicAccess: [],
+          statisticalCodeIds: [],
+          purchaseOrderLineIdentifier: null,
+          materialType: {
+            id: '1a54b431-2e4f-452d-9cae-9cee66c9a892',
+            name: 'book',
           },
-          {
-            name: 'Gonzalez, Thomas',
+          permanentLoanType: {
+            id: '2b94c631-fca9-4892-a730-03ee529ffe27',
+            name: 'Can circulate',
           },
-        ],
-        formerIds: [],
-        discoverySuppress: null,
-        holdingsRecordId: '44a21d17-a666-4f34-b24d-644f8ed1537b',
-        barcode: '5860825104574',
-        copyNumbers: [],
-        notes: [],
-        circulationNotes: [],
-        numberOfPieces: '3',
-        yearCaption: [],
-        electronicAccess: [],
-        statisticalCodeIds: [],
-        purchaseOrderLineIdentifier: null,
-        materialType: {
-          id: '1a54b431-2e4f-452d-9cae-9cee66c9a892',
-          name: 'book',
+          metadata: {
+            createdDate: '2019-04-11T03:34:21.745+0000',
+            createdByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
+            updatedDate: '2019-04-11T12:01:48.451+0000',
+            updatedByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
+          },
+          effectiveLocation: {
+            id: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+            name: 'Main Library',
+          },
         },
-        permanentLoanType: {
-          id: '2b94c631-fca9-4892-a730-03ee529ffe27',
-          name: 'Can circulate',
-        },
-        metadata: {
-          createdDate: '2019-04-11T03:34:21.745+0000',
-          createdByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
-          updatedDate: '2019-04-11T12:01:48.451+0000',
-          updatedByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
-        },
-        effectiveLocation: {
-          id: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-          name: 'Main Library',
-        },
-      },
-    ],
-    totalRecords: 1,
+      ],
+      totalRecords: 1,
+    };
   });
 
   this.get('/inventory/items/:id', ({ items }, { params }) => {
@@ -238,30 +276,42 @@ export default function configure() {
     return JSON.parse(request.requestBody);
   });
 
-  this.get('/holdings-storage/holdings', {
-    holdingsRecords: [
-      {
-        id: '44a21d17-a666-4f34-b24d-644f8ed1537b',
-        hrid: 'ho00000111',
-        formerIds: [],
-        instanceId: '7a8f9775-8de3-4308-8323-b055c104e0f3',
-        permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-        electronicAccess: [],
-        notes: [],
-        holdingsStatements: [],
-        holdingsStatementsForIndexes: [],
-        holdingsStatementsForSupplements: [],
-        statisticalCodeIds: [],
-        holdingsItems: [],
-        metadata: {
-          createdDate: '2019-04-11T03:34:20.887+0000',
-          createdByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
-          updatedDate: '2019-04-11T03:34:20.887+0000',
-          updatedByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
+  this.get('/holdings-storage/holdings', ({ holdings }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      const { field, term } = cqlParser.tree;
+
+      if (field && term) {
+        return holdings.where({ [field]: term });
+      }
+    }
+
+    return {
+      holdingsRecords: [
+        {
+          id: '44a21d17-a666-4f34-b24d-644f8ed1537b',
+          hrid: 'ho00000111',
+          formerIds: [],
+          instanceId: '7a8f9775-8de3-4308-8323-b055c104e0f3',
+          permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+          electronicAccess: [],
+          notes: [],
+          holdingsStatements: [],
+          holdingsStatementsForIndexes: [],
+          holdingsStatementsForSupplements: [],
+          statisticalCodeIds: [],
+          holdingsItems: [],
+          metadata: {
+            createdDate: '2019-04-11T03:34:20.887+0000',
+            createdByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
+            updatedDate: '2019-04-11T03:34:20.887+0000',
+            updatedByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
+          },
         },
-      },
-    ],
-    totalRecords: 1,
+      ],
+      totalRecords: 1,
+    };
   });
 
   this.get('/holdings-storage/holdings/:id', ({ holdings }, { params }) => {
@@ -289,6 +339,9 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.get('/instance-note-types');
+  this.get('/instance-note-types/:id');
+
   this.get('/holdings-note-types');
   this.get('/holdings-note-types/:id');
 
@@ -313,4 +366,12 @@ export default function configure() {
     loantypes: [],
     totalRecords: 0
   });
+
+  this.get('/source-storage/formattedRecords', {
+    records: [],
+    totalRecords: 0
+  });
+  this.get('/source-storage/formattedRecords/:id');
+
+  this.get('/inventory/config/instances/blocked-fields');
 }

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
   Field,
 } from 'redux-form';
@@ -31,8 +31,8 @@ import {
 } from '@folio/stripes/smart-components';
 
 import RepeatableField from '../../components/RepeatableField';
-
 import ElectronicAccessFields from '../electronicAccessFields';
+import { itemDamageStatuses } from '../../constants';
 
 function validate(values) {
   const errors = {};
@@ -61,17 +61,20 @@ function checkUniqueBarcode(okapi, barcode) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  const barcodeTakenMsg = <FormattedMessage id="ui-inventory.barcodeTaken" />;
+  const { barcode } = values;
 
-  if (blurredField === 'barcode' && values.barcode !== props.initialValues.barcode) {
+  if (blurredField === 'barcode'
+    && barcode
+    && barcode !== props.initialValues.barcode) {
     return new Promise((resolve, reject) => {
       // TODO: Should use stripes-connect (dispatching an action and update state)
-      checkUniqueBarcode(props.okapi, values.barcode).then((response) => {
+      checkUniqueBarcode(props.okapi, barcode).then((response) => {
         if (response.status >= 400) {
           //
         } else {
           response.json().then((json) => {
             if (json.totalRecords > 0) {
+              const barcodeTakenMsg = <FormattedMessage id="ui-inventory.barcodeTaken" />;
               const error = { barcode: barcodeTakenMsg };
               reject(error);
             } else {
@@ -151,7 +154,7 @@ class ItemForm extends React.Component {
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
-  }
+  };
 
   handleExpandAll = (obj) => {
     this.setState((curState) => {
@@ -159,7 +162,7 @@ class ItemForm extends React.Component {
       newState.accordions = obj;
       return newState;
     });
-  }
+  };
 
   confirmPermanentLocation(confirm) {
     const { permanentLocation, prevPermanentLocation } = this.state;
@@ -197,9 +200,13 @@ class ItemForm extends React.Component {
         </Icon>
       </Button>
     );
-  }
+  };
 
   onSelectHandler = loc => this.selectTemporaryLocation(loc);
+
+  setItemDamagedStatusDate = () => {
+    this.props.change('itemDamagedStatusDate', new Date());
+  }
 
   render() {
     const {
@@ -221,6 +228,9 @@ class ItemForm extends React.Component {
         statisticalCodeTypes,
       },
       copy,
+      intl: {
+        formatMessage
+      },
     } = this.props;
 
     const {
@@ -230,45 +240,43 @@ class ItemForm extends React.Component {
     } = this.state;
 
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
+    const itemDamageOptions = itemDamageStatuses.map(({ label, value }) => (
+      <option
+        value={value}
+        key={value}
+      >
+        {formatMessage({ id: label })}
+      </option>
+    ));
 
     /* Menus for Add Item workflow */
     const addItemLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.createNewItem">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary paneHeaderNewButton"
-              id="clickable-create-item"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.createItem" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-create-item"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
     const editItemLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.updateItem">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary"
-              id="clickable-update-item"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.updateItem" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary"
+          id="clickable-update-item"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
@@ -602,18 +610,20 @@ class ItemForm extends React.Component {
                 </Col>
                 <Col sm={3}>
                   <Field
-                    label={<FormattedMessage id="ui-inventory.volume" />}
-                    name="volume"
-                    id="additem_volume"
+                    label={<FormattedMessage id="ui-inventory.chronology" />}
+                    name="chronology"
+                    id="additem_chronology"
                     component={TextField}
                     fullWidth
                   />
                 </Col>
+              </Row>
+              <Row>
                 <Col sm={3}>
                   <Field
-                    label={<FormattedMessage id="ui-inventory.chronology" />}
-                    name="chronology"
-                    id="additem_chronology"
+                    label={<FormattedMessage id="ui-inventory.volume" />}
+                    name="volume"
+                    id="additem_volume"
                     component={TextField}
                     fullWidth
                   />
@@ -637,7 +647,7 @@ class ItemForm extends React.Component {
               open={accordions.acc04}
               id="acc04"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.conditions" />}
+              label={<FormattedMessage id="ui-inventory.condition" />}
             >
               <Row>
                 <Col sm={3}>
@@ -676,8 +686,11 @@ class ItemForm extends React.Component {
                         id="input_item_damaged_status_id"
                         component={Select}
                         placeholder={placeholder}
+                        onChange={this.setItemDamagedStatusDate}
                         label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                      />
+                      >
+                        {itemDamageOptions}
+                      </Field>
                     )}
                   </FormattedMessage>
                 </Col>
@@ -726,6 +739,12 @@ class ItemForm extends React.Component {
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
                         type: 'checkbox',
+                        inline: true,
+                        vertical: true,
+                        columnSize: {
+                          xs: 3,
+                          lg: 2,
+                        }
                       }
                     ]}
                   />
@@ -815,6 +834,12 @@ class ItemForm extends React.Component {
                         label: <FormattedMessage id="ui-inventory.staffOnly" />,
                         component: Checkbox,
                         type: 'checkbox',
+                        inline: true,
+                        vertical: true,
+                        columnSize: {
+                          xs: 3,
+                          lg: 2,
+                        }
                       }
                     ]}
                   />
@@ -908,6 +933,7 @@ class ItemForm extends React.Component {
 }
 
 ItemForm.propTypes = {
+  intl: intlShape.isRequired,
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newItem: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,
@@ -932,4 +958,4 @@ export default stripesForm({
   asyncBlurFields: ['barcode'],
   navigationCheck: true,
   enableReinitialize: true,
-})(ItemForm);
+})(injectIntl(ItemForm));

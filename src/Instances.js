@@ -1,15 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import {
+  omit,
+  keyBy,
+  get,
+  template,
+} from 'lodash';
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   stripesShape,
-  IntlConsumer,
+  AppIcon,
 } from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
-import { SearchAndSort } from '@folio/stripes/smart-components';
-import { filters2cql, onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes-core';
+import {
+  SearchAndSort,
+  makeQueryFunction,
+} from '@folio/stripes/smart-components';
+import { onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
@@ -56,15 +67,15 @@ const filterConfig = [
 ];
 
 const searchableIndexes = [
-  { label: 'All (title, contributor, identifier)', value: 'all', makeQuery: term => `(title="${term}" or contributors adj "\\"name\\": \\"${term}\\"" or identifiers adj "\\"value\\": \\"${term}\\"")` },
-  { label: 'Barcode', value: 'item.barcode', makeQuery: term => `(item.barcode=="${term}")` },
-  { label: 'Instance ID', value: 'id', makeQuery: term => `(id="${term}")` },
-  { label: 'Title', value: 'title', makeQuery: term => `(title="${term}")` },
-  { label: 'Identifier', value: 'identifier', makeQuery: term => `(identifiers adj "\\"value\\": \\"${term}\\"")` },
-  { label: '- ISBN', value: 'isbn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
-  { label: '- ISSN', value: 'issn', makeQuery: (term, args) => `identifiers == "*\\"value\\": \\"${term}\\", \\"identifierTypeId\\": \\"${args.identifierTypeId}\\""` },
-  { label: 'Contributor', value: 'contributor', makeQuery: term => `(contributors adj "\\"name\\": \\"${term}\\"")` },
-  { label: 'Subject', value: 'subject', makeQuery: term => `(subjects="${term}")` },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
+  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
+  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
+  { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
+  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
+  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
 ];
 
 class Instances extends React.Component {
@@ -92,61 +103,39 @@ class Instances extends React.Component {
       GET: {
         params: {
           query: (...args) => {
-            /*
-              This code is not DRY as it is copied from makeQueryFunction in stripes-components.
-              This is necessary, as makeQueryFunction only references query parameters as a data source.
-              STRIPES-480 is intended to correct this and allow this query function to be replace with a call
-              to makeQueryFunction.
-              https://issues.folio.org/browse/STRIPES-480
-            */
-            const resourceData = args[2];
-            const sortMap = {
-              Title: 'title',
-              publishers: 'publication',
-              Contributors: 'contributors',
-            };
+            const [
+              queryParams,
+              pathComponents,
+              resourceData,
+              logger
+            ] = args;
+            const queryIndex = resourceData.query.qindex ? resourceData.query.qindex : 'all';
+            const searchableIndex = searchableIndexes.find(idx => idx.value === queryIndex);
+            let queryTemplate = '';
 
-            const index = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            const searchableIndex = searchableIndexes.find(idx => idx.value === index);
+            if (queryIndex === 'isbn' || queryIndex === 'issn') {
+              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === queryIndex);
+              const identifierTypeId = identifierType ? identifierType.id : 'identifier-type-not-found';
 
-            let makeQueryArgs = {};
-            if (index === 'isbn' || index === 'issn') {
-              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === index);
-              makeQueryArgs = { identifierTypeId: (identifierType ? identifierType.id : 'identifier-type-not-found') };
+              queryTemplate = template(searchableIndex.queryTemplate)({ identifierTypeId });
+            } else {
+              queryTemplate = searchableIndex.queryTemplate;
             }
 
-            let cql = searchableIndex.makeQuery(resourceData.query.query || '', makeQueryArgs);
+            resourceData.query = { ...resourceData.query, qindex: '' };
 
-            const filterCql = filters2cql(filterConfig, resourceData.query.filters);
-            if (filterCql) {
-              if (cql) {
-                cql = `(${cql}) and ${filterCql}`;
-              } else {
-                cql = filterCql;
-              }
-            }
-
-            const { sort } = resourceData.query;
-            if (sort) {
-              const sortIndexes = sort.split(',').map((sort1) => {
-                let reverse = false;
-                if (sort1.startsWith('-')) {
-                  // eslint-disable-next-line no-param-reassign
-                  sort1 = sort1.substr(1);
-                  reverse = true;
-                }
-                let sortIndex = sortMap[sort1] || sort1;
-                if (reverse) {
-                  sortIndex = `${sortIndex.replace(' ', '/sort.descending ')}/sort.descending`;
-                }
-                return sortIndex;
-              });
-
-              cql += ` sortby ${sortIndexes.join(' ')}`;
-            }
-
-            return cql;
-          },
+            return makeQueryFunction(
+              'cql.allRecords=1',
+              queryTemplate,
+              {
+                Title: 'title',
+                publishers: 'publication',
+                Contributors: 'contributors',
+              },
+              filterConfig,
+              2
+            )(queryParams, pathComponents, resourceData, logger);
+          }
         },
         staticFallback: { params: {} },
       },
@@ -206,6 +195,15 @@ class Instances extends React.Component {
       records: 'issuanceModes',
       path: 'modes-of-issuance?limit=1000&query=cql.allRecords=1 sortby name',
     },
+    instanceNoteTypes: {
+      type: 'okapi',
+      path: 'instance-note-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
+      records: 'instanceNoteTypes',
+    },
     electronicAccessRelationships: {
       type: 'okapi',
       records: 'electronicAccessRelationships',
@@ -219,7 +217,7 @@ class Instances extends React.Component {
     statisticalCodes: {
       type: 'okapi',
       records: 'statisticalCodes',
-      path: 'statistical-codes?limit=1000&query=cql.allRecords=1 sortby statisticalCodeTypeId',
+      path: 'statistical-codes?limit=1000&query=cql.allRecords=1 sortby name',
     },
     illPolicies: {
       type: 'okapi',
@@ -303,7 +301,7 @@ class Instances extends React.Component {
   }
 
   copyInstance(instance) {
-    this.setState({ copiedInstance: _.omit(instance, ['id', 'hrid']) });
+    this.setState({ copiedInstance: omit(instance, ['id', 'hrid']) });
     this.props.updateLocation({ layer: 'create' });
   }
 
@@ -322,6 +320,7 @@ class Instances extends React.Component {
       onSelectRow,
       disableRecordCreation,
       visibleColumns,
+      intl,
     } = this.props;
 
     if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
@@ -336,6 +335,7 @@ class Instances extends React.Component {
       || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
       || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
       || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
+      || !resources.instanceNoteTypes || !resources.instanceNoteTypes.hasLoaded
       || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
       || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
       || !resources.illPolicies || !resources.illPolicies.hasLoaded
@@ -355,6 +355,7 @@ class Instances extends React.Component {
     const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
     const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
     const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
+    const instanceNoteTypes = resources.instanceNoteTypes.records;
     const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
     const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
     const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
@@ -362,7 +363,7 @@ class Instances extends React.Component {
     const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
     const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
-    const locationsById = _.keyBy(locations, 'id');
+    const locationsById = keyBy(locations, 'id');
 
     const referenceTables = {
       contributorTypes,
@@ -376,6 +377,7 @@ class Instances extends React.Component {
       instanceStatuses,
       modesOfIssuance,
       electronicAccessRelationships,
+      instanceNoteTypes,
       statisticalCodeTypes,
       statisticalCodes,
       illPolicies,
@@ -401,47 +403,50 @@ class Instances extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
     };
 
+    const formattedSearchableIndexes = searchableIndexes.map(index => {
+      const { prefix = '' } = index;
+      const label = prefix + intl.formatMessage({ id: index.label });
+
+      return { ...index, label };
+    });
+
     return (
       <div data-test-inventory-instances>
-        <IntlConsumer>
-          {intl => (
-            <SearchAndSort
-              packageInfo={packageInfo}
-              objectName="inventory"
-              maxSortKeys={1}
-              searchableIndexes={searchableIndexes}
-              selectedIndex={_.get(this.props.resources.query, 'qindex')}
-              searchableIndexesPlaceholder={null}
-              onChangeIndex={this.onChangeIndex}
-              filterConfig={filterConfig}
-              initialResultCount={INITIAL_RESULT_COUNT}
-              resultCountIncrement={RESULT_COUNT_INCREMENT}
-              viewRecordComponent={ViewInstance}
-              editRecordComponent={InstanceForm}
-              newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'manual' }}
-              visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
-              columnMapping={{
-                title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-                contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-                publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-                relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-              }}
-              columnWidths={{ title: '40%' }}
-              resultsFormatter={resultsFormatter}
-              onCreate={this.createInstance}
-              viewRecordPerms="inventory-storage.instances.item.get"
-              newRecordPerms="inventory-storage.instances.item.post"
-              disableRecordCreation={disableRecordCreation || false}
-              parentResources={this.props.resources}
-              parentMutator={this.props.mutator}
-              detailProps={{ referenceTables, onCopy: this.copyInstance }}
-              path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-              showSingleResult={showSingleResult}
-              browseOnly={browseOnly}
-              onSelectRow={onSelectRow}
-            />
-          )}
-        </IntlConsumer>
+        <SearchAndSort
+          packageInfo={packageInfo}
+          objectName="inventory"
+          maxSortKeys={1}
+          searchableIndexes={formattedSearchableIndexes}
+          selectedIndex={get(this.props.resources.query, 'qindex')}
+          searchableIndexesPlaceholder={null}
+          onChangeIndex={this.onChangeIndex}
+          filterConfig={filterConfig}
+          initialResultCount={INITIAL_RESULT_COUNT}
+          resultCountIncrement={RESULT_COUNT_INCREMENT}
+          viewRecordComponent={ViewInstance}
+          editRecordComponent={InstanceForm}
+          newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : { source: 'FOLIO' }}
+          visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
+          columnMapping={{
+            title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
+            contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
+            publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+            relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+          }}
+          columnWidths={{ title: '40%' }}
+          resultsFormatter={resultsFormatter}
+          onCreate={this.createInstance}
+          viewRecordPerms="inventory-storage.instances.item.get"
+          newRecordPerms="inventory-storage.instances.item.post"
+          disableRecordCreation={disableRecordCreation || false}
+          parentResources={this.props.resources}
+          parentMutator={this.props.mutator}
+          detailProps={{ referenceTables, onCopy: this.copyInstance }}
+          path={`${this.props.match.path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
+          showSingleResult={showSingleResult}
+          browseOnly={browseOnly}
+          onSelectRow={onSelectRow}
+        />
       </div>);
   }
 }
@@ -502,6 +507,7 @@ Instances.propTypes = {
   onSelectRow: PropTypes.func,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
   updateLocation: PropTypes.func.isRequired,
+  intl: intlShape,
 };
 
-export default withLocation(Instances);
+export default injectIntl(withLocation(Instances));

@@ -91,9 +91,17 @@ export default function defaultScenario(server) {
   server.create('statistical-code-type', { name: 'Version of resource' });
   server.create('statistical-code-type', { name: 'No display constant generated' });
 
+  server.create('blocked-field', 'discoverySuppress');
+  server.create('blocked-field', 'previouslyHeld');
+  server.create('blocked-field', 'statusId');
+  server.create('blocked-field', 'hrid');
+  server.create('blocked-field', 'staffSuppress');
+  server.create('blocked-field', 'source');
+  server.create('blocked-field', 'statisticalCode');
+
   // instances
 
-  server.create('instance', {
+  server.create('instance', 'withHoldingAndItem', {
     'title': 'ADVANCING LIBRARY EDUCATION: TECHNOLOGICAL INNOVATION AND INSTRUCTIONAL DESIGN',
     'source': 'Local',
     'instanceType': TACTILE_TEXT,

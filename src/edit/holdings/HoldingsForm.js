@@ -223,41 +223,31 @@ class HoldingsForm extends React.Component {
     /* Menus for Add Item workflow */
     const addHoldingsLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.createNewHoldingsRecord">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary paneHeaderNewButton"
-              id="clickable-create-item"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit(this.onSave)}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.createHoldingsRecord" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-create-holdings-record"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit(this.onSave)}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
     const editHoldingsLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.updateHoldingsRecord">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary"
-              id="clickable-update-item"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit(this.onSave)}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.updateHoldingsRecord" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary"
+          id="clickable-update-item"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit(this.onSave)}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
@@ -664,19 +654,31 @@ class HoldingsForm extends React.Component {
               label={<FormattedMessage id="ui-inventory.notes" />}
             >
               <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                    name="acquisitionFormat"
-                    id="edit_acquisitionformat"
-                    component={TextField}
-                  />
+                <Col sm={10}>
+                  <Note noteTypeOptions={holdingsNoteTypeOptions} />
                 </Col>
+              </Row>
+            </Accordion>
+            <Accordion
+              open={accordions.accordion05}
+              id="accordion05"
+              onToggle={this.handleAccordionToggle}
+              label={<FormattedMessage id="ui-inventory.acquisitions" />}
+            >
+              <Row>
                 <Col sm={3}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
                     name="acquisitionMethod"
                     id="edit_acquisitionmethod"
+                    component={TextField}
+                  />
+                </Col>
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+                    name="acquisitionFormat"
+                    id="edit_acquisitionformat"
                     component={TextField}
                   />
                 </Col>
@@ -689,18 +691,7 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
-              <Row>
-                <Col sm={10}>
-                  <Note noteTypeOptions={holdingsNoteTypeOptions} />
-                </Col>
-              </Row>
             </Accordion>
-            <Accordion
-              open={accordions.accordion05}
-              id="accordion05"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.acquisitions" />}
-            />
             <Accordion
               open={accordions.accordion06}
               id="accordion06"

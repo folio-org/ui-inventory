@@ -15,7 +15,10 @@ class Holdings extends React.Component {
     holdings: {
       type: 'okapi',
       records: 'holdingsRecords',
-      path: 'holdings-storage/holdings?query=(instanceId==:{id})',
+      path: 'holdings-storage/holdings',
+      params: {
+        query: 'instanceId==:{id}',
+      },
       resourceShouldRefresh: true,
     },
   });

@@ -1,4 +1,11 @@
-import _ from 'lodash';
+import {
+  get,
+  upperFirst,
+  cloneDeep,
+  set,
+  omit,
+  includes,
+} from 'lodash';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -29,7 +36,8 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
-  IntlConsumer
+  IntlConsumer,
+  stripesConnect,
 } from '@folio/stripes/core';
 
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
@@ -109,12 +117,15 @@ class ViewItem extends React.Component {
         limit: '1',
       },
       records: 'loans',
+      accumulate: 'true',
+      fetch: false,
     },
-    borrowerId: {},
-    borrower: {
+    borrowers: {
       type: 'okapi',
-      path: 'users?query=(id==%{borrowerId.query})',
+      path: 'users',
       records: 'users',
+      accumulate: 'true',
+      fetch: false,
     },
     requestOnItem: {},
   });
@@ -144,72 +155,38 @@ class ViewItem extends React.Component {
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
   }
 
-  /**
-   * If a loan is retrieved matching this item, retrieve the corresponding
-   * user record as well.
-   *
-   * I do not understand why it is necessary to check that loan.itemId matches
-   * itemid and that borrower.id matches userId; the latter values are those
-   * that are used in the manifest above and I can see that the correct
-   * queries are running in the browser's network inspector. And yet, if
-   * they are not checked, the values in nextProps.resources are always
-   * from a previous incarnation of this object.
-   *
-   * Likewise, if the borrower resource's path is defined to have a string
-   * substituted in rather than an object, it will always contain the value
-   * from the previous incarnation of the object. i.e. if the path is
-   *     users?query=(id==%{borrowerId})
-   * and we call
-   *     nextProps.mutator.borrowerId.replace(loan.userId);
-   * instead of
-   *     users?query=(id==%{ borrowerId.query })
-   * and
-   *     nextProps.mutator.borrowerId.replace({ query: loan.userId });
-   * then the value retrieved by nextProps.resources.borrower will always
-   * be that from the previous instance of this object.
-   *
-   * This smells like a dataKey issue in stripes-connect.
-   *
-   * dataKey, with a lower case "d",
-   * that rhymes with "t",
-   * that stands for "tap dancing" or maybe "tesseract" and also "thelonious"
-   * that rhymes with "felonious"
-   * and that stands for "funk!"
-   *
-   */
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const loanRecords = (nextProps.resources.loans || {}).records || [];
-    if ((!prevState.loan) && loanRecords.length === 1) {
-      const loan = loanRecords[0];
-      if (nextProps.itemId === loan.itemId) {
-        const nextState = {
-          loanStatusDate: _.get(loan, ['metadata', 'updatedDate']),
-        };
+  async componentDidMount() {
+    const { AVAILABLE, AWAITING_PICKUP, IN_TRANSIT } = itemStatuses;
+    const loans = await this.fetchLoans();
+    const loan = loans[0];
 
-        // FIXME: loan-status-check must be i18n friendly
-        const itemStatus = loan.item.status.name;
-        if (itemStatus !== 'Available' && itemStatus !== 'Awaiting pickup' && itemStatus !== 'In transit') {
-          nextProps.mutator.borrowerId.replace({ query: loan.userId });
-          nextState.loan = loan;
-        }
+    if (!loan) return;
 
-        return nextState;
-      }
+    const itemStatus = get(loan, 'item.status.name');
+    const loanStatusDate = get(loan, 'metadata.updatedDate');
+    const state = { loanStatusDate };
 
-      // console.warn(`retrieved a loan.itemId ${loan.itemId} that did not match the item.itemid ${nextProps.itemid}`)
+    if (!includes([AVAILABLE, AWAITING_PICKUP, IN_TRANSIT], itemStatus)) {
+      const borrowers = await this.fetchBorrowers(loans[0].userId);
+      state.loan = loan;
+      state.borrower = borrowers[0];
     }
 
-    const borrowerRecords = (nextProps.resources.borrower || {}).records || [];
-    if (prevState.loan && (!prevState.borrower) && borrowerRecords.length === 1) {
-      const borrower = borrowerRecords[0];
-      if (prevState.loan.userId === borrower.id) {
-        return { borrower };
-      }
+    this.setState(state);
+  }
 
-      // console.warn('retrieved a borrower.id ${borrower.id} that did not match the loan.userId ${prevState.loan.userId}')
-    }
+  fetchLoans() {
+    const { mutator: { loans } } = this.props;
+    loans.reset();
+    return loans.GET();
+  }
 
-    return null;
+  fetchBorrowers(borrowerId) {
+    const { mutator: { borrowers } } = this.props;
+    const query = `id==${borrowerId}`;
+
+    borrowers.reset();
+    return borrowers.GET({ params: { query } });
   }
 
   onClickEditItem = (e) => {
@@ -223,6 +200,10 @@ class ViewItem extends React.Component {
   }
 
   saveItem = (item) => {
+    if (!item.barcode) {
+      delete item.barcode;
+    }
+
     this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
   }
 
@@ -243,7 +224,7 @@ class ViewItem extends React.Component {
 
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
-      const newState = _.cloneDeep(state);
+      const newState = cloneDeep(state);
       newState.accordions[id] = !newState.accordions[id];
       return newState;
     });
@@ -251,7 +232,7 @@ class ViewItem extends React.Component {
 
   handleExpandAll = (obj) => {
     this.setState((curState) => {
-      const newState = _.cloneDeep(curState);
+      const newState = cloneDeep(curState);
       newState.accordions = obj;
       return newState;
     });
@@ -259,8 +240,8 @@ class ViewItem extends React.Component {
 
   onCopy(item) {
     this.setState((state) => {
-      const newState = _.cloneDeep(state);
-      newState.copiedItem = _.omit(item, ['id', 'hrid', 'barcode']);
+      const newState = cloneDeep(state);
+      newState.copiedItem = omit(item, ['id', 'hrid', 'barcode']);
       newState.copiedItem.status = { name: 'Available' };
       return newState;
     });
@@ -269,16 +250,16 @@ class ViewItem extends React.Component {
   }
 
   handleConfirm = (item, requestRecords) => {
-    const newItem = _.cloneDeep(item);
-    _.set(newItem, ['status', 'name'], 'Missing');
+    const newItem = cloneDeep(item);
+    set(newItem, ['status', 'name'], 'Missing');
 
     if (requestRecords.length) {
-      const newRequestRecord = _.cloneDeep(requestRecords[0]);
-      const itemStatus = _.get(newRequestRecord, ['item', 'status']);
-      const holdShelfExpirationDate = _.get(newRequestRecord, ['holdShelfExpirationDate']);
+      const newRequestRecord = cloneDeep(requestRecords[0]);
+      const itemStatus = get(newRequestRecord, ['item', 'status']);
+      const holdShelfExpirationDate = get(newRequestRecord, ['holdShelfExpirationDate']);
       if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
         this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
-        _.set(newRequestRecord, ['status'], 'Open - Not yet filled');
+        set(newRequestRecord, ['status'], 'Open - Not yet filled');
         this.props.mutator.requests.PUT(newRequestRecord);
       }
     }
@@ -300,13 +281,13 @@ class ViewItem extends React.Component {
   }
 
   canDeleteItem = (item, request) => {
-    const itemStatus = _.get(item, 'status.name');
+    const itemStatus = get(item, 'status.name');
     const { CHECKED_OUT, ON_ORDER } = itemStatuses;
     let messageId;
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
     } else if (itemStatus === ON_ORDER) {
-      messageId = 'ui-inventory.noItemDeleteModal.onOrderMessage';
+      messageId = 'ui-inventory.noItemDeleteModal.orderMessage';
     } else if (request) {
       messageId = 'ui-inventory.noItemDeleteModal.requestMessage';
     }
@@ -325,8 +306,8 @@ class ViewItem extends React.Component {
 
   getActionMenu = ({ onToggle }) => {
     const { resources } = this.props;
-    const firstItem = _.get(resources, 'items.records[0]');
-    const request = _.get(resources, 'requests.records[0]');
+    const firstItem = get(resources, 'items.records[0]');
+    const request = get(resources, 'requests.records[0]');
 
     const newRequestLink = firstItem.barcode
       ? `/requests?itemBarcode=${firstItem.barcode}&layer=create`
@@ -489,7 +470,7 @@ class ViewItem extends React.Component {
       </PaneMenu>
     );
 
-    const labelPermanentHoldingsLocation = _.get(permanentHoldingsLocation, ['name'], '');
+    const labelPermanentHoldingsLocation = get(permanentHoldingsLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
     const itemIdOrBarcode = item.barcode || item.id;
 
@@ -506,11 +487,12 @@ class ViewItem extends React.Component {
       loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
     }
+
     if (loanLink === 'Awaiting pickup') {
       loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
-    let itemStatusDate = _.get(item, ['metadata', 'updatedDate']);
+    let itemStatusDate = get(item, ['metadata', 'updatedDate']);
     if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
       itemStatusDate = this.state.loanStatusDate;
     }
@@ -529,7 +511,7 @@ class ViewItem extends React.Component {
               <Col xs={1}>
                 <KeyValue
                   label={<FormattedMessage id="ui-inventory.staffOnly" />}
-                  value={_.get(item, ['notes'], []).map((note, j) => {
+                  value={get(item, ['notes'], []).map((note, j) => {
                     if (note.itemNoteTypeId === noteType.id) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
                     }
@@ -540,7 +522,7 @@ class ViewItem extends React.Component {
               <Col xs={11}>
                 <KeyValue
                   label={noteType.name}
-                  value={_.get(item, ['notes'], []).map((note, j) => {
+                  value={get(item, ['notes'], []).map((note, j) => {
                     if (note.itemNoteTypeId === noteType.id) {
                       return <div key={j}>{note.note}</div>;
                     }
@@ -562,7 +544,7 @@ class ViewItem extends React.Component {
               <Col xs={1}>
                 <KeyValue
                   label={<FormattedMessage id="ui-inventory.staffOnly" />}
-                  value={_.get(item, ['circulationNotes'], []).map((note, j) => {
+                  value={get(item, ['circulationNotes'], []).map((note, j) => {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
                     }
@@ -573,7 +555,7 @@ class ViewItem extends React.Component {
               <Col xs={11}>
                 <KeyValue
                   label={`${noteType} note`}
-                  value={_.get(item, ['circulationNotes'], []).map((note, j) => {
+                  value={get(item, ['circulationNotes'], []).map((note, j) => {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.note}</div>;
                     }
@@ -592,7 +574,7 @@ class ViewItem extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: _.upperFirst(_.get(item, ['materialType', 'name'], ''))
+          materialType: upperFirst(get(item, ['materialType', 'name'], ''))
         }}
       />
     );
@@ -668,8 +650,8 @@ class ViewItem extends React.Component {
                 <FormattedMessage
                   id="ui-inventory.itemDotStatus"
                   values={{
-                    barcode: _.get(item, 'barcode', ''),
-                    status: _.get(item, 'status.name', '')
+                    barcode: get(item, 'barcode', ''),
+                    status: get(item, 'status.name', '')
                   }}
                 />
               </span>
@@ -681,13 +663,11 @@ class ViewItem extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                <FormattedMessage id="ui-inventory.instance" />
-                {instance.title}
+                <FormattedMessage id="ui-inventory.instanceTitle" values={{ title: instance.title }} />
                 {(instance.publication && instance.publication.length > 0) &&
                   <span>
-                    <em>, </em>
                     <em>
-                      {instance.publication[0].publisher}
+                      {` ${instance.publication[0].publisher}`}
                       {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
                     </em>
                   </span>
@@ -720,7 +700,7 @@ class ViewItem extends React.Component {
                   size="small"
                 />
                 {' '}
-                {_.get(item, ['materialType', 'name'], '')}
+                {get(item, ['materialType', 'name'], '')}
                 {' '}
                 <AppIcon
                   app="inventory"
@@ -728,7 +708,7 @@ class ViewItem extends React.Component {
                   size="small"
                 />
                 {' '}
-                {_.get(item, ['status', 'name'], '')}
+                {get(item, ['status', 'name'], '')}
               </Col>
             </Row>
             <br />
@@ -747,9 +727,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
             >
-              {(item.metadata && item.metadata.createdDate) &&
-                <this.cViewMetaData metadata={item.metadata} />
-              }
+              <this.cViewMetaData metadata={item.metadata} />
               <Row>
                 <Col xs={12}>
                   {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
@@ -760,14 +738,14 @@ class ViewItem extends React.Component {
                 <Col xs={2}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.itemHrid" />}
-                    value={_.get(item, ['hrid'], '')}
+                    value={get(item, ['hrid'], '')}
                   />
                 </Col>
                 {(item.barcode) &&
                   <Col xs={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.itemBarcode" />}
-                      value={_.get(item, ['barcode'], '')}
+                      value={get(item, ['barcode'], '')}
                     />
                   </Col>
                 }
@@ -775,7 +753,7 @@ class ViewItem extends React.Component {
                   <Col xs={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.accessionNumber" />}
-                      value={_.get(item, ['accessionNumber'], '')}
+                      value={get(item, ['accessionNumber'], '')}
                     />
                   </Col>
                 }
@@ -784,14 +762,14 @@ class ViewItem extends React.Component {
                 <Col xs={2}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
-                    value={_.get(item, ['itemIdentifier'], '')}
+                    value={get(item, ['itemIdentifier'], '')}
                   />
                 </Col>
                 {(item.formerIds && item.formerIds.length > 0) &&
                   <Col smOffset={0} sm={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.formerId" />}
-                      value={_.get(item, ['formerIds'], []).map((line, i) => <div key={i}>{line}</div>)}
+                      value={get(item, ['formerIds'], []).map((line, i) => <div key={i}>{line}</div>)}
                     />
                   </Col>
                 }
@@ -813,9 +791,9 @@ class ViewItem extends React.Component {
                             formatter={{
                               'Statistical code type':
                                 x => refLookup(referenceTables.statisticalCodeTypes,
-                                  refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                                  refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name,
                               'Statistical code':
-                                x => refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                                x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
                             }}
                             ariaLabel={ariaLabel}
                             containerRef={(ref) => { this.resultsList = ref; }}
@@ -842,7 +820,7 @@ class ViewItem extends React.Component {
               </Row>
               <Row>
                 <Col sm={3}>
-                  <KeyValue value={_.get(item, ['materialType', 'name'], '')} />
+                  <KeyValue value={get(item, ['materialType', 'name'], '')} />
                 </Col>
               </Row>
               <Row>
@@ -856,7 +834,7 @@ class ViewItem extends React.Component {
                 <Col sm={2}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                    value={refLookup(referenceTables.callNumberTypes, _.get(item, ['itemLevelCallNumberTypeId'])).name}
+                    value={refLookup(referenceTables.callNumberTypes, get(item, ['itemLevelCallNumberTypeId'])).name}
                   />
                 </Col>
                 <Col sm={2}>
@@ -883,7 +861,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.copyNumbers" />}
-                      value={_.get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)}
+                      value={get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)}
                     />
                   </Col>
                 }
@@ -891,14 +869,14 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                      value={_.get(item, ['numberOfPieces'], '-')}
+                      value={get(item, ['numberOfPieces'], '-')}
                     />
                   </Col>
                 }
                 <Col smOffset={0} sm={4}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
-                    value={_.get(item, ['descriptionOfPieces'], '-')}
+                    value={get(item, ['descriptionOfPieces'], '-')}
                   />
                 </Col>
               </Row>
@@ -914,15 +892,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.enumeration" />}
-                      value={_.get(item, ['enumeration'], '')}
-                    />
-                  </Col>
-                }
-                {(item.volume) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.volume" />}
-                      value={_.get(item, ['volume'], '')}
+                      value={get(item, ['enumeration'], '')}
                     />
                   </Col>
                 }
@@ -930,7 +900,17 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.chronology" />}
-                      value={_.get(item, ['chronology'], '')}
+                      value={get(item, ['chronology'], '')}
+                    />
+                  </Col>
+                }
+              </Row>
+              <Row>
+                {(item.volume) &&
+                  <Col smOffset={0} sm={4}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.volume" />}
+                      value={get(item, ['volume'], '')}
                     />
                   </Col>
                 }
@@ -940,7 +920,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={8}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                      value={_.get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)}
+                      value={get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)}
                     />
                   </Col>
                 }
@@ -950,14 +930,14 @@ class ViewItem extends React.Component {
               open={accordions.acc04}
               id="acc04"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.conditions" />}
+              label={<FormattedMessage id="ui-inventory.condition" />}
             >
               <Row>
                 {(item.numberOfMissingPieces) &&
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
-                      value={_.get(item, ['numberOfMissingPieces'], '')}
+                      value={get(item, ['numberOfMissingPieces'], '')}
                     />
                   </Col>
                 }
@@ -965,7 +945,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.missingPieces" />}
-                      value={_.get(item, ['missingPieces'], '')}
+                      value={get(item, ['missingPieces'], '')}
                     />
                   </Col>
                 }
@@ -973,7 +953,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.date" />}
-                      value={_.get(item, ['missingPiecesDate'], '')}
+                      value={get(item, ['missingPiecesDate'], '')}
                     />
                   </Col>
                 }
@@ -991,7 +971,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.date" />}
-                      value={_.get(item, ['itemDamagedStatusDate'], '')}
+                      value={get(item, ['itemDamagedStatusDate'], '')}
                     />
                   </Col>
                 }
@@ -1003,7 +983,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.notes" />}
             >
-              {layoutNotes(referenceTables.itemNoteTypes, _.get(item, ['notes'], []))}
+              {layoutNotes(referenceTables.itemNoteTypes, get(item, ['notes'], []))}
             </Accordion>
             <Accordion
               open={accordions.acc06}
@@ -1016,7 +996,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
-                      value={_.get(item, ['permanentLoanType', 'name'], '')}
+                      value={get(item, ['permanentLoanType', 'name'], '')}
                     />
                   </Col>
                 }
@@ -1024,7 +1004,7 @@ class ViewItem extends React.Component {
                   <Col smOffset={0} sm={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
-                      value={_.get(item, ['temporaryLoanType', 'name'], '')}
+                      value={get(item, ['temporaryLoanType', 'name'], '')}
                     />
                   </Col>
                 }
@@ -1066,7 +1046,7 @@ class ViewItem extends React.Component {
                   </KeyValue>
                 </Col>
               </Row>
-              {layoutCirculationNotes(['Check out', 'Check in'], _.get(item, ['circulationNotes'], []))}
+              {layoutCirculationNotes(['Check out', 'Check in'], get(item, ['circulationNotes'], []))}
             </Accordion>
             <Accordion
               open={accordions.acc07}
@@ -1086,13 +1066,13 @@ class ViewItem extends React.Component {
                 <Col smOffset={0} sm={4}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                    value={_.get(permanentHoldingsLocation, ['name'], '')}
+                    value={get(permanentHoldingsLocation, ['name'], '')}
                   />
                 </Col>
                 <Col sm={4}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                    value={_.get(temporaryHoldingsLocation, ['name'], '-')}
+                    value={get(temporaryHoldingsLocation, ['name'], '-')}
                   />
                 </Col>
               </Row>
@@ -1108,13 +1088,13 @@ class ViewItem extends React.Component {
                 <Col smOffset={0} sm={4}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                    value={_.get(item, ['permanentLocation', 'name'], '-')}
+                    value={get(item, ['permanentLocation', 'name'], '-')}
                   />
                 </Col>
                 <Col sm={4}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                    value={_.get(item, ['temporaryLocation', 'name'], '-')}
+                    value={get(item, ['temporaryLocation', 'name'], '-')}
                   />
                 </Col>
               </Row>
@@ -1128,7 +1108,7 @@ class ViewItem extends React.Component {
               <br />
               <Row>
                 <Col smOffset={0} sm={4}>
-                  {_.get(item, ['effectiveLocation', 'name'], '')}
+                  {get(item, ['effectiveLocation', 'name'], '')}
                 </Col>
               </Row>
             </Accordion>
@@ -1155,11 +1135,11 @@ class ViewItem extends React.Component {
                             'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
                           }}
                           formatter={{
-                            'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
-                            'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
-                            'Link text': x => _.get(x, ['linkText']) || '',
-                            'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
-                            'URL public note': x => _.get(x, ['publicNote']) || '',
+                            'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
+                            'URI': x => <a href={get(x, ['uri'])}>{get(x, ['uri'])}</a>,
+                            'Link text': x => get(x, ['linkText']) || '',
+                            'Materials specified': x => get(x, ['materialsSpecification']) || '',
+                            'URL public note': x => get(x, ['publicNote']) || '',
                           }}
                           ariaLabel={ariaLabel}
                           containerRef={(ref) => { this.resultsList = ref; }}
@@ -1268,4 +1248,4 @@ ViewItem.propTypes = {
   goTo: PropTypes.func.isRequired,
 };
 
-export default withLocation(ViewItem);
+export default withLocation(stripesConnect(ViewItem));

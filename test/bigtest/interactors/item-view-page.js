@@ -24,8 +24,8 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
 }
 
 @interactor class ItemViewPage {
+  isLoaded = isPresent('[data-test-item-view-page]');
   title = text('[data-test-header-item-title]');
-  isLoaded = isPresent('[data-test-header-item-title]');
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
@@ -34,8 +34,8 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');
   whenLoaded() {
-    return this.when(() => this.isLoaded);
+    return this.timeout(6000).when(() => this.isLoaded);
   }
 }
 
-export default new ItemViewPage('[data-test-item-view-page]');
+export default new ItemViewPage();
