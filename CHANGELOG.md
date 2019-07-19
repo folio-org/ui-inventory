@@ -16,6 +16,7 @@
 * Change series format. Part of UIIN-606.
 * Mark contributor name field as required. Part of UIIN-620.
 * Always show metadata. Fixes UIIN-626.
+* Display Item damage status data. Fixes UIIN-651.
 
 ## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
