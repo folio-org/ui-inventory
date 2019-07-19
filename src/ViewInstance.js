@@ -29,6 +29,7 @@ import {
   KeyValue,
   Layer,
   Layout,
+  List,
   PaneHeaderIconButton,
   Icon,
   Headline,
@@ -118,6 +119,7 @@ class ViewInstance extends React.Component {
     mutator.marcRecord.GET()
       .then(data => this.setState({ marcRecord: data }))
       .catch(error => {
+        // eslint-disable-next-line no-console
         console.error('MARC record getting ERROR: ', error);
       });
   };
@@ -157,7 +159,8 @@ class ViewInstance extends React.Component {
 
   closeViewItem = (e) => {
     if (e) e.preventDefault();
-    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
+    const { goTo, getSearchParams, match: { params: { id } } } = this.props;
+    goTo(`/inventory/view/${id}?${getSearchParams()}`);
   };
 
   closeViewMarc = (e) => {
@@ -198,11 +201,12 @@ class ViewInstance extends React.Component {
 
   handleViewSource = (e, instance) => {
     if (e) e.preventDefault();
-    const { location } = this.props;
     const {
-      marcRecord,
+      location,
       goTo,
-    } = this.state;
+    } = this.props;
+    const { marcRecord } = this.state;
+
     if (!marcRecord) {
       const message = (
         <FormattedMessage
@@ -348,6 +352,39 @@ class ViewInstance extends React.Component {
       },
       'Code': x => this.refLookup(referenceTables.instanceFormats, x.id).code,
       'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
+    };
+
+    const layoutNotes = (noteTypes, notes) => {
+      return noteTypes
+        .filter((noteType) => notes.find(note => note.instanceNoteTypeId === noteType.id))
+        .map((noteType, i) => {
+          return (
+            <Row key={i}>
+              <Col xs={2}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-inventory.staffOnly" />}
+                  value={get(instance, ['notes'], []).map((note, j) => {
+                    if (note.instanceNoteTypeId === noteType.id) {
+                      return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+                    }
+                    return null;
+                  })}
+                />
+              </Col>
+              <Col xs={10}>
+                <KeyValue
+                  label={noteType.name}
+                  value={get(instance, ['notes'], []).map((note, j) => {
+                    if (note.instanceNoteTypeId === noteType.id) {
+                      return <div key={j}>{note.note}</div>;
+                    }
+                    return null;
+                  })}
+                />
+              </Col>
+            </Row>
+          );
+        });
     };
 
     const detailMenu = (
@@ -531,7 +568,7 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceData" />}
         >
-          {(instance.metadata && instance.metadata.createdDate) && <this.cViewMetaData metadata={instance.metadata} />}
+          <this.cViewMetaData metadata={instance.metadata} />
           <Row>
             <Col xs={12}>
               {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
@@ -680,8 +717,9 @@ class ViewInstance extends React.Component {
               instance.series.length > 0 && (
                 <Col xs={12}>
                   <KeyValue
+                    items={instance.series}
+                    value={<List items={instance.series} listStyle="bullets" />}
                     label={<FormattedMessage id="ui-inventory.seriesStatement" />}
-                    value={get(instance, ['series'], '')}
                   />
                 </Col>
               )
@@ -737,13 +775,11 @@ class ViewInstance extends React.Component {
                       <MultiColumnList
                         id="list-contributors"
                         contentData={instance.contributors}
-                        visibleColumns={['Name type', 'Name', 'Type', 'Code', 'Source', 'Free text', 'Primary']}
+                        visibleColumns={['Name type', 'Name', 'Type', 'Free text', 'Primary']}
                         columnMapping={{
                           'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
                           'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
                           'Type': intl.formatMessage({ id: 'ui-inventory.type' }),
-                          'Code': intl.formatMessage({ id: 'ui-inventory.code' }),
-                          'Source': intl.formatMessage({ id: 'ui-inventory.source' }),
                           'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
                           'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
                         }}
@@ -898,18 +934,7 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.notes" />}
         >
-          {
-            instance.notes.length > 0 && (
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.notes" />}
-                    value={get(instance, ['notes'], []).map((note, i) => <div key={i}>{note}</div>)}
-                  />
-                </Col>
-              </Row>
-            )
-          }
+          {layoutNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []))}
         </Accordion>
 
         <Accordion

@@ -42,6 +42,24 @@ describe('Instances', () => {
     });
   });
 
+  describe('remember search results', function () {
+    beforeEach(async function () {
+      this.server.createList('instance', 25, 'withHoldingAndItem');
+      const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
+
+      await inventory.chooseSearchOption('Barcode');
+      await inventory.fillSearchField(item.barcode);
+      await inventory.clickSearch();
+      await inventory.openInstance();
+      await inventory.openItem();
+      await inventory.closeItem();
+    });
+
+    it('should keep search results around after item is closed', () => {
+      expect(inventory.instances().length).to.be.equal(1);
+    });
+  });
+
   describe('search by ISSN', function () {
     beforeEach(async function () {
       this.server.createList('instance', 25, 'withHoldingAndItem');

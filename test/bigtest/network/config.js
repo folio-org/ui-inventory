@@ -21,6 +21,9 @@ export default function configure() {
   this.get('/instance-formats');
   this.get('/instance-formats/:id');
 
+  this.get('/nature-of-content-terms');
+  this.get('/nature-of-content-terms/:id');
+
   this.get('/instance-statuses');
   this.get('/instance-statuses/:id');
 
@@ -335,6 +338,9 @@ export default function configure() {
     holdingsTypes: [],
     totalRecords: 0
   });
+
+  this.get('/instance-note-types');
+  this.get('/instance-note-types/:id');
 
   this.get('/holdings-note-types');
   this.get('/holdings-note-types/:id');

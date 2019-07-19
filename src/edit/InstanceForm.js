@@ -288,41 +288,31 @@ class InstanceForm extends React.Component {
     /* Menus for Add Instance workflow */
     const addInstanceLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.createInstance">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary paneHeaderNewButton"
-              id="clickable-create-instance"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.createInstance" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-create-instance"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
     const editInstanceLastMenu = (
       <PaneMenu>
-        <FormattedMessage id="ui-inventory.updateInstance">
-          {ariaLabel => (
-            <Button
-              buttonStyle="primary paneHeaderNewButton"
-              id="clickable-update-instance"
-              type="submit"
-              aria-label={ariaLabel}
-              disabled={(pristine || submitting) && !copy}
-              onClick={handleSubmit}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-inventory.updateInstance" />
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="primary paneHeaderNewButton"
+          id="clickable-update-instance"
+          type="submit"
+          disabled={(pristine || submitting) && !copy}
+          onClick={handleSubmit}
+          marginBottom0
+        >
+          <FormattedMessage id="stripes-core.button.saveAndClose" />
+        </Button>
       </PaneMenu>
     );
 
@@ -475,7 +465,7 @@ class InstanceForm extends React.Component {
                           disabled: this.isFieldBlocked('statisticalCodeIds'),
                         }
                       ]}
-                      canAdd={this.isFieldBlocked('statisticalCodeIds')}
+                      canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                     />
                   </Col>
                 </Row>
@@ -509,8 +499,14 @@ class InstanceForm extends React.Component {
                   type="hidden"
                   name="source"
                   component="input"
+                  disabled={this.isFieldBlocked('source')}
                 />
-                <AlternativeTitles alternativeTitleTypes={referenceTables.alternativeTitleTypes} />
+                <AlternativeTitles
+                  alternativeTitleTypes={referenceTables.alternativeTitleTypes}
+                  canAdd={!this.isFieldBlocked('alternativeTitles')}
+                  canEdit={!this.isFieldBlocked('alternativeTitles')}
+                  canDelete={!this.isFieldBlocked('alternativeTitles')}
+                />
                 <Col sm={10}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.indexTitle" />}
@@ -519,9 +515,15 @@ class InstanceForm extends React.Component {
                     component={TextField}
                     fullWidth
                     disabled={this.isFieldBlocked('indexTitle')}
+                    canEdit={!this.isFieldBlocked('indexTitle')}
+                    canDelete={!this.isFieldBlocked('indexTitle')}
                   />
                 </Col>
-                <SeriesFields canAdd={!this.isFieldBlocked('series')} />
+                <SeriesFields
+                  canAdd={!this.isFieldBlocked('series')}
+                  canEdit={!this.isFieldBlocked('series')}
+                  canDelete={!this.isFieldBlocked('series')}
+                />
               </Accordion>
               <Accordion
                 label={(
@@ -640,6 +642,7 @@ class InstanceForm extends React.Component {
                   canAdd={!this.isFieldBlocked('notes')}
                   canEdit={!this.isFieldBlocked('notes')}
                   canDelete={!this.isFieldBlocked('notes')}
+                  instanceNoteTypes={referenceTables.instanceNoteTypes}
                 />
               </Accordion>
               <Accordion

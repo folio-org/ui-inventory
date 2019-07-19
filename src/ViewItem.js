@@ -663,13 +663,11 @@ class ViewItem extends React.Component {
           >
             <Row center="xs">
               <Col sm={6}>
-                <FormattedMessage id="ui-inventory.instance" />
-                {instance.title}
+                <FormattedMessage id="ui-inventory.instanceTitle" values={{ title: instance.title }} />
                 {(instance.publication && instance.publication.length > 0) &&
                   <span>
-                    <em>, </em>
                     <em>
-                      {instance.publication[0].publisher}
+                      {` ${instance.publication[0].publisher}`}
                       {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
                     </em>
                   </span>
@@ -729,9 +727,7 @@ class ViewItem extends React.Component {
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.administrativeData" />}
             >
-              {(item.metadata && item.metadata.createdDate) &&
-                <this.cViewMetaData metadata={item.metadata} />
-              }
+              <this.cViewMetaData metadata={item.metadata} />
               <Row>
                 <Col xs={12}>
                   {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}

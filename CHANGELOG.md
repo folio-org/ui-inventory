@@ -2,9 +2,20 @@
 
 ## 1.11.0 (IN PROGRESS)
 
+* Requires `inventory` interface 9.0
+* Requires `instance-storage` interface 7.0
+* Requires `instance-note-types` interface 1.0
+* Requires `nature-of-content-terms` interface 1.0
+* Requires `identifier-types` interface 1.1
+* Requires `contributor-name-types` interface 1.2
+* Requires `classification-types` interface 1.1
 * Fix item details retaining loan data for closed loan. Part of UIIN-484.
 * Do not attempt to manually set the read-only HRID field in tests. Refs UIIN-557.
 * Remove unnecessary permissions. Refs UIORG-150.
+* Use new array-search syntax for identifiers, contributors. Fixes UIIN-618, UIIN-621, UIIN-623, UIIN-624.
+* Change series format. Part of UIIN-606.
+* Mark contributor name field as required. Part of UIIN-620.
+* Always show metadata. Fixes UIIN-626.
 
 ## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
@@ -26,6 +37,7 @@
 * Change accordion header value to Condition. Fix UIIN-576
 * Add validation to alternative title. Fixes UIIN-496.
 * Replace hardcoded translations of search indexes by formatted messages. Fixes UIIN-595
+* `Save` buttons are labeled consistently with other apps. Refs UIIN-530.
 
 ## [1.8.0](https://github.com/folio-org/ui-inventory/tree/v1.8.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.7.0...v1.8.0)

@@ -9,7 +9,6 @@ import {
 import { IntlConsumer } from '@folio/stripes/core';
 import RepeatableField from '../components/RepeatableField';
 import PrimaryToggleButton from './components/PrimaryToggleButton';
-import AlternativeTitles from './alternativeTitles';
 
 const ContributorFields = props => {
   const {
@@ -46,6 +45,7 @@ const ContributorFields = props => {
               label: <FormattedMessage id="ui-inventory.name" />,
               name: 'name',
               component: TextField,
+              required: true,
               disabled: !canEdit,
             }, {
               label: <FormattedMessage id="ui-inventory.nameType" />,

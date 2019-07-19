@@ -107,7 +107,7 @@ describe('ItemViewPage', () => {
     });
   });
 
-  describe('visiting the in proccess item view page', () => {
+  describe('visiting the in process item view page', () => {
     beforeEach(async function () {
       const instance = this.server.create(
         'instance',

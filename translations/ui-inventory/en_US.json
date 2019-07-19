@@ -381,5 +381,15 @@
     "subject": "Subject",
     "isbn": "ISBN",
     "issn": "ISSN",
-    "marcSourceRecord.notFoundError": "Cannot find MARC bibliographic record for \"{name}\" instance!"
+    "marcSourceRecord.notFoundError": "Cannot find MARC bibliographic record for \"{name}\" instance!",
+    "instanceNoteTypes": "Instance note types",
+    "modesOfIssuance": "Modes of issuance",
+    "resourceIdentifierTypes": "Resource identifier types",
+    "classificationIdentifierTypes": "Classification identifier types",
+    "instanceNoteType": "Instance note type",
+    "natureOfContentTerms": "Nature of content",
+    "natureOfContentTerm": "Nature of content",
+    "instanceTitle": "Instance: {title}.",
+    "items.damageStatus.damaged": "Damaged",
+    "items.damageStatus.notdamaged": "Not damaged"
 }
