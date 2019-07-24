@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 1.11.0 (IN PROGRESS)
+## [1.11.0](https://github.com/folio-org/ui-inventory/tree/v1.11.0) (2019-07-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.10.0...v1.11.0)
 
 * Requires `inventory` interface 9.0
 * Requires `instance-storage` interface 7.0
@@ -12,13 +13,21 @@
 * Fix item details retaining loan data for closed loan. Part of UIIN-484.
 * Do not attempt to manually set the read-only HRID field in tests. Refs UIIN-557.
 * Remove unnecessary permissions. Refs UIORG-150.
+* Populate item damage status select list. Set timestamp. UIIN-458
 * Use new array-search syntax for identifiers, contributors. Fixes UIIN-618, UIIN-621, UIIN-623, UIIN-624.
+* Adapt to change structure of instance notes. UIIN-452.
+* Protect certain instance fields from editing when MARC record exists. UIIN-592.
 * Change series format. Part of UIIN-606.
 * Mark contributor name field as required. Part of UIIN-620.
 * Always show metadata. Fixes UIIN-626.
 * Display Item damage status data. Fixes UIIN-651.
+* Add settings page, instance note types. UIIN-461.
+* Add settings page, resource identifiers. UIIN-483.
+* Add settings page, classification types. UIIN-505
+* Add settings page, modes of issuance. UIIN-508.
+* Other bug fixes. UIIN-484, UIIN-567, UIIN-559, UIIN-603, UIIN-614, UIIN-616, UIIN-652.
 
-## 1.10.0 (https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
+## [1.10.0](https://github.com/folio-org/ui-inventory/tree/v1.10.0) (2019-06-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.9.0...v1.10.0)
 
 * Add link to MARC record source from SRS. UIIN-590.
