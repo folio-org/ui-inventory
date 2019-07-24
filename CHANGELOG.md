@@ -22,8 +22,9 @@
 * Always show metadata. Fixes UIIN-626.
 * Display Item damage status data. Fixes UIIN-651.
 * Add settings page, instance note types. UIIN-461.
+* Add settings page, nature of content. UIIN-471.
 * Add settings page, resource identifiers. UIIN-483.
-* Add settings page, classification types. UIIN-505
+* Add settings page, classification types. UIIN-505.
 * Add settings page, modes of issuance. UIIN-508.
 * Other bug fixes. UIIN-484, UIIN-567, UIIN-559, UIIN-603, UIIN-614, UIIN-616, UIIN-652.
 
