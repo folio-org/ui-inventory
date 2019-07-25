@@ -8,7 +8,19 @@ import { change } from 'redux-form';
 import { Button, Label } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
-const PrimaryToggleButton = ({ label, meta: { dispatch, form }, input: { value, onChange }, fields }) => {
+const PrimaryToggleButton = ({
+  label,
+  meta: {
+    dispatch,
+    form
+  },
+  input: {
+    value,
+    onChange
+  },
+  fields,
+  disabled,
+}) => {
   const isPrimary = value === true;
   const handleClick = () => {
     if (isPrimary) {
@@ -30,6 +42,7 @@ const PrimaryToggleButton = ({ label, meta: { dispatch, form }, input: { value, 
         buttonStyle={isPrimary ? 'primary' : 'default'}
         onClick={handleClick}
         type="button"
+        disabled={disabled}
         fullWidth
       >
         <FormattedMessage id={`ui-inventory.${isPrimary ? 'primary' : 'makePrimary'}`} />
@@ -50,7 +63,8 @@ PrimaryToggleButton.propTypes = {
   meta: PropTypes.shape({
     form: PropTypes.string,
     dispatch: PropTypes.func,
-  }).isRequired
+  }).isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default PrimaryToggleButton;
