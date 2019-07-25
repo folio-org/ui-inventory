@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 1.12.0 (IN PROGRESS)
+
+* Do not send optional FKs as empty strings; omit them. Refs UIIN-655.
+
 ## [1.11.0](https://github.com/folio-org/ui-inventory/tree/v1.11.0) (2019-07-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.10.0...v1.11.0)
 
