@@ -13,20 +13,28 @@ module.exports.test = function test(uiTestCtx) {
       ).find(e => re.test(e.textContent)));
     };
 
-    describe('Login > Click Inventory > Enter Search Term > Wait for Results > Confirm search term at top of results > Click Reset All > Wait for results pan to change state > Logout\n', () => {
-      const title = 'California';
-      const authorName = 'Huntley, Henry Veel';
+    describe('Login > Click inventory > Create 2 instance records > Conduct multiple searches > Logout\n', () => {
+      const fragment = 'supercalifragilisticexpialidocious';
+      const title1 = `${fragment} ${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
+      const author1 = `author ${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
+
+      const title2 = `title ${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
+      const author2 = `${fragment} ${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`;
+
       before((done) => {
         login(nightmare, config, done); // logs in with the default admin credentials
       });
+
       after((done) => {
         logout(nightmare, config, done);
       });
+
       it('should open module "Inventory" and find version tag ', (done) => {
         nightmare
           .use(openApp(nightmare, config, done, 'inventory', testVersion))
           .then(result => result);
       });
+
       it('should find "no results" message with no filters applied', (done) => {
         nightmare
           .wait('#paneHeaderpane-results-subtitle')
@@ -34,21 +42,71 @@ module.exports.test = function test(uiTestCtx) {
           .then(done)
           .catch(done);
       });
-      it(`should search for: "${title}"`, (done) => {
+
+      it('should create inventory record', (done) => {
+        nightmare
+          .wait('#clickable-inventory-module')
+          .click('#clickable-inventory-module')
+          .wait('#clickable-newinventory')
+          .click('#clickable-newinventory')
+          .wait('#input_instance_title')
+          .insert('#input_instance_title', title1)
+          .wait('#select_instance_type')
+          .type('#select_instance_type', 'o')
+          .click('#clickable-add-contributor')
+          .wait('input[name="contributors[0].name"')
+          .insert('input[name="contributors[0].name"', author1)
+          .type('select[name="contributors[0].contributorNameTypeId"]', 'P')
+          .type('select[name="contributors[0].contributorTypeId"]', 'Author')
+          .wait('#clickable-create-instance')
+          .click('#clickable-create-instance')
+          .wait(() => !document.querySelector('#clickable-create-instance'))
+          .wait('#clickable-new-holdings-record')
+          .waitUntilNetworkIdle(500)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should create inventory record', (done) => {
+        nightmare
+          .wait('#clickable-inventory-module')
+          .click('#clickable-inventory-module')
+          .wait('#clickable-newinventory')
+          .click('#clickable-newinventory')
+          .wait('#input_instance_title')
+          .insert('#input_instance_title', title2)
+          .wait('#select_instance_type')
+          .type('#select_instance_type', 'o')
+          .click('#clickable-add-contributor')
+          .wait('input[name="contributors[0].name"')
+          .insert('input[name="contributors[0].name"', author2)
+          .type('select[name="contributors[0].contributorNameTypeId"]', 'P')
+          .type('select[name="contributors[0].contributorTypeId"]', 'Author')
+          .wait('#clickable-create-instance')
+          .click('#clickable-create-instance')
+          .wait(() => !document.querySelector('#clickable-create-instance'))
+          .wait('#clickable-new-holdings-record')
+          .waitUntilNetworkIdle(500)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should search "All" for "${fragment}" and find multiple records`, (done) => {
         nightmare
           .wait('#clickable-inventory-module')
           .click('#clickable-inventory-module')
           .wait('#input-inventory-search')
-          .click('#input-inventory-search')
-          .insert('#input-inventory-search', title)
+          .insert('#input-inventory-search', fragment)
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait('#list-inventory[data-total-count]')
-          .wait(contentWait, title)
+          .wait(contentWait, title1)
+          .wait(contentWait, author2)
           .then(done)
           .catch(done);
       });
+
       it('should click "reset all" button', (done) => {
         nightmare
           .wait('#clickable-reset-all')
@@ -58,28 +116,21 @@ module.exports.test = function test(uiTestCtx) {
           .then(done)
           .catch(done);
       });
-      it(`should search for title: ${title}`, (done) => {
+
+      it(`should search "Title" for "${fragment}"`, (done) => {
         nightmare
           .wait('#input-inventory-search-qindex')
-          .select('#input-inventory-search-qindex', 'title')
           .wait('#input-inventory-search')
-          .insert('#input-inventory-search', title)
+          .insert('#input-inventory-search', fragment)
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait('#list-inventory[data-total-count]')
-          .wait(contentWait, title)
-
-          /* .evaluate(function evall(title2) {
-            const list = document.querySelector('#list-inventory div[role="listitem"]:first-of-type > a > div[role="gridcell"]:nth-of-type(1)').title;
-            // console.log(`list contains: ${list} and title is ${title2} `);
-            if (list !== title2) {
-              throw new Error('First item not matched');
-            }
-          }, title) */
+          .wait(contentWait, title1)
           .then(done)
           .catch(done);
       });
+
       it('should click "reset all" button', (done) => {
         nightmare
           .wait('#clickable-reset-all')
@@ -89,15 +140,62 @@ module.exports.test = function test(uiTestCtx) {
           .then(done)
           .catch(done);
       });
-      it(`should search for contributor: ${authorName}`, (done) => {
+
+      it(`should search "Title" for "${title1}"`, (done) => {
+        nightmare
+          .select('#input-inventory-search-qindex', 'title')
+          .insert('#input-inventory-search', title1)
+          .wait('#clickable-reset-all')
+          .wait('button[type=submit]')
+          .click('button[type=submit]')
+          .wait('#list-inventory[data-total-count="1"]')
+          .wait(contentWait, title1)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should click "reset all" button', (done) => {
+        nightmare
+          .wait('#clickable-reset-all')
+          .click('#clickable-reset-all')
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should search "Contributor" for "${fragment}"`, (done) => {
         nightmare
           .select('#input-inventory-search-qindex', 'contributor')
-          .insert('#input-inventory-search', authorName)
+          .insert('#input-inventory-search', author2)
           .wait('#clickable-reset-all')
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait('#list-inventory[data-total-count]')
-          .wait(contentWait, authorName)
+          .wait(contentWait, author2)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should click "reset all" button', (done) => {
+        nightmare
+          .wait('#clickable-reset-all')
+          .click('#clickable-reset-all')
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should search "Contributor" for "${author2}"`, (done) => {
+        nightmare
+          .select('#input-inventory-search-qindex', 'contributor')
+          .insert('#input-inventory-search', author2)
+          .wait('#clickable-reset-all')
+          .wait('button[type=submit]')
+          .click('button[type=submit]')
+          .wait('#list-inventory[data-total-count="1"]')
+          .wait(contentWait, author2)
           .then(done)
           .catch(done);
       });
