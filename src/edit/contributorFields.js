@@ -78,7 +78,6 @@ const ContributorFields = props => {
             name: '',
             contributorNameTypeId: '',
             primary: false,
-            contributorTypeId: '',
             contributorTypeText: '',
           }}
           canAdd={canAdd}
