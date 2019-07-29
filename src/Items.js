@@ -31,22 +31,25 @@ class Items extends React.Component {
   constructor(props) {
     super(props);
     this.editItemModeThisLayer = false;
-    this.searchParams = this.props.getSearchParams();
   }
 
-  anchoredRowFormatter = (row) => (
+  anchoredRowFormatter = (row) => {
+    const { instance, holdingsRecord, getSearchParams } = this.props;
+    const { labelStrings, rowIndex, rowData, rowClass, rowProps, cells } = row;
 
-    <div role="listitem" key={`row-${row.rowIndex}`}>
-      <Link
-        to={`/inventory/view/${this.props.instance.id}/${this.props.holdingsRecord.id}/${row.rowData.id}?${this.searchParams}`}
-        aria-label={row.labelStrings && row.labelStrings.join('...')}
-        className={row.rowClass}
-        {...row.rowProps}
-      >
-        {row.cells}
-      </Link>
-    </div>
-  );
+    return (
+      <div role="listitem" key={`row-${rowIndex}`}>
+        <Link
+          to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${rowData.id}?${getSearchParams()}`}
+          aria-label={labelStrings && labelStrings.join('...')}
+          className={rowClass}
+          {...rowProps}
+        >
+          {cells}
+        </Link>
+      </div>
+    );
+  };
 
   render() {
     const {
