@@ -932,7 +932,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc06}
           id="acc06"
           onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.notes" />}
+          label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
           {layoutNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []))}
         </Accordion>

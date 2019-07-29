@@ -631,7 +631,7 @@ class InstanceForm extends React.Component {
               <Accordion
                 label={(
                   <h3>
-                    <FormattedMessage id="ui-inventory.notes" />
+                    <FormattedMessage id="ui-inventory.instanceNotes" />
                   </h3>
                 )}
                 onToggle={this.onToggleSection}

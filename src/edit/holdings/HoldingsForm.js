@@ -651,7 +651,7 @@ class HoldingsForm extends React.Component {
               open={accordions.accordion04}
               id="accordion04"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.notes" />}
+              label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
             >
               <Row>
                 <Col sm={10}>

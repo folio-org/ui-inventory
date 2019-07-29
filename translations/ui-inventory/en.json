@@ -370,5 +370,6 @@
   "error.noMatch.oops": "Uh-oh!",
   "error.noMatch.how": "How did you get to {location}?",
   "items.damageStatus.damaged": "Damaged",
-  "items.damageStatus.notdamaged": "Not damaged"
+  "items.damageStatus.notdamaged": "Not damaged",
+  "instanceNotes": "Instance notes"
 }
