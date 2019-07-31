@@ -18,3 +18,17 @@ export function canMarkItemAsMissing(item) {
     itemStatuses.IN_PROCESS
   ], get(item, 'status.name'));
 }
+
+export function memoize(fn) {
+  let lastArg;
+  let lastResult;
+
+  return arg => {
+    if (arg !== lastArg) {
+      lastArg = arg;
+      lastResult = fn(arg);
+    }
+
+    return lastResult;
+  };
+}

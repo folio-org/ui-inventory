@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cloneDeep from 'lodash/cloneDeep';
-import { FieldArray } from 'redux-form';
+import { FieldArray } from 'react-final-form-arrays';
 import FieldRow from './FieldRow';
 
 class RepeatableField extends React.Component {
@@ -12,7 +12,9 @@ class RepeatableField extends React.Component {
 
     this._added = false;
     this._arrayId = `${this.props.label}-fields`;
-    this.buildComponentFromTemplate = this.buildComponentFromTemplate.bind(this);
+    this.buildComponentFromTemplate = this.buildComponentFromTemplate.bind(
+      this
+    );
     this.addDefaultField = this.addDefaultField.bind(this);
     this.handleAddField = this.handleAddField.bind(this);
   }
@@ -29,9 +31,7 @@ class RepeatableField extends React.Component {
 
   buildComponentFromTemplate = ({ templateIndex, input, meta, ...rest }) => {
     const Component = this.props.template[templateIndex].component;
-    return (
-      <Component input={input} meta={meta} {...rest} />
-    );
+    return <Component input={input} meta={meta} {...rest} />;
   };
 
   addDefaultField(fields) {
@@ -72,7 +72,9 @@ class RepeatableField extends React.Component {
         onAddField={this.handleAddField}
         formatter={this.buildComponentFromTemplate}
         template={template}
-        containerRef={(ref) => { this.container = ref; }}
+        containerRef={ref => {
+          this.container = ref;
+        }}
         label={label}
         newItemTemplate={newItemTemplate}
         addDefault={this.addDefaultField}
@@ -82,7 +84,9 @@ class RepeatableField extends React.Component {
         canAdd={canAdd}
         canEdit={canEdit}
         canDelete={canDelete}
-        lastRowRef={(ref) => { this.lastRow = ref; }}
+        lastRowRef={ref => {
+          this.lastRow = ref;
+        }}
       />
     );
   }
@@ -95,9 +99,7 @@ RepeatableField.propTypes = {
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   name: PropTypes.string.isRequired,
   newItemTemplate: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  template: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.object),
-  ]),
+  template: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object)]),
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,

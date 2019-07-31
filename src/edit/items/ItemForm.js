@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
   Field,
-} from 'redux-form';
+} from 'react-final-form';
 
 import {
   Paneset,
@@ -23,7 +23,7 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 import {
   LocationSelection,
   LocationLookup,
@@ -33,6 +33,7 @@ import {
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { itemDamageStatuses } from '../../constants';
+import { memoize } from '../../utils';
 
 function validate(values) {
   const errors = {};
@@ -60,32 +61,25 @@ function checkUniqueBarcode(okapi, barcode) {
     });
 }
 
-function asyncValidate(values, dispatch, props, blurredField) {
-  const { barcode } = values;
+function validateBarcode(props) {
+  return memoize(async (barcode) => {
+    if (!barcode) return '';
 
-  if (blurredField === 'barcode'
-    && barcode
-    && barcode !== props.initialValues.barcode) {
-    return new Promise((resolve, reject) => {
-      // TODO: Should use stripes-connect (dispatching an action and update state)
-      checkUniqueBarcode(props.okapi, barcode).then((response) => {
-        if (response.status >= 400) {
-          //
-        } else {
-          response.json().then((json) => {
-            if (json.totalRecords > 0) {
-              const barcodeTakenMsg = <FormattedMessage id="ui-inventory.barcodeTaken" />;
-              const error = { barcode: barcodeTakenMsg };
-              reject(error);
-            } else {
-              resolve();
-            }
-          });
-        }
-      });
-    });
-  }
-  return new Promise(resolve => resolve());
+    const error = <FormattedMessage id="ui-inventory.barcodeTaken" />;
+    const response = await checkUniqueBarcode(props.okapi, barcode);
+
+    if (response.status >= 400) {
+      return error;
+    }
+
+    const json = await response.json();
+
+    if (json.totalRecords > 0) {
+      return error;
+    }
+
+    return '';
+  });
 }
 
 class ItemForm extends React.Component {
@@ -432,6 +426,7 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.barcode" />}
                     name="barcode"
                     id="additem_barcode"
+                    validate={validateBarcode(this.props)}
                     component={TextField}
                     fullWidth
                   />
@@ -951,11 +946,8 @@ ItemForm.propTypes = {
   }).isRequired,
 };
 
-export default stripesForm({
-  form: 'itemForm',
+export default stripesFinalForm({
   validate,
-  asyncValidate,
-  asyncBlurFields: ['barcode'],
+  validateOnBlur: true,
   navigationCheck: true,
-  enableReinitialize: true,
 })(injectIntl(ItemForm));

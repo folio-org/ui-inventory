@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Paneset,
@@ -28,7 +28,7 @@ import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
 
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
@@ -740,8 +740,7 @@ class HoldingsForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'holdingsForm',
+export default stripesFinalForm({
   navigationCheck: true,
   validate,
 })(HoldingsForm);
