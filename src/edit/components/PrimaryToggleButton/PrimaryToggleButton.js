@@ -22,10 +22,12 @@ const PrimaryToggleButton = ({
       return;
     }
 
+    // Reset other primary fields
     fields.forEach((_, index) => {
       fields.update(index, { ...fields.value[index], primary: false });
     });
 
+    // Set primary flag for current field
     onChange(true);
   };
 
