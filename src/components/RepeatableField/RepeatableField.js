@@ -104,9 +104,7 @@ RepeatableField.propTypes = {
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
 };
-RepeatableField.contextTypes = {
-  _reduxForm: PropTypes.object,
-};
+
 RepeatableField.defaultProps = {
   canAdd: true,
   canEdit: true,

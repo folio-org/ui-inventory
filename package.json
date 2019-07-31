@@ -388,8 +388,6 @@
     "eslint": "^5.5.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
     "sinon": "^7.0.0"
   },
   "dependencies": {
@@ -404,8 +402,7 @@
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.3.0",
     "react-router": "^4.0.0",
-    "react-router-dom": "^4.0.0",
-    "redux-form": "^7.0.3"
+    "react-router-dom": "^4.0.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^2.1.0",
