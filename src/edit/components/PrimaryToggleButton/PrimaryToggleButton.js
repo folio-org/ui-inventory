@@ -4,16 +4,11 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { change } from 'redux-form';
 import { Button, Label } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 const PrimaryToggleButton = ({
   label,
-  meta: {
-    dispatch,
-    form
-  },
   input: {
     value,
     onChange
@@ -27,10 +22,10 @@ const PrimaryToggleButton = ({
       return;
     }
 
-    // Reset other primary fields
-    fields.forEach(fieldName => dispatch(change(form, `${fieldName}.primary`, false)));
+    fields.forEach((_, index) => {
+      fields.update(index, { ...fields.value[index], primary: false });
+    });
 
-    // Set primary flag for current field
     onChange(true);
   };
 
@@ -59,10 +54,6 @@ PrimaryToggleButton.propTypes = {
   input: PropTypes.shape({
     onChange: PropTypes.func,
     value: PropTypes.any,
-  }).isRequired,
-  meta: PropTypes.shape({
-    form: PropTypes.string,
-    dispatch: PropTypes.func,
   }).isRequired,
   disabled: PropTypes.bool.isRequired,
 };
