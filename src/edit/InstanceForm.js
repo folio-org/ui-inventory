@@ -528,7 +528,7 @@ class InstanceForm extends React.Component {
               <Accordion
                 label={(
                   <h3>
-                    <FormattedMessage id="ui-inventory.identifiers" />
+                    <FormattedMessage id="ui-inventory.identifier" />
                   </h3>
                 )}
                 onToggle={this.onToggleSection}
@@ -545,7 +545,7 @@ class InstanceForm extends React.Component {
               <Accordion
                 label={(
                   <h3>
-                    <FormattedMessage id="ui-inventory.contributors" />
+                    <FormattedMessage id="ui-inventory.contributor" />
                   </h3>
                 )}
                 onToggle={this.onToggleSection}
@@ -665,7 +665,7 @@ class InstanceForm extends React.Component {
               <Accordion
                 label={(
                   <h3>
-                    <FormattedMessage id="ui-inventory.subjects" />
+                    <FormattedMessage id="ui-inventory.subject" />
                   </h3>
                 )}
                 onToggle={this.onToggleSection}
@@ -681,7 +681,7 @@ class InstanceForm extends React.Component {
               <Accordion
                 label={(
                   <h3>
-                    <FormattedMessage id="ui-inventory.classifications" />
+                    <FormattedMessage id="ui-inventory.classification" />
                   </h3>
                 )}
                 onToggle={this.onToggleSection}
@@ -698,7 +698,7 @@ class InstanceForm extends React.Component {
               <Accordion
                 label={(
                   <h3>
-                    <FormattedMessage id="ui-inventory.instanceRelationshipsAnalyticsBoundWith" />
+                    <FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />
                   </h3>
                 )}
                 onToggle={this.onToggleSection}
