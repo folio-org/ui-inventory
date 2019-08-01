@@ -4,13 +4,14 @@
 
 * Relabel notes accordions. Fixes UIIN-632, UIIN-633, UIIN-634.
 * Fix bug in alternative title validation. Fixes UIIN-558.
+* Refactor forms to use final form. Part of UIIN-668.
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.0...v1.11.1)
 
 * Bug fix: Do not send optional FKs as empty strings; omit them. Refs UIIN-655.
 * Fix/update integration tests (UIIN-654, UIIN-655, UIIN-656)
-* Dissallow edit of instance.contributors.primary from UI when MARC exists. UIIN-650. 
+* Dissallow edit of instance.contributors.primary from UI when MARC exists. UIIN-650.
 
 ## [1.11.0](https://github.com/folio-org/ui-inventory/tree/v1.11.0) (2019-07-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.10.0...v1.11.0)
