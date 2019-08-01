@@ -78,7 +78,7 @@ function validate(values) {
         error.alternativeTitleTypeId = requiredSelectMessage;
       }
 
-      if (!item.alternativeTitleTypeId) {
+      if (!item.alternativeTitle) {
         error.alternativeTitle = requiredTextMessage;
       }
 
