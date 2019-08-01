@@ -982,7 +982,7 @@ class ViewItem extends React.Component {
               open={accordions.acc05}
               id="acc05"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.notes" />}
+              label={<FormattedMessage id="ui-inventory.itemNotes" />}
             >
               {layoutNotes(referenceTables.itemNoteTypes, get(item, ['notes'], []))}
             </Accordion>
@@ -1053,7 +1053,7 @@ class ViewItem extends React.Component {
               open={accordions.acc07}
               id="acc07"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.locations" />}
+              label={<FormattedMessage id="ui-inventory.location" />}
             >
               <Row>
                 <Col smOffset={0} sm={4}>

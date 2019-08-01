@@ -391,5 +391,9 @@
     "natureOfContentTerm": "طبيعة مصطلح المحتوى",
     "instanceTitle": "الوعاء: {title}.",
     "items.damageStatus.damaged": "تالفة",
-    "items.damageStatus.notdamaged": "غير تالفة"
+    "items.damageStatus.notdamaged": "غير تالفة",
+    "instanceNotes": "Instance notes",
+    "addClassification": "Add classification",
+    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
+    "acquisition": "Acquisition"
 }

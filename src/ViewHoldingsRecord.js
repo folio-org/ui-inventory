@@ -527,7 +527,7 @@ class ViewHoldingsRecord extends React.Component {
                 open={this.state.accordions.accordion02}
                 id="accordion02"
                 onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.locations" />}
+                label={<FormattedMessage id="ui-inventory.location" />}
               >
                 <Row>
                   <Col smOffset={0} sm={4}>
@@ -724,7 +724,7 @@ class ViewHoldingsRecord extends React.Component {
                 open={this.state.accordions.accordion04}
                 id="accordion04"
                 onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.notes" />}
+                label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
               >
                 {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
               </Accordion>
@@ -732,7 +732,7 @@ class ViewHoldingsRecord extends React.Component {
                 open={this.state.accordions.accordion05}
                 id="accordion05"
                 onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.acquisitions" />}
+                label={<FormattedMessage id="ui-inventory.acquisition" />}
               >
                 <Row>
                   <Col sm={3}>

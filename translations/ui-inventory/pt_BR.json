@@ -391,5 +391,9 @@
     "natureOfContentTerm": "Natureza do conteúdo",
     "instanceTitle": "Instância: {title}.",
     "items.damageStatus.damaged": "Danificado",
-    "items.damageStatus.notdamaged": "Não danificado"
+    "items.damageStatus.notdamaged": "Não danificado",
+    "instanceNotes": "Instance notes",
+    "addClassification": "Add classification",
+    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
+    "acquisition": "Acquisition"
 }

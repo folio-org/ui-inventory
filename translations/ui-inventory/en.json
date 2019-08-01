@@ -50,9 +50,10 @@
   "alternativeTitles": "Alternative titles",
   "addAlternativeTitles": "Add alternative title",
   "classifications": "Classifications",
-  "addClassifications": "Add classification",
+  "addClassification": "Add classification",
   "selectClassification": "Select classification type",
   "instanceRelationshipsAnalyticsBoundWith": "Instance relationships (analytics and bound-with)",
+  "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
   "number": "Number",
   "type": "Type",
   "typeFreeText": "Type, free text",
@@ -239,6 +240,7 @@
   "holdingsDetails": "Holdings details",
   "numberOfItems": "Number of items",
   "acquisitions": "Acquisitions",
+  "acquisition": "Acquisition",
   "receivingHistory": "Receiving history",
   "viewHoldings": "View holdings",
   "holdingsRecord": "Holdings record",
@@ -370,5 +372,6 @@
   "error.noMatch.oops": "Uh-oh!",
   "error.noMatch.how": "How did you get to {location}?",
   "items.damageStatus.damaged": "Damaged",
-  "items.damageStatus.notdamaged": "Not damaged"
+  "items.damageStatus.notdamaged": "Not damaged",
+  "instanceNotes": "Instance notes"
 }

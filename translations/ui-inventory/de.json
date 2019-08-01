@@ -391,5 +391,9 @@
     "natureOfContentTerm": "Nature of content",
     "instanceTitle": "Instance: {title}.",
     "items.damageStatus.damaged": "Damaged",
-    "items.damageStatus.notdamaged": "Not damaged"
+    "items.damageStatus.notdamaged": "Not damaged",
+    "instanceNotes": "Instance notes",
+    "addClassification": "Add classification",
+    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
+    "acquisition": "Acquisition"
 }
