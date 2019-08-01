@@ -710,7 +710,7 @@ class ItemForm extends React.Component {
               open={accordions.acc05}
               id="acc05"
               onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.notes" />}
+              label={<FormattedMessage id="ui-inventory.itemNotes" />}
             >
               <Row>
                 <Col sm={10}>

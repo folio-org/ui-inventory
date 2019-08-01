@@ -724,7 +724,7 @@ class ViewHoldingsRecord extends React.Component {
                 open={this.state.accordions.accordion04}
                 id="accordion04"
                 onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.notes" />}
+                label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
               >
                 {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
               </Accordion>
