@@ -391,5 +391,9 @@
     "natureOfContentTerm": "内容的性质",
     "instanceTitle": "实例： {title} 。",
     "items.damageStatus.damaged": "损坏",
-    "items.damageStatus.notdamaged": "未损坏"
+    "items.damageStatus.notdamaged": "未损坏",
+    "instanceNotes": "Instance notes",
+    "addClassification": "Add classification",
+    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
+    "acquisition": "Acquisition"
 }
