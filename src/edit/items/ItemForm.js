@@ -63,7 +63,7 @@ function checkUniqueBarcode(okapi, barcode) {
 
 function validateBarcode(props) {
   return memoize(async (barcode) => {
-    if (!barcode) return '';
+    if (!barcode || barcode === props.initialValues.barcode) return '';
 
     const error = <FormattedMessage id="ui-inventory.barcodeTaken" />;
     const response = await checkUniqueBarcode(props.okapi, barcode);
@@ -115,13 +115,15 @@ class ItemForm extends React.Component {
   }
 
   selectPermanentLocation(permanentLocation) {
+    const { form: { change } } = this.props;
+
     if (!permanentLocation) {
-      this.props.change('permanentLocation', {});
+      change('permanentLocation', {});
       return;
     }
 
     if (permanentLocation.isActive) {
-      setTimeout(() => this.props.change('permanentLocation.id', permanentLocation.id));
+      setTimeout(() => change('permanentLocation.id', permanentLocation.id));
       this.setState({ prevPermanentLocation: permanentLocation });
     } else {
       this.setState({ confirmPermanentLocation: true, permanentLocation });
@@ -129,13 +131,15 @@ class ItemForm extends React.Component {
   }
 
   selectTemporaryLocation(temporaryLocation) {
+    const { form: { change } } = this.props;
+
     if (!temporaryLocation) {
-      this.props.change('temporaryLocation', {});
+      change('temporaryLocation', {});
       return;
     }
 
     if (temporaryLocation.isActive) {
-      setTimeout(() => this.props.change('temporaryLocation.id', temporaryLocation.id));
+      setTimeout(() => change('temporaryLocation.id', temporaryLocation.id));
       this.setState({ prevTemporaryLocation: temporaryLocation });
     } else {
       this.setState({ confirmTemporaryLocation: true, temporaryLocation });
@@ -159,22 +163,24 @@ class ItemForm extends React.Component {
   };
 
   confirmPermanentLocation(confirm) {
+    const { form: { change } } = this.props;
     const { permanentLocation, prevPermanentLocation } = this.state;
     const confirmPermanentLocation = false;
     const value = (confirm) ? permanentLocation.id : prevPermanentLocation.id;
     const prevPermanentLoc = (confirm) ? permanentLocation : prevPermanentLocation;
 
-    setTimeout(() => this.props.change('permanentLocation.id', value));
+    setTimeout(() => change('permanentLocation.id', value));
     this.setState({ confirmPermanentLocation, prevPermanentLocation: prevPermanentLoc });
   }
 
   confirmTemporaryLocation(confirm) {
+    const { form: { change } } = this.props;
     const { temporaryLocation, prevTemporaryLocation } = this.state;
     const confirmTemporaryLocation = false;
     const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
     const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
 
-    setTimeout(() => this.props.change('temporaryLocation.id', value));
+    setTimeout(() => change('temporaryLocation.id', value));
     this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
@@ -199,7 +205,7 @@ class ItemForm extends React.Component {
   onSelectHandler = loc => this.selectTemporaryLocation(loc);
 
   setItemDamagedStatusDate = () => {
-    this.props.change('itemDamagedStatusDate', new Date());
+    this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
   render() {
@@ -932,7 +938,6 @@ ItemForm.propTypes = {
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newItem: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,
-  change: PropTypes.func,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   onCancel: PropTypes.func,
@@ -943,6 +948,9 @@ ItemForm.propTypes = {
   copy: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+  }).isRequired,
+  form: PropTypes.shape({
+    change: PropTypes.func.isRequired,
   }).isRequired,
 };
 
