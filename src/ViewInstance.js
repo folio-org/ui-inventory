@@ -731,7 +731,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc03}
           id="acc03"
           onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.identifiers" />}
+          label={<FormattedMessage id="ui-inventory.identifier" />}
         >
           {
             instance.identifiers.length > 0 && (
@@ -764,7 +764,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc04}
           id="acc04"
           onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.contributors" />}
+          label={<FormattedMessage id="ui-inventory.contributor" />}
         >
           {
             instance.contributors.length > 0 && (
@@ -976,7 +976,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc08}
           id="acc08"
           onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.subjects" />}
+          label={<FormattedMessage id="ui-inventory.subject" />}
         >
           {
             instance.subjects.length > 0 && (
@@ -1027,7 +1027,7 @@ class ViewInstance extends React.Component {
           open={this.state.accordions.acc10}
           id="acc10"
           onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.instanceRelationshipsAnalyticsBoundWith" />}
+          label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
         >
           {instance.childInstances.length > 0 && (
             <Row>

@@ -28,10 +28,10 @@ const ClassificationFields = props => {
       {intl => (
         <RepeatableField
           name="classifications"
-          label={<FormattedMessage id="ui-inventory.classifications" />}
+          label={<FormattedMessage id="ui-inventory.classification" />}
           addLabel={
             <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addClassifications" />
+              <FormattedMessage id="ui-inventory.addClassification" />
             </Icon>
           }
           addButtonId="clickable-add-classification"
