@@ -392,8 +392,8 @@
     "instanceTitle": "Instância: {title}.",
     "items.damageStatus.damaged": "Danificado",
     "items.damageStatus.notdamaged": "Não danificado",
-    "instanceNotes": "Instance notes",
-    "addClassification": "Add classification",
-    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
-    "acquisition": "Acquisition"
+    "instanceNotes": "Notas da instância",
+    "addClassification": "Adicionar classificação",
+    "instanceRelationshipAnalyticsBoundWith": "Relacionamentos entre instâncias (analíticas e encadernado com)",
+    "acquisition": "Aquisição"
 }
