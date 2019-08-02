@@ -1,8 +1,7 @@
-import { isNil, omitBy, pickBy, includes } from 'lodash';
+import { isNil, omitBy, pickBy, includes, flowRight } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
-import { compose } from 'redux';
 import { withRouter } from 'react-router';
 
 const searchParams = [
@@ -66,7 +65,7 @@ function withLocation(WrappedComponent) {
   return Location;
 }
 
-export default compose(
+export default flowRight(
   withRouter,
   withLocation,
 );

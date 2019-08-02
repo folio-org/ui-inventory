@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { cloneDeep, isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
@@ -21,7 +21,7 @@ import {
   Headline,
   Datepicker,
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -762,9 +762,7 @@ InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
 };
 
-export default stripesForm({
-  form: 'instanceForm',
+export default stripesFinalForm({
   validate,
   navigationCheck: true,
-  enableReinitialize: true,
 })(InstanceForm);
