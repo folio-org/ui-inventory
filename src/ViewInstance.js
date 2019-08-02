@@ -656,6 +656,7 @@ class ViewInstance extends React.Component {
                         }}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
                       />
                     )}
                   </FormattedMessage>
@@ -697,6 +698,7 @@ class ViewInstance extends React.Component {
                         formatter={alternativeTitlesRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
                       />
                     )}
                   </FormattedMessage>
@@ -751,6 +753,7 @@ class ViewInstance extends React.Component {
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
                       />
                     )}
                   </FormattedMessage>
@@ -786,6 +789,7 @@ class ViewInstance extends React.Component {
                         formatter={contributorsRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
                       />
                     )}
                   </FormattedMessage>
@@ -820,6 +824,7 @@ class ViewInstance extends React.Component {
                         formatter={publicationRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
                       />
                     )}
                   </FormattedMessage>
@@ -892,6 +897,7 @@ class ViewInstance extends React.Component {
                           formatter={formatsRowFormatter}
                           ariaLabel={ariaLabel}
                           containerRef={(ref) => { this.resultsList = ref; }}
+                          interactive={false}
                         />
                       )}
                     </FormattedMessage>
@@ -963,6 +969,7 @@ class ViewInstance extends React.Component {
                         formatter={electronicAccessRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
                       />
                     )}
                   </FormattedMessage>
@@ -1015,6 +1022,7 @@ class ViewInstance extends React.Component {
                       formatter={classificationsRowFormatter}
                       ariaLabel={ariaLabel}
                       containerRef={(ref) => { this.resultsList = ref; }}
+                      interactive={false}
                     />
                   )}
                 </FormattedMessage>

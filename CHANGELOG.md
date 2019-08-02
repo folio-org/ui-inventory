@@ -4,6 +4,7 @@
 
 * Relabel notes accordions. Fixes UIIN-632, UIIN-633, UIIN-634.
 * Fix bug in alternative title validation. Fixes UIIN-558.
+* Don't present static tables as interactive. Refs UIIN-643.
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.0...v1.11.1)
