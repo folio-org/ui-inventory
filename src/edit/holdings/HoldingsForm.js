@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Paneset,
@@ -28,7 +28,7 @@ import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
 
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
@@ -55,14 +55,15 @@ class HoldingsForm extends React.Component {
     submitting: PropTypes.bool,
     copy: PropTypes.bool,
     onCancel: PropTypes.func,
-    onSubmit: PropTypes.func,
     initialValues: PropTypes.object,
     instance: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
-    change: PropTypes.func,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
+    form: PropTypes.shape({
+      change: PropTypes.func,
+    }),
   };
 
   constructor(props) {
@@ -105,11 +106,11 @@ class HoldingsForm extends React.Component {
       delete data.permanentLocationId;
     }
 
-    this.props.onSubmit(data);
+    this.props.handleSubmit(data);
   }
 
   selectPermanentLocation(permanentLocation) {
-    const { change } = this.props;
+    const { form: { change } } = this.props;
 
     if (!permanentLocation) {
       change('permanentLocationId', '');
@@ -125,7 +126,7 @@ class HoldingsForm extends React.Component {
   }
 
   selectTemporaryLocation(temporaryLocation) {
-    const { change } = this.props;
+    const { form: { change } } = this.props;
 
     if (!temporaryLocation) {
       change('temporaryLocationId', '');
@@ -145,11 +146,11 @@ class HoldingsForm extends React.Component {
       permanentLocation,
       prevPermanentLocation,
     } = this.state;
-
+    const { form: { change } } = this.props;
     const confirmPermanentLocation = false;
     const value = (confirm) ? permanentLocation.id : prevPermanentLocation.id;
     const prevPermanentLoc = (confirm) ? permanentLocation : prevPermanentLocation;
-    setTimeout(() => this.props.change('permanentLocationId', value));
+    setTimeout(() => change('permanentLocationId', value));
     this.setState({ confirmPermanentLocation, prevPermanentLocation: prevPermanentLoc });
   }
 
@@ -158,11 +159,11 @@ class HoldingsForm extends React.Component {
       temporaryLocation,
       prevTemporaryLocation,
     } = this.state;
-
+    const { form: { change } } = this.props;
     const confirmTemporaryLocation = false;
     const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
     const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
-    setTimeout(() => this.props.change('temporaryLocationId', value));
+    setTimeout(() => change('temporaryLocationId', value));
     this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
@@ -204,7 +205,6 @@ class HoldingsForm extends React.Component {
 
   render() {
     const {
-      handleSubmit,
       pristine,
       submitting,
       onCancel,
@@ -228,7 +228,7 @@ class HoldingsForm extends React.Component {
           id="clickable-create-holdings-record"
           type="submit"
           disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit(this.onSave)}
+          onClick={this.onSave}
           marginBottom0
         >
           <FormattedMessage id="stripes-core.button.saveAndClose" />
@@ -243,7 +243,7 @@ class HoldingsForm extends React.Component {
           id="clickable-update-item"
           type="submit"
           disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit(this.onSave)}
+          onClick={this.onSave}
           marginBottom0
         >
           <FormattedMessage id="stripes-core.button.saveAndClose" />
@@ -740,8 +740,7 @@ class HoldingsForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'holdingsForm',
+export default stripesFinalForm({
   navigationCheck: true,
   validate,
 })(HoldingsForm);
