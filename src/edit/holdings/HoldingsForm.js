@@ -94,19 +94,6 @@ class HoldingsForm extends React.Component {
     const prevTemporaryLocation = initialValues.temporaryLocation || {};
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({ prevTemporaryLocation });
-
-    this.onSave = this.onSave.bind(this);
-  }
-
-  onSave(data) {
-    if (!data.temporaryLocationId) {
-      delete data.temporaryLocationId;
-    }
-    if (!data.permanentLocationId) {
-      delete data.permanentLocationId;
-    }
-
-    this.props.handleSubmit(data);
   }
 
   selectPermanentLocation(permanentLocation) {
@@ -212,6 +199,7 @@ class HoldingsForm extends React.Component {
       instance,
       referenceTables,
       copy,
+      handleSubmit,
     } = this.props;
 
     const {
@@ -228,7 +216,7 @@ class HoldingsForm extends React.Component {
           id="clickable-create-holdings-record"
           type="submit"
           disabled={(pristine || submitting) && !copy}
-          onClick={this.onSave}
+          onClick={handleSubmit}
           marginBottom0
         >
           <FormattedMessage id="stripes-core.button.saveAndClose" />
@@ -243,7 +231,7 @@ class HoldingsForm extends React.Component {
           id="clickable-update-item"
           type="submit"
           disabled={(pristine || submitting) && !copy}
-          onClick={this.onSave}
+          onClick={handleSubmit}
           marginBottom0
         >
           <FormattedMessage id="stripes-core.button.saveAndClose" />
