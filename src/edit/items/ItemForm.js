@@ -220,10 +220,11 @@ class ItemForm extends React.Component {
         },
       },
     } = this.props;
-    const copyNumbers = getFieldState('copyNumbers');
 
-    if (copyNumbers.value) {
-      updateValue('copyNumbers', [copyNumbers.value]);
+    const { value } = getFieldState('copyNumbers');
+
+    if (value) {
+      updateValue('copyNumbers', [value]);
     }
 
     this.props.handleSubmit(e);
