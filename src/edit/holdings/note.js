@@ -53,7 +53,7 @@ const Note = ({ noteTypeOptions }) => (
 );
 
 Note.propTypes = {
-  noteTypeOptions: PropTypes.object,
+  noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Note;

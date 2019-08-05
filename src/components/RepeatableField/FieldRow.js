@@ -97,7 +97,7 @@ class FieldRow extends React.Component {
       return template.render({ fields, field, fieldIndex, templateIndex });
     }
 
-    const { name, label, ...rest } = omitProps(template, ['component', 'render']);
+    const { name, label, ...rest } = omitProps(template, ['component', 'render', 'columnSize']);
     const labelProps = {};
     if (fieldIndex === 0) {
       labelProps.label = label;
