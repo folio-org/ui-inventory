@@ -457,11 +457,11 @@ class HoldingsForm extends React.Component {
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
                 </Col>
                 <Col sm={4}>
-                  <FormattedMessage id="ui-inventory.selectLocation">
-                    {placeholder => (
+                  <IntlConsumer>
+                    {intl => (
                       <Field
-                        label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                        placeholder={placeholder}
+                        label={intl.formatMessage({ id: 'ui-inventory.temporaryLocation' })}
+                        placeholder={intl.formatMessage({ id: 'ui-inventory.selectLocation' })}
                         name="temporaryLocationId"
                         id="additem_temporarylocation"
                         component={LocationSelection}
@@ -470,7 +470,7 @@ class HoldingsForm extends React.Component {
                         onSelect={this.onSelectLocationHandler}
                       />
                     )}
-                  </FormattedMessage>
+                  </IntlConsumer>
                   <LocationLookup
                     onLocationSelected={this.onSelectLocationHandler}
                     isTemporaryLocation
