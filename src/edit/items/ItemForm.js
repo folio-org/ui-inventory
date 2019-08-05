@@ -37,6 +37,7 @@ import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { itemDamageStatuses } from '../../constants';
 import { memoize, mutators } from '../formUtils';
+import { isArray } from 'is-what';
 
 function validate(values) {
   const errors = {};
@@ -223,7 +224,7 @@ class ItemForm extends React.Component {
 
     const { value } = getFieldState('copyNumbers');
 
-    if (value) {
+    if (value && !isArray(value)) {
       updateValue('copyNumbers', [value]);
     }
 
