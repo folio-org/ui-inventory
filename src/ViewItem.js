@@ -861,8 +861,8 @@ class ViewItem extends React.Component {
                 {(item.copyNumbers && item.copyNumbers.length > 0) &&
                   <Col smOffset={0} sm={2}>
                     <KeyValue
-                      label={<FormattedMessage id="ui-inventory.copyNumbers" />}
-                      value={get(item, ['copyNumbers'], []).map((line, i) => <div key={i}>{line}</div>)}
+                      label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                      value={get(item, 'copyNumbers[0]', '')}
                     />
                   </Col>
                 }

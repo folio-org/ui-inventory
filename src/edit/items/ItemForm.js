@@ -36,7 +36,7 @@ import {
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { itemDamageStatuses } from '../../constants';
-import { memoize } from '../../utils';
+import { memoize, mutators } from '../formUtils';
 
 function validate(values) {
   const errors = {};
@@ -211,9 +211,26 @@ class ItemForm extends React.Component {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
+  onSave = (e) => {
+    const {
+      form: {
+        getFieldState,
+        mutators: {
+          updateValue,
+        },
+      },
+    } = this.props;
+    const copyNumbers = getFieldState('copyNumbers');
+
+    if (copyNumbers.value) {
+      updateValue('copyNumbers', [copyNumbers.value]);
+    }
+
+    this.props.handleSubmit(e);
+  }
+
   render() {
     const {
-      handleSubmit,
       pristine,
       submitting,
       onCancel,
@@ -260,7 +277,6 @@ class ItemForm extends React.Component {
           id="clickable-create-item"
           type="submit"
           disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
           marginBottom0
         >
           <FormattedMessage id="stripes-core.button.saveAndClose" />
@@ -275,7 +291,6 @@ class ItemForm extends React.Component {
           id="clickable-update-item"
           type="submit"
           disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
           marginBottom0
         >
           <FormattedMessage id="stripes-core.button.saveAndClose" />
@@ -338,7 +353,7 @@ class ItemForm extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
-      <form data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
+      <form onSubmit={this.onSave} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
@@ -517,19 +532,12 @@ class ItemForm extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm={8}>
-                  <RepeatableField
+                <Col sm={3}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.copyNumber" />}
                     name="copyNumbers"
-                    addButtonId="clickable-add-copy-number"
-                    addLabel={<FormattedMessage id="ui-inventory.addCopyNumber" />}
-                    template={[{
-                      component: TextField,
-                      label: (
-                        <FormattedMessage id="ui-inventory.copyNumber">
-                          {(message) => message}
-                        </FormattedMessage>
-                      )
-                    }]}
+                    component={TextField}
+                    fullWidth
                   />
                 </Col>
               </Row>
@@ -965,6 +973,7 @@ ItemForm.propTypes = {
 
 export default stripesFinalForm({
   validate,
+  mutators,
   validateOnBlur: true,
   navigationCheck: true,
 })(injectIntl(ItemForm));
