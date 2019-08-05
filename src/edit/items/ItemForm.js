@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { get, cloneDeep } from 'lodash';
+import { get, cloneDeep, isArray } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
@@ -37,7 +37,6 @@ import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { itemDamageStatuses } from '../../constants';
 import { memoize, mutators } from '../formUtils';
-import { isArray } from 'is-what';
 
 function validate(values) {
   const errors = {};
