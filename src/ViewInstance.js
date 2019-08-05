@@ -1128,13 +1128,17 @@ class ViewInstance extends React.Component {
         <Row>
           <Col sm={12}>{newHoldingsRecordButton}</Col>
         </Row>
-
-        <Accordion
-          open={this.state.accordions.acc11}
-          id="acc11"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.relatedInstances" />}
-        />
+        { /*
+          related-instances isn't available yet but accordions MUST contain
+          child elements. this is commented out for now in an effort to
+          keep the console free of warnings.
+          <Accordion
+            open={this.state.accordions.acc11}
+            id="acc11"
+            onToggle={this.handleAccordionToggle}
+            label={<FormattedMessage id="ui-inventory.relatedInstances" />}
+          />
+        */ }
         <Callout ref={this.calloutRef} />
       </Pane>
     );

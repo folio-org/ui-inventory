@@ -10,6 +10,9 @@ import {
   Button,
   Icon,
 } from '@folio/stripes/components';
+import {
+  IntlConsumer
+} from '@folio/stripes/core';
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
@@ -146,29 +149,33 @@ class ItemsPerHoldingsRecord extends React.Component {
     if (query.layer === 'createItem'
       && addItemForHoldingsRecordId.holdingsRecordId === holdingsRecord.id) {
       return (
-        <Layer
-          key={`itemformlayer_${holdingsRecord.id}`}
-          isOpen
-          label={<FormattedMessage id="ui-inventory.addNewHoldingsDialog" />}
-        >
-          <ItemForm
-            form={`itemform_${holdingsRecord.id}`}
-            id={holdingsRecord.id}
-            key={holdingsRecord.id}
-            initialValues={{
-              status: { name: 'Available' },
-              holdingsRecordId: holdingsRecord.id,
-            }}
-            onSubmit={this.createItem}
-            onCancel={this.onClickCloseNewItem}
-            okapi={okapi}
-            instance={instance}
-            holdingsRecord={holdingsRecord}
-            referenceTables={referenceTables}
-            intl={stripes.intl}
-            stripes={stripes}
-          />
-        </Layer>
+        <IntlConsumer>
+          {intl => (
+            <Layer
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.addNewHoldingsDialog' })}
+              key={`itemformlayer_${holdingsRecord.id}`}
+              isOpen
+            >
+              <ItemForm
+                form={`itemform_${holdingsRecord.id}`}
+                id={holdingsRecord.id}
+                key={holdingsRecord.id}
+                initialValues={{
+                  status: { name: 'Available' },
+                  holdingsRecordId: holdingsRecord.id,
+                }}
+                onSubmit={this.createItem}
+                onCancel={this.onClickCloseNewItem}
+                okapi={okapi}
+                instance={instance}
+                holdingsRecord={holdingsRecord}
+                referenceTables={referenceTables}
+                intl={stripes.intl}
+                stripes={stripes}
+              />
+            </Layer>
+          )}
+        </IntlConsumer>
       );
     }
 

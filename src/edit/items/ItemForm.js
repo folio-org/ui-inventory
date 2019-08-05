@@ -22,7 +22,10 @@ import {
   ExpandAllButton,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes-core';
+import {
+  AppIcon,
+  IntlConsumer
+} from '@folio/stripes-core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import {
   LocationSelection,
@@ -847,12 +850,18 @@ class ItemForm extends React.Component {
                 </Col>
               </Row>
             </Accordion>
+            {/*
+              acquisition info isn't available yet but accordions MUST contain
+              child elements. this is commented out for now in an effort to
+              keep the console free of warnings.
+
             <Accordion
               open={accordions.acc07}
               id="acc07"
               onToggle={this.handleAccordionToggle}
               label={<FormattedMessage id="ui-inventory.acquisition" />}
             />
+            */}
             <Accordion
               open={accordions.acc08}
               id="acc08"
@@ -861,11 +870,11 @@ class ItemForm extends React.Component {
             >
               <Row>
                 <Col sm={4}>
-                  <FormattedMessage id="ui-inventory.selectLocation">
-                    {placeholder => (
+                  <IntlConsumer>
+                    {intl => (
                       <Field
-                        label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                        placeholder={placeholder}
+                        label={intl.formatMessage({ id: 'ui-inventory.permanentLocation' })}
+                        placeholder={intl.formatMessage({ id: 'ui-inventory.selectLocation' })}
                         name="permanentLocation.id"
                         id="additem_permanentlocation"
                         component={LocationSelection}
@@ -874,15 +883,15 @@ class ItemForm extends React.Component {
                         onSelect={loc => this.selectPermanentLocation(loc)}
                       />
                     )}
-                  </FormattedMessage>
+                  </IntlConsumer>
                   <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
                 </Col>
                 <Col sm={4}>
-                  <FormattedMessage id="ui-inventory.selectLocation">
-                    {placeholder => (
+                  <IntlConsumer>
+                    {intl => (
                       <Field
-                        label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                        placeholder={placeholder}
+                        label={intl.formatMessage({ id: 'ui-inventory.temporaryLocation' })}
+                        placeholder={intl.formatMessage({ id: 'ui-inventory.selectLocation' })}
                         name="temporaryLocation.id"
                         id="additem_temporarylocation"
                         component={LocationSelection}
@@ -891,7 +900,7 @@ class ItemForm extends React.Component {
                         onSelect={this.onSelectHandler}
                       />
                     )}
-                  </FormattedMessage>
+                  </IntlConsumer>
                   <LocationLookup onLocationSelected={this.onSelectHandler} />
                 </Col>
               </Row>
