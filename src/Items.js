@@ -33,39 +33,31 @@ class Items extends React.Component {
     this.editItemModeThisLayer = false;
   }
 
-  anchoredRowFormatter = (row) => {
-    const { instance, holdingsRecord, getSearchParams } = this.props;
-    const { labelStrings, rowIndex, rowData, rowClass, rowProps, cells } = row;
-
-    return (
-      <div role="listitem" key={`row-${rowIndex}`}>
-        <Link
-          to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${rowData.id}?${getSearchParams()}`}
-          aria-label={labelStrings && labelStrings.join('...')}
-          className={rowClass}
-          {...rowProps}
-        >
-          {cells}
-        </Link>
-      </div>
-    );
-  };
-
   render() {
     const {
       resources: { items },
+      instance,
+      holdingsRecord,
+      getSearchParams,
     } = this.props;
 
     if (!items || !items.hasLoaded) return null;
     const itemRecords = items.records;
     const itemsFormatter = {
-      'Item: barcode': x => (
-        <span data-test-items-app-icon>
-          <AppIcon app="inventory" iconKey="item" size="small">
-            {get(x, ['barcode'])}
-          </AppIcon>
-        </span>
-      ),
+      'Item: barcode': x => {
+        return (
+          <Link
+            to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${x.id}?${getSearchParams()}`}
+            data-test-item-link
+          >
+            <span data-test-items-app-icon>
+              <AppIcon app="inventory" iconKey="item" size="small">
+                {get(x, ['barcode'])}
+              </AppIcon>
+            </span>
+          </Link>
+        );
+      },
       'status': x => get(x, ['status', 'name']) || '--',
       'Material Type': x => get(x, ['materialType', 'name']),
     };
@@ -89,7 +81,7 @@ class Items extends React.Component {
                   }}
                   ariaLabel={ariaLabel}
                   containerRef={(ref) => { this.resultsList = ref; }}
-                  rowFormatter={this.anchoredRowFormatter}
+                  interactive={false}
                 />
               )}
             </FormattedMessage>
@@ -106,9 +98,9 @@ Items.propTypes = {
     }),
     query: PropTypes.object,
   }),
-  parentMutator: PropTypes.object.isRequired,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
+  getSearchParams: PropTypes.func.isRequired,
 };
 
 export default withLocation(Items);
