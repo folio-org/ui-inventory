@@ -5,6 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import InstanceViewPage from '../interactors/instance-view-page';
 import InstanceEditPage from '../interactors/instance-edit-page';
 import InstanceCreatePage from '../interactors/instance-create-page';
+import ItemViewPage from '../interactors/item-view-page';
 
 describe('InstanceViewPage', () => {
   setupApplication();
@@ -48,7 +49,21 @@ describe('InstanceViewPage', () => {
 
   describe('items per holdings', () => {
     it('should render an app icon for each item in the items list', () => {
-      expect(InstanceViewPage.items.itemsHasAppIcon).to.be.true;
+      expect(InstanceViewPage.items(0).hasAppIcon).to.be.true;
+    });
+
+    it('should render a link for each item in the items list', () => {
+      expect(InstanceViewPage.items(0).hasBarcodeLink).to.be.true;
+    });
+
+    describe('clicking item link', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.items(0).clickBarcode();
+      });
+
+      it('should redirect to item view page', () => {
+        expect(ItemViewPage.$root).to.exist;
+      });
     });
   });
 });
