@@ -600,594 +600,583 @@ class ViewItem extends React.Component {
     );
 
     return (
-      <div>
-        <ConfirmationModal
-          data-test-missingConfirmation-modal
-          open={this.state.itemMissingModal}
-          heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
-          message={missingModalMessage}
-          onConfirm={() => this.handleConfirm(item, requestRecords)}
-          onCancel={this.hideMissingModal}
-          confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
-        />
-        <ConfirmationModal
-          id="confirmDeleteItemModal"
-          data-test-confirm-delete-item-modal
-          open={this.state.confirmDeleteItemModal}
-          heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-          message={confirmDeleteItemModalMessage}
-          onConfirm={() => { this.deleteItem(item); }}
-          onCancel={this.hideconfirmDeleteItemModal}
-          confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
-        />
-        {cannotDeleteItemModal &&
-          <Modal
-            id="cannotDeleteItemModal"
-            data-test-cannot-delete-item-modal
-            label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-            open={cannotDeleteItemModal}
-            footer={cannotDeleteItemFooter}
-          >
-            <SafeHTMLMessage
-              id={cannotDeleteItemModalMessageId}
-              values={{
-                hrid: item.hrid,
-                barcode: item.barcode,
-                status: item.status.name
-              }}
+      <IntlConsumer>
+        {intl => (
+          <div>
+            <ConfirmationModal
+              data-test-missingConfirmation-modal
+              open={this.state.itemMissingModal}
+              heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
+              message={missingModalMessage}
+              onConfirm={() => this.handleConfirm(item, requestRecords)}
+              onCancel={this.hideMissingModal}
+              confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
             />
-          </Modal>
-        }
-        <Layer
-          isOpen
-          contentLabel={<FormattedMessage id="ui-inventory.viewItem" />}
-        >
-          <Pane
-            data-test-item-view-page
-            defaultWidth={paneWidth}
-            appIcon={<AppIcon app="inventory" iconKey="item" />}
-            paneTitle={
-              <span data-test-header-item-title>
-                <FormattedMessage
-                  id="ui-inventory.itemDotStatus"
+            <ConfirmationModal
+              id="confirmDeleteItemModal"
+              data-test-confirm-delete-item-modal
+              open={this.state.confirmDeleteItemModal}
+              heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+              message={confirmDeleteItemModalMessage}
+              onConfirm={() => { this.deleteItem(item); }}
+              onCancel={this.hideconfirmDeleteItemModal}
+              confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+            />
+            {cannotDeleteItemModal &&
+              <Modal
+                id="cannotDeleteItemModal"
+                data-test-cannot-delete-item-modal
+                label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+                open={cannotDeleteItemModal}
+                footer={cannotDeleteItemFooter}
+              >
+                <SafeHTMLMessage
+                  id={cannotDeleteItemModalMessageId}
                   values={{
-                    barcode: get(item, 'barcode', ''),
-                    status: get(item, 'status.name', '')
+                    hrid: item.hrid,
+                    barcode: item.barcode,
+                    status: item.status.name
                   }}
                 />
-              </span>
+              </Modal>
             }
-            lastMenu={detailMenu}
-            dismissible
-            onClose={this.props.onCloseViewItem}
-            actionMenu={this.getActionMenu}
-          >
-            <Row center="xs">
-              <Col sm={6}>
-                <FormattedMessage id="ui-inventory.instanceTitle" values={{ title: instance.title }} />
-                {(instance.publication && instance.publication.length > 0) &&
-                  <span>
-                    <em>
-                      {` ${instance.publication[0].publisher}`}
-                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                    </em>
+            <Layer
+              isOpen
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.viewItem' })}
+            >
+              <Pane
+                data-test-item-view-page
+                defaultWidth={paneWidth}
+                appIcon={<AppIcon app="inventory" iconKey="item" />}
+                paneTitle={
+                  <span data-test-header-item-title>
+                    <FormattedMessage
+                      id="ui-inventory.itemDotStatus"
+                      values={{
+                        barcode: get(item, 'barcode', ''),
+                        status: get(item, 'status.name', '')
+                      }}
+                    />
                   </span>
                 }
-                <div>
-                  <FormattedMessage
-                    id="ui-inventory.holdingsTitle"
-                    values={{
-                      location: labelPermanentHoldingsLocation,
-                      callNumber: labelCallNumber,
-                    }}
-                  />
-                </div>
-              </Col>
-            </Row>
-            <hr />
-            <Row>
-              <Col sm={12}>
-                <AppIcon
-                  app="inventory"
-                  iconKey="item"
-                  size="small"
-                />
-                {' '}
-                <FormattedMessage id="ui-inventory.itemRecord" />
-                {' '}
-                <AppIcon
-                  app="inventory"
-                  iconKey="material-type"
-                  size="small"
-                />
-                {' '}
-                {get(item, ['materialType', 'name'], '')}
-                {' '}
-                <AppIcon
-                  app="inventory"
-                  iconKey="item-status"
-                  size="small"
-                />
-                {' '}
-                {get(item, ['status', 'name'], '')}
-              </Col>
-            </Row>
-            <br />
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton
-                  accordionStatus={this.state.accordions}
-                  onToggle={this.handleExpandAll}
-                />
-              </Col>
-            </Row>
-            <br />
-            <Accordion
-              open={accordions.acc01}
-              id="acc01"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.administrativeData" />}
-            >
-              <this.cViewMetaData metadata={item.metadata} />
-              <Row>
-                <Col xs={12}>
-                  {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-                </Col>
-              </Row>
-              {instance.discoverySuppress && <br />}
-              <Row>
-                <Col xs={2}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.itemHrid" />}
-                    value={get(item, ['hrid'], '')}
-                  />
-                </Col>
-                {(item.barcode) &&
-                  <Col xs={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.itemBarcode" />}
-                      value={get(item, ['barcode'], '')}
+                lastMenu={detailMenu}
+                dismissible
+                onClose={this.props.onCloseViewItem}
+                actionMenu={this.getActionMenu}
+              >
+                <Row center="xs">
+                  <Col sm={6}>
+                    <FormattedMessage id="ui-inventory.instanceTitle" values={{ title: instance.title }} />
+                    {(instance.publication && instance.publication.length > 0) &&
+                      <span>
+                        <em>
+                          {` ${instance.publication[0].publisher}`}
+                          {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                        </em>
+                      </span>
+                    }
+                    <div>
+                      <FormattedMessage
+                        id="ui-inventory.holdingsTitle"
+                        values={{
+                          location: labelPermanentHoldingsLocation,
+                          callNumber: labelCallNumber,
+                        }}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={12}>
+                    <AppIcon
+                      app="inventory"
+                      iconKey="item"
+                      size="small"
+                    />
+                    {' '}
+                    <FormattedMessage id="ui-inventory.itemRecord" />
+                    {' '}
+                    <AppIcon
+                      app="inventory"
+                      iconKey="material-type"
+                      size="small"
+                    />
+                    {' '}
+                    {get(item, ['materialType', 'name'], '')}
+                    {' '}
+                    <AppIcon
+                      app="inventory"
+                      iconKey="item-status"
+                      size="small"
+                    />
+                    {' '}
+                    {get(item, ['status', 'name'], '')}
+                  </Col>
+                </Row>
+                <br />
+                <Row end="xs">
+                  <Col xs>
+                    <ExpandAllButton
+                      accordionStatus={this.state.accordions}
+                      onToggle={this.handleExpandAll}
                     />
                   </Col>
-                }
-                {(item.accessionNumber) &&
-                  <Col xs={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.accessionNumber" />}
-                      value={get(item, ['accessionNumber'], '')}
-                    />
-                  </Col>
-                }
-              </Row>
-              <Row>
-                <Col xs={2}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
-                    value={get(item, ['itemIdentifier'], '')}
-                  />
-                </Col>
-                {(item.formerIds && item.formerIds.length > 0) &&
-                  <Col smOffset={0} sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.formerId" />}
-                      value={get(item, ['formerIds'], []).map((line, i) => <div key={i}>{line}</div>)}
-                    />
-                  </Col>
-                }
-              </Row>
-              <Row>
-                {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
-                  <IntlConsumer>
-                    {intl => (
-                      <FormattedMessage id="ui-inventory.statisticalCodes">
-                        {ariaLabel => (
-                          <MultiColumnList
-                            id="list-statistical-codes"
-                            contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
-                            visibleColumns={['Statistical code type', 'Statistical code']}
-                            columnMapping={{
-                              'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                              'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                            }}
-                            formatter={{
-                              'Statistical code type':
-                                x => refLookup(referenceTables.statisticalCodeTypes,
-                                  refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name,
-                              'Statistical code':
-                                x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
-                            }}
-                            ariaLabel={ariaLabel}
-                            containerRef={(ref) => { this.resultsList = ref; }}
-                          />
-                        )}
-                      </FormattedMessage>
-                    )}
-                  </IntlConsumer>
-                )}
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc02}
-              id="acc02"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.itemData" />}
-            >
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>
-                    <FormattedMessage id="ui-inventory.materialType" />
-                  </strong>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <KeyValue value={get(item, ['materialType', 'name'], '')} />
-                </Col>
-              </Row>
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>
-                    <FormattedMessage id="ui-inventory.itemCallNumber" />
-                  </strong>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={2}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                    value={refLookup(referenceTables.callNumberTypes, get(item, ['itemLevelCallNumberTypeId'])).name}
-                  />
-                </Col>
-                <Col sm={2}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                    value={item.itemLevelCallNumberPrefix}
-                  />
-                </Col>
-                <Col sm={2}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.callNumber" />}
-                    value={item.itemLevelCallNumber}
-                  />
-                </Col>
-                <Col sm={2}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                    value={item.itemLevelCallNumberSuffix}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                {(item.copyNumbers && item.copyNumbers.length > 0) &&
-                  <Col smOffset={0} sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                      value={get(item, 'copyNumbers[0]', '')}
-                    />
-                  </Col>
-                }
-                {(item.numberOfPieces) &&
-                  <Col smOffset={0} sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                      value={get(item, ['numberOfPieces'], '-')}
-                    />
-                  </Col>
-                }
-                <Col smOffset={0} sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
-                    value={get(item, ['descriptionOfPieces'], '-')}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc03}
-              id="acc03"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.enumerationData" />}
-            >
-              <Row>
-                {(item.enumeration) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.enumeration" />}
-                      value={get(item, ['enumeration'], '')}
-                    />
-                  </Col>
-                }
-                {(item.chronology) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.chronology" />}
-                      value={get(item, ['chronology'], '')}
-                    />
-                  </Col>
-                }
-              </Row>
-              <Row>
-                {(item.volume) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.volume" />}
-                      value={get(item, ['volume'], '')}
-                    />
-                  </Col>
-                }
-              </Row>
-              <Row>
-                {(item.yearCaption && item.yearCaption.length > 0) &&
-                  <Col smOffset={0} sm={8}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                      value={get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)}
-                    />
-                  </Col>
-                }
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc04}
-              id="acc04"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.condition" />}
-            >
-              <Row>
-                {(item.numberOfMissingPieces) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
-                      value={get(item, ['numberOfMissingPieces'], '')}
-                    />
-                  </Col>
-                }
-                {(item.missingPieces) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.missingPieces" />}
-                      value={get(item, ['missingPieces'], '')}
-                    />
-                  </Col>
-                }
-                {(item.missingPiecesDate) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.date" />}
-                      value={get(item, ['missingPiecesDate'], '')}
-                    />
-                  </Col>
-                }
-              </Row>
-              <Row>
-                {(item.itemDamagedStatusId) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                      value={item.itemDamagedStatusId}
-                    />
-                  </Col>
-                }
-                {(item.itemDamagedStatusDate) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.date" />}
-                      value={<FormattedDate value={item.itemDamagedStatusDate} />}
-                    />
-                  </Col>
-                }
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc05}
-              id="acc05"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.itemNotes" />}
-            >
-              {layoutNotes(referenceTables.itemNoteTypes, get(item, ['notes'], []))}
-            </Accordion>
-            <Accordion
-              open={accordions.acc06}
-              id="acc06"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
-            >
-              <Row>
-                {(item.permanentLoanType) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
-                      value={get(item, ['permanentLoanType', 'name'], '')}
-                    />
-                  </Col>
-                }
-                {(item.temporaryLoanType) &&
-                  <Col smOffset={0} sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
-                      value={get(item, ['temporaryLoanType', 'name'], '')}
-                    />
-                  </Col>
-                }
-              </Row>
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
-                    value={loanLink}
-                  />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.itemStatusDate" />}>
-                    {itemStatusDate ? <FormattedTime value={itemStatusDate} day="numeric" month="numeric" year="numeric" /> : '-'}
-                  </KeyValue>
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.item.availability.requests" />}
-                    value={requestLink}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.item.availability.borrower" />}
-                    value={borrowerLink}
-                  />
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.loanDate" />}>
-                    {this.state.loan ? <FormattedTime value={this.state.loan.loanDate} day="numeric" month="numeric" year="numeric" /> : '-'}
-                  </KeyValue>
-                </Col>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.dueDate" />}>
-                    {this.state.loan ? <FormattedTime value={this.state.loan.dueDate} day="numeric" month="numeric" year="numeric" /> : '-'}
-                  </KeyValue>
-                </Col>
-              </Row>
-              {layoutCirculationNotes(['Check out', 'Check in'], get(item, ['circulationNotes'], []))}
-            </Accordion>
-            <Accordion
-              open={accordions.acc07}
-              id="acc07"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.location" />}
-            >
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>
-                    <FormattedMessage id="ui-inventory.holdingsLocation" />
-                  </strong>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                    value={get(permanentHoldingsLocation, ['name'], '')}
-                  />
-                </Col>
-                <Col sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                    value={get(temporaryHoldingsLocation, ['name'], '-')}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>
-                    <FormattedMessage id="ui-inventory.itemLocation" />
-                  </strong>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                    value={get(item, ['permanentLocation', 'name'], '-')}
-                  />
-                </Col>
-                <Col sm={4}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                    value={get(item, ['temporaryLocation', 'name'], '-')}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  <strong>
-                    <FormattedMessage id="ui-inventory.effectiveLocation" />
-                  </strong>
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col smOffset={0} sm={4}>
-                  {get(item, ['effectiveLocation', 'name'], '')}
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc08}
-              id="acc08"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-            >
-              {(item.electronicAccess && item.electronicAccess.length > 0) && (
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.electronicAccess">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-electronic-access"
-                          contentData={item.electronicAccess}
-                          visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                          columnMapping={{
-                            'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                            'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                            'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                            'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                            'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                          }}
-                          formatter={{
-                            'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
-                            'URI': x => <a href={get(x, ['uri'])}>{get(x, ['uri'])}</a>,
-                            'Link text': x => get(x, ['linkText']) || '',
-                            'Materials specified': x => get(x, ['materialsSpecification']) || '',
-                            'URL public note': x => get(x, ['publicNote']) || '',
-                          }}
-                          ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                </Row>
+                <br />
+                <Accordion
+                  open={accordions.acc01}
+                  id="acc01"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.administrativeData" />}
+                >
+                  <this.cViewMetaData metadata={item.metadata} />
+                  <Row>
+                    <Col xs={12}>
+                      {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
+                    </Col>
+                  </Row>
+                  {instance.discoverySuppress && <br />}
+                  <Row>
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.itemHrid" />}
+                        value={get(item, ['hrid'], '')}
+                      />
+                    </Col>
+                    {(item.barcode) &&
+                      <Col xs={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.itemBarcode" />}
+                          value={get(item, ['barcode'], '')}
                         />
-                      )}
-                    </FormattedMessage>
+                      </Col>
+                    }
+                    {(item.accessionNumber) &&
+                      <Col xs={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.accessionNumber" />}
+                          value={get(item, ['accessionNumber'], '')}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                  <Row>
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
+                        value={get(item, ['itemIdentifier'], '')}
+                      />
+                    </Col>
+                    {(item.formerIds && item.formerIds.length > 0) &&
+                      <Col smOffset={0} sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.formerId" />}
+                          value={get(item, ['formerIds'], []).map((line, i) => <div key={i}>{line}</div>)}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                  <Row>
+                    {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
+                      <MultiColumnList
+                        id="list-statistical-codes"
+                        contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                        visibleColumns={['Statistical code type', 'Statistical code']}
+                        columnMapping={{
+                          'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                          'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                        }}
+                        formatter={{
+                          'Statistical code type':
+                            x => refLookup(referenceTables.statisticalCodeTypes,
+                              refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name,
+                          'Statistical code':
+                            x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                        containerRef={(ref) => { this.resultsList = ref; }}
+                      />
+                    )}
+                  </Row>
+                </Accordion>
+                <Accordion
+                  open={accordions.acc02}
+                  id="acc02"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.itemData" />}
+                >
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <strong>
+                        <FormattedMessage id="ui-inventory.materialType" />
+                      </strong>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={3}>
+                      <KeyValue value={get(item, ['materialType', 'name'], '')} />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <strong>
+                        <FormattedMessage id="ui-inventory.itemCallNumber" />
+                      </strong>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col sm={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                        value={refLookup(referenceTables.callNumberTypes, get(item, ['itemLevelCallNumberTypeId'])).name}
+                      />
+                    </Col>
+                    <Col sm={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
+                        value={item.itemLevelCallNumberPrefix}
+                      />
+                    </Col>
+                    <Col sm={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.callNumber" />}
+                        value={item.itemLevelCallNumber}
+                      />
+                    </Col>
+                    <Col sm={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
+                        value={item.itemLevelCallNumberSuffix}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    {(item.copyNumbers && item.copyNumbers.length > 0) &&
+                      <Col smOffset={0} sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                          value={get(item, 'copyNumbers[0]', '')}
+                        />
+                      </Col>
+                    }
+                    {(item.numberOfPieces) &&
+                      <Col smOffset={0} sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
+                          value={get(item, ['numberOfPieces'], '-')}
+                        />
+                      </Col>
+                    }
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
+                        value={get(item, ['descriptionOfPieces'], '-')}
+                      />
+                    </Col>
+                  </Row>
+                </Accordion>
+                <Accordion
+                  open={accordions.acc03}
+                  id="acc03"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.enumerationData" />}
+                >
+                  <Row>
+                    {(item.enumeration) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.enumeration" />}
+                          value={get(item, ['enumeration'], '')}
+                        />
+                      </Col>
+                    }
+                    {(item.chronology) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.chronology" />}
+                          value={get(item, ['chronology'], '')}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                  <Row>
+                    {(item.volume) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.volume" />}
+                          value={get(item, ['volume'], '')}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                  <Row>
+                    {(item.yearCaption && item.yearCaption.length > 0) &&
+                      <Col smOffset={0} sm={8}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.yearCaption" />}
+                          value={get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                </Accordion>
+                <Accordion
+                  open={accordions.acc04}
+                  id="acc04"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.condition" />}
+                >
+                  <Row>
+                    {(item.numberOfMissingPieces) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
+                          value={get(item, ['numberOfMissingPieces'], '')}
+                        />
+                      </Col>
+                    }
+                    {(item.missingPieces) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.missingPieces" />}
+                          value={get(item, ['missingPieces'], '')}
+                        />
+                      </Col>
+                    }
+                    {(item.missingPiecesDate) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.date" />}
+                          value={get(item, ['missingPiecesDate'], '')}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                  <Row>
+                    {(item.itemDamagedStatusId) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
+                          value={item.itemDamagedStatusId}
+                        />
+                      </Col>
+                    }
+                    {(item.itemDamagedStatusDate) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.date" />}
+                          value={<FormattedDate value={item.itemDamagedStatusDate} />}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                </Accordion>
+                <Accordion
+                  open={accordions.acc05}
+                  id="acc05"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.itemNotes" />}
+                >
+                  {layoutNotes(referenceTables.itemNoteTypes, get(item, ['notes'], []))}
+                </Accordion>
+                <Accordion
+                  open={accordions.acc06}
+                  id="acc06"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
+                >
+                  <Row>
+                    {(item.permanentLoanType) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
+                          value={get(item, ['permanentLoanType', 'name'], '')}
+                        />
+                      </Col>
+                    }
+                    {(item.temporaryLoanType) &&
+                      <Col smOffset={0} sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
+                          value={get(item, ['temporaryLoanType', 'name'], '')}
+                        />
+                      </Col>
+                    }
+                  </Row>
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
+                        value={loanLink}
+                      />
+                    </Col>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.itemStatusDate" />}>
+                        {itemStatusDate ? <FormattedTime value={itemStatusDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                      </KeyValue>
+                    </Col>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.item.availability.requests" />}
+                        value={requestLink}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.item.availability.borrower" />}
+                        value={borrowerLink}
+                      />
+                    </Col>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.loanDate" />}>
+                        {this.state.loan ? <FormattedTime value={this.state.loan.loanDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                      </KeyValue>
+                    </Col>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.dueDate" />}>
+                        {this.state.loan ? <FormattedTime value={this.state.loan.dueDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                      </KeyValue>
+                    </Col>
+                  </Row>
+                  {layoutCirculationNotes(['Check out', 'Check in'], get(item, ['circulationNotes'], []))}
+                </Accordion>
+                <Accordion
+                  open={accordions.acc07}
+                  id="acc07"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.location" />}
+                >
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <strong>
+                        <FormattedMessage id="ui-inventory.holdingsLocation" />
+                      </strong>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                        value={get(permanentHoldingsLocation, ['name'], '')}
+                      />
+                    </Col>
+                    <Col sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                        value={get(temporaryHoldingsLocation, ['name'], '-')}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <strong>
+                        <FormattedMessage id="ui-inventory.itemLocation" />
+                      </strong>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                        value={get(item, ['permanentLocation', 'name'], '-')}
+                      />
+                    </Col>
+                    <Col sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                        value={get(item, ['temporaryLocation', 'name'], '-')}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      <strong>
+                        <FormattedMessage id="ui-inventory.effectiveLocation" />
+                      </strong>
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col smOffset={0} sm={4}>
+                      {get(item, ['effectiveLocation', 'name'], '')}
+                    </Col>
+                  </Row>
+                </Accordion>
+                <Accordion
+                  open={accordions.acc08}
+                  id="acc08"
+                  onToggle={this.handleAccordionToggle}
+                  label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+                >
+                  {(item.electronicAccess && item.electronicAccess.length > 0) && (
+                    <MultiColumnList
+                      id="list-electronic-access"
+                      contentData={item.electronicAccess}
+                      visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                      columnMapping={{
+                        'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                        'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                        'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                        'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                        'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                      }}
+                      formatter={{
+                        'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
+                        'URI': x => <a href={get(x, ['uri'])}>{get(x, ['uri'])}</a>,
+                        'Link text': x => get(x, ['linkText']) || '',
+                        'Materials specified': x => get(x, ['materialsSpecification']) || '',
+                        'URL public note': x => get(x, ['publicNote']) || '',
+                      }}
+                      ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
+                      containerRef={(ref) => { this.resultsList = ref; }}
+                    />
                   )}
-                </IntlConsumer>
-              )}
-            </Accordion>
+                </Accordion>
 
-          </Pane>
-        </Layer>
-        <Layer
-          isOpen={query.layer ? query.layer === 'editItem' : false}
-          contentLabel={<FormattedMessage id="ui-inventory.editItemDialog" />}
-        >
-          <ItemForm
-            form={`itemform_${item.id}`}
-            onSubmit={(record) => { this.saveItem(record); }}
-            initialValues={item}
-            onCancel={this.onClickCloseEditItem}
-            okapi={okapi}
-            instance={instance}
-            holdingsRecord={holdingsRecord}
-            referenceTables={referenceTables}
-            stripes={this.props.stripes}
-          />
-        </Layer>
-        <Layer
-          isOpen={query.layer === 'copyItem'}
-          contentLabel={<FormattedMessage id="ui-inventory.copyItemDialog" />}
-        >
-          <ItemForm
-            form={`itemform_${holdingsRecord.id}`}
-            onSubmit={(record) => { this.copyItem(record); }}
-            initialValues={this.state.copiedItem}
-            onCancel={this.onClickCloseEditItem}
-            okapi={okapi}
-            instance={instance}
-            copy
-            holdingsRecord={holdingsRecord}
-            referenceTables={referenceTables}
-            stripes={this.props.stripes}
-          />
-        </Layer>
-      </div>
+              </Pane>
+            </Layer>
+            <Layer
+              isOpen={query.layer ? query.layer === 'editItem' : false}
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.editItemDialog' })}
+            >
+              <ItemForm
+                form={`itemform_${item.id}`}
+                onSubmit={(record) => { this.saveItem(record); }}
+                initialValues={item}
+                onCancel={this.onClickCloseEditItem}
+                okapi={okapi}
+                instance={instance}
+                holdingsRecord={holdingsRecord}
+                referenceTables={referenceTables}
+                stripes={this.props.stripes}
+              />
+            </Layer>
+            <Layer
+              isOpen={query.layer === 'copyItem'}
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.copyItemDialog' })}
+            >
+              <ItemForm
+                form={`itemform_${holdingsRecord.id}`}
+                onSubmit={(record) => { this.copyItem(record); }}
+                initialValues={this.state.copiedItem}
+                onCancel={this.onClickCloseEditItem}
+                okapi={okapi}
+                instance={instance}
+                copy
+                holdingsRecord={holdingsRecord}
+                referenceTables={referenceTables}
+                stripes={this.props.stripes}
+              />
+            </Layer>
+          </div>
+        )
+      }
+      </IntlConsumer>
     );
   }
 }

@@ -387,481 +387,436 @@ class ViewHoldingsRecord extends React.Component {
     );
 
     return (
-      <div>
-        <ConfirmationModal
-          id="delete-confirmation-modal"
-          open={this.state.confirmHoldingsRecordDeleteModal}
-          heading={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
-          message={confirmHoldingsRecordDeleteModalMessage}
-          onConfirm={() => { this.deleteHoldingsRecord(holdingsRecord); }}
-          onCancel={this.hideConfirmHoldingsRecordDeleteModal}
-          confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
-        />
-        <Modal
-          data-test-no-delete-holdingsrecord-modal
-          label={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
-          open={this.state.noHoldingsRecordDeleteModal}
-          footer={noHoldingsRecordDeleteFooter}
-        >
-          {noHoldingsRecordDeleteModalMessage}
-        </Modal>
-        <Layer
-          isOpen
-          contentLabel={<FormattedMessage id="ui-inventory.viewHoldingsRecord" />}
-        >
-          <div data-test-holdings-view-page>
-            <Pane
-              defaultWidth={this.props.paneWidth}
-              appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-              paneTitle={
-                <span data-test-header-title>
-                  <FormattedMessage
-                    id="ui-inventory.holdingRecord"
-                    values={{
-                      location: _.get(holdingsPermanentLocation, 'name', ''),
-                      callNumber: _.get(holdingsRecord, 'callNumber', '')
-                    }}
-                  />
-                </span>
-              }
-              lastMenu={detailMenu}
-              dismissible
-              onClose={this.props.onCloseViewHoldingsRecord}
-              actionMenu={this.getPaneHeaderActionMenu}
+      <IntlConsumer>
+        {intl => (
+          <div>
+            <ConfirmationModal
+              id="delete-confirmation-modal"
+              open={this.state.confirmHoldingsRecordDeleteModal}
+              heading={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
+              message={confirmHoldingsRecordDeleteModalMessage}
+              onConfirm={() => { this.deleteHoldingsRecord(holdingsRecord); }}
+              onCancel={this.hideConfirmHoldingsRecordDeleteModal}
+              confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+            />
+            <Modal
+              data-test-no-delete-holdingsrecord-modal
+              label={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
+              open={this.state.noHoldingsRecordDeleteModal}
+              footer={noHoldingsRecordDeleteFooter}
             >
-              <Row center="xs">
-                <Col sm={6}>
-                  <FormattedMessage id="ui-inventory.instance" />
-                  {instance.title}
-                  {(instance.publication && instance.publication.length > 0) &&
-                    <span>
-                      <em>, </em>
-                      <em>
-                        {instance.publication[0].publisher}
-                        {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                      </em>
+              {noHoldingsRecordDeleteModalMessage}
+            </Modal>
+            <Layer
+              isOpen
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.viewHoldingsRecord' })}
+            >
+              <div data-test-holdings-view-page>
+                <Pane
+                  defaultWidth={this.props.paneWidth}
+                  appIcon={<AppIcon app="inventory" iconKey="holdings" />}
+                  paneTitle={
+                    <span data-test-header-title>
+                      <FormattedMessage
+                        id="ui-inventory.holdingRecord"
+                        values={{
+                          location: _.get(holdingsPermanentLocation, 'name', ''),
+                          callNumber: _.get(holdingsRecord, 'callNumber', '')
+                        }}
+                      />
                     </span>
                   }
-                </Col>
-              </Row>
-              <hr />
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton
-                    accordionStatus={this.state.accordions}
-                    onToggle={this.handleExpandAll}
-                  />
-                </Col>
-              </Row>
-              <Accordion
-                open={this.state.accordions.accordion01}
-                id="accordion01"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.administrativeData" />}
-              >
-                <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                <Row>
-                  <Col xs={12}>
-                    {holdingsRecord.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col
-                    smOffset={0}
-                    sm={4}
-                  >
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
-                      value={_.get(holdingsRecord, ['hrid'], '')}
-                    />
-                  </Col>
-                  <Col>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.formerHoldingsId" />}
-                      value={_.get(holdingsRecord, ['formerIds'], []).map((hid, i) => <div key={i}>{hid}</div>)}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.holdingsType" />}
-                      value={this.refLookup(referenceTables.holdingsTypes, _.get(holdingsRecord, ['holdingsTypeId'])).name}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  {(holdingsRecord.statisticalCodeIds && holdingsRecord.statisticalCodeIds.length > 0) && (
-                    <IntlConsumer>
-                      {intl => (
-                        <FormattedMessage id="ui-inventory.statisticalCodes">
-                          {ariaLabel => (
-                            <MultiColumnList
-                              id="list-statistical-codes"
-                              contentData={holdingsRecord.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
-                              visibleColumns={['Statistical code type', 'Statistical code']}
-                              columnMapping={{
-                                'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                                'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                              }}
-                              formatter={{
-                                'Statistical code type':
-                                  x => this.refLookup(referenceTables.statisticalCodeTypes,
-                                    this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
-                                'Statistical code':
-                                  x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
-                              }}
-                              ariaLabel={ariaLabel}
-                              containerRef={(ref) => { this.resultsList = ref; }}
-                            />
-                          )}
-                        </FormattedMessage>
-                      )}
-                    </IntlConsumer>
-                  )}
-                </Row>
-
-              </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion02}
-                id="accordion02"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.location" />}
-              >
-                <Row>
-                  <Col smOffset={0} sm={4}>
-                    <strong>
-                      <FormattedMessage id="ui-inventory.holdingsLocation" />
-                    </strong>
-                  </Col>
-                </Row>
-                <br />
-                {((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId)) &&
-                  <Row>
-                    <Col
-                      smOffset={0}
-                      sm={4}
-                    >
-                      <KeyValue
-                        label={<FormattedMessage id="ui-inventory.permanent" />}
-                        value={holdingsPermanentLocation.name}
-                      />
+                  lastMenu={detailMenu}
+                  dismissible
+                  onClose={this.props.onCloseViewHoldingsRecord}
+                  actionMenu={this.getPaneHeaderActionMenu}
+                >
+                  <Row center="xs">
+                    <Col sm={6}>
+                      <FormattedMessage id="ui-inventory.instance" />
+                      {instance.title}
+                      {(instance.publication && instance.publication.length > 0) &&
+                        <span>
+                          <em>, </em>
+                          <em>
+                            {instance.publication[0].publisher}
+                            {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                          </em>
+                        </span>
+                      }
                     </Col>
-                    <Col>
-                      <KeyValue
-                        label={<FormattedMessage id="ui-inventory.temporary" />}
-                        value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'}
+                  </Row>
+                  <hr />
+                  <Row end="xs">
+                    <Col xs>
+                      <ExpandAllButton
+                        accordionStatus={this.state.accordions}
+                        onToggle={this.handleExpandAll}
                       />
                     </Col>
                   </Row>
-                }
-                <Row>
-                  <Col sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
-                      value={holdingsRecord.shelvingOrder}
-                    />
-                  </Col>
-                  <Col>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
-                      value={holdingsRecord.shelvingTitle}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col
-                    smOffset={0}
-                    sm={4}
+                  <Accordion
+                    open={this.state.accordions.accordion01}
+                    id="accordion01"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.administrativeData" />}
                   >
-                    <strong>
-                      <FormattedMessage id="ui-inventory.holdingsCallNumber" />
-                    </strong>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                      value={holdingsRecord.copyNumber}
-                    />
-                  </Col>
-                  <Col sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                      value={this.refLookup(referenceTables.callNumberTypes, _.get(holdingsRecord, ['callNumberTypeId'])).name}
-                    />
-                  </Col>
-                  <Col sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                      value={holdingsRecord.callNumberPrefix}
-                    />
-                  </Col>
-                  <Col sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.callNumber" />}
-                      value={holdingsRecord.callNumber}
-                    />
-                  </Col>
-                  <Col sm={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                      value={holdingsRecord.callNumberSuffix}
-                    />
-                  </Col>
-                </Row>
-              </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion03}
-                id="accordion03"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.holdingsDetails" />}
-              >
-                <KeyValue
-                  label={<FormattedMessage id="ui-inventory.numberOfItems" />}
-                  value={_.get(holdingsRecord, ['numberOfItems'], [])}
-                />
-                {(holdingsRecord.holdingsStatements.length > 0) && (
-                  <IntlConsumer>
-                    {intl => (
-                      <FormattedMessage id="ui-inventory.holdingsStatements">
-                        {ariaLabel => (
-                          <MultiColumnList
-                            id="list-holdingsstatements"
-                            contentData={holdingsRecord.holdingsStatements}
-                            visibleColumns={['Holdings statement', 'Holdings statement note']}
-                            columnMapping={{
-                              'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
-                              'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
-                            }}
-                            formatter={{
-                              'Holdings statement': x => _.get(x, ['statement']) || '',
-                              'Holdings statement note': x => _.get(x, ['note']) || '',
-                            }}
-                            ariaLabel={ariaLabel}
-                            containerRef={(ref) => { this.resultsList = ref; }}
-                          />
-                        )}
-                      </FormattedMessage>
-                    )}
-                  </IntlConsumer>
-                )}
-                {(holdingsRecord.holdingsStatementsForSupplements.length > 0) && (
-                  <IntlConsumer>
-                    {intl => (
-                      <FormattedMessage id="ui-inventory.holdingsStatementForSupplements">
-                        {ariaLabel => (
-                          <MultiColumnList
-                            id="list-holdingsstatementsforsupplements"
-                            contentData={holdingsRecord.holdingsStatementsForSupplements}
-                            visibleColumns={['Holdings statement for supplements', 'Holdings statement for supplements note']}
-                            columnMapping={{
-                              'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
-                              'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
-                            }}
-                            formatter={{
-                              'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
-                              'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
-                            }}
-                            ariaLabel={ariaLabel}
-                            containerRef={(ref) => { this.resultsList = ref; }}
-                          />
-                        )}
-                      </FormattedMessage>
-                    )}
-                  </IntlConsumer>
-                )}
-
-                {(holdingsRecord.holdingsStatementsForIndexes.length > 0) && (
-                  <IntlConsumer>
-                    {intl => (
-                      <FormattedMessage id="ui-inventory.holdingsStatementForIndexes">
-                        {ariaLabel => (
-                          <MultiColumnList
-                            id="list-holdingsstatementsforindexes"
-                            contentData={holdingsRecord.holdingsStatementsForIndexes}
-                            visibleColumns={['Holdings statement for indexes', 'Holdings statement for indexes note']}
-                            columnMapping={{
-                              'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
-                              'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
-                            }}
-                            formatter={{
-                              'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
-                              'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
-                            }}
-                            ariaLabel={ariaLabel}
-                            containerRef={(ref) => { this.resultsList = ref; }}
-                          />
-                        )}
-                      </FormattedMessage>
-                    )}
-                  </IntlConsumer>
-                )}
-                <Row>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.illPolicy" />}
-                      value={this.refLookup(referenceTables.illPolicies, _.get(holdingsRecord, ['illPolicyId'])).name}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
-                      value={_.get(holdingsRecord, ['digitizationPolicy'], '')}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
-                      value={_.get(holdingsRecord, ['retentionPolicy'], '')}
-                    />
-                  </Col>
-                </Row>
-              </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion04}
-                id="accordion04"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
-              >
-                {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
-              </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion05}
-                id="accordion05"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.acquisition" />}
-              >
-                <Row>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
-                      value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                      value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.receiptStatus" />}
-                      value={_.get(holdingsRecord, ['receiptStatus'], '')}
-                    />
-                  </Col>
-                </Row>
-              </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion06}
-                id="accordion06"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-              >
-                {(holdingsRecord.electronicAccess.length > 0) && (
-                  <IntlConsumer>
-                    {intl => (
-                      <FormattedMessage id="ui-inventory.electronicAccess">
-                        {ariaLabel => (
-                          <MultiColumnList
-                            id="list-electronic-access"
-                            contentData={holdingsRecord.electronicAccess}
-                            visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                            columnMapping={{
-                              'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                              'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                              'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                              'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                              'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                            }}
-                            formatter={{
-                              'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
-                              'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
-                              'Link text': x => _.get(x, ['linkText']) || '',
-                              'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
-                              'URL public note': x => _.get(x, ['publicNote']) || '',
-                            }}
-                            ariaLabel={ariaLabel}
-                            containerRef={(ref) => { this.resultsList = ref; }}
-                          />
-                        )}
-                      </FormattedMessage>
-                    )}
-                  </IntlConsumer>
-                )}
-              </Accordion>
-              <Accordion
-                open={this.state.accordions.accordion07}
-                id="accordion07"
-                onToggle={this.handleAccordionToggle}
-                label={<FormattedMessage id="ui-inventory.receivingHistory" />}
-              >
-                {(holdingsRecord.receivingHistory
-                  && holdingsRecord.receivingHistory.entries
-                  && holdingsRecord.receivingHistory.entries.length > 0)
-                  && (
-                    <IntlConsumer>
-                      {intl => (
-                        <FormattedMessage id="ui-inventory.receivingHistory">
-                          {ariaLabel => (
-                            <MultiColumnList
-                              id="list-retrieving-history"
-                              contentData={holdingsRecord.receivingHistory.entries}
-                              visibleColumns={['Enumeration', 'Chronology']}
-                              columnMapping={{
-                                'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
-                                'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
-                              }}
-                              formatter={{
-                                'Enumeration': x => x.enumeration,
-                                'Chronology': x => x.chronology,
-                              }}
-                              ariaLabel={ariaLabel}
-                              containerRef={(ref) => { this.resultsList = ref; }}
-                            />
-                          )}
-                        </FormattedMessage>
+                    <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                    <Row>
+                      <Col xs={12}>
+                        {holdingsRecord.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col
+                        smOffset={0}
+                        sm={4}
+                      >
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
+                          value={_.get(holdingsRecord, ['hrid'], '')}
+                        />
+                      </Col>
+                      <Col>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.formerHoldingsId" />}
+                          value={_.get(holdingsRecord, ['formerIds'], []).map((hid, i) => <div key={i}>{hid}</div>)}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.holdingsType" />}
+                          value={this.refLookup(referenceTables.holdingsTypes, _.get(holdingsRecord, ['holdingsTypeId'])).name}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      {(holdingsRecord.statisticalCodeIds && holdingsRecord.statisticalCodeIds.length > 0) && (
+                        <MultiColumnList
+                          id="list-statistical-codes"
+                          contentData={holdingsRecord.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                          visibleColumns={['Statistical code type', 'Statistical code']}
+                          columnMapping={{
+                            'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                            'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                          }}
+                          formatter={{
+                            'Statistical code type':
+                              x => this.refLookup(referenceTables.statisticalCodeTypes,
+                                this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).statisticalCodeTypeId).name,
+                            'Statistical code':
+                              x => this.refLookup(referenceTables.statisticalCodes, _.get(x, ['codeId'])).name,
+                          }}
+                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                          containerRef={(ref) => { this.resultsList = ref; }}
+                        />
                       )}
-                    </IntlConsumer>
-                  )
-                }
-              </Accordion>
-            </Pane>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion02}
+                    id="accordion02"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.location" />}
+                  >
+                    <Row>
+                      <Col smOffset={0} sm={4}>
+                        <strong>
+                          <FormattedMessage id="ui-inventory.holdingsLocation" />
+                        </strong>
+                      </Col>
+                    </Row>
+                    <br />
+                    {((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId)) &&
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.permanent" />}
+                            value={holdingsPermanentLocation.name}
+                          />
+                        </Col>
+                        <Col>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.temporary" />}
+                            value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'}
+                          />
+                        </Col>
+                      </Row>
+                    }
+                    <Row>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                          value={holdingsRecord.shelvingOrder}
+                        />
+                      </Col>
+                      <Col>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
+                          value={holdingsRecord.shelvingTitle}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col
+                        smOffset={0}
+                        sm={4}
+                      >
+                        <strong>
+                          <FormattedMessage id="ui-inventory.holdingsCallNumber" />
+                        </strong>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                          value={holdingsRecord.copyNumber}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                          value={this.refLookup(referenceTables.callNumberTypes, _.get(holdingsRecord, ['callNumberTypeId'])).name}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
+                          value={holdingsRecord.callNumberPrefix}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.callNumber" />}
+                          value={holdingsRecord.callNumber}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
+                          value={holdingsRecord.callNumberSuffix}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion03}
+                    id="accordion03"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.holdingsDetails" />}
+                  >
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.numberOfItems" />}
+                      value={_.get(holdingsRecord, ['numberOfItems'], [])}
+                    />
+                    {(holdingsRecord.holdingsStatements.length > 0) && (
+                      <MultiColumnList
+                        id="list-holdingsstatements"
+                        contentData={holdingsRecord.holdingsStatements}
+                        visibleColumns={['Holdings statement', 'Holdings statement note']}
+                        columnMapping={{
+                          'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
+                          'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
+                        }}
+                        formatter={{
+                          'Holdings statement': x => _.get(x, ['statement']) || '',
+                          'Holdings statement note': x => _.get(x, ['note']) || '',
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.holdingsStatements' })}
+                        containerRef={(ref) => { this.resultsList = ref; }}
+                      />
+                    )}
+                    {(holdingsRecord.holdingsStatementsForSupplements.length > 0) && (
+                      <MultiColumnList
+                        id="list-holdingsstatementsforsupplements"
+                        contentData={holdingsRecord.holdingsStatementsForSupplements}
+                        visibleColumns={['Holdings statement for supplements', 'Holdings statement for supplements note']}
+                        columnMapping={{
+                          'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
+                          'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
+                        }}
+                        formatter={{
+                          'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
+                          'Holdings statement for supplements note': x => _.get(x, ['note']) || '',
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' })}
+                        containerRef={(ref) => { this.resultsList = ref; }}
+                      />
+                    )}
+
+                    {(holdingsRecord.holdingsStatementsForIndexes.length > 0) && (
+                      <MultiColumnList
+                        id="list-holdingsstatementsforindexes"
+                        contentData={holdingsRecord.holdingsStatementsForIndexes}
+                        visibleColumns={['Holdings statement for indexes', 'Holdings statement for indexes note']}
+                        columnMapping={{
+                          'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
+                          'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
+                        }}
+                        formatter={{
+                          'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
+                          'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' })}
+                        containerRef={(ref) => { this.resultsList = ref; }}
+                      />
+                    )}
+                    <Row>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.illPolicy" />}
+                          value={this.refLookup(referenceTables.illPolicies, _.get(holdingsRecord, ['illPolicyId'])).name}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
+                          value={_.get(holdingsRecord, ['digitizationPolicy'], '')}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
+                          value={_.get(holdingsRecord, ['retentionPolicy'], '')}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion04}
+                    id="accordion04"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
+                  >
+                    {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion05}
+                    id="accordion05"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.acquisition" />}
+                  >
+                    <Row>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
+                          value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+                          value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.receiptStatus" />}
+                          value={_.get(holdingsRecord, ['receiptStatus'], '')}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion06}
+                    id="accordion06"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+                  >
+                    {(holdingsRecord.electronicAccess.length > 0) && (
+                      <MultiColumnList
+                        id="list-electronic-access"
+                        contentData={holdingsRecord.electronicAccess}
+                        visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                        columnMapping={{
+                          'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                          'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                          'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                          'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                          'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                        }}
+                        formatter={{
+                          'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
+                          'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+                          'Link text': x => _.get(x, ['linkText']) || '',
+                          'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
+                          'URL public note': x => _.get(x, ['publicNote']) || '',
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
+                        containerRef={(ref) => { this.resultsList = ref; }}
+                      />
+                    )}
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion07}
+                    id="accordion07"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.receivingHistory" />}
+                  >
+                    {(holdingsRecord.receivingHistory
+                      && holdingsRecord.receivingHistory.entries
+                      && holdingsRecord.receivingHistory.entries.length > 0)
+                      && (
+                        <MultiColumnList
+                          id="list-retrieving-history"
+                          contentData={holdingsRecord.receivingHistory.entries}
+                          visibleColumns={['Enumeration', 'Chronology']}
+                          columnMapping={{
+                            'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
+                            'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+                          }}
+                          formatter={{
+                            'Enumeration': x => x.enumeration,
+                            'Chronology': x => x.chronology,
+                          }}
+                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.receivingHistory' })}
+                          containerRef={(ref) => { this.resultsList = ref; }}
+                        />
+                      )
+                    }
+                  </Accordion>
+                </Pane>
+              </div>
+            </Layer>
+            <Layer
+              isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false}
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.editHoldingsRecordDialog' })}
+            >
+              <HoldingsForm
+                initialValues={holdingsRecord}
+                onSubmit={(record) => this.updateHoldingsRecord(record)}
+                onCancel={this.onClickCloseEditHoldingsRecord}
+                okapi={okapi}
+                instance={instance}
+                referenceTables={referenceTables}
+                stripes={this.props.stripes}
+              />
+            </Layer>
+            <Layer
+              isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false}
+              contentLabel={intl.formatMessage({ id: 'ui-inventory.copyHoldingsRecordDialog' })}
+            >
+              <HoldingsForm
+                initialValues={this.state.copiedRecord}
+                onSubmit={(record) => this.copyHoldingsRecord(record)}
+                onCancel={this.onClickCloseEditHoldingsRecord}
+                okapi={okapi}
+                instance={instance}
+                copy
+                referenceTables={referenceTables}
+                stripes={this.props.stripes}
+              />
+            </Layer>
           </div>
-        </Layer>
-        <Layer
-          isOpen={query.layer ? (query.layer === 'editHoldingsRecord') : false}
-          contentLabel={<FormattedMessage id="ui-inventory.editHoldingsRecordDialog" />}
-        >
-          <HoldingsForm
-            initialValues={holdingsRecord}
-            onSubmit={(record) => this.updateHoldingsRecord(record)}
-            onCancel={this.onClickCloseEditHoldingsRecord}
-            okapi={okapi}
-            instance={instance}
-            referenceTables={referenceTables}
-            stripes={this.props.stripes}
-          />
-        </Layer>
-        <Layer
-          isOpen={query.layer ? (query.layer === 'copyHoldingsRecord') : false}
-          contentLabel={<FormattedMessage id="ui-inventory.copyHoldingsRecordDialog" />}
-        >
-          <HoldingsForm
-            initialValues={this.state.copiedRecord}
-            onSubmit={(record) => this.copyHoldingsRecord(record)}
-            onCancel={this.onClickCloseEditHoldingsRecord}
-            okapi={okapi}
-            instance={instance}
-            copy
-            referenceTables={referenceTables}
-            stripes={this.props.stripes}
-          />
-        </Layer>
-      </div>
+        )}
+      </IntlConsumer>
     );
   }
 }
