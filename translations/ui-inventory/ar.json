@@ -1,6 +1,6 @@
 {
     "inventory.label": "المخزون",
-    "resultCount": "تم العثور على {count, number} {count, plural, one { تسجيلة } other { تسجيلات }}",
+    "resultCount": "تم العثور على {count, number} {count, plural, one { تسجيلة } other { تسجيلة }}",
     "item.availability": "التوافر",
     "item.availability.itemStatus": "حالة المادة",
     "item.availability.itemStatusDate": "تاريخ حالة المادة",
@@ -376,11 +376,11 @@
     "itemsOnHoldingsRecordDeleteModal.message": "رقم التعريف القابل للقراءة بشريًا لتسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> له <strong>{itemCount}</strong> تسجيلة مادة مرتبطة به. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف جميع تسجيلات المواد المرتبطة به.",
     "condition": "شرط",
     "search.isbn": "- ردمك",
-    "search.issn": "- ISSN",
+    "search.issn": "- ردمد",
     "search.all": "الكل (العنوان، المساهم، المعرّف)",
     "subject": "الموضوع",
     "isbn": "ردمك",
-    "issn": "ISSN",
+    "issn": "ردمد",
     "marcSourceRecord.notFoundError": "لا يمكن العثور على تسجيلة مارك البيبلوغرافية للوعاء \"{name}\"!",
     "instanceNoteTypes": "أنواع ملاحظة الوعاء",
     "modesOfIssuance": "أوضاع الإصدار",
@@ -392,8 +392,8 @@
     "instanceTitle": "الوعاء: {title}.",
     "items.damageStatus.damaged": "تالفة",
     "items.damageStatus.notdamaged": "غير تالفة",
-    "instanceNotes": "Instance notes",
-    "addClassification": "Add classification",
-    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
-    "acquisition": "Acquisition"
+    "instanceNotes": "ملاحظات الوعاء",
+    "addClassification": "إضافة تصنيف",
+    "instanceRelationshipAnalyticsBoundWith": "صلات الوعاء (المدخلات التحليلية والارتباطات)",
+    "acquisition": "التزويد"
 }
