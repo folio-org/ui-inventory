@@ -12,7 +12,7 @@ export default @interactor class InventoryInteractor {
   static defaultScope = '[data-test-inventory-instances]';
 
   isNoResultsMessageLabelPresent = isPresent('[class*=noResultsMessageLabel]');
-  instances = collection('[role=row] a');
+  instances = collection('#list-inventory [role=row] a');
 
   instance = scoped('[data-test-instance-details]');
   chooseSearchOption= selectable('#input-inventory-search-qindex');

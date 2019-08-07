@@ -2,6 +2,7 @@ import {
   interactor,
   isPresent,
   clickable,
+  collection,
   text,
 } from '@bigtest/interactor';
 
@@ -14,14 +15,10 @@ import {
   clickDuplicate = clickable('#copy-instance');
 }
 
-@interactor class Items {
-  isLoaded = isPresent('[data-test-items]');
-
-  whenLoaded() {
-    return this.when(() => this.isLoaded);
-  }
-
-  itemsHasAppIcon = isPresent('[data-test-items-app-icon]');
+@interactor class Item {
+  hasAppIcon = isPresent('[data-test-items-app-icon]');
+  hasBarcodeLink = isPresent('[data-test-item-link]');
+  clickBarcode = clickable('[data-test-item-link]')
 }
 
 @interactor class InstanceViewPage {
@@ -33,9 +30,7 @@ import {
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  items = new Items('[data-test-items]');
-
-  itemsHasAppIcon = isPresent('[data-test-items-app-icon]');
+  items = collection('#list-items div[class^=mclRow]', Item);
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');
