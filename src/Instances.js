@@ -365,7 +365,6 @@ class Instances extends React.Component {
           selectedIndex={get(this.props.resources.query, 'qindex')}
           searchableIndexesPlaceholder={null}
           onChangeIndex={this.onChangeIndex}
-          // filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
           viewRecordComponent={ViewInstance}
