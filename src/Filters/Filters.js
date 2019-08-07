@@ -36,7 +36,7 @@ export default class Filters extends React.Component {
 
   isFilterNotEmpty(name) {
     const { activeFilters } = this.props;
-    return activeFilters[name] && activeFilters[name].length;
+    return !!(activeFilters[name] && activeFilters[name].length > 0);
   }
 
   render() {
