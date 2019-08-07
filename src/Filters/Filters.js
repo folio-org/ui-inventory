@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -35,8 +36,7 @@ export default class Filters extends React.Component {
   }
 
   isFilterNotEmpty(name) {
-    const { activeFilters } = this.props;
-    return !!(activeFilters[name] && activeFilters[name].length > 0);
+    return get(this.props.activeFilters, [name, 'length'], []) > 0;
   }
 
   render() {
