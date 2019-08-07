@@ -28,15 +28,16 @@ export default class Filters extends React.Component {
     },
   }
 
-  createOnClearFilterHandler = (filterName) => () => {
+  createOnClearFilterHandler = (name) => () => {
     this.props.onChange({
-      name: filterName,
+      name,
       values: [],
     });
   }
 
-  isFilterNotEmpty(filterName) {
-    return get(this.props.activeFilters, [filterName, 'length'], []) > 0;
+  isFilterNotEmpty(name) {
+    const { activeFilters } = this.props;
+    return activeFilters[name] && activeFilters[name].length;
   }
 
   render() {
