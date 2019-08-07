@@ -9,74 +9,30 @@ import {
 import {
   injectIntl,
   intlShape,
-  FormattedMessage,
 } from 'react-intl';
 
 import {
   stripesShape,
   AppIcon,
-} from '@folio/stripes/core'; // eslint-disable-line import/no-unresolved
+} from '@folio/stripes/core';
 import {
   SearchAndSort,
   makeQueryFunction,
 } from '@folio/stripes/smart-components';
-import { onChangeFilter as commonChangeFilter } from '@folio/stripes/components';
 
 import packageInfo from '../package';
 import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
 import withLocation from './withLocation';
+import { parseStrToFilters, parseFiltersToStr } from './utils';
+import Filters from './Filters';
+import { searchableIndexes, filterConfig } from './constants';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 const emptyObj = {};
 const emptyArr = [];
-
-const languages = [
-  { code: 'eng', name: 'English' },
-  { code: 'spa', name: 'Spanish' },
-  { code: 'fre', name: 'French' },
-  { code: 'ger', name: 'German' },
-  { code: 'chi', name: 'Mandarin' },
-  { code: 'rus', name: 'Russian' },
-  { code: 'ara', name: 'Arabic' },
-];
-
-// the empty 'values' properties will be filled in by componentWillUpdate
-// as those are pulled from the backend
-const filterConfig = [
-  {
-    label: <FormattedMessage id="ui-inventory.instances.resourceType" />,
-    name: 'resource',
-    cql: 'instanceTypeId',
-    values: [],
-  },
-  {
-    label: <FormattedMessage id="ui-inventory.instances.language" />,
-    name: 'language',
-    cql: 'languages',
-    values: languages.map(rec => ({ name: rec.name, cql: rec.code })),
-  },
-  {
-    label: <FormattedMessage id="ui-inventory.instances.location" />,
-    name: 'location',
-    cql: 'holdingsRecords.permanentLocationId',
-    values: [],
-  },
-];
-
-const searchableIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
-  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
-  { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
-  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
-  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
-];
 
 class Instances extends React.Component {
   static defaultProps = {
@@ -248,40 +204,9 @@ class Instances extends React.Component {
     this.cViewInstance = this.props.stripes.connect(ViewInstance);
     this.resultsList = null;
     this.SRStatus = null;
-
-    this.onChangeFilter = commonChangeFilter.bind(this);
     this.copyInstance = this.copyInstance.bind(this);
 
     this.state = {};
-  }
-
-  /**
-   * fill in the filter values
-   */
-  static getDerivedStateFromProps(props) {
-    // resource types
-    const rt = (props.resources.instanceTypes || {}).records || [];
-    if (rt.length) {
-      const oldValuesLength = filterConfig[0].values.length;
-      filterConfig[0].values = rt.map(rec => ({ name: rec.name, cql: rec.id }));
-      if (oldValuesLength === 0) {
-        const numFiltersLoaded = props.resources.numFiltersLoaded;
-        props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
-      }
-    }
-
-    // locations
-    const locations = (props.resources.locations || {}).records || [];
-    if (locations.length) {
-      const oldValuesLength = filterConfig[2].values.length;
-      filterConfig[2].values = locations.map(rec => ({ name: rec.name, cql: rec.id }));
-      if (oldValuesLength === 0) {
-        const numFiltersLoaded = props.resources.numFiltersLoaded;
-        props.mutator.numFiltersLoaded.replace(numFiltersLoaded + 1); // triggers refresh of records
-      }
-    }
-
-    return null;
   }
 
   onChangeIndex = (e) => {
@@ -289,10 +214,15 @@ class Instances extends React.Component {
     this.props.updateLocation({ qindex });
   }
 
-  updateFilters(prevFilters) { // provided for onChangeFilter
-    const filters = Object.keys(prevFilters).filter(key => filters[key]).join(',');
-    this.props.updateLocation({ filters });
-  }
+  onFilterChangeHandler = ({ name, values }) => {
+    const { resources: { query } } = this.props;
+    const curFilters = parseStrToFilters(get(query, 'filters', ''));
+    const filters = values.length
+      ? { ...curFilters, [name]: values }
+      : omit(curFilters, name);
+    const filtersStr = parseFiltersToStr(filters);
+    this.props.updateLocation({ filters: filtersStr });
+  };
 
   closeNewInstance = (e) => {
     if (e) e.preventDefault();
@@ -310,6 +240,21 @@ class Instances extends React.Component {
     this.props.mutator.records.POST(instance).then(() => {
       this.closeNewInstance();
     });
+  }
+
+  renderFilters = (onChange) => {
+    const { resources: { locations, instanceTypes, query } } = this.props;
+
+    return (
+      <Filters
+        activeFilters={parseStrToFilters(get(query, 'filters', ''))}
+        data={{
+          locations: get(locations, 'records', []),
+          resourceTypes: get(instanceTypes, 'records', []),
+        }}
+        onChange={onChange}
+      />
+    );
   }
 
   render() {
@@ -420,7 +365,7 @@ class Instances extends React.Component {
           selectedIndex={get(this.props.resources.query, 'qindex')}
           searchableIndexesPlaceholder={null}
           onChangeIndex={this.onChangeIndex}
-          filterConfig={filterConfig}
+          // filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={RESULT_COUNT_INCREMENT}
           viewRecordComponent={ViewInstance}
@@ -451,6 +396,8 @@ class Instances extends React.Component {
           showSingleResult={showSingleResult}
           browseOnly={browseOnly}
           onSelectRow={onSelectRow}
+          renderFilters={this.renderFilters}
+          onFilterChange={this.onFilterChangeHandler}
         />
       </div>);
   }
