@@ -15,7 +15,32 @@ export default function configure() {
     }
   });
 
-  this.get('/instance-types');
+  this.get('/instance-types', {
+    instanceTypes: [{
+      'id' : '6312d172-f0cf-40f6-b27d-9fa8feaf332f',
+      'name' : 'text',
+      'code' : 'txt',
+      'source' : 'rdacontent'
+    }, {
+      'id' : 'c1e95c2b-4efc-48cf-9e71-edb622cf0c22',
+      'name' : 'three-dimensional form',
+      'code' : 'tdf',
+      'source' : 'rdacontent'
+    }, {
+      'id' : '3e3039b7-fda0-4ac4-885a-022d457cb99c',
+      'name' : 'three-dimensional moving image',
+      'code' : 'tdm',
+      'source' : 'rdacontent'
+    }, {
+      'id' : '225faa14-f9bf-4ecd-990d-69433c912434',
+      'name' : 'two-dimensional moving image',
+      'code' : 'tdi',
+      'source' : 'rdacontent'
+    }],
+    totalRecords: 4
+  });
+
+
   this.get('/instance-types/:id');
 
   this.get('/instance-formats');

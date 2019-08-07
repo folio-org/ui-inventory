@@ -76,4 +76,17 @@ describe('Instances', () => {
       expect(inventory.isNoResultsMessageLabelPresent).to.equal(true);
     });
   });
+
+  describe('search by resource type and location', function () {
+    beforeEach(async function () {
+      this.server.createList('instance', 25, 'withHoldingAndItem');
+      await inventory.clickOnTextResourceTypeFilter();
+      await inventory.clikckOnAnnexLocationFilter();
+      await inventory.clickSearch();
+    });
+
+    it('should not find all instances', () => {
+      expect(inventory.instances().length).to.be.equal(25);
+    });
+  });
 });
