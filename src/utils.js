@@ -34,7 +34,6 @@ export function parseStrToFilters(filtersStr) {
     }, {});
 }
 
-
 export function parseFiltersToStr(filters) {
   const newFilters = [];
 

@@ -35,10 +35,6 @@ export default class Filters extends React.Component {
     });
   }
 
-  onChangeHandler = (filter) => {
-    this.props.onChange(filter);
-  }
-
   isFilterNotEmpty(filterName) {
     return get(this.props.activeFilters, [filterName, 'length'], []) > 0;
   }
@@ -47,17 +43,19 @@ export default class Filters extends React.Component {
     const {
       activeFilters,
       data: { resourceTypes, locations },
-
+      onChange,
     } = this.props;
 
     const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
       label: name,
       value: id,
     }));
+
     const locationOptions = locations.map(({ name, id }) => ({
       label: name,
       value: id,
     }));
+
     const languageOptions = languages.map(({ code, name }) => ({
       label: name,
       value: code
@@ -79,7 +77,7 @@ export default class Filters extends React.Component {
             name="language"
             dataOptions={languageOptions}
             selectedValues={activeFilters.language}
-            onChange={this.onChangeHandler}
+            onChange={onChange}
           />
         </Accordion>
         <Accordion
@@ -94,7 +92,7 @@ export default class Filters extends React.Component {
             name="resource"
             dataOptions={resourceTypeOptions}
             selectedValues={activeFilters.resource}
-            onChange={this.onChangeHandler}
+            onChange={onChange}
           />
         </Accordion>
         <Accordion
@@ -109,7 +107,7 @@ export default class Filters extends React.Component {
             name="location"
             dataOptions={locationOptions}
             selectedValues={activeFilters.location}
-            onChange={this.onChangeHandler}
+            onChange={onChange}
           />
         </Accordion>
       </React.Fragment>
