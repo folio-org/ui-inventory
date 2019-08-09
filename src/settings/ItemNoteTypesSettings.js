@@ -27,7 +27,7 @@ class ItemNoteTypesSettings extends React.Component {
             baseUrl="item-note-types"
             records="itemNoteTypes"
             label={<FormattedMessage id="ui-inventory.itemNoteTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.itemNoteType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.itemNoteType' })}
             objectLabel={<FormattedMessage id="ui-inventory.itemNoteTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

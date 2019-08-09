@@ -27,7 +27,7 @@ class HoldingsNoteTypesSettings extends React.Component {
             baseUrl="holdings-note-types"
             records="holdingsNoteTypes"
             label={<FormattedMessage id="ui-inventory.holdingsNoteTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.holdingsNoteType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.holdingsNoteType' })}
             objectLabel={<FormattedMessage id="ui-inventory.holdingsNoteTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{
