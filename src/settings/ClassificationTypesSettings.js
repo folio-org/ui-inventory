@@ -30,7 +30,7 @@ class ClassificationTypesSettings extends React.Component {
             baseUrl="classification-types"
             records="classificationTypes"
             label={<FormattedMessage id="ui-inventory.classificationIdentifierTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.classificationIdentifierType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' })}
             objectLabel={<FormattedMessage id="ui-inventory.classificationIdentifierTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

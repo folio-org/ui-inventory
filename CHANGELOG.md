@@ -8,6 +8,7 @@
 * Don't present static tables as interactive. Refs UIIN-643.
 * Refactor item's copy number to a single field. Part of UIIN-653.
 * Preserve holdings record checkbox state. Fixes UIIN-667.
+* Fix bug affecting display of warning messages in settings. Fixes UIIN-627.
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.0...v1.11.1)
