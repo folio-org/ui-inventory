@@ -515,8 +515,6 @@ class InstanceForm extends React.Component {
                     component={TextField}
                     fullWidth
                     disabled={this.isFieldBlocked('indexTitle')}
-                    canEdit={!this.isFieldBlocked('indexTitle')}
-                    canDelete={!this.isFieldBlocked('indexTitle')}
                   />
                 </Col>
                 <SeriesFields
