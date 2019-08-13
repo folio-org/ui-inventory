@@ -346,6 +346,7 @@ class HoldingsForm extends React.Component {
                     name="discoverySuppress"
                     id="input_discovery_suppress"
                     component={Checkbox}
+                    type="checkbox"
                   />
                 </Col>
               </Row>
@@ -704,17 +705,18 @@ class HoldingsForm extends React.Component {
                       {
                         name: 'publicDisplay',
                         label: <FormattedMessage id="ui-inventory.publicDisplay" />,
-                        component: Checkbox
+                        component: Checkbox,
+                        type: 'checkbox',
                       },
                       {
                         name: 'enumeration',
                         label: <FormattedMessage id="ui-inventory.enumeration" />,
-                        component: TextField
+                        component: TextField,
                       },
                       {
                         name: 'chronology',
                         label: <FormattedMessage id="ui-inventory.chronology" />,
-                        component: TextField
+                        component: TextField,
                       },
                     ]}
                   />
