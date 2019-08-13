@@ -26,8 +26,6 @@ import withlocation from './withLocation';
 class ItemsPerHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    addItemMode: { initialValue: { mode: false } },
-    addItemForHoldingsRecordId: {},
     materialTypes: {
       type: 'okapi',
       path: 'material-types',
@@ -59,28 +57,16 @@ class ItemsPerHoldingsRecord extends React.Component {
   constructor(props) {
     super(props);
     this.cItems = props.stripes.connect(Items, { dataKey: props.holdingsRecord.id });
-    this.addItemModeThisLayer = false;
   }
 
   // Add Item handlers
   onClickAddNewItem = (holdingsRecordId) => {
-    const { mutator } = this.props;
-
-    mutator.addItemMode.replace({ mode: true });
-    mutator.addItemForHoldingsRecordId.replace({ holdingsRecordId });
-    this.addItemModeThisLayer = true;
-    this.props.updateLocation({ layer: 'createItem' });
+    this.props.updateLocation({ layer: 'createItem', holdingsRecordId });
   };
 
   onClickCloseNewItem = (e) => {
-    const { mutator } = this.props;
-
     if (e) e.preventDefault();
-
-    mutator.addItemMode.replace({ mode: false });
-    this.addItemModeThisLayer = false;
-    mutator.addItemForHoldingsRecordId.replace({});
-    this.props.updateLocation({ layer: null });
+    this.props.updateLocation({ layer: null, holdingsRecordId: null });
   }
 
   createItem = (item) => {
@@ -126,8 +112,10 @@ class ItemsPerHoldingsRecord extends React.Component {
       resources: {
         materialTypes,
         loanTypes,
-        query,
-        addItemForHoldingsRecordId,
+        query: {
+          layer,
+          holdingsRecordId,
+        }
       },
       instance,
       holdingsRecord,
@@ -146,8 +134,7 @@ class ItemsPerHoldingsRecord extends React.Component {
     const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
     const labelCallNumber = holdingsRecord.callNumber || '';
 
-    if (query.layer === 'createItem'
-      && addItemForHoldingsRecordId.holdingsRecordId === holdingsRecord.id) {
+    if (layer === 'createItem' && holdingsRecordId === holdingsRecord.id) {
       return (
         <IntlConsumer>
           {intl => (
@@ -218,9 +205,6 @@ ItemsPerHoldingsRecord.propTypes = {
     }),
     holdings: PropTypes.shape({
       PUT: PropTypes.func,
-    }),
-    addItemMode: PropTypes.shape({
-      replace: PropTypes.func,
     }),
     query: PropTypes.object.isRequired,
   }),
