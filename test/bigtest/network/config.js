@@ -15,7 +15,10 @@ export default function configure() {
     }
   });
 
-  this.get('/instance-types');
+  this.get('/instance-types', ({ instanceTypes }) => {
+    return instanceTypes.all();
+  });
+
   this.get('/instance-types/:id');
 
   this.get('/instance-formats');
@@ -374,4 +377,9 @@ export default function configure() {
   this.get('/source-storage/formattedRecords/:id', {});
 
   this.get('/inventory/config/instances/blocked-fields');
+
+  this.get('/source-storage/formattedRecords/:id', {
+    instanceTypes: [],
+    totalRecords: 0
+  });
 }

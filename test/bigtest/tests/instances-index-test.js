@@ -11,6 +11,13 @@ describe('Instances', () => {
   const inventory = new InventoryInteractor();
 
   beforeEach(async function () {
+    this.server.createList('instance', 25, 'withHoldingAndItem');
+    this.server.create('instance-type', {
+      name: 'text',
+      code: 'txt',
+      source: 'rdacontent'
+    });
+
     this.visit('/inventory');
   });
 
@@ -20,7 +27,6 @@ describe('Instances', () => {
 
   describe('search by barcode', function () {
     beforeEach(async function () {
-      this.server.createList('instance', 25, 'withHoldingAndItem');
       const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
       await inventory.chooseSearchOption('Barcode');
       await inventory.fillSearchField(item.barcode);
@@ -44,7 +50,6 @@ describe('Instances', () => {
 
   describe('remember search results', function () {
     beforeEach(async function () {
-      this.server.createList('instance', 25, 'withHoldingAndItem');
       const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
 
       await inventory.chooseSearchOption('Barcode');
@@ -62,7 +67,6 @@ describe('Instances', () => {
 
   describe('search by ISSN', function () {
     beforeEach(async function () {
-      this.server.createList('instance', 25, 'withHoldingAndItem');
       await inventory.chooseSearchOption('- ISSN');
       await inventory.fillSearchField('incorrect value');
       await inventory.clickSearch();
@@ -74,6 +78,18 @@ describe('Instances', () => {
 
     it('is no results message label present', () => {
       expect(inventory.isNoResultsMessageLabelPresent).to.equal(true);
+    });
+  });
+
+  describe('search by resource type and location', function () {
+    beforeEach(async function () {
+      await inventory.clickOnTextResourceTypeFilter();
+      await inventory.clikckOnAnnexLocationFilter();
+      await inventory.clickSearch();
+    });
+
+    it('should find all instances', () => {
+      expect(inventory.instances().length).to.be.equal(25);
     });
   });
 });
