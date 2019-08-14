@@ -16,7 +16,7 @@ import {
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
-import withlocation from './withLocation';
+import withLocation from './withLocation';
 
 /**
  * Accordion wrapper for an individual Holdings record on the instance-view
@@ -227,4 +227,4 @@ ItemsPerHoldingsRecord.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default withlocation(ItemsPerHoldingsRecord);
+export default withLocation(ItemsPerHoldingsRecord);
