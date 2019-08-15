@@ -1,7 +1,7 @@
 /* global Nightmare describe it before after */
 module.exports.test = function uiTest(uiTestCtx) {
   describe('Module test: inventory:new-title', function testDescribe() {
-    const { config, helpers: { login, clickApp, createInventory, logout }, meta: { testVersion } } = uiTestCtx;
+    const { config, helpers: { login, clickApp, createInventory, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
