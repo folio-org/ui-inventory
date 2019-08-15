@@ -347,7 +347,7 @@
     "publisherDate": "Data pubblicazione",
     "classificationIdentifierType": "Tipologia identificativo classificazione",
     "error.noMatch.oops": "Uh-oh!",
-    "error.noMatch.how": "Come localizzi {sezione}?",
+    "error.noMatch.how": "How did you get to {location}?",
     "addCirculationNote": "Aggiungi nota restituzione / prestito",
     "item.loanAndAvailability": "Prestito e disponibilità",
     "markAsMissing": "Segna come smarrito",
@@ -395,5 +395,7 @@
     "instanceNotes": "Note istanza",
     "addClassification": "Aggiungi classificazione",
     "instanceRelationshipAnalyticsBoundWith": "Relazione istanza (analitica e legata con)",
-    "acquisition": "Acquisizione"
+    "acquisition": "Acquisizione",
+    "holdingsNoteType": "Holdings note type",
+    "itemNoteType": "Item note type"
 }

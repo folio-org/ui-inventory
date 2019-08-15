@@ -388,12 +388,14 @@
     "classificationIdentifierTypes": "Classification identifier types",
     "instanceNoteType": "Instance note type",
     "natureOfContentTerms": "Nature of content",
-    "natureOfContentTerm": "Nature of content",
+    "natureOfContentTerm": "Nature of content term",
     "instanceTitle": "Instance: {title}.",
     "items.damageStatus.damaged": "Damaged",
     "items.damageStatus.notdamaged": "Not damaged",
     "instanceNotes": "Instance notes",
     "addClassification": "Add classification",
     "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
-    "acquisition": "Acquisition"
+    "acquisition": "Acquisition",
+    "holdingsNoteType": "Holdings note type",
+    "itemNoteType": "Item note type"
 }
