@@ -30,7 +30,7 @@ class NatureOfContentTermsSettings extends React.Component {
             baseUrl="nature-of-content-terms"
             records="natureOfContentTerms"
             label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-            labelSingular={<FormattedMessage id="ui-inventory.natureOfContentTerm" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.natureOfContentTerm' })}
             objectLabel={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
             visibleFields={['name', 'source']}
             columnMapping={{

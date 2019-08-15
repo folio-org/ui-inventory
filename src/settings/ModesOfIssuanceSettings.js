@@ -30,7 +30,7 @@ class ModesOfIssuanceSettings extends React.Component {
             baseUrl="modes-of-issuance"
             records="issuanceModes"
             label={<FormattedMessage id="ui-inventory.modesOfIssuance" />}
-            labelSingular={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.modeOfIssuance' })}
             objectLabel={<FormattedMessage id="ui-inventory.modesOfIssuance" />}
             visibleFields={['name', 'source']}
             columnMapping={{
