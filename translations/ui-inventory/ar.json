@@ -395,5 +395,7 @@
     "instanceNotes": "ملاحظات الوعاء",
     "addClassification": "إضافة تصنيف",
     "instanceRelationshipAnalyticsBoundWith": "صلات الوعاء (المدخلات التحليلية والارتباطات)",
-    "acquisition": "التزويد"
+    "acquisition": "التزويد",
+    "holdingsNoteType": "نوع ملاحظة المقتنيات",
+    "itemNoteType": "نوع ملاحظة المادة"
 }

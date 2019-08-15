@@ -395,5 +395,7 @@
     "instanceNotes": "Notas da instância",
     "addClassification": "Adicionar classificação",
     "instanceRelationshipAnalyticsBoundWith": "Relacionamentos entre instâncias (analíticas e encadernado com)",
-    "acquisition": "Aquisição"
+    "acquisition": "Aquisição",
+    "holdingsNoteType": "Holdings note type",
+    "itemNoteType": "Item note type"
 }
