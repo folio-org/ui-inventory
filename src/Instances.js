@@ -195,7 +195,15 @@ class Instances extends React.Component {
       path: 'holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'holdingsNoteTypes',
     },
-
+    itemNoteTypes: {
+      type: 'okapi',
+      path: 'item-note-types',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
+      records: 'itemNoteTypes',
+    },
   });
 
   constructor(props) {
@@ -309,6 +317,7 @@ class Instances extends React.Component {
     const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = keyBy(locations, 'id');
+    const itemNoteTypes = get(resources, 'itemNoteTypes.records', []);
 
     const referenceTables = {
       contributorTypes,
@@ -329,6 +338,7 @@ class Instances extends React.Component {
       holdingsTypes,
       callNumberTypes,
       holdingsNoteTypes,
+      itemNoteTypes,
       locationsById,
     };
 
@@ -422,6 +432,9 @@ Instances.propTypes = {
     numFiltersLoaded: PropTypes.number,
     resultCount: PropTypes.number,
     instanceTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    itemNoteTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     locations: PropTypes.shape({

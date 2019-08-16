@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-
-import { MultiColumnList } from '@folio/stripes/components';
-import { IntlConsumer, AppIcon } from '@folio/stripes/core';
+import {
+  MultiColumnList,
+  IconButton,
+} from '@folio/stripes/components';
+import {
+  IntlConsumer,
+  AppIcon,
+} from '@folio/stripes/core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import withLocation from './withLocation';
 
@@ -44,18 +50,25 @@ class Items extends React.Component {
     if (!items || !items.hasLoaded) return null;
     const itemRecords = items.records;
     const itemsFormatter = {
-      'Item: barcode': x => {
+      'Item: barcode': (item) => {
         return (
-          <Link
-            to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${x.id}?${getSearchParams()}`}
-            data-test-item-link
-          >
-            <span data-test-items-app-icon>
-              <AppIcon app="inventory" iconKey="item" size="small">
-                {get(x, ['barcode'])}
-              </AppIcon>
-            </span>
-          </Link>
+          <React.Fragment>
+            <Link
+              to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
+              data-test-item-link
+            >
+              <span data-test-items-app-icon>
+                <AppIcon app="inventory" iconKey="item" size="small">
+                  {get(item, 'barcode', '')}
+                </AppIcon>
+              </span>
+            </Link>
+            {item.barcode &&
+              <CopyToClipboard text={item.barcode}>
+                <IconButton icon="clipboard" />
+              </CopyToClipboard>
+            }
+          </React.Fragment>
         );
       },
       'status': x => get(x, ['status', 'name']) || '--',

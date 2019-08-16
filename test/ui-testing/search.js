@@ -98,6 +98,8 @@ module.exports.test = function test(uiTestCtx) {
           .wait('#input-inventory-search')
           .insert('#input-inventory-search', fragment)
           .wait('#clickable-reset-all')
+          .click('#clickable-reset-all')
+          .insert('#input-inventory-search', fragment)
           .wait('button[type=submit]')
           .click('button[type=submit]')
           .wait('#list-inventory[data-total-count]')

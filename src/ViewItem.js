@@ -91,15 +91,6 @@ class ViewItem extends React.Component {
       },
       records: 'callNumberTypes',
     },
-    itemNoteTypes: {
-      type: 'okapi',
-      path: 'item-note-types',
-      params: {
-        query: 'cql.allRecords=1 sortby name',
-        limit: '1000',
-      },
-      records: 'itemNoteTypes',
-    },
     requests: {
       type: 'okapi',
       path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled" or "Open - In transit") sortby requestDate desc',
@@ -391,7 +382,6 @@ class ViewItem extends React.Component {
       instances1,
       materialTypes,
       loanTypes,
-      itemNoteTypes,
       callNumberTypes,
     } = this.props.resources;
 
@@ -403,7 +393,6 @@ class ViewItem extends React.Component {
 
     if (!loanTypes || !loanTypes.hasLoaded ||
       !materialTypes || !materialTypes.hasLoaded ||
-      !itemNoteTypes || !itemNoteTypes.hasLoaded ||
       !callNumberTypes || !callNumberTypes.hasLoaded) {
       return true;
     }
@@ -420,7 +409,6 @@ class ViewItem extends React.Component {
         instances1,
         materialTypes,
         loanTypes,
-        itemNoteTypes,
         requests,
         callNumberTypes,
       },
@@ -437,7 +425,6 @@ class ViewItem extends React.Component {
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.materialTypes = (materialTypes || {}).records || [];
-    referenceTables.itemNoteTypes = (itemNoteTypes || {}).records || [];
     referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
 
     if (this.isAwaitingResource()) {
@@ -1205,9 +1192,6 @@ ViewItem.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     holdingsRecords: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    itemNoteTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     callNumberTypes: PropTypes.shape({
