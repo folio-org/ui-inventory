@@ -55,14 +55,14 @@ module.exports.test = function uiTest(uiTestCtx) {
             .type('#input-inventory-search', 0)
             .wait('#clickable-reset-all')
             .click('#clickable-reset-all')
-            .wait('#language li[role=option]')
+            .wait('div[class^=multiSelect] li[role=option]')
             .evaluate((language) => {
-              return Array.from(document.querySelectorAll('#language li[role=option]')).findIndex(e => e.textContent.startsWith(language)) + 1;
+              return Array.from(document.querySelectorAll('div[class^=multiSelect] li[role=option]')).findIndex(e => e.textContent.startsWith(language)) + 1;
             }, filter)
             .then((filterIndex) => {
               nightmare
-                .wait(`#language li[role=option]:nth-of-type(${filterIndex})`)
-                .click(`#language li[role=option]:nth-of-type(${filterIndex})`)
+                .wait(`div[class^=multiSelect] li[role=option]:nth-of-type(${filterIndex})`)
+                .click(`div[class^=multiSelect] li[role=option]:nth-of-type(${filterIndex})`)
                 .wait('#list-inventory[data-total-count]')
                 .click('#clickable-reset-all')
                 .wait('#paneHeaderpane-results-subtitle')
