@@ -79,6 +79,22 @@ export default class Filters extends React.Component {
           />
         </Accordion>
         <Accordion
+          label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
+          id="resource"
+          name="resource"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={this.isFilterNotEmpty('resource')}
+          onClearFilter={this.createOnClearFilterHandler('resource')}
+        >
+          <CheckboxFilter
+            name="resource"
+            dataOptions={resourceTypeOptions}
+            selectedValues={activeFilters.resource}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
           label={<FormattedMessage id="ui-inventory.instances.language" />}
           id="language"
           name="language"
@@ -92,22 +108,6 @@ export default class Filters extends React.Component {
             name="language"
             dataOptions={languageOptions}
             selectedValues={activeFilters.language}
-            onChange={onChange}
-          />
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
-          id="resource"
-          name="resource"
-          closedByDefault
-          header={FilterAccordionHeader}
-          displayClearButton={this.isFilterNotEmpty('resource')}
-          onClearFilter={this.createOnClearFilterHandler('resource')}
-        >
-          <CheckboxFilter
-            name="resource"
-            dataOptions={resourceTypeOptions}
-            selectedValues={activeFilters.resource}
             onChange={onChange}
           />
         </Accordion>
