@@ -101,6 +101,7 @@ class ViewInstance extends React.Component {
       },
       marcRecord: null,
     };
+    this.instanceId = null;
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
@@ -110,7 +111,11 @@ class ViewInstance extends React.Component {
     this.calloutRef = createRef();
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
+    const { location: prevLocation } = prevProps;
+    const { location } = this.props;
+
+    if (prevLocation === location) return;
     this.getMARCRecord();
   }
 
