@@ -64,6 +64,21 @@ export default class Filters extends React.Component {
     return (
       <React.Fragment>
         <Accordion
+          label={<FormattedMessage id="ui-inventory.instances.location" />}
+          id="location"
+          name="location"
+          header={FilterAccordionHeader}
+          displayClearButton={this.isFilterNotEmpty('location')}
+          onClearFilter={this.createOnClearFilterHandler('location')}
+        >
+          <CheckboxFilter
+            name="location"
+            dataOptions={locationOptions}
+            selectedValues={activeFilters.location}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
           label={<FormattedMessage id="ui-inventory.instances.language" />}
           id="language"
           name="language"
@@ -84,6 +99,7 @@ export default class Filters extends React.Component {
           label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
           id="resource"
           name="resource"
+          closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={this.isFilterNotEmpty('resource')}
           onClearFilter={this.createOnClearFilterHandler('resource')}
@@ -92,21 +108,6 @@ export default class Filters extends React.Component {
             name="resource"
             dataOptions={resourceTypeOptions}
             selectedValues={activeFilters.resource}
-            onChange={onChange}
-          />
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-inventory.instances.location" />}
-          id="location"
-          name="location"
-          header={FilterAccordionHeader}
-          displayClearButton={this.isFilterNotEmpty('location')}
-          onClearFilter={this.createOnClearFilterHandler('location')}
-        >
-          <CheckboxFilter
-            name="location"
-            dataOptions={locationOptions}
-            selectedValues={activeFilters.location}
             onChange={onChange}
           />
         </Accordion>
