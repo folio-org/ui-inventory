@@ -388,7 +388,7 @@
     "classificationIdentifierTypes": "Tipos de identificador de classificação",
     "instanceNoteType": "Tipo de nota de instância",
     "natureOfContentTerms": "Natureza do conteúdo",
-    "natureOfContentTerm": "Natureza do conteúdo",
+    "natureOfContentTerm": "Natureza do termo de conteúdo",
     "instanceTitle": "Instância: {title}.",
     "items.damageStatus.damaged": "Danificado",
     "items.damageStatus.notdamaged": "Não danificado",
@@ -396,6 +396,6 @@
     "addClassification": "Adicionar classificação",
     "instanceRelationshipAnalyticsBoundWith": "Relacionamentos entre instâncias (analíticas e encadernado com)",
     "acquisition": "Aquisição",
-    "holdingsNoteType": "Holdings note type",
-    "itemNoteType": "Item note type"
+    "holdingsNoteType": "Tipo de nota de holdings",
+    "itemNoteType": "Tipo de nota de item"
 }
