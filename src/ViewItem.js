@@ -400,6 +400,13 @@ class ViewItem extends React.Component {
     return false;
   };
 
+  formValues = item => {
+    const target = Object.assign({}, item);
+    target.copyNumbers = item.copyNumbers.length ? item.copyNumbers[0] : '';
+
+    return target;
+  };
+
   render() {
     const {
       location,
@@ -1134,7 +1141,7 @@ class ViewItem extends React.Component {
               <ItemForm
                 form={`itemform_${item.id}`}
                 onSubmit={(record) => { this.saveItem(record); }}
-                initialValues={item}
+                initialValues={this.formValues(item)}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
                 instance={instance}
