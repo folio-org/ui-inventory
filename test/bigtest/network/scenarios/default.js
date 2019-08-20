@@ -91,6 +91,9 @@ export default function defaultScenario(server) {
   server.create('statistical-code-type', { name: 'Version of resource' });
   server.create('statistical-code-type', { name: 'No display constant generated' });
 
+  server.create('item-damaged-status', { name: 'Damaged' });
+  server.create('item-damaged-status', { name: 'Not damaged' });
+
   server.create('blocked-field', 'discoverySuppress');
   server.create('blocked-field', 'previouslyHeld');
   server.create('blocked-field', 'statusId');
