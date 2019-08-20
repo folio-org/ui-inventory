@@ -894,10 +894,10 @@ class ViewInstance extends React.Component {
                           contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
                           visibleColumns={['Category', 'Term', 'Code', 'Source']}
                           columnMapping={{
-                            'Category': intl.formatMessage({ id: 'ui-inventory.category' }),
-                            'Term': intl.formatMessage({ id: 'ui-inventory.term' }),
-                            'Code': intl.formatMessage({ id: 'ui-inventory.code' }),
-                            'Source': intl.formatMessage({ id: 'ui-inventory.source' }),
+                            'Category': intl.formatMessage({ id: 'ui-inventory.formatCategory' }),
+                            'Term': intl.formatMessage({ id: 'ui-inventory.formatTerm' }),
+                            'Code': intl.formatMessage({ id: 'ui-inventory.formatCode' }),
+                            'Source': intl.formatMessage({ id: 'ui-inventory.formatSource' }),
                           }}
                           formatter={formatsRowFormatter}
                           ariaLabel={ariaLabel}
