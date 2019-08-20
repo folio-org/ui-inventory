@@ -204,6 +204,11 @@ class Instances extends React.Component {
       },
       records: 'itemNoteTypes',
     },
+    itemDamagedStatuses: {
+      type: 'okapi',
+      path: 'item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+      records: 'itemDamageStatuses',
+    },
   });
 
   constructor(props) {
@@ -295,6 +300,7 @@ class Instances extends React.Component {
       || !resources.holdingsTypes || !resources.holdingsTypes.hasLoaded
       || !resources.callNumberTypes || !resources.callNumberTypes.hasLoaded
       || !resources.holdingsNoteTypes || !resources.holdingsNoteTypes.hasLoaded
+      || !resources.itemDamagedStatuses || !resources.itemDamagedStatuses.hasLoaded
     ) return null;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -315,6 +321,7 @@ class Instances extends React.Component {
     const holdingsTypes = (resources.holdingsTypes || emptyObj).records || emptyArr;
     const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
     const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
+    const itemDamagedStatuses = (resources.itemDamagedStatuses || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = keyBy(locations, 'id');
     const itemNoteTypes = get(resources, 'itemNoteTypes.records', []);
@@ -340,6 +347,7 @@ class Instances extends React.Component {
       holdingsNoteTypes,
       itemNoteTypes,
       locationsById,
+      itemDamagedStatuses,
     };
 
     const resultsFormatter = {
