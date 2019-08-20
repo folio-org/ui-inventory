@@ -105,10 +105,7 @@ class ViewMarc extends React.Component {
                 <FormattedMessage id="ui-inventory.marcSourceRecord" />
               </h3>
               <div style={{ 'whiteSpace': 'pre', 'fontFamily': 'courier' }}>
-                <table
-                  border="0"
-                  style={{ 'tableLayout': 'fixed' }}
-                >
+                <table style={{ tableLayout: 'fixed', border: 0 }}>
                   <tbody>
                     <tr
                       key="leader"

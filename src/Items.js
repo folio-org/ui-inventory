@@ -65,7 +65,7 @@ class Items extends React.Component {
             </Link>
             {item.barcode &&
               <CopyToClipboard text={item.barcode}>
-                <IconButton icon="duplicate" />
+                <IconButton icon="clipboard" />
               </CopyToClipboard>
             }
           </React.Fragment>
