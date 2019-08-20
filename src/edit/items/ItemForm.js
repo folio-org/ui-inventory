@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
   Field,
 } from 'react-final-form';
+import { OnChange } from 'react-final-form-listeners';
 
 import {
   Paneset,
@@ -699,13 +700,17 @@ class ItemForm extends React.Component {
                         id="input_item_damaged_status_id"
                         component={Select}
                         placeholder={placeholder}
-                        onChange={this.setItemDamagedStatusDate}
                         label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
                       >
                         {itemDamageOptions}
                       </Field>
                     )}
                   </FormattedMessage>
+                  <OnChange name="itemDamagedStatusId">
+                    {() => {
+                      this.setItemDamagedStatusDate();
+                    }}
+                  </OnChange>
                 </Col>
                 <Col sm={3}>
                   <Field
