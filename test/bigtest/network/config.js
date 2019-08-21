@@ -45,6 +45,23 @@ export default function configure() {
   this.get('/instance-relationship-types');
   this.get('/instance-relationship-types/:id');
 
+  this.get('/item-damaged-statuses', {
+    'itemDamageStatuses': [
+      {
+        'id': '54d1dd76-ea33-4bcb-955b-6b29df4f7930',
+        'name': 'Damaged',
+        'source': 'local'
+      },
+      {
+        'id': '516b82eb-1f19-4a63-8c48-8f1a3e9ff311',
+        'name': 'Not Damaged',
+        'source': 'local'
+      }
+    ],
+    'totalRecords': 2
+  });
+  this.get('/item-damaged-statuses/:id');
+
   this.get('/modes-of-issuance', ({ issuanceModes }) => issuanceModes.all());
   this.get('/modes-of-issuance/:id', ({ issuanceModes }, { params }) => {
     return issuanceModes.find(params.id);
