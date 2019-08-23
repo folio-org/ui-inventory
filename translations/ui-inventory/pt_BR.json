@@ -397,5 +397,9 @@
     "instanceRelationshipAnalyticsBoundWith": "Relacionamentos entre instâncias (analíticas e encadernado com)",
     "acquisition": "Aquisição",
     "holdingsNoteType": "Tipo de nota de holdings",
-    "itemNoteType": "Tipo de nota de item"
+    "itemNoteType": "Tipo de nota de item",
+    "formatSource": "Origem do formato",
+    "formatTerm": "Termo do formato",
+    "formatCategory": "Categoria do formato",
+    "formatCode": "Código do formato"
 }

@@ -397,5 +397,9 @@
     "instanceRelationshipAnalyticsBoundWith": "صلات الوعاء (المدخلات التحليلية والارتباطات)",
     "acquisition": "التزويد",
     "holdingsNoteType": "نوع ملاحظة المقتنيات",
-    "itemNoteType": "نوع ملاحظة المادة"
+    "itemNoteType": "نوع ملاحظة المادة",
+    "formatSource": "مصدر التنسيق",
+    "formatTerm": "مصطلح التنسيق",
+    "formatCategory": "فئة التنسيق",
+    "formatCode": "رمز التنسيق"
 }
