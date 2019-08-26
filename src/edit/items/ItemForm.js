@@ -211,25 +211,6 @@ class ItemForm extends React.Component {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
-  onSave = (e) => {
-    const {
-      form: {
-        getFieldState,
-        mutators: {
-          updateValue,
-        },
-      },
-    } = this.props;
-
-    const { value } = getFieldState('copyNumbers');
-
-    if (value && !isArray(value)) {
-      updateValue('copyNumbers', [value]);
-    }
-
-    this.props.handleSubmit(e);
-  }
-
   render() {
     const {
       pristine,
@@ -250,6 +231,7 @@ class ItemForm extends React.Component {
         itemDamagedStatuses,
       },
       copy,
+      handleSubmit,
     } = this.props;
 
     const {
@@ -352,7 +334,7 @@ class ItemForm extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
-      <form onSubmit={this.onSave} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
+      <form onSubmit={handleSubmit} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
@@ -534,7 +516,7 @@ class ItemForm extends React.Component {
                 <Col sm={3}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                    name="copyNumbers"
+                    name="copyNumbers[0]"
                     component={TextField}
                     fullWidth
                   />
