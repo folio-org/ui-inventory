@@ -147,6 +147,7 @@
   "instanceNoteType": "Instance note type",
   "natureOfContentTerms": "Nature of content",
   "natureOfContentTerm": "Nature of content term",
+  "addNatureOfContentTerm": "Add nature of content",
   "selectInstanceFormat": "Select format",
   "titleData": "Title data",
   "instanceRecord": "Instance record",
