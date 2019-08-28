@@ -229,7 +229,9 @@ class ViewInstance extends React.Component {
   };
 
   refLookup = (referenceTable, id) => {
+    console.log("doing ref lookup", referenceTable, id)
     const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+    console.log('ref is', ref)
     return ref || {};
   };
 
@@ -292,6 +294,7 @@ class ViewInstance extends React.Component {
       onClose,
       paneWidth,
     } = this.props;
+    console.log("reftables", referenceTables)
 
     const { marcRecord } = this.state;
 
@@ -319,6 +322,10 @@ class ViewInstance extends React.Component {
       'Place of publication': x => get(x, ['place']) || '',
       'Publication date': x => get(x, ['dateOfPublication']) || '',
     };
+
+    const natureOfContentRowFormatter = {
+      'Term': x => this.refLookup(referenceTables.natureOfContentTerms, get(x, ['natureOfContentTermIds'])).name,
+    }
 
     const contributorsRowFormatter = {
       'Name type': x => this.refLookup(referenceTables.contributorNameTypes, get(x, ['contributorNameTypeId'])).name,
@@ -503,7 +510,7 @@ class ViewInstance extends React.Component {
         </IntlConsumer>
       );
     }
-
+console.log('instance', instance)
     return (
       <Pane
         data-test-instance-details
@@ -880,6 +887,36 @@ class ViewInstance extends React.Component {
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
               />
             </Col>
+            <Col cs={3}>
+              <KeyValue
+                label="test content type"
+                value={this.refLookup(referenceTables.natureOfContentTerms, get(instance, ['natureOfContentTermIds'])[0]).name}
+              />
+            </Col>
+            {
+            (instance.natureOfContentTermIds && instance.natureOfContentTermIds.length > 0) && (
+              <IntlConsumer>
+                {intl => (
+                  <FormattedMessage id="ui-inventory.natureOfContentTerms">
+                    {ariaLabel => (
+                      <MultiColumnList
+                        id="list-contributors"
+                        contentData={instance.natureOfContentTermIds.map(nocId => { return { 'id': nocId }; })}
+                        visibleColumns={['Term']}
+                        columnMapping={{
+                          'Term': intl.formatMessage({ id: 'ui-inventory.natureOfContentTerms' }),
+                        }}
+                        formatter={natureOfContentRowFormatter}
+                        ariaLabel={ariaLabel}
+                        containerRef={(ref) => { this.resultsList = ref; }}
+                        interactive={false}
+                      />
+                    )}
+                  </FormattedMessage>
+                )}
+              </IntlConsumer>
+            )
+          }
           </Row>
 
           <Row>
