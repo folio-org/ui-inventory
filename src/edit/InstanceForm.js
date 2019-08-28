@@ -42,6 +42,7 @@ import InstanceFormatFields from './instanceFormatFields';
 import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
+import NatureOfContentFields from './natureOfContentFields';
 
 function validate(values) {
   const errors = {};
@@ -604,6 +605,12 @@ class InstanceForm extends React.Component {
                     )}
                   </FormattedMessage>
                 </Col>
+                <NatureOfContentFields
+                  natureOfContentTypes={referenceTables.natureOfContentTypes}
+                  canAdd={!this.isFieldBlocked('natureOfContent')}
+                  canEdit={!this.isFieldBlocked('natureOfContent')}
+                  canDelete={!this.isFieldBlocked('natureOfContent')}
+                />
                 <InstanceFormatFields
                   instanceFormats={referenceTables.instanceFormats}
                   canAdd={!this.isFieldBlocked('instanceFormatIds')}
