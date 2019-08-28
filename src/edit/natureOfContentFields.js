@@ -10,14 +10,14 @@ import {
 
 import RepeatableField from '../components/RepeatableField';
 
-const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfContentTypes) => {
-  const natureOfContentTypeOptions = natureOfContentTypes
-    ? natureOfContentTypes.map(it => ({
+const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfContentTerms) => {
+  const natureOfContentTermOptions = natureOfContentTerms
+    ? natureOfContentTerms.map(it => ({
       label: it.name,
       value: it.id,
     }))
     : [];
-  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.natureOfContent" /> : null;
+  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.natureOfContentTerm" /> : null;
 
   return (
     <FormattedMessage id="ui-inventory.selectNatureOfContent">
@@ -27,7 +27,7 @@ const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfCont
           name={field}
           component={Select}
           placeholder={placeholder}
-          dataOptions={natureOfContentTypeOptions}
+          dataOptions={natureOfContentTermOptions}
           required
           data-test-nature-of-content-field-count={fieldIndex}
           disabled={!canEdit}
@@ -51,20 +51,21 @@ const NatureOfContentFields = props => {
     canAdd,
     canEdit,
     canDelete,
+    natureOfContentTerms,
   } = props;
 
   return (
     <RepeatableField
       name="natureOfContentTypes"
-      label={<FormattedMessage id="ui-inventory.natureOfContentTypes" />}
+      label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
       addLabel={
         <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addNatureOfContent" />
+          <FormattedMessage id="ui-inventory.addNatureOfContentTerm" />
         </Icon>
       }
       addButtonId="clickable-add-nature-of-content"
       template={[{
-        render(fieldObj) { return renderNatureOfContentField({ ...fieldObj, canEdit }); },
+        render(fieldObj) { return renderNatureOfContentField({ ...fieldObj, canEdit }, natureOfContentTerms); },
       }]}
       canAdd={canAdd}
       canDelete={canDelete}
@@ -76,7 +77,7 @@ NatureOfContentFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-  natureOfContentTypes: PropTypes.arrayOf(PropTypes.object),
+  natureOfContentTerms: PropTypes.arrayOf(PropTypes.object),
 };
 NatureOfContentFields.defaultProps = {
   canAdd: true,

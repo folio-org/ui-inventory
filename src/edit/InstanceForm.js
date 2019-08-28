@@ -606,7 +606,7 @@ class InstanceForm extends React.Component {
                   </FormattedMessage>
                 </Col>
                 <NatureOfContentFields
-                  natureOfContentTypes={referenceTables.natureOfContentTypes}
+                  natureOfContentTerms={referenceTables.natureOfContentTerms}
                   canAdd={!this.isFieldBlocked('natureOfContent')}
                   canEdit={!this.isFieldBlocked('natureOfContent')}
                   canDelete={!this.isFieldBlocked('natureOfContent')}
