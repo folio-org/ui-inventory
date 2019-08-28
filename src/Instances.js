@@ -211,7 +211,7 @@ class Instances extends React.Component {
     },
     natureOfContentTerms: {
       type: 'okapi',
-      path: 'nature-of-content-terms',
+      path: 'nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'natureOfContentTerms',
     },
   });
