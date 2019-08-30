@@ -161,7 +161,7 @@ class HoldingsForm extends React.Component {
 
       return newState;
     });
-  }
+  };
 
   handleExpandAll = (obj) => {
     this.setState((curState) => {
@@ -170,7 +170,7 @@ class HoldingsForm extends React.Component {
 
       return newState;
     });
-  }
+  };
 
   getActionMenu = () => {
     const { onCancel } = this.props;
@@ -186,7 +186,7 @@ class HoldingsForm extends React.Component {
         </Icon>
       </Button>
     );
-  }
+  };
 
   onSelectLocationHandler = loc => this.selectTemporaryLocation(loc);
 
