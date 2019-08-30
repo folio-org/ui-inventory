@@ -945,7 +945,7 @@ class ViewItem extends React.Component {
                       <Col smOffset={0} sm={4}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                          value={item.itemDamagedStatusId}
+                          value={refLookup(referenceTables.itemDamagedStatuses, get(item, ['itemDamagedStatusId'])).name}
                         />
                       </Col>
                     }
