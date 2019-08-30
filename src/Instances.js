@@ -38,7 +38,7 @@ class Instances extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
-  }
+  };
 
   static manifest = Object.freeze({
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -225,7 +225,7 @@ class Instances extends React.Component {
   onChangeIndex = (e) => {
     const qindex = e.target.value;
     this.props.updateLocation({ qindex });
-  }
+  };
 
   onFilterChangeHandler = ({ name, values }) => {
     const { resources: { query } } = this.props;
@@ -241,7 +241,7 @@ class Instances extends React.Component {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
     this.props.updateLocation({ layer: null });
-  }
+  };
 
   copyInstance(instance) {
     this.setState({ copiedInstance: omit(instance, ['id', 'hrid']) });
@@ -253,7 +253,7 @@ class Instances extends React.Component {
     this.props.mutator.records.POST(instance).then(() => {
       this.closeNewInstance();
     });
-  }
+  };
 
   renderFilters = (onChange) => {
     const { resources: { locations, instanceTypes, query } } = this.props;
@@ -268,7 +268,7 @@ class Instances extends React.Component {
         onChange={onChange}
       />
     );
-  }
+  };
 
   render() {
     const {
