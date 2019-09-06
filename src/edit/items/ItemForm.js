@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { get, cloneDeep, isArray } from 'lodash';
+import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -776,12 +776,15 @@ class ItemForm extends React.Component {
                     {placeholder => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
-                        placeholder={placeholder}
                         name="temporaryLoanType.id"
                         id="additem_loanTypeTemp"
                         component={Select}
                         fullWidth
-                        dataOptions={loanTypeOptions}
+                        dataOptions={[{
+                          label: placeholder,
+                          value: '',
+                          selected: !initialValues.loanType,
+                        }, ...loanTypeOptions]}
                       />
                     )}
                   </FormattedMessage>
