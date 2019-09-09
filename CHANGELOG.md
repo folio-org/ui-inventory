@@ -11,6 +11,7 @@
 * Preserve holdings record checkbox state. Fixes UIIN-667.
 * Fix notes selector on item create form. Fixes UIIN-669.
 * Add ability to copy item's barcode to clipboard. Fixes UIIN-177.
+* Fix bug in deselection of temporary location in holdings. Fixes UIIN-686.
 
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)
