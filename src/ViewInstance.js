@@ -229,9 +229,7 @@ class ViewInstance extends React.Component {
   };
 
   refLookup = (referenceTable, id) => {
-    console.log("doing ref lookup", referenceTable, id)
     const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
-    console.log('ref is', ref)
     return ref || {};
   };
 
@@ -294,7 +292,6 @@ class ViewInstance extends React.Component {
       onClose,
       paneWidth,
     } = this.props;
-    console.log("reftables", referenceTables)
 
     const { marcRecord } = this.state;
 
@@ -398,6 +395,8 @@ class ViewInstance extends React.Component {
           );
         });
     };
+
+    const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
 
     const detailMenu = (
       <PaneMenu>
@@ -510,7 +509,7 @@ class ViewInstance extends React.Component {
         </IntlConsumer>
       );
     }
-console.log('instance', instance)
+
     return (
       <Pane
         data-test-instance-details
@@ -889,8 +888,8 @@ console.log('instance', instance)
             </Col>
             <Col cs={3}>
               <KeyValue
-                label="test content type"
-                value={this.refLookup(referenceTables.natureOfContentTerms, get(instance, ['natureOfContentTermIds'])[0]).name}
+                label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+                value={natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)}
               />
             </Col>
             {

@@ -20,7 +20,7 @@ const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfCont
   const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.natureOfContentTerm" /> : null;
 
   return (
-    <FormattedMessage id="ui-inventory.selectNatureOfContent">
+    <FormattedMessage id="ui-inventory.selectNatureOfContentTerm">
       {placeholder => (
         <Field
           label={label}
@@ -28,7 +28,6 @@ const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfCont
           component={Select}
           placeholder={placeholder}
           dataOptions={natureOfContentTermOptions}
-          required
           data-test-nature-of-content-field-count={fieldIndex}
           disabled={!canEdit}
         />
