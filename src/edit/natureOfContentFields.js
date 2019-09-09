@@ -56,7 +56,7 @@ const NatureOfContentFields = props => {
 
   return (
     <RepeatableField
-      name="natureOfContentTypes"
+      name="natureOfContentTermIds"
       label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
       addLabel={
         <Icon icon="plus-sign">
