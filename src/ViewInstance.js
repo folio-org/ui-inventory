@@ -111,6 +111,10 @@ class ViewInstance extends React.Component {
     this.calloutRef = createRef();
   }
 
+  componentDidMount() {
+    this.getMARCRecord();
+  }
+
   componentDidUpdate(prevProps) {
     const { location: prevLocation } = prevProps;
     const { location } = this.props;
@@ -170,8 +174,9 @@ class ViewInstance extends React.Component {
 
   closeViewMarc = (e) => {
     if (e) e.preventDefault();
+    const { location: { search } } = this.props;
     this.resetLayerQueryParam();
-    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
+    this.props.goTo(`/inventory/view/${this.props.match.params.id}${search}`);
   };
 
   closeViewHoldingsRecord = (e) => {
