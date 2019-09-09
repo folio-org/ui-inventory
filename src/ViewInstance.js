@@ -320,10 +320,6 @@ class ViewInstance extends React.Component {
       'Publication date': x => get(x, ['dateOfPublication']) || '',
     };
 
-    const natureOfContentRowFormatter = {
-      'Term': x => this.refLookup(referenceTables.natureOfContentTerms, get(x, ['natureOfContentTermIds'])).name,
-    }
-
     const contributorsRowFormatter = {
       'Name type': x => this.refLookup(referenceTables.contributorNameTypes, get(x, ['contributorNameTypeId'])).name,
       'Name': x => get(x, ['name']),
@@ -892,30 +888,6 @@ class ViewInstance extends React.Component {
                 value={natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)}
               />
             </Col>
-            {
-            (instance.natureOfContentTermIds && instance.natureOfContentTermIds.length > 0) && (
-              <IntlConsumer>
-                {intl => (
-                  <FormattedMessage id="ui-inventory.natureOfContentTerms">
-                    {ariaLabel => (
-                      <MultiColumnList
-                        id="list-contributors"
-                        contentData={instance.natureOfContentTermIds.map(nocId => { return { 'id': nocId }; })}
-                        visibleColumns={['Term']}
-                        columnMapping={{
-                          'Term': intl.formatMessage({ id: 'ui-inventory.natureOfContentTerms' }),
-                        }}
-                        formatter={natureOfContentRowFormatter}
-                        ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                        interactive={false}
-                      />
-                    )}
-                  </FormattedMessage>
-                )}
-              </IntlConsumer>
-            )
-          }
           </Row>
 
           <Row>
