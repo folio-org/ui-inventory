@@ -44,6 +44,9 @@ describe('InstanceViewPage', () => {
       it('should redirect to instance create page', () => {
         expect(InstanceCreatePage.$root).to.exist;
       });
+      it('should have a source value of "FOLIO"', () => {
+        expect(InstanceCreatePage.sourceValue).to.equal('FOLIO');
+      });
     });
   });
 

@@ -14,6 +14,7 @@
 * Fix bug in deselection of temporary location in holdings. Fixes UIIN-686.
 * Add nature of content field to instance record. Completes UIIN-470.
 * Show damage status value from the lookup table, instead of the raw id. Refs UIIN-683.
+* Set source to 'FOLIO' when duplicating instance records. Completes UIIN-711.
 * Allow unassigning of temporary loan type in items. Fixes UIIN-696.
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)

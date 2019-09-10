@@ -7,7 +7,7 @@ const { lorem, name } = faker;
 export default Factory.extend({
   title: () => lorem.sentence(),
   contributors: () => [{ name: `${name.lastName()}, ${name.firstName()}` }],
-  source: () => 'local',
+  source: () => 'FOLIO',
   identifiers: () => [],
   publication: () => [],
   alternativeTitles: () => [],

@@ -15,7 +15,7 @@ describe('Instances', () => {
     this.server.create('instance-type', {
       name: 'text',
       code: 'txt',
-      source: 'rdacontent'
+      source: 'FOLIO'
     });
 
     this.visit('/inventory');
