@@ -101,6 +101,7 @@ class ViewInstance extends React.Component {
       },
       marcRecord: null,
     };
+    this.instanceId = null;
     this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
@@ -111,6 +112,14 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
+    this.getMARCRecord();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location: prevLocation } = prevProps;
+    const { location } = this.props;
+
+    if (prevLocation === location) return;
     this.getMARCRecord();
   }
 
@@ -165,8 +174,9 @@ class ViewInstance extends React.Component {
 
   closeViewMarc = (e) => {
     if (e) e.preventDefault();
+    const { location: { search } } = this.props;
     this.resetLayerQueryParam();
-    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
+    this.props.goTo(`/inventory/view/${this.props.match.params.id}${search}`);
   };
 
   closeViewHoldingsRecord = (e) => {
@@ -386,6 +396,8 @@ class ViewInstance extends React.Component {
           );
         });
     };
+
+    const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
 
     const detailMenu = (
       <PaneMenu>
@@ -875,6 +887,12 @@ class ViewInstance extends React.Component {
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
               />
             </Col>
+            <Col cs={3}>
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+                value={natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)}
+              />
+            </Col>
           </Row>
 
           <Row>
@@ -889,10 +907,10 @@ class ViewInstance extends React.Component {
                           contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
                           visibleColumns={['Category', 'Term', 'Code', 'Source']}
                           columnMapping={{
-                            'Category': intl.formatMessage({ id: 'ui-inventory.category' }),
-                            'Term': intl.formatMessage({ id: 'ui-inventory.term' }),
-                            'Code': intl.formatMessage({ id: 'ui-inventory.code' }),
-                            'Source': intl.formatMessage({ id: 'ui-inventory.source' }),
+                            'Category': intl.formatMessage({ id: 'ui-inventory.formatCategory' }),
+                            'Term': intl.formatMessage({ id: 'ui-inventory.formatTerm' }),
+                            'Code': intl.formatMessage({ id: 'ui-inventory.formatCode' }),
+                            'Source': intl.formatMessage({ id: 'ui-inventory.formatSource' }),
                           }}
                           formatter={formatsRowFormatter}
                           ariaLabel={ariaLabel}

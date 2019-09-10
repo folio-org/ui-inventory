@@ -397,5 +397,9 @@
     "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
     "acquisition": "Acquisition",
     "holdingsNoteType": "Holdings note type",
-    "itemNoteType": "Item note type"
+    "itemNoteType": "Item note type",
+    "formatSource": "Format source",
+    "formatTerm": "Format term",
+    "formatCategory": "Format category",
+    "formatCode": "Format code"
 }

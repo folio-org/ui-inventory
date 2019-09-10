@@ -30,7 +30,7 @@ class IdentifierTypesSettings extends React.Component {
             baseUrl="identifier-types"
             records="identifierTypes"
             label={<FormattedMessage id="ui-inventory.resourceIdentifierTypes" />}
-            labelSingular={<FormattedMessage id="ui-inventory.resourceIdentifierType" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' })}
             objectLabel={<FormattedMessage id="ui-inventory.resourceIdentifierTypes" />}
             visibleFields={['name', 'source']}
             columnMapping={{

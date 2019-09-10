@@ -38,7 +38,7 @@ class Instances extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
-  }
+  };
 
   static manifest = Object.freeze({
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -204,6 +204,16 @@ class Instances extends React.Component {
       },
       records: 'itemNoteTypes',
     },
+    itemDamagedStatuses: {
+      type: 'okapi',
+      path: 'item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
+      records: 'itemDamageStatuses',
+    },
+    natureOfContentTerms: {
+      type: 'okapi',
+      path: 'nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+      records: 'natureOfContentTerms',
+    },
   });
 
   constructor(props) {
@@ -220,7 +230,7 @@ class Instances extends React.Component {
   onChangeIndex = (e) => {
     const qindex = e.target.value;
     this.props.updateLocation({ qindex });
-  }
+  };
 
   onFilterChangeHandler = ({ name, values }) => {
     const { resources: { query } } = this.props;
@@ -236,7 +246,7 @@ class Instances extends React.Component {
     if (e) e.preventDefault();
     this.setState({ copiedInstance: null });
     this.props.updateLocation({ layer: null });
-  }
+  };
 
   copyInstance(instance) {
     this.setState({ copiedInstance: omit(instance, ['id', 'hrid']) });
@@ -248,7 +258,7 @@ class Instances extends React.Component {
     this.props.mutator.records.POST(instance).then(() => {
       this.closeNewInstance();
     });
-  }
+  };
 
   renderFilters = (onChange) => {
     const { resources: { locations, instanceTypes, query } } = this.props;
@@ -263,7 +273,7 @@ class Instances extends React.Component {
         onChange={onChange}
       />
     );
-  }
+  };
 
   render() {
     const {
@@ -295,6 +305,8 @@ class Instances extends React.Component {
       || !resources.holdingsTypes || !resources.holdingsTypes.hasLoaded
       || !resources.callNumberTypes || !resources.callNumberTypes.hasLoaded
       || !resources.holdingsNoteTypes || !resources.holdingsNoteTypes.hasLoaded
+      || !resources.itemDamagedStatuses || !resources.itemDamagedStatuses.hasLoaded
+      || !resources.natureOfContentTerms || !resources.natureOfContentTerms.hasLoaded
     ) return null;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -315,6 +327,8 @@ class Instances extends React.Component {
     const holdingsTypes = (resources.holdingsTypes || emptyObj).records || emptyArr;
     const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
     const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
+    const itemDamagedStatuses = (resources.itemDamagedStatuses || emptyObj).records || emptyArr;
+    const natureOfContentTerms = (resources.natureOfContentTerms || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = keyBy(locations, 'id');
     const itemNoteTypes = get(resources, 'itemNoteTypes.records', []);
@@ -340,6 +354,8 @@ class Instances extends React.Component {
       holdingsNoteTypes,
       itemNoteTypes,
       locationsById,
+      itemDamagedStatuses,
+      natureOfContentTerms,
     };
 
     const resultsFormatter = {

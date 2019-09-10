@@ -119,6 +119,7 @@ class ViewHoldingsRecord extends React.Component {
   updateHoldingsRecord = (holdingsRecord) => {
     const holdings = holdingsRecord;
     if (holdings.permanentLocationId === '') delete holdings.permanentLocationId;
+    if (holdings.temporaryLocationId === '') delete holdings.temporaryLocationId;
     this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
       this.onClickCloseEditHoldingsRecord();
     });

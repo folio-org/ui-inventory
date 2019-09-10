@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
-import { get, cloneDeep, isArray } from 'lodash';
+import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   Field,
 } from 'react-final-form';
+import { OnChange } from 'react-final-form-listeners';
 
 import {
   Paneset,
@@ -35,7 +36,6 @@ import {
 
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
-import { itemDamageStatuses } from '../../constants';
 import { memoize, mutators } from '../formUtils';
 
 function validate(values) {
@@ -211,25 +211,6 @@ class ItemForm extends React.Component {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
-  onSave = (e) => {
-    const {
-      form: {
-        getFieldState,
-        mutators: {
-          updateValue,
-        },
-      },
-    } = this.props;
-
-    const { value } = getFieldState('copyNumbers');
-
-    if (value && !isArray(value)) {
-      updateValue('copyNumbers', [value]);
-    }
-
-    this.props.handleSubmit(e);
-  }
-
   render() {
     const {
       pristine,
@@ -247,11 +228,10 @@ class ItemForm extends React.Component {
         callNumberTypes,
         statisticalCodes,
         statisticalCodeTypes,
+        itemDamagedStatuses,
       },
       copy,
-      intl: {
-        formatMessage
-      },
+      handleSubmit,
     } = this.props;
 
     const {
@@ -261,14 +241,6 @@ class ItemForm extends React.Component {
     } = this.state;
 
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
-    const itemDamageOptions = itemDamageStatuses.map(({ label, value }) => (
-      <option
-        value={value}
-        key={value}
-      >
-        {formatMessage({ id: label })}
-      </option>
-    ));
 
     /* Menus for Add Item workflow */
     const addItemLastMenu = (
@@ -350,11 +322,19 @@ class ItemForm extends React.Component {
       }),
     ) : [];
 
+    const itemDamagedStatusOptions = itemDamagedStatuses ? itemDamagedStatuses.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.damagedStatusId,
+      }),
+    ) : [];
+
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     return (
-      <form onSubmit={this.onSave} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
+      <form onSubmit={handleSubmit} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
@@ -536,7 +516,7 @@ class ItemForm extends React.Component {
                 <Col sm={3}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                    name="copyNumbers"
+                    name="copyNumbers[0]"
                     component={TextField}
                     fullWidth
                   />
@@ -699,13 +679,16 @@ class ItemForm extends React.Component {
                         id="input_item_damaged_status_id"
                         component={Select}
                         placeholder={placeholder}
-                        onChange={this.setItemDamagedStatusDate}
                         label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                      >
-                        {itemDamageOptions}
-                      </Field>
+                        dataOptions={itemDamagedStatusOptions}
+                      />
                     )}
                   </FormattedMessage>
+                  <OnChange name="itemDamagedStatusId">
+                    {() => {
+                      this.setItemDamagedStatusDate();
+                    }}
+                  </OnChange>
                 </Col>
                 <Col sm={3}>
                   <Field
@@ -793,12 +776,15 @@ class ItemForm extends React.Component {
                     {placeholder => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
-                        placeholder={placeholder}
                         name="temporaryLoanType.id"
                         id="additem_loanTypeTemp"
                         component={Select}
                         fullWidth
-                        dataOptions={loanTypeOptions}
+                        dataOptions={[{
+                          label: placeholder,
+                          value: '',
+                          selected: !initialValues.loanType,
+                        }, ...loanTypeOptions]}
                       />
                     )}
                   </FormattedMessage>
@@ -952,7 +938,6 @@ class ItemForm extends React.Component {
 }
 
 ItemForm.propTypes = {
-  intl: intlShape.isRequired,
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newItem: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,
@@ -977,4 +962,4 @@ export default stripesFinalForm({
   mutators,
   validateOnBlur: true,
   navigationCheck: true,
-})(injectIntl(ItemForm));
+})(ItemForm);
