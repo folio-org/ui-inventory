@@ -1164,15 +1164,11 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
-  stripes: PropTypes.shape({
-    connect: PropTypes.func.isRequired,
-    locale: PropTypes.string.isRequired,
-    logger: PropTypes.object.isRequired,
-  }).isRequired,
-  resources: PropTypes.shape({
-    selectedInstance: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+  getSearchParams: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string,
   }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
@@ -1180,11 +1176,6 @@ ViewInstance.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-    search: PropTypes.string,
-  }).isRequired,
-  referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     selectedInstance: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
@@ -1197,11 +1188,22 @@ ViewInstance.propTypes = {
     }),
     query: PropTypes.object.isRequired,
   }),
+  okapi: PropTypes.object,
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
+  referenceTables: PropTypes.object.isRequired,
+  resources: PropTypes.shape({
+    selectedInstance: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+  }).isRequired,
+  stripes: PropTypes.shape({
+    connect: PropTypes.func.isRequired,
+    locale: PropTypes.string.isRequired,
+    logger: PropTypes.object.isRequired,
+  }).isRequired,
   updateLocation: PropTypes.func.isRequired,
-  okapi: PropTypes.object,
 };
 
 export default withLocation(ViewInstance);

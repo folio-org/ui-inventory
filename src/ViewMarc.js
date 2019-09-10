@@ -32,6 +32,7 @@ class ViewMarc extends React.Component {
       connection.GET()
         .then(data => this.setState({ marcRecord: data }))
         .catch(error => {
+          // eslint-disable-next-line no-console
           console.error('MARC record getting ERROR: ', error);
           onClose();
         });
