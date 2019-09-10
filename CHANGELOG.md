@@ -13,7 +13,7 @@
 * Add ability to copy item's barcode to clipboard. Fixes UIIN-177.
 * Fix bug in deselection of temporary location in holdings. Fixes UIIN-686.
 * Show damage status value from the lookup table, instead of the raw id. Refs UIIN-683.
-* Allow unassigning of temporary loan type. Fixes UIIN-696.
+* Allow unassigning of temporary loan type in items. Fixes UIIN-696.
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.0...v1.11.1)
