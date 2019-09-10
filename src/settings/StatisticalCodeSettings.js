@@ -25,6 +25,11 @@ class StatisticalCodeSettings extends React.Component {
   });
 
   static propTypes = {
+    resources: PropTypes.shape({
+      statisticalCodeTypes: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }).isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
