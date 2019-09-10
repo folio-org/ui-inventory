@@ -14,6 +14,7 @@
 * Add nature of content field to instance record. Completes UIIN-470.
 * Show damage status value from the lookup table, instead of the raw id. Refs UIIN-683.
 * Allow unassigning of temporary loan type. Fixes UIIN-696.
+* Set source to 'FOLIO' when duplicating instance records. Completes UIIN-711.
 
 ## [1.11.1](https://github.com/folio-org/ui-inventory/tree/v1.11.1) (2019-07-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.0...v1.11.1)
