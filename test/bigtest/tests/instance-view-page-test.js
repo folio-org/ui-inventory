@@ -46,7 +46,7 @@ describe('InstanceViewPage', () => {
       });
       it('should have a source value of "FOLIO"', () => {
         expect(InstanceCreatePage.sourceValue).to.equal('FOLIO');
-      })
+      });
     });
   });
 
