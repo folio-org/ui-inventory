@@ -4,6 +4,7 @@ import {
   omit,
   keyBy,
   get,
+  set,
   template,
 } from 'lodash';
 import {
@@ -249,7 +250,9 @@ class Instances extends React.Component {
   };
 
   copyInstance(instance) {
-    this.setState({ copiedInstance: omit(instance, ['id', 'hrid']) });
+    let copiedInstance = omit(instance, ['id', 'hrid']);
+    copiedInstance = set(copiedInstance, 'source', 'FOLIO');
+    this.setState({ copiedInstance });
     this.props.updateLocation({ layer: 'create' });
   }
 
