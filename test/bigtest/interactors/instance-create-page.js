@@ -2,6 +2,7 @@ import {
   interactor,
   clickable,
   text,
+  value,
 } from '@bigtest/interactor';
 
 @interactor class HeaderDropdown {
@@ -16,6 +17,7 @@ import {
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
+  sourceValue = value('input[name="source"]');
 }
 
 export default new InstanceCreatePage('[data-test-instance-page-type="create"]');
