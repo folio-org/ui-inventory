@@ -397,6 +397,8 @@ class ViewInstance extends React.Component {
         });
     };
 
+    const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
+
     const detailMenu = (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editInstance">
@@ -883,6 +885,12 @@ class ViewInstance extends React.Component {
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
+              />
+            </Col>
+            <Col cs={3}>
+              <KeyValue
+                label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+                value={natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)}
               />
             </Col>
           </Row>

@@ -12,6 +12,7 @@
 * Fix notes selector on item create form. Fixes UIIN-669.
 * Add ability to copy item's barcode to clipboard. Fixes UIIN-177.
 * Fix bug in deselection of temporary location in holdings. Fixes UIIN-686.
+* Add nature of content field to instance record. Completes UIIN-470.
 * Show damage status value from the lookup table, instead of the raw id. Refs UIIN-683.
 * Allow unassigning of temporary loan type in items. Fixes UIIN-696.
 

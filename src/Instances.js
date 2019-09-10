@@ -209,6 +209,11 @@ class Instances extends React.Component {
       path: 'item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
       records: 'itemDamageStatuses',
     },
+    natureOfContentTerms: {
+      type: 'okapi',
+      path: 'nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
+      records: 'natureOfContentTerms',
+    },
   });
 
   constructor(props) {
@@ -301,6 +306,7 @@ class Instances extends React.Component {
       || !resources.callNumberTypes || !resources.callNumberTypes.hasLoaded
       || !resources.holdingsNoteTypes || !resources.holdingsNoteTypes.hasLoaded
       || !resources.itemDamagedStatuses || !resources.itemDamagedStatuses.hasLoaded
+      || !resources.natureOfContentTerms || !resources.natureOfContentTerms.hasLoaded
     ) return null;
 
     const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
@@ -322,6 +328,7 @@ class Instances extends React.Component {
     const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
     const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
     const itemDamagedStatuses = (resources.itemDamagedStatuses || emptyObj).records || emptyArr;
+    const natureOfContentTerms = (resources.natureOfContentTerms || emptyObj).records || emptyArr;
     const locations = (resources.locations || emptyObj).records || emptyArr;
     const locationsById = keyBy(locations, 'id');
     const itemNoteTypes = get(resources, 'itemNoteTypes.records', []);
@@ -348,6 +355,7 @@ class Instances extends React.Component {
       itemNoteTypes,
       locationsById,
       itemDamagedStatuses,
+      natureOfContentTerms,
     };
 
     const resultsFormatter = {
