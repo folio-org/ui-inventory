@@ -401,5 +401,7 @@
     "formatSource": "مصدر التنسيق",
     "formatTerm": "مصطلح التنسيق",
     "formatCategory": "فئة التنسيق",
-    "formatCode": "رمز التنسيق"
+    "formatCode": "رمز التنسيق",
+    "addNatureOfContentTerm": "Add nature of content",
+    "selectNatureOfContentTerm": "Select nature of content"
 }

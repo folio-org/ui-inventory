@@ -388,7 +388,7 @@
     "classificationIdentifierTypes": "Tipologie identificativo classificazione",
     "instanceNoteType": "Tipologia nota istanza",
     "natureOfContentTerms": "Natura contenuto",
-    "natureOfContentTerm": "Natura contenuto",
+    "natureOfContentTerm": "Termine natura contenuto",
     "instanceTitle": "Istanza: {titolo}.",
     "items.damageStatus.damaged": "Danneggiato",
     "items.damageStatus.notdamaged": "Non danneggiato",
@@ -401,5 +401,7 @@
     "formatSource": "Fonte del formato",
     "formatTerm": "Termine del formato",
     "formatCategory": "Categoria di formato",
-    "formatCode": "Codice di formato"
+    "formatCode": "Codice di formato",
+    "addNatureOfContentTerm": "Aggiungi natura contenuto",
+    "selectNatureOfContentTerm": "Seleziona natura contenuto"
 }
