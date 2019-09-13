@@ -401,5 +401,7 @@
     "formatSource": "Format source",
     "formatTerm": "Format term",
     "formatCategory": "Format category",
-    "formatCode": "Format code"
+    "formatCode": "Format code",
+    "addNatureOfContentTerm": "Add nature of content",
+    "selectNatureOfContentTerm": "Select nature of content"
 }

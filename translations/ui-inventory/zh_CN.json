@@ -401,5 +401,7 @@
     "formatSource": "格式来源",
     "formatTerm": "格式条款",
     "formatCategory": "格式类别",
-    "formatCode": "格式代码"
+    "formatCode": "格式代码",
+    "addNatureOfContentTerm": "Add nature of content",
+    "selectNatureOfContentTerm": "Select nature of content"
 }
