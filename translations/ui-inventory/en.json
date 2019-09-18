@@ -127,7 +127,7 @@
   "addIdentifier": "Add identifier",
   "isbn": "ISBN",
   "issn": "ISSN",
-  "search.all": "All (title, contributor, identifier)",
+  "search.all": "Keyword (title, contributor, identifier)",
   "title": "Title",
   "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
