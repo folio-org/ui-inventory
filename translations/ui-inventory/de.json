@@ -377,7 +377,7 @@
     "condition": "Condition",
     "search.isbn": "- ISBN",
     "search.issn": "- ISSN",
-    "search.all": "All (title, contributor, identifier)",
+    "search.all": "Schlüsselwort (Haupttitel, Mitwirkender, Identifier)",
     "subject": "Subject",
     "isbn": "ISBN",
     "issn": "ISSN",
