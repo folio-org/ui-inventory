@@ -42,7 +42,9 @@ import InstanceFormatFields from './instanceFormatFields';
 import LanguageFields from './languageFields';
 import ChildInstanceFields from './childInstanceFields';
 import ParentInstanceFields from './parentInstanceFields';
+import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
+import SucceedingTitleFields from './succeedingTitleFields';
 
 function validate(values) {
   const errors = {};
@@ -522,6 +524,16 @@ class InstanceForm extends React.Component {
                   canAdd={!this.isFieldBlocked('series')}
                   canEdit={!this.isFieldBlocked('series')}
                   canDelete={!this.isFieldBlocked('series')}
+                />
+                <PrecedingTitleFields
+                  canAdd={!this.isFieldBlocked('precedingTitles')}
+                  canEdit={!this.isFieldBlocked('precedingTitles')}
+                  canDelete={!this.isFieldBlocked('precedingTitles')}
+                />
+                <SucceedingTitleFields
+                  canAdd={!this.isFieldBlocked('succeedingTitles')}
+                  canEdit={!this.isFieldBlocked('succeedingTitles')}
+                  canDelete={!this.isFieldBlocked('succeedingTitles')}
                 />
               </Accordion>
               <Accordion
