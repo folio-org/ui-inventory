@@ -2,6 +2,8 @@
 
 ## 1.13.0 (IN PROGRESS)
 
+* Correctly import `<Field>` in `StatisticalCodeSettings`. Refs UIIN-725
+
 ## [1.12.0](https://github.com/folio-org/ui-inventory/tree/v1.12.0) (2019-09-12)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.1...v1.12.0)
 
