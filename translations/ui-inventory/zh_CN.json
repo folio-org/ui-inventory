@@ -1,6 +1,6 @@
 {
     "inventory.label": "典藏",
-    "resultCount": "{count, number} {count, plural, one {已找到记录} other {已找到记录}}",
+    "resultCount": "{count, number} {count, plural, one {记录找到} other {记录找到}}",
     "item.availability": "可用性",
     "item.availability.itemStatus": "单件状态",
     "item.availability.itemStatusDate": "单件状态日期",

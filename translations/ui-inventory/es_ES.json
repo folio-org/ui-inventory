@@ -377,7 +377,7 @@
     "condition": "Condition",
     "search.isbn": "- ISBN",
     "search.issn": "- ISSN",
-    "search.all": "Keyword (title, contributor, identifier)",
+    "search.all": "Palabra clave (título, colaborador, identificador)",
     "subject": "Subject",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -402,6 +402,6 @@
     "formatTerm": "Format term",
     "formatCategory": "Format category",
     "formatCode": "Format code",
-    "addNatureOfContentTerm": "Add nature of content",
-    "selectNatureOfContentTerm": "Select nature of content"
+    "addNatureOfContentTerm": "Agregar naturaleza del contenido",
+    "selectNatureOfContentTerm": "Seleccionar la naturaleza del contenido"
 }
