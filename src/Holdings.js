@@ -18,6 +18,7 @@ class Holdings extends React.Component {
       path: 'holdings-storage/holdings',
       params: {
         query: 'instanceId==:{id}',
+        limit: '1000',
       },
       resourceShouldRefresh: true,
     },
