@@ -3,6 +3,7 @@
 ## 1.13.0 (IN PROGRESS)
 
 * Increase limit for holdings to 1000. Refs UIIN-723.
+* Fix modal title when assigning a temporary location. Fixes UIIN-681
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
