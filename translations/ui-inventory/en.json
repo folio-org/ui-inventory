@@ -162,6 +162,7 @@
   "barcode": "Barcode",
   "itemBarcode": "Item barcode",
   "item.barcode": "Item: barcode",
+  "noBarcode": "No barcode",
   "itemHrid": "Item HRID",
   "itemIdentifier": "Item identifier",
   "formerId": "Former identifier",
