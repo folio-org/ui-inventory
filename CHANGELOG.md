@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
 ## 1.13.0 (IN PROGRESS)
+* Added iconAlignment "baseline" for <AppIcon>'s in the results list (UIIN-719)
 
 * Increase limit for holdings to 1000. Refs UIIN-723.
 
