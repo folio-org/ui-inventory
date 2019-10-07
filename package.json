@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -69,7 +69,7 @@
       "ill-policies": "1.0",
       "holdings-note-types": "1.0",
       "users": "15.0",
-      "location-units": "1.1",
+      "location-units": "2.0",
       "circulation": "4.0 5.0 6.0 7.0 8.0"
     },
     "permissionSets": [
