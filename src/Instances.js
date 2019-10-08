@@ -367,6 +367,7 @@ class Instances extends React.Component {
           size="small"
           app="inventory"
           iconKey="instance"
+          iconAlignment="baseline"
         >
           {title}
         </AppIcon>
