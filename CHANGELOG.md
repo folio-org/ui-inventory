@@ -9,6 +9,7 @@
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
 
 * Correctly import `<Field>` in `StatisticalCodeSettings`. Refs UIIN-725
+* Create Inventory settings page for HRID handling. Refs UIIN-741
 
 ## [1.12.0](https://github.com/folio-org/ui-inventory/tree/v1.12.0) (2019-09-12)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.11.1...v1.12.0)
