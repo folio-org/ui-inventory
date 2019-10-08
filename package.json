@@ -361,56 +361,57 @@
         "displayName": "Inventory: Can view instances",
         "subPermissions": [
           "module.inventory.enabled",
-          "inventory-storage.contributor-name-types.collection.get",
+          "configuration.entries.collection.get",
+          "inventory-storage.identifier-types.collection.get",
+          "inventory-storage.holdings-types.collection.get",
+          "inventory-storage.contributor-types.collection.get",
+          "inventory-storage.instance-formats.collection.get",
+          "inventory-storage.instance-types.collection.get",
+          "inventory-storage.electronic-access-relationships.collection.get",
+          "inventory-storage.instance-statuses.collection.get",
+          "inventory-storage.modes-of-issuance.collection.get",
+          "inventory-storage.instance-note-types.collection.get",
+          "inventory-storage.classification-types.collection.get",
+          "inventory-storage.alternative-title-types.collection.get",
           "inventory-storage.locations.collection.get",
           "inventory-storage.instance-relationship-types.collection.get",
+          "inventory-storage.statistical-codes.collection.get",
+          "inventory-storage.statistical-code-types.collection.get",
+          "inventory-storage.call-number-types.collection.get",
+          "inventory-storage.ill-policies.collection.get",
+          "inventory-storage.holdings-note-types.collection.get",
+          "inventory-storage.item-note-types.collection.get",
+          "inventory-storage.item-damaged-statuses.collection.get",
+          "inventory-storage.nature-of-content-terms.collection.get",
+          "users.collection.get",
           "inventory.instances.collection.get",
           "inventory-storage.instances.item.get",
-          "ui-inventory.settings.loantypes",
-          "ui-inventory.settings.statistical-code-types",
-          "ui-inventory.settings.materialtypes",
-          "ui-inventory.settings.electronic-access-relationships",
-          "ui-inventory.settings.holdings-types",
-          "ui-inventory.settings.identifier-types",
-          "ui-inventory.settings.instance-statuses",
-          "ui-inventory.settings.instance-formats",
-          "ui-inventory.settings.classification-types",
-          "ui-inventory.settings.instance-statuses",
-          "ui-inventory.settings.statistical-codes",
-          "ui-inventory.settings.alternative-title-types",
-          "ui-inventory.settings.instance-types",
-          "ui-inventory.settings.nature-of-content-terms",
-          "ui-inventory.settings.modes-of-issuance",
-          "ui-inventory.settings.instance-note-types",
-          "ui-inventory.settings.ill-policies",
-          "ui-inventory.settings.contributor-types",
-          "ui-inventory.settings.call-number-types",
-          "ui-inventory.settings.holdings-note-types",
-          "ui-inventory.settings.item-note-types",
-          "settings.inventory.enabled",
+          "inventory-storage.contributor-name-types.collection.get",
+          "inventory.config.instances.blocked-fields.get",
+          "inventory.instances.item.get",
+          "inventory.items.collection.get",
           "source-storage.records.get",
-          "users.collection.get",
-          "configuration.entries.collection.get",
-          "circulation.loans.collection.get",
-          "circulation.requests.collection.get"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "ui-inventory.instance.edit",
-        "displayName": "Inventory: Can create instances",
-        "subPermissions": [
-          "ui-inventory.instance.view",
-          "inventory-storage.instances.item.put"
+          "inventory-storage.holdings.collection.get"
         ],
         "visible": true
       },
       {
         "permissionName": "ui-inventory.instance.create",
+        "displayName": "Inventory: Can create instances",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory.instances.item.post",
+          "inventory-storage.instances.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.edit",
         "displayName": "Inventory: Can edit instances",
         "subPermissions": [
-          "ui-inventory.instance.edit",
-          "inventory-storage.instances.item.post"
+          "ui-inventory.instance.create",
+          "inventory.instances.item.put",
+          "inventory-storage.instances.item.put"
         ],
         "visible": true
       }
