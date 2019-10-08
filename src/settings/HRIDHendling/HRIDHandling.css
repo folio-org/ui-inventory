@@ -1,0 +1,31 @@
+.form {
+   width: 100%;
+}
+
+.headline {
+   padding-left: 1rem;
+}
+
+.headlineRow {
+   margin-top: 1rem;
+}
+
+.inputRow {
+   display: flex;
+   align-items: center;
+   padding-left: 1rem;
+}
+
+.descriptionRow {
+   margin-bottom: 1rem;
+}
+
+.margin0 :first-child {
+   margin-bottom: 0;
+}
+
+.asterisk {
+   color: #900;
+   font-weight: bold;
+   padding: 0 0.1rem;
+}
