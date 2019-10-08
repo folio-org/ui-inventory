@@ -69,7 +69,7 @@
       "ill-policies": "1.0",
       "holdings-note-types": "1.0",
       "users": "15.0",
-      "location-units": "1.1",
+      "location-units": "2.0",
       "circulation": "4.0 5.0 6.0 7.0 8.0"
     },
     "permissionSets": [
@@ -438,7 +438,7 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^2.9.0",
+    "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.13.0",
     "@folio/stripes-core": "^3.0.1",
     "babel-eslint": "^9.0.0",
