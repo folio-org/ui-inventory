@@ -355,6 +355,24 @@
           "settings.inventory.enabled"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.create",
+        "displayName": "Inventory: Can view and create holdings",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory-storage.holdings.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.edit",
+        "displayName": "Inventory: Can view, create and edit holdings",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory-storage.holdings.item.put"
+        ],
+        "visible": true
       }
     ],
     "translations": {
