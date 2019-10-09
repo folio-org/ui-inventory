@@ -24,7 +24,8 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
-  IntlConsumer
+  IntlConsumer,
+  IfPermission,
 } from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
@@ -206,19 +207,21 @@ class ViewHoldingsRecord extends React.Component {
             <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
           </Icon>
         </Button>
-        <Button
-          id="edit-holdings"
-          onClick={() => {
-            onToggle();
-            this.onClickEditHoldingsRecord();
-          }}
-          href={this.craftLayerUrl('editHoldingsRecord')}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editHoldings" />
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-inventory.holdings.edit">
+          <Button
+            id="edit-holdings"
+            onClick={() => {
+              onToggle();
+              this.onClickEditHoldingsRecord();
+            }}
+            href={this.craftLayerUrl('editHoldingsRecord')}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editHoldings" />
+            </Icon>
+          </Button>
+        </IfPermission>
         <Button
           id="copy-holdings"
           onClick={() => {
@@ -287,6 +290,7 @@ class ViewHoldingsRecord extends React.Component {
       },
       referenceTables,
       okapi,
+      stripes,
     } = this.props;
 
     if (this.isAwaitingResource()) {
@@ -306,7 +310,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const query = location.search ? queryString.parse(location.search) : {};
 
-    const detailMenu = (
+    const detailMenu = stripes.hasPerm('ui-inventory.holdings.edit') && (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editHoldings">
           {ariaLabel => (
@@ -825,6 +829,7 @@ class ViewHoldingsRecord extends React.Component {
 ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   parentResources: PropTypes.shape({
     holdingsTypes: PropTypes.shape({
