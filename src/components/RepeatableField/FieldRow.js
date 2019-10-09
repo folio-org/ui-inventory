@@ -124,7 +124,6 @@ class FieldRow extends React.Component {
       addDefaultItem,
       addLabel,
       canAdd,
-      canEdit,
       canDelete,
       containerRef,
       fields,
