@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import languagetable from './data/languages';
 
-
 export default {
-
   identifiersFormatter: (r, identifierTypes) => {
     const formatted = [];
     if (r.identifiers && r.identifiers.length) {
