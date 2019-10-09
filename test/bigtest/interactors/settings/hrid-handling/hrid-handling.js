@@ -3,8 +3,9 @@ import {
   collection,
   property,
 } from '@bigtest/interactor';
-
+// eslint-disable-next-line
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
+// eslint-disable-next-line
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 
 @interactor
