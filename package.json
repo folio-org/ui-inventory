@@ -43,7 +43,7 @@
     "okapiInterfaces": {
       "inventory": "9.0",
       "instance-storage": "7.0",
-      "holdings-storage": "3.0",
+      "holdings-storage": "3.0 4.0",
       "item-storage": "7.0",
       "loan-types": "2.0",
       "material-types": "2.0",
