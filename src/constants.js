@@ -11,16 +11,6 @@ export const itemStatuses = {
   PAGED: 'Paged',
 };
 
-export const languages = [
-  { code: 'eng', name: 'English' },
-  { code: 'spa', name: 'Spanish' },
-  { code: 'fre', name: 'French' },
-  { code: 'ger', name: 'German' },
-  { code: 'chi', name: 'Mandarin' },
-  { code: 'rus', name: 'Russian' },
-  { code: 'ara', name: 'Arabic' },
-];
-
 // the empty 'values' properties will be filled in by componentWillUpdate
 // as those are pulled from the backend
 export const filterConfig = [
