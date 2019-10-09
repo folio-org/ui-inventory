@@ -39,6 +39,7 @@ import {
   AppIcon,
   IntlConsumer,
   stripesConnect,
+  IfPermission,
 } from '@folio/stripes/core';
 
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
@@ -307,32 +308,36 @@ class ViewItem extends React.Component {
 
     return (
       <Fragment>
-        <Button
-          href={this.craftLayerUrl('editItem')}
-          onClick={() => {
-            onToggle();
-            this.onClickEditItem();
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-edit-item-action
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editItem" />
-          </Icon>
-        </Button>
-        <Button
-          id="clickable-copy-item"
-          onClick={() => {
-            onToggle();
-            this.onCopy(firstItem);
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-duplicate-item-action
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-inventory.copyItem" />
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-inventory.item.edit">
+          <Button
+            href={this.craftLayerUrl('editItem')}
+            onClick={() => {
+              onToggle();
+              this.onClickEditItem();
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-edit-item-action
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editItem" />
+            </Icon>
+          </Button>
+        </IfPermission>
+        <IfPermission perm="ui-inventory.item.create">
+          <Button
+            id="clickable-copy-item"
+            onClick={() => {
+              onToggle();
+              this.onCopy(firstItem);
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-duplicate-item-action
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-inventory.copyItem" />
+            </Icon>
+          </Button>
+        </IfPermission>
         <Button
           id="clickable-delete-item"
           onClick={() => {
@@ -442,20 +447,22 @@ class ViewItem extends React.Component {
     const query = location.search ? queryString.parse(location.search) : {};
 
     const detailMenu = (
-      <PaneMenu>
-        <FormattedMessage id="ui-inventory.editItem">
-          {ariaLabel => (
-            <PaneHeaderIconButton
-              icon="edit"
-              id="clickable-edit-item"
-              style={{ visibility: !item ? 'hidden' : 'visible' }}
-              href={this.craftLayerUrl('editItem', location)}
-              onClick={this.onClickEditItem}
-              ariaLabel={ariaLabel}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
+      <IfPermission perm="ui-inventory.item.edit">
+        <PaneMenu>
+          <FormattedMessage id="ui-inventory.editItem">
+            {ariaLabel => (
+              <PaneHeaderIconButton
+                icon="edit"
+                id="clickable-edit-item"
+                style={{ visibility: !item ? 'hidden' : 'visible' }}
+                href={this.craftLayerUrl('editItem', location)}
+                onClick={this.onClickEditItem}
+                ariaLabel={ariaLabel}
+              />
+            )}
+          </FormattedMessage>
+        </PaneMenu>
+      </IfPermission>
     );
 
     const labelPermanentHoldingsLocation = get(permanentHoldingsLocation, ['name'], '');

@@ -422,6 +422,23 @@
           "inventory-storage.instances.item.put"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.create",
+        "displayName": "Inventory: Can view and create item",
+        "subPermissions": [
+          "ui-inventory.instance.edit",
+          "inventory.items.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.edit",
+        "displayName": "Inventory: Can view, create and edit item",
+        "subPermissions": [
+          "ui-inventory.instance.create"
+        ],
+        "visible": true
       }
     ],
     "translations": {

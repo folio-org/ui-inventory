@@ -11,7 +11,8 @@ import {
   Icon,
 } from '@folio/stripes/components';
 import {
-  IntlConsumer
+  IntlConsumer,
+  IfPermission,
 } from '@folio/stripes/core';
 
 import Items from './Items';
@@ -90,17 +91,19 @@ class ItemsPerHoldingsRecord extends React.Component {
         >
           <FormattedMessage id="ui-inventory.viewHoldings" />
         </Button>
-        <Button
-          id="clickable-new-item"
-          onClick={() => {
-            this.onClickAddNewItem(holdingsRecord.id);
-          }}
-          buttonStyle="primary paneHeaderNewButton"
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.addItem" />
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-inventory.item.create">
+          <Button
+            id="clickable-new-item"
+            onClick={() => {
+              this.onClickAddNewItem(holdingsRecord.id);
+            }}
+            buttonStyle="primary paneHeaderNewButton"
+          >
+            <Icon icon="plus-sign">
+              <FormattedMessage id="ui-inventory.addItem" />
+            </Icon>
+          </Button>
+        </IfPermission>
       </Fragment>
     );
   }
