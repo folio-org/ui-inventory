@@ -16,6 +16,7 @@ import HoldingsTypeSettings from './HoldingsTypeSettings';
 import ILLPolicy from './ILLPolicy';
 import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
+import HRIDHandling from './HRIDHendling/HRIDHandling';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 import IdentifierTypesSettings from './IdentifierTypesSettings';
@@ -143,6 +144,11 @@ class InventorySettings extends React.Component {
       {
         label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
         pages: [
+          {
+            route: 'hridHandling',
+            label: <FormattedMessage id="ui-inventory.hridHandling" />,
+            component: HRIDHandling,
+          },
           {
             route: 'statisticalCodeTypes',
             label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,

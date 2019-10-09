@@ -302,8 +302,8 @@ class ViewItem extends React.Component {
     const request = get(resources, 'requests.records[0]');
 
     const newRequestLink = firstItem.barcode
-      ? `/requests?itemBarcode=${firstItem.barcode}&layer=create`
-      : `/requests?itemId=${firstItem.id}&layer=create`;
+      ? `/requests?itemBarcode=${firstItem.barcode}&query=${firstItem.barcode}&layer=create`
+      : `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
 
     return (
       <Fragment>
