@@ -17,7 +17,7 @@ import {
   AppIcon,
   TitleManager,
   IntlConsumer,
-  IfPermission
+  IfPermission,
 } from '@folio/stripes/core';
 import {
   Pane,
