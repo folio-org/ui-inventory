@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { data as languagetable } from './data/languages';
+import languagetable from './data/languages';
 
 
 export default {
@@ -64,7 +64,7 @@ export default {
     if (r.languages && r.languages.length) {
       for (let i = 0; i < r.languages.length; i += 1) {
         const languagecode = r.languages[i];
-        const language = languagetable.find(lang => lang.code === languagecode);
+        const language = languagetable.languageByCode(languagecode);
         if (language) formatted += (i > 0 ? ', ' : '') + (language.name['#text'] || language.name);
       }
     }
