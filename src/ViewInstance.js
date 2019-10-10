@@ -17,6 +17,7 @@ import {
   AppIcon,
   TitleManager,
   IntlConsumer,
+  IfPermission,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -243,31 +244,35 @@ class ViewInstance extends React.Component {
     const { marcRecord } = this.state;
     return (
       <Fragment>
-        <Button
-          id="edit-instance"
-          href={this.craftLayerUrl('edit')}
-          onClick={() => {
-            onToggle();
-            this.onClickEditInstance();
-          }}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editInstance" />
-          </Icon>
-        </Button>
-        <Button
-          id="copy-instance"
-          onClick={() => {
-            onToggle();
-            onCopy(instance);
-          }}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-inventory.duplicateInstance" />
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-inventory.instance.edit">
+          <Button
+            id="edit-instance"
+            href={this.craftLayerUrl('edit')}
+            onClick={() => {
+              onToggle();
+              this.onClickEditInstance();
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editInstance" />
+            </Icon>
+          </Button>
+        </IfPermission>
+        <IfPermission perm="ui-inventory.instance.create">
+          <Button
+            id="copy-instance"
+            onClick={() => {
+              onToggle();
+              onCopy(instance);
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-inventory.duplicateInstance" />
+            </Icon>
+          </Button>
+        </IfPermission>
         {get(instance, ['source'], '') === 'MARC' &&
           <Button
             id="clickable-view-source"
@@ -400,20 +405,22 @@ class ViewInstance extends React.Component {
     const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
 
     const detailMenu = (
-      <PaneMenu>
-        <FormattedMessage id="ui-inventory.editInstance">
-          {ariaLabel => (
-            <PaneHeaderIconButton
-              id="clickable-edit-instance"
-              style={{ visibility: !instance ? 'hidden' : 'visible' }}
-              href={this.craftLayerUrl('edit', location)}
-              onClick={this.onClickEditInstance}
-              ariaLabel={ariaLabel}
-              icon="edit"
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
+      <IfPermission perm="ui-inventory.instance.edit">
+        <PaneMenu>
+          <FormattedMessage id="ui-inventory.editInstance">
+            {ariaLabel => (
+              <PaneHeaderIconButton
+                id="clickable-edit-instance"
+                style={{ visibility: !instance ? 'hidden' : 'visible' }}
+                href={this.craftLayerUrl('edit', location)}
+                onClick={this.onClickEditInstance}
+                ariaLabel={ariaLabel}
+                icon="edit"
+              />
+            )}
+          </FormattedMessage>
+        </PaneMenu>
+      </IfPermission>
     );
 
     if (!instance) {

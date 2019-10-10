@@ -23,7 +23,7 @@ export const validateNumericField = value => {
 };
 
 export const validateAlphaNumericField = value => {
-  const pattern = /^[\w.,\-!?:;"'(){}\[\]$ ]{0,10}$/;
+  const pattern = /^[\w.,\-!?:;"'(){}[\]$ ]{0,10}$/;
 
   if (value.match(pattern)) {
     return undefined;
