@@ -24,7 +24,7 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
-  IntlConsumer
+  IntlConsumer,
 } from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
@@ -186,54 +186,72 @@ class ViewHoldingsRecord extends React.Component {
   getPaneHeaderActionMenu = ({ onToggle }) => {
     const {
       resources,
+      stripes,
     } = this.props;
+
+    const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
+    const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
+    const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
+
+    if (!canCreate && !canEdit && !canDelete) {
+      return null;
+    }
 
     const firstRecordOfHoldings = resources.holdingsRecords.records[0];
 
     return (
       <Fragment>
-        <Button
-          id="clickable-delete-holdingsrecord"
-          onClick={() => {
-            onToggle();
-            this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
-              { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-holdingsrecord-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
-          </Icon>
-        </Button>
-        <Button
-          id="edit-holdings"
-          onClick={() => {
-            onToggle();
-            this.onClickEditHoldingsRecord();
-          }}
-          href={this.craftLayerUrl('editHoldingsRecord')}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editHoldings" />
-          </Icon>
-        </Button>
-        <Button
-          id="copy-holdings"
-          onClick={() => {
-            onToggle();
-            this.onCopy(firstRecordOfHoldings);
-          }}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-inventory.duplicateHoldings" />
-          </Icon>
-        </Button>
+        {
+          canDelete &&
+          <Button
+            id="clickable-delete-holdingsrecord"
+            onClick={() => {
+              onToggle();
+              this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
+                { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-delete-holdingsrecord-action
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
+            </Icon>
+          </Button>
+        }
+        {
+          canEdit &&
+          <Button
+            id="edit-holdings"
+            onClick={() => {
+              onToggle();
+              this.onClickEditHoldingsRecord();
+            }}
+            href={this.craftLayerUrl('editHoldingsRecord')}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editHoldings" />
+            </Icon>
+          </Button>
+        }
+        {
+          canCreate &&
+          <Button
+            id="copy-holdings"
+            onClick={() => {
+              onToggle();
+              this.onCopy(firstRecordOfHoldings);
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-inventory.duplicateHoldings" />
+            </Icon>
+          </Button>
+        }
       </Fragment>
     );
-  }
+  };
 
   isAwaitingResource = () => {
     const {
@@ -287,6 +305,7 @@ class ViewHoldingsRecord extends React.Component {
       },
       referenceTables,
       okapi,
+      stripes,
     } = this.props;
 
     if (this.isAwaitingResource()) {
@@ -306,7 +325,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const query = location.search ? queryString.parse(location.search) : {};
 
-    const detailMenu = (
+    const detailMenu = stripes.hasPerm('ui-inventory.holdings.edit') && (
       <PaneMenu>
         <FormattedMessage id="ui-inventory.editHoldings">
           {ariaLabel => (
@@ -825,6 +844,7 @@ class ViewHoldingsRecord extends React.Component {
 ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   parentResources: PropTypes.shape({
     holdingsTypes: PropTypes.shape({
