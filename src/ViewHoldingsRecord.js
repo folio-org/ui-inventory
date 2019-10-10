@@ -25,7 +25,6 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
   IntlConsumer,
-  IfPermission,
 } from '@folio/stripes/core';
 
 import { craftLayerUrl } from './utils';
@@ -187,27 +186,40 @@ class ViewHoldingsRecord extends React.Component {
   getPaneHeaderActionMenu = ({ onToggle }) => {
     const {
       resources,
+      stripes,
     } = this.props;
+
+    const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
+    const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
+    const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
+
+    if (!canCreate && !canEdit && !canDelete) {
+      return null;
+    }
 
     const firstRecordOfHoldings = resources.holdingsRecords.records[0];
 
     return (
       <Fragment>
-        <Button
-          id="clickable-delete-holdingsrecord"
-          onClick={() => {
-            onToggle();
-            this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
-              { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-holdingsrecord-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
-          </Icon>
-        </Button>
-        <IfPermission perm="ui-inventory.holdings.edit">
+        {
+          canDelete &&
+          <Button
+            id="clickable-delete-holdingsrecord"
+            onClick={() => {
+              onToggle();
+              this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
+                { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-delete-holdingsrecord-action
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
+            </Icon>
+          </Button>
+        }
+        {
+          canEdit &&
           <Button
             id="edit-holdings"
             onClick={() => {
@@ -221,22 +233,25 @@ class ViewHoldingsRecord extends React.Component {
               <FormattedMessage id="ui-inventory.editHoldings" />
             </Icon>
           </Button>
-        </IfPermission>
-        <Button
-          id="copy-holdings"
-          onClick={() => {
-            onToggle();
-            this.onCopy(firstRecordOfHoldings);
-          }}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-inventory.duplicateHoldings" />
-          </Icon>
-        </Button>
+        }
+        {
+          canCreate &&
+          <Button
+            id="copy-holdings"
+            onClick={() => {
+              onToggle();
+              this.onCopy(firstRecordOfHoldings);
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-inventory.duplicateHoldings" />
+            </Icon>
+          </Button>
+        }
       </Fragment>
     );
-  }
+  };
 
   isAwaitingResource = () => {
     const {
