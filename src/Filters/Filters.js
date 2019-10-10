@@ -10,8 +10,7 @@ import {
   CheckboxFilter,
   MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
-
-import { languages } from '../constants';
+import languages from '../data/languages';
 
 export default class Filters extends React.Component {
   static propTypes = {
@@ -54,11 +53,6 @@ export default class Filters extends React.Component {
     const locationOptions = locations.map(({ name, id }) => ({
       label: name,
       value: id,
-    }));
-
-    const languageOptions = languages.map(({ code, name }) => ({
-      label: name,
-      value: code
     }));
 
     return (
@@ -106,7 +100,7 @@ export default class Filters extends React.Component {
         >
           <MultiSelectionFilter
             name="language"
-            dataOptions={languageOptions}
+            dataOptions={languages.selectOptions()}
             selectedValues={activeFilters.language}
             onChange={onChange}
           />
