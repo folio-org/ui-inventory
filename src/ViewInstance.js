@@ -452,7 +452,7 @@ class ViewInstance extends React.Component {
       return null;
     };
 
-    const newHoldingsRecordButton = (
+    const newHoldingsRecordButton = stripes.hasPerm('ui-inventory.holdings.create') && (
       <FormattedMessage id="ui-inventory.addHoldings">
         {ariaLabel => (
           <Button
@@ -1207,6 +1207,7 @@ ViewInstance.propTypes = {
   }).isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
   }).isRequired,

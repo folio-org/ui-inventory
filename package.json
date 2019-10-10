@@ -451,6 +451,33 @@
           "inventory.items.item.delete"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.create",
+        "displayName": "Inventory: Can view and create holdings",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory-storage.holdings.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.edit",
+        "displayName": "Inventory: Can view, create and edit holdings",
+        "subPermissions": [
+          "ui-inventory.holdings.create",
+          "inventory-storage.holdings.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.delete",
+        "displayName": "Inventory: Can view, create, edit and delete holdings",
+        "subPermissions": [
+          "ui-inventory.holdings.edit",
+          "inventory-storage.holdings.item.delete"
+        ],
+        "visible": true
       }
     ],
     "translations": {
@@ -508,4 +535,3 @@
     "react-router-dom": "^5.0.1"
   }
 }
-
