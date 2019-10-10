@@ -338,19 +338,21 @@ class ViewItem extends React.Component {
             </Icon>
           </Button>
         </IfPermission>
-        <Button
-          id="clickable-delete-item"
-          onClick={() => {
-            onToggle();
-            this.canDeleteItem(firstItem, request);
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-item-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteItem" />
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-inventory.item.delete">
+          <Button
+            id="clickable-delete-item"
+            onClick={() => {
+              onToggle();
+              this.canDeleteItem(firstItem, request);
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-delete-item-action
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-inventory.deleteItem" />
+            </Icon>
+          </Button>
+        </IfPermission>
         {
           canMarkItemAsMissing(firstItem) &&
           <Button
