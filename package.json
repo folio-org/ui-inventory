@@ -372,6 +372,8 @@
           "inventory.instances.item.get",
           "inventory.items.collection.get",
           "inventory.items.item.get",
+          "inventory-storage.items.item.get",
+          "inventory-storage.items.collection.get",
           "inventory-storage.identifier-types.collection.get",
           "inventory-storage.contributor-types.collection.get",
           "inventory-storage.contributor-name-types.collection.get",
@@ -437,9 +439,7 @@
         "displayName": "Inventory: Can view, create and edit item",
         "subPermissions": [
           "ui-inventory.item.create",
-          "inventory.items.item.put",
-          "inventory-storage.items.item.get",
-          "inventory-storage.items.collection.get"
+          "inventory.items.item.put"
         ],
         "visible": true
       },
