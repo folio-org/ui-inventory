@@ -48,7 +48,7 @@ class Items extends React.Component {
     } = this.props;
 
     if (!items || !items.hasLoaded) return null;
-    const noBarcode = <FormattedMessage id='ui-inventory.noBarcode'/>;
+    const noBarcode = <FormattedMessage id="ui-inventory.noBarcode" />;
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': (item) => {
