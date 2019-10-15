@@ -3,6 +3,8 @@
 ## 1.13.0 (IN PROGRESS)
 * Added iconAlignment "baseline" for <AppIcon>'s in the results list (UIIN-719)
 * Increase limit for holdings to 1000. Refs UIIN-723.
+* Set default title for items without barcode. Refs UIIN-731.
+* Fix modal title when assigning a temporary location. Fixes UIIN-681
 * Add query param to new request url. Part of UIIN-773.
 * Update language filter to support ISO-639 format. Part of UIIN-735.
 * Add permissions for holdings records. Refs UIIN-699, UIIN-702, UIIN-707

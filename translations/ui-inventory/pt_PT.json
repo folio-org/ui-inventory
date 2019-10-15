@@ -379,5 +379,20 @@
     "formatCategory": "Format category",
     "formatCode": "Format code",
     "addNatureOfContentTerm": "Add nature of content",
-    "selectNatureOfContentTerm": "Select nature of content"
+    "selectNatureOfContentTerm": "Select nature of content",
+    "hridHandling": "HRID handling",
+    "hridHandling.description.line1": "Inventory and MARC records retain any pre-existing HRID unless otherwise specified during load and import",
+    "hridHandling.description.line2": "New FOLIO HRIDs are assigned sequentially, based on the start number in these settings",
+    "hridHandling.description.line3": "Unless changed or removed, the default prefix will be assigned to new FOLIO HRIDs",
+    "hridHandling.sectionHeader1": "Inventory instances and MARC bibliographic records",
+    "hridHandling.sectionHeader2": "Inventory holdings and MARC holdings records",
+    "hridHandling.sectionHeader3": "Inventory item records",
+    "hridHandling.label.startWith": "Start with",
+    "hridHandling.label.assignPrefix": "Assign prefix",
+    "hridHandling.validation.enterValue": "Please enter a value",
+    "hridHandling.validation.maxLength": "Maximum length of field is",
+    "hridHandling.validation.startWithField": "Please enter a numeric value",
+    "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
+    "hridHandling.successfullyMessage": "Setting was successfully updated.",
+    "noBarcode": "No barcode"
 }

@@ -896,7 +896,10 @@ class ItemForm extends React.Component {
                       />
                     )}
                   </IntlConsumer>
-                  <LocationLookup onLocationSelected={this.onSelectHandler} />
+                  <LocationLookup
+                    onLocationSelected={this.onSelectHandler}
+                    isTemporaryLocation
+                  />
                 </Col>
               </Row>
             </Accordion>
