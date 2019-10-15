@@ -353,22 +353,24 @@ class ViewItem extends React.Component {
             </Icon>
           </Button>
         </IfPermission>
-        {
-          canMarkItemAsMissing(firstItem) &&
-          <Button
-            id="clickable-missing-item"
-            onClick={() => {
-              onToggle();
-              this.setState({ itemMissingModal: true });
-            }}
-            buttonStyle="dropdownItem"
-            data-test-mark-as-missing-item
-          >
-            <Icon icon="flag">
-              <FormattedMessage id="ui-inventory.markAsMissing" />
-            </Icon>
-          </Button>
-        }
+        <IfPermission perm="ui-inventory.item.markMissing">
+          {
+            canMarkItemAsMissing(firstItem) &&
+            <Button
+              id="clickable-missing-item"
+              onClick={() => {
+                onToggle();
+                this.setState({ itemMissingModal: true });
+              }}
+              buttonStyle="dropdownItem"
+              data-test-mark-as-missing-item
+            >
+              <Icon icon="flag">
+                <FormattedMessage id="ui-inventory.markAsMissing" />
+              </Icon>
+            </Button>
+          }
+        </IfPermission>
         <Button
           to={newRequestLink}
           buttonStyle="dropdownItem"

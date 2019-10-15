@@ -358,7 +358,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.view",
-        "displayName": "Inventory: Can view instances",
+        "displayName": "Inventory: View instances, holdings, and items",
         "subPermissions": [
           "module.inventory.enabled",
           "users.collection.get",
@@ -407,7 +407,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.create",
-        "displayName": "Inventory: Can view and create instances",
+        "displayName": "Inventory: View, create instances",
         "subPermissions": [
           "ui-inventory.instance.view",
           "inventory.instances.item.post",
@@ -417,7 +417,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.edit",
-        "displayName": "Inventory: Can view, create and edit instances",
+        "displayName": "Inventory: View, edit, create instances",
         "subPermissions": [
           "ui-inventory.instance.create",
           "inventory.instances.item.put",
@@ -427,7 +427,7 @@
       },
       {
         "permissionName": "ui-inventory.item.create",
-        "displayName": "Inventory: Can view and create item",
+        "displayName": "Inventory: View, create items",
         "subPermissions": [
           "ui-inventory.instance.edit",
           "inventory.items.item.post"
@@ -436,7 +436,7 @@
       },
       {
         "permissionName": "ui-inventory.item.edit",
-        "displayName": "Inventory: Can view, create and edit item",
+        "displayName": "Inventory: View, edit, create items",
         "subPermissions": [
           "ui-inventory.item.create",
           "inventory.items.item.put"
@@ -445,7 +445,7 @@
       },
       {
         "permissionName": "ui-inventory.item.delete",
-        "displayName": "Inventory: Can view, create, edit and delete item",
+        "displayName": "Inventory: Delete items",
         "subPermissions": [
           "ui-inventory.item.edit",
           "inventory.items.item.delete"
@@ -454,7 +454,7 @@
       },
       {
         "permissionName": "ui-inventory.holdings.create",
-        "displayName": "Inventory: Can view and create holdings",
+        "displayName": "Inventory: View, create holdings",
         "subPermissions": [
           "ui-inventory.instance.view",
           "inventory-storage.holdings.item.post"
@@ -463,7 +463,7 @@
       },
       {
         "permissionName": "ui-inventory.holdings.edit",
-        "displayName": "Inventory: Can view, create and edit holdings",
+        "displayName": "Inventory: View, edit, create holdings",
         "subPermissions": [
           "ui-inventory.holdings.create",
           "inventory-storage.holdings.item.put"
@@ -472,10 +472,19 @@
       },
       {
         "permissionName": "ui-inventory.holdings.delete",
-        "displayName": "Inventory: Can view, create, edit and delete holdings",
+        "displayName": "Inventory: Delete holdings",
         "subPermissions": [
           "ui-inventory.holdings.edit",
           "inventory-storage.holdings.item.delete"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.markMissing",
+        "displayName": "Inventory: Can mark item as missing",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory.items.item.put"
         ],
         "visible": true
       }
