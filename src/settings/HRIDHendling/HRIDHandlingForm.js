@@ -15,13 +15,13 @@ import css from './HRIDHandling.css';
 const HRID_HANDLING_DESCRIPTION = [
   'ui-inventory.hridHandling.description.line1',
   'ui-inventory.hridHandling.description.line2',
-  'ui-inventory.hridHandling.description.line3'
+  'ui-inventory.hridHandling.description.line3',
 ];
 
 const HRIDHandlingForm = ({
   isSubmitDisabled = false,
   onSubmit,
-  children
+  children,
 }) => {
   const lastMenu = (
     <Button
