@@ -8,6 +8,7 @@ import {
 } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
+import { hidden } from 'ansi-colors';
 
 const PrecedingTitles = props => {
   const {
@@ -18,7 +19,7 @@ const PrecedingTitles = props => {
 
   return (
     <RepeatableField
-      name="precedingTitles"
+      name="parentInstances"
       label=""
       addLabel={
         <Icon icon="plus-sign">
@@ -31,11 +32,14 @@ const PrecedingTitles = props => {
           name: 'precedingTitle',
           label: 'Preceding title',
           component: TextField,
-          required: true,
+          required: false,
           disabled: !canEdit
         },
         {
-          name: 'precedingTitleInstanceHRID',
+          render: () => <input name="instanceRelationshipTypeId" type="hidden" value="cde80cc2-0c8b-4672-82d4-721e51dcb990" />
+        },
+        {
+          name: 'superInstanceId',
           label: 'Instance HRID',
           component: TextField,
           required: true,
