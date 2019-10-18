@@ -445,7 +445,7 @@
       },
       {
         "permissionName": "ui-inventory.item.delete",
-        "displayName": "Inventory: Delete items",
+        "displayName": "Inventory: View, create, edit, delete items",
         "subPermissions": [
           "ui-inventory.item.edit",
           "inventory.items.item.delete"
@@ -472,7 +472,7 @@
       },
       {
         "permissionName": "ui-inventory.holdings.delete",
-        "displayName": "Inventory: Delete holdings",
+        "displayName": "Inventory: View, create, edit, delete holdings",
         "subPermissions": [
           "ui-inventory.holdings.edit",
           "inventory-storage.holdings.item.delete"
