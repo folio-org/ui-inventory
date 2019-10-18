@@ -525,6 +525,7 @@ class InstanceForm extends React.Component {
                   canEdit={!this.isFieldBlocked('series')}
                   canDelete={!this.isFieldBlocked('series')}
                 />
+                <FormattedMessage id="ui-inventory.relatedTitles" />
                 <PrecedingTitleFields
                   canAdd={!this.isFieldBlocked('precedingTitles')}
                   canEdit={!this.isFieldBlocked('precedingTitles')}
