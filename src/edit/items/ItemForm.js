@@ -713,11 +713,7 @@ class ItemForm extends React.Component {
                   <RepeatableField
                     name="notes"
                     addButtonId="clickable-add-note"
-                    addLabel={
-                      <Icon icon="plus-sign">
-                        <FormattedMessage id="ui-inventory.addNote" />
-                      </Icon>
-                    }
+                    addLabel={<FormattedMessage id="ui-inventory.addNote" />}
                     template={[
                       {
                         name: 'itemNoteTypeId',
@@ -807,11 +803,7 @@ class ItemForm extends React.Component {
                   <RepeatableField
                     name="circulationNotes"
                     addButtonId="clickable-add-note"
-                    addLabel={
-                      <Icon icon="plus-sign">
-                        <FormattedMessage id="ui-inventory.addCirculationNote" />
-                      </Icon>
-                    }
+                    addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
                     template={[
                       {
                         name: 'noteType',
