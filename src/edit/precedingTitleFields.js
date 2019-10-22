@@ -8,7 +8,6 @@ import {
 } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
-import { hidden } from 'ansi-colors';
 
 const PrecedingTitles = props => {
   const {
@@ -19,7 +18,7 @@ const PrecedingTitles = props => {
 
   return (
     <RepeatableField
-      name="parentInstances"
+      name="previousTitles"
       label=""
       addLabel={
         <Icon icon="plus-sign">
@@ -29,36 +28,37 @@ const PrecedingTitles = props => {
       addButtonId="clickable-add-precedingTitle"
       template={[
         {
-          name: 'precedingTitle',
-          label: 'Preceding title',
-          component: TextField,
-          required: false,
-          disabled: !canEdit
-        },
-        {
-          render: () => <input name="instanceRelationshipTypeId" type="hidden" value="cde80cc2-0c8b-4672-82d4-721e51dcb990" />
-        },
-        {
           name: 'superInstanceId',
-          label: 'Instance HRID',
+          label: 'FOLIO ID',
           component: TextField,
           required: true,
           disabled: !canEdit
         },
-        {
-          name: 'precedingTitleISSN',
-          label: 'ISSN',
-          component: TextField,
-          disabled: !canEdit
-        },
-        {
-          name: 'precedingTitleISBN',
-          label: 'ISBN',
-          component: TextField,
-          disabled: !canEdit
-        }
+        // {
+        //   render: () => <input name="instanceRelationshipTypeId" type="hidden" value="cde80cc2-0c8b-4672-82d4-721e51dcb990" />
+        // },
+        // {
+        //   name: 'superInstanceId',
+        //   label: 'Instance HRID',
+        //   component: TextField,
+        //   required: true,
+        //   disabled: !canEdit
+        // },
+        // {
+        //   name: 'precedingTitleISSN',
+        //   label: 'ISSN',
+        //   component: TextField,
+        //   disabled: !canEdit
+        // },
+        // {
+        //   name: 'precedingTitleISBN',
+        //   label: 'ISBN',
+        //   component: TextField,
+        //   disabled: !canEdit
+        // }
       ]}
-      newItemTemplate={{ precedingTitle: '', precedingTitleInstanceHRID: '', precedingTitleISSN: '', precedingTitleISBN: '' }}
+      newItemTemplate={{ superInstanceId: '' }}
+      // newItemTemplate={{ precedingTitle: '', precedingTitleInstanceHRID: '', precedingTitleISSN: '', precedingTitleISBN: '' }}
       canAdd={canAdd}
       canDelete={canDelete}
     />

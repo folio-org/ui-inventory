@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   omit,
+  find,
   keyBy,
   get,
   set,
+  map,
   template,
 } from 'lodash';
 import {
@@ -224,6 +226,7 @@ class Instances extends React.Component {
     this.resultsList = null;
     this.SRStatus = null;
     this.copyInstance = this.copyInstance.bind(this);
+    this.handlePrecedingSucceedingTitles = this.handlePrecedingSucceedingTitles.bind(this);
 
     this.state = {};
   }
@@ -257,11 +260,28 @@ class Instances extends React.Component {
   }
 
   createInstance = (instance) => {
-    // POST item record
-    this.props.mutator.records.POST(instance).then(() => {
+    // Massage record to add preceeding and succeeding title fields in the
+    // right place.
+    const copiedInstance = this.handlePrecedingSucceedingTitles(instance);
+
+    // POST instance record
+    this.props.mutator.records.POST(copiedInstance).then(() => {
       this.closeNewInstance();
     });
   };
+
+  handlePrecedingSucceedingTitles = (instance) => {
+    // preceding/succeeding titles are stored in parentInstances and childInstances
+    // in the instance record. Each title needs to provide an instance relationship
+    // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
+    // instance ID.
+    let copiedInstance = instance;
+    const titleRelationshipTypeId = find(this.props.resources.instanceRelationshipTypes.records, { 'name': 'preceding-succeeding' }).id;
+    const previousTitles = map(copiedInstance.previousTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(copiedInstance, 'parentInstances', previousTitles);
+    copiedInstance = omit(copiedInstance, ['previousTitles']);
+    return copiedInstance;
+  }
 
   renderFilters = (onChange) => {
     const { resources: { locations, instanceTypes, query } } = this.props;
@@ -455,6 +475,9 @@ Instances.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     itemNoteTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    instanceRelationshipTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     locations: PropTypes.shape({
