@@ -1,0 +1,1938 @@
+[
+  {
+    "name": "Afar",
+    "code": "aar"
+  },
+  {
+    "name": "Abkhaz",
+    "code": "abk"
+  },
+  {
+    "name": "Achinese",
+    "code": "ace"
+  },
+  {
+    "name": "Acoli",
+    "code": "ach"
+  },
+  {
+    "name": "Adangme",
+    "code": "ada"
+  },
+  {
+    "name": "Adygei",
+    "code": "ady"
+  },
+  {
+    "name": "Afroasiatic (Other)",
+    "code": "afa"
+  },
+  {
+    "name": "Afrihili (Artificial language)",
+    "code": "afh"
+  },
+  {
+    "name": "Afrikaans",
+    "code": "afr"
+  },
+  {
+    "name": "Ainu",
+    "code": "ain"
+  },
+  {
+    "name": "Akan",
+    "code": "aka"
+  },
+  {
+    "name": "Akkadian",
+    "code": "akk"
+  },
+  {
+    "name": "Albanian",
+    "code": "alb"
+  },
+  {
+    "name": "Aleut",
+    "code": "ale"
+  },
+  {
+    "name": "Algonquian (Other)",
+    "code": "alg"
+  },
+  {
+    "name": "Altai",
+    "code": "alt"
+  },
+  {
+    "name": "Amharic",
+    "code": "amh"
+  },
+  {
+    "name": "English, Old (ca. 450-1100)",
+    "code": "ang"
+  },
+  {
+    "name": "Angika",
+    "code": "anp"
+  },
+  {
+    "name": "Apache languages",
+    "code": "apa"
+  },
+  {
+    "name": "Arabic",
+    "code": "ara"
+  },
+  {
+    "name": "Aramaic",
+    "code": "arc"
+  },
+  {
+    "name": "Aragonese",
+    "code": "arg"
+  },
+  {
+    "name": "Armenian",
+    "code": "arm"
+  },
+  {
+    "name": "Mapuche",
+    "code": "arn"
+  },
+  {
+    "name": "Arapaho",
+    "code": "arp"
+  },
+  {
+    "name": "Artificial (Other)",
+    "code": "art"
+  },
+  {
+    "name": "Arawak",
+    "code": "arw"
+  },
+  {
+    "name": "Assamese",
+    "code": "asm"
+  },
+  {
+    "name": "Bable",
+    "code": "ast"
+  },
+  {
+    "name": "Athapascan (Other)",
+    "code": "ath"
+  },
+  {
+    "name": "Australian languages",
+    "code": "aus"
+  },
+  {
+    "name": "Avaric",
+    "code": "ava"
+  },
+  {
+    "name": "Avestan",
+    "code": "ave"
+  },
+  {
+    "name": "Awadhi",
+    "code": "awa"
+  },
+  {
+    "name": "Aymara",
+    "code": "aym"
+  },
+  {
+    "name": "Azerbaijani",
+    "code": "aze"
+  },
+  {
+    "name": "Banda languages",
+    "code": "bad"
+  },
+  {
+    "name": "Bamileke languages",
+    "code": "bai"
+  },
+  {
+    "name": "Bashkir",
+    "code": "bak"
+  },
+  {
+    "name": "Baluchi",
+    "code": "bal"
+  },
+  {
+    "name": "Bambara",
+    "code": "bam"
+  },
+  {
+    "name": "Balinese",
+    "code": "ban"
+  },
+  {
+    "name": "Basque",
+    "code": "baq"
+  },
+  {
+    "name": "Basa",
+    "code": "bas"
+  },
+  {
+    "name": "Baltic (Other)",
+    "code": "bat"
+  },
+  {
+    "name": "Beja",
+    "code": "bej"
+  },
+  {
+    "name": "Belarusian",
+    "code": "bel"
+  },
+  {
+    "name": "Bemba",
+    "code": "bem"
+  },
+  {
+    "name": "Bengali",
+    "code": "ben"
+  },
+  {
+    "name": "Berber (Other)",
+    "code": "ber"
+  },
+  {
+    "name": "Bhojpuri",
+    "code": "bho"
+  },
+  {
+    "name": "Bihari (Other)",
+    "code": "bih"
+  },
+  {
+    "name": "Bikol",
+    "code": "bik"
+  },
+  {
+    "name": "Edo",
+    "code": "bin"
+  },
+  {
+    "name": "Bislama",
+    "code": "bis"
+  },
+  {
+    "name": "Siksika",
+    "code": "bla"
+  },
+  {
+    "name": "Bantu (Other)",
+    "code": "bnt"
+  },
+  {
+    "name": "Bosnian",
+    "code": "bos"
+  },
+  {
+    "name": "Braj",
+    "code": "bra"
+  },
+  {
+    "name": "Breton",
+    "code": "bre"
+  },
+  {
+    "name": "Batak",
+    "code": "btk"
+  },
+  {
+    "name": "Buriat",
+    "code": "bua"
+  },
+  {
+    "name": "Bugis",
+    "code": "bug"
+  },
+  {
+    "name": "Bulgarian",
+    "code": "bul"
+  },
+  {
+    "name": "Burmese",
+    "code": "bur"
+  },
+  {
+    "name": "Bilin",
+    "code": "byn"
+  },
+  {
+    "name": "Caddo",
+    "code": "cad"
+  },
+  {
+    "name": "Central American Indian (Other)",
+    "code": "cai"
+  },
+  {
+    "name": "Carib",
+    "code": "car"
+  },
+  {
+    "name": "Catalan",
+    "code": "cat"
+  },
+  {
+    "name": "Caucasian (Other)",
+    "code": "cau"
+  },
+  {
+    "name": "Cebuano",
+    "code": "ceb"
+  },
+  {
+    "name": "Celtic (Other)",
+    "code": "cel"
+  },
+  {
+    "name": "Chamorro",
+    "code": "cha"
+  },
+  {
+    "name": "Chibcha",
+    "code": "chb"
+  },
+  {
+    "name": "Chechen",
+    "code": "che"
+  },
+  {
+    "name": "Chagatai",
+    "code": "chg"
+  },
+  {
+    "name": "Chinese",
+    "code": "chi"
+  },
+  {
+    "name": "Chuukese",
+    "code": "chk"
+  },
+  {
+    "name": "Mari",
+    "code": "chm"
+  },
+  {
+    "name": "Chinook jargon",
+    "code": "chn"
+  },
+  {
+    "name": "Choctaw",
+    "code": "cho"
+  },
+  {
+    "name": "Chipewyan",
+    "code": "chp"
+  },
+  {
+    "name": "Cherokee",
+    "code": "chr"
+  },
+  {
+    "name": "Church Slavic",
+    "code": "chu"
+  },
+  {
+    "name": "Chuvash",
+    "code": "chv"
+  },
+  {
+    "name": "Cheyenne",
+    "code": "chy"
+  },
+  {
+    "name": "Chamic languages",
+    "code": "cmc"
+  },
+  {
+    "name": "Coptic",
+    "code": "cop"
+  },
+  {
+    "name": "Cornish",
+    "code": "cor"
+  },
+  {
+    "name": "Corsican",
+    "code": "cos"
+  },
+  {
+    "name": "Creoles and Pidgins, English-based (Other)",
+    "code": "cpe"
+  },
+  {
+    "name": "Creoles and Pidgins, French-based (Other)",
+    "code": "cpf"
+  },
+  {
+    "name": "Creoles and Pidgins, Portuguese-based (Other)",
+    "code": "cpp"
+  },
+  {
+    "name": "Cree",
+    "code": "cre"
+  },
+  {
+    "name": "Crimean Tatar",
+    "code": "crh"
+  },
+  {
+    "name": "Creoles and Pidgins (Other)",
+    "code": "crp"
+  },
+  {
+    "name": "Kashubian",
+    "code": "csb"
+  },
+  {
+    "name": "Cushitic (Other)",
+    "code": "cus"
+  },
+  {
+    "name": "Czech",
+    "code": "cze"
+  },
+  {
+    "name": "Dakota",
+    "code": "dak"
+  },
+  {
+    "name": "Danish",
+    "code": "dan"
+  },
+  {
+    "name": "Dargwa",
+    "code": "dar"
+  },
+  {
+    "name": "Dayak",
+    "code": "day"
+  },
+  {
+    "name": "Delaware",
+    "code": "del"
+  },
+  {
+    "name": "Slavey",
+    "code": "den"
+  },
+  {
+    "name": "Dogrib",
+    "code": "dgr"
+  },
+  {
+    "name": "Dinka",
+    "code": "din"
+  },
+  {
+    "name": "Divehi",
+    "code": "div"
+  },
+  {
+    "name": "Dogri",
+    "code": "doi"
+  },
+  {
+    "name": "Dravidian (Other)",
+    "code": "dra"
+  },
+  {
+    "name": "Lower Sorbian",
+    "code": "dsb"
+  },
+  {
+    "name": "Duala",
+    "code": "dua"
+  },
+  {
+    "name": "Dutch, Middle (ca. 1050-1350)",
+    "code": "dum"
+  },
+  {
+    "name": "Dutch",
+    "code": "dut"
+  },
+  {
+    "name": "Dyula",
+    "code": "dyu"
+  },
+  {
+    "name": "Dzongkha",
+    "code": "dzo"
+  },
+  {
+    "name": "Efik",
+    "code": "efi"
+  },
+  {
+    "name": "Egyptian",
+    "code": "egy"
+  },
+  {
+    "name": "Ekajuk",
+    "code": "eka"
+  },
+  {
+    "name": "Elamite",
+    "code": "elx"
+  },
+  {
+    "name": "English",
+    "code": "eng"
+  },
+  {
+    "name": "English, Middle (1100-1500)",
+    "code": "enm"
+  },
+  {
+    "name": "Esperanto",
+    "code": "epo"
+  },
+  {
+    "name": "Estonian",
+    "code": "est"
+  },
+  {
+    "name": "Ewe",
+    "code": "ewe"
+  },
+  {
+    "name": "Ewondo",
+    "code": "ewo"
+  },
+  {
+    "name": "Fang",
+    "code": "fan"
+  },
+  {
+    "name": "Faroese",
+    "code": "fao"
+  },
+  {
+    "name": "Fanti",
+    "code": "fat"
+  },
+  {
+    "name": "Fijian",
+    "code": "fij"
+  },
+  {
+    "name": "Filipino",
+    "code": "fil"
+  },
+  {
+    "name": "Finnish",
+    "code": "fin"
+  },
+  {
+    "name": "Finno-Ugrian (Other)",
+    "code": "fiu"
+  },
+  {
+    "name": "Fon",
+    "code": "fon"
+  },
+  {
+    "name": "French",
+    "code": "fre"
+  },
+  {
+    "name": "French, Middle (ca. 1300-1600)",
+    "code": "frm"
+  },
+  {
+    "name": "French, Old (ca. 842-1300)",
+    "code": "fro"
+  },
+  {
+    "name": "North Frisian",
+    "code": "frr"
+  },
+  {
+    "name": "East Frisian",
+    "code": "frs"
+  },
+  {
+    "name": "Frisian",
+    "code": "fry"
+  },
+  {
+    "name": "Fula",
+    "code": "ful"
+  },
+  {
+    "name": "Friulian",
+    "code": "fur"
+  },
+  {
+    "name": "Gã",
+    "code": "gaa"
+  },
+  {
+    "name": "Gayo",
+    "code": "gay"
+  },
+  {
+    "name": "Gbaya",
+    "code": "gba"
+  },
+  {
+    "name": "Germanic (Other)",
+    "code": "gem"
+  },
+  {
+    "name": "Georgian",
+    "code": "geo"
+  },
+  {
+    "name": "German",
+    "code": "ger"
+  },
+  {
+    "name": "Ethiopic",
+    "code": "gez"
+  },
+  {
+    "name": "Gilbertese",
+    "code": "gil"
+  },
+  {
+    "name": "Scottish Gaelic",
+    "code": "gla"
+  },
+  {
+    "name": "Irish",
+    "code": "gle"
+  },
+  {
+    "name": "Galician",
+    "code": "glg"
+  },
+  {
+    "name": "Manx",
+    "code": "glv"
+  },
+  {
+    "name": "German, Middle High (ca. 1050-1500)",
+    "code": "gmh"
+  },
+  {
+    "name": "German, Old High (ca. 750-1050)",
+    "code": "goh"
+  },
+  {
+    "name": "Gondi",
+    "code": "gon"
+  },
+  {
+    "name": "Gorontalo",
+    "code": "gor"
+  },
+  {
+    "name": "Gothic",
+    "code": "got"
+  },
+  {
+    "name": "Grebo",
+    "code": "grb"
+  },
+  {
+    "name": "Greek, Ancient (to 1453)",
+    "code": "grc"
+  },
+  {
+    "name": "Greek, Modern (1453- )",
+    "code": "gre"
+  },
+  {
+    "name": "Guarani",
+    "code": "grn"
+  },
+  {
+    "name": "Swiss German",
+    "code": "gsw"
+  },
+  {
+    "name": "Gujarati",
+    "code": "guj"
+  },
+  {
+    "name": "Gwich'in",
+    "code": "gwi"
+  },
+  {
+    "name": "Haida",
+    "code": "hai"
+  },
+  {
+    "name": "Haitian French Creole",
+    "code": "hat"
+  },
+  {
+    "name": "Hausa",
+    "code": "hau"
+  },
+  {
+    "name": "Hawaiian",
+    "code": "haw"
+  },
+  {
+    "name": "Hebrew",
+    "code": "heb"
+  },
+  {
+    "name": "Herero",
+    "code": "her"
+  },
+  {
+    "name": "Hiligaynon",
+    "code": "hil"
+  },
+  {
+    "name": "Western Pahari languages",
+    "code": "him"
+  },
+  {
+    "name": "Hindi",
+    "code": "hin"
+  },
+  {
+    "name": "Hittite",
+    "code": "hit"
+  },
+  {
+    "name": "Hmong",
+    "code": "hmn"
+  },
+  {
+    "name": "Hiri Motu",
+    "code": "hmo"
+  },
+  {
+    "name": "Croatian",
+    "code": "hrv"
+  },
+  {
+    "name": "Upper Sorbian",
+    "code": "hsb"
+  },
+  {
+    "name": "Hungarian",
+    "code": "hun"
+  },
+  {
+    "name": "Hupa",
+    "code": "hup"
+  },
+  {
+    "name": "Iban",
+    "code": "iba"
+  },
+  {
+    "name": "Igbo",
+    "code": "ibo"
+  },
+  {
+    "name": "Icelandic",
+    "code": "ice"
+  },
+  {
+    "name": "Ido",
+    "code": "ido"
+  },
+  {
+    "name": "Sichuan Yi",
+    "code": "iii"
+  },
+  {
+    "name": "Ijo",
+    "code": "ijo"
+  },
+  {
+    "name": "Inuktitut",
+    "code": "iku"
+  },
+  {
+    "name": "Interlingue",
+    "code": "ile"
+  },
+  {
+    "name": "Iloko",
+    "code": "ilo"
+  },
+  {
+    "name": "Interlingua (International Auxiliary Language Association)",
+    "code": "ina"
+  },
+  {
+    "name": "Indic (Other)",
+    "code": "inc"
+  },
+  {
+    "name": "Indonesian",
+    "code": "ind"
+  },
+  {
+    "name": "Indo-European (Other)",
+    "code": "ine"
+  },
+  {
+    "name": "Ingush",
+    "code": "inh"
+  },
+  {
+    "name": "Inupiaq",
+    "code": "ipk"
+  },
+  {
+    "name": "Iranian (Other)",
+    "code": "ira"
+  },
+  {
+    "name": "Iroquoian (Other)",
+    "code": "iro"
+  },
+  {
+    "name": "Italian",
+    "code": "ita"
+  },
+  {
+    "name": "Javanese",
+    "code": "jav"
+  },
+  {
+    "name": "Lojban (Artificial language)",
+    "code": "jbo"
+  },
+  {
+    "name": "Japanese",
+    "code": "jpn"
+  },
+  {
+    "name": "Judeo-Persian",
+    "code": "jpr"
+  },
+  {
+    "name": "Judeo-Arabic",
+    "code": "jrb"
+  },
+  {
+    "name": "Kara-Kalpak",
+    "code": "kaa"
+  },
+  {
+    "name": "Kabyle",
+    "code": "kab"
+  },
+  {
+    "name": "Kachin",
+    "code": "kac"
+  },
+  {
+    "name": "Kalâtdlisut",
+    "code": "kal"
+  },
+  {
+    "name": "Kamba",
+    "code": "kam"
+  },
+  {
+    "name": "Kannada",
+    "code": "kan"
+  },
+  {
+    "name": "Karen languages",
+    "code": "kar"
+  },
+  {
+    "name": "Kashmiri",
+    "code": "kas"
+  },
+  {
+    "name": "Kanuri",
+    "code": "kau"
+  },
+  {
+    "name": "Kawi",
+    "code": "kaw"
+  },
+  {
+    "name": "Kazakh",
+    "code": "kaz"
+  },
+  {
+    "name": "Kabardian",
+    "code": "kbd"
+  },
+  {
+    "name": "Khasi",
+    "code": "kha"
+  },
+  {
+    "name": "Khoisan (Other)",
+    "code": "khi"
+  },
+  {
+    "name": "Khmer",
+    "code": "khm"
+  },
+  {
+    "name": "Khotanese",
+    "code": "kho"
+  },
+  {
+    "name": "Kikuyu",
+    "code": "kik"
+  },
+  {
+    "name": "Kinyarwanda",
+    "code": "kin"
+  },
+  {
+    "name": "Kyrgyz",
+    "code": "kir"
+  },
+  {
+    "name": "Kimbundu",
+    "code": "kmb"
+  },
+  {
+    "name": "Konkani",
+    "code": "kok"
+  },
+  {
+    "name": "Komi",
+    "code": "kom"
+  },
+  {
+    "name": "Kongo",
+    "code": "kon"
+  },
+  {
+    "name": "Korean",
+    "code": "kor"
+  },
+  {
+    "name": "Kosraean",
+    "code": "kos"
+  },
+  {
+    "name": "Kpelle",
+    "code": "kpe"
+  },
+  {
+    "name": "Karachay-Balkar",
+    "code": "krc"
+  },
+  {
+    "name": "Karelian",
+    "code": "krl"
+  },
+  {
+    "name": "Kru (Other)",
+    "code": "kro"
+  },
+  {
+    "name": "Kurukh",
+    "code": "kru"
+  },
+  {
+    "name": "Kuanyama",
+    "code": "kua"
+  },
+  {
+    "name": "Kumyk",
+    "code": "kum"
+  },
+  {
+    "name": "Kurdish",
+    "code": "kur"
+  },
+  {
+    "name": "Kootenai",
+    "code": "kut"
+  },
+  {
+    "name": "Ladino",
+    "code": "lad"
+  },
+  {
+    "name": "Lahndā",
+    "code": "lah"
+  },
+  {
+    "name": "Lamba (Zambia and Congo)",
+    "code": "lam"
+  },
+  {
+    "name": "Lao",
+    "code": "lao"
+  },
+  {
+    "name": "Latin",
+    "code": "lat"
+  },
+  {
+    "name": "Latvian",
+    "code": "lav"
+  },
+  {
+    "name": "Lezgian",
+    "code": "lez"
+  },
+  {
+    "name": "Limburgish",
+    "code": "lim"
+  },
+  {
+    "name": "Lingala",
+    "code": "lin"
+  },
+  {
+    "name": "Lithuanian",
+    "code": "lit"
+  },
+  {
+    "name": "Mongo-Nkundu",
+    "code": "lol"
+  },
+  {
+    "name": "Lozi",
+    "code": "loz"
+  },
+  {
+    "name": "Luxembourgish",
+    "code": "ltz"
+  },
+  {
+    "name": "Luba-Lulua",
+    "code": "lua"
+  },
+  {
+    "name": "Luba-Katanga",
+    "code": "lub"
+  },
+  {
+    "name": "Ganda",
+    "code": "lug"
+  },
+  {
+    "name": "Luiseño",
+    "code": "lui"
+  },
+  {
+    "name": "Lunda",
+    "code": "lun"
+  },
+  {
+    "name": "Luo (Kenya and Tanzania)",
+    "code": "luo"
+  },
+  {
+    "name": "Lushai",
+    "code": "lus"
+  },
+  {
+    "name": "Macedonian",
+    "code": "mac"
+  },
+  {
+    "name": "Madurese",
+    "code": "mad"
+  },
+  {
+    "name": "Magahi",
+    "code": "mag"
+  },
+  {
+    "name": "Marshallese",
+    "code": "mah"
+  },
+  {
+    "name": "Maithili",
+    "code": "mai"
+  },
+  {
+    "name": "Makasar",
+    "code": "mak"
+  },
+  {
+    "name": "Malayalam",
+    "code": "mal"
+  },
+  {
+    "name": "Mandingo",
+    "code": "man"
+  },
+  {
+    "name": "Maori",
+    "code": "mao"
+  },
+  {
+    "name": "Austronesian (Other)",
+    "code": "map"
+  },
+  {
+    "name": "Marathi",
+    "code": "mar"
+  },
+  {
+    "name": "Maasai",
+    "code": "mas"
+  },
+  {
+    "name": "Malay",
+    "code": "may"
+  },
+  {
+    "name": "Moksha",
+    "code": "mdf"
+  },
+  {
+    "name": "Mandar",
+    "code": "mdr"
+  },
+  {
+    "name": "Mende",
+    "code": "men"
+  },
+  {
+    "name": "Irish, Middle (ca. 1100-1550)",
+    "code": "mga"
+  },
+  {
+    "name": "Micmac",
+    "code": "mic"
+  },
+  {
+    "name": "Minangkabau",
+    "code": "min"
+  },
+  {
+    "name": "Miscellaneous languages",
+    "code": "mis"
+  },
+  {
+    "name": "Mon-Khmer (Other)",
+    "code": "mkh"
+  },
+  {
+    "name": "Malagasy",
+    "code": "mlg"
+  },
+  {
+    "name": "Maltese",
+    "code": "mlt"
+  },
+  {
+    "name": "Manchu",
+    "code": "mnc"
+  },
+  {
+    "name": "Manipuri",
+    "code": "mni"
+  },
+  {
+    "name": "Manobo languages",
+    "code": "mno"
+  },
+  {
+    "name": "Mohawk",
+    "code": "moh"
+  },
+  {
+    "name": "Mongolian",
+    "code": "mon"
+  },
+  {
+    "name": "Mooré",
+    "code": "mos"
+  },
+  {
+    "name": "Multiple languages",
+    "code": "mul"
+  },
+  {
+    "name": "Munda (Other)",
+    "code": "mun"
+  },
+  {
+    "name": "Creek",
+    "code": "mus"
+  },
+  {
+    "name": "Mirandese",
+    "code": "mwl"
+  },
+  {
+    "name": "Marwari",
+    "code": "mwr"
+  },
+  {
+    "name": "Mayan languages",
+    "code": "myn"
+  },
+  {
+    "name": "Erzya",
+    "code": "myv"
+  },
+  {
+    "name": "Nahuatl",
+    "code": "nah"
+  },
+  {
+    "name": "North American Indian (Other)",
+    "code": "nai"
+  },
+  {
+    "name": "Neapolitan Italian",
+    "code": "nap"
+  },
+  {
+    "name": "Nauru",
+    "code": "nau"
+  },
+  {
+    "name": "Navajo",
+    "code": "nav"
+  },
+  {
+    "name": "Ndebele (South Africa)",
+    "code": "nbl"
+  },
+  {
+    "name": "Ndebele (Zimbabwe)",
+    "code": "nde"
+  },
+  {
+    "name": "Ndonga",
+    "code": "ndo"
+  },
+  {
+    "name": "Low German",
+    "code": "nds"
+  },
+  {
+    "name": "Nepali",
+    "code": "nep"
+  },
+  {
+    "name": "Newari",
+    "code": "new"
+  },
+  {
+    "name": "Nias",
+    "code": "nia"
+  },
+  {
+    "name": "Niger-Kordofanian (Other)",
+    "code": "nic"
+  },
+  {
+    "name": "Niuean",
+    "code": "niu"
+  },
+  {
+    "name": "Norwegian (Nynorsk)",
+    "code": "nno"
+  },
+  {
+    "name": "Norwegian (Bokmål)",
+    "code": "nob"
+  },
+  {
+    "name": "Nogai",
+    "code": "nog"
+  },
+  {
+    "name": "Old Norse",
+    "code": "non"
+  },
+  {
+    "name": "Norwegian",
+    "code": "nor"
+  },
+  {
+    "name": "N'Ko",
+    "code": "nqo"
+  },
+  {
+    "name": "Northern Sotho",
+    "code": "nso"
+  },
+  {
+    "name": "Nubian languages",
+    "code": "nub"
+  },
+  {
+    "name": "Newari, Old",
+    "code": "nwc"
+  },
+  {
+    "name": "Nyanja",
+    "code": "nya"
+  },
+  {
+    "name": "Nyamwezi",
+    "code": "nym"
+  },
+  {
+    "name": "Nyankole",
+    "code": "nyn"
+  },
+  {
+    "name": "Nyoro",
+    "code": "nyo"
+  },
+  {
+    "name": "Nzima",
+    "code": "nzi"
+  },
+  {
+    "name": "Occitan (post-1500)",
+    "code": "oci"
+  },
+  {
+    "name": "Ojibwa",
+    "code": "oji"
+  },
+  {
+    "name": "Oriya",
+    "code": "ori"
+  },
+  {
+    "name": "Oromo",
+    "code": "orm"
+  },
+  {
+    "name": "Osage",
+    "code": "osa"
+  },
+  {
+    "name": "Ossetic",
+    "code": "oss"
+  },
+  {
+    "name": "Turkish, Ottoman",
+    "code": "ota"
+  },
+  {
+    "name": "Otomian languages",
+    "code": "oto"
+  },
+  {
+    "name": "Papuan (Other)",
+    "code": "paa"
+  },
+  {
+    "name": "Pangasinan",
+    "code": "pag"
+  },
+  {
+    "name": "Pahlavi",
+    "code": "pal"
+  },
+  {
+    "name": "Pampanga",
+    "code": "pam"
+  },
+  {
+    "name": "Panjabi",
+    "code": "pan"
+  },
+  {
+    "name": "Papiamento",
+    "code": "pap"
+  },
+  {
+    "name": "Palauan",
+    "code": "pau"
+  },
+  {
+    "name": "Old Persian (ca. 600-400 B.C.)",
+    "code": "peo"
+  },
+  {
+    "name": "Persian",
+    "code": "per"
+  },
+  {
+    "name": "Philippine (Other)",
+    "code": "phi"
+  },
+  {
+    "name": "Phoenician",
+    "code": "phn"
+  },
+  {
+    "name": "Pali",
+    "code": "pli"
+  },
+  {
+    "name": "Polish",
+    "code": "pol"
+  },
+  {
+    "name": "Pohnpeian",
+    "code": "pon"
+  },
+  {
+    "name": "Portuguese",
+    "code": "por"
+  },
+  {
+    "name": "Prakrit languages",
+    "code": "pra"
+  },
+  {
+    "name": "Provençal (to 1500)",
+    "code": "pro"
+  },
+  {
+    "name": "Pushto",
+    "code": "pus"
+  },
+  {
+    "name": "Quechua",
+    "code": "que"
+  },
+  {
+    "name": "Rajasthani",
+    "code": "raj"
+  },
+  {
+    "name": "Rapanui",
+    "code": "rap"
+  },
+  {
+    "name": "Rarotongan",
+    "code": "rar"
+  },
+  {
+    "name": "Romance (Other)",
+    "code": "roa"
+  },
+  {
+    "name": "Raeto-Romance",
+    "code": "roh"
+  },
+  {
+    "name": "Romani",
+    "code": "rom"
+  },
+  {
+    "name": "Romanian",
+    "code": "rum"
+  },
+  {
+    "name": "Rundi",
+    "code": "run"
+  },
+  {
+    "name": "Aromanian",
+    "code": "rup"
+  },
+  {
+    "name": "Russian",
+    "code": "rus"
+  },
+  {
+    "name": "Sandawe",
+    "code": "sad"
+  },
+  {
+    "name": "Sango (Ubangi Creole)",
+    "code": "sag"
+  },
+  {
+    "name": "Yakut",
+    "code": "sah"
+  },
+  {
+    "name": "South American Indian (Other)",
+    "code": "sai"
+  },
+  {
+    "name": "Salishan languages",
+    "code": "sal"
+  },
+  {
+    "name": "Samaritan Aramaic",
+    "code": "sam"
+  },
+  {
+    "name": "Sanskrit",
+    "code": "san"
+  },
+  {
+    "name": "Sasak",
+    "code": "sas"
+  },
+  {
+    "name": "Santali",
+    "code": "sat"
+  },
+  {
+    "name": "Sicilian Italian",
+    "code": "scn"
+  },
+  {
+    "name": "Scots",
+    "code": "sco"
+  },
+  {
+    "name": "Selkup",
+    "code": "sel"
+  },
+  {
+    "name": "Semitic (Other)",
+    "code": "sem"
+  },
+  {
+    "name": "Irish, Old (to 1100)",
+    "code": "sga"
+  },
+  {
+    "name": "Sign languages",
+    "code": "sgn"
+  },
+  {
+    "name": "Shan",
+    "code": "shn"
+  },
+  {
+    "name": "Sidamo",
+    "code": "sid"
+  },
+  {
+    "name": "Sinhalese",
+    "code": "sin"
+  },
+  {
+    "name": "Siouan (Other)",
+    "code": "sio"
+  },
+  {
+    "name": "Sino-Tibetan (Other)",
+    "code": "sit"
+  },
+  {
+    "name": "Slavic (Other)",
+    "code": "sla"
+  },
+  {
+    "name": "Slovak",
+    "code": "slo"
+  },
+  {
+    "name": "Slovenian",
+    "code": "slv"
+  },
+  {
+    "name": "Southern Sami",
+    "code": "sma"
+  },
+  {
+    "name": "Northern Sami",
+    "code": "sme"
+  },
+  {
+    "name": "Sami",
+    "code": "smi"
+  },
+  {
+    "name": "Lule Sami",
+    "code": "smj"
+  },
+  {
+    "name": "Inari Sami",
+    "code": "smn"
+  },
+  {
+    "name": "Samoan",
+    "code": "smo"
+  },
+  {
+    "name": "Skolt Sami",
+    "code": "sms"
+  },
+  {
+    "name": "Shona",
+    "code": "sna"
+  },
+  {
+    "name": "Sindhi",
+    "code": "snd"
+  },
+  {
+    "name": "Soninke",
+    "code": "snk"
+  },
+  {
+    "name": "Sogdian",
+    "code": "sog"
+  },
+  {
+    "name": "Somali",
+    "code": "som"
+  },
+  {
+    "name": "Songhai",
+    "code": "son"
+  },
+  {
+    "name": "Sotho",
+    "code": "sot"
+  },
+  {
+    "name": "Spanish",
+    "code": "spa"
+  },
+  {
+    "name": "Sardinian",
+    "code": "srd"
+  },
+  {
+    "name": "Sranan",
+    "code": "srn"
+  },
+  {
+    "name": "Serbian",
+    "code": "srp"
+  },
+  {
+    "name": "Serer",
+    "code": "srr"
+  },
+  {
+    "name": "Nilo-Saharan (Other)",
+    "code": "ssa"
+  },
+  {
+    "name": "Swazi",
+    "code": "ssw"
+  },
+  {
+    "name": "Sukuma",
+    "code": "suk"
+  },
+  {
+    "name": "Sundanese",
+    "code": "sun"
+  },
+  {
+    "name": "Susu",
+    "code": "sus"
+  },
+  {
+    "name": "Sumerian",
+    "code": "sux"
+  },
+  {
+    "name": "Swahili",
+    "code": "swa"
+  },
+  {
+    "name": "Swedish",
+    "code": "swe"
+  },
+  {
+    "name": "Syriac",
+    "code": "syc"
+  },
+  {
+    "name": "Syriac, Modern",
+    "code": "syr"
+  },
+  {
+    "name": "Tahitian",
+    "code": "tah"
+  },
+  {
+    "name": "Tai (Other)",
+    "code": "tai"
+  },
+  {
+    "name": "Tamil",
+    "code": "tam"
+  },
+  {
+    "name": "Tatar",
+    "code": "tat"
+  },
+  {
+    "name": "Telugu",
+    "code": "tel"
+  },
+  {
+    "name": "Temne",
+    "code": "tem"
+  },
+  {
+    "name": "Terena",
+    "code": "ter"
+  },
+  {
+    "name": "Tetum",
+    "code": "tet"
+  },
+  {
+    "name": "Tajik",
+    "code": "tgk"
+  },
+  {
+    "name": "Tagalog",
+    "code": "tgl"
+  },
+  {
+    "name": "Thai",
+    "code": "tha"
+  },
+  {
+    "name": "Tibetan",
+    "code": "tib"
+  },
+  {
+    "name": "Tigré",
+    "code": "tig"
+  },
+  {
+    "name": "Tigrinya",
+    "code": "tir"
+  },
+  {
+    "name": "Tiv",
+    "code": "tiv"
+  },
+  {
+    "name": "Tokelauan",
+    "code": "tkl"
+  },
+  {
+    "name": "Klingon (Artificial language)",
+    "code": "tlh"
+  },
+  {
+    "name": "Tlingit",
+    "code": "tli"
+  },
+  {
+    "name": "Tamashek",
+    "code": "tmh"
+  },
+  {
+    "name": "Tonga (Nyasa)",
+    "code": "tog"
+  },
+  {
+    "name": "Tongan",
+    "code": "ton"
+  },
+  {
+    "name": "Tok Pisin",
+    "code": "tpi"
+  },
+  {
+    "name": "Tsimshian",
+    "code": "tsi"
+  },
+  {
+    "name": "Tswana",
+    "code": "tsn"
+  },
+  {
+    "name": "Tsonga",
+    "code": "tso"
+  },
+  {
+    "name": "Turkmen",
+    "code": "tuk"
+  },
+  {
+    "name": "Tumbuka",
+    "code": "tum"
+  },
+  {
+    "name": "Tupi languages",
+    "code": "tup"
+  },
+  {
+    "name": "Turkish",
+    "code": "tur"
+  },
+  {
+    "name": "Altaic (Other)",
+    "code": "tut"
+  },
+  {
+    "name": "Tuvaluan",
+    "code": "tvl"
+  },
+  {
+    "name": "Twi",
+    "code": "twi"
+  },
+  {
+    "name": "Tuvinian",
+    "code": "tyv"
+  },
+  {
+    "name": "Udmurt",
+    "code": "udm"
+  },
+  {
+    "name": "Ugaritic",
+    "code": "uga"
+  },
+  {
+    "name": "Uighur",
+    "code": "uig"
+  },
+  {
+    "name": "Ukrainian",
+    "code": "ukr"
+  },
+  {
+    "name": "Umbundu",
+    "code": "umb"
+  },
+  {
+    "name": "Undetermined",
+    "code": "und"
+  },
+  {
+    "name": "Urdu",
+    "code": "urd"
+  },
+  {
+    "name": "Uzbek",
+    "code": "uzb"
+  },
+  {
+    "name": "Vai",
+    "code": "vai"
+  },
+  {
+    "name": "Venda",
+    "code": "ven"
+  },
+  {
+    "name": "Vietnamese",
+    "code": "vie"
+  },
+  {
+    "name": "Volapük",
+    "code": "vol"
+  },
+  {
+    "name": "Votic",
+    "code": "vot"
+  },
+  {
+    "name": "Wakashan languages",
+    "code": "wak"
+  },
+  {
+    "name": "Wolayta",
+    "code": "wal"
+  },
+  {
+    "name": "Waray",
+    "code": "war"
+  },
+  {
+    "name": "Washoe",
+    "code": "was"
+  },
+  {
+    "name": "Welsh",
+    "code": "wel"
+  },
+  {
+    "name": "Sorbian (Other)",
+    "code": "wen"
+  },
+  {
+    "name": "Walloon",
+    "code": "wln"
+  },
+  {
+    "name": "Wolof",
+    "code": "wol"
+  },
+  {
+    "name": "Oirat",
+    "code": "xal"
+  },
+  {
+    "name": "Xhosa",
+    "code": "xho"
+  },
+  {
+    "name": "Yao (Africa)",
+    "code": "yao"
+  },
+  {
+    "name": "Yapese",
+    "code": "yap"
+  },
+  {
+    "name": "Yiddish",
+    "code": "yid"
+  },
+  {
+    "name": "Yoruba",
+    "code": "yor"
+  },
+  {
+    "name": "Yupik languages",
+    "code": "ypk"
+  },
+  {
+    "name": "Zapotec",
+    "code": "zap"
+  },
+  {
+    "name": "Blissymbolics",
+    "code": "zbl"
+  },
+  {
+    "name": "Zenaga",
+    "code": "zen"
+  },
+  {
+    "name": "Zhuang",
+    "code": "zha"
+  },
+  {
+    "name": "Zande languages",
+    "code": "znd"
+  },
+  {
+    "name": "Zulu",
+    "code": "zul"
+  },
+  {
+    "name": "Zuni",
+    "code": "zun"
+  },
+  {
+    "name": "No linguistic content",
+    "code": "zxx"
+  },
+  {
+    "name": "Zaza",
+    "code": "zza"
+  }
+]

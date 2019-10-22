@@ -48,6 +48,7 @@ class Items extends React.Component {
     } = this.props;
 
     if (!items || !items.hasLoaded) return null;
+    const noBarcode = <FormattedMessage id="ui-inventory.noBarcode" />;
     const itemRecords = items.records;
     const itemsFormatter = {
       'Item: barcode': (item) => {
@@ -59,7 +60,7 @@ class Items extends React.Component {
             >
               <span data-test-items-app-icon>
                 <AppIcon app="inventory" iconKey="item" size="small">
-                  {get(item, 'barcode', '')}
+                  {get(item, 'barcode', noBarcode)}
                 </AppIcon>
               </span>
             </Link>

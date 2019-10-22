@@ -367,6 +367,7 @@ class Instances extends React.Component {
           size="small"
           app="inventory"
           iconKey="instance"
+          iconAlignment="baseline"
         >
           {title}
         </AppIcon>
@@ -414,8 +415,8 @@ class Instances extends React.Component {
           columnWidths={{ title: '40%' }}
           resultsFormatter={resultsFormatter}
           onCreate={this.createInstance}
-          viewRecordPerms="inventory-storage.instances.item.get"
-          newRecordPerms="inventory-storage.instances.item.post"
+          viewRecordPerms="ui-inventory.instance.view"
+          newRecordPerms="ui-inventory.instance.create"
           disableRecordCreation={disableRecordCreation || false}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}

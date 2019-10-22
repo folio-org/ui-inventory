@@ -43,7 +43,7 @@
     "okapiInterfaces": {
       "inventory": "9.0",
       "instance-storage": "7.0",
-      "holdings-storage": "3.0",
+      "holdings-storage": "3.0 4.0",
       "item-storage": "7.0",
       "loan-types": "2.0",
       "material-types": "2.0",
@@ -69,7 +69,7 @@
       "ill-policies": "1.0",
       "holdings-note-types": "1.0",
       "users": "15.0",
-      "location-units": "1.1",
+      "location-units": "2.0",
       "circulation": "4.0 5.0 6.0 7.0 8.0"
     },
     "permissionSets": [
@@ -355,6 +355,137 @@
           "settings.inventory.enabled"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.view",
+        "displayName": "Inventory: View instances, holdings, and items",
+        "subPermissions": [
+          "module.inventory.enabled",
+          "users.collection.get",
+          "source-storage.records.get",
+          "circulation.loans.collection.get",
+          "circulation.loans.collection.get",
+          "circulation.requests.collection.get",
+          "configuration.entries.collection.get",
+          "inventory.config.instances.blocked-fields.get",
+          "inventory.instances.collection.get",
+          "inventory.instances.item.get",
+          "inventory.items.collection.get",
+          "inventory.items.item.get",
+          "inventory-storage.items.item.get",
+          "inventory-storage.items.collection.get",
+          "inventory-storage.identifier-types.collection.get",
+          "inventory-storage.contributor-types.collection.get",
+          "inventory-storage.contributor-name-types.collection.get",
+          "inventory-storage.call-number-types.collection.get",
+          "inventory-storage.item-note-types.collection.get",
+          "inventory-storage.item-damaged-statuses.collection.get",
+          "inventory-storage.nature-of-content-terms.collection.get",
+          "inventory-storage.classification-types.collection.get",
+          "inventory-storage.alternative-title-types.collection.get",
+          "inventory-storage.locations.collection.get",
+          "inventory-storage.locations.item.get",
+          "inventory-storage.modes-of-issuance.collection.get",
+          "inventory-storage.instance-formats.collection.get",
+          "inventory-storage.instance-statuses.collection.get",
+          "inventory-storage.instance-types.collection.get",
+          "inventory-storage.instance-relationship-types.collection.get",
+          "inventory-storage.instance-note-types.collection.get",
+          "inventory-storage.instances.item.get",
+          "inventory-storage.electronic-access-relationships.collection.get",
+          "inventory-storage.statistical-code-types.collection.get",
+          "inventory-storage.statistical-codes.collection.get",
+          "inventory-storage.ill-policies.collection.get",
+          "inventory-storage.holdings-note-types.collection.get",
+          "inventory-storage.holdings-types.collection.get",
+          "inventory-storage.holdings.collection.get",
+          "inventory-storage.holdings.item.get",
+          "inventory-storage.material-types.collection.get",
+          "inventory-storage.loan-types.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.create",
+        "displayName": "Inventory: View, create instances",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory.instances.item.post",
+          "inventory-storage.instances.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.edit",
+        "displayName": "Inventory: View, create, edit instances",
+        "subPermissions": [
+          "ui-inventory.instance.create",
+          "inventory.instances.item.put",
+          "inventory-storage.instances.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.create",
+        "displayName": "Inventory: View, create items",
+        "subPermissions": [
+          "ui-inventory.instance.edit",
+          "inventory.items.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.edit",
+        "displayName": "Inventory: View, create, edit items",
+        "subPermissions": [
+          "ui-inventory.item.create",
+          "inventory.items.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.delete",
+        "displayName": "Inventory: View, create, edit, delete items",
+        "subPermissions": [
+          "ui-inventory.item.edit",
+          "inventory.items.item.delete"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.create",
+        "displayName": "Inventory: View, create holdings",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory-storage.holdings.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.edit",
+        "displayName": "Inventory: View, create, edit holdings",
+        "subPermissions": [
+          "ui-inventory.holdings.create",
+          "inventory-storage.holdings.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.delete",
+        "displayName": "Inventory: View, create, edit, delete holdings",
+        "subPermissions": [
+          "ui-inventory.holdings.edit",
+          "inventory-storage.holdings.item.delete"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
+        "displayName": "Inventory: View instance records being suppressed for staff",
+        "subPermissions": [
+          "ui-inventory.instance.view"
+        ],
+        "visible": true
       }
     ],
     "translations": {
@@ -379,7 +510,7 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^2.9.0",
+    "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.13.0",
     "@folio/stripes-core": "^3.0.1",
     "babel-eslint": "^9.0.0",
