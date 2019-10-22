@@ -18,6 +18,9 @@ class LoanTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  suppressEdit = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+
   render() {
     return (
       <IntlConsumer>
@@ -31,6 +34,7 @@ class LoanTypesSettings extends React.Component {
             objectLabel={<FormattedMessage id="ui-inventory.loans" />}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="loantypes"
             sortby="name"
           />

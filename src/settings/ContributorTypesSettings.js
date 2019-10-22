@@ -20,8 +20,8 @@ class ContributorTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'marcrelator';
-  suppressDelete = term => term.source === 'marcrelator';
+  suppressEdit = term => term.source === 'marcrelator' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = term => term.source === 'marcrelator' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
 
   render() {
     return (

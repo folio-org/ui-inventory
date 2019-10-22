@@ -18,8 +18,8 @@ class ClassificationTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'folio';
-  suppressDelete = term => term.source === 'folio';
+  suppressEdit = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
 
   render() {
     return (

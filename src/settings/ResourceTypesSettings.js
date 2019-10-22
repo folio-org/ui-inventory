@@ -20,8 +20,8 @@ class ResourceTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdacontent';
-  suppressDelete = term => term.source === 'rdacontent';
+  suppressEdit = term => term.source === 'rdacontent' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = term => term.source === 'rdacontent' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
 
   render() {
     return (

@@ -20,8 +20,8 @@ class FormatSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdacarrier';
-  suppressDelete = term => term.source === 'rdacarrier';
+  suppressEdit = term => term.source === 'rdacarrier' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = term => term.source === 'rdacarrier' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
 
   render() {
     return (

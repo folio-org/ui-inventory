@@ -18,8 +18,8 @@ class ModesOfIssuanceSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdamodeissue';
-  suppressDelete = term => term.source === 'rdamodeissue';
+  suppressEdit = term => term.source === 'rdamodeissue' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = term => term.source === 'rdamodeissue' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
 
   render() {
     return (

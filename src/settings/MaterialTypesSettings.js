@@ -18,6 +18,9 @@ class MaterialTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  suppressEdit = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
+  suppressDelete = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+
   render() {
     return (
       <IntlConsumer>
@@ -38,6 +41,7 @@ class MaterialTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="materialtypes"
             sortby="name"
           />
