@@ -375,7 +375,7 @@ class ViewInstance extends React.Component {
         .map((noteType, i) => {
           return (
             <Row key={i}>
-              <Col xs={2}>
+              <Col xs={3}>
                 <KeyValue
                   label={<FormattedMessage id="ui-inventory.staffOnly" />}
                   value={get(instance, ['notes'], []).map((note, j) => {
@@ -386,7 +386,7 @@ class ViewInstance extends React.Component {
                   })}
                 />
               </Col>
-              <Col xs={10}>
+              <Col xs={9}>
                 <KeyValue
                   label={noteType.name}
                   value={get(instance, ['notes'], []).map((note, j) => {
@@ -599,19 +599,19 @@ class ViewInstance extends React.Component {
           </Row>
           {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
           <Row>
-            <Col xs={2}>
+            <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceHrid" />}
                 value={get(instance, ['hrid'], '')}
               />
             </Col>
-            <Col xs={2}>
+            <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.metadataSource" />}
                 value={get(instance, ['source'], '')}
               />
             </Col>
-            <Col xs={4}>
+            <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.catalogedDate" />}
                 value={get(instance, ['catalogedDate'], '')}
@@ -631,7 +631,7 @@ class ViewInstance extends React.Component {
                 value={this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code}
               />
             </Col>
-            <Col cs={3}>
+            <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
                 value={this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source}
@@ -665,6 +665,10 @@ class ViewInstance extends React.Component {
                         columnMapping={{
                           'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
                           'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                        }}
+                        columnWidths={{
+                          'Statistical code type': '25%',
+                          'Statistical code': '25%',
                         }}
                         formatter={{
                           'Statistical code type':
@@ -713,6 +717,10 @@ class ViewInstance extends React.Component {
                         columnMapping={{
                           'Alternative title type': intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' }),
                           'Alternative title': intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
+                        }}
+                        columnWidths={{
+                          'Alternative title type': '25%',
+                          'Alternative title': '25%',
                         }}
                         formatter={alternativeTitlesRowFormatter}
                         ariaLabel={ariaLabel}
@@ -769,6 +777,10 @@ class ViewInstance extends React.Component {
                           'Resource identifier type': intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' }),
                           'Resource identifier': intl.formatMessage({ id: 'ui-inventory.resourceIdentifier' }),
                         }}
+                        columnWidths={{
+                          'Resource identifier type': '25%',
+                          'Resource identifier': '25%',
+                        }}
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
@@ -805,6 +817,12 @@ class ViewInstance extends React.Component {
                           'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
                           'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
                         }}
+                        columnWidths={{
+                          'Name type': '25%',
+                          'Name': '25%',
+                          'Type': '12%',
+                          'Free text': '13%',
+                        }}
                         formatter={contributorsRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
@@ -839,6 +857,11 @@ class ViewInstance extends React.Component {
                           'Publisher role': intl.formatMessage({ id: 'ui-inventory.publisherRole' }),
                           'Place of publication': intl.formatMessage({ id: 'ui-inventory.placeOfPublication' }),
                           'Publication date': intl.formatMessage({ id: 'ui-inventory.dateOfPublication' }),
+                        }}
+                        columnWidths={{
+                          'Publisher': '25%',
+                          'Publisher role': '25%',
+                          'Place of publication': '25%',
                         }}
                         formatter={publicationRowFormatter}
                         ariaLabel={ariaLabel}
@@ -888,13 +911,13 @@ class ViewInstance extends React.Component {
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code}
               />
             </Col>
-            <Col cs={3}>
+            <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
               />
             </Col>
-            <Col cs={3}>
+            <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
                 value={natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)}
@@ -918,6 +941,11 @@ class ViewInstance extends React.Component {
                             'Term': intl.formatMessage({ id: 'ui-inventory.formatTerm' }),
                             'Code': intl.formatMessage({ id: 'ui-inventory.formatCode' }),
                             'Source': intl.formatMessage({ id: 'ui-inventory.formatSource' }),
+                          }}
+                          columnWidths={{
+                            'Category': '25%',
+                            'Term': '25%',
+                            'Code': '25%',
                           }}
                           formatter={formatsRowFormatter}
                           ariaLabel={ariaLabel}
@@ -991,6 +1019,13 @@ class ViewInstance extends React.Component {
                           'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
                           'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
                         }}
+                        columnWidths={{
+                          'URL relationship': '25%',
+                          'URI': '25%',
+                          'Link text': '25%',
+                          'Materials specified': '25%',
+                          'URL public note': '25%',
+                        }}
                         formatter={electronicAccessRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
@@ -1043,6 +1078,10 @@ class ViewInstance extends React.Component {
                       columnMapping={{
                         'Classification identifier type': intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
                         'Classification': intl.formatMessage({ id: 'ui-inventory.classification' }),
+                      }}
+                      columnWidths={{
+                        'Classification identifier type': '25%',
+                        'Classification': '25%',
                       }}
                       formatter={classificationsRowFormatter}
                       ariaLabel={ariaLabel}
