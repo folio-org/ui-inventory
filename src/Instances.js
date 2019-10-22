@@ -279,7 +279,9 @@ class Instances extends React.Component {
     const titleRelationshipTypeId = find(this.props.resources.instanceRelationshipTypes.records, { 'name': 'preceding-succeeding' }).id;
     const previousTitles = map(copiedInstance.previousTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
     set(copiedInstance, 'parentInstances', previousTitles);
-    copiedInstance = omit(copiedInstance, ['previousTitles']);
+    const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(copiedInstance, 'childInstances', succeedingTitles);
+    copiedInstance = omit(copiedInstance, ['previousTitles', 'succeedingTitles']);
     return copiedInstance;
   }
 
