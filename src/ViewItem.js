@@ -298,7 +298,10 @@ class ViewItem extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { resources } = this.props;
+    const {
+      resources,
+      stripes,
+    } = this.props;
     const firstItem = get(resources, 'items.records[0]');
     const request = get(resources, 'requests.records[0]');
 
@@ -306,9 +309,18 @@ class ViewItem extends React.Component {
       ? `/requests?itemBarcode=${firstItem.barcode}&query=${firstItem.barcode}&layer=create`
       : `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
 
+    const canCreate = stripes.hasPerm('ui-inventory.item.create');
+    const canEdit = stripes.hasPerm('ui-inventory.item.edit');
+    const canDelete = stripes.hasPerm('ui-inventory.item.delete');
+    const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
+
+    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest) {
+      return null;
+    }
+
     return (
       <Fragment>
-        <IfPermission perm="ui-inventory.item.edit">
+        { canEdit &&
           <Button
             href={this.craftLayerUrl('editItem')}
             onClick={() => {
@@ -319,11 +331,11 @@ class ViewItem extends React.Component {
             data-test-inventory-edit-item-action
           >
             <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editItem" />
+              <FormattedMessage id="ui-inventory.editItem"/>
             </Icon>
           </Button>
-        </IfPermission>
-        <IfPermission perm="ui-inventory.item.create">
+        }
+        { canCreate &&
           <Button
             id="clickable-copy-item"
             onClick={() => {
@@ -334,27 +346,26 @@ class ViewItem extends React.Component {
             data-test-inventory-duplicate-item-action
           >
             <Icon icon="duplicate">
-              <FormattedMessage id="ui-inventory.copyItem" />
+              <FormattedMessage id="ui-inventory.copyItem"/>
             </Icon>
           </Button>
-        </IfPermission>
-        <IfPermission perm="ui-inventory.item.delete">
-          <Button
-            id="clickable-delete-item"
-            onClick={() => {
-              onToggle();
-              this.canDeleteItem(firstItem, request);
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-delete-item-action
-          >
-            <Icon icon="trash">
-              <FormattedMessage id="ui-inventory.deleteItem" />
-            </Icon>
-          </Button>
-        </IfPermission>
-        {
-          canMarkItemAsMissing(firstItem) &&
+        }
+        { canDelete &&
+        <Button
+          id="clickable-delete-item"
+          onClick={() => {
+            onToggle();
+            this.canDeleteItem(firstItem, request);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-item-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteItem"/>
+          </Icon>
+        </Button>
+        }
+        { canMarkItemAsMissing(firstItem) && canEdit &&
           <Button
             id="clickable-missing-item"
             onClick={() => {
@@ -369,15 +380,17 @@ class ViewItem extends React.Component {
             </Icon>
           </Button>
         }
-        <Button
-          to={newRequestLink}
-          buttonStyle="dropdownItem"
-          data-test-inventory-create-request-action
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.newRequest" />
-          </Icon>
-        </Button>
+        { canCreateNewRequest &&
+          <Button
+            to={newRequestLink}
+            buttonStyle="dropdownItem"
+            data-test-inventory-create-request-action
+          >
+            <Icon icon="plus-sign">
+              <FormattedMessage id="ui-inventory.newRequest"/>
+            </Icon>
+          </Button>
+        }
       </Fragment>
     );
   }
@@ -1180,6 +1193,7 @@ class ViewItem extends React.Component {
 ViewItem.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({

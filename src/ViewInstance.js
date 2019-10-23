@@ -240,8 +240,10 @@ class ViewInstance extends React.Component {
   };
 
   createActionMenuGetter = instance => ({ onToggle }) => {
-    const { onCopy } = this.props;
+    const { onCopy, stripes } = this.props;
     const { marcRecord } = this.state;
+    const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
+
     return (
       <Fragment>
         <IfPermission perm="ui-inventory.instance.edit">
@@ -281,7 +283,7 @@ class ViewInstance extends React.Component {
               onToggle();
               this.handleViewSource(e, instance);
             }}
-            disabled={!marcRecord}
+            disabled={!canViewInstance && !marcRecord}
           >
             <Icon icon="document">
               <FormattedMessage id="ui-inventory.viewSource" />
