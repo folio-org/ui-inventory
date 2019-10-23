@@ -18,14 +18,14 @@ class ClassificationTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
-  suppressDelete = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+  suppressActions = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.classification-types');
 
   render() {
     return (
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
+            ddd={this.props}
             {...this.props}
             baseUrl="classification-types"
             records="classificationTypes"
@@ -42,7 +42,7 @@ class ClassificationTypesSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="classification-types"
             sortby="name"
           />

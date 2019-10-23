@@ -20,8 +20,7 @@ class ResourceTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdacontent' || !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
-  suppressDelete = term => term.source === 'rdacontent' || !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+  suppressActions = term => term.source === 'rdacontent' || !this.props.stripes.hasPerm('ui-inventory.settings.instance-types');
 
   render() {
     return (
@@ -45,7 +44,7 @@ class ResourceTypesSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="instance-types"
             sortby="name"
             validate={validateNameAndCode}

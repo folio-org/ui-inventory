@@ -18,8 +18,7 @@ class AlternativeTitleTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
-  suppressDelete = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.alternative-title-types');
 
   render() {
     return (
@@ -32,7 +31,7 @@ class AlternativeTitleTypesSettings extends React.Component {
             label={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' })}
             objectLabel={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
-            visibleFields={['name', 'source']}
+            visibleFields={['name', 'source'].filter((item)=> item !== 'actions')}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               source: intl.formatMessage({ id: 'ui-inventory.source' }),
@@ -41,7 +40,7 @@ class AlternativeTitleTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="alternative-title-types"
             sortby="name"
           />

@@ -18,8 +18,7 @@ class InstanceNoteTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
-  suppressDelete = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.instance-note-types');
 
   render() {
     return (
@@ -41,7 +40,7 @@ class InstanceNoteTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="instanceNoteTypes"
             sortby="name"
           />

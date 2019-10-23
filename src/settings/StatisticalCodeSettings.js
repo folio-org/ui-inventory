@@ -41,16 +41,16 @@ class StatisticalCodeSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.edit');
-  suppressDelete = () => !this.props.stripes.hasPerm('ui-inventory.settings.list.delete');
+  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.statistical-codes');
 
   validate = (item) => {
     const errors = validateNameAndCode(item);
+
     if (!item.statisticalCodeTypeId) {
       errors.name = <FormattedMessage id="ui-inventory.selectToContinue" />;
     }
     return errors;
-  }
+  };
 
   render() {
     const statisticalCodeTypes = _.get(this.props.resources, ['statisticalCodeTypes', 'records'], []);
@@ -114,7 +114,7 @@ class StatisticalCodeSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="statistical-codes"
             sortby="code"
           />
