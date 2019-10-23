@@ -8,7 +8,7 @@ import InstanceCreatePage from '../interactors/instance-create-page';
 import ItemViewPage from '../interactors/item-view-page';
 import HoldingsViewPage from '../interactors/holdings-view-page';
 
-describe.only('InstanceViewPage', () => {
+describe('InstanceViewPage', () => {
   setupApplication();
 
   beforeEach(async function () {
