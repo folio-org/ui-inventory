@@ -18,7 +18,7 @@ import {
 @interactor class Item {
   hasAppIcon = isPresent('[data-test-items-app-icon]');
   hasBarcodeLink = isPresent('[data-test-item-link]');
-  clickBarcode = clickable('[data-test-item-link]')
+  clickBarcode = clickable('[data-test-item-link]');
 }
 
 @interactor class InstanceViewPage {
@@ -31,6 +31,8 @@ import {
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
   items = collection('#list-items div[class^=mclRow]', Item);
+  hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
+  clickViewHoldings = clickable('[data-test-view-holdings]');
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');
