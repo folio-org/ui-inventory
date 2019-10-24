@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   MultiColumnList,
   IconButton,
+  Callout,
 } from '@folio/stripes/components';
 import {
   IntlConsumer,
@@ -37,6 +38,18 @@ class Items extends React.Component {
   constructor(props) {
     super(props);
     this.editItemModeThisLayer = false;
+    this.calloutRef = createRef();
+  }
+
+  showCallout(barcode) {
+    this.calloutRef.current.sendCallout({
+      type: 'success',
+      message: (
+        <FormattedMessage
+          id="ui-inventory.items.successfullyCopiedMessage"
+          values={{ barcode }}
+        />)
+    });
   }
 
   render() {
@@ -65,8 +78,13 @@ class Items extends React.Component {
               </span>
             </Link>
             {item.barcode &&
-              <CopyToClipboard text={item.barcode}>
-                <IconButton icon="clipboard" />
+              <CopyToClipboard
+                text={item.barcode}
+                onCopy={() => this.showCallout(item.barcode)}
+              >
+                <div data-test-items-copy-icon>
+                  <IconButton icon="clipboard" />
+                </div>
               </CopyToClipboard>
             }
           </React.Fragment>
@@ -106,6 +124,7 @@ class Items extends React.Component {
             </FormattedMessage>
           )}
         </IntlConsumer>
+        <Callout ref={this.calloutRef} />
       </div>);
   }
 }

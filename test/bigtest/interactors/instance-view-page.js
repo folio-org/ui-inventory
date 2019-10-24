@@ -18,6 +18,7 @@ import {
 @interactor class Item {
   hasAppIcon = isPresent('[data-test-items-app-icon]');
   hasBarcodeLink = isPresent('[data-test-item-link]');
+  hasCopyIcon = isPresent('[data-test-items-copy-icon]');
   clickBarcode = clickable('[data-test-item-link]');
 }
 

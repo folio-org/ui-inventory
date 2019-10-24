@@ -70,6 +70,10 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.items(0).hasAppIcon).to.be.true;
     });
 
+    it('should render a copy icon for each item in the item list', () => {
+      expect(InstanceViewPage.items(0).hasCopyIcon).to.be.true;
+    });
+
     it('should render a link for each item in the items list', () => {
       expect(InstanceViewPage.items(0).hasBarcodeLink).to.be.true;
     });
