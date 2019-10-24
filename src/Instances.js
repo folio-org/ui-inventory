@@ -266,7 +266,9 @@ class Instances extends React.Component {
   createInstance = (instance) => {
     // Massage record to add preceeding and succeeding title fields in the
     // right place.
+    console.log("saving instance", instance)
     const copiedInstance = this.handlePrecedingSucceedingTitles(instance);
+    console.log("modified instance", copiedInstance)
 
     // POST instance record
     this.props.mutator.records.POST(copiedInstance).then(() => {
@@ -281,11 +283,12 @@ class Instances extends React.Component {
     // instance ID.
     let copiedInstance = instance;
     const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    const previousTitles = map(copiedInstance.previousTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(copiedInstance, 'parentInstances', previousTitles);
+    const precedingTitles = map(copiedInstance.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(copiedInstance, 'parentInstances', precedingTitles);
+    console.log("new set preceding", precedingTitles)
     const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
     set(copiedInstance, 'childInstances', succeedingTitles);
-    copiedInstance = omit(copiedInstance, ['previousTitles', 'succeedingTitles']);
+    copiedInstance = omit(copiedInstance, ['precedingTitles', 'succeedingTitles']);
     return copiedInstance;
   }
 
