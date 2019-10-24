@@ -31,9 +31,23 @@ describe('ItemViewPage', () => {
       expect(ItemViewPage.title).to.equal(`Item record ${item.barcode} ${item.status.name}`);
     });
 
+    it('displays the edit button in the pane header', () => {
+      expect(ItemViewPage.hasEditItemButton).to.be.true;
+    });
+
+    describe('clicking on edit button in the pane header', () => {
+      beforeEach(async () => {
+        await ItemViewPage.clickEditItemButton();
+      });
+
+      it('should redirect to item edit page', () => {
+        expect(ItemEditPage.$root).to.exist;
+      });
+    });
+
     describe('pane header dropdown menu', () => {
       beforeEach(async () => {
-        await ItemViewPage.headerDropdown.click();
+        await ItemViewPage.headerDropdown();
       });
 
       it('should show a new request menu item', () => {
@@ -46,6 +60,10 @@ describe('ItemViewPage', () => {
 
       it('should show a delete item menu item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.true;
+      });
+
+      it('should show a duplicate menu item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasDuplicate).to.be.true;
       });
 
       describe('clicking on edit', () => {

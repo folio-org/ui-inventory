@@ -15,6 +15,7 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
 
 @interactor class HeaderDropdownMenu {
   clickEdit = clickable('[data-test-inventory-edit-item-action]');
+  hasDuplicate = isPresent('[data-test-inventory-duplicate-item-action]');
   clickDuplicate = clickable('[data-test-inventory-duplicate-item-action]');
   hasNewRequestItem = isPresent('[data-test-inventory-create-request-action]');
   hasMarkAsMissing = isPresent('[data-test-mark-as-missing-item]');
@@ -30,6 +31,8 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
   hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
+  hasEditItemButton = isPresent('[data-test-clickable-edit-item]');
+  clickEditItemButton = clickable('[data-test-clickable-edit-item]');
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');

@@ -24,7 +24,7 @@ describe('InstanceViewPage', () => {
   });
 
   it('displays the clickable edit button near the header', () => {
-    expect(InstanceViewPage.buttonEditInstance).to.be.true;
+    expect(InstanceViewPage.hasButtonEditInstance).to.be.true;
   });
 
   it('displays the instance title in the pane header', () => {
@@ -58,6 +58,7 @@ describe('InstanceViewPage', () => {
       it('should redirect to instance create page', () => {
         expect(InstanceCreatePage.$root).to.exist;
       });
+
       it('should have a source value of "FOLIO"', () => {
         expect(InstanceCreatePage.sourceValue).to.equal('FOLIO');
       });

@@ -34,7 +34,7 @@ import {
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
   clickEditInstance = clickable('[data-test-clickable-edit]');
-  buttonEditInstance = isPresent('[data-test-clickable-edit]');
+  hasButtonEditInstance = isPresent('[data-test-clickable-edit]');
   headlineInViewInstance = isPresent('[data-test-headline-medium]');
 }
 

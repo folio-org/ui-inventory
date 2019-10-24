@@ -387,7 +387,7 @@ class ViewItem extends React.Component {
             data-test-inventory-create-request-action
           >
             <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.newRequest"/>
+              <FormattedMessage id="ui-inventory.newRequest" />
             </Icon>
           </Button>
         }
@@ -473,6 +473,7 @@ class ViewItem extends React.Component {
                 href={this.craftLayerUrl('editItem', location)}
                 onClick={this.onClickEditItem}
                 ariaLabel={ariaLabel}
+                data-test-clickable-edit-item
               />
             )}
           </FormattedMessage>
