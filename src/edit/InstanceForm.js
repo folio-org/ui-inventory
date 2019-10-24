@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import {
   cloneDeep,
-  filter,
   isEmpty,
-  reject,
-  remove
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
@@ -194,25 +191,6 @@ class InstanceForm extends React.Component {
     if (!records || !records.length) return;
     const { blockedFields: blockables } = records[0];
     this.setState({ blockables });
-    this.handlePSTitles();
-  }
-
-  // Separate preceding/succeeding title relationships from other types of
-  // parent/child instances
-  handlePSTitles() {
-    const { initialValues, referenceTables } = this.props;
-    console.log("Mounted with values", initialValues)
-    const psRelId = psTitleRelationshipId(referenceTables.instanceRelationshipTypes);
-    if (initialValues.parentInstances) {
-      const precedingTitles = filter(initialValues.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      console.log("pts: ", precedingTitles, psRelId)
-      const otherParents = reject(initialValues.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      console.log("others", otherParents)
-      // initialValues.parentInstances = remove(initialValues.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      initialValues.precedingTitles = precedingTitles;
-      initialValues.parentInstances = otherParents;
-    }
-    console.log("returning values", initialValues)
   }
 
   onToggleSection({ id }) {
@@ -274,7 +252,6 @@ class InstanceForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
-console.log("rendering with values", initialValues)
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
       return ref || {};
