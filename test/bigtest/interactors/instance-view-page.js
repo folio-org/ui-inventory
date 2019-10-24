@@ -38,6 +38,10 @@ import {
   clickViewHoldings = clickable('[data-test-view-holdings]');
   clickEditInstance = clickable('[data-test-clickable-edit]');
   hasButtonEditInstance = isPresent('[data-test-clickable-edit]');
+  hasButtonAddItem = isPresent('#clickable-new-item');
+  clickButtonAddItem = clickable('#clickable-new-item');
+  hasButtonAddHoldings = isPresent('#clickable-new-holdings-record');
+  clickButtonAddHoldings = clickable('#clickable-new-holdings-record');
   headlineInViewInstance = isPresent('[data-test-headline-medium]');
 }
 

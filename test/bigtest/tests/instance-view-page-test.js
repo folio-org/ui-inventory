@@ -48,6 +48,14 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.headerDropdownMenu.hasDuplicateButton).to.be.true;
     });
 
+    it('should render an add item button', () => {
+      expect(InstanceViewPage.hasButtonAddItem).to.be.true;
+    });
+
+    it('should render an add holdings button', () => {
+      expect(InstanceViewPage.hasButtonAddHoldings).to.be.true;
+    });
+
     describe('clicking on edit', () => {
       beforeEach(async () => {
         await InstanceViewPage.headerDropdownMenu.clickEdit();
@@ -103,6 +111,26 @@ describe('InstanceViewPage', () => {
 
       it('should redirect to holding view page', () => {
         expect(HoldingsViewPage.$root).to.exist;
+      });
+    });
+
+    describe('clicking add holdings button', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.clickButtonAddHoldings();
+      });
+
+      it('should redirect to holding view page', () => {
+        expect(HoldingsViewPage.$root).to.exist;
+      });
+    });
+
+    describe('clicking add item button', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.clickButtonAddItem();
+      });
+
+      it('should redirect to item view page', () => {
+        expect(ItemViewPage.$root).to.exist;
       });
     });
 
