@@ -392,5 +392,6 @@
   "error.noMatch.how": "How did you get to {location}?",
   "items.damageStatus.damaged": "Damaged",
   "items.damageStatus.notdamaged": "Not damaged",
+  "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
   "instanceNotes": "Instance notes"
 }
