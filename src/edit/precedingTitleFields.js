@@ -18,7 +18,7 @@ const PrecedingTitles = props => {
 
   return (
     <RepeatableField
-      name="previousTitles"
+      name="precedingTitles"
       label=""
       addLabel={
         <Icon icon="plus-sign">
