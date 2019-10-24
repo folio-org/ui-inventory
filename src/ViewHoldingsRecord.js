@@ -493,6 +493,9 @@ class ViewHoldingsRecord extends React.Component {
                             'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
                             'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
                           }}
+                          columnWidths={{
+                            'Statistical code type': '16%',
+                          }}
                           formatter={{
                             'Statistical code type':
                               x => this.refLookup(referenceTables.statisticalCodeTypes,
@@ -531,7 +534,7 @@ class ViewHoldingsRecord extends React.Component {
                             value={holdingsPermanentLocation.name}
                           />
                         </Col>
-                        <Col>
+                        <Col sm={4}>
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporary" />}
                             value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'}
@@ -546,7 +549,7 @@ class ViewHoldingsRecord extends React.Component {
                           value={holdingsRecord.shelvingOrder}
                         />
                       </Col>
-                      <Col>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
                           value={holdingsRecord.shelvingTitle}
@@ -615,6 +618,9 @@ class ViewHoldingsRecord extends React.Component {
                           'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
                           'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
                         }}
+                        columnWidths={{
+                          'Holdings statement': '16%',
+                        }}
                         formatter={{
                           'Holdings statement': x => _.get(x, ['statement']) || '',
                           'Holdings statement note': x => _.get(x, ['note']) || '',
@@ -631,6 +637,9 @@ class ViewHoldingsRecord extends React.Component {
                         columnMapping={{
                           'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
                           'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
+                        }}
+                        columnWidths={{
+                          'Holdings statement for supplements': '16%',
                         }}
                         formatter={{
                           'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
@@ -649,6 +658,9 @@ class ViewHoldingsRecord extends React.Component {
                         columnMapping={{
                           'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
                           'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
+                        }}
+                        columnWidths={{
+                          'Holdings statement for indexes': '16%',
                         }}
                         formatter={{
                           'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
@@ -693,6 +705,9 @@ class ViewHoldingsRecord extends React.Component {
                         columnMapping={{
                           'Staff only': intl.formatMessage({ id: 'ui-inventory.staffOnly' }),
                           'Note': intl.formatMessage({ id: 'ui-inventory.note' }),
+                        }}
+                        columnWidths={{
+                          'Staff only': '16%',
                         }}
                         formatter={{
                           'Staff only': x => (_.get(x, ['staffOnly']) ? 'Yes' : 'No'),
@@ -748,6 +763,12 @@ class ViewHoldingsRecord extends React.Component {
                           'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
                           'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
                         }}
+                        columnWidths={{
+                          'URL relationship': '16%',
+                          'URI': '16%',
+                          'Link text': '16%',
+                          'Materials specified': '16%',
+                        }}
                         formatter={{
                           'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
                           'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
@@ -777,6 +798,9 @@ class ViewHoldingsRecord extends React.Component {
                           columnMapping={{
                             'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
                             'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+                          }}
+                          columnWidths={{
+                            'Enumeration': '16%',
                           }}
                           formatter={{
                             'Enumeration': x => x.enumeration,
