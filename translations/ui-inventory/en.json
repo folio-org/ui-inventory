@@ -243,8 +243,6 @@
   "addNewItemDialog": "Add new item dialog",
   "parentInstances": "Parent instances",
   "addParentInstance": "Add parent instance",
-  "parentInstancesRequired": "Parent instance *",
-  "typeOfRelationRequired": "Type of relation *",
   "selectType": "Select type",
   "selectStatus": "Select status",
   "loanTypes": "Loan types",
