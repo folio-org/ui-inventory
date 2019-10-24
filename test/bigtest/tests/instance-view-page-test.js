@@ -40,6 +40,14 @@ describe('InstanceViewPage', () => {
       await InstanceViewPage.headerDropdown.click();
     });
 
+    it('should render a edit instance button at the bottom of opened instance', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasEditButton).to.be.true;
+    });
+
+    it('should render a duplicate instance button at the bottom of opened instance', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasDuplicateButton).to.be.true;
+    });
+
     describe('clicking on edit', () => {
       beforeEach(async () => {
         await InstanceViewPage.headerDropdownMenu.clickEdit();

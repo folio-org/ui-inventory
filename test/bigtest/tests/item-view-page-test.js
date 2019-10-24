@@ -50,20 +50,20 @@ describe('ItemViewPage', () => {
         await ItemViewPage.headerDropdown.click();
       });
 
-      it('should show a new request menu item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
+      it('should show a duplicate menu item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasDuplicate).to.be.true;
       });
 
       it('should show a mark as missing item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.true;
       });
 
-      it('should show a delete item menu item', () => {
+      it('should show a delete menu item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.true;
       });
 
-      it('should show a duplicate menu item', () => {
-        expect(ItemViewPage.headerDropdownMenu.hasDuplicate).to.be.true;
+      it('should show a new request item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
       });
 
       describe('clicking on edit', () => {
@@ -93,6 +93,16 @@ describe('ItemViewPage', () => {
 
         it('should open a missing confirmation modal', () => {
           expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
+        });
+      });
+
+      describe('clicking on delete', () => {
+        beforeEach(async () => {
+          await ItemViewPage.headerDropdownMenu.clickDelete();
+        });
+
+        it('should open a delete confirmation modal', () => {
+          expect(ItemViewPage.hasDeleteModal).to.exist;
         });
       });
     });

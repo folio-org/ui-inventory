@@ -278,7 +278,6 @@ class ViewInstance extends React.Component {
         {get(instance, ['source'], '') === 'MARC' &&
           <Button
             id="clickable-view-source"
-            data-test-view-source-button
             buttonStyle="dropdownItem"
             onClick={(e) => {
               onToggle();

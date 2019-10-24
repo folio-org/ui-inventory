@@ -3,7 +3,7 @@ import {
   isPresent,
   clickable,
   collection,
-  text,
+  text, is,
 } from '@bigtest/interactor';
 
 @interactor class HeaderDropdown {
@@ -12,7 +12,9 @@ import {
 
 @interactor class HeaderDropdownMenu {
   clickEdit = clickable('#edit-instance');
+  hasEditButton = isPresent('#edit-instance');
   clickDuplicate = clickable('#copy-instance');
+  hasDuplicateButton = isPresent('#copy-instance');
 }
 
 @interactor class Item {

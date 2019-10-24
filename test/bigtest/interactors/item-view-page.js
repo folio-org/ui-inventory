@@ -30,12 +30,14 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
+  hasMarkAsMissingModal = isPresent('#confirmDeleteItemModal');
+  hasDeleteModal = isPresent('[data-test-missingConfirmation-modal]');
   hasEditItemButton = isPresent('[data-test-clickable-edit-item]');
   clickEditItemButton = clickable('[data-test-clickable-edit-item]');
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');
+
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);
   }
