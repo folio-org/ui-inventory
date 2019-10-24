@@ -1,4 +1,9 @@
-import { includes, get, forOwn } from 'lodash';
+import {
+  includes,
+  find,
+  get,
+  forOwn
+} from 'lodash';
 import { itemStatuses } from './constants';
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
@@ -43,4 +48,11 @@ export function parseFiltersToStr(filters) {
   });
 
   return newFilters.join(',');
+}
+
+// Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
+// idTypes is an array of relationship definition objects of the form
+// { id, name }
+export function psTitleRelationshipId(idTypes) {
+  return find(idTypes, { 'name': 'preceding-succeeding' }).id;
 }

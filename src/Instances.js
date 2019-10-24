@@ -28,7 +28,11 @@ import InstanceForm from './edit/InstanceForm';
 import ViewInstance from './ViewInstance';
 import formatters from './referenceFormatters';
 import withLocation from './withLocation';
-import { parseStrToFilters, parseFiltersToStr } from './utils';
+import {
+  parseStrToFilters,
+  parseFiltersToStr,
+  psTitleRelationshipId
+} from './utils';
 import Filters from './Filters';
 import { searchableIndexes, filterConfig } from './constants';
 
@@ -276,7 +280,7 @@ class Instances extends React.Component {
     // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
     // instance ID.
     let copiedInstance = instance;
-    const titleRelationshipTypeId = find(this.props.resources.instanceRelationshipTypes.records, { 'name': 'preceding-succeeding' }).id;
+    const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
     const previousTitles = map(copiedInstance.previousTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
     set(copiedInstance, 'parentInstances', previousTitles);
     const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
