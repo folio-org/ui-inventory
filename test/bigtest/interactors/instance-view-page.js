@@ -7,7 +7,6 @@ import {
   scoped,
 } from '@bigtest/interactor';
 
-// eslint-disable-next-line /no-extraneous-dependencies
 import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 
 @interactor class HeaderDropdown {
@@ -47,8 +46,9 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   hasButtonAddHoldings = isPresent('#clickable-new-holdings-record');
   clickButtonAddHoldings = clickable('#clickable-new-holdings-record');
   headlineInViewInstance = isPresent('[data-test-headline-medium]');
-  accordion = new AccordionInteractor('[data-test-accordion]');
-  expandAll = scoped('[data-test-expand-all]');
+  accordion = new AccordionInteractor('#accordion-toggle-button-acc01');
+  clickExpandAll = clickable('[data-test-expand-all] button');
+  hasExpandAll = isPresent('[data-test-expand-all] button');
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');

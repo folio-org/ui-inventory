@@ -545,11 +545,13 @@ class ViewInstance extends React.Component {
       >
         <TitleManager record={instance.title} />
         <Row end="xs">
-          <Col xs>
+          <Col
+            data-test-expand-all
+            xs
+          >
             <ExpandAllButton
               accordionStatus={this.state.accordions}
               onToggle={this.handleExpandAll}
-              data-test-expand-all
             />
           </Col>
         </Row>

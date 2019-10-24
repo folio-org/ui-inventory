@@ -19,8 +19,32 @@ describe('InstanceViewPage', () => {
     await InstanceViewPage.whenLoaded();
   });
 
+  it('should be displayed', () => {
+    expect(InstanceViewPage.hasExpandAll).to.be.true;
+  });
+
+  describe('collapse all clicked', () => {
+    beforeEach(async () => {
+      await InstanceViewPage.clickExpandAll();
+    });
+
+    it('accordion should not be displayed', () => {
+      expect(InstanceViewPage.accordion.isOpen).to.be.false;
+    });
+
+    describe('expand all', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.clickExpandAll();
+      });
+
+      it('accordion should be displayed', () => {
+        expect(InstanceViewPage.accordion.isOpen).to.be.true;
+      });
+    });
+  });
+
   it('should be collapse all button displayed', () => {
-    expect(InstanceViewPage.expandAll).to.be.true;
+    expect(InstanceViewPage.hasExpandAll).to.be.true;
   });
 
   it('displays the instance headline under header', () => {
@@ -37,50 +61,6 @@ describe('InstanceViewPage', () => {
 
   it('should render a View holdings button at the bottom of opened instance', () => {
     expect(InstanceViewPage.hasViewHoldingsButton).to.be.true;
-  });
-
-  it('should be displayed collapse all', () => {
-    expect(InstanceViewPage.expandAll.isPresent).to.be.true;
-  });
-
-  describe('collapse all clicked', () => {
-    beforeEach(async () => {
-      await InstanceViewPage.expandAll.click();
-    });
-
-    it('accordion should not be displayed', () => {
-      expect(InstanceViewPage.accordion.isOpen).to.be.false;
-    });
-
-    describe('collapse all clicked again', () => {
-      beforeEach(async () => {
-        await InstanceViewPage.expandAll.click();
-      });
-
-      it('accordion should not be displayed', () => {
-        expect(InstanceViewPage.accordion.isOpen).to.be.true;
-      });
-    });
-  });
-
-  describe('accordion click', () => {
-    beforeEach(async () => {
-      await InstanceViewPage.accordion.click();
-    });
-
-    it('accordion should open', () => {
-      expect(InstanceViewPage.accordion.isOpen).to.be.true;
-    });
-
-    describe('accordion click again', () => {
-      beforeEach(async () => {
-        await InstanceViewPage.accordion.click();
-      });
-
-      it('accordion should close', () => {
-        expect(InstanceViewPage.accordion.isOpen).to.be.false;
-      });
-    });
   });
 
   describe('pane header dropdown menu', () => {
