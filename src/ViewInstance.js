@@ -414,6 +414,7 @@ class ViewInstance extends React.Component {
             {ariaLabel => (
               <PaneHeaderIconButton
                 id="clickable-edit-instance"
+                data-test-clickable-edit
                 style={{ visibility: !instance ? 'hidden' : 'visible' }}
                 href={this.craftLayerUrl('edit', location)}
                 onClick={this.onClickEditInstance}

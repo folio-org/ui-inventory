@@ -16,10 +16,15 @@ describe('InstanceViewPage', () => {
       title: 'ADVANCING RESEARCH',
     });
     this.visit(`/inventory/view/${instance.id}`);
+    await InstanceViewPage.whenLoaded();
   });
 
   it('displays the instance headline under header', () => {
     expect(InstanceViewPage.headlineInViewInstance).to.be.true;
+  });
+
+  it('displays the clickable edit button near the header', () => {
+    expect(InstanceViewPage.buttonEditInstance).to.be.true;
   });
 
   it('displays the instance title in the pane header', () => {
@@ -85,6 +90,16 @@ describe('InstanceViewPage', () => {
 
       it('should redirect to holding view page', () => {
         expect(HoldingsViewPage.$root).to.exist;
+      });
+    });
+
+    describe('clicking edit instance button', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.clickEditInstance();
+      });
+
+      it('should redirect to instance edit page', () => {
+        expect(InstanceEditPage.$root).to.exist;
       });
     });
   });
