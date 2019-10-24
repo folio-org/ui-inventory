@@ -18,6 +18,10 @@ describe('InstanceViewPage', () => {
     this.visit(`/inventory/view/${instance.id}`);
   });
 
+  it('displays the instance headline under header', () => {
+    expect(InstanceViewPage.headlineInViewInstance).to.be.true;
+  });
+
   it('displays the instance title in the pane header', () => {
     expect(InstanceViewPage.title).to.equal('Instance record ADVANCING RESEARCH');
   });

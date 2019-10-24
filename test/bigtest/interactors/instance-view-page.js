@@ -33,6 +33,7 @@ import {
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
+  headlineInViewInstance = isPresent('[data-test-headline-medium]');
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');

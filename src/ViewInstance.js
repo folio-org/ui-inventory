@@ -578,6 +578,7 @@ class ViewInstance extends React.Component {
           </Col>
         </Row>
         <Headline
+          data-test-headline-medium
           size="medium"
           margin="medium"
         >
