@@ -314,42 +314,38 @@ class ViewItem extends React.Component {
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
     const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
 
-    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest) {
-      return null;
-    }
-
-    return (
+    return ((canCreate || canEdit || canDelete || canCreateNewRequest) ?
       <Fragment>
         { canEdit &&
-          <Button
-            href={this.craftLayerUrl('editItem')}
-            onClick={() => {
-              onToggle();
-              this.onClickEditItem();
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-edit-item-action
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editItem"/>
-            </Icon>
-          </Button>
-        }
+        <Button
+          href={this.craftLayerUrl('editItem')}
+          onClick={() => {
+            onToggle();
+            this.onClickEditItem();
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-edit-item-action
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editItem" />
+          </Icon>
+        </Button>
+          }
         { canCreate &&
-          <Button
-            id="clickable-copy-item"
-            onClick={() => {
-              onToggle();
-              this.onCopy(firstItem);
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-duplicate-item-action
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-inventory.copyItem"/>
-            </Icon>
-          </Button>
-        }
+        <Button
+          id="clickable-copy-item"
+          onClick={() => {
+            onToggle();
+            this.onCopy(firstItem);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-duplicate-item-action
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.copyItem" />
+          </Icon>
+        </Button>
+          }
         { canDelete &&
         <Button
           id="clickable-delete-item"
@@ -361,39 +357,38 @@ class ViewItem extends React.Component {
           data-test-inventory-delete-item-action
         >
           <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteItem"/>
+            <FormattedMessage id="ui-inventory.deleteItem" />
           </Icon>
         </Button>
-        }
+          }
         { canMarkItemAsMissing(firstItem) && canEdit &&
-          <Button
-            id="clickable-missing-item"
-            onClick={() => {
-              onToggle();
-              this.setState({ itemMissingModal: true });
-            }}
-            buttonStyle="dropdownItem"
-            data-test-mark-as-missing-item
-          >
-            <Icon icon="flag">
-              <FormattedMessage id="ui-inventory.markAsMissing" />
-            </Icon>
-          </Button>
-        }
+        <Button
+          id="clickable-missing-item"
+          onClick={() => {
+            onToggle();
+            this.setState({ itemMissingModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-mark-as-missing-item
+        >
+          <Icon icon="flag">
+            <FormattedMessage id="ui-inventory.markAsMissing" />
+          </Icon>
+        </Button>
+          }
         { canCreateNewRequest &&
-          <Button
-            to={newRequestLink}
-            buttonStyle="dropdownItem"
-            data-test-inventory-create-request-action
-          >
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.newRequest" />
-            </Icon>
-          </Button>
-        }
-      </Fragment>
-    );
-  }
+        <Button
+          to={newRequestLink}
+          buttonStyle="dropdownItem"
+          data-test-inventory-create-request-action
+        >
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-inventory.newRequest" />
+          </Icon>
+        </Button>
+          }
+      </Fragment> : null);
+  };
 
   isAwaitingResource = () => {
     const {
