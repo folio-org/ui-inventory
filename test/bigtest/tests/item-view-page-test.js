@@ -47,7 +47,7 @@ describe('ItemViewPage', () => {
 
     describe('pane header dropdown menu', () => {
       beforeEach(async () => {
-        await ItemViewPage.headerDropdown();
+        await ItemViewPage.headerDropdown.click();
       });
 
       it('should show a new request menu item', () => {
