@@ -549,6 +549,7 @@ class ViewInstance extends React.Component {
             <ExpandAllButton
               accordionStatus={this.state.accordions}
               onToggle={this.handleExpandAll}
+              data-test-expand-all
             />
           </Col>
         </Row>
@@ -590,6 +591,7 @@ class ViewInstance extends React.Component {
           id="acc01"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceData" />}
+          data-test-accordion
         >
           <this.cViewMetaData metadata={instance.metadata} />
           <Row>
@@ -698,6 +700,7 @@ class ViewInstance extends React.Component {
           id="acc02"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.titleData" />}
+          data-test-accordion
         >
           <Row>
             <Col xs={12}>
@@ -765,6 +768,7 @@ class ViewInstance extends React.Component {
           id="acc03"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.identifier" />}
+          data-test-accordion
         >
           {
             instance.identifiers.length > 0 && (
@@ -803,6 +807,7 @@ class ViewInstance extends React.Component {
           id="acc04"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.contributor" />}
+          data-test-accordion
         >
           {
             instance.contributors.length > 0 && (
@@ -845,6 +850,7 @@ class ViewInstance extends React.Component {
           id="acc05"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.descriptiveData" />}
+          data-test-accordion
         >
           {
             instance.publication.length > 0 && (
@@ -996,6 +1002,7 @@ class ViewInstance extends React.Component {
           id="acc06"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
+          data-test-accordion
         >
           {layoutNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []))}
         </Accordion>
@@ -1005,6 +1012,7 @@ class ViewInstance extends React.Component {
           id="acc07"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+          data-test-accordion
         >
           {
             instance.electronicAccess.length > 0 && (
@@ -1048,6 +1056,7 @@ class ViewInstance extends React.Component {
           id="acc08"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.subject" />}
+          data-test-accordion
         >
           {
             instance.subjects.length > 0 && (
@@ -1068,6 +1077,7 @@ class ViewInstance extends React.Component {
           id="acc09"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.classification" />}
+          data-test-accordion
         >
           {(instance.classifications.length > 0) && (
             <IntlConsumer>
@@ -1104,6 +1114,7 @@ class ViewInstance extends React.Component {
           id="acc10"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
+          data-test-accordion
         >
           {instance.childInstances.length > 0 && (
             <Row>
