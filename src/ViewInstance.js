@@ -1,7 +1,9 @@
 import {
+  filter,
   get,
   has,
   cloneDeep,
+  reject,
 } from 'lodash';
 import React, {
   Fragment,
@@ -39,7 +41,10 @@ import {
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
-import { craftLayerUrl } from './utils';
+import {
+  craftLayerUrl,
+  psTitleRelationshipId,
+} from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
@@ -78,6 +83,11 @@ class ViewInstance extends React.Component {
       clear: false,
       throwErrors: false,
     },
+    instanceRelationshipTypes: {
+      type: 'okapi',
+      records: 'instanceRelationshipTypes',
+      path: 'instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+    },
   });
 
   constructor(props) {
@@ -110,6 +120,8 @@ class ViewInstance extends React.Component {
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.calloutRef = createRef();
+
+    this.handlePSTitles = this.handlePSTitles.bind(this);
   }
 
   componentDidMount() {
@@ -292,6 +304,24 @@ class ViewInstance extends React.Component {
     );
   };
 
+  // Separate preceding/succeeding title relationships from other types of
+  // parent/child instances
+  handlePSTitles(instance) {
+    console.log("handling with values", instance)
+    const psRelId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
+    console.log('psrelid', psRelId)
+    if (instance.parentInstances) {
+      const precedingTitles = filter(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+      console.log("pts: ", precedingTitles, psRelId)
+      const otherParents = reject(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+      console.log("others", otherParents)
+      // initialValues.parentInstances = remove(initialValues.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+      instance.precedingTitles = precedingTitles;
+      instance.parentInstances = otherParents;
+    }
+    console.log("returning values", instance)
+  }
+
   render() {
     const {
       okapi,
@@ -470,6 +500,12 @@ class ViewInstance extends React.Component {
     );
 
     if (query.layer === 'edit') {
+      console.log("instance A", instance)
+      // instance.parentInstances = []
+      // instance.precedingTitles = [{      "superInstanceId": "62ca5b43-0f11-40af-a6b4-1a9ee2db33cb",
+      // "instanceRelationshipTypeId": "cde80cc2-0c8b-4672-82d4-721e51dcb990"}]
+      this.handlePSTitles(instance)
+      console.log("instance B", instance)
       return (
         <IntlConsumer>
           {(intl) => (
