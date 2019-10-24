@@ -93,6 +93,11 @@ class Items extends React.Component {
                     'status': intl.formatMessage({ id: 'ui-inventory.status' }),
                     'Material Type': intl.formatMessage({ id: 'ui-inventory.materialType' }),
                   }}
+                  columnWidths={{
+                    'Item: barcode': '25%',
+                    'status': '25%',
+                    'Material Type': '25%',
+                  }}
                   ariaLabel={ariaLabel}
                   containerRef={(ref) => { this.resultsList = ref; }}
                   interactive={false}

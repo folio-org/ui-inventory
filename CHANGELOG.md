@@ -9,6 +9,7 @@
 * Update language filter to support ISO-639 format. Part of UIIN-735.
 * Add permissions for holdings records. Refs UIIN-699, UIIN-702, UIIN-707
 * Align the UX display of notes in the Holdings record. Refs UIIN-738.
+* Align display of data in the instance record. Refs UIIN-677.
 * Align display of data in the holdings record. Refs UIIN-811.
 * Fix double asterisk in accordion Instance relationships (analytics and bound-with). Fixes UIIN-646
 
