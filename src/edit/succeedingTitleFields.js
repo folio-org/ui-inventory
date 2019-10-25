@@ -19,7 +19,7 @@ const SucceedingTitles = props => {
   return (
     <RepeatableField
       name="succeedingTitles"
-      label=""
+      label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
       addLabel={
         <Icon icon="plus-sign">
           <FormattedMessage id="ui-inventory.addSucceedingTitle" />
