@@ -1,9 +1,13 @@
 import {
+  concat,
   filter,
   get,
   has,
   cloneDeep,
+  map,
+  omit,
   reject,
+  set
 } from 'lodash';
 import React, {
   Fragment,
@@ -122,6 +126,7 @@ class ViewInstance extends React.Component {
     this.calloutRef = createRef();
 
     this.handlePSTitles = this.handlePSTitles.bind(this);
+    this.handlePrecedingSucceedingTitles = this.handlePrecedingSucceedingTitles.bind(this);
   }
 
   componentDidMount() {
@@ -169,9 +174,25 @@ class ViewInstance extends React.Component {
   };
 
   update = (instance) => {
+    this.handlePrecedingSucceedingTitles(instance);
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.resetLayerQueryParam();
     });
+  };
+
+  handlePrecedingSucceedingTitles = (instance) => {
+    // preceding/succeeding titles are stored in parentInstances and childInstances
+    // in the instance record. Each title needs to provide an instance relationship
+    // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
+    // instance ID.
+    let copiedInstance = instance;
+    const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
+    const precedingTitles = map(copiedInstance.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(copiedInstance, 'parentInstances', concat(copiedInstance.parentInstances, precedingTitles));
+    const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(copiedInstance, 'childInstances', succeedingTitles);
+    copiedInstance = omit(copiedInstance, ['precedingTitles', 'succeedingTitles']);
+    return copiedInstance;
   };
 
   resetLayerQueryParam = (e) => {
@@ -307,19 +328,13 @@ class ViewInstance extends React.Component {
   // Separate preceding/succeeding title relationships from other types of
   // parent/child instances
   handlePSTitles(instance) {
-    console.log("handling with values", instance)
     const psRelId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    console.log('psrelid', psRelId)
     if (instance.parentInstances) {
       const precedingTitles = filter(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      console.log("pts: ", precedingTitles, psRelId)
       const otherParents = reject(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      console.log("others", otherParents)
-      // initialValues.parentInstances = remove(initialValues.parentInstances, { 'instanceRelationshipTypeId': psRelId });
       instance.precedingTitles = precedingTitles;
       instance.parentInstances = otherParents;
     }
-    console.log("returning values", instance)
   }
 
   render() {
@@ -500,12 +515,7 @@ class ViewInstance extends React.Component {
     );
 
     if (query.layer === 'edit') {
-      console.log("instance A", instance)
-      // instance.parentInstances = []
-      // instance.precedingTitles = [{      "superInstanceId": "62ca5b43-0f11-40af-a6b4-1a9ee2db33cb",
-      // "instanceRelationshipTypeId": "cde80cc2-0c8b-4672-82d4-721e51dcb990"}]
       this.handlePSTitles(instance)
-      console.log("instance B", instance)
       return (
         <IntlConsumer>
           {(intl) => (

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  concat,
   omit,
   find,
   keyBy,
@@ -284,8 +285,7 @@ class Instances extends React.Component {
     let copiedInstance = instance;
     const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
     const precedingTitles = map(copiedInstance.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(copiedInstance, 'parentInstances', precedingTitles);
-    console.log("new set preceding", precedingTitles)
+    set(copiedInstance, 'parentInstances', concat(copiedInstance.parentInstances, precedingTitles));
     const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
     set(copiedInstance, 'childInstances', succeedingTitles);
     copiedInstance = omit(copiedInstance, ['precedingTitles', 'succeedingTitles']);
