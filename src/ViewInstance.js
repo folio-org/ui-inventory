@@ -184,7 +184,7 @@ class ViewInstance extends React.Component {
   // before saving the instance record
   combineRelTitles = (instance) => {
     // preceding/succeeding titles are stored in parentInstances and childInstances
-    // in the instance record and need to be combined with existing relationships here
+    // in the instance record and needfrle to be combined with existing relationships here
     // before saving. Each title needs to provide an instance relationship
     // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
     // instance ID.
@@ -201,14 +201,19 @@ class ViewInstance extends React.Component {
   // Separate preceding/succeeding title relationships from other types of
   // parent/child instances before displaying the record
   splitRelTitles = (instance) => {
+    const instanceCopy = cloneDeep(instance);
     const psRelId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    if (instance.parentInstances) {
-      instance.precedingTitles = filter(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      instance.parentInstances = reject(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+    if (instanceCopy.parentInstances) {
+      const parentInstances = reject(instanceCopy.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+      const precedingTitles = filter(instanceCopy.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+      instance.precedingTitles = instance.precedingTitles || precedingTitles;
+      instance.parentInstances = parentInstances;
     }
-    if (instance.childInstances) {
-      instance.succeedingTitles = filter(instance.childInstances, { 'instanceRelationshipTypeId': psRelId });
-      instance.childInstances = reject(instance.childInstances, { 'instanceRelationshipTypeId': psRelId });
+    if (instanceCopy.childInstances) {
+      const childInstances = reject(instanceCopy.childInstances, { 'instanceRelationshipTypeId': psRelId });
+      const succeedingTitles = filter(instanceCopy.childInstances, { 'instanceRelationshipTypeId': psRelId });
+      instance.succeedingTitles = instance.succeedingTitles || succeedingTitles;
+      instance.childInstances = childInstances;
     }
   }
 
@@ -519,8 +524,9 @@ class ViewInstance extends React.Component {
       </FormattedMessage>
     );
 
+    this.splitRelTitles(instance);
+
     if (query.layer === 'edit') {
-      this.splitRelTitles(instance);
       return (
         <IntlConsumer>
           {(intl) => (
@@ -797,6 +803,26 @@ class ViewInstance extends React.Component {
               )
             }
           </Row>
+          {instance.precedingTitles && instance.precedingTitles.length > 0 && (
+            <Row>
+              <Col xs={12}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-inventory.precedingTitles" />}
+                  value={formatters.precedingTitlesFormatter(instance, location)}
+                />
+              </Col>
+            </Row>
+          )}
+          {instance.succeedingTitles && instance.succeedingTitles.length > 0 && (
+            <Row>
+              <Col xs={12}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
+                  value={formatters.succeedingTitlesFormatter(instance, location)}
+                />
+              </Col>
+            </Row>
+          )}
         </Accordion>
 
         <Accordion
