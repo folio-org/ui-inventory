@@ -34,31 +34,8 @@ const PrecedingTitles = props => {
           required: true,
           disabled: !canEdit
         },
-        // {
-        //   render: () => <input name="instanceRelationshipTypeId" type="hidden" value="cde80cc2-0c8b-4672-82d4-721e51dcb990" />
-        // },
-        // {
-        //   name: 'superInstanceId',
-        //   label: 'Instance HRID',
-        //   component: TextField,
-        //   required: true,
-        //   disabled: !canEdit
-        // },
-        // {
-        //   name: 'precedingTitleISSN',
-        //   label: 'ISSN',
-        //   component: TextField,
-        //   disabled: !canEdit
-        // },
-        // {
-        //   name: 'precedingTitleISBN',
-        //   label: 'ISBN',
-        //   component: TextField,
-        //   disabled: !canEdit
-        // }
       ]}
       newItemTemplate={{ superInstanceId: '' }}
-      // newItemTemplate={{ precedingTitle: '', precedingTitleInstanceHRID: '', precedingTitleISSN: '', precedingTitleISBN: '' }}
       canAdd={canAdd}
       canDelete={canDelete}
     />

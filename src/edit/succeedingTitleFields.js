@@ -34,28 +34,8 @@ const SucceedingTitles = props => {
           required: true,
           disabled: !canEdit
         },
-        // {
-        //   name: 'succeedingTitleInstanceHRID',
-        //   label: 'Instance HRID',
-        //   component: TextField,
-        //   required: true,
-        //   disabled: !canEdit
-        // },
-        // {
-        //   name: 'succeedingTitleISSN',
-        //   label: 'ISSN',
-        //   component: TextField,
-        //   disabled: !canEdit
-        // },
-        // {
-        //   name: 'succeedingTitleISBN',
-        //   label: 'ISBN',
-        //   component: TextField,
-        //   disabled: !canEdit
-        // }
       ]}
       newItemTemplate={{ subInstanceId: '' }}
-      // newItemTemplate={{ succeedingTitle: '', succeedingTitleInstanceHRID: '', succeedingTitleISSN: '', succeedingTitleISBN: '' }}
       canAdd={canAdd}
       canDelete={canDelete}
     />
