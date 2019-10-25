@@ -4,7 +4,7 @@ import {
   clickable,
   collection,
   text,
-  scoped,
+  scoped, scrollable,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -19,6 +19,7 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   hasEditButton = isPresent('#edit-instance');
   clickDuplicate = clickable('#copy-instance');
   hasDuplicateButton = isPresent('#copy-instance');
+  hasViewSourceButton = isPresent('#clickable-view-source');
 }
 
 @interactor class Item {
@@ -51,6 +52,7 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   accordion = new AccordionInteractor('#acc02');
   expandAll = scoped('[data-test-expand-all] button');
   hasExpandAll = isPresent('[data-test-expand-all] button');
+  instanceSection = scrollable('[class^=paneContent---]');
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');

@@ -10,6 +10,7 @@ import HoldingsViewPage from '../interactors/holdings-view-page';
 
 describe('InstanceViewPage', () => {
   setupApplication();
+  const hasPerm = true;
 
   beforeEach(async function () {
     const instance = this.server.create('instance', 'withHoldingAndItem', {
@@ -65,7 +66,9 @@ describe('InstanceViewPage', () => {
 
   describe('pane header dropdown menu', () => {
     beforeEach(async () => {
-      await InstanceViewPage.headerDropdown.click();
+      if (hasPerm) {
+        await InstanceViewPage.headerDropdown.click();
+      }
     });
 
     it('should render a edit instance button at the bottom of opened instance', () => {
@@ -74,6 +77,10 @@ describe('InstanceViewPage', () => {
 
     it('should render a duplicate instance button at the bottom of opened instance', () => {
       expect(InstanceViewPage.headerDropdownMenu.hasDuplicateButton).to.be.true;
+    });
+
+    it('should render an view source button', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasViewSourceButton).to.be.false;
     });
 
     it('should render an add item button', () => {
@@ -86,7 +93,9 @@ describe('InstanceViewPage', () => {
 
     describe('clicking on edit', () => {
       beforeEach(async () => {
-        await InstanceViewPage.headerDropdownMenu.clickEdit();
+        if (hasPerm) {
+          await InstanceViewPage.headerDropdownMenu.clickEdit();
+        }
       });
 
       it('should redirect to instance edit page', () => {
@@ -96,7 +105,9 @@ describe('InstanceViewPage', () => {
 
     describe('clicking on duplicate', () => {
       beforeEach(async () => {
-        await InstanceViewPage.headerDropdownMenu.clickDuplicate();
+        if (hasPerm) {
+          await InstanceViewPage.headerDropdownMenu.clickDuplicate();
+        }
       });
 
       it('should redirect to instance create page', () => {
@@ -164,7 +175,9 @@ describe('InstanceViewPage', () => {
 
     describe('clicking edit instance button', () => {
       beforeEach(async () => {
-        await InstanceViewPage.clickEditInstance();
+        if (hasPerm) {
+          await InstanceViewPage.clickEditInstance();
+        }
       });
 
       it('should redirect to instance edit page', () => {
