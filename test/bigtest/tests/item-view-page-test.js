@@ -8,7 +8,6 @@ import ItemCreatePage from '../interactors/item-create-page';
 
 describe('ItemViewPage', () => {
   setupApplication();
-  const hasPerm = true;
 
   describe('visiting the item view page', () => {
     let item;
@@ -38,9 +37,7 @@ describe('ItemViewPage', () => {
 
     describe('clicking on edit button in the pane header', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await ItemViewPage.clickEditItemButton();
-        }
+        await ItemViewPage.clickEditItemButton();
       });
 
       it('should redirect to item edit page', () => {
@@ -50,9 +47,7 @@ describe('ItemViewPage', () => {
 
     describe('pane header dropdown menu', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await ItemViewPage.headerDropdown.click();
-        }
+        await ItemViewPage.headerDropdown.click();
       });
 
       it('should show a duplicate menu item', () => {
@@ -73,9 +68,7 @@ describe('ItemViewPage', () => {
 
       describe('clicking on edit', () => {
         beforeEach(async () => {
-          if (hasPerm) {
-            await ItemViewPage.headerDropdownMenu.clickEdit();
-          }
+          await ItemViewPage.headerDropdownMenu.clickEdit();
         });
 
         it('should redirect to item edit page', () => {
@@ -85,9 +78,7 @@ describe('ItemViewPage', () => {
 
       describe('clicking on duplicate', () => {
         beforeEach(async () => {
-          if (hasPerm) {
-            await ItemViewPage.headerDropdownMenu.clickDuplicate();
-          }
+          await ItemViewPage.headerDropdownMenu.clickDuplicate();
         });
 
         it('should redirect to item create page', () => {
@@ -97,9 +88,7 @@ describe('ItemViewPage', () => {
 
       describe('clicking on mark as missing', () => {
         beforeEach(async () => {
-          if (hasPerm) {
-            await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
-          }
+          await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
         });
 
         it('should open a missing confirmation modal', () => {
@@ -109,9 +98,7 @@ describe('ItemViewPage', () => {
 
       describe('clicking on delete', () => {
         beforeEach(async () => {
-          if (hasPerm) {
-            await ItemViewPage.headerDropdownMenu.clickDelete();
-          }
+          await ItemViewPage.headerDropdownMenu.clickDelete();
         });
 
         it('should open a delete confirmation modal', () => {
@@ -139,9 +126,7 @@ describe('ItemViewPage', () => {
 
     describe('clicking on mark as missing', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
-        }
+        await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
       });
 
       it('should open a missing confirmation modal', () => {
@@ -168,9 +153,7 @@ describe('ItemViewPage', () => {
 
     describe('clicking on mark as missing', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
-        }
+        await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
       });
 
       it('should open a missing confirmation modal', () => {

@@ -10,7 +10,6 @@ import HoldingsViewPage from '../interactors/holdings-view-page';
 
 describe('InstanceViewPage', () => {
   setupApplication();
-  const hasPerm = true;
 
   beforeEach(async function () {
     const instance = this.server.create('instance', 'withHoldingAndItem', {
@@ -66,9 +65,7 @@ describe('InstanceViewPage', () => {
 
   describe('pane header dropdown menu', () => {
     beforeEach(async () => {
-      if (hasPerm) {
-        await InstanceViewPage.headerDropdown.click();
-      }
+      await InstanceViewPage.headerDropdown.click();
     });
 
     it('should render a edit instance button at the bottom of opened instance', () => {
@@ -93,9 +90,7 @@ describe('InstanceViewPage', () => {
 
     describe('clicking on edit', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await InstanceViewPage.headerDropdownMenu.clickEdit();
-        }
+        await InstanceViewPage.headerDropdownMenu.clickEdit();
       });
 
       it('should redirect to instance edit page', () => {
@@ -105,9 +100,7 @@ describe('InstanceViewPage', () => {
 
     describe('clicking on duplicate', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await InstanceViewPage.headerDropdownMenu.clickDuplicate();
-        }
+        await InstanceViewPage.headerDropdownMenu.clickDuplicate();
       });
 
       it('should redirect to instance create page', () => {
@@ -175,9 +168,7 @@ describe('InstanceViewPage', () => {
 
     describe('clicking edit instance button', () => {
       beforeEach(async () => {
-        if (hasPerm) {
-          await InstanceViewPage.clickEditInstance();
-        }
+        await InstanceViewPage.clickEditInstance();
       });
 
       it('should redirect to instance edit page', () => {
