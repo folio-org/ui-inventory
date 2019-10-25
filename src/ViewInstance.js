@@ -125,8 +125,8 @@ class ViewInstance extends React.Component {
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.calloutRef = createRef();
 
-    this.handlePSTitles = this.handlePSTitles.bind(this);
-    this.handlePrecedingSucceedingTitles = this.handlePrecedingSucceedingTitles.bind(this);
+    this.combineRelTitles = this.combineRelTitles.bind(this);
+    this.splitRelTitles = this.splitRelTitles.bind(this);
   }
 
   componentDidMount() {
@@ -174,26 +174,43 @@ class ViewInstance extends React.Component {
   };
 
   update = (instance) => {
-    this.handlePrecedingSucceedingTitles(instance);
+    this.combineRelTitles(instance);
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.resetLayerQueryParam();
     });
   };
 
-  handlePrecedingSucceedingTitles = (instance) => {
+  // Combine precedingTitles with parentInstances, and succeedingTitles with childInstances,
+  // before saving the instance record
+  combineRelTitles = (instance) => {
     // preceding/succeeding titles are stored in parentInstances and childInstances
-    // in the instance record. Each title needs to provide an instance relationship
+    // in the instance record and need to be combined with existing relationships here
+    // before saving. Each title needs to provide an instance relationship
     // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
     // instance ID.
-    let copiedInstance = instance;
+    let instanceCopy = instance;
     const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    const precedingTitles = map(copiedInstance.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(copiedInstance, 'parentInstances', concat(copiedInstance.parentInstances, precedingTitles));
-    const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(copiedInstance, 'childInstances', succeedingTitles);
-    copiedInstance = omit(copiedInstance, ['precedingTitles', 'succeedingTitles']);
-    return copiedInstance;
+    const precedingTitles = map(instanceCopy.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    const succeedingTitles = map(instanceCopy.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(instanceCopy, 'parentInstances', concat(instanceCopy.parentInstances, precedingTitles));
+    set(instanceCopy, 'childInstances', concat(instanceCopy.childInstances, succeedingTitles));
+    instanceCopy = omit(instanceCopy, ['precedingTitles', 'succeedingTitles']);
+    return instanceCopy;
   };
+
+  // Separate preceding/succeeding title relationships from other types of
+  // parent/child instances before displaying the record
+  splitRelTitles = (instance) => {
+    const psRelId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
+    if (instance.parentInstances) {
+      instance.precedingTitles = filter(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+      instance.parentInstances = reject(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
+    }
+    if (instance.childInstances) {
+      instance.succeedingTitles = filter(instance.childInstances, { 'instanceRelationshipTypeId': psRelId });
+      instance.childInstances = reject(instance.childInstances, { 'instanceRelationshipTypeId': psRelId });
+    }
+  }
 
   resetLayerQueryParam = (e) => {
     if (e) e.preventDefault();
@@ -324,18 +341,6 @@ class ViewInstance extends React.Component {
       </Fragment>
     );
   };
-
-  // Separate preceding/succeeding title relationships from other types of
-  // parent/child instances
-  handlePSTitles(instance) {
-    const psRelId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    if (instance.parentInstances) {
-      const precedingTitles = filter(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      const otherParents = reject(instance.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      instance.precedingTitles = precedingTitles;
-      instance.parentInstances = otherParents;
-    }
-  }
 
   render() {
     const {
@@ -515,7 +520,7 @@ class ViewInstance extends React.Component {
     );
 
     if (query.layer === 'edit') {
-      this.handlePSTitles(instance)
+      this.splitRelTitles(instance);
       return (
         <IntlConsumer>
           {(intl) => (

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   concat,
   omit,
-  find,
   keyBy,
   get,
   set,
@@ -231,7 +230,7 @@ class Instances extends React.Component {
     this.resultsList = null;
     this.SRStatus = null;
     this.copyInstance = this.copyInstance.bind(this);
-    this.handlePrecedingSucceedingTitles = this.handlePrecedingSucceedingTitles.bind(this);
+    this.combineRelTitles = this.combineRelTitles.bind(this);
 
     this.state = {};
   }
@@ -267,29 +266,27 @@ class Instances extends React.Component {
   createInstance = (instance) => {
     // Massage record to add preceeding and succeeding title fields in the
     // right place.
-    console.log("saving instance", instance)
-    const copiedInstance = this.handlePrecedingSucceedingTitles(instance);
-    console.log("modified instance", copiedInstance)
+    const instanceCopy = this.combineRelTitles(instance);
 
     // POST instance record
-    this.props.mutator.records.POST(copiedInstance).then(() => {
+    this.props.mutator.records.POST(instanceCopy).then(() => {
       this.closeNewInstance();
     });
   };
 
-  handlePrecedingSucceedingTitles = (instance) => {
+  combineRelTitles = (instance) => {
     // preceding/succeeding titles are stored in parentInstances and childInstances
     // in the instance record. Each title needs to provide an instance relationship
     // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
     // instance ID.
-    let copiedInstance = instance;
+    let instanceCopy = instance;
     const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    const precedingTitles = map(copiedInstance.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(copiedInstance, 'parentInstances', concat(copiedInstance.parentInstances, precedingTitles));
-    const succeedingTitles = map(copiedInstance.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(copiedInstance, 'childInstances', succeedingTitles);
-    copiedInstance = omit(copiedInstance, ['precedingTitles', 'succeedingTitles']);
-    return copiedInstance;
+    const precedingTitles = map(instanceCopy.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(instanceCopy, 'parentInstances', concat(instanceCopy.parentInstances, precedingTitles));
+    const succeedingTitles = map(instanceCopy.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(instanceCopy, 'childInstances', succeedingTitles);
+    instanceCopy = omit(instanceCopy, ['precedingTitles', 'succeedingTitles']);
+    return instanceCopy;
   }
 
   renderFilters = (onChange) => {
