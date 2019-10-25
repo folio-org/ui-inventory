@@ -314,7 +314,11 @@ class ViewItem extends React.Component {
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
     const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
 
-    return ((canCreate || canEdit || canDelete || canCreateNewRequest) ?
+    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest) {
+      return null;
+    }
+
+    return (
       <Fragment>
         { canEdit &&
         <Button
@@ -387,7 +391,8 @@ class ViewItem extends React.Component {
           </Icon>
         </Button>
           }
-      </Fragment> : null);
+      </Fragment>
+    );
   };
 
   isAwaitingResource = () => {

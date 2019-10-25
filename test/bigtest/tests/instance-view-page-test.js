@@ -25,7 +25,7 @@ describe('InstanceViewPage', () => {
 
   describe('collapse all clicked', () => {
     beforeEach(async () => {
-      await InstanceViewPage.clickExpandAll();
+      await InstanceViewPage.expandAll.click();
     });
 
     it('accordion should not be displayed', () => {
@@ -34,7 +34,7 @@ describe('InstanceViewPage', () => {
 
     describe('expand all', () => {
       beforeEach(async () => {
-        await InstanceViewPage.clickExpandAll();
+        await InstanceViewPage.expandAll.click();
       });
 
       it('accordion should be displayed', () => {
