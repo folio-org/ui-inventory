@@ -248,8 +248,6 @@
   "addNewItemDialog": "Add new item dialog",
   "parentInstances": "Parent instances",
   "addParentInstance": "Add parent instance",
-  "parentInstancesRequired": "Parent instance *",
-  "typeOfRelationRequired": "Type of relation *",
   "selectType": "Select type",
   "selectStatus": "Select status",
   "loanTypes": "Loan types",
@@ -399,5 +397,6 @@
   "error.noMatch.how": "How did you get to {location}?",
   "items.damageStatus.damaged": "Damaged",
   "items.damageStatus.notdamaged": "Not damaged",
+  "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
   "instanceNotes": "Instance notes"
 }
