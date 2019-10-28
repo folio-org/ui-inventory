@@ -461,7 +461,7 @@ class ViewHoldingsRecord extends React.Component {
                     <Row>
                       <Col
                         smOffset={0}
-                        sm={4}
+                        sm={2}
                       >
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
@@ -476,7 +476,7 @@ class ViewHoldingsRecord extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col sm={4}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.holdingsType" />}
                           value={this.refLookup(referenceTables.holdingsTypes, _.get(holdingsRecord, ['holdingsTypeId'])).name}
@@ -671,19 +671,19 @@ class ViewHoldingsRecord extends React.Component {
                       />
                     )}
                     <Row>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.illPolicy" />}
                           value={this.refLookup(referenceTables.illPolicies, _.get(holdingsRecord, ['illPolicyId'])).name}
                         />
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
                           value={_.get(holdingsRecord, ['digitizationPolicy'], '')}
                         />
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
                           value={_.get(holdingsRecord, ['retentionPolicy'], '')}
@@ -725,19 +725,19 @@ class ViewHoldingsRecord extends React.Component {
                     label={<FormattedMessage id="ui-inventory.acquisition" />}
                   >
                     <Row>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
                           value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
                         />
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
                           value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
                         />
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.receiptStatus" />}
                           value={_.get(holdingsRecord, ['receiptStatus'], '')}

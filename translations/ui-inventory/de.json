@@ -1,5 +1,5 @@
 {
-    "inventory.label": "Bestand",
+    "inventory.label": "Katalog",
     "resultCount": "{count, number} {count, plural, one {Datensatz} other {Datensätze}} gefunden",
     "item.availability.itemStatus": "Exemplarstatus",
     "item.availability.itemStatusDate": "Datum Exemplarstatus",
@@ -143,7 +143,7 @@
     "itemCallNumber": "Exemplarsignatur",
     "holdingsNotes": "Anmerkungen zum Bestand",
     "electronicAccess": "Elektronischer Zugriff",
-    "meta.title": "Bestand",
+    "meta.title": "Katalog",
     "location": "Standort",
     "callNumber": "Signatur",
     "title": "Haupttitel",
@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "Select alternative title type",
     "parentInstances": "Parent instances",
     "addParentInstance": "Add parent instance",
-    "parentInstancesRequired": "Parent instance *",
-    "typeOfRelationRequired": "Type of relation *",
     "selectType": "Select type",
     "selectStatus": "Select status",
     "createNewHoldingsRecord": "Create new holdings record",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "Please enter a numeric value",
     "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
     "hridHandling.successfullyMessage": "Setting was successfully updated.",
-    "noBarcode": "No barcode"
+    "noBarcode": "No barcode",
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
 }
