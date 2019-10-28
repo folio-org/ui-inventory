@@ -7,7 +7,14 @@ import ItemEditPage from '../interactors/item-edit-page';
 import ItemCreatePage from '../interactors/item-create-page';
 
 describe('ItemViewPage', () => {
-  setupApplication();
+  setupApplication(
+    { permissions: {
+      'ui-inventory.item.create': true,
+      'ui-inventory.item.edit': true,
+      'ui-inventory.item.delete': true,
+      'ui-requests.create': true,
+    } }
+  );
 
   describe('visiting the item view page', () => {
     let item;
@@ -160,5 +167,27 @@ describe('ItemViewPage', () => {
         expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
       });
     });
+  });
+
+  setupApplication();
+
+  it('displays the edit button in the pane header', () => {
+    expect(ItemViewPage.hasEditItemButton).to.be.false;
+  });
+
+  it('should show a duplicate menu item', () => {
+    expect(ItemViewPage.headerDropdownMenu.hasDuplicate).to.be.false;
+  });
+
+  it('should show a mark as missing item', () => {
+    expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.false;
+  });
+
+  it('should show a delete menu item', () => {
+    expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.false;
+  });
+
+  it('should show a new request item', () => {
+    expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.false;
   });
 });
