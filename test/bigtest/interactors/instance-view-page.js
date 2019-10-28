@@ -5,6 +5,7 @@ import {
   collection,
   text,
   scoped,
+  attribute,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -20,6 +21,7 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   clickDuplicate = clickable('#copy-instance');
   hasDuplicateButton = isPresent('#copy-instance');
   hasViewSourceButton = isPresent('#clickable-view-source');
+  isDisabledViewSourceButton = attribute('#clickable-view-source', 'disabled');
 }
 
 @interactor class Item {
@@ -43,8 +45,8 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
-  clickEditInstance = clickable('[data-test-clickable-edit]');
-  hasButtonEditInstance = isPresent('[data-test-clickable-edit]');
+  clickEditInstance = clickable('#clickable-edit-instance');
+  hasButtonEditInstance = isPresent('#clickable-edit-instance');
   hasButtonAddItem = isPresent('#clickable-new-item');
   clickButtonAddItem = clickable('#clickable-new-item');
   hasButtonAddHoldings = isPresent('#clickable-new-holdings-record');

@@ -315,7 +315,7 @@ class ViewItem extends React.Component {
     const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
 
     if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest) {
-      return null;
+      return undefined;
     }
 
     return (
