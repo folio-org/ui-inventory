@@ -11,31 +11,38 @@ import {
   injectIntl,
   intlShape,
 } from 'react-intl';
-
 import {
   stripesShape,
   AppIcon,
+  stripesConnect,
 } from '@folio/stripes/core';
 import {
   SearchAndSort,
   makeQueryFunction,
 } from '@folio/stripes/smart-components';
 
-import packageInfo from '../package';
-import InstanceForm from './edit/InstanceForm';
-import ViewInstance from './ViewInstance';
-import formatters from './referenceFormatters';
-import withLocation from './withLocation';
-import { parseStrToFilters, parseFiltersToStr } from './utils';
-import Filters from './Filters';
-import { searchableIndexes, filterConfig } from './constants';
+import { FiltersPanel } from '../components';
+
+import packageInfo from '../../package';
+import InstanceForm from '../edit/InstanceForm';
+import ViewInstance from '../ViewInstance';
+import formatters from '../referenceFormatters';
+import withLocation from '../withLocation';
+import {
+  parseStrToFilters,
+  parseFiltersToStr,
+  getFilter,
+} from '../utils';
+import Filters from '../Filters';
+import {
+  searchableIndexes,
+  filterConfig,
+} from '../constants';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
-const emptyObj = {};
-const emptyArr = [];
 
-class Instances extends React.Component {
+class InstancesRoute extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
@@ -264,7 +271,13 @@ class Instances extends React.Component {
   };
 
   renderFilters = (onChange) => {
-    const { resources: { locations, instanceTypes, query } } = this.props;
+    const {
+      resources: {
+        locations,
+        instanceTypes,
+        query,
+      },
+    } = this.props;
 
     return (
       <Filters
@@ -278,9 +291,42 @@ class Instances extends React.Component {
     );
   };
 
+  isLoading() {
+    const { manifest } = InstancesRoute;
+    const { resources } = this.props;
+
+    for (const key in manifest) {
+      if (key !== 'records' && manifest[key].type === 'okapi' &&
+        !(resources[key] && resources[key].hasLoaded)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  getReferenceTables() {
+    const { manifest } = InstancesRoute;
+    const { resources } = this.props;
+    const referenceTables = {};
+
+    for (const key in manifest) {
+      if (key !== 'records' && manifest[key].type === 'okapi') {
+        referenceTables[key] = get(resources, `${key}.records`, []);
+      }
+    }
+
+    referenceTables.locationsById = keyBy(referenceTables.locations, 'id');
+
+    return referenceTables;
+  }
+
+  renderNavigation = () => (
+    <FiltersPanel filter={getFilter(this.props.match.params.filter)} />
+  )
+
   render() {
     const {
-      resources,
       showSingleResult,
       browseOnly,
       onSelectRow,
@@ -289,78 +335,11 @@ class Instances extends React.Component {
       intl,
     } = this.props;
 
-    if (!resources.contributorTypes || !resources.contributorTypes.hasLoaded
-      || !resources.contributorNameTypes || !resources.contributorNameTypes.hasLoaded
-      || !resources.identifierTypes || !resources.identifierTypes.hasLoaded
-      || !resources.classificationTypes || !resources.classificationTypes.hasLoaded
-      || !resources.instanceTypes || !resources.instanceTypes.hasLoaded
-      || !resources.instanceFormats || !resources.instanceFormats.hasLoaded
-      || !resources.alternativeTitleTypes || !resources.alternativeTitleTypes.hasLoaded
-      || !resources.locations || !resources.locations.hasLoaded
-      || !resources.instanceRelationshipTypes || !resources.instanceRelationshipTypes.hasLoaded
-      || !resources.instanceStatuses || !resources.instanceStatuses.hasLoaded
-      || !resources.modesOfIssuance || !resources.modesOfIssuance.hasLoaded
-      || !resources.electronicAccessRelationships || !resources.electronicAccessRelationships.hasLoaded
-      || !resources.instanceNoteTypes || !resources.instanceNoteTypes.hasLoaded
-      || !resources.statisticalCodeTypes || !resources.statisticalCodeTypes.hasLoaded
-      || !resources.statisticalCodes || !resources.statisticalCodes.hasLoaded
-      || !resources.illPolicies || !resources.illPolicies.hasLoaded
-      || !resources.holdingsTypes || !resources.holdingsTypes.hasLoaded
-      || !resources.callNumberTypes || !resources.callNumberTypes.hasLoaded
-      || !resources.holdingsNoteTypes || !resources.holdingsNoteTypes.hasLoaded
-      || !resources.itemDamagedStatuses || !resources.itemDamagedStatuses.hasLoaded
-      || !resources.natureOfContentTerms || !resources.natureOfContentTerms.hasLoaded
-    ) return null;
+    if (this.isLoading()) {
+      return null;
+    }
 
-    const contributorTypes = (resources.contributorTypes || emptyObj).records || emptyArr;
-    const contributorNameTypes = (resources.contributorNameTypes || emptyObj).records || emptyArr;
-    const instanceRelationshipTypes = (resources.instanceRelationshipTypes || emptyObj).records || emptyArr;
-    const identifierTypes = (resources.identifierTypes || emptyObj).records || emptyArr;
-    const classificationTypes = (resources.classificationTypes || emptyObj).records || emptyArr;
-    const instanceTypes = (resources.instanceTypes || emptyObj).records || emptyArr;
-    const instanceFormats = (resources.instanceFormats || emptyObj).records || emptyArr;
-    const alternativeTitleTypes = (resources.alternativeTitleTypes || emptyObj).records || emptyArr;
-    const instanceStatuses = (resources.instanceStatuses || emptyObj).records || emptyArr;
-    const modesOfIssuance = (resources.modesOfIssuance || emptyObj).records || emptyArr;
-    const electronicAccessRelationships = (resources.electronicAccessRelationships || emptyObj).records || emptyArr;
-    const instanceNoteTypes = resources.instanceNoteTypes.records;
-    const statisticalCodeTypes = (resources.statisticalCodeTypes || emptyObj).records || emptyArr;
-    const statisticalCodes = (resources.statisticalCodes || emptyObj).records || emptyArr;
-    const illPolicies = (resources.illPolicies || emptyObj).records || emptyArr;
-    const holdingsTypes = (resources.holdingsTypes || emptyObj).records || emptyArr;
-    const callNumberTypes = (resources.callNumberTypes || emptyObj).records || emptyArr;
-    const holdingsNoteTypes = (resources.holdingsNoteTypes || emptyObj).records || emptyArr;
-    const itemDamagedStatuses = (resources.itemDamagedStatuses || emptyObj).records || emptyArr;
-    const natureOfContentTerms = (resources.natureOfContentTerms || emptyObj).records || emptyArr;
-    const locations = (resources.locations || emptyObj).records || emptyArr;
-    const locationsById = keyBy(locations, 'id');
-    const itemNoteTypes = get(resources, 'itemNoteTypes.records', []);
-
-    const referenceTables = {
-      contributorTypes,
-      contributorNameTypes,
-      instanceRelationshipTypes,
-      identifierTypes,
-      classificationTypes,
-      instanceTypes,
-      instanceFormats,
-      alternativeTitleTypes,
-      instanceStatuses,
-      modesOfIssuance,
-      electronicAccessRelationships,
-      instanceNoteTypes,
-      statisticalCodeTypes,
-      statisticalCodes,
-      illPolicies,
-      holdingsTypes,
-      callNumberTypes,
-      holdingsNoteTypes,
-      itemNoteTypes,
-      locationsById,
-      itemDamagedStatuses,
-      natureOfContentTerms,
-    };
-
+    const referenceTables = this.getReferenceTables();
     const resultsFormatter = {
       'title': ({ title }) => (
         <AppIcon
@@ -372,10 +351,10 @@ class Instances extends React.Component {
           {title}
         </AppIcon>
       ),
-      'relation': r => formatters.relationsFormatter(r, instanceRelationshipTypes),
+      'relation': r => formatters.relationsFormatter(r, referenceTables.instanceRelationshipTypes),
       'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
-      'contributors': r => formatters.contributorsFormatter(r, contributorTypes),
+      'contributors': r => formatters.contributorsFormatter(r, referenceTables.contributorTypes),
     };
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
@@ -391,6 +370,7 @@ class Instances extends React.Component {
           packageInfo={packageInfo}
           objectName="inventory"
           maxSortKeys={1}
+          renderNavigation={this.renderNavigation}
           searchableIndexes={formattedSearchableIndexes}
           selectedIndex={get(this.props.resources.query, 'qindex')}
           searchableIndexesPlaceholder={null}
@@ -432,7 +412,7 @@ class Instances extends React.Component {
   }
 }
 
-Instances.propTypes = {
+InstancesRoute.propTypes = {
   stripes: stripesShape.isRequired,
   resources: PropTypes.shape({
     records: PropTypes.shape({
@@ -467,6 +447,7 @@ Instances.propTypes = {
   }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
+    params: PropTypes.object.isRequired,
   }).isRequired,
   mutator: PropTypes.shape({
     addInstanceMode: PropTypes.shape({
@@ -494,4 +475,4 @@ Instances.propTypes = {
   intl: intlShape,
 };
 
-export default injectIntl(withLocation(Instances));
+export default stripesConnect(injectIntl(withLocation(InstancesRoute)));

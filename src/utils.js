@@ -1,5 +1,12 @@
-import { includes, get, forOwn } from 'lodash';
-import { itemStatuses } from './constants';
+import {
+  includes,
+  get,
+  forOwn,
+} from 'lodash';
+import {
+  itemStatuses,
+  availableFilters,
+} from './constants';
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
@@ -43,4 +50,9 @@ export function parseFiltersToStr(filters) {
   });
 
   return newFilters.join(',');
+}
+
+export function getFilter(filter) {
+  return availableFilters[filter] ||
+    availableFilters.instances;
 }
