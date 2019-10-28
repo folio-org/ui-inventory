@@ -769,6 +769,9 @@ class ViewInstance extends React.Component {
                           'Resource identifier type': intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' }),
                           'Resource identifier': intl.formatMessage({ id: 'ui-inventory.resourceIdentifier' }),
                         }}
+                        columnWidths={{
+                          'Resource identifier': '70%',
+                        }}
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
                         containerRef={(ref) => { this.resultsList = ref; }}
