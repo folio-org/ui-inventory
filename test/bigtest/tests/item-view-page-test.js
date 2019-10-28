@@ -175,6 +175,10 @@ describe('ItemViewPage', () => {
     expect(ItemViewPage.hasEditItemButton).to.be.false;
   });
 
+  it('should show a dropdown menu in the pane header', () => {
+    expect(ItemViewPage.hasHeaderDropdown).to.be.undefined;
+  });
+
   it('should show a duplicate menu item', () => {
     expect(ItemViewPage.headerDropdownMenu.hasDuplicate).to.be.false;
   });

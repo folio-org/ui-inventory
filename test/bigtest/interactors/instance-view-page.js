@@ -4,7 +4,7 @@ import {
   clickable,
   collection,
   text,
-  scoped, scrollable,
+  scoped,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -38,6 +38,7 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
 
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  hasHeaderDropdown = isPresent('[class^=DropdownMenuTether---]');
   headerDropdownMenu = new HeaderDropdownMenu();
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
@@ -52,7 +53,6 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   accordion = new AccordionInteractor('#acc02');
   expandAll = scoped('[data-test-expand-all] button');
   hasExpandAll = isPresent('[data-test-expand-all] button');
-  instanceSection = scrollable('[class^=paneContent---]');
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');

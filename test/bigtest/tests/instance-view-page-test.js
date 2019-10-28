@@ -9,7 +9,14 @@ import ItemViewPage from '../interactors/item-view-page';
 import HoldingsViewPage from '../interactors/holdings-view-page';
 
 describe('InstanceViewPage', () => {
-  setupApplication();
+  setupApplication(
+    { permissions: {
+      'ui-inventory.instance.view': true,
+      'ui-inventory.instance.create': true,
+      'ui-inventory.instance.edit': true,
+      'ui-inventory.holdings.create': true,
+    } }
+  );
 
   beforeEach(async function () {
     const instance = this.server.create('instance', 'withHoldingAndItem', {
