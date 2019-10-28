@@ -5,7 +5,7 @@ import {
   collection,
   text,
   scoped,
-  attribute,
+  property,
 } from '@bigtest/interactor';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -21,7 +21,7 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   clickDuplicate = clickable('#copy-instance');
   hasDuplicateButton = isPresent('#copy-instance');
   hasViewSourceButton = isPresent('#clickable-view-source');
-  isDisabledViewSourceButton = attribute('#clickable-view-source', 'disabled');
+  disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
 }
 
 @interactor class Item {
