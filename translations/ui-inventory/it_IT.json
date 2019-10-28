@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "Seleziona tipologia titolo alternativo",
     "parentInstances": "Istanze madri",
     "addParentInstance": "Aggiungi istanza madre",
-    "parentInstancesRequired": "Istanza madre *",
-    "typeOfRelationRequired": "Tipologia relazione*",
     "selectType": "Seleziona tipologia",
     "selectStatus": "Seleziona stato",
     "createNewHoldingsRecord": "Crea nuovo record holdings",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "Please enter a numeric value",
     "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
     "hridHandling.successfullyMessage": "Setting was successfully updated.",
-    "noBarcode": "No barcode"
+    "noBarcode": "No barcode",
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
 }
