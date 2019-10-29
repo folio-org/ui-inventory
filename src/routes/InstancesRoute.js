@@ -21,9 +21,7 @@ import {
   makeQueryFunction,
 } from '@folio/stripes/smart-components';
 
-import {
-  FilterNavigation,
-} from '../components';
+import { FilterNavigation } from '../components';
 import packageInfo from '../../package';
 import InstanceForm from '../edit/InstanceForm';
 import ViewInstance from '../ViewInstance';
