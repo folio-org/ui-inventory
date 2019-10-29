@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "Selecione o tipo de título alternativo",
     "parentInstances": "Instâncias pai",
     "addParentInstance": "Adicionar instância pai",
-    "parentInstancesRequired": "Instância pai *",
-    "typeOfRelationRequired": "Tipo de relação *",
     "selectType": "Selecione o tipo",
     "selectStatus": "Selecione o status",
     "createNewHoldingsRecord": "Criar um novo registro de acervo",
@@ -381,9 +379,9 @@
     "addNatureOfContentTerm": "Informe a natureza do conteúdo",
     "selectNatureOfContentTerm": "Selecione a natureza do conteúdo",
     "hridHandling": "Manuseio do HRID",
-    "hridHandling.description.line1": "Os registros de acervo e MARC mantêm qualquer HRID preexistente, a menos que especificado de outra forma durante o carregamento e a importação",
-    "hridHandling.description.line2": "Os novos HRIDs do FOLIO são atribuídos sequencialmente, com base no número inicial nessas configurações",
-    "hridHandling.description.line3": "A menos que seja alterado ou removido, o prefixo padrão será atribuído aos novos HRIDs do FOLIO",
+    "hridHandling.description.line1": "Após a migração inicial dos dados, novos HRIDs do FOLIO são atribuídos sequencialmente, com base no número inicial nessas configurações",
+    "hridHandling.description.line2": "A menos que seja alterado ou removido, o prefixo padrão será atribuído aos novos HRIDs do FOLIO",
+    "hridHandling.description.line3": "Os HRIDs nos registros FOLIO do Acervo e MARC existentes não podem ser alterados",
     "hridHandling.sectionHeader1": "Instâncias de acervo e registros bibliográficos do MARC",
     "hridHandling.sectionHeader2": "Registros de holdings e MARC holdings",
     "hridHandling.sectionHeader3": "Registros de itens do acervo",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "Por favor, insira um valor numérico",
     "hridHandling.validation.assignPrefixField": "Por favor, insira um valor alfanumérico",
     "hridHandling.successfullyMessage": "A configuração foi atualizada com sucesso.",
-    "noBarcode": "Nenhum código de barras"
+    "noBarcode": "Nenhum código de barras",
+    "items.successfullyCopiedMessage": "O código de barras do item {barcode} foi copiado com sucesso para a área de transferência"
 }
