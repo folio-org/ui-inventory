@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Icon,
-  Select,
-} from '@folio/stripes/components';
+import { Select } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 import languages from '../data/languages';
@@ -53,11 +50,7 @@ const LanguageFields = props => {
     <RepeatableField
       name="languages"
       label={<FormattedMessage id="ui-inventory.languages" />}
-      addLabel={
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addLanguage" />
-        </Icon>
-      }
+      addLabel={<FormattedMessage id="ui-inventory.addLanguage" />}
       addButtonId="clickable-add-language"
       template={[{
         render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit }); },
