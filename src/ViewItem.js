@@ -305,9 +305,7 @@ class ViewItem extends React.Component {
     const firstItem = get(resources, 'items.records[0]');
     const request = get(resources, 'requests.records[0]');
 
-    const newRequestLink = firstItem.barcode
-      ? `/requests?itemBarcode=${firstItem.barcode}&query=${firstItem.barcode}&layer=create`
-      : `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
+    const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
 
     const canCreate = stripes.hasPerm('ui-inventory.item.create');
     const canEdit = stripes.hasPerm('ui-inventory.item.edit');
@@ -483,12 +481,11 @@ class ViewItem extends React.Component {
 
     const labelPermanentHoldingsLocation = get(permanentHoldingsLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
-    const itemIdOrBarcode = item.barcode || item.id;
 
     let requestLink = 0;
     const requestFiltersLink = 'requestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit%2CrequestStatus.Open%20-%20Not%20yet%20filled';
-    if (requestRecords.length && itemIdOrBarcode) {
-      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+    if (requestRecords.length) {
+      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.id}&sort=Request%20Date`}>{requestRecords.length}</Link>;
     }
 
     let loanLink = item.status.name;
@@ -500,7 +497,7 @@ class ViewItem extends React.Component {
     }
 
     if (loanLink === 'Awaiting pickup') {
-      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${itemIdOrBarcode}&sort=Request%20Date`}>{loanLink}</Link>;
+      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.id}&sort=Request%20Date`}>{loanLink}</Link>;
     }
 
     let itemStatusDate = get(item, ['metadata', 'updatedDate']);
