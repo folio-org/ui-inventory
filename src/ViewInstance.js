@@ -787,7 +787,7 @@ class ViewInstance extends React.Component {
                         }}
                         columnWidths={{
                           'Resource identifier type': '25%',
-                          'Resource identifier': '25%',
+                          'Resource identifier': '74%',
                         }}
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
