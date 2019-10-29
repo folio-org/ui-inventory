@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import {
-  Icon,
   TextField,
   Select,
 } from '@folio/stripes/components';
@@ -29,11 +28,7 @@ const ClassificationFields = props => {
         <RepeatableField
           name="classifications"
           label={<FormattedMessage id="ui-inventory.classification" />}
-          addLabel={
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addClassification" />
-            </Icon>
-          }
+          addLabel={<FormattedMessage id="ui-inventory.addClassification" />}
           addButtonId="clickable-add-classification"
           addDefaultItem={false}
           template={[

@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import {
-  Icon,
   Select,
   TextField,
 } from '@folio/stripes/components';
@@ -29,11 +28,7 @@ const IdentifierFields = props => {
         <RepeatableField
           name="identifiers"
           label={<FormattedMessage id="ui-inventory.identifiers" />}
-          addLabel={
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addIdentifier" />
-            </Icon>
-          }
+          addLabel={<FormattedMessage id="ui-inventory.addIdentifier" />}
           addButtonId="clickable-add-identifier"
           template={[
             {
