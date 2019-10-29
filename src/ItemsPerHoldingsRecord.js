@@ -86,6 +86,7 @@ class ItemsPerHoldingsRecord extends React.Component {
       <Fragment>
         <Button
           id="clickable-view-holdings"
+          data-test-view-holdings
           to={{ pathname: `/inventory/view/${instance.id}/${holdingsRecord.id}` }}
           style={{ marginRight: '5px' }}
         >
