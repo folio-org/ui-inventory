@@ -22,7 +22,12 @@ import {
   makeQueryFunction,
 } from '@folio/stripes/smart-components';
 
-import { FilterNavigation } from '../components';
+import {
+  FilterNavigation,
+  InstanceFilters,
+  HoldingFilters,
+  ItemFilters,
+} from '../components';
 import packageInfo from '../../package';
 import InstanceForm from '../edit/InstanceForm';
 import ViewInstance from '../ViewInstance';
@@ -32,7 +37,6 @@ import {
   getCurrentFilters,
   parseFiltersToStr,
   getSegment,
-  getFilterComponent,
 } from '../utils';
 import {
   searchableIndexes,
@@ -233,6 +237,11 @@ class InstancesRoute extends React.Component {
     this.copyInstance = this.copyInstance.bind(this);
 
     this.state = {};
+    this.filterRenderers = {
+      instances: this.renderInstanceFilters,
+      holdings: this.renderHoldingFilters,
+      items: this.renderItemFilters,
+    };
   }
 
   onChangeIndex = (e) => {
@@ -301,39 +310,58 @@ class InstancesRoute extends React.Component {
     return referenceTables;
   }
 
-  renderNavigation = () => {
-    const { segment } = this.props.getParams();
+  renderNavigation = () => (
+    <FilterNavigation segment={getSegment(this.props.getParams())} />
+  );
+
+  renderInstanceFilters = (activeFilters, onChange) => {
+    const { resources } = this.props;
 
     return (
-      <FilterNavigation segment={getSegment(segment)} />
-    );
-  }
-
-  renderFilters = (onChange) => {
-    const {
-      resources: {
-        locations,
-        instanceTypes,
-        query,
-      },
-      getParams,
-    } = this.props;
-
-    const { segment } = getParams();
-    const activeFilters = getCurrentFilters(get(query, 'filters', ''));
-    const FilterComponent = getFilterComponent(segment);
-
-    return (
-      <FilterComponent
+      <InstanceFilters
         activeFilters={activeFilters}
         data={{
-          locations: get(locations, 'records', []),
-          resourceTypes: get(instanceTypes, 'records', []),
+          locations: get(resources, 'locations.records', []),
+          resourceTypes: get(resources, 'instanceTypes.records', []),
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}
       />
     );
+  }
+
+  renderHoldingFilters = (activeFilters, onChange) => {
+    return (
+      <HoldingFilters
+        activeFilters={activeFilters}
+        data={{
+          // TODO: pass required data
+        }}
+        onChange={onChange}
+        onClear={(name) => onChange({ name, values: [] })}
+      />
+    );
+  }
+
+  renderItemFilters = (activeFilters, onChange) => {
+    return (
+      <ItemFilters
+        activeFilters={activeFilters}
+        data={{
+          // TODO: pass required data
+        }}
+        onChange={onChange}
+        onClear={(name) => onChange({ name, values: [] })}
+      />
+    );
+  }
+
+  renderFilters = (onChange) => {
+    const { resources, getParams } = this.props;
+    const segment = getSegment(getParams());
+    const activeFilters = getCurrentFilters(get(resources, 'query.filters', ''));
+
+    return this.filterRenderers[segment](activeFilters, onChange);
   };
 
   render() {

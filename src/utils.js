@@ -8,18 +8,6 @@ import {
   segments,
 } from './constants';
 
-import {
-  InstanceFilters,
-  HoldingFilters,
-  ItemFilters,
-} from './components';
-
-const filterComponents = {
-  instances: InstanceFilters,
-  holdings: HoldingFilters,
-  items: ItemFilters,
-};
-
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
     const url = location.pathname + location.search;
@@ -64,12 +52,8 @@ export function parseFiltersToStr(filters) {
   return newFilters.join(',');
 }
 
-export function getSegment(segment) {
+export function getSegment(params) {
+  const { segment } = params;
+
   return segments[segment] || segments.instances;
-}
-
-export function getFilterComponent(name) {
-  const segment = getSegment(name);
-
-  return filterComponents[segment];
 }

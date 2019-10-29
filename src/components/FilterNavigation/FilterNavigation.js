@@ -11,7 +11,7 @@ import { segments } from '../../constants';
 const FiltersNavigation = ({ segment }) => (
   <ButtonGroup
     fullWidth
-    data-test-filters-panel
+    data-test-filters-navigation
   >
     {
       Object.keys(segments).map(name => (
