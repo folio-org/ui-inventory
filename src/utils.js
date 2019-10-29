@@ -5,7 +5,7 @@ import {
 } from 'lodash';
 import {
   itemStatuses,
-  availableFilters,
+  segments,
 } from './constants';
 
 import {
@@ -64,12 +64,12 @@ export function parseFiltersToStr(filters) {
   return newFilters.join(',');
 }
 
-export function getFilterName(name) {
-  return availableFilters[name] ||
-    availableFilters.instances;
+export function getSegment(segment) {
+  return segments[segment] || segments.instances;
 }
 
 export function getFilterComponent(name) {
-  const filter = getFilterName(name);
-  return filterComponents[filter];
+  const segment = getSegment(name);
+
+  return filterComponents[segment];
 }

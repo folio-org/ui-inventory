@@ -6,19 +6,19 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-import { availableFilters } from '../../constants';
+import { segments } from '../../constants';
 
-const FiltersPanel = ({ filter }) => (
+const FiltersNavigation = ({ segment }) => (
   <ButtonGroup
     fullWidth
     data-test-filters-panel
   >
     {
-      Object.keys(availableFilters).map(name => (
+      Object.keys(segments).map(name => (
         <Button
           key={`${name}`}
-          to={`/inventory/${name}`}
-          buttonStyle={`${filter === name ? 'primary' : 'default'}`}
+          to={`/inventory?segment=${name}`}
+          buttonStyle={`${segment === name ? 'primary' : 'default'}`}
         >
           <FormattedMessage id={`ui-inventory.filters.${name}`} />
         </Button>
@@ -27,12 +27,12 @@ const FiltersPanel = ({ filter }) => (
   </ButtonGroup>
 );
 
-FiltersPanel.propTypes = {
-  filter: PropTypes.string,
+FiltersNavigation.propTypes = {
+  segment: PropTypes.string,
 };
 
-FiltersPanel.defaultProps = {
-  filter: availableFilters.instances,
+FiltersNavigation.defaultProps = {
+  segment: segments.instances,
 };
 
-export default FiltersPanel;
+export default FiltersNavigation;

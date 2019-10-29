@@ -46,7 +46,7 @@ export const searchableIndexes = [
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
 ];
 
-export const availableFilters = {
+export const segments = {
   instances: 'instances',
   holdings: 'holdings',
   items: 'items',

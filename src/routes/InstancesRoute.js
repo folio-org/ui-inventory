@@ -31,10 +31,9 @@ import withLocation from '../withLocation';
 import {
   getCurrentFilters,
   parseFiltersToStr,
-  getFilterName,
+  getSegment,
   getFilterComponent,
 } from '../utils';
-
 import {
   searchableIndexes,
   filterConfig,
@@ -302,9 +301,13 @@ class InstancesRoute extends React.Component {
     return referenceTables;
   }
 
-  renderNavigation = () => (
-    <FilterNavigation filter={getFilterName(this.props.match.params.filter)} />
-  )
+  renderNavigation = () => {
+    const { segment } = this.props.getParams();
+
+    return (
+      <FilterNavigation segment={getSegment(segment)} />
+    );
+  }
 
   renderFilters = (onChange) => {
     const {
@@ -313,14 +316,11 @@ class InstancesRoute extends React.Component {
         instanceTypes,
         query,
       },
-      match: {
-        params: {
-          filter,
-        },
-      },
+      getParams,
     } = this.props;
 
-    const FilterComponent = getFilterComponent(filter);
+    const { segment } = getParams();
+    const FilterComponent = getFilterComponent(segment);
 
     return (
       <FilterComponent
@@ -482,6 +482,7 @@ InstancesRoute.propTypes = {
   onSelectRow: PropTypes.func,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
   updateLocation: PropTypes.func.isRequired,
+  getParams: PropTypes.func.isRequired,
   intl: intlShape,
 };
 
