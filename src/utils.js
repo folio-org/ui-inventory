@@ -8,6 +8,18 @@ import {
   availableFilters,
 } from './constants';
 
+import {
+  InstanceFilters,
+  HoldingFilters,
+  ItemFilters,
+} from './components';
+
+const filterComponents = {
+  instances: InstanceFilters,
+  holdings: HoldingFilters,
+  items: ItemFilters,
+};
+
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
     const url = location.pathname + location.search;
@@ -26,7 +38,7 @@ export function canMarkItemAsMissing(item) {
   ], get(item, 'status.name'));
 }
 
-export function parseStrToFilters(filtersStr) {
+export function getCurrentFilters(filtersStr) {
   if (!filtersStr) {
     return undefined;
   }
@@ -52,7 +64,12 @@ export function parseFiltersToStr(filters) {
   return newFilters.join(',');
 }
 
-export function getFilter(filter) {
-  return availableFilters[filter] ||
+export function getFilterName(name) {
+  return availableFilters[name] ||
     availableFilters.instances;
+}
+
+export function getFilterComponent(name) {
+  const filter = getFilterName(name);
+  return filterComponents[filter];
 }

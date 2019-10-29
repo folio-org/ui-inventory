@@ -21,19 +21,21 @@ import {
   makeQueryFunction,
 } from '@folio/stripes/smart-components';
 
-import { FiltersPanel } from '../components';
-
+import {
+  FilterNavigation,
+} from '../components';
 import packageInfo from '../../package';
 import InstanceForm from '../edit/InstanceForm';
 import ViewInstance from '../ViewInstance';
 import formatters from '../referenceFormatters';
 import withLocation from '../withLocation';
 import {
-  parseStrToFilters,
+  getCurrentFilters,
   parseFiltersToStr,
-  getFilter,
+  getFilterName,
+  getFilterComponent,
 } from '../utils';
-import Filters from '../Filters';
+
 import {
   searchableIndexes,
   filterConfig,
@@ -242,11 +244,12 @@ class InstancesRoute extends React.Component {
 
   onFilterChangeHandler = ({ name, values }) => {
     const { resources: { query } } = this.props;
-    const curFilters = parseStrToFilters(get(query, 'filters', ''));
-    const filters = values.length
+    const curFilters = getCurrentFilters(get(query.filters));
+    const mergedFilters = values.length
       ? { ...curFilters, [name]: values }
       : omit(curFilters, name);
-    const filtersStr = parseFiltersToStr(filters);
+    const filtersStr = parseFiltersToStr(mergedFilters);
+
     this.props.updateLocation({ filters: filtersStr });
   };
 
@@ -268,27 +271,6 @@ class InstancesRoute extends React.Component {
     this.props.mutator.records.POST(instance).then(() => {
       this.closeNewInstance();
     });
-  };
-
-  renderFilters = (onChange) => {
-    const {
-      resources: {
-        locations,
-        instanceTypes,
-        query,
-      },
-    } = this.props;
-
-    return (
-      <Filters
-        activeFilters={parseStrToFilters(get(query, 'filters', ''))}
-        data={{
-          locations: get(locations, 'records', []),
-          resourceTypes: get(instanceTypes, 'records', []),
-        }}
-        onChange={onChange}
-      />
-    );
   };
 
   isLoading() {
@@ -322,8 +304,37 @@ class InstancesRoute extends React.Component {
   }
 
   renderNavigation = () => (
-    <FiltersPanel filter={getFilter(this.props.match.params.filter)} />
+    <FilterNavigation filter={getFilterName(this.props.match.params.filter)} />
   )
+
+  renderFilters = (onChange) => {
+    const {
+      resources: {
+        locations,
+        instanceTypes,
+        query,
+      },
+      match: {
+        params: {
+          filter,
+        },
+      },
+    } = this.props;
+
+    const FilterComponent = getFilterComponent(filter);
+
+    return (
+      <FilterComponent
+        activeFilters={getCurrentFilters(get(query, 'filters', ''))}
+        data={{
+          locations: get(locations, 'records', []),
+          resourceTypes: get(instanceTypes, 'records', []),
+        }}
+        onChange={onChange}
+        onClear={(name) => onChange({ name, values: [] })}
+      />
+    );
+  };
 
   render() {
     const {
