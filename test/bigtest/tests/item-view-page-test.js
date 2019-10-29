@@ -8,14 +8,7 @@ import ItemCreatePage from '../interactors/item-create-page';
 
 describe('ItemViewPage', () => {
   describe('User has permissions', () => {
-    setupApplication(
-      { permissions: {
-        'ui-inventory.item.create': true,
-        'ui-inventory.item.edit': true,
-        'ui-inventory.item.delete': true,
-        'ui-requests.create': true,
-      } }
-    );
+    setupApplication();
 
     describe('visiting the item view page', () => {
       let item;
@@ -172,13 +165,13 @@ describe('ItemViewPage', () => {
   });
 
   describe('User does not have permissions', () => {
-    setupApplication(
-      { hasAllPerms: false,
-        permissions: {
-          'module.inventory.enabled': true,
-          'ui-inventory.instance.view': true,
-        } }
-    );
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'module.inventory.enabled': true,
+        'ui-inventory.instance.view': true,
+      }
+    });
 
     describe('visiting the item view page', () => {
       let item;

@@ -240,7 +240,10 @@ class ViewInstance extends React.Component {
   };
 
   createActionMenuGetter = instance => ({ onToggle }) => {
-    const { onCopy, stripes } = this.props;
+    const {
+      onCopy,
+      stripes
+    } = this.props;
     const { marcRecord } = this.state;
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
 
@@ -544,7 +547,10 @@ class ViewInstance extends React.Component {
       >
         <TitleManager record={instance.title} />
         <Row end="xs">
-          <Col data-test-expand-all xs>
+          <Col
+            data-test-expand-all
+            xs
+          >
             <ExpandAllButton
               accordionStatus={this.state.accordions}
               onToggle={this.handleExpandAll}

@@ -9,16 +9,8 @@ import ItemViewPage from '../interactors/item-view-page';
 import HoldingsViewPage from '../interactors/holdings-view-page';
 
 describe('InstanceViewPage', () => {
-  describe('User has permissions', () => {
-    setupApplication(
-      { permissions: {
-        'ui-inventory.instance.view': true,
-        'ui-inventory.instance.create': true,
-        'ui-inventory.instance.edit': true,
-        'ui-inventory.holdings.create': true,
-      } }
-    );
 
+  const visitingViewInventoryPage = () => {
     beforeEach(async function () {
       const instance = this.server.create('instance', 'withHoldingAndItem', {
         title: 'ADVANCING RESEARCH',
@@ -26,6 +18,12 @@ describe('InstanceViewPage', () => {
       this.visit(`/inventory/view/${instance.id}`);
       await InstanceViewPage.whenLoaded();
     });
+  };
+
+  describe('User has permissions', () => {
+    setupApplication();
+
+    visitingViewInventoryPage();
 
     it('should be displayed', () => {
       expect(InstanceViewPage.hasExpandAll).to.be.true;
@@ -183,21 +181,15 @@ describe('InstanceViewPage', () => {
   });
 
   describe('User does not have permissions', () => {
-    setupApplication(
-      { hasAllPerms: false,
-        permissions: {
-          'module.inventory.enabled': true,
-          'ui-inventory.instance.view': true,
-        } }
-    );
-
-    beforeEach(async function () {
-      const instance = this.server.create('instance', 'withHoldingAndItem', {
-        title: 'ADVANCING RESEARCH',
-      });
-      this.visit(`/inventory/view/${instance.id}`);
-      await InstanceViewPage.whenLoaded();
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'module.inventory.enabled': true,
+        'ui-inventory.instance.view': true,
+      }
     });
+
+    visitingViewInventoryPage();
 
     it('displays the clickable edit button near the header', () => {
       expect(InstanceViewPage.hasButtonEditInstance).to.be.false;
