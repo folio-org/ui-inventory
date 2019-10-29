@@ -54,5 +54,6 @@ export function parseFiltersToStr(filters) {
 // idTypes is an array of relationship definition objects of the form
 // { id, name }
 export function psTitleRelationshipId(idTypes) {
-  return find(idTypes, { 'name': 'preceding-succeeding' }).id;
+  const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
+  return relationshipDetail ? relationshipDetail.id : '';
 }
