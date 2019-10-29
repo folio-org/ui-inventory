@@ -246,6 +246,5 @@ describe('InstanceViewPage', () => {
     it('should show succeding title', () => {
       expect(InstanceViewPage.hasSucceedingTitles).to.be.true;
     });
-
-  })
+  });
 });

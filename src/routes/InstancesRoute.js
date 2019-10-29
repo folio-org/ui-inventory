@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  concat,
   keyBy,
   get,
+  map,
+  omit,
+  set,
   template,
 } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
@@ -304,6 +308,9 @@ InstancesRoute.propTypes = {
     numFiltersLoaded: PropTypes.number,
     resultCount: PropTypes.number,
     instanceTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    instanceRelationshipTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     itemNoteTypes: PropTypes.shape({

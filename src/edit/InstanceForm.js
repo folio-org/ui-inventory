@@ -27,7 +27,6 @@ import {
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../components/RepeatableField';
-import { psTitleRelationshipId } from '../utils';
 
 import AlternativeTitles from './alternativeTitles';
 import SeriesFields from './seriesFields';
