@@ -12,6 +12,7 @@ const InventoryRouting = (props) => {
   return (
     <Switch>
       <Route
+        exact
         path={`${path}/:filter`}
         component={InstancesRoute}
       />

@@ -6,6 +6,7 @@ import {
   get,
   set,
   template,
+  flowRight,
 } from 'lodash';
 import {
   injectIntl,
@@ -484,4 +485,8 @@ InstancesRoute.propTypes = {
   intl: intlShape,
 };
 
-export default stripesConnect(injectIntl(withLocation(InstancesRoute)));
+export default flowRight(
+  stripesConnect,
+  injectIntl,
+  withLocation,
+)(InstancesRoute);
