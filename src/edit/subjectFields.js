@@ -2,10 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {
-  Icon,
-  TextField,
-} from '@folio/stripes/components';
+import { TextField } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -19,11 +16,7 @@ const SubjectFields = props => {
   return (
     <RepeatableField
       name="subjects"
-      addLabel={
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addSubject" />
-        </Icon>
-      }
+      addLabel={<FormattedMessage id="ui-inventory.addSubject" />}
       addButtonId="clickable-add-subject"
       template={[{
         component: TextField,

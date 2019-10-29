@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Icon,
-  Select,
-} from '@folio/stripes/components';
+import { Select } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -58,11 +55,7 @@ const InstanceFormatFields = props => {
     <RepeatableField
       name="instanceFormatIds"
       label={<FormattedMessage id="ui-inventory.instanceFormats" />}
-      addLabel={
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addInstanceFormat" />
-        </Icon>
-      }
+      addLabel={<FormattedMessage id="ui-inventory.addInstanceFormat" />}
       addButtonId="clickable-add-instanceformat"
       template={[{
         render(fieldObj) { return renderInstanceFormatField({ ...fieldObj, canEdit }, instanceFormats); },

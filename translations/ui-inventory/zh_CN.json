@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "选择交替提名类型",
     "parentInstances": "父实例",
     "addParentInstance": "添加父实例",
-    "parentInstancesRequired": "父实例*",
-    "typeOfRelationRequired": "关系类型*",
     "selectType": "选择类型",
     "selectStatus": "选择状态",
     "createNewHoldingsRecord": "创建新的馆藏记录",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "请输入一个数值",
     "hridHandling.validation.assignPrefixField": "请输入一个字母数字值",
     "hridHandling.successfullyMessage": "设置更新成功。",
-    "noBarcode": "无条码"
+    "noBarcode": "无条码",
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
 }
