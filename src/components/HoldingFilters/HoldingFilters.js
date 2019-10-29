@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class InstanceFilters extends React.Component {
+export default class HoldingFilters extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* TODO: add filters */}
+        {/* TODO: add holding filters */}
       </React.Fragment>
     );
   }
