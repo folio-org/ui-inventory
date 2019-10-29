@@ -1,12 +1,6 @@
 import {
   includes,
-<<<<<<< HEAD
   find,
-  get,
-  forOwn
-} from 'lodash';
-import { itemStatuses } from './constants';
-=======
   get,
   forOwn,
 } from 'lodash';
@@ -14,7 +8,6 @@ import {
   itemStatuses,
   segments,
 } from './constants';
->>>>>>> origin/master
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
