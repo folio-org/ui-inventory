@@ -15,6 +15,7 @@
 * Align display of data in the instance record. Refs UIIN-677.
 * Align display of data in the holdings record. Refs UIIN-811.
 * Fix double asterisk in accordion Instance relationships (analytics and bound-with). Fixes UIIN-646
+* Make the label of Nature of content is presented on it's own line. Refs UIIN-748.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
