@@ -2,6 +2,7 @@ import {
   get,
   has,
   cloneDeep,
+  orderBy,
 } from 'lodash';
 import React, {
   Fragment,
@@ -309,7 +310,7 @@ class ViewInstance extends React.Component {
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
     const identifiersRowFormatter = {
-      'Resource identifier type': x => this.refLookup(referenceTables.identifierTypes, get(x, ['identifierTypeId'])).name,
+      'Resource identifier type': x => get(x, ['identifierType']),
       'Resource identifier': x => get(x, ['value']) || '--',
     };
 
@@ -517,6 +518,12 @@ class ViewInstance extends React.Component {
         </IntlConsumer>
       );
     }
+
+    const orderedIdentifiers = orderBy(get(instance, 'identifiers', []).map(x => ({
+      identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
+      value: x.value,
+    })),
+    ['identifierType', 'value'], 'asc');
 
     return (
       <Pane
@@ -770,7 +777,7 @@ class ViewInstance extends React.Component {
                     {ariaLabel => (
                       <MultiColumnList
                         id="list-identifiers"
-                        contentData={instance.identifiers}
+                        contentData={orderedIdentifiers}
                         rowMetadata={['identifierTypeId']}
                         visibleColumns={['Resource identifier type', 'Resource identifier']}
                         columnMapping={{
@@ -779,7 +786,7 @@ class ViewInstance extends React.Component {
                         }}
                         columnWidths={{
                           'Resource identifier type': '25%',
-                          'Resource identifier': '25%',
+                          'Resource identifier': '74%',
                         }}
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
