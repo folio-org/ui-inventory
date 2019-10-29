@@ -1,10 +1,20 @@
 import {
   includes,
+<<<<<<< HEAD
   find,
   get,
   forOwn
 } from 'lodash';
 import { itemStatuses } from './constants';
+=======
+  get,
+  forOwn,
+} from 'lodash';
+import {
+  itemStatuses,
+  segments,
+} from './constants';
+>>>>>>> origin/master
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
@@ -24,7 +34,7 @@ export function canMarkItemAsMissing(item) {
   ], get(item, 'status.name'));
 }
 
-export function parseStrToFilters(filtersStr) {
+export function getCurrentFilters(filtersStr) {
   if (!filtersStr) {
     return undefined;
   }
@@ -56,4 +66,10 @@ export function parseFiltersToStr(filters) {
 export function psTitleRelationshipId(idTypes) {
   const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
   return relationshipDetail ? relationshipDetail.id : '';
+}
+
+export function getSegment(params) {
+  const { segment } = params;
+
+  return segments[segment] || segments.instances;
 }
