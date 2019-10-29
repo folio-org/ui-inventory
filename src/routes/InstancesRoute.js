@@ -320,11 +320,12 @@ class InstancesRoute extends React.Component {
     } = this.props;
 
     const { segment } = getParams();
+    const activeFilters = getCurrentFilters(get(query, 'filters', ''));
     const FilterComponent = getFilterComponent(segment);
 
     return (
       <FilterComponent
-        activeFilters={getCurrentFilters(get(query, 'filters', ''))}
+        activeFilters={activeFilters}
         data={{
           locations: get(locations, 'records', []),
           resourceTypes: get(instanceTypes, 'records', []),
