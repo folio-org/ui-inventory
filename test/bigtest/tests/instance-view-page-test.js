@@ -214,4 +214,38 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.hasButtonAddHoldings).to.be.false;
     });
   });
+
+  describe('Preceding and succeding titles', () => {
+    setupApplication();
+    beforeEach(async function () {
+      this.server.create('instanceRelationshipType', {
+        'id': '7531246',
+        'name': 'preceding-succeeding',
+      });
+      const instance = this.server.create('instance', {
+        title: 'ADVANCING RESEARCH',
+        parentInstances: [{
+          id: '10101010101',
+          superInstanceId: '130400000',
+          instanceRelationshipTypeId: '7531246',
+        }],
+        childInstances: [{
+          id: '10101010101',
+          subInstanceId: '130400000',
+          instanceRelationshipTypeId: '7531246',
+        }],
+      });
+
+      this.visit(`/inventory/view/${instance.id}`);
+      await InstanceViewPage.whenLoaded();
+    });
+
+    it('should show preceding title', () => {
+      expect(InstanceViewPage.hasPrecedingTitles).to.be.true;
+    });
+    it('should show succeding title', () => {
+      expect(InstanceViewPage.hasSucceedingTitles).to.be.true;
+    });
+
+  })
 });

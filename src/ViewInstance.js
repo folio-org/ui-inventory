@@ -821,7 +821,10 @@ class ViewInstance extends React.Component {
           </Row>
           {instance.precedingTitles && instance.precedingTitles.length > 0 && (
             <Row>
-              <Col xs={12}>
+              <Col
+                data-test-preceding-titles
+                xs={12}
+              >
                 <KeyValue
                   label={<FormattedMessage id="ui-inventory.precedingTitles" />}
                   value={formatters.precedingTitlesFormatter(instance, location)}
@@ -831,7 +834,10 @@ class ViewInstance extends React.Component {
           )}
           {instance.succeedingTitles && instance.succeedingTitles.length > 0 && (
             <Row>
-              <Col xs={12}>
+              <Col
+                data-test-succeeding-titles
+                xs={12}
+              >
                 <KeyValue
                   label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
                   value={formatters.succeedingTitlesFormatter(instance, location)}
