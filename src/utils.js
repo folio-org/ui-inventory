@@ -59,4 +59,3 @@ export function psTitleRelationshipId(idTypes) {
   const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
   return relationshipDetail ? relationshipDetail.id : '';
 }
-
