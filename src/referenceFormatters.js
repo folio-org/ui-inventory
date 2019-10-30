@@ -150,4 +150,34 @@ export default {
     return formatted.map((elem, i) => <div key={i}>{elem}</div>);
   },
 
+  precedingTitlesFormatter: (r, location) => {
+    const formatted = [];
+    if (r.precedingTitles && r.precedingTitles.length) {
+      r.precedingTitles.forEach((title) => {
+        const viewPrecedingTitleLink = `/inventory/view/${title.superInstanceId}/${location.search}`;
+        formatted.push(
+          <Link to={viewPrecedingTitleLink}>
+            {`${title.superInstanceId}`}
+          </Link>
+        );
+      });
+    }
+    return formatted.map((elem, i) => <div key={i}>{elem}</div>);
+  },
+
+  succeedingTitlesFormatter: (r, location) => {
+    const formatted = [];
+    if (r.succeedingTitles && r.succeedingTitles.length) {
+      r.succeedingTitles.forEach((title) => {
+        const viewSucceedingTitleLink = `/inventory/view/${title.subInstanceId}/${location.search}`;
+        formatted.push(
+          <Link to={viewSucceedingTitleLink}>
+            {`${title.subInstanceId}`}
+          </Link>
+        );
+      });
+    }
+    return formatted.map((elem, i) => <div key={i}>{elem}</div>);
+  },
+
 };

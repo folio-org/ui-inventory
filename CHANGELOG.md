@@ -15,6 +15,7 @@
 * Align display of data in the instance record. Refs UIIN-677.
 * Align display of data in the holdings record. Refs UIIN-811.
 * Fix double asterisk in accordion Instance relationships (analytics and bound-with). Fixes UIIN-646
+* Implement preceding and succeeding title fields in instance record. Completes UIIN-809 and UIIN-810.
 * Make sure the label of Nature of content is presented on its own line. Refs UIIN-748.
 * Add segmented control panel for search. Part of UIIN-758.
 * Move holdings-record accordion to top of instance display. Refs UIIN-802.

@@ -1,5 +1,6 @@
 import {
   includes,
+  find,
   get,
   forOwn,
 } from 'lodash';
@@ -50,6 +51,14 @@ export function parseFiltersToStr(filters) {
   });
 
   return newFilters.join(',');
+}
+
+// Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
+// idTypes is an array of relationship definition objects of the form
+// { id, name }
+export function psTitleRelationshipId(idTypes) {
+  const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
+  return relationshipDetail ? relationshipDetail.id : '';
 }
 
 export function getSegment(params) {
