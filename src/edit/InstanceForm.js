@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import {
   cloneDeep,
+  filter,
   isEmpty,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -48,6 +49,7 @@ import ParentInstanceFields from './parentInstanceFields';
 import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
+import { psTitleRelationshipId } from '../utils';
 
 function validate(values) {
   const errors = {};
@@ -320,6 +322,11 @@ class InstanceForm extends React.Component {
         </Button>
       </PaneMenu>
     );
+
+    // Since preceding/succeeding title relationships are split out from other parent/child instances,
+    // we don't want the type selection box for parent/child to include the preceding-succeeding type
+    const rTypes = referenceTables.instanceRelationshipTypes;
+    const mostParentChildRelationships = filter(rTypes, rt => rt.id !== psTitleRelationshipId(rTypes));
 
     return (
       <form data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}>
@@ -726,13 +733,13 @@ class InstanceForm extends React.Component {
                 id="instanceSection11"
               >
                 <ParentInstanceFields
-                  instanceRelationshipTypes={referenceTables.instanceRelationshipTypes}
+                  instanceRelationshipTypes={mostParentChildRelationships}
                   canAdd={!this.isFieldBlocked('parentInstances')}
                   canEdit={!this.isFieldBlocked('parentInstances')}
                   canDelete={!this.isFieldBlocked('publicInstances')}
                 />
                 <ChildInstanceFields
-                  instanceRelationshipTypes={referenceTables.instanceRelationshipTypes}
+                  instanceRelationshipTypes={mostParentChildRelationships}
                   canAdd={!this.isFieldBlocked('childInstances')}
                   canEdit={!this.isFieldBlocked('childInstances')}
                   canDelete={!this.isFieldBlocked('childInstances')}
