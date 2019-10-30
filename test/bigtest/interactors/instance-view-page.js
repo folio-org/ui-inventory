@@ -55,6 +55,8 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   accordion = new AccordionInteractor('#acc02');
   expandAll = scoped('[data-test-expand-all] button');
   hasExpandAll = isPresent('[data-test-expand-all] button');
+  hasPrecedingTitles = isPresent('[data-test-preceding-titles]');
+  hasSucceedingTitles = isPresent('[data-test-succeeding-titles]');
 }
 
 export default new InstanceViewPage('[data-test-instance-details]');
