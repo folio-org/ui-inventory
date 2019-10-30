@@ -4,10 +4,11 @@ import {
   get,
   has,
   cloneDeep,
+  orderBy,
   map,
   omit,
   reject,
-  set
+  set,
 } from 'lodash';
 import React, {
   Fragment,
@@ -371,7 +372,7 @@ class ViewInstance extends React.Component {
     };
 
     const classificationsRowFormatter = {
-      'Classification identifier type': x => this.refLookup(referenceTables.classificationTypes, get(x, ['classificationTypeId'])).name,
+      'Classification identifier type': x => get(x, ['classificationType']),
       'Classification': x => get(x, ['classificationNumber']) || '--',
     };
 
@@ -576,6 +577,12 @@ class ViewInstance extends React.Component {
         </IntlConsumer>
       );
     }
+
+    const orderedClassifications = orderBy(get(instance, 'classifications', []).map(x => ({
+      classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
+      classificationNumber: x.classificationNumber,
+    })),
+    ['classificationType', 'classificationNumber'], 'asc');
 
     return (
       <Pane
@@ -1210,7 +1217,7 @@ class ViewInstance extends React.Component {
                   {ariaLabel => (
                     <MultiColumnList
                       id="list-classifications"
-                      contentData={instance.classifications}
+                      contentData={orderedClassifications}
                       rowMetadata={['classificationTypeId']}
                       visibleColumns={['Classification identifier type', 'Classification']}
                       columnMapping={{
@@ -1219,7 +1226,7 @@ class ViewInstance extends React.Component {
                       }}
                       columnWidths={{
                         'Classification identifier type': '25%',
-                        'Classification': '25%',
+                        'Classification': '74%',
                       }}
                       formatter={classificationsRowFormatter}
                       ariaLabel={ariaLabel}
