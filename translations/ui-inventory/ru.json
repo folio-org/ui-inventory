@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "Select alternative title type",
     "parentInstances": "Parent instances",
     "addParentInstance": "Add parent instance",
-    "parentInstancesRequired": "Parent instance *",
-    "typeOfRelationRequired": "Type of relation *",
     "selectType": "Select type",
     "selectStatus": "Select status",
     "createNewHoldingsRecord": "Create new holdings record",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "Пожалуйста, введите числовое значение",
     "hridHandling.validation.assignPrefixField": "Пожалуйста, введите буквенно-цифровое значение",
     "hridHandling.successfullyMessage": "Настройка была успешно обновлена.",
-    "noBarcode": "Нет штрих-кода"
+    "noBarcode": "Нет штрих-кода",
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
 }

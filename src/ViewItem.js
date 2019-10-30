@@ -298,7 +298,10 @@ class ViewItem extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { resources } = this.props;
+    const {
+      resources,
+      stripes,
+    } = this.props;
     const firstItem = get(resources, 'items.records[0]');
     const request = get(resources, 'requests.records[0]');
 
@@ -306,69 +309,78 @@ class ViewItem extends React.Component {
       ? `/requests?itemBarcode=${firstItem.barcode}&query=${firstItem.barcode}&layer=create`
       : `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
 
+    const canCreate = stripes.hasPerm('ui-inventory.item.create');
+    const canEdit = stripes.hasPerm('ui-inventory.item.edit');
+    const canDelete = stripes.hasPerm('ui-inventory.item.delete');
+    const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
+
+    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest) {
+      return null;
+    }
+
     return (
       <Fragment>
-        <IfPermission perm="ui-inventory.item.edit">
-          <Button
-            href={this.craftLayerUrl('editItem')}
-            onClick={() => {
-              onToggle();
-              this.onClickEditItem();
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-edit-item-action
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editItem" />
-            </Icon>
-          </Button>
-        </IfPermission>
-        <IfPermission perm="ui-inventory.item.create">
-          <Button
-            id="clickable-copy-item"
-            onClick={() => {
-              onToggle();
-              this.onCopy(firstItem);
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-duplicate-item-action
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-inventory.copyItem" />
-            </Icon>
-          </Button>
-        </IfPermission>
-        <IfPermission perm="ui-inventory.item.delete">
-          <Button
-            id="clickable-delete-item"
-            onClick={() => {
-              onToggle();
-              this.canDeleteItem(firstItem, request);
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-delete-item-action
-          >
-            <Icon icon="trash">
-              <FormattedMessage id="ui-inventory.deleteItem" />
-            </Icon>
-          </Button>
-        </IfPermission>
-        {
-          canMarkItemAsMissing(firstItem) &&
-          <Button
-            id="clickable-missing-item"
-            onClick={() => {
-              onToggle();
-              this.setState({ itemMissingModal: true });
-            }}
-            buttonStyle="dropdownItem"
-            data-test-mark-as-missing-item
-          >
-            <Icon icon="flag">
-              <FormattedMessage id="ui-inventory.markAsMissing" />
-            </Icon>
-          </Button>
-        }
+        { canEdit &&
+        <Button
+          href={this.craftLayerUrl('editItem')}
+          onClick={() => {
+            onToggle();
+            this.onClickEditItem();
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-edit-item-action
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editItem" />
+          </Icon>
+        </Button>
+          }
+        { canCreate &&
+        <Button
+          id="clickable-copy-item"
+          onClick={() => {
+            onToggle();
+            this.onCopy(firstItem);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-duplicate-item-action
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-inventory.copyItem" />
+          </Icon>
+        </Button>
+          }
+        { canDelete &&
+        <Button
+          id="clickable-delete-item"
+          onClick={() => {
+            onToggle();
+            this.canDeleteItem(firstItem, request);
+          }}
+          buttonStyle="dropdownItem"
+          data-test-inventory-delete-item-action
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-inventory.deleteItem" />
+          </Icon>
+        </Button>
+          }
+        { canMarkItemAsMissing(firstItem) && canEdit &&
+        <Button
+          id="clickable-missing-item"
+          onClick={() => {
+            onToggle();
+            this.setState({ itemMissingModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-mark-as-missing-item
+        >
+          <Icon icon="flag">
+            <FormattedMessage id="ui-inventory.markAsMissing" />
+          </Icon>
+        </Button>
+          }
+        { canCreateNewRequest &&
         <Button
           to={newRequestLink}
           buttonStyle="dropdownItem"
@@ -378,9 +390,10 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.newRequest" />
           </Icon>
         </Button>
+          }
       </Fragment>
     );
-  }
+  };
 
   isAwaitingResource = () => {
     const {
@@ -460,6 +473,7 @@ class ViewItem extends React.Component {
                 href={this.craftLayerUrl('editItem', location)}
                 onClick={this.onClickEditItem}
                 ariaLabel={ariaLabel}
+                data-test-clickable-edit-item
               />
             )}
           </FormattedMessage>
@@ -1180,6 +1194,7 @@ class ViewItem extends React.Component {
 ViewItem.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({

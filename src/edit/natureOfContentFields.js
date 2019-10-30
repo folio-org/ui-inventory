@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Icon,
-  Select,
-} from '@folio/stripes/components';
+import { Select } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -57,11 +54,7 @@ const NatureOfContentFields = props => {
     <RepeatableField
       name="natureOfContentTermIds"
       label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-      addLabel={
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addNatureOfContentTerm" />
-        </Icon>
-      }
+      addLabel={<FormattedMessage id="ui-inventory.addNatureOfContentTerm" />}
       addButtonId="clickable-add-nature-of-content"
       template={[{
         render(fieldObj) { return renderNatureOfContentField({ ...fieldObj, canEdit }, natureOfContentTerms); },

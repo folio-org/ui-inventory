@@ -8,7 +8,6 @@ import {
   Row,
   Col,
   Button,
-  Icon,
 } from '@folio/stripes/components';
 import {
   IntlConsumer,
@@ -86,6 +85,7 @@ class ItemsPerHoldingsRecord extends React.Component {
       <Fragment>
         <Button
           id="clickable-view-holdings"
+          data-test-view-holdings
           to={{ pathname: `/inventory/view/${instance.id}/${holdingsRecord.id}` }}
           style={{ marginRight: '5px' }}
         >
@@ -99,9 +99,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             }}
             buttonStyle="primary paneHeaderNewButton"
           >
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addItem" />
-            </Icon>
+            <FormattedMessage id="ui-inventory.addItem" />
           </Button>
         </IfPermission>
       </Fragment>

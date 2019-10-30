@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "حدد نوع عنوان بديل",
     "parentInstances": "الأوعية الأصلية",
     "addParentInstance": "إضافة وعاء أصلي",
-    "parentInstancesRequired": "وعاء أصلي*",
-    "typeOfRelationRequired": "نوع العلاقة *",
     "selectType": "حدد النوع",
     "selectStatus": "حدد الحالة",
     "createNewHoldingsRecord": "إنشاء تسجيلة مقتنيات جديدة",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "يرجى إدخال قيمة رقمية",
     "hridHandling.validation.assignPrefixField": "يرجى إدخال قيمة أبجدية رقمية",
     "hridHandling.successfullyMessage": "تم تحديث الإعداد بنجاح.",
-    "noBarcode": "بدون باركود"
+    "noBarcode": "بدون باركود",
+    "items.successfullyCopiedMessage": "تم نسخ باركود المادة  {barcode} بنجاح إلى الحافظة"
 }
