@@ -25,9 +25,11 @@ function withLocation(WrappedComponent) {
     };
 
     updateLocation = (newParams) => {
-      const { location, history } = this.props;
-      const { search, pathname } = location;
-      const prevParams = parse(search);
+      const {
+        location: { pathname },
+        history,
+      } = this.props;
+      const prevParams = this.getParams();
       const params = Object.assign(prevParams, newParams);
       const cleanParams = omitBy(params, isNil);
       const url = `${pathname}?${stringify(cleanParams)}`;
@@ -40,6 +42,12 @@ function withLocation(WrappedComponent) {
       const url = (params) ? `${path}?${stringify(params)}` : path;
 
       history.push(url);
+    }
+
+    getParams = () => {
+      const { location: { search } } = this.props;
+
+      return parse(search);
     }
 
     getSearchParams = () => {
@@ -56,6 +64,7 @@ function withLocation(WrappedComponent) {
           updateLocation={this.updateLocation}
           goTo={this.goTo}
           getSearchParams={this.getSearchParams}
+          getParams={this.getParams}
           {...this.props}
         />
       );

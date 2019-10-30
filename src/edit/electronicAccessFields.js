@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Icon,
   TextField,
   Select
 } from '@folio/stripes/components';
@@ -28,11 +27,7 @@ const ElectronicAccessFields = props => {
         <RepeatableField
           name="electronicAccess"
           label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-          addLabel={
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addElectronicAccess" />
-            </Icon>
-          }
+          addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
           addButtonId="clickable-add-electronicaccess"
           template={[
             {
