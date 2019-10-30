@@ -240,8 +240,13 @@ class ViewInstance extends React.Component {
   };
 
   createActionMenuGetter = instance => ({ onToggle }) => {
-    const { onCopy } = this.props;
+    const {
+      onCopy,
+      stripes
+    } = this.props;
     const { marcRecord } = this.state;
+    const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
+
     return (
       <Fragment>
         <IfPermission perm="ui-inventory.instance.edit">
@@ -281,7 +286,7 @@ class ViewInstance extends React.Component {
               onToggle();
               this.handleViewSource(e, instance);
             }}
-            disabled={!marcRecord}
+            disabled={!canViewInstance && !marcRecord}
           >
             <Icon icon="document">
               <FormattedMessage id="ui-inventory.viewSource" />
@@ -542,7 +547,10 @@ class ViewInstance extends React.Component {
       >
         <TitleManager record={instance.title} />
         <Row end="xs">
-          <Col xs>
+          <Col
+            data-test-expand-all
+            xs
+          >
             <ExpandAllButton
               accordionStatus={this.state.accordions}
               onToggle={this.handleExpandAll}
@@ -575,6 +583,7 @@ class ViewInstance extends React.Component {
           </Col>
         </Row>
         <Headline
+          data-test-headline-medium
           size="medium"
           margin="medium"
         >
@@ -731,7 +740,6 @@ class ViewInstance extends React.Component {
             )}
           </Row>
         </Accordion>
-
         <Accordion
           open={this.state.accordions.acc02}
           id="acc02"
@@ -822,7 +830,7 @@ class ViewInstance extends React.Component {
                         }}
                         columnWidths={{
                           'Resource identifier type': '25%',
-                          'Resource identifier': '25%',
+                          'Resource identifier': '74%',
                         }}
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
@@ -960,6 +968,9 @@ class ViewInstance extends React.Component {
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
               />
             </Col>
+          </Row>
+
+          <Row>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
