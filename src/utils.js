@@ -1,5 +1,13 @@
-import { includes, get, forOwn } from 'lodash';
-import { itemStatuses } from './constants';
+import {
+  includes,
+  find,
+  get,
+  forOwn,
+} from 'lodash';
+import {
+  itemStatuses,
+  segments,
+} from './constants';
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
@@ -19,7 +27,7 @@ export function canMarkItemAsMissing(item) {
   ], get(item, 'status.name'));
 }
 
-export function parseStrToFilters(filtersStr) {
+export function getCurrentFilters(filtersStr) {
   if (!filtersStr) {
     return undefined;
   }
@@ -43,4 +51,18 @@ export function parseFiltersToStr(filters) {
   });
 
   return newFilters.join(',');
+}
+
+// Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
+// idTypes is an array of relationship definition objects of the form
+// { id, name }
+export function psTitleRelationshipId(idTypes) {
+  const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
+  return relationshipDetail ? relationshipDetail.id : '';
+}
+
+export function getSegment(params) {
+  const { segment } = params;
+
+  return segments[segment] || segments.instances;
 }

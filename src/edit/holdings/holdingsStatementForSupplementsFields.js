@@ -1,21 +1,14 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Icon,
-  TextField,
-} from '@folio/stripes/components';
+import { TextField } from '@folio/stripes/components';
 
 import RepeatableField from '../../components/RepeatableField';
 
 const HoldingsStatementForSupplementsFields = () => (
   <RepeatableField
     name="holdingsStatementsForSupplements"
-    addLabel={
-      <Icon icon="plus-sign">
-        <FormattedMessage id="ui-inventory.addHoldingsStatementForSupplements" />
-      </Icon>
-    }
+    addLabel={<FormattedMessage id="ui-inventory.addHoldingsStatementForSupplements" />}
     addButtonId="clickable-add-holdingsstatementforsupplements"
     template={[
       {
