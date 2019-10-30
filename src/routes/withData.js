@@ -6,9 +6,10 @@ import {
   map,
   concat,
   set,
-  psTitleRelationshipId,
   omit,
 } from 'lodash';
+
+import { psTitleRelationshipId } from '../utils';
 
 const INITIAL_RESULT_COUNT = 30;
 
@@ -172,6 +173,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
     const succeedingTitles = map(instanceCopy.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
     set(instanceCopy, 'childInstances', succeedingTitles);
     instanceCopy = omit(instanceCopy, ['precedingTitles', 'succeedingTitles']);
+
     return instanceCopy;
   }
 
