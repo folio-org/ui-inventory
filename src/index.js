@@ -5,7 +5,11 @@ import Switch from 'react-router-dom/Switch';
 import { hot } from 'react-hot-loader';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
-import InstancesRoute from './routes/InstancesRoute';
+import {
+  InstancesRoute,
+  HoldingsRoute,
+  ItemsRoute,
+} from './routes';
 import Settings from './settings';
 
 const InventoryRouting = (props) => {
@@ -17,6 +21,14 @@ const InventoryRouting = (props) => {
 
   return (
     <Switch>
+      <Route
+        path={`${path}/holdings`}
+        component={HoldingsRoute}
+      />
+      <Route
+        path={`${path}/items`}
+        component={ItemsRoute}
+      />
       <Route
         path={path}
         component={InstancesRoute}
