@@ -141,7 +141,12 @@ class InstancesView extends React.Component {
       return { ...index, label };
     });
 
-    // workaround for SearchAndSort
+    // SearchAndSort is currently using packageInfo.stripes.route as a path
+    // for navigating to a details screen. The code below allows us to
+    // control how the routing for the details screen should look like.
+    // It will handle cases like /inventory or /inventory/holdings or inventory/items
+    // depending on the chosen search segment.
+    // This will go away after we refactor to SearchAndSortQuery.
     const packageData = {
       ...packageInfo,
       stripes: {
