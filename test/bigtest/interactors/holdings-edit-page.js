@@ -26,5 +26,5 @@ import {
 
 export default new HoldingsEditPage({
   scope: '[data-test-holdings-page-type="edit"]',
-  timeout: 3000,
+  timeout: 6000,
 });
