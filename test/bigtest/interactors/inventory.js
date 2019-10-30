@@ -15,7 +15,7 @@ export default @interactor class InventoryInteractor {
   instances = collection('#list-inventory [role=row] a');
 
   instance = scoped('[data-test-instance-details]');
-  chooseSearchOption= selectable('#input-inventory-search-qindex');
+  chooseSearchOption = selectable('#input-inventory-search-qindex');
 
   fillSearchField = fillable('#input-inventory-search');
   clickSearch = clickable('[data-test-search-and-sort-submit]');
