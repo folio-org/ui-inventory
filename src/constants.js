@@ -1,14 +1,24 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+const AWAITING_DELIVERY = 'Awaiting delivery';
+const AWAITING_PICKUP = 'Awaiting pickup';
+const IN_TRANSIT = 'In transit';
 export const itemStatuses = {
   CHECKED_OUT: 'Checked out',
   ON_ORDER: 'On order',
   AVAILABLE: 'Available',
-  IN_TRANSIT: 'In transit',
+  IN_TRANSIT,
   IN_PROCESS: 'In process',
-  AWAITING_PICKUP: 'Awaiting pickup',
+  AWAITING_PICKUP,
   PAGED: 'Paged',
+};
+
+export const requestStatuses = {
+  OPEN_AWAITING_PICKUP: `Open - ${AWAITING_PICKUP}`,
+  OPEN_NOT_YET_FILLED: 'Open - Not yet filled',
+  OPEN_IN_TRANSIT: `Open - ${IN_TRANSIT}`,
+  OPEN_AWAITING_DELIVERY: `Open - ${AWAITING_DELIVERY}`,
 };
 
 // the empty 'values' properties will be filled in by componentWillUpdate
@@ -51,5 +61,3 @@ export const segments = {
   holdings: 'holdings',
   items: 'items',
 };
-
-export default {};

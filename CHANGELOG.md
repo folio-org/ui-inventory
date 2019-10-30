@@ -16,8 +16,10 @@
 * Align display of data in the holdings record. Refs UIIN-811.
 * Fix double asterisk in accordion Instance relationships (analytics and bound-with). Fixes UIIN-646
 * Display Classification identifier types in alphabetic order in detailed view. Refs UIIN-706.
-* Make the label of Nature of content is presented on it's own line. Refs UIIN-748.
+* Implement preceding and succeeding title fields in instance record. Completes UIIN-809 and UIIN-810.
+* Make sure the label of Nature of content is presented on its own line. Refs UIIN-748.
 * Add segmented control panel for search. Part of UIIN-758.
+* Move holdings-record accordion to top of instance display. Refs UIIN-802.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
