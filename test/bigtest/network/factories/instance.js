@@ -46,6 +46,18 @@ export default Factory.extend({
     });
   },
 
+  withPrecedingTitle: trait({
+    afterCreate(instance, server) {
+      instance.parentInstances = [{ id: '1008409091', superInstanceId: '9999999', instanceRelationshipTypeId: 'cde80cc2-0c8b-4672-82d4-721e51dcb990' }];
+    }
+  }),
+
+  withSucceedingTitle: trait({
+    afterCreate(instance, server) {
+      instance.childInstances = [{ id: '1008409092', subInstanceId: '8888888', instanceRelationshipTypeId: 'cde80cc2-0c8b-4672-82d4-721e51dcb990' }];
+    }
+  }),
+
   withHolding: trait({
     afterCreate(instance, server) {
       const holding = server.create('holding');
