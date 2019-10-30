@@ -367,7 +367,7 @@ class ViewInstance extends React.Component {
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
     const identifiersRowFormatter = {
-      'Resource identifier type': x => this.refLookup(referenceTables.identifierTypes, get(x, ['identifierTypeId'])).name,
+      'Resource identifier type': x => get(x, ['identifierType']),
       'Resource identifier': x => get(x, ['value']) || '--',
     };
 
@@ -577,6 +577,12 @@ class ViewInstance extends React.Component {
         </IntlConsumer>
       );
     }
+
+    const orderedIdentifiers = orderBy(get(instance, 'identifiers', []).map(x => ({
+      identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
+      value: x.value,
+    })),
+    ['identifierType', 'value'], 'asc');
 
     const orderedClassifications = orderBy(get(instance, 'classifications', []).map(x => ({
       classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
@@ -912,7 +918,7 @@ class ViewInstance extends React.Component {
                     {ariaLabel => (
                       <MultiColumnList
                         id="list-identifiers"
-                        contentData={instance.identifiers}
+                        contentData={orderedIdentifiers}
                         rowMetadata={['identifierTypeId']}
                         visibleColumns={['Resource identifier type', 'Resource identifier']}
                         columnMapping={{
