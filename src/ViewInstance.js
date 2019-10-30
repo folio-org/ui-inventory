@@ -124,9 +124,6 @@ class ViewInstance extends React.Component {
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.calloutRef = createRef();
-
-    this.combineRelTitles = this.combineRelTitles.bind(this);
-    this.splitRelTitles = this.splitRelTitles.bind(this);
   }
 
   componentDidMount() {
