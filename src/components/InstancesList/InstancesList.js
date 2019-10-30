@@ -45,7 +45,6 @@ class InstancesView extends React.Component {
     updateLocation: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
     segment: PropTypes.string,
-    isLoading: PropTypes.bool,
     intl: intlShape,
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
@@ -102,7 +101,6 @@ class InstancesView extends React.Component {
       disableRecordCreation,
       visibleColumns,
       intl,
-      isLoading,
       data,
       parentResources,
       parentMutator,
@@ -112,10 +110,6 @@ class InstancesView extends React.Component {
         path,
       }
     } = this.props;
-
-    if (isLoading) {
-      return null;
-    }
 
     const resultsFormatter = {
       'title': ({ title }) => (
