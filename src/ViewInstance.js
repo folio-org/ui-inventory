@@ -670,20 +670,24 @@ class ViewInstance extends React.Component {
                       <MultiColumnList
                         id="list-statistical-codes"
                         contentData={instance.statisticalCodeIds.map((codeId) => { return { 'codeId': codeId }; })}
-                        visibleColumns={['Statistical code type', 'Statistical code']}
+                        visibleColumns={['Statistical code type', 'Statistical code', 'Statistical code name']}
                         columnMapping={{
                           'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
                           'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                          'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
                         }}
                         columnWidths={{
-                          'Statistical code type': '25%',
-                          'Statistical code': '25%',
+                          'Statistical code type': '33%',
+                          'Statistical code': '33%',
+                          'Statistical code name': '33%',
                         }}
                         formatter={{
                           'Statistical code type':
                             x => this.refLookup(referenceTables.statisticalCodeTypes,
                               this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name,
                           'Statistical code':
+                            x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).code,
+                          'Statistical code name':
                             x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
                         }}
                         ariaLabel={ariaLabel}
