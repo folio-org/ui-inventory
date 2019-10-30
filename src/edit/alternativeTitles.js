@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Icon,
   TextField,
   Select,
 } from '@folio/stripes/components';
@@ -28,11 +27,7 @@ const AlternativeTitles = props => {
         <RepeatableField
           name="alternativeTitles"
           label={<FormattedMessage id="ui-inventory.alternativeTitles" />}
-          addLabel={
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addAlternativeTitles" />
-            </Icon>
-          }
+          addLabel={<FormattedMessage id="ui-inventory.addAlternativeTitles" />}
           addButtonId="clickable-add-alternativeTitle"
           template={[
             {

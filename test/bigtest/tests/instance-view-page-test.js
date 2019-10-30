@@ -9,7 +9,6 @@ import ItemViewPage from '../interactors/item-view-page';
 import HoldingsViewPage from '../interactors/holdings-view-page';
 
 describe('InstanceViewPage', () => {
-
   const visitingViewInventoryPage = () => {
     beforeEach(async function () {
       const instance = this.server.create('instance', 'withHoldingAndItem', {

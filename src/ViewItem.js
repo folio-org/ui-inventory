@@ -5,6 +5,7 @@ import {
   set,
   omit,
   includes,
+  map,
 } from 'lodash';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
@@ -45,7 +46,12 @@ import {
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { itemStatuses } from './constants';
+import { itemStatuses, requestStatuses } from './constants';
+
+
+const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
+const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
+const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc`;
 
 class ViewItem extends React.Component {
   static manifest = Object.freeze({
@@ -94,7 +100,7 @@ class ViewItem extends React.Component {
     },
     requests: {
       type: 'okapi',
-      path: 'circulation/requests?query=(itemId==:{itemid}) and status==("Open - Awaiting pickup" or "Open - Not yet filled" or "Open - In transit") sortby requestDate desc',
+      path: getRequestsPath,
       records: 'requests',
       PUT: {
         path: 'circulation/requests/%{requestOnItem.id}'
@@ -483,9 +489,9 @@ class ViewItem extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
 
     let requestLink = 0;
-    const requestFiltersLink = 'requestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit%2CrequestStatus.Open%20-%20Not%20yet%20filled';
+    const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
     if (requestRecords.length) {
-      requestLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.id}&sort=Request%20Date`}>{requestRecords.length}</Link>;
+      requestLink = <Link to={requestsUrl}>{requestRecords.length}</Link>;
     }
 
     let loanLink = item.status.name;
@@ -497,7 +503,11 @@ class ViewItem extends React.Component {
     }
 
     if (loanLink === 'Awaiting pickup') {
-      loanLink = <Link to={`/requests?filters=${requestFiltersLink}&query=${item.id}&sort=Request%20Date`}>{loanLink}</Link>;
+      loanLink = (
+        <Link to={requestsUrl}>
+          {loanLink}
+        </Link>
+      );
     }
 
     let itemStatusDate = get(item, ['metadata', 'updatedDate']);

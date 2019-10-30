@@ -590,6 +590,49 @@ class ViewInstance extends React.Component {
           {instance.title}
         </Headline>
 
+        {
+          (!holdingsrecordid && !itemid) ?
+            (
+              <Switch>
+                <Route
+                  path="/inventory/viewsource/"
+                  render={() => (
+                    <this.cViewMarc
+                      instance={instance}
+                      marcRecord={marcRecord}
+                      stripes={stripes}
+                      match={this.props.match}
+                      onClose={this.closeViewMarc}
+                      paneWidth={this.props.paneWidth}
+                    />
+                  )}
+                />
+                <Route
+                  path="/inventory/view/"
+                  render={() => (
+                    <this.cHoldings
+                      dataKey={id}
+                      id={id}
+                      accordionToggle={this.handleAccordionToggle}
+                      accordionStates={this.state.accordions}
+                      instance={instance}
+                      referenceTables={referenceTables}
+                      match={this.props.match}
+                      stripes={stripes}
+                      location={location}
+                    />
+                  )}
+                />
+              </Switch>
+            )
+            :
+            null
+        }
+
+        <Row>
+          <Col sm={12}>{newHoldingsRecordButton}</Col>
+        </Row>
+
         <Accordion
           open={this.state.accordions.acc01}
           id="acc01"
@@ -787,7 +830,7 @@ class ViewInstance extends React.Component {
                         }}
                         columnWidths={{
                           'Resource identifier type': '25%',
-                          'Resource identifier': '25%',
+                          'Resource identifier': '74%',
                         }}
                         formatter={identifiersRowFormatter}
                         ariaLabel={ariaLabel}
@@ -925,6 +968,9 @@ class ViewInstance extends React.Component {
                 value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
               />
             </Col>
+          </Row>
+
+          <Row>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
@@ -1130,46 +1176,6 @@ class ViewInstance extends React.Component {
             </Row>
           )}
         </Accordion>
-
-        {
-          (!holdingsrecordid && !itemid)
-            ? (
-              <Switch>
-                <Route
-                  path="/inventory/viewsource/"
-                  render={() => (
-                    <this.cViewMarc
-                      instance={instance}
-                      marcRecord={marcRecord}
-                      stripes={stripes}
-                      match={this.props.match}
-                      onClose={this.closeViewMarc}
-                      paneWidth={this.props.paneWidth}
-                    />
-                  )}
-                />
-                <Route
-                  path="/inventory/view/"
-                  render={() => (
-                    <this.cHoldings
-                      dataKey={id}
-                      id={id}
-                      accordionToggle={this.handleAccordionToggle}
-                      accordionStates={this.state.accordions}
-                      instance={instance}
-                      referenceTables={referenceTables}
-                      match={this.props.match}
-                      stripes={stripes}
-                      location={location}
-                    />
-                  )}
-                />
-              </Switch>
-            )
-            :
-            null
-        }
-
         {
           (holdingsrecordid && !itemid)
             ? (
@@ -1197,9 +1203,6 @@ class ViewInstance extends React.Component {
             : null
         }
 
-        <Row>
-          <Col sm={12}>{newHoldingsRecordButton}</Col>
-        </Row>
         { /*
           related-instances isn't available yet but accordions MUST contain
           child elements. this is commented out for now in an effort to
