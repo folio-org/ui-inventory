@@ -23,6 +23,7 @@
 * Add segmented control panel for search. Part of UIIN-758.
 * Move holdings-record accordion to top of instance display. Refs UIIN-802.
 * Fix display of statistical codes. Fixes UIIN-796.
+* Link to requests by item-id since barcode may not always be present. Fixes UIIN-821.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

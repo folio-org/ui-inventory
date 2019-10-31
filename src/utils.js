@@ -6,7 +6,6 @@ import {
 } from 'lodash';
 import {
   itemStatuses,
-  segments,
 } from './constants';
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
@@ -59,10 +58,4 @@ export function parseFiltersToStr(filters) {
 export function psTitleRelationshipId(idTypes) {
   const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
   return relationshipDetail ? relationshipDetail.id : '';
-}
-
-export function getSegment(params) {
-  const { segment } = params;
-
-  return segments[segment] || segments.instances;
 }

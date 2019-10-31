@@ -66,4 +66,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   }
 }
 
-export default new InstanceViewPage('[data-test-instance-details]');
+export default new InstanceViewPage({
+  scope: '[data-test-instance-details]',
+  timeout: 3000,
+});

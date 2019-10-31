@@ -44,7 +44,7 @@ export const filterConfig = [
   },
 ];
 
-export const searchableIndexes = [
+export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
@@ -54,6 +54,14 @@ export const searchableIndexes = [
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
+];
+
+export const holdingIndexes = [
+  // TODO: add holding indexes
+];
+
+export const itemIndexes = [
+  // TODO: add item indexes
 ];
 
 export const segments = {
