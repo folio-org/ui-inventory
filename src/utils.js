@@ -59,3 +59,5 @@ export function psTitleRelationshipId(idTypes) {
   const relationshipDetail = find(idTypes, { 'name': 'preceding-succeeding' });
   return relationshipDetail ? relationshipDetail.id : '';
 }
+
+export const getHoldingsNotes = (noteTypes, notes) => notes.filter(noteType => noteTypes.find(note => note.holdingsNoteTypeId === noteType.id));

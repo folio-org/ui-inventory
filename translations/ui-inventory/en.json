@@ -300,6 +300,7 @@
   "deleteStatement": "Delete statement",
   "noteType": "Note type",
   "staffOnly": "Staff only",
+  "generalNote": "General Note",
   "nonPublicNote": "Nonpublic note",
   "actionNote": "Action note",
   "reproductionNote": "Reproduction note",
