@@ -59,4 +59,7 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
   hasSucceedingTitles = isPresent('[data-test-succeeding-titles]');
 }
 
-export default new InstanceViewPage('[data-test-instance-details]');
+export default new InstanceViewPage({
+  scope: '[data-test-instance-details]',
+  timeout: 3000,
+});

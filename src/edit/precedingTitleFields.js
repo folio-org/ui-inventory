@@ -2,10 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Icon,
-  TextField,
-} from '@folio/stripes/components';
+import { TextField } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -20,11 +17,7 @@ const PrecedingTitles = props => {
     <RepeatableField
       name="precedingTitles"
       label={<FormattedMessage id="ui-inventory.precedingTitles" />}
-      addLabel={
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addPrecedingTitle" />
-        </Icon>
-      }
+      addLabel={<FormattedMessage id="ui-inventory.addPrecedingTitle" />}
       addButtonId="clickable-add-precedingTitle"
       template={[
         {

@@ -8,7 +8,10 @@ import InventoryInteractor from '../interactors/inventory';
 describe('Instances', () => {
   setupApplication();
 
-  const inventory = new InventoryInteractor();
+  const inventory = new InventoryInteractor({
+    timeout: 3000,
+    scope: '[data-test-inventory-instances]',
+  });
 
   beforeEach(async function () {
     this.server.createList('instance', 25, 'withHoldingAndItem');
