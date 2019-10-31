@@ -20,7 +20,8 @@ class ContributorTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = term => term.source === 'marcrelator' || !this.props.stripes.hasPerm('ui-inventory.settings.contributor-types');
+  suppressEdit = term => term.source === 'marcrelator';
+  suppressDelete = term => term.source === 'marcrelator';
 
   render() {
     return (
@@ -44,10 +45,11 @@ class ContributorTypesSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="contributor-types"
             sortby="name"
             validate={validateNameAndCode}
+            editable={stripes.hasPerm('ui-inventory.settings.contributor-types')}
           />
         )}
       </IntlConsumer>

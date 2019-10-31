@@ -20,7 +20,8 @@ class InstanceStatusTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = term => term.source === 'marcrelator' || !this.props.stripes.hasPerm('ui-inventory.settings.instance-statuses');
+  suppressEdit = term => term.source === 'marcrelator';
+  suppressDelete = term => term.source === 'marcrelator';
 
   render() {
     return (
@@ -43,10 +44,11 @@ class InstanceStatusTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="instanceStatus-types"
             sortby="name"
             validate={validateNameAndCode}
+            editable={stripes.hasPerm('ui-inventory.settings.instance-statuses')}
           />
         )}
       </IntlConsumer>

@@ -18,8 +18,6 @@ class MaterialTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.materialtypes');
-
   render() {
     return (
       <IntlConsumer>
@@ -40,9 +38,9 @@ class MaterialTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="materialtypes"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.materialtypes')}
           />
         )}
       </IntlConsumer>

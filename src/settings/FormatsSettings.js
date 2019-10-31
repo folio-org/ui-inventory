@@ -20,7 +20,8 @@ class FormatSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = term => term.source === 'rdacarrier' || !this.props.stripes.hasPerm('ui-inventory.settings.instance-formats');
+  suppressEdit = term => term.source === 'rdacarrier';
+  suppressDelete = term => term.source === 'rdacarrier';
 
   render() {
     return (
@@ -44,10 +45,11 @@ class FormatSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="formats"
             sortby="name"
             validate={validateNameAndCode}
+            editable={stripes.hasPerm('ui-inventory.settings.instance-formats')}
           />
         )}
       </IntlConsumer>

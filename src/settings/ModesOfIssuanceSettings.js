@@ -18,7 +18,8 @@ class ModesOfIssuanceSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = term => term.source === 'rdamodeissue' || !this.props.stripes.hasPerm('ui-inventory.settings.modes-of-issuance');
+  suppressEdit = term => term.source === 'rdamodeissue';
+  suppressDelete = term => term.source === 'rdamodeissue';
 
   render() {
     return (
@@ -41,9 +42,10 @@ class ModesOfIssuanceSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="modes-of-issuance"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.modes-of-issuance')}
           />
         )}
       </IntlConsumer>

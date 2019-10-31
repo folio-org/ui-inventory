@@ -18,8 +18,6 @@ class CallNumberTypes extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.call-number-types');
-
   render() {
     return (
       <IntlConsumer>
@@ -40,9 +38,9 @@ class CallNumberTypes extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions}}
             id="callNumberTypes"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.call-number-types')}
           />
         )}
       </IntlConsumer>

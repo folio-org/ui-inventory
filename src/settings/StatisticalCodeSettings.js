@@ -41,8 +41,6 @@ class StatisticalCodeSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.statistical-codes');
-
   validate = (item) => {
     const errors = validateNameAndCode(item);
 
@@ -114,9 +112,9 @@ class StatisticalCodeSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="statistical-codes"
             sortby="code"
+            editable={stripes.hasPerm('ui-inventory.settings.statistical-codes')}
           />
         )}
       </IntlConsumer>

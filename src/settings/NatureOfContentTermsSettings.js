@@ -18,7 +18,8 @@ class NatureOfContentTermsSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.nature-of-content-terms');
+  suppressEdit = term => term.source === 'folio';
+  suppressDelete = term => term.source === 'folio';
 
   render() {
     return (
@@ -39,10 +40,11 @@ class NatureOfContentTermsSettings extends React.Component {
             readOnlyFields={['source']}
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             nameKey="name"
             id="natureOfContentTerms"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.nature-of-content-terms')}
           />
         )}
       </IntlConsumer>

@@ -18,7 +18,8 @@ class IdentifierTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = term => term.source === 'folio' || !this.props.stripes.hasPerm('ui-inventory.settings.identifier-types');
+  suppressEdit = term => term.source === 'folio';
+  suppressDelete = term => term.source === 'folio';
 
   render() {
     return (
@@ -41,9 +42,10 @@ class IdentifierTypesSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
+            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="identifier-types"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.identifier-types')}
           />
         )}
       </IntlConsumer>

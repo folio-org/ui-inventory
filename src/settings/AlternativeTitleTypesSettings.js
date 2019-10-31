@@ -18,8 +18,6 @@ class AlternativeTitleTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.alternative-title-types');
-
   render() {
     return (
       <IntlConsumer>
@@ -40,9 +38,9 @@ class AlternativeTitleTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="alternative-title-types"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.alternative-title-types')}
           />
         )}
       </IntlConsumer>

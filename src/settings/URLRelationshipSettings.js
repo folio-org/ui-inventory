@@ -18,8 +18,6 @@ class URLRelationshipSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressActions = () => !this.props.stripes.hasPerm('ui-inventory.settings.electronic-access-relationships');
-
   render() {
     return (
       <IntlConsumer>
@@ -40,9 +38,9 @@ class URLRelationshipSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressActions, delete: this.suppressActions }}
             id="electronicAccessRelationships"
             sortby="name"
+            editable={stripes.hasPerm('ui-inventory.settings.electronic-access-relationships')}
           />
         )}
       </IntlConsumer>
