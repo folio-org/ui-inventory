@@ -34,6 +34,8 @@ export default class InstanceFilters extends React.Component {
         location = [],
         resource = [],
         language = [],
+        discoverySuppress = [],
+        staffSuppress = [],
       },
       data: {
         resourceTypes,
@@ -52,6 +54,17 @@ export default class InstanceFilters extends React.Component {
       label: name,
       value: id,
     }));
+
+    const suppressedOptions = [
+      {
+        label: 'Yes',
+        value: 'true',
+      },
+      {
+        label: 'No',
+        value: 'false',
+      }
+    ];
 
     return (
       <React.Fragment>
@@ -100,6 +113,38 @@ export default class InstanceFilters extends React.Component {
             name="language"
             dataOptions={languages.selectOptions()}
             selectedValues={language}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label="Staff suppressed"
+          id="staffSuppress"
+          name="staffSuppress"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={staffSuppress.length > 0}
+          onClearFilter={() => onClear('staffSuppress')}
+        >
+          <CheckboxFilter
+            name="staffSuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={staffSuppress}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label="Suppressed in discovery"
+          id="discoverySuppress"
+          name="discoverySuppress"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={discoverySuppress.length > 0}
+          onClearFilter={() => onClear('discoverySuppress')}
+        >
+          <CheckboxFilter
+            name="discoverySuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={discoverySuppress}
             onChange={onChange}
           />
         </Accordion>
