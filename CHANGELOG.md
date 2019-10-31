@@ -21,6 +21,7 @@
 * Implement preceding and succeeding title fields in instance record. Completes UIIN-809 and UIIN-810.
 * Make sure the label of Nature of content is presented on its own line. Refs UIIN-748.
 * Add segmented control panel for search. Part of UIIN-758.
+* Move the Acquisition accordion down in the record. Refs of UIIN-808.
 * Move holdings-record accordion to top of instance display. Refs UIIN-802.
 * Fix display of statistical codes. Fixes UIIN-796.
 * Link to requests by item-id since barcode may not always be present. Fixes UIIN-821.
