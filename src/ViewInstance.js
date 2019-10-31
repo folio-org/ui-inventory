@@ -592,11 +592,19 @@ class ViewInstance extends React.Component {
       ['asc'],
     );
 
-    const orderedClassifications = orderBy(get(instance, 'classifications', []).map(x => ({
+    const classifications = get(instance, 'classifications', []).map(x => ({
       classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
       classificationNumber: x.classificationNumber,
-    })),
-    ['classificationType', 'classificationNumber'], 'asc');
+    }));
+
+    const orderedClassifications = orderBy(
+      classifications,
+      [
+        ({ classificationType }) => classificationType.toLowerCase(),
+        ({ classificationNumber }) => classificationNumber.toLowerCase(),
+      ],
+      ['asc'],
+    );
 
     return (
       <Pane
