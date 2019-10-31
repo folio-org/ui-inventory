@@ -15,6 +15,7 @@
 * Align display of data in the instance record. Refs UIIN-677.
 * Align display of data in the holdings record. Refs UIIN-811.
 * Fix double asterisk in accordion Instance relationships (analytics and bound-with). Fixes UIIN-646
+* Make headings of the item list in the Holdings accordion sortable. Refs UIIN-812
 * Display Resource identifier types in alphabetic order in detailed view. Refs UIIN-705.
 * Display Classification identifier types in alphabetic order in detailed view. Refs UIIN-706.
 * Implement preceding and succeeding title fields in instance record. Completes UIIN-809 and UIIN-810.
@@ -24,6 +25,7 @@
 * Move holdings-record accordion to top of instance display. Refs UIIN-802.
 * Fix display of statistical codes. Fixes UIIN-796.
 * Link to requests by item-id since barcode may not always be present. Fixes UIIN-821.
+* Update the display of list of Instance notes. Refs UIIN-643.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

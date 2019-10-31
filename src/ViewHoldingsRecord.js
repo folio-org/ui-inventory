@@ -27,7 +27,10 @@ import {
   IntlConsumer,
 } from '@folio/stripes/core';
 
-import { craftLayerUrl } from './utils';
+import {
+  craftLayerUrl,
+  getHoldingsNotes,
+} from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
 
@@ -318,7 +321,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
-    const holdingsNotes = this.getHoldingsNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []));
+    const holdingsNotes = getHoldingsNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []));
     const itemCount = _.get(items, 'records.length', 0);
 
     referenceTables.illPolicies = illPolicies.records;

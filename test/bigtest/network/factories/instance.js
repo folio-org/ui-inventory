@@ -14,7 +14,16 @@ export default Factory.extend({
   series: () => [],
   physicalDescriptions: () => [],
   languages: () => [],
-  notes: () => [],
+  notes: () => [
+    {
+      note: lorem.sentence(),
+      staffOnly: false,
+    },
+    {
+      note: lorem.sentence(),
+      staffOnly: false,
+    }
+  ],
   electronicAccess: () => [],
   subjects: () => [],
   classifications: () => [],
@@ -43,6 +52,24 @@ export default Factory.extend({
         contributorNameTypeId = type.id;
       }
       contributor.contributorNameTypeId = contributorNameTypeId;
+    });
+    instance.notes.forEach(note => {
+      let { instanceNoteTypeId } = note;
+      if (!instanceNoteTypeId) {
+        let [type] = server.db.instanceNoteTypes.where({ name: 'General note' });
+        if (!type) {
+          type = server.create('instance-note-type', {
+            name: 'General note',
+            source: 'folio',
+            metadata: {
+              createdDate: new Date(),
+              updatedDate: new Date(),
+            },
+          });
+        }
+        instanceNoteTypeId = type.id;
+      }
+      note.instanceNoteTypeId = instanceNoteTypeId;
     });
   },
 

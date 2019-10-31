@@ -9,12 +9,16 @@ import {
   omit,
   reject,
   set,
+  isEmpty,
 } from 'lodash';
 import React, {
   Fragment,
   createRef,
 } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {
+  Route,
+  Switch
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -49,6 +53,7 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   craftLayerUrl,
   psTitleRelationshipId,
+  getHoldingsNotes,
 } from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
@@ -427,39 +432,6 @@ class ViewInstance extends React.Component {
       'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
     };
 
-    const layoutNotes = (noteTypes, notes) => {
-      return noteTypes
-        .filter((noteType) => notes.find(note => note.instanceNoteTypeId === noteType.id))
-        .map((noteType, i) => {
-          return (
-            <Row key={i}>
-              <Col xs={3}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-inventory.staffOnly" />}
-                  value={get(instance, ['notes'], []).map((note, j) => {
-                    if (note.instanceNoteTypeId === noteType.id) {
-                      return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
-                    }
-                    return null;
-                  })}
-                />
-              </Col>
-              <Col xs={9}>
-                <KeyValue
-                  label={noteType.name}
-                  value={get(instance, ['notes'], []).map((note, j) => {
-                    if (note.instanceNoteTypeId === noteType.id) {
-                      return <div key={j}>{note.note}</div>;
-                    }
-                    return null;
-                  })}
-                />
-              </Col>
-            </Row>
-          );
-        });
-    };
-
     const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
 
     const detailMenu = (
@@ -577,6 +549,11 @@ class ViewInstance extends React.Component {
         </IntlConsumer>
       );
     }
+
+    const holdingsNotes = getHoldingsNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []));
+
+    window.console.log(referenceTables);
+    window.console.log(instance);
 
     const identifiers = get(instance, 'identifiers', []).map(x => ({
       identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
@@ -1160,7 +1137,38 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
-          {layoutNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []))}
+          {
+            !isEmpty(holdingsNotes) && (
+              <IntlConsumer>
+                {intl => (
+                  <FormattedMessage id="ui-inventory.instanceNotes">
+                    {ariaLabel => (
+                      <MultiColumnList
+                        id="list-instance-notes"
+                        contentData={holdingsNotes}
+                        visibleColumns={['Staff only', 'General note']}
+                        columnMapping={{
+                          'Staff only': intl.formatMessage({ id: 'ui-inventory.staffOnly' }),
+                          'General note': intl.formatMessage({ id: 'ui-inventory.generalNote' }),
+                        }}
+                        columnWidths={{
+                          'Staff only': '25%',
+                          'General note': '74%',
+                        }}
+                        formatter={{
+                          'Staff only': x => (get(x, ['staffOnly']) ? 'Yes' : 'No'),
+                          'General note': x => get(x, ['note']) || '',
+                        }}
+                        ariaLabel={ariaLabel}
+                        containerRef={ref => { this.resultsList = ref; }}
+                        interactive={false}
+                      />
+                    )}
+                  </FormattedMessage>
+                )}
+              </IntlConsumer>
+            )
+          }
         </Accordion>
 
         <Accordion
