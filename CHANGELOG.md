@@ -28,6 +28,7 @@
 * Update the display of list of Instance notes. Refs UIIN-643.
 * Update the display of list of Series statements. Refs UIIN-642.
 * Update the display of list of Subject headings. Refs UIIN-815.
+* Add filters for staffSuppress and discoverySuppress. Completes UIIN-289.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

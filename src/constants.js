@@ -43,13 +43,13 @@ export const filterConfig = [
     values: [],
   },
   {
-    label: 'Staff suppressed',
+    label: <FormattedMessage id="ui-inventory.staffSuppress" />,
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
   },
   {
-    label: 'Suppressed in discovery',
+    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],

@@ -403,5 +403,7 @@
   "instanceNotes": "Instance notes",
   "filters.instances": "Instance",
   "filters.holdings": "Holdings",
-  "filters.items": "Item"
+  "filters.items": "Item",
+  "yes": "Yes",
+  "no": "No"
 }

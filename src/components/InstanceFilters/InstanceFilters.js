@@ -57,11 +57,11 @@ export default class InstanceFilters extends React.Component {
 
     const suppressedOptions = [
       {
-        label: 'Yes',
+        label: <FormattedMessage id="ui-inventory.yes" />,
         value: 'true',
       },
       {
-        label: 'No',
+        label: <FormattedMessage id="ui-inventory.no" />,
         value: 'false',
       }
     ];
@@ -117,7 +117,7 @@ export default class InstanceFilters extends React.Component {
           />
         </Accordion>
         <Accordion
-          label="Staff suppressed"
+          label={<FormattedMessage id="ui-inventory.staffSuppress" />}
           id="staffSuppress"
           name="staffSuppress"
           closedByDefault
@@ -133,7 +133,7 @@ export default class InstanceFilters extends React.Component {
           />
         </Accordion>
         <Accordion
-          label="Suppressed in discovery"
+          label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
           id="discoverySuppress"
           name="discoverySuppress"
           closedByDefault
