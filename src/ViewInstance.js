@@ -578,11 +578,19 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const orderedIdentifiers = orderBy(get(instance, 'identifiers', []).map(x => ({
+    const identifiers = get(instance, 'identifiers', []).map(x => ({
       identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
       value: x.value,
-    })),
-    ['identifierType', 'value'], 'asc');
+    }));
+
+    const orderedIdentifiers = orderBy(
+      identifiers,
+      [
+        ({ identifierType }) => identifierType.toLowerCase(),
+        ({ value }) => value.toLowerCase(),
+      ],
+      ['asc'],
+    );
 
     const classifications = get(instance, 'classifications', []).map(x => ({
       classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
