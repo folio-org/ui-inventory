@@ -18,6 +18,8 @@ class MaterialTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.materialtypes');
+
   render() {
     return (
       <IntlConsumer>
@@ -40,7 +42,7 @@ class MaterialTypesSettings extends React.Component {
             nameKey="name"
             id="materialtypes"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.materialtypes')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

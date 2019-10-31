@@ -13,10 +13,13 @@ class AlternativeTitleTypesSettings extends React.Component {
   };
 
   constructor(props) {
+
     super(props);
 
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
+
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.alternative-title-types');
 
   render() {
     return (
@@ -40,7 +43,7 @@ class AlternativeTitleTypesSettings extends React.Component {
             nameKey="name"
             id="alternative-title-types"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.alternative-title-types')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

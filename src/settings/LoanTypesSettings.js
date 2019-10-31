@@ -18,6 +18,8 @@ class LoanTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.loantypes');
+
   render() {
     return (
       <IntlConsumer>
@@ -33,7 +35,7 @@ class LoanTypesSettings extends React.Component {
             nameKey="name"
             id="loantypes"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.loantypes')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

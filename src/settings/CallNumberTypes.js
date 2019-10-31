@@ -18,6 +18,8 @@ class CallNumberTypes extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.call-number-types');
+
   render() {
     return (
       <IntlConsumer>
@@ -40,7 +42,7 @@ class CallNumberTypes extends React.Component {
             nameKey="name"
             id="callNumberTypes"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.call-number-types')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

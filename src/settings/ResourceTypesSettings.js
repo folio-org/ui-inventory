@@ -22,6 +22,8 @@ class ResourceTypesSettings extends React.Component {
 
   suppressEdit = term => term.source === 'rdacontent';
   suppressDelete = term => term.source === 'rdacontent';
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.instance-types');
+
   render() {
     return (
       <IntlConsumer>
@@ -48,7 +50,7 @@ class ResourceTypesSettings extends React.Component {
             id="instance-types"
             sortby="name"
             validate={validateNameAndCode}
-            editable={stripes.hasPerm('ui-inventory.settings.instance-types')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

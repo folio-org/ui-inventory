@@ -18,6 +18,8 @@ class ILLPolicy extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.ill-policies');
+
   render() {
     return (
       <IntlConsumer>
@@ -40,7 +42,7 @@ class ILLPolicy extends React.Component {
             nameKey="name"
             id="ILLPolicy"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.ill-policies')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

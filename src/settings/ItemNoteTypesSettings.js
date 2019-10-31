@@ -18,6 +18,8 @@ class ItemNoteTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.item-note-types');
+
   render() {
     return (
       <IntlConsumer>
@@ -40,7 +42,7 @@ class ItemNoteTypesSettings extends React.Component {
             nameKey="name"
             id="itemNoteTypes"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.item-note-types')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>

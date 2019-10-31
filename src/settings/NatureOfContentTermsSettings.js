@@ -20,6 +20,7 @@ class NatureOfContentTermsSettings extends React.Component {
 
   suppressEdit = term => term.source === 'folio';
   suppressDelete = term => term.source === 'folio';
+  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.nature-of-content-terms');
 
   render() {
     return (
@@ -44,7 +45,7 @@ class NatureOfContentTermsSettings extends React.Component {
             nameKey="name"
             id="natureOfContentTerms"
             sortby="name"
-            editable={stripes.hasPerm('ui-inventory.settings.nature-of-content-terms')}
+            editable={this.hasPermissions()}
           />
         )}
       </IntlConsumer>
