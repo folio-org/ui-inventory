@@ -366,11 +366,7 @@ class HoldingsForm extends React.Component {
                   <RepeatableField
                     name="formerIds"
                     addButtonId="clickable-add-formerholdingsid"
-                    addLabel={
-                      <Icon icon="plus-sign">
-                        <FormattedMessage id="ui-inventory.addFormerHoldingsId" />
-                      </Icon>
-                    }
+                    addLabel={<FormattedMessage id="ui-inventory.addFormerHoldingsId" />}
                     template={[{
                       label: <FormattedMessage id="ui-inventory.formerHoldingsId" />,
                       component: TextField,

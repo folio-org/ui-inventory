@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
-  Icon,
   TextField,
   Select,
 } from '@folio/stripes/components';
@@ -34,11 +33,7 @@ const ContributorFields = props => {
         <RepeatableField
           name="contributors"
           label={<FormattedMessage id="ui-inventory.contributors" />}
-          addLabel={
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.addContributor" />
-            </Icon>
-          }
+          addLabel={<FormattedMessage id="ui-inventory.addContributor" />}
           addButtonId="clickable-add-contributor"
           template={[
             {
