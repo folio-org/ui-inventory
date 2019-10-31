@@ -581,6 +581,8 @@ class ViewInstance extends React.Component {
 
     const seriesStatement = instance.series.map(x => ({ value: x }));
 
+    const instanceSubjects = get(instance, 'subjects', '').map(item => ({ value: item }));
+
     return (
       <Pane
         data-test-instance-details
@@ -1248,18 +1250,31 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.subject" />}
         >
-          {
-            instance.subjects.length > 0 && (
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.subjectHeadings" />}
-                    value={get(instance, ['subjects'], []).map((sub, i) => <div key={i}>{sub}</div>)}
-                  />
-                </Col>
-              </Row>
-            )
-          }
+          <Row>
+            {
+              !isEmpty(instance.subjects) && (
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.subject">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-subject"
+                          contentData={instanceSubjects}
+                          visibleColumns={['Subject headings']}
+                          columnMapping={{ 'Subject headings': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }) }}
+                          columnWidths={{ 'Subject headings': '99%' }}
+                          formatter={{ 'Subject headings': item => get(item, 'value', '') }}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
+                  )}
+                </IntlConsumer>
+              )
+            }
+          </Row>
         </Accordion>
 
         <Accordion
