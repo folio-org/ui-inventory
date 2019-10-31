@@ -11,7 +11,7 @@ export default Factory.extend({
   identifiers: () => [],
   publication: () => [],
   alternativeTitles: () => [],
-  series: () => [],
+  series: () => [lorem.sentence()],
   physicalDescriptions: () => [],
   languages: () => [],
   notes: () => [
