@@ -15,6 +15,7 @@
 * Align display of data in the instance record. Refs UIIN-677.
 * Align display of data in the holdings record. Refs UIIN-811.
 * Fix double asterisk in accordion Instance relationships (analytics and bound-with). Fixes UIIN-646
+* Make headings of the item list in the Holdings accordion sortable. Refs UIIN-812
 * Display Resource identifier types in alphabetic order in detailed view. Refs UIIN-705.
 * Display Classification identifier types in alphabetic order in detailed view. Refs UIIN-706.
 * Implement preceding and succeeding title fields in instance record. Completes UIIN-809 and UIIN-810.

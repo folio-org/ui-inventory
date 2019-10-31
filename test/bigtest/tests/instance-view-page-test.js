@@ -20,7 +20,7 @@ describe('InstanceViewPage', () => {
   };
 
   describe('User has permissions', () => {
-    setupApplication();
+    setupApplication({ scenarios: ['fetch-items-success'] });
 
     visitingViewInventoryPage();
 
@@ -115,6 +115,78 @@ describe('InstanceViewPage', () => {
     });
 
     describe('items per holdings', () => {
+      describe('sorting', () => {
+        describe('compares by `Item: barcode` field', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(0).click();
+          });
+
+          it('ascending', () => {
+            expect(InstanceViewPage.getCellContent(0, 0)).to.equal('40875104574');
+            expect(InstanceViewPage.getCellContent(1, 0)).to.equal('5860825104574');
+            expect(InstanceViewPage.getCellContent(2, 0)).to.equal('60825104574');
+          });
+
+          describe('and', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(0).click();
+            });
+
+            it('descending', () => {
+              expect(InstanceViewPage.getCellContent(0, 0)).to.equal('60825104574');
+              expect(InstanceViewPage.getCellContent(1, 0)).to.equal('5860825104574');
+              expect(InstanceViewPage.getCellContent(2, 0)).to.equal('40875104574');
+            });
+          });
+        });
+        describe('compares by `Status` field', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(1).click();
+          });
+
+          it('descending', () => {
+            expect(InstanceViewPage.getCellContent(0, 1)).to.equal('Paged');
+            expect(InstanceViewPage.getCellContent(1, 1)).to.equal('Checked out');
+            expect(InstanceViewPage.getCellContent(2, 1)).to.equal('Available');
+          });
+
+          describe('and', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(1).click();
+            });
+
+            it('ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, 1)).to.equal('Available');
+              expect(InstanceViewPage.getCellContent(1, 1)).to.equal('Checked out');
+              expect(InstanceViewPage.getCellContent(2, 1)).to.equal('Paged');
+            });
+          });
+        });
+        describe('compares by `Material type` field', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(2).click();
+          });
+
+          it('descending', () => {
+            expect(InstanceViewPage.getCellContent(0, 2)).to.equal('text');
+            expect(InstanceViewPage.getCellContent(1, 2)).to.equal('book');
+            expect(InstanceViewPage.getCellContent(2, 2)).to.equal('book');
+          });
+
+          describe('and', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(2).click();
+            });
+
+            it('ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, 2)).to.equal('book');
+              expect(InstanceViewPage.getCellContent(1, 2)).to.equal('book');
+              expect(InstanceViewPage.getCellContent(2, 2)).to.equal('text');
+            });
+          });
+        });
+      });
+
       it('should render an app icon for each item in the items list', () => {
         expect(InstanceViewPage.items(0).hasAppIcon).to.be.true;
       });
