@@ -26,6 +26,7 @@
 * Fix display of statistical codes. Fixes UIIN-796.
 * Link to requests by item-id since barcode may not always be present. Fixes UIIN-821.
 * Update the display of list of Instance notes. Refs UIIN-643.
+* Update the display of list of Series statements. Refs UIIN-642.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

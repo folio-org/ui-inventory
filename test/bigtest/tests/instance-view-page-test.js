@@ -120,6 +120,12 @@ describe('InstanceViewPage', () => {
       });
     });
 
+    describe('series statement list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.seriesStatementList.rowCount).to.be.equal(1);
+      });
+    });
+
     describe('items per holdings', () => {
       describe('sorting', () => {
         describe('compares by `Item: barcode` field', () => {
