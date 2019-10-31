@@ -27,7 +27,10 @@ import {
   IntlConsumer,
 } from '@folio/stripes/core';
 
-import { craftLayerUrl } from './utils';
+import {
+  craftLayerUrl,
+  getHoldingsNotes,
+} from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
 
@@ -318,7 +321,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
-    const holdingsNotes = this.getHoldingsNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []));
+    const holdingsNotes = getHoldingsNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []));
     const itemCount = _.get(items, 'records.length', 0);
 
     referenceTables.illPolicies = illPolicies.records;
@@ -719,33 +722,6 @@ class ViewHoldingsRecord extends React.Component {
                     )}
                   </Accordion>
                   <Accordion
-                    open={this.state.accordions.accordion05}
-                    id="accordion05"
-                    onToggle={this.handleAccordionToggle}
-                    label={<FormattedMessage id="ui-inventory.acquisition" />}
-                  >
-                    <Row>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
-                          value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
-                        />
-                      </Col>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                          value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
-                        />
-                      </Col>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.receiptStatus" />}
-                          value={_.get(holdingsRecord, ['receiptStatus'], '')}
-                        />
-                      </Col>
-                    </Row>
-                  </Accordion>
-                  <Accordion
                     open={this.state.accordions.accordion06}
                     id="accordion06"
                     onToggle={this.handleAccordionToggle}
@@ -780,6 +756,33 @@ class ViewHoldingsRecord extends React.Component {
                         containerRef={(ref) => { this.resultsList = ref; }}
                       />
                     )}
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion05}
+                    id="accordion05"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.acquisition" />}
+                  >
+                    <Row>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
+                          value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+                          value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.receiptStatus" />}
+                          value={_.get(holdingsRecord, ['receiptStatus'], '')}
+                        />
+                      </Col>
+                    </Row>
                   </Accordion>
                   <Accordion
                     open={this.state.accordions.accordion07}

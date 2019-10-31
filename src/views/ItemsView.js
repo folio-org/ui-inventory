@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import {
-  InstanceFilters,
+  ItemFilters,
   InstancesList,
 } from '../components';
 import { getCurrentFilters } from '../utils';
-import { instanceIndexes } from '../constants';
+import { itemIndexes } from '../constants';
 
-class InstancesView extends React.Component {
+class ItemsView extends React.Component {
   static propTypes = {
     data: PropTypes.object,
   };
@@ -17,8 +17,6 @@ class InstancesView extends React.Component {
   renderFilters = (onChange) => {
     const {
       data: {
-        locations,
-        instanceTypes,
         query,
       },
     } = this.props;
@@ -26,11 +24,10 @@ class InstancesView extends React.Component {
     const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
     return (
-      <InstanceFilters
+      <ItemFilters
         activeFilters={activeFilters}
         data={{
-          locations,
-          resourceTypes: instanceTypes,
+          // TODO provide data to item filters
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}
@@ -44,12 +41,12 @@ class InstancesView extends React.Component {
         <InstancesList
           {...this.props}
           renderFilters={this.renderFilters}
-          segment="instances"
-          searchableIndexes={instanceIndexes}
+          segment="items"
+          searchableIndexes={itemIndexes}
         />
       </div>
     );
   }
 }
 
-export default InstancesView;
+export default ItemsView;
