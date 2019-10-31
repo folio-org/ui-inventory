@@ -120,6 +120,12 @@ describe('InstanceViewPage', () => {
       });
     });
 
+    describe('subject list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.subjectsList.rowCount).to.be.equal(1);
+      });
+    });
+
     describe('series statement list', () => {
       it('has correct amount of items', () => {
         expect(InstanceViewPage.seriesStatementList.rowCount).to.be.equal(1);

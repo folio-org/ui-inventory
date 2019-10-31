@@ -25,7 +25,7 @@ export default Factory.extend({
     }
   ],
   electronicAccess: () => [],
-  subjects: () => [],
+  subjects: () => [lorem.sentence()],
   classifications: () => [],
   childInstances: () => [],
   parentInstances: () => [],
