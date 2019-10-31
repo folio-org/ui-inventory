@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -10,12 +9,14 @@ import {
   CheckboxFilter,
   MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
-import languages from '../data/languages';
 
-export default class Filters extends React.Component {
+import languages from '../../data/languages';
+
+export default class InstanceFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.objectOf(PropTypes.array),
     onChange: PropTypes.func.isRequired,
+    onClear: PropTypes.func.isRequired,
     data: PropTypes.object,
   };
 
@@ -27,22 +28,19 @@ export default class Filters extends React.Component {
     },
   }
 
-  createOnClearFilterHandler = (name) => () => {
-    this.props.onChange({
-      name,
-      values: [],
-    });
-  }
-
-  isFilterNotEmpty(name) {
-    return get(this.props.activeFilters, [name, 'length'], []) > 0;
-  }
-
   render() {
     const {
-      activeFilters,
-      data: { resourceTypes, locations },
+      activeFilters: {
+        location = [],
+        resource = [],
+        language = [],
+      },
+      data: {
+        resourceTypes,
+        locations,
+      },
       onChange,
+      onClear,
     } = this.props;
 
     const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
@@ -62,13 +60,13 @@ export default class Filters extends React.Component {
           id="location"
           name="location"
           header={FilterAccordionHeader}
-          displayClearButton={this.isFilterNotEmpty('location')}
-          onClearFilter={this.createOnClearFilterHandler('location')}
+          displayClearButton={location.length > 0}
+          onClearFilter={() => onClear('location')}
         >
           <CheckboxFilter
             name="location"
             dataOptions={locationOptions}
-            selectedValues={activeFilters.location}
+            selectedValues={location}
             onChange={onChange}
           />
         </Accordion>
@@ -78,13 +76,13 @@ export default class Filters extends React.Component {
           name="resource"
           closedByDefault
           header={FilterAccordionHeader}
-          displayClearButton={this.isFilterNotEmpty('resource')}
-          onClearFilter={this.createOnClearFilterHandler('resource')}
+          displayClearButton={resource.length > 0}
+          onClearFilter={() => onClear('resource')}
         >
           <CheckboxFilter
             name="resource"
             dataOptions={resourceTypeOptions}
-            selectedValues={activeFilters.resource}
+            selectedValues={resource}
             onChange={onChange}
           />
         </Accordion>
@@ -95,13 +93,13 @@ export default class Filters extends React.Component {
           separator={false}
           closedByDefault
           header={FilterAccordionHeader}
-          displayClearButton={this.isFilterNotEmpty('language')}
-          onClearFilter={this.createOnClearFilterHandler('language')}
+          displayClearButton={language.length > 0}
+          onClearFilter={() => onClear('language')}
         >
           <MultiSelectionFilter
             name="language"
             dataOptions={languages.selectOptions()}
-            selectedValues={activeFilters.language}
+            selectedValues={language}
             onChange={onChange}
           />
         </Accordion>
