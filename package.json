@@ -358,11 +358,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.view",
-<<<<<<< HEAD
-        "displayName": "Inventory: View instances",
-=======
         "displayName": "Inventory: View instances, holdings, and items",
->>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "module.inventory.enabled",
           "users.collection.get",
@@ -421,11 +417,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.edit",
-<<<<<<< HEAD
-        "displayName": "Inventory: View, edit, create instances",
-=======
         "displayName": "Inventory: View, create, edit instances",
->>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "ui-inventory.instance.create",
           "inventory.instances.item.put",
@@ -444,11 +436,7 @@
       },
       {
         "permissionName": "ui-inventory.item.edit",
-<<<<<<< HEAD
-        "displayName": "Inventory: View, edit, create items",
-=======
         "displayName": "Inventory: View, create, edit items",
->>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "ui-inventory.item.create",
           "inventory.items.item.put"
@@ -457,11 +445,7 @@
       },
       {
         "permissionName": "ui-inventory.item.delete",
-<<<<<<< HEAD
-        "displayName": "Inventory: Delete items",
-=======
         "displayName": "Inventory: View, create, edit, delete items",
->>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "ui-inventory.item.edit",
           "inventory.items.item.delete"
@@ -492,6 +476,14 @@
         "subPermissions": [
           "ui-inventory.holdings.edit",
           "inventory-storage.holdings.item.delete"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
+        "displayName": "Inventory: View instance records being suppressed for staff",
+        "subPermissions": [
+          "ui-inventory.instance.view"
         ],
         "visible": true
       },

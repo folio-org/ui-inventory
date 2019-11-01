@@ -166,6 +166,7 @@ class InventorySettings extends React.Component {
   addPerm() {
     this.sections.map(section => {
       const { pages } = section;
+      // eslint-disable-next-line array-callback-return
       return pages.map(page => {
         if (page.route !== 'hridHandling') {
           page.perm = 'ui-inventory.settings.list.view';

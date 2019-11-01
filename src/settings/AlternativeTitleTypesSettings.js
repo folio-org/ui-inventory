@@ -13,7 +13,6 @@ class AlternativeTitleTypesSettings extends React.Component {
   };
 
   constructor(props) {
-
     super(props);
 
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
