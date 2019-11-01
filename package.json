@@ -492,8 +492,9 @@
         "displayName": "Settings (Inventory): Display list of settings pages",
         "subPermissions":  [
           "settings.inventory.enabled",
-          "configuration.entries.collection.get",
           "users.collection.get",
+          "configuration.entries.collection.get",
+          "source-storage.records.get",
           "inventory-storage.material-types.collection.get",
           "inventory-storage.material-types.item.get",
           "inventory-storage.loan-types.collection.get",

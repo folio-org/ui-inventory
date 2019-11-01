@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import ItemNoteTypes from '../../../interactors/settings/item-note-types/item-note-types';
 
 describe('Item note types', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('itemNoteType', {
       'id' : '0e40884c-3523-4c6d-8187-d578e3d2794e',
       'name' : 'Action note',
@@ -23,19 +21,63 @@ describe('Item note types', () => {
       'name' : 'Copy note',
       'source' : 'folio'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication();
+
+    beforeEach(mockData);
+
+    describe('viewing item note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/itemNoteTypes');
+      });
+
+      it('has a item note types list', () => {
+        expect(ItemNoteTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(ItemNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(ItemNoteTypes.hasCreateButton).to.be.true;
+        expect(ItemNoteTypes.hasEditButton).to.be.true;
+        expect(ItemNoteTypes.hasDeleteButton).to.be.true;
+      });
+    });
   });
 
-  describe('viewing item note types list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/itemNoteTypes');
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('has a item note types list', () => {
-      expect(ItemNoteTypes.hasList).to.be.true;
-    });
+    beforeEach(mockData);
 
-    it('list has 3 items', () => {
-      expect(ItemNoteTypes.rowCount).to.equal(3);
+    describe('viewing item note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/itemNoteTypes');
+      });
+
+      it('has a item note types list', () => {
+        expect(ItemNoteTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(ItemNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(ItemNoteTypes.hasCreateButton).to.be.false;
+        expect(ItemNoteTypes.hasEditButton).to.be.false;
+        expect(ItemNoteTypes.hasDeleteButton).to.be.false;
+      });
     });
   });
 });

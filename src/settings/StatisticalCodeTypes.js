@@ -18,9 +18,9 @@ class StatisticalCodeTypes extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.statistical-code-types');
-
   render() {
+    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.statistical-code-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +42,7 @@ class StatisticalCodeTypes extends React.Component {
             nameKey="name"
             id="StatisticalCodeTypes"
             sortby="name"
-            editable={this.hasPermissions()}
+            editable={hasPermissions}
           />
         )}
       </IntlConsumer>

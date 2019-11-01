@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import InstanceNoteTypes from '../../../interactors/settings/instance-note-types/instance-note-types';
 
 describe('Instance note types', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('instanceNoteType', {
       'id' : '6a2533a7-4de2-4e64-8466-074c2fa9308c',
       'name' : 'General note',
@@ -23,19 +21,63 @@ describe('Instance note types', () => {
       'name' : 'Awards note',
       'source' : 'folio'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication();
+
+    beforeEach(mockData);
+
+    describe('viewing instance note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/instanceNoteTypes');
+      });
+
+      it('has a instance note types list', () => {
+        expect(InstanceNoteTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(InstanceNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(InstanceNoteTypes.hasCreateButton).to.be.true;
+        expect(InstanceNoteTypes.hasEditButton).to.be.true;
+        expect(InstanceNoteTypes.hasDeleteButton).to.be.true;
+      });
+    });
   });
 
-  describe('viewing instance note types list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/instanceNoteTypes');
+  describe('User doesnot have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('has a instance note types list', () => {
-      expect(InstanceNoteTypes.hasList).to.be.true;
-    });
+    beforeEach(mockData);
 
-    it('list has 3 items', () => {
-      expect(InstanceNoteTypes.rowCount).to.equal(3);
+    describe('viewing instance note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/instanceNoteTypes');
+      });
+
+      it('has a instance note types list', () => {
+        expect(InstanceNoteTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(InstanceNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(InstanceNoteTypes.hasCreateButton).to.be.false;
+        expect(InstanceNoteTypes.hasEditButton).to.be.false;
+        expect(InstanceNoteTypes.hasDeleteButton).to.be.false;
+      });
     });
   });
 });

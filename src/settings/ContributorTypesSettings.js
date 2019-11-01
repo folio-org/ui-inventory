@@ -22,9 +22,10 @@ class ContributorTypesSettings extends React.Component {
 
   suppressEdit = term => term.source === 'marcrelator';
   suppressDelete = term => term.source === 'marcrelator';
-  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.contributor-types');
-
+  
   render() {
+    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.contributor-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -50,7 +51,7 @@ class ContributorTypesSettings extends React.Component {
             id="contributor-types"
             sortby="name"
             validate={validateNameAndCode}
-            editable={this.hasPermissions()}
+            editable={hasPermissions}
           />
         )}
       </IntlConsumer>

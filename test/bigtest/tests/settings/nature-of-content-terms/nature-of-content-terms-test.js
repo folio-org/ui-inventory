@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import NatureOfContentTerms from '../../../interactors/settings/nature-of-content-terms/nature-of-content-terms';
 
 describe('Nature of content terms', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('natureOfContentTerm', {
       'id': '96879b60-098b-453b-bf9a-c47866f1ab2a',
       'name': 'audiobook',
@@ -23,18 +21,56 @@ describe('Nature of content terms', () => {
       'name': 'newspaper',
       'source': 'folio'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication();
+
+    beforeEach(mockData);
+    describe('viewing content terms list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/natureOfContentTerms');
+      });
+
+      it('has a content terms list', () => {
+        expect(NatureOfContentTerms.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(NatureOfContentTerms.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(NatureOfContentTerms.hasNewButton).to.be.true;
+      });
+    });
   });
-  describe('viewing content terms list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/natureOfContentTerms');
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('has a content terms list', () => {
-      expect(NatureOfContentTerms.hasList).to.be.true;
-    });
+    beforeEach(mockData);
+    describe('viewing content terms list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/natureOfContentTerms');
+      });
 
-    it('list has 3 items', () => {
-      expect(NatureOfContentTerms.rowCount).to.equal(3);
+      it('has a content terms list', () => {
+        expect(NatureOfContentTerms.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(NatureOfContentTerms.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(NatureOfContentTerms.hasNewButton).to.be.false;
+      });
     });
   });
 });

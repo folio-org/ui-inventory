@@ -20,9 +20,10 @@ class IdentifierTypesSettings extends React.Component {
 
   suppressEdit = term => term.source === 'folio';
   suppressDelete = term => term.source === 'folio';
-  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.identifier-types');
 
   render() {
+    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.identifier-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -46,7 +47,7 @@ class IdentifierTypesSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="identifier-types"
             sortby="name"
-            editable={this.hasPermissions()}
+            editable={hasPermissions}
           />
         )}
       </IntlConsumer>

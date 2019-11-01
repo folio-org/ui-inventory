@@ -18,9 +18,9 @@ class HoldingsNoteTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.holdings-note-types');
-
   render() {
+    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.holdings-note-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +42,7 @@ class HoldingsNoteTypesSettings extends React.Component {
             nameKey="name"
             id="holdingsNoteTypes"
             sortby="name"
-            editable={this.hasPermissions()}
+            editable={hasPermissions}
           />
         )}
       </IntlConsumer>

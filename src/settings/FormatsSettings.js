@@ -22,9 +22,10 @@ class FormatSettings extends React.Component {
 
   suppressEdit = term => term.source === 'rdacarrier';
   suppressDelete = term => term.source === 'rdacarrier';
-  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.instance-formats');
-
+  
   render() {
+    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.instance-formats');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -50,7 +51,7 @@ class FormatSettings extends React.Component {
             id="formats"
             sortby="name"
             validate={validateNameAndCode}
-            editable={this.hasPermissions()}
+            editable={hasPermissions}
           />
         )}
       </IntlConsumer>

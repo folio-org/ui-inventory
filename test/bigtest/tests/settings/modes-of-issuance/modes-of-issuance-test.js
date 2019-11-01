@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import ModesOfIssuance from '../../../interactors/settings/modes-of-issuance/modes-of-issuance';
 
 describe('Modes of issuance', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('issuance-mode', {
       id : '3363cdb1-e644-446c-82a4-dc3a1d4395b9',
       name : 'Monograph',
@@ -23,18 +21,57 @@ describe('Modes of issuance', () => {
       name : 'Other',
       source : 'rdamodeissue'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication();
+
+    beforeEach(mockData);
+    describe('viewing modes of issuance list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/modesofissuance');
+      });
+
+      it('has a modes of issuance list', () => {
+        expect(ModesOfIssuance.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(ModesOfIssuance.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(ModesOfIssuance.hasCreateButton).to.be.true;
+      });
+    });
   });
-  describe('viewing modes of issuance list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/modesofissuance');
+
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('has a modes of issuance list', () => {
-      expect(ModesOfIssuance.hasList).to.be.true;
-    });
+    beforeEach(mockData);
+    describe('viewing modes of issuance list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/modesofissuance');
+      });
 
-    it('list has 3 items', () => {
-      expect(ModesOfIssuance.rowCount).to.equal(3);
+      it('has a modes of issuance list', () => {
+        expect(ModesOfIssuance.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(ModesOfIssuance.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(ModesOfIssuance.hasCreateButton).to.be.false;
+      });
     });
   });
 });

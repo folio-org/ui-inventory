@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import InstanceTypes from '../../../interactors/settings/resource-types/instance-types';
 
 describe('Resource types (instance types)', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('instanceType', {
       id : '3363cdb1-e644-446c-82a4-dc3a1d4395b9',
       name : 'cartographic dataset',
@@ -26,18 +24,57 @@ describe('Resource types (instance types)', () => {
       code : 'txt',
       source : 'rdacontent'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication();
+
+    beforeEach(mockData);
+    describe('viewing resource types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/resourcetypes');
+      }); 
+
+      it('has a resource types list', () => {
+        expect(InstanceTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(InstanceTypes.rowCount).to.equal(3);
+      }); 
+
+      it('list has new button', () => {
+        expect(InstanceTypes.hasNewButton).to.be.true;
+      });
+    });
   });
-  describe('viewing resource types list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/resourcetypes');
+
+  describe('User has permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('has a resource types list', () => {
-      expect(InstanceTypes.hasList).to.be.true;
-    });
+    beforeEach(mockData);
+    describe('viewing resource types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/resourcetypes');
+      });
 
-    it('list has 3 items', () => {
-      expect(InstanceTypes.rowCount).to.equal(3);
+      it('has a resource types list', () => {
+        expect(InstanceTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(InstanceTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(InstanceTypes.hasNewButton).to.be.false;
+      });
     });
   });
 });

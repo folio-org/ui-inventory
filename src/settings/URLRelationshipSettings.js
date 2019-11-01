@@ -18,9 +18,9 @@ class URLRelationshipSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  hasPermissions = () => this.props.stripes.hasPerm('ui-inventory.settings.electronic-access-relationships');
-
   render() {
+    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.electronic-access-relationships');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +42,7 @@ class URLRelationshipSettings extends React.Component {
             nameKey="name"
             id="electronicAccessRelationships"
             sortby="name"
-            editable={this.hasPermissions()}
+            editable={hasPermissions}
           />
         )}
       </IntlConsumer>
