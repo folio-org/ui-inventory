@@ -23,7 +23,14 @@ describe('Alternative title types', () => {
     });
   }
   describe('User has permissions', () => {
-    setupApplication();
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.alternative-title-types': true
+      }
+    });
 
     beforeEach(mockData);
 

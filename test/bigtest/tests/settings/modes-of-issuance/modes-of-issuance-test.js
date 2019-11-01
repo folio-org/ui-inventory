@@ -24,7 +24,14 @@ describe('Modes of issuance', () => {
   }
 
   describe('User has permissions', () => {
-    setupApplication();
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.modes-of-issuance': true
+      }
+    });
 
     beforeEach(mockData);
     describe('viewing modes of issuance list', () => {

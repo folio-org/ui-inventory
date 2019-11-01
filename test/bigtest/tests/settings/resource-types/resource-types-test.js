@@ -27,7 +27,14 @@ describe('Resource types (instance types)', () => {
   }
 
   describe('User has permissions', () => {
-    setupApplication();
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.instance-types': true
+      }
+    });
 
     beforeEach(mockData);
     describe('viewing resource types list', () => {

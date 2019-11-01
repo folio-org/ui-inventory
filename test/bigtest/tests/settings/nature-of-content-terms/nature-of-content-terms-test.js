@@ -24,7 +24,14 @@ describe('Nature of content terms', () => {
   }
 
   describe('User has permissions', () => {
-    setupApplication();
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.nature-of-content-terms': true
+      }
+    });
 
     beforeEach(mockData);
     describe('viewing content terms list', () => {
