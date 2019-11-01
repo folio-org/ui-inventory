@@ -33,7 +33,7 @@ describe('Resource types (instance types)', () => {
     describe('viewing resource types list', () => {
       beforeEach(function () {
         this.visit('/settings/inventory/resourcetypes');
-      }); 
+      });
 
       it('has a resource types list', () => {
         expect(InstanceTypes.hasList).to.be.true;
@@ -41,7 +41,7 @@ describe('Resource types (instance types)', () => {
 
       it('list has 3 items', () => {
         expect(InstanceTypes.rowCount).to.equal(3);
-      }); 
+      });
 
       it('list has new button', () => {
         expect(InstanceTypes.hasNewButton).to.be.true;

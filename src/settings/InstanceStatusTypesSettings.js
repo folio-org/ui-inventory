@@ -24,8 +24,6 @@ class InstanceStatusTypesSettings extends React.Component {
   suppressDelete = term => term.source === 'marcrelator';
 
   render() {
-    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.instance-statuses');
-
     return (
       <IntlConsumer>
         {intl => (
@@ -50,7 +48,7 @@ class InstanceStatusTypesSettings extends React.Component {
             id="instanceStatus-types"
             sortby="name"
             validate={validateNameAndCode}
-            editable={hasPermissions}
+            editable={this.props.stripes.hasPerm('ui-inventory.settings.instance-statuses')}
           />
         )}
       </IntlConsumer>

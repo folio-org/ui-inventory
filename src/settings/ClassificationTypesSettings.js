@@ -20,10 +20,8 @@ class ClassificationTypesSettings extends React.Component {
 
   suppressEdit = term => term.source === 'folio';
   suppressDelete = term => term.source === 'folio';
-  
-  render() {
-    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.classification-types');
 
+  render() {
     return (
       <IntlConsumer>
         {intl => (
@@ -47,7 +45,7 @@ class ClassificationTypesSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="classification-types"
             sortby="name"
-            editable={hasPermissions}
+            editable={this.props.stripes.hasPerm('ui-inventory.settings.classification-types')}
           />
         )}
       </IntlConsumer>

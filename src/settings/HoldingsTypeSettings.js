@@ -19,8 +19,6 @@ class HoldingsTypeSettings extends React.Component {
   }
 
   render() {
-    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.holdings-types');
-
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +40,7 @@ class HoldingsTypeSettings extends React.Component {
             nameKey="name"
             id="holdingsTypes"
             sortby="name"
-            editable={hasPermissions}
+            editable={this.props.stripes.hasPerm('ui-inventory.settings.holdings-types')}
           />
         )}
       </IntlConsumer>

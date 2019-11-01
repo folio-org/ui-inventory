@@ -50,14 +50,14 @@ describe('Alternative title types', () => {
 
   describe('User does not have permissions', () => {
     setupApplication({
-        hasAllPerms: false,
-        permissions: {
-          'settings.inventory.enabled': true,
-          'ui-inventory.settings.list.view': true
-        }
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    beforeEach(mockData); 
+    beforeEach(mockData);
 
     describe('viewing alternative title types list', () => {
       beforeEach(async function () {
@@ -68,7 +68,7 @@ describe('Alternative title types', () => {
         expect(AlternativeTitleTypes.hasList).to.be.true;
       });
 
-      it('list has 3 items', () => { 
+      it('list has 3 items', () => {
         expect(AlternativeTitleTypes.rowCount).to.equal(3);
       });
 

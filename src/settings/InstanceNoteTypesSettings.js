@@ -19,8 +19,6 @@ class InstanceNoteTypesSettings extends React.Component {
   }
 
   render() {
-    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.instance-note-types');
-
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +40,7 @@ class InstanceNoteTypesSettings extends React.Component {
             nameKey="name"
             id="instanceNoteTypes"
             sortby="name"
-            editable={hasPermissions}
+            editable={this.props.stripes.hasPerm('ui-inventory.settings.instance-note-types')}
           />
         )}
       </IntlConsumer>

@@ -19,8 +19,6 @@ class MaterialTypesSettings extends React.Component {
   }
 
   render() {
-    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.materialtypes');
-
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +40,7 @@ class MaterialTypesSettings extends React.Component {
             nameKey="name"
             id="materialtypes"
             sortby="name"
-            editable={hasPermissions}
+            editable={this.props.stripes.hasPerm('ui-inventory.settings.materialtypes')}
           />
         )}
       </IntlConsumer>

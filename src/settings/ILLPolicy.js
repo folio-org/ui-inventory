@@ -19,8 +19,6 @@ class ILLPolicy extends React.Component {
   }
 
   render() {
-    const hasPermissions = this.props.stripes.hasPerm('ui-inventory.settings.ill-policies');
-
     return (
       <IntlConsumer>
         {intl => (
@@ -42,7 +40,7 @@ class ILLPolicy extends React.Component {
             nameKey="name"
             id="ILLPolicy"
             sortby="name"
-            editable={hasPermissions}
+            editable={this.props.stripes.hasPerm('ui-inventory.settings.ill-policies')}
           />
         )}
       </IntlConsumer>

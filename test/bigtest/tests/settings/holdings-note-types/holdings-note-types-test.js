@@ -23,60 +23,60 @@ describe('Holdings note types', () => {
     });
   }
 
-    describe('User has permissions', () => {
-      setupApplication();
+  describe('User has permissions', () => {
+    setupApplication();
 
-      beforeEach(mockData);
-    
-      describe('viewing holdings note types list', () => {
-        beforeEach(function () {
-          this.visit('/settings/inventory/holdingsNoteTypes');
-        });
+    beforeEach(mockData);
 
-        it('has a holdings note types list', () => {
-          expect(HoldingsNoteTypes.hasList).to.be.true;
-        });
+    describe('viewing holdings note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/holdingsNoteTypes');
+      });
 
-        it('list has 3 items', () => {
-          expect(HoldingsNoteTypes.rowCount).to.equal(3);
-        });
+      it('has a holdings note types list', () => {
+        expect(HoldingsNoteTypes.hasList).to.be.true;
+      });
 
-        it('list has new, edit, delete buttons', () => {
-          expect(HoldingsNoteTypes.hasCreateButton).to.be.true;
-          expect(HoldingsNoteTypes.hasEditButton).to.be.true;
-          expect(HoldingsNoteTypes.hasDeleteButton).to.be.true;
-        });
+      it('list has 3 items', () => {
+        expect(HoldingsNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(HoldingsNoteTypes.hasCreateButton).to.be.true;
+        expect(HoldingsNoteTypes.hasEditButton).to.be.true;
+        expect(HoldingsNoteTypes.hasDeleteButton).to.be.true;
       });
     });
+  });
 
-    describe('User does not have permissions', () => {
-      setupApplication({
-        hasAllPerms: false,
-        permissions: {
-          'settings.inventory.enabled': true,
-          'ui-inventory.settings.list.view': true
-        }
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
+    });
+    beforeEach(mockData);
+
+    describe('viewing holdings note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/holdingsNoteTypes');
       });
-      beforeEach(mockData);
-    
-      describe('viewing holdings note types list', () => {
-        beforeEach(function () {
-          this.visit('/settings/inventory/holdingsNoteTypes');
-        });
 
-        it('has a holdings note types list', () => {
-          expect(HoldingsNoteTypes.hasList).to.be.true;
-        });
+      it('has a holdings note types list', () => {
+        expect(HoldingsNoteTypes.hasList).to.be.true;
+      });
 
-        it('list has 3 items', () => {
-          expect(HoldingsNoteTypes.rowCount).to.equal(3);
-        });
+      it('list has 3 items', () => {
+        expect(HoldingsNoteTypes.rowCount).to.equal(3);
+      });
 
-        it('list does not have new, edit, delete buttons', () => {
-          expect(HoldingsNoteTypes.hasCreateButton).to.be.false;
-          expect(HoldingsNoteTypes.hasEditButton).to.be.false;
-          expect(HoldingsNoteTypes.hasDeleteButton).to.be.false;
-        });
+      it('list does not have new, edit, delete buttons', () => {
+        expect(HoldingsNoteTypes.hasCreateButton).to.be.false;
+        expect(HoldingsNoteTypes.hasEditButton).to.be.false;
+        expect(HoldingsNoteTypes.hasDeleteButton).to.be.false;
       });
     });
+  });
 });

@@ -14,7 +14,7 @@ describe('Classification types', () => {
     this.server.create('classificationType', {
       id : '526aa04d-9289-4511-8866-349299592c18',
       name : 'LCCN',
-      source : 'folio' 
+      source : 'folio'
     });
     this.server.create('classificationType', {
       id : '6312d172-f0cf-40f6-b27d-9fa8feaf332f',

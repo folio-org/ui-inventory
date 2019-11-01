@@ -12,4 +12,4 @@ import {
   rowCount = count('[class^="editListRow---"]');
 }
 
-export default new AlternativeTitleTypes('#alternative-title-types');
+export default new AlternativeTitleTypes();
