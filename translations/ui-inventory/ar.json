@@ -393,5 +393,15 @@
     "hridHandling.validation.assignPrefixField": "يرجى إدخال قيمة أبجدية رقمية",
     "hridHandling.successfullyMessage": "تم تحديث الإعداد بنجاح.",
     "noBarcode": "بدون باركود",
-    "items.successfullyCopiedMessage": "تم نسخ باركود المادة  {barcode} بنجاح إلى الحافظة"
+    "items.successfullyCopiedMessage": "تم نسخ باركود المادة  {barcode} بنجاح إلى الحافظة",
+    "filters.instances": "الوعاء",
+    "filters.holdings": "المقتنيات",
+    "filters.items": "المادة",
+    "relatedTitles": "عناوين ذات صلة",
+    "precedingTitles": "عناوين سابقة",
+    "addPrecedingTitle": "إضافة عنوان سابق",
+    "succeedingTitles": "عناوين لاحقة",
+    "addSucceedingTitle": "إضافة عنوان لاحق",
+    "statisticalCodeName": "اسم الكود الإحصائي",
+    "generalNote": "General Note"
 }
