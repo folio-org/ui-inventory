@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import {
+  get,
+  orderBy,
+} from 'lodash';
+
 import { FormattedMessage } from 'react-intl';
 import {
   MultiColumnList,
   IconButton,
+  Callout,
 } from '@folio/stripes/components';
+
 import {
   IntlConsumer,
   AppIcon,
 } from '@folio/stripes/core';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import withLocation from './withLocation';
 
@@ -37,6 +44,34 @@ class Items extends React.Component {
   constructor(props) {
     super(props);
     this.editItemModeThisLayer = false;
+    this.calloutRef = createRef();
+    this.onHeaderClick = this.onHeaderClick.bind(this);
+    this.state = {
+      sortedColumn: 'barcode',
+      sortOrder: 'desc',
+    };
+  }
+
+  showCallout(barcode) {
+    this.calloutRef.current.sendCallout({
+      type: 'success',
+      message: (
+        <FormattedMessage
+          id="ui-inventory.items.successfullyCopiedMessage"
+          values={{ barcode }}
+        />)
+    });
+  }
+
+  onHeaderClick(e, { name: columnName }) {
+    if (this.state.sortedColumn !== columnName) {
+      this.setState({ sortedColumn: columnName });
+      this.setState({ sortOrder: 'desc' });
+    } else {
+      this.setState(state => (
+        { sortOrder: state.sortOrder === 'desc' ? 'asc' : 'desc' }
+      ));
+    }
   }
 
   render() {
@@ -50,8 +85,16 @@ class Items extends React.Component {
     if (!items || !items.hasLoaded) return null;
     const noBarcode = <FormattedMessage id="ui-inventory.noBarcode" />;
     const itemRecords = items.records;
+    const sorters = {
+      'barcode': ({ barcode }) => barcode,
+      'status': ({ status }) => status.name.toLowerCase(),
+      'materialType': ({ materialType }) => materialType.name.toLowerCase(),
+      'enumeration': ({ enumeration }) => enumeration,
+      'chronology': ({ chronology }) => chronology,
+    };
+    const sortedRecords = orderBy(itemRecords, sorters[this.state.sortedColumn], this.state.sortOrder.slice());
     const itemsFormatter = {
-      'Item: barcode': (item) => {
+      'barcode': item => {
         return (
           <React.Fragment>
             <Link
@@ -65,15 +108,20 @@ class Items extends React.Component {
               </span>
             </Link>
             {item.barcode &&
-              <CopyToClipboard text={item.barcode}>
-                <IconButton icon="clipboard" />
+              <CopyToClipboard
+                text={item.barcode}
+                onCopy={() => this.showCallout(item.barcode)}
+              >
+                <div data-test-items-copy-icon>
+                  <IconButton icon="clipboard" />
+                </div>
               </CopyToClipboard>
             }
           </React.Fragment>
         );
       },
       'status': x => get(x, ['status', 'name']) || '--',
-      'Material Type': x => get(x, ['materialType', 'name']),
+      'materialType': x => get(x, ['materialType', 'name']),
     };
 
     return (
@@ -84,23 +132,32 @@ class Items extends React.Component {
               {ariaLabel => (
                 <MultiColumnList
                   id="list-items"
-                  contentData={itemRecords}
+                  contentData={sortedRecords}
                   rowMetadata={['id', 'holdingsRecordId']}
                   formatter={itemsFormatter}
-                  visibleColumns={['Item: barcode', 'status', 'Material Type']}
+                  visibleColumns={['barcode', 'status', 'materialType']}
                   columnMapping={{
-                    'Item: barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
+                    'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
                     'status': intl.formatMessage({ id: 'ui-inventory.status' }),
-                    'Material Type': intl.formatMessage({ id: 'ui-inventory.materialType' }),
+                    'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
+                  }}
+                  columnWidths={{
+                    'barcode': '25%',
+                    'status': '25%',
+                    'materialType': '25%',
                   }}
                   ariaLabel={ariaLabel}
                   containerRef={(ref) => { this.resultsList = ref; }}
                   interactive={false}
+                  onHeaderClick={this.onHeaderClick}
+                  sortDirection={this.state.sortOrder === 'desc' ? 'descending' : 'ascending'}
+                  sortedColumn={this.state.sortedColumn}
                 />
               )}
             </FormattedMessage>
           )}
         </IntlConsumer>
+        <Callout ref={this.calloutRef} />
       </div>);
   }
 }

@@ -287,8 +287,6 @@
     "selectAlternativeTitleType": "Seleziona tipologia titolo alternativo",
     "parentInstances": "Istanze madri",
     "addParentInstance": "Aggiungi istanza madre",
-    "parentInstancesRequired": "Istanza madre *",
-    "typeOfRelationRequired": "Tipologia relazione*",
     "selectType": "Seleziona tipologia",
     "selectStatus": "Seleziona stato",
     "createNewHoldingsRecord": "Crea nuovo record holdings",
@@ -381,9 +379,9 @@
     "addNatureOfContentTerm": "Aggiungi natura contenuto",
     "selectNatureOfContentTerm": "Seleziona natura contenuto",
     "hridHandling": "HRID handling",
-    "hridHandling.description.line1": "Inventory and MARC records retain any pre-existing HRID unless otherwise specified during load and import",
-    "hridHandling.description.line2": "New FOLIO HRIDs are assigned sequentially, based on the start number in these settings",
-    "hridHandling.description.line3": "Unless changed or removed, the default prefix will be assigned to new FOLIO HRIDs",
+    "hridHandling.description.line1": "After initial data migration, new FOLIO HRIDs are assigned sequentially, based on the starting number in these settings",
+    "hridHandling.description.line2": "Unless changed or removed, the default prefix will be assigned to new FOLIO HRIDs",
+    "hridHandling.description.line3": "HRIDs in existing FOLIO Inventory and MARC records cannot be changed",
     "hridHandling.sectionHeader1": "Inventory instances and MARC bibliographic records",
     "hridHandling.sectionHeader2": "Inventory holdings and MARC holdings records",
     "hridHandling.sectionHeader3": "Inventory item records",
@@ -394,5 +392,6 @@
     "hridHandling.validation.startWithField": "Please enter a numeric value",
     "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
     "hridHandling.successfullyMessage": "Setting was successfully updated.",
-    "noBarcode": "No barcode"
+    "noBarcode": "No barcode",
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
 }

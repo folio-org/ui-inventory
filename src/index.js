@@ -3,65 +3,43 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import { hot } from 'react-hot-loader';
-import { FormattedMessage } from 'react-intl';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
-import Instances from './Instances';
+import {
+  InstancesRoute,
+  HoldingsRoute,
+  ItemsRoute,
+} from './routes';
 import Settings from './settings';
 
-class InstancesRouting extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
+const InventoryRouting = (props) => {
+  const { showSettings, match: { path } } = props;
+
+  if (showSettings) {
+    return <Settings {...props} />;
   }
 
-  constructor(props) {
-    super(props);
+  return (
+    <Switch>
+      <Route
+        path={`${path}/holdings`}
+        component={HoldingsRoute}
+      />
+      <Route
+        path={`${path}/items`}
+        component={ItemsRoute}
+      />
+      <Route
+        path={path}
+        component={InstancesRoute}
+      />
+    </Switch>
+  );
+};
 
-    this.connectedApp = props.stripes.connect(Instances);
-  }
+InventoryRouting.propTypes = {
+  match: ReactRouterPropTypes.match,
+  showSettings: PropTypes.bool,
+};
 
-  NoMatch() {
-    const { pathname } = this.props.location;
-
-    return (
-      <div>
-        <h2>
-          <FormattedMessage id="ui-inventory.error.noMatch.oops" />
-        </h2>
-        <p>
-          <FormattedMessage
-            id="ui-inventory.error.noMatch.how"
-            values={{ location: <tt>{pathname}</tt> }}
-          />
-        </p>
-      </div>
-    );
-  }
-
-  render() {
-    const {
-      showSettings,
-      match: { path },
-    } = this.props;
-
-    if (showSettings) {
-      return <Settings {...this.props} />;
-    }
-
-    return (
-      <Switch>
-        <Route
-          path={path}
-          render={() => <this.connectedApp {...this.props} />}
-        />
-        <Route component={() => { this.NoMatch(); }} />
-      </Switch>
-    );
-  }
-}
-
-export default hot(module)(InstancesRouting);
+export default hot(module)(InventoryRouting);

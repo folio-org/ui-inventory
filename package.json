@@ -358,7 +358,11 @@
       },
       {
         "permissionName": "ui-inventory.instance.view",
+<<<<<<< HEAD
         "displayName": "Inventory: View instances",
+=======
+        "displayName": "Inventory: View instances, holdings, and items",
+>>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "module.inventory.enabled",
           "users.collection.get",
@@ -417,7 +421,11 @@
       },
       {
         "permissionName": "ui-inventory.instance.edit",
+<<<<<<< HEAD
         "displayName": "Inventory: View, edit, create instances",
+=======
+        "displayName": "Inventory: View, create, edit instances",
+>>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "ui-inventory.instance.create",
           "inventory.instances.item.put",
@@ -436,7 +444,11 @@
       },
       {
         "permissionName": "ui-inventory.item.edit",
+<<<<<<< HEAD
         "displayName": "Inventory: View, edit, create items",
+=======
+        "displayName": "Inventory: View, create, edit items",
+>>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "ui-inventory.item.create",
           "inventory.items.item.put"
@@ -445,7 +457,11 @@
       },
       {
         "permissionName": "ui-inventory.item.delete",
+<<<<<<< HEAD
         "displayName": "Inventory: Delete items",
+=======
+        "displayName": "Inventory: View, create, edit, delete items",
+>>>>>>> 11ebc6a000025fe45daf75f2564a07051c43e00a
         "subPermissions": [
           "ui-inventory.item.edit",
           "inventory.items.item.delete"
@@ -454,7 +470,7 @@
       },
       {
         "permissionName": "ui-inventory.holdings.create",
-        "displayName": "Inventory: Can view and create holdings",
+        "displayName": "Inventory: View, create holdings",
         "subPermissions": [
           "ui-inventory.instance.view",
           "inventory-storage.holdings.item.post"
@@ -463,7 +479,7 @@
       },
       {
         "permissionName": "ui-inventory.holdings.edit",
-        "displayName": "Inventory: Can view, create and edit holdings",
+        "displayName": "Inventory: View, create, edit holdings",
         "subPermissions": [
           "ui-inventory.holdings.create",
           "inventory-storage.holdings.item.put"
@@ -472,7 +488,7 @@
       },
       {
         "permissionName": "ui-inventory.holdings.delete",
-        "displayName": "Inventory: Can view, create, edit and delete holdings",
+        "displayName": "Inventory: View, create, edit, delete holdings",
         "subPermissions": [
           "ui-inventory.holdings.edit",
           "inventory-storage.holdings.item.delete"
@@ -528,6 +544,14 @@
           "inventory-storage.item-note-types.item.get"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
+        "displayName": "Inventory: View instance records being suppressed for staff",
+        "subPermissions": [
+          "ui-inventory.instance.view"
+        ],
+        "visible": true
       }
     ],
     "translations": {
@@ -576,6 +600,7 @@
     "react-final-form-listeners": "^1.0.2",
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.3.0",
+    "react-router-prop-types": "^1.0.4",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {

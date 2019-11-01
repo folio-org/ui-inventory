@@ -11,12 +11,21 @@ export default Factory.extend({
   identifiers: () => [],
   publication: () => [],
   alternativeTitles: () => [],
-  series: () => [],
+  series: () => [lorem.sentence()],
   physicalDescriptions: () => [],
   languages: () => [],
-  notes: () => [],
+  notes: () => [
+    {
+      note: lorem.sentence(),
+      staffOnly: false,
+    },
+    {
+      note: lorem.sentence(),
+      staffOnly: false,
+    }
+  ],
   electronicAccess: () => [],
-  subjects: () => [],
+  subjects: () => [lorem.sentence()],
   classifications: () => [],
   childInstances: () => [],
   parentInstances: () => [],
@@ -44,7 +53,37 @@ export default Factory.extend({
       }
       contributor.contributorNameTypeId = contributorNameTypeId;
     });
+    instance.notes.forEach(note => {
+      let { instanceNoteTypeId } = note;
+      if (!instanceNoteTypeId) {
+        let [type] = server.db.instanceNoteTypes.where({ name: 'General note' });
+        if (!type) {
+          type = server.create('instance-note-type', {
+            name: 'General note',
+            source: 'folio',
+            metadata: {
+              createdDate: new Date(),
+              updatedDate: new Date(),
+            },
+          });
+        }
+        instanceNoteTypeId = type.id;
+      }
+      note.instanceNoteTypeId = instanceNoteTypeId;
+    });
   },
+
+  withPrecedingTitle: trait({
+    afterCreate(instance) {
+      instance.parentInstances = [{ id: '1008409091', superInstanceId: '9999999', instanceRelationshipTypeId: 'cde80cc2-0c8b-4672-82d4-721e51dcb990' }];
+    }
+  }),
+
+  withSucceedingTitle: trait({
+    afterCreate(instance) {
+      instance.childInstances = [{ id: '1008409092', subInstanceId: '8888888', instanceRelationshipTypeId: 'cde80cc2-0c8b-4672-82d4-721e51dcb990' }];
+    }
+  }),
 
   withHolding: trait({
     afterCreate(instance, server) {

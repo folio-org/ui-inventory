@@ -27,7 +27,10 @@ import {
   IntlConsumer,
 } from '@folio/stripes/core';
 
-import { craftLayerUrl } from './utils';
+import {
+  craftLayerUrl,
+  getHoldingsNotes,
+} from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
 
@@ -253,6 +256,8 @@ class ViewHoldingsRecord extends React.Component {
     );
   };
 
+  getHoldingsNotes = (noteTypes, notes) => notes.filter(noteType => noteTypes.find(note => note.holdingsNoteTypeId === noteType.id));
+
   isAwaitingResource = () => {
     const {
       holdingsRecords,
@@ -316,6 +321,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
+    const holdingsNotes = getHoldingsNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []));
     const itemCount = _.get(items, 'records.length', 0);
 
     referenceTables.illPolicies = illPolicies.records;
@@ -341,39 +347,6 @@ class ViewHoldingsRecord extends React.Component {
         </FormattedMessage>
       </PaneMenu>
     );
-
-    const layoutNotes = (noteTypes, notes) => {
-      return noteTypes
-        .filter((noteType) => notes.find(note => note.holdingsNoteTypeId === noteType.id))
-        .map((noteType, i) => {
-          return (
-            <Row key={i}>
-              <Col xs={1}>
-                <KeyValue
-                  label={<FormattedMessage id="ui-inventory.staffOnly" />}
-                  value={_.get(holdingsRecord, ['notes'], []).map((note, j) => {
-                    if (note.holdingsNoteTypeId === noteType.id) {
-                      return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
-                    }
-                    return null;
-                  })}
-                />
-              </Col>
-              <Col xs={11}>
-                <KeyValue
-                  label={noteType.name}
-                  value={_.get(holdingsRecord, ['notes'], []).map((note, j) => {
-                    if (note.holdingsNoteTypeId === noteType.id) {
-                      return <div key={j}>{note.note}</div>;
-                    }
-                    return null;
-                  })}
-                />
-              </Col>
-            </Row>
-          );
-        });
-    };
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -491,7 +464,7 @@ class ViewHoldingsRecord extends React.Component {
                     <Row>
                       <Col
                         smOffset={0}
-                        sm={4}
+                        sm={2}
                       >
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
@@ -506,7 +479,7 @@ class ViewHoldingsRecord extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col sm={4}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.holdingsType" />}
                           value={this.refLookup(referenceTables.holdingsTypes, _.get(holdingsRecord, ['holdingsTypeId'])).name}
@@ -522,6 +495,9 @@ class ViewHoldingsRecord extends React.Component {
                           columnMapping={{
                             'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
                             'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                          }}
+                          columnWidths={{
+                            'Statistical code type': '16%',
                           }}
                           formatter={{
                             'Statistical code type':
@@ -561,7 +537,7 @@ class ViewHoldingsRecord extends React.Component {
                             value={holdingsPermanentLocation.name}
                           />
                         </Col>
-                        <Col>
+                        <Col sm={4}>
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporary" />}
                             value={holdingsTemporaryLocation ? holdingsTemporaryLocation.name : '-'}
@@ -576,7 +552,7 @@ class ViewHoldingsRecord extends React.Component {
                           value={holdingsRecord.shelvingOrder}
                         />
                       </Col>
-                      <Col>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
                           value={holdingsRecord.shelvingTitle}
@@ -645,6 +621,9 @@ class ViewHoldingsRecord extends React.Component {
                           'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
                           'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
                         }}
+                        columnWidths={{
+                          'Holdings statement': '16%',
+                        }}
                         formatter={{
                           'Holdings statement': x => _.get(x, ['statement']) || '',
                           'Holdings statement note': x => _.get(x, ['note']) || '',
@@ -661,6 +640,9 @@ class ViewHoldingsRecord extends React.Component {
                         columnMapping={{
                           'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
                           'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
+                        }}
+                        columnWidths={{
+                          'Holdings statement for supplements': '16%',
                         }}
                         formatter={{
                           'Holdings statement for supplements': x => _.get(x, ['statement']) || '',
@@ -680,6 +662,9 @@ class ViewHoldingsRecord extends React.Component {
                           'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
                           'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
                         }}
+                        columnWidths={{
+                          'Holdings statement for indexes': '16%',
+                        }}
                         formatter={{
                           'Holdings statement for indexes': x => _.get(x, ['statement']) || '',
                           'Holdings statement for indexes note': x => _.get(x, ['note']) || '',
@@ -689,19 +674,19 @@ class ViewHoldingsRecord extends React.Component {
                       />
                     )}
                     <Row>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.illPolicy" />}
                           value={this.refLookup(referenceTables.illPolicies, _.get(holdingsRecord, ['illPolicyId'])).name}
                         />
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
                           value={_.get(holdingsRecord, ['digitizationPolicy'], '')}
                         />
                       </Col>
-                      <Col sm={3}>
+                      <Col sm={2}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
                           value={_.get(holdingsRecord, ['retentionPolicy'], '')}
@@ -715,34 +700,26 @@ class ViewHoldingsRecord extends React.Component {
                     onToggle={this.handleAccordionToggle}
                     label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
                   >
-                    {layoutNotes(referenceTables.holdingsNoteTypes, _.get(holdingsRecord, ['notes'], []))}
-                  </Accordion>
-                  <Accordion
-                    open={this.state.accordions.accordion05}
-                    id="accordion05"
-                    onToggle={this.handleAccordionToggle}
-                    label={<FormattedMessage id="ui-inventory.acquisition" />}
-                  >
-                    <Row>
-                      <Col sm={3}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
-                          value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
-                        />
-                      </Col>
-                      <Col sm={3}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                          value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
-                        />
-                      </Col>
-                      <Col sm={3}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.receiptStatus" />}
-                          value={_.get(holdingsRecord, ['receiptStatus'], '')}
-                        />
-                      </Col>
-                    </Row>
+                    {(holdingsNotes.length > 0) && (
+                      <MultiColumnList
+                        id="list-holdingsnotes"
+                        contentData={holdingsNotes}
+                        visibleColumns={['Staff only', 'Note']}
+                        columnMapping={{
+                          'Staff only': intl.formatMessage({ id: 'ui-inventory.staffOnly' }),
+                          'Note': intl.formatMessage({ id: 'ui-inventory.note' }),
+                        }}
+                        columnWidths={{
+                          'Staff only': '16%',
+                        }}
+                        formatter={{
+                          'Staff only': x => (_.get(x, ['staffOnly']) ? 'Yes' : 'No'),
+                          'Note': x => _.get(x, ['note']) || '',
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.holdingsNotes' })}
+                        containerRef={ref => { this.resultsList = ref; }}
+                      />
+                    )}
                   </Accordion>
                   <Accordion
                     open={this.state.accordions.accordion06}
@@ -762,6 +739,12 @@ class ViewHoldingsRecord extends React.Component {
                           'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
                           'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
                         }}
+                        columnWidths={{
+                          'URL relationship': '16%',
+                          'URI': '16%',
+                          'Link text': '16%',
+                          'Materials specified': '16%',
+                        }}
                         formatter={{
                           'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
                           'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
@@ -773,6 +756,33 @@ class ViewHoldingsRecord extends React.Component {
                         containerRef={(ref) => { this.resultsList = ref; }}
                       />
                     )}
+                  </Accordion>
+                  <Accordion
+                    open={this.state.accordions.accordion05}
+                    id="accordion05"
+                    onToggle={this.handleAccordionToggle}
+                    label={<FormattedMessage id="ui-inventory.acquisition" />}
+                  >
+                    <Row>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
+                          value={_.get(holdingsRecord, ['acquisitionMethod'], '')}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+                          value={_.get(holdingsRecord, ['acquisitionFormat'], '')}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.receiptStatus" />}
+                          value={_.get(holdingsRecord, ['receiptStatus'], '')}
+                        />
+                      </Col>
+                    </Row>
                   </Accordion>
                   <Accordion
                     open={this.state.accordions.accordion07}
@@ -791,6 +801,9 @@ class ViewHoldingsRecord extends React.Component {
                           columnMapping={{
                             'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
                             'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+                          }}
+                          columnWidths={{
+                            'Enumeration': '16%',
                           }}
                           formatter={{
                             'Enumeration': x => x.enumeration,

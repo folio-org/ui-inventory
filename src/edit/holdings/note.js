@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Icon,
   Select,
   TextField,
   Checkbox,
@@ -17,11 +16,7 @@ const Note = ({ noteTypeOptions }) => (
       <RepeatableField
         name="notes"
         addButtonId="clickable-add-note"
-        addLabel={
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.addNote" />
-          </Icon>
-        }
+        addLabel={<FormattedMessage id="ui-inventory.addNote" />}
         template={[
           {
             name: 'holdingsNoteTypeId',

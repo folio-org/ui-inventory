@@ -2,10 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import {
-  Icon,
-  TextField,
-} from '@folio/stripes/components';
+import { TextField } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -20,11 +17,7 @@ const PublicationFrequencyFields = props => {
     <RepeatableField
       name="publicationFrequency"
       label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
-      addLabel={
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.addPublicationFrequency" />
-        </Icon>
-      }
+      addLabel={<FormattedMessage id="ui-inventory.addPublicationFrequency" />}
       addButtonId="clickable-add-publicationfrequency"
       template={[{
         label: <FormattedMessage id="ui-inventory.publicationFrequency" />,

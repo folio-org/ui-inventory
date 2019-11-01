@@ -31,13 +31,14 @@ const ParentInstanceFields = props => {
           addButtonId="clickable-add-parentinstance"
           template={[
             {
-              label: <FormattedMessage id="ui-inventory.parentInstancesRequired" />,
+              label: <FormattedMessage id="ui-inventory.parentInstances" />,
               name: 'superInstanceId',
               component: TextField,
+              required: true,
               disabled: !canEdit,
             },
             {
-              label: <FormattedMessage id="ui-inventory.typeOfRelationRequired" />,
+              label: <FormattedMessage id="ui-inventory.typeOfRelation" />,
               name: 'instanceRelationshipTypeId',
               component: Select,
               placeholder,
