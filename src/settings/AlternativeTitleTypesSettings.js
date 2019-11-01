@@ -32,7 +32,7 @@ class AlternativeTitleTypesSettings extends React.Component {
             label={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' })}
             objectLabel={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
-            visibleFields={['name', 'source'].filter((item)=> item !== 'actions')}
+            visibleFields={['name', 'source']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               source: intl.formatMessage({ id: 'ui-inventory.source' }),

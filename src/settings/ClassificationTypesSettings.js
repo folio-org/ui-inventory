@@ -27,7 +27,6 @@ class ClassificationTypesSettings extends React.Component {
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
-            ddd={this.props}
             {...this.props}
             baseUrl="classification-types"
             records="classificationTypes"
