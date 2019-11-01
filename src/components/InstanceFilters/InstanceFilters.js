@@ -122,6 +122,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('staffSuppress')}
         >
           <CheckboxFilter
+            data-test-filter-staff-suppress
             name="staffSuppress"
             dataOptions={suppressedOptions}
             selectedValues={staffSuppress}
@@ -138,6 +139,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('discoverySuppress')}
         >
           <CheckboxFilter
+            data-test-filter-discovery-suppress
             name="discoverySuppress"
             dataOptions={suppressedOptions}
             selectedValues={discoverySuppress}
