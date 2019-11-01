@@ -3,6 +3,7 @@ import {
   find,
   get,
   forOwn,
+  escapeRegExp,
 } from 'lodash';
 import {
   itemStatuses,
@@ -50,6 +51,30 @@ export function parseFiltersToStr(filters) {
   });
 
   return newFilters.join(',');
+}
+
+export function filterItemsBy(name) {
+  return (filter, list) => {
+    if (!filter) {
+      return { renderedItems: list };
+    }
+
+    const esFilter = escapeRegExp(filter);
+    const regex = new RegExp(`^${esFilter}`, 'i');
+    const renderedItems = list
+      .filter(item => item[name].match(new RegExp(esFilter, 'i')))
+      .sort((item1, item2) => {
+        const match1 = item1[name].match(regex);
+        const match2 = item2[name].match(regex);
+
+        if (match1) return -1;
+        if (match2) return 1;
+
+        return (item1[name] < item2[name]) ? -1 : 1;
+      });
+
+    return { renderedItems };
+  };
 }
 
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'

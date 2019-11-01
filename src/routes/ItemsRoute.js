@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
+import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import withData from './withData';
 import { ItemsView } from '../views';
+import {
+  itemIndexes,
+  itemFilterConfig,
+} from '../constants';
 
 class ItemsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -15,9 +20,29 @@ class ItemsRoute extends React.Component {
       path: 'inventory/instances',
       GET: {
         params: {
-          query: () => {
-            // TODO: add query implementation for items
-            return null;
+          query: (...args) => {
+            const [
+              queryParams,
+              pathComponents,
+              resourceData,
+              logger
+            ] = args;
+            const queryIndex = resourceData.query.qindex ? resourceData.query.qindex : 'all';
+            const searchableIndex = itemIndexes.find(idx => idx.value === queryIndex);
+            const queryTemplate = searchableIndex && searchableIndex.queryTemplate;
+            resourceData.query = { ...resourceData.query, qindex: '' };
+
+            return makeQueryFunction(
+              'cql.allRecords=1',
+              queryTemplate,
+              {
+                Title: 'title',
+                publishers: 'publication',
+                Contributors: 'contributors',
+              },
+              itemFilterConfig,
+              2
+            )(queryParams, pathComponents, resourceData, logger);
           }
         },
         staticFallback: { params: {} },

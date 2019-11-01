@@ -23,21 +23,18 @@ export const requestStatuses = {
 
 // the empty 'values' properties will be filled in by componentWillUpdate
 // as those are pulled from the backend
-export const filterConfig = [
+export const instanceFilterConfig = [
   {
-    label: <FormattedMessage id="ui-inventory.instances.language" />,
     name: 'language',
     cql: 'languages',
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.instances.resourceType" />,
     name: 'resource',
     cql: 'instanceTypeId',
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.instances.location" />,
     name: 'location',
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
@@ -73,7 +70,16 @@ export const holdingIndexes = [
 ];
 
 export const itemIndexes = [
-  // TODO: add item indexes
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
+];
+
+export const itemFilterConfig = [
+  {
+    name: 'materialType',
+    cql: 'item.materialTypeId',
+    values: [],
+  },
 ];
 
 export const segments = {
