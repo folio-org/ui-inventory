@@ -17,4 +17,10 @@ describe('ItemsRoute', () => {
   it('opens items route', () => {
     expect(itemsRoute.isPresent).to.equal(true);
   });
+
+  describe('material type filter', () => {
+    it('displays material type filter', () => {
+      expect(itemsRoute.materialTypeFilter.isPresent).to.equal(true);
+    });
+  });
 });

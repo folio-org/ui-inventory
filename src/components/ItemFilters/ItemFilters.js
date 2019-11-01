@@ -55,6 +55,7 @@ export default class ItemFilters extends React.Component {
         >
           <MultiSelectionFilter
             name="materialType"
+            id="materialTypeFilter"
             dataOptions={materialTypesOptions}
             selectedValues={materialType}
             filter={filterItemsBy('label')}
