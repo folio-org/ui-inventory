@@ -393,5 +393,15 @@
     "hridHandling.validation.assignPrefixField": "Пожалуйста, введите буквенно-цифровое значение",
     "hridHandling.successfullyMessage": "Настройка была успешно обновлена.",
     "noBarcode": "Нет штрих-кода",
-    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
+    "filters.instances": "Instance",
+    "filters.holdings": "Holdings",
+    "filters.items": "Item",
+    "relatedTitles": "Related titles",
+    "precedingTitles": "Preceding titles",
+    "addPrecedingTitle": "Add preceding title",
+    "succeedingTitles": "Succeeding titles",
+    "addSucceedingTitle": "Add succeeding title",
+    "statisticalCodeName": "Statistical code name",
+    "generalNote": "General Note"
 }
