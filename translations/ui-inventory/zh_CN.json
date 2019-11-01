@@ -393,5 +393,15 @@
     "hridHandling.validation.assignPrefixField": "请输入一个字母数字值",
     "hridHandling.successfullyMessage": "设置更新成功。",
     "noBarcode": "无条码",
-    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board"
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
+    "filters.instances": "Instance",
+    "filters.holdings": "Holdings",
+    "filters.items": "Item",
+    "relatedTitles": "Related titles",
+    "precedingTitles": "Preceding titles",
+    "addPrecedingTitle": "Add preceding title",
+    "succeedingTitles": "Succeeding titles",
+    "addSucceedingTitle": "Add succeeding title",
+    "statisticalCodeName": "Statistical code name",
+    "generalNote": "General Note"
 }
