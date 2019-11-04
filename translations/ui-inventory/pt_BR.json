@@ -393,5 +393,15 @@
     "hridHandling.validation.assignPrefixField": "Por favor, insira um valor alfanumérico",
     "hridHandling.successfullyMessage": "A configuração foi atualizada com sucesso.",
     "noBarcode": "Nenhum código de barras",
-    "items.successfullyCopiedMessage": "O código de barras do item {barcode} foi copiado com sucesso para a área de transferência"
+    "items.successfullyCopiedMessage": "O código de barras do item {barcode} foi copiado com sucesso para a área de transferência",
+    "filters.instances": "Instância",
+    "filters.holdings": "Holdings",
+    "filters.items": "Item",
+    "relatedTitles": "Títulos relacionados",
+    "precedingTitles": "Títulos anteriores",
+    "addPrecedingTitle": "Adicionar título anterior",
+    "succeedingTitles": "Títulos subseqüentes",
+    "addSucceedingTitle": "Adicionar título subseqüente",
+    "statisticalCodeName": "Nome do código estatístico",
+    "generalNote": "General Note"
 }

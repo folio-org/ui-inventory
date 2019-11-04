@@ -114,6 +114,24 @@ describe('InstanceViewPage', () => {
       });
     });
 
+    describe('instance notes list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.instanceNotesList.rowCount).to.be.equal(2);
+      });
+    });
+
+    describe('subject list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.subjectsList.rowCount).to.be.equal(1);
+      });
+    });
+
+    describe('series statement list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.seriesStatementList.rowCount).to.be.equal(1);
+      });
+    });
+
     describe('items per holdings', () => {
       describe('sorting', () => {
         describe('compares by `Item: barcode` field', () => {

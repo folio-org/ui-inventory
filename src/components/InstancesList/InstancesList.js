@@ -63,7 +63,7 @@ class InstancesView extends React.Component {
 
   onFilterChangeHandler = ({ name, values }) => {
     const { data: { query } } = this.props;
-    const curFilters = getCurrentFilters(get(query.filters));
+    const curFilters = getCurrentFilters(get(query, 'filters', ''));
     const mergedFilters = values.length
       ? { ...curFilters, [name]: values }
       : omit(curFilters, name);

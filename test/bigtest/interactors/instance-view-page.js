@@ -45,6 +45,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   hasHeaderDropdown = isPresent('[class^=DropdownMenuTether---]');
   headerDropdownMenu = new HeaderDropdownMenu();
   itemsList = new MultiColumnListInteractor('#list-items');
+  instanceNotesList = new MultiColumnListInteractor('#list-instance-notes');
+  seriesStatementList = new MultiColumnListInteractor('#list-series-statement');
+  subjectsList = new MultiColumnListInteractor('#list-subject');
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
