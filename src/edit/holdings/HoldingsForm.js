@@ -645,6 +645,14 @@ class HoldingsForm extends React.Component {
               </Row>
             </Accordion>
             <Accordion
+              open={accordions.accordion06}
+              id="accordion06"
+              onToggle={this.handleAccordionToggle}
+              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+            >
+              <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
+            </Accordion>
+            <Accordion
               open={accordions.accordion05}
               id="accordion05"
               onToggle={this.handleAccordionToggle}
@@ -676,14 +684,6 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.accordion06}
-              id="accordion06"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-            >
-              <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
             </Accordion>
             <Accordion
               open={accordions.accordion07}
