@@ -34,7 +34,7 @@ describe('Settings inventory route', () => {
     });
   });
 
-  describe('User has permissions to view settings/inventory instances, items, holdings', () => {
+  describe('User has permissions to view settings/inventory instances, items, holding', () => {
     setupApplication();
 
     const invSettingsRoute = new InvSettingsRouteInteractor();
