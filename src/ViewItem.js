@@ -315,6 +315,7 @@ class ViewItem extends React.Component {
 
     const canCreate = stripes.hasPerm('ui-inventory.item.create');
     const canEdit = stripes.hasPerm('ui-inventory.item.edit');
+    const canMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
     const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
 
@@ -369,7 +370,7 @@ class ViewItem extends React.Component {
           </Icon>
         </Button>
           }
-        { canMarkItemAsMissing(firstItem) && canEdit &&
+        { canMarkItemAsMissing(firstItem) && canMarkAsMissing &&
         <Button
           id="clickable-missing-item"
           onClick={() => {
