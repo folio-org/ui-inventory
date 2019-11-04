@@ -302,7 +302,13 @@ class ViewInstance extends React.Component {
       stripes
     } = this.props;
     const { marcRecord } = this.state;
-    const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
+    const isSourceMARC = get(instance, ['source'], '') === 'MARC';
+    const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
+    const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
+
+    if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
+      return null;
+    }
 
     return (
       <Fragment>
@@ -335,21 +341,23 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         </IfPermission>
-        {get(instance, ['source'], '') === 'MARC' &&
-          <Button
-            id="clickable-view-source"
-            buttonStyle="dropdownItem"
-            onClick={(e) => {
-              onToggle();
-              this.handleViewSource(e, instance);
-            }}
-            disabled={!canViewInstance && !marcRecord}
-          >
-            <Icon icon="document">
-              <FormattedMessage id="ui-inventory.viewSource" />
-            </Icon>
-          </Button>
-        }
+        <IfPermission perm="ui-inventory.instance.view">
+          { isSourceMARC &&
+            <Button
+              id="clickable-view-source"
+              buttonStyle="dropdownItem"
+              onClick={(e) => {
+                onToggle();
+                this.handleViewSource(e, instance);
+              }}
+              disabled={!marcRecord}
+            >
+              <Icon icon="document">
+                <FormattedMessage id="ui-inventory.viewSource" />
+              </Icon>
+            </Button>
+          }
+        </IfPermission>
       </Fragment>
     );
   };

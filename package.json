@@ -429,8 +429,10 @@
         "permissionName": "ui-inventory.item.create",
         "displayName": "Inventory: View, create items",
         "subPermissions": [
-          "ui-inventory.instance.edit",
-          "inventory.items.item.post"
+          "ui-inventory.instance.view",
+          "inventory.items.item.post",
+          "inventory.instances.item.put",
+          "inventory-storage.instances.item.put"
         ],
         "visible": true
       },
@@ -440,6 +442,14 @@
         "subPermissions": [
           "ui-inventory.item.create",
           "inventory.items.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.item.markasmissing",
+        "displayName": "Inventory: View, create, edit, mark missing items",
+        "subPermissions": [
+          "ui-inventory.item.edit"
         ],
         "visible": true
       },
