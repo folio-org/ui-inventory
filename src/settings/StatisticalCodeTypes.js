@@ -19,6 +19,8 @@ class StatisticalCodeTypes extends React.Component {
   }
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.statistical-code-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -40,7 +42,7 @@ class StatisticalCodeTypes extends React.Component {
             nameKey="name"
             id="StatisticalCodeTypes"
             sortby="name"
-            editable={this.props.stripes.hasPerm('ui-inventory.settings.statistical-code-types')}
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

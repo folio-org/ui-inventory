@@ -3,30 +3,56 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import setupApplication from '../../../helpers/setup-application';
+import InvSettingsRouteInteractor from '../../../interactors/routes/inventory-settings-route';
 
-import InventorySettingsRouteInteractor from '../../../interactors/routes/inventory-settings-route';
 
-describe('InventorySettingsRoute', () => {
+describe('Settings inventory route', () => {
   describe('User has not permissions to view settings/inventory instances, items, holdings', () => {
     setupApplication({
       hasAllPerms: false,
       permissions: {
-        'settings.inventory.enabled': true,
-        'ui-inventory.settings.list.view': false
+        'settings.inventory.enabled': true
       }
     });
-    const inventorySettingsRoute = new InventorySettingsRouteInteractor();
+
+    const invSettingsRoute = new InvSettingsRouteInteractor();
 
     beforeEach(async function () {
-      await this.visit('settings/inventory');
+      this.visit('/settings/inventory');
     });
 
-    it('opens settings inventory route', () => {
-      expect(inventorySettingsRoute.isPresent).to.equal(false);
+    it('settings inventory route has inventory instances, items, holdings list', () => {
+      expect(invSettingsRoute.hasSectionItem).to.be.false;
     });
 
-    it('settings inventory route has inventory instances, items, holdings', () => {
-      expect(inventorySettingsRoute.hasSectionItem).to.be.false;
+    it('settings inventory route has inventory instance', () => {
+      expect(invSettingsRoute.hasInstance).to.be.false;
+    });
+
+    it('settings inventory route has inventory instance', () => {
+      expect(invSettingsRoute.hasAlternativeTitleInstance).to.be.false;
+    });
+  });
+
+  describe('User has permissions to view settings/inventory instances, items, holdings', () => {
+    setupApplication();
+
+    const invSettingsRoute = new InvSettingsRouteInteractor();
+
+    beforeEach(async function () {
+      this.visit('/settings/inventory');
+    });
+
+    it('settings inventory route has inventory instances, items, holdings list', () => {
+      expect(invSettingsRoute.hasSectionItem).to.be.false;
+    });
+
+    it('settings inventory route has inventory instance', () => {
+      expect(invSettingsRoute.hasInstance).to.be.false;
+    });
+
+    it('settings inventory route has inventory instance', () => {
+      expect(invSettingsRoute.hasAlternativeTitleInstance).to.be.false;
     });
   });
 });

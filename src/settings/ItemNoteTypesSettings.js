@@ -19,6 +19,8 @@ class ItemNoteTypesSettings extends React.Component {
   }
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.item-note-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -40,7 +42,7 @@ class ItemNoteTypesSettings extends React.Component {
             nameKey="name"
             id="itemNoteTypes"
             sortby="name"
-            editable={this.props.stripes.hasPerm('ui-inventory.settings.item-note-types')}
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>
