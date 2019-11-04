@@ -35,7 +35,7 @@ class InventorySettings extends React.Component {
         pages: [
           {
             route: 'alternativeTitleTypes',
-            label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
+            label: <FormattedMessage id="ui-invetonry.alternativeTitleTypes" />,
             component: AlternativeTitleTypesSettings,
           },
           {
@@ -183,6 +183,7 @@ class InventorySettings extends React.Component {
         {...this.props}
         sections={this.addPerm()}
         paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
+        data-test-inventory-settings
       />
     );
   }
