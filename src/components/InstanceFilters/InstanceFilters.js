@@ -73,6 +73,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('location')}
         >
           <CheckboxFilter
+            data-test-filter-instance-location
             name="location"
             dataOptions={locationOptions}
             selectedValues={location}
@@ -89,6 +90,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('resource')}
         >
           <CheckboxFilter
+            data-test-filter-instance-resource
             name="resource"
             dataOptions={resourceTypeOptions}
             selectedValues={resource}
@@ -122,7 +124,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('staffSuppress')}
         >
           <CheckboxFilter
-            data-test-filter-staff-suppress
+            data-test-filter-instance-staff-suppress
             name="staffSuppress"
             dataOptions={suppressedOptions}
             selectedValues={staffSuppress}
@@ -139,7 +141,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('discoverySuppress')}
         >
           <CheckboxFilter
-            data-test-filter-discovery-suppress
+            data-test-filter-instance-discovery-suppress
             name="discoverySuppress"
             dataOptions={suppressedOptions}
             selectedValues={discoverySuppress}

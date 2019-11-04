@@ -28,14 +28,6 @@ describe('Instances', () => {
     expect(inventory.isNoResultsMessageLabelPresent).to.equal(true);
   });
 
-  it('has a filter for staff-suppressed items', () => {
-    expect(inventory.isStaffSuppressFilterPresent).to.be(true);
-  });
-
-  it('has a filter for discovery-suppressed items', () => {
-    expect(inventory.isDiscoverySuppressFilterPresent).to.be(true);
-  });
-
   describe('search by barcode', function () {
     beforeEach(async function () {
       const item = this.server.schema.instances.first().holdings.models[0].items.models[0];

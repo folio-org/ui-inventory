@@ -12,8 +12,11 @@ export default @interactor class InventoryInteractor {
   static defaultScope = '[data-test-inventory-instances]';
 
   isNoResultsMessageLabelPresent = isPresent('[class*=noResultsMessageLabel]');
-  isStaffSuppressFilterPresent = isPresent('[data-test-filter-staff-suppress]');
-  isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-discovery-suppress]');
+  
+  isResourceFilterPresent = isPresent('[data-test-filter-instance-resource]');
+  isLocationFilterPresent = isPresent('[data-test-filter-instance-location]');
+  isStaffSuppressFilterPresent = isPresent('[data-test-filter-instance-staff-suppress]');
+  isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-instance-discovery-suppress]');
 
   instances = collection('#list-inventory [role=row] a');
 
