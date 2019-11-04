@@ -56,6 +56,27 @@ describe('Resource types (instance types)', () => {
     });
   });
 
+  describe('User does not have permissions to see the list', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true
+      }
+    });
+
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/resourcetypes');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(InstanceTypes.hasList).to.be.false;
+      });
+    });
+  });
+
   describe('User has permissions', () => {
     setupApplication({
       hasAllPerms: false,

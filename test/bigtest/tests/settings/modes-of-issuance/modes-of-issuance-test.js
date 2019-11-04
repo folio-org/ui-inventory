@@ -53,6 +53,27 @@ describe('Modes of issuance', () => {
     });
   });
 
+  describe('User does not have permissions to see the list', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true
+      }
+    });
+
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/modesofissuance');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(ModesOfIssuance.hasList).to.be.false;
+      });
+    });
+  });
+
   describe('User does not have permissions', () => {
     setupApplication({
       hasAllPerms: false,
