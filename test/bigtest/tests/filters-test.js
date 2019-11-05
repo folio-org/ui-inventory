@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 
-describe.only('Instance filters', () => {
+describe('Instance filters', () => {
   setupApplication();
 
   const inventory = new InventoryInteractor({
@@ -24,7 +24,7 @@ describe.only('Instance filters', () => {
     this.visit('/inventory');
   });
 
-  it('has a filter for location', () => {
+  it('has a filter for location', function () {
     expect(inventory.isLocationFilterPresent).to.equal(true);
   });
 
@@ -38,5 +38,29 @@ describe.only('Instance filters', () => {
 
   it('has a filter for discovery-suppressed items', () => {
     expect(inventory.isDiscoverySuppressFilterPresent).to.equal(true);
+  });
+
+  describe('setting filters', () => {
+    beforeEach(async function () {
+      await inventory.clickSelectStaffSuppressFilter();
+      await inventory.clickSelectDiscoverySuppressFilter();
+    });
+
+    it('adds filters to the URL', function () {
+      expect(this.location.search).to.include('staffSuppress.true');
+      expect(this.location.search).to.include('discoverySuppress.true');
+    });
+
+    describe('clearing filters', () => {
+      beforeEach(async function () {
+        await inventory.clickClearStaffSuppressFilter();
+        await inventory.clickClearDiscoverySuppressFilter();
+      });
+
+      it('removes filters from the URL', function () {
+        expect(this.location.search).to.not.include('staffSuppress.true');
+        expect(this.location.search).to.not.include('discoverySuppress.true');
+      });
+    });
   });
 });

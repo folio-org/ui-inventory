@@ -17,6 +17,10 @@ export default @interactor class InventoryInteractor {
   isLocationFilterPresent = isPresent('[data-test-filter-instance-location]');
   isStaffSuppressFilterPresent = isPresent('[data-test-filter-instance-staff-suppress]');
   isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-instance-discovery-suppress]');
+  clickSelectStaffSuppressFilter = clickable('#clickable-filter-staffSuppress-true');
+  clickClearStaffSuppressFilter = clickable('#staffSuppress button[class^="iconButton---"]');
+  clickSelectDiscoverySuppressFilter = clickable('#clickable-filter-discoverySuppress-true');
+  clickClearDiscoverySuppressFilter = clickable('#discoverySuppress button[class^="iconButton---"]');
 
   instances = collection('#list-inventory [role=row] a');
 
