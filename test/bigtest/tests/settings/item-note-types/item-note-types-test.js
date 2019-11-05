@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import ItemNoteTypes from '../../../interactors/settings/item-note-types/item-note-types';
 
 describe('Item note types', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('itemNoteType', {
       'id' : '0e40884c-3523-4c6d-8187-d578e3d2794e',
       'name' : 'Action note',
@@ -23,19 +21,91 @@ describe('Item note types', () => {
       'name' : 'Copy note',
       'source' : 'folio'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.item-note-types': true
+      }
+    });
+
+    beforeEach(mockData);
+
+    describe('viewing item note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/itemNoteTypes');
+      });
+
+      it('has a item note types list', () => {
+        expect(ItemNoteTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(ItemNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(ItemNoteTypes.hasCreateButton).to.be.true;
+        expect(ItemNoteTypes.hasEditButton).to.be.true;
+        expect(ItemNoteTypes.hasDeleteButton).to.be.true;
+      });
+    });
   });
 
-  describe('viewing item note types list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/itemNoteTypes');
+  describe('User does not have permissions to see the list', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true
+      }
     });
 
-    it('has a item note types list', () => {
-      expect(ItemNoteTypes.hasList).to.be.true;
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/itemNoteTypes');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(ItemNoteTypes.hasList).to.be.false;
+      });
+    });
+  });
+
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('list has 3 items', () => {
-      expect(ItemNoteTypes.rowCount).to.equal(3);
+    beforeEach(mockData);
+
+    describe('viewing item note types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/itemNoteTypes');
+      });
+
+      it('has a item note types list', () => {
+        expect(ItemNoteTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(ItemNoteTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, delete buttons', () => {
+        expect(ItemNoteTypes.hasCreateButton).to.be.false;
+        expect(ItemNoteTypes.hasEditButton).to.be.false;
+        expect(ItemNoteTypes.hasDeleteButton).to.be.false;
+      });
     });
   });
 });

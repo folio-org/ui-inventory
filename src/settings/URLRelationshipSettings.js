@@ -19,6 +19,8 @@ class URLRelationshipSettings extends React.Component {
   }
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.electronic-access-relationships');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -40,6 +42,7 @@ class URLRelationshipSettings extends React.Component {
             nameKey="name"
             id="electronicAccessRelationships"
             sortby="name"
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

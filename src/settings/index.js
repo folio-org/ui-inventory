@@ -35,63 +35,53 @@ class InventorySettings extends React.Component {
         pages: [
           {
             route: 'alternativeTitleTypes',
-            label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
+            label: <FormattedMessage id="ui-invetonry.alternativeTitleTypes" />,
             component: AlternativeTitleTypesSettings,
-            perm: 'ui-inventory.settings.alternative-title-types',
           },
           {
             route: 'classificationTypes',
             label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
             component: ClassificationTypesSettings,
-            perm: 'ui-inventory.settings.classification-types',
           },
           {
             route: 'contributortypes',
             label: <FormattedMessage id="ui-inventory.contributorTypes" />,
             component: ContributorTypesSettings,
-            perm: 'ui-inventory.settings.contributor-types',
           },
           {
             route: 'formats',
             label: <FormattedMessage id="ui-inventory.formats" />,
             component: FormatsSettings,
-            perm: 'ui-inventory.settings.instance-formats',
           },
           {
             route: 'instanceNoteTypes',
             label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
             component: InstanceNoteTypesSettings,
-            perm: 'ui-inventory.settings.instance-note-types',
           },
           {
             route: 'instanceStatusTypes',
             label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
             component: InstanceStatusTypesSettings,
-            perm: 'ui-inventory.settings.instance-statuses',
           },
           {
             route: 'modesOfIssuance',
             label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
             component: ModesOfIssuanceSettings,
-            perm: 'ui-inventory.settings.modes-of-issuance',
           },
           {
             route: 'natureOfContentTerms',
             label: <FormattedMessage id="ui-inventory.natureOfContentTerms" />,
             component: NatureOfContentTermsSettings,
-            perm: 'ui-inventory.settings.nature-of-content-terms',
           },
           {
             route: 'identifierTypes',
             label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
             component: IdentifierTypesSettings,
-            perm: 'ui-inventory.settings.identifier-types',
           },
           {
             route: 'resourcetypes',
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
-            perm: 'ui-inventory.settings.instance-types',
           },
         ]
       },
@@ -102,19 +92,16 @@ class InventorySettings extends React.Component {
             route: 'holdingsNoteTypes',
             label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
             component: HoldingsNoteTypesSettings,
-            perm: 'ui-inventory.settings.holdings-note-types',
           },
           {
             route: 'holdingsTypes',
             label: <FormattedMessage id="ui-inventory.holdingsTypes" />,
             component: HoldingsTypeSettings,
-            perm: 'ui-inventory.settings.holdings-types',
           },
           {
             route: 'ILLPolicy',
             label: <FormattedMessage id="ui-inventory.ILLPolicy" />,
             component: ILLPolicy,
-            perm: 'ui-inventory.settings.ill-policies',
           },
         ]
       },
@@ -125,19 +112,16 @@ class InventorySettings extends React.Component {
             route: 'itemNoteTypes',
             label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
             component: ItemNoteTypesSettings,
-            perm: 'ui-inventory.settings.item-note-types',
           },
           {
             route: 'loantypes',
             label: <FormattedMessage id="ui-inventory.loanTypes" />,
             component: LoanTypesSettings,
-            perm: 'ui-inventory.settings.loantypes',
           },
           {
             route: 'materialtypes',
             label: <FormattedMessage id="ui-inventory.materialTypes" />,
             component: MaterialTypesSettings,
-            perm: 'ui-inventory.settings.materialtypes',
           },
         ]
       },
@@ -153,19 +137,16 @@ class InventorySettings extends React.Component {
             route: 'statisticalCodeTypes',
             label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
             component: StatisticalCodeTypes,
-            perm: 'ui-inventory.settings.statistical-code-types',
           },
           {
             route: 'StatisticalCodeSettings',
             label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
             component: StatisticalCodeSettings,
-            perm: 'ui-inventory.settings.statistical-codes',
           },
           {
             route: 'URLrelationship',
             label: <FormattedMessage id="ui-inventory.URLrelationship" />,
             component: URLRelationshipSettings,
-            perm: 'ui-inventory.settings.electronic-access-relationships',
           },
         ]
       },
@@ -176,19 +157,33 @@ class InventorySettings extends React.Component {
             route: 'callNumberTypes',
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
             component: CallNumberTypes,
-            perm: 'ui-inventory.settings.call-number-types',
           },
         ]
       }
     ];
   }
 
+  addPerm() {
+    this.sections.map(section => {
+      const { pages } = section;
+      return pages.map(page => {
+        if (page.route !== 'hridHandling') {
+          page.perm = 'ui-inventory.settings.list.view';
+        }
+
+        return page;
+      });
+    });
+    return this.sections;
+  }
+
   render() {
     return (
       <Settings
         {...this.props}
-        sections={this.sections}
+        sections={this.addPerm()}
         paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
+        data-test-inventory-settings
       />
     );
   }
