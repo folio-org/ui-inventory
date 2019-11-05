@@ -22,6 +22,8 @@ class ModesOfIssuanceSettings extends React.Component {
   suppressDelete = term => term.source === 'rdamodeissue';
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.modes-of-issuance');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -45,6 +47,7 @@ class ModesOfIssuanceSettings extends React.Component {
             actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
             id="modes-of-issuance"
             sortby="name"
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

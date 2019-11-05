@@ -19,6 +19,8 @@ class AlternativeTitleTypesSettings extends React.Component {
   }
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.alternative-title-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -40,6 +42,7 @@ class AlternativeTitleTypesSettings extends React.Component {
             nameKey="name"
             id="alternative-title-types"
             sortby="name"
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import AlternativeTitleTypes from '../../../interactors/settings/alternative-title-types/alternative-title-types';
 
 describe('Alternative title types', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('alternativeTitleType', {
       'id' : '2ca8538d-a2fd-4e60-b967-1cb220101e22',
       'name' : 'Added title page title',
@@ -23,19 +21,90 @@ describe('Alternative title types', () => {
       'name' : 'Cover title',
       'source' : 'folio'
     });
+  }
+  describe('User has permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.alternative-title-types': true
+      }
+    });
+
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/alternativeTitleTypes');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(AlternativeTitleTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(AlternativeTitleTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, create buttons', () => {
+        expect(AlternativeTitleTypes.hasNewButton).to.be.true;
+        expect(AlternativeTitleTypes.hasEditButton).to.be.true;
+        expect(AlternativeTitleTypes.hasDeleteButton).to.be.true;
+      });
+    });
   });
 
-  describe('viewing alternative title types list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/alternativeTitleTypes');
+  describe('User does not have permissions to see the list', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true
+      }
     });
 
-    it('has an altenative title types list', () => {
-      expect(AlternativeTitleTypes.hasList).to.be.true;
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/alternativeTitleTypes');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(AlternativeTitleTypes.hasList).to.be.false;
+      });
+    });
+  });
+
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('list has 3 items', () => {
-      expect(AlternativeTitleTypes.rowCount).to.equal(3);
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/alternativeTitleTypes');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(AlternativeTitleTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(AlternativeTitleTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new, edit, create buttons', () => {
+        expect(AlternativeTitleTypes.hasNewButton).to.be.false;
+        expect(AlternativeTitleTypes.hasEditButton).to.be.false;
+        expect(AlternativeTitleTypes.hasDeleteButton).to.be.false;
+      });
     });
   });
 });
