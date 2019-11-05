@@ -40,4 +40,3 @@ describe.only('Instance filters', () => {
     expect(inventory.isDiscoverySuppressFilterPresent).to.equal(true);
   });
 });
-
