@@ -5,9 +5,7 @@ import setupApplication from '../../../helpers/setup-application';
 import IdentifierTypes from '../../../interactors/settings/identifier-types/identifier-types';
 
 describe('Identifier types', () => {
-  setupApplication();
-
-  beforeEach(function () {
+  function mockData() {
     this.server.create('identifierType', {
       id : '3363cdb1-e644-446c-82a4-dc3a1d4395b9',
       name : 'ISBN',
@@ -23,18 +21,85 @@ describe('Identifier types', () => {
       name : 'ISSN',
       source : 'folio'
     });
+  }
+
+  describe('User has permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+        'ui-inventory.settings.identifier-types': true
+      }
+    });
+
+    beforeEach(mockData);
+    describe('viewing identifier types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/identifiertypes');
+      });
+
+      it('has a identifier types list', () => {
+        expect(IdentifierTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(IdentifierTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(IdentifierTypes.hasCreateButton).to.be.true;
+      });
+    });
   });
-  describe('viewing identifier types list', () => {
-    beforeEach(function () {
-      this.visit('/settings/inventory/identifiertypes');
+
+  describe('User does not have permissions to see the list', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true
+      }
     });
 
-    it('has a identifier types list', () => {
-      expect(IdentifierTypes.hasList).to.be.true;
+    beforeEach(mockData);
+
+    describe('viewing alternative title types list', () => {
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/identifiertypes');
+      });
+
+      it('has an altenative title types list', () => {
+        expect(IdentifierTypes.hasList).to.be.false;
+      });
+    });
+  });
+
+  describe('User does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
     });
 
-    it('list has 3 items', () => {
-      expect(IdentifierTypes.rowCount).to.equal(3);
+    beforeEach(mockData);
+    describe('viewing identifier types list', () => {
+      beforeEach(function () {
+        this.visit('/settings/inventory/identifiertypes');
+      });
+
+      it('has a identifier types list', () => {
+        expect(IdentifierTypes.hasList).to.be.true;
+      });
+
+      it('list has 3 items', () => {
+        expect(IdentifierTypes.rowCount).to.equal(3);
+      });
+
+      it('list has new button', () => {
+        expect(IdentifierTypes.hasCreateButton).to.be.false;
+      });
     });
   });
 });

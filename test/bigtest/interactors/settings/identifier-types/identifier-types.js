@@ -6,6 +6,7 @@ import {
 
 @interactor class IdentifierTypes {
   hasList = isPresent('#editList-identifier-types');
+  hasCreateButton = isPresent('#clickable-add-identifier-types');
   rowCount = count('[class^="editListRow---"]');
 }
 
