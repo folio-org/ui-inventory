@@ -91,7 +91,7 @@ describe('Instances', () => {
       await inventory.clickSearch();
     });
 
-    it('should find all instances', () => {
+    it('should find all instances', function () {
       expect(inventory.instances().length).to.be.equal(25);
     });
   });

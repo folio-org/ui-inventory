@@ -42,6 +42,18 @@ export const filterConfig = [
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
   },
+  {
+    label: <FormattedMessage id="ui-inventory.staffSuppress" />,
+    name: 'staffSuppress',
+    cql: 'staffSuppress',
+    values: [],
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
+    name: 'discoverySuppress',
+    cql: 'discoverySuppress',
+    values: [],
+  }
 ];
 
 export const instanceIndexes = [
