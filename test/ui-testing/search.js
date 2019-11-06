@@ -45,8 +45,8 @@ module.exports.test = function test(uiTestCtx) {
 
       it('should create inventory record', (done) => {
         nightmare
-          .wait('#clickable-inventory-module')
-          .click('#clickable-inventory-module')
+          .wait('#app-list-item-clickable-inventory-module')
+          .click('#app-list-item-clickable-inventory-module')
           .wait('#clickable-newinventory')
           .click('#clickable-newinventory')
           .wait('#input_instance_title')
@@ -69,8 +69,8 @@ module.exports.test = function test(uiTestCtx) {
 
       it('should create inventory record', (done) => {
         nightmare
-          .wait('#clickable-inventory-module')
-          .click('#clickable-inventory-module')
+          .wait('#app-list-item-clickable-inventory-module')
+          .click('#app-list-item-clickable-inventory-module')
           .wait('#clickable-newinventory')
           .click('#clickable-newinventory')
           .wait('#input_instance_title')
@@ -93,8 +93,8 @@ module.exports.test = function test(uiTestCtx) {
 
       it(`should search "All" for "${fragment}" and find multiple records`, (done) => {
         nightmare
-          .wait('#clickable-inventory-module')
-          .click('#clickable-inventory-module')
+          .wait('#app-list-item-clickable-inventory-module')
+          .click('#app-list-item-clickable-inventory-module')
           .wait('#input-inventory-search')
           .insert('#input-inventory-search', fragment)
           .wait('#clickable-reset-all')
