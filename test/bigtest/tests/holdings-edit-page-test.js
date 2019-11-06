@@ -23,7 +23,7 @@ describe('HoldingsEditPage', () => {
     holdingsItems: []
   };
 
-  beforeEach(function () {
+  beforeEach(async function () {
     instance = this.server.create('instance', {
       title: 'ADVANCING RESEARCH',
     });
@@ -31,10 +31,12 @@ describe('HoldingsEditPage', () => {
     this.server.get('/holdings-storage/holdings/:id', holdings);
     this.server.get('/locations/:id', {});
     this.visit(`/inventory/view/${instance.id}/${holdings.id}?layer=editHoldingsRecord`);
+
+    await HoldingsEditPage.whenLoaded();
   });
 
   it('displays the holdings name in the pane header', () => {
-    expect(HoldingsEditPage.title).to.equal('ADVANCING RESEARCH');
+    expect(HoldingsEditPage.title).to.equal('Instance record ADVANCING RESEARCH');
   });
 
   describe('pane header menu', () => {
