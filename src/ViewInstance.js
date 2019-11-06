@@ -564,10 +564,9 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const layoutNotes = (noteTypes, instanceNotes) => {
-      return instanceNotes.map(({ noteId, notes }) => {
-        const noteType = noteTypes.find(note => note.id === noteId);
-        return (
+    const layoutNotes = instanceNotes => {
+      return orderBy(instanceNotes, ['noteType.name'], ['asc'])
+        .map(({ noteType, notes }) => (
           <MultiColumnList
             contentData={notes}
             visibleColumns={['Staff only', 'Note']}
@@ -580,21 +579,23 @@ class ViewInstance extends React.Component {
               'Note': '74%',
             }}
             formatter={{
-              'Staff only': x => (get(x, ['staffOnly']) ? 'Yes' : 'No'),
+              'Staff only': x => (get(x, ['staffOnly']) ? <FormattedMessage id="ui-inventory.yes" /> : <FormattedMessage id="ui-inventory.no" />),
               'Note': x => get(x, ['note']) || '',
             }}
             containerRef={ref => { this.resultsList = ref; }}
             interactive={false}
           />
-        );
-      });
+        ));
     };
 
     const sortedNotes = groupBy(get(instance, ['notes'], []), 'instanceNoteTypeId');
-    const instanceNotes = map(sortedNotes, (value, key) => ({
-      noteId: key,
-      notes: value,
-    }));
+    const instanceNotes = map(sortedNotes, (value, key) => {
+      const noteType = referenceTables.instanceNoteTypes.find(note => note.id === key);
+      return {
+        noteType,
+        notes: value,
+      };
+    });
 
     const seriesStatement = get(instance, 'series').map(x => ({ value: x }));
     const instanceSubjects = get(instance, 'subjects').map(item => ({ value: item }));
@@ -1273,7 +1274,7 @@ class ViewInstance extends React.Component {
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
           <Row>
-            {!isEmpty(sortedNotes) && layoutNotes(referenceTables.instanceNoteTypes, instanceNotes)}
+            {!isEmpty(sortedNotes) && layoutNotes(instanceNotes)}
           </Row>
         </Accordion>
 
