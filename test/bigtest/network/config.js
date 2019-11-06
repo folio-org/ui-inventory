@@ -387,7 +387,7 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/material-types', ({ materialTypes }) => materialTypes.all());
+  this.get('/material-types');
 
   this.get('/loan-types', {
     loantypes: [],

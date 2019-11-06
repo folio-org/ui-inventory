@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -50,7 +51,7 @@ export default class ItemFilters extends React.Component {
           separator
           closedByDefault
           header={FilterAccordionHeader}
-          displayClearButton={materialType.length > 0}
+          displayClearButton={!isEmpty(materialType)}
           onClearFilter={() => onClear('materialType')}
         >
           <MultiSelectionFilter
