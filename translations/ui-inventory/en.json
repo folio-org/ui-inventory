@@ -405,6 +405,7 @@
   "filters.items": "Item",
   "yes": "Yes",
   "no": "No",
+  "unknownNoteType": "Unknown note type",
   "item.status": "Item status",
   "item.status.available": "Available",
   "item.status.awaitingPickup": "Awaiting pickup",
