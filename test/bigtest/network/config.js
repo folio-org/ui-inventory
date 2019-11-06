@@ -116,6 +116,15 @@ export default function configure() {
 
         return instances.where({ id: holding.instanceId });
       }
+
+      if (field === 'item.materialTypeId' && term) {
+        const item = items.all().models.find(it => it.materialType.id === term);
+        const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
+
+        return instances.where({ id: holding.instanceId });
+      }
+
+      return [];
     }
 
     return instances.all();
