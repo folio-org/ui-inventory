@@ -10,6 +10,7 @@ import {
   reject,
   set,
   isEmpty,
+  groupBy,
 } from 'lodash';
 import React, {
   Fragment,
@@ -52,7 +53,6 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   craftLayerUrl,
   psTitleRelationshipId,
-  getHoldingsNotes,
 } from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
@@ -302,7 +302,13 @@ class ViewInstance extends React.Component {
       stripes
     } = this.props;
     const { marcRecord } = this.state;
-    const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
+    const isSourceMARC = get(instance, ['source'], '') === 'MARC';
+    const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
+    const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
+
+    if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
+      return null;
+    }
 
     return (
       <Fragment>
@@ -335,21 +341,23 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         </IfPermission>
-        {get(instance, ['source'], '') === 'MARC' &&
-          <Button
-            id="clickable-view-source"
-            buttonStyle="dropdownItem"
-            onClick={(e) => {
-              onToggle();
-              this.handleViewSource(e, instance);
-            }}
-            disabled={!canViewInstance && !marcRecord}
-          >
-            <Icon icon="document">
-              <FormattedMessage id="ui-inventory.viewSource" />
-            </Icon>
-          </Button>
-        }
+        <IfPermission perm="ui-inventory.instance.view">
+          { isSourceMARC &&
+            <Button
+              id="clickable-view-source"
+              buttonStyle="dropdownItem"
+              onClick={(e) => {
+                onToggle();
+                this.handleViewSource(e, instance);
+              }}
+              disabled={!marcRecord}
+            >
+              <Icon icon="document">
+                <FormattedMessage id="ui-inventory.viewSource" />
+              </Icon>
+            </Button>
+          }
+        </IfPermission>
       </Fragment>
     );
   };
@@ -549,7 +557,37 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const holdingsNotes = getHoldingsNotes(referenceTables.instanceNoteTypes, get(instance, ['notes'], []));
+    const layoutNotes = (noteTypes, instanceNotes) => {
+      return instanceNotes.map(({ noteId, notes }) => {
+        const { name } = noteTypes.find(note => note.id === noteId);
+        return (
+          <MultiColumnList
+            contentData={notes}
+            visibleColumns={['Staff only', 'Note']}
+            columnMapping={{
+              'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
+              'Note': <FormattedMessage id={name} />,
+            }}
+            columnWidths={{
+              'Staff only': '25%',
+              'Note': '74%',
+            }}
+            formatter={{
+              'Staff only': x => (get(x, ['staffOnly']) ? 'Yes' : 'No'),
+              'Note': x => get(x, ['note']) || '',
+            }}
+            containerRef={ref => { this.resultsList = ref; }}
+            interactive={false}
+          />
+        );
+      });
+    };
+
+    const sortedNotes = groupBy(get(instance, ['notes'], []), 'instanceNoteTypeId');
+    const instanceNotes = map(sortedNotes, (value, key) => ({
+      noteId: key,
+      notes: value,
+    }));
 
     const identifiers = get(instance, 'identifiers', []).map(x => ({
       identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
@@ -1164,38 +1202,7 @@ class ViewInstance extends React.Component {
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
           <Row>
-            {
-              !isEmpty(holdingsNotes) && (
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.instanceNotes">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-instance-notes"
-                          contentData={holdingsNotes}
-                          visibleColumns={['Staff only', 'General note']}
-                          columnMapping={{
-                            'Staff only': intl.formatMessage({ id: 'ui-inventory.staffOnly' }),
-                            'General note': intl.formatMessage({ id: 'ui-inventory.generalNote' }),
-                          }}
-                          columnWidths={{
-                            'Staff only': '25%',
-                            'General note': '74%',
-                          }}
-                          formatter={{
-                            'Staff only': x => (get(x, ['staffOnly']) ? 'Yes' : 'No'),
-                            'General note': x => get(x, ['note']) || '',
-                          }}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              )
-            }
+            {!isEmpty(sortedNotes) && layoutNotes(referenceTables.instanceNoteTypes, instanceNotes)}
           </Row>
         </Accordion>
 

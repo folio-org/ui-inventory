@@ -24,6 +24,8 @@ class FormatSettings extends React.Component {
   suppressDelete = term => term.source === 'rdacarrier';
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-formats');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -49,6 +51,7 @@ class FormatSettings extends React.Component {
             id="formats"
             sortby="name"
             validate={validateNameAndCode}
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

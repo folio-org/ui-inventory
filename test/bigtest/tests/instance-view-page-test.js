@@ -116,12 +116,6 @@ describe('InstanceViewPage', () => {
       });
     });
 
-    describe('instance notes list', () => {
-      it('has correct amount of items', () => {
-        expect(InstanceViewPage.instanceNotesList.rowCount).to.be.equal(2);
-      });
-    });
-
     describe('subject list', () => {
       it('has correct amount of items', () => {
         expect(InstanceViewPage.subjectsList.rowCount).to.be.equal(1);

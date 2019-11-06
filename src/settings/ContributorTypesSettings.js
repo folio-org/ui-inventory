@@ -24,6 +24,8 @@ class ContributorTypesSettings extends React.Component {
   suppressDelete = term => term.source === 'marcrelator';
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.contributor-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -49,6 +51,7 @@ class ContributorTypesSettings extends React.Component {
             id="contributor-types"
             sortby="name"
             validate={validateNameAndCode}
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

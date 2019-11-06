@@ -43,11 +43,12 @@ class StatisticalCodeSettings extends React.Component {
 
   validate = (item) => {
     const errors = validateNameAndCode(item);
+
     if (!item.statisticalCodeTypeId) {
       errors.name = <FormattedMessage id="ui-inventory.selectToContinue" />;
     }
     return errors;
-  }
+  };
 
   render() {
     const statisticalCodeTypes = _.get(this.props.resources, ['statisticalCodeTypes', 'records'], []);
@@ -88,6 +89,8 @@ class StatisticalCodeSettings extends React.Component {
       }
     };
 
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.statistical-codes');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -113,6 +116,7 @@ class StatisticalCodeSettings extends React.Component {
             nameKey="name"
             id="statistical-codes"
             sortby="code"
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

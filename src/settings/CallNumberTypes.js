@@ -19,6 +19,8 @@ class CallNumberTypes extends React.Component {
   }
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.call-number-types');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -40,6 +42,7 @@ class CallNumberTypes extends React.Component {
             nameKey="name"
             id="callNumberTypes"
             sortby="name"
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

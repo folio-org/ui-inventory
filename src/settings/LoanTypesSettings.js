@@ -19,6 +19,8 @@ class LoanTypesSettings extends React.Component {
   }
 
   render() {
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.loantypes');
+
     return (
       <IntlConsumer>
         {intl => (
@@ -33,6 +35,7 @@ class LoanTypesSettings extends React.Component {
             nameKey="name"
             id="loantypes"
             sortby="name"
+            editable={hasPerm}
           />
         )}
       </IntlConsumer>

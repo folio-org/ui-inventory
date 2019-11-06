@@ -34,6 +34,8 @@ export default class InstanceFilters extends React.Component {
         location = [],
         resource = [],
         language = [],
+        discoverySuppress = [],
+        staffSuppress = [],
       },
       data: {
         resourceTypes,
@@ -53,6 +55,13 @@ export default class InstanceFilters extends React.Component {
       value: id,
     }));
 
+    const suppressedOptions = [
+      {
+        label: <FormattedMessage id="ui-inventory.yes" />,
+        value: 'true',
+      },
+    ];
+
     return (
       <React.Fragment>
         <Accordion
@@ -64,6 +73,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('location')}
         >
           <CheckboxFilter
+            data-test-filter-instance-location
             name="location"
             dataOptions={locationOptions}
             selectedValues={location}
@@ -80,6 +90,7 @@ export default class InstanceFilters extends React.Component {
           onClearFilter={() => onClear('resource')}
         >
           <CheckboxFilter
+            data-test-filter-instance-resource
             name="resource"
             dataOptions={resourceTypeOptions}
             selectedValues={resource}
@@ -100,6 +111,40 @@ export default class InstanceFilters extends React.Component {
             name="language"
             dataOptions={languages.selectOptions()}
             selectedValues={language}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.staffSuppress" />}
+          id="staffSuppress"
+          name="staffSuppress"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={staffSuppress.length > 0}
+          onClearFilter={() => onClear('staffSuppress')}
+        >
+          <CheckboxFilter
+            data-test-filter-instance-staff-suppress
+            name="staffSuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={staffSuppress}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+          id="discoverySuppress"
+          name="discoverySuppress"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={discoverySuppress.length > 0}
+          onClearFilter={() => onClear('discoverySuppress')}
+        >
+          <CheckboxFilter
+            data-test-filter-instance-discovery-suppress
+            name="discoverySuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={discoverySuppress}
             onChange={onChange}
           />
         </Accordion>
