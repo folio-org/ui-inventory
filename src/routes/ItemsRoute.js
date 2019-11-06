@@ -25,12 +25,14 @@ class ItemsRoute extends React.Component {
               queryParams,
               pathComponents,
               resourceData,
-              logger
+              logger,
             ] = args;
-            const queryIndex = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            const searchableIndex = itemIndexes.find(idx => idx.value === queryIndex);
+            const { query } = resourceData;
+            const queryIndex = query.qindex || 'all';
+            const searchableIndex = itemIndexes.find(({ value }) => value === queryIndex);
             const queryTemplate = searchableIndex && searchableIndex.queryTemplate;
-            resourceData.query = { ...resourceData.query, qindex: '' };
+
+            resourceData.query = { ...query, qindex: '' };
 
             return makeQueryFunction(
               'cql.allRecords=1',
