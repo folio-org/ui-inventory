@@ -5,11 +5,11 @@ import setupApplication from '../../helpers/setup-application';
 import ItemsRouteInteractor from '../../interactors/routes/items-route';
 
 describe('ItemsRoute', () => {
-  setupApplication({ scenarios: ['item-filters'] });
+  setupApplication();
 
   const itemsRoute = new ItemsRouteInteractor();
 
-  beforeEach(async function () {
+  beforeEach(function () {
     this.visit('/inventory/items');
   });
 
