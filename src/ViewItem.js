@@ -46,7 +46,10 @@ import {
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { itemStatusesMap, requestStatuses } from './constants';
+import {
+  itemStatusesMap,
+  requestStatuses,
+} from './constants';
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
 const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
