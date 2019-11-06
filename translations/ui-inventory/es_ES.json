@@ -403,5 +403,7 @@
     "succeedingTitles": "Títulos sucesivos",
     "addSucceedingTitle": "Añadir título sucesivo",
     "statisticalCodeName": "Nombre del código estadístico",
-    "generalNote": "Nota General"
+    "generalNote": "Nota General",
+    "yes": "Yes",
+    "no": "No"
 }
