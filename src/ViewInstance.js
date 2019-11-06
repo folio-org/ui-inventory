@@ -566,14 +566,14 @@ class ViewInstance extends React.Component {
 
     const layoutNotes = (noteTypes, instanceNotes) => {
       return instanceNotes.map(({ noteId, notes }) => {
-        const { name } = noteTypes.find(note => note.id === noteId);
+        const noteType = noteTypes.find(note => note.id === noteId);
         return (
           <MultiColumnList
             contentData={notes}
             visibleColumns={['Staff only', 'Note']}
             columnMapping={{
               'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
-              'Note': <FormattedMessage id={name} />,
+              'Note': noteType ? noteType.name : <FormattedMessage id="ui-inventory.unknownNoteType" />,
             }}
             columnWidths={{
               'Staff only': '25%',
