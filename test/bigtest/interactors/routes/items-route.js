@@ -3,7 +3,6 @@ import {
   clickable,
   collection,
 } from '@bigtest/interactor';
-
 // eslint-disable-next-line
 import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/tests/interactor';
 
