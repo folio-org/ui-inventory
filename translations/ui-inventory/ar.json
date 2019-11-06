@@ -403,5 +403,7 @@
     "succeedingTitles": "عناوين لاحقة",
     "addSucceedingTitle": "إضافة عنوان لاحق",
     "statisticalCodeName": "اسم الكود الإحصائي",
-    "generalNote": "ملاحظة عامة"
+    "generalNote": "ملاحظة عامة",
+    "yes": "Yes",
+    "no": "No"
 }
