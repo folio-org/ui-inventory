@@ -80,6 +80,7 @@ export function filterItemsBy(name) {
 export function getQueryTemplate(resourceData, indexes) {
   const queryIndex = get(resourceData, 'query.qindex', 'all');
   const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+
   return get(searchableIndex, 'queryTemplate');
 }
 
