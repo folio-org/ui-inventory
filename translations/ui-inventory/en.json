@@ -405,5 +405,6 @@
   "filters.holdings": "Holdings",
   "filters.items": "Item",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "unknownNoteType": "Unknown note type"
 }
