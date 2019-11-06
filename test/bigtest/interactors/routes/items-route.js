@@ -1,14 +1,14 @@
 import {
   interactor,
-  clickable,
   collection,
+  scoped,
 } from '@bigtest/interactor';
-// eslint-disable-next-line
-import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/tests/interactor';
+
+import MultiSelectFilterInteractor from '../filters/multiselect-filter';
 
 export default @interactor class ItemsRouteInteractor {
   static defaultScope = '[data-test-inventory-instances]';
-  openMaterialTypeFilter = clickable('#accordion-toggle-button-materialTypeAccordion');
-  materialTypeFilter = new MultiSelectInteractor('#materialTypeFilter');
+
+  materialTypeFilter = scoped('#materialTypeAccordion', MultiSelectFilterInteractor);
   rows = collection('#list-inventory [data-row-index]');
 }

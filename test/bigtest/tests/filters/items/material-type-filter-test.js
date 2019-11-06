@@ -1,4 +1,8 @@
-import { beforeEach, describe, it } from '@bigtest/mocha';
+import {
+  beforeEach,
+  describe,
+  it,
+} from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import setupApplication from '../../../helpers/setup-application';
@@ -15,16 +19,16 @@ describe.only('ItemMaterialTypeFilter', () => {
 
   describe('open material type filter', () => {
     beforeEach(async function () {
-      await itemsRoute.openMaterialTypeFilter();
+      await itemsRoute.materialTypeFilter.open();
     });
 
-    it('displays material type filter', () => {
-      expect(itemsRoute.materialTypeFilter.isPresent).to.equal(true);
+    it('displays material type multi select', () => {
+      expect(itemsRoute.materialTypeFilter.multiSelect.isPresent).to.equal(true);
     });
 
     describe('choose material type', () => {
-      beforeEach(async function () {
-        await itemsRoute.materialTypeFilter.options(0).clickOption();
+      beforeEach(async () => {
+        await itemsRoute.materialTypeFilter.multiSelect.options(0).clickOption();
       });
 
       it('finds instances by chosen material type', () => {
@@ -37,12 +41,22 @@ describe.only('ItemMaterialTypeFilter', () => {
         const materialType = this.server.schema.materialTypes.first();
         const name = materialType.attrs.name.split(' ')[0];
 
-        await itemsRoute.materialTypeFilter.fillFilter(name);
-        await itemsRoute.materialTypeFilter.options(0).clickOption();
+        await itemsRoute.materialTypeFilter.multiSelect.fillFilter(name);
+        await itemsRoute.materialTypeFilter.multiSelect.options(0).clickOption();
       });
 
-      it('finds instances by chosen material type', () => {
+      it('finds instances by filled material type', () => {
         expect(itemsRoute.rows().length).to.equal(1);
+      });
+
+      describe('clear material type filter', () => {
+        beforeEach(async function () {
+          await itemsRoute.materialTypeFilter.clear();
+        });
+
+        it('clears instances', () => {
+          expect(itemsRoute.rows().length).to.equal(0);
+        });
       });
     });
   });

@@ -37,7 +37,6 @@ class ItemsView extends React.Component {
   };
 
   render() {
-    console.log('in items view...');
     return (
       <div data-test-inventory-instances>
         <InstancesList
