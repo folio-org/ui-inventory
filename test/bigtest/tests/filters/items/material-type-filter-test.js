@@ -8,17 +8,17 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import ItemsRouteInteractor from '../../../interactors/routes/items-route';
 
-describe.only('ItemMaterialTypeFilter', () => {
+describe('ItemMaterialTypeFilter', () => {
   setupApplication({ scenarios: ['item-filters'] });
 
   const itemsRoute = new ItemsRouteInteractor();
 
-  beforeEach(async function () {
+  beforeEach(function () {
     this.visit('/inventory/items');
   });
 
   describe('open material type filter', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await itemsRoute.materialTypeFilter.open();
     });
 
@@ -37,7 +37,7 @@ describe.only('ItemMaterialTypeFilter', () => {
     });
 
     describe('fill material type', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         const materialType = this.server.schema.materialTypes.first();
         const name = materialType.attrs.name.split(' ')[0];
 
@@ -50,7 +50,7 @@ describe.only('ItemMaterialTypeFilter', () => {
       });
 
       describe('clear material type filter', () => {
-        beforeEach(async function () {
+        beforeEach(async () => {
           await itemsRoute.materialTypeFilter.clear();
         });
 
