@@ -38,10 +38,7 @@ describe('ItemMaterialTypeFilter', () => {
 
     describe('fill material type', () => {
       beforeEach(async () => {
-        const materialType = this.server.schema.materialTypes.first();
-        const name = materialType.attrs.name.split(' ')[0];
-
-        await itemsRoute.materialTypeFilter.multiSelect.fillFilter(name);
+        await itemsRoute.materialTypeFilter.multiSelect.fillFilter('o');
         await itemsRoute.materialTypeFilter.multiSelect.options(0).clickOption();
       });
 
