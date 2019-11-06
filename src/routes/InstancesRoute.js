@@ -8,7 +8,7 @@ import withData from './withData';
 import { InstancesView } from '../views';
 import {
   instanceIndexes,
-  filterConfig,
+  instanceFilterConfig,
 } from '../constants';
 
 class InstancesRoute extends React.Component {
@@ -63,7 +63,7 @@ class InstancesRoute extends React.Component {
                 publishers: 'publication',
                 Contributors: 'contributors',
               },
-              filterConfig,
+              instanceFilterConfig,
               2
             )(queryParams, pathComponents, resourceData, logger);
           }

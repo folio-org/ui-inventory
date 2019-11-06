@@ -71,32 +71,32 @@ export default function configure() {
   this.get('/electronic-access-relationships/:id');
 
   this.get('/statistical-code-types', {
-    statisticalCodeTypes : [{
-      id : '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
-      name : 'RECM (Record management)',
-      source : 'folio'
+    statisticalCodeTypes: [{
+      id: '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
+      name: 'RECM (Record management)',
+      source: 'folio'
     }, {
-      id : 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
-      name : 'SERM (Serial management)',
-      source : 'folio'
+      id: 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
+      name: 'SERM (Serial management)',
+      source: 'folio'
     }],
-    totalRecords : 2
+    totalRecords: 2
   });
   this.get('/statistical-code-types/:id');
 
   this.get('/statistical-codes', {
     statisticalCodes: [{
-      id : 'c7a32c50-ea7c-43b7-87ab-d134c8371330',
-      code : 'ASER',
-      name : 'Active serial',
-      statisticalCodeTypeId : 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
-      source : 'UC'
+      id: 'c7a32c50-ea7c-43b7-87ab-d134c8371330',
+      code: 'ASER',
+      name: 'Active serial',
+      statisticalCodeTypeId: 'e2ab27f9-a726-4e5e-9963-fff9e6128680',
+      source: 'UC'
     }, {
-      id : 'b6b46869-f3c1-4370-b603-29774a1e42b1',
-      code : 'arch',
-      name : 'Archives (arch)',
-      statisticalCodeTypeId : '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
-      source : 'UC'
+      id: 'b6b46869-f3c1-4370-b603-29774a1e42b1',
+      code: 'arch',
+      name: 'Archives (arch)',
+      statisticalCodeTypeId: '0d3ec58e-dc3c-4aa1-9eba-180fca95c544',
+      source: 'UC'
     }],
     totalRecords: 2
   });
@@ -116,6 +116,15 @@ export default function configure() {
 
         return instances.where({ id: holding.instanceId });
       }
+
+      if (field === 'item.materialTypeId' && term) {
+        const item = items.all().models.find(it => it.materialType.id === term);
+        const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
+
+        return instances.where({ id: holding.instanceId });
+      }
+
+      return [];
     }
 
     return instances.all();
@@ -193,7 +202,7 @@ export default function configure() {
         ],
       },
     ],
-    totalRecords : 5,
+    totalRecords: 5,
   });
   this.get('/locations/:id', {});
 
@@ -378,10 +387,8 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/material-types', {
-    mtypes: [],
-    totalRecords: 0
-  });
+  this.get('/material-types');
+
   this.get('/loan-types', {
     loantypes: [],
     totalRecords: 0

@@ -18,6 +18,7 @@ class ItemsView extends React.Component {
     const {
       data: {
         query,
+        materialTypes,
       },
     } = this.props;
 
@@ -27,7 +28,7 @@ class ItemsView extends React.Component {
       <ItemFilters
         activeFilters={activeFilters}
         data={{
-          // TODO provide data to item filters
+          materialTypes,
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}
