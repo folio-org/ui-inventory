@@ -14,17 +14,18 @@ import {
 }
 
 @interactor class HoldingsEditPage {
-  isLoaded = isPresent('[data-test-header-title]');
+  isLoaded = isPresent('[data-test-holdings-page-type="edit"]');
 
   title = text('[data-test-header-title]');
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
+
   whenLoaded() {
-    return this.timeout(6000).when(() => this.isLoaded);
+    return this.when(() => this.isLoaded);
   }
 }
 
 export default new HoldingsEditPage({
-  scope: '[data-test-holdings-page-type="edit"]',
+  // scope: '[data-test-holdings-page-type="edit"]',
   timeout: 6000,
 });
