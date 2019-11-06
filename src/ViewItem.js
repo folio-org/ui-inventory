@@ -46,8 +46,7 @@ import {
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { itemStatuses, requestStatuses } from './constants';
-
+import { itemStatusesMap, requestStatuses } from './constants';
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
 const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
@@ -146,7 +145,7 @@ class ViewItem extends React.Component {
   }
 
   async componentDidMount() {
-    const { AVAILABLE, AWAITING_PICKUP, IN_TRANSIT } = itemStatuses;
+    const { AVAILABLE, AWAITING_PICKUP, IN_TRANSIT } = itemStatusesMap;
     const loans = await this.fetchLoans();
     const loan = loans[0];
 
@@ -272,7 +271,7 @@ class ViewItem extends React.Component {
 
   canDeleteItem = (item, request) => {
     const itemStatus = get(item, 'status.name');
-    const { CHECKED_OUT, ON_ORDER } = itemStatuses;
+    const { CHECKED_OUT, ON_ORDER } = itemStatusesMap;
     let messageId;
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
@@ -316,77 +315,77 @@ class ViewItem extends React.Component {
 
     return (
       <Fragment>
-        { canEdit &&
-        <Button
-          href={this.craftLayerUrl('editItem')}
-          onClick={() => {
-            onToggle();
-            this.onClickEditItem();
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-edit-item-action
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editItem" />
-          </Icon>
-        </Button>
-          }
-        { canCreate &&
-        <Button
-          id="clickable-copy-item"
-          onClick={() => {
-            onToggle();
-            this.onCopy(firstItem);
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-duplicate-item-action
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-inventory.copyItem" />
-          </Icon>
-        </Button>
-          }
-        { canDelete &&
-        <Button
-          id="clickable-delete-item"
-          onClick={() => {
-            onToggle();
-            this.canDeleteItem(firstItem, request);
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-item-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteItem" />
-          </Icon>
-        </Button>
-          }
-        { canMarkItemAsMissing(firstItem) && canMarkAsMissing &&
-        <Button
-          id="clickable-missing-item"
-          onClick={() => {
-            onToggle();
-            this.setState({ itemMissingModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-mark-as-missing-item
-        >
-          <Icon icon="flag">
-            <FormattedMessage id="ui-inventory.markAsMissing" />
-          </Icon>
-        </Button>
-          }
-        { canCreateNewRequest &&
-        <Button
-          to={newRequestLink}
-          buttonStyle="dropdownItem"
-          data-test-inventory-create-request-action
-        >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.newRequest" />
-          </Icon>
-        </Button>
-          }
+        {canEdit &&
+          <Button
+            href={this.craftLayerUrl('editItem')}
+            onClick={() => {
+              onToggle();
+              this.onClickEditItem();
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-edit-item-action
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editItem" />
+            </Icon>
+          </Button>
+        }
+        {canCreate &&
+          <Button
+            id="clickable-copy-item"
+            onClick={() => {
+              onToggle();
+              this.onCopy(firstItem);
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-duplicate-item-action
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-inventory.copyItem" />
+            </Icon>
+          </Button>
+        }
+        {canDelete &&
+          <Button
+            id="clickable-delete-item"
+            onClick={() => {
+              onToggle();
+              this.canDeleteItem(firstItem, request);
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-delete-item-action
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-inventory.deleteItem" />
+            </Icon>
+          </Button>
+        }
+        {canMarkItemAsMissing(firstItem) && canMarkAsMissing &&
+          <Button
+            id="clickable-missing-item"
+            onClick={() => {
+              onToggle();
+              this.setState({ itemMissingModal: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-mark-as-missing-item
+          >
+            <Icon icon="flag">
+              <FormattedMessage id="ui-inventory.markAsMissing" />
+            </Icon>
+          </Button>
+        }
+        {canCreateNewRequest &&
+          <Button
+            to={newRequestLink}
+            buttonStyle="dropdownItem"
+            data-test-inventory-create-request-action
+          >
+            <Icon icon="plus-sign">
+              <FormattedMessage id="ui-inventory.newRequest" />
+            </Icon>
+          </Button>
+        }
       </Fragment>
     );
   };
