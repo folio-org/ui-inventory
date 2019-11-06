@@ -77,6 +77,12 @@ export function filterItemsBy(name) {
   };
 }
 
+export function getQueryTemplate(resourceData, indexes) {
+  const queryIndex = get(resourceData, 'query.qindex', 'all');
+  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+  return get(searchableIndex, 'queryTemplate');
+}
+
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
 // idTypes is an array of relationship definition objects of the form
 // { id, name }

@@ -82,8 +82,16 @@ export const itemFilterConfig = [
   },
 ];
 
+export const itemSortMap = {
+  Title: 'title',
+  publishers: 'publication',
+  Contributors: 'contributors',
+};
+
 export const segments = {
   instances: 'instances',
   holdings: 'holdings',
   items: 'items',
 };
+
+export const CQL_FIND_ALL = 'cql.allRecords=1';

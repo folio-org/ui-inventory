@@ -5,10 +5,25 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import withData from './withData';
 import { ItemsView } from '../views';
+import { getQueryTemplate } from '../utils';
 import {
   itemIndexes,
+  itemSortMap,
   itemFilterConfig,
+  CQL_FIND_ALL,
 } from '../constants';
+
+function query(queryParams, pathComponents, resourceData, logger) {
+  const queryTemplate = getQueryTemplate(resourceData, itemIndexes);
+
+  return makeQueryFunction(
+    CQL_FIND_ALL,
+    queryTemplate,
+    itemSortMap,
+    itemFilterConfig,
+    2
+  )(queryParams, pathComponents, resourceData, logger);
+}
 
 class ItemsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -19,28 +34,7 @@ class ItemsRoute extends React.Component {
       perRequest: 30,
       path: 'inventory/instances',
       GET: {
-        params: {
-          query: (queryParams, pathComponents, resourceData, logger) => {
-            const { query } = resourceData;
-            const queryIndex = query.qindex || 'all';
-            const searchableIndex = itemIndexes.find(({ value }) => value === queryIndex);
-            const queryTemplate = searchableIndex && searchableIndex.queryTemplate;
-
-            resourceData.query = { ...query, qindex: '' };
-
-            return makeQueryFunction(
-              'cql.allRecords=1',
-              queryTemplate,
-              {
-                Title: 'title',
-                publishers: 'publication',
-                Contributors: 'contributors',
-              },
-              itemFilterConfig,
-              2
-            )(queryParams, pathComponents, resourceData, logger);
-          }
-        },
+        params: { query },
         staticFallback: { params: {} },
       },
     },
