@@ -31,6 +31,7 @@
 * Add enumeration and chronology data to the item table on the instance record. Refs UIIN-757.
 * Add filters for staffSuppress and discoverySuppress. Completes UIIN-289.
 * Display suppress from discovery in the item record view. Fixes UIIN-825.
+* Filter item records by material type. Part of UIIN-777.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

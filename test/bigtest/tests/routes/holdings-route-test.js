@@ -2,8 +2,8 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 
 import { expect } from 'chai';
 
-import setupApplication from '../../../helpers/setup-application';
-import HoldingsRouteInteractor from '../../../interactors/routes/holdings-route';
+import setupApplication from '../../helpers/setup-application';
+import HoldingsRouteInteractor from '../../interactors/routes/holdings-route';
 
 describe('HoldingsRoute', () => {
   setupApplication();

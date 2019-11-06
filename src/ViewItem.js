@@ -71,15 +71,6 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
     },
-    materialTypes: {
-      type: 'okapi',
-      path: 'material-types',
-      params: {
-        query: 'cql.allRecords=1 sortby name',
-        limit: '1000',
-      },
-      records: 'mtypes',
-    },
     loanTypes: {
       type: 'okapi',
       path: 'loan-types',
@@ -405,7 +396,6 @@ class ViewItem extends React.Component {
       items,
       holdingsRecords,
       instances1,
-      materialTypes,
       loanTypes,
       callNumberTypes,
     } = this.props.resources;
@@ -417,7 +407,6 @@ class ViewItem extends React.Component {
     }
 
     if (!loanTypes || !loanTypes.hasLoaded ||
-      !materialTypes || !materialTypes.hasLoaded ||
       !callNumberTypes || !callNumberTypes.hasLoaded) {
       return true;
     }
@@ -432,7 +421,6 @@ class ViewItem extends React.Component {
         items,
         holdingsRecords,
         instances1,
-        materialTypes,
         loanTypes,
         requests,
         callNumberTypes,
@@ -449,7 +437,6 @@ class ViewItem extends React.Component {
     } = this.state;
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
-    referenceTables.materialTypes = (materialTypes || {}).records || [];
     referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
 
     if (this.isAwaitingResource()) {
@@ -1193,7 +1180,7 @@ class ViewItem extends React.Component {
             </Layer>
           </div>
         )
-      }
+        }
       </IntlConsumer>
     );
   }
@@ -1206,9 +1193,6 @@ ViewItem.propTypes = {
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    materialTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     loanTypes: PropTypes.shape({

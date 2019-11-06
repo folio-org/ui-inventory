@@ -144,6 +144,15 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
         path: 'nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
         records: 'natureOfContentTerms',
       },
+      materialTypes: {
+        type: 'okapi',
+        path: 'material-types',
+        params: {
+          query: 'cql.allRecords=1 sortby name',
+          limit: '1000',
+        },
+        records: 'mtypes',
+      },
     }),
   );
 
