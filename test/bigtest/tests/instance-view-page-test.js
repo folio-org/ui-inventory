@@ -8,6 +8,8 @@ import InstanceCreatePage from '../interactors/instance-create-page';
 import ItemViewPage from '../interactors/item-view-page';
 import HoldingsViewPage from '../interactors/holdings-view-page';
 
+import translation from '../../../translations/ui-inventory/en';
+
 describe('InstanceViewPage', () => {
   const visitingViewInventoryPage = () => {
     beforeEach(async function () {
@@ -127,6 +129,18 @@ describe('InstanceViewPage', () => {
     });
 
     describe('items per holdings', () => {
+      it('has correct amount of columns', () => {
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(5);
+      });
+
+      it('renders correct header captions', () => {
+        expect(InstanceViewPage.itemsList.headers(0).text).to.be.equal(translation['item.barcode']);
+        expect(InstanceViewPage.itemsList.headers(1).text).to.be.equal(translation.status);
+        expect(InstanceViewPage.itemsList.headers(2).text).to.be.equal(translation.materialType);
+        expect(InstanceViewPage.itemsList.headers(3).text).to.be.equal(translation.enumeration);
+        expect(InstanceViewPage.itemsList.headers(4).text).to.be.equal(translation.chronology);
+      });
+
       describe('sorting', () => {
         describe('compares by `Item: barcode` field', () => {
           beforeEach(async () => {
@@ -194,6 +208,52 @@ describe('InstanceViewPage', () => {
               expect(InstanceViewPage.getCellContent(0, 2)).to.equal('book');
               expect(InstanceViewPage.getCellContent(1, 2)).to.equal('book');
               expect(InstanceViewPage.getCellContent(2, 2)).to.equal('text');
+            });
+          });
+        });
+        describe('compares by `Enumeration` field', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(3).click();
+          });
+
+          it('descending', () => {
+            expect(InstanceViewPage.getCellContent(0, 3)).to.equal('v.73:no.1-6');
+            expect(InstanceViewPage.getCellContent(1, 3)).to.equal('v.72:no.1-6');
+            expect(InstanceViewPage.getCellContent(2, 3)).to.equal('v.70:no.7-12');
+          });
+
+          describe('and', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(3).click();
+            });
+
+            it('ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, 3)).to.equal('v.70:no.7-12');
+              expect(InstanceViewPage.getCellContent(1, 3)).to.equal('v.72:no.1-6');
+              expect(InstanceViewPage.getCellContent(2, 3)).to.equal('v.73:no.1-6');
+            });
+          });
+        });
+        describe('compares by `Chronology` field', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(4).click();
+          });
+
+          it('descending', () => {
+            expect(InstanceViewPage.getCellContent(0, 4)).to.equal('1987:Jan.-June');
+            expect(InstanceViewPage.getCellContent(1, 4)).to.equal('1986:Jan.-June');
+            expect(InstanceViewPage.getCellContent(2, 4)).to.equal('1984:July-Dec.');
+          });
+
+          describe('and', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(4).click();
+            });
+
+            it('ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, 4)).to.equal('1984:July-Dec.');
+              expect(InstanceViewPage.getCellContent(1, 4)).to.equal('1986:Jan.-June');
+              expect(InstanceViewPage.getCellContent(2, 4)).to.equal('1987:Jan.-June');
             });
           });
         });

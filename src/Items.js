@@ -122,6 +122,8 @@ class Items extends React.Component {
       },
       'status': x => get(x, ['status', 'name']) || '--',
       'materialType': x => get(x, ['materialType', 'name']),
+      'enumeration': x => x.enumeration,
+      'chronology': x => x.chronology,
     };
 
     return (
@@ -135,16 +137,20 @@ class Items extends React.Component {
                   contentData={sortedRecords}
                   rowMetadata={['id', 'holdingsRecordId']}
                   formatter={itemsFormatter}
-                  visibleColumns={['barcode', 'status', 'materialType']}
+                  visibleColumns={['barcode', 'status', 'materialType', 'enumeration', 'chronology']}
                   columnMapping={{
                     'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
                     'status': intl.formatMessage({ id: 'ui-inventory.status' }),
                     'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
+                    'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
+                    'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
                   }}
                   columnWidths={{
                     'barcode': '25%',
                     'status': '25%',
                     'materialType': '25%',
+                    'enumeration': '25%',
+                    'chronology': '25%',
                   }}
                   ariaLabel={ariaLabel}
                   containerRef={(ref) => { this.resultsList = ref; }}
