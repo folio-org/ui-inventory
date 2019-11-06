@@ -20,13 +20,7 @@ class ItemsRoute extends React.Component {
       path: 'inventory/instances',
       GET: {
         params: {
-          query: (...args) => {
-            const [
-              queryParams,
-              pathComponents,
-              resourceData,
-              logger,
-            ] = args;
+          query: (queryParams, pathComponents, resourceData, logger) => {
             const { query } = resourceData;
             const queryIndex = query.qindex || 'all';
             const searchableIndex = itemIndexes.find(({ value }) => value === queryIndex);
