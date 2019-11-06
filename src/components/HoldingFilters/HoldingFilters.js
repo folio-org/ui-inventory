@@ -39,8 +39,9 @@ export default class HoldingFilters extends React.Component {
     return (
       <React.Fragment>
         <Accordion
+          data-test-filter-holding-staff-suppress
           label={<FormattedMessage id="ui-inventory.staffSuppress" />}
-          id="staffSuppress"
+          id="holdingStaffSuppress"
           name="staffSuppress"
           closedByDefault
           header={FilterAccordionHeader}
@@ -56,8 +57,9 @@ export default class HoldingFilters extends React.Component {
           />
         </Accordion>
         <Accordion
+          data-test-filter-holding-discovery-suppress
           label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
-          id="discoverySuppress"
+          id="holdingDiscoverySuppress"
           name="discoverySuppress"
           closedByDefault
           header={FilterAccordionHeader}
