@@ -33,6 +33,7 @@ import {
 } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
+import { wrappingCell } from './constants';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -744,10 +745,11 @@ class ViewHoldingsRecord extends React.Component {
                           'URI': '16%',
                           'Link text': '16%',
                           'Materials specified': '16%',
+                          'URL public note': '32%',
                         }}
                         formatter={{
                           'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, _.get(x, ['relationshipId'])).name,
-                          'URI': x => <a href={_.get(x, ['uri'])}>{_.get(x, ['uri'])}</a>,
+                          'URI': x => <a href={_.get(x, ['uri'])} style={wrappingCell}>{_.get(x, ['uri'])}</a>,
                           'Link text': x => _.get(x, ['linkText']) || '',
                           'Materials specified': x => _.get(x, ['materialsSpecification']) || '',
                           'URL public note': x => _.get(x, ['publicNote']) || '',

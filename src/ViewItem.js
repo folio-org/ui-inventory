@@ -46,7 +46,11 @@ import {
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { itemStatuses, requestStatuses } from './constants';
+import {
+  itemStatuses,
+  requestStatuses,
+  wrappingCell
+} from './constants';
 
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
@@ -1130,9 +1134,16 @@ class ViewItem extends React.Component {
                         'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
                         'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
                       }}
+                      columnWidths={{
+                        'URL relationship': '16%',
+                        'URI': '16%',
+                        'Link text': '16%',
+                        'Materials specified': '16%',
+                        'URL public note': '32%',
+                      }}
                       formatter={{
                         'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
-                        'URI': x => <a href={get(x, ['uri'])}>{get(x, ['uri'])}</a>,
+                        'URI': x => <a href={get(x, ['uri'])} style={wrappingCell}>{get(x, ['uri'])}</a>,
                         'Link text': x => get(x, ['linkText']) || '',
                         'Materials specified': x => get(x, ['materialsSpecification']) || '',
                         'URL public note': x => get(x, ['publicNote']) || '',
