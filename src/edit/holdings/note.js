@@ -34,6 +34,7 @@ const Note = ({ noteTypeOptions }) => (
             name: 'staffOnly',
             label: <FormattedMessage id="ui-inventory.staffOnly" />,
             component: Checkbox,
+            type: 'checkbox',
             inline: true,
             vertical: true,
             columnSize: {
