@@ -110,21 +110,28 @@ export default function configure() {
       cqlParser.parse(request.queryParams.query);
       const { field, term } = cqlParser.tree;
 
-      if (field === 'item.barcode' && term) {
+      if (!term) return [];
+
+      if (field === 'item.barcode') {
         const item = items.where({ barcode: term }).models[0];
         const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
 
         return instances.where({ id: holding.instanceId });
       }
 
-      if (field === 'item.materialTypeId' && term) {
+      if (field === 'item.materialTypeId') {
         const item = items.all().models.find(it => it.materialType.id === term);
         const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
 
         return instances.where({ id: holding.instanceId });
       }
 
-      return [];
+      if (field === 'item.status.name') {
+        const item = items.all().models.find(it => it.status.name === term);
+        const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
+
+        return instances.where({ id: holding.instanceId });
+      }
     }
 
     return instances.all();

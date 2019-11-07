@@ -7,5 +7,6 @@ export default function (server) {
   server.create('materialType', { name: 'sound recording' });
 
   item.materialType = materialType.attrs;
+  item.status.name = 'Withdrawn';
   item.save();
 }
