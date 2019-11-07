@@ -300,7 +300,6 @@
   "deleteStatement": "Delete statement",
   "noteType": "Note type",
   "staffOnly": "Staff only",
-  "generalNote": "General Note",
   "nonPublicNote": "Nonpublic note",
   "actionNote": "Action note",
   "reproductionNote": "Reproduction note",
@@ -405,5 +404,6 @@
   "filters.holdings": "Holdings",
   "filters.items": "Item",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "unknownNoteType": "Unknown note type"
 }

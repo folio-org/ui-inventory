@@ -11,6 +11,7 @@ import {
   set,
   isEmpty,
   groupBy,
+  isArray,
 } from 'lodash';
 import React, {
   Fragment,
@@ -119,6 +120,7 @@ class ViewInstance extends React.Component {
         acc10: true,
         acc11: true,
       },
+      allAccordions: true,
       marcRecord: null,
     };
     this.instanceId = null;
@@ -263,6 +265,7 @@ class ViewInstance extends React.Component {
     this.setState((curState) => {
       const newState = cloneDeep(curState);
       newState.accordions = obj;
+      newState.allAccordions = !newState.allAccordions;
       return newState;
     });
   };
@@ -362,6 +365,12 @@ class ViewInstance extends React.Component {
     );
   };
 
+  isOpen = (id, fields) => {
+    const acc = !fields.every(item => (isArray(item) ? isEmpty(item) : item === '-'));
+    if (this.state.accordions[id] && !this.state.allAccordions) return true;
+    return this.state.accordions[id] === acc && this.state.allAccordions;
+  };
+
   render() {
     const {
       okapi,
@@ -438,8 +447,6 @@ class ViewInstance extends React.Component {
       'Code': x => this.refLookup(referenceTables.instanceFormats, x.id).code,
       'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source,
     };
-
-    const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
 
     const detailMenu = (
       <IfPermission perm="ui-inventory.instance.edit">
@@ -557,42 +564,72 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const layoutNotes = (noteTypes, instanceNotes) => {
-      return instanceNotes.map(({ noteId, notes }) => {
-        const { name } = noteTypes.find(note => note.id === noteId);
-        return (
+    const layoutNotes = instanceNotes => {
+      return orderBy(instanceNotes, ['noteType.name'], ['asc'])
+        .map(({ noteType, notes }) => (
           <MultiColumnList
             contentData={notes}
             visibleColumns={['Staff only', 'Note']}
             columnMapping={{
               'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
-              'Note': <FormattedMessage id={name} />,
+              'Note': noteType ? noteType.name : <FormattedMessage id="ui-inventory.unknownNoteType" />,
             }}
             columnWidths={{
               'Staff only': '25%',
               'Note': '74%',
             }}
             formatter={{
-              'Staff only': x => (get(x, ['staffOnly']) ? 'Yes' : 'No'),
+              'Staff only': x => (get(x, ['staffOnly']) ? <FormattedMessage id="ui-inventory.yes" /> : <FormattedMessage id="ui-inventory.no" />),
               'Note': x => get(x, ['note']) || '',
             }}
             containerRef={ref => { this.resultsList = ref; }}
             interactive={false}
           />
-        );
-      });
+        ));
     };
 
     const sortedNotes = groupBy(get(instance, ['notes'], []), 'instanceNoteTypeId');
-    const instanceNotes = map(sortedNotes, (value, key) => ({
-      noteId: key,
-      notes: value,
-    }));
+    const instanceNotes = map(sortedNotes, (value, key) => {
+      const noteType = referenceTables.instanceNoteTypes.find(note => note.id === key);
+      return {
+        noteType,
+        notes: value,
+      };
+    });
 
+    const seriesStatement = get(instance, 'series').map(x => ({ value: x }));
+    const instanceSubjects = get(instance, 'subjects').map(item => ({ value: item }));
+    const instanceHrid = get(instance, ['hrid'], '-');
+    const metadataSource = get(instance, ['source'], '-');
+    const catalogedDate = get(instance, ['catalogedDate'], '-');
+    const instanceStatusTerm = this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-';
+    const instanceStatusCode = this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code || '-';
+    const instanceStatusSource = this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source || '-';
+    const instanceStatusUpdatedDate = get(instance, ['statusUpdatedDate'], '-');
+    const modeOfIssuance = formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance) || '-';
+    const resourceTitle = get(instance, ['title'], '-');
+    const indexTitle = get(instance, ['indexTitle'], '-');
+    const resourceTypeTerm = this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).name || '-';
+    const resourceTypeCode = this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code || '-';
+    const resourceTypeSource = this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source || '-';
     const identifiers = get(instance, 'identifiers', []).map(x => ({
       identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
       value: x.value,
     }));
+    const classifications = get(instance, 'classifications', []).map(x => ({
+      classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
+      classificationNumber: x.classificationNumber,
+    }));
+
+    const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
+    const natureOfContentTermIdsValue = !isEmpty(natureOfContentTermIds)
+      ? natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>) : '-';
+
+    const publicationRange = get(instance, ['publicationRange'], []);
+    const publicationRangeValue = !isEmpty(publicationRange) ? publicationRange.map((desc, i) => <div key={i}>{desc}</div>) : '-';
+
+    const publicationFrequency = get(instance, ['publicationFrequency'], []);
+    const publicationFrequencyValue = !isEmpty(publicationFrequency) ? publicationFrequency.map((desc, i) => <div key={i}>{desc}</div>) : '-';
 
     const orderedIdentifiers = orderBy(
       identifiers,
@@ -603,11 +640,6 @@ class ViewInstance extends React.Component {
       ['asc'],
     );
 
-    const classifications = get(instance, 'classifications', []).map(x => ({
-      classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
-      classificationNumber: x.classificationNumber,
-    }));
-
     const orderedClassifications = orderBy(
       classifications,
       [
@@ -617,9 +649,49 @@ class ViewInstance extends React.Component {
       ['asc'],
     );
 
-    const seriesStatement = instance.series.map(x => ({ value: x }));
+    const acc01 = this.isOpen('acc01', [
+      instanceHrid,
+      metadataSource,
+      catalogedDate,
+      instanceStatusTerm,
+      instanceStatusCode,
+      instanceStatusSource,
+      instanceStatusUpdatedDate,
+      modeOfIssuance,
+      instance.statisticalCodeIds,
+    ]);
+    const acc02 = this.isOpen('acc02', [
+      resourceTitle,
+      indexTitle,
+      instance.alternativeTitles,
+      instance.series,
+      instance.precedingTitles,
+      instance.succeedingTitles,
+    ]);
+    const acc03 = this.isOpen('acc03', [instance.identifiers]);
+    const acc04 = this.isOpen('acc04', [instance.contributors]);
+    const acc05 = this.isOpen('acc05', [
+      resourceTypeTerm,
+      resourceTypeCode,
+      resourceTypeSource,
+      instance.publication,
+      instance.editions,
+      instance.physicalDescriptions,
+      natureOfContentTermIds,
+      instance.instanceFormatIds,
+      instance.languages,
+      instance.publicationFrequency,
+      instance.publicationRange,
 
-    const instanceSubjects = get(instance, 'subjects', '').map(item => ({ value: item }));
+    ]);
+    const acc06 = this.isOpen('acc06', [instanceNotes]);
+    const acc07 = this.isOpen('acc07', [instance.electronicAccess]);
+    const acc08 = this.isOpen('acc08', [instance.subjects]);
+    const acc09 = this.isOpen('acc09', [instance.classifications]);
+    const acc10 = this.isOpen('acc10', [
+      instance.childInstances,
+      instance.parentInstances,
+    ]);
 
     return (
       <Pane
@@ -732,7 +804,7 @@ class ViewInstance extends React.Component {
         </Row>
 
         <Accordion
-          open={this.state.accordions.acc01}
+          open={acc01}
           id="acc01"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceData" />}
@@ -752,19 +824,19 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-                value={get(instance, ['hrid'], '')}
+                value={instanceHrid}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.metadataSource" />}
-                value={get(instance, ['source'], '')}
+                value={metadataSource}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.catalogedDate" />}
-                value={get(instance, ['catalogedDate'], '')}
+                value={catalogedDate}
               />
             </Col>
           </Row>
@@ -772,25 +844,25 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
-                value={this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name}
+                value={instanceStatusTerm}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusCode" />}
-                value={this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code}
+                value={instanceStatusCode}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
-                value={this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source}
+                value={instanceStatusSource}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusUpdatedDate" />}
-                value={get(instance, ['statusUpdatedDate'], '')}
+                value={instanceStatusUpdatedDate}
               />
             </Col>
           </Row>
@@ -798,7 +870,7 @@ class ViewInstance extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
-                value={formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance)}
+                value={modeOfIssuance}
               />
             </Col>
           </Row>
@@ -843,7 +915,7 @@ class ViewInstance extends React.Component {
           </Row>
         </Accordion>
         <Accordion
-          open={this.state.accordions.acc02}
+          open={acc02}
           id="acc02"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.titleData" />}
@@ -852,7 +924,7 @@ class ViewInstance extends React.Component {
             <Col xs={12}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTitle" />}
-                value={get(instance, ['title'], '')}
+                value={resourceTitle}
               />
             </Col>
           </Row>
@@ -892,7 +964,7 @@ class ViewInstance extends React.Component {
             <Col xs={12}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.indexTitle" />}
-                value={get(instance, ['indexTitle'], '')}
+                value={indexTitle}
               />
             </Col>
           </Row>
@@ -956,7 +1028,7 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc03}
+          open={acc03}
           id="acc03"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.identifier" />}
@@ -996,7 +1068,7 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc04}
+          open={acc04}
           id="acc04"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.contributor" />}
@@ -1040,7 +1112,7 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc05}
+          open={acc05}
           id="acc05"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.descriptiveData" />}
@@ -1096,7 +1168,7 @@ class ViewInstance extends React.Component {
                 <Col xs={6}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.physicalDescription" />}
-                    value={get(instance, ['physicalDescriptions'], []).map((desc, i) => <div key={i}>{desc}</div>)}
+                    value={publicationRange}
                   />
                 </Col>
               )
@@ -1107,19 +1179,19 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeTerm" />}
-                value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).name}
+                value={resourceTypeTerm}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeCode" />}
-                value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code}
+                value={resourceTypeCode}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
-                value={this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source}
+                value={resourceTypeSource}
               />
             </Col>
           </Row>
@@ -1128,7 +1200,7 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-                value={natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)}
+                value={natureOfContentTermIdsValue}
               />
             </Col>
           </Row>
@@ -1183,31 +1255,31 @@ class ViewInstance extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
-                value={get(instance, ['publicationFrequency'], []).map((desc, i) => <div key={i}>{desc}</div>)}
+                value={publicationFrequencyValue}
               />
             </Col>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.publicationRange" />}
-                value={get(instance, ['publicationRange'], []).map((desc, i) => <div key={i}>{desc}</div>)}
+                value={publicationRangeValue}
               />
             </Col>
           </Row>
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc06}
+          open={acc06}
           id="acc06"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
           <Row>
-            {!isEmpty(sortedNotes) && layoutNotes(referenceTables.instanceNoteTypes, instanceNotes)}
+            {!isEmpty(sortedNotes) && layoutNotes(instanceNotes)}
           </Row>
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc07}
+          open={acc07}
           id="acc07"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.electronicAccess" />}
@@ -1252,7 +1324,7 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc08}
+          open={acc08}
           id="acc08"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.subject" />}
@@ -1285,7 +1357,7 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc09}
+          open={acc09}
           id="acc09"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.classification" />}
@@ -1325,7 +1397,7 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={this.state.accordions.acc10}
+          open={acc10}
           id="acc10"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
