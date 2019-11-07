@@ -110,7 +110,7 @@ export default function configure() {
       cqlParser.parse(request.queryParams.query);
       const { field, term } = cqlParser.tree;
 
-      if (!term) return [];
+      if (!term) return instances.all();
 
       if (field === 'item.barcode') {
         const item = items.where({ barcode: term }).models[0];
