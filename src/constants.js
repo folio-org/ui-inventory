@@ -1,6 +1,3 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
@@ -40,13 +37,11 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.staffSuppress" />,
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
@@ -63,7 +58,14 @@ export const instanceIndexes = [
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
+
+export const instanceSortMap = {
+  Title: 'title',
+  publishers: 'publication',
+  Contributors: 'contributors',
+};
 
 export const holdingIndexes = [
   // TODO: add holding indexes
