@@ -65,7 +65,7 @@ export default class InstanceFilters extends React.Component {
     return (
       <React.Fragment>
         <Accordion
-          label={<FormattedMessage id="ui-inventory.instances.location" />}
+          label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
           id="location"
           name="location"
           header={FilterAccordionHeader}
