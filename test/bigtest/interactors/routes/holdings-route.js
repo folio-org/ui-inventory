@@ -11,10 +11,7 @@ export default @interactor class HoldingsRouteInteractor {
 
   rows = collection('#list-inventory [data-row-index]');
 
-  isStaffSuppressFilterPresent = isPresent('[data-test-filter-holdings-staff-suppress]');
   isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-holdings-discovery-suppress]');
-  clickSelectStaffSuppressFilter = clickable('#clickable-filter-staffSuppress-true');
-  clickClearStaffSuppressFilter = clickable('#holdingStaffSuppress button[class^="iconButton---"]');
   clickSelectDiscoverySuppressFilter = clickable('#clickable-filter-discoverySuppress-true');
   clickClearDiscoverySuppressFilter = clickable('#holdingDiscoverySuppress button[class^="iconButton---"]');
 }

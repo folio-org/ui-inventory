@@ -23,7 +23,6 @@ export default class HoldingFilters extends React.Component {
     const {
       activeFilters: {
         discoverySuppress = [],
-        staffSuppress = [],
       },
       onChange,
       onClear,
@@ -38,24 +37,6 @@ export default class HoldingFilters extends React.Component {
 
     return (
       <React.Fragment>
-        <Accordion
-          data-test-filter-holding-staff-suppress
-          label={<FormattedMessage id="ui-inventory.staffSuppress" />}
-          id="holdingStaffSuppress"
-          name="staffSuppress"
-          closedByDefault
-          header={FilterAccordionHeader}
-          displayClearButton={staffSuppress.length > 0}
-          onClearFilter={() => onClear('staffSuppress')}
-        >
-          <CheckboxFilter
-            data-test-filter-holdings-staff-suppress
-            name="staffSuppress"
-            dataOptions={suppressedOptions}
-            selectedValues={staffSuppress}
-            onChange={onChange}
-          />
-        </Accordion>
         <Accordion
           data-test-filter-holding-discovery-suppress
           label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
