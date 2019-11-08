@@ -64,6 +64,22 @@ export default class ItemFilters extends React.Component {
     return (
       <React.Fragment>
         <Accordion
+          label={<FormattedMessage id="ui-inventory.item.status" />}
+          id="itemFilterAccordion"
+          name="itemFilterAccordion"
+          header={FilterAccordionHeader}
+          displayClearButton={!isEmpty(itemStatus)}
+          onClearFilter={() => onClear('itemStatus')}
+        >
+          <CheckboxFilter
+            data-test-filter-item-status
+            name="itemStatus"
+            dataOptions={itemStatusesOptions}
+            selectedValues={itemStatus}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
           label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
           id="holdingsPermanentLocation"
           name="holdingsPermanentLocation"
@@ -77,22 +93,6 @@ export default class ItemFilters extends React.Component {
             name="holdingsPermanentLocation"
             dataOptions={locationOptions}
             selectedValues={holdingsPermanentLocation}
-            onChange={onChange}
-          />
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id="ui-inventory.item.status" />}
-          id="itemFilterAccordion"
-          name="itemFilterAccordion"
-          header={FilterAccordionHeader}
-          displayClearButton={!isEmpty(itemStatus)}
-          onClearFilter={() => onClear('itemStatus')}
-        >
-          <CheckboxFilter
-            data-test-filter-item-status
-            name="itemStatus"
-            dataOptions={itemStatusesOptions}
-            selectedValues={itemStatus}
             onChange={onChange}
           />
         </Accordion>
