@@ -3,7 +3,6 @@ import {
   interactor,
   isPresent,
   collection,
-  scoped,
 } from '@bigtest/interactor';
 
 export default @interactor class HoldingsRouteInteractor {
@@ -15,4 +14,3 @@ export default @interactor class HoldingsRouteInteractor {
   clickSelectDiscoverySuppressFilter = clickable('#clickable-filter-discoverySuppress-true');
   clickClearDiscoverySuppressFilter = clickable('#holdingDiscoverySuppress button[class^="iconButton---"]');
 }
-

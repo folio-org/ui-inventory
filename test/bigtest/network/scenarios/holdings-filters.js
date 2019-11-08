@@ -1,3 +1,3 @@
 export default function (server) {
-  const instances = server.createList('instance', 25, 'withHoldingAndItem');
+  server.createList('instance', 25, 'withHoldingAndItem');
 }

@@ -73,12 +73,6 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
-    label: <FormattedMessage id="ui-inventory.staffSuppress" />,
-    name: 'staffSuppress',
-    cql: 'holdingsRecords.staffSuppress',
-    values: [],
-  },
-  {
     label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
