@@ -49,7 +49,7 @@ export default class HoldingFilters extends React.Component {
           onClearFilter={() => onClear('staffSuppress')}
         >
           <CheckboxFilter
-            data-test-filter-holding-staff-suppress
+            data-test-filter-holdings-staff-suppress
             name="staffSuppress"
             dataOptions={suppressedOptions}
             selectedValues={staffSuppress}
@@ -67,7 +67,7 @@ export default class HoldingFilters extends React.Component {
           onClearFilter={() => onClear('discoverySuppress')}
         >
           <CheckboxFilter
-            data-test-filter-holding-discovery-suppress
+            data-test-filter-holdings-discovery-suppress
             name="discoverySuppress"
             dataOptions={suppressedOptions}
             selectedValues={discoverySuppress}
