@@ -6,7 +6,7 @@ import {
   escapeRegExp,
 } from 'lodash';
 import {
-  itemStatuses,
+  itemStatusesMap,
 } from './constants';
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
@@ -19,11 +19,11 @@ export function craftLayerUrl(mode, location) { // eslint-disable-line import/pr
 
 export function canMarkItemAsMissing(item) {
   return includes([
-    itemStatuses.AVAILABLE,
-    itemStatuses.IN_TRANSIT,
-    itemStatuses.AWAITING_PICKUP,
-    itemStatuses.PAGED,
-    itemStatuses.IN_PROCESS
+    itemStatusesMap.AVAILABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.PAGED,
+    itemStatusesMap.IN_PROCESS
   ], get(item, 'status.name'));
 }
 

@@ -254,7 +254,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.nature-of-content-terms",
-        "displayName": "Settings (Inventory): Create, edit, delete Nature of content",
+        "displayName": "Settings (Inventory): Create, edit, delete nature of content",
         "subPermissions": [
           "inventory-storage.nature-of-content-terms.collection.get",
           "inventory-storage.nature-of-content-terms.item.delete",
@@ -582,6 +582,7 @@
     "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.13.0",
     "@folio/stripes-core": "^3.0.1",
+    "@folio/stripes-smart-components": "^2.12.0",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
-export const itemStatuses = {
+export const itemStatusesMap = {
   CHECKED_OUT: 'Checked out',
   ON_ORDER: 'On order',
   AVAILABLE: 'Available',
@@ -57,7 +57,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
   { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
@@ -91,6 +91,11 @@ export const itemFilterConfig = [
     cql: 'item.materialTypeId',
     values: [],
   },
+  {
+    name: 'itemStatus',
+    cql: 'item.status.name',
+    values: [],
+  },
 ];
 
 export const itemSortMap = {
@@ -98,6 +103,18 @@ export const itemSortMap = {
   publishers: 'publication',
   Contributors: 'contributors',
 };
+
+export const itemStatuses = [
+  { label: 'ui-inventory.item.status.available', value: 'Available' },
+  { label: 'ui-inventory.item.status.awaitingPickup', value: 'Awaiting pickup' },
+  { label: 'ui-inventory.item.status.checkedOut', value: 'Checked out' },
+  { label: 'ui-inventory.item.status.inProcess', value: 'In process' },
+  { label: 'ui-inventory.item.status.inTransit', value: 'In transit' },
+  { label: 'ui-inventory.item.status.missing', value: 'Missing' },
+  { label: 'ui-inventory.item.status.onOrder', value: 'On order' },
+  { label: 'ui-inventory.item.status.paged', value: 'Paged' },
+  { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
+];
 
 export const segments = {
   instances: 'instances',

@@ -6,7 +6,10 @@ import {
   Accordion,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import { MultiSelectionFilter } from '@folio/stripes/smart-components';
+import {
+  CheckboxFilter,
+  MultiSelectionFilter,
+} from '@folio/stripes/smart-components';
 
 import { filterItemsBy } from '../../utils';
 
@@ -22,6 +25,7 @@ export default class ItemFilters extends React.Component {
     activeFilters: {},
     data: {
       materialTypes: [],
+      itemStatuses: [],
     },
   }
 
@@ -29,9 +33,11 @@ export default class ItemFilters extends React.Component {
     const {
       activeFilters: {
         materialType = [],
+        itemStatus = [],
       },
       data: {
         materialTypes,
+        itemStatuses
       },
       onChange,
       onClear,
@@ -42,8 +48,29 @@ export default class ItemFilters extends React.Component {
       value: id,
     }));
 
+    const itemStatusesOptions = itemStatuses.map(({ label, value }) => ({
+      label: <FormattedMessage id={`${label}`} />,
+      value,
+    }));
+
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.item.status" />}
+          id="itemFilterAccordion"
+          name="itemFilterAccordion"
+          header={FilterAccordionHeader}
+          displayClearButton={!isEmpty(itemStatus)}
+          onClearFilter={() => onClear('itemStatus')}
+        >
+          <CheckboxFilter
+            data-test-filter-item-status
+            name="itemStatus"
+            dataOptions={itemStatusesOptions}
+            selectedValues={itemStatus}
+            onChange={onChange}
+          />
+        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.materialType" />}
           id="materialTypeAccordion"

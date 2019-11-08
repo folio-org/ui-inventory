@@ -26,7 +26,7 @@ module.exports.test = function uiTest(uiTestCtx) {
         logout(nightmare, config, done);
       });
 
-      it('should navigate to users', (done) => {
+      it('should navigate to inventory', (done) => {
         clickApp(nightmare, done, 'inventory');
       });
 

@@ -46,8 +46,10 @@ import {
 import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { itemStatuses, requestStatuses } from './constants';
-
+import {
+  itemStatusesMap,
+  requestStatuses,
+} from './constants';
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
 const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
@@ -146,7 +148,11 @@ class ViewItem extends React.Component {
   }
 
   async componentDidMount() {
-    const { AVAILABLE, AWAITING_PICKUP, IN_TRANSIT } = itemStatuses;
+    const {
+      AVAILABLE,
+      AWAITING_PICKUP,
+      IN_TRANSIT,
+    } = itemStatusesMap;
     const loans = await this.fetchLoans();
     const loan = loans[0];
 
@@ -272,7 +278,10 @@ class ViewItem extends React.Component {
 
   canDeleteItem = (item, request) => {
     const itemStatus = get(item, 'status.name');
-    const { CHECKED_OUT, ON_ORDER } = itemStatuses;
+    const {
+      CHECKED_OUT,
+      ON_ORDER,
+    } = itemStatusesMap;
     let messageId;
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
