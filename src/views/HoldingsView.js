@@ -18,6 +18,7 @@ class HoldingsView extends React.Component {
     const {
       data: {
         query,
+        locations,
       },
     } = this.props;
 
@@ -27,7 +28,7 @@ class HoldingsView extends React.Component {
       <HoldingFilters
         activeFilters={activeFilters}
         data={{
-          // TODO provide data to holding filters
+          locations,
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}

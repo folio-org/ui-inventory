@@ -26,6 +26,7 @@ export default class ItemFilters extends React.Component {
     data: {
       materialTypes: [],
       itemStatuses: [],
+      locations: [],
     },
   }
 
@@ -34,10 +35,12 @@ export default class ItemFilters extends React.Component {
       activeFilters: {
         materialType = [],
         itemStatus = [],
+        holdingsPermanentLocation = [],
       },
       data: {
         materialTypes,
-        itemStatuses
+        itemStatuses,
+        locations,
       },
       onChange,
       onClear,
@@ -53,8 +56,30 @@ export default class ItemFilters extends React.Component {
       value,
     }));
 
+    const locationOptions = locations.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
+          id="holdingsPermanentLocation"
+          name="holdingsPermanentLocation"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={holdingsPermanentLocation.length > 0}
+          onClearFilter={() => onClear('holdingsPermanentLocation')}
+        >
+          <CheckboxFilter
+            data-test-filter-instance-location
+            name="holdingsPermanentLocation"
+            dataOptions={locationOptions}
+            selectedValues={holdingsPermanentLocation}
+            onChange={onChange}
+          />
+        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.item.status" />}
           id="itemFilterAccordion"

@@ -35,11 +35,6 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
-    name: 'location',
-    cql: 'holdingsRecords.permanentLocationId',
-    values: [],
-  },
-  {
     label: <FormattedMessage id="ui-inventory.staffSuppress" />,
     name: 'staffSuppress',
     cql: 'staffSuppress',
@@ -73,6 +68,11 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
+    name: 'holdingsPermanentLocation',
+    cql: 'holdingsRecords.permanentLocationId',
+    values: [],
+  },
+  {
     label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
@@ -94,6 +94,11 @@ export const itemFilterConfig = [
   {
     name: 'itemStatus',
     cql: 'item.status.name',
+    values: [],
+  },
+  {
+    name: 'holdingsPermanentLocation',
+    cql: 'holdingsRecords.permanentLocationId',
     values: [],
   },
 ];

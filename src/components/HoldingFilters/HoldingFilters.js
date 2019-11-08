@@ -17,16 +17,28 @@ export default class HoldingFilters extends React.Component {
 
   static defaultProps = {
     activeFilters: {},
+    data: {
+      locations: [],
+    },
   }
 
   render() {
     const {
       activeFilters: {
         discoverySuppress = [],
+        holdingsPermanentLocation = [],
+      },
+      data: {
+        locations,
       },
       onChange,
       onClear,
     } = this.props;
+
+    const locationOptions = locations.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
 
     const suppressedOptions = [
       {
@@ -37,6 +49,23 @@ export default class HoldingFilters extends React.Component {
 
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
+          id="holdingsPermanentLocation"
+          name="holdingsPermanentLocation"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={holdingsPermanentLocation.length > 0}
+          onClearFilter={() => onClear('holdingsPermanentLocation')}
+        >
+          <CheckboxFilter
+            data-test-filter-instance-location
+            name="holdingsPermanentLocation"
+            dataOptions={locationOptions}
+            selectedValues={holdingsPermanentLocation}
+            onChange={onChange}
+          />
+        </Accordion>
         <Accordion
           data-test-filter-holding-discovery-suppress
           label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
