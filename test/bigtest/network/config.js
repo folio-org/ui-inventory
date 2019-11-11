@@ -108,7 +108,16 @@ export default function configure() {
     if (request.queryParams.query) {
       const cqlParser = new CQLParser();
       cqlParser.parse(request.queryParams.query);
-      const { field, term } = cqlParser.tree;
+      const {
+        field,
+        term,
+        left,
+        right,
+      } = cqlParser.tree;
+
+      if (left && right && left.field === 'title' && right.field === 'contributors') {
+        return instances.all().filter(inst => inst.title === left.term && inst.contributors[0].name === right.term);
+      }
 
       if (!term) return instances.all();
 

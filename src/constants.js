@@ -1,6 +1,7 @@
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
+
 export const itemStatusesMap = {
   CHECKED_OUT: 'Checked out',
   ON_ORDER: 'On order',
@@ -75,7 +76,6 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
-    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
     values: [],
