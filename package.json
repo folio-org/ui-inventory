@@ -254,7 +254,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.nature-of-content-terms",
-        "displayName": "Settings (Inventory): Create, edit, delete Nature of content",
+        "displayName": "Settings (Inventory): Create, edit, delete nature of content",
         "subPermissions": [
           "inventory-storage.nature-of-content-terms.collection.get",
           "inventory-storage.nature-of-content-terms.item.delete",
