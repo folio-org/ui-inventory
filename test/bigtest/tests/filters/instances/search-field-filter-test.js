@@ -24,7 +24,7 @@ describe('SearchFieldFilter', () => {
 
     describe('search without sortby', () => {
       beforeEach(async () => {
-        await instancesRoute.searchFieldFilter.searchField.fillInput('title="Sapiens: A Brief History of Humankind" and contributors =/@name "Yuval Noah Harari"');
+        await instancesRoute.searchFieldFilter.searchField.fillInput('(title="Sapiens: A Brief History of Humankind" and contributors =/@name "Yuval Noah Harari")');
         await instancesRoute.searchFieldFilter.clickSearch();
       });
 
@@ -35,7 +35,7 @@ describe('SearchFieldFilter', () => {
 
     describe('search with sortby', () => {
       beforeEach(async () => {
-        await instancesRoute.searchFieldFilter.searchField.fillInput('title="Sapiens: A Brief History of Humankind" and contributors =/@name "Yuval Noah Harari" sortby title');
+        await instancesRoute.searchFieldFilter.searchField.fillInput('(title="Sapiens: A Brief History of Humankind" and contributors =/@name "Yuval Noah Harari") sortby title');
         await instancesRoute.searchFieldFilter.clickSearch();
       });
 
