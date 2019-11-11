@@ -81,15 +81,14 @@ export default class ItemFilters extends React.Component {
         </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
-          id="holdingsPermanentLocation"
-          name="holdingsPermanentLocation"
+          id="holdingsPermanentLocationAccordion"
+          name="holdingsPermanentLocationAccordion"
           closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={holdingsPermanentLocation.length > 0}
           onClearFilter={() => onClear('holdingsPermanentLocation')}
         >
-          <CheckboxFilter
-            data-test-filter-instance-location
+          <MultiSelectionFilter
             name="holdingsPermanentLocation"
             dataOptions={locationOptions}
             selectedValues={holdingsPermanentLocation}
