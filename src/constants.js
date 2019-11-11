@@ -69,6 +69,17 @@ export const holdingIndexes = [
   // TODO: add holding indexes
 ];
 
+export const holdingSortMap = {};
+
+export const holdingFilterConfig = [
+  {
+    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
+    name: 'discoverySuppress',
+    cql: 'holdingsRecords.discoverySuppress',
+    values: [],
+  }
+];
+
 export const itemIndexes = [
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
