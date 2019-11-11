@@ -112,3 +112,5 @@ export const segments = {
 };
 
 export const CQL_FIND_ALL = 'cql.allRecords=1';
+
+export const noValue = <div role="definition" aria-label="no value set">-</div>;
