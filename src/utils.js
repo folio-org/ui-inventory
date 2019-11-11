@@ -1,13 +1,19 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import {
   includes,
   find,
   get,
   forOwn,
   escapeRegExp,
+  isArray,
+  isEmpty,
 } from 'lodash';
 import {
   itemStatusesMap,
 } from './constants';
+
+export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item) ? isEmpty(item) : item === '-'));
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
@@ -93,3 +99,33 @@ export function psTitleRelationshipId(idTypes) {
 }
 
 export const getHoldingsNotes = (noteTypes, notes) => notes.filter(noteType => noteTypes.find(note => note.holdingsNoteTypeId === noteType.id));
+
+export const validateRequiredField = value => {
+  const isValid = !isEmpty(value);
+
+  if (isValid) {
+    return undefined;
+  }
+
+  return <FormattedMessage id="ui-inventory.hridHandling.validation.enterValue" />;
+};
+
+export const validateNumericField = value => {
+  const pattern = /^\d{1,8}$/;
+
+  if (value.match(pattern)) {
+    return undefined;
+  }
+
+  return <FormattedMessage id="ui-inventory.hridHandling.validation.startWithField" />;
+};
+
+export const validateAlphaNumericField = value => {
+  const pattern = /^[\w.,\-!?:;"'(){}[\]$ ]{0,10}$/;
+
+  if (value.match(pattern)) {
+    return undefined;
+  }
+
+  return <FormattedMessage id="ui-inventory.hridHandling.validation.assignPrefixField" />;
+};

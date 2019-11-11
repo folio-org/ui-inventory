@@ -19,7 +19,7 @@ import {
   validateNumericField,
   validateAlphaNumericField,
   validateRequiredField,
-} from '../../utils/';
+} from '../../utils';
 
 // TODO: this const will be removed after BE stories will be done
 
