@@ -6,7 +6,10 @@ import {
   Accordion,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import { CheckboxFilter } from '@folio/stripes/smart-components';
+import {
+  CheckboxFilter,
+  MultiSelectionFilter,
+} from '@folio/stripes/smart-components';
 
 export default class HoldingFilters extends React.Component {
   static propTypes = {
@@ -58,8 +61,7 @@ export default class HoldingFilters extends React.Component {
           displayClearButton={holdingsPermanentLocation.length > 0}
           onClearFilter={() => onClear('holdingsPermanentLocation')}
         >
-          <CheckboxFilter
-            data-test-filter-instance-location
+          <MultiSelectionFilter
             name="holdingsPermanentLocation"
             dataOptions={locationOptions}
             selectedValues={holdingsPermanentLocation}
