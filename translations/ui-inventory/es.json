@@ -415,5 +415,6 @@
     "item.status.missing": "Missing",
     "item.status.onOrder": "On order",
     "item.status.paged": "Paged",
-    "item.status.withdrawn": "Withdrawn"
+    "item.status.withdrawn": "Withdrawn",
+    "querySearch": "Query search"
 }

@@ -130,3 +130,5 @@ export const segments = {
 };
 
 export const CQL_FIND_ALL = 'cql.allRecords=1';
+
+export const wrappingCell = { 'word-break': 'break-word' };

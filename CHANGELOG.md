@@ -33,6 +33,7 @@
 * Display suppress from discovery in the item record view. Fixes UIIN-825.
 * Display empty elements with the dashes. Refs UIIN-826.
 * Filter item records by material type. Part of UIIN-777.
+* Fix wrapping cells in Electronic access table. Refs UIIN-414.
 * Fix checkbox on holdings edit page. Refs of UIIN-843.
 * Filter item records by item status. Part of UIIN-771.
 * Allow for searching title with words out of order. Part of UIIN-602.

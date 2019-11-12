@@ -64,6 +64,7 @@ import ViewItem from './ViewItem';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
+import { wrappingCell } from './constants';
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -421,7 +422,7 @@ class ViewInstance extends React.Component {
 
     const electronicAccessRowFormatter = {
       'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
-      'URI': x => <a href={get(x, ['uri'])}>{get(x, ['uri'])}</a>,
+      'URI': x => <a href={get(x, ['uri'])} style={wrappingCell}>{get(x, ['uri'])}</a>,
       'Link text': x => get(x, ['linkText']) || '',
       'Materials specified': x => get(x, ['materialsSpecification']) || '',
       'URL public note': x => get(x, ['publicNote']) || '',
