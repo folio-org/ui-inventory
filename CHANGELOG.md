@@ -30,11 +30,14 @@
 * Update the display of list of Subject headings. Refs UIIN-815.
 * Add enumeration and chronology data to the item table on the instance record. Refs UIIN-757.
 * Add filters for staffSuppress and discoverySuppress. Completes UIIN-289.
+* Display suppress from discovery in the item record view. Fixes UIIN-825.
 * Display empty elements with the dashes. Refs UIIN-826.
 * Filter item records by material type. Part of UIIN-777.
+* Fix wrapping cells in Electronic access table. Refs UIIN-414.
+* Fix checkbox on holdings edit page. Refs of UIIN-843.
 * Filter item records by item status. Part of UIIN-771.
 * Allow for searching title with words out of order. Part of UIIN-602.
-* Filter holdings pane by discovery-suppress. Completes UIIN-766.
+* Filter holdings and item panes by discovery-suppress. Completes UIIN-766 and UIIN-767.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

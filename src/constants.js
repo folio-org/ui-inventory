@@ -1,9 +1,7 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
+
 export const itemStatusesMap = {
   CHECKED_OUT: 'Checked out',
   ON_ORDER: 'On order',
@@ -35,13 +33,16 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.staffSuppress" />,
+    name: 'location',
+    cql: 'holdingsRecords.permanentLocationId',
+    values: [],
+  },
+  {
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
@@ -58,7 +59,14 @@ export const instanceIndexes = [
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
+
+export const instanceSortMap = {
+  Title: 'title',
+  publishers: 'publication',
+  Contributors: 'contributors',
+};
 
 export const holdingIndexes = [
   // TODO: add holding indexes
@@ -73,7 +81,6 @@ export const holdingFilterConfig = [
     values: [],
   },
   {
-    label: <FormattedMessage id="ui-inventory.discoverySuppress" />,
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
     values: [],
@@ -101,6 +108,11 @@ export const itemFilterConfig = [
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
   },
+  {
+    name: 'discoverySuppress',
+    cql: 'item.discoverySuppress',
+    values: [],
+  }
 ];
 
 export const itemSortMap = {
@@ -128,3 +140,5 @@ export const segments = {
 };
 
 export const CQL_FIND_ALL = 'cql.allRecords=1';
+
+export const wrappingCell = { 'word-break': 'break-word' };

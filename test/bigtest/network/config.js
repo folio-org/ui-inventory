@@ -104,13 +104,37 @@ export default function configure() {
   this.get('/alternative-title-types');
   this.get('/statistical-title-types/:id');
 
-  this.get('/inventory/instances', ({ instances, holdings, items }, request) => {
+  this.get('/inventory/instances', (schema, request) => {
+    const {
+      instances,
+      holdings,
+      items,
+      identifierTypes,
+    } = schema;
+
     if (request.queryParams.query) {
       const cqlParser = new CQLParser();
       cqlParser.parse(request.queryParams.query);
-      const { field, term } = cqlParser.tree;
+      const {
+        field,
+        term,
+        left,
+        right,
+      } = cqlParser.tree;
+
+      if (left && right && left.field === 'title' && right.field === 'contributors') {
+        return instances.all().filter(inst => inst.title === left.term &&
+          inst.contributors[0].name === right.term);
+      }
 
       if (!term) return instances.all();
+
+      if (field === 'identifiers') {
+        const idType = identifierTypes.where({ name: term }).models[0];
+
+        return instances.all().filter(inst => inst.identifiers.length &&
+          inst.identifiers[0].identifierTypeId === idType.id);
+      }
 
       if (field === 'item.barcode') {
         const item = items.where({ barcode: term }).models[0];

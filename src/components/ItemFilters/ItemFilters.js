@@ -36,6 +36,7 @@ export default class ItemFilters extends React.Component {
         materialType = [],
         itemStatus = [],
         holdingsPermanentLocation = [],
+        discoverySuppress = [],
       },
       data: {
         materialTypes,
@@ -60,6 +61,12 @@ export default class ItemFilters extends React.Component {
       label: name,
       value: id,
     }));
+    const suppressedOptions = [
+      {
+        label: <FormattedMessage id="ui-inventory.yes" />,
+        value: 'true',
+      },
+    ];
 
     return (
       <React.Fragment>
@@ -111,6 +118,23 @@ export default class ItemFilters extends React.Component {
             dataOptions={materialTypesOptions}
             selectedValues={materialType}
             filter={filterItemsBy('label')}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+          id="itemDiscoverySuppressAccordion"
+          name="discoverySuppress"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={discoverySuppress.length > 0}
+          onClearFilter={() => onClear('discoverySuppress')}
+        >
+          <CheckboxFilter
+            data-test-filter-item-discovery-suppress
+            name="discoverySuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={discoverySuppress}
             onChange={onChange}
           />
         </Accordion>

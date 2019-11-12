@@ -403,7 +403,18 @@
     "succeedingTitles": "Títulos subseqüentes",
     "addSucceedingTitle": "Adicionar título subseqüente",
     "statisticalCodeName": "Nome do código estatístico",
-    "generalNote": "Nota geral",
-    "yes": "Yes",
-    "no": "No"
+    "yes": "Sim",
+    "no": "Não",
+    "unknownNoteType": "Tipo de nota desconhecido",
+    "item.status": "Status do item",
+    "item.status.available": "Disponível",
+    "item.status.awaitingPickup": "Aguardando retirada",
+    "item.status.checkedOut": "Emprestado",
+    "item.status.inProcess": "Em processamento",
+    "item.status.inTransit": "Em trânsito",
+    "item.status.missing": "Não encontrado",
+    "item.status.onOrder": "Em processo de compra",
+    "item.status.paged": "Paginado",
+    "item.status.withdrawn": "Retirado",
+    "querySearch": "Query search"
 }

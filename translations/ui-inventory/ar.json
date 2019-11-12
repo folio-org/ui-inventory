@@ -403,7 +403,18 @@
     "succeedingTitles": "عناوين لاحقة",
     "addSucceedingTitle": "إضافة عنوان لاحق",
     "statisticalCodeName": "اسم الكود الإحصائي",
-    "generalNote": "ملاحظة عامة",
-    "yes": "Yes",
-    "no": "No"
+    "yes": "نعم",
+    "no": "لا",
+    "unknownNoteType": "نوع ملاحظة غير معروف",
+    "item.status": "حالة المادة",
+    "item.status.available": "متاح",
+    "item.status.awaitingPickup": "في انتظار الالتقاط",
+    "item.status.checkedOut": "معار",
+    "item.status.inProcess": "في المعالجة",
+    "item.status.inTransit": "في النقل",
+    "item.status.missing": "مفقودة",
+    "item.status.onOrder": "في الطلب",
+    "item.status.paged": "مقسم إلى صفحات",
+    "item.status.withdrawn": "مسحوب",
+    "querySearch": "Query search"
 }
