@@ -79,4 +79,7 @@ import {
   }
 }
 
-export default new InstanceEditPage('[data-test-instance-page-type="edit"]');
+export default new InstanceEditPage({
+  scope: '[data-test-instance-page-type="edit"]',
+  timeout: 4000,
+});

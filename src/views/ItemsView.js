@@ -7,7 +7,10 @@ import {
   InstancesList,
 } from '../components';
 import { getCurrentFilters } from '../utils';
-import { itemIndexes } from '../constants';
+import {
+  itemIndexes,
+  itemStatuses,
+} from '../constants';
 
 class ItemsView extends React.Component {
   static propTypes = {
@@ -29,6 +32,7 @@ class ItemsView extends React.Component {
         activeFilters={activeFilters}
         data={{
           materialTypes,
+          itemStatuses,
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}

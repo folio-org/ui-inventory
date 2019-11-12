@@ -33,6 +33,10 @@
 * Display empty elements with the dashes. Refs UIIN-826.
 * Filter item records by material type. Part of UIIN-777.
 * Fix wrapping cells in Electronic access table. Refs UIIN-414.
+* Fix checkbox on holdings edit page. Refs of UIIN-843.
+* Filter item records by item status. Part of UIIN-771.
+* Allow for searching title with words out of order. Part of UIIN-602.
+* Filter holdings pane by discovery-suppress. Completes UIIN-766.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

@@ -52,7 +52,6 @@ import {
   wrappingCell
 } from './constants';
 
-
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
 const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc`;
@@ -150,7 +149,11 @@ class ViewItem extends React.Component {
   }
 
   async componentDidMount() {
-    const { AVAILABLE, AWAITING_PICKUP, IN_TRANSIT } = itemStatuses;
+    const {
+      AVAILABLE,
+      AWAITING_PICKUP,
+      IN_TRANSIT,
+    } = itemStatusesMap;
     const loans = await this.fetchLoans();
     const loan = loans[0];
 
@@ -276,7 +279,10 @@ class ViewItem extends React.Component {
 
   canDeleteItem = (item, request) => {
     const itemStatus = get(item, 'status.name');
-    const { CHECKED_OUT, ON_ORDER } = itemStatuses;
+    const {
+      CHECKED_OUT,
+      ON_ORDER,
+    } = itemStatusesMap;
     let messageId;
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
