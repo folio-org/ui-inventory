@@ -747,10 +747,10 @@ class ViewItem extends React.Component {
                   <this.cViewMetaData metadata={item.metadata} />
                   <Row>
                     <Col xs={12}>
-                      {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
+                      {item.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
                     </Col>
                   </Row>
-                  {instance.discoverySuppress && <br />}
+                  {item.discoverySuppress && <br />}
                   <Row>
                     <Col xs={2}>
                       <KeyValue
