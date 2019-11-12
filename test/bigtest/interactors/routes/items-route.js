@@ -15,6 +15,7 @@ export default @interactor class ItemsRouteInteractor {
   static defaultScope = '[data-test-inventory-instances]';
 
   materialTypeFilter = scoped('#materialTypeAccordion', MultiSelectFilterInteractor);
+  permLocationFilter = scoped('#holdingsPermanentLocationAccordion', MultiSelectFilterInteractor);
   itemStatusFilter = scoped('#itemFilterAccordion', CheckboxFilterInteractor);
 
   rows = collection('#list-inventory [data-row-index]');
