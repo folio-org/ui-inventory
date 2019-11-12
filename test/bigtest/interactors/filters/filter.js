@@ -12,7 +12,7 @@ import {
   expanded,
 } from '@folio/stripes-components/lib/Accordion/Accordion.css';
 
-export default @interactor class FilterInteractor {
+@interactor class FilterInteractor {
   static defaultScope = '[data-test-accordion-section]';
 
   label = text(`.${labelArea}`);
@@ -20,4 +20,8 @@ export default @interactor class FilterInteractor {
 
   clear = clickable('button[icon="times-circle-solid"]');
   open = clickable('[id*="accordion-toggle-button-"]');
+}
+
+export default function filterInteractor(classDescriptor) {
+  return FilterInteractor.extend(classDescriptor);
 }

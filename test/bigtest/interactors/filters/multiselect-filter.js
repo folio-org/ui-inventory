@@ -1,7 +1,9 @@
+import { scoped } from '@bigtest/interactor';
+
 // eslint-disable-next-line
 import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/tests/interactor';
-import FilterInteractor from './filter';
+import filterInteractor from './filter';
 
-export default class MultiSelectFilterInteractor extends FilterInteractor {
-  multiSelect = new MultiSelectInteractor('[class^="multiSelectContainer---"]');
+export default @filterInteractor class MultiSelectFilterInteractor {
+  multiSelect = scoped('[class^= "multiSelectContainer---"]', MultiSelectInteractor);
 }
