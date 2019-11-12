@@ -96,6 +96,11 @@ export const itemFilterConfig = [
     cql: 'item.status.name',
     values: [],
   },
+  {
+    name: 'discoverySuppress',
+    cql: 'item.discoverySuppress',
+    values: [],
+  }
 ];
 
 export const itemSortMap = {
