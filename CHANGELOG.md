@@ -30,6 +30,7 @@
 * Update the display of list of Subject headings. Refs UIIN-815.
 * Add enumeration and chronology data to the item table on the instance record. Refs UIIN-757.
 * Add filters for staffSuppress and discoverySuppress. Completes UIIN-289.
+* Display suppress from discovery in the item record view. Fixes UIIN-825.
 * Display empty elements with the dashes. Refs UIIN-826.
 * Filter item records by material type. Part of UIIN-777.
 * Fix wrapping cells in Electronic access table. Refs UIIN-414.

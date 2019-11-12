@@ -415,5 +415,6 @@
     "item.status.missing": "مفقودة",
     "item.status.onOrder": "في الطلب",
     "item.status.paged": "مقسم إلى صفحات",
-    "item.status.withdrawn": "مسحوب"
+    "item.status.withdrawn": "مسحوب",
+    "querySearch": "Query search"
 }

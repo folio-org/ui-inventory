@@ -415,5 +415,6 @@
     "item.status.missing": "Não encontrado",
     "item.status.onOrder": "Em processo de compra",
     "item.status.paged": "Paginado",
-    "item.status.withdrawn": "Retirado"
+    "item.status.withdrawn": "Retirado",
+    "querySearch": "Query search"
 }
