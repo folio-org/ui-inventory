@@ -16,6 +16,7 @@ export default class HoldingFilters extends React.Component {
     activeFilters: PropTypes.objectOf(PropTypes.array),
     onChange: PropTypes.func.isRequired,
     onClear: PropTypes.func.isRequired,
+    data: PropTypes.object,
   };
 
   static defaultProps = {
