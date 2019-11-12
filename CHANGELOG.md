@@ -32,6 +32,7 @@
 * Add filters for staffSuppress and discoverySuppress. Completes UIIN-289.
 * Display empty elements with the dashes. Refs UIIN-826.
 * Filter item records by material type. Part of UIIN-777.
+* Fix checkbox on holdings edit page. Refs of UIIN-843.
 * Filter item records by item status. Part of UIIN-771.
 * Allow for searching title with words out of order. Part of UIIN-602.
 * Filter holdings pane by discovery-suppress. Completes UIIN-766.
