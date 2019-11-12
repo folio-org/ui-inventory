@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { template } from 'lodash';
+import {
+  template,
+  get,
+} from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
@@ -9,7 +12,44 @@ import { InstancesView } from '../views';
 import {
   instanceIndexes,
   instanceFilterConfig,
+  instanceSortMap,
+  CQL_FIND_ALL,
 } from '../constants';
+import { getQueryTemplate } from '../utils';
+
+function getIsbnIssnTemplate(queryTemplate, props, queryIndex) {
+  const { resources: { identifierTypes } } = props;
+  const identifierType = get(identifierTypes, 'records', [])
+    .find(({ name }) => name.toLowerCase() === queryIndex);
+  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
+
+  return template(queryTemplate)({ identifierTypeId });
+}
+
+function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
+  const query = { ...resourceData.query };
+  const queryIndex = get(query, 'qindex', 'all');
+  const queryValue = get(query, 'query', '');
+  let queryTemplate = getQueryTemplate(resourceData, instanceIndexes);
+
+  if (queryIndex.match(/isbn|issn/)) {
+    queryTemplate = getIsbnIssnTemplate(queryTemplate, props, queryIndex);
+  }
+
+  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
+    query.sort = '';
+  }
+
+  resourceData.query = { ...query, qindex: '' };
+
+  return makeQueryFunction(
+    CQL_FIND_ALL,
+    queryTemplate,
+    instanceSortMap,
+    instanceFilterConfig,
+    2
+  )(queryParams, pathComponents, resourceData, logger, props);
+}
 
 class InstancesRoute extends React.Component {
   static propTypes = {
@@ -32,42 +72,7 @@ class InstancesRoute extends React.Component {
       perRequest: 30,
       path: 'inventory/instances',
       GET: {
-        params: {
-          query: (...args) => {
-            const [
-              queryParams,
-              pathComponents,
-              resourceData,
-              logger
-            ] = args;
-            const queryIndex = resourceData.query.qindex ? resourceData.query.qindex : 'all';
-            const searchableIndex = instanceIndexes.find(idx => idx.value === queryIndex);
-            let queryTemplate = '';
-
-            if (queryIndex === 'isbn' || queryIndex === 'issn') {
-              const identifierType = resourceData.identifier_types.records.find(type => type.name.toLowerCase() === queryIndex);
-              const identifierTypeId = identifierType ? identifierType.id : 'identifier-type-not-found';
-
-              queryTemplate = template(searchableIndex.queryTemplate)({ identifierTypeId });
-            } else {
-              queryTemplate = searchableIndex.queryTemplate;
-            }
-
-            resourceData.query = { ...resourceData.query, qindex: '' };
-
-            return makeQueryFunction(
-              'cql.allRecords=1',
-              queryTemplate,
-              {
-                Title: 'title',
-                publishers: 'publication',
-                Contributors: 'contributors',
-              },
-              instanceFilterConfig,
-              2
-            )(queryParams, pathComponents, resourceData, logger);
-          }
-        },
+        params: { query: buildQuery },
         staticFallback: { params: {} },
       },
     },
