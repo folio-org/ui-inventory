@@ -147,7 +147,7 @@
     "location": "Location",
     "callNumber": "Call number",
     "title": "Title",
-    "barcode": "Barcode",
+    "barcode": "バーコード",
     "status": "Status",
     "notes": "Notes",
     "date": "Date",
@@ -403,7 +403,17 @@
     "succeedingTitles": "Succeeding titles",
     "addSucceedingTitle": "Add succeeding title",
     "statisticalCodeName": "Statistical code name",
-    "generalNote": "General Note",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "unknownNoteType": "Unknown note type",
+    "item.status": "Item status",
+    "item.status.available": "Available",
+    "item.status.awaitingPickup": "Awaiting pickup",
+    "item.status.checkedOut": "Checked out",
+    "item.status.inProcess": "In process",
+    "item.status.inTransit": "In transit",
+    "item.status.missing": "Missing",
+    "item.status.onOrder": "On order",
+    "item.status.paged": "Paged",
+    "item.status.withdrawn": "Withdrawn"
 }

@@ -1,9 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
+import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import withData from './withData';
 import { HoldingsView } from '../views';
+import { getQueryTemplate } from '../utils';
+import {
+  holdingIndexes,
+  holdingSortMap,
+  holdingFilterConfig,
+  CQL_FIND_ALL,
+} from '../constants';
+
+function query(queryParams, pathComponents, resourceData, logger) {
+  const queryTemplate = getQueryTemplate(resourceData, holdingIndexes);
+
+  return makeQueryFunction(
+    CQL_FIND_ALL,
+    queryTemplate,
+    holdingSortMap,
+    holdingFilterConfig,
+    2
+  )(queryParams, pathComponents, resourceData, logger);
+}
 
 class HoldingsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -14,12 +34,7 @@ class HoldingsRoute extends React.Component {
       perRequest: 30,
       path: 'inventory/instances',
       GET: {
-        params: {
-          query: () => {
-            // TODO: add query implementation for holdings
-            return null;
-          }
-        },
+        params: { query },
         staticFallback: { params: {} },
       },
     },
