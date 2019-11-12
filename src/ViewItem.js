@@ -47,7 +47,7 @@ import { craftLayerUrl, canMarkItemAsMissing } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import {
-  itemStatuses,
+  itemStatusesMap,
   requestStatuses,
   wrappingCell
 } from './constants';
