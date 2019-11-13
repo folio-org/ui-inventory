@@ -22,6 +22,7 @@ class ItemsView extends React.Component {
       data: {
         query,
         materialTypes,
+        locations,
       },
     } = this.props;
 
@@ -33,6 +34,7 @@ class ItemsView extends React.Component {
         data={{
           materialTypes,
           itemStatuses,
+          locations,
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}

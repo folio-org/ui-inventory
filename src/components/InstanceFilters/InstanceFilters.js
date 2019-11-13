@@ -23,7 +23,6 @@ export default class InstanceFilters extends React.Component {
   static defaultProps = {
     activeFilters: {},
     data: {
-      locations: [],
       resourceTypes: [],
     },
   }
@@ -31,7 +30,6 @@ export default class InstanceFilters extends React.Component {
   render() {
     const {
       activeFilters: {
-        location = [],
         resource = [],
         language = [],
         discoverySuppress = [],
@@ -39,18 +37,12 @@ export default class InstanceFilters extends React.Component {
       },
       data: {
         resourceTypes,
-        locations,
       },
       onChange,
       onClear,
     } = this.props;
 
     const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
-      label: name,
-      value: id,
-    }));
-
-    const locationOptions = locations.map(({ name, id }) => ({
       label: name,
       value: id,
     }));
@@ -64,22 +56,6 @@ export default class InstanceFilters extends React.Component {
 
     return (
       <React.Fragment>
-        <Accordion
-          label={<FormattedMessage id="ui-inventory.instances.location" />}
-          id="location"
-          name="location"
-          header={FilterAccordionHeader}
-          displayClearButton={location.length > 0}
-          onClearFilter={() => onClear('location')}
-        >
-          <CheckboxFilter
-            data-test-filter-instance-location
-            name="location"
-            dataOptions={locationOptions}
-            selectedValues={location}
-            onChange={onChange}
-          />
-        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
           id="resource"

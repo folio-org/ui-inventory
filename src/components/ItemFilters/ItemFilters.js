@@ -26,6 +26,7 @@ export default class ItemFilters extends React.Component {
     data: {
       materialTypes: [],
       itemStatuses: [],
+      locations: [],
     },
   }
 
@@ -34,11 +35,13 @@ export default class ItemFilters extends React.Component {
       activeFilters: {
         materialType = [],
         itemStatus = [],
+        holdingsPermanentLocation = [],
         discoverySuppress = [],
       },
       data: {
         materialTypes,
-        itemStatuses
+        itemStatuses,
+        locations,
       },
       onChange,
       onClear,
@@ -54,6 +57,10 @@ export default class ItemFilters extends React.Component {
       value,
     }));
 
+    const locationOptions = locations.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
     const suppressedOptions = [
       {
         label: <FormattedMessage id="ui-inventory.yes" />,
@@ -76,6 +83,22 @@ export default class ItemFilters extends React.Component {
             name="itemStatus"
             dataOptions={itemStatusesOptions}
             selectedValues={itemStatus}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
+          id="holdingsPermanentLocationAccordion"
+          name="holdingsPermanentLocationAccordion"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={holdingsPermanentLocation.length > 0}
+          onClearFilter={() => onClear('holdingsPermanentLocation')}
+        >
+          <MultiSelectionFilter
+            name="holdingsPermanentLocation"
+            dataOptions={locationOptions}
+            selectedValues={holdingsPermanentLocation}
             onChange={onChange}
           />
         </Accordion>
