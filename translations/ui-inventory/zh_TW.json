@@ -307,7 +307,6 @@
     "newRequest": "新建请求",
     "instances.resourceType": "资源类型",
     "instances.language": "语言",
-    "instances.location": "馆藏地",
     "holdingsRecord.awaitingResources": "等待资源",
     "addLabel": "添加{label}",
     "source": "来源",
@@ -416,5 +415,6 @@
     "item.status.onOrder": "On order",
     "item.status.paged": "Paged",
     "item.status.withdrawn": "Withdrawn",
-    "querySearch": "Query search"
+    "querySearch": "Query search",
+    "holdings.permanentLocation": "Holdings permanent location"
 }

@@ -307,7 +307,6 @@
     "newRequest": "Nuova richiesta",
     "instances.resourceType": "Tipologia risorsa",
     "instances.language": "Lingua",
-    "instances.location": "Sezione",
     "holdingsRecord.awaitingResources": "Risorse in attesa",
     "addLabel": "Aggiungi {label}",
     "source": "Fonte",
@@ -416,5 +415,6 @@
     "item.status.onOrder": "On order",
     "item.status.paged": "Paged",
     "item.status.withdrawn": "Withdrawn",
-    "querySearch": "Query search"
+    "querySearch": "Query search",
+    "holdings.permanentLocation": "Holdings permanent location"
 }
