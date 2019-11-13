@@ -67,9 +67,7 @@ class ViewItem extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
-      POST: {
-        path: 'inventory/items',
-      },
+      POST: { path: 'inventory/items' },
     },
     holdingsRecords: {
       type: 'okapi',
@@ -101,9 +99,7 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: getRequestsPath,
       records: 'requests',
-      PUT: {
-        path: 'circulation/requests/%{requestOnItem.id}'
-      },
+      PUT: { path: 'circulation/requests/%{requestOnItem.id}' },
     },
     // there is no canonical method to retrieve an item's "current" loan.
     // the top item, sorted by loan-date descending, is a best-effort.
@@ -171,6 +167,7 @@ class ViewItem extends React.Component {
 
     if (!includes([AVAILABLE, AWAITING_PICKUP, IN_TRANSIT], itemStatus)) {
       const borrowers = await this.fetchBorrowers(loans[0].userId);
+
       state.loan = loan;
       state.borrower = borrowers[0];
     }
@@ -180,7 +177,9 @@ class ViewItem extends React.Component {
 
   fetchLoans() {
     const { mutator: { loans } } = this.props;
+
     loans.reset();
+
     return loans.GET();
   }
 
@@ -189,6 +188,7 @@ class ViewItem extends React.Component {
     const query = `id==${borrowerId}`;
 
     borrowers.reset();
+
     return borrowers.GET({ params: { query } });
   }
 
@@ -211,11 +211,16 @@ class ViewItem extends React.Component {
   };
 
   copyItem = item => {
-    const { resources: { holdingsRecords, instances1 } } = this.props;
+    const {
+      resources: {
+        holdingsRecords,
+        instances1,
+      },
+    } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
-    this.props.mutator.items.POST(item).then((data) => {
+    this.props.mutator.items.POST(item).then(data => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   };
@@ -235,27 +240,33 @@ class ViewItem extends React.Component {
   };
 
   handleAccordionToggle = ({ id }) => {
-    this.setState((state) => {
+    this.setState(state => {
       const newState = cloneDeep(state);
+
       newState.accordions[id] = !newState.accordions[id];
+
       return newState;
     });
   };
 
   handleExpandAll = obj => {
-    this.setState((curState) => {
+    this.setState(curState => {
       const newState = cloneDeep(curState);
+
       newState.accordions = obj;
       newState.areAllAccordionsOpen = !newState.areAllAccordionsOpen;
+
       return newState;
     });
   };
 
   onCopy(item) {
-    this.setState((state) => {
+    this.setState(state => {
       const newState = cloneDeep(state);
+
       newState.copiedItem = omit(item, ['id', 'hrid', 'barcode']);
       newState.copiedItem.status = { name: 'Available' };
+
       return newState;
     });
 
@@ -264,12 +275,14 @@ class ViewItem extends React.Component {
 
   handleConfirm = (item, requestRecords) => {
     const newItem = cloneDeep(item);
+
     set(newItem, ['status', 'name'], 'Missing');
 
     if (requestRecords.length) {
       const newRequestRecord = cloneDeep(requestRecords[0]);
       const itemStatus = get(newRequestRecord, ['item', 'status']);
       const holdShelfExpirationDate = get(newRequestRecord, ['holdShelfExpirationDate']);
+
       if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
         this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
         set(newRequestRecord, ['status'], 'Open - Not yet filled');
@@ -300,6 +313,7 @@ class ViewItem extends React.Component {
       ON_ORDER,
     } = itemStatusesMap;
     let messageId;
+
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
     } else if (itemStatus === ON_ORDER) {
@@ -313,9 +327,7 @@ class ViewItem extends React.Component {
         cannotDeleteItemModal: true,
         cannotDeleteItemModalMessageId: messageId,
       } :
-      {
-        confirmDeleteItemModal: true,
-      };
+      { confirmDeleteItemModal: true };
 
     this.setState(state);
   };
@@ -342,7 +354,7 @@ class ViewItem extends React.Component {
 
     return (
       <Fragment>
-        { canEdit &&
+        { canEdit && (
         <Button
           href={this.craftLayerUrl('editItem')}
           onClick={() => {
@@ -356,8 +368,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.editItem" />
           </Icon>
         </Button>
-          }
-        { canCreate &&
+        )}
+        { canCreate && (
         <Button
           id="clickable-copy-item"
           onClick={() => {
@@ -371,8 +383,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.copyItem" />
           </Icon>
         </Button>
-          }
-        { canDelete &&
+        )}
+        { canDelete && (
         <Button
           id="clickable-delete-item"
           onClick={() => {
@@ -386,8 +398,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.deleteItem" />
           </Icon>
         </Button>
-          }
-        { canMarkItemAsMissing(firstItem) && canMarkAsMissing &&
+        )}
+        { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
         <Button
           id="clickable-missing-item"
           onClick={() => {
@@ -401,8 +413,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.markAsMissing" />
           </Icon>
         </Button>
-          }
-        { canCreateNewRequest &&
+        )}
+        { canCreateNewRequest && (
         <Button
           to={newRequestLink}
           buttonStyle="dropdownItem"
@@ -412,7 +424,7 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.newRequest" />
           </Icon>
         </Button>
-          }
+        )}
       </Fragment>
     );
   };
@@ -519,18 +531,20 @@ class ViewItem extends React.Component {
     }
 
     let itemStatusDate = get(item, ['metadata', 'updatedDate']);
+
     if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
       itemStatusDate = this.state.loanStatusDate;
     }
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+
       return ref || {};
     };
 
     const layoutNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -541,6 +555,7 @@ class ViewItem extends React.Component {
                     if (note.itemNoteTypeId === noteType.id) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -552,6 +567,7 @@ class ViewItem extends React.Component {
                     if (note.itemNoteTypeId === noteType.id) {
                       return <div key={j}>{note.note}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -563,7 +579,7 @@ class ViewItem extends React.Component {
 
     const layoutCirculationNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter((noteType) => notes.find(note => note.noteType === noteType))
+        .filter(noteType => notes.find(note => note.noteType === noteType))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -574,6 +590,7 @@ class ViewItem extends React.Component {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -585,6 +602,7 @@ class ViewItem extends React.Component {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.note}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -600,7 +618,7 @@ class ViewItem extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], ''))
+          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
         }}
       />
     );
@@ -610,7 +628,7 @@ class ViewItem extends React.Component {
         id="ui-inventory.confirmItemDeleteModal.message"
         values={{
           hrid: item.hrid,
-          barcode: item.barcode
+          barcode: item.barcode,
         }}
       />
     );
@@ -649,7 +667,7 @@ class ViewItem extends React.Component {
       enumeration: get(item, 'enumeration', '-'),
       chronology: get(item, 'chronology', '-'),
       volume: get(item, 'volume', '-'),
-      yearCaption: get(item, 'yearCaption', []).map((line, i) => <div key={i}>{line}</div>)
+      yearCaption: get(item, 'yearCaption', []).map((line, i) => <div key={i}>{line}</div>),
     };
 
     const condition = {
@@ -660,19 +678,38 @@ class ViewItem extends React.Component {
       itemDamagedStatusDate: get(item, 'itemDamagedStatusDate', '-'),
     };
 
-    const itemNotes = {
-      notes: layoutNotes(referenceTables.itemNoteTypes, get(item, 'notes', [])),
-    };
+    const itemNotes = { notes: layoutNotes(referenceTables.itemNoteTypes, get(item, 'notes', [])) };
 
     const loanAndAvailability = {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatus: loanLink,
-      itemStatusDate: itemStatusDate ? <FormattedTime value={itemStatusDate} day="numeric" month="numeric" year="numeric" /> : '-',
+      itemStatusDate: itemStatusDate ? (
+        <FormattedTime
+          value={itemStatusDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      ) : '-',
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
-      loanDate: loan ? <FormattedTime value={loan.loanDate} day="numeric" month="numeric" year="numeric" /> : '-',
-      dueDate: loan ? <FormattedTime value={loan.dueDate} day="numeric" month="numeric" year="numeric" /> : '-',
+      loanDate: loan ? (
+        <FormattedTime
+          value={loan.loanDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      ) : '-',
+      dueDate: loan ? (
+        <FormattedTime
+          value={loan.dueDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      ) : '-',
       circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])) || [],
     };
 
@@ -721,24 +758,24 @@ class ViewItem extends React.Component {
               onCancel={this.hideConfirmDeleteItemModal}
               confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
             />
-            {cannotDeleteItemModal &&
-              <Modal
-                id="cannotDeleteItemModal"
-                data-test-cannot-delete-item-modal
-                label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-                open={cannotDeleteItemModal}
-                footer={cannotDeleteItemFooter}
-              >
-                <SafeHTMLMessage
-                  id={cannotDeleteItemModalMessageId}
-                  values={{
-                    hrid: item.hrid,
-                    barcode: item.barcode,
-                    status: item.status.name
-                  }}
-                />
-              </Modal>
-            }
+            {cannotDeleteItemModal && (
+            <Modal
+              id="cannotDeleteItemModal"
+              data-test-cannot-delete-item-modal
+              label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+              open={cannotDeleteItemModal}
+              footer={cannotDeleteItemFooter}
+            >
+              <SafeHTMLMessage
+                id={cannotDeleteItemModalMessageId}
+                values={{
+                  hrid: item.hrid,
+                  barcode: item.barcode,
+                  status: item.status.name,
+                }}
+              />
+            </Modal>
+            )}
             <Layer
               isOpen
               contentLabel={intl.formatMessage({ id: 'ui-inventory.viewItem' })}
@@ -746,18 +783,23 @@ class ViewItem extends React.Component {
               <Pane
                 data-test-item-view-page
                 defaultWidth={paneWidth}
-                appIcon={<AppIcon app="inventory" iconKey="item" />}
-                paneTitle={
+                appIcon={(
+                  <AppIcon
+                    app="inventory"
+                    iconKey="item"
+                  />
+)}
+                paneTitle={(
                   <span data-test-header-item-title>
                     <FormattedMessage
                       id="ui-inventory.itemDotStatus"
                       values={{
                         barcode: get(item, 'barcode', ''),
-                        status: get(item, 'status.name', '')
+                        status: get(item, 'status.name', ''),
                       }}
                     />
                   </span>
-                }
+)}
                 lastMenu={detailMenu}
                 dismissible
                 onClose={this.props.onCloseViewItem}
@@ -765,15 +807,18 @@ class ViewItem extends React.Component {
               >
                 <Row center="xs">
                   <Col sm={6}>
-                    <FormattedMessage id="ui-inventory.instanceTitle" values={{ title: instance.title }} />
-                    {(instance.publication && instance.publication.length > 0) &&
-                      <span>
-                        <em>
-                          {` ${instance.publication[0].publisher}`}
-                          {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                        </em>
-                      </span>
-                    }
+                    <FormattedMessage
+                      id="ui-inventory.instanceTitle"
+                      values={{ title: instance.title }}
+                    />
+                    {(instance.publication && instance.publication.length > 0) && (
+                    <span>
+                      <em>
+                        {` ${instance.publication[0].publisher}`}
+                        {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                      </em>
+                    </span>
+                    )}
                     <div>
                       <FormattedMessage
                         id="ui-inventory.holdingsTitle"
@@ -840,25 +885,25 @@ class ViewItem extends React.Component {
                     <Col xs={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.itemHrid" />}
-                        value={administrativeData.hrid}
+                        value={checkIfElementIsEmpty(administrativeData.hrid)}
                       />
                     </Col>
-                    {(item.barcode) &&
-                      <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemBarcode" />}
-                          value={administrativeData.barcode}
-                        />
-                      </Col>
-                    }
-                    {(item.accessionNumber) &&
-                      <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.accessionNumber" />}
-                          value={administrativeData.accessionNumber}
-                        />
-                      </Col>
-                    }
+                    {(item.barcode) && (
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.itemBarcode" />}
+                        value={checkIfElementIsEmpty(administrativeData.barcode)}
+                      />
+                    </Col>
+                    )}
+                    {(item.accessionNumber) && (
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.accessionNumber" />}
+                        value={checkIfElementIsEmpty(administrativeData.accessionNumber)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
                     <Col xs={2}>
@@ -867,20 +912,23 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(administrativeData.identifier)}
                       />
                     </Col>
-                    {(item.formerIds && item.formerIds.length > 0) &&
-                      <Col smOffset={0} sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.formerId" />}
-                          value={administrativeData.formerIds}
-                        />
-                      </Col>
-                    }
+                    {(item.formerIds && item.formerIds.length > 0) && (
+                    <Col
+                      smOffset={0}
+                      sm={2}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.formerId" />}
+                        value={checkIfElementIsEmpty(administrativeData.formerIds)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
                     {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
                       <MultiColumnList
                         id="list-statistical-codes"
-                        contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
+                        contentData={item.statisticalCodeIds.map(id => { return { codeId: id }; })}
                         visibleColumns={['Statistical code type', 'Statistical code']}
                         columnMapping={{
                           'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
@@ -894,7 +942,7 @@ class ViewItem extends React.Component {
                             x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
                         }}
                         ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
-                        containerRef={(ref) => { this.resultsList = ref; }}
+                        containerRef={ref => { this.resultsList = ref; }}
                       />
                     )}
                   </Row>
@@ -906,7 +954,10 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.itemData" />}
                 >
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.materialType" />
                       </strong>
@@ -918,7 +969,10 @@ class ViewItem extends React.Component {
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.itemCallNumber" />
                       </strong>
@@ -928,49 +982,58 @@ class ViewItem extends React.Component {
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                        value={itemData.callNumberType}
+                        value={checkIfElementIsEmpty(itemData.callNumberType)}
                       />
                     </Col>
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                        value={itemData.callNumberPrefix}
+                        value={checkIfElementIsEmpty(itemData.callNumberPrefix)}
                       />
                     </Col>
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumber" />}
-                        value={itemData.callNumber}
+                        value={checkIfElementIsEmpty(itemData.callNumber)}
                       />
                     </Col>
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                        value={itemData.callNumberSuffix}
+                        value={checkIfElementIsEmpty(itemData.callNumberSuffix)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    {(item.copyNumbers && item.copyNumbers.length > 0) &&
-                      <Col smOffset={0} sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                          value={itemData.copyNumbers}
-                        />
-                      </Col>
-                    }
-                    {(item.numberOfPieces) &&
-                      <Col smOffset={0} sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                          value={itemData.numberOfPieces}
-                        />
-                      </Col>
-                    }
-                    <Col smOffset={0} sm={4}>
+                    {(item.copyNumbers && item.copyNumbers.length > 0) && (
+                    <Col
+                      smOffset={0}
+                      sm={2}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                        value={checkIfElementIsEmpty(itemData.copyNumbers)}
+                      />
+                    </Col>
+                    )}
+                    {(item.numberOfPieces) && (
+                    <Col
+                      smOffset={0}
+                      sm={2}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
+                        value={checkIfElementIsEmpty(itemData.numberOfPieces)}
+                      />
+                    </Col>
+                    )}
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
-                        value={itemData.descriptionOfPieces}
+                        value={checkIfElementIsEmpty(itemData.descriptionOfPieces)}
                       />
                     </Col>
                   </Row>
@@ -982,42 +1045,54 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.enumerationData" />}
                 >
                   <Row>
-                    {(item.enumeration) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.enumeration" />}
-                          value={enumerationData.enumeration}
-                        />
-                      </Col>
-                    }
-                    {(item.chronology) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.chronology" />}
-                          value={enumerationData.chronology}
-                        />
-                      </Col>
-                    }
+                    {(item.enumeration) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.enumeration" />}
+                        value={checkIfElementIsEmpty(enumerationData.enumeration)}
+                      />
+                    </Col>
+                    )}
+                    {(item.chronology) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.chronology" />}
+                        value={checkIfElementIsEmpty(enumerationData.chronology)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    {(item.volume) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.volume" />}
-                          value={enumerationData.volume}
-                        />
-                      </Col>
-                    }
+                    {(item.volume) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.volume" />}
+                        value={checkIfElementIsEmpty(enumerationData.volume)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    {(item.yearCaption && item.yearCaption.length > 0) &&
-                      <Col smOffset={0} sm={8}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                          value={enumerationData.yearCaption}
-                        />
-                      </Col>
-                    }
+                    {(item.yearCaption && item.yearCaption.length > 0) && (
+                    <Col
+                      smOffset={0}
+                      sm={8}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.yearCaption" />}
+                        value={checkIfElementIsEmpty(enumerationData.yearCaption)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                 </Accordion>
                 <Accordion
@@ -1027,48 +1102,63 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.condition" />}
                 >
                   <Row>
-                    {(item.numberOfMissingPieces) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
-                          value={condition.numberOfMissingPieces}
-                        />
-                      </Col>
-                    }
-                    {(item.missingPieces) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.missingPieces" />}
-                          value={condition.missingPieces}
-                        />
-                      </Col>
-                    }
-                    {(item.missingPiecesDate) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.date" />}
-                          value={condition.missingPiecesDate}
-                        />
-                      </Col>
-                    }
+                    {(item.numberOfMissingPieces) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
+                        value={checkIfElementIsEmpty(condition.numberOfMissingPieces)}
+                      />
+                    </Col>
+                    )}
+                    {(item.missingPieces) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.missingPieces" />}
+                        value={checkIfElementIsEmpty(condition.missingPieces)}
+                      />
+                    </Col>
+                    )}
+                    {(item.missingPiecesDate) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.date" />}
+                        value={checkIfElementIsEmpty(condition.missingPiecesDate)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    {(item.itemDamagedStatusId) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                          value={condition.itemDamagedStatus}
-                        />
-                      </Col>
-                    }
-                    {(item.itemDamagedStatusDate) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.date" />}
-                          value={<FormattedDate value={condition.itemDamagedStatusDate} />}
-                        />
-                      </Col>
-                    }
+                    {(item.itemDamagedStatusId) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
+                        value={checkIfElementIsEmpty(condition.itemDamagedStatus)}
+                      />
+                    </Col>
+                    )}
+                    {(item.itemDamagedStatusDate) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.date" />}
+                        value={<FormattedDate value={checkIfElementIsEmpty(condition.itemDamagedStatusDate)} />}
+                      />
+                    </Col>
+                    )}
                   </Row>
                 </Accordion>
                 <Accordion
@@ -1086,57 +1176,81 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
                 >
                   <Row>
-                    {(item.permanentLoanType) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
-                          value={loanAndAvailability.permanentLoanType}
-                        />
-                      </Col>
-                    }
-                    {(item.temporaryLoanType) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
-                          value={loanAndAvailability.temporaryLoanType}
-                        />
-                      </Col>
-                    }
+                    {(item.permanentLoanType) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
+                        value={checkIfElementIsEmpty(loanAndAvailability.permanentLoanType)}
+                      />
+                    </Col>
+                    )}
+                    {(item.temporaryLoanType) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
+                        value={checkIfElementIsEmpty(loanAndAvailability.temporaryLoanType)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
-                        value={loanAndAvailability.itemStatus}
+                        value={checkIfElementIsEmpty(loanAndAvailability.itemStatus)}
                       />
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.itemStatusDate" />}>
-                        {loanAndAvailability.itemStatusDate}
+                        {checkIfElementIsEmpty(loanAndAvailability.itemStatusDate)}
                       </KeyValue>
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.item.availability.requests" />}
-                        value={loanAndAvailability.requestLink}
+                        value={checkIfElementIsEmpty(loanAndAvailability.requestLink)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.item.availability.borrower" />}
-                        value={loanAndAvailability.borrower}
+                        value={checkIfElementIsEmpty(loanAndAvailability.borrower)}
                       />
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.loanDate" />}>
-                        {loanAndAvailability.loanDate}
+                        {checkIfElementIsEmpty(loanAndAvailability.loanDate)}
                       </KeyValue>
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.dueDate" />}>
-                        {loanAndAvailability.dueDate}
+                        {checkIfElementIsEmpty(loanAndAvailability.dueDate)}
                       </KeyValue>
                     </Col>
                   </Row>
@@ -1149,7 +1263,10 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.location" />}
                 >
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.holdingsLocation" />
                       </strong>
@@ -1157,21 +1274,27 @@ class ViewItem extends React.Component {
                   </Row>
                   <br />
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                        value={holdingLocation.permanentLocation}
+                        value={checkIfElementIsEmpty(holdingLocation.permanentLocation)}
                       />
                     </Col>
                     <Col sm={4}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                        value={holdingLocation.temporaryLocation}
+                        value={checkIfElementIsEmpty(holdingLocation.temporaryLocation)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.itemLocation" />
                       </strong>
@@ -1179,21 +1302,27 @@ class ViewItem extends React.Component {
                   </Row>
                   <br />
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                        value={itemLocation.permanentLocation}
+                        value={checkIfElementIsEmpty(itemLocation.permanentLocation)}
                       />
                     </Col>
                     <Col sm={4}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                        value={itemLocation.temporaryLocation}
+                        value={checkIfElementIsEmpty(itemLocation.temporaryLocation)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.effectiveLocation" />
                       </strong>
@@ -1201,8 +1330,11 @@ class ViewItem extends React.Component {
                   </Row>
                   <br />
                   <Row>
-                    <Col smOffset={0} sm={4}>
-                      {itemLocation.effectiveLocation}
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      {checkIfElementIsEmpty(itemLocation.effectiveLocation)}
                     </Col>
                   </Row>
                 </Accordion>
@@ -1232,7 +1364,7 @@ class ViewItem extends React.Component {
                         'URL public note': x => get(x, ['publicNote']) || '',
                       }}
                       ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
-                      containerRef={(ref) => { this.resultsList = ref; }}
+                      containerRef={ref => { this.resultsList = ref; }}
                     />
                   )}
                 </Accordion>
@@ -1245,7 +1377,7 @@ class ViewItem extends React.Component {
             >
               <ItemForm
                 form={`itemform_${item.id}`}
-                onSubmit={(record) => { this.saveItem(record); }}
+                onSubmit={record => { this.saveItem(record); }}
                 initialValues={item}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
@@ -1261,7 +1393,7 @@ class ViewItem extends React.Component {
             >
               <ItemForm
                 form={`itemform_${holdingsRecord.id}`}
-                onSubmit={(record) => { this.copyItem(record); }}
+                onSubmit={record => { this.copyItem(record); }}
                 initialValues={this.state.copiedItem}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
@@ -1286,27 +1418,13 @@ ViewItem.propTypes = {
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    instances1: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    loanTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    requests: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    loans: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    items: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsRecords: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    callNumberTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    instances1: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    loanTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    requests: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    callNumberTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     borrower: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
@@ -1319,12 +1437,8 @@ ViewItem.propTypes = {
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
     }),
-    requests: PropTypes.shape({
-      PUT: PropTypes.func.isRequired,
-    }),
-    requestOnItem: PropTypes.shape({
-      replace: PropTypes.func.isRequired,
-    }),
+    requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
+    requestOnItem: PropTypes.shape({ replace: PropTypes.func.isRequired }),
     query: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,
