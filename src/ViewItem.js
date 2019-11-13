@@ -55,7 +55,7 @@ import withLocation from './withLocation';
 import {
   itemStatusesMap,
   requestStatuses,
-  wrappingCell
+  wrappingCell,
 } from './constants';
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
@@ -212,16 +212,11 @@ class ViewItem extends React.Component {
   };
 
   copyItem = item => {
-    const {
-      resources: {
-        holdingsRecords,
-        instances1,
-      },
-    } = this.props;
+    const { resources: { holdingsRecords, instances1 } } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
-    this.props.mutator.items.POST(item).then(data => {
+    this.props.mutator.items.POST(item).then((data) => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   };
@@ -241,7 +236,7 @@ class ViewItem extends React.Component {
   };
 
   handleAccordionToggle = ({ id }) => {
-    this.setState(state => {
+    this.setState((state) => {
       const newState = cloneDeep(state);
 
       newState.accordions[id] = !newState.accordions[id];
@@ -251,7 +246,7 @@ class ViewItem extends React.Component {
   };
 
   handleExpandAll = obj => {
-    this.setState(curState => {
+    this.setState((curState) => {
       const newState = cloneDeep(curState);
 
       newState.accordions = obj;
@@ -262,7 +257,7 @@ class ViewItem extends React.Component {
   };
 
   onCopy(item) {
-    this.setState(state => {
+    this.setState((state) => {
       const newState = cloneDeep(state);
 
       newState.copiedItem = omit(item, ['id', 'hrid', 'barcode']);
@@ -545,7 +540,7 @@ class ViewItem extends React.Component {
 
     const layoutNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -711,7 +706,7 @@ class ViewItem extends React.Component {
           year="numeric"
         />
       ) : '-',
-      circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])) || [],
+      circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
     };
 
     const holdingLocation = {
@@ -863,6 +858,7 @@ class ViewItem extends React.Component {
                 <Row end="xs">
                   <Col xs>
                     <ExpandAllButton
+                      id="collapse-all"
                       accordionStatus={accordions}
                       onToggle={this.handleExpandAll}
                     />
@@ -929,7 +925,7 @@ class ViewItem extends React.Component {
                     {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
                       <MultiColumnList
                         id="list-statistical-codes"
-                        contentData={item.statisticalCodeIds.map(id => { return { codeId: id }; })}
+                        contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
                         visibleColumns={['Statistical code type', 'Statistical code']}
                         columnMapping={{
                           'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
@@ -943,7 +939,7 @@ class ViewItem extends React.Component {
                             x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
                         }}
                         ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
-                        containerRef={ref => { this.resultsList = ref; }}
+                        containerRef={(ref) => { this.resultsList = ref; }}
                       />
                     )}
                   </Row>
@@ -1372,7 +1368,7 @@ class ViewItem extends React.Component {
                         'URL public note': x => get(x, ['publicNote']) || '',
                       }}
                       ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
-                      containerRef={ref => { this.resultsList = ref; }}
+                      containerRef={(ref) => { this.resultsList = ref; }}
                     />
                   )}
                 </Accordion>
@@ -1385,7 +1381,7 @@ class ViewItem extends React.Component {
             >
               <ItemForm
                 form={`itemform_${item.id}`}
-                onSubmit={record => { this.saveItem(record); }}
+                onSubmit={(record) => { this.saveItem(record); }}
                 initialValues={item}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
@@ -1401,7 +1397,7 @@ class ViewItem extends React.Component {
             >
               <ItemForm
                 form={`itemform_${holdingsRecord.id}`}
-                onSubmit={record => { this.copyItem(record); }}
+                onSubmit={(record) => { this.copyItem(record); }}
                 initialValues={this.state.copiedItem}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}

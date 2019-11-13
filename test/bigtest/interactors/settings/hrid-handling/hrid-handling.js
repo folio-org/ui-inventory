@@ -11,11 +11,13 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
 @interactor
 class StartWithFieldInteractor {
   fields = collection('.startWithField', TextFieldInteractor);
+  errorMessages = collection('[class*="feedbackError---"]');
 }
 
 @interactor
 class AssignPrefixFieldInteractor {
   fields = collection('.assignPrefixField', TextFieldInteractor);
+  errorMessages = collection('[class*="feedbackError---"]');
 }
 
 @interactor class HRIDHandlingInteractor {

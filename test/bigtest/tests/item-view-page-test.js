@@ -36,6 +36,15 @@ describe('ItemViewPage', () => {
         expect(ItemViewPage.hasEditItemButton).to.be.true;
       });
 
+      it('displays the "Collapse all" button', () => {
+        expect(ItemViewPage.collapseAllButton.isPresent).to.be.true;
+      });
+
+      it('displays collapsed accordion by default if it is empty', () => {
+        expect(ItemViewPage.enumerationDataAccordion.contentHeight).to.be.equal(0);
+        expect(ItemViewPage.enumerationDataAccordion.isOpen).to.be.false;
+      });
+
       describe('clicking on edit button in the pane header', () => {
         beforeEach(async () => {
           await ItemViewPage.clickEditItemButton();
