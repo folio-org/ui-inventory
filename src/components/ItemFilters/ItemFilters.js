@@ -26,6 +26,7 @@ export default class ItemFilters extends React.Component {
     data: {
       materialTypes: [],
       itemStatuses: [],
+      locations: [],
     },
   }
 
@@ -34,10 +35,13 @@ export default class ItemFilters extends React.Component {
       activeFilters: {
         materialType = [],
         itemStatus = [],
+        holdingsPermanentLocation = [],
+        discoverySuppress = [],
       },
       data: {
         materialTypes,
-        itemStatuses
+        itemStatuses,
+        locations,
       },
       onChange,
       onClear,
@@ -52,6 +56,17 @@ export default class ItemFilters extends React.Component {
       label: <FormattedMessage id={`${label}`} />,
       value,
     }));
+
+    const locationOptions = locations.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+    const suppressedOptions = [
+      {
+        label: <FormattedMessage id="ui-inventory.yes" />,
+        value: 'true',
+      },
+    ];
 
     return (
       <React.Fragment>
@@ -72,6 +87,22 @@ export default class ItemFilters extends React.Component {
           />
         </Accordion>
         <Accordion
+          label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
+          id="holdingsPermanentLocationAccordion"
+          name="holdingsPermanentLocationAccordion"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={holdingsPermanentLocation.length > 0}
+          onClearFilter={() => onClear('holdingsPermanentLocation')}
+        >
+          <MultiSelectionFilter
+            name="holdingsPermanentLocation"
+            dataOptions={locationOptions}
+            selectedValues={holdingsPermanentLocation}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
           label={<FormattedMessage id="ui-inventory.materialType" />}
           id="materialTypeAccordion"
           name="materialTypeAccordion"
@@ -87,6 +118,23 @@ export default class ItemFilters extends React.Component {
             dataOptions={materialTypesOptions}
             selectedValues={materialType}
             filter={filterItemsBy('label')}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+          id="itemDiscoverySuppressAccordion"
+          name="discoverySuppress"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={discoverySuppress.length > 0}
+          onClearFilter={() => onClear('discoverySuppress')}
+        >
+          <CheckboxFilter
+            data-test-filter-item-discovery-suppress
+            name="discoverySuppress"
+            dataOptions={suppressedOptions}
+            selectedValues={discoverySuppress}
             onChange={onChange}
           />
         </Accordion>

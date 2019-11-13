@@ -78,6 +78,11 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
+    name: 'holdingsPermanentLocation',
+    cql: 'holdingsRecords.permanentLocationId',
+    values: [],
+  },
+  {
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
     values: [],
@@ -100,6 +105,16 @@ export const itemFilterConfig = [
     cql: 'item.status.name',
     values: [],
   },
+  {
+    name: 'holdingsPermanentLocation',
+    cql: 'holdingsRecords.permanentLocationId',
+    values: [],
+  },
+  {
+    name: 'discoverySuppress',
+    cql: 'item.discoverySuppress',
+    values: [],
+  }
 ];
 
 export const itemSortMap = {
@@ -138,3 +153,5 @@ export const noValue = (
     -
   </span>
 );
+
+export const wrappingCell = { 'word-break': 'break-word' };

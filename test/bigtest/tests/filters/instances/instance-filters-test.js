@@ -24,10 +24,6 @@ describe('Instance filters', () => {
     this.visit('/inventory');
   });
 
-  it('has a filter for location', function () {
-    expect(inventory.isLocationFilterPresent).to.equal(true);
-  });
-
   it('has a filter for resource type', () => {
     expect(inventory.isResourceFilterPresent).to.equal(true);
   });
