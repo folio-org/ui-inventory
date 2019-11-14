@@ -3,8 +3,11 @@ import {
   clickable,
   isPresent,
   isVisible,
-  text
+  text,
+  scoped,
 } from '@bigtest/interactor';
+import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
+import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 @interactor class HeaderDropdown {
   click = clickable('button');
@@ -27,6 +30,15 @@ import {
   confirmDeleteModalIsPresent = isPresent('#delete-confirmation-modal');
   noDeleteHoldingsRecordModalIsVisible = isVisible('[data-test-no-delete-holdingsrecord-modal]');
   noDeleteHoldingsRecordModalIsPresent = isPresent('[data-test-no-delete-holdingsrecord-modal]');
+  administrativeDataAccordion = new AccordionInteractor('#acc01');
+  statisticalCodesList = new MultiColumnListInteractor('#list-statistical-codes');
+  holdingsStatementsList = new MultiColumnListInteractor('#list-holdingsstatements');
+  holdingsStatementsForSupplementsList = new MultiColumnListInteractor('#list-holdingsstatementsforsupplements');
+  holdingsStatementsForIndexesList = new MultiColumnListInteractor('#list-holdingsstatementsforindexes');
+  holdingsNotesList = new MultiColumnListInteractor('#list-holdingsnotes');
+  electronicAccessList = new MultiColumnListInteractor('#list-electronic-access');
+  expandAll = scoped('[data-test-expand-all] button');
+  hasExpandAll = isPresent('[data-test-expand-all] button');
   whenLoaded() {
     return this.when(() => this.isLoaded);
   }
