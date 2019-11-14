@@ -416,5 +416,16 @@
   "item.status.missing": "Missing",
   "item.status.onOrder": "On order",
   "item.status.paged": "Paged",
-  "item.status.withdrawn": "Withdrawn"
+  "item.status.withdrawn": "Withdrawn",
+  "inTransitReport": "In transit items report (CSV)",
+  "reports.inTransitItem.barcode": "Item barcode",
+  "reports.inTransitItem.title": "Title",
+  "reports.inTransitItem.location.name": "Library",
+  "reports.inTransitItem.location.libraryName": "Shelving location",
+  "reports.inTransitItem.location.code": "Shelving location code",
+  "reports.inTransitItem.status.name": "Item status",
+  "reports.inTransitItem.contributors": "Contributors",
+  "reports.inTransitItem.emptyReport.label": "Nothing to export",
+  "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
+  "common.close": "Close"
 }

@@ -76,6 +76,13 @@ class InstancesRoute extends React.Component {
         staticFallback: { params: {} },
       },
     },
+    itemsInTransitReport: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory-reports/items-in-transit',
+      accumulate: true,
+      fetch: false,
+    },
   });
 
   render() {
