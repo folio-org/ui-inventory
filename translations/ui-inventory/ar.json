@@ -307,7 +307,6 @@
     "newRequest": "طلب جديد",
     "instances.resourceType": "نوع المورد",
     "instances.language": "اللغة",
-    "instances.location": "الموقع",
     "holdingsRecord.awaitingResources": "في انتظار الموارد",
     "addLabel": "إضافة {label}",
     "source": "المصدر",
@@ -416,5 +415,6 @@
     "item.status.onOrder": "في الطلب",
     "item.status.paged": "مقسم إلى صفحات",
     "item.status.withdrawn": "مسحوب",
-    "querySearch": "Query search"
+    "querySearch": "بحث الاستعلام",
+    "holdings.permanentLocation": "موقع المقتنيات الدائم"
 }

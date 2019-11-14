@@ -307,7 +307,6 @@
     "newRequest": "Nova solicitação de compra",
     "instances.resourceType": "Tipo de recurso",
     "instances.language": "Idioma",
-    "instances.location": "Localização",
     "holdingsRecord.awaitingResources": "Recursos esperados",
     "addLabel": "Adicionar {label}",
     "source": "Fonte",
@@ -416,5 +415,6 @@
     "item.status.onOrder": "Em processo de compra",
     "item.status.paged": "Paginado",
     "item.status.withdrawn": "Retirado",
-    "querySearch": "Query search"
+    "querySearch": "Pesquisa rápida",
+    "holdings.permanentLocation": "Local permanente dos acervos"
 }
