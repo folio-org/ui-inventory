@@ -47,6 +47,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   itemsList = new MultiColumnListInteractor('#list-items');
   seriesStatementList = new MultiColumnListInteractor('#list-series-statement');
   subjectsList = new MultiColumnListInteractor('#list-subject');
+  statisticalCodesList = new MultiColumnListInteractor('#list-statistical-codes');
+  alternativeTitlesList = new MultiColumnListInteractor('#list-alternative-titles');
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');

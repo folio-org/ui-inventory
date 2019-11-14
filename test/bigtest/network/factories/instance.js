@@ -1,8 +1,14 @@
-import { faker, trait } from '@bigtest/mirage';
+import {
+  faker,
+  trait
+} from '@bigtest/mirage';
 
 import Factory from './application';
 
-const { lorem, name } = faker;
+const {
+  lorem,
+  name,
+} = faker;
 
 export default Factory.extend({
   title: () => lorem.sentence(),
@@ -10,7 +16,10 @@ export default Factory.extend({
   source: () => 'FOLIO',
   identifiers: () => [],
   publication: () => [],
-  alternativeTitles: () => [],
+  alternativeTitles: () => [{
+    alternativeTitle: lorem.sentence(),
+    alternativeTitleTypeId: '09964ad1-7aed-49b8-8223-a4c105e3ef87',
+  }],
   series: () => [lorem.sentence()],
   physicalDescriptions: () => [],
   languages: () => [],
@@ -29,6 +38,11 @@ export default Factory.extend({
   classifications: () => [],
   childInstances: () => [],
   parentInstances: () => [],
+  statisticalCodeIds: () => [
+    'b5968c9e-cddc-4576-99e3-8e60aed8b0dd',
+    '30b5400d-0b9e-4757-a3d0-db0d30a49e72',
+    '2850630b-cd12-4379-af57-5c51491a6873',
+  ],
 
   afterCreate(instance, server) {
     instance.identifiers.forEach(identifier => {
