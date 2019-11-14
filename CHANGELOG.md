@@ -37,6 +37,8 @@
 * Fix checkbox on holdings edit page. Refs of UIIN-843.
 * Filter item records by item status. Part of UIIN-771.
 * Allow for searching title with words out of order. Part of UIIN-602.
+* Item record. Display empty elements with the dashes. Refs UIIN-828.
+* Filter holdings pane by discovery-suppress. Completes UIIN-766.
 * Filter holdings and item panes by discovery-suppress. Completes UIIN-766 and UIIN-767.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)

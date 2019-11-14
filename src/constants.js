@@ -1,3 +1,5 @@
+import React from 'react';
+
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
@@ -46,7 +48,7 @@ export const instanceFilterConfig = [
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
-  }
+  },
 ];
 
 export const instanceIndexes = [
@@ -84,7 +86,7 @@ export const holdingFilterConfig = [
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
     values: [],
-  }
+  },
 ];
 
 export const itemIndexes = [
@@ -140,5 +142,16 @@ export const segments = {
 };
 
 export const CQL_FIND_ALL = 'cql.allRecords=1';
+
+// this constant is used for reading the given dash character as "no value set" by a screenreader
+export const noValue = (
+  <span
+    /* eslint-disable-next-line jsx-a11y/aria-role */
+    role="text"
+    aria-label="no value set"
+  >
+    -
+  </span>
+);
 
 export const wrappingCell = { 'word-break': 'break-word' };

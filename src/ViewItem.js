@@ -6,6 +6,7 @@ import {
   omit,
   includes,
   map,
+  isEmpty,
 } from 'lodash';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
@@ -43,13 +44,18 @@ import {
   IfPermission,
 } from '@folio/stripes/core';
 
-import { craftLayerUrl, canMarkItemAsMissing } from './utils';
+import {
+  craftLayerUrl,
+  canMarkItemAsMissing,
+  areAllFieldsEmpty,
+  checkIfElementIsEmpty,
+} from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import {
   itemStatusesMap,
   requestStatuses,
-  wrappingCell
+  wrappingCell,
 } from './constants';
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
@@ -62,9 +68,7 @@ class ViewItem extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
-      POST: {
-        path: 'inventory/items',
-      },
+      POST: { path: 'inventory/items' },
     },
     holdingsRecords: {
       type: 'okapi',
@@ -96,9 +100,7 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: getRequestsPath,
       records: 'requests',
-      PUT: {
-        path: 'circulation/requests/%{requestOnItem.id}'
-      },
+      PUT: { path: 'circulation/requests/%{requestOnItem.id}' },
     },
     // there is no canonical method to retrieve an item's "current" loan.
     // the top item, sorted by loan-date descending, is a best-effort.
@@ -126,6 +128,7 @@ class ViewItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      areAllAccordionsOpen: true,
       accordions: {
         acc01: true,
         acc02: true,
@@ -165,6 +168,7 @@ class ViewItem extends React.Component {
 
     if (!includes([AVAILABLE, AWAITING_PICKUP, IN_TRANSIT], itemStatus)) {
       const borrowers = await this.fetchBorrowers(loans[0].userId);
+
       state.loan = loan;
       state.borrower = borrowers[0];
     }
@@ -174,7 +178,9 @@ class ViewItem extends React.Component {
 
   fetchLoans() {
     const { mutator: { loans } } = this.props;
+
     loans.reset();
+
     return loans.GET();
   }
 
@@ -183,28 +189,29 @@ class ViewItem extends React.Component {
     const query = `id==${borrowerId}`;
 
     borrowers.reset();
+
     return borrowers.GET({ params: { query } });
   }
 
-  onClickEditItem = (e) => {
+  onClickEditItem = e => {
     if (e) e.preventDefault();
     this.props.updateLocation({ layer: 'editItem' });
-  }
+  };
 
-  onClickCloseEditItem = (e) => {
+  onClickCloseEditItem = e => {
     if (e) e.preventDefault();
     this.props.updateLocation({ layer: null });
-  }
+  };
 
-  saveItem = (item) => {
+  saveItem = item => {
     if (!item.barcode) {
       delete item.barcode;
     }
 
     this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
-  }
+  };
 
-  copyItem = (item) => {
+  copyItem = item => {
     const { resources: { holdingsRecords, instances1 } } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
@@ -212,34 +219,50 @@ class ViewItem extends React.Component {
     this.props.mutator.items.POST(item).then((data) => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
-  }
+  };
 
-  deleteItem = (item) => {
+  deleteItem = item => {
     this.props.onCloseViewItem();
     this.props.mutator.items.DELETE(item);
-  }
+  };
+
+  isAccordionOpen = (id, hasAllFieldsEmpty) => {
+    const {
+      accordions,
+      areAllAccordionsOpen,
+    } = this.state;
+
+    return accordions[id] === !hasAllFieldsEmpty && areAllAccordionsOpen;
+  };
 
   handleAccordionToggle = ({ id }) => {
     this.setState((state) => {
       const newState = cloneDeep(state);
+
       newState.accordions[id] = !newState.accordions[id];
+
       return newState;
     });
-  }
+  };
 
-  handleExpandAll = (obj) => {
+  handleExpandAll = obj => {
     this.setState((curState) => {
       const newState = cloneDeep(curState);
+
       newState.accordions = obj;
+      newState.areAllAccordionsOpen = !newState.areAllAccordionsOpen;
+
       return newState;
     });
-  }
+  };
 
   onCopy(item) {
     this.setState((state) => {
       const newState = cloneDeep(state);
+
       newState.copiedItem = omit(item, ['id', 'hrid', 'barcode']);
       newState.copiedItem.status = { name: 'Available' };
+
       return newState;
     });
 
@@ -248,12 +271,14 @@ class ViewItem extends React.Component {
 
   handleConfirm = (item, requestRecords) => {
     const newItem = cloneDeep(item);
+
     set(newItem, ['status', 'name'], 'Missing');
 
     if (requestRecords.length) {
       const newRequestRecord = cloneDeep(requestRecords[0]);
       const itemStatus = get(newRequestRecord, ['item', 'status']);
       const holdShelfExpirationDate = get(newRequestRecord, ['holdShelfExpirationDate']);
+
       if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
         this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
         set(newRequestRecord, ['status'], 'Open - Not yet filled');
@@ -263,19 +288,19 @@ class ViewItem extends React.Component {
 
     this.props.mutator.items.PUT(newItem)
       .then(() => this.setState({ itemMissingModal: false }));
-  }
+  };
 
   hideMissingModal = () => {
     this.setState({ itemMissingModal: false });
-  }
+  };
 
-  hideconfirmDeleteItemModal = () => {
+  hideConfirmDeleteItemModal = () => {
     this.setState({ confirmDeleteItemModal: false });
-  }
+  };
 
   hideCannotDeleteItemModal = () => {
     this.setState({ cannotDeleteItemModal: false });
-  }
+  };
 
   canDeleteItem = (item, request) => {
     const itemStatus = get(item, 'status.name');
@@ -284,6 +309,7 @@ class ViewItem extends React.Component {
       ON_ORDER,
     } = itemStatusesMap;
     let messageId;
+
     if (itemStatus === CHECKED_OUT) {
       messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
     } else if (itemStatus === ON_ORDER) {
@@ -297,12 +323,10 @@ class ViewItem extends React.Component {
         cannotDeleteItemModal: true,
         cannotDeleteItemModalMessageId: messageId,
       } :
-      {
-        confirmDeleteItemModal: true,
-      };
+      { confirmDeleteItemModal: true };
 
     this.setState(state);
-  }
+  };
 
   getActionMenu = ({ onToggle }) => {
     const {
@@ -326,7 +350,7 @@ class ViewItem extends React.Component {
 
     return (
       <Fragment>
-        { canEdit &&
+        { canEdit && (
         <Button
           href={this.craftLayerUrl('editItem')}
           onClick={() => {
@@ -340,8 +364,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.editItem" />
           </Icon>
         </Button>
-          }
-        { canCreate &&
+        )}
+        { canCreate && (
         <Button
           id="clickable-copy-item"
           onClick={() => {
@@ -355,8 +379,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.copyItem" />
           </Icon>
         </Button>
-          }
-        { canDelete &&
+        )}
+        { canDelete && (
         <Button
           id="clickable-delete-item"
           onClick={() => {
@@ -370,8 +394,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.deleteItem" />
           </Icon>
         </Button>
-          }
-        { canMarkItemAsMissing(firstItem) && canMarkAsMissing &&
+        )}
+        { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
         <Button
           id="clickable-missing-item"
           onClick={() => {
@@ -385,8 +409,8 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.markAsMissing" />
           </Icon>
         </Button>
-          }
-        { canCreateNewRequest &&
+        )}
+        { canCreateNewRequest && (
         <Button
           to={newRequestLink}
           buttonStyle="dropdownItem"
@@ -396,7 +420,7 @@ class ViewItem extends React.Component {
             <FormattedMessage id="ui-inventory.newRequest" />
           </Icon>
         </Button>
-          }
+        )}
       </Fragment>
     );
   };
@@ -444,6 +468,7 @@ class ViewItem extends React.Component {
       accordions,
       cannotDeleteItemModalMessageId,
       cannotDeleteItemModal,
+      loan,
     } = this.state;
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
@@ -483,14 +508,7 @@ class ViewItem extends React.Component {
       </IfPermission>
     );
 
-    const labelPermanentHoldingsLocation = get(permanentHoldingsLocation, ['name'], '');
-    const labelCallNumber = holdingsRecord.callNumber || '';
-
-    let requestLink = 0;
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
-    if (requestRecords.length) {
-      requestLink = <Link to={requestsUrl}>{requestRecords.length}</Link>;
-    }
 
     let loanLink = item.status.name;
     let borrowerLink = '-';
@@ -509,12 +527,14 @@ class ViewItem extends React.Component {
     }
 
     let itemStatusDate = get(item, ['metadata', 'updatedDate']);
+
     if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
       itemStatusDate = this.state.loanStatusDate;
     }
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+
       return ref || {};
     };
 
@@ -531,6 +551,7 @@ class ViewItem extends React.Component {
                     if (note.itemNoteTypeId === noteType.id) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -542,6 +563,7 @@ class ViewItem extends React.Component {
                     if (note.itemNoteTypeId === noteType.id) {
                       return <div key={j}>{note.note}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -553,7 +575,7 @@ class ViewItem extends React.Component {
 
     const layoutCirculationNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter((noteType) => notes.find(note => note.noteType === noteType))
+        .filter(noteType => notes.find(note => note.noteType === noteType))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -564,6 +586,7 @@ class ViewItem extends React.Component {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -575,6 +598,7 @@ class ViewItem extends React.Component {
                     if (note.noteType === noteType) {
                       return <div key={j}>{note.note}</div>;
                     }
+
                     return null;
                   })}
                 />
@@ -590,7 +614,7 @@ class ViewItem extends React.Component {
         values={{
           title: item.title,
           barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], ''))
+          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
         }}
       />
     );
@@ -600,7 +624,7 @@ class ViewItem extends React.Component {
         id="ui-inventory.confirmItemDeleteModal.message"
         values={{
           hrid: item.hrid,
-          barcode: item.barcode
+          barcode: item.barcode,
         }}
       />
     );
@@ -613,6 +637,99 @@ class ViewItem extends React.Component {
         <FormattedMessage id="stripes-core.button.back" />
       </Button>
     );
+
+    const administrativeData = {
+      discoverySuppress: get(instance, 'discoverySuppress', '-'),
+      hrid: get(item, 'hrid', '-'),
+      barcode: get(item, 'barcode', '-'),
+      accessionNumber: get(item, 'accessionNumber', '-'),
+      identifier: get(item, 'itemIdentifier', '-'),
+      formerIds: get(item, 'formerIds', []).map((line, i) => <div key={i}>{line}</div>),
+      statisticalCodeIds: get(item, 'statisticalCodeIds', []),
+    };
+
+    const itemData = {
+      materialType: get(item, ['materialType', 'name'], '-'),
+      callNumberType: refLookup(referenceTables.callNumberTypes, get(item, 'itemLevelCallNumberTypeId')).name || '-',
+      callNumberPrefix: get(item, 'itemLevelCallNumberPrefix', '-'),
+      callNumber: get(item, 'itemLevelCallNumber', '-'),
+      callNumberSuffix: get(item, 'itemLevelCallNumberSuffix', '-'),
+      copyNumbers: get(item, 'copyNumbers[0]', '-'),
+      numberOfPieces: get(item, 'numberOfPieces', '-'),
+      descriptionOfPieces: get(item, 'descriptionOfPieces', '-'),
+    };
+
+    const enumerationData = {
+      enumeration: get(item, 'enumeration', '-'),
+      chronology: get(item, 'chronology', '-'),
+      volume: get(item, 'volume', '-'),
+      yearCaption: get(item, 'yearCaption', []).map((line, i) => <div key={i}>{line}</div>),
+    };
+
+    const condition = {
+      numberOfMissingPieces: get(item, 'numberOfMissingPieces', '-'),
+      missingPieces: get(item, 'missingPieces', '-'),
+      missingPiecesDate: get(item, 'missingPiecesDate', '-'),
+      itemDamagedStatus: refLookup(referenceTables.itemDamagedStatuses, get(item, 'itemDamagedStatusId')).name || '-',
+      itemDamagedStatusDate: get(item, 'itemDamagedStatusDate', '-'),
+    };
+
+    const itemNotes = { notes: layoutNotes(referenceTables.itemNoteTypes, get(item, 'notes', [])) };
+
+    const loanAndAvailability = {
+      permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
+      temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
+      itemStatus: loanLink,
+      itemStatusDate: itemStatusDate ? (
+        <FormattedTime
+          value={itemStatusDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      ) : '-',
+      requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
+      borrower: borrowerLink,
+      loanDate: loan ? (
+        <FormattedTime
+          value={loan.loanDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      ) : '-',
+      dueDate: loan ? (
+        <FormattedTime
+          value={loan.dueDate}
+          day="numeric"
+          month="numeric"
+          year="numeric"
+        />
+      ) : '-',
+      circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
+    };
+
+    const holdingLocation = {
+      permanentLocation: get(permanentHoldingsLocation, 'name', '-'),
+      temporaryLocation: get(temporaryHoldingsLocation, 'name', '-'),
+    };
+
+    const itemLocation = {
+      permanentLocation: get(item, ['permanentLocation', 'name'], '-'),
+      temporaryLocation: get(item, ['temporaryLocation', 'name'], '-'),
+      effectiveLocation: get(item, ['effectiveLocation', 'name'], '-'),
+    };
+
+    const accordionsState = {
+      acc01: areAllFieldsEmpty(Object.values(administrativeData)),
+      acc02: areAllFieldsEmpty(Object.values(itemData)),
+      acc03: areAllFieldsEmpty(Object.values(enumerationData)),
+      acc04: areAllFieldsEmpty(Object.values(condition)),
+      acc05: areAllFieldsEmpty(Object.values(itemNotes)),
+      acc06: areAllFieldsEmpty(Object.values(loanAndAvailability)),
+      acc07: areAllFieldsEmpty([...Object.values(holdingLocation), ...Object.values(itemLocation)]),
+      acc08: areAllFieldsEmpty([...get(item, 'electronicAccess', [])]),
+    };
 
     return (
       <IntlConsumer>
@@ -634,27 +751,27 @@ class ViewItem extends React.Component {
               heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
               message={confirmDeleteItemModalMessage}
               onConfirm={() => { this.deleteItem(item); }}
-              onCancel={this.hideconfirmDeleteItemModal}
+              onCancel={this.hideConfirmDeleteItemModal}
               confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
             />
-            {cannotDeleteItemModal &&
-              <Modal
-                id="cannotDeleteItemModal"
-                data-test-cannot-delete-item-modal
-                label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-                open={cannotDeleteItemModal}
-                footer={cannotDeleteItemFooter}
-              >
-                <SafeHTMLMessage
-                  id={cannotDeleteItemModalMessageId}
-                  values={{
-                    hrid: item.hrid,
-                    barcode: item.barcode,
-                    status: item.status.name
-                  }}
-                />
-              </Modal>
-            }
+            {cannotDeleteItemModal && (
+            <Modal
+              id="cannotDeleteItemModal"
+              data-test-cannot-delete-item-modal
+              label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+              open={cannotDeleteItemModal}
+              footer={cannotDeleteItemFooter}
+            >
+              <SafeHTMLMessage
+                id={cannotDeleteItemModalMessageId}
+                values={{
+                  hrid: item.hrid,
+                  barcode: item.barcode,
+                  status: item.status.name,
+                }}
+              />
+            </Modal>
+            )}
             <Layer
               isOpen
               contentLabel={intl.formatMessage({ id: 'ui-inventory.viewItem' })}
@@ -662,18 +779,23 @@ class ViewItem extends React.Component {
               <Pane
                 data-test-item-view-page
                 defaultWidth={paneWidth}
-                appIcon={<AppIcon app="inventory" iconKey="item" />}
-                paneTitle={
+                appIcon={(
+                  <AppIcon
+                    app="inventory"
+                    iconKey="item"
+                  />
+)}
+                paneTitle={(
                   <span data-test-header-item-title>
                     <FormattedMessage
                       id="ui-inventory.itemDotStatus"
                       values={{
                         barcode: get(item, 'barcode', ''),
-                        status: get(item, 'status.name', '')
+                        status: get(item, 'status.name', ''),
                       }}
                     />
                   </span>
-                }
+)}
                 lastMenu={detailMenu}
                 dismissible
                 onClose={this.props.onCloseViewItem}
@@ -681,21 +803,24 @@ class ViewItem extends React.Component {
               >
                 <Row center="xs">
                   <Col sm={6}>
-                    <FormattedMessage id="ui-inventory.instanceTitle" values={{ title: instance.title }} />
-                    {(instance.publication && instance.publication.length > 0) &&
-                      <span>
-                        <em>
-                          {` ${instance.publication[0].publisher}`}
-                          {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                        </em>
-                      </span>
-                    }
+                    <FormattedMessage
+                      id="ui-inventory.instanceTitle"
+                      values={{ title: instance.title }}
+                    />
+                    {(instance.publication && instance.publication.length > 0) && (
+                    <span>
+                      <em>
+                        {` ${instance.publication[0].publisher}`}
+                        {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                      </em>
+                    </span>
+                    )}
                     <div>
                       <FormattedMessage
                         id="ui-inventory.holdingsTitle"
                         values={{
-                          location: labelPermanentHoldingsLocation,
-                          callNumber: labelCallNumber,
+                          location: holdingLocation.permanentLocation,
+                          callNumber: get(holdingsRecord, 'callNumber', ''),
                         }}
                       />
                     </div>
@@ -733,14 +858,15 @@ class ViewItem extends React.Component {
                 <Row end="xs">
                   <Col xs>
                     <ExpandAllButton
-                      accordionStatus={this.state.accordions}
+                      id="collapse-all"
+                      accordionStatus={accordions}
                       onToggle={this.handleExpandAll}
                     />
                   </Col>
                 </Row>
                 <br />
                 <Accordion
-                  open={accordions.acc01}
+                  open={this.isAccordionOpen('acc01', accordionsState.acc01)}
                   id="acc01"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.administrativeData" />}
@@ -756,41 +882,44 @@ class ViewItem extends React.Component {
                     <Col xs={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.itemHrid" />}
-                        value={get(item, ['hrid'], '')}
+                        value={checkIfElementIsEmpty(administrativeData.hrid)}
                       />
                     </Col>
-                    {(item.barcode) &&
-                      <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemBarcode" />}
-                          value={get(item, ['barcode'], '')}
-                        />
-                      </Col>
-                    }
-                    {(item.accessionNumber) &&
-                      <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.accessionNumber" />}
-                          value={get(item, ['accessionNumber'], '')}
-                        />
-                      </Col>
-                    }
+                    {(item.barcode) && (
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.itemBarcode" />}
+                        value={checkIfElementIsEmpty(administrativeData.barcode)}
+                      />
+                    </Col>
+                    )}
+                    {(item.accessionNumber) && (
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.accessionNumber" />}
+                        value={checkIfElementIsEmpty(administrativeData.accessionNumber)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
                     <Col xs={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
-                        value={get(item, ['itemIdentifier'], '')}
+                        value={checkIfElementIsEmpty(administrativeData.identifier)}
                       />
                     </Col>
-                    {(item.formerIds && item.formerIds.length > 0) &&
-                      <Col smOffset={0} sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.formerId" />}
-                          value={get(item, ['formerIds'], []).map((line, i) => <div key={i}>{line}</div>)}
-                        />
-                      </Col>
-                    }
+                    {(item.formerIds && item.formerIds.length > 0) && (
+                    <Col
+                      smOffset={0}
+                      sm={2}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.formerId" />}
+                        value={checkIfElementIsEmpty(administrativeData.formerIds)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
                     {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
@@ -816,13 +945,16 @@ class ViewItem extends React.Component {
                   </Row>
                 </Accordion>
                 <Accordion
-                  open={accordions.acc02}
+                  open={this.isAccordionOpen('acc02', accordionsState.acc02)}
                   id="acc02"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.itemData" />}
                 >
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.materialType" />
                       </strong>
@@ -830,11 +962,14 @@ class ViewItem extends React.Component {
                   </Row>
                   <Row>
                     <Col sm={3}>
-                      <KeyValue value={get(item, ['materialType', 'name'], '')} />
+                      <KeyValue value={checkIfElementIsEmpty(itemData.materialType)} />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.itemCallNumber" />
                       </strong>
@@ -844,228 +979,291 @@ class ViewItem extends React.Component {
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                        value={refLookup(referenceTables.callNumberTypes, get(item, ['itemLevelCallNumberTypeId'])).name}
+                        value={checkIfElementIsEmpty(itemData.callNumberType)}
                       />
                     </Col>
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                        value={item.itemLevelCallNumberPrefix}
+                        value={checkIfElementIsEmpty(itemData.callNumberPrefix)}
                       />
                     </Col>
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumber" />}
-                        value={item.itemLevelCallNumber}
+                        value={checkIfElementIsEmpty(itemData.callNumber)}
                       />
                     </Col>
                     <Col sm={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                        value={item.itemLevelCallNumberSuffix}
+                        value={checkIfElementIsEmpty(itemData.callNumberSuffix)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    {(item.copyNumbers && item.copyNumbers.length > 0) &&
-                      <Col smOffset={0} sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                          value={get(item, 'copyNumbers[0]', '')}
-                        />
-                      </Col>
-                    }
-                    {(item.numberOfPieces) &&
-                      <Col smOffset={0} sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                          value={get(item, ['numberOfPieces'], '-')}
-                        />
-                      </Col>
-                    }
-                    <Col smOffset={0} sm={4}>
+                    {(item.copyNumbers && item.copyNumbers.length > 0) && (
+                    <Col
+                      smOffset={0}
+                      sm={2}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                        value={checkIfElementIsEmpty(itemData.copyNumbers)}
+                      />
+                    </Col>
+                    )}
+                    {(item.numberOfPieces) && (
+                    <Col
+                      smOffset={0}
+                      sm={2}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
+                        value={checkIfElementIsEmpty(itemData.numberOfPieces)}
+                      />
+                    </Col>
+                    )}
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
-                        value={get(item, ['descriptionOfPieces'], '-')}
+                        value={checkIfElementIsEmpty(itemData.descriptionOfPieces)}
                       />
                     </Col>
                   </Row>
                 </Accordion>
                 <Accordion
-                  open={accordions.acc03}
+                  open={this.isAccordionOpen('acc03', accordionsState.acc03)}
                   id="acc03"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.enumerationData" />}
                 >
                   <Row>
-                    {(item.enumeration) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.enumeration" />}
-                          value={get(item, ['enumeration'], '')}
-                        />
-                      </Col>
-                    }
-                    {(item.chronology) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.chronology" />}
-                          value={get(item, ['chronology'], '')}
-                        />
-                      </Col>
-                    }
+                    {(item.enumeration) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.enumeration" />}
+                        value={checkIfElementIsEmpty(enumerationData.enumeration)}
+                      />
+                    </Col>
+                    )}
+                    {(item.chronology) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.chronology" />}
+                        value={checkIfElementIsEmpty(enumerationData.chronology)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    {(item.volume) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.volume" />}
-                          value={get(item, ['volume'], '')}
-                        />
-                      </Col>
-                    }
+                    {(item.volume) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.volume" />}
+                        value={checkIfElementIsEmpty(enumerationData.volume)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    {(item.yearCaption && item.yearCaption.length > 0) &&
-                      <Col smOffset={0} sm={8}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                          value={get(item, ['yearCaption'], []).map((line, i) => <div key={i}>{line}</div>)}
-                        />
-                      </Col>
-                    }
+                    {(item.yearCaption && item.yearCaption.length > 0) && (
+                    <Col
+                      smOffset={0}
+                      sm={8}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.yearCaption" />}
+                        value={checkIfElementIsEmpty(enumerationData.yearCaption)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                 </Accordion>
                 <Accordion
-                  open={accordions.acc04}
+                  open={this.isAccordionOpen('acc04', accordionsState.acc04)}
                   id="acc04"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.condition" />}
                 >
                   <Row>
-                    {(item.numberOfMissingPieces) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
-                          value={get(item, ['numberOfMissingPieces'], '')}
-                        />
-                      </Col>
-                    }
-                    {(item.missingPieces) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.missingPieces" />}
-                          value={get(item, ['missingPieces'], '')}
-                        />
-                      </Col>
-                    }
-                    {(item.missingPiecesDate) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.date" />}
-                          value={get(item, ['missingPiecesDate'], '')}
-                        />
-                      </Col>
-                    }
+                    {(item.numberOfMissingPieces) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
+                        value={checkIfElementIsEmpty(condition.numberOfMissingPieces)}
+                      />
+                    </Col>
+                    )}
+                    {(item.missingPieces) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.missingPieces" />}
+                        value={checkIfElementIsEmpty(condition.missingPieces)}
+                      />
+                    </Col>
+                    )}
+                    {(item.missingPiecesDate) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.date" />}
+                        value={checkIfElementIsEmpty(condition.missingPiecesDate)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    {(item.itemDamagedStatusId) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                          value={refLookup(referenceTables.itemDamagedStatuses, get(item, ['itemDamagedStatusId'])).name}
-                        />
-                      </Col>
-                    }
-                    {(item.itemDamagedStatusDate) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.date" />}
-                          value={<FormattedDate value={item.itemDamagedStatusDate} />}
-                        />
-                      </Col>
-                    }
+                    {(item.itemDamagedStatusId) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
+                        value={checkIfElementIsEmpty(condition.itemDamagedStatus)}
+                      />
+                    </Col>
+                    )}
+                    {(item.itemDamagedStatusDate) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.date" />}
+                        value={<FormattedDate value={checkIfElementIsEmpty(condition.itemDamagedStatusDate)} />}
+                      />
+                    </Col>
+                    )}
                   </Row>
                 </Accordion>
                 <Accordion
-                  open={accordions.acc05}
+                  open={this.isAccordionOpen('acc05', accordionsState.acc05)}
                   id="acc05"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.itemNotes" />}
                 >
-                  {layoutNotes(referenceTables.itemNoteTypes, get(item, ['notes'], []))}
+                  {itemNotes.notes}
                 </Accordion>
                 <Accordion
-                  open={accordions.acc06}
+                  open={this.isAccordionOpen('acc06', accordionsState.acc06)}
                   id="acc06"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
                 >
                   <Row>
-                    {(item.permanentLoanType) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
-                          value={get(item, ['permanentLoanType', 'name'], '')}
-                        />
-                      </Col>
-                    }
-                    {(item.temporaryLoanType) &&
-                      <Col smOffset={0} sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
-                          value={get(item, ['temporaryLoanType', 'name'], '')}
-                        />
-                      </Col>
-                    }
+                    {(item.permanentLoanType) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
+                        value={checkIfElementIsEmpty(loanAndAvailability.permanentLoanType)}
+                      />
+                    </Col>
+                    )}
+                    {(item.temporaryLoanType) && (
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
+                        value={checkIfElementIsEmpty(loanAndAvailability.temporaryLoanType)}
+                      />
+                    </Col>
+                    )}
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
-                        value={loanLink}
+                        value={checkIfElementIsEmpty(loanAndAvailability.itemStatus)}
                       />
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.itemStatusDate" />}>
-                        {itemStatusDate ? <FormattedTime value={itemStatusDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                        {checkIfElementIsEmpty(loanAndAvailability.itemStatusDate)}
                       </KeyValue>
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.item.availability.requests" />}
-                        value={requestLink}
+                        value={checkIfElementIsEmpty(loanAndAvailability.requestLink)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.item.availability.borrower" />}
-                        value={borrowerLink}
+                        value={checkIfElementIsEmpty(loanAndAvailability.borrower)}
                       />
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.loanDate" />}>
-                        {this.state.loan ? <FormattedTime value={this.state.loan.loanDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                        {checkIfElementIsEmpty(loanAndAvailability.loanDate)}
                       </KeyValue>
                     </Col>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.dueDate" />}>
-                        {this.state.loan ? <FormattedTime value={this.state.loan.dueDate} day="numeric" month="numeric" year="numeric" /> : '-'}
+                        {checkIfElementIsEmpty(loanAndAvailability.dueDate)}
                       </KeyValue>
                     </Col>
                   </Row>
-                  {layoutCirculationNotes(['Check out', 'Check in'], get(item, ['circulationNotes'], []))}
+                  {loanAndAvailability.circulationNotes}
                 </Accordion>
                 <Accordion
-                  open={accordions.acc07}
+                  open={this.isAccordionOpen('acc07', accordionsState.acc07)}
                   id="acc07"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.location" />}
                 >
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.holdingsLocation" />
                       </strong>
@@ -1073,21 +1271,27 @@ class ViewItem extends React.Component {
                   </Row>
                   <br />
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                        value={get(permanentHoldingsLocation, ['name'], '')}
+                        value={checkIfElementIsEmpty(holdingLocation.permanentLocation)}
                       />
                     </Col>
                     <Col sm={4}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                        value={get(temporaryHoldingsLocation, ['name'], '-')}
+                        value={checkIfElementIsEmpty(holdingLocation.temporaryLocation)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.itemLocation" />
                       </strong>
@@ -1095,21 +1299,27 @@ class ViewItem extends React.Component {
                   </Row>
                   <br />
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                        value={get(item, ['permanentLocation', 'name'], '-')}
+                        value={checkIfElementIsEmpty(itemLocation.permanentLocation)}
                       />
                     </Col>
                     <Col sm={4}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                        value={get(item, ['temporaryLocation', 'name'], '-')}
+                        value={checkIfElementIsEmpty(itemLocation.temporaryLocation)}
                       />
                     </Col>
                   </Row>
                   <Row>
-                    <Col smOffset={0} sm={4}>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
                       <strong>
                         <FormattedMessage id="ui-inventory.effectiveLocation" />
                       </strong>
@@ -1117,13 +1327,16 @@ class ViewItem extends React.Component {
                   </Row>
                   <br />
                   <Row>
-                    <Col smOffset={0} sm={4}>
-                      {get(item, ['effectiveLocation', 'name'], '')}
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      {checkIfElementIsEmpty(itemLocation.effectiveLocation)}
                     </Col>
                   </Row>
                 </Accordion>
                 <Accordion
-                  open={accordions.acc08}
+                  open={this.isAccordionOpen('acc08', accordionsState.acc08)}
                   id="acc08"
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.electronicAccess" />}
@@ -1209,27 +1422,13 @@ ViewItem.propTypes = {
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    instances1: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    loanTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    requests: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    loans: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    items: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsRecords: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    callNumberTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    instances1: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    loanTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    requests: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    callNumberTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     borrower: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
@@ -1242,12 +1441,8 @@ ViewItem.propTypes = {
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
     }),
-    requests: PropTypes.shape({
-      PUT: PropTypes.func.isRequired,
-    }),
-    requestOnItem: PropTypes.shape({
-      replace: PropTypes.func.isRequired,
-    }),
+    requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
+    requestOnItem: PropTypes.shape({ replace: PropTypes.func.isRequired }),
     query: PropTypes.object.isRequired,
   }),
   onCloseViewItem: PropTypes.func.isRequired,

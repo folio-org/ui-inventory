@@ -7,7 +7,8 @@ import {
 
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor'; // eslint-disable-line
 import ModalInteractor from '@folio/stripes-components/lib/Modal/tests/interactor'; // eslint-disable-line
-import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor'; // eslint-disable-line
+import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
+import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor'; // eslint-disable-line
 
 @interactor class HeaderDropdown {
   click = clickable('button');
@@ -37,6 +38,8 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');
+  enumerationDataAccordion = new AccordionInteractor('[data-test-item-view-page] #acc03');
+  collapseAllButton = new ButtonInteractor('#collapse-all');
 
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);
