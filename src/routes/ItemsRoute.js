@@ -16,9 +16,9 @@ import {
 
 function buildQuery(queryParams, pathComponents, resourceData, logger) {
   const query = { ...resourceData.query };
-  const queryIndex = get(query, 'qindex', 'all');
+  const queryIndex = get(query, 'qindex', 'contributor');
   const queryValue = get(query, 'query', '');
-  const queryTemplate = getQueryTemplate(resourceData, itemIndexes);
+  const queryTemplate = getQueryTemplate(queryIndex, itemIndexes);
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';

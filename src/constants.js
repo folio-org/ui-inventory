@@ -71,7 +71,7 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
-  // TODO: add holding indexes
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
