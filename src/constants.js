@@ -25,6 +25,11 @@ export const requestStatuses = {
 // as those are pulled from the backend
 export const instanceFilterConfig = [
   {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
+    values: [],
+  },
+  {
     name: 'language',
     cql: 'languages',
     values: [],
