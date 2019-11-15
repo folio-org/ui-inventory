@@ -9,20 +9,31 @@ module.exports.test = function uiTest(uiTestCtx) {
     // Resource type filter test disabled as new resource types are being loaded.
     // const filters = ['resource-books', 'resource-serials', 'resource-ebooks', 'language-english', 'language-spanish', 'location-annex'];
     const languageFilters = ['English', 'Spanish'];
-    const locationFilters = ['location-annex', 'location-main-library'];
+    const locationFilters = ['Annex', 'Main Library'];
+    const itemStatusFilters = ['itemStatus-available', 'itemStatus-checked-out'];
 
-    describe('Login > Open module "Inventory" > Get hit counts > Click filters > Logout', () => {
-      before((done) => {
-        login(nightmare, config, done); // logs in with the default admin credentials
-      });
-      after((done) => {
-        logout(nightmare, config, done);
-      });
-      it('should open module "Inventory" and find version tag ', (done) => {
+    /**
+     * Navigate to the given segment, then choose each of the elements
+     * on the list from the multi-select filter in the given accordion,
+     * validating that one or more results was returned by the presence of
+     * `#list-inventory[data-total-count]`.
+     *
+     * @param {string} segmentName label for the segment we are testing
+     * @param {string} segmentSelector selector for the segment we are testing
+     * @param {string} accordionSelector selector for the accordion containing the filters
+     * @param {string[]} list option-values
+     */
+    const multiSelectFilterTest = (segmentName, segmentSelector, accordionSelector, list) => {
+      it(`should click "${segmentName}" to navigate there`, (done) => {
         nightmare
-          .use(openApp(nightmare, config, done, 'inventory', testVersion))
-          .then(result => result);
+          .wait(segmentSelector)
+          .click(segmentSelector)
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
+          .catch(done);
       });
+
       it('should find "no results" message with no filters applied', (done) => {
         nightmare
           .wait('#paneHeaderpane-results-subtitle')
@@ -30,39 +41,22 @@ module.exports.test = function uiTest(uiTestCtx) {
           .then(done)
           .catch(done);
       });
-      locationFilters.forEach((filter) => {
-        it(`should click ${filter} and find hit count`, (done) => {
-          nightmare
-            .wait('#input-inventory-search')
-            .type('#input-inventory-search', 0)
-            .wait('#clickable-reset-all')
-            .click('#clickable-reset-all')
-            .wait(`#clickable-filter-${filter}`)
-            .click(`#clickable-filter-${filter}`)
-            .wait('#list-inventory[data-total-count]')
-            .click('#clickable-reset-all')
-            .wait('#paneHeaderpane-results-subtitle')
-            .wait('span[class^="noResultsMessageLabel"]')
-            .then(done)
-            .catch(done);
-        });
-      });
 
-      languageFilters.forEach((filter) => {
+      list.forEach((filter) => {
         it(`should click ${filter} and find hit count`, (done) => {
           nightmare
             .wait('#input-inventory-search')
             .type('#input-inventory-search', 0)
             .wait('#clickable-reset-all')
             .click('#clickable-reset-all')
-            .wait('div[class^=multiSelect] li[role=option]')
-            .evaluate((language) => {
-              return Array.from(document.querySelectorAll('div[class^=multiSelect] li[role=option]')).findIndex(e => e.textContent.startsWith(language)) + 1;
-            }, filter)
+            .wait(`section#${accordionSelector} [class^=multiSelect] [role=option]`)
+            .evaluate((value, accordionId) => {
+              return Array.from(document.querySelectorAll(`section#${accordionId} [class^=multiSelect] [role=option] [class^=optionSegment]`)).findIndex(e => e.textContent === value) + 1;
+            }, filter, accordionSelector)
             .then((filterIndex) => {
               nightmare
-                .wait(`div[class^=multiSelect] li[role=option]:nth-of-type(${filterIndex})`)
-                .click(`div[class^=multiSelect] li[role=option]:nth-of-type(${filterIndex})`)
+                .wait(`section#${accordionSelector} [class^=multiSelect] [role=option]:nth-of-type(${filterIndex})`)
+                .click(`section#${accordionSelector} [class^=multiSelect] [role=option]:nth-of-type(${filterIndex})`)
                 .wait('#list-inventory[data-total-count]')
                 .click('#clickable-reset-all')
                 .wait('#paneHeaderpane-results-subtitle')
@@ -72,6 +66,92 @@ module.exports.test = function uiTest(uiTestCtx) {
             })
             .catch(done);
         });
+      });
+    };
+
+    /**
+     * Navigate to the given segment, then tick and untick each of the
+     * checkboxes in the list, validating that one or more results was
+     * returned by the presence of `#list-inventory[data-total-count]`.
+     *
+     * @param {string} segmentName label for the segment we are testing
+     * @param {string} segmentSelector selector for the segment we are testing
+     * @param {string} accordionSelector selector for the accordion containing the filters
+     * @param {string[]} list filter ids to be concatenated onto '#clickable-filter-'
+     */
+    const checkboxFilterTest = (segmentName, segmentSelector, accordionSelector, list) => {
+      it(`should click "${segmentName}" to navigate there`, (done) => {
+        nightmare
+          .wait(segmentSelector)
+          .click(segmentSelector)
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
+          .catch(done);
+      });
+
+      it('should find "no results" message with no filters applied', (done) => {
+        nightmare
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
+          .catch(done);
+      });
+
+      list.forEach((filter) => {
+        it(`should click ${filter} and find hit count`, (done) => {
+          nightmare
+            .wait('#input-inventory-search')
+            .type('#input-inventory-search', 0)
+            .wait('#clickable-reset-all')
+            .click('#clickable-reset-all')
+            .wait(`#${accordionSelector} #clickable-filter-${filter}`)
+            .click(`#${accordionSelector} #clickable-filter-${filter}`)
+            .wait('#list-inventory[data-total-count]')
+            .click('#clickable-reset-all')
+            .wait('#paneHeaderpane-results-subtitle')
+            .wait('span[class^="noResultsMessageLabel"]')
+            .then(done)
+            .catch(done);
+        });
+      });
+    };
+
+    describe('Login > Open module "Inventory" > Get hit counts > Click filters > Logout', () => {
+      before((done) => {
+        login(nightmare, config, done); // logs in with the default admin credentials
+      });
+
+      after((done) => {
+        logout(nightmare, config, done);
+      });
+
+      it('should open module "Inventory" and find version tag ', (done) => {
+        nightmare
+          .use(openApp(nightmare, config, done, 'inventory', testVersion))
+          .then(result => result);
+      });
+
+      describe('Should test instance language filters', () => {
+        multiSelectFilterTest('instance', '#segment-navigation-instances', 'language', languageFilters);
+      });
+
+      describe('Should test holdings location filters', () => {
+        multiSelectFilterTest('holdings', '#segment-navigation-holdings', 'holdingsPermanentLocation', locationFilters);
+      });
+
+      describe('Should test items item-status filters', () => {
+        checkboxFilterTest('items', '#segment-navigation-items', 'itemFilterAccordion', itemStatusFilters);
+      });
+
+      it('should click the "item" segment filter', (done) => {
+        nightmare
+          .wait('#segment-navigation-items')
+          .click('#segment-navigation-items')
+          .wait('#paneHeaderpane-results-subtitle')
+          .wait('span[class^="noResultsMessageLabel"]')
+          .then(done)
+          .catch(done);
       });
     });
   });
