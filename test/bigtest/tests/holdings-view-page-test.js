@@ -62,6 +62,96 @@ describe('HoldingsViewPage', () => {
           expect(HoldingsViewPage.noDeleteHoldingsRecordModalIsVisible).to.equal(true);
         });
       });
+
+      it('should be displayed', () => {
+        expect(HoldingsViewPage.hasExpandAll).to.be.true;
+      });
+
+      it('accordion should be open', () => {
+        expect(HoldingsViewPage.administrativeDataAccordion.isOpen).to.be.true;
+      });
+
+      describe('accordion toggle', () => {
+        beforeEach(async () => {
+          await HoldingsViewPage.administrativeDataAccordion.clickHeader();
+        });
+
+        it('accordion should not be displayed', () => {
+          expect(HoldingsViewPage.administrativeDataAccordion.isOpen).to.be.false;
+        });
+      });
+
+      describe('statistical codes list', () => {
+        it('has correct amount of items', () => {
+          expect(HoldingsViewPage.statisticalCodesList.rowCount).to.be.equal(3);
+        });
+      });
+
+      describe('holdings statements list', () => {
+        it('has correct amount of items', () => {
+          expect(HoldingsViewPage.holdingsStatementsList.rowCount).to.be.equal(1);
+        });
+      });
+
+      describe('holdings statements for indexes list', () => {
+        it('has correct amount of items', () => {
+          expect(HoldingsViewPage.holdingsStatementsForIndexesList.rowCount).to.be.equal(2);
+        });
+      });
+
+      describe('holdings statements for supplements list', () => {
+        it('has correct amount of items', () => {
+          expect(HoldingsViewPage.holdingsStatementsForSupplementsList.rowCount).to.be.equal(1);
+        });
+      });
+
+      describe('holding notes list', () => {
+        it('has correct amount of items', () => {
+          expect(HoldingsViewPage.holdingsNotesList.rowCount).to.be.equal(2);
+        });
+
+        describe('has correct values', () => {
+          it('first row - staff only: "Yes", note: is empty ', () => {
+            expect(HoldingsViewPage.holdingsNotesList.rows(0).cells(0).content).to.be.equal('Yes');
+            expect(HoldingsViewPage.holdingsNotesList.rows(0).cells(1).content).to.be.a('string').that.is.empty;
+          });
+
+          it('second row - staff only: "No", note: is note empty', () => {
+            expect(HoldingsViewPage.holdingsNotesList.rows(1).cells(0).content).to.be.equal('No');
+            expect(HoldingsViewPage.holdingsNotesList.rows(1).cells(1).content).to.be.a('string').that.not.empty;
+          });
+        });
+      });
+
+      describe('electronic access list', () => {
+        it('has correct amount of items', () => {
+          expect(HoldingsViewPage.electronicAccessList.rowCount).to.be.equal(1);
+        });
+
+        describe('has correct values', () => {
+          describe('first row', () => {
+            it('url relationship - should be "Resource"', () => {
+              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(0).content).to.be.equal('Resource');
+            });
+
+            it('uri - should be the link', () => {
+              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(1).content).to.match(/^http/);
+            });
+
+            it('link test - should be the text', () => {
+              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(2).content).to.be.a('string').that.not.empty;
+            });
+
+            it('materials specified - should be the text', () => {
+              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(3).content).to.be.a('string').that.not.empty;
+            });
+
+            it('url public note - should be empty', () => {
+              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(4).content).to.be.a('string').that.is.empty;
+            });
+          });
+        });
+      });
     });
   });
 
