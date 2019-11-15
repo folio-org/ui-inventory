@@ -30,6 +30,20 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.hasExpandAll).to.be.true;
     });
 
+    it('accordion should be open', () => {
+      expect(InstanceViewPage.accordion.isOpen).to.be.true;
+    });
+
+    describe('accordion toggle', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.accordion.clickHeader();
+      });
+
+      it('accordion should not be displayed', () => {
+        expect(InstanceViewPage.accordion.isOpen).to.be.false;
+      });
+    });
+
     describe('collapse all clicked', () => {
       beforeEach(async () => {
         await InstanceViewPage.expandAll.click();
@@ -116,15 +130,27 @@ describe('InstanceViewPage', () => {
       });
     });
 
-    describe('subject list', () => {
+    describe('statistical codes list', () => {
       it('has correct amount of items', () => {
-        expect(InstanceViewPage.subjectsList.rowCount).to.be.equal(1);
+        expect(InstanceViewPage.statisticalCodesList.rowCount).to.be.equal(3);
+      });
+    });
+
+    describe('alternative titles list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.alternativeTitlesList.rowCount).to.be.equal(1);
       });
     });
 
     describe('series statement list', () => {
       it('has correct amount of items', () => {
         expect(InstanceViewPage.seriesStatementList.rowCount).to.be.equal(1);
+      });
+    });
+
+    describe('subject list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.subjectsList.rowCount).to.be.equal(1);
       });
     });
 
