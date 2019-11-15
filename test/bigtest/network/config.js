@@ -446,7 +446,7 @@ export default function configure() {
         barcode: '10101',
         contributors: [{ 'name': 'Antoniou, Grigoris' }],
         callNumber: 'TK5105.88815 . A58 2004 FT MEADE',
-        status: { name: 'In transit'},
+        status: { name: 'In transit' },
         inTransitDestinationServicePointId: 'c4c90014-c8c9-4ade-8f24-b5e313319f4b',
         inTransitDestinationServicePoint: {
           id: 'c4c90014-c8c9-4ade-8f24-b5e313319f4b',

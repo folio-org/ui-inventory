@@ -1,13 +1,23 @@
+import { get } from 'lodash';
 import { exportCsv } from '@folio/stripes/util';
 
 const columns = [
   'barcode',
   'title',
   'contributors',
-  'location.name',
-  'location.libraryName',
-  'location.code',
-  'status.name',
+  'library',
+  'shelvingLocation',
+  'shelvingLocationCode',
+  'itemStatus',
+  'checkInServicePoint',
+  'checkInDateTime',
+  'destinationServicePoint',
+  'requestType',
+  'requesterPatronGroup',
+  'requestCreationDate',
+  'requestExpirationDate',
+  'requestPickupServicePoint',
+  'tags',
 ];
 
 class InTransitItemReport {
@@ -20,19 +30,33 @@ class InTransitItemReport {
 
   parse(records) {
     return records.map(record => {
-      const { contributors = [] } = record;
-
-      return {
-        ...record,
-        contributors: contributors.map(({ name }) => name).join(';')
+      const toCSV = {
+        barcode: get(record, 'barcode'),
+        title: get(record, 'title'),
+        contributors: get(record, 'contributors', []).map(({ name }) => name).join(';'),
+        library: get(record, 'location.name'),
+        shelvingLocation: get(record, 'location.libraryName'),
+        shelvingLocationCode: get(record, 'location.code'),
+        itemStatus: get(record, 'status.name'),
+        checkInServicePoint: get(record, 'loan.checkInServicePoint.name'),
+        checkInDateTime: get(record, 'loan.checkInDateTime'),
+        destinationServicePoint: get(record, 'inTransitDestinationServicePoint.name'),
+        requestType: get(record, 'request.requestType'),
+        requesterPatronGroup: get(record, 'request.requestPatronGroup'),
+        requestCreationDate: get(record, 'request.requestDate'),
+        requestExpirationDate: get(record, 'request.requestExpirationDate'),
+        requestPickupServicePoint: get(record, 'request.requestPickupServicePointName'),
+        tags: get(record, 'request.tags', []).join(';'),
       };
+
+      return toCSV;
     });
   }
 
-  toCSV(records) {
+  toCSV(records = []) {
     const onlyFields = this.columnsMap;
     const parsedRecords = this.parse(records);
-    exportCsv(parsedRecords, { onlyFields, fileName: 'inTransit' });
+    exportCsv(parsedRecords, { onlyFields, filename: 'inTransit' });
   }
 }
 
