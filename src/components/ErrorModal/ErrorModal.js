@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Modal,
-  ModalFooter
+  ModalFooter,
 } from '@folio/stripes/components';
 
 const ErrorModal = (props) => {

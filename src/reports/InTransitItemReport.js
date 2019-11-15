@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+
 import { exportCsv } from '@folio/stripes/util';
 
 const columns = [
@@ -24,7 +25,7 @@ class InTransitItemReport {
   constructor({ formatMessage }) {
     this.columnsMap = columns.map(value => ({
       label: formatMessage({ id: `ui-inventory.reports.inTransitItem.${value}` }),
-      value
+      value,
     }));
   }
 

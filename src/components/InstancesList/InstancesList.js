@@ -6,16 +6,16 @@ import {
   get,
   set,
   flowRight,
+  isEmpty
 } from 'lodash';
 import {
   injectIntl,
   intlShape,
-  FormattedMessage
+  FormattedMessage,
 } from 'react-intl';
 
 import { AppIcon } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
-
 import { Button } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -114,7 +114,7 @@ class InstancesView extends React.Component {
       reset();
       const items = await GET();
 
-      if (items.length > 0) {
+      if (!isEmpty(items)) {
         const report = new InTransitItemReport({ formatMessage: this.props.intl.formatMessage });
         report.toCSV(items);
       } else {
@@ -233,7 +233,7 @@ class InstancesView extends React.Component {
               discoverySuppress: false,
               staffSuppress: false,
               previouslyHeld: false,
-              source: 'FOLIO'
+              source: 'FOLIO',
             }}
             visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
             columnMapping={{
