@@ -95,4 +95,15 @@ describe('Instances', () => {
       expect(inventory.instances().length).to.be.equal(25);
     });
   });
+
+  describe('Export in transit item report to CSV', () => {
+    beforeEach(async function () {
+      await inventory.headerDropdown.click();
+      await inventory.headerDropdownMenu.clickItemsInTransitReportBtn();
+    });
+
+    it('should expotr items in transit to csv', () => {
+      expect(inventory.headerDropdownMenu.itemsInTransitReportBtnIsVisible).to.be.false;
+    });
+  });
 });

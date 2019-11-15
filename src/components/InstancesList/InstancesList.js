@@ -265,7 +265,7 @@ class InstancesView extends React.Component {
         <ErrorModal
           isOpen={this.state.showErrorModal}
           label={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.label" />}
-          content={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.label" />}
+          content={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.message" />}
           onClose={this.onErrorModalClose}
         />
       </React.Fragment>
