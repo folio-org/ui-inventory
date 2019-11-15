@@ -11,7 +11,6 @@ import {
   set,
   isEmpty,
   groupBy,
-  isArray,
 } from 'lodash';
 import React, {
   Fragment,
@@ -52,8 +51,10 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import {
+  areAllFieldsEmpty,
   craftLayerUrl,
   psTitleRelationshipId,
+  checkIfElementIsEmpty,
 } from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
@@ -121,7 +122,7 @@ class ViewInstance extends React.Component {
         acc10: true,
         acc11: true,
       },
-      allAccordions: true,
+      areAllAccordionsOpen: true,
       marcRecord: null,
     };
     this.instanceId = null;
@@ -254,19 +255,23 @@ class ViewInstance extends React.Component {
   };
 
   handleAccordionToggle = ({ id }) => {
-    this.setState((state) => {
+    this.setState(state => {
       const newState = cloneDeep(state);
+
       if (!has(newState.accordions, id)) newState.accordions[id] = true;
       newState.accordions[id] = !newState.accordions[id];
+
       return newState;
     });
   };
 
-  handleExpandAll = (obj) => {
-    this.setState((curState) => {
+  handleExpandAll = obj => {
+    this.setState(curState => {
       const newState = cloneDeep(curState);
+
       newState.accordions = obj;
-      newState.allAccordions = !newState.allAccordions;
+      newState.areAllAccordionsOpen = !newState.areAllAccordionsOpen;
+
       return newState;
     });
   };
@@ -366,10 +371,13 @@ class ViewInstance extends React.Component {
     );
   };
 
-  isOpen = (id, fields) => {
-    const acc = !fields.every(item => (isArray(item) ? isEmpty(item) : item === '-'));
-    if (this.state.accordions[id] && !this.state.allAccordions) return true;
-    return this.state.accordions[id] === acc && this.state.allAccordions;
+  isAccordionOpen = (id, hasAllFieldsEmpty) => {
+    const {
+      accordions,
+      areAllAccordionsOpen,
+    } = this.state;
+
+    return accordions[id] === !hasAllFieldsEmpty && areAllAccordionsOpen;
   };
 
   render() {
@@ -383,7 +391,10 @@ class ViewInstance extends React.Component {
       paneWidth,
     } = this.props;
 
-    const { marcRecord } = this.state;
+    const {
+      accordions,
+      marcRecord
+    } = this.state;
 
     const query = location.search ? queryString.parse(location.search) : {};
     const ci = makeConnectedInstance(this.props, stripes.logger);
@@ -589,48 +600,31 @@ class ViewInstance extends React.Component {
         ));
     };
 
-    const sortedNotes = groupBy(get(instance, ['notes'], []), 'instanceNoteTypeId');
-    const instanceNotes = map(sortedNotes, (value, key) => {
-      const noteType = referenceTables.instanceNoteTypes.find(note => note.id === key);
-      return {
-        noteType,
-        notes: value,
-      };
-    });
+    const instanceData = {
+      instanceHrid: get(instance, ['hrid'], '-'),
+      metadataSource: get(instance, ['source'], '-'),
+      catalogedDate: get(instance, ['catalogedDate'], '-'),
+      instanceStatusTerm: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-',
+      instanceStatusCode: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code || '-',
+      instanceStatusSource: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source || '-',
+      instanceStatusUpdatedDate: get(instance, ['statusUpdatedDate'], '-'),
+      modeOfIssuance: formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance) || '-',
+      statisticalCodeIds: get(instance, ['statisticalCodeIds'], []),
+    };
 
-    const seriesStatement = get(instance, 'series').map(x => ({ value: x }));
-    const instanceSubjects = get(instance, 'subjects').map(item => ({ value: item }));
-    const instanceHrid = get(instance, ['hrid'], '-');
-    const metadataSource = get(instance, ['source'], '-');
-    const catalogedDate = get(instance, ['catalogedDate'], '-');
-    const instanceStatusTerm = this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-';
-    const instanceStatusCode = this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code || '-';
-    const instanceStatusSource = this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source || '-';
-    const instanceStatusUpdatedDate = get(instance, ['statusUpdatedDate'], '-');
-    const modeOfIssuance = formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance) || '-';
-    const resourceTitle = get(instance, ['title'], '-');
-    const indexTitle = get(instance, ['indexTitle'], '-');
-    const resourceTypeTerm = this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).name || '-';
-    const resourceTypeCode = this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code || '-';
-    const resourceTypeSource = this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source || '-';
+    const titleData = {
+      resourceTitle: get(instance, ['title'], '-'),
+      alternativeTitles: get(instance, ['alternativeTitles'], []),
+      indexTitle: get(instance, ['indexTitle'], '-'),
+      series: get(instance, ['series'], []),
+      precedingTitles: get(instance, ['precedingTitles'], []),
+      succeedingTitles: get(instance, ['succeedingTitles'], []),
+    };
+
     const identifiers = get(instance, 'identifiers', []).map(x => ({
       identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
       value: x.value,
     }));
-    const classifications = get(instance, 'classifications', []).map(x => ({
-      classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
-      classificationNumber: x.classificationNumber,
-    }));
-
-    const natureOfContentTermIds = get(instance, ['natureOfContentTermIds'], []);
-    const natureOfContentTermIdsValue = !isEmpty(natureOfContentTermIds)
-      ? natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>) : '-';
-
-    const publicationRange = get(instance, ['publicationRange'], []);
-    const publicationRangeValue = !isEmpty(publicationRange) ? publicationRange.map((desc, i) => <div key={i}>{desc}</div>) : '-';
-
-    const publicationFrequency = get(instance, ['publicationFrequency'], []);
-    const publicationFrequencyValue = !isEmpty(publicationFrequency) ? publicationFrequency.map((desc, i) => <div key={i}>{desc}</div>) : '-';
 
     const orderedIdentifiers = orderBy(
       identifiers,
@@ -641,6 +635,54 @@ class ViewInstance extends React.Component {
       ['asc'],
     );
 
+    const contributors = get(instance, ['contributors'], []);
+
+    const descriptiveData = {
+      publication: get(instance, ['publication'], []),
+      editions: get(instance, ['editions'], []),
+      physicalDescriptions: get(instance, ['physicalDescriptions'], []),
+      resourceTypeTerm: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).name || '-',
+      resourceTypeCode: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code || '-',
+      resourceTypeSource: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source || '-',
+      natureOfContentTermIds: get(instance, ['natureOfContentTermIds'], []),
+      instanceFormatIds: get(instance, ['instanceFormatIds'], []),
+      languages: get(instance, ['languages'], []),
+      publicationFrequency: get(instance, ['publicationFrequency'], []),
+      publicationRange: get(instance, ['publicationRange'], []),
+    };
+
+    const natureOfContentTermIdsValue = !isEmpty(descriptiveData.natureOfContentTermIds)
+      ? descriptiveData.natureOfContentTermIds.map((nocTerm, i) => <div key={i}>{this.refLookup(referenceTables.natureOfContentTerms, nocTerm).name}</div>)
+      : '-';
+
+    const publicationFrequencyValue = !isEmpty(descriptiveData.publicationFrequency)
+      ? descriptiveData.publicationFrequency.map((desc, i) => <div key={i}>{desc}</div>)
+      : '-';
+
+    const publicationRangeValue = !isEmpty(descriptiveData.publicationRange)
+      ? descriptiveData.publicationRange.map((desc, i) => <div key={i}>{desc}</div>)
+      : '-';
+
+    const sortedNotes = groupBy(get(instance, ['notes'], []), 'instanceNoteTypeId');
+
+    const instanceNotes = map(sortedNotes, (value, key) => {
+      const noteType = referenceTables.instanceNoteTypes.find(note => note.id === key);
+
+      return {
+        noteType,
+        notes: value,
+      };
+    });
+
+    const electronicAccess = get(instance, ['electronicAccess'], []);
+
+    const subjects = get(instance, ['subjects'], []);
+
+    const classifications = get(instance, 'classifications', []).map(x => ({
+      classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
+      classificationNumber: x.classificationNumber,
+    }));
+
     const orderedClassifications = orderBy(
       classifications,
       [
@@ -650,49 +692,23 @@ class ViewInstance extends React.Component {
       ['asc'],
     );
 
-    const acc01 = this.isOpen('acc01', [
-      instanceHrid,
-      metadataSource,
-      catalogedDate,
-      instanceStatusTerm,
-      instanceStatusCode,
-      instanceStatusSource,
-      instanceStatusUpdatedDate,
-      modeOfIssuance,
-      instance.statisticalCodeIds,
-    ]);
-    const acc02 = this.isOpen('acc02', [
-      resourceTitle,
-      indexTitle,
-      instance.alternativeTitles,
-      instance.series,
-      instance.precedingTitles,
-      instance.succeedingTitles,
-    ]);
-    const acc03 = this.isOpen('acc03', [instance.identifiers]);
-    const acc04 = this.isOpen('acc04', [instance.contributors]);
-    const acc05 = this.isOpen('acc05', [
-      resourceTypeTerm,
-      resourceTypeCode,
-      resourceTypeSource,
-      instance.publication,
-      instance.editions,
-      instance.physicalDescriptions,
-      natureOfContentTermIds,
-      instance.instanceFormatIds,
-      instance.languages,
-      instance.publicationFrequency,
-      instance.publicationRange,
+    const instanceRelationship = {
+      childInstances: get(instance, ['childInstances'], []),
+      parentInstances: get(instance, ['parentInstances'], []),
+    };
 
-    ]);
-    const acc06 = this.isOpen('acc06', [instanceNotes]);
-    const acc07 = this.isOpen('acc07', [instance.electronicAccess]);
-    const acc08 = this.isOpen('acc08', [instance.subjects]);
-    const acc09 = this.isOpen('acc09', [instance.classifications]);
-    const acc10 = this.isOpen('acc10', [
-      instance.childInstances,
-      instance.parentInstances,
-    ]);
+    const accordionsState = {
+      acc01: areAllFieldsEmpty(Object.values(instanceData)),
+      acc02: areAllFieldsEmpty(Object.values(titleData)),
+      acc03: areAllFieldsEmpty([identifiers]),
+      acc04: areAllFieldsEmpty([contributors]),
+      acc05: areAllFieldsEmpty(Object.values(descriptiveData)),
+      acc06: areAllFieldsEmpty([instanceNotes]),
+      acc07: areAllFieldsEmpty([electronicAccess]),
+      acc08: areAllFieldsEmpty([subjects]),
+      acc09: areAllFieldsEmpty([classifications]),
+      acc10: areAllFieldsEmpty(Object.values(instanceRelationship)),
+    };
 
     return (
       <Pane
@@ -723,7 +739,7 @@ class ViewInstance extends React.Component {
             xs
           >
             <ExpandAllButton
-              accordionStatus={this.state.accordions}
+              accordionStatus={accordions}
               onToggle={this.handleExpandAll}
             />
           </Col>
@@ -805,7 +821,7 @@ class ViewInstance extends React.Component {
         </Row>
 
         <Accordion
-          open={acc01}
+          open={this.isAccordionOpen('acc01', accordionsState.acc01)}
           id="acc01"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceData" />}
@@ -825,19 +841,19 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-                value={instanceHrid}
+                value={checkIfElementIsEmpty(instanceData.instanceHrid)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.metadataSource" />}
-                value={metadataSource}
+                value={checkIfElementIsEmpty(instanceData.metadataSource)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.catalogedDate" />}
-                value={catalogedDate}
+                value={checkIfElementIsEmpty(instanceData.catalogedDate)}
               />
             </Col>
           </Row>
@@ -845,25 +861,25 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
-                value={instanceStatusTerm}
+                value={checkIfElementIsEmpty(instanceData.instanceStatusTerm)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusCode" />}
-                value={instanceStatusCode}
+                value={checkIfElementIsEmpty(instanceData.instanceStatusCode)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
-                value={instanceStatusSource}
+                value={checkIfElementIsEmpty(instanceData.instanceStatusSource)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusUpdatedDate" />}
-                value={instanceStatusUpdatedDate}
+                value={checkIfElementIsEmpty(instanceData.instanceStatusUpdatedDate)}
               />
             </Col>
           </Row>
@@ -871,19 +887,19 @@ class ViewInstance extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
-                value={modeOfIssuance}
+                value={checkIfElementIsEmpty(instanceData.modeOfIssuance)}
               />
             </Col>
           </Row>
           <Row>
-            {(instance.statisticalCodeIds && instance.statisticalCodeIds.length > 0) && (
+            {(instanceData.statisticalCodeIds && !isEmpty(instanceData.statisticalCodeIds)) && (
               <IntlConsumer>
                 {intl => (
                   <FormattedMessage id="ui-inventory.statisticalCodes">
                     {ariaLabel => (
                       <MultiColumnList
                         id="list-statistical-codes"
-                        contentData={instance.statisticalCodeIds.map((codeId) => { return { 'codeId': codeId }; })}
+                        contentData={instanceData.statisticalCodeIds.map(codeId => ({ 'codeId': codeId }))}
                         visibleColumns={['Statistical code type', 'Statistical code', 'Statistical code name']}
                         columnMapping={{
                           'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
@@ -905,7 +921,7 @@ class ViewInstance extends React.Component {
                             x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
                         }}
                         ariaLabel={ariaLabel}
-                        containerRef={(ref) => { this.resultsList = ref; }}
+                        containerRef={ref => { this.resultsList = ref; }}
                         interactive={false}
                       />
                     )}
@@ -915,8 +931,9 @@ class ViewInstance extends React.Component {
             )}
           </Row>
         </Accordion>
+
         <Accordion
-          open={acc02}
+          open={this.isAccordionOpen('acc02', accordionsState.acc02)}
           id="acc02"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.titleData" />}
@@ -925,20 +942,20 @@ class ViewInstance extends React.Component {
             <Col xs={12}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTitle" />}
-                value={resourceTitle}
+                value={checkIfElementIsEmpty(titleData.resourceTitle)}
               />
             </Col>
           </Row>
           <Row>
             {
-              instance.alternativeTitles.length > 0 && (
+              !isEmpty(titleData.alternativeTitles) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.alternativeTitles">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-alternative-titles"
-                          contentData={instance.alternativeTitles}
+                          contentData={titleData.alternativeTitles}
                           rowMetadata={['alternativeTitleTypeId']}
                           visibleColumns={['Alternative title type', 'Alternative title']}
                           columnMapping={{
@@ -951,7 +968,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={alternativeTitlesRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -965,30 +982,24 @@ class ViewInstance extends React.Component {
             <Col xs={12}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.indexTitle" />}
-                value={indexTitle}
+                value={checkIfElementIsEmpty(titleData.indexTitle)}
               />
             </Col>
           </Row>
           <Row>
             {
-              !isEmpty(instance.series) && (
+              !isEmpty(titleData.series) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.seriesStatement">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-series-statement"
-                          contentData={seriesStatement}
+                          contentData={titleData.series.map(x => ({ value: x }))}
                           visibleColumns={['Series statement']}
-                          columnMapping={{
-                            'Series statement': intl.formatMessage({ id: 'ui-inventory.seriesStatement' }),
-                          }}
-                          columnWidths={{
-                            'Series statement': '99%',
-                          }}
-                          formatter={{
-                            'Series statement': x => get(x, ['value']),
-                          }}
+                          columnMapping={{ 'Series statement': intl.formatMessage({ id: 'ui-inventory.seriesStatement' }) }}
+                          columnWidths={{ 'Series statement': '99%' }}
+                          formatter={{ 'Series statement': x => get(x, ['value']) }}
                           ariaLabel={ariaLabel}
                           containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
@@ -1000,7 +1011,7 @@ class ViewInstance extends React.Component {
               )
             }
           </Row>
-          {instance.precedingTitles && instance.precedingTitles.length > 0 && (
+          {titleData.precedingTitles && !isEmpty(titleData.precedingTitles) && (
             <Row>
               <Col
                 data-test-preceding-titles
@@ -1013,7 +1024,7 @@ class ViewInstance extends React.Component {
               </Col>
             </Row>
           )}
-          {instance.succeedingTitles && instance.succeedingTitles.length > 0 && (
+          {titleData.succeedingTitles && !isEmpty(titleData.succeedingTitles) && (
             <Row>
               <Col
                 data-test-succeeding-titles
@@ -1029,14 +1040,14 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={acc03}
+          open={this.isAccordionOpen('acc03', accordionsState.acc03)}
           id="acc03"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.identifier" />}
         >
           <Row>
             {
-              instance.identifiers.length > 0 && (
+              !isEmpty(identifiers) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.identifiers">
@@ -1056,7 +1067,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={identifiersRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -1069,21 +1080,21 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={acc04}
+          open={this.isAccordionOpen('acc04', accordionsState.acc04)}
           id="acc04"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.contributor" />}
         >
           <Row>
             {
-              instance.contributors.length > 0 && (
+              !isEmpty(contributors) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.contributors">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-contributors"
-                          contentData={instance.contributors}
+                          contentData={contributors}
                           visibleColumns={['Name type', 'Name', 'Type', 'Free text', 'Primary']}
                           columnMapping={{
                             'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
@@ -1100,7 +1111,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={contributorsRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -1113,21 +1124,21 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={acc05}
+          open={this.isAccordionOpen('acc05', accordionsState.acc05)}
           id="acc05"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.descriptiveData" />}
         >
           <Row>
             {
-              instance.publication.length > 0 && (
+              !isEmpty(descriptiveData.publication) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.publication">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-publication"
-                          contentData={instance.publication}
+                          contentData={descriptiveData.publication}
                           visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
                           columnMapping={{
                             'Publisher': intl.formatMessage({ id: 'ui-inventory.publisher' }),
@@ -1142,7 +1153,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={publicationRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -1155,21 +1166,21 @@ class ViewInstance extends React.Component {
           <br />
           <Row>
             {
-              (instance.editions && instance.editions.length > 0) && (
+              (descriptiveData.editions && !isEmpty(descriptiveData.editions)) && (
                 <Col xs={6}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.edition" />}
-                    value={get(instance, ['editions'], []).map((edition, i) => <div key={i}>{edition}</div>)}
+                    value={descriptiveData.editions.map((edition, i) => <div key={i}>{edition}</div>)}
                   />
                 </Col>
               )
             }
             {
-              (instance.physicalDescriptions.length > 0) && (
+              !isEmpty(descriptiveData.physicalDescriptions) && (
                 <Col xs={6}>
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.physicalDescription" />}
-                    value={publicationRange}
+                    value={descriptiveData.physicalDescriptions.map((desc, i) => <div key={i}>{desc}</div>)}
                   />
                 </Col>
               )
@@ -1180,19 +1191,19 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeTerm" />}
-                value={resourceTypeTerm}
+                value={checkIfElementIsEmpty(descriptiveData.resourceTypeTerm)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeCode" />}
-                value={resourceTypeCode}
+                value={checkIfElementIsEmpty(descriptiveData.resourceTypeCode)}
               />
             </Col>
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
-                value={resourceTypeSource}
+                value={checkIfElementIsEmpty(descriptiveData.resourceTypeSource)}
               />
             </Col>
           </Row>
@@ -1201,21 +1212,21 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-                value={natureOfContentTermIdsValue}
+                value={checkIfElementIsEmpty(natureOfContentTermIdsValue)}
               />
             </Col>
           </Row>
 
           <Row>
             {
-              (instance.instanceFormatIds && instance.instanceFormatIds.length > 0) && (
+              (descriptiveData.instanceFormatIds && !isEmpty(descriptiveData.instanceFormatIds)) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.formats">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-formats"
-                          contentData={instance.instanceFormatIds.map((formatId) => { return { 'id': formatId }; })}
+                          contentData={descriptiveData.instanceFormatIds.map(formatId => ({ 'id': formatId }))}
                           visibleColumns={['Category', 'Term', 'Code', 'Source']}
                           columnMapping={{
                             'Category': intl.formatMessage({ id: 'ui-inventory.formatCategory' }),
@@ -1230,7 +1241,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={formatsRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -1241,7 +1252,7 @@ class ViewInstance extends React.Component {
             }
           </Row>
           {
-            instance.languages.length > 0 && (
+            !isEmpty(descriptiveData.languages) && (
               <Row>
                 <Col xs={12}>
                   <KeyValue
@@ -1256,45 +1267,45 @@ class ViewInstance extends React.Component {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
-                value={publicationFrequencyValue}
+                value={checkIfElementIsEmpty(publicationFrequencyValue)}
               />
             </Col>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.publicationRange" />}
-                value={publicationRangeValue}
+                value={checkIfElementIsEmpty(publicationRangeValue)}
               />
             </Col>
           </Row>
         </Accordion>
 
         <Accordion
-          open={acc06}
+          open={this.isAccordionOpen('acc06', accordionsState.acc06)}
           id="acc06"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
           <Row>
-            {!isEmpty(sortedNotes) && layoutNotes(instanceNotes)}
+            {!isEmpty(instanceNotes) && layoutNotes(instanceNotes)}
           </Row>
         </Accordion>
 
         <Accordion
-          open={acc07}
+          open={this.isAccordionOpen('acc07', accordionsState.acc07)}
           id="acc07"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.electronicAccess" />}
         >
           <Row>
             {
-              instance.electronicAccess.length > 0 && (
+              !isEmpty(electronicAccess) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.electronicAccess">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-electronic-access"
-                          contentData={instance.electronicAccess}
+                          contentData={electronicAccess}
                           visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
                           columnMapping={{
                             'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
@@ -1312,7 +1323,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={electronicAccessRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -1325,21 +1336,21 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={acc08}
+          open={this.isAccordionOpen('acc08', accordionsState.acc08)}
           id="acc08"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.subject" />}
         >
           <Row>
             {
-              !isEmpty(instance.subjects) && (
+              !isEmpty(subjects) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.subject">
                       {ariaLabel => (
                         <MultiColumnList
                           id="list-subject"
-                          contentData={instanceSubjects}
+                          contentData={subjects.map(item => ({ value: item }))}
                           visibleColumns={['Subject headings']}
                           columnMapping={{ 'Subject headings': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }) }}
                           columnWidths={{ 'Subject headings': '99%' }}
@@ -1358,14 +1369,14 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={acc09}
+          open={this.isAccordionOpen('acc09', accordionsState.acc09)}
           id="acc09"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.classification" />}
         >
           <Row>
             {
-              (instance.classifications.length > 0) && (
+              !isEmpty(classifications) && (
                 <IntlConsumer>
                   {intl => (
                     <FormattedMessage id="ui-inventory.classifications">
@@ -1385,7 +1396,7 @@ class ViewInstance extends React.Component {
                           }}
                           formatter={classificationsRowFormatter}
                           ariaLabel={ariaLabel}
-                          containerRef={(ref) => { this.resultsList = ref; }}
+                          containerRef={ref => { this.resultsList = ref; }}
                           interactive={false}
                         />
                       )}
@@ -1398,12 +1409,12 @@ class ViewInstance extends React.Component {
         </Accordion>
 
         <Accordion
-          open={acc10}
+          open={this.isAccordionOpen('acc10', accordionsState.acc10)}
           id="acc10"
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
         >
-          {instance.childInstances.length > 0 && (
+          {!isEmpty(instanceRelationship.childInstances) && (
             <Row>
               <Col xs={12}>
                 <KeyValue
@@ -1413,7 +1424,7 @@ class ViewInstance extends React.Component {
               </Col>
             </Row>
           )}
-          {instance.parentInstances.length > 0 && (
+          {!isEmpty(instanceRelationship.parentInstances) && (
             <Row>
               <Col xs={12}>
                 <KeyValue
