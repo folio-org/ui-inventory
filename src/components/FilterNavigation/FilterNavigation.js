@@ -19,6 +19,7 @@ const FilterNavigation = ({ segment }) => (
           key={`${name}`}
           to={`/inventory/${name}`}
           buttonStyle={`${segment === name ? 'primary' : 'default'}`}
+          id={`segment-navigation-${name}`}
         >
           <FormattedMessage id={`ui-inventory.filters.${name}`} />
         </Button>
