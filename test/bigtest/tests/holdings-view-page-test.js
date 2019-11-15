@@ -83,7 +83,7 @@ describe('HoldingsViewPage', () => {
 
       describe('statistical codes list', () => {
         it('has correct amount of items', () => {
-          expect(HoldingsViewPage.statisticalCodesList.rowCount).to.be.equal(2);
+          expect(HoldingsViewPage.statisticalCodesList.rowCount).to.be.equal(3);
         });
       });
 
