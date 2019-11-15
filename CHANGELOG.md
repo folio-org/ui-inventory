@@ -42,6 +42,7 @@
 * Filter holdings and item panes by discovery-suppress. Completes UIIN-766 and UIIN-767.
 * Holding record. Display empty elements with the dashes. Refs UIIN-827.
 * Add ability to search by cql from item segment. Parf of UIIN-869.
+* Add ability to search by cql from holding segment. Parf of UIIN-868.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
