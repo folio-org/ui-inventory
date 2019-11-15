@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import ItemsRouteInteractor from '../../../interactors/routes/items-route';
 
-describe.only('Items SearchFieldFilter', () => {
+describe('Items SearchFieldFilter', () => {
   setupApplication({ scenarios: ['item-filters'] });
 
   const itemsRoute = new ItemsRouteInteractor();
