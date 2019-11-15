@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
@@ -13,8 +14,17 @@ import {
   CQL_FIND_ALL,
 } from '../constants';
 
-function query(queryParams, pathComponents, resourceData, logger) {
+function buildQuery(queryParams, pathComponents, resourceData, logger) {
+  const query = { ...resourceData.query };
+  const queryIndex = get(query, 'qindex', 'all');
+  const queryValue = get(query, 'query', '');
   const queryTemplate = getQueryTemplate(resourceData, itemIndexes);
+
+  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
+    query.sort = '';
+  }
+
+  resourceData.query = { ...query, qindex: '' };
 
   return makeQueryFunction(
     CQL_FIND_ALL,
@@ -34,7 +44,7 @@ class ItemsRoute extends React.Component {
       perRequest: 30,
       path: 'inventory/instances',
       GET: {
-        params: { query },
+        params: { query: buildQuery },
         staticFallback: { params: {} },
       },
     },

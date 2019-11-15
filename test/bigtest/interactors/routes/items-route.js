@@ -9,6 +9,7 @@ import {
 import {
   MultiSelectFilterInteractor,
   CheckboxFilterInteractor,
+  SearchFieldFilterInteractor,
 } from '../filters';
 
 export default @interactor class ItemsRouteInteractor {
@@ -23,4 +24,5 @@ export default @interactor class ItemsRouteInteractor {
   isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-item-discovery-suppress]');
   clickSelectDiscoverySuppressFilter = clickable('#clickable-filter-discoverySuppress-true');
   clickClearDiscoverySuppressFilter = clickable('#itemDiscoverySuppressAccordion button[class^="iconButton---"]');
+  searchFieldFilter = scoped('#pane-filter', SearchFieldFilterInteractor);
 }
