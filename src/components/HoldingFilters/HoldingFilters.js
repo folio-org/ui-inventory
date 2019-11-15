@@ -30,6 +30,7 @@ export default class HoldingFilters extends React.Component {
     const {
       activeFilters: {
         discoverySuppress = [],
+        effectiveLocation = [],
         holdingsPermanentLocation = [],
       },
       data: {
@@ -53,6 +54,22 @@ export default class HoldingFilters extends React.Component {
 
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+          id="effectiveLocation"
+          name="effectiveLocation"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={effectiveLocation.length > 0}
+          onClearFilter={() => onClear('effectiveLocation')}
+        >
+          <MultiSelectionFilter
+            name="effectiveLocation"
+            dataOptions={locationOptions}
+            selectedValues={effectiveLocation}
+            onChange={onChange}
+          />
+        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
           id="holdingsPermanentLocation"
