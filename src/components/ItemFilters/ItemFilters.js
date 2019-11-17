@@ -91,7 +91,7 @@ export default class ItemFilters extends React.Component {
           label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
           id="effectiveLocation"
           name="effectiveLocation"
-          separator={false}
+          separator={true}
           header={FilterAccordionHeader}
           displayClearButton={effectiveLocation.length > 0}
           onClearFilter={() => onClear('effectiveLocation')}
