@@ -76,7 +76,7 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
-  // TODO: add holding indexes
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
@@ -102,6 +102,7 @@ export const holdingFilterConfig = [
 export const itemIndexes = [
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const itemFilterConfig = [
