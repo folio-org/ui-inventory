@@ -75,7 +75,7 @@ class InstancesRoute extends React.Component {
         params: { query: buildQuery },
         staticFallback: { params: {} },
       },
-    },
+    }
   });
 
   render() {
