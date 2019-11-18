@@ -153,6 +153,13 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
         },
         records: 'mtypes',
       },
+      itemsInTransitReport: {
+        type: 'okapi',
+        records: 'items',
+        path: 'inventory-reports/items-in-transit',
+        accumulate: true,
+        fetch: false,
+      },
     }),
   );
 
