@@ -57,7 +57,7 @@ class InTransitItemReport {
   toCSV(records = []) {
     const onlyFields = this.columnsMap;
     const parsedRecords = this.parse(records);
-    exportCsv(parsedRecords, { onlyFields, filename: 'inTransit' });
+    exportCsv(parsedRecords, { onlyFields, filename: 'InTransit' });
   }
 }
 
