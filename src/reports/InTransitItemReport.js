@@ -21,7 +21,7 @@ const columns = [
   'tags',
 ];
 
-class InTransitItemReport {
+class InTransitItemsReport {
   constructor({ formatMessage }) {
     this.columnsMap = columns.map(value => ({
       label: formatMessage({ id: `ui-inventory.reports.inTransitItem.${value}` }),
@@ -61,4 +61,4 @@ class InTransitItemReport {
   }
 }
 
-export default InTransitItemReport;
+export default InTransitItemsReport;
