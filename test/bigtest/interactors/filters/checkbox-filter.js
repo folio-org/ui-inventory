@@ -1,7 +1,8 @@
 import {
   clickable,
   text,
-  hasClass
+  hasClass,
+  interactor,
 } from '@bigtest/interactor';
 
 import {
@@ -11,7 +12,7 @@ import {
 } from '@folio/stripes-components/lib/Accordion/Accordion.css';
 import CheckboxInteractor from '@folio/stripes-smart-components/lib/SearchAndSort/components/CheckboxFilter/tests/interactor';
 
-export default class CheckboxFilterInteractor {
+export default @interactor class CheckboxFilterInteractor {
   static defaultScope = '[data-test-accordion-section]';
 
   label = text(`.${labelArea}`);
