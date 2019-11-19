@@ -952,6 +952,10 @@ ItemForm.propTypes = {
   }).isRequired,
 };
 
+ItemForm.defaultProps = {
+  initialValues: {},
+};
+
 export default stripesFinalForm({
   validate,
   mutators,
