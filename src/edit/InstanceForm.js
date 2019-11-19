@@ -249,7 +249,7 @@ class InstanceForm extends React.Component {
       pristine,
       submitting,
       onCancel,
-      initialValues,
+      initialValues = {},
       referenceTables,
       copy,
     } = this.props;
