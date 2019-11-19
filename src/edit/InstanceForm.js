@@ -249,7 +249,7 @@ class InstanceForm extends React.Component {
       pristine,
       submitting,
       onCancel,
-      initialValues = {},
+      initialValues,
       referenceTables,
       copy,
     } = this.props;
@@ -787,6 +787,7 @@ InstanceForm.propTypes = {
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
+  initialValues: {},
 };
 
 export default stripesFinalForm({
