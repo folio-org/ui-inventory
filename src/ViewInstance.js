@@ -351,7 +351,7 @@ class ViewInstance extends React.Component {
           </Button>
         </IfPermission>
         <IfPermission perm="ui-inventory.instance.view">
-          { isSourceMARC &&
+          {isSourceMARC &&
             <Button
               id="clickable-view-source"
               buttonStyle="dropdownItem"
@@ -795,7 +795,7 @@ class ViewInstance extends React.Component {
                   )}
                 />
                 <Route
-                  path="/inventory/view/"
+                  path="/inventory/(holdings|items|instances)?/view/"
                   render={() => (
                     <this.cHoldings
                       dataKey={id}
