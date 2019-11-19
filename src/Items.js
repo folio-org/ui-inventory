@@ -145,13 +145,6 @@ class Items extends React.Component {
                     'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
                     'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
                   }}
-                  columnWidths={{
-                    'barcode': '25%',
-                    'status': '25%',
-                    'materialType': '25%',
-                    'enumeration': '25%',
-                    'chronology': '25%',
-                  }}
                   ariaLabel={ariaLabel}
                   containerRef={(ref) => { this.resultsList = ref; }}
                   interactive={false}
