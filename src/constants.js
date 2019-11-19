@@ -154,4 +154,4 @@ export const noValue = (
   </span>
 );
 
-export const wrappingCell = { 'word-break': 'break-word' };
+export const wrappingCell = { wordBreak: 'break-word' };

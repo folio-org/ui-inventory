@@ -1,5 +1,8 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedTime,
+} from 'react-intl';
 import {
   includes,
   find,
@@ -132,3 +135,18 @@ export const validateAlphaNumericField = value => {
 };
 
 export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
+
+export const convertArrayToBlocks = elements => (!isEmpty(elements)
+  ? elements.map((line, i) => <div key={i}>{line}</div>)
+  : '-');
+
+export const getDate = dateValue => {
+  return dateValue ? (
+    <FormattedTime
+      value={dateValue}
+      day="numeric"
+      month="numeric"
+      year="numeric"
+    />
+  ) : '-';
+};

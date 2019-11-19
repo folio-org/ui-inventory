@@ -1,8 +1,13 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
+import {
+  describe,
+  beforeEach,
+  it,
+} from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import setupApplication from '../../../helpers/setup-application';
 import HRIDHandlingInteractor from '../../../interactors/settings/hrid-handling/hrid-handling';
+import translation from '../../../../../translations/ui-inventory/en';
 
 describe('Setting of HRID Handling', () => {
   setupApplication();
@@ -73,6 +78,10 @@ describe('Setting of HRID Handling', () => {
     it('renders an error message', () => {
       expect(HRIDHandlingInteractor.startWithFields.fields(0).inputError).to.be.true;
     });
+
+    it('with correct wording', () => {
+      expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.startWithField']);
+    });
   });
 
   describe('when input special symbols to the assignPrefix field', () => {
@@ -82,6 +91,10 @@ describe('Setting of HRID Handling', () => {
 
     it('renders an error message', () => {
       expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).inputError).to.be.true;
+    });
+
+    it('with correct wording', () => {
+      expect(HRIDHandlingInteractor.assignPrefixFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.assignPrefixField']);
     });
   });
 
@@ -95,6 +108,11 @@ describe('Setting of HRID Handling', () => {
       expect(HRIDHandlingInteractor.startWithFields.fields(0).inputError).to.be.true;
       expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).inputError).to.be.true;
     });
+
+    it('with correct wording', () => {
+      expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.startWithField']);
+      expect(HRIDHandlingInteractor.assignPrefixFields.errorMessages(1).text).to.be.equal(translation['hridHandling.validation.assignPrefixField']);
+    });
   });
 
   describe('when the required startWith field is empty', () => {
@@ -104,6 +122,10 @@ describe('Setting of HRID Handling', () => {
 
     it('renders an error message', () => {
       expect(HRIDHandlingInteractor.startWithFields.fields(0).inputError).to.be.true;
+    });
+
+    it('with correct wording', () => {
+      expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.enterValue']);
     });
   });
 });
