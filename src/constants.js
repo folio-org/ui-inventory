@@ -52,7 +52,7 @@ export const instanceFilterConfig = [
 ];
 
 export const instanceIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title="%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title all "%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
@@ -71,7 +71,7 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
-  // TODO: add holding indexes
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
@@ -91,7 +91,8 @@ export const holdingFilterConfig = [
 
 export const itemIndexes = [
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title="%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
+  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const itemFilterConfig = [

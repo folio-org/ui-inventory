@@ -437,4 +437,43 @@ export default function configure() {
     instanceTypes: [],
     totalRecords: 0
   });
+
+  this.get('/inventory-reports/items-in-transit', {
+    items: [
+      {
+        id: '7212ba6a-8dcf-45a1-be9a-ffaa847c4423',
+        title: 'A semantic web primer',
+        barcode: '10101',
+        contributors: [{ 'name': 'Antoniou, Grigoris' }],
+        callNumber: 'TK5105.88815 . A58 2004 FT MEADE',
+        status: { name: 'In transit' },
+        inTransitDestinationServicePointId: 'c4c90014-c8c9-4ade-8f24-b5e313319f4b',
+        inTransitDestinationServicePoint: {
+          id: 'c4c90014-c8c9-4ade-8f24-b5e313319f4b',
+          name: 'Circ Desk 2'
+        },
+        location: {
+          name: 'Main Library',
+          code: 'KU/CC/DI/M',
+          libraryName: 'Datalogisk Institut'
+        },
+        request: {
+          requestType: 'Hold',
+          requestDate: '2019-11-13T11:23:16.000Z',
+          requestPickupServicePointName: 'Circ Desk 2',
+          requestPatronGroup: 'Kovacek, Meredith'
+        },
+        loan: {
+          checkInServicePoint: {
+            name: 'Online',
+            code: 'Online',
+            discoveryDisplayName: 'Online',
+            shelvingLagTime: 0,
+            pickupLocation: false
+          },
+          checkInDateTime: '2019-11-11T19:19:49.000Z'
+        }
+      }],
+    totalRecords: 1
+  });
 }

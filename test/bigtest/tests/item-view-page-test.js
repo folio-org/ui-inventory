@@ -56,7 +56,7 @@ describe('ItemViewPage', () => {
           expect(ItemViewPage.electronicAccessTable.isPresent).to.be.true;
         });
       });
-
+      
       describe('clicking on edit button in the pane header', () => {
         beforeEach(async () => {
           await ItemViewPage.clickEditItemButton();

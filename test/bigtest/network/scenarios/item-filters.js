@@ -1,8 +1,14 @@
 export default function (server) {
   const materialType = server.create('materialType', { name: 'book' });
-  const instances = server.createList('instance', 25, 'withHoldingAndItem');
-  const item = instances[0].holdings.models[0].items.models[0];
-  const holding = instances[0].holdings.models[0];
+  server.createList('instance', 25, 'withHoldingAndItem');
+
+  const instance = server.create('instance', {
+    title: 'Sapiens: A Brief History of Humankind',
+    contributors: [{ name: 'Yuval Noah Harari' }],
+  }, 'withHoldingAndItem');
+
+  const item = instance.holdings.models[0].items.models[0];
+  const holding = instance.holdings.models[0];
 
   server.create('materialType', { name: 'dvd' });
   server.create('materialType', { name: 'sound recording' });
@@ -12,5 +18,6 @@ export default function (server) {
 
   item.materialType = materialType.attrs;
   item.status.name = 'Withdrawn';
+
   item.save();
 }

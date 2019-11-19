@@ -211,16 +211,11 @@ class ViewItem extends React.Component {
   };
 
   copyItem = item => {
-    const {
-      resources: {
-        holdingsRecords,
-        instances1,
-      },
-    } = this.props;
+    const { resources: { holdingsRecords, instances1 } } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
-    this.props.mutator.items.POST(item).then(data => {
+    this.props.mutator.items.POST(item).then((data) => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   };
@@ -240,7 +235,7 @@ class ViewItem extends React.Component {
   };
 
   handleAccordionToggle = ({ id }) => {
-    this.setState(state => {
+    this.setState((state) => {
       const newState = cloneDeep(state);
 
       newState.accordions[id] = !newState.accordions[id];
@@ -250,7 +245,7 @@ class ViewItem extends React.Component {
   };
 
   handleExpandAll = obj => {
-    this.setState(curState => {
+    this.setState((curState) => {
       const newState = cloneDeep(curState);
 
       newState.accordions = obj;
@@ -261,7 +256,7 @@ class ViewItem extends React.Component {
   };
 
   onCopy(item) {
-    this.setState(state => {
+    this.setState((state) => {
       const newState = cloneDeep(state);
 
       newState.copiedItem = omit(item, ['id', 'hrid', 'barcode']);
@@ -561,7 +556,7 @@ class ViewItem extends React.Component {
 
     const layoutNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -1363,7 +1358,6 @@ class ViewItem extends React.Component {
                     containerRef={ref => { this.resultsList = ref; }}
                   />
                 </Accordion>
-
               </Pane>
             </Layer>
             <Layer
@@ -1372,7 +1366,7 @@ class ViewItem extends React.Component {
             >
               <ItemForm
                 form={`itemform_${item.id}`}
-                onSubmit={record => { this.saveItem(record); }}
+                onSubmit={(record) => { this.saveItem(record); }}
                 initialValues={item}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
@@ -1388,7 +1382,7 @@ class ViewItem extends React.Component {
             >
               <ItemForm
                 form={`itemform_${holdingsRecord.id}`}
-                onSubmit={record => { this.copyItem(record); }}
+                onSubmit={(record) => { this.copyItem(record); }}
                 initialValues={this.state.copiedItem}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}

@@ -6,7 +6,13 @@ import {
   fillable,
   clickable,
   isPresent,
+  isVisible,
 } from '@bigtest/interactor';
+
+@interactor class InventoryHeaderDropdownMenu {
+  clickItemsInTransitReportBtn = clickable('#dropdown-clickable-get-report');
+  itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
+}
 
 export default @interactor class InventoryInteractor {
   static defaultScope = '[data-test-inventory-instances]';
@@ -35,5 +41,8 @@ export default @interactor class InventoryInteractor {
 
   openInstance = clickable('[role=row] a');
   openItem = clickable('[data-test-items] a');
-  closeItem = clickable('[data-test-item-view-page] button:first-child')
+  closeItem = clickable('[data-test-item-view-page] button:first-child');
+
+  headerDropdown = scoped('[class*=paneHeaderCenterInner---] [class*=dropdown---] button');
+  headerDropdownMenu = new InventoryHeaderDropdownMenu();
 }
