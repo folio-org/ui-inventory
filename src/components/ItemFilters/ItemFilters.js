@@ -88,8 +88,8 @@ export default class ItemFilters extends React.Component {
           />
         </Accordion>
         <Accordion
-          label={<FormattedMessage id="ui-inventory.filters.itemEffectiveLocation" />}
-          id="effectiveLocation"
+          label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+          id="itemEffectiveLocationAccordion"
           name="effectiveLocation"
           separator={true}
           header={FilterAccordionHeader}

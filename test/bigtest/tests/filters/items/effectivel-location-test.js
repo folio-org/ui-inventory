@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import ItemsRouteInteractor from '../../../interactors/routes/items-route';
 
-describe.only('Item pane effective location filter', () => {
+describe('Item pane effective location filter', () => {
   setupApplication({ scenarios: ['item-filters'] });
 
   const itemsRoute = new ItemsRouteInteractor();
@@ -19,11 +19,11 @@ describe.only('Item pane effective location filter', () => {
 
   describe('open effective location filter', () => {
     beforeEach(async () => {
-      await itemsRoute.itemEffectiveLocationFilter.open();
+      await itemsRoute.effectiveLocationFilter.open();
     });
 
     it('displays the effective location multi select', () => {
-      expect(itemsRoute.itemEffectiveLocationFilter.multiSelect.isPresent).to.equal(true);
+      expect(itemsRoute.effectiveLocationFilter.multiSelect.isPresent).to.equal(true);
     });
   });
 });

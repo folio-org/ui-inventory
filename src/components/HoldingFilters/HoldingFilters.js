@@ -56,7 +56,7 @@ export default class HoldingFilters extends React.Component {
       <React.Fragment>
         <Accordion
           label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
-          id="effectiveLocation"
+          id="holdingsEffectiveLocationAccordion"
           name="effectiveLocation"
           separator={false}
           header={FilterAccordionHeader}
@@ -72,7 +72,7 @@ export default class HoldingFilters extends React.Component {
         </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
-          id="holdingsPermanentLocation"
+          id="holdingsPermanentLocationAccordion"
           name="holdingsPermanentLocation"
           closedByDefault
           header={FilterAccordionHeader}
