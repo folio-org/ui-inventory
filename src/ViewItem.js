@@ -728,11 +728,11 @@ class ViewItem extends React.Component {
       acc08: areAllFieldsEmpty(Object.values(electronicAccess)),
     };
 
-    const statisticalCodeContent = (!isEmpty(administrativeData.statisticalCodeIds)
+    const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
       ? administrativeData.statisticalCodeIds.map(id => ({ codeId: id }))
-      : [{ codeId: '-' }]);
+      : [{ codeId: '-' }];
 
-    const electronicAccessContent = (!isEmpty(electronicAccess.electronicAccess)
+    const electronicAccessContent = !isEmpty(electronicAccess.electronicAccess)
       ? electronicAccess.electronicAccess
       : [{
         relationshipId: '-',
@@ -740,7 +740,7 @@ class ViewItem extends React.Component {
         linkText: '-',
         materialsSpecification: '-',
         publicNote: '-',
-      }]);
+      }];
 
     const statisticalCodeFormatter = {
       'Statistical code type': x => refLookup(referenceTables.statisticalCodeTypes,
@@ -751,7 +751,7 @@ class ViewItem extends React.Component {
     const electronicAccessFormatter = {
       'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships,
         get(x, ['relationshipId'])).name || noValue,
-      URI: x => (get(x, ['uri'])
+      'URI': x => (get(x, ['uri'])
         ? (
           <a
             href={get(x, ['uri'])}
