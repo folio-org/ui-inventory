@@ -787,6 +787,7 @@ InstanceForm.propTypes = {
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
+  initialValues: {},
 };
 
 export default stripesFinalForm({
