@@ -25,6 +25,11 @@ export const requestStatuses = {
 // as those are pulled from the backend
 export const instanceFilterConfig = [
   {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
+    values: [],
+  },
+  {
     name: 'language',
     cql: 'languages',
     values: [],
@@ -78,6 +83,11 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
+    values: [],
+  },
+  {
     name: 'holdingsPermanentLocation',
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
@@ -104,6 +114,11 @@ export const itemFilterConfig = [
   {
     name: 'itemStatus',
     cql: 'item.status.name',
+    values: [],
+  },
+  {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
     values: [],
   },
   {

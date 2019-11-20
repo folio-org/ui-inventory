@@ -40,11 +40,13 @@
 * Item record. Display empty elements with the dashes. Refs UIIN-828.
 * Filter holdings pane by discovery-suppress. Completes UIIN-766.
 * Filter holdings and item panes by discovery-suppress. Completes UIIN-766 and UIIN-767.
+* Filter holdings and item panes by holdings perm location. Completes UIIN-679.
 * Holding record. Display empty elements with the dashes. Refs UIIN-827.
 * Add ability to search by cql from item segment. Parf of UIIN-869.
 * Add ability to search by cql from holding segment. Parf of UIIN-868.
 * Add support for new search segments in `ViewInstance` route. UIIN-859.
-* Change instance all/keyword search to use new `keyword` index. Completes UIIN-564.
+* Change instance all/keyword search to use new `keyword` index. Completes UIIN-717.
+* Filter all panes by item effective location. Completes UIIN-199.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

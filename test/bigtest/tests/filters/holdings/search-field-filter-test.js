@@ -6,12 +6,12 @@ import {
 import { expect } from 'chai';
 
 import setupApplication from '../../../helpers/setup-application';
-import HoldingRouteInteractor from '../../../interactors/routes/holdings-route';
+import HoldingsRouteInteractor from '../../../interactors/routes/holdings-route';
 
 describe('Holdings SearchFieldFilter', () => {
   setupApplication({ scenarios: ['holdings-filters'] });
 
-  const holdingsRoute = new HoldingRouteInteractor();
+  const holdingsRoute = new HoldingsRouteInteractor();
 
   beforeEach(function () {
     this.visit('/inventory/holdings');

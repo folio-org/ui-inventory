@@ -16,6 +16,7 @@ export default @interactor class ItemsRouteInteractor {
   static defaultScope = '[data-test-inventory-instances]';
 
   materialTypeFilter = scoped('#materialTypeAccordion', MultiSelectFilterInteractor);
+  effectiveLocationFilter = scoped('#itemEffectiveLocationAccordion', MultiSelectFilterInteractor);
   permLocationFilter = scoped('#holdingsPermanentLocationAccordion', MultiSelectFilterInteractor);
   itemStatusFilter = scoped('#itemFilterAccordion', CheckboxFilterInteractor);
 
