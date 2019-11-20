@@ -47,6 +47,7 @@
 * Add support for new search segments in `ViewInstance` route. UIIN-859.
 * Change instance all/keyword search to use new `keyword` index. Completes UIIN-717.
 * Filter all panes by item effective location. Completes UIIN-199.
+* Display "status updated" date/time. Completes UIIN-846.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
