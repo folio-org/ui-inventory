@@ -13,11 +13,7 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import {
-  FormattedDate,
-  FormattedTime,
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Pane,
@@ -49,11 +45,14 @@ import {
   canMarkItemAsMissing,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
+  convertArrayToBlocks,
+  getDate,
 } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import {
   itemStatusesMap,
+  noValue,
   requestStatuses,
   wrappingCell,
 } from './constants';
@@ -538,6 +537,23 @@ class ViewItem extends React.Component {
       return ref || {};
     };
 
+    const emptyNotes = (
+      <Row>
+        <Col xs={1}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.staffOnly" />}
+            value={checkIfElementIsEmpty('-')}
+          />
+        </Col>
+        <Col xs={11}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.note" />}
+            value={checkIfElementIsEmpty('-')}
+          />
+        </Col>
+      </Row>
+    );
+
     const layoutNotes = (noteTypes, notes) => {
       return noteTypes
         .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
@@ -644,7 +660,7 @@ class ViewItem extends React.Component {
       barcode: get(item, 'barcode', '-'),
       accessionNumber: get(item, 'accessionNumber', '-'),
       identifier: get(item, 'itemIdentifier', '-'),
-      formerIds: get(item, 'formerIds', []).map((line, i) => <div key={i}>{line}</div>),
+      formerIds: get(item, 'formerIds', []),
       statisticalCodeIds: get(item, 'statisticalCodeIds', []),
     };
 
@@ -663,15 +679,15 @@ class ViewItem extends React.Component {
       enumeration: get(item, 'enumeration', '-'),
       chronology: get(item, 'chronology', '-'),
       volume: get(item, 'volume', '-'),
-      yearCaption: get(item, 'yearCaption', []).map((line, i) => <div key={i}>{line}</div>),
+      yearCaption: get(item, 'yearCaption', []),
     };
 
     const condition = {
       numberOfMissingPieces: get(item, 'numberOfMissingPieces', '-'),
       missingPieces: get(item, 'missingPieces', '-'),
-      missingPiecesDate: get(item, 'missingPiecesDate', '-'),
+      missingPiecesDate: getDate(get(item, 'missingPiecesDate')),
       itemDamagedStatus: refLookup(referenceTables.itemDamagedStatuses, get(item, 'itemDamagedStatusId')).name || '-',
-      itemDamagedStatusDate: get(item, 'itemDamagedStatusDate', '-'),
+      itemDamagedStatusDate: getDate(get(item, 'itemDamagedStatusDate')),
     };
 
     const itemNotes = { notes: layoutNotes(referenceTables.itemNoteTypes, get(item, 'notes', [])) };
@@ -680,32 +696,11 @@ class ViewItem extends React.Component {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatus: loanLink,
-      itemStatusDate: itemStatusDate ? (
-        <FormattedTime
-          value={itemStatusDate}
-          day="numeric"
-          month="numeric"
-          year="numeric"
-        />
-      ) : '-',
+      itemStatusDate: getDate(itemStatusDate),
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
-      loanDate: loan ? (
-        <FormattedTime
-          value={loan.loanDate}
-          day="numeric"
-          month="numeric"
-          year="numeric"
-        />
-      ) : '-',
-      dueDate: loan ? (
-        <FormattedTime
-          value={loan.dueDate}
-          day="numeric"
-          month="numeric"
-          year="numeric"
-        />
-      ) : '-',
+      loanDate: loan ? getDate(loan.loanDate) : '-',
+      dueDate: loan ? getDate(loan.dueDate) : '-',
       circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
     };
 
@@ -720,6 +715,8 @@ class ViewItem extends React.Component {
       effectiveLocation: get(item, ['effectiveLocation', 'name'], '-'),
     };
 
+    const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
+
     const accordionsState = {
       acc01: areAllFieldsEmpty(Object.values(administrativeData)),
       acc02: areAllFieldsEmpty(Object.values(itemData)),
@@ -728,7 +725,44 @@ class ViewItem extends React.Component {
       acc05: areAllFieldsEmpty(Object.values(itemNotes)),
       acc06: areAllFieldsEmpty(Object.values(loanAndAvailability)),
       acc07: areAllFieldsEmpty([...Object.values(holdingLocation), ...Object.values(itemLocation)]),
-      acc08: areAllFieldsEmpty([...get(item, 'electronicAccess', [])]),
+      acc08: areAllFieldsEmpty(Object.values(electronicAccess)),
+    };
+
+    const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
+      ? administrativeData.statisticalCodeIds.map(id => ({ codeId: id }))
+      : [{ codeId: '-' }];
+
+    const electronicAccessContent = !isEmpty(electronicAccess.electronicAccess)
+      ? electronicAccess.electronicAccess
+      : [{
+        relationshipId: '-',
+        uri: '-',
+        linkText: '-',
+        materialsSpecification: '-',
+        publicNote: '-',
+      }];
+
+    const statisticalCodeFormatter = {
+      'Statistical code type': x => refLookup(referenceTables.statisticalCodeTypes,
+        refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
+      'Statistical code': x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
+    };
+
+    const electronicAccessFormatter = {
+      'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships,
+        get(x, ['relationshipId'])).name || noValue,
+      'URI': x => (get(x, ['uri'])
+        ? (
+          <a
+            href={get(x, ['uri'])}
+            style={wrappingCell}
+          >
+            {get(x, ['uri'])}
+          </a>)
+        : noValue),
+      'Link text': x => get(x, ['linkText']) || noValue,
+      'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
+      'URL public note': x => get(x, ['publicNote']) || noValue,
     };
 
     return (
@@ -885,22 +919,18 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(administrativeData.hrid)}
                       />
                     </Col>
-                    {(item.barcode) && (
                     <Col xs={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.itemBarcode" />}
                         value={checkIfElementIsEmpty(administrativeData.barcode)}
                       />
                     </Col>
-                    )}
-                    {(item.accessionNumber) && (
                     <Col xs={2}>
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                         value={checkIfElementIsEmpty(administrativeData.accessionNumber)}
                       />
                     </Col>
-                    )}
                   </Row>
                   <Row>
                     <Col xs={2}>
@@ -909,39 +939,29 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(administrativeData.identifier)}
                       />
                     </Col>
-                    {(item.formerIds && item.formerIds.length > 0) && (
                     <Col
                       smOffset={0}
                       sm={2}
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.formerId" />}
-                        value={checkIfElementIsEmpty(administrativeData.formerIds)}
+                        value={checkIfElementIsEmpty(convertArrayToBlocks(administrativeData.formerIds))}
                       />
                     </Col>
-                    )}
                   </Row>
                   <Row>
-                    {(item.statisticalCodeIds && item.statisticalCodeIds.length > 0) && (
-                      <MultiColumnList
-                        id="list-statistical-codes"
-                        contentData={item.statisticalCodeIds.map((id) => { return { 'codeId': id }; })}
-                        visibleColumns={['Statistical code type', 'Statistical code']}
-                        columnMapping={{
-                          'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                          'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                        }}
-                        formatter={{
-                          'Statistical code type':
-                            x => refLookup(referenceTables.statisticalCodeTypes,
-                              refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name,
-                          'Statistical code':
-                            x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
-                        }}
-                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
-                        containerRef={(ref) => { this.resultsList = ref; }}
-                      />
-                    )}
+                    <MultiColumnList
+                      id="item-list-statistical-codes"
+                      contentData={statisticalCodeContent}
+                      visibleColumns={['Statistical code type', 'Statistical code']}
+                      columnMapping={{
+                        'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                        'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                      }}
+                      formatter={statisticalCodeFormatter}
+                      ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                      containerRef={ref => { this.resultsList = ref; }}
+                    />
                   </Row>
                 </Accordion>
                 <Accordion
@@ -1002,7 +1022,6 @@ class ViewItem extends React.Component {
                     </Col>
                   </Row>
                   <Row>
-                    {(item.copyNumbers && item.copyNumbers.length > 0) && (
                     <Col
                       smOffset={0}
                       sm={2}
@@ -1012,8 +1031,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(itemData.copyNumbers)}
                       />
                     </Col>
-                    )}
-                    {(item.numberOfPieces) && (
                     <Col
                       smOffset={0}
                       sm={2}
@@ -1023,7 +1040,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(itemData.numberOfPieces)}
                       />
                     </Col>
-                    )}
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1042,7 +1058,6 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.enumerationData" />}
                 >
                   <Row>
-                    {(item.enumeration) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1052,8 +1067,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(enumerationData.enumeration)}
                       />
                     </Col>
-                    )}
-                    {(item.chronology) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1063,10 +1076,8 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(enumerationData.chronology)}
                       />
                     </Col>
-                    )}
                   </Row>
                   <Row>
-                    {(item.volume) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1076,20 +1087,17 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(enumerationData.volume)}
                       />
                     </Col>
-                    )}
                   </Row>
                   <Row>
-                    {(item.yearCaption && item.yearCaption.length > 0) && (
                     <Col
                       smOffset={0}
                       sm={8}
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                        value={checkIfElementIsEmpty(enumerationData.yearCaption)}
+                        value={checkIfElementIsEmpty(convertArrayToBlocks(enumerationData.yearCaption))}
                       />
                     </Col>
-                    )}
                   </Row>
                 </Accordion>
                 <Accordion
@@ -1099,7 +1107,6 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.condition" />}
                 >
                   <Row>
-                    {(item.numberOfMissingPieces) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1109,8 +1116,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(condition.numberOfMissingPieces)}
                       />
                     </Col>
-                    )}
-                    {(item.missingPieces) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1120,8 +1125,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(condition.missingPieces)}
                       />
                     </Col>
-                    )}
-                    {(item.missingPiecesDate) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1131,10 +1134,8 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(condition.missingPiecesDate)}
                       />
                     </Col>
-                    )}
                   </Row>
                   <Row>
-                    {(item.itemDamagedStatusId) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1144,18 +1145,15 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(condition.itemDamagedStatus)}
                       />
                     </Col>
-                    )}
-                    {(item.itemDamagedStatusDate) && (
                     <Col
                       smOffset={0}
                       sm={4}
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.date" />}
-                        value={<FormattedDate value={checkIfElementIsEmpty(condition.itemDamagedStatusDate)} />}
+                        value={checkIfElementIsEmpty(condition.itemDamagedStatusDate)}
                       />
                     </Col>
-                    )}
                   </Row>
                 </Accordion>
                 <Accordion
@@ -1164,7 +1162,7 @@ class ViewItem extends React.Component {
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.itemNotes" />}
                 >
-                  {itemNotes.notes}
+                  {!isEmpty(itemNotes.notes) ? itemNotes.notes : emptyNotes}
                 </Accordion>
                 <Accordion
                   open={this.isAccordionOpen('acc06', accordionsState.acc06)}
@@ -1173,7 +1171,6 @@ class ViewItem extends React.Component {
                   label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
                 >
                   <Row>
-                    {(item.permanentLoanType) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1183,8 +1180,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(loanAndAvailability.permanentLoanType)}
                       />
                     </Col>
-                    )}
-                    {(item.temporaryLoanType) && (
                     <Col
                       smOffset={0}
                       sm={4}
@@ -1194,7 +1189,6 @@ class ViewItem extends React.Component {
                         value={checkIfElementIsEmpty(loanAndAvailability.temporaryLoanType)}
                       />
                     </Col>
-                    )}
                   </Row>
                   <Row>
                     <Col
@@ -1251,7 +1245,7 @@ class ViewItem extends React.Component {
                       </KeyValue>
                     </Col>
                   </Row>
-                  {loanAndAvailability.circulationNotes}
+                  {!isEmpty(loanAndAvailability.circulationNotes) ? loanAndAvailability.circulationNotes : emptyNotes}
                 </Accordion>
                 <Accordion
                   open={this.isAccordionOpen('acc07', accordionsState.acc07)}
@@ -1341,38 +1335,29 @@ class ViewItem extends React.Component {
                   onToggle={this.handleAccordionToggle}
                   label={<FormattedMessage id="ui-inventory.electronicAccess" />}
                 >
-                  {(item.electronicAccess && item.electronicAccess.length > 0) && (
-                    <MultiColumnList
-                      id="list-electronic-access"
-                      contentData={item.electronicAccess}
-                      visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                      columnMapping={{
-                        'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                        'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                        'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                        'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                        'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                      }}
-                      columnWidths={{
-                        'URL relationship': '16%',
-                        'URI': '16%',
-                        'Link text': '16%',
-                        'Materials specified': '16%',
-                        'URL public note': '32%',
-                      }}
-                      formatter={{
-                        'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
-                        'URI': x => <a href={get(x, ['uri'])} style={wrappingCell}>{get(x, ['uri'])}</a>,
-                        'Link text': x => get(x, ['linkText']) || '',
-                        'Materials specified': x => get(x, ['materialsSpecification']) || '',
-                        'URL public note': x => get(x, ['publicNote']) || '',
-                      }}
-                      ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
-                      containerRef={(ref) => { this.resultsList = ref; }}
-                    />
-                  )}
+                  <MultiColumnList
+                    id="item-list-electronic-access"
+                    contentData={electronicAccessContent}
+                    visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                    columnMapping={{
+                      'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                      'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                      'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                      'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                      'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                    }}
+                    columnWidths={{
+                      'URL relationship': '16%',
+                      'URI': '16%',
+                      'Link text': '16%',
+                      'Materials specified': '16%',
+                      'URL public note': '32%',
+                    }}
+                    formatter={electronicAccessFormatter}
+                    ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
+                    containerRef={ref => { this.resultsList = ref; }}
+                  />
                 </Accordion>
-
               </Pane>
             </Layer>
             <Layer
