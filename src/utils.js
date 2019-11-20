@@ -11,6 +11,7 @@ import {
   escapeRegExp,
   isArray,
   isEmpty,
+  template,
 } from 'lodash';
 import {
   itemStatusesMap,
@@ -91,6 +92,15 @@ export function getQueryTemplate(queryIndex, indexes) {
   const searchableIndex = indexes.find(({ value }) => value === queryIndex);
 
   return get(searchableIndex, 'queryTemplate');
+}
+
+export function getIsbnIssnTemplate(queryTemplate, props, queryIndex) {
+  const { resources: { identifierTypes } } = props;
+  const identifierType = get(identifierTypes, 'records', [])
+    .find(({ name }) => name.toLowerCase() === queryIndex);
+  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
+
+  return template(queryTemplate)({ identifierTypeId });
 }
 
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
