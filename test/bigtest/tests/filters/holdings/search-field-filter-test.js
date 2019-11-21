@@ -1,9 +1,9 @@
+import { expect } from 'chai';
 import {
   beforeEach,
   describe,
   it,
 } from '@bigtest/mocha';
-import { expect } from 'chai';
 
 import setupApplication from '../../../helpers/setup-application';
 import HoldingsRouteInteractor from '../../../interactors/routes/holdings-route';
@@ -42,6 +42,18 @@ describe('Holdings SearchFieldFilter', () => {
       it('finds instances by title and contributor name', () => {
         expect(holdingsRoute.rows().length).to.equal(1);
       });
+    });
+  });
+
+  describe('ISBN', function () {
+    beforeEach(async () => {
+      await holdingsRoute.searchFieldFilter.searchField.selectIndex('- ISBN');
+      await holdingsRoute.searchFieldFilter.searchField.fillInput('isbn');
+      await holdingsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('finds instances by isbn', () => {
+      expect(holdingsRoute.rows().length).to.equal(1);
     });
   });
 });
