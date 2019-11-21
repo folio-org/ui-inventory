@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  template,
-  get,
-} from 'lodash';
+import { get } from 'lodash';
+
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
@@ -15,16 +13,10 @@ import {
   instanceSortMap,
   CQL_FIND_ALL,
 } from '../constants';
-import { getQueryTemplate } from '../utils';
-
-function getIsbnIssnTemplate(queryTemplate, props, queryIndex) {
-  const { resources: { identifierTypes } } = props;
-  const identifierType = get(identifierTypes, 'records', [])
-    .find(({ name }) => name.toLowerCase() === queryIndex);
-  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
-
-  return template(queryTemplate)({ identifierTypeId });
-}
+import {
+  getQueryTemplate,
+  getIsbnIssnTemplate,
+} from '../utils';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const query = { ...resourceData.query };
