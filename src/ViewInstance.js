@@ -21,7 +21,11 @@ import {
   Switch
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedTime,
+  FormattedMessage,
+} from 'react-intl';
 
 import queryString from 'query-string';
 
@@ -710,6 +714,14 @@ class ViewInstance extends React.Component {
       acc10: areAllFieldsEmpty(Object.values(instanceRelationship)),
     };
 
+    const formattedStatusUpdatedDate = (
+      <React.Fragment>
+        <FormattedDate value={checkIfElementIsEmpty(instanceData.instanceStatusUpdatedDate)} />
+        <br />
+        <FormattedTime value={checkIfElementIsEmpty(instanceData.instanceStatusUpdatedDate)} />
+      </React.Fragment>
+    );
+
     return (
       <Pane
         data-test-instance-details
@@ -879,7 +891,7 @@ class ViewInstance extends React.Component {
             <Col xs={3}>
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusUpdatedDate" />}
-                value={checkIfElementIsEmpty(instanceData.instanceStatusUpdatedDate)}
+                value={formattedStatusUpdatedDate}
               />
             </Col>
           </Row>
