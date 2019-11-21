@@ -140,7 +140,6 @@ class ViewItem extends React.Component {
       },
       loan: null,
       borrower: null,
-      loanStatusDate: null,
       itemMissingModal: false,
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
@@ -162,17 +161,16 @@ class ViewItem extends React.Component {
     if (!loan) return;
 
     const itemStatus = get(loan, 'item.status.name');
-    const loanStatusDate = get(loan, 'metadata.updatedDate');
-    const state = { loanStatusDate };
 
     if (!includes([AVAILABLE, AWAITING_PICKUP, IN_TRANSIT], itemStatus)) {
       const borrowers = await this.fetchBorrowers(loans[0].userId);
+      const state = {
+        loan,
+        borrower: borrowers[0],
+      };
 
-      state.loan = loan;
-      state.borrower = borrowers[0];
+      this.setState(state);
     }
-
-    this.setState(state);
   }
 
   fetchLoans() {
@@ -525,11 +523,7 @@ class ViewItem extends React.Component {
       );
     }
 
-    let itemStatusDate = get(item, ['metadata', 'updatedDate']);
-
-    if (this.state.loanStatusDate && this.state.loanStatusDate > itemStatusDate) {
-      itemStatusDate = this.state.loanStatusDate;
-    }
+    const itemStatusDate = get(item, ['status', 'date']);
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
