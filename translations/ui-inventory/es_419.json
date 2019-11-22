@@ -438,5 +438,9 @@
     "reports.inTransitItem.emptyReport.message": "No hay ítems con el estatus En tránsito",
     "common.close": "Cerrar",
     "filters.effectiveLocation": "Effective location",
-    "identifierAll": "Identificador"
+    "identifierAll": "Identificador",
+    "reports.inTransitItem.callNumber": "Call number",
+    "reports.inTransitItem.enumeration": "Enumeration",
+    "reports.inTransitItem.volume": "Volume",
+    "reports.inTransitItem.yearCaption": "Year"
 }

@@ -438,5 +438,9 @@
     "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
     "common.close": "Close",
     "filters.effectiveLocation": "Effective location",
-    "identifierAll": "Identifier (all)"
+    "identifierAll": "Identifier (all)",
+    "reports.inTransitItem.callNumber": "Call number",
+    "reports.inTransitItem.enumeration": "Enumeration",
+    "reports.inTransitItem.volume": "Volume",
+    "reports.inTransitItem.yearCaption": "Year"
 }

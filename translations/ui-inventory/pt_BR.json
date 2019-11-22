@@ -93,7 +93,7 @@
     "updateHoldingsRecord": "Atualizar registro do acervo",
     "editHoldings": "Editar",
     "instanceData": "Dados administrativos",
-    "instanceId": "ID da instância",
+    "instanceId": "UUID da instância",
     "metadataSource": "Fonte de metadados",
     "tba": "A ser anunciado",
     "resourceIdentifier": "Identificador do recurso",
@@ -146,7 +146,7 @@
     "meta.title": "Acervo",
     "location": "Localização",
     "callNumber": "Número de chamada",
-    "title": "Título",
+    "title": "Título (todos)",
     "barcode": "Código de barras",
     "status": "Status",
     "notes": "Notas",
@@ -438,5 +438,9 @@
     "reports.inTransitItem.emptyReport.message": "Não há itens com o status Em trânsito.",
     "common.close": "Fechar",
     "filters.effectiveLocation": "Localização efetiva",
-    "identifierAll": "Identifier (all)"
+    "identifierAll": "Identificador (todos)",
+    "reports.inTransitItem.callNumber": "Call number",
+    "reports.inTransitItem.enumeration": "Enumeration",
+    "reports.inTransitItem.volume": "Volume",
+    "reports.inTransitItem.yearCaption": "Year"
 }
