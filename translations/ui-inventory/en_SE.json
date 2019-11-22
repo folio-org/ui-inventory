@@ -93,7 +93,7 @@
     "updateHoldingsRecord": "Update Holdings Record",
     "editHoldings": "Edit",
     "instanceData": "Instance data",
-    "instanceId": "Instance ID",
+    "instanceId": "Instance UUID",
     "metadataSource": "Metadata source",
     "tba": "TBA",
     "resourceIdentifier": "Resource identifier",
@@ -146,7 +146,7 @@
     "meta.title": "Inventory",
     "location": "Location",
     "callNumber": "Call number",
-    "title": "Title",
+    "title": "Title (all)",
     "barcode": "Barcode",
     "status": "Status",
     "notes": "Notes",
@@ -436,5 +436,7 @@
     "reports.inTransitItem.tags": "Tags",
     "reports.inTransitItem.emptyReport.label": "Nothing to export",
     "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
-    "common.close": "Close"
+    "common.close": "Close",
+    "filters.effectiveLocation": "Effective location",
+    "identifierAll": "Identifier (all)"
 }

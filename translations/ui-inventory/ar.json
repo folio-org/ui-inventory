@@ -436,5 +436,7 @@
     "reports.inTransitItem.tags": "وسوم",
     "reports.inTransitItem.emptyReport.label": "لا يوجد شيء للتصدير",
     "reports.inTransitItem.emptyReport.message": "لا توجد مواد بحالة في النقل",
-    "common.close": "إغلاق"
+    "common.close": "إغلاق",
+    "filters.effectiveLocation": "الموقع الفعال",
+    "identifierAll": "Identifier (all)"
 }
