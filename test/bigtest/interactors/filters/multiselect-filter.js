@@ -2,7 +2,8 @@ import {
   clickable,
   scoped,
   text,
-  hasClass
+  hasClass,
+  interactor,
 } from '@bigtest/interactor';
 
 import {
@@ -13,7 +14,8 @@ import {
 // eslint-disable-next-line
 import MultiSelectInteractor from '@folio/stripes-components/lib/MultiSelection/tests/interactor';
 
-export default class MultiSelectFilterInteractor {
+
+export default @interactor class MultiSelectFilterInteractor {
   static defaultScope = '[data-test-accordion-section]';
 
   label = text(`.${labelArea}`);

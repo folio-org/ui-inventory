@@ -35,6 +35,7 @@ export default class ItemFilters extends React.Component {
       activeFilters: {
         materialType = [],
         itemStatus = [],
+        effectiveLocation = [],
         holdingsPermanentLocation = [],
         discoverySuppress = [],
       },
@@ -83,6 +84,22 @@ export default class ItemFilters extends React.Component {
             name="itemStatus"
             dataOptions={itemStatusesOptions}
             selectedValues={itemStatus}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+          id="itemEffectiveLocationAccordion"
+          name="effectiveLocation"
+          separator
+          header={FilterAccordionHeader}
+          displayClearButton={effectiveLocation.length > 0}
+          onClearFilter={() => onClear('effectiveLocation')}
+        >
+          <MultiSelectionFilter
+            name="effectiveLocation"
+            dataOptions={locationOptions}
+            selectedValues={effectiveLocation}
             onChange={onChange}
           />
         </Accordion>

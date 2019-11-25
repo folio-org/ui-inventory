@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import HoldingsRouteInteractor from '../../../interactors/routes/holdings-route';
 
-describe('Holdings pane permanent location filter', () => {
+describe('Holdings pane effective location filter', () => {
   setupApplication({ scenarios: ['holdings-filters'] });
 
   const holdingsRoute = new HoldingsRouteInteractor();
@@ -17,13 +17,13 @@ describe('Holdings pane permanent location filter', () => {
     this.visit('/inventory/holdings');
   });
 
-  describe('open permanent location filter', () => {
+  describe('open effective location filter', () => {
     beforeEach(async () => {
-      await holdingsRoute.permLocationFilter.open();
+      await holdingsRoute.effectiveLocationFilter.open();
     });
 
-    it('displays the permanent location multi select', () => {
-      expect(holdingsRoute.permLocationFilter.multiSelect.isPresent).to.equal(true);
+    it('displays the effective location multi select', () => {
+      expect(holdingsRoute.effectiveLocationFilter.multiSelect.isPresent).to.equal(true);
     });
   });
 });

@@ -24,23 +24,31 @@ export default class InstanceFilters extends React.Component {
     activeFilters: {},
     data: {
       resourceTypes: [],
+      locations: [],
     },
   }
 
   render() {
     const {
       activeFilters: {
+        effectiveLocation = [],
         resource = [],
         language = [],
         discoverySuppress = [],
         staffSuppress = [],
       },
       data: {
+        locations,
         resourceTypes,
       },
       onChange,
       onClear,
     } = this.props;
+
+    const effectiveLocationOptions = locations.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
 
     const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
       label: name,
@@ -56,6 +64,22 @@ export default class InstanceFilters extends React.Component {
 
     return (
       <React.Fragment>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
+          id="effectiveLocation"
+          name="effectiveLocation"
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={effectiveLocation.length > 0}
+          onClearFilter={() => onClear('effectiveLocation')}
+        >
+          <MultiSelectionFilter
+            name="effectiveLocation"
+            dataOptions={effectiveLocationOptions}
+            selectedValues={effectiveLocation}
+            onChange={onChange}
+          />
+        </Accordion>
         <Accordion
           label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
           id="resource"

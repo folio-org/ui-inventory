@@ -1,5 +1,8 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedTime,
+} from 'react-intl';
 import {
   includes,
   find,
@@ -8,6 +11,7 @@ import {
   escapeRegExp,
   isArray,
   isEmpty,
+  template,
 } from 'lodash';
 import {
   itemStatusesMap,
@@ -90,6 +94,15 @@ export function getQueryTemplate(queryIndex, indexes) {
   return get(searchableIndex, 'queryTemplate');
 }
 
+export function getIsbnIssnTemplate(queryTemplate, props, queryIndex) {
+  const { resources: { identifierTypes } } = props;
+  const identifierType = get(identifierTypes, 'records', [])
+    .find(({ name }) => name.toLowerCase() === queryIndex);
+  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
+
+  return template(queryTemplate)({ identifierTypeId });
+}
+
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
 // idTypes is an array of relationship definition objects of the form
 // { id, name }
@@ -131,3 +144,18 @@ export const validateAlphaNumericField = value => {
 };
 
 export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
+
+export const convertArrayToBlocks = elements => (!isEmpty(elements)
+  ? elements.map((line, i) => <div key={i}>{line}</div>)
+  : '-');
+
+export const getDate = dateValue => {
+  return dateValue ? (
+    <FormattedTime
+      value={dateValue}
+      day="numeric"
+      month="numeric"
+      year="numeric"
+    />
+  ) : '-';
+};

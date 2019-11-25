@@ -66,6 +66,10 @@ class HoldingsForm extends React.Component {
     }),
   };
 
+  static defaultProps = {
+    initialValues: {},
+  };
+
   constructor(props) {
     super(props);
 

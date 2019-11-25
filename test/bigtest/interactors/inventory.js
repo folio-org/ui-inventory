@@ -21,6 +21,7 @@ export default @interactor class InventoryInteractor {
 
   isResourceFilterPresent = isPresent('[data-test-filter-instance-resource]');
   isLocationFilterPresent = isPresent('[data-test-filter-instance-location]');
+  isEffectiveLocationFilterPresent = isPresent('#effectiveLocation');
   isStaffSuppressFilterPresent = isPresent('[data-test-filter-instance-staff-suppress]');
   isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-instance-discovery-suppress]');
   clickSelectStaffSuppressFilter = clickable('#clickable-filter-staffSuppress-true');

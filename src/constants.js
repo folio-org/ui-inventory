@@ -25,6 +25,11 @@ export const requestStatuses = {
 // as those are pulled from the backend
 export const instanceFilterConfig = [
   {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
+    values: [],
+  },
+  {
     name: 'language',
     cql: 'languages',
     values: [],
@@ -52,15 +57,15 @@ export const instanceFilterConfig = [
 ];
 
 export const instanceIndexes = [
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'title all "%{query.query}" or contributors =/@name "%{query.query}" or identifiers =/@value "%{query.query}"' },
-  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifier', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
+  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
+  // { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
+  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -71,12 +76,20 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
+  {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
+    values: [],
+  },
   {
     name: 'holdingsPermanentLocation',
     cql: 'holdingsRecords.permanentLocationId',
@@ -90,9 +103,13 @@ export const holdingFilterConfig = [
 ];
 
 export const itemIndexes = [
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  // { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors =/@name "%{query.query}"' },
+  // { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
 ];
 
 export const itemFilterConfig = [
@@ -104,6 +121,11 @@ export const itemFilterConfig = [
   {
     name: 'itemStatus',
     cql: 'item.status.name',
+    values: [],
+  },
+  {
+    name: 'effectiveLocation',
+    cql: 'item.effectiveLocationId',
     values: [],
   },
   {
@@ -155,4 +177,4 @@ export const noValue = (
   </span>
 );
 
-export const wrappingCell = { 'word-break': 'break-word' };
+export const wrappingCell = { wordBreak: 'break-word' };
