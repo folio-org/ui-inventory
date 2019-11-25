@@ -760,14 +760,12 @@ class ViewItem extends React.Component {
     };
 
     const effectiveLocationDisplay = (
-      <Row>
-        <Col xs={4}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
-            value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
-          />
-        </Col>
-      </Row>
+      <Col xs={4} smOffset={0}>
+        <KeyValue
+          label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
+          value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
+        />
+      </Col>
     );
 
     return (
@@ -894,9 +892,10 @@ class ViewItem extends React.Component {
                   </Col>
                 </Row>
                 <br />
-                {effectiveLocationDisplay}
-                <Row end="xs">
-                  <Col xs>
+                <Row>
+                  {effectiveLocationDisplay}
+                  <Col xs="8" />
+                  <Col end="xs">
                     <ExpandAllButton
                       id="collapse-all"
                       accordionStatus={accordions}
@@ -1315,7 +1314,9 @@ class ViewItem extends React.Component {
                       />
                     </Col>
                   </Row>
-                  {effectiveLocationDisplay}
+                  <Row>
+                    {effectiveLocationDisplay}
+                  </Row>
                 </Accordion>
                 <Accordion
                   open={this.isAccordionOpen('acc08', accordionsState.acc08)}

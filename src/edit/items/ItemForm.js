@@ -16,6 +16,7 @@ import {
   Accordion,
   Button,
   Icon,
+  KeyValue,
   TextField,
   Select,
   Checkbox,
@@ -37,6 +38,7 @@ import {
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
+import { checkIfElementIsEmpty } from '../../utils';
 
 function validate(values) {
   const errors = {};
@@ -332,6 +334,7 @@ class ItemForm extends React.Component {
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
+    const effectiveLocation = get(initialValues, ['effectiveLocation', 'name'], '-')
 
     return (
       <form onSubmit={handleSubmit} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
@@ -379,8 +382,19 @@ class ItemForm extends React.Component {
                 </h2>
               </Col>
             </Row>
-            <Row end="xs">
-              <Col xs>
+            <Row>
+              { initialValues.id &&
+                <React.Fragment>
+                  <Col xs="4">
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
+                      value={effectiveLocation}
+                    />
+                  </Col>
+                  <Col xs="8" />
+                </React.Fragment>
+              }
+              <Col end="xs">
                 <ExpandAllButton
                   accordionStatus={accordions}
                   onToggle={this.handleExpandAll}
