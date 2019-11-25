@@ -22,6 +22,9 @@ import {
 
 import withLocation from './withLocation';
 
+import { noValue } from './constants';
+import { checkIfArrayIsEmpty } from './utils';
+
 /**
  * List items for display in the Holdings accordion in the main
  * instance-details pane.
@@ -50,6 +53,19 @@ class Items extends React.Component {
       sortedColumn: 'barcode',
       sortOrder: 'desc',
     };
+  }
+
+  componentDidUpdate() {
+    const {
+      resources: { items },
+      getRecords,
+    } = this.props;
+
+    console.log('items', items);
+
+    if (items.records !== null) {
+      getRecords(items.records);
+    }
   }
 
   showCallout(barcode) {
@@ -95,7 +111,7 @@ class Items extends React.Component {
     const sortedRecords = orderBy(itemRecords, sorters[this.state.sortedColumn], this.state.sortOrder.slice());
     const itemsFormatter = {
       'barcode': item => {
-        return (
+        return (item.id &&
           <React.Fragment>
             <Link
               to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
@@ -118,12 +134,12 @@ class Items extends React.Component {
               </CopyToClipboard>
             }
           </React.Fragment>
-        );
+        ) || noValue;
       },
-      'status': x => get(x, ['status', 'name']) || '--',
-      'materialType': x => get(x, ['materialType', 'name']),
-      'enumeration': x => x.enumeration,
-      'chronology': x => x.chronology,
+      'status': x => get(x, ['status', 'name']) || noValue,
+      'materialType': x => get(x, ['materialType', 'name']) || noValue,
+      'enumeration': x => x.enumeration || noValue,
+      'chronology': x => x.chronology || noValue,
     };
 
     return (
@@ -134,7 +150,7 @@ class Items extends React.Component {
               {ariaLabel => (
                 <MultiColumnList
                   id="list-items"
-                  contentData={sortedRecords}
+                  contentData={checkIfArrayIsEmpty(sortedRecords)}
                   rowMetadata={['id', 'holdingsRecordId']}
                   formatter={itemsFormatter}
                   visibleColumns={['barcode', 'status', 'materialType', 'enumeration', 'chronology']}
@@ -153,7 +169,7 @@ class Items extends React.Component {
                     'chronology': '25%',
                   }}
                   ariaLabel={ariaLabel}
-                  containerRef={(ref) => { this.resultsList = ref; }}
+                  containerRef={ref => { this.resultsList = ref; }}
                   interactive={false}
                   onHeaderClick={this.onHeaderClick}
                   sortDirection={this.state.sortOrder === 'desc' ? 'descending' : 'ascending'}
@@ -178,6 +194,7 @@ Items.propTypes = {
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
   getSearchParams: PropTypes.func.isRequired,
+  getRecords: PropTypes.func.isRequired,
 };
 
 export default withLocation(Items);

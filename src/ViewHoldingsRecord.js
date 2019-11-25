@@ -807,7 +807,7 @@ class ViewHoldingsRecord extends React.Component {
                   >
                     {!isEmpty(electronicAccess) && (
                       <MultiColumnList
-                        id="list-electronic-access"
+                        id="holding-list-electronic-access"
                         contentData={electronicAccess}
                         visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
                         columnMapping={{

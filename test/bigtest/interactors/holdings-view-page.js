@@ -36,7 +36,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   holdingsStatementsForSupplementsList = new MultiColumnListInteractor('#list-holdingsstatementsforsupplements');
   holdingsStatementsForIndexesList = new MultiColumnListInteractor('#list-holdingsstatementsforindexes');
   holdingsNotesList = new MultiColumnListInteractor('#list-holdingsnotes');
-  electronicAccessList = new MultiColumnListInteractor('#list-electronic-access');
+  electronicAccessList = new MultiColumnListInteractor('#holding-list-electronic-access');
   expandAll = scoped('[data-test-expand-all] button');
   hasExpandAll = isPresent('[data-test-expand-all] button');
   whenLoaded() {

@@ -14,9 +14,8 @@ describe('HoldingsViewPage', () => {
       const instance = this.server.create(
         'instance',
         'withHoldingAndItem',
-        {
-          title: 'Holding record',
-        }
+        'withStatisticalCodeIds',
+        { title: 'Holding record' },
       );
       const holding = this.server.schema.instances.first().holdings.models[0];
 

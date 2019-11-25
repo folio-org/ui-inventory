@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FormattedMessage,
   FormattedTime,
+  FormattedDate,
 } from 'react-intl';
 import {
   includes,
@@ -16,6 +17,7 @@ import {
 import {
   itemStatusesMap,
   noValue,
+  emptyList,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item) ? isEmpty(item) : item === '-'));
@@ -145,13 +147,15 @@ export const validateAlphaNumericField = value => {
 
 export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
 
+export const checkIfArrayIsEmpty = array => (!isEmpty(array) ? array : emptyList);
+
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
-  ? elements.map((line, i) => <div key={i}>{line}</div>)
-  : '-');
+  ? elements.map((line, i) => (line !== null ? <div key={i}>{line}</div> : noValue))
+  : noValue);
 
 export const getDate = dateValue => {
   return dateValue ? (
-    <FormattedTime
+    <FormattedDate
       value={dateValue}
       day="numeric"
       month="numeric"
@@ -159,3 +163,5 @@ export const getDate = dateValue => {
     />
   ) : '-';
 };
+
+export const getTime = timeValue => (timeValue ? <FormattedTime value={timeValue} /> : '-');

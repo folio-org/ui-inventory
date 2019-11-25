@@ -64,6 +64,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   hasExpandAll = isPresent('[data-test-expand-all] button');
   hasPrecedingTitles = isPresent('[data-test-preceding-titles]');
   hasSucceedingTitles = isPresent('[data-test-succeeding-titles]');
+  notes = collection('[id^="list-instance-notes"]', MultiColumnListInteractor);
 
   getCellContent(row, cell) {
     return this.itemsList.rows(row).cells(cell).content;
