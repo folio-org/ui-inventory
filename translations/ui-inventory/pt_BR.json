@@ -439,8 +439,8 @@
     "common.close": "Fechar",
     "filters.effectiveLocation": "Localização efetiva",
     "identifierAll": "Identificador (todos)",
-    "reports.inTransitItem.callNumber": "Call number",
-    "reports.inTransitItem.enumeration": "Enumeration",
+    "reports.inTransitItem.callNumber": "Número de chamada",
+    "reports.inTransitItem.enumeration": "Enumeração",
     "reports.inTransitItem.volume": "Volume",
-    "reports.inTransitItem.yearCaption": "Year"
+    "reports.inTransitItem.yearCaption": "Ano"
 }
