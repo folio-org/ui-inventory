@@ -38,7 +38,6 @@ import {
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { checkIfElementIsEmpty } from '../../utils';
 
 function validate(values) {
   const errors = {};
@@ -334,7 +333,7 @@ class ItemForm extends React.Component {
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
-    const effectiveLocation = get(initialValues, ['effectiveLocation', 'name'], '-')
+    const effectiveLocation = get(initialValues, ['effectiveLocation', 'name'], '-');
 
     return (
       <form onSubmit={handleSubmit} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
