@@ -23,21 +23,49 @@ module.exports.test = function uiTest(uiTestCtx) {
         .catch(done);
     };
 
+    /**
+     * Clear the search form, click the toggle-button for a multi-select filter,
+     * click a single option from a multi-select filter, wait for results,
+     * click the toggle-button for a multi-select filter, clear the search form.
+     *
+     * NOTE: the selectors in this test are very carefully crafted though it may
+     * not appear so at first glance. The `<MultiSelection>` component in play
+     * here renders its list under different elements depending on the size of
+     * the screen (under `#OverlayContainer` <= 800px, under the given accordion
+     * on wider screens). On a narrow screen containing multiple `<MultiSelection>`
+     * components, this means the _only_ way to distinguish whether an option
+     * belongs to the current accordion is the _absence_ of `hidden` on the
+     * `[role=listbox]` element, an ancestor element to the options.
+     *
+     * Without checking for `[hidden]`, all the options from all the
+     * `<MultiSelection>`s are returned in a single list, leading to incorrect
+     * values being returned from the `evaluate` block.
+     *
+     * @param {string} accordionSelector
+     * @param {string} filter
+     * @param {*} done
+     */
     const findMultiSelectFilteredResults = (accordionSelector, filter, done) => {
+      // for toggling visibility of the menu
+      const toggle = `section#${accordionSelector} button[class^=multiSelectToggleButton]`;
+
       nightmare
         .wait('#input-inventory-search')
         .type('#input-inventory-search', 0)
         .wait('#clickable-reset-all')
         .click('#clickable-reset-all')
-        .wait(`section#${accordionSelector} [class^=multiSelect] [role=option]`)
-        .evaluate((value, accordionId) => {
-          return Array.from(document.querySelectorAll(`section#${accordionId} [class^=multiSelect] [role=option] [class^=optionSegment]`)).findIndex(e => e.textContent === value) + 1;
-        }, filter, accordionSelector)
+        .wait(toggle)
+        .click(toggle)
+        .wait('[role=listbox]:not([hidden]) [role=option] [class^=optionSegment]')
+        .evaluate((value) => {
+          return Array.from(document.querySelectorAll('[role=listbox]:not([hidden]) [role=option] [class^=optionSegment]')).findIndex(e => e.textContent === value) + 1;
+        }, filter)
         .then((filterIndex) => {
-          return nightmare
-            .wait(`section#${accordionSelector} [class^=multiSelect] [role=option]:nth-of-type(${filterIndex})`)
-            .click(`section#${accordionSelector} [class^=multiSelect] [role=option]:nth-of-type(${filterIndex})`)
+          nightmare
+            .wait(`[role=listbox]:not([hidden]) [class^=multiSelect] [role=option]:nth-of-type(${filterIndex})`)
+            .click(`[role=listbox]:not([hidden]) [class^=multiSelect] [role=option]:nth-of-type(${filterIndex})`)
             .wait('#list-inventory[data-total-count]')
+            .click(toggle)
             .click('#clickable-reset-all')
             .wait('#paneHeaderpane-results-subtitle')
             .wait('span[class^="noResultsMessageLabel"]')
