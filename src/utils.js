@@ -159,3 +159,5 @@ export const getDate = dateValue => {
     />
   ) : '-';
 };
+
+export const callNumberLabel = hr => `${hr.callNumberPrefix || ''} ${hr.callNumber || ''} ${hr.callNumberSuffix || ''}`;

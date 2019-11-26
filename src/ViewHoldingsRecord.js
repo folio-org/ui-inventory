@@ -37,6 +37,7 @@ import {
   getHoldingsNotes,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
+  callNumberLabel,
 } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
@@ -539,7 +540,7 @@ class ViewHoldingsRecord extends React.Component {
                         id="ui-inventory.holdingRecord"
                         values={{
                           location: get(holdingsPermanentLocation, 'name', ''),
-                          callNumber: get(holdingsRecord, 'callNumber', '')
+                          callNumber: callNumberLabel(holdingsRecord)
                         }}
                       />
                     </span>
