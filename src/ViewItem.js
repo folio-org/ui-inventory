@@ -759,6 +759,15 @@ class ViewItem extends React.Component {
       'URL public note': x => get(x, ['publicNote']) || noValue,
     };
 
+    const effectiveLocationDisplay = (
+      <Col xs={4} smOffset={0}>
+        <KeyValue
+          label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
+          value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
+        />
+      </Col>
+    );
+
     return (
       <IntlConsumer>
         {intl => (
@@ -883,8 +892,10 @@ class ViewItem extends React.Component {
                   </Col>
                 </Row>
                 <br />
-                <Row end="xs">
-                  <Col xs>
+                <Row>
+                  {effectiveLocationDisplay}
+                  <Col xs="8" />
+                  <Col end="xs">
                     <ExpandAllButton
                       id="collapse-all"
                       accordionStatus={accordions}
@@ -1304,23 +1315,7 @@ class ViewItem extends React.Component {
                     </Col>
                   </Row>
                   <Row>
-                    <Col
-                      smOffset={0}
-                      sm={4}
-                    >
-                      <strong>
-                        <FormattedMessage id="ui-inventory.effectiveLocation" />
-                      </strong>
-                    </Col>
-                  </Row>
-                  <br />
-                  <Row>
-                    <Col
-                      smOffset={0}
-                      sm={4}
-                    >
-                      {checkIfElementIsEmpty(itemLocation.effectiveLocation)}
-                    </Col>
+                    {effectiveLocationDisplay}
                   </Row>
                 </Accordion>
                 <Accordion

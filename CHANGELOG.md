@@ -53,6 +53,7 @@
 * Reorder and relabel instance search options. Completes UIIN-847 and UIIN-838.
 * Reorder item search options. Completes UIIN-849.
 * Instance record's item-record columns should not be clipped. Refs UIIN-865.
+* Display effective location at top of item record. Completes UIIN-863.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)
