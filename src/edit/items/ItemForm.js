@@ -390,7 +390,7 @@ class ItemForm extends React.Component {
                       value={effectiveLocation}
                     />
                   </Col>
-                  <Col xs="8" />
+                  <Col xs={8} />
                 </React.Fragment>
               }
               <Col end="xs">

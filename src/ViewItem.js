@@ -894,7 +894,7 @@ class ViewItem extends React.Component {
                 <br />
                 <Row>
                   {effectiveLocationDisplay}
-                  <Col xs="8" />
+                  <Col xs={8} />
                   <Col end="xs">
                     <ExpandAllButton
                       id="collapse-all"
