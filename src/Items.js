@@ -77,9 +77,10 @@ class Items extends React.Component {
   render() {
     const {
       resources: { items },
-      instance,
       holdingsRecord,
       getSearchParams,
+      location: { pathname },
+
     } = this.props;
 
     if (!items || !items.hasLoaded) return null;
@@ -98,7 +99,7 @@ class Items extends React.Component {
         return (
           <React.Fragment>
             <Link
-              to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
+              to={`${pathname}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
               data-test-item-link
             >
               <span data-test-items-app-icon>
@@ -168,7 +169,7 @@ Items.propTypes = {
     }),
     query: PropTypes.object,
   }),
-  instance: PropTypes.object,
+  location: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
   getSearchParams: PropTypes.func.isRequired,
 };
