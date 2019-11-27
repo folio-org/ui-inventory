@@ -146,8 +146,8 @@ export const validateAlphaNumericField = value => {
 export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
 
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
-  ? elements.map((line, i) => <div key={i}>{line}</div>)
-  : '-');
+  ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : noValue))
+  : noValue);
 
 export const getDate = dateValue => {
   return dateValue ? (

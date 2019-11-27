@@ -7,6 +7,7 @@ import {
   includes,
   map,
   isEmpty,
+  values,
 } from 'lodash';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
@@ -536,13 +537,13 @@ class ViewItem extends React.Component {
         <Col xs={1}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.staffOnly" />}
-            value={checkIfElementIsEmpty('-')}
+            value={noValue}
           />
         </Col>
         <Col xs={11}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.note" />}
-            value={checkIfElementIsEmpty('-')}
+            value={noValue}
           />
         </Col>
       </Row>
@@ -550,7 +551,7 @@ class ViewItem extends React.Component {
 
     const layoutNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -571,7 +572,7 @@ class ViewItem extends React.Component {
                   label={noteType.name}
                   value={get(item, ['notes'], []).map((note, j) => {
                     if (note.itemNoteTypeId === noteType.id) {
-                      return <div key={j}>{note.note}</div>;
+                      return <div key={j}>{note.note || noValue}</div>;
                     }
 
                     return null;
@@ -606,7 +607,7 @@ class ViewItem extends React.Component {
                   label={`${noteType} note`}
                   value={get(item, ['circulationNotes'], []).map((note, j) => {
                     if (note.noteType === noteType) {
-                      return <div key={j}>{note.note}</div>;
+                      return <div key={j}>{note.note || noValue}</div>;
                     }
 
                     return null;
@@ -712,14 +713,14 @@ class ViewItem extends React.Component {
     const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
 
     const accordionsState = {
-      acc01: areAllFieldsEmpty(Object.values(administrativeData)),
-      acc02: areAllFieldsEmpty(Object.values(itemData)),
-      acc03: areAllFieldsEmpty(Object.values(enumerationData)),
-      acc04: areAllFieldsEmpty(Object.values(condition)),
-      acc05: areAllFieldsEmpty(Object.values(itemNotes)),
-      acc06: areAllFieldsEmpty(Object.values(loanAndAvailability)),
-      acc07: areAllFieldsEmpty([...Object.values(holdingLocation), ...Object.values(itemLocation)]),
-      acc08: areAllFieldsEmpty(Object.values(electronicAccess)),
+      acc01: areAllFieldsEmpty(values(administrativeData)),
+      acc02: areAllFieldsEmpty(values(itemData)),
+      acc03: areAllFieldsEmpty(values(enumerationData)),
+      acc04: areAllFieldsEmpty(values(condition)),
+      acc05: areAllFieldsEmpty(values(itemNotes)),
+      acc06: areAllFieldsEmpty(values(loanAndAvailability)),
+      acc07: areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
+      acc08: areAllFieldsEmpty(values(electronicAccess)),
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
@@ -950,7 +951,7 @@ class ViewItem extends React.Component {
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.formerId" />}
-                        value={checkIfElementIsEmpty(convertArrayToBlocks(administrativeData.formerIds))}
+                        value={convertArrayToBlocks(administrativeData.formerIds)}
                       />
                     </Col>
                   </Row>
@@ -1100,7 +1101,7 @@ class ViewItem extends React.Component {
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                        value={checkIfElementIsEmpty(convertArrayToBlocks(enumerationData.yearCaption))}
+                        value={convertArrayToBlocks(enumerationData.yearCaption)}
                       />
                     </Col>
                   </Row>
