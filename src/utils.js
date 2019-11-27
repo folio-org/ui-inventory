@@ -160,4 +160,11 @@ export const getDate = dateValue => {
   ) : '-';
 };
 
-export const callNumberLabel = hr => `${hr.callNumberPrefix || ''} ${hr.callNumber || ''} ${hr.callNumberSuffix || ''}`;
+export const callNumberLabel = holdingsRecord => {
+  const parts = [];
+  parts.push(get(holdingsRecord, 'callNumberPrefix', ''));
+  parts.push(get(holdingsRecord, 'callNumber', ''));
+  parts.push(get(holdingsRecord, 'callNumberSuffix', ''));
+
+  return parts.join(' ');
+};
