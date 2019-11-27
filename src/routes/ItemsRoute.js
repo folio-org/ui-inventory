@@ -1,12 +1,16 @@
 import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { stripesConnect } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import withData from './withData';
 import { ItemsView } from '../views';
-import { getQueryTemplate } from '../utils';
+import {
+  getQueryTemplate,
+  getIsbnIssnTemplate,
+} from '../utils';
 import {
   itemIndexes,
   itemSortMap,
@@ -14,11 +18,15 @@ import {
   CQL_FIND_ALL,
 } from '../constants';
 
-function buildQuery(queryParams, pathComponents, resourceData, logger) {
+function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const query = { ...resourceData.query };
   const queryIndex = get(query, 'qindex', 'contributor');
   const queryValue = get(query, 'query', '');
-  const queryTemplate = getQueryTemplate(queryIndex, itemIndexes);
+  let queryTemplate = getQueryTemplate(queryIndex, itemIndexes);
+
+  if (queryIndex.match(/isbn|issn/)) {
+    queryTemplate = getIsbnIssnTemplate(queryTemplate, props, queryIndex);
+  }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';
