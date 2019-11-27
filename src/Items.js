@@ -93,9 +93,10 @@ class Items extends React.Component {
   render() {
     const {
       resources: { items },
-      instance,
       holdingsRecord,
       getSearchParams,
+      location: { pathname },
+
     } = this.props;
 
     if (!items || !items.hasLoaded) return null;
@@ -114,7 +115,7 @@ class Items extends React.Component {
         return (item.id &&
           <React.Fragment>
             <Link
-              to={`/inventory/view/${instance.id}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
+              to={`${pathname}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
               data-test-item-link
             >
               <span data-test-items-app-icon>
@@ -161,13 +162,6 @@ class Items extends React.Component {
                     'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
                     'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
                   }}
-                  columnWidths={{
-                    'barcode': '25%',
-                    'status': '25%',
-                    'materialType': '25%',
-                    'enumeration': '25%',
-                    'chronology': '25%',
-                  }}
                   ariaLabel={ariaLabel}
                   containerRef={ref => { this.resultsList = ref; }}
                   interactive={false}
@@ -191,7 +185,7 @@ Items.propTypes = {
     }),
     query: PropTypes.object,
   }),
-  instance: PropTypes.object,
+  location: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
   getSearchParams: PropTypes.func.isRequired,
   getRecords: PropTypes.func.isRequired,
