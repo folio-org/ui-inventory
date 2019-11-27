@@ -34,6 +34,7 @@ import {
   LocationLookup,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
+import { effectiveCallNumber } from '@folio/stripes-util';
 
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
@@ -390,7 +391,12 @@ class ItemForm extends React.Component {
                       value={effectiveLocation}
                     />
                   </Col>
-                  <Col xs="8" />
+                  <Col xs={8}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
+                      value={effectiveCallNumber(initialValues)}
+                    />
+                  </Col>
                 </React.Fragment>
               }
               <Col end="xs">
