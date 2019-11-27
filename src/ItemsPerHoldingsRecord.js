@@ -78,8 +78,8 @@ class ItemsPerHoldingsRecord extends React.Component {
 
   renderButtonsGroup = () => {
     const {
-      instance,
       holdingsRecord,
+      location: { pathname },
     } = this.props;
 
     return (
@@ -87,7 +87,7 @@ class ItemsPerHoldingsRecord extends React.Component {
         <Button
           id="clickable-view-holdings"
           data-test-view-holdings
-          to={{ pathname: `/inventory/view/${instance.id}/${holdingsRecord.id}` }}
+          to={{ pathname: `${pathname}/${holdingsRecord.id}` }}
           style={{ marginRight: '5px' }}
         >
           <FormattedMessage id="ui-inventory.viewHoldings" />
@@ -199,6 +199,7 @@ class ItemsPerHoldingsRecord extends React.Component {
 
 ItemsPerHoldingsRecord.propTypes = {
   instance: PropTypes.object,
+  location: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     items: PropTypes.shape({
