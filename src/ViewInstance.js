@@ -10,7 +10,6 @@ import {
   reject,
   set,
   isEmpty,
-  groupBy,
   values,
 } from 'lodash';
 import React, {
@@ -62,6 +61,8 @@ import {
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   checkIfArrayIsEmpty,
+  staffOnlyFormatter,
+  getSortedNotes,
 } from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
@@ -621,36 +622,32 @@ class ViewInstance extends React.Component {
       const notesList = isEmpty(content) ? emptyList : content;
       const orderedNotes = orderBy(notesList, ['noteType.name'], ['asc']);
 
-      const formatterStaffOnly = x => (get(x, ['staffOnly'])
-        ? <FormattedMessage id="ui-inventory.yes" />
-        : <FormattedMessage id="ui-inventory.no" />);
-
       return orderedNotes.map(({ noteType, notes }, i) => {
         const noteName = noteType ? noteType.name : <FormattedMessage id="ui-inventory.unknownNoteType" />;
 
         return (
-          <MultiColumnList
-            key={i}
-            id={`list-instance-notes-${i}`}
-            contentData={notesList === emptyList ? emptyList : notes}
-            visibleColumns={['Staff only', 'Note']}
-            columnMapping={{
-              'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
-              'Note': notesList === emptyList ? <FormattedMessage id="ui-inventory.note" /> : noteName,
-            }}
-            columnWidths={{
-              'Staff only': '25%',
-              'Note': '75%',
-            }}
-            formatter={
-              {
-                'Staff only': x => (notesList === emptyList ? noValue : formatterStaffOnly(x)),
+          <Row key={i}>
+            <MultiColumnList
+              key={i}
+              id={`list-instance-notes-${i}`}
+              contentData={notesList === emptyList ? emptyList : notes}
+              visibleColumns={['Staff only', 'Note']}
+              columnMapping={{
+                'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
+                'Note': notesList === emptyList ? <FormattedMessage id="ui-inventory.note" /> : noteName,
+              }}
+              columnWidths={{
+                'Staff only': '25%',
+                'Note': '75%',
+              }}
+              formatter={{
+                'Staff only': x => (notesList === emptyList ? noValue : staffOnlyFormatter(x)),
                 'Note': x => get(x, ['note']) || noValue,
-              }
-            }
-            containerRef={ref => { this.resultsList = ref; }}
-            interactive={false}
-          />
+              }}
+              containerRef={ref => { this.resultsList = ref; }}
+              interactive={false}
+            />
+          </Row>
         );
       });
     };
@@ -722,16 +719,7 @@ class ViewInstance extends React.Component {
 
     const languagesContent = !isEmpty(descriptiveData.languages) ? formatters.languagesFormatter(instance) : noValue;
 
-    const sortedNotes = groupBy(get(instance, ['notes']), 'instanceNoteTypeId');
-
-    const instanceNotes = map(sortedNotes, (value, key) => {
-      const noteType = referenceTables.instanceNoteTypes.find(note => note.id === key);
-
-      return {
-        noteType,
-        notes: value,
-      };
-    });
+    const instanceNotes = getSortedNotes(instance, 'instanceNoteTypeId', referenceTables.instanceNoteTypes);
 
     const electronicAccess = get(instance, ['electronicAccess'], []);
 
@@ -790,9 +778,12 @@ class ViewInstance extends React.Component {
     const formattedStatusUpdatedDate = instanceData.instanceStatusUpdatedDate !== '-'
       ? (
         <Fragment>
-          <FormattedDate value={instanceData.instanceStatusUpdatedDate} />
-          <br />
-          <FormattedTime value={instanceData.instanceStatusUpdatedDate} />
+          <p>
+            <FormattedDate value={instanceData.instanceStatusUpdatedDate} />
+          </p>
+          <p>
+            <FormattedTime value={instanceData.instanceStatusUpdatedDate} />
+          </p>
         </Fragment>
       )
       : noValue;
@@ -1332,9 +1323,7 @@ class ViewInstance extends React.Component {
           onToggle={this.handleAccordionToggle}
           label={<FormattedMessage id="ui-inventory.instanceNotes" />}
         >
-          <Row>
-            {layoutNotes(instanceNotes)}
-          </Row>
+          {layoutNotes(instanceNotes)}
         </Accordion>
 
         <Accordion

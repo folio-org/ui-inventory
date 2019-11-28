@@ -61,8 +61,6 @@ class Items extends React.Component {
       getRecords,
     } = this.props;
 
-    console.log('items', items);
-
     if (items.records !== null) {
       getRecords(items.records);
     }

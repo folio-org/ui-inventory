@@ -13,6 +13,8 @@ import {
   isArray,
   isEmpty,
   template,
+  groupBy,
+  map,
 } from 'lodash';
 import {
   itemStatusesMap,
@@ -113,8 +115,6 @@ export function psTitleRelationshipId(idTypes) {
   return relationshipDetail ? relationshipDetail.id : '';
 }
 
-export const getHoldingsNotes = (noteTypes, notes) => notes.filter(noteType => noteTypes.find(note => note.holdingsNoteTypeId === noteType.id));
-
 export const validateRequiredField = value => {
   const isValid = !isEmpty(value);
 
@@ -150,7 +150,7 @@ export const checkIfElementIsEmpty = element => (element === '-' ? noValue : ele
 export const checkIfArrayIsEmpty = array => (!isEmpty(array) ? array : emptyList);
 
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
-  ? elements.map((line, i) => (line !== null ? <div key={i}>{line}</div> : noValue))
+  ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : noValue))
   : noValue);
 
 export const getDate = dateValue => {
@@ -173,4 +173,23 @@ export const callNumberLabel = holdingsRecord => {
   parts.push(get(holdingsRecord, 'callNumberSuffix', ''));
 
   return parts.join(' ');
+};
+
+export const staffOnlyFormatter = x => (get(x, ['staffOnly'])
+  ? <FormattedMessage id="ui-inventory.yes" />
+  : <FormattedMessage id="ui-inventory.no" />);
+
+export const getSortedNotes = (resource, field, types) => {
+  const notes = groupBy(get(resource, ['notes']), field);
+
+  const sortedNotes = map(notes, (value, key) => {
+    const noteType = types.find(note => note.id === key);
+
+    return {
+      noteType,
+      notes: value,
+    };
+  });
+
+  return sortedNotes;
 };
