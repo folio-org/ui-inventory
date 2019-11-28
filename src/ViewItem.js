@@ -43,6 +43,7 @@ import {
 
 import {
   craftLayerUrl,
+  callNumberLabel,
   canMarkItemAsMissing,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
@@ -849,7 +850,7 @@ class ViewItem extends React.Component {
                         id="ui-inventory.holdingsTitle"
                         values={{
                           location: holdingLocation.permanentLocation,
-                          callNumber: get(holdingsRecord, 'callNumber', ''),
+                          callNumber: callNumberLabel(holdingsRecord),
                         }}
                       />
                     </div>

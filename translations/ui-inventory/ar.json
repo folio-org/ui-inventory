@@ -438,9 +438,9 @@
     "reports.inTransitItem.emptyReport.message": "لا توجد مواد بحالة في النقل",
     "common.close": "إغلاق",
     "filters.effectiveLocation": "الموقع الفعال",
-    "identifierAll": "Identifier (all)",
-    "reports.inTransitItem.callNumber": "Call number",
-    "reports.inTransitItem.enumeration": "Enumeration",
-    "reports.inTransitItem.volume": "Volume",
-    "reports.inTransitItem.yearCaption": "Year"
+    "identifierAll": "المعرف (الكل)",
+    "reports.inTransitItem.callNumber": "رقم الاستدعاء",
+    "reports.inTransitItem.enumeration": "الترقيم",
+    "reports.inTransitItem.volume": "المجلد",
+    "reports.inTransitItem.yearCaption": "السنة"
 }

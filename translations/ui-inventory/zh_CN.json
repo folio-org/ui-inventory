@@ -426,7 +426,7 @@
     "reports.inTransitItem.itemStatus": "Item status",
     "reports.inTransitItem.contributors": "Contributors",
     "reports.inTransitItem.checkInServicePoint": "Check in service point",
-    "reports.inTransitItem.checkInDateTime": "Check in date and time",
+    "reports.inTransitItem.checkInDateTime": "\n",
     "reports.inTransitItem.destinationServicePoint": "Destination service point",
     "reports.inTransitItem.requestType": "Request type",
     "reports.inTransitItem.requesterPatronGroup": "Requester patron group",

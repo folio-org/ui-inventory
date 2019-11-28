@@ -21,7 +21,10 @@ import {
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { areAllFieldsEmpty } from './utils';
+import {
+  areAllFieldsEmpty,
+  callNumberLabel
+} from './utils';
 
 /**
  * Accordion wrapper for an individual Holdings record on the instance-view
@@ -163,7 +166,6 @@ class ItemsPerHoldingsRecord extends React.Component {
     referenceTables.materialTypes = materialtypes;
 
     const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
-    const labelCallNumber = holdingsRecord.callNumber || '';
 
     if (layer === 'createItem' && holdingsRecordId === holdingsRecord.id) {
       return (
@@ -209,7 +211,7 @@ class ItemsPerHoldingsRecord extends React.Component {
             id="ui-inventory.holdingsHeader"
             values={{
               location: labelLocation,
-              callNumber: labelCallNumber,
+              callNumber: callNumberLabel(holdingsRecord),
             }}
           />
         )}
