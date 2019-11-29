@@ -12,17 +12,10 @@ const {
 } = faker;
 
 export default Factory.extend({
-  id: random.uuid(),
+  id: () => random.uuid(),
   permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
   hrid: () => Math.floor(Math.random() * 90000000) + 10000000,
-  electronicAccess: [
-    {
-      linkText: lorem.sentence(),
-      materialsSpecification: lorem.sentence(),
-      publicNote: '',
-      uri: internet.url(),
-    }
-  ],
+  electronicAccess: () => [],
   formerIds: [],
   holdingsItems: [],
   holdingsStatements: [
@@ -81,24 +74,6 @@ export default Factory.extend({
       }
       note.holdingsNoteTypeId = holdingsNoteTypeId;
     });
-    holding.electronicAccess.forEach(item => {
-      let { relationshipId } = item;
-      if (!relationshipId) {
-        let [type] = server.db.electronicAccessRelationships.where({ name: 'Resource' });
-        if (!type) {
-          type = server.create('electronic-access-relationship', {
-            name: 'Resource',
-            source: 'folio',
-            metadata: {
-              createdDate: new Date(),
-              updatedDate: new Date(),
-            },
-          });
-        }
-        relationshipId = type.id;
-      }
-      item.relationshipId = relationshipId;
-    });
   },
 
   withItem: trait({
@@ -116,5 +91,34 @@ export default Factory.extend({
       holding.items = [item];
       holding.save();
     }
-  })
+  }),
+
+  withElectronicAccess: trait({
+    afterCreate(holding, server) {
+      holding.electronicAccess = [{
+        linkText: lorem.sentence(),
+        materialsSpecification: lorem.sentence(),
+        publicNote: '',
+        uri: internet.url(),
+      }];
+      holding.electronicAccess.forEach(item => {
+        let { relationshipId } = item;
+        if (!relationshipId) {
+          let [type] = server.db.electronicAccessRelationships.where({ name: 'Resource' });
+          if (!type) {
+            type = server.create('electronic-access-relationship', {
+              name: 'Resource',
+              source: 'folio',
+              metadata: {
+                createdDate: new Date(),
+                updatedDate: new Date(),
+              },
+            });
+          }
+          relationshipId = type.id;
+        }
+        item.relationshipId = relationshipId;
+      });
+    }
+  }),
 });

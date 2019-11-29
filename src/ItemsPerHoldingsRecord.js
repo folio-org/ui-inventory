@@ -13,11 +13,18 @@ import {
   IntlConsumer,
   IfPermission,
 } from '@folio/stripes/core';
+import {
+  has,
+  cloneDeep,
+} from 'lodash';
 
 import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
-import { callNumberLabel } from './utils';
+import {
+  areAllFieldsEmpty,
+  callNumberLabel
+} from './utils';
 
 /**
  * Accordion wrapper for an individual Holdings record on the instance-view
@@ -58,6 +65,22 @@ class ItemsPerHoldingsRecord extends React.Component {
   constructor(props) {
     super(props);
     this.cItems = props.stripes.connect(Items, { dataKey: props.holdingsRecord.id });
+
+    this.state = {
+      records: [],
+    };
+  }
+
+  componentDidUpdate() {
+    const {
+      holdingsRecord,
+      accordionStates,
+      updateAccordions,
+    } = this.props;
+
+    if (!has(accordionStates, holdingsRecord.id)) {
+      updateAccordions(holdingsRecord);
+    }
   }
 
   // Add Item handlers
@@ -75,6 +98,15 @@ class ItemsPerHoldingsRecord extends React.Component {
     this.props.mutator.items.POST(item)
       .then(() => this.onClickCloseNewItem());
   }
+
+  getRecords = records => {
+    this.setState(curState => {
+      const newState = cloneDeep(curState);
+      newState.records = records;
+
+      return newState;
+    });
+  };
 
   renderButtonsGroup = () => {
     const {
@@ -117,12 +149,12 @@ class ItemsPerHoldingsRecord extends React.Component {
         query: {
           layer,
           holdingsRecordId,
-        }
+        },
       },
       instance,
       holdingsRecord,
       accordionToggle,
-      accordionStates,
+      isAccordionOpen,
       mutator,
       stripes,
     } = this.props;
@@ -167,9 +199,11 @@ class ItemsPerHoldingsRecord extends React.Component {
       );
     }
 
+    const accordionState = areAllFieldsEmpty([this.state.records]);
+
     return (
       <Accordion
-        open={accordionStates[holdingsRecord.id] === undefined || accordionStates[holdingsRecord.id]}
+        open={isAccordionOpen(holdingsRecord.id, accordionState)}
         id={holdingsRecord.id}
         onToggle={accordionToggle}
         label={(
@@ -189,6 +223,7 @@ class ItemsPerHoldingsRecord extends React.Component {
               holdingsRecord={holdingsRecord}
               instance={instance}
               parentMutator={mutator}
+              getRecords={this.getRecords}
             />
           </Col>
         </Row>
@@ -227,6 +262,8 @@ ItemsPerHoldingsRecord.propTypes = {
   accordionToggle: PropTypes.func.isRequired,
   accordionStates: PropTypes.object.isRequired,
   updateLocation: PropTypes.func.isRequired,
+  isAccordionOpen: PropTypes.func.isRequired,
+  updateAccordions: PropTypes.func.isRequired,
 };
 
 export default withLocation(ItemsPerHoldingsRecord);

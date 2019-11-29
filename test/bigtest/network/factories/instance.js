@@ -16,33 +16,17 @@ export default Factory.extend({
   source: () => 'FOLIO',
   identifiers: () => [],
   publication: () => [],
-  alternativeTitles: () => [{
-    alternativeTitle: lorem.sentence(),
-    alternativeTitleTypeId: '09964ad1-7aed-49b8-8223-a4c105e3ef87',
-  }],
-  series: () => [lorem.sentence()],
+  alternativeTitles: () => [],
+  series: () => [],
   physicalDescriptions: () => [],
   languages: () => [],
-  notes: () => [
-    {
-      note: lorem.sentence(),
-      staffOnly: false,
-    },
-    {
-      note: lorem.sentence(),
-      staffOnly: false,
-    }
-  ],
+  notes: () => [],
   electronicAccess: () => [],
-  subjects: () => [lorem.sentence()],
+  subjects: () => [],
   classifications: () => [],
   childInstances: () => [],
   parentInstances: () => [],
-  statisticalCodeIds: () => [
-    'b5968c9e-cddc-4576-99e3-8e60aed8b0dd',
-    '30b5400d-0b9e-4757-a3d0-db0d30a49e72',
-    '2850630b-cd12-4379-af57-5c51491a6873',
-  ],
+  statisticalCodeIds: () => [],
 
   afterCreate(instance, server) {
     instance.identifiers.forEach(identifier => {
@@ -67,25 +51,72 @@ export default Factory.extend({
       }
       contributor.contributorNameTypeId = contributorNameTypeId;
     });
-    instance.notes.forEach(note => {
-      let { instanceNoteTypeId } = note;
-      if (!instanceNoteTypeId) {
-        let [type] = server.db.instanceNoteTypes.where({ name: 'General note' });
-        if (!type) {
-          type = server.create('instance-note-type', {
-            name: 'General note',
-            source: 'folio',
-            metadata: {
-              createdDate: new Date(),
-              updatedDate: new Date(),
-            },
-          });
-        }
-        instanceNoteTypeId = type.id;
-      }
-      note.instanceNoteTypeId = instanceNoteTypeId;
-    });
   },
+
+  withStatisticalCodeIds: trait({
+    afterCreate(instance) {
+      instance.statisticalCodeIds = [
+        'b5968c9e-cddc-4576-99e3-8e60aed8b0dd',
+        '30b5400d-0b9e-4757-a3d0-db0d30a49e72',
+        '2850630b-cd12-4379-af57-5c51491a6873',
+      ];
+    }
+  }),
+
+  withAlternativeTitles: trait({
+    afterCreate(instance) {
+      instance.alternativeTitles = [{
+        alternativeTitle: lorem.sentence(),
+        alternativeTitleTypeId: '09964ad1-7aed-49b8-8223-a4c105e3ef87',
+      }];
+    }
+  }),
+
+  withSubjects: trait({
+    afterCreate(instance) {
+      instance.subjects = [lorem.sentence()];
+    }
+  }),
+
+  withSeriesStatement: trait({
+    afterCreate(instance) {
+      instance.series = [lorem.sentence()];
+    }
+  }),
+
+  withNotes: trait({
+    afterCreate(instance, server) {
+      instance.notes = [
+        {
+          note: lorem.sentence(),
+          staffOnly: false,
+        },
+        {
+          note: lorem.sentence(),
+          staffOnly: true,
+        }
+      ];
+
+      instance.notes.forEach(note => {
+        let { instanceNoteTypeId } = note;
+        if (!instanceNoteTypeId) {
+          let [type] = server.db.instanceNoteTypes.where({ name: 'General note' });
+          if (!type) {
+            type = server.create('instance-note-type', {
+              name: 'General note',
+              source: 'folio',
+              metadata: {
+                createdDate: new Date(),
+                updatedDate: new Date(),
+              },
+            });
+          }
+          instanceNoteTypeId = type.id;
+        }
+        note.instanceNoteTypeId = instanceNoteTypeId;
+      });
+    }
+  }),
 
   withPrecedingTitle: trait({
     afterCreate(instance) {
@@ -109,7 +140,11 @@ export default Factory.extend({
 
   withHoldingAndItem: trait({
     afterCreate(instance, server) {
-      const holding = server.create('holding', 'withItem');
+      const holding = server.create(
+        'holding',
+        'withItem',
+        'withElectronicAccess',
+      );
       instance.holdings = [holding];
       instance.save();
     }

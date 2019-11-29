@@ -11,11 +11,29 @@ import HoldingsViewPage from '../interactors/holdings-view-page';
 import translation from '../../../translations/ui-inventory/en';
 
 describe('InstanceViewPage', () => {
-  const visitingViewInventoryPage = () => {
+  const visitingViewInventoryPageWithContent = () => {
     beforeEach(async function () {
-      const instance = this.server.create('instance', 'withHoldingAndItem', {
-        title: 'ADVANCING RESEARCH',
-      });
+      const instance = this.server.create(
+        'instance',
+        'withHoldingAndItem',
+        'withStatisticalCodeIds',
+        'withAlternativeTitles',
+        'withSeriesStatement',
+        'withSubjects',
+        'withNotes',
+        { title: 'ADVANCING RESEARCH' },
+      );
+      this.visit(`/inventory/view/${instance.id}`);
+      await InstanceViewPage.whenLoaded();
+    });
+  };
+
+  const visitingViewInventoryPageWithoutContent = () => {
+    beforeEach(async function () {
+      const instance = this.server.create(
+        'instance',
+        { title: 'ADVANCING RESEARCH' }
+      );
       this.visit(`/inventory/view/${instance.id}`);
       await InstanceViewPage.whenLoaded();
     });
@@ -24,7 +42,7 @@ describe('InstanceViewPage', () => {
   describe('User has permissions', () => {
     setupApplication({ scenarios: ['fetch-items-success'] });
 
-    visitingViewInventoryPage();
+    visitingViewInventoryPageWithContent();
 
     it('should be displayed', () => {
       expect(InstanceViewPage.hasExpandAll).to.be.true;
@@ -145,6 +163,26 @@ describe('InstanceViewPage', () => {
     describe('series statement list', () => {
       it('has correct amount of items', () => {
         expect(InstanceViewPage.seriesStatementList.rowCount).to.be.equal(1);
+      });
+    });
+
+    describe('instance notes list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.notes(0).rowCount).to.be.equal(2);
+      });
+
+      describe('values of first row', () => {
+        it('Staff only: No, Note has text', () => {
+          expect(InstanceViewPage.notes(0).rows(0).cells(0).content).to.be.equal('No');
+          expect(InstanceViewPage.notes(0).rows(0).cells(1).content).to.be.a('string').that.not.empty;
+        });
+      });
+
+      describe('values of second row', () => {
+        it('Staff only: Yes, Note has text', () => {
+          expect(InstanceViewPage.notes(0).rows(1).cells(0).content).to.be.equal('Yes');
+          expect(InstanceViewPage.notes(0).rows(1).cells(1).content).to.be.a('string').that.not.empty;
+        });
       });
     });
 
@@ -358,7 +396,7 @@ describe('InstanceViewPage', () => {
       }
     });
 
-    visitingViewInventoryPage();
+    visitingViewInventoryPageWithContent();
 
     it('displays the clickable edit button near the header', () => {
       expect(InstanceViewPage.hasButtonEditInstance).to.be.false;
@@ -415,6 +453,66 @@ describe('InstanceViewPage', () => {
     });
     it('should show succeding title', () => {
       expect(InstanceViewPage.hasSucceedingTitles).to.be.true;
+    });
+  });
+
+  describe('Empty fields', () => {
+    setupApplication({ scenarios: ['fetch-items-success'] });
+
+    visitingViewInventoryPageWithoutContent();
+
+    describe('statistical codes list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.statisticalCodesList.rowCount).to.be.equal(1);
+      });
+
+      it('has correct values - dashes', () => {
+        expect(InstanceViewPage.statisticalCodesList.rows(0).cells(0).content).to.be.equal('-');
+        expect(InstanceViewPage.statisticalCodesList.rows(0).cells(1).content).to.be.equal('-');
+        expect(InstanceViewPage.statisticalCodesList.rows(0).cells(2).content).to.be.equal('-');
+      });
+    });
+
+    describe('alternative titles list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.alternativeTitlesList.rowCount).to.be.equal(1);
+      });
+
+      it('has correct values - dashes', () => {
+        expect(InstanceViewPage.alternativeTitlesList.rows(0).cells(0).content).to.be.equal('-');
+        expect(InstanceViewPage.alternativeTitlesList.rows(0).cells(1).content).to.be.equal('-');
+      });
+    });
+
+    describe('series statement list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.seriesStatementList.rowCount).to.be.equal(1);
+      });
+
+      it('has correct value - dash', () => {
+        expect(InstanceViewPage.seriesStatementList.rows(0).cells(0).content).to.be.equal('-');
+      });
+    });
+
+    describe('instance notes list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.notes(0).rowCount).to.be.equal(1);
+      });
+
+      it('has correct values - dashes', () => {
+        expect(InstanceViewPage.notes(0).rows(0).cells(0).content).to.be.equal('-');
+        expect(InstanceViewPage.notes(0).rows(0).cells(1).content).to.be.equal('-');
+      });
+    });
+
+    describe('subject list', () => {
+      it('has correct amount of items', () => {
+        expect(InstanceViewPage.subjectsList.rowCount).to.be.equal(1);
+      });
+
+      it('has correct value - dash', () => {
+        expect(InstanceViewPage.subjectsList.rows(0).cells(0).content).to.be.equal('-');
+      });
     });
   });
 });

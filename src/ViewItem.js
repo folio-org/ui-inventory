@@ -7,6 +7,7 @@ import {
   includes,
   map,
   isEmpty,
+  values,
 } from 'lodash';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
@@ -48,6 +49,7 @@ import {
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   getDate,
+  checkIfArrayIsEmpty,
 } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
@@ -537,13 +539,13 @@ class ViewItem extends React.Component {
         <Col xs={1}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.staffOnly" />}
-            value={checkIfElementIsEmpty('-')}
+            value={noValue}
           />
         </Col>
         <Col xs={11}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.note" />}
-            value={checkIfElementIsEmpty('-')}
+            value={noValue}
           />
         </Col>
       </Row>
@@ -713,29 +715,19 @@ class ViewItem extends React.Component {
     const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
 
     const accordionsState = {
-      acc01: areAllFieldsEmpty(Object.values(administrativeData)),
-      acc02: areAllFieldsEmpty(Object.values(itemData)),
-      acc03: areAllFieldsEmpty(Object.values(enumerationData)),
-      acc04: areAllFieldsEmpty(Object.values(condition)),
-      acc05: areAllFieldsEmpty(Object.values(itemNotes)),
-      acc06: areAllFieldsEmpty(Object.values(loanAndAvailability)),
-      acc07: areAllFieldsEmpty([...Object.values(holdingLocation), ...Object.values(itemLocation)]),
-      acc08: areAllFieldsEmpty(Object.values(electronicAccess)),
+      acc01: areAllFieldsEmpty(values(administrativeData)),
+      acc02: areAllFieldsEmpty(values(itemData)),
+      acc03: areAllFieldsEmpty(values(enumerationData)),
+      acc04: areAllFieldsEmpty(values(condition)),
+      acc05: areAllFieldsEmpty(values(itemNotes)),
+      acc06: areAllFieldsEmpty(values(loanAndAvailability)),
+      acc07: areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
+      acc08: areAllFieldsEmpty(values(electronicAccess)),
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
       ? administrativeData.statisticalCodeIds.map(id => ({ codeId: id }))
       : [{ codeId: '-' }];
-
-    const electronicAccessContent = !isEmpty(electronicAccess.electronicAccess)
-      ? electronicAccess.electronicAccess
-      : [{
-        relationshipId: '-',
-        uri: '-',
-        linkText: '-',
-        materialsSpecification: '-',
-        publicNote: '-',
-      }];
 
     const statisticalCodeFormatter = {
       'Statistical code type': x => refLookup(referenceTables.statisticalCodeTypes,
@@ -951,7 +943,7 @@ class ViewItem extends React.Component {
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.formerId" />}
-                        value={checkIfElementIsEmpty(convertArrayToBlocks(administrativeData.formerIds))}
+                        value={convertArrayToBlocks(administrativeData.formerIds)}
                       />
                     </Col>
                   </Row>
@@ -1101,7 +1093,7 @@ class ViewItem extends React.Component {
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                        value={checkIfElementIsEmpty(convertArrayToBlocks(enumerationData.yearCaption))}
+                        value={convertArrayToBlocks(enumerationData.yearCaption)}
                       />
                     </Col>
                   </Row>
@@ -1327,7 +1319,7 @@ class ViewItem extends React.Component {
                 >
                   <MultiColumnList
                     id="item-list-electronic-access"
-                    contentData={electronicAccessContent}
+                    contentData={checkIfArrayIsEmpty(electronicAccess.electronicAccess)}
                     visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
                     columnMapping={{
                       'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),

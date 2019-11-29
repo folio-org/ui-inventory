@@ -5,6 +5,7 @@ import {
   isVisible,
   text,
   scoped,
+  collection,
 } from '@bigtest/interactor';
 import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
@@ -35,8 +36,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   holdingsStatementsList = new MultiColumnListInteractor('#list-holdingsstatements');
   holdingsStatementsForSupplementsList = new MultiColumnListInteractor('#list-holdingsstatementsforsupplements');
   holdingsStatementsForIndexesList = new MultiColumnListInteractor('#list-holdingsstatementsforindexes');
-  holdingsNotesList = new MultiColumnListInteractor('#list-holdingsnotes');
-  electronicAccessList = new MultiColumnListInteractor('#list-electronic-access');
+  notes = collection('[id^="list-holdings-notes-"', MultiColumnListInteractor);
+  electronicAccessList = new MultiColumnListInteractor('#holding-list-electronic-access');
   expandAll = scoped('[data-test-expand-all] button');
   hasExpandAll = isPresent('[data-test-expand-all] button');
   whenLoaded() {
