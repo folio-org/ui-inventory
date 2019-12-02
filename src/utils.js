@@ -22,7 +22,9 @@ import {
   emptyList,
 } from './constants';
 
-export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item) ? isEmpty(item) : item === '-'));
+export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
+  ? (isEmpty(item) || item.every(element => !element || element === '-'))
+  : item === '-'));
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
