@@ -553,7 +553,7 @@ class ViewItem extends React.Component {
 
     const layoutNotes = (noteTypes, notes) => {
       return noteTypes
-        .filter((noteType) => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
         .map((noteType, i) => {
           return (
             <Row key={i}>
@@ -574,7 +574,7 @@ class ViewItem extends React.Component {
                   label={noteType.name}
                   value={get(item, ['notes'], []).map((note, j) => {
                     if (note.itemNoteTypeId === noteType.id) {
-                      return <div key={j}>{note.note}</div>;
+                      return <div key={j}>{note.note || noValue}</div>;
                     }
 
                     return null;
@@ -609,7 +609,7 @@ class ViewItem extends React.Component {
                   label={`${noteType} note`}
                   value={get(item, ['circulationNotes'], []).map((note, j) => {
                     if (note.noteType === noteType) {
-                      return <div key={j}>{note.note}</div>;
+                      return <div key={j}>{note.note || noValue}</div>;
                     }
 
                     return null;
