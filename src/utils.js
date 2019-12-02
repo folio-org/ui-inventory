@@ -2,7 +2,6 @@ import React from 'react';
 import {
   FormattedMessage,
   FormattedTime,
-  FormattedDate,
 } from 'react-intl';
 import {
   includes,
@@ -160,7 +159,7 @@ export const convertArrayToBlocks = elements => (!isEmpty(elements)
 
 export const getDate = dateValue => {
   return dateValue ? (
-    <FormattedDate
+    <FormattedTime
       value={dateValue}
       day="numeric"
       month="numeric"
@@ -168,8 +167,6 @@ export const getDate = dateValue => {
     />
   ) : '-';
 };
-
-export const getTime = timeValue => (timeValue ? <FormattedTime value={timeValue} /> : '-');
 
 export const callNumberLabel = holdingsRecord => {
   const parts = [];
