@@ -389,7 +389,7 @@
     "hridHandling.validation.enterValue": "يرجى إدخال قيمة",
     "hridHandling.validation.maxLength": "الحد الأقصى لطول الحقل هو",
     "hridHandling.validation.startWithField": "يرجى إدخال قيمة رقمية",
-    "hridHandling.validation.assignPrefixField": "يرجى إدخال قيمة أبجدية رقمية",
+    "hridHandling.validation.assignPrefixField": "يرجى إدخال قيمة أبجدية عددية",
     "hridHandling.successfullyMessage": "تم تحديث الإعداد بنجاح.",
     "noBarcode": "بدون باركود",
     "items.successfullyCopiedMessage": "تم نسخ باركود المادة  {barcode} بنجاح إلى الحافظة",
