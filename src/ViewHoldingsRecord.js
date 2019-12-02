@@ -415,8 +415,8 @@ class ViewHoldingsRecord extends React.Component {
     };
 
     const formerHoldingsIdValue = !isEmpty(administrativeData.formerHoldingsId)
-      ? administrativeData.formerHoldingsId.map((hid, i) => <div key={i}>{hid}</div>)
-      : '-';
+      ? administrativeData.formerHoldingsId.map((hid, i) => <div key={i}>{hid || noValue}</div>)
+      : noValue;
 
     const statisticalCodeIdsContent = !isEmpty(administrativeData.statisticalCodeIds)
       ? administrativeData.statisticalCodeIds.map(id => ({ 'codeId': id }))
@@ -520,13 +520,14 @@ class ViewHoldingsRecord extends React.Component {
 
       return orderedNotes.map(({ noteType, notes }, i) => {
         const noteName = noteType ? noteType.name : <FormattedMessage id="ui-inventory.unknownNoteType" />;
+        const notesContent = notesList === emptyList ? emptyList : notes;
 
         return (
           <Row key={i}>
             <MultiColumnList
               key={i}
               id={`list-holdings-notes-${i}`}
-              contentData={notesList === emptyList ? emptyList : notes}
+              contentData={checkIfArrayIsEmpty(notesContent)}
               visibleColumns={['Staff only', 'Note']}
               columnMapping={{
                 'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
