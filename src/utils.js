@@ -15,6 +15,7 @@ import {
   template,
   groupBy,
   map,
+  isObject,
 } from 'lodash';
 import {
   itemStatusesMap,
@@ -149,7 +150,9 @@ export const validateAlphaNumericField = value => {
 
 export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
 
-export const checkIfArrayIsEmpty = array => (!isEmpty(array) ? array : emptyList);
+export const checkIfArrayIsEmpty = array => (!isEmpty(array)
+  ? array.map(element => (isObject(element) ? element : {}))
+  : emptyList);
 
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
   ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : noValue))
