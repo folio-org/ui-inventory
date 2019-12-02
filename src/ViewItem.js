@@ -49,6 +49,7 @@ import {
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   getDate,
+  checkIfArrayIsEmpty,
 } from './utils';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
@@ -728,16 +729,6 @@ class ViewItem extends React.Component {
       ? administrativeData.statisticalCodeIds.map(id => ({ codeId: id }))
       : [{ codeId: '-' }];
 
-    const electronicAccessContent = !isEmpty(electronicAccess.electronicAccess)
-      ? electronicAccess.electronicAccess
-      : [{
-        relationshipId: '-',
-        uri: '-',
-        linkText: '-',
-        materialsSpecification: '-',
-        publicNote: '-',
-      }];
-
     const statisticalCodeFormatter = {
       'Statistical code type': x => refLookup(referenceTables.statisticalCodeTypes,
         refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
@@ -1328,7 +1319,7 @@ class ViewItem extends React.Component {
                 >
                   <MultiColumnList
                     id="item-list-electronic-access"
-                    contentData={electronicAccessContent}
+                    contentData={checkIfArrayIsEmpty(electronicAccess.electronicAccess)}
                     visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
                     columnMapping={{
                       'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),

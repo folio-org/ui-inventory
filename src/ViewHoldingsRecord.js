@@ -5,6 +5,7 @@ import {
   isEmpty,
   cloneDeep,
   omit,
+  orderBy,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -34,14 +35,20 @@ import {
 
 import {
   craftLayerUrl,
-  getHoldingsNotes,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
   callNumberLabel,
+  checkIfArrayIsEmpty,
+  staffOnlyFormatter,
+  getSortedNotes,
 } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
-import { wrappingCell } from './constants';
+import {
+  wrappingCell,
+  emptyList,
+  noValue,
+} from './constants';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -280,8 +287,6 @@ class ViewHoldingsRecord extends React.Component {
     );
   };
 
-  getHoldingsNotes = (noteTypes, notes) => notes.filter(noteType => noteTypes.find(note => note.holdingsNoteTypeId === noteType.id));
-
   isAwaitingResource = () => {
     const {
       holdingsRecords,
@@ -413,6 +418,10 @@ class ViewHoldingsRecord extends React.Component {
       ? administrativeData.formerHoldingsId.map((hid, i) => <div key={i}>{hid}</div>)
       : '-';
 
+    const statisticalCodeIdsContent = !isEmpty(administrativeData.statisticalCodeIds)
+      ? administrativeData.statisticalCodeIds.map(id => ({ 'codeId': id }))
+      : emptyList;
+
     const locationAccordion = {
       permanent: get(holdingsPermanentLocation, ['name'], '-'),
       temporary: get(holdingsTemporaryLocation, ['name'], '-'),
@@ -435,7 +444,7 @@ class ViewHoldingsRecord extends React.Component {
       retentionPolicy: get(holdingsRecord, ['retentionPolicy'], '-'),
     };
 
-    const holdingsNotes = getHoldingsNotes(referenceTables.holdingsNoteTypes, get(holdingsRecord, ['notes'], []));
+    const holdingsNotes = getSortedNotes(holdingsRecord, 'holdingsNoteTypeId', referenceTables.holdingsNoteTypes);
 
     const electronicAccess = get(holdingsRecord, ['electronicAccess'], []);
 
@@ -445,7 +454,7 @@ class ViewHoldingsRecord extends React.Component {
       receiptStatus: get(holdingsRecord, ['receiptStatus'], '-'),
     };
 
-    const receivingHistory = get(holdingsRecord, ['receivingHistory.entries'], []);
+    const receivingHistory = get(holdingsRecord, ['receivingHistory', 'entries'], []);
 
     const accordionsState = {
       acc01: areAllFieldsEmpty(Object.values(administrativeData)),
@@ -460,7 +469,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsDetailsTables = intl => [
       {
         id: 'list-holdingsstatements',
-        contentData: holdingsDetails.holdingsStatements,
+        contentData: checkIfArrayIsEmpty(holdingsDetails.holdingsStatements),
         visibleColumns: ['Holdings statement', 'Holdings statement note'],
         columnMapping: {
           'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
@@ -468,14 +477,14 @@ class ViewHoldingsRecord extends React.Component {
         },
         columnWidths: { 'Holdings statement': '16%' },
         formatter: {
-          'Holdings statement': x => get(x, ['statement'], ''),
-          'Holdings statement note': x => get(x, ['note'], ''),
+          'Holdings statement': x => get(x, ['statement']) || noValue,
+          'Holdings statement note': x => get(x, ['note']) || noValue,
         },
         ariaLabel: intl.formatMessage({ id: 'ui-inventory.holdingsStatements' })
       },
       {
         id: 'list-holdingsstatementsforsupplements',
-        contentData: holdingsDetails.holdingsStatementsForSupplements,
+        contentData: checkIfArrayIsEmpty(holdingsDetails.holdingsStatementsForSupplements),
         visibleColumns: ['Holdings statement for supplements', 'Holdings statement for supplements note'],
         columnMapping: {
           'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
@@ -483,14 +492,14 @@ class ViewHoldingsRecord extends React.Component {
         },
         columnWidths: { 'Holdings statement for supplements': '16%' },
         formatter: {
-          'Holdings statement for supplements': x => get(x, ['statement'], ''),
-          'Holdings statement for supplements note': x => get(x, ['note'], ''),
+          'Holdings statement for supplements': x => get(x, ['statement']) || noValue,
+          'Holdings statement for supplements note': x => get(x, ['note']) || noValue,
         },
         ariaLabel: intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
       },
       {
         id: 'list-holdingsstatementsforindexes',
-        contentData: holdingsDetails.holdingsStatementsForIndexes,
+        contentData: checkIfArrayIsEmpty(holdingsDetails.holdingsStatementsForIndexes),
         visibleColumns: ['Holdings statement for indexes', 'Holdings statement for indexes note'],
         columnMapping: {
           'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
@@ -498,12 +507,48 @@ class ViewHoldingsRecord extends React.Component {
         },
         columnWidths: { 'Holdings statement for indexes': '16%' },
         formatter: {
-          'Holdings statement for indexes': x => get(x, ['statement'], ''),
-          'Holdings statement for indexes note': x => get(x, ['note'], ''),
+          'Holdings statement for indexes': x => get(x, ['statement']) || noValue,
+          'Holdings statement for indexes note': x => get(x, ['note']) || noValue,
         },
         ariaLabel: intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
       },
     ];
+
+    const layoutNotes = content => {
+      const notesList = isEmpty(content) ? emptyList : content;
+      const orderedNotes = orderBy(notesList, ['noteType.name'], ['asc']);
+
+      return orderedNotes.map(({ noteType, notes }, i) => {
+        const noteName = noteType ? noteType.name : <FormattedMessage id="ui-inventory.unknownNoteType" />;
+
+        return (
+          <Row key={i}>
+            <MultiColumnList
+              key={i}
+              id={`list-holdings-notes-${i}`}
+              contentData={notesList === emptyList ? emptyList : notes}
+              visibleColumns={['Staff only', 'Note']}
+              columnMapping={{
+                'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
+                'Note': notesList === emptyList ? <FormattedMessage id="ui-inventory.note" /> : noteName,
+              }}
+              columnWidths={{
+                'Staff only': '25%',
+                'Note': '75%',
+              }}
+              formatter={
+                {
+                  'Staff only': x => (notesList === emptyList ? noValue : staffOnlyFormatter(x)),
+                  'Note': x => get(x, ['note']) || noValue,
+                }
+              }
+              containerRef={ref => { this.resultsList = ref; }}
+              interactive={false}
+            />
+          </Row>
+        );
+      });
+    };
 
     return (
       <IntlConsumer>
@@ -613,27 +658,25 @@ class ViewHoldingsRecord extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      {(administrativeData.statisticalCodeIds && !isEmpty(administrativeData.statisticalCodeIds)) && (
-                        <MultiColumnList
-                          id="list-statistical-codes"
-                          contentData={administrativeData.statisticalCodeIds.map(id => ({ 'codeId': id }))}
-                          visibleColumns={['Statistical code type', 'Statistical code']}
-                          columnMapping={{
-                            'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                            'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                          }}
-                          columnWidths={{ 'Statistical code type': '16%' }}
-                          formatter={{
-                            'Statistical code type':
-                              x => this.refLookup(referenceTables.statisticalCodeTypes,
-                                this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name,
-                            'Statistical code':
-                              x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name,
-                          }}
-                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
-                          containerRef={ref => { this.resultsList = ref; }}
-                        />
-                      )}
+                      <MultiColumnList
+                        id="list-statistical-codes"
+                        contentData={statisticalCodeIdsContent}
+                        visibleColumns={['Statistical code type', 'Statistical code']}
+                        columnMapping={{
+                          'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                          'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                        }}
+                        columnWidths={{ 'Statistical code type': '16%' }}
+                        formatter={{
+                          'Statistical code type':
+                            x => this.refLookup(referenceTables.statisticalCodeTypes,
+                              this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
+                          'Statistical code':
+                            x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
+                        }}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                        containerRef={ref => { this.resultsList = ref; }}
+                      />
                     </Row>
                   </Accordion>
 
@@ -651,25 +694,23 @@ class ViewHoldingsRecord extends React.Component {
                       </Col>
                     </Row>
                     <br />
-                    {((holdingsRecord.permanentLocationId) || (holdingsRecord.temporaryLocationId)) &&
-                      <Row>
-                        <Col
-                          smOffset={0}
-                          sm={4}
-                        >
-                          <KeyValue
-                            label={<FormattedMessage id="ui-inventory.permanent" />}
-                            value={checkIfElementIsEmpty(locationAccordion.permanent)}
-                          />
-                        </Col>
-                        <Col sm={4}>
-                          <KeyValue
-                            label={<FormattedMessage id="ui-inventory.temporary" />}
-                            value={checkIfElementIsEmpty(locationAccordion.temporary)}
-                          />
-                        </Col>
-                      </Row>
-                    }
+                    <Row>
+                      <Col
+                        smOffset={0}
+                        sm={4}
+                      >
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.permanent" />}
+                          value={checkIfElementIsEmpty(locationAccordion.permanent)}
+                        />
+                      </Col>
+                      <Col sm={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.temporary" />}
+                          value={checkIfElementIsEmpty(locationAccordion.temporary)}
+                        />
+                      </Col>
+                    </Row>
                     <Row>
                       <Col sm={2}>
                         <KeyValue
@@ -738,7 +779,7 @@ class ViewHoldingsRecord extends React.Component {
                       label={<FormattedMessage id="ui-inventory.numberOfItems" />}
                       value={checkIfElementIsEmpty(holdingsDetails.numberOfItems)}
                     />
-                    {holdingsDetailsTables(intl).map(item => !isEmpty(item.contentData) && (
+                    {holdingsDetailsTables(intl).map(item => (
                       <Row key={item.id}>
                         <MultiColumnList
                           id={item.id}
@@ -780,24 +821,7 @@ class ViewHoldingsRecord extends React.Component {
                     onToggle={this.handleAccordionToggle}
                     label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
                   >
-                    {!isEmpty(holdingsNotes) && (
-                      <MultiColumnList
-                        id="list-holdingsnotes"
-                        contentData={holdingsNotes}
-                        visibleColumns={['Staff only', 'Note']}
-                        columnMapping={{
-                          'Staff only': intl.formatMessage({ id: 'ui-inventory.staffOnly' }),
-                          'Note': intl.formatMessage({ id: 'ui-inventory.note' }),
-                        }}
-                        columnWidths={{ 'Staff only': '16%' }}
-                        formatter={{
-                          'Staff only': x => (get(x, ['staffOnly']) ? 'Yes' : 'No'),
-                          'Note': x => get(x, ['note'], ''),
-                        }}
-                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.holdingsNotes' })}
-                        containerRef={ref => { this.resultsList = ref; }}
-                      />
-                    )}
+                    {layoutNotes(holdingsNotes)}
                   </Accordion>
 
                   <Accordion
@@ -806,36 +830,42 @@ class ViewHoldingsRecord extends React.Component {
                     onToggle={this.handleAccordionToggle}
                     label={<FormattedMessage id="ui-inventory.electronicAccess" />}
                   >
-                    {!isEmpty(electronicAccess) && (
-                      <MultiColumnList
-                        id="list-electronic-access"
-                        contentData={electronicAccess}
-                        visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                        columnMapping={{
-                          'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                          'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                          'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                          'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                          'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                        }}
-                        columnWidths={{
-                          'URL relationship': '16%',
-                          'URI': '16%',
-                          'Link text': '16%',
-                          'Materials specified': '16%',
-                          'URL public note': '32%',
-                        }}
-                        formatter={{
-                          'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name,
-                          'URI': x => <a href={get(x, ['uri'])} style={wrappingCell}>{get(x, ['uri'])}</a>,
-                          'Link text': x => get(x, ['linkText']) || '',
-                          'Materials specified': x => get(x, ['materialsSpecification']) || '',
-                          'URL public note': x => get(x, ['publicNote']) || '',
-                        }}
-                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
-                        containerRef={ref => { this.resultsList = ref; }}
-                      />
-                    )}
+                    <MultiColumnList
+                      id="holding-list-electronic-access"
+                      contentData={checkIfArrayIsEmpty(electronicAccess)}
+                      visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                      columnMapping={{
+                        'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                        'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                        'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                        'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                        'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                      }}
+                      columnWidths={{
+                        'URL relationship': '16%',
+                        'URI': '16%',
+                        'Link text': '16%',
+                        'Materials specified': '16%',
+                        'URL public note': '32%',
+                      }}
+                      formatter={{
+                        'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name || noValue,
+                        'URI': x => (get(x, ['uri'])
+                          ? (
+                            <a
+                              href={get(x, ['uri'])}
+                              style={wrappingCell}
+                            >
+                              {get(x, ['uri'])}
+                            </a>)
+                          : noValue),
+                        'Link text': x => get(x, ['linkText']) || noValue,
+                        'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
+                        'URL public note': x => get(x, ['publicNote']) || noValue,
+                      }}
+                      ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
+                      containerRef={ref => { this.resultsList = ref; }}
+                    />
                   </Accordion>
 
                   <Accordion
@@ -872,28 +902,22 @@ class ViewHoldingsRecord extends React.Component {
                     onToggle={this.handleAccordionToggle}
                     label={<FormattedMessage id="ui-inventory.receivingHistory" />}
                   >
-                    {(holdingsRecord.receivingHistory
-                      && receivingHistory
-                      && !isEmpty(receivingHistory.entries))
-                      && (
-                        <MultiColumnList
-                          id="list-retrieving-history"
-                          contentData={receivingHistory}
-                          visibleColumns={['Enumeration', 'Chronology']}
-                          columnMapping={{
-                            'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
-                            'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
-                          }}
-                          columnWidths={{ 'Enumeration': '16%' }}
-                          formatter={{
-                            'Enumeration': x => x.enumeration,
-                            'Chronology': x => x.chronology,
-                          }}
-                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.receivingHistory' })}
-                          containerRef={ref => { this.resultsList = ref; }}
-                        />
-                      )
-                    }
+                    <MultiColumnList
+                      id="list-retrieving-history"
+                      contentData={checkIfArrayIsEmpty(receivingHistory)}
+                      visibleColumns={['Enumeration', 'Chronology']}
+                      columnMapping={{
+                        'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
+                        'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+                      }}
+                      columnWidths={{ 'Enumeration': '16%' }}
+                      formatter={{
+                        'Enumeration': x => x.enumeration || noValue,
+                        'Chronology': x => x.chronology || noValue,
+                      }}
+                      ariaLabel={intl.formatMessage({ id: 'ui-inventory.receivingHistory' })}
+                      containerRef={ref => { this.resultsList = ref; }}
+                    />
                   </Accordion>
                 </Pane>
               </div>

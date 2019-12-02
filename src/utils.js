@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FormattedMessage,
   FormattedTime,
+  FormattedDate,
 } from 'react-intl';
 import {
   includes,
@@ -12,10 +13,13 @@ import {
   isArray,
   isEmpty,
   template,
+  groupBy,
+  map,
 } from 'lodash';
 import {
   itemStatusesMap,
   noValue,
+  emptyList,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item) ? isEmpty(item) : item === '-'));
@@ -111,8 +115,6 @@ export function psTitleRelationshipId(idTypes) {
   return relationshipDetail ? relationshipDetail.id : '';
 }
 
-export const getHoldingsNotes = (noteTypes, notes) => notes.filter(noteType => noteTypes.find(note => note.holdingsNoteTypeId === noteType.id));
-
 export const validateRequiredField = value => {
   const isValid = !isEmpty(value);
 
@@ -145,13 +147,15 @@ export const validateAlphaNumericField = value => {
 
 export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
 
+export const checkIfArrayIsEmpty = array => (!isEmpty(array) ? array : emptyList);
+
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
   ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : noValue))
   : noValue);
 
 export const getDate = dateValue => {
   return dateValue ? (
-    <FormattedTime
+    <FormattedDate
       value={dateValue}
       day="numeric"
       month="numeric"
@@ -160,6 +164,8 @@ export const getDate = dateValue => {
   ) : '-';
 };
 
+export const getTime = timeValue => (timeValue ? <FormattedTime value={timeValue} /> : '-');
+
 export const callNumberLabel = holdingsRecord => {
   const parts = [];
   parts.push(get(holdingsRecord, 'callNumberPrefix', ''));
@@ -167,4 +173,23 @@ export const callNumberLabel = holdingsRecord => {
   parts.push(get(holdingsRecord, 'callNumberSuffix', ''));
 
   return parts.join(' ');
+};
+
+export const staffOnlyFormatter = x => (get(x, ['staffOnly'])
+  ? <FormattedMessage id="ui-inventory.yes" />
+  : <FormattedMessage id="ui-inventory.no" />);
+
+export const getSortedNotes = (resource, field, types) => {
+  const notes = groupBy(get(resource, ['notes']), field);
+
+  const sortedNotes = map(notes, (value, key) => {
+    const noteType = types.find(note => note.id === key);
+
+    return {
+      noteType,
+      notes: value,
+    };
+  });
+
+  return sortedNotes;
 };

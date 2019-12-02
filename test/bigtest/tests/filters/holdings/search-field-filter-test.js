@@ -47,7 +47,7 @@ describe('Holdings SearchFieldFilter', () => {
 
   describe('ISBN', function () {
     beforeEach(async () => {
-      await holdingsRoute.searchFieldFilter.searchField.selectIndex('- ISBN');
+      await holdingsRoute.searchFieldFilter.searchField.selectIndex('ISBN');
       await holdingsRoute.searchFieldFilter.searchField.fillInput('isbn');
       await holdingsRoute.searchFieldFilter.clickSearch();
     });

@@ -177,4 +177,6 @@ export const noValue = (
   </span>
 );
 
+export const emptyList = [{}];
+
 export const wrappingCell = { wordBreak: 'break-word' };

@@ -14,9 +14,8 @@ describe('HoldingsViewPage', () => {
       const instance = this.server.create(
         'instance',
         'withHoldingAndItem',
-        {
-          title: 'Holding record',
-        }
+        'withStatisticalCodeIds',
+        { title: 'Holding record' },
       );
       const holding = this.server.schema.instances.first().holdings.models[0];
 
@@ -106,19 +105,23 @@ describe('HoldingsViewPage', () => {
       });
 
       describe('holding notes list', () => {
+        it('has correct amount of lists', () => {
+          expect(HoldingsViewPage.notes().length).to.be.equal(1);
+        });
+
         it('has correct amount of items', () => {
-          expect(HoldingsViewPage.holdingsNotesList.rowCount).to.be.equal(2);
+          expect(HoldingsViewPage.notes(0).rowCount).to.be.equal(2);
         });
 
         describe('has correct values', () => {
           it('first row - staff only: "Yes", note: is empty ', () => {
-            expect(HoldingsViewPage.holdingsNotesList.rows(0).cells(0).content).to.be.equal('Yes');
-            expect(HoldingsViewPage.holdingsNotesList.rows(0).cells(1).content).to.be.a('string').that.is.empty;
+            expect(HoldingsViewPage.notes(0).rows(0).cells(0).content).to.be.equal('Yes');
+            expect(HoldingsViewPage.notes(0).rows(0).cells(1).content).to.be.equal('-');
           });
 
-          it('second row - staff only: "No", note: is note empty', () => {
-            expect(HoldingsViewPage.holdingsNotesList.rows(1).cells(0).content).to.be.equal('No');
-            expect(HoldingsViewPage.holdingsNotesList.rows(1).cells(1).content).to.be.a('string').that.not.empty;
+          it('second row - staff only: "No", note: is not empty', () => {
+            expect(HoldingsViewPage.notes(0).rows(1).cells(0).content).to.be.equal('No');
+            expect(HoldingsViewPage.notes(0).rows(1).cells(1).content).to.be.a('string').that.not.empty;
           });
         });
       });
@@ -146,8 +149,8 @@ describe('HoldingsViewPage', () => {
               expect(HoldingsViewPage.electronicAccessList.rows(0).cells(3).content).to.be.a('string').that.not.empty;
             });
 
-            it('url public note - should be empty', () => {
-              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(4).content).to.be.a('string').that.is.empty;
+            it('url public note - should be dash', () => {
+              expect(HoldingsViewPage.electronicAccessList.rows(0).cells(4).content).to.be.equal('-');
             });
           });
         });
