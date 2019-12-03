@@ -35,7 +35,7 @@ class InventorySettings extends React.Component {
         pages: [
           {
             route: 'alternativeTitleTypes',
-            label: <FormattedMessage id="ui-invetonry.alternativeTitleTypes" />,
+            label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
             component: AlternativeTitleTypesSettings,
           },
           {
