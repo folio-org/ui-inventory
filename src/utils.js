@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FormattedMessage,
   FormattedTime,
+  FormattedDate,
 } from 'react-intl';
 import {
   includes,
@@ -24,7 +25,7 @@ import {
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
   ? (isEmpty(item) || item.every(element => !element || element === '-'))
-  : item === '-'));
+  : (!item || item === '-')));
 
 export function craftLayerUrl(mode, location) { // eslint-disable-line import/prefer-default-export
   if (location) {
@@ -147,7 +148,7 @@ export const validateAlphaNumericField = value => {
   return <FormattedMessage id="ui-inventory.hridHandling.validation.assignPrefixField" />;
 };
 
-export const checkIfElementIsEmpty = element => (element === '-' ? noValue : element);
+export const checkIfElementIsEmpty = element => ((!element || element === '-') ? noValue : element);
 
 export const checkIfArrayIsEmpty = array => (!isEmpty(array)
   ? array.map(element => (isObject(element) ? element : {}))
@@ -158,6 +159,17 @@ export const convertArrayToBlocks = elements => (!isEmpty(elements)
   : noValue);
 
 export const getDate = dateValue => {
+  return dateValue ? (
+    <FormattedDate
+      value={dateValue}
+      day="numeric"
+      month="numeric"
+      year="numeric"
+    />
+  ) : '-';
+};
+
+export const getDateWithTime = dateValue => {
   return dateValue ? (
     <FormattedTime
       value={dateValue}

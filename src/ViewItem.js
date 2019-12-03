@@ -49,6 +49,7 @@ import {
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   getDate,
+  getDateWithTime,
   checkIfArrayIsEmpty,
 } from './utils';
 import ItemForm from './edit/items/ItemForm';
@@ -693,11 +694,11 @@ class ViewItem extends React.Component {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatus: loanLink,
-      itemStatusDate: getDate(itemStatusDate),
+      itemStatusDate: getDateWithTime(itemStatusDate),
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
-      loanDate: loan ? getDate(loan.loanDate) : '-',
-      dueDate: loan ? getDate(loan.dueDate) : '-',
+      loanDate: loan ? getDateWithTime(loan.loanDate) : '-',
+      dueDate: loan ? getDateWithTime(loan.dueDate) : '-',
       circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
     };
 
