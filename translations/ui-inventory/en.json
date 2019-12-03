@@ -103,6 +103,7 @@
   "permanentLocation": "Permanent",
   "temporaryLocation": "Temporary",
   "effectiveLocation": "Effective location for item",
+  "effectiveCallNumber": "Effective call number string",
   "permanent": "Permanent",
   "temporary": "Temporary",
   "selectPermanenLocation": "Select permanent location",

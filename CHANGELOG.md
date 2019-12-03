@@ -56,6 +56,7 @@
 * Display effective location at top of item record. Completes UIIN-863.
 * Display complete call number in holdings headers. Completes UIIN-884.
 * Use instance url with the correct search segment. Fixes UIIN-886.
+* Display effective call number string at the top of the item record. Fixes UIIN-750.
 
 ## [1.12.1](https://github.com/folio-org/ui-inventory/tree/v1.12.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.0...v1.12.1)

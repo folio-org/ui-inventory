@@ -13,8 +13,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import Link from 'react-router-dom/Link';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { FormattedMessage } from 'react-intl';
+
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { effectiveCallNumber } from '@folio/stripes-util';
 
 import {
   Pane,
@@ -888,7 +890,12 @@ class ViewItem extends React.Component {
                 <br />
                 <Row>
                   {effectiveLocationDisplay}
-                  <Col xs="8" />
+                  <Col xs={8}>
+                    <KeyValue
+                      label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
+                      value={effectiveCallNumber(item)}
+                    />
+                  </Col>
                   <Col end="xs">
                     <ExpandAllButton
                       id="collapse-all"
