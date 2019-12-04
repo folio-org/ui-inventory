@@ -20,7 +20,7 @@ import {
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const query = { ...resourceData.query };
-  const queryIndex = get(query, 'qindex', 'contributor');
+  const queryIndex = get(query, 'qindex', 'all');
   const queryValue = get(query, 'query', '');
   let queryTemplate = getQueryTemplate(queryIndex, itemIndexes);
 
