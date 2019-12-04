@@ -442,5 +442,6 @@
     "reports.inTransitItem.callNumber": "رقم الاستدعاء",
     "reports.inTransitItem.enumeration": "الترقيم",
     "reports.inTransitItem.volume": "المجلد",
-    "reports.inTransitItem.yearCaption": "السنة"
+    "reports.inTransitItem.yearCaption": "السنة",
+    "effectiveCallNumber": "مقطع رقم الاستدعاء الفعال"
 }

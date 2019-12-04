@@ -442,5 +442,6 @@
     "reports.inTransitItem.callNumber": "Call number",
     "reports.inTransitItem.enumeration": "Enumeration",
     "reports.inTransitItem.volume": "Volume",
-    "reports.inTransitItem.yearCaption": "Year"
+    "reports.inTransitItem.yearCaption": "Year",
+    "effectiveCallNumber": "Effective call number string"
 }
