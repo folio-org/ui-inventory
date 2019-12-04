@@ -442,5 +442,6 @@
     "reports.inTransitItem.callNumber": "Número de chamada",
     "reports.inTransitItem.enumeration": "Enumeração",
     "reports.inTransitItem.volume": "Volume",
-    "reports.inTransitItem.yearCaption": "Ano"
+    "reports.inTransitItem.yearCaption": "Ano",
+    "effectiveCallNumber": "Seqüência efetiva do número de chamada"
 }

@@ -430,7 +430,7 @@
     "reports.inTransitItem.destinationServicePoint": "目的地服务点",
     "reports.inTransitItem.requestType": "请求类型",
     "reports.inTransitItem.requesterPatronGroup": "请求者读者组",
-    "reports.inTransitItem.requestCreationDate": "Request creation date",
+    "reports.inTransitItem.requestCreationDate": "请求创建日期",
     "reports.inTransitItem.requestExpirationDate": "请求到期日",
     "reports.inTransitItem.requestPickupServicePoint": "请求取件服务点",
     "reports.inTransitItem.tags": "标签",
@@ -442,5 +442,6 @@
     "reports.inTransitItem.callNumber": "索书号",
     "reports.inTransitItem.enumeration": "期数",
     "reports.inTransitItem.volume": "卷",
-    "reports.inTransitItem.yearCaption": "年"
+    "reports.inTransitItem.yearCaption": "年",
+    "effectiveCallNumber": "Effective call number string"
 }

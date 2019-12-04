@@ -442,5 +442,6 @@
     "reports.inTransitItem.callNumber": "Call number",
     "reports.inTransitItem.enumeration": "Enumeration",
     "reports.inTransitItem.volume": "Том",
-    "reports.inTransitItem.yearCaption": "Год"
+    "reports.inTransitItem.yearCaption": "Год",
+    "effectiveCallNumber": "Effective call number string"
 }
