@@ -79,12 +79,20 @@
       },
       {
         "permissionName": "ui-inventory.all-permissions.TEMPORARY",
-        "displayName": "Inventory: <temporary> all perms including UI",
+        "displayName": "Inventory: All permissions",
         "description": "Some subperms to support enabling/using the Inventory app",
         "subPermissions": [
-          "module.inventory.enabled",
-          "inventory-storage.all",
-          "inventory.all"
+          "ui-inventory.instance.view",
+          "ui-inventory.instance.create",
+          "ui-inventory.holdings.create",
+          "ui-inventory.item.create",
+          "ui-inventory.instance.edit",
+          "ui-inventory.item.edit",
+          "ui-inventory.holdings.edit",
+          "ui-inventory.item.markasmissing",
+          "ui-inventory.item.delete",
+          "ui-inventory.holdings.delete",
+          "ui-inventory.instance.view-staff-suppressed-records"
         ],
         "visible": true
       },
