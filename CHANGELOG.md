@@ -1,6 +1,8 @@
 # Change history for ui-inventory
 
-## 1.13.0 (IN PROGRESS)
+## [1.13.0](https://github.com/folio-org/ui-inventory/tree/v1.13.0) (2019-12-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.1...v1.13.0)
+
 * Added iconAlignment "baseline" for <AppIcon>'s in the results list (UIIN-719)
 * Increase limit for holdings to 1000. Refs UIIN-723.
 * Set default title for items without barcode. Refs UIIN-731.
