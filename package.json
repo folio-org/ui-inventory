@@ -79,7 +79,7 @@
       },
       {
         "permissionName": "ui-inventory.all-permissions.TEMPORARY",
-        "displayName": " Inventory: All permissions",
+        "displayName": "Inventory: All permissions",
         "description": "Some subperms to support enabling/using the Inventory app",
         "subPermissions": [
           "ui-inventory.instance.view",
