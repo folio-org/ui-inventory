@@ -893,7 +893,7 @@ class ViewItem extends React.Component {
                   <Col xs={8}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
-                      value={effectiveCallNumber(item, holdingsRecord)}
+                      value={effectiveCallNumber(item)}
                     />
                   </Col>
                   <Col end="xs">

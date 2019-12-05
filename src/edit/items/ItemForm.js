@@ -394,7 +394,7 @@ class ItemForm extends React.Component {
                   <Col xs={8}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
-                      value={effectiveCallNumber(initialValues, holdingsRecord)}
+                      value={effectiveCallNumber(initialValues)}
                     />
                   </Col>
                 </React.Fragment>
