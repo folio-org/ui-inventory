@@ -26,6 +26,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
         },
       },
       resultCount: { initialValue: INITIAL_RESULT_COUNT },
+      resultOffset: { initialValue: 0 },
       identifierTypes: {
         type: 'okapi',
         records: 'identifierTypes',
