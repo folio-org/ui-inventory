@@ -9,6 +9,10 @@ import {
   isVisible,
 } from '@bigtest/interactor';
 
+import {
+  MultiSelectFilterInteractor,
+} from './filters';
+
 @interactor class InventoryHeaderDropdownMenu {
   clickItemsInTransitReportBtn = clickable('#dropdown-clickable-get-report');
   itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
@@ -46,4 +50,6 @@ export default @interactor class InventoryInteractor {
 
   headerDropdown = scoped('[class*=paneHeaderCenterInner---] [class*=dropdown---] button');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
+
+  resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
 }

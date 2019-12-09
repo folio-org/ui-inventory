@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import languages from '../../data/languages';
+import { filterItemsBy } from '../../utils';
 
 export default class InstanceFilters extends React.Component {
   static propTypes = {
@@ -81,23 +82,6 @@ export default class InstanceFilters extends React.Component {
           />
         </Accordion>
         <Accordion
-          label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
-          id="resource"
-          name="resource"
-          closedByDefault
-          header={FilterAccordionHeader}
-          displayClearButton={resource.length > 0}
-          onClearFilter={() => onClear('resource')}
-        >
-          <CheckboxFilter
-            data-test-filter-instance-resource
-            name="resource"
-            dataOptions={resourceTypeOptions}
-            selectedValues={resource}
-            onChange={onChange}
-          />
-        </Accordion>
-        <Accordion
           label={<FormattedMessage id="ui-inventory.instances.language" />}
           id="language"
           name="language"
@@ -111,6 +95,23 @@ export default class InstanceFilters extends React.Component {
             name="language"
             dataOptions={languages.selectOptions()}
             selectedValues={language}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
+          id="resource"
+          name="resource"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={resource.length > 0}
+          onClearFilter={() => onClear('resource')}
+        >
+          <MultiSelectionFilter
+            name="resource"
+            dataOptions={resourceTypeOptions}
+            selectedValues={resource}
+            filter={filterItemsBy('label')}
             onChange={onChange}
           />
         </Accordion>
