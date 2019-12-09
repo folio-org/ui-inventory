@@ -77,7 +77,6 @@ export function filterItemsBy(name) {
       return { renderedItems: list };
     }
 
-    console.log('list', list);
     const esFilter = escapeRegExp(filter);
     const regex = new RegExp(`^${esFilter}`, 'i');
     const renderedItems = list
