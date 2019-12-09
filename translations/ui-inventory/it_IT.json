@@ -443,5 +443,16 @@
     "reports.inTransitItem.enumeration": "Enumerazione",
     "reports.inTransitItem.volume": "Volume",
     "reports.inTransitItem.yearCaption": "Anno",
-    "effectiveCallNumber": "Effective call number string"
+    "effectiveCallNumber": "Effective call number string",
+    "updatedDateAndTime": "Updated date and time",
+    "updatedSource": "Updated source",
+    "createdDateAndTime": "Created date and time",
+    "createdSource": "Created source",
+    "precedingTitle": "Preceding title",
+    "succeedingTitle": "Succeeding title",
+    "identifierType": "Identifier type",
+    "parentInstance": "Parent instance",
+    "missingDate": "Missing date",
+    "itemDamagedStatusDate": "Damaged date",
+    "checkInOutNoteType": "Check in / out note type"
 }

@@ -166,8 +166,8 @@
     "addPublicationFrequency": "إضافة تواتر",
     "addPublicationRange": "إضافة نطاق",
     "publicationRange": "نطاق النشر",
-    "staffSuppress": "منع الموظفين",
-    "discoverySuppress": "منع من الاكتشاف",
+    "staffSuppress": "حجب الموظفين",
+    "discoverySuppress": "حجب من الاكتشاف",
     "previouslyHeld": "حجزت سابقا",
     "addElectronicAccess": "إضافة الوصول الإلكتروني",
     "instanceStatus": "مصطلح حالة الوعاء",
@@ -443,5 +443,16 @@
     "reports.inTransitItem.enumeration": "الترقيم",
     "reports.inTransitItem.volume": "المجلد",
     "reports.inTransitItem.yearCaption": "السنة",
-    "effectiveCallNumber": "مقطع رقم الاستدعاء الفعال"
+    "effectiveCallNumber": "مقطع رقم الاستدعاء الفعال",
+    "updatedDateAndTime": "Updated date and time",
+    "updatedSource": "Updated source",
+    "createdDateAndTime": "Created date and time",
+    "createdSource": "Created source",
+    "precedingTitle": "Preceding title",
+    "succeedingTitle": "Succeeding title",
+    "identifierType": "Identifier type",
+    "parentInstance": "Parent instance",
+    "missingDate": "Missing date",
+    "itemDamagedStatusDate": "Damaged date",
+    "checkInOutNoteType": "Check in / out note type"
 }
