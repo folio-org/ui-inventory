@@ -260,6 +260,8 @@ class InstancesView extends React.Component {
             onSelectRow={onSelectRow}
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
+            pageAmount={100}
+            pagingType={'click'}
           />
         </div>
         <ErrorModal

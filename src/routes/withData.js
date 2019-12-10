@@ -11,7 +11,7 @@ import {
 
 import { psTitleRelationshipId } from '../utils';
 
-const INITIAL_RESULT_COUNT = 30;
+const INITIAL_RESULT_COUNT = 100;
 
 // HOC used to reuse instance manifest
 const withData = WrappedComponent => class WithDataComponent extends React.Component {
