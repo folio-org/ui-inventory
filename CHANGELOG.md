@@ -3,6 +3,7 @@
 ## [1.14.0] (IN PROGRESS)
 
 * Create one common inventory permission "Inventory: All permissions". Refs UIIN-739.
+* Refactor Resource Type filter on instances segment. Part of UIIN-193.
 
 ## [1.13.0](https://github.com/folio-org/ui-inventory/tree/v1.13.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.1...v1.13.0)
