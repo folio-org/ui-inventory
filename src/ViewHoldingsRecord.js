@@ -475,7 +475,7 @@ class ViewHoldingsRecord extends React.Component {
           'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
           'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
         },
-        columnWidths: { 'Holdings statement': '16%' },
+        columnWidths: { 'Holdings statement': '16%', 'Holdings statement note': '84%' },
         formatter: {
           'Holdings statement': x => get(x, ['statement']) || noValue,
           'Holdings statement note': x => get(x, ['note']) || noValue,
@@ -490,7 +490,7 @@ class ViewHoldingsRecord extends React.Component {
           'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
           'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
         },
-        columnWidths: { 'Holdings statement for supplements': '16%' },
+        columnWidths: { 'Holdings statement for supplements': '16%', 'Holdings statement for supplements note': '84%' },
         formatter: {
           'Holdings statement for supplements': x => get(x, ['statement']) || noValue,
           'Holdings statement for supplements note': x => get(x, ['note']) || noValue,
@@ -505,7 +505,7 @@ class ViewHoldingsRecord extends React.Component {
           'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
           'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
         },
-        columnWidths: { 'Holdings statement for indexes': '16%' },
+        columnWidths: { 'Holdings statement for indexes': '16%', 'Holdings statement for indexes note': '84%' },
         formatter: {
           'Holdings statement for indexes': x => get(x, ['statement']) || noValue,
           'Holdings statement for indexes note': x => get(x, ['note']) || noValue,
