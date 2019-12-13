@@ -57,6 +57,20 @@ describe('ItemViewPage', () => {
         });
       });
 
+      describe('"Circulation history" accordion', () => {
+        it('should be present', () => {
+          expect(ItemViewPage.circulationHistoryAccordion.isPresent).to.be.true;
+        });
+
+        it('"Check in date" field should not be empty', () => {
+          expect(ItemViewPage.circulationHistoryAccordion.keyValues(0).text).to.be.equal('12/12/2019, 2:28 PM');
+        });
+
+        it('"Source" field should not be empty', () => {
+          expect(ItemViewPage.circulationHistoryAccordion.keyValues(2).text).to.be.equal('Doe, John Antony');
+        });
+      });
+
       describe('clicking on edit button in the pane header', () => {
         beforeEach(async () => {
           await ItemViewPage.clickEditItemButton();

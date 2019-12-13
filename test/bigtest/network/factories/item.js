@@ -32,4 +32,16 @@ export default Factory.extend({
     name: 'Main Library'
   },
   links: {},
+  lastCheckIn: {},
+
+  afterCreate(instance, server) {
+    const user = server.create('user');
+    const servicePoint = server.create('service-point');
+
+    instance.lastCheckIn = {
+      dateTime: '2019-12-12T14:28:07.000Z',
+      staffMemberId: user.id,
+      servicePointId: servicePoint.id,
+    };
+  }
 });
