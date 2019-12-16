@@ -1,4 +1,7 @@
-import React, { Fragment, createRef } from 'react';
+import React, {
+  Fragment,
+  createRef,
+} from 'react';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -19,6 +22,7 @@ import {
   validateNumericField,
   validateAlphaNumericField,
   validateRequiredField,
+  validateFieldLength,
 } from '../../utils';
 
 // TODO: this const will be removed after BE stories will be done
@@ -38,8 +42,12 @@ const DEFAULT_RECORDS = [
     id: '3',
     title: 'ui-inventory.hridHandling.sectionHeader3',
     recordsType: 'item',
-  }
+  },
 ];
+const START_WITH_MAX_LENGTH = 11;
+const ASSIGN_PREFIX_MAX_LENGTH = 10;
+const validateStartWithMaxLength = value => validateFieldLength(value, START_WITH_MAX_LENGTH);
+const validateAssignPrefixMaxLength = value => validateFieldLength(value, ASSIGN_PREFIX_MAX_LENGTH);
 
 const HRIDHandling = ({
   pristine,
@@ -56,7 +64,7 @@ const HRIDHandling = ({
         <FormattedMessage
           data-test-invoice-settings-voucher-number-error
           id="ui-inventory.hridHandling.successfullyMessage"
-        />)
+        />),
     });
   };
 
@@ -82,7 +90,7 @@ const HRIDHandling = ({
                 xs={2}
               >
                 <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
-                  {(txt) => (
+                  {txt => (
                     <div>
                       {txt}
                       <span className={css.asterisk}>*</span>
@@ -99,7 +107,7 @@ const HRIDHandling = ({
                     required
                     component={TextField}
                     className={`${css.margin0} startWithField startWithField--${data.recordsType}`}
-                    validate={[validateRequiredField, validateNumericField]}
+                    validate={[validateRequiredField, validateNumericField, validateStartWithMaxLength]}
                   />
                 </div>
               </Col>
@@ -120,7 +128,7 @@ const HRIDHandling = ({
                     name={`assignPrefix${data.id}`}
                     component={TextField}
                     className={`${css.margin0} assignPrefixField assignPrefixField--${data.recordsType}`}
-                    validate={[validateAlphaNumericField]}
+                    validate={[validateAlphaNumericField, validateAssignPrefixMaxLength]}
                   />
                 </div>
               </Col>
@@ -146,11 +154,11 @@ export default stripesForm({
   navigationCheck: true,
   enableReinitialize: true,
   initialValues: {
-    startWith1: '00000001',
+    startWith1: '00000000001',
     assignPrefix1: 'in',
-    startWith2: '00000001',
+    startWith2: '00000000001',
     assignPrefix2: 'ho',
-    startWith3: '00000001',
-    assignPrefix3: 'it'
+    startWith3: '00000000001',
+    assignPrefix3: 'it',
   },
 })(HRIDHandling);
