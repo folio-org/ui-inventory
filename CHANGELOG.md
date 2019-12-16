@@ -7,6 +7,7 @@
 * Refactor Resource Type filter on instances segment. Part of UIIN-193.
 * In transit report: check in fields. Refs UIIN-883.
 * Fix holdings note field widths. Fixes UIIN-882.
+* Show most recent check in on item record. Refs UIIN-749.
 
 ## [1.13.0](https://github.com/folio-org/ui-inventory/tree/v1.13.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.1...v1.13.0)
