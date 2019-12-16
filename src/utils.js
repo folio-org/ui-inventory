@@ -128,8 +128,21 @@ export const validateRequiredField = value => {
   return <FormattedMessage id="ui-inventory.hridHandling.validation.enterValue" />;
 };
 
+export const validateFieldLength = (value, maxLength) => {
+  if (value.length <= maxLength) {
+    return undefined;
+  }
+
+  return (
+    <FormattedMessage
+      id="ui-inventory.hridHandling.validation.maxLength"
+      values={{ maxLength }}
+    />
+  );
+};
+
 export const validateNumericField = value => {
-  const pattern = /^\d{1,8}$/;
+  const pattern = /^\d+$/;
 
   if (value.match(pattern)) {
     return undefined;
@@ -139,7 +152,7 @@ export const validateNumericField = value => {
 };
 
 export const validateAlphaNumericField = value => {
-  const pattern = /^[\w.,\-!?:;"'(){}[\]$ ]{0,10}$/;
+  const pattern = /^[\w.,\-!?:;"'(){}[\]$ ]+$/;
 
   if (value.match(pattern)) {
     return undefined;
