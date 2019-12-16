@@ -454,5 +454,9 @@
     "parentInstance": "Parent instance",
     "missingDate": "Missing date",
     "itemDamagedStatusDate": "Damaged date",
-    "checkInOutNoteType": "Check in / out note type"
+    "checkInOutNoteType": "Check in / out note type",
+    "circulationHistory": "Circulation history",
+    "mostRecentCheckIn": "Most recent check in",
+    "checkInDate": "Check in date",
+    "servicePoint": "Service point"
 }
