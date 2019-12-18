@@ -16,6 +16,15 @@
    padding-left: 1rem;
 }
 
+.inputLabel {
+  width: 9rem;
+  padding: 0 0.5rem;
+}
+
+.inputField {
+  width: 9rem;
+}
+
 .descriptionRow {
    margin-bottom: 1rem;
 }
