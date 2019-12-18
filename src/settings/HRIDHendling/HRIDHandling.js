@@ -86,9 +86,7 @@ const HRIDHandling = ({
               </Col>
             </Row>
             <Row className={css.inputRow}>
-              <Col
-                xs={2}
-              >
+              <Col className={css.inputLabel}>
                 <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
                   {txt => (
                     <div>
@@ -98,9 +96,7 @@ const HRIDHandling = ({
                   )}
                 </FormattedMessage>
               </Col>
-              <Col
-                xs={2}
-              >
+              <Col className={css.inputField}>
                 <div data-test-start-with-field>
                   <Field
                     name={`startWith${data.id}`}
@@ -113,16 +109,12 @@ const HRIDHandling = ({
               </Col>
             </Row>
             <Row className={css.inputRow}>
-              <Col
-                xs={2}
-              >
+              <Col className={css.inputLabel}>
                 <div>
                   <FormattedMessage id="ui-inventory.hridHandling.label.assignPrefix" />
                 </div>
               </Col>
-              <Col
-                xs={2}
-              >
+              <Col className={css.inputField}>
                 <div data-test-assign-prefix-field>
                   <Field
                     name={`assignPrefix${data.id}`}
