@@ -74,6 +74,7 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
+      resourceShouldRefresh: true,
     },
     holdingsRecords: {
       type: 'okapi',
@@ -99,10 +100,11 @@ class ViewItem extends React.Component {
       params: (_q, _p, _r, _l, props) => {
         const servicePointId = get(props.resources, 'items.records[0].lastCheckIn.servicePointId', '');
 
-        if (!servicePointId) return {};
+        const query = servicePointId && `id==${servicePointId}`;
 
-        return { query: `id==${servicePointId}` };
+        return query ? { query } : null;
       },
+      resourceShouldRefresh: true,
     },
     staffMembers: {
       type: 'okapi',
@@ -111,10 +113,11 @@ class ViewItem extends React.Component {
       params: (_q, _p, _r, _l, props) => {
         const staffMemberId = get(props.resources, 'items.records[0].lastCheckIn.staffMemberId', '');
 
-        if (!staffMemberId) return {};
+        const query = staffMemberId && `id==${staffMemberId}`;
 
-        return { query: `id==${staffMemberId}` };
+        return query ? { query } : null;
       },
+      resourceShouldRefresh: true,
     },
     callNumberTypes: {
       type: 'okapi',
