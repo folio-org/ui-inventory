@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -9,37 +8,50 @@ import {
   Pane,
   Button,
 } from '@folio/stripes/components';
+import stripesForm from '@folio/stripes-form/lib/stripesForm';
 
 import css from './HRIDHandling.css';
 
-const HRID_HANDLING_DESCRIPTION = [
+const HRID_DESCRIPTIONS_ID = [
   'ui-inventory.hridHandling.description.line1',
   'ui-inventory.hridHandling.description.line2',
   'ui-inventory.hridHandling.description.line3',
 ];
 
 const HRIDHandlingForm = ({
-  isSubmitDisabled = false,
-  onSubmit,
+  handleSubmit,
+  pristine,
+  submitting,
   children,
 }) => {
   const lastMenu = (
     <Button
       data-test-submit-button
-      buttonStyle="primary"
-      disabled={isSubmitDisabled}
-      marginBottom0
       type="submit"
+      buttonStyle="primary"
+      disabled={(pristine || submitting)}
+      marginBottom0
     >
       <FormattedMessage id="stripes-core.button.save" />
     </Button>
   );
 
+  const description = HRID_DESCRIPTIONS_ID.map((id, index) => (
+    <Row
+      key={index}
+      className={css.descriptionRow}
+    >
+      <Col xs={12}>
+        <FormattedMessage id={id} />
+      </Col>
+    </Row>
+  ));
+
   return (
     <form
       data-test-hrid-handling-form
       id="hrid-handling-settings-form"
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       className={css.form}
     >
       <Pane
@@ -49,39 +61,21 @@ const HRIDHandlingForm = ({
         lastMenu={lastMenu}
       >
         <Row>
-          <Col
-            xs={12}
-          >
+          <Col xs={12}>
             <Headline>
               <FormattedMessage id="ui-inventory.hridHandling" />
             </Headline>
           </Col>
         </Row>
-        {HRID_HANDLING_DESCRIPTION.map((description, index) => (
-          <Row
-            key={index}
-            className={css.descriptionRow}
-          >
-            <Col
-              xs={12}
-            >
-              <FormattedMessage id={description} />
-            </Col>
-          </Row>
-        ))}
+        {description}
         {children}
       </Pane>
     </form>
   );
 };
 
-HRIDHandlingForm.propTypes = {
-  isSubmitDisabled: PropTypes.bool,
-  onSubmit: PropTypes.func,
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]),
-};
-
-export default HRIDHandlingForm;
+export default stripesForm({
+  form: 'hridHandling',
+  navigationCheck: true,
+  enableReinitialize: true,
+})(HRIDHandlingForm);

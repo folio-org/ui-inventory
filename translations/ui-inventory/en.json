@@ -132,6 +132,7 @@
   "hridHandling.validation.startWithField": "Please enter a numeric value",
   "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
   "hridHandling.successfullyMessage": "Setting was successfully updated.",
+  "hridHandling.errorMessage": "Server communication problem. Please try again",
   "inheritFromHoldings": "Inherit from holdings",
   "uri": "URI",
   "shelvingOrder": "Shelving order",
