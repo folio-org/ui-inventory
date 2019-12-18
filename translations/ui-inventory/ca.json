@@ -387,7 +387,7 @@
     "hridHandling.label.startWith": "Start with",
     "hridHandling.label.assignPrefix": "Assign prefix",
     "hridHandling.validation.enterValue": "Please enter a value",
-    "hridHandling.validation.maxLength": "Maximum length of field is",
+    "hridHandling.validation.maxLength": "Invalid value. Maximum {maxLength} characters allowed",
     "hridHandling.validation.startWithField": "Please enter a numeric value",
     "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
     "hridHandling.successfullyMessage": "Setting was successfully updated.",
@@ -456,7 +456,7 @@
     "itemDamagedStatusDate": "Damaged date",
     "checkInOutNoteType": "Check in / out note type",
     "circulationHistory": "Circulation history",
-    "mostRecentCheckIn": "Most recent check in",
-    "checkInDate": "Check in date",
+    "mostRecentCheckIn": "Entrada més recent",
+    "checkInDate": "Data d'arribada",
     "servicePoint": "Service point"
 }

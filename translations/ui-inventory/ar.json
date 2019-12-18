@@ -455,8 +455,8 @@
     "missingDate": "تاريخ مفقود",
     "itemDamagedStatusDate": "تاريخ تالف",
     "checkInOutNoteType": "نوع ملاحظة الإعارة/ الرد",
-    "circulationHistory": "Circulation history",
-    "mostRecentCheckIn": "Most recent check in",
-    "checkInDate": "Check in date",
-    "servicePoint": "Service point"
+    "circulationHistory": "سجل الإعارة",
+    "mostRecentCheckIn": "أحدث رد",
+    "checkInDate": "تاريخ الرد",
+    "servicePoint": "نقطة الخدمة"
 }
