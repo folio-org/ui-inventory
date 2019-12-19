@@ -261,7 +261,7 @@ class InstancesView extends React.Component {
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType={'click'}
+            pagingType="click"
           />
         </div>
         <ErrorModal
