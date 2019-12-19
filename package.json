@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -409,7 +409,9 @@
           "inventory-storage.holdings.collection.get",
           "inventory-storage.holdings.item.get",
           "inventory-storage.material-types.collection.get",
-          "inventory-storage.loan-types.collection.get"
+          "inventory-storage.loan-types.collection.get",
+          "inventory-storage.service-points.get",
+          "inventory-storage.service-points.collection.get"
         ],
         "visible": true
       },

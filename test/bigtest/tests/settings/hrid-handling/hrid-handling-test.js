@@ -9,6 +9,9 @@ import setupApplication from '../../../helpers/setup-application';
 import HRIDHandlingInteractor from '../../../interactors/settings/hrid-handling/hrid-handling';
 import translation from '../../../../../translations/ui-inventory/en';
 
+const START_WITH_MAX_LENGTH = 11;
+const ASSIGN_PREFIX_MAX_LENGTH = 10;
+
 describe('Setting of HRID Handling', () => {
   setupApplication();
 
@@ -34,9 +37,9 @@ describe('Setting of HRID Handling', () => {
     });
 
     it('has initialValues for startWith fields', () => {
-      expect(HRIDHandlingInteractor.startWithFields.fields(0).val).to.be.equal('00000001');
-      expect(HRIDHandlingInteractor.startWithFields.fields(1).val).to.be.equal('00000001');
-      expect(HRIDHandlingInteractor.startWithFields.fields(2).val).to.be.equal('00000001');
+      expect(HRIDHandlingInteractor.startWithFields.fields(0).val).to.be.equal('00000000001');
+      expect(HRIDHandlingInteractor.startWithFields.fields(1).val).to.be.equal('00000000001');
+      expect(HRIDHandlingInteractor.startWithFields.fields(2).val).to.be.equal('00000000001');
     });
 
     it('has initialValues for assignPrefix fields', () => {
@@ -80,7 +83,8 @@ describe('Setting of HRID Handling', () => {
     });
 
     it('with correct wording', () => {
-      expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.startWithField']);
+      expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text)
+        .to.be.equal(translation['hridHandling.validation.startWithField']);
     });
   });
 
@@ -94,24 +98,48 @@ describe('Setting of HRID Handling', () => {
     });
 
     it('with correct wording', () => {
-      expect(HRIDHandlingInteractor.assignPrefixFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.assignPrefixField']);
+      expect(HRIDHandlingInteractor.assignPrefixFields.errorMessages(0).text)
+        .to.be.equal(translation['hridHandling.validation.assignPrefixField']);
     });
   });
 
   describe('when input a value that exceeds the required length to fields', () => {
-    beforeEach(async function () {
-      await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('111111111');
-      await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillAndBlur('111111111aa');
+    describe('input more then 11 characters to the "Start with" field', () => {
+      beforeEach(async function () {
+        await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('111111111111');
+      });
+
+      it('renders an error message', () => {
+        expect(HRIDHandlingInteractor.startWithFields.fields(0).inputError).to.be.true;
+      });
+
+      it('with correct wording', () => {
+        expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text)
+          .to.be.equal(`Invalid value. Maximum ${START_WITH_MAX_LENGTH} characters allowed`);
+      });
+
+      it('value length exceeds allowed length', () => {
+        expect(HRIDHandlingInteractor.startWithFields.fields(0).val.length).to.be.above(START_WITH_MAX_LENGTH);
+      });
     });
 
-    it('renders an error message', () => {
-      expect(HRIDHandlingInteractor.startWithFields.fields(0).inputError).to.be.true;
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).inputError).to.be.true;
-    });
+    describe('input more then 10 characters to the "Assign prefix" field', () => {
+      beforeEach(async function () {
+        await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillAndBlur('111111111aa');
+      });
 
-    it('with correct wording', () => {
-      expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.startWithField']);
-      expect(HRIDHandlingInteractor.assignPrefixFields.errorMessages(1).text).to.be.equal(translation['hridHandling.validation.assignPrefixField']);
+      it('renders an error message', () => {
+        expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).inputError).to.be.true;
+      });
+
+      it('with correct wording', () => {
+        expect(HRIDHandlingInteractor.assignPrefixFields.errorMessages(0).text)
+          .to.be.equal(`Invalid value. Maximum ${ASSIGN_PREFIX_MAX_LENGTH} characters allowed`);
+      });
+
+      it('value length exceeds allowed length', () => {
+        expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).val.length).to.be.above(ASSIGN_PREFIX_MAX_LENGTH);
+      });
     });
   });
 

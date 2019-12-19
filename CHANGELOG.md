@@ -1,8 +1,16 @@
 # Change history for ui-inventory
 
-## [1.14.0] (IN PROGRESS)
+## **1.14.0** (in progress)
+* Increase number of digits for HRID settings page. Refs UIIN-904
+
+## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
 
 * Create one common inventory permission "Inventory: All permissions". Refs UIIN-739.
+* Refactor Resource Type filter on instances segment. Part of UIIN-193.
+* In transit report: check in fields. Refs UIIN-883.
+* Fix holdings note field widths. Fixes UIIN-882.
+* Show most recent check in on item record. Refs UIIN-749.
 
 ## [1.13.0](https://github.com/folio-org/ui-inventory/tree/v1.13.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.12.1...v1.13.0)

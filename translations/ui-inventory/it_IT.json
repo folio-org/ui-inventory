@@ -443,5 +443,20 @@
     "reports.inTransitItem.enumeration": "Enumerazione",
     "reports.inTransitItem.volume": "Volume",
     "reports.inTransitItem.yearCaption": "Anno",
-    "effectiveCallNumber": "Effective call number string"
+    "effectiveCallNumber": "Stringa di collocazione effettiva",
+    "updatedDateAndTime": "Data e ora di aggiornamento",
+    "updatedSource": "Fonte aggiornata",
+    "createdDateAndTime": "Data e ora di creazione",
+    "createdSource": "Fonte creata",
+    "precedingTitle": "Titolo precedente",
+    "succeedingTitle": "Titolo successivo",
+    "identifierType": "Tipologia identificativo",
+    "parentInstance": "Istanza madre",
+    "missingDate": "Data di smarrimento",
+    "itemDamagedStatusDate": "Data del danneggiamento",
+    "checkInOutNoteType": "Tipologia nota restituzione / prestito",
+    "circulationHistory": "Circulation history",
+    "mostRecentCheckIn": "Most recent check in",
+    "checkInDate": "Check in date",
+    "servicePoint": "Service point"
 }

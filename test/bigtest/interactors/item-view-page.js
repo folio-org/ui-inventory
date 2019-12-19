@@ -3,6 +3,7 @@ import {
   clickable,
   text,
   isPresent,
+  collection,
 } from '@bigtest/interactor';
 
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor'; // eslint-disable-line
@@ -26,6 +27,10 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   clickDelete = clickable('[data-test-inventory-delete-item-action]');
 }
 
+@interactor class CirculationHistory {
+  keyValues = collection('[data-test-kv-value]');
+}
+
 @interactor class ItemViewPage {
   isLoaded = isPresent('[data-test-item-view-page]');
   title = text('[data-test-header-item-title]');
@@ -43,6 +48,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   statisticalCodeTable = new MultiColumnListInteractor('#item-list-statistical-codes');
   electronicAccessTable = new MultiColumnListInteractor('#item-list-electronic-access');
   collapseAllButton = new ButtonInteractor('#collapse-all');
+  circulationHistoryAccordion = new CirculationHistory('[data-test-item-view-page] #acc09');
 
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);

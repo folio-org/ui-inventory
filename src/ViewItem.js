@@ -74,6 +74,7 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
+      resourceShouldRefresh: true,
     },
     holdingsRecords: {
       type: 'okapi',
@@ -91,6 +92,32 @@ class ViewItem extends React.Component {
         limit: '1000',
       },
       records: 'loantypes',
+    },
+    servicePoints: {
+      type: 'okapi',
+      path: 'service-points',
+      records: 'servicepoints',
+      params: (_q, _p, _r, _l, props) => {
+        const servicePointId = get(props.resources, 'items.records[0].lastCheckIn.servicePointId', '');
+
+        const query = servicePointId && `id==${servicePointId}`;
+
+        return query ? { query } : null;
+      },
+      resourceShouldRefresh: true,
+    },
+    staffMembers: {
+      type: 'okapi',
+      path: 'users',
+      records: 'users',
+      params: (_q, _p, _r, _l, props) => {
+        const staffMemberId = get(props.resources, 'items.records[0].lastCheckIn.staffMemberId', '');
+
+        const query = staffMemberId && `id==${staffMemberId}`;
+
+        return query ? { query } : null;
+      },
+      resourceShouldRefresh: true,
     },
     callNumberTypes: {
       type: 'okapi',
@@ -143,6 +170,7 @@ class ViewItem extends React.Component {
         acc06: true,
         acc07: true,
         acc08: true,
+        acc09: true,
       },
       loan: null,
       borrower: null,
@@ -461,6 +489,8 @@ class ViewItem extends React.Component {
         loanTypes,
         requests,
         callNumberTypes,
+        staffMembers,
+        servicePoints,
       },
       referenceTables,
       okapi,
@@ -476,11 +506,18 @@ class ViewItem extends React.Component {
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
+    const staffMember = get(staffMembers, 'records[0]');
 
     if (this.isAwaitingResource()) {
       return <FormattedMessage id="ui-inventory.waitingForResources" />;
     }
 
+    const source = staffMember ?
+      <Link to={`/users/view/${staffMember.id}`}>
+        {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
+      </Link> :
+      '-';
+    const servicePointName = get(servicePoints, 'records[0].name', '-');
     const instance = instances1.records[0];
     const item = items.records[0];
     const holdingsRecord = holdingsRecords.records[0];
@@ -717,6 +754,12 @@ class ViewItem extends React.Component {
 
     const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
 
+    const circulationHistory = {
+      checkInDate: getDateWithTime(get(item, ['lastCheckIn', 'dateTime'])),
+      servicePointName,
+      source,
+    };
+
     const accordionsState = {
       acc01: areAllFieldsEmpty(values(administrativeData)),
       acc02: areAllFieldsEmpty(values(itemData)),
@@ -726,6 +769,7 @@ class ViewItem extends React.Component {
       acc06: areAllFieldsEmpty(values(loanAndAvailability)),
       acc07: areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
       acc08: areAllFieldsEmpty(values(electronicAccess)),
+      acc09: areAllFieldsEmpty(values(circulationHistory)),
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
@@ -1347,6 +1391,45 @@ class ViewItem extends React.Component {
                     ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
                     containerRef={ref => { this.resultsList = ref; }}
                   />
+                </Accordion>
+                <Accordion
+                  open={this.isAccordionOpen('acc09', accordionsState.acc09)}
+                  id="acc09"
+                  label={<FormattedMessage id="ui-inventory.circulationHistory" />}
+                  onToggle={this.handleAccordionToggle}
+                >
+                  <Row>
+                    <Col
+                      smOffset={0}
+                      sm={4}
+                    >
+                      <FormattedMessage
+                        tagName="strong"
+                        id="ui-inventory.mostRecentCheckIn"
+                      />
+                    </Col>
+                  </Row>
+                  <br />
+                  <Row>
+                    <Col sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.checkInDate" />}
+                        value={checkIfElementIsEmpty(circulationHistory.checkInDate)}
+                      />
+                    </Col>
+                    <Col sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.servicePoint" />}
+                        value={checkIfElementIsEmpty(circulationHistory.servicePointName)}
+                      />
+                    </Col>
+                    <Col sm={4}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.source" />}
+                        value={checkIfElementIsEmpty(circulationHistory.source)}
+                      />
+                    </Col>
+                  </Row>
                 </Accordion>
               </Pane>
             </Layer>
