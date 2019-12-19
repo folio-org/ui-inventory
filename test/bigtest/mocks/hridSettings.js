@@ -1,4 +1,4 @@
-export const hridSettings = {
+const hridSettings = {
   id: '65f6d006-393f-423b-9d2a-977d33371ab8',
   instances: {
     prefix: 'in',
@@ -13,3 +13,5 @@ export const hridSettings = {
     startNumber: 1,
   },
 };
+
+export default hridSettings;

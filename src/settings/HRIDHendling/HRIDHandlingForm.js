@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -8,7 +9,7 @@ import {
   Pane,
   Button,
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes-form/lib/stripesForm';
+import stripesForm from '@folio/stripes/form';
 
 import css from './HRIDHandling.css';
 
@@ -72,6 +73,16 @@ const HRIDHandlingForm = ({
       </Pane>
     </form>
   );
+};
+
+HRIDHandlingForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default stripesForm({

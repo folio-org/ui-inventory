@@ -40,7 +40,7 @@ const validateStartWithMaxLength = value => validateFieldLength(value, START_WIT
 const validateAssignPrefixMaxLength = value => validateFieldLength(value, ASSIGN_PREFIX_MAX_LENGTH);
 
 @stripesConnect
-export class HRIDHandlingSettings extends Component {
+class HRIDHandlingSettings extends Component {
   static manifest = Object.freeze({
     hridSettings: {
       type: 'okapi',
@@ -103,7 +103,6 @@ export class HRIDHandlingSettings extends Component {
   }
 
   render() {
-    const { resources: { hridSettings } } = this.props;
     const initialValues = this.getInitialValues();
 
     return (
