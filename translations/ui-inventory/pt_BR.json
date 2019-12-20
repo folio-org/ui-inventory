@@ -459,5 +459,5 @@
     "mostRecentCheckIn": "Devoluções mais recentes",
     "checkInDate": "Data de devolução",
     "servicePoint": "Ponto de serviço",
-    "hridHandling.errorMessage": "Server communication problem. Please try again"
+    "hridHandling.errorMessage": "Problema de comunicação do servidor. Por favor, tente novamente"
 }
