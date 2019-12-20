@@ -12,6 +12,7 @@ export const itemStatusesMap = {
   IN_PROCESS: 'In process',
   AWAITING_PICKUP,
   PAGED: 'Paged',
+  AWAITING_DELIVERY,
 };
 
 export const requestStatuses = {
