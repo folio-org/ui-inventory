@@ -1,7 +1,6 @@
 import React, {
   Component,
   Fragment,
-  createRef,
 } from 'react';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -9,7 +8,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { stripesConnect } from '@folio/stripes-core';
 import {
-  Callout,
   Col,
   KeyValue,
   Row,
@@ -17,11 +15,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  clone,
   get,
   keys,
-  omit,
-  parseInt,
 } from 'lodash';
 
 import {
@@ -55,31 +50,6 @@ class HRIDHandlingSettings extends Component {
     resources: PropTypes.object.isRequired,
   };
 
-  calloutRef = createRef();
-
-  onEdit(data) {
-    const { mutator } = this.props;
-    const settings = this.onBeforeSave(data);
-
-    return mutator.hridSettings.PUT(settings)
-      .then(() => this.showCallout('success', 'ui-inventory.hridHandling.successfullyMessage'))
-      .catch(() => this.showCallout('error', 'ui-inventory.hridHandling.errorMessage'));
-  }
-
-  onBeforeSave(value) {
-    const settings = clone(value);
-
-    keys(settings).forEach(key => {
-      if (settings[key].startNumber) {
-        const startNumber = settings[key].startNumber;
-
-        settings[key].startNumber = parseInt(startNumber);
-      }
-    });
-
-    return omit(settings, ['id']);
-  }
-
   getInitialValues() {
     const { resources } = this.props;
     const settings = get(resources, ['hridSettings', 'records', '0'], {});
@@ -95,20 +65,14 @@ class HRIDHandlingSettings extends Component {
     return { ...settings };
   }
 
-  showCallout(type, messageId) {
-    this.calloutRef.current.sendCallout({
-      type,
-      message: (<FormattedMessage id={messageId} />),
-    });
-  }
-
   render() {
+    const { mutator } = this.props;
     const initialValues = this.getInitialValues();
 
     return (
       <HRIDHandlingForm
-        onSubmit={data => this.onEdit(data)}
         initialValues={initialValues}
+        mutator={mutator}
       >
         {hridSettingsSections.map((record, index) => {
           return (
@@ -171,7 +135,6 @@ class HRIDHandlingSettings extends Component {
             </Fragment>
           );
         })}
-        <Callout ref={this.calloutRef} />
       </HRIDHandlingForm>
     );
   }

@@ -159,24 +159,7 @@ describe('Setting of HRID Handling', () => {
 
   describe('when form is submitted', () => {
     describe('and settings are updated successfully', () => {
-      setupApplication({ scenarios: ['update-hrid-settings-success'] });
-
-      beforeEach(async function () {
-        await this.visit('/settings/inventory/hridHandling');
-
-        await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('5');
-        await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('34');
-        await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
-        await HRIDHandlingInteractor.submitFormButton.click();
-      });
-
-      it('then successful toast appears', () => {
-        expect(HRIDHandlingInteractor.callout.successCalloutIsPresent).to.be.true;
-      });
-    });
-
-    describe('and the response contains error message', () => {
-      setupApplication({ scenarios: ['update-hrid-settings-error'] });
+      setupApplication({ scenarios: ['fetch-hrid-settings-success', 'update-hrid-settings-success'] });
 
       beforeEach(async function () {
         await this.visit('/settings/inventory/hridHandling');
@@ -185,6 +168,54 @@ describe('Setting of HRID Handling', () => {
         await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('001');
         await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
         await HRIDHandlingInteractor.submitFormButton.click();
+      });
+
+      describe('confirmation modal', () => {
+        it('appears', () => {
+          expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.true;
+        });
+
+        describe('when clicking the confirm button', () => {
+          beforeEach(async () => {
+            await HRIDHandlingInteractor.confirmationModal.confirmButton.click();
+          });
+
+          it('then confirmation modal disappears', () => {
+            expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.false;
+          });
+
+          it('and successful toast appears', () => {
+            expect(HRIDHandlingInteractor.callout.successCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('when clicking the cancel button', () => {
+          beforeEach(async () => {
+            await HRIDHandlingInteractor.confirmationModal.cancelButton.click();
+          });
+
+          it('then confirmation modal disappears', () => {
+            expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.false;
+          });
+
+          it('and successful toast appears', () => {
+            expect(HRIDHandlingInteractor.callout.successCalloutIsPresent).to.be.true;
+          });
+        });
+      });
+    });
+
+    describe('and the response contains error message', () => {
+      setupApplication({ scenarios: ['fetch-hrid-settings-success', 'update-hrid-settings-error'] });
+
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/hridHandling');
+
+        await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('765');
+        await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('001');
+        await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
+        await HRIDHandlingInteractor.submitFormButton.click();
+        await HRIDHandlingInteractor.confirmationModal.confirmButton.click();
       });
 
       it('then error callout appears', () => {

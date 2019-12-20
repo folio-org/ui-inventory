@@ -8,6 +8,7 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
 // eslint-disable-next-line
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
+import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 
 @interactor
 class StartWithFieldInteractor {
@@ -29,6 +30,7 @@ class AssignPrefixFieldInteractor {
   startWithFields = new StartWithFieldInteractor();
   assignPrefixFields = new AssignPrefixFieldInteractor();
   callout = new CalloutInteractor();
+  confirmationModal = new ConfirmationModalInteractor('#confirm-edit-hrid-settings-modal');
 }
 
 export default new HRIDHandlingInteractor();
