@@ -458,5 +458,6 @@
     "circulationHistory": "Histórico de circulação",
     "mostRecentCheckIn": "Devoluções mais recentes",
     "checkInDate": "Data de devolução",
-    "servicePoint": "Ponto de serviço"
+    "servicePoint": "Ponto de serviço",
+    "hridHandling.errorMessage": "Server communication problem. Please try again"
 }

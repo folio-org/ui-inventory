@@ -240,7 +240,7 @@
     "urlRelationshipTerm": "URL relationship term",
     "digitizationPolicy": "Digitization policy",
     "retentionPolicy": "Retention policy",
-    "alternativeTitleTypes": "Alternative title types",
+    "alternativeTitleTypes": "Tipos de títulos alternativos",
     "alternativeTitleType": "Alternative title type",
     "statisticalCodeTypes": "Statistical code types",
     "statisticalCodeType": "Statistical code type",
@@ -458,5 +458,6 @@
     "circulationHistory": "Circulation history",
     "mostRecentCheckIn": "Most recent check in",
     "checkInDate": "Check in date",
-    "servicePoint": "Service point"
+    "servicePoint": "Service point",
+    "hridHandling.errorMessage": "Server communication problem. Please try again"
 }
