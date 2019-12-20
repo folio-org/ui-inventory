@@ -181,3 +181,18 @@ export const noValue = (
 export const emptyList = [{}];
 
 export const wrappingCell = { wordBreak: 'break-word' };
+
+export const hridSettingsSections = [
+  {
+    type: 'instances',
+    title: 'ui-inventory.hridHandling.sectionHeader1',
+  },
+  {
+    type: 'holdings',
+    title: 'ui-inventory.hridHandling.sectionHeader2',
+  },
+  {
+    type: 'items',
+    title: 'ui-inventory.hridHandling.sectionHeader3',
+  },
+];

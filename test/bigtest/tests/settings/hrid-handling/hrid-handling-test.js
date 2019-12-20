@@ -13,7 +13,7 @@ const START_WITH_MAX_LENGTH = 11;
 const ASSIGN_PREFIX_MAX_LENGTH = 10;
 
 describe('Setting of HRID Handling', () => {
-  setupApplication();
+  setupApplication({ scenarios: ['fetch-hrid-settings-success'] });
 
   beforeEach(function () {
     this.visit('/settings/inventory/hridHandling');
@@ -50,7 +50,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when is changed correctly', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('0001');
       await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillInput('it');
     });
@@ -74,7 +74,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when input a non numeric value to the startWith field', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('fdg');
     });
 
@@ -89,7 +89,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when input special symbols to the assignPrefix field', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillAndBlur('*');
     });
 
@@ -105,7 +105,7 @@ describe('Setting of HRID Handling', () => {
 
   describe('when input a value that exceeds the required length to fields', () => {
     describe('input more then 11 characters to the "Start with" field', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('111111111111');
       });
 
@@ -124,7 +124,7 @@ describe('Setting of HRID Handling', () => {
     });
 
     describe('input more then 10 characters to the "Assign prefix" field', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillAndBlur('111111111aa');
       });
 
@@ -144,7 +144,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when the required startWith field is empty', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('');
     });
 
@@ -154,6 +154,42 @@ describe('Setting of HRID Handling', () => {
 
     it('with correct wording', () => {
       expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.enterValue']);
+    });
+  });
+
+  describe('when form is submitted', () => {
+    describe('and settings are updated successfully', () => {
+      setupApplication({ scenarios: ['update-hrid-settings-success'] });
+
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/hridHandling');
+
+        await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('5');
+        await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('34');
+        await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
+        await HRIDHandlingInteractor.submitFormButton.click();
+      });
+
+      it('then successful toast appears', () => {
+        expect(HRIDHandlingInteractor.callout.successCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe('and the response contains error message', () => {
+      setupApplication({ scenarios: ['update-hrid-settings-error'] });
+
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/hridHandling');
+
+        await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('765');
+        await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('001');
+        await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
+        await HRIDHandlingInteractor.submitFormButton.click();
+      });
+
+      it('then error callout appears', () => {
+        expect(HRIDHandlingInteractor.callout.errorCalloutIsPresent).to.be.true;
+      });
     });
   });
 });
