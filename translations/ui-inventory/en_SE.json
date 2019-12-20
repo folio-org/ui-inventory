@@ -182,7 +182,7 @@
     "editions": "Editions",
     "addEdition": "Add edition",
     "indexTitle": "Index title",
-    "dateOfPublication": "Date of publication",
+    "dateOfPublication": "Publication date",
     "otherRelatedInstances": "Other related instances",
     "instanceFormat": "Format",
     "instanceFormats": "Formats",
@@ -236,8 +236,8 @@
     "instanceStatusTypes": "Instance status types",
     "instanceStatusType": "Instance status type",
     "instanceHoldingsItem": "Instances, Holdings, Items",
-    "URLrelationship": "URL Relationship",
-    "urlRelationshipTerm": "URL Relationship term",
+    "URLrelationship": "URL relationship",
+    "urlRelationshipTerm": "URL relationship term",
     "digitizationPolicy": "Digitization policy",
     "retentionPolicy": "Retention policy",
     "alternativeTitleTypes": "Alternative title types",
@@ -320,7 +320,7 @@
     "resourceIdentifierType": "Resource identifier type",
     "publication": "Publication",
     "placeOfPublication": "Place of publication",
-    "publisherDate": "Publisher date",
+    "publisherDate": "Publication date",
     "classificationIdentifierType": "Classification identifier type",
     "error.noMatch.oops": "Uh-oh!",
     "error.noMatch.how": "How did you get to {location}?",
@@ -458,5 +458,6 @@
     "circulationHistory": "Circulation history",
     "mostRecentCheckIn": "Most recent check in",
     "checkInDate": "Check in date",
-    "servicePoint": "Service point"
+    "servicePoint": "Service point",
+    "hridHandling.errorMessage": "Server communication problem. Please try again"
 }

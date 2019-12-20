@@ -455,8 +455,9 @@
     "missingDate": "Data di smarrimento",
     "itemDamagedStatusDate": "Data del danneggiamento",
     "checkInOutNoteType": "Tipologia nota restituzione / prestito",
-    "circulationHistory": "Circulation history",
-    "mostRecentCheckIn": "Most recent check in",
-    "checkInDate": "Check in date",
-    "servicePoint": "Service point"
+    "circulationHistory": "Storia della circolazione",
+    "mostRecentCheckIn": "Ultima restituzione",
+    "checkInDate": "Data di restituzione",
+    "servicePoint": "Punto di servizio",
+    "hridHandling.errorMessage": "Server communication problem. Please try again"
 }
