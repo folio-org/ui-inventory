@@ -459,5 +459,5 @@
     "mostRecentCheckIn": "أحدث رد",
     "checkInDate": "تاريخ الرد",
     "servicePoint": "نقطة الخدمة",
-    "hridHandling.errorMessage": "Server communication problem. Please try again"
+    "hridHandling.errorMessage": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
 }
