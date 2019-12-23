@@ -458,5 +458,6 @@
     "circulationHistory": "Circulation history",
     "mostRecentCheckIn": "Entrada més recent",
     "checkInDate": "Data d'arribada",
-    "servicePoint": "Service point"
+    "servicePoint": "Service point",
+    "hridHandling.errorMessage": "Server communication problem. Please try again"
 }
