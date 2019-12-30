@@ -4,6 +4,7 @@ import {
   text,
   isPresent,
   collection,
+  scoped,
 } from '@bigtest/interactor';
 
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor'; // eslint-disable-line
@@ -27,7 +28,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   clickDelete = clickable('[data-test-inventory-delete-item-action]');
 }
 
-@interactor class CirculationHistory {
+@interactor class AccordionSection {
   keyValues = collection('[data-test-kv-value]');
 }
 
@@ -37,8 +38,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  hasMarkAsMissingModal = isPresent('#confirmDeleteItemModal');
-  hasDeleteModal = isPresent('[data-test-missingConfirmation-modal]');
+  hasDeleteModal = isPresent('#confirmDeleteItemModal');
+  hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
+  markAsMissingModal = scoped('[data-test-missingConfirmation-modal]');
   hasEditItemButton = isPresent('[data-test-clickable-edit-item]');
   clickEditItemButton = clickable('[data-test-clickable-edit-item]');
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
@@ -48,7 +50,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   statisticalCodeTable = new MultiColumnListInteractor('#item-list-statistical-codes');
   electronicAccessTable = new MultiColumnListInteractor('#item-list-electronic-access');
   collapseAllButton = new ButtonInteractor('#collapse-all');
-  circulationHistoryAccordion = new CirculationHistory('[data-test-item-view-page] #acc09');
+  loanAccordion = new AccordionSection('[data-test-item-view-page] #acc06');
+  circulationHistoryAccordion = new AccordionSection('[data-test-item-view-page] #acc09');
+  confirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
 
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);

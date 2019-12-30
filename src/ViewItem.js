@@ -4,7 +4,6 @@ import {
   cloneDeep,
   set,
   omit,
-  includes,
   map,
   isEmpty,
   values,
@@ -134,25 +133,13 @@ class ViewItem extends React.Component {
       records: 'requests',
       PUT: { path: 'circulation/requests/%{requestOnItem.id}' },
     },
-    // there is no canonical method to retrieve an item's "current" loan.
-    // the top item, sorted by loan-date descending, is a best-effort.
-    loans: {
+    openLoans: {
       type: 'okapi',
       path: 'circulation/loans',
       params: {
-        query: 'itemId==!{itemId} sortby loanDate/sort.descending',
-        limit: '1',
+        query: 'status.name=="Open" and itemId==!{itemId}',
       },
       records: 'loans',
-      accumulate: 'true',
-      fetch: false,
-    },
-    borrowers: {
-      type: 'okapi',
-      path: 'users',
-      records: 'users',
-      accumulate: 'true',
-      fetch: false,
     },
     requestOnItem: {},
   });
@@ -172,8 +159,6 @@ class ViewItem extends React.Component {
         acc08: true,
         acc09: true,
       },
-      loan: null,
-      borrower: null,
       itemMissingModal: false,
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
@@ -181,47 +166,6 @@ class ViewItem extends React.Component {
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-  }
-
-  async componentDidMount() {
-    const {
-      AVAILABLE,
-      AWAITING_PICKUP,
-      IN_TRANSIT,
-    } = itemStatusesMap;
-    const loans = await this.fetchLoans();
-    const loan = loans[0];
-
-    if (!loan) return;
-
-    const itemStatus = get(loan, 'item.status.name');
-
-    if (!includes([AVAILABLE, AWAITING_PICKUP, IN_TRANSIT], itemStatus)) {
-      const borrowers = await this.fetchBorrowers(loans[0].userId);
-      const state = {
-        loan,
-        borrower: borrowers[0],
-      };
-
-      this.setState(state);
-    }
-  }
-
-  fetchLoans() {
-    const { mutator: { loans } } = this.props;
-
-    loans.reset();
-
-    return loans.GET();
-  }
-
-  fetchBorrowers(borrowerId) {
-    const { mutator: { borrowers } } = this.props;
-    const query = `id==${borrowerId}`;
-
-    borrowers.reset();
-
-    return borrowers.GET({ params: { query } });
   }
 
   onClickEditItem = e => {
@@ -491,6 +435,7 @@ class ViewItem extends React.Component {
         callNumberTypes,
         staffMembers,
         servicePoints,
+        openLoans,
       },
       referenceTables,
       okapi,
@@ -501,12 +446,12 @@ class ViewItem extends React.Component {
       accordions,
       cannotDeleteItemModalMessageId,
       cannotDeleteItemModal,
-      loan,
     } = this.state;
 
     referenceTables.loanTypes = (loanTypes || {}).records || [];
     referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
     const staffMember = get(staffMembers, 'records[0]');
+    const openLoan = get(openLoans, 'records[0]');
 
     if (this.isAwaitingResource()) {
       return <FormattedMessage id="ui-inventory.waitingForResources" />;
@@ -553,9 +498,9 @@ class ViewItem extends React.Component {
     let loanLink = item.status.name;
     let borrowerLink = '-';
 
-    if (this.state.loan && this.state.borrower) {
-      loanLink = <Link to={`/users/view/${this.state.loan.userId}?filters=&layer=loan&loan=${this.state.loan.id}&query=&sort=`}>{item.status.name}</Link>;
-      borrowerLink = <Link to={`/users/view/${this.state.loan.userId}`}>{this.state.borrower.barcode}</Link>;
+    if (openLoan) {
+      loanLink = <Link to={`/users/view/${openLoan.userId}?filters=&layer=loan&loan=${openLoan.id}&query=&sort=`}>{item.status.name}</Link>;
+      borrowerLink = <Link to={`/users/view/${openLoan.userId}`}>{openLoan.borrower.barcode}</Link>;
     }
 
     if (loanLink === 'Awaiting pickup') {
@@ -736,8 +681,8 @@ class ViewItem extends React.Component {
       itemStatusDate: getDateWithTime(itemStatusDate),
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
-      loanDate: loan ? getDateWithTime(loan.loanDate) : '-',
-      dueDate: loan ? getDateWithTime(loan.dueDate) : '-',
+      loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : '-',
+      dueDate: openLoan ? getDateWithTime(openLoan.dueDate) : '-',
       circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
     };
 
