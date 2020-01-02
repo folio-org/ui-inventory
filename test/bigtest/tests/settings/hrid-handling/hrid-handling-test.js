@@ -11,6 +11,19 @@ import translation from '../../../../../translations/ui-inventory/en';
 
 const START_WITH_MAX_LENGTH = 11;
 const ASSIGN_PREFIX_MAX_LENGTH = 10;
+const checkInitialValues = () => {
+  it('form has initialValues for startWith fields', () => {
+    HRIDHandlingInteractor.startWithFields.fields().forEach(field => {
+      expect(field.val).to.be.equal('00000000001');
+    });
+  });
+
+  it('form has initialValues for assignPrefix fields', () => {
+    expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).val).to.be.equal('in');
+    expect(HRIDHandlingInteractor.assignPrefixFields.fields(1).val).to.be.equal('ho');
+    expect(HRIDHandlingInteractor.assignPrefixFields.fields(2).val).to.be.equal('it');
+  });
+};
 
 describe('Setting of HRID Handling', () => {
   setupApplication({ scenarios: ['fetch-hrid-settings-success'] });
@@ -36,17 +49,7 @@ describe('Setting of HRID Handling', () => {
       expect(HRIDHandlingInteractor.submitFormButtonDisabled).to.be.true;
     });
 
-    it('has initialValues for startWith fields', () => {
-      expect(HRIDHandlingInteractor.startWithFields.fields(0).val).to.be.equal('00000000001');
-      expect(HRIDHandlingInteractor.startWithFields.fields(1).val).to.be.equal('00000000001');
-      expect(HRIDHandlingInteractor.startWithFields.fields(2).val).to.be.equal('00000000001');
-    });
-
-    it('has initialValues for assignPrefix fields', () => {
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).val).to.be.equal('in');
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(1).val).to.be.equal('ho');
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(2).val).to.be.equal('it');
-    });
+    checkInitialValues();
   });
 
   describe('when is changed correctly', () => {
@@ -198,9 +201,7 @@ describe('Setting of HRID Handling', () => {
             expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.false;
           });
 
-          it('and successful toast appears', () => {
-            expect(HRIDHandlingInteractor.callout.successCalloutIsPresent).to.be.true;
-          });
+          checkInitialValues();
         });
       });
     });

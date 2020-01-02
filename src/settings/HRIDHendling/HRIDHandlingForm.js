@@ -137,7 +137,6 @@ const HRIDHandlingForm = ({
         onCancel={() => {
           setConfirmModalOpen(false);
           reset();
-          showCallout('success', 'ui-inventory.hridHandling.toast.notUpdated');
         }}
         buttonStyle="default"
         cancelButtonStyle="primary"
