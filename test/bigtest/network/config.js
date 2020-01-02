@@ -239,8 +239,11 @@ export default function configure() {
 
   // item-storage
   this.get('/service-points', {
-    servicepoints: [],
-    totalRecords: 0
+    servicepoints: [{
+      name: 'Circ Desk 1',
+      id: '3a40852d-49fd-4df2-a1f9-6e2641a6e91f',
+    }],
+    totalRecords: 1
   });
 
   this.get('/inventory/items', ({ items }, request) => {
@@ -312,6 +315,27 @@ export default function configure() {
 
   this.get('/inventory/items/:id', ({ items }, { params }) => {
     return items.find(params.id);
+  });
+
+  this.put('/inventory/items/:id', ({ items }, request) => {
+    const {
+      id,
+      name,
+      description,
+      status,
+    } = JSON.parse(request.requestBody);
+    const item = items.find(id);
+
+    item.update({ name, description, status });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id', ({ items }, request) => {
+    const body = JSON.parse(request.requestBody);
+    const item = items.create(body);
+
+    return item.attrs;
   });
 
   this.get('/circulation/loans', ({ loans }, request) => {

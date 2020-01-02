@@ -66,6 +66,10 @@ describe('ItemViewPage', () => {
           expect(ItemViewPage.circulationHistoryAccordion.keyValues(0).text).to.be.equal('12/12/2019, 2:28 PM');
         });
 
+        it('"Service point" field should not be empty', () => {
+          expect(ItemViewPage.circulationHistoryAccordion.keyValues(1).text).to.be.equal('Circ Desk 1');
+        });
+
         it('"Source" field should not be empty', () => {
           expect(ItemViewPage.circulationHistoryAccordion.keyValues(2).text).to.be.equal('Doe, John Antony');
         });
@@ -130,8 +134,21 @@ describe('ItemViewPage', () => {
           it('should open a missing confirmation modal', () => {
             expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
           });
-        });
 
+          describe('clicking on "Confirm" button', () => {
+            beforeEach(async () => {
+              await ItemViewPage.confirmButton.click();
+            });
+
+            it('should close a missing confirmation modal', () => {
+              expect(ItemViewPage.hasMarkAsMissingModal).to.be.false;
+            });
+
+            it('should change item status to "Missing"', () => {
+              expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal('Missing');
+            });
+          });
+        });
         describe('clicking on delete', () => {
           beforeEach(async () => {
             await ItemViewPage.headerDropdownMenu.clickDelete();
