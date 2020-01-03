@@ -41,7 +41,8 @@ export function canMarkItemAsMissing(item) {
     itemStatusesMap.IN_TRANSIT,
     itemStatusesMap.AWAITING_PICKUP,
     itemStatusesMap.PAGED,
-    itemStatusesMap.IN_PROCESS
+    itemStatusesMap.IN_PROCESS,
+    itemStatusesMap.AWAITING_DELIVERY,
   ], get(item, 'status.name'));
 }
 
@@ -119,9 +120,9 @@ export function psTitleRelationshipId(idTypes) {
 }
 
 export const validateRequiredField = value => {
-  const isValid = !isEmpty(value);
+  const number = value ? parseInt(value, 10) : 0;
 
-  if (isValid) {
+  if (number > 0) {
     return undefined;
   }
 
@@ -129,36 +130,51 @@ export const validateRequiredField = value => {
 };
 
 export const validateFieldLength = (value, maxLength) => {
-  if (value.length <= maxLength) {
-    return undefined;
+  if (value) {
+    const str = value.toString();
+
+    if (str.length <= maxLength) {
+      return undefined;
+    }
+
+    return (
+      <FormattedMessage
+        id="ui-inventory.hridHandling.validation.maxLength"
+        values={{ maxLength }}
+      />
+    );
   }
 
-  return (
-    <FormattedMessage
-      id="ui-inventory.hridHandling.validation.maxLength"
-      values={{ maxLength }}
-    />
-  );
+  return undefined;
 };
 
 export const validateNumericField = value => {
-  const pattern = /^\d+$/;
+  if (value) {
+    const str = value.toString();
+    const pattern = /^\d+$/;
 
-  if (value.match(pattern)) {
-    return undefined;
+    if (str.match(pattern)) {
+      return undefined;
+    }
+
+    return <FormattedMessage id="ui-inventory.hridHandling.validation.startWithField" />;
   }
 
-  return <FormattedMessage id="ui-inventory.hridHandling.validation.startWithField" />;
+  return undefined;
 };
 
 export const validateAlphaNumericField = value => {
-  const pattern = /^[\w.,\-!?:;"'(){}[\]$ ]+$/;
+  if (value) {
+    const pattern = /^[\w.,\-!?:;"'(){}[\]$ ]+$/;
 
-  if (value.match(pattern)) {
-    return undefined;
+    if (value.match(pattern)) {
+      return undefined;
+    }
+
+    return <FormattedMessage id="ui-inventory.hridHandling.validation.assignPrefixField" />;
   }
 
-  return <FormattedMessage id="ui-inventory.hridHandling.validation.assignPrefixField" />;
+  return undefined;
 };
 
 export const checkIfElementIsEmpty = element => ((!element || element === '-') ? noValue : element);

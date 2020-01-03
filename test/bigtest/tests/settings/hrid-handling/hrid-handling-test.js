@@ -11,9 +11,22 @@ import translation from '../../../../../translations/ui-inventory/en';
 
 const START_WITH_MAX_LENGTH = 11;
 const ASSIGN_PREFIX_MAX_LENGTH = 10;
+const checkInitialValues = () => {
+  it('form has initialValues for startWith fields', () => {
+    HRIDHandlingInteractor.startWithFields.fields().forEach(field => {
+      expect(field.val).to.be.equal('00000000001');
+    });
+  });
+
+  it('form has initialValues for assignPrefix fields', () => {
+    expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).val).to.be.equal('in');
+    expect(HRIDHandlingInteractor.assignPrefixFields.fields(1).val).to.be.equal('ho');
+    expect(HRIDHandlingInteractor.assignPrefixFields.fields(2).val).to.be.equal('it');
+  });
+};
 
 describe('Setting of HRID Handling', () => {
-  setupApplication();
+  setupApplication({ scenarios: ['fetch-hrid-settings-success'] });
 
   beforeEach(function () {
     this.visit('/settings/inventory/hridHandling');
@@ -36,21 +49,11 @@ describe('Setting of HRID Handling', () => {
       expect(HRIDHandlingInteractor.submitFormButtonDisabled).to.be.true;
     });
 
-    it('has initialValues for startWith fields', () => {
-      expect(HRIDHandlingInteractor.startWithFields.fields(0).val).to.be.equal('00000000001');
-      expect(HRIDHandlingInteractor.startWithFields.fields(1).val).to.be.equal('00000000001');
-      expect(HRIDHandlingInteractor.startWithFields.fields(2).val).to.be.equal('00000000001');
-    });
-
-    it('has initialValues for assignPrefix fields', () => {
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).val).to.be.equal('in');
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(1).val).to.be.equal('ho');
-      expect(HRIDHandlingInteractor.assignPrefixFields.fields(2).val).to.be.equal('it');
-    });
+    checkInitialValues();
   });
 
   describe('when is changed correctly', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('0001');
       await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillInput('it');
     });
@@ -74,7 +77,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when input a non numeric value to the startWith field', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('fdg');
     });
 
@@ -89,7 +92,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when input special symbols to the assignPrefix field', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillAndBlur('*');
     });
 
@@ -105,7 +108,7 @@ describe('Setting of HRID Handling', () => {
 
   describe('when input a value that exceeds the required length to fields', () => {
     describe('input more then 11 characters to the "Start with" field', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('111111111111');
       });
 
@@ -124,7 +127,7 @@ describe('Setting of HRID Handling', () => {
     });
 
     describe('input more then 10 characters to the "Assign prefix" field', () => {
-      beforeEach(async function () {
+      beforeEach(async () => {
         await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillAndBlur('111111111aa');
       });
 
@@ -144,7 +147,7 @@ describe('Setting of HRID Handling', () => {
   });
 
   describe('when the required startWith field is empty', () => {
-    beforeEach(async function () {
+    beforeEach(async () => {
       await HRIDHandlingInteractor.startWithFields.fields(0).fillAndBlur('');
     });
 
@@ -154,6 +157,71 @@ describe('Setting of HRID Handling', () => {
 
     it('with correct wording', () => {
       expect(HRIDHandlingInteractor.startWithFields.errorMessages(0).text).to.be.equal(translation['hridHandling.validation.enterValue']);
+    });
+  });
+
+  describe('when form is submitted', () => {
+    describe('and settings are updated successfully', () => {
+      setupApplication({ scenarios: ['fetch-hrid-settings-success', 'update-hrid-settings-success'] });
+
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/hridHandling');
+
+        await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('765');
+        await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('001');
+        await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
+        await HRIDHandlingInteractor.submitFormButton.click();
+      });
+
+      describe('confirmation modal', () => {
+        it('appears', () => {
+          expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.true;
+        });
+
+        describe('when clicking the confirm button', () => {
+          beforeEach(async () => {
+            await HRIDHandlingInteractor.confirmationModal.confirmButton.click();
+          });
+
+          it('then confirmation modal disappears', () => {
+            expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.false;
+          });
+
+          it('and successful toast appears', () => {
+            expect(HRIDHandlingInteractor.callout.successCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('when clicking the cancel button', () => {
+          beforeEach(async () => {
+            await HRIDHandlingInteractor.confirmationModal.cancelButton.click();
+          });
+
+          it('then confirmation modal disappears', () => {
+            expect(HRIDHandlingInteractor.confirmationModal.isPresent).to.be.false;
+          });
+
+          checkInitialValues();
+        });
+      });
+    });
+
+    describe('and the response contains error message', () => {
+      setupApplication({ scenarios: ['fetch-hrid-settings-success', 'update-hrid-settings-error'] });
+
+      beforeEach(async function () {
+        await this.visit('/settings/inventory/hridHandling');
+
+        await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('765');
+        await HRIDHandlingInteractor.startWithFields.fields(1).fillInput('001');
+        await HRIDHandlingInteractor.startWithFields.fields(2).fillInput('5');
+        await HRIDHandlingInteractor.submitFormButton.click();
+        await HRIDHandlingInteractor.confirmationModal.confirmButton.click();
+      });
+
+      it('then error callout appears', () => {
+        expect(HRIDHandlingInteractor.callout.errorCalloutIsPresent).to.be.true;
+      });
     });
   });
 });
