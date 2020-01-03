@@ -390,7 +390,6 @@
     "hridHandling.validation.maxLength": "Valor inválido. Máximo {maxLength} caracteres permitidos",
     "hridHandling.validation.startWithField": "Por favor, insira um valor numérico",
     "hridHandling.validation.assignPrefixField": "Por favor, insira um valor alfanumérico",
-    "hridHandling.successfullyMessage": "A configuração foi atualizada com sucesso.",
     "noBarcode": "Nenhum código de barras",
     "items.successfullyCopiedMessage": "O código de barras do item {barcode} foi copiado com sucesso para a área de transferência",
     "filters.instances": "Instância",
@@ -459,5 +458,11 @@
     "mostRecentCheckIn": "Devoluções mais recentes",
     "checkInDate": "Data de devolução",
     "servicePoint": "Ponto de serviço",
-    "hridHandling.errorMessage": "Problema de comunicação do servidor. Por favor, tente novamente"
+    "hridHandling.toast.updated": "A configuração foi atualizada com sucesso.",
+    "hridHandling.toast.notUpdated": "A configuração NÃO foi atualizada.",
+    "hridHandling.toast.error": "Problema de comunicação do servidor. Por favor, tente novamente",
+    "hridHandling.modal.header": "Você tem certeza?",
+    "hridHandling.modal.body": "AVISO: A alteração da configuração do HRID pode criar conflitos se os registros já existirem no Acervo.",
+    "hridHandling.modal.button.close": "Fechar sem salvar",
+    "hridHandling.modal.button.confirm": "Atualizar configuração"
 }

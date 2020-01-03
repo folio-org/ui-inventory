@@ -387,10 +387,9 @@
     "hridHandling.label.startWith": "Commence par",
     "hridHandling.label.assignPrefix": "Attribuer un préfixe",
     "hridHandling.validation.enterValue": "Merci de saisir une valeur",
-    "hridHandling.validation.maxLength": "La longueur maximale du champ est",
+    "hridHandling.validation.maxLength": "Valeur invalide. Maximum {maxLength} caractères autorisés",
     "hridHandling.validation.startWithField": "Merci de saisir une valeur numérique",
     "hridHandling.validation.assignPrefixField": "Merci de saisir une valeur alphanumérique",
-    "hridHandling.successfullyMessage": "Le paramètre a été mis à jour avec succès.",
     "noBarcode": "Pas de code-barres",
     "items.successfullyCopiedMessage": "Le code-barres de l'élément {barcode} a été copié avec succès dans le presse-papiers.",
     "filters.instances": "Instance",
@@ -459,5 +458,11 @@
     "mostRecentCheckIn": "Most recent check in",
     "checkInDate": "Check in date",
     "servicePoint": "Service point",
-    "hridHandling.errorMessage": "Server communication problem. Please try again"
+    "hridHandling.toast.updated": "Setting was successfully updated.",
+    "hridHandling.toast.notUpdated": "Setting was NOT updated.",
+    "hridHandling.toast.error": "Server communication problem. Please try again",
+    "hridHandling.modal.header": "Êtes-vous sûr(e)?",
+    "hridHandling.modal.body": "WARNING: Changing the HRID setting may create conflicts if records already exist in Inventory.",
+    "hridHandling.modal.button.close": "Close without saving",
+    "hridHandling.modal.button.confirm": "Update setting"
 }
