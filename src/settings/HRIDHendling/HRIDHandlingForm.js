@@ -8,7 +8,7 @@ import {
   Pane,
   Button,
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes-form/lib/stripesForm';
+import stripesForm from '@folio/stripes/form';
 
 import css from './HRIDHandling.css';
 
