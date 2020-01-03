@@ -390,7 +390,6 @@
     "hridHandling.validation.maxLength": "Максимальная длина поля",
     "hridHandling.validation.startWithField": "Пожалуйста, введите числовое значение",
     "hridHandling.validation.assignPrefixField": "Пожалуйста, введите буквенно-цифровое значение",
-    "hridHandling.successfullyMessage": "Настройка была успешно обновлена.",
     "noBarcode": "Нет штрих-кода",
     "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
     "filters.instances": "Instance",
@@ -459,5 +458,11 @@
     "mostRecentCheckIn": "Most recent check in",
     "checkInDate": "Check in date",
     "servicePoint": "Service point",
-    "hridHandling.errorMessage": "Server communication problem. Please try again"
+    "hridHandling.toast.updated": "Setting was successfully updated.",
+    "hridHandling.toast.notUpdated": "Setting was NOT updated.",
+    "hridHandling.toast.error": "Server communication problem. Please try again",
+    "hridHandling.modal.header": "Are you sure?",
+    "hridHandling.modal.body": "WARNING: Changing the HRID setting may create conflicts if records already exist in Inventory.",
+    "hridHandling.modal.button.close": "Close without saving",
+    "hridHandling.modal.button.confirm": "Update setting"
 }

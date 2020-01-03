@@ -390,7 +390,6 @@
     "hridHandling.validation.maxLength": "最大字段长度为",
     "hridHandling.validation.startWithField": "请输入一个数值",
     "hridHandling.validation.assignPrefixField": "请输入一个字母数字值",
-    "hridHandling.successfullyMessage": "设置更新成功。",
     "noBarcode": "无条码",
     "items.successfullyCopiedMessage": "单件条码{barcode}已成功复制到剪贴板",
     "filters.instances": "实例",
@@ -459,5 +458,11 @@
     "mostRecentCheckIn": "Most recent check in",
     "checkInDate": "Check in date",
     "servicePoint": "Service point",
-    "hridHandling.errorMessage": "Server communication problem. Please try again"
+    "hridHandling.toast.updated": "Setting was successfully updated.",
+    "hridHandling.toast.notUpdated": "Setting was NOT updated.",
+    "hridHandling.toast.error": "Server communication problem. Please try again",
+    "hridHandling.modal.header": "Are you sure?",
+    "hridHandling.modal.body": "WARNING: Changing the HRID setting may create conflicts if records already exist in Inventory.",
+    "hridHandling.modal.button.close": "Close without saving",
+    "hridHandling.modal.button.confirm": "Update setting"
 }
