@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [1.13.3](https://github.com/folio-org/ui-inventory/tree/v1.13.3) (2020-01-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.2...v1.13.3)
+
+* Correctly import `stripesForm` from `@folio/stripes/form`.
+
 ## [1.13.2](https://github.com/folio-org/ui-inventory/tree/v1.13.2) (2020-01-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v1.13.2)
 
