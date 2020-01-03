@@ -1,7 +1,10 @@
 # Change history for ui-inventory
 
-## **1.14.0** (in progress)
+## [1.13.2](https://github.com/folio-org/ui-inventory/tree/v1.13.2) (2020-01-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v1.13.2)
+
 * Increase number of digits for HRID settings page. Refs UIIN-904
+* Connect HRID settings page to backend. Refs UIIN-752.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
