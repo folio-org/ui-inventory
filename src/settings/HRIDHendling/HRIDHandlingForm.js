@@ -15,6 +15,7 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
+import { IfPermission } from '@folio/stripes/core';
 
 import {
   clone,
@@ -44,15 +45,17 @@ const HRIDHandlingForm = ({
   const [hridSettings, setHridSettings] = useState({});
 
   const lastMenu = (
-    <Button
-      data-test-submit-button
-      type="submit"
-      buttonStyle="primary"
-      disabled={(pristine || submitting)}
-      marginBottom0
-    >
-      <FormattedMessage id="stripes-core.button.save" />
-    </Button>
+    <IfPermission perm="ui-inventory.settings.hrid-handling">
+      <Button
+        data-test-submit-button
+        type="submit"
+        buttonStyle="primary"
+        disabled={(pristine || submitting)}
+        marginBottom0
+      >
+        <FormattedMessage id="stripes-core.button.save" />
+      </Button>
+    </IfPermission>
   );
 
   const description = HRID_DESCRIPTIONS_ID.map((id, index) => (

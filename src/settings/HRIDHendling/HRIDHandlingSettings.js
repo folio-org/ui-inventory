@@ -48,6 +48,9 @@ class HRIDHandlingSettings extends Component {
   static propTypes = {
     mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   getInitialValues() {
@@ -66,8 +69,14 @@ class HRIDHandlingSettings extends Component {
   }
 
   render() {
-    const { mutator } = this.props;
+    const {
+      mutator,
+      stripes,
+    } = this.props;
     const initialValues = this.getInitialValues();
+    const hasPerm = stripes.hasPerm('ui-inventory.settings.hrid-handling');
+    console.log('hasPerm');
+    console.log(hasPerm);
 
     return (
       <HRIDHandlingForm
@@ -106,8 +115,9 @@ class HRIDHandlingSettings extends Component {
                       name={`${record.type}.startNumber`}
                       required
                       component={TextField}
+                      readOnly={!hasPerm}
                       className={`${css.margin0} startWithField startWithField--${record.type}`}
-                      validate={[validateNumericField, validateRequiredField, validateStartWithMaxLength]}
+                      validate={hasPerm && [validateNumericField, validateRequiredField, validateStartWithMaxLength]}
                     />
                   </div>
                 </Col>
@@ -126,8 +136,9 @@ class HRIDHandlingSettings extends Component {
                     <Field
                       name={`${record.type}.prefix`}
                       component={TextField}
+                      readOnly={!hasPerm}
                       className={`${css.margin0} assignPrefixField assignPrefixField--${record.type}`}
-                      validate={[validateAlphaNumericField, validateAssignPrefixMaxLength]}
+                      validate={hasPerm && [validateAlphaNumericField, validateAssignPrefixMaxLength]}
                     />
                   </div>
                 </Col>
