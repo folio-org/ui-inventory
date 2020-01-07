@@ -4,6 +4,7 @@
 * Increase number of digits for HRID settings page. Refs UIIN-904
 * Add warning modal to HRID settings page. Refs UIIN-861
 * Fix display of information when the item's status is "Missing". Refs UIIN-913.
+* Create permission for Inventory -> Settings -> HRID handling. Fix Inventory -> Settings -> pages access depending on the patron's permissions. Refs UIIN-800.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
