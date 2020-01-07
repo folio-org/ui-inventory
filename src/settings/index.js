@@ -188,15 +188,7 @@ class InventorySettings extends React.Component {
     const { stripes } = this.props;
     const generalViewPermission = 'ui-inventory.settings.list.view';
 
-    if (stripes.hasPerm(permission)) {
-      return permission;
-    }
-
-    if (stripes.hasPerm(generalViewPermission)) {
-      return generalViewPermission;
-    } else {
-      return null;
-    }
+    return stripes.hasPerm(permission) ? permission : generalViewPermission;
   }
 
   render() {

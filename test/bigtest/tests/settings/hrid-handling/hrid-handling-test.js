@@ -25,7 +25,7 @@ const checkInitialValues = () => {
   });
 };
 
-describe('Setting of HRID Handling', () => {
+describe.only('Setting of HRID Handling', () => {
   setupApplication({ scenarios: ['fetch-hrid-settings-success'] });
 
   beforeEach(function () {
@@ -222,6 +222,41 @@ describe('Setting of HRID Handling', () => {
       it('then error callout appears', () => {
         expect(HRIDHandlingInteractor.callout.errorCalloutIsPresent).to.be.true;
       });
+    });
+  });
+
+  describe('Patron has permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'ui-inventory.settings.hrid-handling': true
+      }
+    });
+
+    beforeEach(async function () {
+      await this.visit('/settings/inventory/hridHandling');
+    });
+
+    it('should render HRID handling page', () => {
+      expect(HRIDHandlingInteractor.isPresent).to.be.true;
+    });
+  });
+
+  describe('Patron does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true
+      }
+    });
+
+    beforeEach(async function () {
+      await this.visit('/settings/inventory/hridHandling');
+    });
+
+    it('should render HRID handling page', () => {
+      expect(HRIDHandlingInteractor.isPresent).to.be.false;
     });
   });
 });

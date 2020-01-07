@@ -98,9 +98,10 @@
       },
       {
         "permissionName": "settings.inventory.enabled",
-        "displayName": "Settings (Inventory): display list of settings pages",
+        "displayName": "UI: Settings (Inventory) module is enabled.",
         "subPermissions": [
-          "settings.enabled"
+          "settings.enabled",
+          "configuration.entries.collection.get"
         ],
         "visible": false
       },
@@ -525,7 +526,6 @@
         "subPermissions":  [
           "settings.inventory.enabled",
           "users.collection.get",
-          "configuration.entries.collection.get",
           "source-storage.records.get",
           "inventory-storage.material-types.collection.get",
           "inventory-storage.material-types.item.get",
