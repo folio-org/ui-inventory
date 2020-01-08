@@ -167,7 +167,7 @@
     "addPublicationRange": "إضافة نطاق",
     "publicationRange": "نطاق النشر",
     "staffSuppress": "حجب الموظفين",
-    "discoverySuppress": "حجب من الاكتشاف",
+    "discoverySuppress": "حجب عن الاكتشاف",
     "previouslyHeld": "حجزت سابقا",
     "addElectronicAccess": "إضافة الوصول الإلكتروني",
     "instanceStatus": "مصطلح حالة الوعاء",
@@ -390,7 +390,6 @@
     "hridHandling.validation.maxLength": "الحد الأقصى لطول الحقل هو",
     "hridHandling.validation.startWithField": "يرجى إدخال قيمة رقمية",
     "hridHandling.validation.assignPrefixField": "يرجى إدخال قيمة أبجدية عددية",
-    "hridHandling.successfullyMessage": "تم تحديث الإعداد بنجاح.",
     "noBarcode": "بدون باركود",
     "items.successfullyCopiedMessage": "تم نسخ باركود المادة  {barcode} بنجاح إلى الحافظة",
     "filters.instances": "الوعاء",
@@ -459,5 +458,11 @@
     "mostRecentCheckIn": "أحدث رد",
     "checkInDate": "تاريخ الرد",
     "servicePoint": "نقطة الخدمة",
-    "hridHandling.errorMessage": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
+    "hridHandling.toast.updated": "تم تحديث الإعداد بنجاح.",
+    "hridHandling.toast.notUpdated": "لم يتم تحديث الإعداد.",
+    "hridHandling.toast.error": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "hridHandling.modal.header": "هل أنت متأكد؟",
+    "hridHandling.modal.body": "تحذير: قد يؤدي تغيير إعداد رقم التعريف القابل للقراءة بشريًا إلى إنشاء تعارضات إذا كانت التسجيلات موجودة بالفعل في المخزون.",
+    "hridHandling.modal.button.close": "إغلاق بدون حفظ",
+    "hridHandling.modal.button.confirm": "تحديث الإعداد"
 }

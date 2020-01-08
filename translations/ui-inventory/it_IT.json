@@ -390,7 +390,6 @@
     "hridHandling.validation.maxLength": "La lunghezza massima del campo è",
     "hridHandling.validation.startWithField": "Inserisci un valore numerico",
     "hridHandling.validation.assignPrefixField": "Inserisci un valore alfanumerico",
-    "hridHandling.successfullyMessage": "L'impostazione è stata aggiornata con successo.",
     "noBarcode": "Nessun barcode",
     "items.successfullyCopiedMessage": "Barcode {barcode} copiato con successo",
     "filters.instances": "Istanza",
@@ -459,5 +458,11 @@
     "mostRecentCheckIn": "Ultima restituzione",
     "checkInDate": "Data di restituzione",
     "servicePoint": "Punto di servizio",
-    "hridHandling.errorMessage": "Server communication problem. Please try again"
+    "hridHandling.toast.updated": "Setting was successfully updated.",
+    "hridHandling.toast.notUpdated": "Setting was NOT updated.",
+    "hridHandling.toast.error": "Server communication problem. Please try again",
+    "hridHandling.modal.header": "Are you sure?",
+    "hridHandling.modal.body": "WARNING: Changing the HRID setting may create conflicts if records already exist in Inventory.",
+    "hridHandling.modal.button.close": "Close without saving",
+    "hridHandling.modal.button.confirm": "Update setting"
 }
