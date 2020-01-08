@@ -16,7 +16,7 @@ import HoldingsTypeSettings from './HoldingsTypeSettings';
 import ILLPolicy from './ILLPolicy';
 import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import CallNumberTypes from './CallNumberTypes';
-import HRIDHandlingSettings from './HRIDHendling/HRIDHandlingSettings';
+import HRIDHandlingSettings from './HRIDHandling/HRIDHandlingSettings';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
 import IdentifierTypesSettings from './IdentifierTypesSettings';
