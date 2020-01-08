@@ -25,7 +25,7 @@ const checkInitialValues = () => {
   });
 };
 
-describe.only('Setting of HRID Handling', () => {
+describe('Setting of HRID Handling', () => {
   setupApplication({ scenarios: ['fetch-hrid-settings-success'] });
 
   beforeEach(function () {

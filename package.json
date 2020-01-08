@@ -100,8 +100,7 @@
         "permissionName": "settings.inventory.enabled",
         "displayName": "UI: Settings (Inventory) module is enabled.",
         "subPermissions": [
-          "settings.enabled",
-          "configuration.entries.collection.get"
+          "settings.enabled"
         ],
         "visible": false
       },
@@ -369,10 +368,10 @@
         "permissionName": "ui-inventory.settings.hrid-handling",
         "displayName": "Settings (Inventory): Create, edit and remove HRID handling",
         "subPermissions": [
+          "configuration.entries.collection.get",
           "inventory-storage.hrid-settings.item.get",
           "inventory-storage.hrid-settings.item.put",
-          "settings.inventory.enabled",
-          "ui-inventory.settings.list.view"
+          "settings.inventory.enabled"
         ],
         "visible": true
       },
