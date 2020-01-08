@@ -60,8 +60,8 @@ class InstancesRoute extends React.Component {
     records: {
       type: 'okapi',
       records: 'instances',
-      recordsRequired: '%{resultCount}',
-      perRequest: 30,
+      resultOffset: '%{resultOffset}',
+      perRequest: 100,
       path: 'inventory/instances',
       GET: {
         params: { query: buildQuery },
