@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import InventoryInteractor from '../../../interactors/inventory';
 
-describe.only('Instances format filter', () => {
+describe('Instances format filter', () => {
   setupApplication({ scenarios: ['resource-filters'] });
 
   const instances = new InventoryInteractor();
