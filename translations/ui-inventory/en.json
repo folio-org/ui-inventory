@@ -398,6 +398,7 @@
   "instanceStatusTypes": "Instance status types",
   "instanceStatusType": "Instance status type",
   "administrativeData": "Administrative data",
+  "adminData": "Admin data",
   "itemNotes": "Item notes",
   "itemCallNumber": "Item call number",
   "otherRelatedInstances": "Other related instances",
