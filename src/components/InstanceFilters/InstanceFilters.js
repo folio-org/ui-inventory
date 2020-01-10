@@ -35,12 +35,14 @@ export default class InstanceFilters extends React.Component {
         effectiveLocation = [],
         resource = [],
         language = [],
+        format = [],
         discoverySuppress = [],
         staffSuppress = [],
       },
       data: {
         locations,
         resourceTypes,
+        instanceFormats,
       },
       onChange,
       onClear,
@@ -52,6 +54,11 @@ export default class InstanceFilters extends React.Component {
     }));
 
     const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+
+    const instanceFormatOptions = instanceFormats.map(({ name, id }) => ({
       label: name,
       value: id,
     }));
@@ -111,6 +118,23 @@ export default class InstanceFilters extends React.Component {
             name="resource"
             dataOptions={resourceTypeOptions}
             selectedValues={resource}
+            filter={filterItemsBy('label')}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.instanceFormat" />}
+          id="format"
+          name="format"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={format.length > 0}
+          onClearFilter={() => onClear('format')}
+        >
+          <MultiSelectionFilter
+            name="format"
+            dataOptions={instanceFormatOptions}
+            selectedValues={format}
             filter={filterItemsBy('label')}
             onChange={onChange}
           />
