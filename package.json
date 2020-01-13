@@ -75,7 +75,7 @@
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
-        "displayName": "UI: Inventory module is enabled"
+        "displayName": "Inventory: Module is enabled"
       },
       {
         "permissionName": "ui-inventory.all-permissions.TEMPORARY",
@@ -98,7 +98,7 @@
       },
       {
         "permissionName": "settings.inventory.enabled",
-        "displayName": "UI: Settings (Inventory) module is enabled.",
+        "displayName": "Settings (Inventory): Module is enabled.",
         "subPermissions": [
           "settings.enabled"
         ],
