@@ -464,5 +464,6 @@
   "circulationHistory": "Circulation history",
   "mostRecentCheckIn": "Most recent check in",
   "checkInDate": "Check in date",
-  "servicePoint": "Service point"
+  "servicePoint": "Service point",
+  "adminData": "Admin data"
 }

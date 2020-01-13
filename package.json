@@ -75,7 +75,7 @@
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
-        "displayName": "UI: Inventory module is enabled"
+        "displayName": "Inventory: Module is enabled"
       },
       {
         "permissionName": "ui-inventory.all-permissions.TEMPORARY",
@@ -98,7 +98,7 @@
       },
       {
         "permissionName": "settings.inventory.enabled",
-        "displayName": "Settings (Inventory): display list of settings pages",
+        "displayName": "Settings (Inventory): Module is enabled.",
         "subPermissions": [
           "settings.enabled"
         ],
@@ -365,6 +365,17 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.hrid-handling",
+        "displayName": "Settings (Inventory): Create, edit and remove HRID handling",
+        "subPermissions": [
+          "configuration.entries.collection.get",
+          "inventory-storage.hrid-settings.item.get",
+          "inventory-storage.hrid-settings.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.instance.view",
         "displayName": "Inventory: View instances, holdings, and items",
         "subPermissions": [
@@ -411,7 +422,8 @@
           "inventory-storage.material-types.collection.get",
           "inventory-storage.loan-types.collection.get",
           "inventory-storage.service-points.get",
-          "inventory-storage.service-points.collection.get"
+          "inventory-storage.service-points.collection.get",
+          "inventory-storage.hrid-settings.item.get"
         ],
         "visible": true
       },
@@ -513,7 +525,6 @@
         "subPermissions":  [
           "settings.inventory.enabled",
           "users.collection.get",
-          "configuration.entries.collection.get",
           "source-storage.records.get",
           "inventory-storage.material-types.collection.get",
           "inventory-storage.material-types.item.get",
@@ -554,7 +565,8 @@
           "inventory-storage.holdings-note-types.collection.get",
           "inventory-storage.holdings-note-types.item.get",
           "inventory-storage.item-note-types.collection.get",
-          "inventory-storage.item-note-types.item.get"
+          "inventory-storage.item-note-types.item.get",
+          "inventory-storage.hrid-settings.item.get"
         ],
         "visible": true
       },
