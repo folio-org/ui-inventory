@@ -86,10 +86,14 @@ export function filterItemsBy(name) {
         const match1 = item1[name].match(regex);
         const match2 = item2[name].match(regex);
 
+        if ((match1 && match2) || (!match1 && !match2)) {
+          return item1[name] < item2[name] ? -1 : 1;
+        }
+
         if (match1) return -1;
         if (match2) return 1;
 
-        return (item1[name] < item2[name]) ? -1 : 1;
+        return 1;
       });
 
     return { renderedItems };
