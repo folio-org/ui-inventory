@@ -652,7 +652,7 @@ class ViewItem extends React.Component {
       callNumberPrefix: get(item, 'itemLevelCallNumberPrefix', '-'),
       callNumber: get(item, 'itemLevelCallNumber', '-'),
       callNumberSuffix: get(item, 'itemLevelCallNumberSuffix', '-'),
-      copyNumbers: get(item, 'copyNumbers[0]', '-'),
+      copyNumber: get(item, 'copyNumber', '-'),
       numberOfPieces: get(item, 'numberOfPieces', '-'),
       descriptionOfPieces: get(item, 'descriptionOfPieces', '-'),
     };
@@ -1023,7 +1023,7 @@ class ViewItem extends React.Component {
                     >
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                        value={checkIfElementIsEmpty(itemData.copyNumbers)}
+                        value={checkIfElementIsEmpty(itemData.copyNumber)}
                       />
                     </Col>
                     <Col

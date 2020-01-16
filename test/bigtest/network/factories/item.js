@@ -12,7 +12,7 @@ export default Factory.extend({
   },
   formerIds: [],
   discoverySuppress: null,
-  copyNumbers: [],
+  copyNumber: '',
   notes: [],
   circulationNotes: [],
   yearCaption: [],

@@ -535,7 +535,7 @@ class ItemForm extends React.Component {
                 <Col sm={3}>
                   <Field
                     label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                    name="copyNumbers[0]"
+                    name="copyNumber"
                     component={TextField}
                     fullWidth
                   />

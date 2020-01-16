@@ -22,7 +22,7 @@ describe('Delete item checked out', () => {
       title: '14 cows for America',
       holdingsRecordId: '5f6d50f1-e3bf-4c04-8621-4e3dc3d9b543',
       barcode: 337,
-      copyNumbers: [],
+      copyNumber: '',
       notes: [],
       materialType: {
         id: '1a54b431-2e4f-452d-9cae-9cee66c9a892',
