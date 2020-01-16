@@ -44,9 +44,21 @@ describe('Setting of HRID Handling', () => {
     expect(HRIDHandlingInteractor.assignPrefixFields.fields().length).to.be.equal(3);
   });
 
+  it('has "Cancel" button at the bottom', () => {
+    expect(HRIDHandlingInteractor.cancelFormButton.isPresent).to.be.true;
+  });
+
+  it('has "Save & close" button at the bottom', () => {
+    expect(HRIDHandlingInteractor.submitFormButton.isPresent).to.be.true;
+  });
+
   describe('when is pristine', () => {
     it('the submit button is disabled', () => {
       expect(HRIDHandlingInteractor.submitFormButtonDisabled).to.be.true;
+    });
+
+    it('the cancel button is disabled', () => {
+      expect(HRIDHandlingInteractor.cancelFormButtonDisabled).to.be.true;
     });
 
     checkInitialValues();
@@ -62,6 +74,10 @@ describe('Setting of HRID Handling', () => {
       expect(HRIDHandlingInteractor.submitFormButtonDisabled).to.be.false;
     });
 
+    it('the cancel button is not disabled', () => {
+      expect(HRIDHandlingInteractor.cancelFormButtonDisabled).to.be.false;
+    });
+
     it('applies a changed class to fields', () => {
       expect(HRIDHandlingInteractor.startWithFields.fields(0).hasChangedStyle).to.be.true;
       expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).hasChangedStyle).to.be.true;
@@ -73,6 +89,21 @@ describe('Setting of HRID Handling', () => {
 
     it('assignPrefix field value should be equal to "it"', () => {
       expect(HRIDHandlingInteractor.assignPrefixFields.fields(0).val).to.be.equal('it');
+    });
+  });
+
+  describe('when is changed', () => {
+    beforeEach(async () => {
+      await HRIDHandlingInteractor.startWithFields.fields(0).fillInput('0001');
+      await HRIDHandlingInteractor.assignPrefixFields.fields(0).fillInput('it');
+    });
+
+    describe('and "Cancel" button pressed', () => {
+      beforeEach(async () => {
+        await HRIDHandlingInteractor.cancelFormButton.click();
+      });
+
+      checkInitialValues();
     });
   });
 
@@ -228,9 +259,7 @@ describe('Setting of HRID Handling', () => {
   describe('Patron has permissions', () => {
     setupApplication({
       hasAllPerms: false,
-      permissions: {
-        'ui-inventory.settings.hrid-handling': true
-      }
+      permissions: { 'ui-inventory.settings.hrid-handling': true },
     });
 
     beforeEach(async function () {
@@ -247,15 +276,15 @@ describe('Setting of HRID Handling', () => {
       hasAllPerms: false,
       permissions: {
         'settings.inventory.enabled': true,
-        'ui-inventory.settings.list.view': true
-      }
+        'ui-inventory.settings.list.view': true,
+      },
     });
 
     beforeEach(async function () {
       await this.visit('/settings/inventory/hridHandling');
     });
 
-    it('should render HRID handling page', () => {
+    it('should not render HRID handling page', () => {
       expect(HRIDHandlingInteractor.isPresent).to.be.false;
     });
   });

@@ -26,7 +26,9 @@ class AssignPrefixFieldInteractor {
   static defaultScope = '[data-test-hrid-handling-form]';
 
   submitFormButton = new ButtonInteractor('[data-test-submit-button]');
+  cancelFormButton = new ButtonInteractor('[data-test-cancel-button]');
   submitFormButtonDisabled = property('[data-test-submit-button]', 'disabled');
+  cancelFormButtonDisabled = property('[data-test-cancel-button]', 'disabled');
   startWithFields = new StartWithFieldInteractor();
   assignPrefixFields = new AssignPrefixFieldInteractor();
   callout = new CalloutInteractor();
