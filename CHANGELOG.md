@@ -6,6 +6,7 @@
 * Fix display of information when the item's status is "Missing". Refs UIIN-913.
 * Add filter for instance formats. Refs UIIN-820.
 * Create permission for Inventory -> Settings -> HRID handling. Fix Inventory -> Settings -> pages access depending on the patron's permissions. Refs UIIN-800.
+* Support updated versions of mod-circulation, mod-inventory, and mod-item-storage. Refs UIIN-936.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
