@@ -464,5 +464,6 @@
     "hridHandling.modal.header": "Você tem certeza?",
     "hridHandling.modal.body": "AVISO: A alteração da configuração do HRID pode criar conflitos se os registros já existirem no Acervo.",
     "hridHandling.modal.button.close": "Fechar sem salvar",
-    "hridHandling.modal.button.confirm": "Atualizar configuração"
+    "hridHandling.modal.button.confirm": "Atualizar configuração",
+    "adminData": "Dados administrativos"
 }
