@@ -464,5 +464,6 @@
     "hridHandling.modal.header": "是否确定？",
     "hridHandling.modal.body": "警告：如果记录已存在于典藏中，则更改HRID设置可能会产生冲突。",
     "hridHandling.modal.button.close": "不保存即关闭",
-    "hridHandling.modal.button.confirm": "更新设置"
+    "hridHandling.modal.button.confirm": "更新设置",
+    "adminData": "Admin data"
 }
