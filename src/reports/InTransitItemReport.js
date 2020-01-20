@@ -13,6 +13,9 @@ const columns = [
   'library',
   'shelvingLocation',
   'shelvingLocationCode',
+  'callNumberPrefix',
+  'callNumberSuffix',
+  'copyNumbers',
   'itemStatus',
   'checkInServicePoint',
   'checkInDateTime',
@@ -35,7 +38,7 @@ class InTransitItemsReport {
 
   parse(records) {
     return records.map(record => {
-      const toCSV = {
+      return {
         barcode: get(record, 'barcode'),
         title: get(record, 'title'),
         contributors: get(record, 'contributors', []).map(({ name }) => name).join(';'),
@@ -46,6 +49,9 @@ class InTransitItemsReport {
         library: get(record, 'location.name'),
         shelvingLocation: get(record, 'location.libraryName'),
         shelvingLocationCode: get(record, 'location.code'),
+        callNumberPrefix: get(record, 'prefix'),
+        callNumberSuffix: get(record, 'suffix'),
+        copyNumbers: get(record, 'copyNumbers', []).map(number => number).join(';'),
         itemStatus: get(record, 'status.name'),
         checkInServicePoint: get(record, 'lastCheckIn.servicePoint.name'),
         checkInDateTime: get(record, 'lastCheckIn.dateTime'),
@@ -57,8 +63,6 @@ class InTransitItemsReport {
         requestPickupServicePoint: get(record, 'request.requestPickupServicePointName'),
         tags: get(record, 'request.tags', []).join(';'),
       };
-
-      return toCSV;
     });
   }
 
