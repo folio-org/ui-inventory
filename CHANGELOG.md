@@ -7,6 +7,7 @@
 * Add filter for instance formats. Refs UIIN-820.
 * Create permission for Inventory -> Settings -> HRID handling. Fix Inventory -> Settings -> pages access depending on the patron's permissions. Refs UIIN-800.
 * Add remaining call number fields in transit report. Refs UIIN-925.
+* Add ability to search by Instance HRID (Instance segment). Refs UIIN-899.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
