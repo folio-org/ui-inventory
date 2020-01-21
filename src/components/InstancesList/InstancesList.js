@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -28,8 +28,10 @@ import {
   getCurrentFilters,
   parseFiltersToStr,
 } from '../../utils';
-
-import InTransitItemReport from '../../reports/InTransitItemReport';
+import {
+  InTransitItemReport,
+  InstancesIdReport,
+} from '../../reports';
 import ErrorModal from '../ErrorModal';
 
 const INITIAL_RESULT_COUNT = 30;
@@ -63,7 +65,8 @@ class InstancesView extends React.Component {
   };
 
   state = {
-    exportInProgress: false,
+    inTransitItemsExportInProgress: false,
+    instancesIdExportInProgress: false,
     showErrorModal: false,
   };
 
@@ -104,7 +107,7 @@ class InstancesView extends React.Component {
     <FilterNavigation segment={this.props.segment} />
   );
 
-  generateInTransinItemReport = async () => {
+  generateInTransitItemReport = async () => {
     const {
       reset,
       GET,
@@ -123,32 +126,74 @@ class InstancesView extends React.Component {
     } catch (error) {
       throw new Error(error);
     } finally {
-      this.setState({ exportInProgress: false });
+      this.setState({ inTransitItemsExportInProgress: false });
     }
   };
 
-  startExport = () => {
-    const { exportInProgress } = this.state;
+  startInTransitReportGeneration = () => {
+    const { inTransitItemsExportInProgress } = this.state;
 
-    if (exportInProgress) {
+    if (inTransitItemsExportInProgress) {
       return;
     }
 
-    this.setState({ exportInProgress: true }, this.generateInTransinItemReport);
+    this.setState({ inTransitItemsExportInProgress: true }, this.generateInTransitItemReport);
+  };
+
+  generateInstancesIdReport = async () => {
+    const { instancesIdExportInProgress } = this.state;
+
+    if (instancesIdExportInProgress) return;
+
+    this.setState({ instancesIdExportInProgress: true }, async () => {
+      const {
+        reset,
+        GET,
+      } = this.props.parentMutator.recordsToExportIDs;
+
+      try {
+        reset();
+
+        const items = await GET();
+        const report = new InstancesIdReport();
+
+        if (!isEmpty(items)) {
+          report.toCSV(items);
+        }
+      } catch (error) {
+        throw new Error(error);
+      } finally {
+        this.setState({ instancesIdExportInProgress: false });
+      }
+    });
   };
 
   getActionMenu = ({ onToggle }) => {
     return (
-      <Button
-        buttonStyle="dropdownItem"
-        id="dropdown-clickable-get-report"
-        onClick={() => {
-          onToggle();
-          this.startExport();
-        }}
-      >
-        <FormattedMessage id="ui-inventory.inTransitReport" />
-      </Button>
+      <Fragment>
+        <Button
+          buttonStyle="dropdownItem"
+          id="dropdown-clickable-get-report"
+          onClick={() => {
+            onToggle();
+
+            this.startInTransitReportGeneration();
+          }}
+        >
+          <FormattedMessage id="ui-inventory.inTransitReport" />
+        </Button>
+        <Button
+          buttonStyle="dropdownItem"
+          id="dropdown-clickable-get-items-uiids"
+          onClick={() => {
+            onToggle();
+
+            this.generateInstancesIdReport();
+          }}
+        >
+          <FormattedMessage id="ui-inventory.saveInstancesUIIDS" />
+        </Button>
+      </Fragment>
     );
   };
 
