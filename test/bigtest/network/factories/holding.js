@@ -14,7 +14,7 @@ const {
 export default Factory.extend({
   id: () => random.uuid(),
   permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-  hrid: () => Math.floor(Math.random() * 90000000) + 10000000,
+  hrid: i => `ho0000000000${i + 1}`,
   electronicAccess: () => [],
   formerIds: [],
   holdingsItems: [],
