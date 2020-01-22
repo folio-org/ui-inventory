@@ -27,6 +27,7 @@ export default Factory.extend({
   childInstances: () => [],
   parentInstances: () => [],
   statisticalCodeIds: () => [],
+  hrid: i => `in0000000000${i + 1}`,
 
   afterCreate(instance, server) {
     instance.identifiers.forEach(identifier => {

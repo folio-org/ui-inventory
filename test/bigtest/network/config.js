@@ -156,6 +156,8 @@ export default function configure() {
 
         return instances.where({ id: holding.instanceId });
       }
+
+      if (field === 'hrid') return instances.where({ hrid: term });
     }
 
     return instances.all();
