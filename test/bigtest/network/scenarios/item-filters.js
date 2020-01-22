@@ -17,7 +17,7 @@ export default function (server) {
   holding.save();
 
   item.materialType = materialType.attrs;
-  item.status.name = 'Withdrawn';
+  item.status.name = 'Missing';
 
   item.save();
 }

@@ -283,7 +283,7 @@ export default function configure() {
           discoverySuppress: null,
           holdingsRecordId: '44a21d17-a666-4f34-b24d-644f8ed1537b',
           barcode: '5860825104574',
-          copyNumbers: [],
+          copyNumber: '',
           notes: [],
           circulationNotes: [],
           numberOfPieces: '3',
