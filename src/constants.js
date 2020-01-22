@@ -151,7 +151,7 @@ export const itemSortMap = {
 export const itemStatuses = [
   { label: 'ui-inventory.item.status.available', value: 'Available' },
   { label: 'ui-inventory.item.status.awaitingPickup', value: 'Awaiting pickup' },
-  { label: 'ui-inventory.item.status.awaitingDelivery', value: 'Awaiting delivery'},
+  { label: 'ui-inventory.item.status.awaitingDelivery', value: 'Awaiting delivery' },
   { label: 'ui-inventory.item.status.checkedOut', value: 'Checked out' },
   { label: 'ui-inventory.item.status.inProcess', value: 'In process' },
   { label: 'ui-inventory.item.status.inTransit', value: 'In transit' },
