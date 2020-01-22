@@ -13,6 +13,8 @@ describe('SearchFieldFilter', () => {
 
   const instancesRoute = new InstancesRouteInteractor();
 
+  const instanceHRID = 'in00000000009';
+
   beforeEach(function () {
     this.visit('/inventory');
   });
@@ -54,6 +56,34 @@ describe('SearchFieldFilter', () => {
 
     it('finds instances by isbn', () => {
       expect(instancesRoute.rows().length).to.equal(1);
+    });
+  });
+
+  describe('selecting the Instance HRID search option', function () {
+    beforeEach(async () => {
+      await instancesRoute.searchFieldFilter.searchField.selectIndex('Instance HRID');
+      await instancesRoute.searchFieldFilter.searchField.fillInput(instanceHRID);
+      await instancesRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('should reflect the Instance HRID in the URL query params', () => {
+      expect(this.ctx.location.search).to.include('qindex=hrid');
+      expect(this.ctx.location.search).to.include(`query=${instanceHRID}`);
+    });
+
+    it('should find instance by Instance HRID', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+
+    describe('filling the search field with incorrect hrid', function () {
+      beforeEach(async () => {
+        await instancesRoute.searchFieldFilter.searchField.fillInput('incorrect value');
+        await instancesRoute.searchFieldFilter.clickSearch();
+      });
+
+      it('should not find an instance with given Instance HRID', () => {
+        expect(instancesRoute.rows().length).to.equal(0);
+      });
     });
   });
 });

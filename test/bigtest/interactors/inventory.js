@@ -16,6 +16,8 @@ import {
 @interactor class InventoryHeaderDropdownMenu {
   clickItemsInTransitReportBtn = clickable('#dropdown-clickable-get-report');
   itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
+  clickSaveInstancesUIIDsBtn = clickable('#dropdown-clickable-get-items-uiids');
+  saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
 }
 
 export default @interactor class InventoryInteractor {

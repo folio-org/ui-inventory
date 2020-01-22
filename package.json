@@ -366,7 +366,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.hrid-handling",
-        "displayName": "Settings (Inventory): Create, edit and remove HRID handling",
+        "displayName": "Settings (Inventory): Create, edit and delete HRID handling",
         "subPermissions": [
           "configuration.entries.collection.get",
           "inventory-storage.hrid-settings.item.get",
