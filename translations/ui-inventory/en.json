@@ -427,6 +427,7 @@
   "item.status.paged": "Paged",
   "item.status.withdrawn": "Withdrawn",
   "inTransitReport": "In transit items report (CSV)",
+  "saveInstancesUIIDS": "Save instances UUIDs",
   "reports.inTransitItem.barcode": "Item barcode",
   "reports.inTransitItem.title": "Title",
   "reports.inTransitItem.library": "Library",
