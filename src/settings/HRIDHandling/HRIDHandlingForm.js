@@ -46,12 +46,14 @@ const HRIDHandlingForm = ({
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [hridSettings, setHridSettings] = useState({});
 
+  const isButtonDisabled = pristine || submitting;
+
   const saveButton = (
     <Button
       data-test-submit-button
       type="submit"
       buttonStyle="primary mega"
-      disabled={(pristine || submitting)}
+      disabled={isButtonDisabled}
       marginBottom0
     >
       <FormattedMessage id="stripes-components.saveAndClose" />
@@ -62,7 +64,7 @@ const HRIDHandlingForm = ({
     <Button
       data-test-cancel-button
       buttonStyle="default mega"
-      disabled={(pristine || submitting)}
+      disabled={isButtonDisabled}
       onClick={reset}
       marginBottom0
     >
@@ -74,6 +76,7 @@ const HRIDHandlingForm = ({
     <PaneFooter
       renderStart={cancelButton}
       renderEnd={saveButton}
+      innerClassName={css.footer}
     />
   );
 
