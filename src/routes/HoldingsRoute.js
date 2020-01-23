@@ -17,6 +17,7 @@ import {
   holdingFilterConfig,
   CQL_FIND_ALL,
 } from '../constants';
+import buildManifestObject from './buildManifestObject';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const query = { ...resourceData.query };
@@ -44,19 +45,7 @@ function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
 }
 
 class HoldingsRoute extends React.Component {
-  static manifest = Object.freeze({
-    records: {
-      type: 'okapi',
-      records: 'instances',
-      resultOffset: '%{resultOffset}',
-      perRequest: 100,
-      path: 'inventory/instances',
-      GET: {
-        params: { query: buildQuery },
-        staticFallback: { params: {} },
-      },
-    },
-  });
+  static manifest = Object.freeze(buildManifestObject(buildQuery));
 
   render() {
     const {

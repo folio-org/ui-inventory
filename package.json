@@ -41,10 +41,10 @@
       }
     ],
     "okapiInterfaces": {
-      "inventory": "9.0",
+      "inventory": "10.0",
       "instance-storage": "7.0",
       "holdings-storage": "3.0 4.0",
-      "item-storage": "7.0",
+      "item-storage": "8.0",
       "loan-types": "2.0",
       "material-types": "2.0",
       "item-note-types": "1.0",
@@ -70,7 +70,7 @@
       "holdings-note-types": "1.0",
       "users": "15.0",
       "location-units": "2.0",
-      "circulation": "4.0 5.0 6.0 7.0 8.0"
+      "circulation": "9.0"
     },
     "permissionSets": [
       {
@@ -366,7 +366,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.hrid-handling",
-        "displayName": "Settings (Inventory): Create, edit and remove HRID handling",
+        "displayName": "Settings (Inventory): Create, edit and delete HRID handling",
         "subPermissions": [
           "configuration.entries.collection.get",
           "inventory-storage.hrid-settings.item.get",

@@ -125,7 +125,7 @@
     "onePublicationFieldToContinue": "يرجى ملء حقل واحد أو أكثر من حقول النشر للمتابعة",
     "holdingsLocation": "موقع المقتنيات",
     "itemLocation": "موقع المادة",
-    "effectiveLocation": "موقع فعال للمادة",
+    "effectiveLocation": "موقع نشط للمادة",
     "permanent": "دائم",
     "temporary": "مؤقت",
     "selectPermanenLocation": "حدد الموقع الدائم",
@@ -436,13 +436,13 @@
     "reports.inTransitItem.emptyReport.label": "لا يوجد شيء للتصدير",
     "reports.inTransitItem.emptyReport.message": "لا توجد مواد بحالة في النقل",
     "common.close": "إغلاق",
-    "filters.effectiveLocation": "الموقع الفعال",
+    "filters.effectiveLocation": "الموقع النشط",
     "identifierAll": "المعرف (الكل)",
     "reports.inTransitItem.callNumber": "رقم الاستدعاء",
     "reports.inTransitItem.enumeration": "الترقيم",
     "reports.inTransitItem.volume": "المجلد",
     "reports.inTransitItem.yearCaption": "السنة",
-    "effectiveCallNumber": "مقطع رقم الاستدعاء الفعال",
+    "effectiveCallNumber": "مقطع رقم الاستدعاء النشط",
     "updatedDateAndTime": "التاريخ والوقت المحدث",
     "updatedSource": "المصدر المحدث",
     "createdDateAndTime": "التاريخ والوقت الذي تم إنشاؤه",
@@ -464,5 +464,6 @@
     "hridHandling.modal.header": "هل أنت متأكد؟",
     "hridHandling.modal.body": "تحذير: قد يؤدي تغيير إعداد رقم التعريف القابل للقراءة بشريًا إلى إنشاء تعارضات إذا كانت التسجيلات موجودة بالفعل في المخزون.",
     "hridHandling.modal.button.close": "إغلاق بدون حفظ",
-    "hridHandling.modal.button.confirm": "تحديث الإعداد"
+    "hridHandling.modal.button.confirm": "تحديث الإعداد",
+    "adminData": "بيانات الإدارة"
 }

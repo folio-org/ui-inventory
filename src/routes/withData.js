@@ -199,7 +199,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
     const { resources } = this.props;
 
     for (const key in manifest) {
-      if (!['records', 'itemsInTransitReport'].includes(key) && manifest[key].type === 'okapi' &&
+      if (!['records', 'itemsInTransitReport', 'recordsToExportIDs'].includes(key) && manifest[key].type === 'okapi' &&
         !(resources[key] && resources[key].hasLoaded)) {
         return true;
       }
@@ -214,7 +214,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
     const data = {};
 
     for (const key in manifest) {
-      if (!['records', 'itemsInTransitReport'].includes(key) && manifest[key].type === 'okapi') {
+      if (!['records', 'itemsInTransitReport', 'recordsToExportIDs'].includes(key) && manifest[key].type === 'okapi') {
         data[key] = get(resources, `${key}.records`, []);
       }
     }
