@@ -10,6 +10,7 @@
 * Add remaining call number fields in transit report. Refs UIIN-925.
 * Add ability to search by Instance HRID (Instance segment). Refs UIIN-899.
 * Add saving instances UIIDs of the inventory search result to csv file. Refs UIDEXP-1.
+* Add ability to search by Item HRID (Item segment). Refs UIIN-901.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
