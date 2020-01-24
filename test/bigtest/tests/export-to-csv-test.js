@@ -9,9 +9,10 @@ import sinon from 'sinon';
 
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
+import InstancesRouteInteractor from '../interactors/routes/instances-route';
 
 describe('Instances', () => {
-  setupApplication();
+  setupApplication({ scenarios: ['instances-filters'] });
 
   const inventory = new InventoryInteractor({
     timeout: 5000,
@@ -20,6 +21,21 @@ describe('Instances', () => {
 
   let xhr;
   let requests = [];
+
+  describe('searching by instance HRID to fill items list', function () {
+    beforeEach(async function () {
+      this.visit('/inventory');
+      const instancesRoute = new InstancesRouteInteractor();
+      await instancesRoute.searchFieldFilter.searchField.selectIndex('Instance HRID');
+      await instancesRoute.searchFieldFilter.searchField.fillInput('in00000000009');
+      await instancesRoute.searchFieldFilter.clickSearch();
+      await inventory.headerDropdown.click();
+    });
+
+    it('should enable action button for saving instances UIIDs if there are items in search result', () => {
+      expect(inventory.headerDropdownMenu.isSaveInstancesUIIDsBtnDisabled).to.be.false;
+    });
+  });
 
   describe('clicking on header dropdown button', () => {
     beforeEach(async function () {
@@ -34,6 +50,10 @@ describe('Instances', () => {
 
     it('should display action button for saving instances UIIDs to csv', () => {
       expect(inventory.headerDropdownMenu.saveInstancesUIIDsBtnIsVisible).to.be.true;
+    });
+
+    it('should disable action button for saving instances UIIDs if there are not items in search result', () => {
+      expect(inventory.headerDropdownMenu.isSaveInstancesUIIDsBtnDisabled).to.be.true;
     });
 
     describe('clicking Items in transit report button', () => {
