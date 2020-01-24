@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
 import {
   omit,
   get,
@@ -169,6 +168,8 @@ class InstancesView extends React.Component {
   };
 
   getActionMenu = ({ onToggle }) => {
+    const { parentResources } = this.props;
+
     return (
       <Fragment>
         <Button
@@ -183,6 +184,7 @@ class InstancesView extends React.Component {
           <FormattedMessage id="ui-inventory.inTransitReport" />
         </Button>
         <Button
+          disabled={isEmpty(get(parentResources, ['records', 'records'], []))}
           buttonStyle="dropdownItem"
           id="dropdown-clickable-get-items-uiids"
           onClick={() => {

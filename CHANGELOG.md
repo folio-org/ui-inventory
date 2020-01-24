@@ -12,6 +12,7 @@
 * Add saving instances UIIDs of the inventory search result to csv file. Refs UIDEXP-1.
 * Add ability to search by Item HRID (Item segment). Refs UIIN-901.
 * Add ability to search by Holdings HRID (Holdings segment). Refs UIIN-900.
+* Disable saving instances UIIDs option if there are not items in search result. Refs UIDEXP-12.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
