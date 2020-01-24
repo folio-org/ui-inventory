@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import moment from 'moment';
 
 import { exportCsv } from '@folio/stripes/util';
 
@@ -18,7 +19,7 @@ class InstancesIdReport {
 
     exportCsv(parsedRecords, {
       header: false,
-      filename: 'SearchInstanceUUIDs' + new Date().toISOString(),
+      filename: 'SearchInstanceUUIDs' + moment().format(),
     });
   }
 }
