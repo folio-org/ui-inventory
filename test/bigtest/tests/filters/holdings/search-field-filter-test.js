@@ -13,6 +13,8 @@ describe('Holdings SearchFieldFilter', () => {
 
   const holdingsRoute = new HoldingsRouteInteractor();
 
+  const holdingHRID = 'ho00000000002';
+
   beforeEach(function () {
     this.visit('/inventory/holdings');
   });
@@ -54,6 +56,34 @@ describe('Holdings SearchFieldFilter', () => {
 
     it('finds instances by isbn', () => {
       expect(holdingsRoute.rows().length).to.equal(1);
+    });
+  });
+
+  describe('selecting the Holdings HRID search option', function () {
+    beforeEach(async () => {
+      await holdingsRoute.searchFieldFilter.searchField.selectIndex('Holdings HRID');
+      await holdingsRoute.searchFieldFilter.searchField.fillInput(holdingHRID);
+      await holdingsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('should reflect the Holdings HRID in the URL query params', () => {
+      expect(this.ctx.location.search).to.include('qindex=hrid');
+      expect(this.ctx.location.search).to.include(`query=${holdingHRID}`);
+    });
+
+    it('should find instance by Holdings HRID', () => {
+      expect(holdingsRoute.rows().length).to.equal(1);
+    });
+
+    describe('filling the search field with incorrect hrid', function () {
+      beforeEach(async () => {
+        await holdingsRoute.searchFieldFilter.searchField.fillInput('incorrect value');
+        await holdingsRoute.searchFieldFilter.clickSearch();
+      });
+
+      it('should not find an instance with given Holdings HRID', () => {
+        expect(holdingsRoute.rows().length).to.equal(0);
+      });
     });
   });
 });
