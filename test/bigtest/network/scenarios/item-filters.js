@@ -18,6 +18,7 @@ export default function (server) {
 
   item.materialType = materialType.attrs;
   item.status.name = 'Missing';
+  item.hrid = 'it00000000005';
 
   item.save();
 }

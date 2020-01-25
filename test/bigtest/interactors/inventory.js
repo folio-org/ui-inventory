@@ -7,6 +7,7 @@ import {
   clickable,
   isPresent,
   isVisible,
+  property,
 } from '@bigtest/interactor';
 
 import {
@@ -18,6 +19,8 @@ import {
   itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
   clickSaveInstancesUIIDsBtn = clickable('#dropdown-clickable-get-items-uiids');
   saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
+  saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
+  isSaveInstancesUIIDsBtnDisabled = property('#dropdown-clickable-get-items-uiids', 'disabled');
 }
 
 export default @interactor class InventoryInteractor {

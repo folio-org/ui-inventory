@@ -13,6 +13,8 @@ describe('Items SearchFieldFilter', () => {
 
   const itemsRoute = new ItemsRouteInteractor();
 
+  const itemHRID = 'it00000000005';
+
   beforeEach(function () {
     this.visit('/inventory/items');
   });
@@ -41,6 +43,34 @@ describe('Items SearchFieldFilter', () => {
 
       it('finds instances by title and contributor name', () => {
         expect(itemsRoute.rows().length).to.equal(1);
+      });
+    });
+  });
+
+  describe('selecting the Item HRID search option', function () {
+    beforeEach(async () => {
+      await itemsRoute.searchFieldFilter.searchField.selectIndex('Item HRID');
+      await itemsRoute.searchFieldFilter.searchField.fillInput(itemHRID);
+      await itemsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('should reflect the Item HRID in the URL query params', () => {
+      expect(this.ctx.location.search).to.include('qindex=hrid');
+      expect(this.ctx.location.search).to.include(`query=${itemHRID}`);
+    });
+
+    it('should find instance by Item HRID', () => {
+      expect(itemsRoute.rows().length).to.equal(1);
+    });
+
+    describe('filling the search field with incorrect hrid', function () {
+      beforeEach(async () => {
+        await itemsRoute.searchFieldFilter.searchField.fillInput('incorrect value');
+        await itemsRoute.searchFieldFilter.clickSearch();
+      });
+
+      it('should not find an instance with given Item HRID', () => {
+        expect(itemsRoute.rows().length).to.equal(0);
       });
     });
   });
