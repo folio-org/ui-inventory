@@ -413,7 +413,6 @@
     "item.status.missing": "Não encontrado",
     "item.status.onOrder": "Em processo de compra",
     "item.status.paged": "Paginado",
-    "item.status.withdrawn": "Retirado",
     "querySearch": "Pesquisa rápida",
     "holdings.permanentLocation": "Local permanente dos acervos",
     "inTransitReport": "Relatório de itens em trânsito (CSV)",
@@ -465,5 +464,12 @@
     "hridHandling.modal.body": "AVISO: A alteração da configuração do HRID pode criar conflitos se os registros já existirem no Acervo.",
     "hridHandling.modal.button.close": "Fechar sem salvar",
     "hridHandling.modal.button.confirm": "Atualizar configuração",
-    "adminData": "Dados administrativos"
+    "adminData": "Dados administrativos",
+    "reports.inTransitItem.callNumberPrefix": "Prefixo do número de chamada",
+    "reports.inTransitItem.callNumberSuffix": "Sufixo do número de chamada",
+    "saveInstancesUIIDS": "Salvar UUIDs das instâncias",
+    "item.status.declaredLost": "Declarado perdido",
+    "item.status.received": "Recebido",
+    "item.status.orderClosed": "Pedido encerrado",
+    "reports.inTransitItem.copyNumber": "Copy number"
 }
