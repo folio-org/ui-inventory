@@ -471,5 +471,5 @@
     "item.status.declaredLost": "Dichiarato perso",
     "item.status.received": "Ricevuto",
     "item.status.orderClosed": "Ordine chiuso",
-    "reports.inTransitItem.copyNumber": "Copy number"
+    "reports.inTransitItem.copyNumber": "Numero copia"
 }
