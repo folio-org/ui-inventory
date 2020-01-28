@@ -13,6 +13,8 @@
 * Add ability to search by Item HRID (Item segment). Refs UIIN-901.
 * Add ability to search by Holdings HRID (Holdings segment). Refs UIIN-900.
 * Disable saving instances UIIDs option if there are not items in search result. Refs UIDEXP-12.
+* Retrieve up to 2000 statistical codes. Refs UIIN-819.
+* Retrieve up to 1000 material types on the item-edit screen. Refs UIIN-946.
 * Always retrieve fresh statistical-code-types in settings. Refs UIIN-949.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
