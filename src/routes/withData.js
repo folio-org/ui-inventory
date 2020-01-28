@@ -104,7 +104,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
       statisticalCodes: {
         type: 'okapi',
         records: 'statisticalCodes',
-        path: 'statistical-codes?limit=1000&query=cql.allRecords=1 sortby name',
+        path: 'statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
       },
       illPolicies: {
         type: 'okapi',
