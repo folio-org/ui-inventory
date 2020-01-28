@@ -16,7 +16,7 @@ class StatisticalCodeSettings extends React.Component {
       type: 'okapi',
       path: 'statistical-code-types',
       records: 'statisticalCodeTypes',
-      accumulate: 'true',
+      shouldRefresh: true,
       throwErrors: false,
       GET: {
         path: 'statistical-code-types?query=cql.allRecords=1 &limit=500'
