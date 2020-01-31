@@ -16,6 +16,7 @@
 * Retrieve up to 2000 statistical codes. Refs UIIN-819.
 * Retrieve up to 1000 material types on the item-edit screen. Refs UIIN-946.
 * Always retrieve fresh statistical-code-types in settings. Refs UIIN-949.
+* Replace deprecated babel dependencies. Refs UIIN-956, STCOR-381.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
