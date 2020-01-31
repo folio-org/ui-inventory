@@ -413,7 +413,6 @@
     "item.status.missing": "遗失",
     "item.status.onOrder": "订购中",
     "item.status.paged": "已处理",
-    "item.status.withdrawn": "撤消",
     "querySearch": "查询搜寻",
     "holdings.permanentLocation": "馆藏永久馆藏地",
     "inTransitReport": "传送中单件报告（CSV）",
@@ -465,5 +464,12 @@
     "hridHandling.modal.body": "警告：如果记录已存在于典藏中，则更改HRID设置可能会产生冲突。",
     "hridHandling.modal.button.close": "不保存即关闭",
     "hridHandling.modal.button.confirm": "更新设置",
-    "adminData": "Admin data"
+    "adminData": "Admin data",
+    "reports.inTransitItem.callNumberPrefix": "Call number prefix",
+    "reports.inTransitItem.callNumberSuffix": "Call number suffix",
+    "saveInstancesUIIDS": "Save instances UUIDs",
+    "item.status.declaredLost": "Declared lost",
+    "item.status.received": "Received",
+    "item.status.orderClosed": "Order closed",
+    "reports.inTransitItem.copyNumber": "Copy number"
 }

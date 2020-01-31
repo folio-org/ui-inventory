@@ -273,7 +273,7 @@
     "itemDamagedStatus": "Item damaged status",
     "typeFreeText": "Type, free text",
     "name": "Name",
-    "nameType": "Name Type",
+    "nameType": "Name type",
     "primary": "Primary",
     "childInstances": "Child instances",
     "addChildInstance": "Add child instance",
@@ -413,7 +413,6 @@
     "item.status.missing": "Falta",
     "item.status.onOrder": "En petición",
     "item.status.paged": "Paginado",
-    "item.status.withdrawn": "Retirado",
     "querySearch": "Búsqueda de consulta",
     "holdings.permanentLocation": "Ubicación permanente de los fondos",
     "inTransitReport": "Informe de ítems en tránsito (CSV)",
@@ -465,5 +464,12 @@
     "hridHandling.modal.body": "WARNING: Changing the HRID setting may create conflicts if records already exist in Inventory.",
     "hridHandling.modal.button.close": "Close without saving",
     "hridHandling.modal.button.confirm": "Update setting",
-    "adminData": "Admin data"
+    "adminData": "Admin data",
+    "reports.inTransitItem.callNumberPrefix": "Call number prefix",
+    "reports.inTransitItem.callNumberSuffix": "Call number suffix",
+    "saveInstancesUIIDS": "Save instances UUIDs",
+    "item.status.declaredLost": "Declared lost",
+    "item.status.received": "Received",
+    "item.status.orderClosed": "Order closed",
+    "reports.inTransitItem.copyNumber": "Copy number"
 }

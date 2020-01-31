@@ -158,6 +158,19 @@ export default function configure() {
       }
 
       if (field === 'hrid') return instances.where({ hrid: term });
+
+      if (field === 'holdingsRecords.hrid') {
+        const holding = holdings.where({ hrid: term }).models[0] || {};
+
+        return instances.where({ id: holding.instanceId });
+      }
+
+      if (field === 'item.hrid') {
+        const item = items.where({ hrid: term }).models[0] || {};
+        const holding = holdings.where({ id: item.holdingsRecordId }).models[0] || {};
+
+        return instances.where({ id: holding.instanceId });
+      }
     }
 
     return instances.all();

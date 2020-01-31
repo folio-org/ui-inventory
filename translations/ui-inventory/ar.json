@@ -413,7 +413,6 @@
     "item.status.missing": "مفقودة",
     "item.status.onOrder": "في الطلب",
     "item.status.paged": "مقسم إلى صفحات",
-    "item.status.withdrawn": "مسحوب",
     "querySearch": "بحث الاستعلام",
     "holdings.permanentLocation": "موقع المقتنيات الدائم",
     "inTransitReport": "تقرير المواد الموجودة في النقل (CSV)",
@@ -465,5 +464,12 @@
     "hridHandling.modal.body": "تحذير: قد يؤدي تغيير إعداد رقم التعريف القابل للقراءة بشريًا إلى إنشاء تعارضات إذا كانت التسجيلات موجودة بالفعل في المخزون.",
     "hridHandling.modal.button.close": "إغلاق بدون حفظ",
     "hridHandling.modal.button.confirm": "تحديث الإعداد",
-    "adminData": "بيانات الإدارة"
+    "adminData": "بيانات الإدارة",
+    "reports.inTransitItem.callNumberPrefix": "بادئة رقم الاستدعاء",
+    "reports.inTransitItem.callNumberSuffix": "لاحقة رقم الاستدعاء",
+    "saveInstancesUIIDS": "حفظ UUIDs الأوعية",
+    "item.status.declaredLost": "تم الإعلان عن فقدانه",
+    "item.status.received": "تم استلامه",
+    "item.status.orderClosed": "تم إغلاق الطلبية",
+    "reports.inTransitItem.copyNumber": "رقم النسخة"
 }
