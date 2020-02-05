@@ -57,5 +57,6 @@ export default @interactor class InventoryInteractor {
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
 
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
-  formatFilter = scoped('#format', MultiSelectFilterInteractor)
+  formatFilter = scoped('#format', MultiSelectFilterInteractor);
+  modeFilter = scoped('#mode', MultiSelectFilterInteractor);
 }

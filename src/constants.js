@@ -41,6 +41,11 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
+    name: 'mode',
+    cql: 'modeOfIssuanceId',
+    values: [],
+  },
+  {
     name: 'location',
     cql: 'holdingsRecords.permanentLocationId',
     values: [],

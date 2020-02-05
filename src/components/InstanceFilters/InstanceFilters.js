@@ -36,6 +36,7 @@ export default class InstanceFilters extends React.Component {
         resource = [],
         language = [],
         format = [],
+        mode = [],
         discoverySuppress = [],
         staffSuppress = [],
       },
@@ -43,6 +44,7 @@ export default class InstanceFilters extends React.Component {
         locations,
         resourceTypes,
         instanceFormats,
+        modesOfIssuance,
       },
       onChange,
       onClear,
@@ -59,6 +61,11 @@ export default class InstanceFilters extends React.Component {
     }));
 
     const instanceFormatOptions = instanceFormats.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+
+    const modeOfIssuanceOptions = modesOfIssuance.map(({ name, id }) => ({
       label: name,
       value: id,
     }));
@@ -135,6 +142,23 @@ export default class InstanceFilters extends React.Component {
             name="format"
             dataOptions={instanceFormatOptions}
             selectedValues={format}
+            filter={filterItemsBy('label')}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+          id="mode"
+          name="mode"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={mode.length > 0}
+          onClearFilter={() => onClear('mode')}
+        >
+          <MultiSelectionFilter
+            name="mode"
+            dataOptions={modeOfIssuanceOptions}
+            selectedValues={mode}
             filter={filterItemsBy('label')}
             onChange={onChange}
           />

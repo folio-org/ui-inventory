@@ -20,6 +20,7 @@ class InstancesView extends React.Component {
         locations,
         instanceTypes,
         instanceFormats,
+        modesOfIssuance,
         query,
       },
     } = this.props;
@@ -33,6 +34,7 @@ class InstancesView extends React.Component {
           locations,
           resourceTypes: instanceTypes,
           instanceFormats,
+          modesOfIssuance,
         }}
         onChange={onChange}
         onClear={(name) => onChange({ name, values: [] })}
