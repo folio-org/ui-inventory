@@ -6,6 +6,7 @@
 * Fix display of information when the item's status is "Missing". Refs UIIN-913.
 * Add filter for instance formats. Refs UIIN-820.
 * Create permission for Inventory -> Settings -> HRID handling. Fix Inventory -> Settings -> pages access depending on the patron's permissions. Refs UIIN-800.
+* Move the Cancel/Save buttons to the bottom of the Inventory HRID settings screen. Refs UIIN-929.
 * Support updated versions of mod-circulation, mod-inventory, and mod-item-storage. Refs UIIN-936.
 * Add remaining call number fields in transit report. Refs UIIN-925.
 * Add ability to search by Instance HRID (Instance segment). Refs UIIN-899.

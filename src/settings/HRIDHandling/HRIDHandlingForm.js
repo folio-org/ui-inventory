@@ -8,11 +8,14 @@ import { FormattedMessage } from 'react-intl';
 import {
   Col,
   Row,
-  Headline,
   Pane,
-  Button,
   Callout,
+  PaneHeader,
+  Button,
+  Headline,
+  PaneFooter,
   ConfirmationModal,
+  PaneCloseLink,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 
@@ -43,16 +46,57 @@ const HRIDHandlingForm = ({
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [hridSettings, setHridSettings] = useState({});
 
-  const lastMenu = (
+  const isButtonDisabled = pristine || submitting;
+
+  const saveButton = (
     <Button
       data-test-submit-button
       type="submit"
-      buttonStyle="primary"
-      disabled={(pristine || submitting)}
+      buttonStyle="primary mega"
+      disabled={isButtonDisabled}
       marginBottom0
     >
-      <FormattedMessage id="stripes-core.button.save" />
+      <FormattedMessage id="stripes-components.saveAndClose" />
     </Button>
+  );
+
+  const cancelButton = (
+    <Button
+      data-test-cancel-button
+      buttonStyle="default mega"
+      disabled={isButtonDisabled}
+      onClick={reset}
+      marginBottom0
+    >
+      <FormattedMessage id="stripes-components.cancel" />
+    </Button>
+  );
+
+  const footer = (
+    <PaneFooter
+      renderStart={cancelButton}
+      renderEnd={saveButton}
+      innerClassName={css.footer}
+    />
+  );
+
+  const closeButton = (
+    <FormattedMessage id="ui-inventory.settings.goBack">
+      {ariaLabel => (
+        <PaneCloseLink
+          ariaLabel={ariaLabel}
+          to="/settings/inventory"
+        />
+      )}
+    </FormattedMessage>
+  );
+
+  const header = renderProps => (
+    <PaneHeader
+      {...renderProps}
+      paneTitle={<FormattedMessage id="ui-inventory.hridHandling" />}
+      firstMenu={closeButton}
+    />
   );
 
   const description = HRID_DESCRIPTIONS_ID.map((id, index) => (
@@ -110,8 +154,8 @@ const HRIDHandlingForm = ({
       <Pane
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={<FormattedMessage id="ui-inventory.hridHandling" />}
-        lastMenu={lastMenu}
+        renderHeader={header}
+        footer={footer}
       >
         <Row>
           <Col xs={12}>
