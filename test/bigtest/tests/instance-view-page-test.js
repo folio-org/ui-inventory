@@ -194,7 +194,7 @@ describe('InstanceViewPage', () => {
 
     describe('items per holdings', () => {
       it('has correct amount of columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(5);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(7);
       });
 
       it('renders correct header captions', () => {
@@ -203,6 +203,8 @@ describe('InstanceViewPage', () => {
         expect(InstanceViewPage.itemsList.headers(2).text).to.be.equal(translation.materialType);
         expect(InstanceViewPage.itemsList.headers(3).text).to.be.equal(translation.enumeration);
         expect(InstanceViewPage.itemsList.headers(4).text).to.be.equal(translation.chronology);
+        expect(InstanceViewPage.itemsList.headers(5).text).to.be.equal(translation.volume);
+        expect(InstanceViewPage.itemsList.headers(6).text).to.be.equal(translation.yearCaption);
       });
 
       describe('sorting', () => {
@@ -229,6 +231,7 @@ describe('InstanceViewPage', () => {
             });
           });
         });
+
         describe('compares by `Status` field', () => {
           beforeEach(async () => {
             await InstanceViewPage.itemsList.headers(1).click();
@@ -252,6 +255,7 @@ describe('InstanceViewPage', () => {
             });
           });
         });
+
         describe('compares by `Material type` field', () => {
           beforeEach(async () => {
             await InstanceViewPage.itemsList.headers(2).click();
@@ -275,6 +279,7 @@ describe('InstanceViewPage', () => {
             });
           });
         });
+
         describe('compares by `Enumeration` field', () => {
           beforeEach(async () => {
             await InstanceViewPage.itemsList.headers(3).click();
@@ -298,6 +303,7 @@ describe('InstanceViewPage', () => {
             });
           });
         });
+
         describe('compares by `Chronology` field', () => {
           beforeEach(async () => {
             await InstanceViewPage.itemsList.headers(4).click();
@@ -318,6 +324,54 @@ describe('InstanceViewPage', () => {
               expect(InstanceViewPage.getCellContent(0, 4)).to.equal('1984:July-Dec.');
               expect(InstanceViewPage.getCellContent(1, 4)).to.equal('1986:Jan.-June');
               expect(InstanceViewPage.getCellContent(2, 4)).to.equal('1987:Jan.-June');
+            });
+          });
+        });
+
+        describe('clicking on the `Volume` header', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(5).click();
+          });
+
+          it('the item order should be descending', () => {
+            expect(InstanceViewPage.getCellContent(0, 5)).to.equal('V.2 211');
+            expect(InstanceViewPage.getCellContent(1, 5)).to.equal('V.1 2345');
+            expect(InstanceViewPage.getCellContent(2, 5)).to.equal('V.1 101');
+          });
+
+          describe('clicking on the `Volume` header again', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(5).click();
+            });
+
+            it('the item order should be ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, 5)).to.equal('V.1 101');
+              expect(InstanceViewPage.getCellContent(1, 5)).to.equal('V.1 2345');
+              expect(InstanceViewPage.getCellContent(2, 5)).to.equal('V.2 211');
+            });
+          });
+        });
+
+        describe('clicking on the `Year, caption` header', () => {
+          beforeEach(async () => {
+            await InstanceViewPage.itemsList.headers(6).click();
+          });
+
+          it('the item order should be descending', () => {
+            expect(InstanceViewPage.getCellContent(0, 6)).to.equal('2020');
+            expect(InstanceViewPage.getCellContent(1, 6)).to.equal('2018, 2019, 2020');
+            expect(InstanceViewPage.getCellContent(2, 6)).to.equal('2015, 2019');
+          });
+
+          describe('clicking on the `Year, caption` header again', () => {
+            beforeEach(async () => {
+              await InstanceViewPage.itemsList.headers(6).click();
+            });
+
+            it('the item order should be ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, 6)).to.equal('2015, 2019');
+              expect(InstanceViewPage.getCellContent(1, 6)).to.equal('2018, 2019, 2020');
+              expect(InstanceViewPage.getCellContent(2, 6)).to.equal('2020');
             });
           });
         });
