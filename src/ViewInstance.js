@@ -267,7 +267,14 @@ class ViewInstance extends React.Component {
 
   closeViewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
-    this.props.goTo(`/inventory/view/${this.props.match.params.id}`);
+
+    const {
+      goTo,
+      getParams,
+      match: { params },
+    } = this.props;
+
+    goTo(`/inventory/view/${params.id}`, getParams());
   };
 
   createHoldingsRecord = (holdingsRecord) => {
@@ -1502,6 +1509,7 @@ class ViewInstance extends React.Component {
 ViewInstance.propTypes = {
   getSearchParams: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
+  getParams: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
