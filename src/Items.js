@@ -174,15 +174,6 @@ class Items extends React.Component {
                     'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
                     'yearCaption': intl.formatMessage({ id: 'ui-inventory.yearCaption' }),
                   }}
-                  columnWidths={{
-                    'barcode': '21%',
-                    'status': '13%',
-                    'materialType': '17%',
-                    'enumeration': '13%',
-                    'chronology': '12%',
-                    'volume': '8%',
-                    'yearCaption': '17%',
-                  }}
                   ariaLabel={ariaLabel}
                   containerRef={ref => { this.resultsList = ref; }}
                   interactive={false}
