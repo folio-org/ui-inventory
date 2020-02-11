@@ -112,18 +112,27 @@ class ItemsPerHoldingsRecord extends React.Component {
     });
   };
 
-  renderButtonsGroup = () => {
+  viewHoldings = () => {
     const {
       holdingsRecord,
+      goTo,
+      getParams,
       location: { pathname },
     } = this.props;
+    const path = `${pathname}/${holdingsRecord.id}`;
+
+    goTo(path, getParams());
+  }
+
+  renderButtonsGroup = () => {
+    const { holdingsRecord } = this.props;
 
     return (
       <Fragment>
         <Button
           id="clickable-view-holdings"
           data-test-view-holdings
-          to={{ pathname: `${pathname}/${holdingsRecord.id}` }}
+          onClick={this.viewHoldings}
           style={{ marginRight: '5px' }}
         >
           <FormattedMessage id="ui-inventory.viewHoldings" />
@@ -266,6 +275,8 @@ ItemsPerHoldingsRecord.propTypes = {
   accordionToggle: PropTypes.func.isRequired,
   accordionStates: PropTypes.object.isRequired,
   updateLocation: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired,
+  getParams: PropTypes.func.isRequired,
   isAccordionOpen: PropTypes.func.isRequired,
   updateAccordions: PropTypes.func.isRequired,
 };

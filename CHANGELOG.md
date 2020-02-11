@@ -20,6 +20,7 @@
 * Replace deprecated babel dependencies. Refs UIIN-956, STCOR-381.
 * Add filter for modes of issuance. Refs UIIN-823.
 * Add "Volume" and "Year, caption" fields to the Instance record in a detailed view. Refs UIIN-954.
+* Fix search and filter pane when viewing a holdings record. Fixes UIIN-953.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
