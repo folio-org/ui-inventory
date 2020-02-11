@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   Pane,
   Layer,
+  Headline,
 } from '@folio/stripes/components';
 
 class ViewMarc extends React.Component {
@@ -55,39 +56,77 @@ class ViewMarc extends React.Component {
     const marcJSON = (marcRecord || stateMarcRecord).parsedRecord.content;
     const { fields } = marcJSON;
     const leader = `LEADER ${marcJSON.leader}`;
-    const fields001to009 = fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
-    const fields010andUp = fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
-    const formattedFields001to009 = fields001to009.map((field) => {
-      const key = Object.keys(field)[0];
-      return (
-        <tr key={'00field' + key} id={'00field' + key}>
-          <td key={'cell' + key} id={'cell' + key} colSpan="3">
-            {key}
-            {' '}
-            {field[key].replace(/\\/g, ' ')}
-          </td>
-        </tr>
-      );
-    });
-    const formattedFields010andUp = fields010andUp.map((field, index) => {
-      const key = Object.keys(field)[0];
-      const subFields = (field[key].subfields).map((subField) => {
+    const leaderRow = (
+      <tr
+        key="leader"
+        id="tr-leader"
+      >
+        <td
+          key="leader"
+          id="td-leader"
+          colSpan="4"
+        >
+          {leader}
+        </td>
+      </tr>
+    );
+
+    const getCellWithoutSubFields = (field, key, index) => (
+      <tr
+        key={`field-${key}-${index}`}
+        id={`field-${key}-${index}`}
+      >
+        <td
+          key={`cell1-${key}-${index}`}
+          id={`cell1-${key}-${index}`}
+          colSpan="3"
+        >
+          {`${key} ${field[key].replace(/\\/g, ' ')}`}
+        </td>
+      </tr>
+    );
+
+    const getCellWithSubFields = (field, key, index) => {
+      const subFields = (field[key].subfields).map(subField => {
         const subKey = Object.keys(subField)[0];
-        return [<span key={'span' + subKey}>&#8225;</span>, subKey, ' ', subField[subKey], ' '];
+
+        return [<span key={`span${subKey}`}>&#8225;</span>, subKey, ' ', subField[subKey], ' '];
       });
+
       return (
-        <tr key={'field-' + key + '-' + index}>
-          <td key={'cell1-' + key + '-' + index} style={{ 'verticalAlign': 'top' }}>
-            {key}
-            {' '}
-            {field[key].ind1.replace(/\\/g, ' ')}
-            {' '}
-            {field[key].ind2.replace(/\\/g, ' ')}
+        <tr
+          key={`field-${key}-${index}`}
+          id={`field-${key}-${index}`}
+        >
+          <td
+            key={`cell1-${key}-${index}`}
+            id={`cell1-${key}-${index}`}
+            style={{ verticalAlign: 'top' }}
+          >
+            {`${key} ${field[key].ind1.replace(/\\/g, ' ')} ${field[key].ind2.replace(/\\/g, ' ')}`}
           </td>
-          <td key={'cell2-' + key + '-' + index} style={{ 'whiteSpace': 'pre-wrap' }}><div>{subFields}</div></td>
+          <td
+            key={`cell2-${key}-${index}`}
+            style={{ whiteSpace: 'pre-wrap' }}
+          >
+            <div>{subFields}</div>
+          </td>
         </tr>
       );
-    });
+    };
+
+    const getFormattedField = (field, index) => {
+      const key = Object.keys(field)[0];
+
+      return typeof field[key] === 'string'
+        ? getCellWithoutSubFields(field, key, index)
+        : getCellWithSubFields(field, key, index);
+    };
+
+    const fields001to009 = fields.filter(field => (Object.keys(field)[0]).startsWith('00'));
+    const fields010andUp = fields.filter(field => !(Object.keys(field)[0]).startsWith('00'));
+    const formattedFields001to009 = fields001to009.map(getFormattedField);
+    const formattedFields010andUp = fields010andUp.map(getFormattedField);
 
     return (
       <div>
@@ -101,25 +140,26 @@ class ViewMarc extends React.Component {
             dismissible
             onClose={onClose}
           >
-            <div style={{ 'marginLeft': '20px' }}>
-              <h3>
+            <div style={{ marginLeft: '20px' }}>
+              <Headline
+                size="large"
+                margin="small"
+                tag="h3"
+              >
                 <FormattedMessage id="ui-inventory.marcSourceRecord" />
-              </h3>
-              <div style={{ 'whiteSpace': 'pre', 'fontFamily': 'courier' }}>
-                <table style={{ tableLayout: 'fixed', border: 0 }}>
+              </Headline>
+              <div style={{
+                whiteSpace: 'pre',
+                fontFamily: 'courier',
+              }}
+              >
+                <table style={{
+                  tableLayout: 'fixed',
+                  border: 0,
+                }}
+                >
                   <tbody>
-                    <tr
-                      key="leader"
-                      id="tr-leader"
-                    >
-                      <td
-                        key="leader"
-                        id="td-leader"
-                        colSpan="4"
-                      >
-                        {leader}
-                      </td>
-                    </tr>
+                    {leaderRow}
                     {formattedFields001to009}
                     {formattedFields010andUp}
                   </tbody>
@@ -139,9 +179,7 @@ ViewMarc.propTypes = {
   paneWidth: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   mutator: PropTypes.shape({
-    marcRecord: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
-    }),
+    marcRecord: PropTypes.shape({ GET: PropTypes.func.isRequired }),
     query: PropTypes.object.isRequired,
   }),
 };
