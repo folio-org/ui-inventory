@@ -420,6 +420,7 @@
   "item.status": "Item status",
   "item.status.available": "Available",
   "item.status.awaitingPickup": "Awaiting pickup",
+  "item.status.awaitingDelivery": "Awaiting delivery",
   "item.status.checkedOut": "Checked out",
   "item.status.inProcess": "In process",
   "item.status.inTransit": "In transit",
