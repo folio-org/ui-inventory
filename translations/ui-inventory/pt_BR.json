@@ -471,5 +471,6 @@
     "item.status.declaredLost": "Declarado perdido",
     "item.status.received": "Recebido",
     "item.status.orderClosed": "Pedido encerrado",
-    "reports.inTransitItem.copyNumber": "Número do exemplar"
+    "reports.inTransitItem.copyNumber": "Número do exemplar",
+    "settings.goBack": "Volte para as configurações de inventário"
 }

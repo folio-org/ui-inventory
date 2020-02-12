@@ -6,6 +6,7 @@
 * Fix display of information when the item's status is "Missing". Refs UIIN-913.
 * Add filter for instance formats. Refs UIIN-820.
 * Create permission for Inventory -> Settings -> HRID handling. Fix Inventory -> Settings -> pages access depending on the patron's permissions. Refs UIIN-800.
+* Move the Cancel/Save buttons to the bottom of the Inventory HRID settings screen. Refs UIIN-929.
 * Support updated versions of mod-circulation, mod-inventory, and mod-item-storage. Refs UIIN-936.
 * Add remaining call number fields in transit report. Refs UIIN-925.
 * Add ability to search by Instance HRID (Instance segment). Refs UIIN-899.
@@ -18,6 +19,10 @@
 * Always retrieve fresh statistical-code-types in settings. Refs UIIN-949.
 * Replace deprecated babel dependencies. Refs UIIN-956, STCOR-381.
 * Fix display of marc fields on ViewMarc screen. Refs UIIN-980.
+* Add filter for modes of issuance. Refs UIIN-823.
+* Add "Volume" and "Year, caption" fields to the Instance record in a detailed view. Refs UIIN-954.
+* Fix search and filter pane when viewing a holdings record. Fixes UIIN-953.
+* Fix translation for "Awaiting delivery" item status. Fixes UIIN-976.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
