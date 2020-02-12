@@ -240,7 +240,7 @@ class ViewInstance extends React.Component {
     this.props.updateLocation({ layer: null });
   };
 
-  closeViewItem = (e) => {
+  goBack = (e) => {
     if (e) e.preventDefault();
 
     const {
@@ -265,17 +265,6 @@ class ViewInstance extends React.Component {
     this.props.goTo(`/inventory/view/${this.props.match.params.id}${search}`);
   };
 
-  closeViewHoldingsRecord = (e) => {
-    if (e) e.preventDefault();
-
-    const {
-      goTo,
-      getParams,
-      match: { params },
-    } = this.props;
-
-    goTo(`/inventory/view/${params.id}`, getParams());
-  };
 
   createHoldingsRecord = (holdingsRecord) => {
     // POST holdings record
@@ -1468,7 +1457,7 @@ class ViewInstance extends React.Component {
               <this.cViewHoldingsRecord
                 id={id}
                 holdingsrecordid={holdingsrecordid}
-                onCloseViewHoldingsRecord={this.closeViewHoldingsRecord}
+                onCloseViewHoldingsRecord={this.goBack}
                 {...this.props}
               />
             )
@@ -1482,7 +1471,7 @@ class ViewInstance extends React.Component {
                 id={id}
                 holdingsRecordId={holdingsrecordid}
                 itemId={itemid}
-                onCloseViewItem={this.closeViewItem}
+                onCloseViewItem={this.goBack}
                 {...this.props}
               />
             )
