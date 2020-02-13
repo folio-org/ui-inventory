@@ -106,6 +106,8 @@ class Items extends React.Component {
       'materialType': ({ materialType }) => materialType.name.toLowerCase(),
       'enumeration': ({ enumeration }) => enumeration,
       'chronology': ({ chronology }) => chronology,
+      'volume': ({ volume }) => volume,
+      'yearCaption': ({ yearCaption }) => yearCaption,
     };
     const sortedRecords = orderBy(itemRecords, sorters[this.state.sortedColumn], this.state.sortOrder.slice());
     const itemsFormatter = {
@@ -139,6 +141,8 @@ class Items extends React.Component {
       'materialType': x => get(x, ['materialType', 'name']) || noValue,
       'enumeration': x => x.enumeration || noValue,
       'chronology': x => x.chronology || noValue,
+      'volume': x => x.volume || noValue,
+      'yearCaption': x => (x.yearCaption ? x.yearCaption.join(', ') : noValue),
     };
 
     return (
@@ -152,13 +156,23 @@ class Items extends React.Component {
                   contentData={checkIfArrayIsEmpty(sortedRecords)}
                   rowMetadata={['id', 'holdingsRecordId']}
                   formatter={itemsFormatter}
-                  visibleColumns={['barcode', 'status', 'materialType', 'enumeration', 'chronology']}
+                  visibleColumns={[
+                    'barcode',
+                    'status',
+                    'materialType',
+                    'enumeration',
+                    'chronology',
+                    'volume',
+                    'yearCaption',
+                  ]}
                   columnMapping={{
                     'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
                     'status': intl.formatMessage({ id: 'ui-inventory.status' }),
                     'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
                     'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
                     'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+                    'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
+                    'yearCaption': intl.formatMessage({ id: 'ui-inventory.yearCaption' }),
                   }}
                   ariaLabel={ariaLabel}
                   containerRef={ref => { this.resultsList = ref; }}
