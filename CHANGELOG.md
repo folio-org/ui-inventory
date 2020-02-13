@@ -18,6 +18,7 @@
 * Retrieve up to 1000 material types on the item-edit screen. Refs UIIN-946.
 * Always retrieve fresh statistical-code-types in settings. Refs UIIN-949.
 * Replace deprecated babel dependencies. Refs UIIN-956, STCOR-381.
+* Fix display of marc fields on ViewMarc screen. Refs UIIN-980.
 * Add filter for modes of issuance. Refs UIIN-823.
 * Add "Volume" and "Year, caption" fields to the Instance record in a detailed view. Refs UIIN-954.
 * Fix search and filter pane when viewing a holdings record. Fixes UIIN-953.
