@@ -142,7 +142,7 @@ class Items extends React.Component {
       'enumeration': x => x.enumeration || noValue,
       'chronology': x => x.chronology || noValue,
       'volume': x => x.volume || noValue,
-      'yearCaption': x => x.yearCaption?.join(', ') || noValue,
+      'yearCaption': x => (x.yearCaption ? x.yearCaption.join(', ') : noValue),
     };
 
     return (
