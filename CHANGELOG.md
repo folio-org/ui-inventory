@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 1.13.4 (IN PROGRESS)
+## [1.13.4](https://github.com/folio-org/ui-inventory/tree/v1.13.4) (2020-02-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.3...v1.13.4)
 
 * Add "Volume" and "Year, caption" fields to the Instance record in a detailed view. Refs UIIN-954.
 
