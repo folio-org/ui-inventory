@@ -83,15 +83,6 @@ class ViewItem extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
     },
-    loanTypes: {
-      type: 'okapi',
-      path: 'loan-types',
-      params: {
-        query: 'cql.allRecords=1 sortby name',
-        limit: '1000',
-      },
-      records: 'loantypes',
-    },
     servicePoints: {
       type: 'okapi',
       path: 'service-points',
@@ -117,15 +108,6 @@ class ViewItem extends React.Component {
         return query ? { query } : null;
       },
       resourceShouldRefresh: true,
-    },
-    callNumberTypes: {
-      type: 'okapi',
-      path: 'call-number-types',
-      params: {
-        query: 'cql.allRecords=1 sortby name',
-        limit: '1000',
-      },
-      records: 'callNumberTypes',
     },
     requests: {
       type: 'okapi',
@@ -405,18 +387,11 @@ class ViewItem extends React.Component {
       items,
       holdingsRecords,
       instances1,
-      loanTypes,
-      callNumberTypes,
     } = this.props.resources;
 
     if (!items || !items.hasLoaded || !instances1 ||
       !instances1.hasLoaded || !holdingsRecords ||
       !holdingsRecords.hasLoaded) {
-      return true;
-    }
-
-    if (!loanTypes || !loanTypes.hasLoaded ||
-      !callNumberTypes || !callNumberTypes.hasLoaded) {
       return true;
     }
 
@@ -430,9 +405,7 @@ class ViewItem extends React.Component {
         items,
         holdingsRecords,
         instances1,
-        loanTypes,
         requests,
-        callNumberTypes,
         staffMembers,
         servicePoints,
         openLoans,
@@ -448,8 +421,6 @@ class ViewItem extends React.Component {
       cannotDeleteItemModal,
     } = this.state;
 
-    referenceTables.loanTypes = (loanTypes || {}).records || [];
-    referenceTables.callNumberTypes = (callNumberTypes || {}).records || [];
     const staffMember = get(staffMembers, 'records[0]');
     const openLoan = get(openLoans, 'records[0]');
 

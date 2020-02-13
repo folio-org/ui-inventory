@@ -16,7 +16,7 @@ describe('Holdings SearchFieldFilter', () => {
   const holdingHRID = 'ho00000000002';
 
   beforeEach(function () {
-    this.visit('/inventory/holdings');
+    this.visit('/inventory?segment=holdings');
   });
 
   describe('Query Search', () => {

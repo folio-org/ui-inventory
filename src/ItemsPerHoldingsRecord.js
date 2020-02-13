@@ -34,24 +34,6 @@ import {
 class ItemsPerHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    materialTypes: {
-      type: 'okapi',
-      path: 'material-types',
-      params: {
-        query: 'cql.allRecords=1 sortby name',
-        limit: '1000',
-      },
-      records: 'mtypes',
-    },
-    loanTypes: {
-      type: 'okapi',
-      path: 'loan-types',
-      params: {
-        query: 'cql.allRecords=1 sortby name',
-        limit: '40',
-      },
-      records: 'loantypes',
-    },
     items: {
       type: 'okapi',
       records: 'items',
@@ -157,8 +139,6 @@ class ItemsPerHoldingsRecord extends React.Component {
       okapi,
       referenceTables,
       resources: {
-        materialTypes,
-        loanTypes,
         query: {
           layer,
           holdingsRecordId,
@@ -172,12 +152,6 @@ class ItemsPerHoldingsRecord extends React.Component {
       stripes,
     } = this.props;
     const { locationsById } = referenceTables;
-    const materialtypes = (materialTypes || {}).records || [];
-    const loantypes = (loanTypes || {}).records || [];
-
-    referenceTables.loanTypes = loantypes;
-    referenceTables.materialTypes = materialtypes;
-
     const labelLocation = holdingsRecord.permanentLocationId ? locationsById[holdingsRecord.permanentLocationId].name : '';
 
     if (layer === 'createItem' && holdingsRecordId === holdingsRecord.id) {

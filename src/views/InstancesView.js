@@ -1,59 +1,22 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { isEqual } from 'lodash';
 
-import {
-  InstanceFilters,
-  InstancesList,
-} from '../components';
-import { getCurrentFilters } from '../utils';
-import { instanceIndexes } from '../constants';
+import { InstancesList } from '../components';
 
-class InstancesView extends React.Component {
-  static propTypes = {
-    data: PropTypes.object,
-  };
+const InstancesView = props => (
+  <div data-test-inventory-instances>
+    <InstancesList {...props} />
+  </div>
+);
 
-  renderFilters = (onChange) => {
-    const {
-      data: {
-        locations,
-        instanceTypes,
-        instanceFormats,
-        modesOfIssuance,
-        query,
-      },
-    } = this.props;
+InstancesView.propTypes = {
+  data: PropTypes.object,
+  parentResources: PropTypes.object,
+};
 
-    const activeFilters = getCurrentFilters(get(query, 'filters', ''));
-
-    return (
-      <InstanceFilters
-        activeFilters={activeFilters}
-        data={{
-          locations,
-          resourceTypes: instanceTypes,
-          instanceFormats,
-          modesOfIssuance,
-        }}
-        onChange={onChange}
-        onClear={(name) => onChange({ name, values: [] })}
-      />
-    );
-  };
-
-  render() {
-    return (
-      <div data-test-inventory-instances>
-        <InstancesList
-          {...this.props}
-          renderFilters={this.renderFilters}
-          segment="instances"
-          searchableIndexes={instanceIndexes}
-        />
-      </div>
-    );
-  }
-}
-
-export default InstancesView;
+export default memo(InstancesView, (prevProps, nextProps) => {
+  return isEqual(prevProps.data, nextProps.data) &&
+    isEqual(prevProps.parentResources.records, nextProps.parentResources.records) &&
+    prevProps.segment === nextProps.segment;
+});

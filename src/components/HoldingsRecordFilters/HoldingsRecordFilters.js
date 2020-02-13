@@ -11,7 +11,7 @@ import {
   MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
 
-export default class HoldingFilters extends React.Component {
+export default class HoldingsRecordFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.objectOf(PropTypes.array),
     onChange: PropTypes.func.isRequired,

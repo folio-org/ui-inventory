@@ -245,17 +245,16 @@ class ViewInstance extends React.Component {
 
     const {
       goTo,
-      getSearchParams,
       match: {
         params: { id },
       },
-      location: { pathname }
+      location: { pathname, search }
     } = this.props;
 
-    // extract instance url with a correct segment
+    // extract instance url
     const [path] = pathname.match(new RegExp(`(.*)${id}`));
 
-    goTo(`${path}?${getSearchParams()}`);
+    goTo(`${path}${search}`);
   };
 
   closeViewMarc = (e) => {
@@ -869,7 +868,7 @@ class ViewInstance extends React.Component {
                   )}
                 />
                 <Route
-                  path="/inventory/(holdings|items|instances)?/view/"
+                  path="/inventory/view/"
                   render={() => (
                     <this.cHoldings
                       dataKey={id}

@@ -7,8 +7,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 
 import {
   InstancesRoute,
-  HoldingsRoute,
-  ItemsRoute,
 } from './routes';
 import Settings from './settings';
 
@@ -21,14 +19,6 @@ const InventoryRouting = (props) => {
 
   return (
     <Switch>
-      <Route
-        path={`${path}/holdings`}
-        component={HoldingsRoute}
-      />
-      <Route
-        path={`${path}/items`}
-        component={ItemsRoute}
-      />
       <Route
         path={path}
         component={InstancesRoute}
