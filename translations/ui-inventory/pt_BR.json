@@ -472,5 +472,6 @@
     "item.status.received": "Recebido",
     "item.status.orderClosed": "Pedido encerrado",
     "reports.inTransitItem.copyNumber": "Número do exemplar",
-    "settings.goBack": "Volte para as configurações de inventário"
+    "settings.goBack": "Volte para as configurações de inventário",
+    "item.status.awaitingDelivery": "Aguardando entrega"
 }
