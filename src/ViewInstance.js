@@ -69,7 +69,6 @@ import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
-import ViewItem from './ViewItem';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
@@ -1457,20 +1456,6 @@ class ViewInstance extends React.Component {
                 id={id}
                 holdingsrecordid={holdingsrecordid}
                 onCloseViewHoldingsRecord={this.goBack}
-                {...this.props}
-              />
-            )
-            : null
-        }
-
-        {
-          (holdingsrecordid && itemid)
-            ? (
-              <ViewItem
-                id={id}
-                holdingsRecordId={holdingsrecordid}
-                itemId={itemid}
-                onCloseViewItem={this.goBack}
                 {...this.props}
               />
             )

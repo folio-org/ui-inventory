@@ -79,7 +79,6 @@ class InstancesRoute extends React.Component {
       getParams,
     } = this.props;
 
-
     if (isLoading()) {
       return null;
     }
