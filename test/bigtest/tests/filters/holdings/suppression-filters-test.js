@@ -14,7 +14,7 @@ describe('Holdings suppression filters', () => {
   const holdingsRoute = new HoldingsRouteInteractor();
 
   beforeEach(function () {
-    this.visit('/inventory/holdings');
+    this.visit('/inventory?segment=holdings');
   });
 
   it('has a filter for discovery-suppressed items', () => {

@@ -1,48 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import {
+  map,
+  concat,
+  set,
+  omit,
+  flowRight,
+} from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import withData from './withData';
+import withLocation from '../withLocation';
 import { InstancesView } from '../views';
 import {
-  instanceIndexes,
-  instanceFilterConfig,
-  instanceSortMap,
-  CQL_FIND_ALL,
-} from '../constants';
-import {
-  getQueryTemplate,
-  getIsbnIssnTemplate,
-} from '../utils';
+  getFilterConfig,
+} from '../filterConfig';
+
 import buildManifestObject from './buildManifestObject';
-
-function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
-  const query = { ...resourceData.query };
-  const queryIndex = get(query, 'qindex', 'all');
-  const queryValue = get(query, 'query', '');
-  let queryTemplate = getQueryTemplate(queryIndex, instanceIndexes);
-
-  if (queryIndex.match(/isbn|issn/)) {
-    queryTemplate = getIsbnIssnTemplate(queryTemplate, props, queryIndex);
-  }
-
-  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
-    query.sort = '';
-  }
-
-  resourceData.query = { ...query, qindex: '' };
-
-  return makeQueryFunction(
-    CQL_FIND_ALL,
-    queryTemplate,
-    instanceSortMap,
-    instanceFilterConfig,
-    2
-  )(queryParams, pathComponents, resourceData, logger, props);
-}
+import { psTitleRelationshipId } from '../utils';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
@@ -54,10 +30,41 @@ class InstancesRoute extends React.Component {
     onSelectRow: PropTypes.func,
     isLoading: PropTypes.func,
     getData: PropTypes.func,
-    createInstance: PropTypes.func,
+    getParams: PropTypes.func,
   };
 
-  static manifest = Object.freeze(buildManifestObject(buildQuery));
+  static defaultProps = {
+    showSingleResult: false,
+    browseOnly: false,
+    disableRecordCreation: false,
+  };
+
+  static manifest = Object.freeze(buildManifestObject());
+
+  createInstance = (instance) => {
+    // Massage record to add preceeding and succeeding title fields in the
+    // right place.
+    const instanceCopy = this.combineRelTitles(instance);
+
+    // POST item record
+    return this.props.mutator.records.POST(instanceCopy);
+  };
+
+  combineRelTitles = (instance) => {
+    // preceding/succeeding titles are stored in parentInstances and childInstances
+    // in the instance record. Each title needs to provide an instance relationship
+    // type ID corresponding to 'preceeding-succeeding' in addition to the actual
+    // parent/child instance ID.
+    let instanceCopy = instance;
+    const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
+    const precedingTitles = map(instanceCopy.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(instanceCopy, 'parentInstances', concat(instanceCopy.parentInstances, precedingTitles));
+    const succeedingTitles = map(instanceCopy.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
+    set(instanceCopy, 'childInstances', succeedingTitles);
+    instanceCopy = omit(instanceCopy, ['precedingTitles', 'succeedingTitles']);
+
+    return instanceCopy;
+  }
 
   render() {
     const {
@@ -69,26 +76,37 @@ class InstancesRoute extends React.Component {
       mutator,
       isLoading,
       getData,
-      createInstance,
+      getParams,
     } = this.props;
 
     if (isLoading()) {
       return null;
     }
 
+    const data = getData();
+    const { segment } = getParams(this.props);
+    const { indexes, renderer } = getFilterConfig(segment);
+
     return (
       <InstancesView
         parentResources={resources}
         parentMutator={mutator}
-        data={getData()}
+        data={data}
         browseOnly={browseOnly}
         showSingleResult={showSingleResult}
-        onCreate={createInstance}
+        onCreate={this.createInstance}
         onSelectRow={onSelectRow}
         disableRecordCreation={disableRecordCreation}
+        renderFilters={renderer(data)}
+        segment={segment}
+        searchableIndexes={indexes}
       />
     );
   }
 }
 
-export default stripesConnect(withData(InstancesRoute));
+export default flowRight(
+  stripesConnect,
+  withLocation,
+  withData,
+)(InstancesRoute);

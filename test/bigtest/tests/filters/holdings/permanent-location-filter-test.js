@@ -14,7 +14,7 @@ describe('Holdings pane permanent location filter', () => {
   const holdingsRoute = new HoldingsRouteInteractor();
 
   beforeEach(function () {
-    this.visit('/inventory/holdings');
+    this.visit('/inventory?segment=holdings');
   });
 
   describe('open permanent location filter', () => {

@@ -16,7 +16,7 @@ describe('Items SearchFieldFilter', () => {
   const itemHRID = 'it00000000005';
 
   beforeEach(function () {
-    this.visit('/inventory/items');
+    this.visit('/inventory?segment=items');
   });
 
   describe('Query Search', () => {

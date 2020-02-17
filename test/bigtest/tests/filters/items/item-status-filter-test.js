@@ -14,7 +14,7 @@ describe('ItemStatusFilter', () => {
   const itemsRoute = new ItemsRouteInteractor();
 
   beforeEach(function () {
-    this.visit('/inventory/items');
+    this.visit('/inventory?segment=items');
   });
 
   describe('choose item status', () => {

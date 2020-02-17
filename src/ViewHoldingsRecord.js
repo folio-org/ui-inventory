@@ -331,12 +331,6 @@ class ViewHoldingsRecord extends React.Component {
         temporaryLocation,
         items,
       },
-      parentResources: {
-        holdingsTypes,
-        holdingsNoteTypes,
-        illPolicies,
-        callNumberTypes,
-      },
       referenceTables,
       okapi,
       stripes,
@@ -351,12 +345,6 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
     const itemCount = get(items, 'records.length', 0);
-
-    referenceTables.illPolicies = illPolicies.records;
-    referenceTables.holdingsTypes = holdingsTypes.records;
-    referenceTables.callNumberTypes = callNumberTypes.records;
-    referenceTables.holdingsNoteTypes = holdingsNoteTypes.records;
-
     const query = location.search ? queryString.parse(location.search) : {};
 
     const detailMenu = stripes.hasPerm('ui-inventory.holdings.edit') && (
