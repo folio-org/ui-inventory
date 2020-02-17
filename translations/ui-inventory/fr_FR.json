@@ -83,7 +83,7 @@
     "viewHoldingsRecord": "Afficher les enregistrements",
     "holdingsData": "Données sur les collections",
     "holdingsId": "ID des collections",
-    "holdingsStatement": "Holdings statement",
+    "holdingsStatement": "État des collections",
     "holdingsStatements": "Holdings statements",
     "removeStatement": "Retirer le relevé {num}",
     "deleteStatement": "Supprimer le relevé",
@@ -472,5 +472,6 @@
     "item.status.received": "Reçu(e)",
     "item.status.orderClosed": "Commande clôturée",
     "reports.inTransitItem.copyNumber": "Numéro de copie/d'exemplaire",
-    "settings.goBack": "Revenir aux paramètres d'inventaire"
+    "settings.goBack": "Revenir aux paramètres d'inventaire",
+    "item.status.awaitingDelivery": "En attente de livraison"
 }
