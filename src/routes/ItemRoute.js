@@ -99,13 +99,30 @@ class ItemRoute extends React.Component {
     goTo(`${path}${search}`);
   }
 
-  render() {
+  isLoading = () => {
     const {
       isLoading,
-      getData,
+      resources: {
+        items,
+        holdingsRecords,
+        instances1,
+      },
     } = this.props;
 
-    if (isLoading(true)) {
+    if (!items?.hasLoaded ||
+      !instances1?.hasLoaded ||
+      !holdingsRecords?.hasLoaded ||
+      isLoading()) {
+      return true;
+    }
+
+    return false;
+  }
+
+  render() {
+    const { getData } = this.props;
+
+    if (this.isLoading()) {
       return <PaneLoading defaultWidth="100%" />;
     }
 

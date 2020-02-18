@@ -153,12 +153,11 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
     mutator: PropTypes.object.isRequired,
   };
 
-  isLoading = (includeWrapped) => {
+  isLoading = () => {
     const { resources } = this.props;
-    const manifest = includeWrapped ? WithDataComponent.manifest : dataManifest;
 
-    for (const key in manifest) {
-      if (manifest[key].type === 'okapi' &&
+    for (const key in dataManifest) {
+      if (dataManifest[key].type === 'okapi' &&
         !(resources[key] && resources[key].hasLoaded)) {
         return true;
       }

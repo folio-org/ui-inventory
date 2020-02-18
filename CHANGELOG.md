@@ -23,6 +23,8 @@
 * Add "Volume" and "Year, caption" fields to the Instance record in a detailed view. Refs UIIN-954.
 * Fix search and filter pane when viewing a holdings record. Fixes UIIN-953.
 * Fix translation for "Awaiting delivery" item status. Fixes UIIN-976.
+* Use correct requester and proxy name on user's form. Fixes UIREQ-413.
+* Extract item view into a separate route. Fixes UIIN-955.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)

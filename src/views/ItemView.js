@@ -318,22 +318,6 @@ class ItemView extends React.Component {
     );
   };
 
-  isAwaitingResource = () => {
-    const {
-      items,
-      holdingsRecords,
-      instances1,
-    } = this.props.resources;
-
-    if (!items || !items.hasLoaded || !instances1 ||
-      !instances1.hasLoaded || !holdingsRecords ||
-      !holdingsRecords.hasLoaded) {
-      return true;
-    }
-
-    return false;
-  };
-
   render() {
     const {
       location,
@@ -358,11 +342,6 @@ class ItemView extends React.Component {
 
     const staffMember = get(staffMembers, 'records[0]');
     const openLoan = get(openLoans, 'records[0]');
-
-    if (this.isAwaitingResource()) {
-      return <FormattedMessage id="ui-inventory.waitingForResources" />;
-    }
-
     const source = staffMember ?
       <Link to={`/users/view/${staffMember.id}`}>
         {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
