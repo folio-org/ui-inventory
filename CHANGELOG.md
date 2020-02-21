@@ -25,6 +25,7 @@
 * Fix translation for "Awaiting delivery" item status. Fixes UIIN-976.
 * Use correct requester and proxy name on user's form. Fixes UIREQ-413.
 * Extract item view into a separate route. Fixes UIIN-955.
+* Filter instance, holding and item records by suppress: No. Refs UIIN-967, UIIN-968, UIIN-969, UIIN-970.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)

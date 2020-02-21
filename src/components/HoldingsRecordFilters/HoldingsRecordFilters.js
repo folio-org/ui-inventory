@@ -50,6 +50,10 @@ export default class HoldingsRecordFilters extends React.Component {
         label: <FormattedMessage id="ui-inventory.yes" />,
         value: 'true',
       },
+      {
+        label: <FormattedMessage id="ui-inventory.no" />,
+        value: 'false',
+      },
     ];
 
     return (
