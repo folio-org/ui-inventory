@@ -26,6 +26,11 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
+    name: 'natureOfContent',
+    cql: 'natureOfContentTermIds',
+    values: [],
+  },
+  {
     name: 'location',
     cql: 'holdingsRecords.permanentLocationId',
     values: [],
