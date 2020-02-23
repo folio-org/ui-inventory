@@ -175,7 +175,7 @@ export default class InstanceFilters extends React.Component {
           />
         </Accordion>
         <Accordion
-          label="Nature of content"
+          label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
           id="natureOfContent"
           name="natureOfContent"
           closedByDefault
