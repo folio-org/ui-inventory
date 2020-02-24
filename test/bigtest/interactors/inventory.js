@@ -28,7 +28,7 @@ export default @interactor class InventoryInteractor {
 
   isNoResultsMessageLabelPresent = isPresent('[class*=noResultsMessageLabel]');
 
-  isResourceFilterPresent = isPresent('[data-test-filter-instance-resource]');
+  isResourceFilterPresent = isPresent('#resource');
   isLocationFilterPresent = isPresent('[data-test-filter-instance-location]');
   isEffectiveLocationFilterPresent = isPresent('#effectiveLocation');
   isStaffSuppressFilterPresent = isPresent('[data-test-filter-instance-staff-suppress]');
