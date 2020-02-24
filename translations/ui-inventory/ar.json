@@ -125,7 +125,7 @@
     "onePublicationFieldToContinue": "يرجى ملء حقل واحد أو أكثر من حقول النشر للمتابعة",
     "holdingsLocation": "موقع المقتنيات",
     "itemLocation": "موقع المادة",
-    "effectiveLocation": "موقع نشط للمادة",
+    "effectiveLocation": "الموقع النشط للمادة",
     "permanent": "دائم",
     "temporary": "مؤقت",
     "selectPermanenLocation": "حدد الموقع الدائم",
