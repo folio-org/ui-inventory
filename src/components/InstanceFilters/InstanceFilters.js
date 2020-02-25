@@ -37,6 +37,7 @@ export default class InstanceFilters extends React.Component {
         language = [],
         format = [],
         mode = [],
+        natureOfContent = [],
         discoverySuppress = [],
         staffSuppress = [],
       },
@@ -45,6 +46,7 @@ export default class InstanceFilters extends React.Component {
         resourceTypes,
         instanceFormats,
         modesOfIssuance,
+        natureOfContentTerms,
       },
       onChange,
       onClear,
@@ -70,10 +72,19 @@ export default class InstanceFilters extends React.Component {
       value: id,
     }));
 
+    const natureOfContentOptions = natureOfContentTerms.map(({ name, id }) => ({
+      label: name,
+      value: id,
+    }));
+
     const suppressedOptions = [
       {
         label: <FormattedMessage id="ui-inventory.yes" />,
         value: 'true',
+      },
+      {
+        label: <FormattedMessage id="ui-inventory.no" />,
+        value: 'false',
       },
     ];
 
@@ -159,6 +170,23 @@ export default class InstanceFilters extends React.Component {
             name="mode"
             dataOptions={modeOfIssuanceOptions}
             selectedValues={mode}
+            filter={filterItemsBy('label')}
+            onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+          id="natureOfContent"
+          name="natureOfContent"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={mode.length > 0}
+          onClearFilter={() => onClear('natureOfContent')}
+        >
+          <MultiSelectionFilter
+            name="natureOfContent"
+            dataOptions={natureOfContentOptions}
+            selectedValues={natureOfContent}
             filter={filterItemsBy('label')}
             onChange={onChange}
           />

@@ -92,8 +92,7 @@ class Items extends React.Component {
     const {
       resources: { items },
       holdingsRecord,
-      getSearchParams,
-      location: { pathname },
+      location: { pathname, search },
 
     } = this.props;
 
@@ -115,7 +114,7 @@ class Items extends React.Component {
         return (item.id &&
           <React.Fragment>
             <Link
-              to={`${pathname}/${holdingsRecord.id}/${item.id}?${getSearchParams()}`}
+              to={`${pathname}/${holdingsRecord.id}/${item.id}${search}`}
               data-test-item-link
             >
               <span data-test-items-app-icon>
@@ -199,7 +198,6 @@ Items.propTypes = {
   }),
   location: PropTypes.object,
   holdingsRecord: PropTypes.object.isRequired,
-  getSearchParams: PropTypes.func.isRequired,
   getRecords: PropTypes.func.isRequired,
 };
 

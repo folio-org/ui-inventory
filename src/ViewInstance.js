@@ -69,7 +69,6 @@ import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
-import ViewItem from './ViewItem';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
@@ -245,17 +244,16 @@ class ViewInstance extends React.Component {
 
     const {
       goTo,
-      getSearchParams,
       match: {
         params: { id },
       },
-      location: { pathname }
+      location: { pathname, search }
     } = this.props;
 
-    // extract instance url with a correct segment
+    // extract instance url
     const [path] = pathname.match(new RegExp(`(.*)${id}`));
 
-    goTo(`${path}?${getSearchParams()}`);
+    goTo(`${path}${search}`);
   };
 
   closeViewMarc = (e) => {
@@ -869,7 +867,7 @@ class ViewInstance extends React.Component {
                   )}
                 />
                 <Route
-                  path="/inventory/(holdings|items|instances)?/view/"
+                  path="/inventory/view/"
                   render={() => (
                     <this.cHoldings
                       dataKey={id}
@@ -1458,20 +1456,6 @@ class ViewInstance extends React.Component {
                 id={id}
                 holdingsrecordid={holdingsrecordid}
                 onCloseViewHoldingsRecord={this.goBack}
-                {...this.props}
-              />
-            )
-            : null
-        }
-
-        {
-          (holdingsrecordid && itemid)
-            ? (
-              <ViewItem
-                id={id}
-                holdingsRecordId={holdingsrecordid}
-                itemId={itemid}
-                onCloseViewItem={this.goBack}
                 {...this.props}
               />
             )

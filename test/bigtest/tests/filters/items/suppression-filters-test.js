@@ -14,7 +14,7 @@ describe('Item suppression filters', () => {
   const itemRoute = new ItemsRouteInteractor();
 
   beforeEach(function () {
-    this.visit('/inventory/items');
+    this.visit('/inventory?segment=items');
   });
 
   it('has a filter for discovery-suppressed items', () => {

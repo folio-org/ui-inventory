@@ -125,7 +125,7 @@
     "onePublicationFieldToContinue": "يرجى ملء حقل واحد أو أكثر من حقول النشر للمتابعة",
     "holdingsLocation": "موقع المقتنيات",
     "itemLocation": "موقع المادة",
-    "effectiveLocation": "موقع نشط للمادة",
+    "effectiveLocation": "الموقع النشط للمادة",
     "permanent": "دائم",
     "temporary": "مؤقت",
     "selectPermanenLocation": "حدد الموقع الدائم",
@@ -472,5 +472,6 @@
     "item.status.received": "تم استلامه",
     "item.status.orderClosed": "تم إغلاق الطلبية",
     "reports.inTransitItem.copyNumber": "رقم النسخة",
-    "settings.goBack": "العودة إلى إعدادات المخزون"
+    "settings.goBack": "العودة إلى إعدادات المخزون",
+    "item.status.awaitingDelivery": "في انتظار التوصيل"
 }
