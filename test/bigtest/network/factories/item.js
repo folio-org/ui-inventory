@@ -7,6 +7,7 @@ export default Factory.extend({
   title: faker.company.catchPhrase(),
   hrid: () => Math.floor(Math.random() * 90000000) + 10000000,
   barcode: () => Math.floor(Math.random() * 9000000000000) + 1000000000000,
+  callNumber: () => `callNumber - ${faker.random.uuid()}`,
   status: {
     name: 'Available'
   },
