@@ -578,17 +578,7 @@
         ],
         "visible": true
       }
-    ],
-    "translations": {
-      "en": {
-        "search": "Search",
-        "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}"
-      },
-      "de": {
-        "search": "Suche",
-        "resultCount": "Gefunden {count, number} {count, plural, one {Aufzeichnung} other {Aufzeichnungen}}"
-      }
-    }
+    ]
   },
   "scripts": {
     "start": "stripes serve",
@@ -608,11 +598,11 @@
     "@folio/stripes-components": "^5.9.0",
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
-    "core-js": "^3.6.4", 
+    "core-js": "^3.6.4",
     "eslint": "^5.5.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "regenerator-runtime": "^0.13.3", 
+    "regenerator-runtime": "^0.13.3",
     "sinon": "^7.0.0"
   },
   "dependencies": {
