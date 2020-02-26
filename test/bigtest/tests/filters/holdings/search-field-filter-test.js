@@ -59,7 +59,7 @@ describe('Holdings SearchFieldFilter', () => {
     });
   });
 
-  describe.only('Call number, eye readable', function () {
+  describe('Call number, eye readable', function () {
     beforeEach(async function () {
       const instance = this.server.create('instance', {}, 'withHoldingAndItem');
 
