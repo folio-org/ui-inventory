@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## **1.14.0** (in progress)
+## 2.0.0 (IN PROGRESS)
+
 * Increase number of digits for HRID settings page. Refs UIIN-904
 * Add warning modal to HRID settings page. Refs UIIN-861
 * Fix display of information when the item's status is "Missing". Refs UIIN-913.
@@ -27,6 +28,7 @@
 * Extract item view into a separate route. Fixes UIIN-955.
 * Filter instance, holding and item records by suppress: No. Refs UIIN-967, UIIN-968, UIIN-969, UIIN-970.
 * Filter instance by nature of content. Refs UIIN-824.
+* Migrate to `stripes` `v3.0.0` and move `react-intl` to peerDependencies.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
