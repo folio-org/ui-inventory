@@ -28,6 +28,8 @@
 * Filter instance, holding and item records by suppress: No. Refs UIIN-967, UIIN-968, UIIN-969, UIIN-970.
 * Filter instance by nature of content. Refs UIIN-824.
 * Omit Former holdings ID when copying holdings record. Refs UIIN-845.
+* Filter instance by "Call number, eye readable" via holdings segment. Refs UIIN-858.
+* Filter instance by "Call number, eye readable" via items segment. Refs UIIN-990.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)

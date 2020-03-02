@@ -156,6 +156,8 @@
   "addIdentifier": "Add identifier",
   "isbn": "ISBN",
   "issn": "ISSN",
+  "callNumberEyeReadable": "Call number, eye readable",
+  "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
   "search.all": "Keyword (title, contributor, identifier)",
   "title": "Title (all)",
   "indexTitle": "Index title",
