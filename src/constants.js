@@ -74,3 +74,8 @@ export const hridSettingsSections = [
     title: 'ui-inventory.hridHandling.sectionHeader3',
   },
 ];
+
+export const indentifierTypeNames = {
+  ISBN: 'ISBN',
+  ISSN: 'ISSN',
+};

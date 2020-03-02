@@ -21,6 +21,8 @@
   "selectToContinue": "Please select to continue",
   "add": "Add",
   "addLabel": "Add {label}",
+  "notAvailable": "N/A",
+  "findInstancePluginNotFound": "find-instance plugin not found",
   "onePublicationFieldToContinue": "Please fill in one or more publication fields to continue",
   "barcodeTaken": "This barcode has already been taken",
   "hridTaken": "This HRID has already been taken",
@@ -475,5 +477,8 @@
   "mostRecentCheckIn": "Most recent check in",
   "checkInDate": "Check in date",
   "servicePoint": "Service point",
-  "adminData": "Admin data"
+  "adminData": "Admin data",
+  "precedingField.title": "Title",
+  "precedingField.notConnected": "Not connected",
+  "precedingField.connected": "Connected"
 }

@@ -16,6 +16,7 @@ import {
   groupBy,
   map,
   isObject,
+  cloneDeep,
 } from 'lodash';
 import {
   itemStatusesMap,
@@ -239,4 +240,58 @@ export const getSortedNotes = (resource, field, types) => {
   });
 
   return sortedNotes;
+};
+
+/**
+ * Filter instance indetifiers by given type and
+ * return them as a comma separated string.
+ *
+ * @param indetifiers array of objects
+ * @param type string
+ * @param identifierTypesById object
+ *
+ * @return string
+ */
+export const getIdentifiers = (indetifiers = [], type, identifierTypesById) => {
+  const result = [];
+
+  indetifiers.forEach(({ identifierTypeId, value }) => {
+    const ident = identifierTypesById[identifierTypeId];
+
+    if (ident?.name === type && value) {
+      result.push(value);
+    }
+  });
+
+  return result.join(',');
+};
+
+/**
+ * Parses preceding and succeeding titles for a given instance
+ * to the format required by the backend.
+ *
+ * @param instance instance object
+ * @param type string ("precedingTitles" or "precedingTitles")
+ * @param titleIdKey string ("precedingInstanceId" or "succeedingInstanceId")
+ *
+ */
+export const parseTitles = (instance, type, titleIdKey) => {
+  instance[type] = (instance?.[type] ?? []).map((inst) => {
+    const {
+      id,
+      title,
+      hrid,
+      identifiers,
+    } = inst;
+
+    return id ?
+      // connected title
+      { [titleIdKey]: id } :
+      // unconnected title
+      {
+        title,
+        hrid,
+        identifiers,
+      };
+  });
 };

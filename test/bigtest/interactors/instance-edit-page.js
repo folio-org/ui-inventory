@@ -38,6 +38,13 @@ import {
   clickAddNewContributor = clickable('#clickable-add-contributor');
 }
 
+@interactor class PrecedingTitles {
+  precedingTitlesCount = count('[data-test-repeater-field-row]');
+  clickAddPrecedingTitle = clickable('#clickable-add-precedingTitle-add-button');
+  clickAddInstance = clickable('[data-test-plugin-find-record-button]');
+  instanceName = text('[data-test-connected-instance-title]');
+}
+
 @interactor class Foo { }
 
 @interactor class InstanceEditPage {
@@ -67,6 +74,7 @@ import {
   secondLanguageLabelId = attribute('[data-test-language-field-count="1"]', 'aria-labelledby');
 
   contributors = new Contributors();
+  precedingTitles = new PrecedingTitles();
 
   // The BigTest documentation shows examples like
   //   let input = new Interactor('input');

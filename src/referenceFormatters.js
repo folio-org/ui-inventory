@@ -154,10 +154,10 @@ export default {
     const formatted = [];
     if (r.precedingTitles && r.precedingTitles.length) {
       r.precedingTitles.forEach((title) => {
-        const viewPrecedingTitleLink = `/inventory/view/${title.superInstanceId}/${location.search}`;
+        const viewPrecedingTitleLink = `/inventory/view/${title.precedingInstanceId}/${location.search}`;
         formatted.push(
           <Link to={viewPrecedingTitleLink}>
-            {`${title.superInstanceId}`}
+            {`${title.title}`}
           </Link>
         );
       });
@@ -169,10 +169,10 @@ export default {
     const formatted = [];
     if (r.succeedingTitles && r.succeedingTitles.length) {
       r.succeedingTitles.forEach((title) => {
-        const viewSucceedingTitleLink = `/inventory/view/${title.subInstanceId}/${location.search}`;
+        const viewSucceedingTitleLink = `/inventory/view/${title.succeedingInstanceId}/${location.search}`;
         formatted.push(
           <Link to={viewSucceedingTitleLink}>
-            {`${title.subInstanceId}`}
+            {`${title.title}`}
           </Link>
         );
       });
