@@ -473,5 +473,7 @@
     "item.status.orderClosed": "Pedido encerrado",
     "reports.inTransitItem.copyNumber": "Número do exemplar",
     "settings.goBack": "Volte para as configurações de inventário",
-    "item.status.awaitingDelivery": "Aguardando entrega"
+    "item.status.awaitingDelivery": "Aguardando entrega",
+    "callNumberEyeReadable": "Número de chamada, legível",
+    "itemEffectiveCallNumberEyeReadable": "Número de chamada efetivo (item), legível"
 }
