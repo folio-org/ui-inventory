@@ -8,4 +8,5 @@ export { default as InstancePlugin } from './InstancePlugin';
 export { default as ConnectedTitle } from './ConnectedTitle';
 export { default as UnconnectedTitle } from './UnconnectedTitle';
 export { default as TitleLabel } from './TitleLabel';
+export { default as TitlesView } from './TitlesView';
 export { PaneLoading, ViewLoading } from './Loading';

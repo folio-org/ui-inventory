@@ -480,21 +480,19 @@ describe('InstanceViewPage', () => {
   describe('Preceding and succeding titles', () => {
     setupApplication();
     beforeEach(async function () {
-      this.server.create('instanceRelationshipType', {
-        'id': '7531246',
-        'name': 'preceding-succeeding',
-      });
       const instance = this.server.create('instance', {
         title: 'ADVANCING RESEARCH',
-        parentInstances: [{
-          id: '10101010101',
-          superInstanceId: '130400000',
-          instanceRelationshipTypeId: '7531246',
+        precedingTitles: [{
+          id: 'da672352-7856-4241-ac06-ae62f0bade4c',
+          precedingInstanceId: '5bf370e0-8cca-4d9c-82e4-5170ab2a0a39',
+          title: 'A semantic web primer',
+          hrid: 'inst000000000022',
         }],
-        childInstances: [{
-          id: '10101010101',
-          subInstanceId: '130400000',
-          instanceRelationshipTypeId: '7531246',
+        succeedingTitles: [{
+          id: '668b93f1-4821-4eb0-8a2b-d507434965f4',
+          succeedingInstanceId: '5bf370e0-8cca-4d9c-82e4-5170ab2a0a39',
+          title: 'Bridget Jones\'s Baby: the diaries',
+          hrid: 'inst000000000022',
         }],
       });
 
@@ -503,10 +501,10 @@ describe('InstanceViewPage', () => {
     });
 
     it('should show preceding title', () => {
-      expect(InstanceViewPage.hasPrecedingTitles).to.be.true;
+      expect(InstanceViewPage.precedingTitles.rowCount).to.be.equal(1);
     });
     it('should show succeding title', () => {
-      expect(InstanceViewPage.hasSucceedingTitles).to.be.true;
+      expect(InstanceViewPage.succeedingTitles.rowCount).to.be.equal(1);
     });
   });
 
