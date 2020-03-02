@@ -59,6 +59,20 @@ describe('Holdings SearchFieldFilter', () => {
     });
   });
 
+  describe('Call number, eye readable', function () {
+    beforeEach(async function () {
+      const instance = this.server.create('instance', {}, 'withHoldingAndItem');
+
+      await holdingsRoute.searchFieldFilter.searchField.selectIndex('Call number, eye readable');
+      await holdingsRoute.searchFieldFilter.searchField.fillInput(instance.holdings.models[0].callNumber);
+      await holdingsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('finds instances by Call number - eye readable', () => {
+      expect(holdingsRoute.rows().length).to.equal(1);
+    });
+  });
+
   describe('selecting the Holdings HRID search option', function () {
     beforeEach(async () => {
       await holdingsRoute.searchFieldFilter.searchField.selectIndex('Holdings HRID');

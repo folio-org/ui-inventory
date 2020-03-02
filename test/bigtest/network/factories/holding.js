@@ -16,6 +16,7 @@ export default Factory.extend({
   permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
   hrid: i => `ho0000000000${i + 1}`,
   electronicAccess: () => [],
+  callNumber: () => `callNumber - ${random.uuid()}`,
   formerIds: [],
   holdingsItems: [],
   holdingsStatements: [
