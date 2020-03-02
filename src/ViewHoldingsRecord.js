@@ -192,7 +192,7 @@ class ViewHoldingsRecord extends React.Component {
   onCopy(record) {
     this.setState((state) => {
       const newState = cloneDeep(state);
-      newState.copiedRecord = omit(record, ['id', 'hrid']);
+      newState.copiedRecord = omit(record, ['id', 'hrid', 'formerIds']);
       return newState;
     });
 
