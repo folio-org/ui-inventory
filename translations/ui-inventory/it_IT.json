@@ -473,5 +473,7 @@
     "item.status.orderClosed": "Ordine chiuso",
     "reports.inTransitItem.copyNumber": "Numero copia",
     "settings.goBack": "Torna alle impostazioni di Inventory",
-    "item.status.awaitingDelivery": "Awaiting delivery"
+    "item.status.awaitingDelivery": "Awaiting delivery",
+    "callNumberEyeReadable": "Call number, eye readable",
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
 }
