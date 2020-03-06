@@ -15,7 +15,7 @@ import {
 
 import { AppIcon } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
-import { Button } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
@@ -32,6 +32,8 @@ import {
   InstancesIdReport,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
+
+import css from './instances.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -193,6 +195,11 @@ class InstancesView extends React.Component {
             this.generateInstancesIdReport();
           }}
         >
+          <Icon
+            icon="save"
+            size="medium"
+            iconClassName={css.actionIcon}
+          />
           <FormattedMessage id="ui-inventory.saveInstancesUIIDS" />
         </Button>
       </Fragment>
