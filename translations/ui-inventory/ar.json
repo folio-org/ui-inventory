@@ -474,6 +474,6 @@
     "reports.inTransitItem.copyNumber": "رقم النسخة",
     "settings.goBack": "العودة إلى إعدادات المخزون",
     "item.status.awaitingDelivery": "في انتظار التوصيل",
-    "callNumberEyeReadable": "Call number, eye readable",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
+    "callNumberEyeReadable": "رقم الاستدعاء، قابل للقراءة بالعين",
+    "itemEffectiveCallNumberEyeReadable": "رقم الاستدعاء النشط (مادة)، قابل للقراءة بالعين"
 }
