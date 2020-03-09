@@ -242,19 +242,19 @@ export const getSortedNotes = (resource, field, types) => {
 };
 
 /**
- * Filter instance indetifiers by given type and
+ * Filter instance identifiers by given type and
  * return them as a comma separated string.
  *
- * @param indetifiers array of objects
+ * @param identifiers array of objects
  * @param type string
  * @param identifierTypesById object
  *
  * @return string
  */
-export const getIdentifiers = (indetifiers = [], type, identifierTypesById) => {
+export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
   const result = [];
 
-  indetifiers.forEach(({ identifierTypeId, value }) => {
+  identifiers.forEach(({ identifierTypeId, value }) => {
     const ident = identifierTypesById[identifierTypeId];
 
     if (ident?.name === type && value) {
