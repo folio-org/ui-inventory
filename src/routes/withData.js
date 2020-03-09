@@ -177,6 +177,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
     }
 
     data.locationsById = keyBy(data.locations, 'id');
+    data.identifierTypesById = keyBy(data.identifierTypes, 'id');
     data.query = resources.query;
 
     return data;

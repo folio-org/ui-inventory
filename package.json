@@ -628,5 +628,8 @@
     "react": "*",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
+  },
+  "optionalDependencies": {
+    "@folio/plugin-find-instance": "^1.6.0"
   }
 }

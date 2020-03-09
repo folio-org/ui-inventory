@@ -1,14 +1,8 @@
 import {
-  concat,
-  filter,
   get,
   has,
   cloneDeep,
   orderBy,
-  map,
-  omit,
-  reject,
-  set,
   isEmpty,
   values,
 } from 'lodash';
@@ -57,12 +51,12 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   areAllFieldsEmpty,
   craftLayerUrl,
-  psTitleRelationshipId,
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   checkIfArrayIsEmpty,
   staffOnlyFormatter,
   getSortedNotes,
+  parseTitles,
 } from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
@@ -191,48 +185,14 @@ class ViewInstance extends React.Component {
   };
 
   update = (instance) => {
-    this.combineRelTitles(instance);
+    // Massage record to add preceeding and succeeding title fields
+    parseTitles(instance, 'precedingTitles', 'precedingInstanceId');
+    parseTitles(instance, 'succeedingTitles', 'succeedingInstanceId');
+
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.resetLayerQueryParam();
     });
   };
-
-  // Combine precedingTitles with parentInstances, and succeedingTitles with childInstances,
-  // before saving the instance record
-  combineRelTitles = (instance) => {
-    // preceding/succeeding titles are stored in parentInstances and childInstances
-    // in the instance record and needfrle to be combined with existing relationships here
-    // before saving. Each title needs to provide an instance relationship
-    // type ID corresponding to 'preceeding-succeeding' in addition to the actual parent
-    // instance ID.
-    let instanceCopy = instance;
-    const titleRelationshipTypeId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    const precedingTitles = map(instanceCopy.precedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    const succeedingTitles = map(instanceCopy.succeedingTitles, p => { p.instanceRelationshipTypeId = titleRelationshipTypeId; return p; });
-    set(instanceCopy, 'parentInstances', concat(instanceCopy.parentInstances, precedingTitles));
-    set(instanceCopy, 'childInstances', concat(instanceCopy.childInstances, succeedingTitles));
-    instanceCopy = omit(instanceCopy, ['precedingTitles', 'succeedingTitles']);
-    return instanceCopy;
-  };
-
-  // Separate preceding/succeeding title relationships from other types of
-  // parent/child instances before displaying the record
-  splitRelTitles = (instance) => {
-    const instanceCopy = cloneDeep(instance);
-    const psRelId = psTitleRelationshipId(this.props.resources.instanceRelationshipTypes.records);
-    if (instanceCopy.parentInstances) {
-      const parentInstances = reject(instanceCopy.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      const precedingTitles = filter(instanceCopy.parentInstances, { 'instanceRelationshipTypeId': psRelId });
-      instance.precedingTitles = instance.precedingTitles || precedingTitles;
-      instance.parentInstances = parentInstances;
-    }
-    if (instanceCopy.childInstances) {
-      const childInstances = reject(instanceCopy.childInstances, { 'instanceRelationshipTypeId': psRelId });
-      const succeedingTitles = filter(instanceCopy.childInstances, { 'instanceRelationshipTypeId': psRelId });
-      instance.succeedingTitles = instance.succeedingTitles || succeedingTitles;
-      instance.childInstances = childInstances;
-    }
-  }
 
   resetLayerQueryParam = (e) => {
     if (e) e.preventDefault();
@@ -262,7 +222,6 @@ class ViewInstance extends React.Component {
     this.resetLayerQueryParam();
     this.props.goTo(`/inventory/view/${this.props.match.params.id}${search}`);
   };
-
 
   createHoldingsRecord = (holdingsRecord) => {
     // POST holdings record
@@ -560,8 +519,6 @@ class ViewInstance extends React.Component {
         )}
       </FormattedMessage>
     );
-
-    this.splitRelTitles(instance);
 
     if (query.layer === 'edit') {
       return (

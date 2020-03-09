@@ -253,6 +253,7 @@ class InstanceForm extends React.Component {
       referenceTables,
       copy,
     } = this.props;
+
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
       return ref || {};
