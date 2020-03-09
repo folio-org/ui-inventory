@@ -1,14 +1,8 @@
 import {
-  concat,
-  filter,
   get,
   has,
   cloneDeep,
   orderBy,
-  map,
-  omit,
-  reject,
-  set,
   isEmpty,
   values,
 } from 'lodash';
@@ -57,7 +51,6 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   areAllFieldsEmpty,
   craftLayerUrl,
-  psTitleRelationshipId,
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   checkIfArrayIsEmpty,
