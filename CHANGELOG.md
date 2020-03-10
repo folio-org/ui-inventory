@@ -31,7 +31,6 @@
 * Filter instance by "Call number, eye readable" via holdings segment. Refs UIIN-858.
 * Filter instance by "Call number, eye readable" via items segment. Refs UIIN-990.
 * Enhance preceding connected titles. Refs UIIN-960.
-* Add Save icon to the Save Instances UUIDs option in Action menu. UIDEXP-32.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
