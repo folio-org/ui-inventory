@@ -10,6 +10,7 @@ import InstanceViewPage from '../interactors/instance-view-page';
 
 describe('InstanceEditPage', () => {
   setupApplication({
+    scenarios: ['default'],
     modules: [{
       type: 'plugin',
       name: '@folio/plugin-find-instance',
@@ -189,6 +190,20 @@ describe('InstanceEditPage', () => {
 
     it('should increase number of preceding title"', () => {
       expect(InstanceEditPage.precedingTitles.precedingTitlesCount).to.be.gt(prevCount);
+    });
+
+    describe('saving unconnected titles', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.precedingTitles.fillTitleField('title 1');
+        await InstanceEditPage.precedingTitles.fillISBNField('isbn1');
+        await InstanceEditPage.precedingTitles.fillISSNField('issn1');
+        await InstanceEditPage.selectInstanceType('still image');
+        await InstanceEditPage.saveInstance();
+      });
+
+      it('should save instance and go back to instance view', function () {
+        expect(this.location.search).to.not.include('layer=edit');
+      });
     });
 
     describe('clicking add instance', () => {

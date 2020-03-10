@@ -56,7 +56,8 @@ import {
   checkIfArrayIsEmpty,
   staffOnlyFormatter,
   getSortedNotes,
-  parseTitles,
+  marshalInstance,
+  unmarshalInstance,
 } from './utils';
 import formatters from './referenceFormatters';
 import Holdings from './Holdings';
@@ -187,9 +188,10 @@ class ViewInstance extends React.Component {
   };
 
   update = (instance) => {
+    const { referenceTables: { identifierTypesByName } } = this.props;
+
     // Massage record to add preceeding and succeeding title fields
-    parseTitles(instance, 'precedingTitles', 'precedingInstanceId');
-    parseTitles(instance, 'succeedingTitles', 'succeedingInstanceId');
+    marshalInstance(instance, identifierTypesByName);
 
     this.props.mutator.selectedInstance.PUT(instance).then(() => {
       this.resetLayerQueryParam();
@@ -385,6 +387,8 @@ class ViewInstance extends React.Component {
       marcRecord
     } = this.state;
 
+    const { identifierTypesById } = referenceTables;
+
     const query = location.search ? queryString.parse(location.search) : {};
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
@@ -532,7 +536,7 @@ class ViewInstance extends React.Component {
             >
               <InstanceForm
                 onSubmit={this.update}
-                initialValues={instance}
+                initialValues={unmarshalInstance(instance, identifierTypesById)}
                 instanceSource={get(instance, ['source'])}
                 referenceTables={referenceTables}
                 stripes={stripes}
