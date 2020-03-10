@@ -15,7 +15,10 @@ import {
 
 import { AppIcon } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
-import { Button, Icon } from '@folio/stripes/components';
+import {
+  Button,
+  Icon
+} from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
