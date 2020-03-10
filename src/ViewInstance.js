@@ -66,6 +66,8 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
+
+import { TitlesView } from './components';
 import {
   wrappingCell,
   noValue,
@@ -624,16 +626,13 @@ class ViewInstance extends React.Component {
       alternativeTitles: get(instance, ['alternativeTitles'], []),
       indexTitle: get(instance, ['indexTitle'], '-'),
       series: get(instance, ['series'], []),
-      precedingTitles: get(instance, ['precedingTitles'], []),
-      succeedingTitles: get(instance, ['succeedingTitles'], []),
     };
+    const {
+      precedingTitles,
+      succeedingTitles,
+    } = instance;
 
     const seriesContent = !isEmpty(titleData.series) ? titleData.series.map(x => ({ value: x })) : emptyList;
-
-    const precedingTitlesContent = !isEmpty(titleData.precedingTitles) ? formatters.precedingTitlesFormatter(instance, location) : noValue;
-
-    const succeedingTitlesContent = !isEmpty(titleData.succeedingTitles) ? formatters.succeedingTitlesFormatter(instance, location) : noValue;
-
     const identifiers = get(instance, 'identifiers', []).map(x => ({
       identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
       value: x.value,
@@ -1037,9 +1036,11 @@ class ViewInstance extends React.Component {
               data-test-preceding-titles
               xs={12}
             >
-              <KeyValue
+              <TitlesView
+                id="precedingTitles"
+                titleKey="precedingInstanceId"
                 label={<FormattedMessage id="ui-inventory.precedingTitles" />}
-                value={precedingTitlesContent}
+                titles={isEmpty(precedingTitles) ? emptyList : precedingTitles}
               />
             </Col>
           </Row>
@@ -1048,9 +1049,11 @@ class ViewInstance extends React.Component {
               data-test-succeeding-titles
               xs={12}
             >
-              <KeyValue
+              <TitlesView
+                id="succeedingTitles"
+                titleKey="succeedingInstanceId"
                 label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
-                value={succeedingTitlesContent}
+                titles={isEmpty(succeedingTitles) ? emptyList : succeedingTitles}
               />
             </Col>
           </Row>

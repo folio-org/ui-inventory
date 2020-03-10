@@ -62,8 +62,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   accordion = new AccordionInteractor('#acc02');
   expandAll = scoped('[data-test-expand-all] button');
   hasExpandAll = isPresent('[data-test-expand-all] button');
-  hasPrecedingTitles = isPresent('[data-test-preceding-titles]');
-  hasSucceedingTitles = isPresent('[data-test-succeeding-titles]');
+  precedingTitles = new MultiColumnListInteractor('#precedingTitles');
+  succeedingTitles = new MultiColumnListInteractor('#succeedingTitles');
+
   notes = collection('[id^="list-instance-notes"]', MultiColumnListInteractor);
 
   getCellContent(row, cell) {
