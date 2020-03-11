@@ -186,6 +186,11 @@ class InstancesView extends React.Component {
             this.startInTransitReportGeneration();
           }}
         >
+          <Icon
+            icon="reports"
+            size="medium"
+            iconClassName={css.actionIcon}
+          />
           <FormattedMessage id="ui-inventory.inTransitReport" />
         </Button>
         <Button

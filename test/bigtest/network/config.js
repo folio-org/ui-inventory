@@ -128,7 +128,7 @@ export default function configure() {
       }
 
 
-      if (left.field === 'holdingsRecords.fullCallNumber') {
+      if (left?.field === 'holdingsRecords.fullCallNumber') {
         const holding = holdings.where({ callNumber: left.term }).models[0];
 
         return instances.where({ id: holding.instanceId });
