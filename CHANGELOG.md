@@ -34,6 +34,7 @@
 * Add Save icon to the Save Instances UUIDs option in Action menu. UIDEXP-32.
 * Display succeeding/preceding titles on instance view. Refs UIIN-952, UIIN-961 and UIIN-964.
 * Rename the filter `Effective location` to `Effective location (item)`. Refs UIIN-1008.
+* Change endpoint to request instances UIIDs for report generation. UIDEXP-28.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)

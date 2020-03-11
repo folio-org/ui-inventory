@@ -48,8 +48,16 @@ describe('Instances', () => {
       expect(inventory.headerDropdownMenu.itemsInTransitReportBtnIsVisible).to.be.true;
     });
 
+    it('should display correct icon for saving items in transit to csv', () => {
+      expect(inventory.headerDropdownMenu.isTransitItemsReportIconPresent).to.be.true;
+    });
+
     it('should display action button for saving instances UIIDs to csv', () => {
       expect(inventory.headerDropdownMenu.saveInstancesUIIDsBtnIsVisible).to.be.true;
+    });
+
+    it('should display correct icon for saving instances UIIDs to csv', () => {
+      expect(inventory.headerDropdownMenu.isSaveInstancesUIIDsIconPresent).to.be.true;
     });
 
     it('should disable action button for saving instances UIIDs if there are not items in search result', () => {
@@ -83,8 +91,8 @@ describe('Instances', () => {
         expect(requests.length).to.equal(0);
       });
 
-      it('should hide action items', () => {
-        expect(inventory.headerDropdownMenu.saveInstancesUIIDsBtnIsVisible).to.be.false;
+      it('should not hide action items', () => {
+        expect(inventory.headerDropdownMenu.saveInstancesUIIDsBtnIsVisible).to.be.true;
       });
     });
   });
