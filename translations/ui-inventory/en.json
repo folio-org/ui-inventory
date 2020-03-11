@@ -417,7 +417,7 @@
   "filters.instances": "Instance",
   "filters.holdings": "Holdings",
   "filters.items": "Item",
-  "filters.effectiveLocation": "Effective location",
+  "filters.effectiveLocation": "Effective location (item)",
   "yes": "Yes",
   "no": "No",
   "unknownNoteType": "Unknown note type",
