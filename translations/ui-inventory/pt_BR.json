@@ -289,7 +289,7 @@
     "addParentInstance": "Adicionar instância pai",
     "selectType": "Selecione o tipo",
     "selectStatus": "Selecione o status",
-    "createNewHoldingsRecord": "Criar um novo registro de acervo",
+    "createNewHoldingsRecord": "Criar um registro de acervo",
     "volume": "Volume",
     "yearCaption": "Ano, legenda",
     "addYearCaption": "Adicionar ano, legenda",
@@ -398,8 +398,8 @@
     "relatedTitles": "Títulos relacionados",
     "precedingTitles": "Títulos anteriores",
     "addPrecedingTitle": "Adicionar título anterior",
-    "succeedingTitles": "Títulos subseqüentes",
-    "addSucceedingTitle": "Adicionar título subseqüente",
+    "succeedingTitles": "Títulos subsequentes",
+    "addSucceedingTitle": "Adicionar título subsequente",
     "statisticalCodeName": "Nome do código estatístico",
     "yes": "Sim",
     "no": "Não",
@@ -441,7 +441,7 @@
     "reports.inTransitItem.enumeration": "Enumeração",
     "reports.inTransitItem.volume": "Volume",
     "reports.inTransitItem.yearCaption": "Ano",
-    "effectiveCallNumber": "Seqüência efetiva do número de chamada",
+    "effectiveCallNumber": "Sequência efetiva do número de chamada",
     "updatedDateAndTime": "Data e hora atualizadas",
     "updatedSource": "Fonte atualizada",
     "createdDateAndTime": "Data e hora da criação",
@@ -473,5 +473,7 @@
     "item.status.orderClosed": "Pedido encerrado",
     "reports.inTransitItem.copyNumber": "Número do exemplar",
     "settings.goBack": "Volte para as configurações de inventário",
-    "item.status.awaitingDelivery": "Aguardando entrega"
+    "item.status.awaitingDelivery": "Aguardando entrega",
+    "callNumberEyeReadable": "Número de chamada, legível",
+    "itemEffectiveCallNumberEyeReadable": "Número de chamada efetivo (item), legível"
 }

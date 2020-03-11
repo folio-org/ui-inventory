@@ -19,8 +19,9 @@ import {
   itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
   clickSaveInstancesUIIDsBtn = clickable('#dropdown-clickable-get-items-uiids');
   saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
-  saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
   isSaveInstancesUIIDsBtnDisabled = property('#dropdown-clickable-get-items-uiids', 'disabled');
+  isSaveInstancesUIIDsIconPresent = isPresent('#dropdown-clickable-get-items-uiids [class*=icon-save]');
+  isTransitItemsReportIconPresent = isPresent('#dropdown-clickable-get-report [class*=icon-report]');
 }
 
 export default @interactor class InventoryInteractor {
@@ -28,7 +29,7 @@ export default @interactor class InventoryInteractor {
 
   isNoResultsMessageLabelPresent = isPresent('[class*=noResultsMessageLabel]');
 
-  isResourceFilterPresent = isPresent('[data-test-filter-instance-resource]');
+  isResourceFilterPresent = isPresent('#resource');
   isLocationFilterPresent = isPresent('[data-test-filter-instance-location]');
   isEffectiveLocationFilterPresent = isPresent('#effectiveLocation');
   isStaffSuppressFilterPresent = isPresent('[data-test-filter-instance-staff-suppress]');
@@ -53,7 +54,7 @@ export default @interactor class InventoryInteractor {
   openItem = clickable('[data-test-items] a');
   closeItem = clickable('[data-test-item-view-page] button:first-child');
 
-  headerDropdown = scoped('[class*=paneHeaderCenterInner---] [class*=dropdown---] button');
+  headerDropdown = scoped('[data-test-pane-header-actions-button]');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
 
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);

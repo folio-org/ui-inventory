@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
 
-import { TextField } from '@folio/stripes/components';
+import { RepeatableField } from '@folio/stripes/components';
 
-import RepeatableField from '../components/RepeatableField';
+import {
+  ConnectedTitle,
+  UnconnectedTitle,
+} from '../components';
 
 const PrecedingTitles = props => {
   const {
@@ -13,24 +17,35 @@ const PrecedingTitles = props => {
     canDelete,
   } = props;
 
+  const fieldRenderer = (field, index, fields) => {
+    const {
+      value,
+      update,
+    } = fields;
+    const instance = value[index];
+
+    return instance.id ?
+      <ConnectedTitle
+        instance={instance}
+        onSelect={inst => update(index, inst)}
+      /> :
+      <UnconnectedTitle
+        field={field}
+        onSelect={inst => update(index, inst)}
+      />;
+  };
+
   return (
-    <RepeatableField
-      name="precedingTitles"
-      label={<FormattedMessage id="ui-inventory.precedingTitles" />}
+    <FieldArray
       addLabel={<FormattedMessage id="ui-inventory.addPrecedingTitle" />}
-      addButtonId="clickable-add-precedingTitle"
-      template={[
-        {
-          name: 'superInstanceId',
-          label: 'FOLIO ID',
-          component: TextField,
-          required: true,
-          disabled: !canEdit
-        },
-      ]}
-      newItemTemplate={{ superInstanceId: '' }}
+      legend={<FormattedMessage id="ui-inventory.precedingTitles" />}
+      id="clickable-add-precedingTitle"
+      component={RepeatableField}
+      name="precedingTitles"
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
+      canEdit={canEdit}
+      renderField={fieldRenderer}
     />
   );
 };

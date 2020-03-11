@@ -423,7 +423,8 @@
           "inventory-storage.loan-types.collection.get",
           "inventory-storage.service-points.get",
           "inventory-storage.service-points.collection.get",
-          "inventory-storage.hrid-settings.item.get"
+          "inventory-storage.hrid-settings.item.get",
+          "inventory-storage.instance-bulk.ids.get"
         ],
         "visible": true
       },
@@ -629,5 +630,8 @@
     "react-intl": "^2.3.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
+  },
+  "optionalDependencies": {
+    "@folio/plugin-find-instance": "^1.6.0"
   }
 }

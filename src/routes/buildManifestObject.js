@@ -63,14 +63,14 @@ export default function buildManifestObject() {
     },
     recordsToExportIDs: {
       type: 'okapi',
-      records: 'instances',
+      records: 'ids',
       accumulate: true,
       fetch: false,
-      path: 'inventory/instances',
+      path: 'instance-bulk/ids',
       GET: {
         params: {
           query: buildQuery,
-          limit: '30',
+          limit: '2147483647',
         },
         staticFallback: { params: {} },
       },

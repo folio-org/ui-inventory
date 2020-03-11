@@ -21,6 +21,8 @@
   "selectToContinue": "Please select to continue",
   "add": "Add",
   "addLabel": "Add {label}",
+  "notAvailable": "N/A",
+  "findInstancePluginNotFound": "find-instance plugin not found",
   "onePublicationFieldToContinue": "Please fill in one or more publication fields to continue",
   "barcodeTaken": "This barcode has already been taken",
   "hridTaken": "This HRID has already been taken",
@@ -156,6 +158,8 @@
   "addIdentifier": "Add identifier",
   "isbn": "ISBN",
   "issn": "ISSN",
+  "callNumberEyeReadable": "Call number, eye readable",
+  "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
   "search.all": "Keyword (title, contributor, identifier)",
   "title": "Title (all)",
   "indexTitle": "Index title",
@@ -413,7 +417,7 @@
   "filters.instances": "Instance",
   "filters.holdings": "Holdings",
   "filters.items": "Item",
-  "filters.effectiveLocation": "Effective location",
+  "filters.effectiveLocation": "Effective location (item)",
   "yes": "Yes",
   "no": "No",
   "unknownNoteType": "Unknown note type",
@@ -473,5 +477,8 @@
   "mostRecentCheckIn": "Most recent check in",
   "checkInDate": "Check in date",
   "servicePoint": "Service point",
-  "adminData": "Admin data"
+  "adminData": "Admin data",
+  "precedingField.title": "Title",
+  "precedingField.notConnected": "Not connected",
+  "precedingField.connected": "Connected"
 }

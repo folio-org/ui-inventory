@@ -28,6 +28,14 @@
 * Extract item view into a separate route. Fixes UIIN-955.
 * Filter instance, holding and item records by suppress: No. Refs UIIN-967, UIIN-968, UIIN-969, UIIN-970.
 * Filter instance by nature of content. Refs UIIN-824.
+* Omit Former holdings ID when copying holdings record. Refs UIIN-845.
+* Filter instance by "Call number, eye readable" via holdings segment. Refs UIIN-858.
+* Filter instance by "Call number, eye readable" via items segment. Refs UIIN-990.
+* Enhance preceding connected titles. Refs UIIN-960.
+* Add Save icon to the Save Instances UUIDs option in Action menu. UIDEXP-32.
+* Display succeeding/preceding titles on instance view. Refs UIIN-952, UIIN-961 and UIIN-964.
+* Rename the filter `Effective location` to `Effective location (item)`. Refs UIIN-1008.
+* Change endpoint to request instances UIIDs for report generation. UIDEXP-28.
 * Migrate to `stripes` `v3.0.0` and move `react-intl` to peerDependencies.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)

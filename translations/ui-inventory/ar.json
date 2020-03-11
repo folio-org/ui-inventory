@@ -473,5 +473,7 @@
     "item.status.orderClosed": "تم إغلاق الطلبية",
     "reports.inTransitItem.copyNumber": "رقم النسخة",
     "settings.goBack": "العودة إلى إعدادات المخزون",
-    "item.status.awaitingDelivery": "في انتظار التوصيل"
+    "item.status.awaitingDelivery": "في انتظار التوصيل",
+    "callNumberEyeReadable": "رقم الاستدعاء، قابل للقراءة بالعين",
+    "itemEffectiveCallNumberEyeReadable": "رقم الاستدعاء النشط (مادة)، قابل للقراءة بالعين"
 }
