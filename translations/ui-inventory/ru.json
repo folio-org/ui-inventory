@@ -387,7 +387,7 @@
     "hridHandling.label.startWith": "Начать с",
     "hridHandling.label.assignPrefix": "Назначить префикс",
     "hridHandling.validation.enterValue": "Пожалуйста, введите значение",
-    "hridHandling.validation.maxLength": "Максимальная длина поля",
+    "hridHandling.validation.maxLength": "Ошибка. Разрешена {максимальная длина поля}",
     "hridHandling.validation.startWithField": "Пожалуйста, введите числовое значение",
     "hridHandling.validation.assignPrefixField": "Пожалуйста, введите буквенно-цифровое значение",
     "noBarcode": "Нет штрих-кода",
@@ -435,7 +435,7 @@
     "reports.inTransitItem.emptyReport.label": "Nothing to export",
     "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
     "common.close": "Close",
-    "filters.effectiveLocation": "Эффективное местоположение",
+    "filters.effectiveLocation": "Постоянное место хранения",
     "identifierAll": "Identifier (all)",
     "reports.inTransitItem.callNumber": "Call number",
     "reports.inTransitItem.enumeration": "Enumeration",
@@ -475,5 +475,12 @@
     "settings.goBack": "Go back to inventory settings",
     "item.status.awaitingDelivery": "Awaiting delivery",
     "callNumberEyeReadable": "Call number, eye readable",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+    "notAvailable": "N/A",
+    "findInstancePluginNotFound": "find-instance plugin not found",
+    "precedingField.title": "Title",
+    "precedingField.notConnected": "Not connected",
+    "precedingField.connected": "Connected",
+    "exportInstancesMARC": "Export instances (MARC)",
+    "exportInstancesJSON": "Export instance (JSON)"
 }

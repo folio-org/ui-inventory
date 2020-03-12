@@ -435,7 +435,7 @@
     "reports.inTransitItem.emptyReport.label": "Nothing to export",
     "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
     "common.close": "Close",
-    "filters.effectiveLocation": "Effective location",
+    "filters.effectiveLocation": "Effective location (item)",
     "identifierAll": "Identifier (all)",
     "reports.inTransitItem.callNumber": "Call number",
     "reports.inTransitItem.enumeration": "Enumeration",
@@ -475,5 +475,12 @@
     "settings.goBack": "Go back to inventory settings",
     "item.status.awaitingDelivery": "Awaiting delivery",
     "callNumberEyeReadable": "Call number, eye readable",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+    "notAvailable": "N/A",
+    "findInstancePluginNotFound": "find-instance plugin not found",
+    "precedingField.title": "Title",
+    "precedingField.notConnected": "Not connected",
+    "precedingField.connected": "Connected",
+    "exportInstancesMARC": "Export instances (MARC)",
+    "exportInstancesJSON": "Export instance (JSON)"
 }

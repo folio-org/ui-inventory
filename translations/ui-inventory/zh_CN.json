@@ -475,5 +475,12 @@
     "settings.goBack": "返回典藏设置",
     "item.status.awaitingDelivery": "等待交付",
     "callNumberEyeReadable": "Call number, eye readable",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+    "notAvailable": "N/A",
+    "findInstancePluginNotFound": "find-instance plugin not found",
+    "precedingField.title": "Title",
+    "precedingField.notConnected": "Not connected",
+    "precedingField.connected": "Connected",
+    "exportInstancesMARC": "Export instances (MARC)",
+    "exportInstancesJSON": "Export instance (JSON)"
 }

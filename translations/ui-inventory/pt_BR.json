@@ -475,5 +475,12 @@
     "settings.goBack": "Volte para as configurações de inventário",
     "item.status.awaitingDelivery": "Aguardando entrega",
     "callNumberEyeReadable": "Número de chamada, legível",
-    "itemEffectiveCallNumberEyeReadable": "Número de chamada efetivo (item), legível"
+    "itemEffectiveCallNumberEyeReadable": "Número de chamada efetivo (item), legível",
+    "notAvailable": "N/D",
+    "findInstancePluginNotFound": "plug-in find-instance não encontrado",
+    "precedingField.title": "Título",
+    "precedingField.notConnected": "Não conectado",
+    "precedingField.connected": "Conectado",
+    "exportInstancesMARC": "Export instances (MARC)",
+    "exportInstancesJSON": "Export instance (JSON)"
 }

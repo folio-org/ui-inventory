@@ -435,7 +435,7 @@
     "reports.inTransitItem.emptyReport.label": "Rien à exporter",
     "reports.inTransitItem.emptyReport.message": "Il n'y a pas d'articles avec le statut En transit.",
     "common.close": "Fermer",
-    "filters.effectiveLocation": "Emplacement effectif",
+    "filters.effectiveLocation": "Emplacement effectif (article)",
     "identifierAll": "Identifiant (tous)",
     "reports.inTransitItem.callNumber": "Cote",
     "reports.inTransitItem.enumeration": "Énumération",
@@ -475,5 +475,12 @@
     "settings.goBack": "Revenir aux paramètres d'inventaire",
     "item.status.awaitingDelivery": "En attente de livraison",
     "callNumberEyeReadable": "Cote, lecture à l'oeil nu",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+    "notAvailable": "N / A",
+    "findInstancePluginNotFound": "plugin de recherche d'instance introuvable",
+    "precedingField.title": "Titre",
+    "precedingField.notConnected": "Non connecté",
+    "precedingField.connected": "Connecté",
+    "exportInstancesMARC": "Exporter les instances (MARC)",
+    "exportInstancesJSON": "Exporter l'instance (JSON)"
 }
