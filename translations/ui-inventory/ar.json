@@ -475,5 +475,12 @@
     "settings.goBack": "العودة إلى إعدادات المخزون",
     "item.status.awaitingDelivery": "في انتظار التوصيل",
     "callNumberEyeReadable": "رقم الاستدعاء، قابل للقراءة بالعين",
-    "itemEffectiveCallNumberEyeReadable": "رقم الاستدعاء النشط (مادة)، قابل للقراءة بالعين"
+    "itemEffectiveCallNumberEyeReadable": "رقم الاستدعاء النشط (مادة)، قابل للقراءة بالعين",
+    "notAvailable": "غير قابل للتطبيق",
+    "findInstancePluginNotFound": "لم يتم العثور على برنامج باحث الوعاء المساعد",
+    "precedingField.title": "عنوان",
+    "precedingField.notConnected": "غير متصل",
+    "precedingField.connected": "متصل",
+    "exportInstancesMARC": "تصدير الأوعية (مارك)",
+    "exportInstancesJSON": "تصدير الوعاء (JSON)"
 }

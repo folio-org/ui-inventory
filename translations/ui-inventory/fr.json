@@ -475,5 +475,12 @@
     "settings.goBack": "Retourner aux paramètres de l'inventaire",
     "item.status.awaitingDelivery": "En attente de livraison",
     "callNumberEyeReadable": "Call number, eye readable",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable"
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+    "notAvailable": "N/A",
+    "findInstancePluginNotFound": "find-instance plugin not found",
+    "precedingField.title": "Title",
+    "precedingField.notConnected": "Not connected",
+    "precedingField.connected": "Connected",
+    "exportInstancesMARC": "Export instances (MARC)",
+    "exportInstancesJSON": "Export instance (JSON)"
 }
