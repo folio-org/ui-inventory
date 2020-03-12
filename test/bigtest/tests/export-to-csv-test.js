@@ -11,7 +11,7 @@ import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import InstancesRouteInteractor from '../interactors/routes/instances-route';
 
-describe.only('Instances', () => {
+describe('Instances', () => {
   setupApplication({ scenarios: ['instances-filters'] });
 
   const inventory = new InventoryInteractor({
