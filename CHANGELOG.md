@@ -39,6 +39,7 @@
 * Migrate to `stripes` `v3.0.0` and move `react-intl` to peerDependencies.
 * Add new options with icons to action menu - `Export instances (MARC)` and `Export instances (JSON)`. UIDEXP-33.
 * Add support for unconnected preceding titles. Refs UIIN-950.
+* Add support for connected and connected succeeding titles. Refs UIIN-962 and UIIN-963.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)

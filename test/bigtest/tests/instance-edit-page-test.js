@@ -216,4 +216,40 @@ describe('InstanceEditPage', () => {
       });
     });
   });
+
+  describe('clicking on "add succeeding title"', () => {
+    const prevCount = InstanceEditPage.succeedingTitles.succeedingTitlesCount;
+
+    beforeEach(async () => {
+      await InstanceEditPage.succeedingTitles.clickAddSucceedingTitle();
+    });
+
+    it('should increase number of succeeding title"', () => {
+      expect(InstanceEditPage.succeedingTitles.succeedingTitlesCount).to.be.gt(prevCount);
+    });
+
+    describe('saving unconnected titles', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.succeedingTitles.fillTitleField('title 1');
+        await InstanceEditPage.succeedingTitles.fillISBNField('isbn1');
+        await InstanceEditPage.succeedingTitles.fillISSNField('issn1');
+        await InstanceEditPage.selectInstanceType('still image');
+        await InstanceEditPage.saveInstance();
+      });
+
+      it('should save instance and go back to instance view', function () {
+        expect(this.location.search).to.not.include('layer=edit');
+      });
+    });
+
+    describe('clicking add instance', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.succeedingTitles.clickAddInstance();
+      });
+
+      it('should add instance', () => {
+        expect(InstanceEditPage.succeedingTitles.instanceName).to.be.equal('Fake instance');
+      });
+    });
+  });
 });
