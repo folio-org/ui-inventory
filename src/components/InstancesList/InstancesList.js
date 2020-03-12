@@ -214,9 +214,6 @@ class InstancesView extends React.Component {
           disabled
           buttonStyle="dropdownItem"
           id="dropdown-clickable-export-marc"
-          onClick={() => {
-            onToggle();
-          }}
         >
           <Icon
             icon="download"
@@ -229,9 +226,6 @@ class InstancesView extends React.Component {
           disabled
           buttonStyle="dropdownItem"
           id="dropdown-clickable-export-json"
-          onClick={() => {
-            onToggle();
-          }}
         >
           <Icon
             icon="download"
