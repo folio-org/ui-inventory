@@ -26,7 +26,6 @@ const UnconnectedTitle = ({ field, onSelect }) => (
           />
         }
         name={`${field}.title`}
-        disabled
       />
     </Col>
     <Col xs={1}>
@@ -43,7 +42,6 @@ const UnconnectedTitle = ({ field, onSelect }) => (
         component={TextField}
         label={<FormattedMessage id="ui-inventory.isbn" />}
         name={`${field}.isbn`}
-        disabled
       />
     </Col>
     <Col xs>
@@ -51,7 +49,6 @@ const UnconnectedTitle = ({ field, onSelect }) => (
         component={TextField}
         label={<FormattedMessage id="ui-inventory.issn" />}
         name={`${field}.issn`}
-        disabled
       />
     </Col>
   </Row>

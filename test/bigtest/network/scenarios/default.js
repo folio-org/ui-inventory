@@ -33,6 +33,9 @@ export default function defaultScenario(server) {
     source: 'rdacarrier'
   });
 
+  server.create('identifier-type', { name: 'ISSN' });
+  server.create('identifier-type', { name: 'ISBN' });
+
   server.create('instance-relationship-type', { name: 'bound-with' });
   server.create('instance-relationship-type', { name: 'series' });
   server.create('instance-status', {

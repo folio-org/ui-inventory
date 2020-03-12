@@ -17,7 +17,12 @@ import DataContext from '../../contexts/DataContext';
 
 const ConnectedTitle = ({ instance, onSelect }) => {
   const { identifierTypesById } = useContext(DataContext);
-  const { identifiers } = instance;
+  const {
+    id,
+    title,
+    hrid,
+    identifiers,
+  } = instance;
   const {
     ISSN,
     ISBN,
@@ -35,14 +40,14 @@ const ConnectedTitle = ({ instance, onSelect }) => {
               subLabel={<FormattedMessage id="ui-inventory.precedingField.connected" />}
               required
             />
-        }
+          }
           value={
             <Link
               data-test-connected-instance-title
               target="_blank"
-              to={`/inventory/view/${instance.id}`}
+              to={`/inventory/view/${id}`}
             >
-              {instance.title}
+              {title}
             </Link>
           }
         />
@@ -53,7 +58,7 @@ const ConnectedTitle = ({ instance, onSelect }) => {
       <Col xs>
         <KeyValue
           label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-          value={instance.hrid || <FormattedMessage id="ui-inventory.notAvailable" />}
+          value={hrid || <FormattedMessage id="ui-inventory.notAvailable" />}
         />
       </Col>
       <Col xs>

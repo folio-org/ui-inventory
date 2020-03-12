@@ -24,7 +24,7 @@ const PrecedingTitles = props => {
     } = fields;
     const instance = value[index];
 
-    return instance.id ?
+    return instance.precedingInstanceId ?
       <ConnectedTitle
         instance={instance}
         onSelect={inst => update(index, inst)}
