@@ -194,6 +194,11 @@ export default function configure() {
     return schema.instances.find(params.id);
   });
 
+  this.put('/inventory/instances/:id', ({ instances }, request) => {
+    const { id } = JSON.parse(request.requestBody);
+    return instances.find(id);
+  });
+
   this.get('/locations', {
     locations: [
       {

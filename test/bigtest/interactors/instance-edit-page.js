@@ -6,6 +6,8 @@ import {
   property,
   attribute,
   count,
+  fillable,
+  selectable,
 } from '@bigtest/interactor';
 
 @interactor class HeaderDropdown {
@@ -43,6 +45,10 @@ import {
   clickAddPrecedingTitle = clickable('#clickable-add-precedingTitle-add-button');
   clickAddInstance = clickable('[data-test-plugin-find-record-button]');
   instanceName = text('[data-test-connected-instance-title]');
+
+  fillTitleField = fillable('[name="precedingTitles[0].title"]');
+  fillISBNField = fillable('[name="precedingTitles[0].isbn"]');
+  fillISSNField = fillable('[name="precedingTitles[0].issn"]');
 }
 
 @interactor class Foo { }
@@ -65,6 +71,8 @@ import {
   secondFormatLabelId = attribute('[data-test-instance-format-field-count="1"]', 'aria-labelledby');
   firstFormatFieldExists = isPresent('[data-test-instance-format-field-count="0"]');
   secondFormatFieldExists = isPresent('[data-test-instance-format-field-count="1"]');
+  selectInstanceType = selectable('#select_instance_type');
+  saveInstance = clickable('#clickable-update-instance');
 
   languages = new Languages('select[name="languages[0]"]');
   clickAddLanguage = clickable('#clickable-add-language');

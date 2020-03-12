@@ -16,11 +16,13 @@ import {
   groupBy,
   map,
   isObject,
+  cloneDeep,
 } from 'lodash';
 import {
   itemStatusesMap,
   noValue,
   emptyList,
+  indentifierTypeNames,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -266,24 +268,99 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
 };
 
 /**
- * Parses preceding and succeeding titles for a given instance
- * to the format required by the backend.
+ * Marshal ISBN and ISSN attatched to the given title into
+ * identifiers required by the backend.
  *
- * @param instance instance object
- * @param type string ("precedingTitles" or "precedingTitles")
- * @param titleIdKey string ("precedingInstanceId" or "succeedingInstanceId")
+ * @param title object
+ * @param identifierTypesByName object
  *
  */
-export const parseTitles = (instance, type, titleIdKey) => {
-  instance[type] = (instance?.[type] ?? []).map((inst) => {
+export const marshalIdentifiers = (title, identifierTypesByName) => {
+  const identifiers = [];
+  const {
+    isbn,
+    issn,
+  } = title;
+
+  if (isbn) {
+    identifiers.push({
+      identifierTypeId: identifierTypesByName.ISBN.id,
+      value: isbn,
+    });
+  }
+
+  if (issn) {
+    identifiers.push({
+      identifierTypeId: identifierTypesByName.ISSN.id,
+      value: issn,
+    });
+  }
+
+  return identifiers;
+};
+
+/**
+ * Unmarshal identifiers to the format required by the instance form.
+ *
+ * @param title object
+ * @param identifierTypesById object
+ *
+ */
+export const unmarshalIdentifiers = (title, identifierTypesById) => {
+  const { identifiers = [] } = title;
+
+  identifiers.forEach(ident => {
+    const identifier = identifierTypesById[ident.identifierTypeId];
+    if (identifier.name === indentifierTypeNames.ISBN) {
+      title.isbn = ident.value;
+    }
+
+    if (identifier.name === indentifierTypeNames.ISSN) {
+      title.issn = ident.value;
+    }
+  });
+
+  return title;
+};
+
+/**
+ * UnMarshal preceding/succeeding titles to the format required by the instance form.
+ *
+ * @param instance instance object
+ * @param identifierTypesById object
+ * @param type string ("preceding" or "succeeding")
+ *
+ */
+export const unmarshalTitles = (instance, identifierTypesById, type) => {
+  const titleAttr = `${type}Titles`;
+
+  (instance?.[titleAttr] ?? []).map((title) => unmarshalIdentifiers(title, identifierTypesById));
+
+  return instance;
+};
+
+/**
+ * Marshal preceding/succeeding titles for a given instance
+ * to the format required by the server.
+ *
+ * @param instance instance object
+ * @param identifierTypesByName object
+ * @param type string ("preceding" or "succeeding")
+ *
+ */
+export const marshalTitles = (instance, identifierTypesByName, type) => {
+  const titleAttr = `${type}Titles`;
+  const titleIdKey = `${type}InstanceId`;
+
+  instance[titleAttr] = (instance?.[titleAttr] ?? []).map((inst) => {
     const {
       id,
       title,
       hrid,
-      identifiers,
     } = inst;
+    const identifiers = marshalIdentifiers(inst, identifierTypesByName);
 
-    return id ?
+    return inst[titleIdKey] ?
       // connected title
       { [titleIdKey]: id } :
       // unconnected title
@@ -293,4 +370,32 @@ export const parseTitles = (instance, type, titleIdKey) => {
         identifiers,
       };
   });
+};
+
+/**
+ * Marshal given instance to the format required by the server.
+ *
+ * @param instance instance object
+ * @param identifierTypesByName object
+ *
+ */
+export const marshalInstance = (instance, identifierTypesByName) => {
+  marshalTitles(instance, identifierTypesByName, 'preceding');
+  marshalTitles(instance, identifierTypesByName, 'succeeding');
+};
+
+/**
+ * Unmarshal given instance to the format required by the instance form.
+ *
+ * @param instance instance object
+ * @param identifierTypesById object
+ *
+ */
+export const unmarshalInstance = (instance, identifierTypesById) => {
+  const inst = cloneDeep(instance);
+
+  unmarshalTitles(inst, identifierTypesById, 'preceding');
+  unmarshalTitles(inst, identifierTypesById, 'succeeding');
+
+  return inst;
 };

@@ -29,6 +29,7 @@ import withLocation from '../../withLocation';
 import {
   getCurrentFilters,
   parseFiltersToStr,
+  marshalInstance,
 } from '../../utils';
 import {
   InTransitItemReport,
@@ -57,7 +58,6 @@ class InstancesView extends React.Component {
     onSelectRow: PropTypes.func,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     updateLocation: PropTypes.func.isRequired,
-    onCreate: PropTypes.func,
     segment: PropTypes.string,
     intl: intlShape,
     match: PropTypes.shape({
@@ -96,8 +96,18 @@ class InstancesView extends React.Component {
     this.props.updateLocation({ layer: null });
   };
 
+  createInstance = (instance) => {
+    const { data: { identifierTypesByName } } = this.props;
+
+    // Massage record to add preceeding and succeeding title fields
+    marshalInstance(instance, identifierTypesByName);
+
+    // POST item record
+    return this.props.parentMutator.records.POST(instance);
+  };
+
   onCreate = (instance) => {
-    this.props.onCreate(instance).then(() => this.closeNewInstance());
+    this.createInstance(instance).then(() => this.closeNewInstance());
   }
 
   copyInstance = (instance) => {

@@ -11,7 +11,6 @@ import {
   getFilterConfig,
 } from '../filterConfig';
 import buildManifestObject from './buildManifestObject';
-import { parseTitles } from '../utils';
 import DataContext from '../contexts/DataContext';
 
 class InstancesRoute extends React.Component {
@@ -34,15 +33,6 @@ class InstancesRoute extends React.Component {
   };
 
   static manifest = Object.freeze(buildManifestObject());
-
-  createInstance = (instance) => {
-    // Massage record to add preceeding and succeeding title fields
-    parseTitles(instance, 'precedingTitles', 'precedingInstanceId');
-    parseTitles(instance, 'succeedingTitles', 'succeedingInstanceId');
-
-    // POST item record
-    return this.props.mutator.records.POST(instance);
-  };
 
   render() {
     const {
@@ -73,7 +63,6 @@ class InstancesRoute extends React.Component {
           data={data}
           browseOnly={browseOnly}
           showSingleResult={showSingleResult}
-          onCreate={this.createInstance}
           onSelectRow={onSelectRow}
           disableRecordCreation={disableRecordCreation}
           renderFilters={renderer(data)}
