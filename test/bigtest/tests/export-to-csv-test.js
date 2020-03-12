@@ -64,6 +64,30 @@ describe('Instances', () => {
       expect(inventory.headerDropdownMenu.isSaveInstancesUIIDsBtnDisabled).to.be.true;
     });
 
+    it('should display action button for export instances (MARC)', () => {
+      expect(inventory.headerDropdownMenu.exportInstancesMARCBtnIsVisible).to.be.true;
+    });
+
+    it('should display correct icon for export instances (MARC)', () => {
+      expect(inventory.headerDropdownMenu.isExportInstancesMARCIconPresent).to.be.true;
+    });
+
+    it('should disable action button for export instances (MARC) if there are not items in search result', () => {
+      expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.true;
+    });
+
+    it('should display action button for export instances (JSON)', () => {
+      expect(inventory.headerDropdownMenu.exportInstancesJSONBtnIsVisible).to.be.true;
+    });
+
+    it('should display correct icon for export instances (JSON)', () => {
+      expect(inventory.headerDropdownMenu.isExportInstancesJSONIconPresent).to.be.true;
+    });
+
+    it('should disable action button for export instances (JSON) if there are not items in search result', () => {
+      expect(inventory.headerDropdownMenu.isExportInstancesJSONBtnDisabled).to.be.true;
+    });
+
     describe('clicking Items in transit report button', () => {
       beforeEach(async function () {
         await inventory.headerDropdownMenu.clickItemsInTransitReportBtn();

@@ -187,7 +187,7 @@ class InstancesView extends React.Component {
           }}
         >
           <Icon
-            icon="reports"
+            icon="report"
             size="medium"
             iconClassName={css.actionIcon}
           />
@@ -209,6 +209,30 @@ class InstancesView extends React.Component {
             iconClassName={css.actionIcon}
           />
           <FormattedMessage id="ui-inventory.saveInstancesUIIDS" />
+        </Button>
+        <Button
+          disabled
+          buttonStyle="dropdownItem"
+          id="dropdown-clickable-export-marc"
+        >
+          <Icon
+            icon="download"
+            size="medium"
+            iconClassName={css.actionIcon}
+          />
+          <FormattedMessage id="ui-inventory.exportInstancesMARC" />
+        </Button>
+        <Button
+          disabled
+          buttonStyle="dropdownItem"
+          id="dropdown-clickable-export-json"
+        >
+          <Icon
+            icon="download"
+            size="medium"
+            iconClassName={css.actionIcon}
+          />
+          <FormattedMessage id="ui-inventory.exportInstancesJSON" />
         </Button>
       </Fragment>
     );
