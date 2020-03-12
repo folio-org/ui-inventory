@@ -37,7 +37,7 @@
 * Rename the filter `Effective location` to `Effective location (item)`. Refs UIIN-1008.
 * Change endpoint to request instances UIIDs for report generation. UIDEXP-28.
 * Migrate to `stripes` `v3.0.0` and move `react-intl` to peerDependencies.
-* Add new options with icons to action menu - `Export instances (MARC)` and `Export instance (JSON)`. UIDEXP-33.
+* Add new options with icons to action menu - `Export instances (MARC)` and `Export instances (JSON)`. UIDEXP-33.
 * Add support for unconnected preceding titles. Refs UIIN-950.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)

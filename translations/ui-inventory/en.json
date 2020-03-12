@@ -437,7 +437,7 @@
   "inTransitReport": "In transit items report (CSV)",
   "saveInstancesUIIDS": "Save instances UUIDs",
   "exportInstancesMARC": "Export instances (MARC)",
-  "exportInstancesJSON": "Export instance (JSON)",
+  "exportInstancesJSON": "Export instances (JSON)",
   "reports.inTransitItem.barcode": "Item barcode",
   "reports.inTransitItem.title": "Title",
   "reports.inTransitItem.library": "Library",
