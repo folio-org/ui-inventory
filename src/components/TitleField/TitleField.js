@@ -32,6 +32,7 @@ const TitleField = ({ field, index, fields, titleIdKey }) => {
     <ConnectedTitle
       instance={instance}
       onSelect={handleSelect}
+      titleIdKey={titleIdKey}
     /> :
     <UnconnectedTitle
       field={field}

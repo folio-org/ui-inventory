@@ -15,7 +15,7 @@ import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
 import DataContext from '../../contexts/DataContext';
 
-const ConnectedTitle = ({ instance, onSelect }) => {
+const ConnectedTitle = ({ instance, onSelect, titleIdKey }) => {
   const { identifierTypesById } = useContext(DataContext);
   const {
     id,
@@ -45,7 +45,7 @@ const ConnectedTitle = ({ instance, onSelect }) => {
             <Link
               data-test-connected-instance-title
               target="_blank"
-              to={`/inventory/view/${id}`}
+              to={`/inventory/view/${instance[titleIdKey]}`}
             >
               {title}
             </Link>
@@ -80,6 +80,7 @@ const ConnectedTitle = ({ instance, onSelect }) => {
 ConnectedTitle.propTypes = {
   instance: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+  titleIdKey: PropTypes.string.isRequired,
 };
 
 export default ConnectedTitle;
