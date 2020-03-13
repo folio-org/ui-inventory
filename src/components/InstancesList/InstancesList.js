@@ -230,7 +230,7 @@ class InstancesView extends React.Component {
             size="medium"
             iconClassName={css.actionIcon}
           />
-          <FormattedMessage id="ui-inventory.exportInstancesMARC" />
+          <FormattedMessage id="ui-inventory.exportInstancesInMARC" />
         </Button>
         <Button
           disabled
@@ -242,7 +242,7 @@ class InstancesView extends React.Component {
             size="medium"
             iconClassName={css.actionIcon}
           />
-          <FormattedMessage id="ui-inventory.exportInstancesJSON" />
+          <FormattedMessage id="ui-inventory.exportInstancesInJSON" />
         </Button>
       </Fragment>
     );
