@@ -22,12 +22,12 @@ import {
   isSaveInstancesUIIDsBtnDisabled = property('#dropdown-clickable-get-items-uiids', 'disabled');
   isSaveInstancesUIIDsIconPresent = isPresent('#dropdown-clickable-get-items-uiids [class*=icon-save]');
   isTransitItemsReportIconPresent = isPresent('#dropdown-clickable-get-report [class*=icon-report]');
-  exportInstancesMrcBtnIsVisible = isVisible('#dropdown-clickable-export-marc');
-  isExportInstancesMrcBtnDisabled = property('#dropdown-clickable-export-marc', 'disabled');
-  isExportInstancesMrcIconPresent = isPresent('#dropdown-clickable-export-marc [class*=icon-download]');
-  exportInstancesJsonBtnIsVisible = isVisible('#dropdown-clickable-export-json');
-  isExportInstancesJsonBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');
-  isExportInstancesJsonIconPresent = isPresent('#dropdown-clickable-export-json [class*=icon-download]');
+  exportInstancesMARCBtnIsVisible = isVisible('#dropdown-clickable-export-marc');
+  isExportInstancesMARCBtnDisabled = property('#dropdown-clickable-export-marc', 'disabled');
+  isExportInstancesMARCIconPresent = isPresent('#dropdown-clickable-export-marc [class*=icon-download]');
+  exportInstancesJSONBtnIsVisible = isVisible('#dropdown-clickable-export-json');
+  isExportInstancesJSONBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');
+  isExportInstancesJSONIconPresent = isPresent('#dropdown-clickable-export-json [class*=icon-download]');
 }
 
 export default @interactor class InventoryInteractor {
