@@ -354,7 +354,6 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
 
   instance[titleAttr] = (instance?.[titleAttr] ?? []).map((inst) => {
     const {
-      id,
       title,
       hrid,
     } = inst;
@@ -362,7 +361,7 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
 
     return inst[titleIdKey] ?
       // connected title
-      { [titleIdKey]: id } :
+      { [titleIdKey]: inst[titleIdKey] } :
       // unconnected title
       {
         title,
@@ -392,10 +391,8 @@ export const marshalInstance = (instance, identifierTypesByName) => {
  *
  */
 export const unmarshalInstance = (instance, identifierTypesById) => {
-  const inst = cloneDeep(instance);
+  unmarshalTitles(instance, identifierTypesById, 'preceding');
+  unmarshalTitles(instance, identifierTypesById, 'succeeding');
 
-  unmarshalTitles(inst, identifierTypesById, 'preceding');
-  unmarshalTitles(inst, identifierTypesById, 'succeeding');
-
-  return inst;
+  return instance;
 };

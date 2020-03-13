@@ -51,6 +51,17 @@ import {
   fillISSNField = fillable('[name="precedingTitles[0].issn"]');
 }
 
+@interactor class SucceedingTitles {
+  succeedingTitlesCount = count('[data-test-repeater-field-row]');
+  clickAddSucceedingTitle = clickable('#clickable-add-succeedingTitle-add-button');
+  clickAddInstance = clickable('[data-test-plugin-find-record-button]');
+  instanceName = text('[data-test-connected-instance-title]');
+
+  fillTitleField = fillable('[name="succeedingTitles[0].title"]');
+  fillISBNField = fillable('[name="succeedingTitles[0].isbn"]');
+  fillISSNField = fillable('[name="succeedingTitles[0].issn"]');
+}
+
 @interactor class Foo { }
 
 @interactor class InstanceEditPage {
@@ -83,6 +94,7 @@ import {
 
   contributors = new Contributors();
   precedingTitles = new PrecedingTitles();
+  succeedingTitles = new SucceedingTitles();
 
   // The BigTest documentation shows examples like
   //   let input = new Interactor('input');
