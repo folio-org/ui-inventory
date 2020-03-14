@@ -481,6 +481,6 @@
     "precedingField.title": "Titre",
     "precedingField.notConnected": "Non connecté",
     "precedingField.connected": "Connecté",
-    "exportInstancesMARC": "Exporter les instances (MARC)",
-    "exportInstancesJSON": "Exporter l'instance (JSON)"
+    "exportInstancesInMARC": "Exporter les instances (MARC)",
+    "exportInstancesInJSON": "Exporter les instances (JSON)"
 }

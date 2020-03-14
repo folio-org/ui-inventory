@@ -481,6 +481,6 @@
     "precedingField.title": "عنوان",
     "precedingField.notConnected": "غير متصل",
     "precedingField.connected": "متصل",
-    "exportInstancesMARC": "تصدير الأوعية (مارك)",
-    "exportInstancesJSON": "تصدير الوعاء (JSON)"
+    "exportInstancesInMARC": "تصدير الأوعية (مارك)",
+    "exportInstancesInJSON": "تصدير الأوعية (JSON)"
 }
