@@ -84,7 +84,7 @@
     "holdingsData": "Holdings data",
     "holdingsId": "Holdings ID",
     "holdingsStatement": "Holdings statement",
-    "holdingsStatements": "Holdings statements",
+    "holdingsStatements": "Объём фонда",
     "removeStatement": "Remove statement {num}",
     "deleteStatement": "Delete statement",
     "editHoldingsRecordDialog": "Edit holdings record dialog",
@@ -105,7 +105,7 @@
     "resourceTypes": "Типы источника",
     "subjectHeadings": "Subject headings",
     "classification": "Классификация",
-    "seriesStatement": "Series statement",
+    "seriesStatement": "Последовательное сообщение",
     "editInstanceDialog": "Edit instance dialog",
     "addNewHoldingsDialog": "Add new holdings dialog",
     "addItem": "Добавить элемент",
@@ -481,6 +481,6 @@
     "precedingField.title": "Title",
     "precedingField.notConnected": "Not connected",
     "precedingField.connected": "Connected",
-    "exportInstancesMARC": "Export instances (MARC)",
-    "exportInstancesJSON": "Export instance (JSON)"
+    "exportInstancesInMARC": "Export instances (MARC)",
+    "exportInstancesInJSON": "Export instances (JSON)"
 }
