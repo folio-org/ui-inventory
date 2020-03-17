@@ -625,13 +625,13 @@
     "moment": "^2.22.2"
   },
   "peerDependencies": {
-    "@folio/stripes": "^3.0.0",
+    "@folio/stripes": "^3.1.0",
     "react": "*",
     "react-intl": "^2.3.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-find-instance": "^1.6.0"
+    "@folio/plugin-find-instance": "^2.0.0"
   }
 }
