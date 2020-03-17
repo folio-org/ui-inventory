@@ -15,6 +15,7 @@ import {
   Switch
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import {
   FormattedDate,
   FormattedTime,
@@ -179,6 +180,16 @@ class ViewInstance extends React.Component {
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
     this.props.updateLocation({ layer: 'edit' });
+  };
+
+  editInstanceMarc = () => {
+    const { history, location, match } = this.props;
+    const instanceId = match.params.id;
+
+    history.push({
+      pathname: `/inventory/quick-marc/edit/${instanceId}`,
+      search: location.search,
+    });
   };
 
   onClickAddNewHoldingsRecord = (e) => {
@@ -347,6 +358,19 @@ class ViewInstance extends React.Component {
             </Button>
           }
         </IfPermission>
+
+        <Button
+          id="edit-instance-marc"
+          buttonStyle="dropdownItem"
+          onClick={() => {
+            onToggle();
+            this.editInstanceMarc();
+          }}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editInstanceMarc" />
+          </Icon>
+        </Button>
       </Fragment>
     );
   };
@@ -1457,6 +1481,7 @@ ViewInstance.propTypes = {
       id: PropTypes.string,
     }),
   }),
+  history: ReactRouterPropTypes.history.isRequired,
   mutator: PropTypes.shape({
     selectedInstance: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
