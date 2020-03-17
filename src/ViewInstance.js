@@ -361,11 +361,11 @@ class ViewInstance extends React.Component {
 
         <Button
           id="edit-instance-marc"
+          buttonStyle="dropdownItem"
           onClick={() => {
             onToggle();
             this.editInstanceMarc();
           }}
-          buttonStyle="dropdownItem"
         >
           <Icon icon="edit">
             <FormattedMessage id="ui-inventory.editInstanceMarc" />

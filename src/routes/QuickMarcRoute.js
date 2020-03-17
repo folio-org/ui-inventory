@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { Pluggable } from '@folio/stripes/core';
 
@@ -18,7 +19,9 @@ const QuickMarcRoute = ({ match, history, location }) => {
         basePath={match.path}
         onClose={onClose}
       >
-        <span data-test-inventory-quick-marc-no-plugin>No plugin available!</span>
+        <span data-test-inventory-quick-marc-no-plugin>
+          <FormattedMessage id="ui-inventory.quickMarcNotAvailable" />
+        </span>
       </Pluggable>
     </div>
   );
