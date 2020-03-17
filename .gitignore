@@ -7,3 +7,7 @@ node_modules
 yarn.lock
 ModuleDescriptor.json
 yarn-error.log
+
+# stripes
+.stripesclirc
+stripes.config.js.local

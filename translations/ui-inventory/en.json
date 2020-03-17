@@ -482,5 +482,7 @@
   "adminData": "Admin data",
   "precedingField.title": "Title",
   "precedingField.notConnected": "Not connected",
-  "precedingField.connected": "Connected"
+  "precedingField.connected": "Connected",
+
+  "editInstanceMarc": "Edit in QuickMARC"
 }
