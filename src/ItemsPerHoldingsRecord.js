@@ -57,18 +57,6 @@ class ItemsPerHoldingsRecord extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    const {
-      holdingsRecord,
-      accordionStates,
-      updateAccordions,
-    } = this.props;
-
-    if (!has(accordionStates, holdingsRecord.id)) {
-      updateAccordions(holdingsRecord);
-    }
-  }
-
   // Add Item handlers
   onClickAddNewItem = (holdingsRecordId) => {
     this.props.updateLocation({ layer: 'createItem', holdingsRecordId });
@@ -146,8 +134,6 @@ class ItemsPerHoldingsRecord extends React.Component {
       },
       instance,
       holdingsRecord,
-      accordionToggle,
-      isAccordionOpen,
       mutator,
       stripes,
     } = this.props;
@@ -186,13 +172,9 @@ class ItemsPerHoldingsRecord extends React.Component {
       );
     }
 
-    const accordionState = areAllFieldsEmpty([this.state.records]);
-
     return (
       <Accordion
-        open={isAccordionOpen(holdingsRecord.id, accordionState)}
         id={holdingsRecord.id}
-        onToggle={accordionToggle}
         label={(
           <FormattedMessage
             id="ui-inventory.holdingsHeader"
@@ -246,13 +228,9 @@ ItemsPerHoldingsRecord.propTypes = {
     locale: PropTypes.string.isRequired,
   }).isRequired,
   okapi: PropTypes.object,
-  accordionToggle: PropTypes.func.isRequired,
-  accordionStates: PropTypes.object.isRequired,
   updateLocation: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
   getParams: PropTypes.func.isRequired,
-  isAccordionOpen: PropTypes.func.isRequired,
-  updateAccordions: PropTypes.func.isRequired,
 };
 
 export default withLocation(ItemsPerHoldingsRecord);
