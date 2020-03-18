@@ -3,6 +3,7 @@
 ## [2.0.1] IN PROGRESS
 
 * Use correct operator when searching by item status and hrid. Fixes UIIN-1048, UIIN-1051, UIIN-1052, UIIN-1053.
+* Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
