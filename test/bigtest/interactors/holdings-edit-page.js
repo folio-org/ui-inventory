@@ -17,7 +17,7 @@ import {
   isLoaded = isPresent('[data-test-holdings-page-type="edit"]');
 
   title = text('[data-test-header-title]');
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
 
   whenLoaded() {

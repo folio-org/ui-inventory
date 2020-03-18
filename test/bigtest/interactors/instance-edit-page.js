@@ -66,7 +66,7 @@ import {
 
 @interactor class InstanceEditPage {
   title = text('[data-test-header-title]');
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
 
   classifications = new Classifications('select[name="classifications[0].classificationTypeId"]');
@@ -109,5 +109,5 @@ import {
 
 export default new InstanceEditPage({
   scope: '[data-test-instance-page-type="edit"]',
-  timeout: 4000,
+  timeout: 10000,
 });

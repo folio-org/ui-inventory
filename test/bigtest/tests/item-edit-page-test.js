@@ -3,12 +3,14 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import ItemEditPage from '../interactors/item-edit-page';
-import InstanceViewPage from '../interactors/instance-view-page';
+import ItemPage from '../interactors/item-page';
 
 describe('ItemEditPage', () => {
   setupApplication();
 
   let instance;
+
+  const itemPage = new ItemPage();
 
   const holdings = {
     id: '0e3a404a-61a9-4388-9d11-c7d62d491165',
@@ -74,10 +76,11 @@ describe('ItemEditPage', () => {
     describe('clicking on cancel', () => {
       beforeEach(async () => {
         await ItemEditPage.headerDropdownMenu.clickCancel();
+        await itemPage.whenLoaded();
       });
 
       it('should redirect to instance view page after click', () => {
-        expect(InstanceViewPage.$root).to.exist;
+        expect(itemPage.isLoaded).to.equal(true);
       });
     });
   });
