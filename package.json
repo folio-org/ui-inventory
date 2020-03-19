@@ -578,7 +578,7 @@
           "ui-inventory.instance.view"
         ],
         "visible": true
-      }
+      },
       {
         "permissionName": "records-editor.records.item.put",
         "displayName": "quickMARC: edit",
