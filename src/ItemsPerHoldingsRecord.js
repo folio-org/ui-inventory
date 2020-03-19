@@ -14,7 +14,6 @@ import {
   IfPermission,
 } from '@folio/stripes/core';
 import {
-  has,
   cloneDeep,
 } from 'lodash';
 
@@ -22,7 +21,6 @@ import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import {
-  areAllFieldsEmpty,
   callNumberLabel
 } from './utils';
 
@@ -175,6 +173,7 @@ class ItemsPerHoldingsRecord extends React.Component {
     return (
       <Accordion
         id={holdingsRecord.id}
+        closedByDefault={false}
         label={(
           <FormattedMessage
             id="ui-inventory.holdingsHeader"

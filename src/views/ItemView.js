@@ -550,15 +550,15 @@ class ItemView extends React.Component {
     };
 
     const initialAccordionsState = {
-      acc01: areAllFieldsEmpty(values(administrativeData)),
-      acc02: areAllFieldsEmpty(values(itemData)),
-      acc03: areAllFieldsEmpty(values(enumerationData)),
-      acc04: areAllFieldsEmpty(values(condition)),
-      acc05: areAllFieldsEmpty(values(itemNotes)),
-      acc06: areAllFieldsEmpty(values(loanAndAvailability)),
-      acc07: areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
-      acc08: areAllFieldsEmpty(values(electronicAccess)),
-      acc09: areAllFieldsEmpty(values(circulationHistory)),
+      acc01: !areAllFieldsEmpty(values(administrativeData)),
+      acc02: !areAllFieldsEmpty(values(itemData)),
+      acc03: !areAllFieldsEmpty(values(enumerationData)),
+      acc04: !areAllFieldsEmpty(values(condition)),
+      acc05: !areAllFieldsEmpty(values(itemNotes)),
+      acc06: !areAllFieldsEmpty(values(loanAndAvailability)),
+      acc07: !areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
+      acc08: !areAllFieldsEmpty(values(electronicAccess)),
+      acc09: !areAllFieldsEmpty(values(circulationHistory)),
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)

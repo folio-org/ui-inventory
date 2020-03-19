@@ -407,13 +407,13 @@ class ViewHoldingsRecord extends React.Component {
     const receivingHistory = get(holdingsRecord, ['receivingHistory', 'entries'], []);
 
     const initialAccordionsState = {
-      acc01: areAllFieldsEmpty(Object.values(administrativeData)),
-      acc02: areAllFieldsEmpty(Object.values(locationAccordion)),
-      acc03: areAllFieldsEmpty(Object.values(holdingsDetails)),
-      acc04: areAllFieldsEmpty([holdingsNotes]),
-      acc05: areAllFieldsEmpty([electronicAccess]),
-      acc06: areAllFieldsEmpty(Object.values(acquisition)),
-      acc07: false//areAllFieldsEmpty([receivingHistory]),
+      acc01: !areAllFieldsEmpty(Object.values(administrativeData)),
+      acc02: !areAllFieldsEmpty(Object.values(locationAccordion)),
+      acc03: !areAllFieldsEmpty(Object.values(holdingsDetails)),
+      acc04: !areAllFieldsEmpty([holdingsNotes]),
+      acc05: !areAllFieldsEmpty([electronicAccess]),
+      acc06: !areAllFieldsEmpty(Object.values(acquisition)),
+      acc07: !areAllFieldsEmpty([receivingHistory]),
     };
 
     const holdingsDetailsTables = intl => [
