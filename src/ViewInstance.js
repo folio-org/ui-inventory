@@ -359,7 +359,7 @@ class ViewInstance extends React.Component {
           }
         </IfPermission>
 
-        <IfPermission perm="ui-inventory.instance.edit">
+        <IfPermission perm="records-editor.records.item.put">
           <Button
             id="edit-instance-marc"
             buttonStyle="dropdownItem"
