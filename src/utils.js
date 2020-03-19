@@ -16,7 +16,6 @@ import {
   groupBy,
   map,
   isObject,
-  cloneDeep,
 } from 'lodash';
 import {
   itemStatusesMap,

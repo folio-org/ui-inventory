@@ -49,10 +49,6 @@ class ItemsPerHoldingsRecord extends React.Component {
   constructor(props) {
     super(props);
     this.cItems = props.stripes.connect(Items, { dataKey: props.holdingsRecord.id });
-
-    this.state = {
-      records: [],
-    };
   }
 
   // Add Item handlers
