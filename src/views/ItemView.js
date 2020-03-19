@@ -15,7 +15,7 @@ import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { effectiveCallNumber } from '@folio/stripes-util';
+import { effectiveCallNumber } from '@folio/stripes/util';
 
 import {
   Pane,

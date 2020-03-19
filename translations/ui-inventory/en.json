@@ -484,6 +484,6 @@
   "precedingField.notConnected": "Not connected",
   "precedingField.connected": "Connected",
 
-  "editInstanceMarc": "Edit in QuickMARC",
+  "editInstanceMarc": "Edit in quickMARC",
   "quickMarcNotAvailable": "No plugin available!"
 }
