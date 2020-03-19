@@ -439,7 +439,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.instance.edit",
+        "permissionName": "records-editor.records.item.put",
         "displayName": "Inventory: View, create, edit instances",
         "subPermissions": [
           "ui-inventory.instance.create",
@@ -577,6 +577,11 @@
         "subPermissions": [
           "ui-inventory.instance.view"
         ],
+        "visible": true
+      }
+      {
+        "permissionName": "records-editor.records.item.put",
+        "displayName": "quickMARC: edit",
         "visible": true
       }
     ]
