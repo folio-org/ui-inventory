@@ -5,7 +5,8 @@ import {
   get,
   set,
   flowRight,
-  isEmpty
+  isEmpty,
+  noop,
 } from 'lodash';
 import {
   injectIntl,
@@ -34,8 +35,10 @@ import {
 import {
   InTransitItemReport,
   InstancesIdReport,
+  exportStringToCSV,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
+import { buildQuery } from '../../routes/buildManifestObject';
 
 import css from './instances.css';
 
@@ -182,68 +185,80 @@ class InstancesView extends React.Component {
     });
   };
 
+  generateCQLQueryReport = async () => {
+    const { data } = this.props;
+
+    const cqlQuery = buildQuery(data.query, {}, data, { log: noop }, this.props);
+
+    exportStringToCSV(cqlQuery);
+  }
+
+  getActionItem = ({ id, icon, messageId, onClickHandler, isDisabled = false }) => {
+    return (
+      <Button
+        buttonStyle="dropdownItem"
+        id={id}
+        disabled={isDisabled}
+        onClick={onClickHandler}
+      >
+        <Icon
+          icon={icon}
+          size="medium"
+          iconClassName={css.actionIcon}
+        />
+        <FormattedMessage id={messageId} />
+      </Button>
+    );
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { parentResources } = this.props;
+    const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
+
+    const buildOnClickHandler = onClickHandler => {
+      return () => {
+        onToggle();
+
+        onClickHandler();
+      };
+    };
 
     return (
       <Fragment>
-        <Button
-          buttonStyle="dropdownItem"
-          id="dropdown-clickable-get-report"
-          onClick={() => {
-            onToggle();
-
-            this.startInTransitReportGeneration();
-          }}
-        >
-          <Icon
-            icon="report"
-            size="medium"
-            iconClassName={css.actionIcon}
-          />
-          <FormattedMessage id="ui-inventory.inTransitReport" />
-        </Button>
-        <Button
-          disabled={isEmpty(get(parentResources, ['records', 'records'], []))}
-          buttonStyle="dropdownItem"
-          id="dropdown-clickable-get-items-uiids"
-          onClick={() => {
-            onToggle();
-
-            this.generateInstancesIdReport();
-          }}
-        >
-          <Icon
-            icon="save"
-            size="medium"
-            iconClassName={css.actionIcon}
-          />
-          <FormattedMessage id="ui-inventory.saveInstancesUIIDS" />
-        </Button>
-        <Button
-          disabled
-          buttonStyle="dropdownItem"
-          id="dropdown-clickable-export-marc"
-        >
-          <Icon
-            icon="download"
-            size="medium"
-            iconClassName={css.actionIcon}
-          />
-          <FormattedMessage id="ui-inventory.exportInstancesInMARC" />
-        </Button>
-        <Button
-          disabled
-          buttonStyle="dropdownItem"
-          id="dropdown-clickable-export-json"
-        >
-          <Icon
-            icon="download"
-            size="medium"
-            iconClassName={css.actionIcon}
-          />
-          <FormattedMessage id="ui-inventory.exportInstancesInJSON" />
-        </Button>
+        {this.getActionItem({
+          id: 'dropdown-clickable-get-report',
+          icon: 'report',
+          messageId: 'ui-inventory.inTransitReport',
+          onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
+        })}
+        {this.getActionItem({
+          id: 'dropdown-clickable-get-items-uiids',
+          icon: 'save',
+          messageId: 'ui-inventory.saveInstancesUIIDS',
+          onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
+          isDisabled: isInstancesListEmpty,
+        })}
+        {this.getActionItem({
+          id: 'dropdown-clickable-get-cql-query',
+          icon: 'search',
+          messageId: 'ui-inventory.saveInstancesCQLQuery',
+          onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
+          isDisabled: isInstancesListEmpty,
+        })}
+        {this.getActionItem({
+          id: 'dropdown-clickable-export-marc',
+          icon: 'download',
+          messageId: 'ui-inventory.exportInstancesInMARC',
+          onClickHandler: buildOnClickHandler(noop),
+          isDisabled: true,
+        })}
+        {this.getActionItem({
+          id: 'dropdown-clickable-export-json',
+          icon: 'download',
+          messageId: 'ui-inventory.exportInstancesInJSON',
+          onClickHandler: buildOnClickHandler(noop),
+          isDisabled: true,
+        })}
       </Fragment>
     );
   };
