@@ -1,7 +1,8 @@
 # Change history for ui-inventory
 
-## 2.1.0 (IN PROGRESS)
+## [2.0.1] IN PROGRESS
 
+* Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
 * Rewrite accordion state control. Fixes UIIN-921. 
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)

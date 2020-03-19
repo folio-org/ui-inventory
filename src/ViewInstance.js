@@ -324,18 +324,20 @@ class ViewInstance extends React.Component {
           }
         </IfPermission>
 
-        <Button
-          id="edit-instance-marc"
-          buttonStyle="dropdownItem"
-          onClick={() => {
-            onToggle();
-            this.editInstanceMarc();
-          }}
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editInstanceMarc" />
-          </Icon>
-        </Button>
+        <IfPermission perm="records-editor.records.item.put">
+          <Button
+            id="edit-instance-marc"
+            buttonStyle="dropdownItem"
+            onClick={() => {
+              onToggle();
+              this.editInstanceMarc();
+            }}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editInstanceMarc" />
+            </Icon>
+          </Button>
+        </IfPermission>
       </Fragment>
     );
   };
