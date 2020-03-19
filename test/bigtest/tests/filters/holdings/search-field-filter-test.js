@@ -26,7 +26,7 @@ describe('Holdings SearchFieldFilter', () => {
 
     describe('search without sortby', () => {
       beforeEach(async () => {
-        await holdingsRoute.searchFieldFilter.searchField.fillInput('(title="Sapiens: A Brief History of Humankind" and contributors =/@name "Yuval Noah Harari")');
+        await holdingsRoute.searchFieldFilter.searchField.fillInput('(title=Sapiens and contributors=Yuval)');
         await holdingsRoute.searchFieldFilter.clickSearch();
       });
 
@@ -37,7 +37,7 @@ describe('Holdings SearchFieldFilter', () => {
 
     describe('search with sortby', () => {
       beforeEach(async () => {
-        await holdingsRoute.searchFieldFilter.searchField.fillInput('(title="Sapiens: A Brief History of Humankind" and contributors =/@name "Yuval Noah Harari") sortby title');
+        await holdingsRoute.searchFieldFilter.searchField.fillInput('(title=Sapiens and contributors=Yuval) sortby title');
         await holdingsRoute.searchFieldFilter.clickSearch();
       });
 

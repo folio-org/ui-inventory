@@ -22,10 +22,10 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 }
 
 @interactor class HoldingsViewPage {
-  isLoaded = isPresent('[data-test-header-title]');
+  isLoaded = isPresent('[data-test-holdings-view-page]');
 
   title = text('[data-test-header-title]');
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   confirmDeleteModalIsVisible = isVisible('#delete-confirmation-modal');
   confirmDeleteModalIsPresent = isPresent('#delete-confirmation-modal');
@@ -45,4 +45,6 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   }
 }
 
-export default new HoldingsViewPage({ timeout: 6000 });
+export default new HoldingsViewPage({
+  timeout: 10000
+});

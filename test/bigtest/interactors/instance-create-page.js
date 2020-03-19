@@ -15,7 +15,7 @@ import {
 
 @interactor class InstanceCreatePage {
   title = text('[data-test-header-title]');
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   sourceValue = value('input[name="source"]');
 }
