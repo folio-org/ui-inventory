@@ -58,7 +58,6 @@ export default @interactor class InventoryInteractor {
 
   openInstance = clickable('[role=row] a');
   openItem = clickable('[data-test-items] a');
-  closeItem = clickable('[data-test-item-view-page] button:first-child');
 
   headerDropdown = scoped('[data-test-pane-header-actions-button]');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();

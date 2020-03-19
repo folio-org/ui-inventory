@@ -10,7 +10,7 @@ describe('HoldingsViewPage', () => {
   setupApplication();
 
   describe('holding record with items', () => {
-    beforeEach(function () {
+    beforeEach(async function () {
       const instance = this.server.create(
         'instance',
         'withHoldingAndItem',
@@ -20,6 +20,7 @@ describe('HoldingsViewPage', () => {
       const holding = this.server.schema.instances.first().holdings.models[0];
 
       this.visit(`/inventory/view/${instance.id}/${holding.id}`);
+      await HoldingsViewPage.whenLoaded();
     });
 
     it('displays the title in the pane header', () => {

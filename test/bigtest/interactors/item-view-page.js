@@ -36,7 +36,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   isLoaded = isPresent('[data-test-item-view-page]');
   title = text('[data-test-header-item-title]');
 
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   hasDeleteModal = isPresent('#confirmDeleteItemModal');
   hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
@@ -59,4 +59,6 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   }
 }
 
-export default new ItemViewPage();
+export default new ItemViewPage({
+  timeout: 10000,
+});
