@@ -10,7 +10,7 @@ import { InstancesView } from '../views';
 import {
   getFilterConfig,
 } from '../filterConfig';
-import buildManifestObject from './buildManifestObject';
+import { buildManifestObject } from './buildManifestObject';
 import DataContext from '../contexts/DataContext';
 
 class InstancesRoute extends React.Component {
