@@ -49,7 +49,10 @@ import ParentInstanceFields from './parentInstanceFields';
 import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
-import { psTitleRelationshipId } from '../utils';
+import {
+  psTitleRelationshipId,
+  validateOptionalField,
+} from '../utils';
 
 function validate(values) {
   const errors = {};
@@ -116,34 +119,16 @@ function validate(values) {
     { list: 'identifiers', textFields: ['value'], selectFields: ['identifierTypeId'] },
     { list: 'contributors', textFields: ['name'], selectFields: ['contributorNameTypeId'] },
     { list: 'classifications', textFields: ['classificationNumber'], selectFields: ['classificationTypeId'] },
+    { list: 'notes', textFields: ['note'], selectFields: ['instanceNoteTypeId']}
   ];
 
-  optionalLists.forEach((l) => {
-    if (values[l.list] && values[l.list].length) {
-      const errorList = [];
-      values[l.list].forEach((item, i) => {
-        const entryErrors = {};
-
-        l.textFields.forEach((field) => {
-          if (!item || !item[field]) {
-            entryErrors[field] = requiredTextMessage;
-            errorList[i] = entryErrors;
-          }
-        });
-
-        l.selectFields.forEach((field) => {
-          if (!item || !item[field]) {
-            entryErrors[field] = requiredSelectMessage;
-            errorList[i] = entryErrors;
-          }
-        });
-      });
-
-      if (errorList.length) {
-        errors[l.list] = errorList;
-      }
+  optionalLists.forEach(listProps => {
+    const listErrors = validateOptionalField(listProps, values);
+    if (listErrors.length) {
+      errors[listProps.list] = errorList;
     }
   });
+
   return errors;
 }
 
