@@ -39,6 +39,7 @@ import { effectiveCallNumber } from '@folio/stripes-util';
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
+import { validateOptionalField } from '../../utils';
 
 function validate(values) {
   const errors = {};
@@ -51,6 +52,19 @@ function validate(values) {
   if (!(values.permanentLoanType && values.permanentLoanType.id)) {
     errors.permanentLoanType = { id: selectToContinueMsg };
   }
+
+  // Validate optional lists in the holdings record description.
+  // The list itself is not required, but if a list is present,
+  // each item must have non-empty values in each field.
+  const optionalLists = [
+    { list: 'notes', textFields: ['note'], selectFields: ['itemNoteTypeId']}
+  ];
+  optionalLists.forEach(listProps => {
+    const listErrors = validateOptionalField(listProps, values);
+    if (listErrors.length) {
+      errors[listProps.list] = listErrors;
+    }
+  });
 
   return errors;
 }
