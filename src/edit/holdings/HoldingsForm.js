@@ -36,6 +36,7 @@ import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
 import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
 import Note from './note';
+import { validateOptionalField } from '../../utils';
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -44,6 +45,19 @@ function validate(values, props) {
   if (!values.permanentLocationId) {
     errors.permanentLocationId = <FormattedMessage id="ui-inventory.selectToContinue" />;
   }
+
+  // Validate optional lists in the holdings record description.
+  // The list itself is not required, but if a list is present,
+  // each item must have non-empty values in each field.
+  const optionalLists = [
+    { list: 'notes', textFields: ['note'], selectFields: ['holdingsNoteTypeId']}
+  ];
+  optionalLists.forEach(listProps => {
+    const listErrors = validateOptionalField(listProps, values);
+    if (listErrors.length) {
+      errors[listProps.list] = listErrors;
+    }
+  });
 
   return errors;
 }
