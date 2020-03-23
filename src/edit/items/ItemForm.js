@@ -53,7 +53,7 @@ function validate(values) {
     errors.permanentLoanType = { id: selectToContinueMsg };
   }
 
-  // Validate optional lists in the holdings record description.
+  // Validate optional lists in the items record description.
   // The list itself is not required, but if a list is present,
   // each item must have non-empty values in each field.
   const optionalLists = [
