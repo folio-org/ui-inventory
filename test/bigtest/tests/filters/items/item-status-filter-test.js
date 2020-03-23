@@ -19,7 +19,7 @@ describe('ItemStatusFilter', () => {
 
   describe('choose item status', () => {
     beforeEach(async () => {
-      await itemsRoute.itemStatusFilter.checkboxes.dataOptions(8).click();
+      await itemsRoute.itemStatusFilter.checkboxes.dataOptions(6).click();
     });
 
     it('finds instances by chosen item status', () => {

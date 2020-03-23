@@ -41,7 +41,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   }
 
   title = text('[data-test-header-title]');
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   hasHeaderDropdown = isPresent('[class^=DropdownMenuTether---]');
   headerDropdownMenu = new HeaderDropdownMenu();
   itemsList = new MultiColumnListInteractor('#list-items');
@@ -74,5 +74,5 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 
 export default new InstanceViewPage({
   scope: '[data-test-instance-details]',
-  timeout: 3000,
+  timeout: 20000,
 });

@@ -18,7 +18,7 @@ import {
 
   title = text('[data-test-header-title]');
   sub = text('[data-test-header-sub]');
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-test-item-page-type="edit"] [data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);

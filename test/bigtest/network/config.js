@@ -123,10 +123,9 @@ export default function configure() {
       } = cqlParser.tree;
 
       if (left?.field === 'title' && right?.field === 'contributors') {
-        return instances.all().filter(inst => inst.title === left.term &&
-          inst.contributors[0].name === right.term);
+        return instances.all().filter(inst => inst.title.match(left.term) &&
+          inst.contributors[0].name.match(right.term));
       }
-
 
       if (left?.field === 'holdingsRecords.fullCallNumber') {
         const holding = holdings.where({ callNumber: left.term }).models[0];
