@@ -16,7 +16,6 @@ import {
   groupBy,
   map,
   isObject,
-  cloneDeep,
 } from 'lodash';
 import {
   itemStatusesMap,
@@ -201,7 +200,6 @@ export const validateOptionalField = (optionalField, values) => {
   const errorList = [];
 
   if (values[listName] && values[listName].length) {
-
     values[listName].forEach((item, i) => {
       const entryErrors = {};
       optionalField.textFields.forEach((field) => {
@@ -218,9 +216,10 @@ export const validateOptionalField = (optionalField, values) => {
         }
       });
     });
-  };
+  }
+
   return errorList;
-}
+};
 
 export const checkIfElementIsEmpty = element => ((!element || element === '-') ? noValue : element);
 

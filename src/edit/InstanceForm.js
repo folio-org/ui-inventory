@@ -119,7 +119,7 @@ function validate(values) {
     { list: 'identifiers', textFields: ['value'], selectFields: ['identifierTypeId'] },
     { list: 'contributors', textFields: ['name'], selectFields: ['contributorNameTypeId'] },
     { list: 'classifications', textFields: ['classificationNumber'], selectFields: ['classificationTypeId'] },
-    { list: 'notes', textFields: ['note'], selectFields: ['instanceNoteTypeId']}
+    { list: 'notes', textFields: ['note'], selectFields: ['instanceNoteTypeId'] }
   ];
 
   optionalLists.forEach(listProps => {

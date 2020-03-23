@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [2.0.1](In progress)
+
+* Add validation for notes in inventory, holdings, item forms. Refs UIIN-924.
+
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
 

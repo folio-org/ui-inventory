@@ -50,7 +50,7 @@ function validate(values, props) {
   // The list itself is not required, but if a list is present,
   // each item must have non-empty values in each field.
   const optionalLists = [
-    { list: 'notes', textFields: ['note'], selectFields: ['holdingsNoteTypeId']}
+    { list: 'notes', textFields: ['note'], selectFields: ['holdingsNoteTypeId'] }
   ];
   optionalLists.forEach(listProps => {
     const listErrors = validateOptionalField(listProps, values);
