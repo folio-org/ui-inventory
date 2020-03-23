@@ -125,7 +125,7 @@ function validate(values) {
   optionalLists.forEach(listProps => {
     const listErrors = validateOptionalField(listProps, values);
     if (listErrors.length) {
-      errors[listProps.list] = errorList;
+      errors[listProps.list] = listErrors;
     }
   });
 

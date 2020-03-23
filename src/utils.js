@@ -199,20 +199,21 @@ export const validateAlphaNumericField = value => {
 export const validateOptionalField = (optionalField, values) => {
   const listName = optionalField.list;
   const errorList = [];
+
   if (values[listName] && values[listName].length) {
 
     values[listName].forEach((item, i) => {
       const entryErrors = {};
       optionalField.textFields.forEach((field) => {
         if (!item || !item[field]) {
-          entryErrors[field] = requiredTextMessage;
+          entryErrors[field] = <FormattedMessage id="ui-inventory.fillIn" />;
           errorList[i] = entryErrors;
         }
       });
 
       optionalField.selectFields.forEach((field) => {
         if (!item || !item[field]) {
-          entryErrors[field] = requiredSelectMessage;
+          entryErrors[field] = <FormattedMessage id="ui-inventory.selectToContinue" />;
           errorList[i] = entryErrors;
         }
       });
