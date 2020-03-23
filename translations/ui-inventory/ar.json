@@ -482,5 +482,7 @@
     "precedingField.notConnected": "غير متصل",
     "precedingField.connected": "متصل",
     "exportInstancesInMARC": "تصدير الأوعية (مارك)",
-    "exportInstancesInJSON": "تصدير الأوعية (JSON)"
+    "exportInstancesInJSON": "تصدير الأوعية (JSON)",
+    "editInstanceMarc": "تحرير في مارك السريع",
+    "quickMarcNotAvailable": "لا توجد برامج مساعدة!"
 }

@@ -482,5 +482,7 @@
     "precedingField.notConnected": "Non connecté",
     "precedingField.connected": "Connecté",
     "exportInstancesInMARC": "Exporter les instances (MARC)",
-    "exportInstancesInJSON": "Exporter les instances (JSON)"
+    "exportInstancesInJSON": "Exporter les instances (JSON)",
+    "editInstanceMarc": "Modifier dans QuickMARC",
+    "quickMarcNotAvailable": "Aucun plugin disponible!"
 }

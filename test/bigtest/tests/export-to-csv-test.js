@@ -35,6 +35,22 @@ describe('Instances', () => {
     it('should enable action button for saving instances UIIDs if there are items in search result', () => {
       expect(inventory.headerDropdownMenu.isSaveInstancesUIIDsBtnDisabled).to.be.false;
     });
+
+    it('should enable action button for saving instances CQL query if there are items in search result', () => {
+      expect(inventory.headerDropdownMenu.isSaveInstancesCQLQueryDisabled).to.be.false;
+    });
+
+    describe('clicking saving instances CQL query button', () => {
+      beforeEach(async function () {
+        // Timeout to skip enabling animation
+        await new Promise((resolve) => { setTimeout(() => resolve(), 3000); });
+        await inventory.headerDropdownMenu.saveInstancesCQLQueryBtn.click();
+      });
+
+      it('should hide action items', () => {
+        expect(inventory.headerDropdownMenu.saveInstancesCQLQueryBtn.isVisible).to.be.false;
+      });
+    });
   });
 
   describe('clicking on header dropdown button', () => {
@@ -62,6 +78,14 @@ describe('Instances', () => {
 
     it('should disable action button for saving instances UIIDs if there are not items in search result', () => {
       expect(inventory.headerDropdownMenu.isSaveInstancesUIIDsBtnDisabled).to.be.true;
+    });
+
+    it('should display correct icon for saving instances CQL query to csv', () => {
+      expect(inventory.headerDropdownMenu.isSaveInstancesCQLQueryIconPresent).to.be.true;
+    });
+
+    it('should disable action button for saving instances CQL query if there are no items in search result', () => {
+      expect(inventory.headerDropdownMenu.isSaveInstancesCQLQueryDisabled).to.be.true;
     });
 
     it('should display action button for export instances (MARC)', () => {
