@@ -482,5 +482,7 @@
     "precedingField.notConnected": "Not connected",
     "precedingField.connected": "Connected",
     "exportInstancesInMARC": "Экспортировать экземпляры (MARC)",
-    "exportInstancesInJSON": "Экспортировать экземпляры (JSON)"
+    "exportInstancesInJSON": "Экспортировать экземпляры (JSON)",
+    "editInstanceMarc": "Редактировать в QuickMARC",
+    "quickMarcNotAvailable": "Нет доступных плагинов!"
 }

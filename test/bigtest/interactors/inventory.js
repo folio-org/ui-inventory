@@ -8,6 +8,7 @@ import {
   isPresent,
   isVisible,
   property,
+  Interactor,
 } from '@bigtest/interactor';
 
 import {
@@ -21,6 +22,9 @@ import {
   saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
   isSaveInstancesUIIDsBtnDisabled = property('#dropdown-clickable-get-items-uiids', 'disabled');
   isSaveInstancesUIIDsIconPresent = isPresent('#dropdown-clickable-get-items-uiids [class*=icon-save]');
+  saveInstancesCQLQueryBtn = new Interactor('#dropdown-clickable-get-cql-query');
+  isSaveInstancesCQLQueryDisabled = property('#dropdown-clickable-get-cql-query', 'disabled');
+  isSaveInstancesCQLQueryIconPresent = isPresent('#dropdown-clickable-get-cql-query [class*=icon-search]');
   isTransitItemsReportIconPresent = isPresent('#dropdown-clickable-get-report [class*=icon-report]');
   exportInstancesMARCBtnIsVisible = isVisible('#dropdown-clickable-export-marc');
   isExportInstancesMARCBtnDisabled = property('#dropdown-clickable-export-marc', 'disabled');
@@ -58,7 +62,6 @@ export default @interactor class InventoryInteractor {
 
   openInstance = clickable('[role=row] a');
   openItem = clickable('[data-test-items] a');
-  closeItem = clickable('[data-test-item-view-page] button:first-child');
 
   headerDropdown = scoped('[data-test-pane-header-actions-button]');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
@@ -66,4 +69,8 @@ export default @interactor class InventoryInteractor {
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
   formatFilter = scoped('#format', MultiSelectFilterInteractor);
   modeFilter = scoped('#mode', MultiSelectFilterInteractor);
+
+  whenLoaded() {
+    return this.when(() => this.isLoaded);
+  }
 }

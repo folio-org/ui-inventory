@@ -436,6 +436,7 @@
   "item.status.orderClosed": "Order closed",
   "inTransitReport": "In transit items report (CSV)",
   "saveInstancesUIIDS": "Save instances UUIDs",
+  "saveInstancesCQLQuery": "Save instances CQL query",
   "exportInstancesInMARC": "Export instances (MARC)",
   "exportInstancesInJSON": "Export instances (JSON)",
   "reports.inTransitItem.barcode": "Item barcode",
@@ -484,6 +485,6 @@
   "precedingField.notConnected": "Not connected",
   "precedingField.connected": "Connected",
 
-  "editInstanceMarc": "Edit in QuickMARC",
+  "editInstanceMarc": "Edit in quickMARC",
   "quickMarcNotAvailable": "No plugin available!"
 }

@@ -34,7 +34,7 @@ import {
   LocationLookup,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-import { effectiveCallNumber } from '@folio/stripes-util';
+import { effectiveCallNumber } from '@folio/stripes/util';
 
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
