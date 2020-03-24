@@ -47,7 +47,19 @@ export function canMarkItemAsMissing(item) {
     itemStatusesMap.PAGED,
     itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AWAITING_DELIVERY,
-  ], get(item, 'status.name'));
+  ], item?.status?.name);
+}
+
+export function canMarkItemAsWithdrawn(item) {
+  return includes([
+    itemStatusesMap.IN_PROCESS,
+    itemStatusesMap.AVAILABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.MISSING,
+    itemStatusesMap.AWAITING_DELIVERY,
+    itemStatusesMap.PAGED,
+  ], item?.status?.name);
 }
 
 export function getCurrentFilters(filtersStr) {

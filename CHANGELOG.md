@@ -6,6 +6,7 @@
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
 * Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
 * Use correct operator when searching by item status and hrid. Fixes UIIN-1048, UIIN-1051, UIIN-1052, UIIN-1053.
+* Add ability to mark item as withdrawn. Refs UIIN-817.
 * Register `instanceFormatIds` filter. Fixes UIIN-1057.
 * Add filter for instance date created. Refs UIIN-788.
 * Improve `buildOptionalBooleanQuery` performance by using `cql.allRecords=1` and `==` operator. Fixes UIIN-1064.

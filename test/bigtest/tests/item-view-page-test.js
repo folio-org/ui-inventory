@@ -98,6 +98,10 @@ describe('ItemViewPage', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.true;
         });
 
+        it('should show a mark as withdrawn item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsWithdrawn).to.be.true;
+        });
+
         it('should show a delete menu item', () => {
           expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.true;
         });
@@ -149,6 +153,31 @@ describe('ItemViewPage', () => {
             });
           });
         });
+
+        describe('clicking on mark as withdrawn', () => {
+          beforeEach(async () => {
+            await ItemViewPage.headerDropdownMenu.clickMarkAsWithdrawn();
+          });
+
+          it('should open a withdrawn confirmation modal', () => {
+            expect(ItemViewPage.hasMarkAsWithdrawnModal).to.exist;
+          });
+
+          describe('clicking on "Confirm" button', () => {
+            beforeEach(async () => {
+              await ItemViewPage.confirmButton.click();
+            });
+
+            it('should close a withdrawn confirmation modal', () => {
+              expect(ItemViewPage.hasMarkAsWithdrawnModal).to.be.false;
+            });
+
+            it('should change item status to "Withdrawn"', () => {
+              expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal('Withdrawn');
+            });
+          });
+        });
+
         describe('clicking on delete', () => {
           beforeEach(async () => {
             await ItemViewPage.headerDropdownMenu.clickDelete();
