@@ -4,6 +4,7 @@
 
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
+* Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
