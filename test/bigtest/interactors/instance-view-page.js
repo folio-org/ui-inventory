@@ -13,6 +13,8 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
+import KeyValue from './KeyValue';
+
 @interactor class HeaderDropdown {
   click = clickable('button');
 }
@@ -64,6 +66,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   hasExpandAll = isPresent('[data-test-expand-all] button');
   precedingTitles = new MultiColumnListInteractor('#precedingTitles');
   succeedingTitles = new MultiColumnListInteractor('#succeedingTitles');
+  natureOfContent = scoped('[data-test-nature-of-content-terms] div', KeyValue);
 
   notes = collection('[id^="list-instance-notes"]', MultiColumnListInteractor);
 

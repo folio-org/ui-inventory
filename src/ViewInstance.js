@@ -679,6 +679,9 @@ class ViewInstance extends React.Component {
 
     const contributors = get(instance, ['contributors'], []);
 
+    const natureOfContentTerms = get(instance, 'natureOfContentTermIds', [])
+      .map(termId => this.refLookup(referenceTables.natureOfContentTerms, termId).name);
+
     const descriptiveData = {
       publication: get(instance, ['publication'], []),
       editions: get(instance, ['editions'], []),
@@ -686,7 +689,7 @@ class ViewInstance extends React.Component {
       resourceTypeTerm: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).name || '-',
       resourceTypeCode: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code || '-',
       resourceTypeSource: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source || '-',
-      natureOfContentTermIds: get(instance, ['natureOfContentTermIds'], []),
+      natureOfContentTerms: natureOfContentTerms || [],
       instanceFormatIds: get(instance, ['instanceFormatIds'], []),
       languages: get(instance, ['languages'], []),
       publicationFrequency: get(instance, ['publicationFrequency'], []),
@@ -1239,10 +1242,13 @@ class ViewInstance extends React.Component {
           </Row>
 
           <Row>
-            <Col xs={3}>
+            <Col
+              data-test-nature-of-content-terms
+              xs={3}
+            >
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-                value={convertArrayToBlocks(descriptiveData.natureOfContentTermIds)}
+                value={convertArrayToBlocks(descriptiveData.natureOfContentTerms)}
               />
             </Col>
           </Row>

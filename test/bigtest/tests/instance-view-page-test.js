@@ -508,6 +508,23 @@ describe('InstanceViewPage', () => {
     });
   });
 
+  describe('Nature of content field', () => {
+    setupApplication();
+
+    const name = 'audiobook';
+
+    beforeEach(async function () {
+      const natureOfContentTerm = this.server.create('nature-of-content-term', { name });
+      const instance = this.server.create('instance', { natureOfContentTermIds: [natureOfContentTerm.id] });
+      this.visit(`/inventory/view/${instance.id}`);
+      await InstanceViewPage.whenLoaded();
+    });
+
+    it('should display nature of content value', () => {
+      expect(InstanceViewPage.natureOfContent.value.text).to.equal(name);
+    });
+  });
+
   describe('Empty fields', () => {
     setupApplication({ scenarios: ['fetch-items-success'] });
 
@@ -564,6 +581,12 @@ describe('InstanceViewPage', () => {
 
       it('has correct value - dash', () => {
         expect(InstanceViewPage.subjectsList.rows(0).cells(0).content).to.be.equal('-');
+      });
+    });
+
+    describe('Nature of content field', () => {
+      it('should display dash', () => {
+        expect(InstanceViewPage.natureOfContent.value.text).to.equal('-');
       });
     });
   });
