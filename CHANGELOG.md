@@ -48,6 +48,7 @@
 * Add support for unconnected preceding titles. Refs UIIN-950.
 * Add support for connected and connected succeeding titles. Refs UIIN-962 and UIIN-963.
 * Add `parse` to `discoverySuppress` and `staffSuppress` filters. Refs STCOM-654.
+* Display the value in the 'Nature of content' field instead of the UUID. Fixes UIIN-1022.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
