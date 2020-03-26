@@ -993,6 +993,5 @@ ItemForm.defaultProps = {
 export default stripesFinalForm({
   validate,
   mutators,
-  validateOnBlur: true,
   navigationCheck: true,
 })(ItemForm);
