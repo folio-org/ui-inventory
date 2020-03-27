@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [1.13.6](https://github.com/folio-org/ui-inventory/tree/v1.13.6) (2020-03-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.5...v1.13.6)
+
+* Replace infinite scroll with "Load more" button. Refs CHAL-91.
+
 ## [1.13.5](https://github.com/folio-org/ui-inventory/tree/v1.13.5) (2020-02-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.4...v1.13.5)
 
