@@ -73,7 +73,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   // { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid="%{query.query}"' },
+  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
@@ -91,7 +91,7 @@ export const holdingIndexes = [
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
     queryTemplate: 'holdingsRecords.fullCallNumber=="%{query.query}" OR holdingsRecords.callNumberAndSuffix=="%{query.query}"' },
-  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid="%{query.query}"' },
+  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -124,7 +124,7 @@ export const itemIndexes = [
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
     queryTemplate: 'item.fullCallNumber=="%{query.query}" OR item.callNumberAndSuffix=="%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid="%{query.query}"' },
+  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -137,6 +137,7 @@ export const itemFilterConfig = [
   {
     name: 'itemStatus',
     cql: 'item.status.name',
+    operator: '==',
     values: [],
   },
   {
