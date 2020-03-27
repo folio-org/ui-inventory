@@ -45,11 +45,12 @@ function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
 
 class HoldingsRoute extends React.Component {
   static manifest = Object.freeze({
+    resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
       records: 'instances',
-      recordsRequired: '%{resultCount}',
-      perRequest: 30,
+      resultOffset: '%{resultOffset}',
+      perRequest: 100,
       path: 'inventory/instances',
       GET: {
         params: { query: buildQuery },
