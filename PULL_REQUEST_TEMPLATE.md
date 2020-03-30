@@ -1,6 +1,6 @@
 <!--
   If you have a relevant JIRA issue number, please put it in the issue title.
-  Example: MODORDERS-70 Orders schema updates
+  Example: UIIN-817 Orders schema updates
 -->
 
 ## Purpose
@@ -18,7 +18,7 @@
   section."
 
   If you have a relevant JIRA issue, add a link directly to the issue URL here.
-  Example: https://issues.folio.org/browse/MODORDERS-70
+  Example: https://issues.folio.org/browse/UIIN-817
  -->
 
 ## Approach

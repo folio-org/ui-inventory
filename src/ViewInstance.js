@@ -349,11 +349,11 @@ class ViewInstance extends React.Component {
                 <Button
                   id="clickable-view-source"
                   buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
                   onClick={(e) => {
                     onToggle();
                     this.handleViewSource(e, instance);
                   }}
-                  disabled={!marcRecord}
                 >
                   <Icon icon="document">
                     <FormattedMessage id="ui-inventory.viewSource" />
