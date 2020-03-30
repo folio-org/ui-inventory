@@ -25,6 +25,7 @@ import KeyValue from './KeyValue';
   clickDuplicate = clickable('#copy-instance');
   hasDuplicateButton = isPresent('#copy-instance');
   hasViewSourceButton = isPresent('#clickable-view-source');
+  hasEditMarcButton = isPresent('#edit-instance-marc');
   disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
 }
 

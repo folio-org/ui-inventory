@@ -468,6 +468,10 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.headerDropdownMenu.hasViewSourceButton).to.be.false;
     });
 
+    it('should not render an view source button', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasEditMarcButton).to.be.false;
+    });
+
     it('should render an add item button', () => {
       expect(InstanceViewPage.hasButtonAddItem).to.be.false;
     });

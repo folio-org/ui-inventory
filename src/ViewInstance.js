@@ -341,38 +341,43 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         </IfPermission>
-        <IfPermission perm="ui-inventory.instance.view">
-          {isSourceMARC &&
-            <Button
-              id="clickable-view-source"
-              buttonStyle="dropdownItem"
-              onClick={(e) => {
-                onToggle();
-                this.handleViewSource(e, instance);
-              }}
-              disabled={!marcRecord}
-            >
-              <Icon icon="document">
-                <FormattedMessage id="ui-inventory.viewSource" />
-              </Icon>
-            </Button>
-          }
-        </IfPermission>
 
-        <IfPermission perm="records-editor.records.item.put">
-          <Button
-            id="edit-instance-marc"
-            buttonStyle="dropdownItem"
-            onClick={() => {
-              onToggle();
-              this.editInstanceMarc();
-            }}
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editInstanceMarc" />
-            </Icon>
-          </Button>
-        </IfPermission>
+        {
+          isSourceMARC && (
+            <>
+              <IfPermission perm="ui-inventory.instance.view">
+                <Button
+                  id="clickable-view-source"
+                  buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
+                  onClick={(e) => {
+                    onToggle();
+                    this.handleViewSource(e, instance);
+                  }}
+                >
+                  <Icon icon="document">
+                    <FormattedMessage id="ui-inventory.viewSource" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+
+              <IfPermission perm="records-editor.records.item.put">
+                <Button
+                  id="edit-instance-marc"
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.editInstanceMarc();
+                  }}
+                >
+                  <Icon icon="edit">
+                    <FormattedMessage id="ui-inventory.editInstanceMarc" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+            </>
+          )
+        }
       </Fragment>
     );
   };
