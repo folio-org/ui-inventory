@@ -4,6 +4,8 @@ import {
   itemFilterRenderer,
 } from './components';
 
+import { buildDateRangeQuery } from './utils';
+
 // Function which takes a filter name and returns
 // another function which can be used in filter config
 // to parse a given filter into a CQL manually.
@@ -66,6 +68,12 @@ export const instanceFilterConfig = [
     cql: 'discoverySuppress',
     values: [],
     parse: parseFilter('discoverySuppress'),
+  },
+  {
+    name: 'createdDate',
+    cql: 'metadata.createdDate',
+    values: [],
+    parse: buildDateRangeQuery('createdDate'),
   },
 ];
 

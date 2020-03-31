@@ -17,11 +17,14 @@ import {
   map,
   isObject,
 } from 'lodash';
+import moment from 'moment';
+
 import {
   itemStatusesMap,
   noValue,
   emptyList,
   indentifierTypeNames,
+  DATE_FORMAT,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -72,6 +75,45 @@ export function parseFiltersToStr(filters) {
 
   return newFilters.join(',');
 }
+
+export const retrieveDatesFromDateRangeFilterString = filterValue => {
+  let dateRange = {
+    startDate: '',
+    endDate: '',
+  };
+
+  if (filterValue) {
+    const [startDateString, endDateString] = filterValue.split(':');
+    const endDate = moment.utc(endDateString);
+    const startDate = moment.utc(startDateString);
+
+    dateRange = {
+      startDate: startDate.isValid()
+        ? startDate.format(DATE_FORMAT)
+        : '',
+      endDate: endDate.isValid()
+        ? endDate.subtract(1, 'days').format(DATE_FORMAT)
+        : '',
+    };
+  }
+
+  return dateRange;
+};
+
+
+export const makeDateRangeFilterString = (startDate, endDate) => {
+  const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
+
+  return `${startDate}:${endDateCorrected}`;
+};
+
+export const buildDateRangeQuery = name => values => {
+  const [startDateString, endDateString] = values[0]?.split(':') || [];
+
+  if (!startDateString || !endDateString) return '';
+
+  return `metadata.${name}>="${startDateString}" and metadata.${name}<="${endDateString}"`;
+};
 
 export function filterItemsBy(name) {
   return (filter, list) => {

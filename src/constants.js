@@ -79,3 +79,5 @@ export const indentifierTypeNames = {
   ISBN: 'ISBN',
   ISSN: 'ISSN',
 };
+
+export const DATE_FORMAT = 'YYYY-MM-DD';
