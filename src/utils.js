@@ -115,6 +115,21 @@ export const buildDateRangeQuery = name => values => {
   return `metadata.${name}>="${startDateString}" and metadata.${name}<="${endDateString}"`;
 };
 
+// Function which takes a filter name and returns
+// another function which can be used in filter config
+// to parse a given filter into a CQL manually.
+export const buildOptionalBooleanQuery = name => values => {
+  if (values.length === 2) {
+    return 'cql.allRecords=1';
+  } else if (values.length === 1 && values[0] === 'false') {
+    return `cql.allRecords=1 not ${name}=="true"`;
+  } else {
+    const joinedValues = values.map(v => `"${v}"`).join(' or ');
+
+    return `${name}==${joinedValues}`;
+  }
+};
+
 export function filterItemsBy(name) {
   return (filter, list) => {
     if (!filter) {
