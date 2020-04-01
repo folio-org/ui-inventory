@@ -122,6 +122,16 @@ export default function configure() {
         right,
       } = cqlParser.tree;
 
+      if (left?.field === 'metadata.createdDate' && right?.field === 'metadata.createdDate') {
+        return instances.all().filter(inst => {
+          const createdDate = new Date(inst.metadata.createdDate);
+          const from = new Date(left.term);
+          const to = new Date(right.term);
+
+          return createdDate >= from && createdDate < to;
+        });
+      }
+
       if (left?.field === 'title' && right?.field === 'contributors') {
         return instances.all().filter(inst => inst.title.match(left.term) &&
           inst.contributors[0].name.match(right.term));

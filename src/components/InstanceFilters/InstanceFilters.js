@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
 import {
   Accordion,
   FilterAccordionHeader,
@@ -8,10 +9,16 @@ import {
 import {
   CheckboxFilter,
   MultiSelectionFilter,
+  DateRangeFilter,
 } from '@folio/stripes/smart-components';
 
 import languages from '../../data/languages';
-import { filterItemsBy } from '../../utils';
+import {
+  filterItemsBy,
+  retrieveDatesFromDateRangeFilterString,
+  makeDateRangeFilterString,
+} from '../../utils';
+import { DATE_FORMAT } from '../../constants';
 
 export default class InstanceFilters extends React.Component {
   static propTypes = {
@@ -40,6 +47,7 @@ export default class InstanceFilters extends React.Component {
         natureOfContent = [],
         discoverySuppress = [],
         staffSuppress = [],
+        createdDate = [],
       },
       data: {
         locations,
@@ -223,6 +231,23 @@ export default class InstanceFilters extends React.Component {
             dataOptions={suppressedOptions}
             selectedValues={discoverySuppress}
             onChange={onChange}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.createdDate" />}
+          id="createdDate"
+          name="createdDate"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={createdDate.length > 0}
+          onClearFilter={() => onClear('createdDate')}
+        >
+          <DateRangeFilter
+            name="createdDate"
+            dateFormat={DATE_FORMAT}
+            selectedValues={retrieveDatesFromDateRangeFilterString(createdDate[0])}
+            onChange={onChange}
+            makeFilterString={makeDateRangeFilterString}
           />
         </Accordion>
       </React.Fragment>
