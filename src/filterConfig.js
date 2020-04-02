@@ -4,20 +4,11 @@ import {
   itemFilterRenderer,
 } from './components';
 
-// Function which takes a filter name and returns
-// another function which can be used in filter config
-// to parse a given filter into a CQL manually.
-const parseFilter = name => values => {
-  if (values.length === 2) {
-    return `${name}="*"`;
-  } else if (values.length === 1 && values[0] === 'false') {
-    return `${name}="*" not ${name}="true"`;
-  } else {
-    const joinedValues = values.map(v => `"${v}"`).join(' or ');
 
-    return `${name}=${joinedValues}`;
-  }
-};
+import {
+  buildDateRangeQuery,
+  buildOptionalBooleanQuery,
+} from './utils';
 
 export const instanceFilterConfig = [
   {
@@ -59,13 +50,13 @@ export const instanceFilterConfig = [
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
-    parse: parseFilter('staffSuppress'),
+    parse: buildOptionalBooleanQuery('staffSuppress'),
   },
   {
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
-    parse: parseFilter('discoverySuppress'),
+    parse: buildOptionalBooleanQuery('discoverySuppress'),
   },
 ];
 
@@ -117,7 +108,7 @@ export const holdingFilterConfig = [
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
     values: [],
-    parse: parseFilter('holdingsRecords.discoverySuppress'),
+    parse: buildOptionalBooleanQuery('holdingsRecords.discoverySuppress'),
   },
 ];
 
@@ -159,7 +150,7 @@ export const itemFilterConfig = [
     name: 'discoverySuppress',
     cql: 'item.discoverySuppress',
     values: [],
-    parse: parseFilter('item.discoverySuppress'),
+    parse: buildOptionalBooleanQuery('item.discoverySuppress'),
   }
 ];
 
