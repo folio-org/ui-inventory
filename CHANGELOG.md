@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [2.0.1] IN PROGRESS
+## [2.0.1](https://github.com/folio-org/ui-inventory/tree/v2.0.1) (2020-04-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v2.0.1)
 
 * Use correct operator when searching by item status and hrid. Fixes UIIN-1048, UIIN-1051, UIIN-1052, UIIN-1053.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
