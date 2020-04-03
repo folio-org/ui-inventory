@@ -485,5 +485,6 @@
     "exportInstancesInJSON": "Exporter les instances (JSON)",
     "editInstanceMarc": "Modifier dans QuickMARC",
     "quickMarcNotAvailable": "Aucun plugin disponible!",
-    "saveInstancesCQLQuery": "Save instances CQL query"
+    "saveInstancesCQLQuery": "Save instances CQL query",
+    "createdDate": "Date created"
 }

@@ -485,5 +485,6 @@
     "exportInstancesInJSON": "تصدير الأوعية (JSON)",
     "editInstanceMarc": "تحرير في مارك السريع",
     "quickMarcNotAvailable": "لا توجد برامج مساعدة!",
-    "saveInstancesCQLQuery": "حفظ استعلام CQL الأوعية"
+    "saveInstancesCQLQuery": "حفظ استعلام CQL الأوعية",
+    "createdDate": "تاريخ الإنشاء"
 }
