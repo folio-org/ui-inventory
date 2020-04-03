@@ -485,5 +485,6 @@
     "exportInstancesInJSON": "Экспортировать экземпляры (JSON)",
     "editInstanceMarc": "Редактировать в QuickMARC",
     "quickMarcNotAvailable": "Нет доступных плагинов!",
-    "saveInstancesCQLQuery": "Save instances CQL query"
+    "saveInstancesCQLQuery": "Save instances CQL query",
+    "createdDate": "Date created"
 }
