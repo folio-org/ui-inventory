@@ -486,5 +486,5 @@
     "editInstanceMarc": "Редактировать в QuickMARC",
     "quickMarcNotAvailable": "Нет доступных плагинов!",
     "saveInstancesCQLQuery": "Save instances CQL query",
-    "createdDate": "Date created"
+    "createdDate": "Дата создания"
 }
