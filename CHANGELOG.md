@@ -9,6 +9,7 @@
 * Register `instanceFormatIds` filter. Fixes UIIN-1057.
 * Add filter for instance date created. Refs UIIN-788.
 * Improve `buildOptionalBooleanQuery` performance by using `cql.allRecords=1` and `==` operator. Fixes UIIN-1064.
+* Display item status date with status. Refs UIIN-984.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

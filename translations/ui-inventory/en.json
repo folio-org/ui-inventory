@@ -434,6 +434,7 @@
   "item.status.declaredLost": "Declared lost",
   "item.status.received": "Received",
   "item.status.orderClosed": "Order closed",
+  "item.status.statusUpdatedLabel": "status updated {statusDate}",
   "inTransitReport": "In transit items report (CSV)",
   "saveInstancesUIIDS": "Save instances UUIDs",
   "saveInstancesCQLQuery": "Save instances CQL query",
