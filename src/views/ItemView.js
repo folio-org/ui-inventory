@@ -396,8 +396,6 @@ class ItemView extends React.Component {
       );
     }
 
-    const itemStatusDate = get(item, ['status', 'date']);
-
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
 
@@ -563,7 +561,7 @@ class ItemView extends React.Component {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatus: loanLink,
-      itemStatusDate: getDateWithTime(itemStatusDate),
+      itemStatusDate: getDateWithTime(item?.status?.date),
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
       loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : '-',
@@ -1075,15 +1073,13 @@ class ItemView extends React.Component {
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
                       value={checkIfElementIsEmpty(loanAndAvailability.itemStatus)}
+                      subValue={
+                        <FormattedMessage
+                          id="ui-inventory.item.status.statusUpdatedLabel"
+                          values={{ statusDate: loanAndAvailability.itemStatusDate }}
+                        />
+                      }
                     />
-                  </Col>
-                  <Col
-                    smOffset={0}
-                    sm={4}
-                  >
-                    <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.itemStatusDate" />}>
-                      {checkIfElementIsEmpty(loanAndAvailability.itemStatusDate)}
-                    </KeyValue>
                   </Col>
                   <Col
                     smOffset={0}
