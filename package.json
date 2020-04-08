@@ -72,6 +72,9 @@
       "location-units": "2.0",
       "circulation": "9.0"
     },
+    "optionalOkapiInterfaces": {
+      "instance-storage-match": "3.1"
+    },
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
