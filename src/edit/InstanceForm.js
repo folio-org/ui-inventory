@@ -53,6 +53,7 @@ import {
   psTitleRelationshipId,
   validateOptionalField,
 } from '../utils';
+import { validateTitles } from '../validation';
 
 function validate(values) {
   const errors = {};
@@ -128,6 +129,9 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  validateTitles(values, 'preceding', errors, requiredTextMessage);
+  validateTitles(values, 'succeeding', errors, requiredTextMessage);
 
   return errors;
 }
