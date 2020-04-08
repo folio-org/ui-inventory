@@ -14,7 +14,7 @@ import InstancePlugin from '../InstancePlugin';
 import TitleLabel from '../TitleLabel';
 
 const UnconnectedTitle = ({ field, onSelect }) => (
-  <Row bottom="xs">
+  <Row>
     <Col xs>
       <Field
         component={TextField}
