@@ -29,6 +29,7 @@ import {
   TitleManager,
   IntlConsumer,
   IfPermission,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -642,6 +643,7 @@ class ViewInstance extends React.Component {
 
     const instanceData = {
       instanceHrid: get(instance, ['hrid'], '-'),
+      instanceMatchKey: get(instance, ['matchKey'], 'X'),
       metadataSource: get(instance, ['source'], '-'),
       catalogedDate: get(instance, ['catalogedDate'], '-'),
       instanceStatusTerm: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-',
@@ -925,6 +927,16 @@ class ViewInstance extends React.Component {
               />
             </Col>
           </Row>
+          <IfInterface name="instance-storage-match">
+            <Row>
+              <Col xs={12}>
+                <KeyValue
+                  label={<FormattedMessage id="ui-inventory.instanceMatchKey" />}
+                  value={checkIfElementIsEmpty(instanceData.instanceMatchKey)}
+                />
+              </Col>
+            </Row>
+          </IfInterface>
           <Row>
             <Col xs={3}>
               <KeyValue
