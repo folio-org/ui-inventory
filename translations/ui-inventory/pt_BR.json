@@ -486,5 +486,6 @@
     "editInstanceMarc": "Editar no quickMARC",
     "quickMarcNotAvailable": "Nenhum plugin disponível!",
     "saveInstancesCQLQuery": "Salvar consulta CQL das instâncias",
-    "createdDate": "Data de criação"
+    "createdDate": "Data de criação",
+    "item.status.statusUpdatedLabel": "status atualizado {statusDate}"
 }
