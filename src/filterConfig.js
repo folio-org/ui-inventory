@@ -31,6 +31,11 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
+    name: 'format',
+    cql: 'instanceFormatIds',
+    values: [],
+  },
+  {
     name: 'resource',
     cql: 'instanceTypeId',
     values: [],
