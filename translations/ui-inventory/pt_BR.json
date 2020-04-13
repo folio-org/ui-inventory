@@ -487,5 +487,6 @@
     "quickMarcNotAvailable": "Nenhum plugin disponível!",
     "saveInstancesCQLQuery": "Salvar consulta CQL das instâncias",
     "createdDate": "Data de criação",
-    "item.status.statusUpdatedLabel": "status atualizado {statusDate}"
+    "item.status.statusUpdatedLabel": "status atualizado {statusDate}",
+    "isbnNormalized": "ISBN, normalizado"
 }
