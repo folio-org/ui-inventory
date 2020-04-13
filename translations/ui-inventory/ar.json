@@ -487,5 +487,6 @@
     "quickMarcNotAvailable": "لا توجد برامج مساعدة!",
     "saveInstancesCQLQuery": "حفظ استعلام CQL الأوعية",
     "createdDate": "تاريخ الإنشاء",
-    "item.status.statusUpdatedLabel": "status updated {statusDate}"
+    "item.status.statusUpdatedLabel": "تم تحديث الحالة {statusDate}",
+    "isbnNormalized": "ردمك، تطبيع"
 }
