@@ -157,6 +157,7 @@
   "identifiers": "Identifiers",
   "addIdentifier": "Add identifier",
   "isbn": "ISBN",
+  "isbnNormalized": "ISBN, normalized",
   "issn": "ISSN",
   "callNumberEyeReadable": "Call number, eye readable",
   "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",

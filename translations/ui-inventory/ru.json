@@ -486,5 +486,7 @@
     "editInstanceMarc": "Редактировать в QuickMARC",
     "quickMarcNotAvailable": "Нет доступных плагинов!",
     "saveInstancesCQLQuery": "Save instances CQL query",
-    "createdDate": "Дата создания"
+    "createdDate": "Дата создания",
+    "item.status.statusUpdatedLabel": "status updated {statusDate}",
+    "isbnNormalized": "ISBN, normalized"
 }

@@ -54,8 +54,8 @@
     "numberOfPieces": "Number of pieces",
     "language": "言語",
     "languages": "言語",
-    "addLanguage": "Add language",
-    "selectLanguage": "Select language",
+    "addLanguage": "言語を追加",
+    "selectLanguage": "言語を選択",
     "note": "ノート",
     "addNote": "ノートを追加",
     "addNotes": "ノートを追加",
@@ -143,7 +143,7 @@
     "itemCallNumber": "Item call number",
     "holdingsNotes": "Holdings notes",
     "electronicAccess": "Electronic access",
-    "meta.title": "Inventory",
+    "meta.title": "蔵書",
     "location": "Location",
     "callNumber": "Call number",
     "title": "Title (all)",
@@ -306,7 +306,7 @@
     "selectIllPolicy": "Select ILL policy",
     "newRequest": "New Request",
     "instances.resourceType": "Resource Type",
-    "instances.language": "Language",
+    "instances.language": "言語",
     "holdingsRecord.awaitingResources": "Awaiting resources",
     "addLabel": "Add {label}",
     "source": "Source",
@@ -486,5 +486,7 @@
     "editInstanceMarc": "Edit in quickMARC",
     "quickMarcNotAvailable": "No plugin available!",
     "saveInstancesCQLQuery": "Save instances CQL query",
-    "createdDate": "Date created"
+    "createdDate": "Date created",
+    "item.status.statusUpdatedLabel": "status updated {statusDate}",
+    "isbnNormalized": "ISBN, normalized"
 }

@@ -486,5 +486,7 @@
     "editInstanceMarc": "Modifier dans QuickMARC",
     "quickMarcNotAvailable": "Aucun plugin disponible!",
     "saveInstancesCQLQuery": "Save instances CQL query",
-    "createdDate": "Date created"
+    "createdDate": "Date de création",
+    "item.status.statusUpdatedLabel": "statut mis à jour {statusDate}",
+    "isbnNormalized": "ISBN, normalized"
 }
