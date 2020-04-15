@@ -47,6 +47,8 @@ module.exports.test = function test(uiTestCtx) {
         nightmare
           .wait('#app-list-item-clickable-inventory-module')
           .click('#app-list-item-clickable-inventory-module')
+          .wait('[data-test-inventory-instances] #paneHeaderpane-results [data-test-pane-header-actions-button]')
+          .click('[data-test-inventory-instances] #paneHeaderpane-results [data-test-pane-header-actions-button]')
           .wait('#clickable-newinventory')
           .click('#clickable-newinventory')
           .wait('#input_instance_title')
@@ -71,6 +73,8 @@ module.exports.test = function test(uiTestCtx) {
         nightmare
           .wait('#app-list-item-clickable-inventory-module')
           .click('#app-list-item-clickable-inventory-module')
+          .wait('[data-test-inventory-instances] #paneHeaderpane-results [data-test-pane-header-actions-button]')
+          .click('[data-test-inventory-instances] #paneHeaderpane-results [data-test-pane-header-actions-button]')
           .wait('#clickable-newinventory')
           .click('#clickable-newinventory')
           .wait('#input_instance_title')

@@ -14,7 +14,10 @@ import {
   FormattedMessage,
 } from 'react-intl';
 
-import { AppIcon } from '@folio/stripes/core';
+import {
+  AppIcon,
+  IfPermission,
+} from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   Button,
@@ -113,11 +116,15 @@ class InstancesView extends React.Component {
     this.createInstance(instance).then(() => this.closeNewInstance());
   }
 
+  openCreateInstance = () => {
+    this.props.updateLocation({ layer: 'create' });
+  }
+
   copyInstance = (instance) => {
     let copiedInstance = omit(instance, ['id', 'hrid']);
     copiedInstance = set(copiedInstance, 'source', 'FOLIO');
     this.setState({ copiedInstance });
-    this.props.updateLocation({ layer: 'create' });
+    this.openCreateInstance();
   }
 
   renderNavigation = () => (
@@ -225,6 +232,21 @@ class InstancesView extends React.Component {
 
     return (
       <Fragment>
+        <IfPermission perm="ui-inventory.instance.create">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-newinventory"
+            onClick={buildOnClickHandler(this.openCreateInstance)}
+          >
+            <Icon
+              icon="plus-sign"
+              size="medium"
+              iconClassName={css.actionIcon}
+            />
+            <FormattedMessage id="stripes-smart-components.new" />
+          </Button>
+        </IfPermission>
+
         {this.getActionItem({
           id: 'dropdown-clickable-get-report',
           icon: 'report',
@@ -359,6 +381,7 @@ class InstancesView extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType="click"
+            hasNewButton={false}
           />
         </div>
         <ErrorModal
