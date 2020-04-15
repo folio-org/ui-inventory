@@ -2,6 +2,7 @@
 
 ## [2.0.1] IN PROGRESS
 
+* Add conditionally displayed field `matchKey` to Instance detail view. OLE PR-467.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
 * Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
