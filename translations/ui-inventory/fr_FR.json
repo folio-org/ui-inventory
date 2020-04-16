@@ -488,5 +488,10 @@
     "saveInstancesCQLQuery": "Save instances CQL query",
     "createdDate": "Date de création",
     "item.status.statusUpdatedLabel": "statut mis à jour {statusDate}",
-    "isbnNormalized": "ISBN, normalized"
+    "isbnNormalized": "ISBN, normalized",
+    "markAsWithdrawn": "Mark as withdrawn",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
+    "withdrawnModal.heading": "Confirm item as withdrawn",
+    "withdrawnModal.confirm": "Confirm",
+    "item.status.withdrawn": "Withdrawn"
 }

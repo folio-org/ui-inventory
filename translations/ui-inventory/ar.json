@@ -488,5 +488,10 @@
     "saveInstancesCQLQuery": "حفظ استعلام CQL الأوعية",
     "createdDate": "تاريخ الإنشاء",
     "item.status.statusUpdatedLabel": "تم تحديث الحالة {statusDate}",
-    "isbnNormalized": "ردمك، تطبيع"
+    "isbnNormalized": "ردمك، تطبيع",
+    "markAsWithdrawn": "Mark as withdrawn",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
+    "withdrawnModal.heading": "Confirm item as withdrawn",
+    "withdrawnModal.confirm": "Confirm",
+    "item.status.withdrawn": "Withdrawn"
 }
