@@ -230,7 +230,6 @@ class InstanceForm extends React.Component {
         type="submit"
         disabled={(pristine || submitting) && !copy}
         onClick={handleSubmit}
-        // marginBottom0
       >
         <FormattedMessage id="stripes-core.button.saveAndClose" />
       </Button>
