@@ -90,10 +90,6 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.headlineInViewInstance).to.be.true;
     });
 
-    it('displays the clickable edit button near the header', () => {
-      expect(InstanceViewPage.hasButtonEditInstance).to.be.true;
-    });
-
     it('displays the instance title in the pane header', () => {
       expect(InstanceViewPage.title).to.equal('Instance record ADVANCING RESEARCH');
     });
@@ -428,16 +424,6 @@ describe('InstanceViewPage', () => {
           expect(ItemViewPage.$root).to.exist;
         });
       });
-
-      describe('clicking edit instance button', () => {
-        beforeEach(async () => {
-          await InstanceViewPage.clickEditInstance();
-        });
-
-        it('should redirect to instance edit page', () => {
-          expect(InstanceEditPage.$root).to.exist;
-        });
-      });
     });
   });
 
@@ -451,10 +437,6 @@ describe('InstanceViewPage', () => {
     });
 
     visitingViewInventoryPageWithContent();
-
-    it('displays the clickable edit button near the header', () => {
-      expect(InstanceViewPage.hasButtonEditInstance).to.be.false;
-    });
 
     it('should render a edit instance button at the bottom of opened instance', () => {
       expect(InstanceViewPage.headerDropdownMenu.hasEditButton).to.be.false;
