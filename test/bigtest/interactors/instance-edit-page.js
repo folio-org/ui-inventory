@@ -83,7 +83,7 @@ import {
   firstFormatFieldExists = isPresent('[data-test-instance-format-field-count="0"]');
   secondFormatFieldExists = isPresent('[data-test-instance-format-field-count="1"]');
   selectInstanceType = selectable('#select_instance_type');
-  saveInstance = clickable('#clickable-update-instance');
+  saveInstance = clickable('#clickable-save-instance');
 
   languages = new Languages('select[name="languages[0]"]');
   clickAddLanguage = clickable('#clickable-add-language');
