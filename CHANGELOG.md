@@ -14,6 +14,7 @@
 * Add ability to search by `ISBN, normalized` option. Refs UIIN-647.
 * Instance. Remove The New button. Refs UIIN-1023.
 * Instance. Remove The Edit pen icon in the top pane. Refs UIIN-1024.
+* New/Edit Instance Record: Move Save button to fixed footer component Refs UIIN-915.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
