@@ -12,6 +12,7 @@
 * Make the title element required for preceding and succeeding titles. Fixes UIIN-1033 and UIIN-1034.
 * Display item status date with status. Refs UIIN-984.
 * Add ability to search by `ISBN, normalized` option. Refs UIIN-647.
+* Instance. Remove The New button. Refs UIIN-1023.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

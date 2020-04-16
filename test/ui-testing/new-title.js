@@ -33,6 +33,8 @@ module.exports.test = function uiTest(uiTestCtx) {
 
       it('should create new instance ', (done) => {
         nightmare
+          .wait('[data-test-inventory-instances] #paneHeaderpane-results [data-test-pane-header-actions-button]')
+          .click('[data-test-inventory-instances] #paneHeaderpane-results [data-test-pane-header-actions-button]')
           .wait('#clickable-newinventory')
           .click('#clickable-newinventory')
           .wait(55)
