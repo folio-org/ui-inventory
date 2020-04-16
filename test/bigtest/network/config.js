@@ -384,6 +384,14 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.put('/inventory/items/:id/mark-withdrawn', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Withdrawn' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id', ({ items }, request) => {
     const body = JSON.parse(request.requestBody);
     const item = items.create(body);
