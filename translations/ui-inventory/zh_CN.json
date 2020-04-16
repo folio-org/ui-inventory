@@ -488,5 +488,10 @@
     "saveInstancesCQLQuery": "保存实例CQL查询",
     "createdDate": "创建日期",
     "item.status.statusUpdatedLabel": "状态已更新{statusDate}",
-    "isbnNormalized": "ISBN，标准化"
+    "isbnNormalized": "ISBN，标准化",
+    "markAsWithdrawn": "Mark as withdrawn",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
+    "withdrawnModal.heading": "Confirm item as withdrawn",
+    "withdrawnModal.confirm": "Confirm",
+    "item.status.withdrawn": "Withdrawn"
 }
