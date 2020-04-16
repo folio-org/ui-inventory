@@ -108,8 +108,8 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('input[name="notes[2].note"]')
           .insert('input[name="notes[2].note"]', notes[2])
           .wait(55)
-          .wait('#clickable-create-instance')
-          .click('#clickable-create-instance')
+          .wait('#clickable-save-instance')
+          .click('#clickable-save-instance')
           .wait('#clickable-new-holdings-record')
           .then(() => { done(); })
           .catch(done);
