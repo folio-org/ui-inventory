@@ -55,8 +55,6 @@ import KeyValue from './KeyValue';
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
-  clickEditInstance = clickable('#clickable-edit-instance');
-  hasButtonEditInstance = isPresent('#clickable-edit-instance');
   hasButtonAddItem = isPresent('#clickable-new-item');
   clickButtonAddItem = clickable('#clickable-new-item');
   hasButtonAddHoldings = isPresent('#clickable-new-holdings-record');
