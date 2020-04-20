@@ -42,6 +42,7 @@ describe('HoldingsEditPage', () => {
   describe('clicking on cancel', () => {
     beforeEach(async () => {
       await HoldingsEditPage.clickCancel();
+      await InstanceViewPage.whenLoaded();
     });
 
     it('should redirect to instance view page after click', () => {
