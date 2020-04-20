@@ -489,9 +489,9 @@
     "createdDate": "Date de création",
     "item.status.statusUpdatedLabel": "statut mis à jour {statusDate}",
     "isbnNormalized": "ISBN, normalized",
-    "markAsWithdrawn": "Mark as withdrawn",
+    "markAsWithdrawn": "Marquer comme retiré",
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
-    "withdrawnModal.heading": "Confirm item as withdrawn",
-    "withdrawnModal.confirm": "Confirm",
-    "item.status.withdrawn": "Withdrawn"
+    "withdrawnModal.heading": "Confirmez l'élément comme retiré",
+    "withdrawnModal.confirm": "Confirmer",
+    "item.status.withdrawn": "Retiré"
 }
