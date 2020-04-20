@@ -24,6 +24,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   hasNewRequestItem = isPresent('[data-test-inventory-create-request-action]');
   hasMarkAsMissing = isPresent('[data-test-mark-as-missing-item]');
   clickMarkAsMissing = clickable('[data-test-mark-as-missing-item]');
+  hasMarkAsWithdrawn = isPresent('[data-test-mark-as-withdrawn-item]');
+  clickMarkAsWithdrawn = clickable('[data-test-mark-as-withdrawn-item]')
   hasDeleteItem = isPresent('[data-test-inventory-delete-item-action]');
   clickDelete = clickable('[data-test-inventory-delete-item-action]');
 }
@@ -41,6 +43,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   hasDeleteModal = isPresent('#confirmDeleteItemModal');
   hasMarkAsMissingModal = isPresent('[data-test-missingConfirmation-modal]');
   markAsMissingModal = scoped('[data-test-missingConfirmation-modal]');
+  hasMarkAsWithdrawnModal = isPresent('[data-test-withdrawn-confirmation-modal]');
+  markAsWithdrawnModal = scoped('[data-test-withdrawn-confirmation-modal]');
   hasEditItemButton = isPresent('[data-test-clickable-edit-item]');
   clickEditItemButton = clickable('[data-test-clickable-edit-item]');
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');

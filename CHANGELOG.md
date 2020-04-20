@@ -9,12 +9,17 @@
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
 * Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
 * Use correct operator when searching by item status and hrid. Fixes UIIN-1048, UIIN-1051, UIIN-1052, UIIN-1053.
+* Add ability to mark item as withdrawn. Refs UIIN-817.
 * Register `instanceFormatIds` filter. Fixes UIIN-1057.
 * Add filter for instance date created. Refs UIIN-788.
 * Improve `buildOptionalBooleanQuery` performance by using `cql.allRecords=1` and `==` operator. Fixes UIIN-1064.
 * Make the title element required for preceding and succeeding titles. Fixes UIIN-1033 and UIIN-1034.
 * Display item status date with status. Refs UIIN-984.
 * Add ability to search by `ISBN, normalized` option. Refs UIIN-647.
+* Instance. Remove The New button. Refs UIIN-1023.
+* Instance. Remove The Edit pen icon in the top pane. Refs UIIN-1024.
+* New/Edit Instance Record: Move Save button to fixed footer component Refs UIIN-915.
+* Add missing location permissions to `ui-inventory.instance.view`. Fixes UIIN-1056.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

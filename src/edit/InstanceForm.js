@@ -14,16 +14,15 @@ import {
   Accordion,
   Paneset,
   Pane,
-  PaneMenu,
   Row,
   Col,
   Button,
-  Icon,
   TextField,
   Select,
   Checkbox,
   Headline,
   Datepicker,
+  PaneFooter,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -54,6 +53,8 @@ import {
   validateOptionalField,
 } from '../utils';
 import { validateTitles } from '../validation';
+
+import styles from './InstanceForm.css';
 
 function validate(values) {
   const errors = {};
@@ -205,23 +206,40 @@ class InstanceForm extends React.Component {
     );
   }
 
-  getActionMenu = ({ onToggle }) => {
-    const { onCancel } = this.props;
-    const cancel = () => {
-      onToggle();
-      onCancel();
-    };
+  getFooter = () => {
+    const {
+      onCancel,
+      handleSubmit,
+      pristine,
+      submitting,
+      copy,
+    } = this.props;
+    const cancelButton = (
+      <Button
+        buttonStyle="default mega"
+        id="cancel-instance-edition"
+        onClick={onCancel}
+      >
+        <FormattedMessage id="ui-inventory.cancel" />
+      </Button>
+    );
+    const saveButton = (
+      <Button
+        id="clickable-save-instance"
+        buttonStyle="primary mega"
+        type="submit"
+        disabled={(pristine || submitting) && !copy}
+        onClick={handleSubmit}
+      >
+        <FormattedMessage id="stripes-core.button.saveAndClose" />
+      </Button>
+    );
 
     return (
-      <Button
-        buttonStyle="dropdownItem"
-        id="cancel-instance-edition"
-        onClick={cancel}
-      >
-        <Icon icon="times-circle">
-          <FormattedMessage id="ui-inventory.cancel" />
-        </Icon>
-      </Button>
+      <PaneFooter
+        renderStart={cancelButton}
+        renderEnd={saveButton}
+      />
     );
   };
 
@@ -234,13 +252,9 @@ class InstanceForm extends React.Component {
 
   render() {
     const {
-      handleSubmit,
-      pristine,
-      submitting,
       onCancel,
       initialValues,
       referenceTables,
-      copy,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
@@ -282,50 +296,22 @@ class InstanceForm extends React.Component {
       )
       .sort((a, b) => a.label.localeCompare(b.label));
 
-    /* Menus for Add Instance workflow */
-    const addInstanceLastMenu = (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-instance"
-          type="submit"
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="stripes-core.button.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
-
-    const editInstanceLastMenu = (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-update-instance"
-          type="submit"
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="stripes-core.button.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
-
     // Since preceding/succeeding title relationships are split out from other parent/child instances,
     // we don't want the type selection box for parent/child to include the preceding-succeeding type
     const rTypes = referenceTables.instanceRelationshipTypes;
     const mostParentChildRelationships = filter(rTypes, rt => rt.id !== psTitleRelationshipId(rTypes));
 
     return (
-      <form data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}>
+      <form
+        data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}
+        className={styles.instanceForm}
+      >
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
-            lastMenu={initialValues.id ? editInstanceLastMenu : addInstanceLastMenu}
+            footer={this.getFooter()}
             paneTitle={this.getPaneTitle()}
             actionMenu={this.getActionMenu}
           >

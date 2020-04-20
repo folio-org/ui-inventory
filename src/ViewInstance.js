@@ -28,7 +28,6 @@ import {
 } from '@folio/stripes/core';
 import {
   Pane,
-  PaneMenu,
   Row,
   Col,
   Button,
@@ -37,7 +36,6 @@ import {
   KeyValue,
   Layer,
   Layout,
-  PaneHeaderIconButton,
   Icon,
   Headline,
   MultiColumnList,
@@ -489,25 +487,6 @@ class ViewInstance extends React.Component {
       'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source || noValue,
     };
 
-    const detailMenu = (
-      <IfPermission perm="ui-inventory.instance.edit">
-        <PaneMenu>
-          <FormattedMessage id="ui-inventory.editInstance">
-            {ariaLabel => (
-              <PaneHeaderIconButton
-                id="clickable-edit-instance"
-                style={{ visibility: !instance ? 'hidden' : 'visible' }}
-                href={this.craftLayerUrl('edit', location)}
-                onClick={this.onClickEditInstance}
-                ariaLabel={ariaLabel}
-                icon="edit"
-              />
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
-    );
-
     if (!instance) {
       return (
         <Pane
@@ -515,7 +494,6 @@ class ViewInstance extends React.Component {
           defaultWidth={paneWidth}
           paneTitle={<FormattedMessage id="ui-inventory.editInstance" />}
           appIcon={<AppIcon app="inventory" iconKey="instance" />}
-          lastMenu={detailMenu}
           dismissible
           onClose={onClose}
         >
@@ -781,7 +759,6 @@ class ViewInstance extends React.Component {
           </span>
         }
         paneSub={instanceSub()}
-        lastMenu={detailMenu}
         dismissible
         onClose={onClose}
         actionMenu={this.createActionMenuGetter(instance)}

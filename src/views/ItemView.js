@@ -46,6 +46,7 @@ import {
   craftLayerUrl,
   callNumberLabel,
   canMarkItemAsMissing,
+  canMarkItemAsWithdrawn,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
   convertArrayToBlocks,
@@ -81,6 +82,7 @@ class ItemView extends React.Component {
         acc09: true,
       },
       itemMissingModal: false,
+      itemWithdrawnModal: false,
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
     };
@@ -164,29 +166,44 @@ class ItemView extends React.Component {
     this.props.updateLocation({ layer: 'copyItem' });
   }
 
-  handleConfirm = (item, requestRecords) => {
+  markItemAsMissing = (item) => {
     const newItem = cloneDeep(item);
 
-    set(newItem, ['status', 'name'], 'Missing');
+    set(newItem, ['status', 'name'], itemStatusesMap.MISSING);
+    this.markRequestAsOpen();
+    this.props.mutator.items.PUT(newItem).then(() => this.setState({ itemMissingModal: false }));
+  }
+
+  markItemAsWithdrawn = () => {
+    this.props.mutator.markItemAsWithdrawn.POST({}).then(
+      () => this.setState({ itemWithdrawnModal: false })
+    );
+  }
+
+  markRequestAsOpen() {
+    const requestRecords = this.props.resources?.requests?.records ?? [];
 
     if (requestRecords.length) {
-      const newRequestRecord = cloneDeep(requestRecords[0]);
-      const itemStatus = get(newRequestRecord, ['item', 'status']);
-      const holdShelfExpirationDate = get(newRequestRecord, ['holdShelfExpirationDate']);
-
-      if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
-        this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
-        set(newRequestRecord, ['status'], 'Open - Not yet filled');
-        this.props.mutator.requests.PUT(newRequestRecord);
-      }
+      return;
     }
 
-    this.props.mutator.items.PUT(newItem)
-      .then(() => this.setState({ itemMissingModal: false }));
-  };
+    const newRequestRecord = cloneDeep(requestRecords[0]);
+    const itemStatus = newRequestRecord?.item?.status;
+    const holdShelfExpirationDate = newRequestRecord?.holdShelfExpirationDate;
+
+    if (itemStatus === itemStatusesMap.AWAITING_PICKUP && new Date(holdShelfExpirationDate) > new Date()) {
+      this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
+      newRequestRecord.status = 'Open - Not yet filled';
+      this.props.mutator.requests.PUT(newRequestRecord);
+    }
+  }
 
   hideMissingModal = () => {
     this.setState({ itemMissingModal: false });
+  };
+
+  hideWithdrawnModal = () => {
+    this.setState({ itemWithdrawnModal: false });
   };
 
   hideConfirmDeleteItemModal = () => {
@@ -300,6 +317,21 @@ class ItemView extends React.Component {
         >
           <Icon icon="flag">
             <FormattedMessage id="ui-inventory.markAsMissing" />
+          </Icon>
+        </Button>
+        )}
+        { canMarkItemAsWithdrawn(firstItem) && (
+        <Button
+          id="clickable-withdrawn-item"
+          onClick={() => {
+            onToggle();
+            this.setState({ itemWithdrawnModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-mark-as-withdrawn-item
+        >
+          <Icon icon="flag">
+            <FormattedMessage id="ui-inventory.markAsWithdrawn" />
           </Icon>
         </Button>
         )}
@@ -489,14 +521,23 @@ class ItemView extends React.Component {
         });
     };
 
+    const itemValues = {
+      title: item.title,
+      barcode: item.barcode,
+      materialType: upperFirst(item?.materialType?.name ?? ''),
+    };
+
     const missingModalMessage = (
       <SafeHTMLMessage
         id="ui-inventory.missingModal.message"
-        values={{
-          title: item.title,
-          barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
-        }}
+        values={itemValues}
+      />
+    );
+
+    const withdrawnModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.withdrawnModal.message"
+        values={itemValues}
       />
     );
 
@@ -670,9 +711,18 @@ class ItemView extends React.Component {
                 open={this.state.itemMissingModal}
                 heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
                 message={missingModalMessage}
-                onConfirm={() => this.handleConfirm(item, requestRecords)}
+                onConfirm={() => this.markItemAsMissing(item)}
                 onCancel={this.hideMissingModal}
                 confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
+              />
+              <ConfirmationModal
+                data-test-withdrawn-confirmation-modal
+                open={this.state.itemWithdrawnModal}
+                heading={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
+                message={withdrawnModalMessage}
+                onConfirm={this.markItemAsWithdrawn}
+                onCancel={this.hideWithdrawnModal}
+                confirmLabel={<FormattedMessage id="ui-inventory.withdrawnModal.confirm" />}
               />
               <ConfirmationModal
                 id="confirmDeleteItemModal"
@@ -1319,6 +1369,9 @@ ItemView.propTypes = {
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
+    }),
+    markItemAsWithdrawn: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
     requestOnItem: PropTypes.shape({ replace: PropTypes.func.isRequired }),

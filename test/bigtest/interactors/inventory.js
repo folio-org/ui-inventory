@@ -18,6 +18,7 @@ import {
 } from './filters';
 
 @interactor class InventoryHeaderDropdownMenu {
+  clickNewInstanceBtn = clickable('#clickable-newinventory');
   clickItemsInTransitReportBtn = clickable('#dropdown-clickable-get-report');
   itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
   clickSaveInstancesUIIDsBtn = clickable('#dropdown-clickable-get-items-uiids');
