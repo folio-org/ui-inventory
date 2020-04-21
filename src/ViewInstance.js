@@ -16,11 +16,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import {
-  FormattedDate,
-  FormattedTime,
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import queryString from 'query-string';
 
@@ -53,9 +49,10 @@ import {
   checkIfElementIsEmpty,
   convertArrayToBlocks,
   checkIfArrayIsEmpty,
-  staffOnlyFormatter,
+  getDateWithTime,
   getSortedNotes,
   marshalInstance,
+  staffOnlyFormatter,
   unmarshalInstance,
 } from './utils';
 import formatters from './referenceFormatters';
@@ -625,7 +622,7 @@ class ViewInstance extends React.Component {
       instanceStatusTerm: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-',
       instanceStatusCode: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code || '-',
       instanceStatusSource: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source || '-',
-      instanceStatusUpdatedDate: get(instance, ['statusUpdatedDate'], '-'),
+      instanceStatusUpdatedDate: instance?.statusUpdatedDate,
       modeOfIssuance: formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance) || '-',
       statisticalCodeIds: get(instance, ['statisticalCodeIds'], []),
     };
@@ -741,18 +738,7 @@ class ViewInstance extends React.Component {
       acc10: areAllFieldsEmpty(values(instanceRelationship)),
     };
 
-    const formattedStatusUpdatedDate = instanceData.instanceStatusUpdatedDate !== '-'
-      ? (
-        <Fragment>
-          <p>
-            <FormattedDate value={instanceData.instanceStatusUpdatedDate} />
-          </p>
-          <p>
-            <FormattedTime value={instanceData.instanceStatusUpdatedDate} />
-          </p>
-        </Fragment>
-      )
-      : noValue;
+    const formattedStatusUpdatedDate = getDateWithTime(instanceData.instanceStatusUpdatedDate);
 
     return (
       <Pane
@@ -907,6 +893,12 @@ class ViewInstance extends React.Component {
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
                 value={checkIfElementIsEmpty(instanceData.instanceStatusTerm)}
+                subValue={
+                  <FormattedMessage
+                    id="ui-inventory.item.status.statusUpdatedLabel"
+                    values={{ statusDate: formattedStatusUpdatedDate }}
+                  />
+                }
               />
             </Col>
             <Col xs={3}>
@@ -919,12 +911,6 @@ class ViewInstance extends React.Component {
               <KeyValue
                 label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
                 value={checkIfElementIsEmpty(instanceData.instanceStatusSource)}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.instanceStatusUpdatedDate" />}
-                value={formattedStatusUpdatedDate}
               />
             </Col>
           </Row>

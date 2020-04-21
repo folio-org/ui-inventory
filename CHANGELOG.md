@@ -1,7 +1,7 @@
 # Change history for ui-inventory
 
-## [2.0.1] IN PROGRESS
-
+## [2.1.0] IN PROGRESS
+* Display instance status date with status. Refs UIIN-1007.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
 * Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
