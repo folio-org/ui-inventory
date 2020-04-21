@@ -342,9 +342,9 @@ class ItemForm extends React.Component {
 
     return (
       <form
-        onSubmit={handleSubmit}
         data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
         className={styles.itemForm}
+        onSubmit={handleSubmit}
       >
         <Paneset isRoot>
           <Pane
