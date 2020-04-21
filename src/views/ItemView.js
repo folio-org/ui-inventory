@@ -19,7 +19,6 @@ import { effectiveCallNumber } from '@folio/stripes/util';
 
 import {
   Pane,
-  PaneMenu,
   Paneset,
   Row,
   Col,
@@ -27,7 +26,6 @@ import {
   ExpandAllButton,
   KeyValue,
   Layer,
-  PaneHeaderIconButton,
   MultiColumnList,
   Button,
   Icon,
@@ -39,7 +37,6 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
   IntlConsumer,
-  IfPermission,
 } from '@folio/stripes/core';
 
 import {
@@ -390,26 +387,6 @@ class ItemView extends React.Component {
     const requestRecords = (requests || {}).records || [];
     const query = location.search ? queryString.parse(location.search) : {};
 
-    const detailMenu = (
-      <IfPermission perm="ui-inventory.item.edit">
-        <PaneMenu>
-          <FormattedMessage id="ui-inventory.editItem">
-            {ariaLabel => (
-              <PaneHeaderIconButton
-                icon="edit"
-                id="clickable-edit-item"
-                style={{ visibility: !item ? 'hidden' : 'visible' }}
-                href={this.craftLayerUrl('editItem', location)}
-                onClick={this.onClickEditItem}
-                ariaLabel={ariaLabel}
-                data-test-clickable-edit-item
-              />
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
-    );
-
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
     let loanLink = item.status.name;
@@ -701,7 +678,6 @@ class ItemView extends React.Component {
                   />
                 </span>
             )}
-              lastMenu={detailMenu}
               dismissible
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
