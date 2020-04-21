@@ -622,7 +622,7 @@ class ViewInstance extends React.Component {
       instanceStatusTerm: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-',
       instanceStatusCode: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code || '-',
       instanceStatusSource: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source || '-',
-      instanceStatusUpdatedDate: get(instance, ['statusUpdatedDate'], '-'),
+      instanceStatusUpdatedDate: instance?.statusUpdatedDate,
       modeOfIssuance: formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance) || '-',
       statisticalCodeIds: get(instance, ['statisticalCodeIds'], []),
     };
@@ -738,9 +738,7 @@ class ViewInstance extends React.Component {
       acc10: areAllFieldsEmpty(values(instanceRelationship)),
     };
 
-    const formattedStatusUpdatedDate = instanceData?.instanceStatusUpdatedDate !== '-'
-      ? getDateWithTime(instanceData.instanceStatusUpdatedDate)
-      : noValue;
+    const formattedStatusUpdatedDate = getDateWithTime(instanceData.instanceStatusUpdatedDate);
 
     return (
       <Pane
