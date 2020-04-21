@@ -22,21 +22,16 @@ describe('HoldingsCreatePage', () => {
     it('displays the holdings name in the pane header', () => {
       expect(HoldingsCreatePage.title).to.equal('ADVANCING RESEARCH');
     });
+  });
 
-    describe('pane header menu', () => {
-      beforeEach(async () => {
-        await HoldingsCreatePage.headerDropdown.click();
-      });
+  describe('clicking on cancel', () => {
+    beforeEach(async () => {
+      await HoldingsCreatePage.clickCancel();
+      await InstanceViewPage.whenLoaded();
+    });
 
-      describe('clicking on cancel', () => {
-        beforeEach(async () => {
-          await HoldingsCreatePage.headerDropdownMenu.clickCancel();
-        });
-
-        it('should redirect to instance view page after click', () => {
-          expect(InstanceViewPage.$root).to.exist;
-        });
-      });
+    it('should redirect to instance view page after click', () => {
+      expect(InstanceViewPage.$root).to.exist;
     });
   });
 });
