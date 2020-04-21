@@ -223,7 +223,7 @@ class ItemForm extends React.Component {
       <Button
         data-test-inventory-cancel-item-edit-action
         buttonStyle="default mega"
-        id="cancel-item-edition"
+        id="cancel-item-edit"
         onClick={onCancel}
       >
         <FormattedMessage id="ui-inventory.cancel" />
