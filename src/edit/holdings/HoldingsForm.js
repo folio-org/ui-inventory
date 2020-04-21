@@ -194,10 +194,10 @@ class HoldingsForm extends React.Component {
   getFooter = () => {
     const {
       onCancel,
-      handleSubmit,
       pristine,
       submitting,
       copy,
+      handleSubmit,
     } = this.props;
     const cancelButton = (
       <Button
