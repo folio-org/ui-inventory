@@ -17,6 +17,7 @@
 * Instance. Remove The Edit pen icon in the top pane. Refs UIIN-1024.
 * New/Edit Instance Record: Move Save button to fixed footer component Refs UIIN-915.
 * New/Edit Holding Record: Move Save button to fixed footer component Refs UIIN-916.
+* Add missing location permissions to `ui-inventory.instance.view`. Fixes UIIN-1056.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
