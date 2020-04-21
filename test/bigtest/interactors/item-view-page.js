@@ -18,6 +18,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 }
 
 @interactor class HeaderDropdownMenu {
+  hasEdit = isPresent('[data-test-inventory-edit-item-action]');
   clickEdit = clickable('[data-test-inventory-edit-item-action]');
   hasDuplicate = isPresent('[data-test-inventory-duplicate-item-action]');
   clickDuplicate = clickable('[data-test-inventory-duplicate-item-action]');
@@ -45,8 +46,6 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   markAsMissingModal = scoped('[data-test-missingConfirmation-modal]');
   hasMarkAsWithdrawnModal = isPresent('[data-test-withdrawn-confirmation-modal]');
   markAsWithdrawnModal = scoped('[data-test-withdrawn-confirmation-modal]');
-  hasEditItemButton = isPresent('[data-test-clickable-edit-item]');
-  clickEditItemButton = clickable('[data-test-clickable-edit-item]');
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');

@@ -14,13 +14,11 @@ import queryString from 'query-string';
 import {
   Layer,
   Pane,
-  PaneMenu,
   Row,
   Col,
   Accordion,
   ExpandAllButton,
   KeyValue,
-  PaneHeaderIconButton,
   MultiColumnList,
   Icon,
   Button,
@@ -333,7 +331,6 @@ class ViewHoldingsRecord extends React.Component {
       },
       referenceTables,
       okapi,
-      stripes,
     } = this.props;
 
     if (this.isAwaitingResource()) {
@@ -346,23 +343,6 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
-
-    const detailMenu = stripes.hasPerm('ui-inventory.holdings.edit') && (
-      <PaneMenu>
-        <FormattedMessage id="ui-inventory.editHoldings">
-          {ariaLabel => (
-            <PaneHeaderIconButton
-              icon="edit"
-              id="clickable-edit-holdingsrecord"
-              style={{ visibility: !holdingsRecord ? 'hidden' : 'visible' }}
-              href={this.craftLayerUrl('editHoldingsRecord')}
-              onClick={this.onClickEditHoldingsRecord}
-              ariaLabel={ariaLabel}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
-    );
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -579,7 +559,6 @@ class ViewHoldingsRecord extends React.Component {
                       />
                     </span>
                   }
-                  lastMenu={detailMenu}
                   dismissible
                   onClose={this.props.onCloseViewHoldingsRecord}
                   actionMenu={this.getPaneHeaderActionMenu}
