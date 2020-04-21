@@ -10,12 +10,11 @@ import { OnChange } from 'react-final-form-listeners';
 import {
   Paneset,
   Pane,
-  PaneMenu,
+  PaneFooter,
   Row,
   Col,
   Accordion,
   Button,
-  Icon,
   KeyValue,
   TextField,
   Select,
@@ -40,6 +39,8 @@ import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
 import { validateOptionalField } from '../../utils';
+
+import styles from './ItemForm.css';
 
 function validate(values) {
   const errors = {};
@@ -204,34 +205,52 @@ class ItemForm extends React.Component {
     this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
-  getActionMenu = ({ onToggle }) => {
-    const { onCancel } = this.props;
-    return (
-      <Button
-        data-test-inventory-cancel-item-edit-action
-        buttonStyle="dropdownItem"
-        onClick={() => {
-          onCancel();
-          onToggle();
-        }}
-      >
-        <Icon icon="times-circle">
-          <FormattedMessage id="ui-inventory.cancel" />
-        </Icon>
-      </Button>
-    );
-  };
-
   onSelectHandler = loc => this.selectTemporaryLocation(loc);
 
   setItemDamagedStatusDate = () => {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
-  render() {
+  getFooter = () => {
     const {
+      onCancel,
+      handleSubmit,
       pristine,
       submitting,
+      copy,
+    } = this.props;
+    const cancelButton = (
+      <Button
+        data-test-inventory-cancel-item-edit-action
+        buttonStyle="default mega"
+        id="cancel-item-edit"
+        onClick={onCancel}
+      >
+        <FormattedMessage id="ui-inventory.cancel" />
+      </Button>
+    );
+    const saveButton = (
+      <Button
+        id="clickable-save-item"
+        buttonStyle="primary mega"
+        type="submit"
+        disabled={(pristine || submitting) && !copy}
+        onClick={handleSubmit}
+      >
+        <FormattedMessage id="stripes-core.button.saveAndClose" />
+      </Button>
+    );
+
+    return (
+      <PaneFooter
+        renderStart={cancelButton}
+        renderEnd={saveButton}
+      />
+    );
+  };
+
+  render() {
+    const {
       onCancel,
       initialValues,
       instance,
@@ -247,7 +266,6 @@ class ItemForm extends React.Component {
         statisticalCodeTypes,
         itemDamagedStatuses,
       },
-      copy,
       handleSubmit,
     } = this.props;
 
@@ -258,35 +276,6 @@ class ItemForm extends React.Component {
     } = this.state;
 
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
-
-    /* Menus for Add Item workflow */
-    const addItemLastMenu = (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-item"
-          type="submit"
-          disabled={(pristine || submitting) && !copy}
-          marginBottom0
-        >
-          <FormattedMessage id="stripes-core.button.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
-
-    const editItemLastMenu = (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary"
-          id="clickable-update-item"
-          type="submit"
-          disabled={(pristine || submitting) && !copy}
-          marginBottom0
-        >
-          <FormattedMessage id="stripes-core.button.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -352,14 +341,17 @@ class ItemForm extends React.Component {
     const effectiveLocation = get(initialValues, ['effectiveLocation', 'name'], '-');
 
     return (
-      <form onSubmit={handleSubmit} data-test-item-page-type={initialValues.id ? 'edit' : 'create'}>
+      <form
+        data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
+        className={styles.itemForm}
+        onSubmit={handleSubmit}
+      >
         <Paneset isRoot>
           <Pane
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
-            lastMenu={(initialValues.id) ? editItemLastMenu : addItemLastMenu}
-            actionMenu={this.getActionMenu}
+            footer={this.getFooter()}
             appIcon={<AppIcon app="inventory" iconKey="item" />}
             paneTitle={
               <span data-test-header-title>
