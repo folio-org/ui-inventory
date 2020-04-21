@@ -16,6 +16,7 @@
 * Instance. Remove The New button. Refs UIIN-1023.
 * Instance. Remove The Edit pen icon in the top pane. Refs UIIN-1024.
 * New/Edit Instance Record: Move Save button to fixed footer component Refs UIIN-915.
+* New/Edit Holding Record: Move Save button to fixed footer component Refs UIIN-916.
 * New/Edit Item Record: Move Save button to fixed footer component. Refs UIIN-917.
 * Add missing location permissions to `ui-inventory.instance.view`. Fixes UIIN-1056.
 
