@@ -14,7 +14,6 @@ import {
   IfPermission,
 } from '@folio/stripes/core';
 import {
-  has,
   cloneDeep,
 } from 'lodash';
 
@@ -22,7 +21,6 @@ import Items from './Items';
 import ItemForm from './edit/items/ItemForm';
 import withLocation from './withLocation';
 import {
-  areAllFieldsEmpty,
   callNumberLabel
 } from './utils';
 
@@ -51,22 +49,7 @@ class ItemsPerHoldingsRecord extends React.Component {
   constructor(props) {
     super(props);
     this.cItems = props.stripes.connect(Items, { dataKey: props.holdingsRecord.id });
-
-    this.state = {
-      records: [],
-    };
-  }
-
-  componentDidUpdate() {
-    const {
-      holdingsRecord,
-      accordionStates,
-      updateAccordions,
-    } = this.props;
-
-    if (!has(accordionStates, holdingsRecord.id)) {
-      updateAccordions(holdingsRecord);
-    }
+    this.state = {};
   }
 
   // Add Item handlers
@@ -146,8 +129,6 @@ class ItemsPerHoldingsRecord extends React.Component {
       },
       instance,
       holdingsRecord,
-      accordionToggle,
-      isAccordionOpen,
       mutator,
       stripes,
     } = this.props;
@@ -186,13 +167,10 @@ class ItemsPerHoldingsRecord extends React.Component {
       );
     }
 
-    const accordionState = areAllFieldsEmpty([this.state.records]);
-
     return (
       <Accordion
-        open={isAccordionOpen(holdingsRecord.id, accordionState)}
         id={holdingsRecord.id}
-        onToggle={accordionToggle}
+        closedByDefault={false}
         label={(
           <FormattedMessage
             id="ui-inventory.holdingsHeader"
@@ -246,13 +224,9 @@ ItemsPerHoldingsRecord.propTypes = {
     locale: PropTypes.string.isRequired,
   }).isRequired,
   okapi: PropTypes.object,
-  accordionToggle: PropTypes.func.isRequired,
-  accordionStates: PropTypes.object.isRequired,
   updateLocation: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
   getParams: PropTypes.func.isRequired,
-  isAccordionOpen: PropTypes.func.isRequired,
-  updateAccordions: PropTypes.func.isRequired,
 };
 
 export default withLocation(ItemsPerHoldingsRecord);

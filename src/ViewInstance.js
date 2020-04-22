@@ -1,7 +1,5 @@
 import {
   get,
-  has,
-  cloneDeep,
   orderBy,
   isEmpty,
   values,
@@ -32,6 +30,8 @@ import {
   Col,
   Button,
   Accordion,
+  AccordionSet,
+  AccordionStatus,
   ExpandAllButton,
   KeyValue,
   Layer,
@@ -113,20 +113,6 @@ class ViewInstance extends React.Component {
     this.log = logger.log.bind(logger);
 
     this.state = {
-      accordions: {
-        acc01: true,
-        acc02: true,
-        acc03: true,
-        acc04: true,
-        acc05: true,
-        acc06: true,
-        acc07: true,
-        acc08: true,
-        acc09: true,
-        acc10: true,
-        acc11: true,
-      },
-      areAllAccordionsOpen: true,
       marcRecord: null,
     };
     this.instanceId = null;
@@ -241,27 +227,6 @@ class ViewInstance extends React.Component {
     });
   };
 
-  handleAccordionToggle = ({ id }) => {
-    this.setState(state => {
-      const newState = cloneDeep(state);
-
-      if (!has(newState.accordions, id)) newState.accordions[id] = true;
-      newState.accordions[id] = !newState.accordions[id];
-
-      return newState;
-    });
-  };
-
-  handleExpandAll = obj => {
-    this.setState(curState => {
-      const newState = cloneDeep(curState);
-      newState.accordions = obj;
-      newState.areAllAccordionsOpen = !newState.areAllAccordionsOpen;
-
-      return newState;
-    });
-  };
-
   handleViewSource = (e, instance) => {
     if (e) e.preventDefault();
     const {
@@ -336,6 +301,38 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         </IfPermission>
+        <IfPermission perm="ui-inventory.instance.view">
+          {isSourceMARC &&
+            <Button
+              id="clickable-view-source"
+              buttonStyle="dropdownItem"
+              onClick={(e) => {
+                onToggle();
+                this.handleViewSource(e, instance);
+              }}
+              disabled={!marcRecord}
+            >
+              <Icon icon="document">
+                <FormattedMessage id="ui-inventory.viewSource" />
+              </Icon>
+            </Button>
+          }
+        </IfPermission>
+
+        <IfPermission perm="records-editor.records.item.put">
+          <Button
+            id="edit-instance-marc"
+            buttonStyle="dropdownItem"
+            onClick={() => {
+              onToggle();
+              this.editInstanceMarc();
+            }}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editInstanceMarc" />
+            </Icon>
+          </Button>
+        </IfPermission>
 
         {
           isSourceMARC && (
@@ -377,26 +374,6 @@ class ViewInstance extends React.Component {
     );
   };
 
-  isAccordionOpen = (id, hasAllFieldsEmpty) => {
-    const {
-      accordions,
-      areAllAccordionsOpen,
-    } = this.state;
-
-    return accordions[id] === !hasAllFieldsEmpty && areAllAccordionsOpen;
-  };
-
-  updateAccordions = ({ id }) => {
-    this.setState(state => {
-      const newState = cloneDeep(state);
-
-      if (!has(newState.accordions, id)) {
-        newState.accordions[id] = true;
-      }
-      return newState;
-    });
-  };
-
   render() {
     const {
       okapi,
@@ -408,10 +385,7 @@ class ViewInstance extends React.Component {
       paneWidth,
     } = this.props;
 
-    const {
-      accordions,
-      marcRecord
-    } = this.state;
+    const { marcRecord } = this.state;
 
     const { identifierTypesById } = referenceTables;
 
@@ -725,17 +699,17 @@ class ViewInstance extends React.Component {
       ? formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)
       : noValue;
 
-    const accordionsState = {
-      acc01: areAllFieldsEmpty(values(instanceData)),
-      acc02: areAllFieldsEmpty(values(titleData)),
-      acc03: areAllFieldsEmpty([identifiers]),
-      acc04: areAllFieldsEmpty([contributors]),
-      acc05: areAllFieldsEmpty(values(descriptiveData)),
-      acc06: areAllFieldsEmpty([instanceNotes]),
-      acc07: areAllFieldsEmpty([electronicAccess]),
-      acc08: areAllFieldsEmpty([subjects]),
-      acc09: areAllFieldsEmpty([classifications]),
-      acc10: areAllFieldsEmpty(values(instanceRelationship)),
+    const initialAccordionsState = {
+      acc01: !areAllFieldsEmpty(values(instanceData)),
+      acc02: !areAllFieldsEmpty(values(titleData)),
+      acc03: !areAllFieldsEmpty([identifiers]),
+      acc04: !areAllFieldsEmpty([contributors]),
+      acc05: !areAllFieldsEmpty(values(descriptiveData)),
+      acc06: !areAllFieldsEmpty([instanceNotes]),
+      acc07: !areAllFieldsEmpty([electronicAccess]),
+      acc08: !areAllFieldsEmpty([subjects]),
+      acc09: !areAllFieldsEmpty([classifications]),
+      acc10: !areAllFieldsEmpty(values(instanceRelationship)),
     };
 
     const formattedStatusUpdatedDate = getDateWithTime(instanceData.instanceStatusUpdatedDate);
@@ -762,657 +736,632 @@ class ViewInstance extends React.Component {
         actionMenu={this.createActionMenuGetter(instance)}
       >
         <TitleManager record={instance.title} />
-        <Row end="xs">
-          <Col
-            data-test-expand-all
-            xs
+        <AccordionStatus>
+          <Row end="xs">
+            <Col
+              data-test-expand-all
+              xs
+            >
+              <ExpandAllButton />
+            </Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col xs={12}>
+              <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
+                <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                  <AppIcon
+                    app="inventory"
+                    iconKey="instance"
+                    size="small"
+                  >
+                    <FormattedMessage id="ui-inventory.instanceRecord" />
+                  </AppIcon>
+                </Layout>
+                <Layout className="margin-end-gutter display-flex flex-align-items-center">
+                  <AppIcon
+                    app="inventory"
+                    iconKey="resource-type"
+                    size="small"
+                  >
+                    {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
+                  </AppIcon>
+                </Layout>
+              </Layout>
+            </Col>
+          </Row>
+          <Headline
+            data-test-headline-medium
+            size="medium"
+            margin="medium"
           >
-            <ExpandAllButton
-              accordionStatus={accordions}
-              onToggle={this.handleExpandAll}
-            />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col xs={12}>
-            <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
-              <Layout className="margin-end-gutter display-flex flex-align-items-center">
-                <AppIcon
-                  app="inventory"
-                  iconKey="instance"
-                  size="small"
-                >
-                  <FormattedMessage id="ui-inventory.instanceRecord" />
-                </AppIcon>
-              </Layout>
-              <Layout className="margin-end-gutter display-flex flex-align-items-center">
-                <AppIcon
-                  app="inventory"
-                  iconKey="resource-type"
-                  size="small"
-                >
-                  {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
-                </AppIcon>
-              </Layout>
-            </Layout>
-          </Col>
-        </Row>
-        <Headline
-          data-test-headline-medium
-          size="medium"
-          margin="medium"
-        >
-          {instance.title}
-        </Headline>
-
-        {
-          (!holdingsrecordid && !itemid) ?
-            (
-              <Switch>
-                <Route
-                  path="/inventory/viewsource/"
-                  render={() => (
-                    <this.cViewMarc
-                      instance={instance}
-                      marcRecord={marcRecord}
-                      stripes={stripes}
-                      match={this.props.match}
-                      onClose={this.closeViewMarc}
-                      paneWidth={this.props.paneWidth}
+            {instance.title}
+          </Headline>
+          <AccordionSet initialStatus={initialAccordionsState}>
+            {
+              (!holdingsrecordid && !itemid) ?
+                (
+                  <Switch>
+                    <Route
+                      path="/inventory/viewsource/"
+                      render={() => (
+                        <this.cViewMarc
+                          instance={instance}
+                          marcRecord={marcRecord}
+                          stripes={stripes}
+                          match={this.props.match}
+                          onClose={this.closeViewMarc}
+                          paneWidth={this.props.paneWidth}
+                        />
+                      )}
                     />
-                  )}
-                />
-                <Route
-                  path="/inventory/view/"
-                  render={() => (
-                    <this.cHoldings
-                      dataKey={id}
-                      id={id}
-                      accordionToggle={this.handleAccordionToggle}
-                      accordionStates={this.state.accordions}
-                      instance={instance}
-                      referenceTables={referenceTables}
-                      match={this.props.match}
-                      stripes={stripes}
-                      location={location}
-                      isAccordionOpen={this.isAccordionOpen}
-                      updateAccordions={this.updateAccordions}
+                    <Route
+                      path="/inventory/view/"
+                      render={() => (
+                        <this.cHoldings
+                          dataKey={id}
+                          id={id}
+                          instance={instance}
+                          referenceTables={referenceTables}
+                          match={this.props.match}
+                          stripes={stripes}
+                          location={location}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Switch>
-            )
-            :
-            null
-        }
+                  </Switch>
+                )
+                :
+                null
+            }
 
-        <Row>
-          <Col sm={12}>{newHoldingsRecordButton}</Col>
-        </Row>
-
-        <Accordion
-          open={this.isAccordionOpen('acc01', accordionsState.acc01)}
-          id="acc01"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.instanceData" />}
-        >
-          <this.cViewMetaData metadata={instance.metadata} />
-          <Row>
-            <Col xs={12}>
-              {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-              {instance.discoverySuppress && instance.staffSuppress && '|'}
-              {instance.staffSuppress && <FormattedMessage id="ui-inventory.staffSuppress" />}
-              {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
-              {instance.previouslyHeld && <FormattedMessage id="ui-inventory.previouslyHeld" />}
-            </Col>
-          </Row>
-          {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
-          <Row>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-                value={checkIfElementIsEmpty(instanceData.instanceHrid)}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.metadataSource" />}
-                value={checkIfElementIsEmpty(instanceData.metadataSource)}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.catalogedDate" />}
-                value={checkIfElementIsEmpty(instanceData.catalogedDate)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
-                value={checkIfElementIsEmpty(instanceData.instanceStatusTerm)}
-                subValue={
-                  <FormattedMessage
-                    id="ui-inventory.item.status.statusUpdatedLabel"
-                    values={{ statusDate: formattedStatusUpdatedDate }}
+            <Row>
+              <Col sm={12}>{newHoldingsRecordButton}</Col>
+            </Row>
+            <Accordion
+              id="acc01"
+              label={<FormattedMessage id="ui-inventory.instanceData" />}
+            >
+              <this.cViewMetaData metadata={instance.metadata} />
+              <Row>
+                <Col xs={12}>
+                  {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
+                  {instance.discoverySuppress && instance.staffSuppress && '|'}
+                  {instance.staffSuppress && <FormattedMessage id="ui-inventory.staffSuppress" />}
+                  {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
+                  {instance.previouslyHeld && <FormattedMessage id="ui-inventory.previouslyHeld" />}
+                </Col>
+              </Row>
+              {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
+              <Row>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.instanceHrid" />}
+                    value={checkIfElementIsEmpty(instanceData.instanceHrid)}
                   />
-                }
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.instanceStatusCode" />}
-                value={checkIfElementIsEmpty(instanceData.instanceStatusCode)}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
-                value={checkIfElementIsEmpty(instanceData.instanceStatusSource)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
-                value={checkIfElementIsEmpty(instanceData.modeOfIssuance)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.statisticalCodes">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-statistical-codes"
-                      contentData={statisticalCodeIdsContent}
-                      visibleColumns={['Statistical code type', 'Statistical code', 'Statistical code name']}
-                      columnMapping={{
-                        'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                        'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                        'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
-                      }}
-                      columnWidths={{
-                        'Statistical code type': '25%',
-                        'Statistical code': '25%',
-                        'Statistical code name': '25%',
-                      }}
-                      formatter={{
-                        'Statistical code type':
-                          x => this.refLookup(referenceTables.statisticalCodeTypes,
-                            this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
-                        'Statistical code':
-                          x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).code || noValue,
-                        'Statistical code name':
-                          x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
-                      }}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
+                </Col>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.metadataSource" />}
+                    value={checkIfElementIsEmpty(instanceData.metadataSource)}
+                  />
+                </Col>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.catalogedDate" />}
+                    value={checkIfElementIsEmpty(instanceData.catalogedDate)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
+                    value={checkIfElementIsEmpty(instanceData.instanceStatusTerm)}
+                    subValue={
+                      <FormattedMessage
+                        id="ui-inventory.item.status.statusUpdatedLabel"
+                        values={{ statusDate: formattedStatusUpdatedDate }}
+                      />
+                    }
+                  />
+                </Col>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.instanceStatusCode" />}
+                    value={checkIfElementIsEmpty(instanceData.instanceStatusCode)}
+                  />
+                </Col>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
+                    value={checkIfElementIsEmpty(instanceData.instanceStatusSource)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+                    value={checkIfElementIsEmpty(instanceData.modeOfIssuance)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.statisticalCodes">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-statistical-codes"
+                          contentData={statisticalCodeIdsContent}
+                          visibleColumns={['Statistical code type', 'Statistical code', 'Statistical code name']}
+                          columnMapping={{
+                            'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                            'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                            'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
+                          }}
+                          columnWidths={{
+                            'Statistical code type': '25%',
+                            'Statistical code': '25%',
+                            'Statistical code name': '25%',
+                          }}
+                          formatter={{
+                            'Statistical code type':
+                              x => this.refLookup(referenceTables.statisticalCodeTypes,
+                                this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
+                            'Statistical code':
+                              x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).code || noValue,
+                            'Statistical code name':
+                              x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
+                          }}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-        </Accordion>
+                </IntlConsumer>
+              </Row>
+            </Accordion>
 
-        <Accordion
-          open={this.isAccordionOpen('acc02', accordionsState.acc02)}
-          id="acc02"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.titleData" />}
-        >
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.resourceTitle" />}
-                value={checkIfElementIsEmpty(titleData.resourceTitle)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.alternativeTitles">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-alternative-titles"
-                      contentData={checkIfArrayIsEmpty(titleData.alternativeTitles)}
-                      rowMetadata={['alternativeTitleTypeId']}
-                      visibleColumns={['Alternative title type', 'Alternative title']}
-                      columnMapping={{
-                        'Alternative title type': intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' }),
-                        'Alternative title': intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
-                      }}
-                      columnWidths={{
-                        'Alternative title type': '25%',
-                        'Alternative title': '75%',
-                      }}
-                      formatter={alternativeTitlesRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
-                  )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.indexTitle" />}
-                value={checkIfElementIsEmpty(titleData.indexTitle)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.seriesStatement">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-series-statement"
-                      contentData={seriesContent}
-                      visibleColumns={['Series statement']}
-                      columnMapping={{ 'Series statement': intl.formatMessage({ id: 'ui-inventory.seriesStatement' }) }}
-                      columnWidths={{ 'Series statement': '99%' }}
-                      formatter={{ 'Series statement': x => get(x, ['value']) || noValue }}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
-                  )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-          <Row>
-            <Col
-              data-test-preceding-titles
-              xs={12}
+            <Accordion
+              id="acc02"
+              label={<FormattedMessage id="ui-inventory.titleData" />}
             >
-              <TitlesView
-                id="precedingTitles"
-                titleKey="precedingInstanceId"
-                label={<FormattedMessage id="ui-inventory.precedingTitles" />}
-                titles={isEmpty(precedingTitles) ? emptyList : precedingTitles}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              data-test-succeeding-titles
-              xs={12}
+              <Row>
+                <Col xs={12}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.resourceTitle" />}
+                    value={checkIfElementIsEmpty(titleData.resourceTitle)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.alternativeTitles">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-alternative-titles"
+                          contentData={checkIfArrayIsEmpty(titleData.alternativeTitles)}
+                          rowMetadata={['alternativeTitleTypeId']}
+                          visibleColumns={['Alternative title type', 'Alternative title']}
+                          columnMapping={{
+                            'Alternative title type': intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' }),
+                            'Alternative title': intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
+                          }}
+                          columnWidths={{
+                            'Alternative title type': '25%',
+                            'Alternative title': '75%',
+                          }}
+                          formatter={alternativeTitlesRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
+                  )}
+                </IntlConsumer>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.indexTitle" />}
+                    value={checkIfElementIsEmpty(titleData.indexTitle)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.seriesStatement">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-series-statement"
+                          contentData={seriesContent}
+                          visibleColumns={['Series statement']}
+                          columnMapping={{ 'Series statement': intl.formatMessage({ id: 'ui-inventory.seriesStatement' }) }}
+                          columnWidths={{ 'Series statement': '99%' }}
+                          formatter={{ 'Series statement': x => get(x, ['value']) || noValue }}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
+                  )}
+                </IntlConsumer>
+              </Row>
+              <Row>
+                <Col
+                  data-test-preceding-titles
+                  xs={12}
+                >
+                  <TitlesView
+                    id="precedingTitles"
+                    titleKey="precedingInstanceId"
+                    label={<FormattedMessage id="ui-inventory.precedingTitles" />}
+                    titles={isEmpty(precedingTitles) ? emptyList : precedingTitles}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col
+                  data-test-succeeding-titles
+                  xs={12}
+                >
+                  <TitlesView
+                    id="succeedingTitles"
+                    titleKey="succeedingInstanceId"
+                    label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
+                    titles={isEmpty(succeedingTitles) ? emptyList : succeedingTitles}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
+
+            <Accordion
+              id="acc03"
+              label={<FormattedMessage id="ui-inventory.identifier" />}
             >
-              <TitlesView
-                id="succeedingTitles"
-                titleKey="succeedingInstanceId"
-                label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
-                titles={isEmpty(succeedingTitles) ? emptyList : succeedingTitles}
-              />
-            </Col>
-          </Row>
-        </Accordion>
-
-        <Accordion
-          open={this.isAccordionOpen('acc03', accordionsState.acc03)}
-          id="acc03"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.identifier" />}
-        >
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.identifiers">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-identifiers"
-                      contentData={checkIfArrayIsEmpty(orderedIdentifiers)}
-                      rowMetadata={['identifierTypeId']}
-                      visibleColumns={['Resource identifier type', 'Resource identifier']}
-                      columnMapping={{
-                        'Resource identifier type': intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' }),
-                        'Resource identifier': intl.formatMessage({ id: 'ui-inventory.resourceIdentifier' }),
-                      }}
-                      columnWidths={{
-                        'Resource identifier type': '25%',
-                        'Resource identifier': '75%',
-                      }}
-                      formatter={identifiersRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.identifiers">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-identifiers"
+                          contentData={checkIfArrayIsEmpty(orderedIdentifiers)}
+                          rowMetadata={['identifierTypeId']}
+                          visibleColumns={['Resource identifier type', 'Resource identifier']}
+                          columnMapping={{
+                            'Resource identifier type': intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' }),
+                            'Resource identifier': intl.formatMessage({ id: 'ui-inventory.resourceIdentifier' }),
+                          }}
+                          columnWidths={{
+                            'Resource identifier type': '25%',
+                            'Resource identifier': '75%',
+                          }}
+                          formatter={identifiersRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-        </Accordion>
+                </IntlConsumer>
+              </Row>
+            </Accordion>
 
-        <Accordion
-          open={this.isAccordionOpen('acc04', accordionsState.acc04)}
-          id="acc04"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.contributor" />}
-        >
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.contributors">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-contributors"
-                      contentData={checkIfArrayIsEmpty(contributors)}
-                      visibleColumns={['Name type', 'Name', 'Type', 'Free text', 'Primary']}
-                      columnMapping={{
-                        'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
-                        'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
-                        'Type': intl.formatMessage({ id: 'ui-inventory.type' }),
-                        'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
-                        'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
-                      }}
-                      columnWidths={{
-                        'Name type': '25%',
-                        'Name': '25%',
-                        'Type': '12%',
-                        'Free text': '13%',
-                      }}
-                      formatter={contributorsRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
-                  )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-        </Accordion>
-
-        <Accordion
-          open={this.isAccordionOpen('acc05', accordionsState.acc05)}
-          id="acc05"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.descriptiveData" />}
-        >
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.publication">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-publication"
-                      contentData={checkIfArrayIsEmpty(descriptiveData.publication)}
-                      visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
-                      columnMapping={{
-                        'Publisher': intl.formatMessage({ id: 'ui-inventory.publisher' }),
-                        'Publisher role': intl.formatMessage({ id: 'ui-inventory.publisherRole' }),
-                        'Place of publication': intl.formatMessage({ id: 'ui-inventory.placeOfPublication' }),
-                        'Publication date': intl.formatMessage({ id: 'ui-inventory.dateOfPublication' }),
-                      }}
-                      columnWidths={{
-                        'Publisher': '25%',
-                        'Publisher role': '25%',
-                        'Place of publication': '25%',
-                      }}
-                      formatter={publicationRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
-                  )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-          <br />
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.edition" />}
-                value={convertArrayToBlocks(descriptiveData.editions)}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.physicalDescription" />}
-                value={convertArrayToBlocks(descriptiveData.physicalDescriptions)}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.resourceTypeTerm" />}
-                value={checkIfElementIsEmpty(descriptiveData.resourceTypeTerm)}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.resourceTypeCode" />}
-                value={checkIfElementIsEmpty(descriptiveData.resourceTypeCode)}
-              />
-            </Col>
-            <Col xs={3}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
-                value={checkIfElementIsEmpty(descriptiveData.resourceTypeSource)}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col
-              data-test-nature-of-content-terms
-              xs={3}
+            <Accordion
+              id="acc04"
+              label={<FormattedMessage id="ui-inventory.contributor" />}
             >
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-                value={convertArrayToBlocks(descriptiveData.natureOfContentTerms)}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.formats">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-formats"
-                      contentData={instanceFormatIdsContent}
-                      visibleColumns={['Category', 'Term', 'Code', 'Source']}
-                      columnMapping={{
-                        'Category': intl.formatMessage({ id: 'ui-inventory.formatCategory' }),
-                        'Term': intl.formatMessage({ id: 'ui-inventory.formatTerm' }),
-                        'Code': intl.formatMessage({ id: 'ui-inventory.formatCode' }),
-                        'Source': intl.formatMessage({ id: 'ui-inventory.formatSource' }),
-                      }}
-                      columnWidths={{
-                        'Category': '25%',
-                        'Term': '25%',
-                        'Code': '25%',
-                      }}
-                      formatter={formatsRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.contributors">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-contributors"
+                          contentData={checkIfArrayIsEmpty(contributors)}
+                          visibleColumns={['Name type', 'Name', 'Type', 'Free text', 'Primary']}
+                          columnMapping={{
+                            'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
+                            'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
+                            'Type': intl.formatMessage({ id: 'ui-inventory.type' }),
+                            'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
+                            'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
+                          }}
+                          columnWidths={{
+                            'Name type': '25%',
+                            'Name': '25%',
+                            'Type': '12%',
+                            'Free text': '13%',
+                          }}
+                          formatter={contributorsRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.language" />}
-                value={languagesContent}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
-                value={convertArrayToBlocks(descriptiveData.publicationFrequency)}
-              />
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.publicationRange" />}
-                value={convertArrayToBlocks(descriptiveData.publicationRange)}
-              />
-            </Col>
-          </Row>
-        </Accordion>
+                </IntlConsumer>
+              </Row>
+            </Accordion>
 
-        <Accordion
-          open={this.isAccordionOpen('acc06', accordionsState.acc06)}
-          id="acc06"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.instanceNotes" />}
-        >
-          {layoutNotes(instanceNotes)}
-        </Accordion>
-
-        <Accordion
-          open={this.isAccordionOpen('acc07', accordionsState.acc07)}
-          id="acc07"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-        >
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.electronicAccess">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-electronic-access"
-                      contentData={checkIfArrayIsEmpty(electronicAccess)}
-                      visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                      columnMapping={{
-                        'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                        'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                        'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                        'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                        'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                      }}
-                      columnWidths={{
-                        'URL relationship': '25%',
-                        'URI': '25%',
-                        'Link text': '25%',
-                        'Materials specified': '25%',
-                        'URL public note': '25%',
-                      }}
-                      formatter={electronicAccessRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
+            <Accordion
+              id="acc05"
+              label={<FormattedMessage id="ui-inventory.descriptiveData" />}
+            >
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.publication">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-publication"
+                          contentData={checkIfArrayIsEmpty(descriptiveData.publication)}
+                          visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
+                          columnMapping={{
+                            'Publisher': intl.formatMessage({ id: 'ui-inventory.publisher' }),
+                            'Publisher role': intl.formatMessage({ id: 'ui-inventory.publisherRole' }),
+                            'Place of publication': intl.formatMessage({ id: 'ui-inventory.placeOfPublication' }),
+                            'Publication date': intl.formatMessage({ id: 'ui-inventory.dateOfPublication' }),
+                          }}
+                          columnWidths={{
+                            'Publisher': '25%',
+                            'Publisher role': '25%',
+                            'Place of publication': '25%',
+                          }}
+                          formatter={publicationRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-        </Accordion>
+                </IntlConsumer>
+              </Row>
+              <br />
+              <Row>
+                <Col xs={6}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.edition" />}
+                    value={convertArrayToBlocks(descriptiveData.editions)}
+                  />
+                </Col>
+                <Col xs={6}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.physicalDescription" />}
+                    value={convertArrayToBlocks(descriptiveData.physicalDescriptions)}
+                  />
+                </Col>
+              </Row>
 
-        <Accordion
-          open={this.isAccordionOpen('acc08', accordionsState.acc08)}
-          id="acc08"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.subject" />}
-        >
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.subject">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-subject"
-                      contentData={subjectsContent}
-                      visibleColumns={['Subject headings']}
-                      columnMapping={{ 'Subject headings': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }) }}
-                      columnWidths={{ 'Subject headings': '99%' }}
-                      formatter={{ 'Subject headings': item => get(item, 'value') || noValue }}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
+              <Row>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.resourceTypeTerm" />}
+                    value={checkIfElementIsEmpty(descriptiveData.resourceTypeTerm)}
+                  />
+                </Col>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.resourceTypeCode" />}
+                    value={checkIfElementIsEmpty(descriptiveData.resourceTypeCode)}
+                  />
+                </Col>
+                <Col xs={3}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
+                    value={checkIfElementIsEmpty(descriptiveData.resourceTypeSource)}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col
+                  data-test-nature-of-content-terms
+                  xs={3}
+                >
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+                    value={convertArrayToBlocks(descriptiveData.natureOfContentTermIds)}
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.formats">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-formats"
+                          contentData={instanceFormatIdsContent}
+                          visibleColumns={['Category', 'Term', 'Code', 'Source']}
+                          columnMapping={{
+                            'Category': intl.formatMessage({ id: 'ui-inventory.formatCategory' }),
+                            'Term': intl.formatMessage({ id: 'ui-inventory.formatTerm' }),
+                            'Code': intl.formatMessage({ id: 'ui-inventory.formatCode' }),
+                            'Source': intl.formatMessage({ id: 'ui-inventory.formatSource' }),
+                          }}
+                          columnWidths={{
+                            'Category': '25%',
+                            'Term': '25%',
+                            'Code': '25%',
+                          }}
+                          formatter={formatsRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-        </Accordion>
+                </IntlConsumer>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.language" />}
+                    value={languagesContent}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
+                    value={convertArrayToBlocks(descriptiveData.publicationFrequency)}
+                  />
+                </Col>
+                <Col xs={6}>
+                  <KeyValue
+                    label={<FormattedMessage id="ui-inventory.publicationRange" />}
+                    value={convertArrayToBlocks(descriptiveData.publicationRange)}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
 
-        <Accordion
-          open={this.isAccordionOpen('acc09', accordionsState.acc09)}
-          id="acc09"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.classification" />}
-        >
-          <Row>
-            <IntlConsumer>
-              {intl => (
-                <FormattedMessage id="ui-inventory.classifications">
-                  {ariaLabel => (
-                    <MultiColumnList
-                      id="list-classifications"
-                      contentData={checkIfArrayIsEmpty(orderedClassifications)}
-                      rowMetadata={['classificationTypeId']}
-                      visibleColumns={['Classification identifier type', 'Classification']}
-                      columnMapping={{
-                        'Classification identifier type': intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
-                        'Classification': intl.formatMessage({ id: 'ui-inventory.classification' }),
-                      }}
-                      columnWidths={{
-                        'Classification identifier type': '25%',
-                        'Classification': '75%',
-                      }}
-                      formatter={classificationsRowFormatter}
-                      ariaLabel={ariaLabel}
-                      containerRef={ref => { this.resultsList = ref; }}
-                      interactive={false}
-                    />
+            <Accordion
+              id="acc06"
+              label={<FormattedMessage id="ui-inventory.instanceNotes" />}
+            >
+              {layoutNotes(instanceNotes)}
+            </Accordion>
+
+            <Accordion
+              id="acc07"
+              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+            >
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.electronicAccess">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-electronic-access"
+                          contentData={checkIfArrayIsEmpty(electronicAccess)}
+                          visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                          columnMapping={{
+                            'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                            'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                            'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                            'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                            'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                          }}
+                          columnWidths={{
+                            'URL relationship': '25%',
+                            'URI': '25%',
+                            'Link text': '25%',
+                            'Materials specified': '25%',
+                            'URL public note': '25%',
+                          }}
+                          formatter={electronicAccessRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
                   )}
-                </FormattedMessage>
-              )}
-            </IntlConsumer>
-          </Row>
-        </Accordion>
+                </IntlConsumer>
+              </Row>
+            </Accordion>
 
-        <Accordion
-          open={this.isAccordionOpen('acc10', accordionsState.acc10)}
-          id="acc10"
-          onToggle={this.handleAccordionToggle}
-          label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
-        >
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={childInstancesContentLabel}
-                value={childInstancesContentValue}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <KeyValue
-                label={parentInstancesContentLabel}
-                value={parentInstancesContentValue}
-              />
-            </Col>
-          </Row>
-        </Accordion>
+            <Accordion
+              id="acc08"
+              label={<FormattedMessage id="ui-inventory.subject" />}
+            >
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.subject">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-subject"
+                          contentData={subjectsContent}
+                          visibleColumns={['Subject headings']}
+                          columnMapping={{ 'Subject headings': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }) }}
+                          columnWidths={{ 'Subject headings': '99%' }}
+                          formatter={{ 'Subject headings': item => get(item, 'value') || noValue }}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
+                  )}
+                </IntlConsumer>
+              </Row>
+            </Accordion>
+
+            <Accordion
+              id="acc09"
+              label={<FormattedMessage id="ui-inventory.classification" />}
+            >
+              <Row>
+                <IntlConsumer>
+                  {intl => (
+                    <FormattedMessage id="ui-inventory.classifications">
+                      {ariaLabel => (
+                        <MultiColumnList
+                          id="list-classifications"
+                          contentData={checkIfArrayIsEmpty(orderedClassifications)}
+                          rowMetadata={['classificationTypeId']}
+                          visibleColumns={['Classification identifier type', 'Classification']}
+                          columnMapping={{
+                            'Classification identifier type': intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
+                            'Classification': intl.formatMessage({ id: 'ui-inventory.classification' }),
+                          }}
+                          columnWidths={{
+                            'Classification identifier type': '25%',
+                            'Classification': '75%',
+                          }}
+                          formatter={classificationsRowFormatter}
+                          ariaLabel={ariaLabel}
+                          containerRef={ref => { this.resultsList = ref; }}
+                          interactive={false}
+                        />
+                      )}
+                    </FormattedMessage>
+                  )}
+                </IntlConsumer>
+              </Row>
+            </Accordion>
+
+            <Accordion
+              id="acc10"
+              label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
+            >
+              <Row>
+                <Col xs={12}>
+                  <KeyValue
+                    label={childInstancesContentLabel}
+                    value={childInstancesContentValue}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <KeyValue
+                    label={parentInstancesContentLabel}
+                    value={parentInstancesContentValue}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
+          </AccordionSet>
+        </AccordionStatus>
         {
           (holdingsrecordid && !itemid)
             ? (

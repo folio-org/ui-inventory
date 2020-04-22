@@ -18,7 +18,6 @@ import DataContext from '../../contexts/DataContext';
 const ConnectedTitle = ({ instance, onSelect, titleIdKey }) => {
   const { identifierTypesById } = useContext(DataContext);
   const {
-    id,
     title,
     hrid,
     identifiers,

@@ -3,6 +3,7 @@
 ## [2.1.0] IN PROGRESS
 * Display instance status date with status. Refs UIIN-1007.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
+* Rewrite accordion state control. Fixes UIIN-921. 
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
 * Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
 * Use correct operator when searching by item status and hrid. Fixes UIIN-1048, UIIN-1051, UIIN-1052, UIIN-1053.
