@@ -435,7 +435,7 @@
     "reports.inTransitItem.emptyReport.label": "Nothing to export",
     "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
     "common.close": "Close",
-    "filters.effectiveLocation": "Effective location (item)",
+    "filters.effectiveLocation": "مؤثر مقام (شے)",
     "identifierAll": "Identifier (all)",
     "reports.inTransitItem.callNumber": "Call number",
     "reports.inTransitItem.enumeration": "Enumeration",
@@ -483,6 +483,15 @@
     "precedingField.connected": "Connected",
     "exportInstancesInMARC": "Export instances (MARC)",
     "exportInstancesInJSON": "Export instances (JSON)",
-    "editInstanceMarc": "Edit in quickMARC",
-    "quickMarcNotAvailable": "No plugin available!"
+    "editInstanceMarc": "کوئیک مارک میں ترمیم کریں",
+    "quickMarcNotAvailable": "No plugin available!",
+    "saveInstancesCQLQuery": "Save instances CQL query",
+    "createdDate": "Date created",
+    "item.status.statusUpdatedLabel": "status updated {statusDate}",
+    "isbnNormalized": "ISBN, normalized",
+    "markAsWithdrawn": "Mark as withdrawn",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
+    "withdrawnModal.heading": "Confirm item as withdrawn",
+    "withdrawnModal.confirm": "Confirm",
+    "item.status.withdrawn": "Withdrawn"
 }

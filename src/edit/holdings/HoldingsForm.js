@@ -7,17 +7,16 @@ import { Field } from 'react-final-form';
 import {
   Paneset,
   Pane,
-  PaneMenu,
   Accordion,
   ExpandAllButton,
   Row,
   Col,
   Button,
-  Icon,
   TextField,
   Select,
   Checkbox,
   ConfirmationModal,
+  PaneFooter,
 } from '@folio/stripes/components';
 
 import { AppIcon, IntlConsumer } from '@folio/stripes-core';
@@ -36,6 +35,9 @@ import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
 import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
 import Note from './note';
+import { validateOptionalField } from '../../utils';
+
+import styles from './HoldingsForm.css';
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -44,6 +46,19 @@ function validate(values, props) {
   if (!values.permanentLocationId) {
     errors.permanentLocationId = <FormattedMessage id="ui-inventory.selectToContinue" />;
   }
+
+  // Validate optional lists in the holdings record description.
+  // The list itself is not required, but if a list is present,
+  // each item must have non-empty values in each field.
+  const optionalLists = [
+    { list: 'notes', textFields: ['note'], selectFields: ['holdingsNoteTypeId'] }
+  ];
+  optionalLists.forEach(listProps => {
+    const listErrors = validateOptionalField(listProps, values);
+    if (listErrors.length) {
+      errors[listProps.list] = listErrors;
+    }
+  });
 
   return errors;
 }
@@ -176,19 +191,41 @@ class HoldingsForm extends React.Component {
     });
   };
 
-  getActionMenu = () => {
-    const { onCancel } = this.props;
-
-    return (
+  getFooter = () => {
+    const {
+      onCancel,
+      pristine,
+      submitting,
+      copy,
+      handleSubmit,
+    } = this.props;
+    const cancelButton = (
       <Button
-        buttonStyle="dropdownItem"
+        buttonStyle="default mega"
         id="cancel-holdings-creation"
         onClick={onCancel}
       >
-        <Icon icon="times-circle">
-          <FormattedMessage id="ui-inventory.cancel" />
-        </Icon>
+        <FormattedMessage id="ui-inventory.cancel" />
       </Button>
+    );
+    const saveButton = (
+      <Button
+        buttonStyle="primary mega"
+        id="clickable-create-holdings-record"
+        type="submit"
+        disabled={(pristine || submitting) && !copy}
+        onClick={handleSubmit}
+        marginBottom0
+      >
+        <FormattedMessage id="stripes-core.button.saveAndClose" />
+      </Button>
+    );
+
+    return (
+      <PaneFooter
+        renderStart={cancelButton}
+        renderEnd={saveButton}
+      />
     );
   };
 
@@ -196,14 +233,10 @@ class HoldingsForm extends React.Component {
 
   render() {
     const {
-      pristine,
-      submitting,
       onCancel,
       initialValues,
       instance,
       referenceTables,
-      copy,
-      handleSubmit,
     } = this.props;
 
     const {
@@ -211,37 +244,6 @@ class HoldingsForm extends React.Component {
       confirmPermanentLocation,
       confirmTemporaryLocation,
     } = this.state;
-
-    /* Menus for Add Item workflow */
-    const addHoldingsLastMenu = (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary paneHeaderNewButton"
-          id="clickable-create-holdings-record"
-          type="submit"
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="stripes-core.button.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
-
-    const editHoldingsLastMenu = (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary"
-          id="clickable-update-item"
-          type="submit"
-          disabled={(pristine || submitting) && !copy}
-          onClick={handleSubmit}
-          marginBottom0
-        >
-          <FormattedMessage id="stripes-core.button.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -293,15 +295,17 @@ class HoldingsForm extends React.Component {
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
 
     return (
-      <form data-test-holdings-page-type={holdingsPageType}>
+      <form
+        data-test-holdings-page-type={holdingsPageType}
+        className={styles.holingsForm}
+      >
         <Paneset isRoot>
           <Pane
-            actionMenu={this.getActionMenu}
             appIcon={<AppIcon app="inventory" iconKey="holdings" />}
             defaultWidth="100%"
             dismissible
             onClose={onCancel}
-            lastMenu={holdingsPageType === 'edit' ? editHoldingsLastMenu : addHoldingsLastMenu}
+            footer={this.getFooter()}
             paneTitle={
               <span data-test-header-title>
                 {instance.title}

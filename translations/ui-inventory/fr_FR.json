@@ -484,5 +484,14 @@
     "exportInstancesInMARC": "Exporter les instances (MARC)",
     "exportInstancesInJSON": "Exporter les instances (JSON)",
     "editInstanceMarc": "Modifier dans QuickMARC",
-    "quickMarcNotAvailable": "Aucun plugin disponible!"
+    "quickMarcNotAvailable": "Aucun plugin disponible!",
+    "saveInstancesCQLQuery": "Save instances CQL query",
+    "createdDate": "Date de création",
+    "item.status.statusUpdatedLabel": "statut mis à jour {statusDate}",
+    "isbnNormalized": "ISBN, normalized",
+    "markAsWithdrawn": "Marquer comme retiré",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
+    "withdrawnModal.heading": "Confirmez l'élément comme retiré",
+    "withdrawnModal.confirm": "Confirmer",
+    "item.status.withdrawn": "Retiré"
 }

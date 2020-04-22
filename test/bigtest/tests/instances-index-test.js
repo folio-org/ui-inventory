@@ -5,6 +5,7 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import ItemPageInteractor from '../interactors/item-page';
+import InstanceCreatePage from '../interactors/instance-create-page';
 
 describe('Instances', () => {
   setupApplication();
@@ -30,6 +31,17 @@ describe('Instances', () => {
 
     it('is no results message label present', () => {
       expect(inventory.isNoResultsMessageLabelPresent).to.equal(true);
+    });
+
+    describe('New action', () => {
+      beforeEach(async () => {
+        await inventory.headerDropdown.click();
+        await inventory.headerDropdownMenu.clickNewInstanceBtn();
+      });
+
+      it('should open instance form', () => {
+        expect(InstanceCreatePage.isPresent).to.be.true;
+      });
     });
 
     describe('search by barcode', function () {

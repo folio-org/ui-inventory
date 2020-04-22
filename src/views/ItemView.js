@@ -19,7 +19,6 @@ import { effectiveCallNumber } from '@folio/stripes/util';
 
 import {
   Pane,
-  PaneMenu,
   Paneset,
   Row,
   Col,
@@ -29,7 +28,6 @@ import {
   ExpandAllButton,
   KeyValue,
   Layer,
-  PaneHeaderIconButton,
   MultiColumnList,
   Button,
   Icon,
@@ -41,13 +39,13 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
   IntlConsumer,
-  IfPermission,
 } from '@folio/stripes/core';
 
 import {
   craftLayerUrl,
   callNumberLabel,
   canMarkItemAsMissing,
+  canMarkItemAsWithdrawn,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
   convertArrayToBlocks,
@@ -71,6 +69,7 @@ class ItemView extends React.Component {
     super(props);
     this.state = {
       itemMissingModal: false,
+      itemWithdrawnModal: false,
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
     };
@@ -124,29 +123,44 @@ class ItemView extends React.Component {
     this.props.updateLocation({ layer: 'copyItem' });
   }
 
-  handleConfirm = (item, requestRecords) => {
+  markItemAsMissing = (item) => {
     const newItem = cloneDeep(item);
 
-    set(newItem, ['status', 'name'], 'Missing');
+    set(newItem, ['status', 'name'], itemStatusesMap.MISSING);
+    this.markRequestAsOpen();
+    this.props.mutator.items.PUT(newItem).then(() => this.setState({ itemMissingModal: false }));
+  }
+
+  markItemAsWithdrawn = () => {
+    this.props.mutator.markItemAsWithdrawn.POST({}).then(
+      () => this.setState({ itemWithdrawnModal: false })
+    );
+  }
+
+  markRequestAsOpen() {
+    const requestRecords = this.props.resources?.requests?.records ?? [];
 
     if (requestRecords.length) {
-      const newRequestRecord = cloneDeep(requestRecords[0]);
-      const itemStatus = get(newRequestRecord, ['item', 'status']);
-      const holdShelfExpirationDate = get(newRequestRecord, ['holdShelfExpirationDate']);
-
-      if (itemStatus === 'Awaiting pickup' && new Date(holdShelfExpirationDate) > new Date()) {
-        this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
-        set(newRequestRecord, ['status'], 'Open - Not yet filled');
-        this.props.mutator.requests.PUT(newRequestRecord);
-      }
+      return;
     }
 
-    this.props.mutator.items.PUT(newItem)
-      .then(() => this.setState({ itemMissingModal: false }));
-  };
+    const newRequestRecord = cloneDeep(requestRecords[0]);
+    const itemStatus = newRequestRecord?.item?.status;
+    const holdShelfExpirationDate = newRequestRecord?.holdShelfExpirationDate;
+
+    if (itemStatus === itemStatusesMap.AWAITING_PICKUP && new Date(holdShelfExpirationDate) > new Date()) {
+      this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
+      newRequestRecord.status = 'Open - Not yet filled';
+      this.props.mutator.requests.PUT(newRequestRecord);
+    }
+  }
 
   hideMissingModal = () => {
     this.setState({ itemMissingModal: false });
+  };
+
+  hideWithdrawnModal = () => {
+    this.setState({ itemWithdrawnModal: false });
   };
 
   hideConfirmDeleteItemModal = () => {
@@ -263,6 +277,21 @@ class ItemView extends React.Component {
           </Icon>
         </Button>
         )}
+        { canMarkItemAsWithdrawn(firstItem) && (
+        <Button
+          id="clickable-withdrawn-item"
+          onClick={() => {
+            onToggle();
+            this.setState({ itemWithdrawnModal: true });
+          }}
+          buttonStyle="dropdownItem"
+          data-test-mark-as-withdrawn-item
+        >
+          <Icon icon="flag">
+            <FormattedMessage id="ui-inventory.markAsWithdrawn" />
+          </Icon>
+        </Button>
+        )}
         { canCreateNewRequest && (
         <Button
           to={newRequestLink}
@@ -317,26 +346,6 @@ class ItemView extends React.Component {
     const requestRecords = (requests || {}).records || [];
     const query = location.search ? queryString.parse(location.search) : {};
 
-    const detailMenu = (
-      <IfPermission perm="ui-inventory.item.edit">
-        <PaneMenu>
-          <FormattedMessage id="ui-inventory.editItem">
-            {ariaLabel => (
-              <PaneHeaderIconButton
-                icon="edit"
-                id="clickable-edit-item"
-                style={{ visibility: !item ? 'hidden' : 'visible' }}
-                href={this.craftLayerUrl('editItem', location)}
-                onClick={this.onClickEditItem}
-                ariaLabel={ariaLabel}
-                data-test-clickable-edit-item
-              />
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
-    );
-
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
     let loanLink = item.status.name;
@@ -354,8 +363,6 @@ class ItemView extends React.Component {
         </Link>
       );
     }
-
-    const itemStatusDate = get(item, ['status', 'date']);
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -450,14 +457,23 @@ class ItemView extends React.Component {
         });
     };
 
+    const itemValues = {
+      title: item.title,
+      barcode: item.barcode,
+      materialType: upperFirst(item?.materialType?.name ?? ''),
+    };
+
     const missingModalMessage = (
       <SafeHTMLMessage
         id="ui-inventory.missingModal.message"
-        values={{
-          title: item.title,
-          barcode: item.barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
-        }}
+        values={itemValues}
+      />
+    );
+
+    const withdrawnModalMessage = (
+      <SafeHTMLMessage
+        id="ui-inventory.withdrawnModal.message"
+        values={itemValues}
       />
     );
 
@@ -522,7 +538,7 @@ class ItemView extends React.Component {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatus: loanLink,
-      itemStatusDate: getDateWithTime(itemStatusDate),
+      itemStatusDate: getDateWithTime(item?.status?.date),
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
       loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : '-',
@@ -621,7 +637,6 @@ class ItemView extends React.Component {
                   />
                 </span>
             )}
-              lastMenu={detailMenu}
               dismissible
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
@@ -631,9 +646,18 @@ class ItemView extends React.Component {
                 open={this.state.itemMissingModal}
                 heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
                 message={missingModalMessage}
-                onConfirm={() => this.handleConfirm(item, requestRecords)}
+                onConfirm={() => this.markItemAsMissing(item)}
                 onCancel={this.hideMissingModal}
                 confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
+              />
+              <ConfirmationModal
+                data-test-withdrawn-confirmation-modal
+                open={this.state.itemWithdrawnModal}
+                heading={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
+                message={withdrawnModalMessage}
+                onConfirm={this.markItemAsWithdrawn}
+                onCancel={this.hideWithdrawnModal}
+                confirmLabel={<FormattedMessage id="ui-inventory.withdrawnModal.confirm" />}
               />
               <ConfirmationModal
                 id="confirmDeleteItemModal"
@@ -1020,15 +1044,13 @@ class ItemView extends React.Component {
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
                           value={checkIfElementIsEmpty(loanAndAvailability.itemStatus)}
+                          subValue={
+                            <FormattedMessage
+                              id="ui-inventory.item.status.statusUpdatedLabel"
+                              values={{ statusDate: loanAndAvailability.itemStatusDate }}
+                            />
+                          }
                         />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.itemStatusDate" />}>
-                          {checkIfElementIsEmpty(loanAndAvailability.itemStatusDate)}
-                        </KeyValue>
                       </Col>
                       <Col
                         smOffset={0}
@@ -1263,6 +1285,9 @@ ItemView.propTypes = {
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
+    }),
+    markItemAsWithdrawn: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
     requestOnItem: PropTypes.shape({ replace: PropTypes.func.isRequired }),

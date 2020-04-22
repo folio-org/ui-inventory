@@ -13,6 +13,8 @@ export const itemStatusesMap = {
   AWAITING_PICKUP,
   PAGED: 'Paged',
   AWAITING_DELIVERY,
+  MISSING: 'Missing',
+  WITHDRAWN: 'Withdrawn',
 };
 
 export const requestStatuses = {
@@ -34,7 +36,8 @@ export const itemStatuses = [
   { label: 'ui-inventory.item.status.paged', value: 'Paged' },
   { label: 'ui-inventory.item.status.declaredLost', value: 'Declared lost' },
   { label: 'ui-inventory.item.status.received', value: 'Received' },
-  { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' }
+  { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' },
+  { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
 ];
 
 export const segments = {
@@ -79,3 +82,5 @@ export const indentifierTypeNames = {
   ISBN: 'ISBN',
   ISSN: 'ISSN',
 };
+
+export const DATE_FORMAT = 'YYYY-MM-DD';

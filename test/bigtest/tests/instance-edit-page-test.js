@@ -228,6 +228,17 @@ describe('InstanceEditPage', () => {
       expect(InstanceEditPage.succeedingTitles.succeedingTitlesCount).to.be.gt(prevCount);
     });
 
+    describe('saving without title', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.selectInstanceType('still image');
+        await InstanceEditPage.saveInstance();
+      });
+
+      it('should not save instance without missing title', function () {
+        expect(this.location.search).to.include('layer=edit');
+      });
+    });
+
     describe('saving unconnected titles', () => {
       beforeEach(async () => {
         await InstanceEditPage.succeedingTitles.fillTitleField('title 1');

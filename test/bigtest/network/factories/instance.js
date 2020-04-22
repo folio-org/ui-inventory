@@ -8,6 +8,7 @@ import Factory from './application';
 const {
   lorem,
   name,
+  date,
 } = faker;
 
 export default Factory.extend({
@@ -28,6 +29,10 @@ export default Factory.extend({
   parentInstances: () => [],
   statisticalCodeIds: () => [],
   hrid: i => `in0000000000${i + 1}`,
+  metadata: {
+    createdDate: date.between('2019-01-01', '2020-01-01'),
+    updatedDate: date.between('2019-01-01', '2020-01-01'),
+  },
 
   afterCreate(instance, server) {
     instance.identifiers.forEach(identifier => {

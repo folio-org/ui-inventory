@@ -39,19 +39,14 @@ describe('HoldingsEditPage', () => {
     expect(HoldingsEditPage.title).to.equal('Instance record ADVANCING RESEARCH');
   });
 
-  describe('pane header menu', () => {
+  describe('clicking on cancel', () => {
     beforeEach(async () => {
-      await HoldingsEditPage.headerDropdown.click();
+      await HoldingsEditPage.clickCancel();
+      await InstanceViewPage.whenLoaded();
     });
 
-    describe('clicking on cancel', () => {
-      beforeEach(async () => {
-        await HoldingsEditPage.headerDropdownMenu.clickCancel();
-      });
-
-      it('should redirect to instance view page after click', () => {
-        expect(InstanceViewPage.$root).to.exist;
-      });
+    it('should redirect to instance view page after click', () => {
+      expect(InstanceViewPage.$root).to.exist;
     });
   });
 });

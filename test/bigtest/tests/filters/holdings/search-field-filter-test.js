@@ -59,6 +59,30 @@ describe('Holdings SearchFieldFilter', () => {
     });
   });
 
+  describe('selecting the "ISBN, normalized" search option', function () {
+    beforeEach(async function () {
+      const isbnIdentifierType = this.server.create('identifier-type', { name: 'ISBN' });
+      const invalidIsbnIdentifierType = this.server.create('identifier-type', { name: 'Invalid ISBN' });
+
+      this.server.create('instance', {
+        title: 'Homo Deus: A Brief History of Tomorrow',
+        contributors: [{ name: 'Yuval Noah Harari' }],
+        identifiers: [
+          { identifierTypeId: isbnIdentifierType.id, value: ' 1-2 345- (pbk. 3 )' },
+          { identifierTypeId: invalidIsbnIdentifierType.id, value: '66-777 88-999' },
+        ],
+      }, 'withHoldingAndItem');
+
+      await holdingsRoute.searchFieldFilter.searchField.selectIndex('ISBN, normalized');
+      await holdingsRoute.searchFieldFilter.searchField.fillInput('6677788999');
+      await holdingsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('should find instances by normalized isbn', () => {
+      expect(holdingsRoute.rows().length).to.equal(1);
+    });
+  });
+
   describe('Call number, eye readable', function () {
     beforeEach(async function () {
       const instance = this.server.create('instance', {}, 'withHoldingAndItem');

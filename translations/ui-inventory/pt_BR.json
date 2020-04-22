@@ -484,5 +484,14 @@
     "exportInstancesInMARC": "Exportar instâncias (MARC)",
     "exportInstancesInJSON": "Exportar instâncias (JSON)",
     "editInstanceMarc": "Editar no quickMARC",
-    "quickMarcNotAvailable": "Nenhum plugin disponível!"
+    "quickMarcNotAvailable": "Nenhum plugin disponível!",
+    "saveInstancesCQLQuery": "Salvar consulta CQL das instâncias",
+    "createdDate": "Data de criação",
+    "item.status.statusUpdatedLabel": "status atualizado {statusDate}",
+    "isbnNormalized": "ISBN, normalizado",
+    "markAsWithdrawn": "Marcar como descartado",
+    "withdrawnModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) será marcado como <strong>descartado</strong>.",
+    "withdrawnModal.heading": "Confirmar item como descartado",
+    "withdrawnModal.confirm": "Confirmar",
+    "item.status.withdrawn": "Descartado"
 }

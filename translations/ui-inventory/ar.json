@@ -484,5 +484,14 @@
     "exportInstancesInMARC": "تصدير الأوعية (مارك)",
     "exportInstancesInJSON": "تصدير الأوعية (JSON)",
     "editInstanceMarc": "تحرير في مارك السريع",
-    "quickMarcNotAvailable": "لا توجد برامج مساعدة!"
+    "quickMarcNotAvailable": "لا توجد برامج مساعدة!",
+    "saveInstancesCQLQuery": "حفظ استعلام CQL الأوعية",
+    "createdDate": "تاريخ الإنشاء",
+    "item.status.statusUpdatedLabel": "تم تحديث الحالة {statusDate}",
+    "isbnNormalized": "ردمك، تطبيع",
+    "markAsWithdrawn": "الإشارة إليه كمسحوب",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (الباركود:{barcode}) سيتم الإشارة إليه كـ <strong> مسحوب</strong>",
+    "withdrawnModal.heading": "تأكيد المادة كمسحوبة",
+    "withdrawnModal.confirm": "تأكيد",
+    "item.status.withdrawn": "مسحوب"
 }

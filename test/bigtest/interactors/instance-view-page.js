@@ -13,6 +13,8 @@ import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tes
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
+import KeyValue from './KeyValue';
+
 @interactor class HeaderDropdown {
   click = clickable('button');
 }
@@ -23,6 +25,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   clickDuplicate = clickable('#copy-instance');
   hasDuplicateButton = isPresent('#copy-instance');
   hasViewSourceButton = isPresent('#clickable-view-source');
+  hasEditMarcButton = isPresent('#edit-instance-marc');
   disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
 }
 
@@ -52,8 +55,6 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   items = collection('#list-items div[class^=mclRow]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
-  clickEditInstance = clickable('#clickable-edit-instance');
-  hasButtonEditInstance = isPresent('#clickable-edit-instance');
   hasButtonAddItem = isPresent('#clickable-new-item');
   clickButtonAddItem = clickable('#clickable-new-item');
   hasButtonAddHoldings = isPresent('#clickable-new-holdings-record');
@@ -64,6 +65,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   hasExpandAll = isPresent('[data-test-expand-all] button');
   precedingTitles = new MultiColumnListInteractor('#precedingTitles');
   succeedingTitles = new MultiColumnListInteractor('#succeedingTitles');
+  natureOfContent = scoped('[data-test-nature-of-content-terms] div', KeyValue);
 
   notes = collection('[id^="list-instance-notes"]', MultiColumnListInteractor);
 

@@ -17,11 +17,14 @@ import {
   map,
   isObject,
 } from 'lodash';
+import moment from 'moment';
+
 import {
   itemStatusesMap,
   noValue,
   emptyList,
   indentifierTypeNames,
+  DATE_FORMAT,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -44,7 +47,19 @@ export function canMarkItemAsMissing(item) {
     itemStatusesMap.PAGED,
     itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AWAITING_DELIVERY,
-  ], get(item, 'status.name'));
+  ], item?.status?.name);
+}
+
+export function canMarkItemAsWithdrawn(item) {
+  return includes([
+    itemStatusesMap.IN_PROCESS,
+    itemStatusesMap.AVAILABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.MISSING,
+    itemStatusesMap.AWAITING_DELIVERY,
+    itemStatusesMap.PAGED,
+  ], item?.status?.name);
 }
 
 export function getCurrentFilters(filtersStr) {
@@ -72,6 +87,60 @@ export function parseFiltersToStr(filters) {
 
   return newFilters.join(',');
 }
+
+export const retrieveDatesFromDateRangeFilterString = filterValue => {
+  let dateRange = {
+    startDate: '',
+    endDate: '',
+  };
+
+  if (filterValue) {
+    const [startDateString, endDateString] = filterValue.split(':');
+    const endDate = moment.utc(endDateString);
+    const startDate = moment.utc(startDateString);
+
+    dateRange = {
+      startDate: startDate.isValid()
+        ? startDate.format(DATE_FORMAT)
+        : '',
+      endDate: endDate.isValid()
+        ? endDate.subtract(1, 'days').format(DATE_FORMAT)
+        : '',
+    };
+  }
+
+  return dateRange;
+};
+
+
+export const makeDateRangeFilterString = (startDate, endDate) => {
+  const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
+
+  return `${startDate}:${endDateCorrected}`;
+};
+
+export const buildDateRangeQuery = name => values => {
+  const [startDateString, endDateString] = values[0]?.split(':') || [];
+
+  if (!startDateString || !endDateString) return '';
+
+  return `metadata.${name}>="${startDateString}" and metadata.${name}<="${endDateString}"`;
+};
+
+// Function which takes a filter name and returns
+// another function which can be used in filter config
+// to parse a given filter into a CQL manually.
+export const buildOptionalBooleanQuery = name => values => {
+  if (values.length === 2) {
+    return 'cql.allRecords=1';
+  } else if (values.length === 1 && values[0] === 'false') {
+    return `cql.allRecords=1 not ${name}=="true"`;
+  } else {
+    const joinedValues = values.map(v => `"${v}"`).join(' or ');
+
+    return `${name}==${joinedValues}`;
+  }
+};
 
 export function filterItemsBy(name) {
   return (filter, list) => {
@@ -180,6 +249,45 @@ export const validateAlphaNumericField = value => {
   }
 
   return undefined;
+};
+
+/**
+ * Provide validation of an optional form field consisting of one or more
+ * textfields and one or more select fields used for type id selection,
+ * where both parts (text and identifier type) are required.
+ *
+ * @param optionalField the field description object, consisting of
+ *  list: list name (string)
+ *  textFields: array of text field names
+ *  selectFields: array of select field names
+ * @param values array of field values passed in to caller validate function
+ *
+ * @return nested array of errors for optionalField
+ */
+export const validateOptionalField = (optionalField, values) => {
+  const listName = optionalField.list;
+  const errorList = [];
+
+  if (values[listName] && values[listName].length) {
+    values[listName].forEach((item, i) => {
+      const entryErrors = {};
+      optionalField.textFields.forEach((field) => {
+        if (!item || !item[field]) {
+          entryErrors[field] = <FormattedMessage id="ui-inventory.fillIn" />;
+          errorList[i] = entryErrors;
+        }
+      });
+
+      optionalField.selectFields.forEach((field) => {
+        if (!item || !item[field]) {
+          entryErrors[field] = <FormattedMessage id="ui-inventory.selectToContinue" />;
+          errorList[i] = entryErrors;
+        }
+      });
+    });
+  }
+
+  return errorList;
 };
 
 export const checkIfElementIsEmpty = element => ((!element || element === '-') ? noValue : element);

@@ -4,20 +4,10 @@ import {
   itemFilterRenderer,
 } from './components';
 
-// Function which takes a filter name and returns
-// another function which can be used in filter config
-// to parse a given filter into a CQL manually.
-const parseFilter = name => values => {
-  if (values.length === 2) {
-    return `${name}="*"`;
-  } else if (values.length === 1 && values[0] === 'false') {
-    return `${name}="*" not ${name}="true"`;
-  } else {
-    const joinedValues = values.map(v => `"${v}"`).join(' or ');
-
-    return `${name}=${joinedValues}`;
-  }
-};
+import {
+  buildDateRangeQuery,
+  buildOptionalBooleanQuery,
+} from './utils';
 
 export const instanceFilterConfig = [
   {
@@ -28,6 +18,11 @@ export const instanceFilterConfig = [
   {
     name: 'language',
     cql: 'languages',
+    values: [],
+  },
+  {
+    name: 'format',
+    cql: 'instanceFormatIds',
     values: [],
   },
   {
@@ -54,13 +49,19 @@ export const instanceFilterConfig = [
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
-    parse: parseFilter('staffSuppress'),
+    parse: buildOptionalBooleanQuery('staffSuppress'),
   },
   {
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
-    parse: parseFilter('discoverySuppress'),
+    parse: buildOptionalBooleanQuery('discoverySuppress'),
+  },
+  {
+    name: 'createdDate',
+    cql: 'metadata.createdDate',
+    values: [],
+    parse: buildDateRangeQuery('createdDate'),
   },
 ];
 
@@ -70,10 +71,11 @@ export const instanceIndexes = [
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
   { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers =/@value "%{query.query}"' },
   { label: 'ui-inventory.isbn', prefix: '- ', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.isbnNormalized', prefix: '- ', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
   { label: 'ui-inventory.issn', prefix: '- ', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   // { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid="%{query.query}"' },
+  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
@@ -87,11 +89,12 @@ export const instanceSortMap = {
 export const holdingIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.isbnNormalized', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
     queryTemplate: 'holdingsRecords.fullCallNumber=="%{query.query}" OR holdingsRecords.callNumberAndSuffix=="%{query.query}"' },
-  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid="%{query.query}"' },
+  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -112,7 +115,7 @@ export const holdingFilterConfig = [
     name: 'discoverySuppress',
     cql: 'holdingsRecords.discoverySuppress',
     values: [],
-    parse: parseFilter('holdingsRecords.discoverySuppress'),
+    parse: buildOptionalBooleanQuery('holdingsRecords.discoverySuppress'),
   },
 ];
 
@@ -120,11 +123,12 @@ export const itemIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
+  { label: 'ui-inventory.isbnNormalized', value: 'isbnNormalized', queryTemplate: 'isbn="%{query.query}" OR invalidIsbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
     queryTemplate: 'item.fullCallNumber=="%{query.query}" OR item.callNumberAndSuffix=="%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid="%{query.query}"' },
+  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -137,6 +141,7 @@ export const itemFilterConfig = [
   {
     name: 'itemStatus',
     cql: 'item.status.name',
+    operator: '==',
     values: [],
   },
   {
@@ -153,7 +158,7 @@ export const itemFilterConfig = [
     name: 'discoverySuppress',
     cql: 'item.discoverySuppress',
     values: [],
-    parse: parseFilter('item.discoverySuppress'),
+    parse: buildOptionalBooleanQuery('item.discoverySuppress'),
   }
 ];
 
