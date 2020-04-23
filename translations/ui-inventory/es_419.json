@@ -489,7 +489,7 @@
     "createdDate": "Date created",
     "item.status.statusUpdatedLabel": "status updated {statusDate}",
     "isbnNormalized": "ISBN, normalized",
-    "markAsWithdrawn": "Mark as withdrawn",
+    "markAsWithdrawn": "Marcar como perdido",
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
     "withdrawnModal.heading": "Confirm item as withdrawn",
     "withdrawnModal.confirm": "Confirmar",
