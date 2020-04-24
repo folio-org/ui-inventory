@@ -49,6 +49,8 @@ const TitlesViews = ({ titles, id, titleKey, label }) => {
   const columnWidths = {
     title: '35%',
     hrid: '25%',
+    isbn: '20%',
+    issn: '20%',
   };
 
   return (

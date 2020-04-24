@@ -22,6 +22,7 @@
 * Add missing location permissions to `ui-inventory.instance.view`. Fixes UIIN-1056.
 * Item. Remove The Edit pen icon in the top main pane. Fixes UIIN-1026.
 * Holdings. Remove The Edit pen icon in the top main pane. Fixes UIIN-1025.
+* Make the string to be wrapped with a space symbol in Preceding and Succeeding titles. Fixes UIIN-1036.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

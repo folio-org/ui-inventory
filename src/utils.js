@@ -371,7 +371,7 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     }
   });
 
-  return result.join(',');
+  return result.join(', ');
 };
 
 /**
