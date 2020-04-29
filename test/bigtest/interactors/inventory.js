@@ -12,6 +12,7 @@ import {
 } from '@bigtest/interactor';
 
 import DateRangeFilterInteractor from '@folio/stripes-smart-components/lib/SearchAndSort/components/DateRangeFilter/tests/interactor';
+import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import {
   MultiSelectFilterInteractor,
@@ -81,6 +82,7 @@ export default @interactor class InventoryInteractor {
   formatFilter = scoped('#format', MultiSelectFilterInteractor);
   modeFilter = scoped('#mode', MultiSelectFilterInteractor);
   createdDate = new CreatedDateFilterInteractor();
+  callout = new CalloutInteractor();
 
   whenLoaded() {
     return this.when(() => this.isLoaded);

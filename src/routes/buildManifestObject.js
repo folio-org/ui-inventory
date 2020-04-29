@@ -67,6 +67,7 @@ export function buildManifestObject() {
       accumulate: true,
       fetch: false,
       path: 'instance-bulk/ids',
+      throwErrors: false,
       GET: {
         params: {
           query: buildQuery,
