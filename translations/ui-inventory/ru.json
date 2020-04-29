@@ -492,6 +492,6 @@
     "markAsWithdrawn": "Mark as withdrawn",
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
     "withdrawnModal.heading": "Confirm item as withdrawn",
-    "withdrawnModal.confirm": "Confirm",
+    "withdrawnModal.confirm": "Подтвердить",
     "item.status.withdrawn": "Withdrawn"
 }
