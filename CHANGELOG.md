@@ -3,7 +3,7 @@
 ## [2.1.0] IN PROGRESS
 * Display instance status date with status. Refs UIIN-1007.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
-* Rewrite accordion state control. Fixes UIIN-921. 
+* Rewrite accordion state control. Fixes UIIN-921.
 * Add CQL query report generation to search instances. UIDEXP-13 and UIDEXP-2
 * Add validation for notes in inventory, holdings, item forms. Refs UIIN-994.
 * Use correct operator when searching by item status and hrid. Fixes UIIN-1048, UIIN-1051, UIIN-1052, UIIN-1053.
@@ -22,6 +22,7 @@
 * Add missing location permissions to `ui-inventory.instance.view`. Fixes UIIN-1056.
 * Item. Remove The Edit pen icon in the top main pane. Fixes UIIN-1026.
 * Holdings. Remove The Edit pen icon in the top main pane. Fixes UIIN-1025.
+* Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1. Fixes UUIN-940.
 * Make the string to be wrapped with a space symbol in Preceding and Succeeding titles. Fixes UIIN-1036.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
