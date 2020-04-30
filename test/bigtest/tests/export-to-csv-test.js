@@ -10,6 +10,8 @@ import sinon from 'sinon';
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import InstancesRouteInteractor from '../interactors/routes/instances-route';
+import HRIDHandlingInteractor from '../interactors/settings/hrid-handling/hrid-handling';
+import wait from '../helpers/wait';
 
 describe('Instances', () => {
   setupApplication({ scenarios: ['instances-filters'] });
@@ -43,12 +45,26 @@ describe('Instances', () => {
     describe('clicking saving instances CQL query button', () => {
       beforeEach(async function () {
         // Timeout to skip enabling animation
-        await new Promise((resolve) => { setTimeout(() => resolve(), 3000); });
+        await wait();
         await inventory.headerDropdownMenu.saveInstancesCQLQueryBtn.click();
       });
 
       it('should hide action items', () => {
         expect(inventory.headerDropdownMenu.saveInstancesCQLQueryBtn.isVisible).to.be.false;
+      });
+    });
+
+    describe('clicking Save instances UIIDs button with API request set up to fail', () => {
+      beforeEach(async function () {
+        this.server.put('/instance-bulk/ids', {}, 500);
+
+        // Timeout to skip enabling animation
+        await wait();
+        await inventory.headerDropdownMenu.clickSaveInstancesUIIDsBtn();
+      });
+
+      it('should display then error callout', () => {
+        expect(inventory.callout.errorCalloutIsPresent).to.be.true;
       });
     });
   });

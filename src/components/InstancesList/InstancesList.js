@@ -17,6 +17,7 @@ import {
 import {
   AppIcon,
   IfPermission,
+  CalloutContext,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -73,6 +74,8 @@ class InstancesView extends React.Component {
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
+
+  static contextType = CalloutContext;
 
   state = {
     inTransitItemsExportInProgress: false,
@@ -164,7 +167,7 @@ class InstancesView extends React.Component {
     this.setState({ inTransitItemsExportInProgress: true }, this.generateInTransitItemReport);
   };
 
-  generateInstancesIdReport = async () => {
+  generateInstancesIdReport = async (sendCallout) => {
     const { instancesIdExportInProgress } = this.state;
 
     if (instancesIdExportInProgress) return;
@@ -185,7 +188,10 @@ class InstancesView extends React.Component {
           report.toCSV(items);
         }
       } catch (error) {
-        throw new Error(error);
+        sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.saveInstancesUIIDS.error" />,
+        });
       } finally {
         this.setState({ instancesIdExportInProgress: false });
       }
@@ -226,7 +232,7 @@ class InstancesView extends React.Component {
       return () => {
         onToggle();
 
-        onClickHandler();
+        onClickHandler(this.context.sendCallout);
       };
     };
 
