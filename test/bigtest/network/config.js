@@ -132,6 +132,16 @@ export default function configure() {
         });
       }
 
+      if (left?.field === 'metadata.updatedDate' && right?.field === 'metadata.updatedDate') {
+        return instances.all().filter(inst => {
+          const updatedDate = new Date(inst.metadata.updatedDate);
+          const from = new Date(left.term);
+          const to = new Date(right.term);
+
+          return updatedDate >= from && updatedDate < to;
+        });
+      }
+
       if (left?.field === 'title' && right?.field === 'contributors') {
         return instances.all().filter(inst => inst.title.match(left.term) &&
           inst.contributors[0].name.match(right.term));

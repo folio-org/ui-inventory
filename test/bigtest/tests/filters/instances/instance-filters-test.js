@@ -25,6 +25,7 @@ describe('Instance filters', () => {
       contributors: [{ name: 'Yuval Noah Harari' }],
       metadata: {
         createdDate: '2020-03-04',
+        updatedDate: '2020-04-15',
       },
     }, 'withHoldingAndItem');
 
@@ -58,12 +59,16 @@ describe('Instance filters', () => {
     expect(inventory.createdDate.isPresent).to.equal(true);
   });
 
+  it('has a filter for updated date', () => {
+    expect(inventory.updatedDate.isPresent).to.equal(true);
+  });
+
   describe('filtering by createdDate', () => {
     beforeEach(async function () {
       await inventory.createdDate.open();
-      await inventory.createdDate.filter.startDateInput.enterDate('2020-03-03');
-      await inventory.createdDate.filter.endDateInput.enterDate('2020-03-13');
-      await inventory.createdDate.filter.applyButton.click();
+      await inventory.createdDate.fillStartDateInput('2020-03-03');
+      await inventory.createdDate.fillEndDateInput('2020-03-13');
+      await inventory.createdDate.clickApplyButton();
     });
 
     it('should find instance by created date', () => {
@@ -76,6 +81,29 @@ describe('Instance filters', () => {
       });
 
       it('should not find any instance by created date', () => {
+        expect(instancesRoute.rows().length).to.equal(0);
+      });
+    });
+  });
+
+  describe('filtering by updatedDate', () => {
+    beforeEach(async function () {
+      await inventory.updatedDate.open();
+      await inventory.updatedDate.fillStartDateInput('2020-04-13');
+      await inventory.updatedDate.fillEndDateInput('2020-04-16');
+      await inventory.updatedDate.clickApplyButton();
+    });
+
+    it('should find instance by updated date', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+
+    describe('clicking clear button', () => {
+      beforeEach(async function () {
+        await inventory.updatedDate.clear();
+      });
+
+      it('should not find any instance by updated date', () => {
         expect(instancesRoute.rows().length).to.equal(0);
       });
     });

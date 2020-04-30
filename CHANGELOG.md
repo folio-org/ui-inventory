@@ -25,6 +25,7 @@
 * Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1. Fixes UUIN-940.
 * Make the string to be wrapped with a space symbol in Preceding and Succeeding titles. Fixes UIIN-1036.
 * Show error callout when saving file with the instance UUIDs fails. UIDEXP-55.
+* Add filter for instance date updated. Refs UIIN-790.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
