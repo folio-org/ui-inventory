@@ -48,6 +48,7 @@ export default class InstanceFilters extends React.Component {
         discoverySuppress = [],
         staffSuppress = [],
         createdDate = [],
+        updatedDate = [],
       },
       data: {
         locations,
@@ -246,6 +247,23 @@ export default class InstanceFilters extends React.Component {
             name="createdDate"
             dateFormat={DATE_FORMAT}
             selectedValues={retrieveDatesFromDateRangeFilterString(createdDate[0])}
+            onChange={onChange}
+            makeFilterString={makeDateRangeFilterString}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.updatedDate" />}
+          id="updatedDate"
+          name="updatedDate"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={updatedDate.length > 0}
+          onClearFilter={() => onClear('updatedDate')}
+        >
+          <DateRangeFilter
+            name="updatedDate"
+            dateFormat={DATE_FORMAT}
+            selectedValues={retrieveDatesFromDateRangeFilterString(updatedDate[0])}
             onChange={onChange}
             makeFilterString={makeDateRangeFilterString}
           />

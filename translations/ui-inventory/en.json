@@ -478,6 +478,7 @@
   "createdDateAndTime": "Created date and time",
   "createdSource": "Created source",
   "createdDate": "Date created",
+  "updatedDate": "Date updated",
   "precedingTitle": "Preceding title",
   "succeedingTitle": "Succeeding title",
   "identifierType": "Identifier type",

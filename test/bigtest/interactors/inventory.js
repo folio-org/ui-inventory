@@ -11,11 +11,11 @@ import {
   Interactor,
 } from '@bigtest/interactor';
 
-import DateRangeFilterInteractor from '@folio/stripes-smart-components/lib/SearchAndSort/components/DateRangeFilter/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import {
   MultiSelectFilterInteractor,
+  DateRangeFilterInteractor,
 } from './filters';
 
 @interactor class InventoryHeaderDropdownMenu {
@@ -36,14 +36,6 @@ import {
   exportInstancesJSONBtnIsVisible = isVisible('#dropdown-clickable-export-json');
   isExportInstancesJSONBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');
   isExportInstancesJSONIconPresent = isPresent('#dropdown-clickable-export-json [class*=icon-download]');
-}
-
-@interactor class CreatedDateFilterInteractor {
-  static defaultScope = '#createdDate';
-
-  clear = clickable('button[icon="times-circle-solid"]');
-  open = clickable('[id*="accordion-toggle-button-"]');
-  filter = new DateRangeFilterInteractor();
 }
 
 export default @interactor class InventoryInteractor {
@@ -81,7 +73,8 @@ export default @interactor class InventoryInteractor {
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
   formatFilter = scoped('#format', MultiSelectFilterInteractor);
   modeFilter = scoped('#mode', MultiSelectFilterInteractor);
-  createdDate = new CreatedDateFilterInteractor();
+  createdDate = new DateRangeFilterInteractor('#createdDate');
+  updatedDate = new DateRangeFilterInteractor('#updatedDate');
   callout = new CalloutInteractor();
 
   whenLoaded() {
