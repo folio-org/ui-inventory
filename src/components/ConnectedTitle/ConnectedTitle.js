@@ -43,7 +43,6 @@ const ConnectedTitle = ({ instance, onSelect, titleIdKey }) => {
           value={
             <Link
               data-test-connected-instance-title
-              target="_blank"
               to={`/inventory/view/${instance[titleIdKey]}`}
             >
               {title}

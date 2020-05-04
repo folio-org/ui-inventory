@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
 ## [2.1.0] IN PROGRESS
+* Preceding and Succeeding titles. Clicking on connected titles should open in the same window. Fixes UIIN-1037.
 * Display instance status date with status. Refs UIIN-1007.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
 * Rewrite accordion state control. Fixes UIIN-921.
