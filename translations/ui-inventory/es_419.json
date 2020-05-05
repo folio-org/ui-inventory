@@ -493,5 +493,7 @@
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
     "withdrawnModal.heading": "Confirm item as withdrawn",
     "withdrawnModal.confirm": "Confirmar",
-    "item.status.withdrawn": "Withdrawn"
+    "item.status.withdrawn": "Withdrawn",
+    "saveInstancesUIIDS.error": "Error occurred while saving instances UUIDs. Please try again.",
+    "updatedDate": "Date updated"
 }

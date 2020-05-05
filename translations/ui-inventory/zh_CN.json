@@ -158,7 +158,7 @@
     "instanceStatusCode": "实例状态代码",
     "instanceStatusSource": "实例状态来源",
     "urlRelationship": "关系",
-    "linkText": "链接文字",
+    "linkText": "链接文本",
     "urlPublicNote": "URL公开附注",
     "materialsSpecification": "指定资料",
     "publisherRole": "出版者角色",
@@ -489,9 +489,11 @@
     "createdDate": "创建日期",
     "item.status.statusUpdatedLabel": "状态已更新{statusDate}",
     "isbnNormalized": "ISBN，标准化",
-    "markAsWithdrawn": "Mark as withdrawn",
-    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
-    "withdrawnModal.heading": "Confirm item as withdrawn",
-    "withdrawnModal.confirm": "Confirm",
-    "item.status.withdrawn": "Withdrawn"
+    "markAsWithdrawn": "标记为已撤回",
+    "withdrawnModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将标记为<strong>撤回</strong> 。",
+    "withdrawnModal.heading": "确认单件已撤回",
+    "withdrawnModal.confirm": "确认",
+    "item.status.withdrawn": "撤回",
+    "saveInstancesUIIDS.error": "保存实例UUID时发生错误。请再试。",
+    "updatedDate": "Date updated"
 }

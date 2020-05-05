@@ -493,5 +493,7 @@
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (الباركود:{barcode}) سيتم الإشارة إليه كـ <strong> مسحوب</strong>",
     "withdrawnModal.heading": "تأكيد المادة كمسحوبة",
     "withdrawnModal.confirm": "تأكيد",
-    "item.status.withdrawn": "مسحوب"
+    "item.status.withdrawn": "مسحوب",
+    "saveInstancesUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للوعاء. يرجى إعادة المحاولة.",
+    "updatedDate": "تم تحديث التاريخ"
 }
