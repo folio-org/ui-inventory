@@ -493,5 +493,7 @@
     "withdrawnModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) será marcado como <strong>descartado</strong>.",
     "withdrawnModal.heading": "Confirmar item como descartado",
     "withdrawnModal.confirm": "Confirmar",
-    "item.status.withdrawn": "Descartado"
+    "item.status.withdrawn": "Descartado",
+    "saveInstancesUIIDS.error": "Ocorreu um erro ao salvar UUIDs de instâncias. Por favor, tente novamente.",
+    "updatedDate": "Data da atualização"
 }
