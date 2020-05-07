@@ -28,6 +28,7 @@
 * Show error callout when saving file with the instance UUIDs fails. UIDEXP-55.
 * Add filter for instance date updated. Refs UIIN-790.
 * Pin `moment` at `~2.24.0` in light of multiple issues with `2.25.0` ([5489](https://github.com/moment/moment/issues/5489), [5472](https://github.com/moment/moment/issues/5472)).
+* Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

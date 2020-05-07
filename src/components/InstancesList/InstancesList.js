@@ -10,7 +10,6 @@ import {
 } from 'lodash';
 import {
   injectIntl,
-  intlShape,
   FormattedMessage,
 } from 'react-intl';
 
@@ -66,7 +65,7 @@ class InstancesView extends React.Component {
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     updateLocation: PropTypes.func.isRequired,
     segment: PropTypes.string,
-    intl: intlShape,
+    intl: PropTypes.object,
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
       params: PropTypes.object.isRequired,
