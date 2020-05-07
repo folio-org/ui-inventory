@@ -21,7 +21,6 @@ const TitlesViews = ({ titles, id, titleKey, label }) => {
   const formatter = {
     title: row => (row[titleKey] ?
       <Link
-        target="_blank"
         to={`/inventory/view/${row[titleKey]}`}
       >
         {row.title}
