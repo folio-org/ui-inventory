@@ -28,8 +28,8 @@ const TitlesViews = ({ titles, id, titleKey, label }) => {
       </Link> :
       row.title || '-'),
     hrid: row => row.hrid || '-',
-    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById) || '-',
-    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById) || '-',
+    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById).replace(',', ', ') || '-',
+    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById).replace(',', ', ') || '-',
   };
 
   const visibleColumns = [
