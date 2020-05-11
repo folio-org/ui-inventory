@@ -13,6 +13,9 @@ import { indentifierTypeNames } from '../../constants';
 import DataContext from '../../contexts/DataContext';
 
 const TitlesViews = ({ titles, id, titleKey, label }) => {
+  function separator(string) {
+    return string.replace(/,/g, ', ');
+  }
   const { identifierTypesById } = useContext(DataContext);
   const {
     ISSN,
@@ -28,8 +31,8 @@ const TitlesViews = ({ titles, id, titleKey, label }) => {
       </Link> :
       row.title || '-'),
     hrid: row => row.hrid || '-',
-    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById).replace(',', ', ') || '-',
-    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById).replace(',', ', ') || '-',
+    issn: row => separator(getIdentifiers(row.identifiers, ISSN, identifierTypesById)) || '-',
+    isbn: row => separator(getIdentifiers(row.identifiers, ISBN, identifierTypesById)) || '-',
   };
 
   const visibleColumns = [
