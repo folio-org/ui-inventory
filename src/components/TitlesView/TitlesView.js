@@ -24,7 +24,6 @@ const TitlesViews = ({ titles, id, titleKey, label }) => {
   const formatter = {
     title: row => (row[titleKey] ?
       <Link
-        target="_blank"
         to={`/inventory/view/${row[titleKey]}`}
       >
         {row.title}
@@ -52,8 +51,6 @@ const TitlesViews = ({ titles, id, titleKey, label }) => {
   const columnWidths = {
     title: '40%',
     hrid: '25%',
-    isbn: 140,
-    issn: 100,
   };
 
   return (
