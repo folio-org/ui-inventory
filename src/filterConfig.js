@@ -134,8 +134,12 @@ export const itemIndexes = [
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
     queryTemplate: 'item.fullCallNumber=="%{query.query}" OR item.callNumberAndSuffix=="%{query.query}"' },
+  { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
+    value: 'itemCallNumberNorm',
+    queryTemplate: 'item.fullCallNumberNormalized="%{query.query}" OR item.callNumberAndSuffixNormalized="%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+
 ];
 
 export const itemFilterConfig = [

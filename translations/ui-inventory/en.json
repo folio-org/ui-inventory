@@ -161,6 +161,7 @@
   "issn": "ISSN",
   "callNumberEyeReadable": "Call number, eye readable",
   "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+  "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
   "search.all": "Keyword (title, contributor, identifier)",
   "title": "Title (all)",
   "indexTitle": "Index title",
