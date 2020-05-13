@@ -160,6 +160,7 @@
   "isbnNormalized": "ISBN, normalized",
   "issn": "ISSN",
   "callNumberEyeReadable": "Call number, eye readable",
+  "callNumberNormalized": "Call number, normalized",
   "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
   "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
   "search.all": "Keyword (title, contributor, identifier)",

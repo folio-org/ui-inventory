@@ -153,6 +153,19 @@ export default function configure() {
         return instances.where({ id: holding.instanceId });
       }
 
+      if (left?.field === 'holdingsRecords.fullCallNumberNormalized') {
+        const normalize = value => value.replace(/\W/g, '').toLowerCase();
+
+        const normalizedHoldings = holdings.all().models.map(holding => {
+          const { instanceId, callNumber, callNumberPrefix } = holding;
+          return { instanceId, callNumber: normalize(callNumberPrefix + callNumber) };
+        });
+
+        const holding = normalizedHoldings.find(h => h.callNumber === normalize(left.term));
+
+        return instances.where({ id: holding?.instanceId });
+      }
+
       if (left?.field === 'item.fullCallNumber') {
         const item = items.where({ callNumber: left.term }).models[0];
         const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
