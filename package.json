@@ -598,11 +598,11 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^3.1.0",
+    "@folio/stripes": "^4.0.0",
     "@folio/stripes-cli": "^1.13.0",
-    "@folio/stripes-core": "^4.0.0",
-    "@folio/stripes-smart-components": "^3.0.0",
-    "@folio/stripes-components": "^6.1.0",
+    "@folio/stripes-core": "^5.0.0",
+    "@folio/stripes-smart-components": "^4.0.0",
+    "@folio/stripes-components": "^7.0.0",
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
     "core-js": "^3.6.4",
@@ -630,7 +630,7 @@
     "moment": "~2.24.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^3.1.0",
+    "@folio/stripes": "^4.0.0",
     "react": "*",
     "react-intl": "^2.3.0",
     "react-router": "^5.0.1",
@@ -639,7 +639,7 @@
   "optionalDependencies": {
     "@folio/plugin-find-instance": "^2.0.0",
     "@folio/quick-marc": "^1.0.0"
-  }, 
+  },
   "resolutions": {
     "moment": "~2.24.0"
   }
