@@ -90,6 +90,21 @@ describe('Items SearchFieldFilter', () => {
     });
   });
 
+  describe('Call number, normalized', function () {
+    beforeEach(async function () {
+      const instance = this.server.create('instance', {}, 'withHoldingAndItem');
+      const item = instance.holdings.models[0].items.models[0];
+
+      await itemsRoute.searchFieldFilter.searchField.selectIndex('Effective call number (item), normalized');
+      await itemsRoute.searchFieldFilter.searchField.fillInput(item.callNumber);
+      await itemsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('finds instances by call number (item), normalized', () => {
+      expect(itemsRoute.rows().length).to.equal(1);
+    });
+  });
+
   describe('selecting the "ISBN, normalized" search option', function () {
     beforeEach(async function () {
       const isbnIdentifierType = this.server.create('identifier-type', { name: 'ISBN' });

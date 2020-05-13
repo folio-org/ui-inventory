@@ -160,6 +160,13 @@ export default function configure() {
         return instances.where({ id: holding.instanceId });
       }
 
+      if (left?.field === 'item.fullCallNumberNormalized') {
+        const item = items.where({ callNumber: left.term }).models[0];
+        const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
+
+        return instances.where({ id: holding.instanceId });
+      }
+
       if (field === 'identifiers') {
         const idType = identifierTypes.where({ name: term }).models[0];
 
