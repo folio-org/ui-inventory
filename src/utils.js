@@ -371,7 +371,10 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     }
   });
 
-  return result.join(', ');
+  return (
+    <div>
+      {result.map((value, index) => <div>{`${value}${index !== result.length - 1 ? ',' : ''}`}</div>)}
+    </div>);
 };
 
 /**
