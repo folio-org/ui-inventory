@@ -174,5 +174,19 @@ export default Factory.extend({
       instance.holdings = [holding];
       instance.save();
     }
+  }),
+
+  withFullCallNumber: trait({
+    afterCreate(instance, server) {
+      const holding = server.create(
+        'holding',
+        { callNumber: 'Call Number',
+          callNumberPrefix: 'Prefix',
+          callNumberSuffix: 'Suffix' },
+      );
+
+      instance.holdings = [holding];
+      instance.save();
+    }
   })
 });

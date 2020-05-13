@@ -100,6 +100,9 @@ export const holdingIndexes = [
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
     queryTemplate: 'holdingsRecords.fullCallNumber=="%{query.query}" OR holdingsRecords.callNumberAndSuffix=="%{query.query}"' },
+  { label: 'ui-inventory.callNumberNormalized',
+    value: 'callNumberNormalized',
+    queryTemplate: 'holdingsRecords.fullCallNumberNormalized="%{query.query}" OR holdingsRecords.callNumberAndSuffixNormalized="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
