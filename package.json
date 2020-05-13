@@ -609,12 +609,13 @@
     "eslint": "^6.8.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "react-intl": "^4.5.3",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.0.0"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^1.0.2",
+    "@folio/react-intl-safe-html": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
     "lodash": "^4.17.4",
@@ -632,7 +633,7 @@
   "peerDependencies": {
     "@folio/stripes": "^4.0.0",
     "react": "*",
-    "react-intl": "^2.3.0",
+    "react-intl": "^4.5.3",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },
