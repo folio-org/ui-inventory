@@ -97,6 +97,20 @@ describe('Holdings SearchFieldFilter', () => {
     });
   });
 
+  describe('selecting "Call number, normalized" option', function () {
+    beforeEach(async function () {
+      this.server.create('instance', {}, 'withFullCallNumber');
+
+      await holdingsRoute.searchFieldFilter.searchField.selectIndex('Call number, normalized');
+      await holdingsRoute.searchFieldFilter.searchField.fillInput('prefix - callNumber()');
+      await holdingsRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('finds instances by Call number - normalized', () => {
+      expect(holdingsRoute.rows().length).to.equal(1);
+    });
+  });
+
   describe('selecting the Holdings HRID search option', function () {
     beforeEach(async () => {
       await holdingsRoute.searchFieldFilter.searchField.selectIndex('Holdings HRID');
