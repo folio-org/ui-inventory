@@ -292,7 +292,7 @@ class ItemView extends React.Component {
           </Icon>
         </Button>
         )}
-        { canCreateNewRequest && (
+        { canMarkItemAsWithdrawn(firstItem) && canCreateNewRequest && (
         <Button
           to={newRequestLink}
           buttonStyle="dropdownItem"

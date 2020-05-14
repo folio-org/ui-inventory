@@ -35,6 +35,7 @@
 * Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
 * Add ability to search by `Effective call number (item), normalized` option. Refs UIIN-993.
 * Add ability to search by `Call number, normalized` option via holdings segment. Refs UIIN-983.
+* Show/hide specific options in Actions menu for the `Withdrawn` item. Refs UIIN-818.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

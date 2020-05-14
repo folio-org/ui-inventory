@@ -47,6 +47,7 @@ export function canMarkItemAsMissing(item) {
     itemStatusesMap.PAGED,
     itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AWAITING_DELIVERY,
+    itemStatusesMap.WITHDRAWN,
   ], item?.status?.name);
 }
 

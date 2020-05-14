@@ -211,9 +211,10 @@ describe('ItemViewPage', () => {
       beforeEach(async function () {
         const instance = this.server.create(
           'instance',
-          'withHoldingAndInProcessItem',
+          'withHoldingAndItemStatus',
           {
             title: 'ADVANCING RESEARCH',
+            itemStatus: 'In process',
           }
         );
         const holding = this.server.schema.instances.first().holdings.models[0];
@@ -230,6 +231,42 @@ describe('ItemViewPage', () => {
 
         it('should open a missing confirmation modal', () => {
           expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
+        });
+      });
+    });
+
+    describe('visiting the withdrawn item view page', () => {
+      beforeEach(async function () {
+        const instance = this.server.create(
+          'instance',
+          'withHoldingAndItemStatus',
+          {
+            title: 'ADVANCING RESEARCH',
+            itemStatus: 'Withdrawn',
+          }
+        );
+        const holding = this.server.schema.instances.first().holdings.models[0];
+        const item = holding.items.models[0].attrs;
+
+        this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
+        await ItemViewPage.whenLoaded();
+      });
+
+      describe('clicking pane header dropdown menu', () => {
+        beforeEach(async () => {
+          await ItemViewPage.headerDropdown.click();
+        });
+
+        it('should show a mark as missing item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.true;
+        });
+
+        it('should not show a mark as withdrawn item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsWithdrawn).to.be.false;
+        });
+
+        it('should not show a new request item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.false;
         });
       });
     });
