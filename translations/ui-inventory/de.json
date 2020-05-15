@@ -495,5 +495,7 @@
     "withdrawnModal.confirm": "Confirm",
     "item.status.withdrawn": "Withdrawn",
     "saveInstancesUIIDS.error": "Error occurred while saving instances UUIDs. Please try again.",
-    "updatedDate": "Date updated"
+    "updatedDate": "Date updated",
+    "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
+    "callNumberNormalized": "Call number, normalized"
 }

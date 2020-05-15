@@ -495,5 +495,7 @@
     "withdrawnModal.confirm": "Confirmar",
     "item.status.withdrawn": "Descartado",
     "saveInstancesUIIDS.error": "Ocorreu um erro ao salvar UUIDs de instâncias. Por favor, tente novamente.",
-    "updatedDate": "Data da atualização"
+    "updatedDate": "Data da atualização",
+    "itemEffectiveCallNumberNormalized": "Número de chamada efetivo (item), normalizado",
+    "callNumberNormalized": "Número de chamada, normalizado"
 }

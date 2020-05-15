@@ -495,5 +495,7 @@
     "withdrawnModal.confirm": "تأكيد",
     "item.status.withdrawn": "مسحوب",
     "saveInstancesUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للوعاء. يرجى إعادة المحاولة.",
-    "updatedDate": "تم تحديث التاريخ"
+    "updatedDate": "تم تحديث التاريخ",
+    "itemEffectiveCallNumberNormalized": "رقم الاستدعاء النشط (مادة)، مطبّع",
+    "callNumberNormalized": "رقم الاستدعاء، مطبّع"
 }
