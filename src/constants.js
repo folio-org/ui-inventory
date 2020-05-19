@@ -15,6 +15,7 @@ export const itemStatusesMap = {
   AWAITING_DELIVERY,
   MISSING: 'Missing',
   WITHDRAWN: 'Withdrawn',
+  CLAIMED_RETURNED: 'Claimed returned',
 };
 
 export const requestStatuses = {
