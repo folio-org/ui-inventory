@@ -497,5 +497,6 @@
     "saveInstancesUIIDS.error": "Error occurred while saving instances UUIDs. Please try again.",
     "updatedDate": "Date mise à jour",
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
-    "callNumberNormalized": "Call number, normalized"
+    "callNumberNormalized": "Call number, normalized",
+    "item.status.claimedReturned": "Claimed returned"
 }

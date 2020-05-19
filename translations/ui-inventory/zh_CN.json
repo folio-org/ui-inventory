@@ -497,5 +497,6 @@
     "saveInstancesUIIDS.error": "保存实例UUID时发生错误。请再试。",
     "updatedDate": "Date updated",
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
-    "callNumberNormalized": "Call number, normalized"
+    "callNumberNormalized": "Call number, normalized",
+    "item.status.claimedReturned": "Claimed returned"
 }
