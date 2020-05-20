@@ -2,6 +2,8 @@
 
 ## [3.1.0] IN PROGRESS
 
+* Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
+
 ## [3.0.0] IN PROGRESS
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
