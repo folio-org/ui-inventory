@@ -15,6 +15,7 @@ export const itemStatusesMap = {
   AWAITING_DELIVERY,
   MISSING: 'Missing',
   WITHDRAWN: 'Withdrawn',
+  CLAIMED_RETURNED: 'Claimed returned',
 };
 
 export const requestStatuses = {
@@ -38,6 +39,7 @@ export const itemStatuses = [
   { label: 'ui-inventory.item.status.received', value: 'Received' },
   { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' },
   { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
+  { label: 'ui-inventory.item.status.claimedReturned', value: ' Claimed returned' },
 ];
 
 export const segments = {
