@@ -48,6 +48,7 @@ export function canMarkItemAsMissing(item) {
     itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AWAITING_DELIVERY,
     itemStatusesMap.WITHDRAWN,
+    itemStatusesMap.CLAIMED_RETURNED,
   ], item?.status?.name);
 }
 
@@ -60,6 +61,7 @@ export function canMarkItemAsWithdrawn(item) {
     itemStatusesMap.MISSING,
     itemStatusesMap.AWAITING_DELIVERY,
     itemStatusesMap.PAGED,
+    itemStatusesMap.CLAIMED_RETURNED,
   ], item?.status?.name);
 }
 
