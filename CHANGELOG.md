@@ -1,5 +1,7 @@
 # Change history for ui-inventory
 
+## [3.1.0] IN PROGRESS
+
 ## [3.0.0] IN PROGRESS
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
