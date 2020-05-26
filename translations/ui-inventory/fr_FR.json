@@ -427,7 +427,7 @@
     "reports.inTransitItem.checkInDateTime": "Date et heure de retour",
     "reports.inTransitItem.destinationServicePoint": "Point de service de destination",
     "reports.inTransitItem.requestType": "Type de demande",
-    "reports.inTransitItem.requesterPatronGroup": "Groupe adhérent du demandeur",
+    "reports.inTransitItem.requesterPatronGroup": "Groupe utilisateur du demandeur",
     "reports.inTransitItem.requestCreationDate": "Date de création de la demande",
     "reports.inTransitItem.requestExpirationDate": "Date d'expiration de la demande",
     "reports.inTransitItem.requestPickupServicePoint": "Demander un point de retrait",
