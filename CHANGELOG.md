@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [3.1.1] IN PROGRESS
+
+* Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN 1039
+
 ## [3.1.0] IN PROGRESS
 
 * Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
