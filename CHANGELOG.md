@@ -1,17 +1,9 @@
 # Change history for ui-inventory
 
-## [3.1.1] IN PROGRESS
-
-* Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN 1039
-
-## [3.1.0] IN PROGRESS
-
-* Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
-
 ## [3.0.0] IN PROGRESS
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
-
+* Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN 1039
 ## [2.1.0] IN PROGRESS
 * Preceding and Succeeding titles. Clicking on connected titles should open in the same window. Fixes UIIN-1037.
 * Display instance status date with status. Refs UIIN-1007.
