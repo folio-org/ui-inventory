@@ -10,7 +10,7 @@ import {
 const TitleLabel = ({ label, subLabel, required }) => (
   <Layout className="flex justified full">
     <Label required={required}>{label}</Label>
-    <Label>{subLabel}</Label>
+    <Label style={{ fontWeight: 'normal' }}>{subLabel}</Label>
   </Layout>
 );
 
