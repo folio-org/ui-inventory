@@ -20,7 +20,7 @@ export default @interactor class InvSettingsInteractor {
   titleHoldingsIllPolicy = text('#ILLPolicy [class^=headline--]');
 
   titleItemsNoteTypes = text('#itemNoteTypes [class^=headline--]');
-  titleItemsLoanTypes = text('#loantypes [class^=headline--]');
+  titleItemsLoanTypes = text('#loanTypes [class^=headline--]');
   titleItemsMaterialTypes = text('#materialtypes [class^=headline--]');
 
   titleStaticticalCodeTypes = text('#StatisticalCodeTypes [class^=headline--]');
