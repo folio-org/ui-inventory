@@ -12,11 +12,13 @@
   },
   "main": "src/index.js",
   "stripes": {
-    "type": "app",
+    "actsAs": [
+      "app",
+      "settings"
+    ],
     "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
     "home": "/inventory?filters=&sort=Title",
-    "hasSettings": true,
     "queryResource": "query",
     "icons": [
       {

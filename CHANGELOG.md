@@ -5,6 +5,7 @@
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
 * Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
 * Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN-1039
+* Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
 
 ## [2.1.0] IN PROGRESS
 * Preceding and Succeeding titles. Clicking on connected titles should open in the same window. Fixes UIIN-1037.
