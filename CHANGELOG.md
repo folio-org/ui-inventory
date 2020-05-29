@@ -40,6 +40,7 @@
 * Show/hide specific options in Actions menu for the `Withdrawn` item. Refs UIIN-818.
 * Prevent items with the status `Claimed returned` from being marked missing. Refs UIIN-891.
 * Add ability to search item by `Claimed returned` status. Refs UIIN-957.
+* Add permission for marking an item withdrawn. Refs UIIN-889.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
