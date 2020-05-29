@@ -52,7 +52,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   enumerationDataAccordion = new AccordionInteractor('[data-test-item-view-page] #acc03');
   statisticalCodeTable = new MultiColumnListInteractor('#item-list-statistical-codes');
   electronicAccessTable = new MultiColumnListInteractor('#item-list-electronic-access');
-  collapseAllButton = new ButtonInteractor('#collapse-all');
+  collapseAllButton = new ButtonInteractor('[data-tast-expand-button]');
   loanAccordion = new AccordionSection('[data-test-item-view-page] #acc06');
   circulationHistoryAccordion = new AccordionSection('[data-test-item-view-page] #acc09');
   confirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
