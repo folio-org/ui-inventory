@@ -1141,7 +1141,7 @@ class ViewInstance extends React.Component {
                 >
                   <KeyValue
                     label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-                    value={convertArrayToBlocks(descriptiveData.natureOfContentTermIds)}
+                    value={convertArrayToBlocks(descriptiveData.natureOfContentTerms)}
                   />
                 </Col>
               </Row>
