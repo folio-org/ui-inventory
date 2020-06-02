@@ -586,6 +586,14 @@
           "ui-inventory.instance.view"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-items-withdrawn",
+        "displayName": "Inventory: Mark items withdrawn",
+        "subPermissions": [
+          "inventory.items.item.mark-withdrawn.post"
+        ],
+        "visible": true
       }
     ]
   },

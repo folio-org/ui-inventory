@@ -5,6 +5,10 @@
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
 * Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
 * Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN-1039
+* Subheading Related title to be deprecated. Instance (edit view). Fixes UIIN-1032.
+* Preceding and Succeeding titles. Make the Connected label less prominent (edit view). Fixes UIIN-1039.
+* Item record: "loan type" appears as "loantype" (on detailed view). Fixes UIIN-657.
+* Restore displaying of `Nature of content` value in Instance detailed view. Fixes UIIN-1100.
 * Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
 
 ## [2.1.0] IN PROGRESS
@@ -41,6 +45,7 @@
 * Show/hide specific options in Actions menu for the `Withdrawn` item. Refs UIIN-818.
 * Prevent items with the status `Claimed returned` from being marked missing. Refs UIIN-891.
 * Add ability to search item by `Claimed returned` status. Refs UIIN-957.
+* Add permission for marking an item withdrawn. Refs UIIN-889.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)

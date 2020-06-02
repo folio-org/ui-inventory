@@ -38,6 +38,7 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   AppIcon,
+  IfPermission,
   IntlConsumer,
 } from '@folio/stripes/core';
 
@@ -277,21 +278,23 @@ class ItemView extends React.Component {
           </Icon>
         </Button>
         )}
-        { canMarkItemAsWithdrawn(firstItem) && (
-        <Button
-          id="clickable-withdrawn-item"
-          onClick={() => {
-            onToggle();
-            this.setState({ itemWithdrawnModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-mark-as-withdrawn-item
-        >
-          <Icon icon="flag">
-            <FormattedMessage id="ui-inventory.markAsWithdrawn" />
-          </Icon>
-        </Button>
-        )}
+        <IfPermission perm="ui-inventory.items.mark-items-withdrawn">
+          { canMarkItemAsWithdrawn(firstItem) && (
+          <Button
+            id="clickable-withdrawn-item"
+            onClick={() => {
+              onToggle();
+              this.setState({ itemWithdrawnModal: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-mark-as-withdrawn-item
+          >
+            <Icon icon="flag">
+              <FormattedMessage id="ui-inventory.markAsWithdrawn" />
+            </Icon>
+          </Button>
+          )}
+        </IfPermission>
         { canMarkItemAsWithdrawn(firstItem) && canCreateNewRequest && (
         <Button
           to={newRequestLink}
