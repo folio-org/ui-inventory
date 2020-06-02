@@ -211,8 +211,9 @@ class ItemView extends React.Component {
     const canMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
     const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
+    const canWithdrawn = stripes.hasPerm('ui-inventory.items.mark-items-withdrawn');
 
-    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest) {
+    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest && !canWithdrawn) {
       return null;
     }
 
