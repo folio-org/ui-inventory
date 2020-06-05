@@ -48,6 +48,7 @@ export function canMarkItemAsMissing(item) {
     itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AWAITING_DELIVERY,
     itemStatusesMap.WITHDRAWN,
+    itemStatusesMap.LOST_AND_PAID,
   ], item?.status?.name);
 }
 
@@ -60,7 +61,21 @@ export function canMarkItemAsWithdrawn(item) {
     itemStatusesMap.MISSING,
     itemStatusesMap.AWAITING_DELIVERY,
     itemStatusesMap.PAGED,
+    itemStatusesMap.LOST_AND_PAID,
   ], item?.status?.name);
+}
+
+export function canCreateNewRequest(item, stripes) {
+  return stripes.hasPerm('ui-requests.create') &&
+    includes([
+      itemStatusesMap.IN_PROCESS,
+      itemStatusesMap.AVAILABLE,
+      itemStatusesMap.IN_TRANSIT,
+      itemStatusesMap.AWAITING_PICKUP,
+      itemStatusesMap.MISSING,
+      itemStatusesMap.AWAITING_DELIVERY,
+      itemStatusesMap.PAGED,
+    ], item?.status?.name);
 }
 
 export function getCurrentFilters(filtersStr) {

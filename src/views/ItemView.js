@@ -47,6 +47,7 @@ import {
   callNumberLabel,
   canMarkItemAsMissing,
   canMarkItemAsWithdrawn,
+  canCreateNewRequest,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
   convertArrayToBlocks,
@@ -210,10 +211,10 @@ class ItemView extends React.Component {
     const canEdit = stripes.hasPerm('ui-inventory.item.edit');
     const canMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
-    const canCreateNewRequest = stripes.hasPerm('ui-requests.create');
+    const allCreateNewRequest = stripes.hasPerm('ui-requests.create');
     const canWithdrawn = stripes.hasPerm('ui-inventory.items.mark-items-withdrawn');
 
-    if (!canCreate && !canEdit && !canDelete && !canCreateNewRequest && !canWithdrawn) {
+    if (!canCreate && !canEdit && !canDelete && !allCreateNewRequest && !canWithdrawn) {
       return null;
     }
 
@@ -296,7 +297,7 @@ class ItemView extends React.Component {
           </Button>
           )}
         </IfPermission>
-        { canMarkItemAsWithdrawn(firstItem) && canCreateNewRequest && (
+        { canCreateNewRequest(firstItem, stripes) && (
         <Button
           to={newRequestLink}
           buttonStyle="dropdownItem"
