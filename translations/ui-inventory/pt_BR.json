@@ -498,5 +498,6 @@
     "updatedDate": "Data da atualização",
     "itemEffectiveCallNumberNormalized": "Número de chamada efetivo (item), normalizado",
     "callNumberNormalized": "Número de chamada, normalizado",
-    "item.status.claimedReturned": "Alegou ter devolvido"
+    "item.status.claimedReturned": "Alegou ter devolvido",
+    "item.status.lostAndPaid": "Perdido e pago"
 }
