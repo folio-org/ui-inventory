@@ -498,5 +498,6 @@
     "updatedDate": "Date updated",
     "itemEffectiveCallNumberNormalized": "Актуальный номер (издание), нормализованный",
     "callNumberNormalized": "Телефонный номер, нормализованный",
-    "item.status.claimedReturned": "Подлежащий возврату"
+    "item.status.claimedReturned": "Подлежащий возврату",
+    "item.status.lostAndPaid": "Утраченный и оплаченный"
 }

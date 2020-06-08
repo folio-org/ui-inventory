@@ -498,5 +498,6 @@
     "updatedDate": "Date updated",
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
     "callNumberNormalized": "Call number, normalized",
-    "item.status.claimedReturned": "宣稱已歸還"
+    "item.status.claimedReturned": "宣稱已歸還",
+    "item.status.lostAndPaid": "Lost and paid"
 }
