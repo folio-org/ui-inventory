@@ -531,7 +531,7 @@
       {
         "permissionName": "ui-inventory.settings.list.view",
         "displayName": "Settings (Inventory): Display list of settings pages",
-        "subPermissions":  [
+        "subPermissions": [
           "settings.inventory.enabled",
           "users.collection.get",
           "source-storage.records.get",
@@ -610,9 +610,9 @@
     "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes": "^4.0.0",
     "@folio/stripes-cli": "^1.13.0",
+    "@folio/stripes-components": "^7.0.0",
     "@folio/stripes-core": "^5.0.0",
     "@folio/stripes-smart-components": "^4.0.0",
-    "@folio/stripes-components": "^7.0.0",
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
     "core-js": "^3.6.4",
@@ -629,16 +629,17 @@
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
     "lodash": "^4.17.4",
+    "moment": "~2.24.0",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.0",
     "react-final-form-listeners": "^1.0.2",
     "react-hot-loader": "^4.3.12",
     "react-router-prop-types": "^1.0.4",
-    "redux-form": "^7.0.3",
-    "moment": "~2.24.0"
+    "redux-form": "^7.0.3"
   },
   "peerDependencies": {
     "@folio/stripes": "^4.0.0",

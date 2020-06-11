@@ -44,6 +44,9 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import {
+  TitlesView,
+} from './components';
+import {
   areAllFieldsEmpty,
   craftLayerUrl,
   checkIfElementIsEmpty,
@@ -56,7 +59,6 @@ import {
   unmarshalInstance,
 } from './utils';
 import formatters from './referenceFormatters';
-import Holdings from './Holdings';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -64,7 +66,11 @@ import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 
-import { TitlesView } from './components';
+import {
+  HoldingsListContainer,
+  MoveItemsContext,
+} from './Instance';
+
 import {
   wrappingCell,
   noValue,
@@ -86,6 +92,13 @@ class ViewInstance extends React.Component {
       path: 'holdings-storage/holdings',
       fetch: false,
       throwErrors: false,
+    },
+    movableItems: {
+      type: 'okapi',
+      path: 'inventory/items',
+      fetch: false,
+      throwErrors: false,
+      accumulate: true,
     },
     marcRecord: {
       type: 'okapi',
@@ -114,9 +127,9 @@ class ViewInstance extends React.Component {
 
     this.state = {
       marcRecord: null,
+      isItemsMovement: false,
     };
     this.instanceId = null;
-    this.cHoldings = this.props.stripes.connect(Holdings);
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.cViewMarc = this.props.stripes.connect(ViewMarc);
@@ -171,6 +184,39 @@ class ViewInstance extends React.Component {
       pathname: `/inventory/quick-marc/edit/${instanceId}`,
       search: location.search,
     });
+  };
+
+  toggleItemsMovement = () => {
+    this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
+  };
+
+  moveItems = (fromHolding, toHolding, items) => {
+    // TODO: replace temporary solution with correct one when implemented
+    const { mutator } = this.props;
+
+    return mutator.movableItems.GET({
+      params: {
+        query: items.map(item => `id==${item}`).join(' or '),
+      },
+    })
+      .then(({ items: fetchedItems }) => {
+        const updatedPromises = fetchedItems.map((item) => mutator.movableItems.PUT({
+          ...item,
+          holdingsRecordId: toHolding,
+        }));
+
+        return Promise.all(updatedPromises);
+      })
+      .then(() => {
+        const message = (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.success"
+            values={{ count: items.length }}
+          />
+        );
+
+        this.calloutRef.current.sendCallout({ message });
+      });
   };
 
   onClickAddNewHoldingsRecord = (e) => {
@@ -338,6 +384,21 @@ class ViewInstance extends React.Component {
             </>
           )
         }
+
+        <Button
+          id="move-instance-items"
+          buttonStyle="dropdownItem"
+          onClick={() => {
+            onToggle();
+            this.toggleItemsMovement();
+          }}
+        >
+          <Icon icon="transfer">
+            <FormattedMessage
+              id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+            />
+          </Icon>
+        </Button>
       </Fragment>
     );
   };
@@ -766,15 +827,14 @@ class ViewInstance extends React.Component {
                     <Route
                       path="/inventory/view/"
                       render={() => (
-                        <this.cHoldings
-                          dataKey={id}
-                          id={id}
-                          instance={instance}
-                          referenceTables={referenceTables}
-                          match={this.props.match}
-                          stripes={stripes}
-                          location={location}
-                        />
+                        <MoveItemsContext moveItems={this.moveItems}>
+                          <HoldingsListContainer
+                            instance={instance}
+                            referenceDeata={referenceTables}
+                            draggable={this.state.isItemsMovement}
+                            droppable
+                          />
+                        </MoveItemsContext>
                       )}
                     />
                   </Switch>

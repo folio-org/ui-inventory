@@ -12,6 +12,7 @@ import {
 import { AccordionInteractor } from '@folio/stripes-components/lib/Accordion/tests/interactor';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
+import CheckboxInteractor from '@folio/stripes-components/lib/Checkbox/tests/interactor';
 
 import KeyValue from './KeyValue';
 
@@ -26,6 +27,8 @@ import KeyValue from './KeyValue';
   hasDuplicateButton = isPresent('#copy-instance');
   hasViewSourceButton = isPresent('#clickable-view-source');
   hasEditMarcButton = isPresent('#edit-instance-marc');
+  hasMoveWithinInstanceButton = isPresent('#move-instance-items');
+  clickMoveWithinInstance = clickable('#move-instance-items');
   disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
 }
 
@@ -34,6 +37,7 @@ import KeyValue from './KeyValue';
   hasBarcodeLink = isPresent('[data-test-item-link]');
   hasCopyIcon = isPresent('[data-test-items-copy-icon]');
   clickBarcode = clickable('[data-test-item-link]');
+  dragSelector = scoped('[data-test-select-item]', CheckboxInteractor);
 }
 
 @interactor class InstanceViewPage {
@@ -47,16 +51,18 @@ import KeyValue from './KeyValue';
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   hasHeaderDropdown = isPresent('[class^=DropdownMenuTether---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  itemsList = new MultiColumnListInteractor('#list-items');
+  itemsList = new MultiColumnListInteractor('[id^="list-items"]');
+  dragItemsListSelectAll = scoped('[id^="list-items"] [data-test-select-all-items]', CheckboxInteractor);
   seriesStatementList = new MultiColumnListInteractor('#list-series-statement');
   subjectsList = new MultiColumnListInteractor('#list-subject');
   statisticalCodesList = new MultiColumnListInteractor('#list-statistical-codes');
   alternativeTitlesList = new MultiColumnListInteractor('#list-alternative-titles');
-  items = collection('#list-items div[class^=mclRow]', Item);
+  items = collection('[id^="list-items"] div[class^=mclRow]', Item);
+  draggableItems = collection('[id^="list-items"] div[draggable]', Item);
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
-  hasButtonAddItem = isPresent('#clickable-new-item');
-  clickButtonAddItem = clickable('#clickable-new-item');
+  hasButtonAddItem = isPresent('[data-test-add-item]');
+  clickButtonAddItem = clickable('[data-test-add-item]');
   hasButtonAddHoldings = isPresent('#clickable-new-holdings-record');
   clickButtonAddHoldings = clickable('#clickable-new-holdings-record');
   headlineInViewInstance = isPresent('[data-test-headline-medium]');
