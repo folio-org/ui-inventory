@@ -11,6 +11,7 @@
 * Restore displaying of `Nature of content` value in Instance detailed view. Fixes UIIN-1100.
 * Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
 * Instance record. Relabel in the UI the Metadata source to Source (View and Edit) Fixes UIIN-1133
+* Make permission names l10nable. UIIN-1137.
 
 ## [2.1.0] IN PROGRESS
 * Preceding and Succeeding titles. Clicking on connected titles should open in the same window. Fixes UIIN-1037.
