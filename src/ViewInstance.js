@@ -265,12 +265,8 @@ class ViewInstance extends React.Component {
     return ref || {};
   };
 
-  openFindInstancePlugin = () => {
-    this.setState({ findInstancePluginOpened: true });
-  }
-
-  closeFindInstancePlugin = () => {
-    this.setState({ findInstancePluginOpened: false });
+  toggleFindInstancePlugin = () => {
+    this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
   }
 
   createActionMenuGetter = instance => ({ onToggle }) => {
@@ -361,7 +357,7 @@ class ViewInstance extends React.Component {
           buttonStyle="dropdownItem"
           onClick={() => {
             onToggle();
-            this.openFindInstancePlugin();
+            this.toggleFindInstancePlugin();
           }}
         >
           <Icon icon="arrow-right">
@@ -1390,7 +1386,7 @@ class ViewInstance extends React.Component {
         {this.state.findInstancePluginOpened
           && <InstancePlugin
             onSelect={this.selectInstanse}
-            onClosePluggin={this.closeFindInstancePlugin}
+            onClose={this.toggleFindInstancePlugin}
             withTrigger={false}
           />}
       </Pane>
