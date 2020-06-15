@@ -269,6 +269,10 @@ class ViewInstance extends React.Component {
     this.setState({ findInstancePluginOpened: true });
   }
 
+  closeFindInstancePlugin = () => {
+    this.setState({ findInstancePluginOpened: false });
+  }
+
   createActionMenuGetter = instance => ({ onToggle }) => {
     const {
       onCopy,
@@ -1383,7 +1387,12 @@ class ViewInstance extends React.Component {
           />
         */ }
         <Callout ref={this.calloutRef} />
-        {this.state.findInstancePluginOpened && <InstancePlugin onSelect={this.selectInstanse} />}
+        {this.state.findInstancePluginOpened
+          && <InstancePlugin
+            onSelect={this.selectInstanse}
+            onClosePluggin={this.closeFindInstancePlugin}
+            withTrigger={false}
+          />}
       </Pane>
     );
   }
