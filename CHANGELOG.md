@@ -10,6 +10,9 @@
 * Item record: "loan type" appears as "loantype" (on detailed view). Fixes UIIN-657.
 * Restore displaying of `Nature of content` value in Instance detailed view. Fixes UIIN-1100.
 * Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
+* Instance record. Relabel in the UI the Metadata source to Source (View and Edit) Fixes UIIN-1133
+* Maintain default title sort when searching or filtering. Fixes UIIN-1046.
+* Make permission names l10nable. UIIN-1137.
 
 ## [2.1.0] IN PROGRESS
 * Preceding and Succeeding titles. Clicking on connected titles should open in the same window. Fixes UIIN-1037.

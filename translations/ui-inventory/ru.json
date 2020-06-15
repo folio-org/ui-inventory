@@ -326,7 +326,7 @@
     "error.noMatch.how": "How did you get to {location}?",
     "addCirculationNote": "Add check in / check out note",
     "item.loanAndAvailability": "Книговыдача и доступность",
-    "markAsMissing": "Mark as missing",
+    "markAsMissing": "Отметить как отсутствующий",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
     "missingModal.heading": "Confirm item as missing",
     "missingModal.confirm": "Подтвердить",
@@ -489,14 +489,15 @@
     "createdDate": "Дата создания",
     "item.status.statusUpdatedLabel": "status updated {statusDate}",
     "isbnNormalized": "ISBN, normalized",
-    "markAsWithdrawn": "Mark as withdrawn",
-    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>withdrawn</strong>.",
+    "markAsWithdrawn": "Отметить как изъятое из обращения",
+    "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) будет отмечен как <strong>изъятый из обращения</strong>.",
     "withdrawnModal.heading": "Confirm item as withdrawn",
     "withdrawnModal.confirm": "Подтвердить",
-    "item.status.withdrawn": "Withdrawn",
+    "item.status.withdrawn": "Изъятый из обращения",
     "saveInstancesUIIDS.error": "Error occurred while saving instances UUIDs. Please try again.",
     "updatedDate": "Date updated",
     "itemEffectiveCallNumberNormalized": "Актуальный номер (издание), нормализованный",
     "callNumberNormalized": "Телефонный номер, нормализованный",
-    "item.status.claimedReturned": "Подлежащий возврату"
+    "item.status.claimedReturned": "Подлежащий возврату",
+    "item.status.lostAndPaid": "Утраченный и оплаченный"
 }

@@ -498,5 +498,6 @@
     "updatedDate": "تم تحديث التاريخ",
     "itemEffectiveCallNumberNormalized": "رقم الاستدعاء النشط (مادة)، مطبّع",
     "callNumberNormalized": "رقم الاستدعاء، مطبّع",
-    "item.status.claimedReturned": "تم إدعاء إعادته"
+    "item.status.claimedReturned": "تم إدعاء إعادته",
+    "item.status.lostAndPaid": "مفقود وتم الدفع"
 }

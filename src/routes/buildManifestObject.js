@@ -25,6 +25,9 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';
+  } else if (!query.sort) {
+    // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
+    query.sort = 'title';
   }
 
   resourceData.query = { ...query, qindex: '' };

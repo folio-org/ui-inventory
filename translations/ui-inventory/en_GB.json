@@ -112,8 +112,8 @@
     "viewItem": "View item",
     "itemData": "Item data",
     "temporaryLocation": "Temporary",
-    "permanentLoantype": "Permanent loantype",
-    "temporaryLoantype": "Temporary loantype",
+    "permanentLoantype": "Permanent loan type",
+    "temporaryLoantype": "Temporary loan type",
     "removeIdentifier": "Remove identifier {num}",
     "editItemDialog": "Edit item dialog",
     "copyItemDialog": "Copy item dialog",
@@ -498,5 +498,6 @@
     "updatedDate": "Date updated",
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
     "callNumberNormalized": "Call number, normalized",
-    "item.status.claimedReturned": "Claimed returned"
+    "item.status.claimedReturned": "Claimed returned",
+    "item.status.lostAndPaid": "Lost and paid"
 }
