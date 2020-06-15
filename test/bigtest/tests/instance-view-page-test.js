@@ -111,16 +111,16 @@ describe('InstanceViewPage', () => {
         expect(InstanceViewPage.headerDropdownMenu.hasDuplicateButton).to.be.true;
       });
 
+      it('should render an move items/holdings button', () => {
+        expect(InstanceViewPage.headerDropdownMenu.hasMoveItemsButton).to.be.true;
+      });
+
       it('should render an add item button', () => {
         expect(InstanceViewPage.hasButtonAddItem).to.be.true;
       });
 
       it('should render an add holdings button', () => {
         expect(InstanceViewPage.hasButtonAddHoldings).to.be.true;
-      });
-
-      it('should render an move items/holdings button', () => {
-        expect(InstanceViewPage.hasMoveItemsButton).to.be.true;
       });
 
       describe('clicking on edit', () => {
