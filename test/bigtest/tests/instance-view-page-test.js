@@ -119,6 +119,10 @@ describe('InstanceViewPage', () => {
         expect(InstanceViewPage.hasButtonAddHoldings).to.be.true;
       });
 
+      it('should render an move items/holdings button', () => {
+        expect(InstanceViewPage.hasMoveItemsButton).to.be.true;
+      });
+
       describe('clicking on edit', () => {
         beforeEach(async () => {
           await InstanceViewPage.headerDropdownMenu.clickEdit();

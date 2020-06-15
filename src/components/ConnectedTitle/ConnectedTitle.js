@@ -60,7 +60,7 @@ const ConnectedTitle = ({ instance, onSelect, titleIdKey }) => {
           onSelect={onSelect}
           searchLabel="+"
           searchButtonStyle="default"
-          renderTrigger
+          withTrigger
         />
       </Col>
       <Col xs>

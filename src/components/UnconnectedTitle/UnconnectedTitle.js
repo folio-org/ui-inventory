@@ -38,7 +38,7 @@ const UnconnectedTitle = ({ field, onSelect }) => (
         onSelect={onSelect}
         searchLabel="+"
         searchButtonStyle="default"
-        renderTrigger
+        withTrigger
       />
     </Col>
     <Col xs>

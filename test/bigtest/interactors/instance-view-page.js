@@ -27,6 +27,7 @@ import KeyValue from './KeyValue';
   hasViewSourceButton = isPresent('#clickable-view-source');
   hasEditMarcButton = isPresent('#edit-instance-marc');
   disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
+  hasMoveItemsButton = isPresent('#move-instance');
 }
 
 @interactor class Item {

@@ -115,7 +115,7 @@ class ViewInstance extends React.Component {
 
     this.state = {
       marcRecord: null,
-      pluginOpened: false,
+      findInstancePluginOpened: false,
     };
     this.instanceId = null;
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -178,7 +178,7 @@ class ViewInstance extends React.Component {
   selectInstanse = (instance) => {
     const { location: { search } } = this.props;
 
-    this.setState({ pluginOpened: false });
+    this.setState({ findInstancePluginOpened: false });
     this.props.goTo(`/inventory/view/${instance.id}${search}`);
   }
 
@@ -265,8 +265,8 @@ class ViewInstance extends React.Component {
     return ref || {};
   };
 
-  openPlugin = () => {
-    this.setState({ pluginOpened: true });
+  openFindInstancePlugin = () => {
+    this.setState({ findInstancePluginOpened: true });
   }
 
   createActionMenuGetter = instance => ({ onToggle }) => {
@@ -357,7 +357,7 @@ class ViewInstance extends React.Component {
           buttonStyle="dropdownItem"
           onClick={() => {
             onToggle();
-            this.openPlugin();
+            this.openFindInstancePlugin();
           }}
         >
           <Icon icon="arrow-right">
@@ -1383,7 +1383,7 @@ class ViewInstance extends React.Component {
           />
         */ }
         <Callout ref={this.calloutRef} />
-        {this.state.pluginOpened && <InstancePlugin onSelect={this.selectInstanse} />}
+        {this.state.findInstancePluginOpened && <InstancePlugin onSelect={this.selectInstanse} />}
       </Pane>
     );
   }
