@@ -34,6 +34,7 @@
   "cancel": "Cancel",
   "newInstance": "New instance",
   "editInstance": "Edit",
+  "moveItems": "Move holdings/items to another instance",
   "instanceDetails": "Instance details",
   "addHoldings": "Add holdings",
   "itemDotStatus": "Item record {barcode} {status}",

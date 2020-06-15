@@ -13,6 +13,8 @@ import {
 import InstancePlugin from '../InstancePlugin';
 import TitleLabel from '../TitleLabel';
 
+import styles from './UnconnectedTitle.css';
+
 const UnconnectedTitle = ({ field, onSelect }) => (
   <Row>
     <Col xs>
@@ -28,8 +30,16 @@ const UnconnectedTitle = ({ field, onSelect }) => (
         name={`${field}.title`}
       />
     </Col>
-    <Col xs={1}>
-      <InstancePlugin onSelect={onSelect} />
+    <Col
+      xs={1}
+      className={styles.marginTop}
+    >
+      <InstancePlugin
+        onSelect={onSelect}
+        searchLabel="+"
+        searchButtonStyle="default"
+        renderTrigger
+      />
     </Col>
     <Col xs>
       <KeyValue

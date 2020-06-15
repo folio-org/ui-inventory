@@ -63,6 +63,7 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
+import InstancePlugin from './components/InstancePlugin';
 
 import { TitlesView } from './components';
 import {
@@ -114,6 +115,7 @@ class ViewInstance extends React.Component {
 
     this.state = {
       marcRecord: null,
+      pkuginOpened: false,
     };
     this.instanceId = null;
     this.cHoldings = this.props.stripes.connect(Holdings);
@@ -172,6 +174,13 @@ class ViewInstance extends React.Component {
       search: location.search,
     });
   };
+
+  selectInstanse = (instance) => {
+    const { location: { search } } = this.props;
+
+    this.setState({ pkuginOpened: false });
+    this.props.goTo(`/inventory/view/${instance.id}${search}`);
+  }
 
   onClickAddNewHoldingsRecord = (e) => {
     if (e) e.preventDefault();
@@ -256,6 +265,10 @@ class ViewInstance extends React.Component {
     return ref || {};
   };
 
+  openPlugin = () => {
+    this.setState({ pkuginOpened: true });
+  }
+
   createActionMenuGetter = instance => ({ onToggle }) => {
     const {
       onCopy,
@@ -338,6 +351,20 @@ class ViewInstance extends React.Component {
             </>
           )
         }
+
+        <Button
+          id="move-instance"
+          buttonStyle="dropdownItem"
+          onClick={() => {
+            onToggle();
+            this.openPlugin();
+          }}
+        >
+          <Icon icon="arrow-right">
+            <FormattedMessage id="ui-inventory.moveItems" />
+          </Icon>
+        </Button>
+
       </Fragment>
     );
   };
@@ -686,6 +713,7 @@ class ViewInstance extends React.Component {
       <Pane
         data-test-instance-details
         defaultWidth={paneWidth}
+        style={{ flex: 'auto' }}
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
         paneTitle={
           <span data-test-header-title>
@@ -1355,6 +1383,7 @@ class ViewInstance extends React.Component {
           />
         */ }
         <Callout ref={this.calloutRef} />
+        {this.state.pkuginOpened && <InstancePlugin onSelect={this.selectInstanse} />}
       </Pane>
     );
   }

@@ -15,6 +15,8 @@ import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
 import DataContext from '../../contexts/DataContext';
 
+import styles from './ConnectedTitle.css';
+
 const ConnectedTitle = ({ instance, onSelect, titleIdKey }) => {
   const { identifierTypesById } = useContext(DataContext);
   const {
@@ -50,8 +52,16 @@ const ConnectedTitle = ({ instance, onSelect, titleIdKey }) => {
           }
         />
       </Col>
-      <Col xs={1}>
-        <InstancePlugin onSelect={onSelect} />
+      <Col
+        xs={1}
+        className={styles.marginTop}
+      >
+        <InstancePlugin
+          onSelect={onSelect}
+          searchLabel="+"
+          searchButtonStyle="default"
+          renderTrigger
+        />
       </Col>
       <Col xs>
         <KeyValue
