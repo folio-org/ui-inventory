@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [3.0.1] (IN PROGRESS)
+
+* Maintain default title sort when searching or filtering. Fixes UIIN-1046.
+
 ## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v3.0.0)
 
@@ -48,7 +52,6 @@
 * Restore displaying of `Nature of content` value in Instance detailed view. Fixes UIIN-1100.
 * Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
 * Instance record. Relabel in the UI the Metadata source to Source (View and Edit) Fixes UIIN-1133
-* Maintain default title sort when searching or filtering. Fixes UIIN-1046.
 * Make permission names l10nable. UIIN-1137.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
