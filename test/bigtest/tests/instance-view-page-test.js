@@ -111,7 +111,7 @@ describe('InstanceViewPage', () => {
         expect(InstanceViewPage.headerDropdownMenu.hasDuplicateButton).to.be.true;
       });
 
-      it('should render an move items/holdings button', () => {
+      it('should render a move items/holdings button', () => {
         expect(InstanceViewPage.headerDropdownMenu.hasMoveItemsButton).to.be.true;
       });
 
