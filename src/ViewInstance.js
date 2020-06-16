@@ -178,7 +178,6 @@ class ViewInstance extends React.Component {
   selectInstanse = (instance) => {
     const { location: { search } } = this.props;
 
-    this.setState({ findInstancePluginOpened: false });
     this.props.goTo(`/inventory/view/${instance.id}${search}`);
   }
 
