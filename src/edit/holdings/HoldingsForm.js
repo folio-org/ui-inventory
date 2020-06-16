@@ -358,6 +358,7 @@ class HoldingsForm extends React.Component {
                   />
                 </Col>
               </Row>
+              <br />
               <Row>
                 <Col sm={4}>
                   <Field

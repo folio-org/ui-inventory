@@ -2,6 +2,7 @@
 
 ## [3.0.0] IN PROGRESS
 
+* Holdings record. Add space between: Suppress from Discovery and HRID. Fixes UIIN-477
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
 * Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
 * Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN-1039
