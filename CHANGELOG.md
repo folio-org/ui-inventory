@@ -1,19 +1,8 @@
 # Change history for ui-inventory
 
-## [3.0.0] IN PROGRESS
+## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v3.0.0)
 
-* Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
-* Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
-* Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN-1039
-* Subheading Related title to be deprecated. Instance (edit view). Fixes UIIN-1032.
-* Preceding and Succeeding titles. Make the Connected label less prominent (edit view). Fixes UIIN-1039.
-* Item record: "loan type" appears as "loantype" (on detailed view). Fixes UIIN-657.
-* Restore displaying of `Nature of content` value in Instance detailed view. Fixes UIIN-1100.
-* Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
-* Instance record. Relabel in the UI the Metadata source to Source (View and Edit) Fixes UIIN-1133
-* Maintain default title sort when searching or filtering. Fixes UIIN-1046.
-
-## [2.1.0] IN PROGRESS
 * Preceding and Succeeding titles. Clicking on connected titles should open in the same window. Fixes UIIN-1037.
 * Display instance status date with status. Refs UIIN-1007.
 * Import `stripes-util` via `stripes`. Fixes UIIN-1021 and UIIN-1029.
@@ -49,6 +38,18 @@
 * Add ability to search item by `Claimed returned` status. Refs UIIN-957.
 * Add permission for marking an item withdrawn. Refs UIIN-889.
 * Allow users to search & filter for items with the status Lost and paid. Refs UIIN-895.
+* Holdings record. Add space between: Suppress from Discovery and HRID. Fixes UIIN-477
+* Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+* Subheading Related title to be deprecated. Instance (edit view) Fixes UIIN-1032
+* Preceding and Succeeding titles. Make the Connected label less prominent (edit view) Fixes UIIN-1039
+* Subheading Related title to be deprecated. Instance (edit view). Fixes UIIN-1032.
+* Preceding and Succeeding titles. Make the Connected label less prominent (edit view). Fixes UIIN-1039.
+* Item record: "loan type" appears as "loantype" (on detailed view). Fixes UIIN-657.
+* Restore displaying of `Nature of content` value in Instance detailed view. Fixes UIIN-1100.
+* Prefer `stripes.actsAs` to the deprecated `stripes.type` in `package.json`. Refs STCOR-148.
+* Instance record. Relabel in the UI the Metadata source to Source (View and Edit) Fixes UIIN-1133
+* Maintain default title sort when searching or filtering. Fixes UIIN-1046.
+* Make permission names l10nable. UIIN-1137.
 
 ## [2.0.0](https://github.com/folio-org/ui-inventory/tree/v2.0.0) (2020-03-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.1...v2.0.0)
