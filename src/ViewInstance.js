@@ -711,7 +711,6 @@ class ViewInstance extends React.Component {
     return (
       <Pane
         data-test-instance-details
-        defaultWidth={paneWidth}
         style={{ flex: 'auto' }}
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
         paneTitle={
