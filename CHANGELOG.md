@@ -2,6 +2,7 @@
 
 ## (IN PROGRESS)
 
+* Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Move items between holdings. Refs UIIN-1097.
 
 ## [3.0.1] (IN PROGRESS)

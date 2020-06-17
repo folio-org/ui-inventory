@@ -6,9 +6,10 @@ import { Pluggable } from '@folio/stripes/core';
 
 import css from './InstancePlugin.css';
 
-const InstancePlugin = ({ onSelect }) => (
+const InstancePlugin = ({ onSelect, ...props }) => (
   <div className={css.marginTop}>
     <Pluggable
+      {...props}
       aria-haspopup="true"
       dataKey="instances"
       searchButtonStyle="default"

@@ -30,6 +30,7 @@ import KeyValue from './KeyValue';
   hasMoveWithinInstanceButton = isPresent('#move-instance-items');
   clickMoveWithinInstance = clickable('#move-instance-items');
   disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
+  hasMoveItemsButton = isPresent('#move-instance');
 }
 
 @interactor class Item {
