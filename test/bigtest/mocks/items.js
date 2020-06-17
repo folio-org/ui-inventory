@@ -71,7 +71,7 @@ const itemsData = [
     ],
     formerIds: [],
     discoverySuppress: null,
-    holdingsRecordId: '48a21d17-a666-4f34-b24d-644f8ed1537b',
+    holdingsRecordId: '44a21d17-a666-4f34-b24d-644f8ed1537b',
     barcode: '60825104574',
     enumeration : 'v.70:no.7-12',
     chronology : '1984:July-Dec.',
@@ -103,7 +103,7 @@ const itemsData = [
       name: 'Main Library',
     },
   }, {
-    id: '7abd8dfe-0234-4256-b2e6-539499999cac',
+    id: '6abd8dfe-0234-4256-b2e6-539499999cac',
     status: {
       name: 'Paged',
     },

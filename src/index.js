@@ -9,6 +9,7 @@ import {
   InstancesRoute,
   ItemRoute,
   QuickMarcRoute,
+  CreateItemRoute,
 } from './routes';
 import Settings from './settings';
 
@@ -21,6 +22,10 @@ const InventoryRouting = (props) => {
 
   return (
     <Switch>
+      <Route
+        path={`${path}/create/:id/:holdingId/item`}
+        component={CreateItemRoute}
+      />
       <Route
         path={`${path}/view/:id/:holdingsrecordid/:itemid`}
         component={ItemRoute}

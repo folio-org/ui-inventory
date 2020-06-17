@@ -7,6 +7,7 @@ import InstanceEditPage from '../interactors/instance-edit-page';
 import InstanceCreatePage from '../interactors/instance-create-page';
 import ItemViewPage from '../interactors/item-view-page';
 import HoldingsViewPage from '../interactors/holdings-view-page';
+import ItemCreatePage from '../interactors/item-create-page';
 
 import translation from '../../../translations/ui-inventory/en';
 
@@ -123,6 +124,10 @@ describe('InstanceViewPage', () => {
         expect(InstanceViewPage.hasButtonAddHoldings).to.be.true;
       });
 
+      it('should render a move items within instance button', () => {
+        expect(InstanceViewPage.headerDropdownMenu.hasMoveWithinInstanceButton).to.be.true;
+      });
+
       describe('clicking on edit', () => {
         beforeEach(async () => {
           await InstanceViewPage.headerDropdownMenu.clickEdit();
@@ -144,6 +149,42 @@ describe('InstanceViewPage', () => {
 
         it('should have a source value of "FOLIO"', () => {
           expect(InstanceCreatePage.sourceValue).to.equal('FOLIO');
+        });
+      });
+    });
+
+    describe('move items within instance action', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.headerDropdown.click();
+        await InstanceViewPage.headerDropdownMenu.clickMoveWithinInstance();
+      });
+
+      it('should enable dnd for items lists', () => {
+        expect(InstanceViewPage.items().length !== 0).to.be.true;
+      });
+
+      it('should display additional columns', () => {
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(9);
+      });
+
+      describe('select all action', () => {
+        beforeEach(async () => {
+          await InstanceViewPage.dragItemsListSelectAll.clickInput();
+        });
+
+        it('should mark all items as ready for movement', () => {
+          expect(InstanceViewPage.draggableItems().every(item => item.dragSelector.isChecked)).to.be.true;
+        });
+      });
+
+      describe('unselect all action', () => {
+        beforeEach(async () => {
+          await InstanceViewPage.dragItemsListSelectAll.clickInput();
+          await InstanceViewPage.dragItemsListSelectAll.clickInput();
+        });
+
+        it('should mark all items as not ready for movement', () => {
+          expect(InstanceViewPage.draggableItems().every(item => !item.dragSelector.isChecked)).to.be.true;
         });
       });
     });
@@ -424,8 +465,8 @@ describe('InstanceViewPage', () => {
           await InstanceViewPage.clickButtonAddItem();
         });
 
-        it('should redirect to item view page', () => {
-          expect(ItemViewPage.$root).to.exist;
+        it('should redirect to item form', () => {
+          expect(ItemCreatePage.isPresent).to.be.true;
         });
       });
     });
