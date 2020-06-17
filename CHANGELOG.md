@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## (IN PROGRESS)
+
+* Move items between holdings. Refs UIIN-1097.
+
 ## [3.0.1] (IN PROGRESS)
 
 * Maintain default title sort when searching or filtering. Fixes UIIN-1046.
