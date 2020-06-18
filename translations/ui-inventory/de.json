@@ -350,7 +350,7 @@
     "itemOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>one</strong> associated item record. To be able to continue deletion of this holdings record, the associated item record must be deleted.",
     "itemsOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>{itemCount}</strong> associated item records. To be able to continue deletion of this holdings record, all associated item records must be deleted.",
     "condition": "Condition",
-    "search.all": "Schlüsselwort (Haupttitel, Mitwirkender, Identifier)",
+    "search.all": "Stichwort (Haupttitel, Mitwirkende, Identifier)",
     "subject": "Subject",
     "isbn": "ISBN",
     "issn": "ISSN",
@@ -534,5 +534,12 @@
     "permission.holdings.delete": "Inventory: View, create, edit, delete holdings",
     "permission.instance.view-staff-suppressed-records": "Inventory: View instance records being suppressed for staff",
     "permission.settings.list.view": "Settings (Inventory): Display list of settings pages",
-    "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn"
+    "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn",
+    "moveItems.selectAll": "Select/unselect all items for movement",
+    "moveItems.selectItem": "Select/unselect item for movement",
+    "moveItems.move.items.count": "Move: {count, number} {count, plural, one {item} other {items}}",
+    "moveItems.instance.actionMenu.enable": "Move items within an instance",
+    "moveItems.instance.actionMenu.disable": "Stop items movement within an instance",
+    "moveItems.instance.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
+    "moveItems": "Move holdings/items to another instance"
 }
