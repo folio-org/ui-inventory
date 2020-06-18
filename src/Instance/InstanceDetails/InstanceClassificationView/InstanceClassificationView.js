@@ -8,28 +8,28 @@ import { orderBy } from 'lodash';
 import {
   Accordion,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 import {
   checkIfArrayIsEmpty,
 } from '../../../utils';
-import {
-  noValue,
-} from '../../../constants';
+
+const noValue = <NoValue />;
 
 const rowMetadata = ['classificationTypeId'];
-const visibleColumns = ['Classification identifier type', 'Classification'];
+const visibleColumns = ['type', 'classification'];
 const columnWidths = {
-  'Classification identifier type': '25%',
-  'Classification': '75%',
+  type: '25%',
+  classification: '75%',
 };
 const getColumnMapping = intl => ({
-  'Classification identifier type': intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
-  'Classification': intl.formatMessage({ id: 'ui-inventory.classification' }),
+  type: intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
+  classification: intl.formatMessage({ id: 'ui-inventory.classification' }),
 });
 const classificationsRowFormatter = {
-  'Classification identifier type': item => item?.classificationType || noValue,
-  'Classification': item => item?.classificationNumber || noValue,
+  type: item => item?.classificationType || noValue,
+  classification: item => item?.classificationNumber || noValue,
 };
 
 

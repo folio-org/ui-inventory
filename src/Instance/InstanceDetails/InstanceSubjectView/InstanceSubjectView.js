@@ -7,21 +7,21 @@ import { useIntl } from 'react-intl';
 import {
   Accordion,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 import {
   checkIfArrayIsEmpty,
 } from '../../../utils';
-import {
-  noValue,
-} from '../../../constants';
 
-const visibleColumns = ['Subject headings'];
+const noValue = <NoValue />;
+
+const visibleColumns = ['subject'];
 const getColumnMapping = intl => ({
-  'Subject headings': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' })
+  'subject': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' })
 });
-const classificationsRowFormatter = {
-  'Subject headings': item => item?.value || noValue
+const formatter = {
+  'subject': item => item?.value || noValue,
 };
 
 const InstanceSubjectView = ({
@@ -45,7 +45,7 @@ const InstanceSubjectView = ({
         contentData={contentData}
         visibleColumns={visibleColumns}
         columnMapping={columnMapping}
-        formatter={classificationsRowFormatter}
+        formatter={formatter}
         ariaLabel={intl.formatMessage({ id: 'ui-inventory.subject' })}
         interactive={false}
       />

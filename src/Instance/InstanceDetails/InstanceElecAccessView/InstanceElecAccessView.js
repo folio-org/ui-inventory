@@ -7,34 +7,36 @@ import { useIntl } from 'react-intl';
 import {
   Accordion,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 import {
   checkIfArrayIsEmpty,
 } from '../../../utils';
 import {
-  noValue,
   wrappingCell,
 } from '../../../constants';
 
-const visibleColumns = ['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note'];
+const noValue = <NoValue />;
+
+const visibleColumns = ['urlRelationship', 'uri', 'linkText', 'materialsSpecification', 'urlPublicNote'];
 const columnWidths = {
-  'URL relationship': '25%',
-  'URI': '25%',
-  'Link text': '25%',
-  'Materials specified': '25%',
-  'URL public note': '25%',
+  urlRelationship: '25%',
+  uri: '25%',
+  linkText: '25%',
+  materialsSpecification: '25%',
+  urlPublicNote: '25%',
 };
 const getColumnMapping = intl => ({
-  'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-  'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-  'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-  'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-  'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+  urlRelationship: intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+  uri: intl.formatMessage({ id: 'ui-inventory.uri' }),
+  linkText: intl.formatMessage({ id: 'ui-inventory.linkText' }),
+  materialsSpecification: intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+  urlPublicNote: intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
 });
 const getFormatter = (elAccessRelationshipsMap) => ({
-  'URL relationship': item => elAccessRelationshipsMap[item?.relationshipId] || noValue,
-  'URI': item => {
+  urlRelationship: item => elAccessRelationshipsMap[item?.relationshipId] || noValue,
+  uri: item => {
     const uri = item?.uri;
 
     return uri
@@ -50,9 +52,9 @@ const getFormatter = (elAccessRelationshipsMap) => ({
       )
       : noValue;
   },
-  'Link text': item => item?.linkText || noValue,
-  'Materials specified': item => item?.materialsSpecification || noValue,
-  'URL public note': item => item?.publicNote || noValue,
+  linkText: item => item?.linkText || noValue,
+  materialsSpecification: item => item?.materialsSpecification || noValue,
+  urlPublicNote: item => item?.publicNote || noValue,
 });
 
 const InstanceElecAccessView = ({
