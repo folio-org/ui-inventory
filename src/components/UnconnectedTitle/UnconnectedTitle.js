@@ -13,7 +13,7 @@ import {
 import InstancePlugin from '../InstancePlugin';
 import TitleLabel from '../TitleLabel';
 
-const UnconnectedTitle = ({ field, onSelect }) => (
+const UnconnectedTitle = ({ field, onSelect, isDisabled }) => (
   <Row>
     <Col xs>
       <Field
@@ -25,11 +25,12 @@ const UnconnectedTitle = ({ field, onSelect }) => (
             required
           />
         }
+        disabled={isDisabled}
         name={`${field}.title`}
       />
     </Col>
     <Col xs={1}>
-      <InstancePlugin onSelect={onSelect} />
+      <InstancePlugin onSelect={onSelect} disabled={isDisabled} />
     </Col>
     <Col xs>
       <KeyValue
@@ -42,6 +43,7 @@ const UnconnectedTitle = ({ field, onSelect }) => (
         component={TextField}
         label={<FormattedMessage id="ui-inventory.isbn" />}
         name={`${field}.isbn`}
+        disabled={isDisabled}
       />
     </Col>
     <Col xs>
@@ -49,6 +51,7 @@ const UnconnectedTitle = ({ field, onSelect }) => (
         component={TextField}
         label={<FormattedMessage id="ui-inventory.issn" />}
         name={`${field}.issn`}
+        disabled={isDisabled}
       />
     </Col>
   </Row>
@@ -57,6 +60,7 @@ const UnconnectedTitle = ({ field, onSelect }) => (
 UnconnectedTitle.propTypes = {
   field: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default UnconnectedTitle;

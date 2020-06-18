@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 3.0.2 (IN PROGRESS)
+
+* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
+
 ## [3.0.1](https://github.com/folio-org/ui-inventory/tree/v3.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.0...v3.0.1)
 
