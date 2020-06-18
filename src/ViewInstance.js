@@ -70,10 +70,14 @@ import InstancePlugin from './components/InstancePlugin';
 import {
   HoldingsListContainer,
   MoveItemsContext,
+
+  InstanceElecAccessView,
+  InstanceSubjectView,
+  InstanceClassificationView,
+  InstanceRelationshipView,
 } from './Instance';
 
 import {
-  wrappingCell,
   noValue,
   emptyList,
 } from './constants';
@@ -451,11 +455,6 @@ class ViewInstance extends React.Component {
       'Resource identifier': x => get(x, ['value']) || noValue,
     };
 
-    const classificationsRowFormatter = {
-      'Classification identifier type': x => get(x, ['classificationType']) || noValue,
-      'Classification': x => get(x, ['classificationNumber']) || noValue,
-    };
-
     const alternativeTitlesRowFormatter = {
       'Alternative title type': x => this.refLookup(referenceTables.alternativeTitleTypes, get(x, ['alternativeTitleTypeId'])).name || noValue,
       'Alternative title': x => get(x, ['alternativeTitle']) || noValue,
@@ -476,22 +475,6 @@ class ViewInstance extends React.Component {
       'Source': x => this.refLookup(referenceTables.contributorTypes, get(x, ['contributorTypeId'])).source || noValue,
       'Free text': x => get(x, ['contributorTypeText']) || noValue,
       'Primary': ({ primary }) => (primary ? <FormattedMessage id="ui-inventory.primary" /> : noValue)
-    };
-
-    const electronicAccessRowFormatter = {
-      'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name || noValue,
-      'URI': x => (get(x, ['uri'])
-        ? (
-          <a
-            href={get(x, ['uri'])}
-            style={wrappingCell}
-          >
-            {get(x, ['uri'])}
-          </a>)
-        : noValue),
-      'Link text': x => get(x, ['linkText']) || noValue,
-      'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
-      'URL public note': x => get(x, ['publicNote']) || noValue,
     };
 
     const formatsRowFormatter = {
@@ -716,42 +699,10 @@ class ViewInstance extends React.Component {
 
     const subjects = get(instance, ['subjects'], []);
 
-    const subjectsContent = !isEmpty(subjects) ? subjects.map(item => ({ value: item })) : emptyList;
-
-    const classifications = get(instance, 'classifications', []).map(x => ({
-      classificationType: this.refLookup(referenceTables.classificationTypes, get(x, 'classificationTypeId')).name,
-      classificationNumber: x.classificationNumber,
-    }));
-
-    const orderedClassifications = orderBy(
-      classifications,
-      [
-        ({ classificationType }) => classificationType.toLowerCase(),
-        ({ classificationNumber }) => classificationNumber.toLowerCase(),
-      ],
-      ['asc'],
-    );
-
     const instanceRelationship = {
       childInstances: get(instance, ['childInstances'], []),
       parentInstances: get(instance, ['parentInstances'], []),
     };
-
-    const childInstancesContentLabel = !isEmpty(instanceRelationship.childInstances)
-      ? referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.childInstances[0].instanceRelationshipTypeId).name + ' (M)'
-      : <FormattedMessage id="ui-inventory.childInstances" />;
-
-    const childInstancesContentValue = !isEmpty(instanceRelationship.childInstances)
-      ? formatters.childInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)
-      : noValue;
-
-    const parentInstancesContentLabel = !isEmpty(instanceRelationship.parentInstances)
-      ? referenceTables.instanceRelationshipTypes.find(irt => irt.id === instance.parentInstances[0].instanceRelationshipTypeId).name
-      : <FormattedMessage id="ui-inventory.parentInstances" />;
-
-    const parentInstancesContentValue = !isEmpty(instanceRelationship.parentInstances)
-      ? formatters.parentInstancesFormatter(instance, referenceTables.instanceRelationshipTypes, location)
-      : noValue;
 
     const initialAccordionsState = {
       acc01: !areAllFieldsEmpty(values(instanceData)),
@@ -762,7 +713,7 @@ class ViewInstance extends React.Component {
       acc06: !areAllFieldsEmpty([instanceNotes]),
       acc07: !areAllFieldsEmpty([electronicAccess]),
       acc08: !areAllFieldsEmpty([subjects]),
-      acc09: !areAllFieldsEmpty([classifications]),
+      acc09: !areAllFieldsEmpty([get(instance, 'classifications', [])]),
       acc10: !areAllFieldsEmpty(values(instanceRelationship)),
     };
 
@@ -1292,127 +1243,28 @@ class ViewInstance extends React.Component {
               {layoutNotes(instanceNotes)}
             </Accordion>
 
-            <Accordion
+            <InstanceElecAccessView
               id="acc07"
-              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-            >
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.electronicAccess">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-electronic-access"
-                          contentData={checkIfArrayIsEmpty(electronicAccess)}
-                          visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                          columnMapping={{
-                            'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                            'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                            'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                            'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                            'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                          }}
-                          columnWidths={{
-                            'URL relationship': '25%',
-                            'URI': '25%',
-                            'Link text': '25%',
-                            'Materials specified': '25%',
-                            'URL public note': '25%',
-                          }}
-                          formatter={electronicAccessRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-            </Accordion>
+              electronicAccessLines={electronicAccess}
+              electronicAccessRelationships={referenceTables.electronicAccessRelationships}
+            />
 
-            <Accordion
+            <InstanceSubjectView
               id="acc08"
-              label={<FormattedMessage id="ui-inventory.subject" />}
-            >
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.subject">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-subject"
-                          contentData={subjectsContent}
-                          visibleColumns={['Subject headings']}
-                          columnMapping={{ 'Subject headings': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }) }}
-                          columnWidths={{ 'Subject headings': '99%' }}
-                          formatter={{ 'Subject headings': item => get(item, 'value') || noValue }}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-            </Accordion>
+              subjects={subjects}
+            />
 
-            <Accordion
+            <InstanceClassificationView
               id="acc09"
-              label={<FormattedMessage id="ui-inventory.classification" />}
-            >
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.classifications">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-classifications"
-                          contentData={checkIfArrayIsEmpty(orderedClassifications)}
-                          rowMetadata={['classificationTypeId']}
-                          visibleColumns={['Classification identifier type', 'Classification']}
-                          columnMapping={{
-                            'Classification identifier type': intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' }),
-                            'Classification': intl.formatMessage({ id: 'ui-inventory.classification' }),
-                          }}
-                          columnWidths={{
-                            'Classification identifier type': '25%',
-                            'Classification': '75%',
-                          }}
-                          formatter={classificationsRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-            </Accordion>
+              classifications={instance?.classifications}
+              classificationTypes={referenceTables.classificationTypes}
+            />
 
-            <Accordion
+            <InstanceRelationshipView
               id="acc10"
-              label={<FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />}
-            >
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={childInstancesContentLabel}
-                    value={childInstancesContentValue}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={parentInstancesContentLabel}
-                    value={parentInstancesContentValue}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
+              instance={instance}
+              relationTypes={referenceTables.instanceRelationshipTypes}
+            />
           </AccordionSet>
         </AccordionStatus>
         {
