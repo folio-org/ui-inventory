@@ -514,11 +514,13 @@ class InstanceForm extends React.Component {
                   canAdd={!this.isFieldBlocked('precedingTitles')}
                   canEdit={!this.isFieldBlocked('precedingTitles')}
                   canDelete={!this.isFieldBlocked('precedingTitles')}
+                  isDisabled={this.isFieldBlocked('precedingTitles')}
                 />
                 <SucceedingTitleFields
                   canAdd={!this.isFieldBlocked('succeedingTitles')}
                   canEdit={!this.isFieldBlocked('succeedingTitles')}
                   canDelete={!this.isFieldBlocked('succeedingTitles')}
+                  isDisabled={this.isFieldBlocked('succeedingTitles')}
                 />
               </Accordion>
               <Accordion
