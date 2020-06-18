@@ -6,7 +6,7 @@ import {
   UnconnectedTitle,
 } from '..';
 
-const TitleField = ({ field, index, fields, titleIdKey }) => {
+const TitleField = ({ field, index, fields, titleIdKey, isDisabled }) => {
   const {
     value,
     update,
@@ -37,6 +37,7 @@ const TitleField = ({ field, index, fields, titleIdKey }) => {
     <UnconnectedTitle
       field={field}
       onSelect={handleSelect}
+      isDisabled={isDisabled}
     />;
 };
 
@@ -45,6 +46,7 @@ TitleField.propTypes = {
   fields: PropTypes.object,
   index: PropTypes.number,
   titleIdKey: PropTypes.string,
+  isDisabled: PropTypes.bool,
 };
 
 export default TitleField;
