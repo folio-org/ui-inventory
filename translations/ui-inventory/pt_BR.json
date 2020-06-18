@@ -534,5 +534,12 @@
     "permission.holdings.delete": "Acervo: Ver, criar, editar, excluir holdings",
     "permission.instance.view-staff-suppressed-records": "Acervo: Visualizar os registros da instância que estão sendo suprimidos para a equipe",
     "permission.settings.list.view": "Configurações (Acervo): Exibe a lista de páginas de configurações",
-    "permission.items.mark-items-withdrawn": "Acervo: Marcar itens como descartado"
+    "permission.items.mark-items-withdrawn": "Acervo: Marcar itens como descartado",
+    "moveItems.selectAll": "Marque/desmarque todos os itens para movimento",
+    "moveItems.selectItem": "Marque/desmarque o item para movimento",
+    "moveItems.move.items.count": "Mover: {count, number} {count, plural, one {item} other {itens}}",
+    "moveItems.instance.actionMenu.enable": "Mover itens dentro de uma instância",
+    "moveItems.instance.actionMenu.disable": "Interromper o movimento de itens em uma instância",
+    "moveItems.instance.success": "{count, number} {count, plural, one {item} other {itens}} foram movidos com sucesso.",
+    "moveItems": "Mover holdings/itens para outra instância"
 }

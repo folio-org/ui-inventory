@@ -534,5 +534,12 @@
     "permission.holdings.delete": "المخزون: اعرض، أنشئ، حرّر، احذف المقتنيات",
     "permission.instance.view-staff-suppressed-records": "المخزون: اعرض تسجيلات الوعاء المحجوبة للموظفين",
     "permission.settings.list.view": "الإعدادات (المخزون): اعرض قائمة بصفحات الإعدادات",
-    "permission.items.mark-items-withdrawn": "المخزون: علّم المواد المسحوبة"
+    "permission.items.mark-items-withdrawn": "المخزون: علّم المواد المسحوبة",
+    "moveItems.selectAll": "تحديد/إلغاء تحديد مواد للنقل",
+    "moveItems.selectItem": "تحديد/إلغاء تحديد مادة للنقل",
+    "moveItems.move.items.count": "نقل: {count, number} {count, plural, one {مادة} other {مادة}}",
+    "moveItems.instance.actionMenu.enable": "نقل المواد في وعاء",
+    "moveItems.instance.actionMenu.disable": "إيقاف نقل المواد في وعاء",
+    "moveItems.instance.success": "تم نقل {count, number} {count, plural, one {مادة} other {مادة}}  بنجاح",
+    "moveItems": "نقل المقتنيات/المواد إلى وعاء آخر"
 }
