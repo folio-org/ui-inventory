@@ -55,7 +55,7 @@ const InstanceSubjectView = ({
 
 InstanceSubjectView.propTypes = {
   id: PropTypes.string.isRequired,
-  subjects: PropTypes.arrayOf(PropTypes.object),
+  subjects: PropTypes.arrayOf(PropTypes.string),
 };
 
 InstanceSubjectView.defaultProps = {
