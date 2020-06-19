@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 3.0.1 (IN PROGRESS)
+
+* Increment `@folio/plugin-find-instance` to `v3.0` for `@folio/stripes` `v4` compatibility.
+
 ## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v3.0.0)
 
