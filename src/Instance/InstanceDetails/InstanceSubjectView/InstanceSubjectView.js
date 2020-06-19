@@ -18,10 +18,10 @@ const noValue = <NoValue />;
 
 const visibleColumns = ['subject'];
 const getColumnMapping = intl => ({
-  'subject': intl.formatMessage({ id: 'ui-inventory.subjectHeadings' })
+  subject: intl.formatMessage({ id: 'ui-inventory.subjectHeadings' })
 });
 const formatter = {
-  'subject': item => item?.value || noValue,
+  subject: item => item?.value || noValue,
 };
 
 const InstanceSubjectView = ({

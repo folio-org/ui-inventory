@@ -1,19 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import languagetable from './data/languages';
 
 export default {
-  identifiersFormatter: (r, identifierTypes) => {
-    const formatted = [];
-    if (r.identifiers && r.identifiers.length) {
-      r.identifiers.forEach((identifier) => {
-        const type = identifierTypes.find(it => it.id === identifier.identifierTypeId);
-        formatted.push(`${type ? `${type.name} ` : ''}${identifier.value}`);
-      });
-    }
-    return formatted.sort().map((id, i) => <div key={i}>{id}</div>);
-  },
-
   contributorsFormatter: (r, contributorTypes) => {
     let formatted = '';
     if (r.contributors && r.contributors.length) {
@@ -26,16 +13,6 @@ export default {
       }
     }
     return formatted;
-  },
-
-  publishersFormatter: (r) => {
-    const formatted = [];
-    if (r.publication && r.publication.length) {
-      r.publication.forEach((pub) => {
-        if (pub !== null) formatted.push(`${pub.publisher}${pub.place ? `, ${pub.place}` : ''}${pub.dateOfPublication ? ` (${pub.dateOfPublication})` : ''} ${pub.role ? ` (Role: ${pub.role})` : ''}`);
-      });
-    }
-    return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
   electronicAccessFormatter: (r, electronicAccessRelationships) => {
@@ -57,29 +34,6 @@ export default {
     return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
-  languagesFormatter: (r) => {
-    let formatted = '';
-    if (r.languages && r.languages.length) {
-      for (let i = 0; i < r.languages.length; i += 1) {
-        const langCode = r.languages[i];
-        const langName = languagetable.languageByCode(langCode);
-        if (langName) formatted += (i > 0 ? ', ' : '') + (langName);
-      }
-    }
-    return formatted;
-  },
-
-  instanceFormatsFormatter: (r, instanceFormats) => {
-    let formatted = '';
-    if (r.instanceFormatId) {
-      const format = instanceFormats.find(fmt => fmt.id === r.instanceFormatId);
-      if (format) {
-        formatted = format.name;
-      }
-    }
-    return formatted;
-  },
-
   instanceTypesFormatter: (r, instanceTypes) => {
     let formatted = '';
     if (r.instanceTypeId) {
@@ -89,28 +43,6 @@ export default {
       }
     }
     return formatted;
-  },
-
-  modesOfIssuanceFormatter: (r, modesOfIssuance) => {
-    let formatted = '';
-    if (r.modeOfIssuanceId) {
-      const qualifier = modesOfIssuance.find(type => type.id === r.modeOfIssuanceId);
-      if (qualifier) {
-        formatted = qualifier.name;
-      }
-    }
-    return formatted;
-  },
-
-  classificationsFormatter: (r, classificationTypes) => {
-    const formatted = [];
-    if (r.classifications && r.classifications.length) {
-      r.classifications.forEach((classification) => {
-        const type = classificationTypes.find(ct => ct.id === classification.classificationTypeId);
-        formatted.push(`${type ? `${type.name} ` : ''}${classification.classificationNumber}`);
-      });
-    }
-    return formatted.sort().map((c, i) => <div key={i}>{c}</div>);
   },
 
   relationsFormatter: (r, instanceRelationshipTypes) => {
@@ -125,35 +57,4 @@ export default {
     }
     return formatted;
   },
-
-  precedingTitlesFormatter: (r, location) => {
-    const formatted = [];
-    if (r.precedingTitles && r.precedingTitles.length) {
-      r.precedingTitles.forEach((title) => {
-        const viewPrecedingTitleLink = `/inventory/view/${title.precedingInstanceId}/${location.search}`;
-        formatted.push(
-          <Link to={viewPrecedingTitleLink}>
-            {`${title.title}`}
-          </Link>
-        );
-      });
-    }
-    return formatted.map((elem, i) => <div key={i}>{elem}</div>);
-  },
-
-  succeedingTitlesFormatter: (r, location) => {
-    const formatted = [];
-    if (r.succeedingTitles && r.succeedingTitles.length) {
-      r.succeedingTitles.forEach((title) => {
-        const viewSucceedingTitleLink = `/inventory/view/${title.succeedingInstanceId}/${location.search}`;
-        formatted.push(
-          <Link to={viewSucceedingTitleLink}>
-            {`${title.title}`}
-          </Link>
-        );
-      });
-    }
-    return formatted.map((elem, i) => <div key={i}>{elem}</div>);
-  },
-
 };
