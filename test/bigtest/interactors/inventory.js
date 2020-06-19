@@ -16,6 +16,7 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
 import {
   MultiSelectFilterInteractor,
   DateRangeFilterInteractor,
+  CheckboxFilterInteractor,
 } from './filters';
 
 @interactor class InventoryHeaderDropdownMenu {
@@ -75,6 +76,7 @@ export default @interactor class InventoryInteractor {
   modeFilter = scoped('#mode', MultiSelectFilterInteractor);
   createdDate = new DateRangeFilterInteractor('#createdDate');
   updatedDate = new DateRangeFilterInteractor('#updatedDate');
+  source = new CheckboxFilterInteractor('#source');
   callout = new CalloutInteractor();
 
   whenLoaded() {

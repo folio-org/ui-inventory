@@ -69,6 +69,12 @@ export const instanceFilterConfig = [
     values: [],
     parse: buildDateRangeQuery('updatedDate'),
   },
+  {
+    name: 'source',
+    cql: 'source',
+    operator: '==',
+    values: [],
+  },
 ];
 
 export const instanceIndexes = [
