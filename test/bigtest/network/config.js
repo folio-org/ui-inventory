@@ -540,15 +540,15 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/source-storage/formattedRecords', {
+  this.get('/source-storage/records', {
     records: [],
     totalRecords: 0
   });
-  this.get('/source-storage/formattedRecords/:id', {});
+  this.get('/source-storage/records/:id', {});
 
   this.get('/inventory/config/instances/blocked-fields');
 
-  this.get('/source-storage/formattedRecords/:id', {
+  this.get('/source-storage/records/:id', {
     instanceTypes: [],
     totalRecords: 0
   });
