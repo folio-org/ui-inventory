@@ -9,6 +9,7 @@
 ## [3.0.1] (IN PROGRESS)
 
 * Maintain default title sort when searching or filtering. Fixes UIIN-1046.
+* Update Requests to SRS for v4. Refs UIIN-1158
 
 ## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v3.0.0)
