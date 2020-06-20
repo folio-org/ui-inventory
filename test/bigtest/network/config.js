@@ -544,11 +544,11 @@ export default function configure() {
     records: [],
     totalRecords: 0
   });
-  this.get('/source-storage/records/:id', {});
+  this.get('/source-storage/records/:id/formatted', {});
 
   this.get('/inventory/config/instances/blocked-fields');
 
-  this.get('/source-storage/records/:id', {
+  this.get('/source-storage/records/:id/formatted', {
     instanceTypes: [],
     totalRecords: 0
   });
