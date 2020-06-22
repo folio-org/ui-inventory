@@ -27,6 +27,7 @@ describe('Instance filters', () => {
         createdDate: '2020-03-04',
         updatedDate: '2020-04-15',
       },
+      source: 'MARC',
     }, 'withHoldingAndItem');
 
     this.server.create('instance-type', {
@@ -61,6 +62,10 @@ describe('Instance filters', () => {
 
   it('has a filter for updated date', () => {
     expect(inventory.updatedDate.isPresent).to.equal(true);
+  });
+
+  it('has a filter for source', () => {
+    expect(inventory.source.isPresent).to.equal(true);
   });
 
   describe('filtering by createdDate', () => {
@@ -104,6 +109,27 @@ describe('Instance filters', () => {
       });
 
       it('should not find any instance by updated date', () => {
+        expect(instancesRoute.rows().length).to.equal(0);
+      });
+    });
+  });
+
+  describe('filtering by source', () => {
+    beforeEach(async function () {
+      await inventory.source.open();
+      await inventory.source.checkboxes.dataOptions(5).click();
+    });
+
+    it('should find instance by source', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+
+    describe('clicking clear button', () => {
+      beforeEach(async function () {
+        await inventory.source.clear();
+      });
+
+      it('should not find any instance by source', () => {
         expect(instancesRoute.rows().length).to.equal(0);
       });
     });

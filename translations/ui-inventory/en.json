@@ -428,6 +428,8 @@
   "filters.effectiveLocation": "Effective location (item)",
   "yes": "Yes",
   "no": "No",
+  "folio": "FOLIO",
+  "marc": "MARC",
   "unknownNoteType": "Unknown note type",
   "item.status": "Item status",
   "item.status.available": "Available",

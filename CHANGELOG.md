@@ -10,6 +10,7 @@
 ## [3.0.1] (IN PROGRESS)
 
 * Maintain default title sort when searching or filtering. Fixes UIIN-1046.
+* Add filter for the instance source. Refs UIIN-1132.
 
 ## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v3.0.0)
