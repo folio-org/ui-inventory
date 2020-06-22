@@ -1,14 +1,11 @@
 # Change history for ui-inventory
 
-## (IN PROGRESS)
-
-* Select and move holdings with items or items to another instance. Refs UIIN-1098.
-* Move items between holdings. Refs UIIN-1097.
-* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
-
-## [3.0.1] (IN PROGRESS)
+## [4.0.0] (IN PROGRESS)
 
 * Maintain default title sort when searching or filtering. Fixes UIIN-1046.
+* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
+* Move items between holdings. Refs UIIN-1097.
+* Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Update Requests to SRS for v4. Refs UIIN-1158
 
 ## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
