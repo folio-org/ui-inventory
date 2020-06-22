@@ -50,9 +50,7 @@ import {
   areAllFieldsEmpty,
   craftLayerUrl,
   checkIfElementIsEmpty,
-  convertArrayToBlocks,
   checkIfArrayIsEmpty,
-  getDateWithTime,
   getSortedNotes,
   marshalInstance,
   staffOnlyFormatter,
@@ -71,6 +69,10 @@ import {
   HoldingsListContainer,
   MoveItemsContext,
 
+  InstanceAdministrativeView,
+  InstanceIdentifiersView,
+  InstanceDescriptiveView,
+  InstanceContributorsView,
   InstanceElecAccessView,
   InstanceSubjectView,
   InstanceClassificationView,
@@ -450,52 +452,10 @@ class ViewInstance extends React.Component {
     const query = location.search ? queryString.parse(location.search) : {};
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
-    const identifiersRowFormatter = {
-      'Resource identifier type': x => get(x, ['identifierType']) || noValue,
-      'Resource identifier': x => get(x, ['value']) || noValue,
-    };
 
     const alternativeTitlesRowFormatter = {
       'Alternative title type': x => this.refLookup(referenceTables.alternativeTitleTypes, get(x, ['alternativeTitleTypeId'])).name || noValue,
       'Alternative title': x => get(x, ['alternativeTitle']) || noValue,
-    };
-
-    const publicationRowFormatter = {
-      'Publisher': x => get(x, ['publisher']) || noValue,
-      'Publisher role': x => get(x, ['role']) || noValue,
-      'Place of publication': x => get(x, ['place']) || noValue,
-      'Publication date': x => get(x, ['dateOfPublication']) || noValue,
-    };
-
-    const contributorsRowFormatter = {
-      'Name type': x => this.refLookup(referenceTables.contributorNameTypes, get(x, ['contributorNameTypeId'])).name || noValue,
-      'Name': x => get(x, ['name']) || noValue,
-      'Type': x => this.refLookup(referenceTables.contributorTypes, get(x, ['contributorTypeId'])).name || noValue,
-      'Code': x => this.refLookup(referenceTables.contributorTypes, get(x, ['contributorTypeId'])).code || noValue,
-      'Source': x => this.refLookup(referenceTables.contributorTypes, get(x, ['contributorTypeId'])).source || noValue,
-      'Free text': x => get(x, ['contributorTypeText']) || noValue,
-      'Primary': ({ primary }) => (primary ? <FormattedMessage id="ui-inventory.primary" /> : noValue)
-    };
-
-    const formatsRowFormatter = {
-      'Category': x => {
-        const term = this.refLookup(referenceTables.instanceFormats, x.id).name;
-        if (term && term.split('--').length === 2) {
-          return term.split('--')[0];
-        } else {
-          return noValue;
-        }
-      },
-      'Term': x => {
-        const term = this.refLookup(referenceTables.instanceFormats, x.id).name;
-        if (term && term.split('--').length === 2) {
-          return term.split('--')[1];
-        } else {
-          return term || noValue;
-        }
-      },
-      'Code': x => this.refLookup(referenceTables.instanceFormats, x.id).code || noValue,
-      'Source': x => this.refLookup(referenceTables.instanceFormats, x.id).source || noValue,
     };
 
     if (!instance) {
@@ -630,17 +590,11 @@ class ViewInstance extends React.Component {
       instanceHrid: get(instance, ['hrid'], '-'),
       metadataSource: get(instance, ['source'], '-'),
       catalogedDate: get(instance, ['catalogedDate'], '-'),
-      instanceStatusTerm: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).name || '-',
-      instanceStatusCode: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).code || '-',
-      instanceStatusSource: this.refLookup(referenceTables.instanceStatuses, get(instance, ['statusId'])).source || '-',
+      status: instance.statusId,
       instanceStatusUpdatedDate: instance?.statusUpdatedDate,
-      modeOfIssuance: formatters.modesOfIssuanceFormatter(instance, referenceTables.modesOfIssuance) || '-',
+      modeOfIssuance: instance.modeOfIssuanceId,
       statisticalCodeIds: get(instance, ['statisticalCodeIds'], []),
     };
-
-    const statisticalCodeIdsContent = !isEmpty(instanceData.statisticalCodeIds)
-      ? instanceData.statisticalCodeIds.map(codeId => ({ 'codeId': codeId }))
-      : emptyList;
 
     const titleData = {
       resourceTitle: get(instance, ['title'], '-'),
@@ -654,44 +608,21 @@ class ViewInstance extends React.Component {
     } = instance;
 
     const seriesContent = !isEmpty(titleData.series) ? titleData.series.map(x => ({ value: x })) : emptyList;
-    const identifiers = get(instance, 'identifiers', []).map(x => ({
-      identifierType: this.refLookup(referenceTables.identifierTypes, get(x, 'identifierTypeId')).name,
-      value: x.value,
-    }));
 
-    const orderedIdentifiers = orderBy(
-      identifiers,
-      [
-        ({ identifierType }) => identifierType.toLowerCase(),
-        ({ value }) => value.toLowerCase(),
-      ],
-      ['asc'],
-    );
-
+    const identifiers = get(instance, ['identifiers'], []);
     const contributors = get(instance, ['contributors'], []);
-
-    const natureOfContentTerms = get(instance, 'natureOfContentTermIds', [])
-      .map(termId => this.refLookup(referenceTables.natureOfContentTerms, termId).name);
 
     const descriptiveData = {
       publication: get(instance, ['publication'], []),
       editions: get(instance, ['editions'], []),
       physicalDescriptions: get(instance, ['physicalDescriptions'], []),
-      resourceTypeTerm: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).name || '-',
-      resourceTypeCode: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).code || '-',
-      resourceTypeSource: this.refLookup(referenceTables.instanceTypes, get(instance, ['instanceTypeId'])).source || '-',
-      natureOfContentTerms: natureOfContentTerms || [],
+      instanceTypeId: get(instance, ['instanceTypeId'], ''),
+      natureOfContentTerms: get(instance, 'natureOfContentTermIds', []),
       instanceFormatIds: get(instance, ['instanceFormatIds'], []),
       languages: get(instance, ['languages'], []),
       publicationFrequency: get(instance, ['publicationFrequency'], []),
       publicationRange: get(instance, ['publicationRange'], []),
     };
-
-    const instanceFormatIdsContent = !isEmpty(descriptiveData.instanceFormatIds)
-      ? descriptiveData.instanceFormatIds.map(formatId => ({ 'id': formatId }))
-      : emptyList;
-
-    const languagesContent = !isEmpty(descriptiveData.languages) ? formatters.languagesFormatter(instance) : noValue;
 
     const instanceNotes = getSortedNotes(instance, 'instanceNoteTypeId', referenceTables.instanceNoteTypes);
 
@@ -716,8 +647,6 @@ class ViewInstance extends React.Component {
       acc09: !areAllFieldsEmpty([get(instance, 'classifications', [])]),
       acc10: !areAllFieldsEmpty(values(instanceRelationship)),
     };
-
-    const formattedStatusUpdatedDate = getDateWithTime(instanceData.instanceStatusUpdatedDate);
 
     return (
       <Pane
@@ -822,113 +751,15 @@ class ViewInstance extends React.Component {
             <Row>
               <Col sm={12}>{newHoldingsRecordButton}</Col>
             </Row>
-            <Accordion
+
+            <InstanceAdministrativeView
               id="acc01"
-              label={<FormattedMessage id="ui-inventory.instanceData" />}
-            >
-              <this.cViewMetaData metadata={instance.metadata} />
-              <Row>
-                <Col xs={12}>
-                  {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-                  {instance.discoverySuppress && instance.staffSuppress && '|'}
-                  {instance.staffSuppress && <FormattedMessage id="ui-inventory.staffSuppress" />}
-                  {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
-                  {instance.previouslyHeld && <FormattedMessage id="ui-inventory.previouslyHeld" />}
-                </Col>
-              </Row>
-              {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
-              <Row>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-                    value={checkIfElementIsEmpty(instanceData.instanceHrid)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.metadataSource" />}
-                    value={checkIfElementIsEmpty(instanceData.metadataSource)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.catalogedDate" />}
-                    value={checkIfElementIsEmpty(instanceData.catalogedDate)}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.instanceStatusTerm" />}
-                    value={checkIfElementIsEmpty(instanceData.instanceStatusTerm)}
-                    subValue={
-                      <FormattedMessage
-                        id="ui-inventory.item.status.statusUpdatedLabel"
-                        values={{ statusDate: formattedStatusUpdatedDate }}
-                      />
-                    }
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.instanceStatusCode" />}
-                    value={checkIfElementIsEmpty(instanceData.instanceStatusCode)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.instanceStatusSource" />}
-                    value={checkIfElementIsEmpty(instanceData.instanceStatusSource)}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
-                    value={checkIfElementIsEmpty(instanceData.modeOfIssuance)}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.statisticalCodes">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-statistical-codes"
-                          contentData={statisticalCodeIdsContent}
-                          visibleColumns={['Statistical code type', 'Statistical code', 'Statistical code name']}
-                          columnMapping={{
-                            'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                            'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                            'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
-                          }}
-                          columnWidths={{
-                            'Statistical code type': '25%',
-                            'Statistical code': '25%',
-                            'Statistical code name': '25%',
-                          }}
-                          formatter={{
-                            'Statistical code type':
-                              x => this.refLookup(referenceTables.statisticalCodeTypes,
-                                this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
-                            'Statistical code':
-                              x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).code || noValue,
-                            'Statistical code name':
-                              x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
-                          }}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-            </Accordion>
+              instance={instance}
+              instanceStatuses={referenceTables.instanceStatuses}
+              issuanceModes={referenceTables.modesOfIssuance}
+              statisticalCodes={referenceTables.statisticalCodes}
+              statisticalCodeTypes={referenceTables.statisticalCodeTypes}
+            />
 
             <Accordion
               id="acc02"
@@ -1027,214 +858,26 @@ class ViewInstance extends React.Component {
               </Row>
             </Accordion>
 
-            <Accordion
+            <InstanceIdentifiersView
               id="acc03"
-              label={<FormattedMessage id="ui-inventory.identifier" />}
-            >
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.identifiers">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-identifiers"
-                          contentData={checkIfArrayIsEmpty(orderedIdentifiers)}
-                          rowMetadata={['identifierTypeId']}
-                          visibleColumns={['Resource identifier type', 'Resource identifier']}
-                          columnMapping={{
-                            'Resource identifier type': intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' }),
-                            'Resource identifier': intl.formatMessage({ id: 'ui-inventory.resourceIdentifier' }),
-                          }}
-                          columnWidths={{
-                            'Resource identifier type': '25%',
-                            'Resource identifier': '75%',
-                          }}
-                          formatter={identifiersRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-            </Accordion>
+              identifiers={identifiers}
+              identifierTypes={referenceTables.identifierTypes}
+            />
 
-            <Accordion
+            <InstanceContributorsView
               id="acc04"
-              label={<FormattedMessage id="ui-inventory.contributor" />}
-            >
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.contributors">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-contributors"
-                          contentData={checkIfArrayIsEmpty(contributors)}
-                          visibleColumns={['Name type', 'Name', 'Type', 'Free text', 'Primary']}
-                          columnMapping={{
-                            'Name type': intl.formatMessage({ id: 'ui-inventory.nameType' }),
-                            'Name': intl.formatMessage({ id: 'ui-inventory.name' }),
-                            'Type': intl.formatMessage({ id: 'ui-inventory.type' }),
-                            'Free text': intl.formatMessage({ id: 'ui-inventory.freeText' }),
-                            'Primary': intl.formatMessage({ id: 'ui-inventory.primary' }),
-                          }}
-                          columnWidths={{
-                            'Name type': '25%',
-                            'Name': '25%',
-                            'Type': '12%',
-                            'Free text': '13%',
-                          }}
-                          formatter={contributorsRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-            </Accordion>
+              contributors={contributors}
+              contributorTypes={referenceTables.contributorTypes}
+              contributorNameTypes={referenceTables.contributorNameTypes}
+            />
 
-            <Accordion
+            <InstanceDescriptiveView
               id="acc05"
-              label={<FormattedMessage id="ui-inventory.descriptiveData" />}
-            >
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.publication">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-publication"
-                          contentData={checkIfArrayIsEmpty(descriptiveData.publication)}
-                          visibleColumns={['Publisher', 'Publisher role', 'Place of publication', 'Publication date']}
-                          columnMapping={{
-                            'Publisher': intl.formatMessage({ id: 'ui-inventory.publisher' }),
-                            'Publisher role': intl.formatMessage({ id: 'ui-inventory.publisherRole' }),
-                            'Place of publication': intl.formatMessage({ id: 'ui-inventory.placeOfPublication' }),
-                            'Publication date': intl.formatMessage({ id: 'ui-inventory.dateOfPublication' }),
-                          }}
-                          columnWidths={{
-                            'Publisher': '25%',
-                            'Publisher role': '25%',
-                            'Place of publication': '25%',
-                          }}
-                          formatter={publicationRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-              <br />
-              <Row>
-                <Col xs={6}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.edition" />}
-                    value={convertArrayToBlocks(descriptiveData.editions)}
-                  />
-                </Col>
-                <Col xs={6}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.physicalDescription" />}
-                    value={convertArrayToBlocks(descriptiveData.physicalDescriptions)}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.resourceTypeTerm" />}
-                    value={checkIfElementIsEmpty(descriptiveData.resourceTypeTerm)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.resourceTypeCode" />}
-                    value={checkIfElementIsEmpty(descriptiveData.resourceTypeCode)}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.resourceTypeSource" />}
-                    value={checkIfElementIsEmpty(descriptiveData.resourceTypeSource)}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                <Col
-                  data-test-nature-of-content-terms
-                  xs={3}
-                >
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
-                    value={convertArrayToBlocks(descriptiveData.natureOfContentTerms)}
-                  />
-                </Col>
-              </Row>
-
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.formats">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-formats"
-                          contentData={instanceFormatIdsContent}
-                          visibleColumns={['Category', 'Term', 'Code', 'Source']}
-                          columnMapping={{
-                            'Category': intl.formatMessage({ id: 'ui-inventory.formatCategory' }),
-                            'Term': intl.formatMessage({ id: 'ui-inventory.formatTerm' }),
-                            'Code': intl.formatMessage({ id: 'ui-inventory.formatCode' }),
-                            'Source': intl.formatMessage({ id: 'ui-inventory.formatSource' }),
-                          }}
-                          columnWidths={{
-                            'Category': '25%',
-                            'Term': '25%',
-                            'Code': '25%',
-                          }}
-                          formatter={formatsRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.language" />}
-                    value={languagesContent}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
-                    value={convertArrayToBlocks(descriptiveData.publicationFrequency)}
-                  />
-                </Col>
-                <Col xs={6}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.publicationRange" />}
-                    value={convertArrayToBlocks(descriptiveData.publicationRange)}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
+              instance={instance}
+              resourceTypes={referenceTables.instanceTypes}
+              resourceFormats={referenceTables.instanceFormats}
+              natureOfContentTerms={referenceTables.natureOfContentTerms}
+            />
 
             <Accordion
               id="acc06"
