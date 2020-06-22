@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## (IN PROGRESS)
+
+* Add Item screen : Incorrect aria label. Refs UIIN-1104.
+
 ## [4.0.0] (IN PROGRESS)
 
 * Maintain default title sort when searching or filtering. Fixes UIIN-1046.
