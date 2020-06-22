@@ -12,7 +12,7 @@ const HoldingContainer = ({
 
   instance,
   holding,
-  referenceDeata,
+  referenceData,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -33,7 +33,7 @@ const HoldingContainer = ({
     <Holding
       {...rest}
       holding={holding}
-      referenceDeata={referenceDeata}
+      referenceData={referenceData}
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
     />
@@ -46,7 +46,7 @@ HoldingContainer.propTypes = {
 
   instance: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
-  referenceDeata: PropTypes.object.isRequired,
+  referenceData: PropTypes.object.isRequired,
 };
 
 export default withRouter(HoldingContainer);

@@ -1,7 +1,5 @@
 import {
   get,
-  orderBy,
-  isEmpty,
   values,
 } from 'lodash';
 import React, {
@@ -29,34 +27,20 @@ import {
   Row,
   Col,
   Button,
-  Accordion,
   AccordionSet,
   AccordionStatus,
   ExpandAllButton,
-  KeyValue,
   Layer,
-  Layout,
   Icon,
-  Headline,
-  MultiColumnList,
   Callout,
 } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
 
-import {
-  TitlesView,
-} from './components';
 import {
   areAllFieldsEmpty,
   craftLayerUrl,
-  checkIfElementIsEmpty,
-  checkIfArrayIsEmpty,
-  getSortedNotes,
   marshalInstance,
-  staffOnlyFormatter,
   unmarshalInstance,
 } from './utils';
-import formatters from './referenceFormatters';
 import InstanceForm from './edit/InstanceForm';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -69,20 +53,18 @@ import {
   HoldingsListContainer,
   MoveItemsContext,
 
+  InstanceTitle,
   InstanceAdministrativeView,
+  InstanceTitleData,
   InstanceIdentifiersView,
   InstanceDescriptiveView,
   InstanceContributorsView,
+  InstanceNotesView,
   InstanceElecAccessView,
   InstanceSubjectView,
   InstanceClassificationView,
   InstanceRelationshipView,
 } from './Instance';
-
-import {
-  noValue,
-  emptyList,
-} from './constants';
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -139,7 +121,6 @@ class ViewInstance extends React.Component {
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
-    this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.cViewMarc = this.props.stripes.connect(ViewMarc);
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -311,14 +292,9 @@ class ViewInstance extends React.Component {
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
   };
 
-  refLookup = (referenceTable, id) => {
-    const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
-    return ref || {};
-  };
-
   toggleFindInstancePlugin = () => {
     this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
-  }
+  };
 
   createActionMenuGetter = instance => ({ onToggle }) => {
     const {
@@ -453,11 +429,6 @@ class ViewInstance extends React.Component {
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
-    const alternativeTitlesRowFormatter = {
-      'Alternative title type': x => this.refLookup(referenceTables.alternativeTitleTypes, get(x, ['alternativeTitleTypeId'])).name || noValue,
-      'Alternative title': x => get(x, ['alternativeTitle']) || noValue,
-    };
-
     if (!instance) {
       return (
         <Pane
@@ -552,40 +523,6 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const layoutNotes = content => {
-      const notesList = isEmpty(content) ? emptyList : content;
-      const orderedNotes = orderBy(notesList, ['noteType.name'], ['asc']);
-
-      return orderedNotes.map(({ noteType, notes }, i) => {
-        const noteName = noteType ? noteType.name : <FormattedMessage id="ui-inventory.unknownNoteType" />;
-
-        return (
-          <Row key={i}>
-            <MultiColumnList
-              key={i}
-              id={`list-instance-notes-${i}`}
-              contentData={notesList === emptyList ? emptyList : notes}
-              visibleColumns={['Staff only', 'Note']}
-              columnMapping={{
-                'Staff only': <FormattedMessage id="ui-inventory.staffOnly" />,
-                'Note': notesList === emptyList ? <FormattedMessage id="ui-inventory.note" /> : noteName,
-              }}
-              columnWidths={{
-                'Staff only': '25%',
-                'Note': '75%',
-              }}
-              formatter={{
-                'Staff only': x => (notesList === emptyList ? noValue : staffOnlyFormatter(x)),
-                'Note': x => get(x, ['note']) || noValue,
-              }}
-              containerRef={ref => { this.resultsList = ref; }}
-              interactive={false}
-            />
-          </Row>
-        );
-      });
-    };
-
     const instanceData = {
       instanceHrid: get(instance, ['hrid'], '-'),
       metadataSource: get(instance, ['source'], '-'),
@@ -602,12 +539,6 @@ class ViewInstance extends React.Component {
       indexTitle: get(instance, ['indexTitle'], '-'),
       series: get(instance, ['series'], []),
     };
-    const {
-      precedingTitles,
-      succeedingTitles,
-    } = instance;
-
-    const seriesContent = !isEmpty(titleData.series) ? titleData.series.map(x => ({ value: x })) : emptyList;
 
     const identifiers = get(instance, ['identifiers'], []);
     const contributors = get(instance, ['contributors'], []);
@@ -624,8 +555,6 @@ class ViewInstance extends React.Component {
       publicationRange: get(instance, ['publicationRange'], []),
     };
 
-    const instanceNotes = getSortedNotes(instance, 'instanceNoteTypeId', referenceTables.instanceNoteTypes);
-
     const electronicAccess = get(instance, ['electronicAccess'], []);
 
     const subjects = get(instance, ['subjects'], []);
@@ -641,7 +570,7 @@ class ViewInstance extends React.Component {
       acc03: !areAllFieldsEmpty([identifiers]),
       acc04: !areAllFieldsEmpty([contributors]),
       acc05: !areAllFieldsEmpty(values(descriptiveData)),
-      acc06: !areAllFieldsEmpty([instanceNotes]),
+      acc06: !areAllFieldsEmpty([[get(instance, 'notes', [])]]),
       acc07: !areAllFieldsEmpty([electronicAccess]),
       acc08: !areAllFieldsEmpty([subjects]),
       acc09: !areAllFieldsEmpty([get(instance, 'classifications', [])]),
@@ -679,38 +608,12 @@ class ViewInstance extends React.Component {
               <ExpandAllButton />
             </Col>
           </Row>
-          <hr />
-          <Row>
-            <Col xs={12}>
-              <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
-                <Layout className="margin-end-gutter display-flex flex-align-items-center">
-                  <AppIcon
-                    app="inventory"
-                    iconKey="instance"
-                    size="small"
-                  >
-                    <FormattedMessage id="ui-inventory.instanceRecord" />
-                  </AppIcon>
-                </Layout>
-                <Layout className="margin-end-gutter display-flex flex-align-items-center">
-                  <AppIcon
-                    app="inventory"
-                    iconKey="resource-type"
-                    size="small"
-                  >
-                    {formatters.instanceTypesFormatter(instance, referenceTables.instanceTypes)}
-                  </AppIcon>
-                </Layout>
-              </Layout>
-            </Col>
-          </Row>
-          <Headline
-            data-test-headline-medium
-            size="medium"
-            margin="medium"
-          >
-            {instance.title}
-          </Headline>
+
+          <InstanceTitle
+            instance={instance}
+            instanceTypes={referenceTables.instanceTypes}
+          />
+
           <AccordionSet initialStatus={initialAccordionsState}>
             {
               (!holdingsrecordid && !itemid) ?
@@ -735,7 +638,7 @@ class ViewInstance extends React.Component {
                         <MoveItemsContext moveItems={this.moveItems}>
                           <HoldingsListContainer
                             instance={instance}
-                            referenceDeata={referenceTables}
+                            referenceData={referenceTables}
                             draggable={this.state.isItemsMovement}
                             droppable
                           />
@@ -761,102 +664,11 @@ class ViewInstance extends React.Component {
               statisticalCodeTypes={referenceTables.statisticalCodeTypes}
             />
 
-            <Accordion
+            <InstanceTitleData
               id="acc02"
-              label={<FormattedMessage id="ui-inventory.titleData" />}
-            >
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.resourceTitle" />}
-                    value={checkIfElementIsEmpty(titleData.resourceTitle)}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.alternativeTitles">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-alternative-titles"
-                          contentData={checkIfArrayIsEmpty(titleData.alternativeTitles)}
-                          rowMetadata={['alternativeTitleTypeId']}
-                          visibleColumns={['Alternative title type', 'Alternative title']}
-                          columnMapping={{
-                            'Alternative title type': intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' }),
-                            'Alternative title': intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
-                          }}
-                          columnWidths={{
-                            'Alternative title type': '25%',
-                            'Alternative title': '75%',
-                          }}
-                          formatter={alternativeTitlesRowFormatter}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <KeyValue
-                    label={<FormattedMessage id="ui-inventory.indexTitle" />}
-                    value={checkIfElementIsEmpty(titleData.indexTitle)}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <IntlConsumer>
-                  {intl => (
-                    <FormattedMessage id="ui-inventory.seriesStatement">
-                      {ariaLabel => (
-                        <MultiColumnList
-                          id="list-series-statement"
-                          contentData={seriesContent}
-                          visibleColumns={['Series statement']}
-                          columnMapping={{ 'Series statement': intl.formatMessage({ id: 'ui-inventory.seriesStatement' }) }}
-                          columnWidths={{ 'Series statement': '99%' }}
-                          formatter={{ 'Series statement': x => get(x, ['value']) || noValue }}
-                          ariaLabel={ariaLabel}
-                          containerRef={ref => { this.resultsList = ref; }}
-                          interactive={false}
-                        />
-                      )}
-                    </FormattedMessage>
-                  )}
-                </IntlConsumer>
-              </Row>
-              <Row>
-                <Col
-                  data-test-preceding-titles
-                  xs={12}
-                >
-                  <TitlesView
-                    id="precedingTitles"
-                    titleKey="precedingInstanceId"
-                    label={<FormattedMessage id="ui-inventory.precedingTitles" />}
-                    titles={isEmpty(precedingTitles) ? emptyList : precedingTitles}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  data-test-succeeding-titles
-                  xs={12}
-                >
-                  <TitlesView
-                    id="succeedingTitles"
-                    titleKey="succeedingInstanceId"
-                    label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
-                    titles={isEmpty(succeedingTitles) ? emptyList : succeedingTitles}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
+              instance={instance}
+              titleTypes={referenceTables.alternativeTitleTypes}
+            />
 
             <InstanceIdentifiersView
               id="acc03"
@@ -879,12 +691,11 @@ class ViewInstance extends React.Component {
               natureOfContentTerms={referenceTables.natureOfContentTerms}
             />
 
-            <Accordion
+            <InstanceNotesView
               id="acc06"
-              label={<FormattedMessage id="ui-inventory.instanceNotes" />}
-            >
-              {layoutNotes(instanceNotes)}
-            </Accordion>
+              instance={instance}
+              noteTypes={referenceTables.instanceNoteTypes}
+            />
 
             <InstanceElecAccessView
               id="acc07"

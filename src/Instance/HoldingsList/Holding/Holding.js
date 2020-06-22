@@ -22,7 +22,7 @@ import { ItemsListContainer } from '../../ItemsList';
 
 const Holding = ({
   holding,
-  referenceDeata,
+  referenceData,
   onViewHolding,
   onAddItem,
 
@@ -33,7 +33,7 @@ const Holding = ({
   getDraggingItems,
   activeDropZone,
 }) => {
-  const { locationsById } = referenceDeata;
+  const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
 
   const viewHoldings = useCallback(() => {
@@ -105,7 +105,7 @@ const Holding = ({
 
 Holding.propTypes = {
   holding: PropTypes.object.isRequired,
-  referenceDeata: PropTypes.object.isRequired,
+  referenceData: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
 

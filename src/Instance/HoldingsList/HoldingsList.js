@@ -6,7 +6,7 @@ import { HoldingContainer } from './Holding';
 const HoldingsList = ({
   instance,
   holdings,
-  referenceDeata,
+  referenceData,
 
   draggable,
   droppable,
@@ -23,7 +23,7 @@ const HoldingsList = ({
             key={`items_${holding.id}`}
             instance={instance}
             holding={holding}
-            referenceDeata={referenceDeata}
+            referenceData={referenceData}
 
             draggable={draggable}
             droppable={droppable}
@@ -41,7 +41,7 @@ const HoldingsList = ({
 HoldingsList.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  referenceDeata: PropTypes.object.isRequired,
+  referenceData: PropTypes.object.isRequired,
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,

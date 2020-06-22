@@ -11,7 +11,7 @@ import {
 
 import HoldingsList from './HoldingsList';
 
-const HoldingsListContainer = ({ mutator, referenceDeata, instance, ...rest }) => {
+const HoldingsListContainer = ({ mutator, referenceData, instance, ...rest }) => {
   const [holdings, setHoldings] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,7 +32,7 @@ const HoldingsListContainer = ({ mutator, referenceDeata, instance, ...rest }) =
       {...rest}
       holdings={holdings}
       instance={instance}
-      referenceDeata={referenceDeata}
+      referenceData={referenceData}
     />
   );
 };
@@ -53,7 +53,7 @@ HoldingsListContainer.manifest = Object.freeze({
 HoldingsListContainer.propTypes = {
   mutator: PropTypes.object.isRequired,
   instance: PropTypes.object.isRequired,
-  referenceDeata: PropTypes.object.isRequired,
+  referenceData: PropTypes.object.isRequired,
 };
 
 export default stripesConnect(HoldingsListContainer);
