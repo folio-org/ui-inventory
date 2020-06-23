@@ -2,6 +2,7 @@
 
 ## 3.0.2 (IN PROGRESS)
 
+* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
 * Try harder to maintain default title sort when searching or filtering. Fixes UIIN-1046.
 
 ## [3.0.1](https://github.com/folio-org/ui-inventory/tree/v3.0.1) (2020-06-19)
