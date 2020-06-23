@@ -2,6 +2,7 @@ import {
   interactor,
   isPresent,
   text,
+  clickable,
 } from '@bigtest/interactor';
 
 @interactor class InstanceMovementDetails {
@@ -12,6 +13,7 @@ import {
   }
 
   title = text('[data-test-pane-header-title]');
+  close = clickable('[data-test-pane-header-dismiss-button]');
 }
 
 export default InstanceMovementDetails;
