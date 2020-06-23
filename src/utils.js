@@ -360,6 +360,7 @@ export const getSortedNotes = (resource, field, types) => {
     return {
       noteType,
       notes: value,
+      key,
     };
   });
 

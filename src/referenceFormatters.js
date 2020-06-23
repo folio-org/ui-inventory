@@ -34,17 +34,6 @@ export default {
     return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
-  instanceTypesFormatter: (r, instanceTypes) => {
-    let formatted = '';
-    if (r.instanceTypeId) {
-      const qualifier = instanceTypes.find(type => type.id === r.instanceTypeId);
-      if (qualifier) {
-        formatted = qualifier.name;
-      }
-    }
-    return formatted;
-  },
-
   relationsFormatter: (r, instanceRelationshipTypes) => {
     let formatted = '';
     if (r.childInstances && r.childInstances.length) {
