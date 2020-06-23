@@ -541,5 +541,7 @@
     "moveItems.instance.actionMenu.enable": "نقل المواد في وعاء",
     "moveItems.instance.actionMenu.disable": "إيقاف نقل المواد في وعاء",
     "moveItems.instance.success": "تم نقل {count, number} {count, plural, one {مادة} other {مادة}}  بنجاح",
-    "moveItems": "نقل المقتنيات/المواد إلى وعاء آخر"
+    "moveItems": "نقل المقتنيات/المواد إلى وعاء آخر",
+    "folio": "فوليو",
+    "marc": "مارك"
 }
