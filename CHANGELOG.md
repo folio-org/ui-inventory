@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [4.0.0](https://github.com/folio-org/ui-inventory/tree/v4.0.4) (2020-06-23)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v4.0.0)
+
+* Update Requests to SRS for v4. Refs UIIN-1158
+
 ## [3.0.1](https://github.com/folio-org/ui-inventory/tree/v3.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.0...v3.0.1)
 
