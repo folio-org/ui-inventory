@@ -7,6 +7,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 
 import {
   InstancesRoute,
+  InstanceMovementRoute,
   ItemRoute,
   QuickMarcRoute,
   CreateItemRoute,
@@ -25,6 +26,10 @@ const InventoryRouting = (props) => {
       <Route
         path={`${path}/create/:id/:holdingId/item`}
         component={CreateItemRoute}
+      />
+      <Route
+        path={`${path}/move/:idFrom/:idTo/instance`}
+        component={InstanceMovementRoute}
       />
       <Route
         path={`${path}/view/:id/:holdingsrecordid/:itemid`}
