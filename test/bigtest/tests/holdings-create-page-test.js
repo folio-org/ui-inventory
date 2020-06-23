@@ -10,17 +10,18 @@ describe('HoldingsCreatePage', () => {
 
   let instance;
 
-  beforeEach(function () {
+  beforeEach(async function () {
     instance = this.server.create('instance', {
       title: 'ADVANCING RESEARCH',
     });
 
     this.visit(`/inventory/view/${instance.id}?layer=createHoldingsRecord`);
+    await HoldingsCreatePage.whenLoaded();
   });
 
   describe('visiting the holdings create page', () => {
     it('displays the holdings name in the pane header', () => {
-      expect(HoldingsCreatePage.title).to.equal('ADVANCING RESEARCH');
+      expect(HoldingsCreatePage.title).to.equal(instance.title);
     });
   });
 

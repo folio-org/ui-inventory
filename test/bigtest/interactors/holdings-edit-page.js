@@ -8,7 +8,7 @@ import {
 @interactor class HoldingsEditPage {
   isLoaded = isPresent('[data-test-holdings-page-type="edit"]');
 
-  title = text('[data-test-header-title]');
+  title = text('[data-test-holdings-page-type="edit"] [data-test-header-title]');
   clickCancel = clickable('#cancel-holdings-creation');
 
   whenLoaded() {

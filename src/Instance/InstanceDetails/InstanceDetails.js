@@ -58,12 +58,18 @@ const InstanceDetails = ({
   const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
 
   const title = useMemo(() => {
-    return intl.formatMessage({
-      id: 'ui-inventory.instanceRecordTitle',
-    }, {
-      title: instance.title,
-      publisherAndDate: publicationInfo ?? '',
-    });
+    return (
+      <span data-test-instance-header-title>
+        {
+          intl.formatMessage({
+            id: 'ui-inventory.instanceRecordTitle',
+          }, {
+            title: instance.title,
+            publisherAndDate: publicationInfo ?? '',
+          })
+        }
+      </span>
+    );
   }, [instance, publicationInfo]);
 
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);

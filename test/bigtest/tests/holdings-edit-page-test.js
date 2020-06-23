@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import HoldingsEditPage from '../interactors/holdings-edit-page';
-import InstanceViewPage from '../interactors/instance-view-page';
+import HoldingsViewPage from '../interactors/holdings-view-page';
 
 describe('HoldingsEditPage', () => {
   setupApplication();
@@ -36,17 +36,17 @@ describe('HoldingsEditPage', () => {
   });
 
   it('displays the holdings name in the pane header', () => {
-    expect(HoldingsEditPage.title).to.equal('Instance record ADVANCING RESEARCH');
+    expect(HoldingsEditPage.title).to.equal(instance.title);
   });
 
   describe('clicking on cancel', () => {
     beforeEach(async () => {
       await HoldingsEditPage.clickCancel();
-      await InstanceViewPage.whenLoaded();
+      await HoldingsViewPage.whenLoaded();
     });
 
-    it('should redirect to instance view page after click', () => {
-      expect(InstanceViewPage.$root).to.exist;
+    it('should redirect to holding view page after click', () => {
+      expect(HoldingsViewPage.isPresent).to.be.true;
     });
   });
 });

@@ -9,6 +9,8 @@ import HoldingsCreatePage from '../interactors/holdings-create-page';
 describe('HoldingsViewPage', () => {
   setupApplication();
 
+  let holding;
+
   describe('holding record with items', () => {
     beforeEach(async function () {
       const instance = this.server.create(
@@ -17,14 +19,16 @@ describe('HoldingsViewPage', () => {
         'withStatisticalCodeIds',
         { title: 'Holding record' },
       );
-      const holding = this.server.schema.instances.first().holdings.models[0];
+      holding = this.server.schema.instances.first().holdings.models[0];
 
       this.visit(`/inventory/view/${instance.id}/${holding.id}`);
       await HoldingsViewPage.whenLoaded();
     });
 
     it('displays the title in the pane header', () => {
-      expect(HoldingsViewPage.title).to.equal('Instance record Holding record');
+      expect(HoldingsViewPage.title.includes(holding.callNumberPrefix)).to.be.true;
+      expect(HoldingsViewPage.title.includes(holding.callNumber)).to.be.true;
+      expect(HoldingsViewPage.title.includes(holding.callNumberSuffix)).to.be.true;
     });
 
     describe('pane header dropdown menu', () => {
