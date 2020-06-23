@@ -570,7 +570,7 @@ class ViewInstance extends React.Component {
       acc03: !areAllFieldsEmpty([identifiers]),
       acc04: !areAllFieldsEmpty([contributors]),
       acc05: !areAllFieldsEmpty(values(descriptiveData)),
-      acc06: !areAllFieldsEmpty([[get(instance, 'notes', [])]]),
+      acc06: !areAllFieldsEmpty([instance?.nodes ?? []]),
       acc07: !areAllFieldsEmpty([electronicAccess]),
       acc08: !areAllFieldsEmpty([subjects]),
       acc09: !areAllFieldsEmpty([get(instance, 'classifications', [])]),

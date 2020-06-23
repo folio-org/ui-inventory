@@ -1,7 +1,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { orderBy } from 'lodash';
+import {
+  orderBy,
+  isEmpty,
+} from 'lodash';
 
 import {
   Accordion,
@@ -19,7 +22,7 @@ const InstanceNotesView = ({
   noteTypes,
 }) => {
   const notesGroups = useMemo(() => {
-    if (!instance.notes?.length) {
+    if (isEmpty(instance.notes)) {
       return [{ key: -1, noteType: { name: <FormattedMessage id="ui-inventory.note" /> } }];
     }
 
