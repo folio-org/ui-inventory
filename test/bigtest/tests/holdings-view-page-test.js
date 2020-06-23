@@ -166,7 +166,9 @@ describe('HoldingsViewPage', () => {
   describe('holding record without items', () => {
     beforeEach(function () {
       const instance = this.server.create('instance', 'withHolding');
-      const holding = this.server.schema.instances.first().holdings.models[0];
+
+      holding = this.server.schema.instances.first().holdings.models[0];
+
       this.visit(`/inventory/view/${instance.id}/${holding.id}`);
     });
 
