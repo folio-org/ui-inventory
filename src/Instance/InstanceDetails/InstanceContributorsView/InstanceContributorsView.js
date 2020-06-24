@@ -93,9 +93,9 @@ const InstanceContributorsView = ({
 
 InstanceContributorsView.propTypes = {
   id: PropTypes.string.isRequired,
-  contributors: PropTypes.arrayOf(PropTypes.string),
-  contributorTypes: PropTypes.arrayOf(PropTypes.string),
-  contributorNameTypes: PropTypes.arrayOf(PropTypes.string),
+  contributors: PropTypes.arrayOf(PropTypes.object),
+  contributorTypes: PropTypes.arrayOf(PropTypes.object),
+  contributorNameTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 InstanceContributorsView.defaultProps = {

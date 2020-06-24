@@ -1,6 +1,5 @@
 import {
   get,
-  values,
 } from 'lodash';
 import React, {
   Fragment,
@@ -18,7 +17,6 @@ import queryString from 'query-string';
 
 import {
   AppIcon,
-  TitleManager,
   IntlConsumer,
   IfPermission,
 } from '@folio/stripes/core';
@@ -27,16 +25,12 @@ import {
   Row,
   Col,
   Button,
-  AccordionSet,
-  AccordionStatus,
-  ExpandAllButton,
   Layer,
   Icon,
   Callout,
 } from '@folio/stripes/components';
 
 import {
-  areAllFieldsEmpty,
   craftLayerUrl,
   marshalInstance,
   unmarshalInstance,
@@ -53,17 +47,7 @@ import {
   HoldingsListContainer,
   MoveItemsContext,
 
-  InstanceTitle,
-  InstanceAdministrativeView,
-  InstanceTitleData,
-  InstanceIdentifiersView,
-  InstanceDescriptiveView,
-  InstanceContributorsView,
-  InstanceNotesView,
-  InstanceElecAccessView,
-  InstanceSubjectView,
-  InstanceClassificationView,
-  InstanceRelationshipView,
+  InstanceDetails,
 } from './Instance';
 
 class ViewInstance extends React.Component {
@@ -91,7 +75,7 @@ class ViewInstance extends React.Component {
     },
     marcRecord: {
       type: 'okapi',
-      path: 'source-storage/formattedRecords/:{id}?identifier=INSTANCE',
+      path: 'source-storage/records/:{id}/formatted?idType=INSTANCE',
       accumulate: true,
       throwErrors: false,
     },
@@ -149,16 +133,6 @@ class ViewInstance extends React.Component {
       });
   };
 
-  getPublisherAndDate = instance => {
-    const publisher = get(instance, 'publication[0].publisher', '');
-    const dateOfPublication = get(instance, 'publication[0].dateOfPublication', '');
-    let publisherAndDate = publisher;
-
-    publisherAndDate += (publisher) ? `, ${dateOfPublication}` : publisherAndDate;
-
-    return publisherAndDate;
-  };
-
   // Edit Instance Handlers
   onClickEditInstance = (e) => {
     if (e) e.preventDefault();
@@ -175,11 +149,15 @@ class ViewInstance extends React.Component {
     });
   };
 
-  selectInstanse = (instance) => {
-    const { location: { search } } = this.props;
+  selectInstanse = (selectedInstance) => {
+    const { history, location, match } = this.props;
+    const instanceId = match.params.id;
 
-    this.props.goTo(`/inventory/view/${instance.id}${search}`);
-  }
+    history.push({
+      pathname: `/inventory/move/${instanceId}/${selectedInstance.id}/instance`,
+      search: location.search,
+    });
+  };
 
   toggleItemsMovement = () => {
     this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
@@ -449,14 +427,6 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const instanceSub = () => {
-      const { publication } = instance;
-      if (publication && publication.length > 0 && publication[0]) {
-        return `${publication[0].publisher}${publication[0].dateOfPublication ? `, ${publication[0].dateOfPublication}` : ''}`;
-      }
-      return null;
-    };
-
     const newHoldingsRecordButton = stripes.hasPerm('ui-inventory.holdings.create') && (
       <FormattedMessage id="ui-inventory.addHoldings">
         {ariaLabel => (
@@ -523,236 +493,80 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const instanceData = {
-      instanceHrid: get(instance, ['hrid'], '-'),
-      metadataSource: get(instance, ['source'], '-'),
-      catalogedDate: get(instance, ['catalogedDate'], '-'),
-      status: instance.statusId,
-      instanceStatusUpdatedDate: instance?.statusUpdatedDate,
-      modeOfIssuance: instance.modeOfIssuanceId,
-      statisticalCodeIds: get(instance, ['statisticalCodeIds'], []),
-    };
-
-    const titleData = {
-      resourceTitle: get(instance, ['title'], '-'),
-      alternativeTitles: get(instance, ['alternativeTitles'], []),
-      indexTitle: get(instance, ['indexTitle'], '-'),
-      series: get(instance, ['series'], []),
-    };
-
-    const identifiers = get(instance, ['identifiers'], []);
-    const contributors = get(instance, ['contributors'], []);
-
-    const descriptiveData = {
-      publication: get(instance, ['publication'], []),
-      editions: get(instance, ['editions'], []),
-      physicalDescriptions: get(instance, ['physicalDescriptions'], []),
-      instanceTypeId: get(instance, ['instanceTypeId'], ''),
-      natureOfContentTerms: get(instance, 'natureOfContentTermIds', []),
-      instanceFormatIds: get(instance, ['instanceFormatIds'], []),
-      languages: get(instance, ['languages'], []),
-      publicationFrequency: get(instance, ['publicationFrequency'], []),
-      publicationRange: get(instance, ['publicationRange'], []),
-    };
-
-    const electronicAccess = get(instance, ['electronicAccess'], []);
-
-    const subjects = get(instance, ['subjects'], []);
-
-    const instanceRelationship = {
-      childInstances: get(instance, ['childInstances'], []),
-      parentInstances: get(instance, ['parentInstances'], []),
-    };
-
-    const initialAccordionsState = {
-      acc01: !areAllFieldsEmpty(values(instanceData)),
-      acc02: !areAllFieldsEmpty(values(titleData)),
-      acc03: !areAllFieldsEmpty([identifiers]),
-      acc04: !areAllFieldsEmpty([contributors]),
-      acc05: !areAllFieldsEmpty(values(descriptiveData)),
-      acc06: !areAllFieldsEmpty([instance?.notes ?? []]),
-      acc07: !areAllFieldsEmpty([electronicAccess]),
-      acc08: !areAllFieldsEmpty([subjects]),
-      acc09: !areAllFieldsEmpty([get(instance, 'classifications', [])]),
-      acc10: !areAllFieldsEmpty(values(instanceRelationship)),
-    };
-
     return (
-      <Pane
-        data-test-instance-details
-        style={{ flex: 'auto' }}
-        appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={
-          <span data-test-header-title>
-            <FormattedMessage
-              id="ui-inventory.instanceRecordTitle"
-              values={{
-                title: instance.title,
-                publisherAndDate: this.getPublisherAndDate(instance),
-              }}
-            />
-          </span>
-        }
-        paneSub={instanceSub()}
-        dismissible
-        onClose={onClose}
-        actionMenu={this.createActionMenuGetter(instance)}
-      >
-        <TitleManager record={instance.title} />
-        <AccordionStatus>
-          <Row end="xs">
-            <Col
-              data-test-expand-all
-              xs
-            >
-              <ExpandAllButton />
-            </Col>
+      <>
+        <InstanceDetails
+          onClose={onClose}
+          actionMenu={this.createActionMenuGetter(instance)}
+          instance={instance}
+          referenceData={referenceTables}
+        >
+          {
+            (!holdingsrecordid && !itemid) ?
+              (
+                <Switch>
+                  <Route
+                    path="/inventory/viewsource/"
+                    render={() => (
+                      <this.cViewMarc
+                        instance={instance}
+                        marcRecord={marcRecord}
+                        stripes={stripes}
+                        match={this.props.match}
+                        onClose={this.closeViewMarc}
+                        paneWidth={this.props.paneWidth}
+                      />
+                    )}
+                  />
+                  <Route
+                    path="/inventory/view/"
+                    render={() => (
+                      <MoveItemsContext moveItems={this.moveItems}>
+                        <HoldingsListContainer
+                          instance={instance}
+                          referenceData={referenceTables}
+                          draggable={this.state.isItemsMovement}
+                          droppable
+                        />
+                      </MoveItemsContext>
+                    )}
+                  />
+                </Switch>
+              )
+              :
+              null
+          }
+
+          <Row>
+            <Col sm={12}>{newHoldingsRecordButton}</Col>
           </Row>
 
-          <InstanceTitle
-            instance={instance}
-            instanceTypes={referenceTables.instanceTypes}
-          />
+          {
+            (holdingsrecordid && !itemid)
+              ? (
+                <this.cViewHoldingsRecord
+                  id={id}
+                  holdingsrecordid={holdingsrecordid}
+                  onCloseViewHoldingsRecord={this.goBack}
+                  {...this.props}
+                />
+              )
+              : null
+          }
+        </InstanceDetails>
 
-          <AccordionSet initialStatus={initialAccordionsState}>
-            {
-              (!holdingsrecordid && !itemid) ?
-                (
-                  <Switch>
-                    <Route
-                      path="/inventory/viewsource/"
-                      render={() => (
-                        <this.cViewMarc
-                          instance={instance}
-                          marcRecord={marcRecord}
-                          stripes={stripes}
-                          match={this.props.match}
-                          onClose={this.closeViewMarc}
-                          paneWidth={this.props.paneWidth}
-                        />
-                      )}
-                    />
-                    <Route
-                      path="/inventory/view/"
-                      render={() => (
-                        <MoveItemsContext moveItems={this.moveItems}>
-                          <HoldingsListContainer
-                            instance={instance}
-                            referenceData={referenceTables}
-                            draggable={this.state.isItemsMovement}
-                            droppable
-                          />
-                        </MoveItemsContext>
-                      )}
-                    />
-                  </Switch>
-                )
-                :
-                null
-            }
-
-            <Row>
-              <Col sm={12}>{newHoldingsRecordButton}</Col>
-            </Row>
-
-            <InstanceAdministrativeView
-              id="acc01"
-              instance={instance}
-              instanceStatuses={referenceTables.instanceStatuses}
-              issuanceModes={referenceTables.modesOfIssuance}
-              statisticalCodes={referenceTables.statisticalCodes}
-              statisticalCodeTypes={referenceTables.statisticalCodeTypes}
-            />
-
-            <InstanceTitleData
-              id="acc02"
-              instance={instance}
-              titleTypes={referenceTables.alternativeTitleTypes}
-            />
-
-            <InstanceIdentifiersView
-              id="acc03"
-              identifiers={identifiers}
-              identifierTypes={referenceTables.identifierTypes}
-            />
-
-            <InstanceContributorsView
-              id="acc04"
-              contributors={contributors}
-              contributorTypes={referenceTables.contributorTypes}
-              contributorNameTypes={referenceTables.contributorNameTypes}
-            />
-
-            <InstanceDescriptiveView
-              id="acc05"
-              instance={instance}
-              resourceTypes={referenceTables.instanceTypes}
-              resourceFormats={referenceTables.instanceFormats}
-              natureOfContentTerms={referenceTables.natureOfContentTerms}
-            />
-
-            <InstanceNotesView
-              id="acc06"
-              instance={instance}
-              noteTypes={referenceTables.instanceNoteTypes}
-            />
-
-            <InstanceElecAccessView
-              id="acc07"
-              electronicAccessLines={electronicAccess}
-              electronicAccessRelationships={referenceTables.electronicAccessRelationships}
-            />
-
-            <InstanceSubjectView
-              id="acc08"
-              subjects={subjects}
-            />
-
-            <InstanceClassificationView
-              id="acc09"
-              classifications={instance?.classifications}
-              classificationTypes={referenceTables.classificationTypes}
-            />
-
-            <InstanceRelationshipView
-              id="acc10"
-              instance={instance}
-              relationTypes={referenceTables.instanceRelationshipTypes}
-            />
-          </AccordionSet>
-        </AccordionStatus>
-        {
-          (holdingsrecordid && !itemid)
-            ? (
-              <this.cViewHoldingsRecord
-                id={id}
-                holdingsrecordid={holdingsrecordid}
-                onCloseViewHoldingsRecord={this.goBack}
-                {...this.props}
-              />
-            )
-            : null
-        }
-
-        { /*
-          related-instances isn't available yet but accordions MUST contain
-          child elements. this is commented out for now in an effort to
-          keep the console free of warnings.
-          <Accordion
-            open={this.state.accordions.acc11}
-            id="acc11"
-            onToggle={this.handleAccordionToggle}
-            label={<FormattedMessage id="ui-inventory.relatedInstances" />}
-          />
-        */ }
         <Callout ref={this.calloutRef} />
-        {this.state.findInstancePluginOpened
-          && <InstancePlugin
-            onSelect={this.selectInstanse}
-            onClose={this.toggleFindInstancePlugin}
-            withTrigger={false}
-          />}
-      </Pane>
+
+        {
+          this.state.findInstancePluginOpened && (
+            <InstancePlugin
+              onSelect={this.selectInstanse}
+              onClose={this.toggleFindInstancePlugin}
+              withTrigger={false}
+            />
+          )
+        }
+      </>
     );
   }
 }

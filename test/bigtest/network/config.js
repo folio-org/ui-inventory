@@ -222,6 +222,8 @@ export default function configure() {
 
       if (field === 'hrid') return instances.where({ hrid: term });
 
+      if (field === 'id') return instances.where({ id: term });
+
       if (field === 'holdingsRecords.hrid') {
         const holding = holdings.where({ hrid: term }).models[0] || {};
 
@@ -542,15 +544,15 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/source-storage/formattedRecords', {
+  this.get('/source-storage/records', {
     records: [],
     totalRecords: 0
   });
-  this.get('/source-storage/formattedRecords/:id', {});
+  this.get('/source-storage/records/:id/formatted', {});
 
   this.get('/inventory/config/instances/blocked-fields');
 
-  this.get('/source-storage/formattedRecords/:id', {
+  this.get('/source-storage/records/:id/formatted', {
     instanceTypes: [],
     totalRecords: 0
   });
