@@ -49,6 +49,7 @@ export default class InstanceFilters extends React.Component {
         staffSuppress = [],
         createdDate = [],
         updatedDate = [],
+        source = [],
       },
       data: {
         locations,
@@ -94,6 +95,17 @@ export default class InstanceFilters extends React.Component {
       {
         label: <FormattedMessage id="ui-inventory.no" />,
         value: 'false',
+      },
+    ];
+
+    const sourceOptions = [
+      {
+        label: <FormattedMessage id="ui-inventory.folio" />,
+        value: 'FOLIO',
+      },
+      {
+        label: <FormattedMessage id="ui-inventory.marc" />,
+        value: 'MARC',
       },
     ];
 
@@ -266,6 +278,23 @@ export default class InstanceFilters extends React.Component {
             selectedValues={retrieveDatesFromDateRangeFilterString(updatedDate[0])}
             onChange={onChange}
             makeFilterString={makeDateRangeFilterString}
+          />
+        </Accordion>
+        <Accordion
+          label={<FormattedMessage id="ui-inventory.source" />}
+          id="source"
+          name="source"
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={source.length > 0}
+          onClearFilter={() => onClear('source')}
+        >
+          <CheckboxFilter
+            data-test-filter-instance-source
+            name="source"
+            dataOptions={sourceOptions}
+            selectedValues={source}
+            onChange={onChange}
           />
         </Accordion>
       </React.Fragment>

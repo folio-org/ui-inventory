@@ -107,7 +107,7 @@
     "classification": "Classification",
     "seriesStatement": "Series statement",
     "editInstanceDialog": "Edit instance dialog",
-    "addNewHoldingsDialog": "Add new holdings dialog",
+    "addNewHoldingsDialog": "Add new",
     "addItem": "Add item",
     "viewItem": "View item",
     "itemData": "Item data",
@@ -541,5 +541,7 @@
     "moveItems.instance.actionMenu.enable": "Move items within an instance",
     "moveItems.instance.actionMenu.disable": "Stop items movement within an instance",
     "moveItems.instance.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
-    "moveItems": "Move holdings/items to another instance"
+    "moveItems": "Move holdings/items to another instance",
+    "folio": "FOLIO",
+    "marc": "MARC"
 }

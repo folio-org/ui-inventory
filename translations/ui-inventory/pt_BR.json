@@ -107,7 +107,7 @@
     "classification": "Classificação",
     "seriesStatement": "Declaração de série",
     "editInstanceDialog": "Editar caixa de diálogo da instância",
-    "addNewHoldingsDialog": "Adicionar nova caixa de diálogo de holdings",
+    "addNewHoldingsDialog": "Adicionar novo",
     "addItem": "Adicionar item",
     "viewItem": "Ver item",
     "itemData": "Dados do item",
@@ -541,5 +541,7 @@
     "moveItems.instance.actionMenu.enable": "Mover itens dentro de uma instância",
     "moveItems.instance.actionMenu.disable": "Interromper o movimento de itens em uma instância",
     "moveItems.instance.success": "{count, number} {count, plural, one {item} other {itens}} foram movidos com sucesso.",
-    "moveItems": "Mover holdings/itens para outra instância"
+    "moveItems": "Mover holdings/itens para outra instância",
+    "folio": "FOLIO",
+    "marc": "MARC"
 }

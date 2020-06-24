@@ -180,6 +180,8 @@ export default function configure() {
         return instances.where({ id: holding.instanceId });
       }
 
+      if (field === 'source') return instances.where({ source: term });
+
       if (field === 'identifiers') {
         const idType = identifierTypes.where({ name: term }).models[0];
 
