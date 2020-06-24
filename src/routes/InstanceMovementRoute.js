@@ -25,8 +25,8 @@ const InstanceMovementRoute = ({ match, isLoading, getData }) => {
 
 InstanceMovementRoute.propTypes = {
   match: PropTypes.object.isRequired,
-  isLoading: PropTypes.func,
-  getData: PropTypes.func,
+  isLoading: PropTypes.func.isRequired,
+  getData: PropTypes.func.isRequired,
 };
 
 export default withRouter(stripesConnect(withData(InstanceMovementRoute)));

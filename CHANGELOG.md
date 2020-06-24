@@ -2,11 +2,11 @@
 
 ## (IN PROGRESS)
 
-* Show two instance records as a split screen. Refs UIIN-1103.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Move items between holdings. Refs UIIN-1097.
 * Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
+* Show two instance records as a split screen. Refs UIIN-1103.
 
 ## [3.0.1] (IN PROGRESS)
 
