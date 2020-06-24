@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## (IN PROGRESS)
+## 3.1.0 (IN PROGRESS)
 
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
@@ -8,11 +8,19 @@
 * Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
 * Update Requests to SRS for v4. Refs UIIN-1158.
 * Show two instance records as a split screen. Refs UIIN-1103.
-
-## [3.0.1] (IN PROGRESS)
-
-* Maintain default title sort when searching or filtering. Fixes UIIN-1046.
 * Add filter for the instance source. Refs UIIN-1132.
+* Increment `@folio/plugin-find-instance` to `v3.0` for `@folio/stripes` `v4` compatibility.
+
+## [3.0.2](https://github.com/folio-org/ui-inventory/tree/v3.0.2) (2020-06-23)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v3.0.2)
+
+* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
+* Try harder to maintain default title sort when searching or filtering. Fixes UIIN-1046.
+
+## [3.0.1](https://github.com/folio-org/ui-inventory/tree/v3.0.1) (2020-06-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.0...v3.0.1)
+
+* Increment `@folio/plugin-find-instance` to `v3.0` for `@folio/stripes` `v4` compatibility.
 
 ## [3.0.0](https://github.com/folio-org/ui-inventory/tree/v3.0.0) (2020-06-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v2.0.0...v3.0.0)
