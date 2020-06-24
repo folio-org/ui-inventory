@@ -222,6 +222,8 @@ export default function configure() {
 
       if (field === 'hrid') return instances.where({ hrid: term });
 
+      if (field === 'id') return instances.where({ id: term });
+
       if (field === 'holdingsRecords.hrid') {
         const holding = holdings.where({ hrid: term }).models[0] || {};
 

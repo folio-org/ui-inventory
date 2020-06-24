@@ -42,13 +42,13 @@ import KeyValue from './KeyValue';
 }
 
 @interactor class InstanceViewPage {
-  isLoaded = isPresent('[data-test-header-title]');
+  isLoaded = isPresent('[data-test-instance-header-title]');
 
   whenLoaded() {
     return this.when(() => this.isLoaded);
   }
 
-  title = text('[data-test-header-title]');
+  title = text('[data-test-instance-header-title]');
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   hasHeaderDropdown = isPresent('[class^=DropdownMenuTether---]');
   headerDropdownMenu = new HeaderDropdownMenu();

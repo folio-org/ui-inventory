@@ -7,6 +7,7 @@
 * Move items between holdings. Refs UIIN-1097.
 * Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
 * Update Requests to SRS for v4. Refs UIIN-1158.
+* Show two instance records as a split screen. Refs UIIN-1103.
 
 ## [3.0.1] (IN PROGRESS)
 
