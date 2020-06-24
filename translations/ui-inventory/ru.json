@@ -331,7 +331,7 @@
     "missingModal.heading": "Confirm item as missing",
     "missingModal.confirm": "Подтвердить",
     "deleteItem": "Удалить",
-    "confirmItemDeleteModal.message": "Элемент HRID <strong> {hrid} , штрихкод {barcode} </strong> не имеет зависимостей и будет <strong> удален </strong> .",
+    "confirmItemDeleteModal.message": "HRID экземпляра <strong>{hrid} , штрихкод {barcode}</strong> не имеет зависимостей и будет <strong>удален</strong>.",
     "confirmItemDeleteModal.heading": "Подтвердите удаление элемента",
     "confirmItemDeleteModal.confirm": "Подтвердить",
     "deleteHoldingsRecord": "Удалить",
