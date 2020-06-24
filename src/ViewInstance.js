@@ -89,7 +89,7 @@ class ViewInstance extends React.Component {
     },
     marcRecord: {
       type: 'okapi',
-      path: 'source-storage/formattedRecords/:{id}?identifier=INSTANCE',
+      path: 'source-storage/records/:{id}/formatted?idType=INSTANCE',
       accumulate: true,
       throwErrors: false,
     },
