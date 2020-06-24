@@ -3,3 +3,4 @@ export * from './HoldingsList';
 export * from './MoveItemsContext';
 
 export * from './InstanceDetails';
+export * from './InstanceMovement';
