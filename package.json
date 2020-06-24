@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -44,6 +44,7 @@
     ],
     "okapiInterfaces": {
       "inventory": "10.0",
+      "source-storage-records": "2.0",
       "instance-storage": "7.0",
       "holdings-storage": "3.0 4.0",
       "item-storage": "8.0",
