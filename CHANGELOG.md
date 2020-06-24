@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## [4.0.0](https://github.com/folio-org/ui-inventory/tree/v4.0.0) (2020-06-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.2...v4.0.0)
+
 ## [3.0.2](https://github.com/folio-org/ui-inventory/tree/v3.0.2) (2020-06-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v3.0.2)
 
