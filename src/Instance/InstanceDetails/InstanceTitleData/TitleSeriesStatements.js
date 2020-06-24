@@ -47,7 +47,7 @@ const TitleSeriesStatements = ({
 };
 
 TitleSeriesStatements.propTypes = {
-  seriesStatements: PropTypes.arrayOf(PropTypes.object),
+  seriesStatements: PropTypes.arrayOf(PropTypes.string),
 };
 
 TitleSeriesStatements.defaultProps = {
