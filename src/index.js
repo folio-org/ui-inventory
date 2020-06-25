@@ -11,6 +11,7 @@ import {
   ItemRoute,
   QuickMarcRoute,
   CreateItemRoute,
+  CreateHoldingRoute,
 } from './routes';
 import Settings from './settings';
 
@@ -23,6 +24,10 @@ const InventoryRouting = (props) => {
 
   return (
     <Switch>
+      <Route
+        path={`${path}/create/:id/holding`}
+        component={CreateHoldingRoute}
+      />
       <Route
         path={`${path}/create/:id/:holdingId/item`}
         component={CreateItemRoute}

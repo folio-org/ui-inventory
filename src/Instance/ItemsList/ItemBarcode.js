@@ -20,8 +20,8 @@ import {
   IconButton,
 } from '@folio/stripes/components';
 
-const ItemBarcode = ({ location, item, holdingId }) => {
-  const { pathname, search } = location;
+const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
+  const { search } = location;
 
   const callout = useContext(CalloutContext);
   const onCopyToClipbaord = useCallback(() => {
@@ -38,7 +38,7 @@ const ItemBarcode = ({ location, item, holdingId }) => {
   return (
     <>
       <Link
-        to={`${pathname}/${holdingId}/${item.id}${search}`}
+        to={`/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`}
         data-test-item-link
       >
         <span data-test-items-app-icon>
@@ -66,6 +66,7 @@ ItemBarcode.propTypes = {
 
   item: PropTypes.object.isRequired,
   holdingId: PropTypes.string.isRequired,
+  instanceId: PropTypes.string.isRequired,
 };
 
 export default withRouter(ItemBarcode);
