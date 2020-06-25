@@ -22,8 +22,6 @@ import {
 } from '@folio/stripes/core';
 import {
   Pane,
-  Row,
-  Col,
   Button,
   Layer,
   Icon,
@@ -36,7 +34,6 @@ import {
   unmarshalInstance,
 } from './utils';
 import InstanceForm from './edit/InstanceForm';
-import HoldingsForm from './edit/holdings/HoldingsForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
@@ -192,12 +189,6 @@ class ViewInstance extends React.Component {
       });
   };
 
-  onClickAddNewHoldingsRecord = (e) => {
-    if (e) e.preventDefault();
-    this.log('clicked "add new holdings record"');
-    this.props.updateLocation({ layer: 'createHoldingsRecord' });
-  };
-
   update = (instance) => {
     const { referenceTables: { identifierTypesByName } } = this.props;
 
@@ -236,14 +227,6 @@ class ViewInstance extends React.Component {
     const { location: { search } } = this.props;
     this.resetLayerQueryParam();
     this.props.goTo(`/inventory/view/${this.props.match.params.id}${search}`);
-  };
-
-  createHoldingsRecord = (holdingsRecord) => {
-    // POST holdings record
-    this.log(`Creating new holdings record: ${JSON.stringify(holdingsRecord)}`);
-    this.props.mutator.holdings.POST(holdingsRecord).then(() => {
-      this.resetLayerQueryParam();
-    });
   };
 
   handleViewSource = (e, instance) => {
@@ -390,7 +373,6 @@ class ViewInstance extends React.Component {
 
   render() {
     const {
-      okapi,
       match: { params: { id, holdingsrecordid, itemid } },
       location,
       referenceTables,
@@ -427,23 +409,6 @@ class ViewInstance extends React.Component {
       );
     }
 
-    const newHoldingsRecordButton = stripes.hasPerm('ui-inventory.holdings.create') && (
-      <FormattedMessage id="ui-inventory.addHoldings">
-        {ariaLabel => (
-          <Button
-            id="clickable-new-holdings-record"
-            href={this.craftLayerUrl('createHoldingsRecord', location)}
-            onClick={this.onClickAddNewHoldingsRecord}
-            aria-label={ariaLabel}
-            buttonStyle="primary"
-            fullWidth
-          >
-            <FormattedMessage id="ui-inventory.addHoldings" />
-          </Button>
-        )}
-      </FormattedMessage>
-    );
-
     if (query.layer === 'edit') {
       return (
         <IntlConsumer>
@@ -460,32 +425,6 @@ class ViewInstance extends React.Component {
                 stripes={stripes}
                 match={this.props.match}
                 onCancel={this.resetLayerQueryParam}
-              />
-            </Layer>
-          )}
-        </IntlConsumer>
-      );
-    }
-
-    if (query.layer === 'createHoldingsRecord') {
-      return (
-        <IntlConsumer>
-          {intl => (
-            <Layer
-              isOpen
-              contentLabel={intl.formatMessage({ id: 'ui-inventory.addNewHoldingsDialog' })}
-            >
-              <HoldingsForm
-                form={instance.id}
-                id={instance.id}
-                key={instance.id}
-                initialValues={{ instanceId: instance.id }}
-                onSubmit={this.createHoldingsRecord}
-                onCancel={this.resetLayerQueryParam}
-                okapi={okapi}
-                instance={instance}
-                referenceTables={referenceTables}
-                stripes={stripes}
               />
             </Layer>
           )}
@@ -536,10 +475,6 @@ class ViewInstance extends React.Component {
               :
               null
           }
-
-          <Row>
-            <Col sm={12}>{newHoldingsRecordButton}</Col>
-          </Row>
 
           {
             (holdingsrecordid && !itemid)

@@ -31,7 +31,7 @@ import {
 
 const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 const getFormatter = (
-  holdingsRecordId,
+  holding,
   selectItemsForDrag,
   ifItemsSelected,
 ) => ({
@@ -62,7 +62,8 @@ const getFormatter = (
       item.id && (
         <ItemBarcode
           item={item}
-          holdingId={holdingsRecordId}
+          holdingId={holding.id}
+          instanceId={holding.instanceId}
         />
       )
     ) || noValue;
@@ -131,8 +132,8 @@ const ItemsList = ({
     [holding.id, records, ifItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(holding.id, selectItemsForDrag, ifItemsDragSelected),
-    [holding.id, selectItemsForDrag, ifItemsDragSelected],
+    () => getFormatter(holding, selectItemsForDrag, ifItemsDragSelected),
+    [holding, selectItemsForDrag, ifItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,

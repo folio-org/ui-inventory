@@ -17,10 +17,10 @@ const HoldingContainer = ({
 }) => {
   const onViewHolding = useCallback(() => {
     history.push({
-      pathname: `${location.pathname}/${holding.id}`,
+      pathname: `/inventory/view/${instance.id}/${holding.id}`,
       search: location.search,
     });
-  }, [location.pathname, location.search, holding.id]);
+  }, [location.search, instance.id, holding.id]);
 
   const onAddItem = useCallback(() => {
     history.push({

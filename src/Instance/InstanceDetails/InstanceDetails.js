@@ -26,6 +26,7 @@ import { InstanceElecAccessView } from './InstanceElecAccessView';
 import { InstanceSubjectView } from './InstanceSubjectView';
 import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
+import { InstanceNewHolding } from './InstanceNewHolding';
 
 import {
   getAccordionState,
@@ -105,6 +106,8 @@ const InstanceDetails = ({
 
         <AccordionSet initialStatus={accordionState}>
           {children}
+
+          <InstanceNewHolding instance={instance} />
 
           <InstanceAdministrativeView
             id={accordions.administrative}

@@ -11,9 +11,11 @@ import {
   LoadingView,
 } from '@folio/stripes/components';
 
+import {
+  useInstance,
+} from '../../common/hooks';
 import DataContext from '../../contexts/DataContext';
 
-import useInstance from './useInstance';
 import InstanceMovement from './InstanceMovement';
 
 const InstanceMovementContainer = ({

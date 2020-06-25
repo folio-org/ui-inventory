@@ -15,7 +15,7 @@ describe('HoldingsCreatePage', () => {
       title: 'ADVANCING RESEARCH',
     });
 
-    this.visit(`/inventory/view/${instance.id}?layer=createHoldingsRecord`);
+    this.visit(`/inventory/create/${instance.id}/holding`);
     await HoldingsCreatePage.whenLoaded();
   });
 
