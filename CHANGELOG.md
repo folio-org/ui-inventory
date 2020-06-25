@@ -10,6 +10,7 @@
 * Show two instance records as a split screen. Refs UIIN-1103.
 * Add filter for the instance source. Refs UIIN-1132.
 * Increment `@folio/plugin-find-instance` to `v3.0` for `@folio/stripes` `v4` compatibility.
+* Clear detail record pane after new search is performed. Refs UIIN-1074.
 
 ## [3.0.2](https://github.com/folio-org/ui-inventory/tree/v3.0.2) (2020-06-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v3.0.2)
@@ -498,8 +499,8 @@
 * Increase the contributor-type limit from 100 to 400. Fixes UIIN-215.
 * Provide defaults for props used by plugin-find-instance. Refs UIIN-217.
 * Bug fixes with no separate change log entry:
-    UIIN-53, UIIN-64, UIIN-67, UIIN-68, UIIN-76, UIIN-77, UIIN-102, UIIN-175,
-    UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221,
+UIIN-53, UIIN-64, UIIN-67, UIIN-68, UIIN-76, UIIN-77, UIIN-102, UIIN-175,
+UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221,
 * Basic tests for ui-instances. UIIN-7
 * Edit Holding Associated with Instance v1. UIIN-39
 * Regression test for holdings - add/edit. UIIN-43

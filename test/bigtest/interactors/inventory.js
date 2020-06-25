@@ -82,4 +82,8 @@ export default @interactor class InventoryInteractor {
   whenLoaded() {
     return this.when(() => this.isLoaded);
   }
+
+  whenInstanceLoaded() {
+    return this.when(() => this.instance.isVisible);
+  }
 }

@@ -64,6 +64,8 @@ class InstancesView extends React.Component {
     onSelectRow: PropTypes.func,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
     updateLocation: PropTypes.func.isRequired,
+    goTo: PropTypes.func.isRequired,
+    getParams: PropTypes.func.isRequired,
     segment: PropTypes.string,
     intl: PropTypes.object,
     match: PropTypes.shape({
@@ -88,14 +90,20 @@ class InstancesView extends React.Component {
   };
 
   onFilterChangeHandler = ({ name, values }) => {
-    const { data: { query } } = this.props;
+    const {
+      data: { query },
+      match: { path },
+      goTo,
+      getParams,
+    } = this.props;
     const curFilters = getCurrentFilters(get(query, 'filters', ''));
     const mergedFilters = values.length
       ? { ...curFilters, [name]: values }
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
+    const params = getParams();
 
-    this.props.updateLocation({ filters: filtersStr });
+    goTo(path, { ...params, filters: filtersStr });
   };
 
   closeNewInstance = (e) => {
@@ -378,6 +386,7 @@ class InstancesView extends React.Component {
               referenceTables: data,
               onCopy: this.copyInstance,
             }}
+            basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
