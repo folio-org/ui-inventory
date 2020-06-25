@@ -67,6 +67,24 @@ describe('Instances', () => {
       });
     });
 
+    describe('instances details screen stays closed after search', function () {
+      beforeEach(async function () {
+        const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
+
+        await inventory.chooseSearchOption('Barcode');
+        await inventory.fillSearchField(item.barcode);
+        await inventory.clickSearch();
+        await inventory.instances(0).click();
+        await inventory.whenInstanceLoaded();
+        await inventory.fillSearchField(item.barcode);
+        await inventory.clickSearch();
+      });
+
+      it('should hide instance details pane', function () {
+        expect(inventory.instance.isPresent).to.equal(false);
+      });
+    });
+
     describe('remember search results', function () {
       beforeEach(async function () {
         const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
