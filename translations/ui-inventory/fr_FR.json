@@ -500,7 +500,7 @@
     "callNumberNormalized": "Call number, normalized",
     "item.status.claimedReturned": "Claimed returned",
     "item.status.lostAndPaid": "Lost and paid",
-    "permission.all-permissions.TEMPORARY": "Inventory: All permissions",
+    "permission.all-permissions.TEMPORARY": "Inventaire: toutes les autorisations",
     "permission.settings.materialtypes": "Settings (Inventory): Create, edit, delete material types",
     "permission.settings.loantypes": "Settings (Inventory): Create, edit, delete loan types",
     "permission.settings.statistical-code-types": "Settings (Inventory): Create, edit, delete statistical code types",
