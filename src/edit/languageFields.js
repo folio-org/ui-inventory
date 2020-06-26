@@ -60,9 +60,9 @@ const LanguageFields = props => {
       // can be represented by either a two- or three-character code (e.g.,
       // 'bur' and 'my' both represent Burmese), but formatDisplayName will only
       // return a localized language name for the two-char code (if there is one).
-      // Otherwise, it simply returns the same input code. Thus for localizing, we
+      // Otherwise, it returns undefined. Thus for localizing, we
       // have to favor the two-char code if there is one. If the function doesn't
-      // return a formatted language name, we use the English name as a fallback label.
+      // return a formatted language name at all, we use the English name as a fallback label.
       const codeToUse = l.alpha2 || l.alpha3;
       const intlDisplayName = useIntl().formatDisplayName(codeToUse, { fallback: 'none' });
       const label = intlDisplayName || l.name;
