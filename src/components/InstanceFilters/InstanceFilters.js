@@ -308,7 +308,7 @@ const InstanceFilters = props => {
       </Accordion>
     </React.Fragment>
   );
-}
+};
 
 export default InstanceFilters;
 
@@ -325,4 +325,4 @@ InstanceFilters.defaultProps = {
     resourceTypes: [],
     locations: [],
   },
-}
+};

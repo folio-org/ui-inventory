@@ -1,4 +1,3 @@
-// import languagetable from '../../../data/languages';
 import { useIntl } from 'react-intl';
 
 import {
