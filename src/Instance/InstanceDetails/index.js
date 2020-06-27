@@ -9,5 +9,6 @@ export * from './InstanceClassificationView';
 export * from './InstanceRelationshipView';
 export * from './InstanceTitle';
 export * from './InstanceNotesView';
+export * from './InstanceNewHolding';
 
 export { default as InstanceDetails } from './InstanceDetails';

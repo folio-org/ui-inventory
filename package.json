@@ -650,7 +650,7 @@
     "react-router-dom": "^5.0.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-find-instance": "^2.0.0",
+    "@folio/plugin-find-instance": "^3.0.0",
     "@folio/quick-marc": "^1.0.0"
   },
   "resolutions": {
