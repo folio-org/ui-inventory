@@ -11,6 +11,27 @@ import ItemCreatePage from '../interactors/item-create-page';
 
 import translation from '../../../translations/ui-inventory/en';
 
+const headersMap = {
+  BARCODE: InstanceViewPage.itemsList.headers(0),
+  STATUS: InstanceViewPage.itemsList.headers(1),
+  MATERIAL_TYPE: InstanceViewPage.itemsList.headers(2),
+  EFFECTIVE_LOCATION: InstanceViewPage.itemsList.headers(3),
+  ENUMERATION: InstanceViewPage.itemsList.headers(4),
+  CHRONOLOGY: InstanceViewPage.itemsList.headers(5),
+  VOLUME: InstanceViewPage.itemsList.headers(6),
+  YEAR: InstanceViewPage.itemsList.headers(7),
+};
+const headersIndex = {
+  BARCODE: 0,
+  STATUS: 1,
+  MATERIAL_TYPE: 2,
+  EFFECTIVE_LOCATION: 3,
+  ENUMERATION: 4,
+  CHRONOLOGY: 5,
+  VOLUME: 6,
+  YEAR: 7,
+};
+
 describe('InstanceViewPage', () => {
   const visitingViewInventoryPageWithContent = () => {
     beforeEach(async function () {
@@ -164,7 +185,7 @@ describe('InstanceViewPage', () => {
       });
 
       it('should display additional columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(9);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(10);
       });
 
       describe('select all action', () => {
@@ -235,185 +256,209 @@ describe('InstanceViewPage', () => {
 
     describe('items per holdings', () => {
       it('has correct amount of columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(7);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(8);
       });
 
       it('renders correct header captions', () => {
-        expect(InstanceViewPage.itemsList.headers(0).text).to.be.equal(translation['item.barcode']);
-        expect(InstanceViewPage.itemsList.headers(1).text).to.be.equal(translation.status);
-        expect(InstanceViewPage.itemsList.headers(2).text).to.be.equal(translation.materialType);
-        expect(InstanceViewPage.itemsList.headers(3).text).to.be.equal(translation.effectiveLocationShort);
-        expect(InstanceViewPage.itemsList.headers(4).text).to.be.equal(translation.enumeration);
-        expect(InstanceViewPage.itemsList.headers(5).text).to.be.equal(translation.chronology);
-        expect(InstanceViewPage.itemsList.headers(6).text).to.be.equal(translation.volume);
-        expect(InstanceViewPage.itemsList.headers(7).text).to.be.equal(translation.yearCaption);
+        expect(headersMap.BARCODE.text).to.be.equal(translation['item.barcode']);
+        expect(headersMap.STATUS.text).to.be.equal(translation.status);
+        expect(headersMap.MATERIAL_TYPE.text).to.be.equal(translation.materialType);
+        expect(headersMap.EFFECTIVE_LOCATION.text).to.be.equal(translation.effectiveLocationShort);
+        expect(headersMap.ENUMERATION.text).to.be.equal(translation.enumeration);
+        expect(headersMap.CHRONOLOGY.text).to.be.equal(translation.chronology);
+        expect(headersMap.VOLUME.text).to.be.equal(translation.volume);
+        expect(headersMap.YEAR.text).to.be.equal(translation.yearCaption);
       });
 
       describe('sorting', () => {
         describe('compares by `Item: barcode` field', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(0).click();
+            await headersMap.BARCODE.click();
           });
 
           it('ascending', () => {
-            expect(InstanceViewPage.getCellContent(0, 0)).to.equal('40875104574');
-            expect(InstanceViewPage.getCellContent(1, 0)).to.equal('5860825104574');
-            expect(InstanceViewPage.getCellContent(2, 0)).to.equal('60825104574');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.BARCODE)).to.equal('40875104574');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.BARCODE)).to.equal('5860825104574');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.BARCODE)).to.equal('60825104574');
           });
 
           describe('and', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(0).click();
+              await headersMap.BARCODE.click();
             });
 
             it('descending', () => {
-              expect(InstanceViewPage.getCellContent(0, 0)).to.equal('60825104574');
-              expect(InstanceViewPage.getCellContent(1, 0)).to.equal('5860825104574');
-              expect(InstanceViewPage.getCellContent(2, 0)).to.equal('40875104574');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.BARCODE)).to.equal('60825104574');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.BARCODE)).to.equal('5860825104574');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.BARCODE)).to.equal('40875104574');
             });
           });
         });
 
         describe('compares by `Status` field', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(1).click();
+            await headersMap.STATUS.click();
           });
 
           it('descending', () => {
-            expect(InstanceViewPage.getCellContent(0, 1)).to.equal('Paged');
-            expect(InstanceViewPage.getCellContent(1, 1)).to.equal('Checked out');
-            expect(InstanceViewPage.getCellContent(2, 1)).to.equal('Available');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.STATUS)).to.equal('Paged');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.STATUS)).to.equal('Checked out');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.STATUS)).to.equal('Available');
           });
 
           describe('and', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(1).click();
+              await headersMap.STATUS.click();
             });
 
             it('ascending', () => {
-              expect(InstanceViewPage.getCellContent(0, 1)).to.equal('Available');
-              expect(InstanceViewPage.getCellContent(1, 1)).to.equal('Checked out');
-              expect(InstanceViewPage.getCellContent(2, 1)).to.equal('Paged');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.STATUS)).to.equal('Available');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.STATUS)).to.equal('Checked out');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.STATUS)).to.equal('Paged');
             });
           });
         });
 
         describe('compares by `Material type` field', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(2).click();
+            await headersMap.MATERIAL_TYPE.click();
           });
 
           it('descending', () => {
-            expect(InstanceViewPage.getCellContent(0, 2)).to.equal('text');
-            expect(InstanceViewPage.getCellContent(1, 2)).to.equal('book');
-            expect(InstanceViewPage.getCellContent(2, 2)).to.equal('book');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.MATERIAL_TYPE)).to.equal('text');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.MATERIAL_TYPE)).to.equal('book');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.MATERIAL_TYPE)).to.equal('book');
           });
 
           describe('and', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(2).click();
+              await headersMap.MATERIAL_TYPE.click();
             });
 
             it('ascending', () => {
-              expect(InstanceViewPage.getCellContent(0, 2)).to.equal('book');
-              expect(InstanceViewPage.getCellContent(1, 2)).to.equal('book');
-              expect(InstanceViewPage.getCellContent(2, 2)).to.equal('text');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.MATERIAL_TYPE)).to.equal('book');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.MATERIAL_TYPE)).to.equal('book');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.MATERIAL_TYPE)).to.equal('text');
+            });
+          });
+        });
+
+        describe('sorts by `Effective location` field', () => {
+          beforeEach(async () => {
+            await headersMap.EFFECTIVE_LOCATION.click();
+          });
+
+          it('descending', () => {
+            expect(InstanceViewPage.getCellContent(0, headersIndex.EFFECTIVE_LOCATION)).to.equal('Main Library');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.EFFECTIVE_LOCATION)).to.equal('Main Library');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.EFFECTIVE_LOCATION)).to.equal('Annex');
+          });
+
+          describe('and', () => {
+            beforeEach(async () => {
+              await headersMap.EFFECTIVE_LOCATION.click();
+            });
+
+            it('ascending', () => {
+              expect(InstanceViewPage.getCellContent(0, headersIndex.EFFECTIVE_LOCATION)).to.equal('Annex');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.EFFECTIVE_LOCATION)).to.equal('Main Library');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.EFFECTIVE_LOCATION)).to.equal('Main Library');
             });
           });
         });
 
         describe('compares by `Enumeration` field', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(3).click();
+            await headersMap.ENUMERATION.click();
           });
 
           it('descending', () => {
-            expect(InstanceViewPage.getCellContent(0, 3)).to.equal('v.73:no.1-6');
-            expect(InstanceViewPage.getCellContent(1, 3)).to.equal('v.72:no.1-6');
-            expect(InstanceViewPage.getCellContent(2, 3)).to.equal('v.70:no.7-12');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.ENUMERATION)).to.equal('v.73:no.1-6');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.ENUMERATION)).to.equal('v.72:no.1-6');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.ENUMERATION)).to.equal('v.70:no.7-12');
           });
 
           describe('and', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(3).click();
+              await headersMap.ENUMERATION.click();
             });
 
             it('ascending', () => {
-              expect(InstanceViewPage.getCellContent(0, 3)).to.equal('v.70:no.7-12');
-              expect(InstanceViewPage.getCellContent(1, 3)).to.equal('v.72:no.1-6');
-              expect(InstanceViewPage.getCellContent(2, 3)).to.equal('v.73:no.1-6');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.ENUMERATION)).to.equal('v.70:no.7-12');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.ENUMERATION)).to.equal('v.72:no.1-6');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.ENUMERATION)).to.equal('v.73:no.1-6');
             });
           });
         });
 
         describe('compares by `Chronology` field', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(4).click();
+            await headersMap.CHRONOLOGY.click();
           });
 
           it('descending', () => {
-            expect(InstanceViewPage.getCellContent(0, 4)).to.equal('1987:Jan.-June');
-            expect(InstanceViewPage.getCellContent(1, 4)).to.equal('1986:Jan.-June');
-            expect(InstanceViewPage.getCellContent(2, 4)).to.equal('1984:July-Dec.');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.CHRONOLOGY)).to.equal('1987:Jan.-June');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.CHRONOLOGY)).to.equal('1986:Jan.-June');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.CHRONOLOGY)).to.equal('1984:July-Dec.');
           });
 
           describe('and', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(4).click();
+              await headersMap.CHRONOLOGY.click();
             });
 
             it('ascending', () => {
-              expect(InstanceViewPage.getCellContent(0, 4)).to.equal('1984:July-Dec.');
-              expect(InstanceViewPage.getCellContent(1, 4)).to.equal('1986:Jan.-June');
-              expect(InstanceViewPage.getCellContent(2, 4)).to.equal('1987:Jan.-June');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.CHRONOLOGY)).to.equal('1984:July-Dec.');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.CHRONOLOGY)).to.equal('1986:Jan.-June');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.CHRONOLOGY)).to.equal('1987:Jan.-June');
             });
           });
         });
 
         describe('clicking on the `Volume` header', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(5).click();
+            await headersMap.VOLUME.click();
           });
 
           it('the item order should be descending', () => {
-            expect(InstanceViewPage.getCellContent(0, 5)).to.equal('V.2 211');
-            expect(InstanceViewPage.getCellContent(1, 5)).to.equal('V.1 2345');
-            expect(InstanceViewPage.getCellContent(2, 5)).to.equal('V.1 101');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.VOLUME)).to.equal('V.2 211');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.VOLUME)).to.equal('V.1 2345');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.VOLUME)).to.equal('V.1 101');
           });
 
           describe('clicking on the `Volume` header again', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(5).click();
+              await headersMap.VOLUME.click();
             });
 
             it('the item order should be ascending', () => {
-              expect(InstanceViewPage.getCellContent(0, 5)).to.equal('V.1 101');
-              expect(InstanceViewPage.getCellContent(1, 5)).to.equal('V.1 2345');
-              expect(InstanceViewPage.getCellContent(2, 5)).to.equal('V.2 211');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.VOLUME)).to.equal('V.1 101');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.VOLUME)).to.equal('V.1 2345');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.VOLUME)).to.equal('V.2 211');
             });
           });
         });
 
         describe('clicking on the `Year, caption` header', () => {
           beforeEach(async () => {
-            await InstanceViewPage.itemsList.headers(6).click();
+            await headersMap.YEAR.click();
           });
 
           it('the item order should be descending', () => {
-            expect(InstanceViewPage.getCellContent(0, 6)).to.equal('2020');
-            expect(InstanceViewPage.getCellContent(1, 6)).to.equal('2018, 2019, 2020');
-            expect(InstanceViewPage.getCellContent(2, 6)).to.equal('2015, 2019');
+            expect(InstanceViewPage.getCellContent(0, headersIndex.YEAR)).to.equal('2020');
+            expect(InstanceViewPage.getCellContent(1, headersIndex.YEAR)).to.equal('2018, 2019, 2020');
+            expect(InstanceViewPage.getCellContent(2, headersIndex.YEAR)).to.equal('2015, 2019');
           });
 
           describe('clicking on the `Year, caption` header again', () => {
             beforeEach(async () => {
-              await InstanceViewPage.itemsList.headers(6).click();
+              await headersMap.YEAR.click();
             });
 
             it('the item order should be ascending', () => {
-              expect(InstanceViewPage.getCellContent(0, 6)).to.equal('2015, 2019');
-              expect(InstanceViewPage.getCellContent(1, 6)).to.equal('2018, 2019, 2020');
-              expect(InstanceViewPage.getCellContent(2, 6)).to.equal('2020');
+              expect(InstanceViewPage.getCellContent(0, headersIndex.YEAR)).to.equal('2015, 2019');
+              expect(InstanceViewPage.getCellContent(1, headersIndex.YEAR)).to.equal('2018, 2019, 2020');
+              expect(InstanceViewPage.getCellContent(2, headersIndex.YEAR)).to.equal('2020');
             });
           });
         });
