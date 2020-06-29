@@ -180,7 +180,7 @@ console.log("records", records)
             interactive={false}
             onHeaderClick={onHeaderClick}
             sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-            sortedColumn={'effectiveLocation'}
+            sortedColumn={itemsSorting.column}
             rowFormatter={ItemsListRow}
             rowProps={rowProps}
           />
