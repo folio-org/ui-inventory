@@ -70,6 +70,7 @@ export function canCreateNewRequest(item, stripes) {
     includes([
       itemStatusesMap.IN_PROCESS,
       itemStatusesMap.AVAILABLE,
+      itemStatusesMap.ON_ORDER,
       itemStatusesMap.IN_TRANSIT,
       itemStatusesMap.AWAITING_PICKUP,
       itemStatusesMap.MISSING,
