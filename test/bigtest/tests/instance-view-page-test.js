@@ -233,7 +233,7 @@ describe('InstanceViewPage', () => {
       });
     });
 
-    describe.only('items per holdings', () => {
+    describe('items per holdings', () => {
       it('has correct amount of columns', () => {
         expect(InstanceViewPage.itemsList.columnCount).to.be.equal(7);
       });
