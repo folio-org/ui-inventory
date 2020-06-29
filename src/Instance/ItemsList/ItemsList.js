@@ -145,6 +145,9 @@ const ItemsList = ({
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
   }, [items, itemsSorting]);
 
+  // NOTE: in order to sort on a particular column, it must be registered
+  // as a sorter in '../utils'. If it's not, there won't be any errors;
+  // sorting on that column simply won't work.
   const onHeaderClick = useCallback((e, { name: column }) => {
     if (['dnd', 'select'].includes(column)) return;
 
@@ -154,10 +157,10 @@ const ItemsList = ({
       column: isChangeDirection ? itemsSorting.column : column,
       isDesc: isChangeDirection ? !itemsSorting.isDesc : true,
     };
-console.log("new sorting", newItemsSorting)
+
     setItemsSorting(newItemsSorting);
   }, [itemsSorting]);
-console.log("records", records)
+
   return (
     <Droppable
       droppableId={holding.id}

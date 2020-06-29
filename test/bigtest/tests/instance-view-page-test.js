@@ -242,7 +242,7 @@ describe('InstanceViewPage', () => {
         expect(InstanceViewPage.itemsList.headers(0).text).to.be.equal(translation['item.barcode']);
         expect(InstanceViewPage.itemsList.headers(1).text).to.be.equal(translation.status);
         expect(InstanceViewPage.itemsList.headers(2).text).to.be.equal(translation.materialType);
-        expect(InstanceViewPage.itemsList.headers(3).text).to.be.equal(translation.effectiveLocationShort)
+        expect(InstanceViewPage.itemsList.headers(3).text).to.be.equal(translation.effectiveLocationShort);
         expect(InstanceViewPage.itemsList.headers(4).text).to.be.equal(translation.enumeration);
         expect(InstanceViewPage.itemsList.headers(5).text).to.be.equal(translation.chronology);
         expect(InstanceViewPage.itemsList.headers(6).text).to.be.equal(translation.volume);
