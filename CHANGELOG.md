@@ -3,6 +3,7 @@
 ## 4.0.1 (IN PROGRESS)
 
 * Show new request action for on order items. Fixes UIIN-1187.
+* Show new request action for checked out items. Fixes UIIN-1188.
 
 ## [4.0.0](https://github.com/folio-org/ui-inventory/tree/v4.0.0) (2020-06-25)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.2...v4.0.0)
