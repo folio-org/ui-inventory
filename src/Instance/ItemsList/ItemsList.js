@@ -10,9 +10,6 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import {
-  get,
-} from 'lodash';
 
 import {
   Checkbox,
@@ -68,8 +65,9 @@ const getFormatter = (
       )
     ) || noValue;
   },
-  'status': x => get(x, ['status', 'name']) || noValue,
-  'materialType': x => get(x, ['materialType', 'name']) || noValue,
+  'status': x => x.status?.name || noValue,
+  'materialType': x => x.materialType?.name || noValue,
+  'effectiveLocation': x => x.effectiveLocation?.name || noValue,
   'enumeration': x => x.enumeration || noValue,
   'chronology': x => x.chronology || noValue,
   'volume': x => x.volume || noValue,
@@ -90,6 +88,7 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, select
   'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
   'status': intl.formatMessage({ id: 'ui-inventory.status' }),
   'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
+  'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
   'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
   'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
   'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
@@ -99,6 +98,7 @@ const visibleColumns = [
   'barcode',
   'status',
   'materialType',
+  'effectiveLocation',
   'enumeration',
   'chronology',
   'volume',
@@ -145,6 +145,9 @@ const ItemsList = ({
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
   }, [items, itemsSorting]);
 
+  // NOTE: in order to sort on a particular column, it must be registered
+  // as a sorter in '../utils'. If it's not, there won't be any errors;
+  // sorting on that column simply won't work.
   const onHeaderClick = useCallback((e, { name: column }) => {
     if (['dnd', 'select'].includes(column)) return;
 
