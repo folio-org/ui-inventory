@@ -543,5 +543,6 @@
     "moveItems.instance.success": "{count, number} {count, plural, one {item} other {itens}} foram movidos com sucesso.",
     "moveItems": "Mover holdings/itens para outra instância",
     "folio": "FOLIO",
-    "marc": "MARC"
+    "marc": "MARC",
+    "effectiveLocationShort": "Localização efetiva"
 }

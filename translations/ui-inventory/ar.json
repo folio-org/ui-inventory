@@ -543,5 +543,6 @@
     "moveItems.instance.success": "تم نقل {count, number} {count, plural, one {مادة} other {مادة}}  بنجاح",
     "moveItems": "نقل المقتنيات/المواد إلى وعاء آخر",
     "folio": "فوليو",
-    "marc": "مارك"
+    "marc": "مارك",
+    "effectiveLocationShort": "الموقع النشط"
 }
