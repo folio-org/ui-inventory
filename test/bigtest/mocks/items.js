@@ -150,8 +150,8 @@ const itemsData = [
       updatedByUserId: '834408d0-5f11-5278-8945-4508aadf94b6',
     },
     effectiveLocation: {
-      id: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-      name: 'Main Library',
+      id: 'fcd64ce1-6995-48f0-840e-89ffa2288372',
+      name: 'Annex',
     },
   }
 ];

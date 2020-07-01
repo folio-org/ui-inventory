@@ -12,6 +12,7 @@
 * Increment `@folio/plugin-find-instance` to `v3.0` for `@folio/stripes` `v4` compatibility.
 * Clear detail record pane after new search is performed. Refs UIIN-1074.
 * Make language-filter labels translatable. Fixes UIIN-829.
+* Add effective location to item list table. Refs UIIN-1124.
 * Continue working in Inventory after moving holding(s) and/or item(s). Refs UIIN-1111.
 * Show new request action for checked out items. Fixes UIIN-1188.
 * Show new request action for on order items. Fixes UIIN-1187.
