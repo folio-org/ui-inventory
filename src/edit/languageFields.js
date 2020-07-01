@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import {
-  FormattedMessage,
-  useIntl
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { sortBy } from 'lodash';
 
 import {
-  intlPreferredLanguageCode,
+  formattedLanguageName,
   languages,
   Select,
 } from '@folio/stripes/components';
@@ -54,28 +51,12 @@ const LanguageFields = props => {
     canDelete,
   } = props;
 
-  // Build the language options for the select list in the instance create/edit form
-  let languageOptions = languages.map(
-    l => {
-      // The label property is slightly tricky because some languages
-      // can be represented by either a two- or three-character code (e.g.,
-      // 'bur' and 'my' both represent Burmese), but formatDisplayName will only
-      // return a localized language name for the two-char code (if there is one).
-      // Otherwise, it returns undefined. Thus for localizing, we
-      // have to favor the two-char code if there is one. If the function doesn't
-      // return a formatted language name at all, we use the English name as a fallback label.
-      const codeToUse = intlPreferredLanguageCode(l.alpha3);
-      const intlDisplayName = useIntl().formatDisplayName(codeToUse, { fallback: 'none' });
-      const label = intlDisplayName || l.name;
-
-      return (
-        {
-          label,
-          value: l.alpha3,
-        }
-      );
+  let languageOptions = languages.map(l => (
+    {
+      label: formattedLanguageName(l.alpha3),
+      value: l.alpha3,
     }
-  );
+  ));
   languageOptions = sortBy(languageOptions, ['label']);
 
   return (
