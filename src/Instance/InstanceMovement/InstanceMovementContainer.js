@@ -52,7 +52,6 @@ const InstanceMovementContainer = ({
   return (
     <DataContext.Provider value={referenceData}>
       <InstanceMovement
-        referenceData={referenceData}
         instanceFrom={instanceFrom}
         instanceTo={instanceTo}
         onClose={onClose}

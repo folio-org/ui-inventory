@@ -4,20 +4,23 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 
 import InstanceMovementDetails from '../interactors/instance-movement-page';
+import InstanceMarcPage from '../interactors/instance-marc-page';
 import InstanceViewPage from '../interactors/instance-view-page';
 
 const titleInstanceFrom = 'FROM ADVANCING RESEARCH';
 const titleInstanceTo = 'TO ADVANCING RESEARCH';
+const marcRecord = {
+  parsedRecord: {
+    content: { fields: [] },
+  },
+};
 
 describe('InstanceMovementPage', () => {
   setupApplication();
 
-  const instanceMovementDetailsFrom = new InstanceMovementDetails({
-    scope: '[data-test-movement-from-instance-details]'
-  });
-  const instanceMovementDetailsTo = new InstanceMovementDetails({
-    scope: '[data-test-movement-to-instance-details]'
-  });
+  const instanceMarcPage = new InstanceMarcPage();
+  let instanceMovementDetailsFrom;
+  let instanceMovementDetailsTo;
 
   beforeEach(async function () {
     const instanceFrom = this.server.create(
@@ -33,6 +36,7 @@ describe('InstanceMovementPage', () => {
         publication: [{
           publisher: 'International Pub',
         }],
+        source: 'MARC',
       },
     );
     const instanceTo = this.server.create(
@@ -48,6 +52,15 @@ describe('InstanceMovementPage', () => {
         }],
       },
     );
+
+    this.server.get('/source-storage/records/:id/formatted', marcRecord);
+
+    instanceMovementDetailsFrom = new InstanceMovementDetails({
+      scope: `[data-test-instance-movement-details="${instanceFrom.id}"]`
+    });
+    instanceMovementDetailsTo = new InstanceMovementDetails({
+      scope: `[data-test-instance-movement-details="${instanceTo.id}"]`
+    });
 
     this.visit(`/inventory/move/${instanceFrom.id}/${instanceTo.id}/instance`);
 
@@ -96,6 +109,32 @@ describe('InstanceMovementPage', () => {
 
     it('should open instance TO details view in the instances list view', () => {
       expect(InstanceViewPage.title.includes(titleInstanceFrom)).to.be.true;
+    });
+  });
+
+  describe('View MARC action', () => {
+    beforeEach(async () => {
+      await instanceMovementDetailsFrom.headerDropdown.click();
+      await instanceMovementDetailsFrom.headerDropdownMenu.clickViewMarc();
+
+      await instanceMarcPage.whenLoaded();
+    });
+
+    it('should open View Source page', () => {
+      expect(instanceMarcPage.isPresent).to.be.true;
+    });
+
+    describe('cancel View Source page', () => {
+      beforeEach(async () => {
+        await instanceMarcPage.close();
+
+        await instanceMovementDetailsFrom.whenLoaded();
+      });
+
+      it('should navigate back to movement screen', () => {
+        expect(instanceMovementDetailsFrom.isPresent).to.be.true;
+        expect(instanceMovementDetailsTo.isPresent).to.be.true;
+      });
     });
   });
 });

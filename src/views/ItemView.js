@@ -11,7 +11,7 @@ import {
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
