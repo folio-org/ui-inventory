@@ -1,0 +1,10 @@
+.instanceMarcWrapper {
+  margin-left: 20px;
+}
+
+.instanceMarc {
+  table-layout: fixed;
+  border: 0;
+  font-family: courier;
+  white-space: pre;
+}

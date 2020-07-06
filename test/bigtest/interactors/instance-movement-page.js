@@ -3,7 +3,12 @@ import {
   isPresent,
   text,
   clickable,
+  scoped,
 } from '@bigtest/interactor';
+
+@interactor class InventoryMovementActions {
+  clickViewMarc = clickable('[data-test-movement-details-view-source]');
+}
 
 @interactor class InstanceMovementDetails {
   isLoaded = isPresent('[data-test-pane-header-title]');
@@ -14,6 +19,9 @@ import {
 
   title = text('[data-test-pane-header-title]');
   close = clickable('[data-test-pane-header-dismiss-button]');
+
+  headerDropdown = scoped('[data-test-pane-header-actions-button]');
+  headerDropdownMenu = new InventoryMovementActions();
 }
 
 export default InstanceMovementDetails;
