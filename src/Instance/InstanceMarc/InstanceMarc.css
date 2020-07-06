@@ -6,5 +6,9 @@
   table-layout: fixed;
   border: 0;
   font-family: courier;
-  white-space: pre;
+  white-space: pre-wrap;
+
+  & tr td {
+    vertical-align: top;
+  }
 }
