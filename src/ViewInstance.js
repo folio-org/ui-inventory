@@ -325,6 +325,7 @@ class ViewInstance extends React.Component {
                 <Button
                   id="edit-instance-marc"
                   buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
                   onClick={() => {
                     onToggle();
                     this.editInstanceMarc();
