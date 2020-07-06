@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useIntl } from 'react-intl';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,9 +9,6 @@ import {
 } from '@folio/stripes/components';
 
 import InstanceMarcField from './InstanceMarcField';
-import {
-  isControlField,
-} from './utils';
 import styles from './InstanceMarc.css';
 
 const InstanceMarc = ({
@@ -19,13 +16,6 @@ const InstanceMarc = ({
   marc,
   onClose,
 }) => {
-  const intl = useIntl();
-
-  const renderFields = useMemo(() => ([
-    ...marc.fields.filter(isControlField),
-    ...marc.fields.filter(field => !isControlField(field)),
-  ]), [marc]);
-
   return (
     <Paneset isRoot>
       <Pane
@@ -41,7 +31,7 @@ const InstanceMarc = ({
             margin="small"
             tag="h3"
           >
-            {intl.formatMessage({ id: 'ui-inventory.marcSourceRecord' })}
+            <FormattedMessage id="ui-inventory.marcSourceRecord" />
           </Headline>
 
           <table className={styles.instanceMarc}>
@@ -53,7 +43,7 @@ const InstanceMarc = ({
               </tr>
 
               {
-                renderFields
+                marc.fields
                   .map((field, idx) => (
                     <InstanceMarcField
                       field={field}

@@ -14,6 +14,9 @@ import {
   useGoBack,
 } from '../../common/hooks';
 
+import {
+  isControlField,
+} from './utils';
 import InstanceMarc from './InstanceMarc';
 
 const InstanceMarcContainer = ({ mutator, instanceId }) => {
@@ -28,7 +31,17 @@ const InstanceMarcContainer = ({ mutator, instanceId }) => {
     setIsMarcLoading(true);
 
     mutator.marcRecord.GET()
-      .then((marcResponse) => setMarc(marcResponse.parsedRecord.content))
+      .then((marcResponse) => {
+        const parsedMarc = marcResponse.parsedRecord.content;
+
+        setMarc({
+          leader: parsedMarc.leader,
+          fields: [
+            ...parsedMarc.fields.filter(isControlField),
+            ...parsedMarc.fields.filter(field => !isControlField(field)),
+          ],
+        });
+      })
       .catch(error => {
         // eslint-disable-next-line no-console
         console.error('MARC record getting ERROR: ', error);

@@ -51,7 +51,7 @@ HoldingsList.propTypes = {
   activeDropZone: PropTypes.string,
 };
 
-HoldingsList.defaulProps = {
+HoldingsList.defaultProps = {
   holdings: [],
 };
 
