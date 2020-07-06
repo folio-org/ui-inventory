@@ -15,6 +15,7 @@
 * Continue working in Inventory after moving holding(s) and/or item(s). Refs UIIN-1111.
 * Show new request action for checked out items. Fixes UIIN-1188.
 * Show new request action for on order items. Fixes UIIN-1187.
+* Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
 
 ## [3.0.2](https://github.com/folio-org/ui-inventory/tree/v3.0.2) (2020-06-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v3.0.2)
