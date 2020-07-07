@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 3.1.0 (IN PROGRESS)
+## 5.0.0 (IN PROGRESS)
 
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
@@ -18,6 +18,18 @@
 * Show new request action for on order items. Fixes UIIN-1187.
 * Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
 * Action menu view source in split screen instance records. Refs UIIN-1112.
+* Increment `@folio/stripes` to `v5`, plus corresponding dev-dep increments.
+
+## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
+
+* Show new request action for on order items. Fixes UIIN-1187.
+* Show new request action for checked out items. Fixes UIIN-1188.
+
+## [4.0.0](https://github.com/folio-org/ui-inventory/tree/v4.0.0) (2020-06-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.2...v4.0.0)
+
+* Update Requests to SRS for v4. Refs UIIN-1158.
 
 ## [3.0.2](https://github.com/folio-org/ui-inventory/tree/v3.0.2) (2020-06-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v3.0.2)
