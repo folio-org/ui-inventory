@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
+import { sortBy } from 'lodash';
 
-import { Select } from '@folio/stripes/components';
+import {
+  formattedLanguageName,
+  languages,
+  Select,
+} from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
-import languages from '../data/languages';
 
-const renderLanguageField = ({ field, fieldIndex, canEdit }) => {
-  const languageOptions = languages.selectOptions(field);
+const renderLanguageField = ({ field, fieldIndex, canEdit, languageOptions }) => {
   const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.language" /> : null;
 
   return (
@@ -34,9 +37,11 @@ renderLanguageField.propTypes = {
   field: PropTypes.object,
   fieldIndex: PropTypes.number,
   canEdit: PropTypes.bool,
+  languageOptions: PropTypes.arrayOf(PropTypes.object),
 };
 renderLanguageField.defaultProps = {
   canEdit: true,
+  languageOptions: [],
 };
 
 const LanguageFields = props => {
@@ -46,6 +51,14 @@ const LanguageFields = props => {
     canDelete,
   } = props;
 
+  let languageOptions = languages.map(l => (
+    {
+      label: formattedLanguageName(l.alpha3),
+      value: l.alpha3,
+    }
+  ));
+  languageOptions = sortBy(languageOptions, ['label']);
+
   return (
     <RepeatableField
       name="languages"
@@ -53,7 +66,7 @@ const LanguageFields = props => {
       addLabel={<FormattedMessage id="ui-inventory.addLanguage" />}
       addButtonId="clickable-add-language"
       template={[{
-        render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit }); },
+        render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit, languageOptions }); },
       }]}
       canAdd={canAdd}
       canDelete={canDelete}
