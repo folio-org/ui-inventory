@@ -18,7 +18,9 @@ const HoldingsListContainer = ({ mutator, referenceData, instance, ...rest }) =>
   useEffect(() => {
     setIsLoading(true);
 
-    mutator.instanceHoldings.GET()
+    const fetchHoldingPromise = mutator.instanceHoldings.GET() || Promise.reject();
+
+    fetchHoldingPromise
       .then(setHoldings)
       .finally(() => {
         setIsLoading(false);

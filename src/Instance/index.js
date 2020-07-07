@@ -4,3 +4,4 @@ export * from './MoveItemsContext';
 
 export * from './InstanceDetails';
 export * from './InstanceMovement';
+export * from './InstanceMarc';

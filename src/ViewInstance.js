@@ -5,10 +5,6 @@ import React, {
   Fragment,
   createRef,
 } from 'react';
-import {
-  Route,
-  Switch
-} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -35,7 +31,6 @@ import {
 } from './utils';
 import InstanceForm from './edit/InstanceForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
-import ViewMarc from './ViewMarc';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
@@ -102,7 +97,6 @@ class ViewInstance extends React.Component {
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
-    this.cViewMarc = this.props.stripes.connect(ViewMarc);
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
     this.calloutRef = createRef();
@@ -222,13 +216,6 @@ class ViewInstance extends React.Component {
     goTo(`${path}${search}`);
   };
 
-  closeViewMarc = (e) => {
-    if (e) e.preventDefault();
-    const { location: { search } } = this.props;
-    this.resetLayerQueryParam();
-    this.props.goTo(`/inventory/view/${this.props.match.params.id}${search}`);
-  };
-
   handleViewSource = (e, instance) => {
     if (e) e.preventDefault();
     const {
@@ -326,6 +313,7 @@ class ViewInstance extends React.Component {
                 <Button
                   id="edit-instance-marc"
                   buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
                   onClick={() => {
                     onToggle();
                     this.editInstanceMarc();
@@ -380,8 +368,6 @@ class ViewInstance extends React.Component {
       onClose,
       paneWidth,
     } = this.props;
-
-    const { marcRecord } = this.state;
 
     const { identifierTypesById } = referenceTables;
 
@@ -443,34 +429,14 @@ class ViewInstance extends React.Component {
           {
             (!holdingsrecordid && !itemid) ?
               (
-                <Switch>
-                  <Route
-                    path="/inventory/viewsource/"
-                    render={() => (
-                      <this.cViewMarc
-                        instance={instance}
-                        marcRecord={marcRecord}
-                        stripes={stripes}
-                        match={this.props.match}
-                        onClose={this.closeViewMarc}
-                        paneWidth={this.props.paneWidth}
-                      />
-                    )}
+                <MoveItemsContext moveItems={this.moveItems}>
+                  <HoldingsListContainer
+                    instance={instance}
+                    referenceData={referenceTables}
+                    draggable={this.state.isItemsMovement}
+                    droppable
                   />
-                  <Route
-                    path="/inventory/view/"
-                    render={() => (
-                      <MoveItemsContext moveItems={this.moveItems}>
-                        <HoldingsListContainer
-                          instance={instance}
-                          referenceData={referenceTables}
-                          draggable={this.state.isItemsMovement}
-                          droppable
-                        />
-                      </MoveItemsContext>
-                    )}
-                  />
-                </Switch>
+                </MoveItemsContext>
               )
               :
               null
