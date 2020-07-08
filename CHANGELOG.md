@@ -5,7 +5,6 @@
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Move items between holdings. Refs UIIN-1097.
-* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
 * Update Requests to SRS for v4. Refs UIIN-1158.
 * Show two instance records as a split screen. Refs UIIN-1103.
 * Add filter for the instance source. Refs UIIN-1132.
@@ -19,6 +18,7 @@
 * Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
 * Action menu view source in split screen instance records. Refs UIIN-1112.
 * Increment `@folio/stripes` to `v5`, plus corresponding dev-dep increments.
+* Possible error for Source=FOLIO instances has been fixed. Refs UIIN-1190.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
