@@ -16,9 +16,9 @@
 * Show new request action for checked out items. Fixes UIIN-1188.
 * Show new request action for on order items. Fixes UIIN-1187.
 * Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
-* Possible error for Source=FOLIO instances has been fixed. Refs UIIN-1190.
 * Action menu view source in split screen instance records. Refs UIIN-1112.
 * Increment `@folio/stripes` to `v5`, plus corresponding dev-dep increments.
+* Possible error for Source=FOLIO instances has been fixed. Refs UIIN-1190.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
