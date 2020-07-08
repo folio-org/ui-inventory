@@ -125,14 +125,18 @@ class ViewInstance extends React.Component {
     this.calloutRef = createRef();
   }
 
+  /**
+   * Load the MARC record if the selectedInstance has changed and has source === MARC
+   */
   componentDidUpdate(prevProps) {
     const { resources: prevResources } = prevProps;
     const { resources } = this.props;
-    const instanceRecords = resources.selectedInstance.records;
+    const instanceRecords = get(resources, 'selectedInstance.records', []);
     const instanceRecordsId = instanceRecords[0]?.id;
-    const instanceRecordsSource = instanceRecords[0]?.source;
-    const prevInstanceRecordsId = prevResources.selectedInstance.records[0]?.id;
-    const isMarcSource = instanceRecordsSource === 'MARC';
+    const isMarcSource = instanceRecords[0]?.source === 'MARC';
+
+    const previousRecords = get(prevResources, 'selectedInstance.records', []);
+    const prevInstanceRecordsId = previousRecords[0]?.id;
 
     if (!isMarcSource || instanceRecordsId === prevInstanceRecordsId) return;
     this.getMARCRecord();
