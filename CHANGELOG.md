@@ -3,6 +3,7 @@
 ## 4.0.2 (IN PROGRESS)
 
 * Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
+* Possible error for Source=FOLIO instances has been fixed. Refs UIIN-1190.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
