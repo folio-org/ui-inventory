@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { sortBy } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   Accordion,
@@ -97,7 +97,7 @@ const InstanceFilters = props => {
 
   let languageOptions = languages.map(l => (
     {
-      label: formattedLanguageName(l.alpha3),
+      label: formattedLanguageName(l.alpha3, useIntl()),
       value: l.alpha3,
     }
   ));

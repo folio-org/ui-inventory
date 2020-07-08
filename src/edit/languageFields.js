@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { sortBy } from 'lodash';
 
 import {
@@ -50,10 +50,11 @@ const LanguageFields = props => {
     canEdit,
     canDelete,
   } = props;
+  const intl = useIntl();
 
   let languageOptions = languages.map(l => (
     {
-      label: formattedLanguageName(l.alpha3),
+      label: formattedLanguageName(l.alpha3, intl),
       value: l.alpha3,
     }
   ));
