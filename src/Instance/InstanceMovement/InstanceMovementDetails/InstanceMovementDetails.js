@@ -4,6 +4,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  useStripes,
+} from '@folio/stripes/core';
+
 import DataContext from '../../../contexts/DataContext';
 import {
   InstanceDetails,
@@ -18,6 +22,8 @@ import {
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 
 const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
+  const stripes = useStripes();
+
   const closeInstance = useCallback(() => {
     onClose(instance);
   }, [instance, onClose]);
@@ -25,7 +31,10 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
   const referenceData = useContext(DataContext);
 
   const getActionMenu = useCallback(({ onToggle }) => {
-    if (instance.source !== 'MARC') {
+    if (
+      instance.source !== 'MARC'
+      && !stripes.hasPerm('inventory.instances.item.put')
+    ) {
       return null;
     }
 

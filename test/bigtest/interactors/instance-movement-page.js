@@ -8,6 +8,7 @@ import {
 
 @interactor class InventoryMovementActions {
   clickViewMarc = clickable('[data-test-movement-details-view-source]');
+  clickEdit = clickable('[data-test-movement-details-edit-instance]');
 }
 
 @interactor class InstanceMovementDetails {

@@ -9,27 +9,17 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import queryString from 'query-string';
-
 import {
   AppIcon,
-  IntlConsumer,
   IfPermission,
 } from '@folio/stripes/core';
 import {
   Pane,
   Button,
-  Layer,
   Icon,
   Callout,
 } from '@folio/stripes/components';
 
-import {
-  craftLayerUrl,
-  marshalInstance,
-  unmarshalInstance,
-} from './utils';
-import InstanceForm from './edit/InstanceForm';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
@@ -98,7 +88,6 @@ class ViewInstance extends React.Component {
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
 
-    this.craftLayerUrl = craftLayerUrl.bind(this);
     this.calloutRef = createRef();
   }
 
@@ -126,9 +115,14 @@ class ViewInstance extends React.Component {
   };
 
   // Edit Instance Handlers
-  onClickEditInstance = (e) => {
-    if (e) e.preventDefault();
-    this.props.updateLocation({ layer: 'edit' });
+  onClickEditInstance = () => {
+    const { history, location, match } = this.props;
+    const instanceId = match.params.id;
+
+    history.push({
+      pathname: `/inventory/edit/${instanceId}/instance`,
+      search: location.search,
+    });
   };
 
   editInstanceMarc = () => {
@@ -182,22 +176,6 @@ class ViewInstance extends React.Component {
 
         this.calloutRef.current.sendCallout({ message });
       });
-  };
-
-  update = (instance) => {
-    const { referenceTables: { identifierTypesByName } } = this.props;
-
-    // Massage record to add preceeding and succeeding title fields
-    marshalInstance(instance, identifierTypesByName);
-
-    this.props.mutator.selectedInstance.PUT(instance).then(() => {
-      this.resetLayerQueryParam();
-    });
-  };
-
-  resetLayerQueryParam = (e) => {
-    if (e) e.preventDefault();
-    this.props.updateLocation({ layer: null });
   };
 
   goBack = (e) => {
@@ -264,7 +242,6 @@ class ViewInstance extends React.Component {
         <IfPermission perm="ui-inventory.instance.edit">
           <Button
             id="edit-instance"
-            href={this.craftLayerUrl('edit')}
             onClick={() => {
               onToggle();
               this.onClickEditInstance();
@@ -363,16 +340,12 @@ class ViewInstance extends React.Component {
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
-      location,
       referenceTables,
       stripes,
       onClose,
       paneWidth,
     } = this.props;
 
-    const { identifierTypesById } = referenceTables;
-
-    const query = location.search ? queryString.parse(location.search) : {};
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -393,29 +366,6 @@ class ViewInstance extends React.Component {
             />
           </div>
         </Pane>
-      );
-    }
-
-    if (query.layer === 'edit') {
-      return (
-        <IntlConsumer>
-          {(intl) => (
-            <Layer
-              isOpen
-              contentLabel={intl.formatMessage({ id: 'ui-inventory.editInstanceDialog' })}
-            >
-              <InstanceForm
-                onSubmit={this.update}
-                initialValues={unmarshalInstance(instance, identifierTypesById)}
-                instanceSource={get(instance, ['source'])}
-                referenceTables={referenceTables}
-                stripes={stripes}
-                match={this.props.match}
-                onCancel={this.resetLayerQueryParam}
-              />
-            </Layer>
-          )}
-        </IntlConsumer>
       );
     }
 
