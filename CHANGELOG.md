@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 4.0.2 (IN PROGRESS)
+## [4.0.2](https://github.com/folio-org/ui-inventory/tree/v4.0.2) (2020-07-08)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.1...v4.0.2)
 
 * Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
 * Possible error for Source=FOLIO instances has been fixed. Refs UIIN-1190.
