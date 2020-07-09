@@ -10,11 +10,7 @@ import {
   selectable,
 } from '@bigtest/interactor';
 
-@interactor class HeaderDropdown {
-  click = clickable('button');
-}
-
-@interactor class HeaderDropdownMenu {
+@interactor class Footer {
   clickCancel = clickable('#cancel-instance-edition');
 }
 
@@ -66,8 +62,7 @@ import {
 
 @interactor class InstanceEditPage {
   title = text('[data-test-header-title]');
-  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
-  headerDropdownMenu = new HeaderDropdownMenu();
+  footer = new Footer();
 
   classifications = new Classifications('select[name="classifications[0].classificationTypeId"]');
   clickAddClassification = clickable('#clickable-add-classification');
@@ -95,6 +90,11 @@ import {
   contributors = new Contributors();
   precedingTitles = new PrecedingTitles();
   succeedingTitles = new SucceedingTitles();
+
+  isLoaded = isPresent('[data-test-pane-header-title]');
+  whenLoaded() {
+    return this.timeout(10000).when(() => this.isLoaded);
+  }
 
   // The BigTest documentation shows examples like
   //   let input = new Interactor('input');

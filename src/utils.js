@@ -508,8 +508,12 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
  *
  */
 export const marshalInstance = (instance, identifierTypesByName) => {
-  marshalTitles(instance, identifierTypesByName, 'preceding');
-  marshalTitles(instance, identifierTypesByName, 'succeeding');
+  const marshaledInstance = { ...instance };
+
+  marshalTitles(marshaledInstance, identifierTypesByName, 'preceding');
+  marshalTitles(marshaledInstance, identifierTypesByName, 'succeeding');
+
+  return marshaledInstance;
 };
 
 /**
@@ -520,8 +524,10 @@ export const marshalInstance = (instance, identifierTypesByName) => {
  *
  */
 export const unmarshalInstance = (instance, identifierTypesById) => {
-  unmarshalTitles(instance, identifierTypesById, 'preceding');
-  unmarshalTitles(instance, identifierTypesById, 'succeeding');
+  const unmarshaledInstance = { ...instance };
 
-  return instance;
+  unmarshalTitles(unmarshaledInstance, identifierTypesById, 'preceding');
+  unmarshalTitles(unmarshaledInstance, identifierTypesById, 'succeeding');
+
+  return unmarshaledInstance;
 };
