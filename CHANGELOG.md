@@ -1,4 +1,8 @@
 # Change history for ui-inventory
+## [4.0.3](https://github.com/folio-org/ui-inventory/tree/v4.0.3) (2020-07-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.2...v4.0.3)
+* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Fixes UIIN-1128.
+* Fix Edit in quickMARC and View Source options state after instance editing. Refs UIIN-1204.
 
 ## [4.0.2](https://github.com/folio-org/ui-inventory/tree/v4.0.2) (2020-07-08)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.1...v4.0.2)
