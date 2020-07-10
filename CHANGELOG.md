@@ -22,6 +22,7 @@
 * Action menu edit in split screen instance records. Refs UIIN-1116.
 * Validate presence of resources before accessing them. Refs UIIN-1203, STCON-111.
 * Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Fixes UIIN-1128.
+* Fix Edit in quickMARC and View Source options state after instance editing. Refs UIIN-1204.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
