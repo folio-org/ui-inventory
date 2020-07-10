@@ -94,10 +94,10 @@ class ViewInstance extends React.Component {
   componentDidUpdate(prevProps) {
     const { resources: prevResources } = prevProps;
     const { resources } = this.props;
-    const instanceRecords = resources.selectedInstance.records;
+    const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsId = instanceRecords[0]?.id;
     const instanceRecordsSource = instanceRecords[0]?.source;
-    const prevInstanceRecordsId = prevResources.selectedInstance?.records[0]?.id;
+    const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
     const isMarcSource = instanceRecordsSource === 'MARC';
 
     if (!isMarcSource || instanceRecordsId === prevInstanceRecordsId) return;
