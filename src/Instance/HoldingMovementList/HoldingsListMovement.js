@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { HoldingContainer } from './Holding';
+import { HoldingMovementContainer } from './HoldingMovement';
 import DataContext from '../../contexts/DataContext';
 
-const HoldingsList = ({
+const HoldingsListMovement = ({
   instance,
   holdings,
-  referenceData,
 
   draggable,
   droppable,
@@ -17,12 +16,14 @@ const HoldingsList = ({
     ifItemsDragSelected,
     getDraggingItems,
     activeDropZone,
+    referenceData,
   } = useContext(DataContext);
+
   return (
     <>
       {
-        holdings.map(holding => (
-          <HoldingContainer
+        holdings.map((holding, index) => (
+          <HoldingMovementContainer
             key={`items_${holding.id}`}
             instance={instance}
             holding={holding}
@@ -34,6 +35,7 @@ const HoldingsList = ({
             selectItemsForDrag={selectItemsForDrag}
             ifItemsDragSelected={ifItemsDragSelected}
             getDraggingItems={getDraggingItems}
+            holdingindex={index}
           />
         ))
       }
@@ -41,21 +43,16 @@ const HoldingsList = ({
   );
 };
 
-HoldingsList.propTypes = {
+HoldingsListMovement.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  referenceData: PropTypes.object.isRequired,
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
-  selectItemsForDrag: PropTypes.func.isRequired,
-  ifItemsDragSelected: PropTypes.func.isRequired,
-  getDraggingItems: PropTypes.func.isRequired,
-  activeDropZone: PropTypes.string,
 };
 
-HoldingsList.defaultProps = {
+HoldingsListMovement.defaultProps = {
   holdings: [],
 };
 
-export default HoldingsList;
+export default HoldingsListMovement;

@@ -429,10 +429,12 @@ class ViewInstance extends React.Component {
           {
             (!holdingsrecordid && !itemid) ?
               (
-                <MoveItemsContext moveItems={this.moveItems}>
+                <MoveItemsContext
+                  moveItems={this.moveItems}
+                >
                   <HoldingsListContainer
-                    instance={instance}
                     referenceData={referenceTables}
+                    instance={instance}
                     draggable={this.state.isItemsMovement}
                     droppable
                   />

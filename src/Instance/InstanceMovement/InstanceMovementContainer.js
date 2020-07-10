@@ -14,7 +14,6 @@ import {
 import {
   useInstance,
 } from '../../common/hooks';
-import DataContext from '../../contexts/DataContext';
 
 import InstanceMovement from './InstanceMovement';
 
@@ -50,13 +49,12 @@ const InstanceMovementContainer = ({
   if (isInstanceFromLoading || isInstanceToLoading) return <LoadingView />;
 
   return (
-    <DataContext.Provider value={referenceData}>
-      <InstanceMovement
-        instanceFrom={instanceFrom}
-        instanceTo={instanceTo}
-        onClose={onClose}
-      />
-    </DataContext.Provider>
+    <InstanceMovement
+      referenceData={referenceData}
+      instanceFrom={instanceFrom}
+      instanceTo={instanceTo}
+      onClose={onClose}
+    />
   );
 };
 

@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { Droppable } from 'react-beautiful-dnd';
 import DataContext from '../../../contexts/DataContext';
 import {
   InstanceDetails,
@@ -11,9 +12,6 @@ import {
 import {
   HoldingsListContainer,
 } from '../../HoldingsList';
-import {
-  MoveItemsContext,
-} from '../../MoveItemsContext';
 
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 
@@ -46,14 +44,29 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
       actionMenu={getActionMenu}
       data-test-instance-movement-details={instance.id}
     >
-      <MoveItemsContext>
-        <HoldingsListContainer
-          instance={instance}
-          referenceData={referenceData}
-          draggable={false}
-          droppable={false}
-        />
-      </MoveItemsContext>
+      <Droppable
+        droppableId={`${instance.id}`}
+        // isDropDisabled
+        // isDropDisabled={!droppable || activeDropZone === instance.id}
+      >
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            data-test-holdings
+          >
+            <HoldingsListContainer
+              instance={instance}
+              referenceData={referenceData}
+              isHoldingsMove
+              draggable={false}
+              droppable={false}
+            />
+
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </InstanceDetails>
   );
 };

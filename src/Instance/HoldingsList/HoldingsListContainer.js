@@ -10,8 +10,15 @@ import {
 } from '@folio/stripes/components';
 
 import HoldingsList from './HoldingsList';
+import HoldingsListMovement from '../HoldingMovementList';
 
-const HoldingsListContainer = ({ mutator, referenceData, instance, ...rest }) => {
+const HoldingsListContainer = ({
+  mutator,
+  referenceData,
+  instance,
+  isHoldingsMove,
+  ...rest
+}) => {
   const [holdings, setHoldings] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,12 +37,21 @@ const HoldingsListContainer = ({ mutator, referenceData, instance, ...rest }) =>
   if (isLoading) return <Loading size="large" />;
 
   return (
-    <HoldingsList
-      {...rest}
-      holdings={holdings}
-      instance={instance}
-      referenceData={referenceData}
-    />
+    isHoldingsMove ? (
+      <HoldingsListMovement
+        {...rest}
+        holdings={holdings}
+        instance={instance}
+        referenceData={referenceData}
+      />
+    ) : (
+      <HoldingsList
+        {...rest}
+        holdings={holdings}
+        instance={instance}
+        referenceData={referenceData}
+      />
+    )
   );
 };
 
@@ -56,6 +72,7 @@ HoldingsListContainer.propTypes = {
   mutator: PropTypes.object.isRequired,
   instance: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
+  isHoldingsMove: PropTypes.bool,
 };
 
 export default stripesConnect(HoldingsListContainer);

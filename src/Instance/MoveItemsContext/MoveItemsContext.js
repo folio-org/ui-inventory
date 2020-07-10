@@ -1,5 +1,4 @@
 import React, {
-  cloneElement,
   useState,
   useCallback,
 } from 'react';
@@ -9,13 +8,15 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import {
   Loading,
 } from '@folio/stripes/components';
+import DataContext from '../../contexts/DataContext';
 
-const MoveItemsContext = ({ children, moveItems }) => {
+const MoveItemsContext = ({ children, moveItems, referenceData }) => {
+  // console.log('referenceData', referenceData);
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
   const [activeDropZone, setActiveDropZone] = useState();
-
   const onDragStart = useCallback((result) => {
+    console.log('result start', result);
     setActiveDropZone(result.source.droppableId);
   }, []);
 
@@ -103,14 +104,17 @@ const MoveItemsContext = ({ children, moveItems }) => {
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
     >
-      {
-        cloneElement(children, {
+      <DataContext.Provider
+        value={{
           activeDropZone,
           selectItemsForDrag,
           ifItemsDragSelected,
           getDraggingItems,
-        })
-      }
+          referenceData,
+        }}
+      >
+        {children}
+      </DataContext.Provider>
     </DragDropContext>
   );
 };
@@ -118,6 +122,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
 MoveItemsContext.propTypes = {
   children: PropTypes.node.isRequired,
   moveItems: PropTypes.func.isRequired,
+  referenceData: PropTypes.object,
 };
 
 export default MoveItemsContext;
