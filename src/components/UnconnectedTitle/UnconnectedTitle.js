@@ -30,7 +30,7 @@ const UnconnectedTitle = ({ field, onSelect, isDisabled }) => (
       />
     </Col>
     <Col xs={1}>
-      <InstancePlugin onSelect={onSelect} disabled={isDisabled} />
+      <InstancePlugin onSelect={onSelect} isDisabled={isDisabled} />
     </Col>
     <Col xs>
       <KeyValue
