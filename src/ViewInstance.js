@@ -91,18 +91,34 @@ class ViewInstance extends React.Component {
     this.calloutRef = createRef();
   }
 
+  componentDidMount() {
+    const isMARCSource = this.isMARCSource();
+
+    if (isMARCSource) {
+      this.getMARCRecord();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { resources: prevResources } = prevProps;
     const { resources } = this.props;
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsId = instanceRecords[0]?.id;
-    const instanceRecordsSource = instanceRecords[0]?.source;
     const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
-    const isMarcSource = instanceRecordsSource === 'MARC';
+    const isMARCSource = this.isMARCSource();
 
-    if (!isMarcSource || instanceRecordsId === prevInstanceRecordsId) return;
-    this.getMARCRecord();
+    if (isMARCSource && instanceRecordsId !== prevInstanceRecordsId) {
+      this.getMARCRecord();
+    }
   }
+
+  isMARCSource = () => {
+    const { resources } = this.props;
+    const instanceRecords = resources?.selectedInstance?.records;
+    const instanceRecordsSource = instanceRecords?.[0]?.source;
+
+    return instanceRecordsSource === 'MARC';
+  };
 
   getMARCRecord = () => {
     const { mutator } = this.props;
