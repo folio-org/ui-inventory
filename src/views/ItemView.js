@@ -346,7 +346,7 @@ class ItemView extends React.Component {
 
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
-    let loanLink = item.status.name;
+    let loanLink = item?.status?.name;
     let borrowerLink = '-';
 
     if (openLoan) {
