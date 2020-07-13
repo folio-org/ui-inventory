@@ -426,6 +426,14 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-missing', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Missing' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id', ({ items }, request) => {
     const body = JSON.parse(request.requestBody);
     const item = items.create(body);

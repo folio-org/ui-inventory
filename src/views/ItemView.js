@@ -2,7 +2,6 @@ import {
   get,
   upperFirst,
   cloneDeep,
-  set,
   omit,
   map,
   isEmpty,
