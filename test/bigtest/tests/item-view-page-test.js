@@ -321,7 +321,7 @@ describe('ItemViewPage', () => {
 
       describe('pane header dropdown menu', () => {
         beforeEach(async () => {
-          await ItemViewPage.headerDropdown.click();
+          await ItemViewPage.clickDismiss();
         });
 
         it('should not display an edit item', () => {

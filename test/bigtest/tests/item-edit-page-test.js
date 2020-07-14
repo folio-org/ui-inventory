@@ -69,13 +69,9 @@ describe('ItemEditPage', () => {
   });
 
   describe('pane header menu', () => {
-    beforeEach(async () => {
-      await ItemEditPage.headerDropdown.click();
-    });
-
     describe('clicking on cancel', () => {
       beforeEach(async () => {
-        await ItemEditPage.headerDropdownMenu.clickCancel();
+        await ItemEditPage.paneFooter.clickCancel();
         await itemPage.whenLoaded();
       });
 
