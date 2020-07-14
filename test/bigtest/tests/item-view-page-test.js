@@ -1,5 +1,6 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import faker from 'faker';
 
 import setupApplication from '../helpers/setup-application';
 import ItemViewPage from '../interactors/item-view-page';
@@ -21,8 +22,15 @@ describe('ItemViewPage', () => {
             title: 'ADVANCING RESEARCH',
           }
         );
+
         const holding = this.server.schema.instances.first().holdings.models[0];
         item = holding.items.models[0].attrs;
+        const request = this.server.create('request', {
+          holdShelfExpirationDate: faker.date.future(),
+          item: { ...item, status: 'Awaiting pickup' },
+        });
+
+        this.server.get('/circulation/requests', { totalRecords: 1, requests: [request.toJSON()] });
 
         this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
         await ItemViewPage.whenLoaded();
@@ -121,7 +129,7 @@ describe('ItemViewPage', () => {
         });
 
         describe('clicking on mark as missing', () => {
-          beforeEach(async () => {
+          beforeEach(async function () {
             await ItemViewPage.headerDropdownMenu.clickMarkAsMissing();
           });
 

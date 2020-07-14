@@ -512,6 +512,15 @@ export default function configure() {
     totalRecords: 0
   });
 
+  this.put('/circulation/requests/:id', ({ requests }, { requestBody }) => {
+    const { id, status } = JSON.parse(requestBody);
+    const request = requests.find(id);
+
+    request.update({ status });
+
+    return request.attrs;
+  });
+
   this.get('/service-points-users', {
     servicePointsUsers: [],
     totalRecords: 0
