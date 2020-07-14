@@ -259,7 +259,10 @@ describe('Setting of HRID Handling', () => {
   describe('Patron has permissions', () => {
     setupApplication({
       hasAllPerms: false,
-      permissions: { 'ui-inventory.settings.hrid-handling': true },
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.hrid-handling': true,
+      },
     });
 
     beforeEach(async function () {

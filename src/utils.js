@@ -80,6 +80,21 @@ export function canCreateNewRequest(item, stripes) {
     ], item?.status?.name);
 }
 
+export function canMarkRequestAsOpen(request) {
+  if (!request) {
+    return false;
+  }
+
+  const { item, holdShelfExpirationDate } = request;
+  const status = item?.status;
+
+  return new Date(holdShelfExpirationDate) > new Date() &&
+    includes([
+      itemStatusesMap.AWAITING_PICKUP,
+      itemStatusesMap.AWAITING_DELIVERY,
+    ], status);
+}
+
 export function getCurrentFilters(filtersStr) {
   if (!filtersStr) {
     return undefined;
