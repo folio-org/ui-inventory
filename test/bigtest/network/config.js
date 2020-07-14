@@ -62,6 +62,8 @@ export default function configure() {
   });
   this.get('/item-damaged-statuses/:id');
 
+  this.get('/instance-bulk/ids', {});
+
   this.get('/modes-of-issuance', ({ issuanceModes }) => issuanceModes.all());
   this.get('/modes-of-issuance/:id', ({ issuanceModes }, { params }) => {
     return issuanceModes.find(params.id);
