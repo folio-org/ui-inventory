@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { beforeEach, describe, it } from '@bigtest/mocha';
-import { camelize, pluralize } from '@bigtest/mirage';
+import { camelize, pluralize, underscore } from 'inflected';
 
 import { expect } from 'chai';
 
@@ -39,7 +39,7 @@ function check(entityName, ...fields) {
     });
 
     it('stubs the index and entity GET endpoints', function () {
-      const entitiesName = camelize(plural);
+      const entitiesName = camelize(underscore(plural), false);
       expect(index[entitiesName].length).to.equal(1);
       const [first] = index[entitiesName];
       expect(first).to.include(attributes);
