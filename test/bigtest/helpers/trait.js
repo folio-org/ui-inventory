@@ -1,7 +1,7 @@
 const trait = (afterCreate) => {
   return {
     extension: {
-      afterCreate
+      ...afterCreate
     },
     __isTrait__: true
   };
