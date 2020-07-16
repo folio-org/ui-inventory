@@ -60,7 +60,7 @@ const getFormatter = (
         <ItemBarcode
           item={item}
           holdingId={holding.id}
-          instanceId={holding.instanceId}
+          instanceId={holding.instance}
         />
       )
     ) || noValue;
