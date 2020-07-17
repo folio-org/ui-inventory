@@ -499,7 +499,7 @@
     "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
     "callNumberNormalized": "Call number, normalized",
     "item.status.claimedReturned": "Claimed returned",
-    "item.status.lostAndPaid": "Lost and paid",
+    "item.status.lostAndPaid": "Perdu et payé",
     "permission.all-permissions.TEMPORARY": "Inventaire: toutes les autorisations",
     "permission.settings.materialtypes": "Settings (Inventory): Create, edit, delete material types",
     "permission.settings.loantypes": "Settings (Inventory): Create, edit, delete loan types",
@@ -544,5 +544,5 @@
     "moveItems": "Move holdings/items to another instance",
     "folio": "FOLIO",
     "marc": "MARC",
-    "effectiveLocationShort": "Effective location"
+    "effectiveLocationShort": "Emplacement effectif"
 }

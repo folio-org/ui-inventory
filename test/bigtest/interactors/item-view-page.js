@@ -56,6 +56,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   loanAccordion = new AccordionSection('[data-test-item-view-page] #acc06');
   circulationHistoryAccordion = new AccordionSection('[data-test-item-view-page] #acc09');
   confirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
+  clickDismiss = clickable('[data-test-pane-header-dismiss-button]');
 
   whenLoaded() {
     return this.timeout(6000).when(() => this.isLoaded);

@@ -11,6 +11,7 @@ import {
   InstancesRoute,
   InstanceMovementRoute,
   InstanceMarcRoute,
+  InstanceEditRoute,
   ItemRoute,
   QuickMarcRoute,
   CreateItemRoute,
@@ -50,6 +51,10 @@ const InventoryRouting = (props) => {
       <Route
         path={`${path}/viewsource/:id`}
         component={InstanceMarcRoute}
+      />
+      <Route
+        path={`${path}/edit/:id/instance`}
+        component={InstanceEditRoute}
       />
       <Route
         path={path}

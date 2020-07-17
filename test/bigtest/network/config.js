@@ -62,6 +62,8 @@ export default function configure() {
   });
   this.get('/item-damaged-statuses/:id');
 
+  this.get('/instance-bulk/ids', {});
+
   this.get('/modes-of-issuance', ({ issuanceModes }) => issuanceModes.all());
   this.get('/modes-of-issuance/:id', ({ issuanceModes }, { params }) => {
     return issuanceModes.find(params.id);
@@ -426,6 +428,14 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-missing', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Missing' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id', ({ items }, request) => {
     const body = JSON.parse(request.requestBody);
     const item = items.create(body);
@@ -500,6 +510,15 @@ export default function configure() {
   this.get('/circulation/requests', {
     requests: [],
     totalRecords: 0
+  });
+
+  this.put('/circulation/requests/:id', ({ requests }, { requestBody }) => {
+    const { id, status } = JSON.parse(requestBody);
+    const request = requests.find(id);
+
+    request.update({ status });
+
+    return request.attrs;
   });
 
   this.get('/service-points-users', {

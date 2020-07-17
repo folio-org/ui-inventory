@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   Accordion,
@@ -39,6 +39,7 @@ const InstanceDescriptiveView = ({
 
     return (instance.natureOfContentTermIds || []).map(termId => natureOfContentTermsMap[termId]);
   }, [instance, natureOfContentTerms]);
+  const intl = useIntl();
 
   return (
     <Accordion
@@ -108,7 +109,7 @@ const InstanceDescriptiveView = ({
         <Col xs={12}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.language" />}
-            value={formatLanguages(instance.languages)}
+            value={formatLanguages(instance.languages, intl)}
           />
         </Col>
       </Row>

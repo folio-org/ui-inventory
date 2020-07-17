@@ -1,22 +1,41 @@
 # Change history for ui-inventory
 
-## 3.1.0 (IN PROGRESS)
+## 5.0.0 (IN PROGRESS)
 
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Move items between holdings. Refs UIIN-1097.
-* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Refs UIIN-1128.
 * Update Requests to SRS for v4. Refs UIIN-1158.
 * Show two instance records as a split screen. Refs UIIN-1103.
 * Add filter for the instance source. Refs UIIN-1132.
 * Increment `@folio/plugin-find-instance` to `v3.0` for `@folio/stripes` `v4` compatibility.
 * Clear detail record pane after new search is performed. Refs UIIN-1074.
+* Make language-filter labels translatable. Fixes UIIN-829.
 * Add effective location to item list table. Refs UIIN-1124.
 * Continue working in Inventory after moving holding(s) and/or item(s). Refs UIIN-1111.
 * Show new request action for checked out items. Fixes UIIN-1188.
 * Show new request action for on order items. Fixes UIIN-1187.
 * Add `Edit in quickMARC` link disabled state condition. Refs UIIN-1191
 * Action menu view source in split screen instance records. Refs UIIN-1112.
+* Increment `@folio/stripes` to `v5`, plus corresponding dev-dep increments.
+* Possible error for Source=FOLIO instances has been fixed. Refs UIIN-1190.
+* Action menu edit in split screen instance records. Refs UIIN-1116.
+* Validate presence of resources before accessing them. Refs UIIN-1203, STCON-111.
+* Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Fixes UIIN-1128.
+* Fix Edit in quickMARC and View Source options state after instance editing. Refs UIIN-1204.
+* Change request status for `Awaiting delivery` items marked as missing. Fixes UIIN-1206.
+* In transit report does not export name of library. Refs UIIN-1058.
+
+## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
+
+* Show new request action for on order items. Fixes UIIN-1187.
+* Show new request action for checked out items. Fixes UIIN-1188.
+
+## [4.0.0](https://github.com/folio-org/ui-inventory/tree/v4.0.0) (2020-06-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.2...v4.0.0)
+
+* Update Requests to SRS for v4. Refs UIIN-1158.
 
 ## [3.0.2](https://github.com/folio-org/ui-inventory/tree/v3.0.2) (2020-06-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v3.0.1...v3.0.2)

@@ -2,7 +2,6 @@ import {
   get,
   upperFirst,
   cloneDeep,
-  set,
   omit,
   map,
   isEmpty,
@@ -47,6 +46,7 @@ import {
   callNumberLabel,
   canMarkItemAsMissing,
   canMarkItemAsWithdrawn,
+  canMarkRequestAsOpen,
   canCreateNewRequest,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
@@ -125,12 +125,11 @@ class ItemView extends React.Component {
     this.props.updateLocation({ layer: 'copyItem' });
   }
 
-  markItemAsMissing = (item) => {
-    const newItem = cloneDeep(item);
-
-    set(newItem, ['status', 'name'], itemStatusesMap.MISSING);
+  markItemAsMissing = () => {
     this.markRequestAsOpen();
-    this.props.mutator.items.PUT(newItem).then(() => this.setState({ itemMissingModal: false }));
+    this.props.mutator.markItemAsMissing.POST({}).then(
+      () => this.setState({ itemMissingModal: false })
+    );
   }
 
   markItemAsWithdrawn = () => {
@@ -140,19 +139,13 @@ class ItemView extends React.Component {
   }
 
   markRequestAsOpen() {
-    const requestRecords = this.props.resources?.requests?.records ?? [];
+    const request = this.props.resources?.requests?.records?.[0];
 
-    if (requestRecords.length) {
-      return;
-    }
+    if (canMarkRequestAsOpen(request)) {
+      const newRequestRecord = cloneDeep(request);
 
-    const newRequestRecord = cloneDeep(requestRecords[0]);
-    const itemStatus = newRequestRecord?.item?.status;
-    const holdShelfExpirationDate = newRequestRecord?.holdShelfExpirationDate;
-
-    if (itemStatus === itemStatusesMap.AWAITING_PICKUP && new Date(holdShelfExpirationDate) > new Date()) {
+      newRequestRecord.status = requestStatuses.OPEN_NOT_YET_FILLED;
       this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
-      newRequestRecord.status = 'Open - Not yet filled';
       this.props.mutator.requests.PUT(newRequestRecord);
     }
   }
@@ -353,7 +346,7 @@ class ItemView extends React.Component {
 
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
-    let loanLink = item.status.name;
+    let loanLink = item?.status?.name;
     let borrowerLink = '-';
 
     if (openLoan) {
@@ -651,7 +644,7 @@ class ItemView extends React.Component {
                 open={this.state.itemMissingModal}
                 heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
                 message={missingModalMessage}
-                onConfirm={() => this.markItemAsMissing(item)}
+                onConfirm={this.markItemAsMissing}
                 onCancel={this.hideMissingModal}
                 confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
               />
@@ -1292,6 +1285,9 @@ ItemView.propTypes = {
       DELETE: PropTypes.func.isRequired,
     }),
     markItemAsWithdrawn: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markItemAsMissing: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),

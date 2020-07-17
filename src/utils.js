@@ -80,6 +80,21 @@ export function canCreateNewRequest(item, stripes) {
     ], item?.status?.name);
 }
 
+export function canMarkRequestAsOpen(request) {
+  if (!request) {
+    return false;
+  }
+
+  const { item, holdShelfExpirationDate } = request;
+  const status = item?.status;
+
+  return new Date(holdShelfExpirationDate) > new Date() &&
+    includes([
+      itemStatusesMap.AWAITING_PICKUP,
+      itemStatusesMap.AWAITING_DELIVERY,
+    ], status);
+}
+
 export function getCurrentFilters(filtersStr) {
   if (!filtersStr) {
     return undefined;
@@ -508,8 +523,12 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
  *
  */
 export const marshalInstance = (instance, identifierTypesByName) => {
-  marshalTitles(instance, identifierTypesByName, 'preceding');
-  marshalTitles(instance, identifierTypesByName, 'succeeding');
+  const marshaledInstance = { ...instance };
+
+  marshalTitles(marshaledInstance, identifierTypesByName, 'preceding');
+  marshalTitles(marshaledInstance, identifierTypesByName, 'succeeding');
+
+  return marshaledInstance;
 };
 
 /**
@@ -520,8 +539,10 @@ export const marshalInstance = (instance, identifierTypesByName) => {
  *
  */
 export const unmarshalInstance = (instance, identifierTypesById) => {
-  unmarshalTitles(instance, identifierTypesById, 'preceding');
-  unmarshalTitles(instance, identifierTypesById, 'succeeding');
+  const unmarshaledInstance = { ...instance };
 
-  return instance;
+  unmarshalTitles(unmarshaledInstance, identifierTypesById, 'preceding');
+  unmarshalTitles(unmarshaledInstance, identifierTypesById, 'succeeding');
+
+  return unmarshaledInstance;
 };

@@ -6,6 +6,7 @@ import setupApplication from '../helpers/setup-application';
 import InstanceMovementDetails from '../interactors/instance-movement-page';
 import InstanceMarcPage from '../interactors/instance-marc-page';
 import InstanceViewPage from '../interactors/instance-view-page';
+import InstanceEditPage from '../interactors/instance-edit-page';
 
 const titleInstanceFrom = 'FROM ADVANCING RESEARCH';
 const titleInstanceTo = 'TO ADVANCING RESEARCH';
@@ -127,6 +128,32 @@ describe('InstanceMovementPage', () => {
     describe('cancel View Source page', () => {
       beforeEach(async () => {
         await instanceMarcPage.close();
+
+        await instanceMovementDetailsFrom.whenLoaded();
+      });
+
+      it('should navigate back to movement screen', () => {
+        expect(instanceMovementDetailsFrom.isPresent).to.be.true;
+        expect(instanceMovementDetailsTo.isPresent).to.be.true;
+      });
+    });
+  });
+
+  describe('Edit action', () => {
+    beforeEach(async () => {
+      await instanceMovementDetailsFrom.headerDropdown.click();
+      await instanceMovementDetailsFrom.headerDropdownMenu.clickEdit();
+
+      await InstanceEditPage.whenLoaded();
+    });
+
+    it('should open Edit instance page', () => {
+      expect(InstanceEditPage.isPresent).to.be.true;
+    });
+
+    describe('cancel Edit instance page', () => {
+      beforeEach(async () => {
+        await InstanceEditPage.footer.clickCancel();
 
         await instanceMovementDetailsFrom.whenLoaded();
       });

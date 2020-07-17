@@ -381,7 +381,7 @@
     "hridHandling.description.line1": "After initial data migration, new FOLIO HRIDs are assigned sequentially, based on the starting number in these settings",
     "hridHandling.description.line2": "Unless changed or removed, the default prefix will be assigned to new FOLIO HRIDs",
     "hridHandling.description.line3": "HRIDs in existing FOLIO Inventory and MARC records cannot be changed",
-    "hridHandling.sectionHeader1": "Inventory instances and MARC bibliographic records",
+    "hridHandling.sectionHeader1": "Документы в Фонде и библиографические MARC-записи",
     "hridHandling.sectionHeader2": "Inventory holdings and MARC holdings records",
     "hridHandling.sectionHeader3": "Записи на экземпляр в Фонде",
     "hridHandling.label.startWith": "Начать с",

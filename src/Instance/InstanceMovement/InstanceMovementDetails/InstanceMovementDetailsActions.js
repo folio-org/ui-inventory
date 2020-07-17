@@ -9,6 +9,9 @@ import {
 import PropTypes from 'prop-types';
 
 import {
+  IfPermission,
+} from '@folio/stripes/core';
+import {
   Icon,
   Button,
 } from '@folio/stripes/components';
@@ -28,10 +31,31 @@ const InstanceMovementDetailsActions = ({
       pathname: `/inventory/viewsource/${instance.id}`,
       search: location.search,
     });
-  }, [location.search, onToggle]);
+  }, [instance.id, location.search, onToggle]);
+
+  const editInstance = useCallback(() => {
+    onToggle();
+
+    history.push({
+      pathname: `/inventory/edit/${instance.id}/instance`,
+      search: location.search,
+    });
+  }, [instance.id, location.search, onToggle]);
 
   return (
     <>
+      <IfPermission perm="inventory.instances.item.put">
+        <Button
+          data-test-movement-details-edit-instance
+          onClick={editInstance}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-inventory.editInstance" />
+          </Icon>
+        </Button>
+      </IfPermission>
+
       {
         instance.source === 'MARC' && (
           <Button
