@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Replace `bigtest/mirage` with `miragejs`.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Move items between holdings. Refs UIIN-1097.
