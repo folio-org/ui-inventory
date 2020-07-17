@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 import HoldingsList from './HoldingsList';
-import HoldingsListMovement from '../HoldingMovementList';
+import { HoldingsListMovement } from '../HoldingMovementList';
 
 const HoldingsListContainer = ({
   mutator,

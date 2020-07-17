@@ -31,8 +31,9 @@ const HoldingMovement = ({
   droppable,
   ifItemsDragSelected,
   selectItemsForDrag,
+  selectHoldingsForDrag,
+  ifHoldingDragSelected,
   getDraggingItems,
-  activeDropZone,
 }) => {
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
@@ -72,7 +73,20 @@ const HoldingMovement = ({
 
   return (
     <div>
-      <Checkbox />
+      <FormattedMessage id="ui-inventory.moveItems.selectItem">
+        {
+          (ariaLabel) => (
+            <span data-test-select-holding>
+              <Checkbox
+                id={`select-holding-${holding.id}`}
+                aria-label={ariaLabel}
+                checked={ifHoldingDragSelected(holding)}
+                onChange={() => selectHoldingsForDrag(holding)}
+              />
+            </span>
+          )
+        }
+      </FormattedMessage>
       <Accordion
         id={holding.id}
         closedByDefault={false}
@@ -98,7 +112,7 @@ const HoldingMovement = ({
               ifItemsDragSelected={ifItemsDragSelected}
               selectItemsForDrag={selectItemsForDrag}
               getDraggingItems={getDraggingItems}
-              activeDropZone={activeDropZone}
+              isMovement
             />
           </Col>
         </Row>
@@ -118,7 +132,8 @@ HoldingMovement.propTypes = {
   selectItemsForDrag: PropTypes.func.isRequired,
   ifItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
-  activeDropZone: PropTypes.string,
+  selectHoldingsForDrag: PropTypes.func.isRequired,
+  ifHoldingDragSelected: PropTypes.func.isRequired,
 };
 
 export default HoldingMovement;

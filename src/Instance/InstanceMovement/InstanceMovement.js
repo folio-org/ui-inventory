@@ -24,22 +24,11 @@ const InstanceMovement = ({
   mutator,
 }) => {
   const calloutRef = useRef();
-  const moveHoldings = (fromHolding, toHolding, items) => {
-    // TODO: replace temporary solution with correct one when implemented
-
-    return mutator.movableItems.GET({
-      params: {
-        query: items.map(item => `id==${item}`).join(' or '),
-      },
+  const moveHoldings = (toInstanceId, items) => {
+    return mutator.movableItems.POST({
+      toInstanceId,
+      holdingsRecordIds: items,
     })
-      .then(({ items: fetchedItems }) => {
-        const updatedPromises = fetchedItems.map((item) => mutator.movableItems.PUT({
-          ...item,
-          holdingsRecordId: toHolding,
-        }));
-
-        return Promise.all(updatedPromises);
-      })
       .then(() => {
         const message = (
           <FormattedMessage
@@ -57,6 +46,7 @@ const InstanceMovement = ({
       <MoveItemsContext
         referenceData={referenceData}
         moveItems={moveHoldings}
+        withConfirmationModal
       >
         <InstanceMovementDetailsContainer
           instance={instanceFrom}
@@ -78,10 +68,9 @@ const InstanceMovement = ({
 InstanceMovement.manifest = Object.freeze({
   movableItems: {
     type: 'okapi',
-    path: 'inventory/items',
+    path: 'inventory/holdings/move',
     fetch: false,
     throwErrors: false,
-    accumulate: true,
   },
 });
 

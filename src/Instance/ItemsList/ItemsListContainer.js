@@ -7,8 +7,9 @@ import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
 
 import ItemsList from './ItemsList';
+import ItemsListMovement from './ItemsListMovement';
 
-const ItemsListContainer = ({ holding, mutator, ...rest }) => {
+const ItemsListContainer = ({ holding, mutator, isMovement, ...rest }) => {
   const [items, setItems] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,7 +25,13 @@ const ItemsListContainer = ({ holding, mutator, ...rest }) => {
 
   if (isLoading) return null;
 
-  return (
+  return isMovement ? (
+    <ItemsListMovement
+      {...rest}
+      holding={holding}
+      items={items}
+    />
+  ) : (
     <ItemsList
       {...rest}
       holding={holding}
@@ -50,6 +57,7 @@ ItemsListContainer.manifest = Object.freeze({
 ItemsListContainer.propTypes = {
   mutator: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
+  isMovement: PropTypes.bool,
 };
 
 export default stripesConnect(ItemsListContainer);

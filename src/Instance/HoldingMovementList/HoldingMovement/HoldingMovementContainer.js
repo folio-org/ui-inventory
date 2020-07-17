@@ -16,13 +16,13 @@ const dragStyles = {
   borderRadius: '3px',
   padding: '5px',
   width: 'fit content',
+  height: 'fit content'
 };
 
-const getItemStyle = (draggableStyle, selected, dragging) => {
+const getItemStyle = (draggableStyle, dragging) => {
   return {
     userSelect: 'none',
     width: '100%',
-    background: selected ? 'rgba(33, 150, 243, 0.3)' : undefined,
     ...draggableStyle,
     ...(dragging ? dragStyles : {}),
   };
@@ -31,8 +31,7 @@ const getItemStyle = (draggableStyle, selected, dragging) => {
 const Holding = ({
   provided,
   snapshot,
-  selected,
-  draggingItemsCount,
+  draggingHoldingsCount,
   holding,
   referenceData,
   onViewHolding,
@@ -42,11 +41,9 @@ const Holding = ({
   const rowStyles = useMemo(() => (
     getItemStyle(
       provided.draggableProps.style,
-      selected,
       snapshot.isDragging,
     )
-  ), [provided.draggableProps.style, selected, snapshot.isDragging]);
-
+  ), [provided.draggableProps.style, snapshot.isDragging]);
   const child = (
     <div
       id={`item-row-${holding.id}`}
@@ -55,18 +52,14 @@ const Holding = ({
       {...provided.draggableProps}
       {...provided.dragHandleProps}
 
-      style={getItemStyle(
-        provided.draggableProps.style,
-        selected,
-        snapshot.isDragging,
-      )}
+      style={rowStyles}
     >
       {
         snapshot.isDragging
           ? (
             <FormattedMessage
-              id="ui-inventory.moveItems.move.items.count"
-              values={{ count: draggingItemsCount || 1 }}
+              id="ui-inventory.moveItems.move.holdings.count"
+              values={{ count: draggingHoldingsCount || 1 }}
             />
           ) : (
             <HoldingMovement
@@ -94,6 +87,7 @@ const HoldingMovementContainer = ({
   holding,
   referenceData,
   holdingindex,
+  draggingHoldingsCount,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -117,37 +111,16 @@ const HoldingMovementContainer = ({
       index={holdingindex}
     >
       {(provided, snapshot) => (
-        <div
-          id={`item-row-${holding.id}`}
-          data-row-inner
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-
-          style={getItemStyle(
-            provided.draggableProps.style,
-            false,
-            snapshot.isDragging,
-          )}
-        >
-          {/* {
-            snapshot.isDragging
-              ? (
-                <FormattedMessage
-                  id="ui-inventory.moveItems.move.items.count"
-                  values={{ count: 1 }}
-                />
-              ) : ( */}
-                <HoldingMovement
-                  {...rest}
-                  holding={holding}
-                  referenceData={referenceData}
-                  onViewHolding={onViewHolding}
-                  onAddItem={onAddItem}
-                />
-              {/* )
-          } */}
-        </div>
+        <Holding
+          provided={provided}
+          snapshot={snapshot}
+          draggingHoldingsCount={draggingHoldingsCount}
+          holding={holding}
+          referenceData={referenceData}
+          onViewHolding={onViewHolding}
+          onAddItem={onAddItem}
+          {...rest}
+        />
       )}
     </Draggable>
   );
@@ -161,6 +134,7 @@ HoldingMovementContainer.propTypes = {
   holding: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
   holdingindex: PropTypes.number.isRequired,
+  draggingHoldingsCount: PropTypes.number.isRequired,
 };
 
 export default withRouter(HoldingMovementContainer);
