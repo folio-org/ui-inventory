@@ -2,7 +2,6 @@
 
 ## 5.0.0 (IN PROGRESS)
 
-* Replace `bigtest/mirage` with `miragejs`.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
 * Move items between holdings. Refs UIIN-1097.
@@ -25,6 +24,7 @@
 * Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Fixes UIIN-1128.
 * Fix Edit in quickMARC and View Source options state after instance editing. Refs UIIN-1204.
 * Change request status for `Awaiting delivery` items marked as missing. Fixes UIIN-1206.
+* Replace `bigtest/mirage` with `miragejs`.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
