@@ -135,15 +135,20 @@ describe('Instance filters', () => {
     });
   });
 
-  describe('setting filters', () => {
+  describe('setting filters and sorting', () => {
     beforeEach(async function () {
       await inventory.clickSelectStaffSuppressFilter();
       await inventory.clickSelectDiscoverySuppressFilter();
+      await instancesRoute.headers(1).click();
     });
 
     it('adds filters to the URL', function () {
       expect(this.location.search).to.include('staffSuppress.true');
       expect(this.location.search).to.include('discoverySuppress.true');
+    });
+
+    it('selected sorting should be set in URL', function () {
+      expect(this.location.search).to.include('sort=contributors');
     });
 
     describe('clearing filters', () => {
@@ -155,6 +160,16 @@ describe('Instance filters', () => {
       it('removes filters from the URL', function () {
         expect(this.location.search).to.not.include('staffSuppress.true');
         expect(this.location.search).to.not.include('discoverySuppress.true');
+      });
+    });
+
+    describe('clicking Reset all button', () => {
+      beforeEach(async function () {
+        await inventory.resetAll();
+      });
+
+      it('default sorting should be set in URL', function () {
+        expect(this.location.search).to.include('sort=title');
       });
     });
   });
