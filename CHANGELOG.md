@@ -24,6 +24,7 @@
 * Disable fields in Preceding/Succeeding section, when Instance is controlled by Source MARC. Fixes UIIN-1128.
 * Fix Edit in quickMARC and View Source options state after instance editing. Refs UIIN-1204.
 * Change request status for `Awaiting delivery` items marked as missing. Fixes UIIN-1206.
+* In transit report does not export name of library. Refs UIIN-1058.
 * Replace `bigtest/mirage` with `miragejs`.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
