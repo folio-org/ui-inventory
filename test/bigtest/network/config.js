@@ -482,6 +482,7 @@ export default function configure() {
           id: '44a21d17-a666-4f34-b24d-644f8ed1537b',
           hrid: 'ho00000111',
           formerIds: [],
+          instanceId: '7a8f9775-8de3-4308-8323-b055c104e0f3',
           permanentLocationId: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
           electronicAccess: [],
           notes: [],
