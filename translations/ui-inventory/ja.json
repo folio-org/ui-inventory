@@ -298,7 +298,7 @@
     "itemIdentifier": "Item identifier",
     "formerId": "Former identifier",
     "addFormerId": "Add former identifier",
-    "accessionNumber": "Accession number",
+    "accessionNumber": "受入番号",
     "addStatisticalCode": "Add statistical code",
     "selectHoldingsType": "Select holdings type",
     "publicDisplay": "Public display",

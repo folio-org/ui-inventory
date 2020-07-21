@@ -412,7 +412,7 @@
     "item.status.inTransit": "In transito",
     "item.status.missing": "Smarrito",
     "item.status.onOrder": "Ordinato",
-    "item.status.paged": "Chiamato",
+    "item.status.paged": "Richiesto",
     "querySearch": "Query di ricerca",
     "holdings.permanentLocation": "Sezione permanente dell'holding",
     "inTransitReport": "Report items in transito(CSV)",
