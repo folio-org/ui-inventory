@@ -26,7 +26,7 @@ describe('Instances', () => {
         source: 'FOLIO'
       });
 
-      return this.visit('/inventory?segment=items');
+      this.visit('/inventory?segment=items');
     });
 
     it('is no results message label present', () => {
