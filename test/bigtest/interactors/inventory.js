@@ -78,6 +78,7 @@ export default @interactor class InventoryInteractor {
   updatedDate = new DateRangeFilterInteractor('#updatedDate');
   source = new CheckboxFilterInteractor('#source');
   callout = new CalloutInteractor();
+  resetAll = clickable('#clickable-reset-all');
 
   whenLoaded() {
     return this.when(() => this.isLoaded);
