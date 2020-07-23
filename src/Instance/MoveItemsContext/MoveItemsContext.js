@@ -59,13 +59,15 @@ const MoveItemsContext = ({ children, moveItems }) => {
   }, [activeDropZone, selectedItemsMap]);
 
   const ifItemsDragSelected = useCallback((items) => {
-    isItemsSelected(items, selectedItemsMap);
+    return isItemsSelected(items, selectedItemsMap);
   }, [selectedItemsMap]);
 
   const selectItemsForDrag = useCallback((items) => {
     const holdingId = items[0].holdingsRecordId;
 
-    setSelectedItemsMap((prevItemsMap) => selectItems(prevItemsMap, holdingId, items));
+    setSelectedItemsMap((prevItemsMap) => {
+      return selectItems(prevItemsMap, holdingId, items);
+    });
   }, []);
 
   if (isMoving) {
