@@ -13,4 +13,5 @@ export default @interactor class InstancesRouteInteractor {
 
   searchFieldFilter = scoped('#pane-filter', SearchFieldFilterInteractor);
   rows = collection('#list-inventory [data-row-index]');
+  headers = collection('#list-inventory [data-test-clickable-header]');
 }
