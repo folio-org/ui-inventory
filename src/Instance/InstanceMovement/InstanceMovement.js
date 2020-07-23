@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
   stripesConnect,
+  CalloutContext,
 } from '@folio/stripes/core';
 
 import {
@@ -23,7 +24,7 @@ const InstanceMovement = ({
   referenceData,
   mutator,
 }) => {
-  const calloutRef = useRef();
+  const callout = useContext(CalloutContext);
   const moveHoldings = (toInstanceId, items) => {
     return mutator.movableHoldings.POST({
       toInstanceId,
@@ -37,7 +38,7 @@ const InstanceMovement = ({
           />
         );
 
-        calloutRef.current.sendCallout({ message });
+        callout.sendCallout({ message });
       });
   };
 
@@ -54,7 +55,7 @@ const InstanceMovement = ({
           />
         );
 
-        calloutRef.current.sendCallout({ message });
+        callout.sendCallout({ message });
       });
   };
 
@@ -78,7 +79,7 @@ const InstanceMovement = ({
           data-test-movement-to-instance-details
         />
       </MoveHoldingContext>
-      <Callout ref={calloutRef} />
+      {/* <Callout ref={callout} /> */}
     </Paneset>
   );
 };

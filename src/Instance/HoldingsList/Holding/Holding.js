@@ -33,7 +33,7 @@ const Holding = ({
   droppable,
   selectHoldingsForDrag,
   ifHoldingDragSelected,
-  withDraggableHolding,
+  isDraggable,
 }) => {
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
@@ -80,7 +80,7 @@ const Holding = ({
 
   return (
     <div>
-      {withDraggableHolding &&
+      {isDraggable &&
         <FormattedMessage id="ui-inventory.moveItems.selectItem">
           {
             (ariaLabel) => (
@@ -139,7 +139,7 @@ Holding.propTypes = {
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
-  withDraggableHolding: PropTypes.bool,
+  isDraggable: PropTypes.bool,
   selectHoldingsForDrag: PropTypes.func.isRequired,
   ifHoldingDragSelected: PropTypes.func.isRequired,
 };

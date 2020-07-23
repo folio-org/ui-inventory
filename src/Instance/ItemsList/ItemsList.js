@@ -5,7 +5,6 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { Droppable } from 'react-beautiful-dnd';
 import {
   FormattedMessage,
   useIntl,
@@ -22,6 +21,7 @@ import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
 import ItemsListRow from './ItemsListRow';
+import DropZone from './DropZone';
 import {
   sortItems,
 } from './utils';
@@ -106,35 +106,6 @@ const visibleColumns = [
 ];
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
-
-const DropZone = ({
-  isItemsDropable,
-  children,
-  droppableId,
-  isDropDisabled,
-}) => {
-  return isItemsDropable ? (
-    <Droppable
-      droppableId={droppableId}
-      isDropDisabled={isDropDisabled}
-    >
-      {(provided) => (
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          data-test-items
-        >
-          {children}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
-  ) : (
-    <>
-      {children}
-    </>
-  );
-};
 
 const ItemsList = ({
   holding,

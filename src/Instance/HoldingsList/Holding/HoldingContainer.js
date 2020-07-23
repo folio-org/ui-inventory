@@ -64,7 +64,7 @@ const DraggableHolding = ({
           ) : (
             <Holding
               {...rest}
-              withDraggableHolding
+              isDraggable
               holding={holding}
               referenceData={referenceData}
               onViewHolding={onViewHolding}
@@ -87,7 +87,7 @@ const HoldingContainer = ({
   instance,
   holding,
   referenceData,
-  withDraggableHolding,
+  isDraggable,
   holdingindex,
   draggingHoldingsCount,
   isItemsDropable,
@@ -107,7 +107,7 @@ const HoldingContainer = ({
     });
   }, [instance.id, holding.id]);
 
-  return withDraggableHolding ? (
+  return isDraggable ? (
     <Draggable
       key={`${holding.id}`}
       draggableId={holding.id}
@@ -146,7 +146,7 @@ HoldingContainer.propTypes = {
   holding: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
   holdingindex: PropTypes.number.isRequired,
-  withDraggableHolding: PropTypes.bool,
+  isDraggable: PropTypes.bool,
 };
 
 export default withRouter(HoldingContainer);

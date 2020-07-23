@@ -50,7 +50,7 @@ const HoldingsListMovement = ({
               holding={holding}
               referenceData={referenceData}
 
-              withDraggableHolding
+              isDraggable
               draggable={draggable}
               droppable={droppable}
               activeDropZone={activeDropZone}
