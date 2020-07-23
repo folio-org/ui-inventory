@@ -23,6 +23,7 @@ const HoldingsListMovement = ({
 
   draggable,
   droppable,
+  referenceData,
 }) => {
   const {
     selectItemsForDrag,
@@ -31,7 +32,6 @@ const HoldingsListMovement = ({
     ifHoldingDragSelected,
     getDraggingItems,
     activeDropZone,
-    referenceData,
     draggingHoldingsCount,
   } = useContext(DnDContext);
 
@@ -79,6 +79,7 @@ HoldingsListMovement.propTypes = {
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
+  referenceData: PropTypes.object.isRequired,
 };
 
 HoldingsListMovement.defaultProps = {

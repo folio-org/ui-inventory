@@ -10,10 +10,14 @@ import {
 
 import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
-import DnDContext from '../../contexts/DnDContext';
 
-const TitlesViews = ({ titles, id, titleKey, label }) => {
-  const { identifierTypesById } = useContext(DnDContext);
+const TitlesViews = ({
+  titles,
+  id,
+  titleKey,
+  label,
+  identifierTypesById,
+}) => {
   const {
     ISSN,
     ISBN,
@@ -71,6 +75,7 @@ TitlesViews.propTypes = {
   label: PropTypes.node.isRequired,
   titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   titleKey: PropTypes.string.isRequired,
+  identifierTypesById: PropTypes.func.isRequired,
 };
 
 export default TitlesViews;

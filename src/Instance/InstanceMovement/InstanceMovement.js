@@ -9,7 +9,6 @@ import {
 
 import {
   Paneset,
-  Callout,
 } from '@folio/stripes/components';
 import {
   MoveHoldingContext,
@@ -62,18 +61,19 @@ const InstanceMovement = ({
   return (
     <Paneset data-test-movement>
       <MoveHoldingContext
-        referenceData={referenceData}
         moveHoldings={moveHoldings}
         moveItems={moveItems}
         withConfirmationModal
       >
         <InstanceMovementDetailsContainer
+          referenceData={referenceData}
           instance={instanceFrom}
           onClose={onClose}
           data-test-movement-from-instance-details
         />
 
         <InstanceMovementDetailsContainer
+          referenceData={referenceData}
           instance={instanceTo}
           onClose={onClose}
           data-test-movement-to-instance-details

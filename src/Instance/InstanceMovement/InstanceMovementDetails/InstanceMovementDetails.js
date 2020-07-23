@@ -19,7 +19,12 @@ import {
 
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 
-const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
+const InstanceMovementDetails = ({
+  instance,
+  onClose,
+  hasMarc,
+  referenceData,
+}) => {
   const stripes = useStripes();
 
   const closeInstance = useCallback(() => {
@@ -27,7 +32,6 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
   }, [instance, onClose]);
 
   const {
-    referenceData,
     activeDropZone,
     isItemsDropable,
   } = useContext(DnDContext);
@@ -87,6 +91,7 @@ InstanceMovementDetails.propTypes = {
   instance: PropTypes.object,
   hasMarc: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
+  referenceData: PropTypes.object.isRequired,
 };
 
 InstanceMovementDetails.defaultProps = {

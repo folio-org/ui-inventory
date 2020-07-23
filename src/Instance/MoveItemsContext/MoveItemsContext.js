@@ -9,6 +9,10 @@ import {
   Loading,
 } from '@folio/stripes/components';
 import DnDContext from '../../contexts/DnDContext';
+import {
+  isItemsSelected,
+  selectItems,
+} from '../utils';
 
 const MoveItemsContext = ({ children, moveItems }) => {
   const [isMoving, setIsMoving] = useState(false);
@@ -55,43 +59,13 @@ const MoveItemsContext = ({ children, moveItems }) => {
   }, [activeDropZone, selectedItemsMap]);
 
   const ifItemsDragSelected = useCallback((items) => {
-    return items.every((item) => Boolean(
-      selectedItemsMap[item.holdingsRecordId] && selectedItemsMap[item.holdingsRecordId][item.id]
-    ));
+    isItemsSelected(items, selectedItemsMap);
   }, [selectedItemsMap]);
 
   const selectItemsForDrag = useCallback((items) => {
     const holdingId = items[0].holdingsRecordId;
 
-    setSelectedItemsMap((prevItemsMap) => {
-      const prevHolding = prevItemsMap[holdingId] || {};
-      const prevSelectedCount = Object
-        .keys(prevHolding)
-        .filter(itemId => prevHolding[itemId])
-        .length;
-
-      let newHolding;
-
-      if (items.length > 1 && prevSelectedCount === items.length) {
-        newHolding = {};
-      } else if (items.length > 1 && prevSelectedCount !== items.length) {
-        newHolding = items.reduce((acc, item) => {
-          acc[item.id] = true;
-
-          return acc;
-        }, {});
-      } else {
-        newHolding = {
-          ...prevHolding,
-          [items[0].id]: !prevHolding[items[0].id],
-        };
-      }
-
-      return {
-        ...prevItemsMap,
-        [holdingId]: newHolding,
-      };
-    });
+    setSelectedItemsMap((prevItemsMap) => selectItems(prevItemsMap, holdingId, items));
   }, []);
 
   if (isMoving) {
