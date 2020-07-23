@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 import { HoldingContainer } from '../HoldingsList/Holding';
-import DataContext from '../../contexts/DataContext';
+import DnDContext from '../../contexts/DnDContext';
 
 const getDropStyle = (holdingsLength) => {
   return {
@@ -33,7 +33,7 @@ const HoldingsListMovement = ({
     activeDropZone,
     referenceData,
     draggingHoldingsCount,
-  } = useContext(DataContext);
+  } = useContext(DnDContext);
 
   const dropStyles = useMemo(() => (
     getDropStyle(holdings.length)

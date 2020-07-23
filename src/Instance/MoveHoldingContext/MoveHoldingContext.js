@@ -12,7 +12,7 @@ import {
   Loading,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import DataContext from '../../contexts/DataContext';
+import DnDContext from '../../contexts/DnDContext';
 
 
 const MoveHoldingContext = ({
@@ -163,7 +163,7 @@ const MoveHoldingContext = ({
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
       >
-        <DataContext.Provider
+        <DnDContext.Provider
           value={{
             activeDropZone,
             selectItemsForDrag,
@@ -177,7 +177,7 @@ const MoveHoldingContext = ({
           }}
         >
           {children}
-        </DataContext.Provider>
+        </DnDContext.Provider>
       </DragDropContext>
       {isMoveModalOpened && (
         <ConfirmationModal

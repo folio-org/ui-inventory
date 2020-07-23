@@ -79,7 +79,6 @@ const InstanceMovement = ({
           data-test-movement-to-instance-details
         />
       </MoveHoldingContext>
-      {/* <Callout ref={callout} /> */}
     </Paneset>
   );
 };

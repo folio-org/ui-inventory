@@ -9,7 +9,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import DataContext from '../../../contexts/DataContext';
+import DnDContext from '../../../contexts/DnDContext';
 import {
   InstanceDetails,
 } from '../../InstanceDetails';
@@ -30,7 +30,7 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
     referenceData,
     activeDropZone,
     isItemsDropable,
-  } = useContext(DataContext);
+  } = useContext(DnDContext);
 
   const getActionMenu = useCallback(({ onToggle }) => {
     if (

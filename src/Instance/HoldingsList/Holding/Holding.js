@@ -21,7 +21,7 @@ import {
   callNumberLabel
 } from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
-import DataContext from '../../../contexts/DataContext';
+import DnDContext from '../../../contexts/DnDContext';
 
 const Holding = ({
   holding,
@@ -43,7 +43,7 @@ const Holding = ({
     getDraggingItems,
     activeDropZone,
     isItemsDropable,
-  } = useContext(DataContext);
+  } = useContext(DnDContext);
 
   const viewHoldings = useCallback(() => {
     onViewHolding();

@@ -8,7 +8,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import {
   Loading,
 } from '@folio/stripes/components';
-import DataContext from '../../contexts/DataContext';
+import DnDContext from '../../contexts/DnDContext';
 
 const MoveItemsContext = ({ children, moveItems }) => {
   const [isMoving, setIsMoving] = useState(false);
@@ -103,7 +103,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
     >
-      <DataContext.Provider
+      <DnDContext.Provider
         value={{
           activeDropZone,
           selectItemsForDrag,
@@ -112,7 +112,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
         }}
       >
         {children}
-      </DataContext.Provider>
+      </DnDContext.Provider>
     </DragDropContext>
   );
 };

@@ -10,10 +10,10 @@ import {
 
 import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
-import DataContext from '../../contexts/DataContext';
+import DnDContext from '../../contexts/DnDContext';
 
 const TitlesViews = ({ titles, id, titleKey, label }) => {
-  const { identifierTypesById } = useContext(DataContext);
+  const { identifierTypesById } = useContext(DnDContext);
   const {
     ISSN,
     ISBN,
