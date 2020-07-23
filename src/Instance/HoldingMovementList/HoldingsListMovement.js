@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { HoldingMovementContainer } from './HoldingMovement';
+import { HoldingContainer } from '../HoldingsList/Holding';
 import DataContext from '../../contexts/DataContext';
 
 const getDropStyle = (holdingsLength) => {
@@ -44,12 +44,13 @@ const HoldingsListMovement = ({
       {
         holdings.length ? (
           holdings.map((holding, index) => (
-            <HoldingMovementContainer
+            <HoldingContainer
               key={`items_${holding.id}`}
               instance={instance}
               holding={holding}
               referenceData={referenceData}
 
+              withDraggableHolding
               draggable={draggable}
               droppable={droppable}
               activeDropZone={activeDropZone}

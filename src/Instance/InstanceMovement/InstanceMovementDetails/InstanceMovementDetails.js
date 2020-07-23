@@ -28,7 +28,8 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
 
   const {
     referenceData,
-    activeDropZone
+    activeDropZone,
+    isItemsDropable,
   } = useContext(DataContext);
 
   const getActionMenu = useCallback(({ onToggle }) => {
@@ -58,7 +59,7 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
     >
       <Droppable
         droppableId={`${instance.id}`}
-        isDropDisabled={activeDropZone === instance.id}
+        isDropDisabled={isItemsDropable || activeDropZone === instance.id}
       >
         {(provided) => (
           <div
@@ -70,8 +71,8 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
               instance={instance}
               referenceData={referenceData}
               isHoldingsMove
-              draggable={false}
-              droppable={false}
+              draggable
+              droppable
             />
 
             {provided.placeholder}

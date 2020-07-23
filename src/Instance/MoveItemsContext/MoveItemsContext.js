@@ -4,43 +4,16 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
-import {
-  FormattedMessage,
-} from 'react-intl';
 
 import {
   Loading,
-  ConfirmationModal,
 } from '@folio/stripes/components';
 import DataContext from '../../contexts/DataContext';
 
-
-const MoveItemsContext = ({
-  children,
-  moveItems,
-  referenceData,
-  withConfirmationModal,
-}) => {
+const MoveItemsContext = ({ children, moveItems }) => {
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
-  const [selectedHoldingsMap, setSelectedHoldingsMap] = useState([]);
   const [activeDropZone, setActiveDropZone] = useState();
-  const [isMoveModalOpened, toggleMoveModal] = useState(false);
-  const [movingItems, setMovingItems] = useState([]);
-  const [dragToId, setDragToId] = useState();
-
-  const onConfirm = useCallback(() => {
-    toggleMoveModal(false);
-    setIsMoving(true);
-
-    moveItems(dragToId, movingItems)
-      .finally(() => {
-        setIsMoving(false);
-      });
-
-    setSelectedHoldingsMap([]);
-    setActiveDropZone(undefined);
-  }, [movingItems, dragToId]);
 
   const onDragStart = useCallback((result) => {
     setActiveDropZone(result.source.droppableId);
@@ -48,38 +21,30 @@ const MoveItemsContext = ({
 
   const onDragEnd = useCallback((result) => {
     if (!result.destination) return;
+
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
-    setDragToId(to);
+
     const fromSelectedMap = selectedItemsMap[from] || {};
-    const items = withConfirmationModal
-      ?
-      selectedHoldingsMap
-      :
-      Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+    const items = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
     if (!items.length) {
       items.push(result.draggableId);
     }
-    setMovingItems(items);
 
-    if (withConfirmationModal) {
-      toggleMoveModal(true);
-    } else {
-      setIsMoving(true);
+    setIsMoving(true);
 
-      moveItems(from, to, items)
-        .finally(() => {
-          setIsMoving(false);
-        });
+    moveItems(from, to, items)
+      .finally(() => {
+        setIsMoving(false);
+      });
 
-      setSelectedItemsMap((prevItemsMap) => ({
-        ...prevItemsMap,
-        [from]: undefined,
-      }));
-      setActiveDropZone(undefined);
-    }
-  }, [selectedItemsMap, selectedHoldingsMap]);
+    setSelectedItemsMap((prevItemsMap) => ({
+      ...prevItemsMap,
+      [from]: undefined,
+    }));
+    setActiveDropZone(undefined);
+  }, [selectedItemsMap]);
 
   const getDraggingItems = useCallback(() => {
     const fromHolding = selectedItemsMap[activeDropZone] || {};
@@ -88,26 +53,6 @@ const MoveItemsContext = ({
       items: Object.keys(fromHolding).filter(item => fromHolding[item]),
     };
   }, [activeDropZone, selectedItemsMap]);
-
-  const ifHoldingDragSelected = useCallback((holding) => {
-    return selectedHoldingsMap.some(item => item === holding.id);
-  }, [selectedHoldingsMap]);
-
-  const selectHoldingsForDrag = useCallback((holding) => {
-    setSelectedHoldingsMap((prevHoldings) => {
-      const newHoldings = prevHoldings.filter(item => item !== holding.id);
-
-      if (newHoldings.length < prevHoldings.length) {
-        return [
-          ...newHoldings,
-        ];
-      }
-      return [
-        ...newHoldings,
-        holding.id
-      ];
-    });
-  }, [setSelectedHoldingsMap]);
 
   const ifItemsDragSelected = useCallback((items) => {
     return items.every((item) => Boolean(
@@ -149,62 +94,32 @@ const MoveItemsContext = ({
     });
   }, []);
 
-  const closeModal = useCallback(() => {
-    toggleMoveModal(false);
-  }, [toggleMoveModal]);
-
   if (isMoving) {
     return <Loading size="large" />;
   }
 
   return (
-    <>
-      <DragDropContext
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
+    <DragDropContext
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    >
+      <DataContext.Provider
+        value={{
+          activeDropZone,
+          selectItemsForDrag,
+          ifItemsDragSelected,
+          getDraggingItems,
+        }}
       >
-        <DataContext.Provider
-          value={{
-            activeDropZone,
-            selectItemsForDrag,
-            ifItemsDragSelected,
-            selectHoldingsForDrag,
-            ifHoldingDragSelected,
-            getDraggingItems,
-            draggingHoldingsCount: selectedHoldingsMap.length,
-            referenceData,
-          }}
-        >
-          {children}
-        </DataContext.Provider>
-      </DragDropContext>
-      {isMoveModalOpened && (
-        <ConfirmationModal
-          id="delete-row-confirmation"
-          confirmLabel={<FormattedMessage id="ui-inventory.moveItems.modal.confirmLabel" />}
-          heading={<FormattedMessage id="ui-inventory.moveItems.modal.title" />}
-          message={
-            <FormattedMessage
-              id="ui-inventory.moveItems.modal.message"
-              values={{
-                count: movingItems.length,
-              }}
-            />
-          }
-          onCancel={closeModal}
-          onConfirm={onConfirm}
-          open
-        />
-      )}
-    </>
+        {children}
+      </DataContext.Provider>
+    </DragDropContext>
   );
 };
 
 MoveItemsContext.propTypes = {
   children: PropTypes.node.isRequired,
   moveItems: PropTypes.func.isRequired,
-  referenceData: PropTypes.object,
-  withConfirmationModal: PropTypes.bool,
 };
 
 export default MoveItemsContext;

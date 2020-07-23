@@ -11,8 +11,8 @@ import {
   Callout,
 } from '@folio/stripes/components';
 import {
-  MoveItemsContext,
-} from '../MoveItemsContext';
+  MoveHoldingContext,
+} from '../MoveHoldingContext';
 
 import { InstanceMovementDetailsContainer } from './InstanceMovementDetails';
 
@@ -25,7 +25,7 @@ const InstanceMovement = ({
 }) => {
   const calloutRef = useRef();
   const moveHoldings = (toInstanceId, items) => {
-    return mutator.movableItems.POST({
+    return mutator.movableHoldings.POST({
       toInstanceId,
       holdingsRecordIds: items,
     })
@@ -41,11 +41,29 @@ const InstanceMovement = ({
       });
   };
 
+  const moveItems = (toHoldingsRecordId, items) => {
+    return mutator.movableItems.POST({
+      toHoldingsRecordId,
+      itemIds: items,
+    })
+      .then(() => {
+        const message = (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.success"
+            values={{ count: items.length }}
+          />
+        );
+
+        calloutRef.current.sendCallout({ message });
+      });
+  };
+
   return (
     <Paneset data-test-movement>
-      <MoveItemsContext
+      <MoveHoldingContext
         referenceData={referenceData}
-        moveItems={moveHoldings}
+        moveHoldings={moveHoldings}
+        moveItems={moveItems}
         withConfirmationModal
       >
         <InstanceMovementDetailsContainer
@@ -59,16 +77,22 @@ const InstanceMovement = ({
           onClose={onClose}
           data-test-movement-to-instance-details
         />
-      </MoveItemsContext>
+      </MoveHoldingContext>
       <Callout ref={calloutRef} />
     </Paneset>
   );
 };
 
 InstanceMovement.manifest = Object.freeze({
-  movableItems: {
+  movableHoldings: {
     type: 'okapi',
     path: 'inventory/holdings/move',
+    fetch: false,
+    throwErrors: false,
+  },
+  movableItems: {
+    type: 'okapi',
+    path: 'inventory/items/move',
     fetch: false,
     throwErrors: false,
   },

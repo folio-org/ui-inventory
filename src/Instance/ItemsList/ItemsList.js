@@ -107,6 +107,35 @@ const visibleColumns = [
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
 
+const DropZone = ({
+  isItemsDropable,
+  children,
+  droppableId,
+  isDropDisabled,
+}) => {
+  return isItemsDropable ? (
+    <Droppable
+      droppableId={droppableId}
+      isDropDisabled={isDropDisabled}
+    >
+      {(provided) => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          data-test-items
+        >
+          {children}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  ) : (
+    <>
+      {children}
+    </>
+  );
+};
+
 const ItemsList = ({
   holding,
   items,
@@ -117,6 +146,7 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
   activeDropZone,
+  isItemsDropable,
 }) => {
   const intl = useIntl();
 
@@ -162,36 +192,27 @@ const ItemsList = ({
   }, [itemsSorting]);
 
   return (
-    <Droppable
+    <DropZone
+      isItemsDropable={isItemsDropable}
       droppableId={holding.id}
       isDropDisabled={!droppable || activeDropZone === holding.id}
     >
-      {(provided) => (
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          data-test-items
-        >
-          <MultiColumnList
-            id={`list-items-${holding.id}`}
-            contentData={records}
-            rowMetadata={rowMetadata}
-            formatter={formatter}
-            visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
-            columnMapping={columnMapping}
-            ariaLabel={ariaLabel}
-            interactive={false}
-            onHeaderClick={onHeaderClick}
-            sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-            sortedColumn={itemsSorting.column}
-            rowFormatter={ItemsListRow}
-            rowProps={rowProps}
-          />
-
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+      <MultiColumnList
+        id={`list-items-${holding.id}`}
+        contentData={records}
+        rowMetadata={rowMetadata}
+        formatter={formatter}
+        visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
+        columnMapping={columnMapping}
+        ariaLabel={ariaLabel}
+        interactive={false}
+        onHeaderClick={onHeaderClick}
+        sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+        sortedColumn={itemsSorting.column}
+        rowFormatter={ItemsListRow}
+        rowProps={rowProps}
+      />
+    </DropZone>
   );
 };
 
@@ -205,10 +226,12 @@ ItemsList.propTypes = {
   ifItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   activeDropZone: PropTypes.string,
+  isItemsDropable: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   items: [],
+  isItemsDropable: true,
 };
 
 export default ItemsList;

@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { HoldingContainer } from './Holding';
-import DataContext from '../../contexts/DataContext';
 
 const HoldingsList = ({
   instance,
@@ -12,12 +11,6 @@ const HoldingsList = ({
   draggable,
   droppable,
 }) => {
-  const {
-    selectItemsForDrag,
-    ifItemsDragSelected,
-    getDraggingItems,
-    activeDropZone,
-  } = useContext(DataContext);
   return (
     <>
       {
@@ -30,10 +23,6 @@ const HoldingsList = ({
 
             draggable={draggable}
             droppable={droppable}
-            activeDropZone={activeDropZone}
-            selectItemsForDrag={selectItemsForDrag}
-            ifItemsDragSelected={ifItemsDragSelected}
-            getDraggingItems={getDraggingItems}
           />
         ))
       }
