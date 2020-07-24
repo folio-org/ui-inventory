@@ -12,7 +12,7 @@ import {
   Loading,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import DnDContext from '../../contexts/DnDContext';
+import DnDContext from '../DnDContext';
 import {
   isItemsSelected,
   selectItems,
@@ -70,7 +70,7 @@ const MoveHoldingContext = ({
     } else {
       setIsMoving(true);
 
-      moveItems(from, to, items)
+      moveItems(to, items)
         .finally(() => {
           setIsMoving(false);
         });

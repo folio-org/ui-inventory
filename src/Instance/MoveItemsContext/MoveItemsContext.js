@@ -8,7 +8,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import {
   Loading,
 } from '@folio/stripes/components';
-import DnDContext from '../../contexts/DnDContext';
+import DnDContext from '../DnDContext';
 import {
   isItemsSelected,
   selectItems,

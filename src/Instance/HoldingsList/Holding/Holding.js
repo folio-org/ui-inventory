@@ -21,7 +21,7 @@ import {
   callNumberLabel
 } from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
-import DnDContext from '../../../contexts/DnDContext';
+import DnDContext from '../../DnDContext';
 
 const Holding = ({
   holding,

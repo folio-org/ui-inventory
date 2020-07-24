@@ -9,7 +9,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import DnDContext from '../../../contexts/DnDContext';
+import DnDContext from '../../DnDContext';
 import {
   InstanceDetails,
 } from '../../InstanceDetails';

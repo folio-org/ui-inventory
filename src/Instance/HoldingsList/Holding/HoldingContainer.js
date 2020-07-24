@@ -112,7 +112,7 @@ const HoldingContainer = ({
       key={`${holding.id}`}
       draggableId={holding.id}
       index={holdingindex}
-      isDragDisabled={isItemsDropable}
+      isDragDisabled={!draggingHoldingsCount}
     >
       {(provided, snapshot) => (
         <DraggableHolding

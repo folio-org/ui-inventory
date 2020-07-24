@@ -2,8 +2,8 @@ import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { HoldingContainer } from '../HoldingsList/Holding';
-import DnDContext from '../../contexts/DnDContext';
+import { HoldingContainer } from '../../HoldingsList/Holding';
+import DnDContext from '../../DnDContext';
 
 const getDropStyle = (holdingsLength) => {
   return {
