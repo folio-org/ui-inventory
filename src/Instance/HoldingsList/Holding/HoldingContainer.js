@@ -90,7 +90,6 @@ const HoldingContainer = ({
   isDraggable,
   holdingindex,
   draggingHoldingsCount,
-  isItemsDropable,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {

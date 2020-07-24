@@ -22,7 +22,6 @@ const InstanceMovement = ({
   moveHoldings,
   moveItems,
 }) => {
-
   return (
     <Paneset data-test-movement>
       <MoveHoldingContext
