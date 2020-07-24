@@ -161,7 +161,6 @@ const ItemsList = ({
 
     setItemsSorting(newItemsSorting);
   }, [itemsSorting]);
-
   return (
     <DropZone
       isItemsDropable={isItemsDropable}

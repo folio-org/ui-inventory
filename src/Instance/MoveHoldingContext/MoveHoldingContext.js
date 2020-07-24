@@ -30,6 +30,7 @@ const MoveHoldingContext = ({
   const [isMoveModalOpened, toggleMoveModal] = useState(false);
   const [movingItems, setMovingItems] = useState([]);
   const [dragToId, setDragToId] = useState();
+  const [isHoldingMoved, setisHoldingMoved] = useState();
 
   const onConfirm = useCallback(() => {
     toggleMoveModal(false);
@@ -44,9 +45,15 @@ const MoveHoldingContext = ({
     setActiveDropZone(undefined);
   }, [movingItems, dragToId]);
 
+  const onBeforeCapture = useCallback((result) => {
+    const isHolding = selectedHoldingsMap.some(item => item === result.draggableId);
+
+    setisHoldingMoved(isHolding);
+  }, [selectedHoldingsMap]);
+
   const onDragStart = useCallback((result) => {
     setActiveDropZone(result.source.droppableId);
-  }, []);
+  }, [selectedHoldingsMap]);
 
   const onDragEnd = useCallback((result) => {
     if (!result.destination) return;
@@ -54,7 +61,7 @@ const MoveHoldingContext = ({
     const to = result.destination.droppableId;
     setDragToId(to);
     const fromSelectedMap = selectedItemsMap[from] || {};
-    const items = selectedHoldingsMap.length
+    const items = isHoldingMoved
       ?
       selectedHoldingsMap
       :
@@ -65,7 +72,7 @@ const MoveHoldingContext = ({
     }
     setMovingItems(items);
 
-    if (selectedHoldingsMap.length) {
+    if (isHoldingMoved) {
       toggleMoveModal(true);
     } else {
       setIsMoving(true);
@@ -75,13 +82,14 @@ const MoveHoldingContext = ({
           setIsMoving(false);
         });
 
+      setSelectedHoldingsMap([]);
       setSelectedItemsMap((prevItemsMap) => ({
         ...prevItemsMap,
         [from]: undefined,
       }));
       setActiveDropZone(undefined);
     }
-  }, [selectedItemsMap, selectedHoldingsMap]);
+  }, [selectedItemsMap, selectedHoldingsMap, isHoldingMoved]);
 
   const getDraggingItems = useCallback(() => {
     const fromHolding = selectedItemsMap[activeDropZone] || {};
@@ -134,6 +142,7 @@ const MoveHoldingContext = ({
   return (
     <>
       <DragDropContext
+        onBeforeCapture={onBeforeCapture}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
       >
@@ -146,7 +155,7 @@ const MoveHoldingContext = ({
             ifHoldingDragSelected,
             getDraggingItems,
             draggingHoldingsCount: selectedHoldingsMap.length,
-            isItemsDropable: !selectedHoldingsMap.length,
+            isItemsDropable: !isHoldingMoved,
           }}
         >
           {children}
