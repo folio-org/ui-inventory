@@ -1,3 +1,3 @@
-import { RestSerializer } from '@bigtest/mirage';
+import { Serializer } from '@bigtest/mirage';
 
-export default RestSerializer;
+export default Serializer;
