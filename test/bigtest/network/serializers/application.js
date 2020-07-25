@@ -1,3 +1,5 @@
 import { Serializer } from '@bigtest/mirage';
 
-export default Serializer;
+export default Serializer.extend({
+  serializeIds: 'always'
+});

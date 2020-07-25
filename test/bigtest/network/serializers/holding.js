@@ -4,11 +4,6 @@ const { isArray } = Array;
 const { assign } = Object;
 
 export default ApplicationSerializer.extend({
-
-  include: [
-    'instance'
-  ],
-
   serialize(object, request) {
     const json = ApplicationSerializer.prototype.serialize.call(this, object, request);
 
