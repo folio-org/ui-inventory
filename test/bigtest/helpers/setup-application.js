@@ -8,7 +8,10 @@ export default function setupApplication({
   modules,
 } = {}) {
   setupStripesCore({
-    mirageOptions,
+    mirageOptions: {
+      serverType: 'miragejs',
+      ...mirageOptions
+    },
     scenarios,
     permissions,
     modules,

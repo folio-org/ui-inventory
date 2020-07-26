@@ -1,4 +1,4 @@
-import { Serializer } from '@bigtest/mirage';
+import { Serializer } from 'miragejs';
 
 export default Serializer.extend({
   serializeIds: 'always'
