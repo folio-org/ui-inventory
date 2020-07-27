@@ -46,7 +46,7 @@ const MoveHoldingContext = ({
   }, [movingItems, dragToId]);
 
   const onBeforeCapture = useCallback((result) => {
-    const isHolding = selectedHoldingsMap.some(item => item === result.draggableId);
+    const isHolding = result.draggableId.slice(0, 8) === 'holding-';
 
     setisHoldingMoved(isHolding);
   }, [selectedHoldingsMap]);
@@ -66,9 +66,10 @@ const MoveHoldingContext = ({
       selectedHoldingsMap
       :
       Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+    const itemDropId = isHoldingMoved ? result.draggableId.slice(8) : result.draggableId;
 
     if (!items.length) {
-      items.push(result.draggableId);
+      items.push(itemDropId);
     }
     setMovingItems(items);
 
