@@ -105,7 +105,11 @@ export const holdingIndexes = [
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
-    queryTemplate: 'holdingsRecords.fullCallNumber=="%{query.query}" OR holdingsRecords.callNumberAndSuffix=="%{query.query}"' },
+    queryTemplate: `
+      holdingsRecords.fullCallNumber=="%{query.query}" 
+      OR holdingsRecords.callNumberAndSuffix=="%{query.query}" 
+      OR holdingsRecords.callNumber=="%{query.query}"
+    ` },
   { label: 'ui-inventory.callNumberNormalized',
     value: 'callNumberNormalized',
     queryTemplate: 'holdingsRecords.fullCallNumberNormalized="%{query.query}" OR holdingsRecords.callNumberAndSuffixNormalized="%{query.query}"' },

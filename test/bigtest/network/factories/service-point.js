@@ -1,4 +1,4 @@
-import { Factory } from '@bigtest/mirage';
+import { Factory } from 'miragejs';
 
 export default Factory.extend({
   name: 'Circ Desk 1',
