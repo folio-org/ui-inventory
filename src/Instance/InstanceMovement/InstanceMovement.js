@@ -2,10 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  stripesConnect,
-} from '@folio/stripes/core';
-
-import {
   Paneset,
 } from '@folio/stripes/components';
 import {
@@ -61,4 +57,4 @@ InstanceMovement.defaultProps = {
   instanceTo: {},
 };
 
-export default stripesConnect(InstanceMovement);
+export default InstanceMovement;

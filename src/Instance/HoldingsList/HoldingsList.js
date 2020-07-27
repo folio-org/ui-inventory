@@ -38,7 +38,7 @@ HoldingsList.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
-  ifItemsDragSelected: PropTypes.func.isRequired,
+  isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   activeDropZone: PropTypes.string,
 };

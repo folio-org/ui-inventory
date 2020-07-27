@@ -27,9 +27,9 @@ const HoldingsListMovement = ({
 }) => {
   const {
     selectItemsForDrag,
-    ifItemsDragSelected,
+    isItemsDragSelected,
     selectHoldingsForDrag,
-    ifHoldingDragSelected,
+    isHoldingDragSelected,
     getDraggingItems,
     activeDropZone,
     draggingHoldingsCount,
@@ -56,8 +56,8 @@ const HoldingsListMovement = ({
               activeDropZone={activeDropZone}
               selectItemsForDrag={selectItemsForDrag}
               selectHoldingsForDrag={selectHoldingsForDrag}
-              ifHoldingDragSelected={ifHoldingDragSelected}
-              ifItemsDragSelected={ifItemsDragSelected}
+              isHoldingDragSelected={isHoldingDragSelected}
+              isItemsDragSelected={isItemsDragSelected}
               getDraggingItems={getDraggingItems}
               holdingindex={index}
               draggingHoldingsCount={draggingHoldingsCount}

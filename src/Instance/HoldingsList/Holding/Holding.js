@@ -32,14 +32,14 @@ const Holding = ({
   draggable,
   droppable,
   selectHoldingsForDrag,
-  ifHoldingDragSelected,
+  isHoldingDragSelected,
   isDraggable,
 }) => {
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const {
     selectItemsForDrag,
-    ifItemsDragSelected,
+    isItemsDragSelected,
     getDraggingItems,
     activeDropZone,
     isItemsDropable,
@@ -88,7 +88,7 @@ const Holding = ({
                 <Checkbox
                   id={`select-holding-${holding.id}`}
                   aria-label={ariaLabel}
-                  checked={ifHoldingDragSelected(holding)}
+                  checked={isHoldingDragSelected(holding)}
                   onChange={() => selectHoldingsForDrag(holding)}
                 />
               </span>
@@ -118,7 +118,7 @@ const Holding = ({
 
               draggable={draggable}
               droppable={droppable}
-              ifItemsDragSelected={ifItemsDragSelected}
+              isItemsDragSelected={isItemsDragSelected}
               selectItemsForDrag={selectItemsForDrag}
               getDraggingItems={getDraggingItems}
               activeDropZone={activeDropZone}
@@ -141,7 +141,7 @@ Holding.propTypes = {
   droppable: PropTypes.bool,
   isDraggable: PropTypes.bool,
   selectHoldingsForDrag: PropTypes.func.isRequired,
-  ifHoldingDragSelected: PropTypes.func.isRequired,
+  isHoldingDragSelected: PropTypes.func.isRequired,
 };
 
 export default Holding;

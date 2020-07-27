@@ -113,7 +113,7 @@ const ItemsList = ({
 
   draggable,
   droppable,
-  ifItemsDragSelected,
+  isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
   activeDropZone,
@@ -129,18 +129,18 @@ const ItemsList = ({
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
-    () => getColumnMapping(intl, holding.id, records, ifItemsDragSelected, selectItemsForDrag),
-    [holding.id, records, ifItemsDragSelected, selectItemsForDrag],
+    () => getColumnMapping(intl, holding.id, records, isItemsDragSelected, selectItemsForDrag),
+    [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(holding, selectItemsForDrag, ifItemsDragSelected),
-    [holding, selectItemsForDrag, ifItemsDragSelected],
+    () => getFormatter(holding, selectItemsForDrag, isItemsDragSelected),
+    [holding, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,
-    ifItemsDragSelected,
+    isItemsDragSelected,
     getDraggingItems,
-  }), [draggable, ifItemsDragSelected, getDraggingItems]);
+  }), [draggable, isItemsDragSelected, getDraggingItems]);
 
   useEffect(() => {
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
@@ -193,7 +193,7 @@ ItemsList.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
-  ifItemsDragSelected: PropTypes.func.isRequired,
+  isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   activeDropZone: PropTypes.string,
   isItemsDropable: PropTypes.bool,

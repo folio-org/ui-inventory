@@ -10,12 +10,14 @@ export const selectItems = (prevItemsMap, holdingId, items) => {
     .keys(prevHolding)
     .filter(itemId => prevHolding[itemId])
     .length;
+  const isNoNewItems = (items.length > 1 && prevSelectedCount === items.length);
+  const withNewItems = (items.length > 1 && prevSelectedCount !== items.length);
 
   let newHolding;
 
-  if (items.length > 1 && prevSelectedCount === items.length) {
+  if (isNoNewItems) {
     newHolding = {};
-  } else if (items.length > 1 && prevSelectedCount !== items.length) {
+  } else if (withNewItems) {
     newHolding = items.reduce((acc, item) => {
       acc[item.id] = true;
 

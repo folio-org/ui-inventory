@@ -58,7 +58,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
     };
   }, [activeDropZone, selectedItemsMap]);
 
-  const ifItemsDragSelected = useCallback((items) => {
+  const isItemsDragSelected = useCallback((items) => {
     return isItemsSelected(items, selectedItemsMap);
   }, [selectedItemsMap]);
 
@@ -83,7 +83,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
         value={{
           activeDropZone,
           selectItemsForDrag,
-          ifItemsDragSelected,
+          isItemsDragSelected,
           getDraggingItems,
         }}
       >

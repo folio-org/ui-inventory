@@ -62,12 +62,9 @@ const MoveHoldingContext = ({
     setDragToId(to);
     const fromSelectedMap = selectedItemsMap[from] || {};
     const items = isHoldingMoved
-     ? selectedHoldingsMap
-     : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
-      ?
-      selectedHoldingsMap
-      :
-      Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+      ? selectedHoldingsMap
+      : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+
     const itemDropId = isHoldingMoved ? result.draggableId.slice(8) : result.draggableId;
 
     if (!items.length) {
@@ -102,7 +99,7 @@ const MoveHoldingContext = ({
     };
   }, [activeDropZone, selectedItemsMap]);
 
-  const ifHoldingDragSelected = useCallback((holding) => {
+  const isHoldingDragSelected = useCallback((holding) => {
     return selectedHoldingsMap.some(item => item === holding.id);
   }, [selectedHoldingsMap]);
 
@@ -122,7 +119,7 @@ const MoveHoldingContext = ({
     });
   }, [setSelectedHoldingsMap]);
 
-  const ifItemsDragSelected = useCallback((items) => {
+  const isItemsDragSelected = useCallback((items) => {
     return isItemsSelected(items, selectedItemsMap);
   }, [selectedItemsMap]);
 
@@ -153,9 +150,9 @@ const MoveHoldingContext = ({
           value={{
             activeDropZone,
             selectItemsForDrag,
-            ifItemsDragSelected,
+            isItemsDragSelected,
             selectHoldingsForDrag,
-            ifHoldingDragSelected,
+            isHoldingDragSelected,
             getDraggingItems,
             draggingHoldingsCount: selectedHoldingsMap.length,
             isItemsDropable: !isHoldingMoved,
