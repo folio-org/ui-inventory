@@ -62,6 +62,8 @@ const MoveHoldingContext = ({
     setDragToId(to);
     const fromSelectedMap = selectedItemsMap[from] || {};
     const items = isHoldingMoved
+     ? selectedHoldingsMap
+     : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
       ?
       selectedHoldingsMap
       :
