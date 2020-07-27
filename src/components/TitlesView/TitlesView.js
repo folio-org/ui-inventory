@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -10,10 +10,14 @@ import {
 
 import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
-import DataContext from '../../contexts/DataContext';
 
-const TitlesViews = ({ titles, id, titleKey, label }) => {
-  const { identifierTypesById } = useContext(DataContext);
+const TitlesViews = ({
+  titles,
+  id,
+  titleKey,
+  label,
+  identifierTypesById,
+}) => {
   const {
     ISSN,
     ISBN,
@@ -71,6 +75,7 @@ TitlesViews.propTypes = {
   label: PropTypes.node.isRequired,
   titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   titleKey: PropTypes.string.isRequired,
+  identifierTypesById: PropTypes.func.isRequired,
 };
 
 export default TitlesViews;

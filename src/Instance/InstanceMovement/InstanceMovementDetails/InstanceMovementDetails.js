@@ -4,31 +4,37 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { Droppable } from 'react-beautiful-dnd';
 import {
   useStripes,
 } from '@folio/stripes/core';
 
-import DataContext from '../../../contexts/DataContext';
+import DnDContext from '../../DnDContext';
 import {
   InstanceDetails,
 } from '../../InstanceDetails';
 import {
   HoldingsListContainer,
 } from '../../HoldingsList';
-import {
-  MoveItemsContext,
-} from '../../MoveItemsContext';
 
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 
-const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
+const InstanceMovementDetails = ({
+  instance,
+  onClose,
+  hasMarc,
+  referenceData,
+}) => {
   const stripes = useStripes();
 
   const closeInstance = useCallback(() => {
     onClose(instance);
   }, [instance, onClose]);
 
-  const referenceData = useContext(DataContext);
+  const {
+    activeDropZone,
+    isItemsDropable,
+  } = useContext(DnDContext);
 
   const getActionMenu = useCallback(({ onToggle }) => {
     if (
@@ -55,14 +61,28 @@ const InstanceMovementDetails = ({ instance, onClose, hasMarc }) => {
       actionMenu={getActionMenu}
       data-test-instance-movement-details={instance.id}
     >
-      <MoveItemsContext>
-        <HoldingsListContainer
-          instance={instance}
-          referenceData={referenceData}
-          draggable={false}
-          droppable={false}
-        />
-      </MoveItemsContext>
+      <Droppable
+        droppableId={`${instance.id}`}
+        isDropDisabled={isItemsDropable || activeDropZone === instance.id}
+      >
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            data-test-holdings
+          >
+            <HoldingsListContainer
+              instance={instance}
+              referenceData={referenceData}
+              isHoldingsMove
+              draggable
+              droppable
+            />
+
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </InstanceDetails>
   );
 };
@@ -71,6 +91,7 @@ InstanceMovementDetails.propTypes = {
   instance: PropTypes.object,
   hasMarc: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
+  referenceData: PropTypes.object.isRequired,
 };
 
 InstanceMovementDetails.defaultProps = {

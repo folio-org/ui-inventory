@@ -5,7 +5,6 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { Droppable } from 'react-beautiful-dnd';
 import {
   FormattedMessage,
   useIntl,
@@ -22,6 +21,7 @@ import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
 import ItemsListRow from './ItemsListRow';
+import DropZone from './DropZone';
 import {
   sortItems,
 } from './utils';
@@ -113,10 +113,11 @@ const ItemsList = ({
 
   draggable,
   droppable,
-  ifItemsDragSelected,
+  isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
   activeDropZone,
+  isItemsDropable,
 }) => {
   const intl = useIntl();
 
@@ -128,18 +129,18 @@ const ItemsList = ({
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
-    () => getColumnMapping(intl, holding.id, records, ifItemsDragSelected, selectItemsForDrag),
-    [holding.id, records, ifItemsDragSelected, selectItemsForDrag],
+    () => getColumnMapping(intl, holding.id, records, isItemsDragSelected, selectItemsForDrag),
+    [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(holding, selectItemsForDrag, ifItemsDragSelected),
-    [holding, selectItemsForDrag, ifItemsDragSelected],
+    () => getFormatter(holding, selectItemsForDrag, isItemsDragSelected),
+    [holding, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,
-    ifItemsDragSelected,
+    isItemsDragSelected,
     getDraggingItems,
-  }), [draggable, ifItemsDragSelected, getDraggingItems]);
+  }), [draggable, isItemsDragSelected, getDraggingItems]);
 
   useEffect(() => {
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
@@ -160,38 +161,28 @@ const ItemsList = ({
 
     setItemsSorting(newItemsSorting);
   }, [itemsSorting]);
-
   return (
-    <Droppable
+    <DropZone
+      isItemsDropable={isItemsDropable}
       droppableId={holding.id}
       isDropDisabled={!droppable || activeDropZone === holding.id}
     >
-      {(provided) => (
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          data-test-items
-        >
-          <MultiColumnList
-            id={`list-items-${holding.id}`}
-            contentData={records}
-            rowMetadata={rowMetadata}
-            formatter={formatter}
-            visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
-            columnMapping={columnMapping}
-            ariaLabel={ariaLabel}
-            interactive={false}
-            onHeaderClick={onHeaderClick}
-            sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-            sortedColumn={itemsSorting.column}
-            rowFormatter={ItemsListRow}
-            rowProps={rowProps}
-          />
-
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+      <MultiColumnList
+        id={`list-items-${holding.id}`}
+        contentData={records}
+        rowMetadata={rowMetadata}
+        formatter={formatter}
+        visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
+        columnMapping={columnMapping}
+        ariaLabel={ariaLabel}
+        interactive={false}
+        onHeaderClick={onHeaderClick}
+        sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+        sortedColumn={itemsSorting.column}
+        rowFormatter={ItemsListRow}
+        rowProps={rowProps}
+      />
+    </DropZone>
   );
 };
 
@@ -202,13 +193,15 @@ ItemsList.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
-  ifItemsDragSelected: PropTypes.func.isRequired,
+  isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   activeDropZone: PropTypes.string,
+  isItemsDropable: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   items: [],
+  isItemsDropable: true,
 };
 
 export default ItemsList;

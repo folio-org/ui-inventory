@@ -1,11 +1,14 @@
 import React, {
   useCallback,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 import {
   stripesConnect,
+  CalloutContext,
 } from '@folio/stripes/core';
 import {
   LoadingView,
@@ -14,7 +17,6 @@ import {
 import {
   useInstance,
 } from '../../common/hooks';
-import DataContext from '../../contexts/DataContext';
 
 import InstanceMovement from './InstanceMovement';
 
@@ -27,6 +29,7 @@ const InstanceMovementContainer = ({
   history,
   location,
 }) => {
+  const callout = useContext(CalloutContext);
   const {
     instance: instanceFrom,
     isLoading: isInstanceFromLoading,
@@ -47,16 +50,51 @@ const InstanceMovementContainer = ({
     });
   });
 
+  const moveHoldings = (toInstanceId, items) => {
+    return mutator.movableHoldings.POST({
+      toInstanceId,
+      holdingsRecordIds: items,
+    })
+      .then(() => {
+        const message = (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.success"
+            values={{ count: items.length }}
+          />
+        );
+
+        callout.sendCallout({ message });
+      });
+  };
+
+  const moveItems = (toHoldingsRecordId, items) => {
+    return mutator.movableItems.POST({
+      toHoldingsRecordId,
+      itemIds: items,
+    })
+      .then(() => {
+        const message = (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.success"
+            values={{ count: items.length }}
+          />
+        );
+
+        callout.sendCallout({ message });
+      });
+  };
+
   if (isInstanceFromLoading || isInstanceToLoading) return <LoadingView />;
 
   return (
-    <DataContext.Provider value={referenceData}>
-      <InstanceMovement
-        instanceFrom={instanceFrom}
-        instanceTo={instanceTo}
-        onClose={onClose}
-      />
-    </DataContext.Provider>
+    <InstanceMovement
+      referenceData={referenceData}
+      instanceFrom={instanceFrom}
+      instanceTo={instanceTo}
+      onClose={onClose}
+      moveHoldings={moveHoldings}
+      moveItems={moveItems}
+    />
   );
 };
 
@@ -67,6 +105,18 @@ InstanceMovementContainer.manifest = Object.freeze({
     throwErrors: false,
     path: 'inventory/instances',
     accumulate: true,
+  },
+  movableHoldings: {
+    type: 'okapi',
+    path: 'inventory/holdings/move',
+    fetch: false,
+    throwErrors: false,
+  },
+  movableItems: {
+    type: 'okapi',
+    path: 'inventory/items/move',
+    fetch: false,
+    throwErrors: false,
   },
 });
 

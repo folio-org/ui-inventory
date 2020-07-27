@@ -83,7 +83,7 @@ const ItemsListRow = ({
 }) => {
   const {
     draggable,
-    ifItemsDragSelected,
+    isItemsDragSelected,
     getDraggingItems,
   } = rowProps;
 
@@ -100,7 +100,7 @@ const ItemsListRow = ({
         <Row
           provided={provided}
           snapshot={snapshot}
-          selected={ifItemsDragSelected([rowData])}
+          selected={isItemsDragSelected([rowData])}
           draggingItemsCount={draggingItemsCount}
 
           cells={cells}
