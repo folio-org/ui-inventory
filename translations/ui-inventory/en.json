@@ -546,7 +546,12 @@
   "moveItems.selectAll": "Select/unselect all items for movement",
   "moveItems.selectItem": "Select/unselect item for movement",
   "moveItems.move.items.count": "Move: {count, number} {count, plural, one {item} other {items}}",
+  "moveItems.move.holdings.count": "Move: {count, number} {count, plural, one {holding} other {holdings}}",
   "moveItems.instance.actionMenu.enable": "Move items within an instance",
   "moveItems.instance.actionMenu.disable": "Stop items movement within an instance",
-  "moveItems.instance.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved."
+  "moveItems.instance.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
+  "moveItems.instance.dropZone": "Drop holding",
+  "moveItems.modal.confirmLabel": "Continue",
+  "moveItems.modal.title": "Confirm move",
+  "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved."
 }

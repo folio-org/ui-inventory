@@ -122,6 +122,7 @@ const InstanceDetails = ({
             id={accordions.title}
             instance={instance}
             titleTypes={referenceData.alternativeTitleTypes}
+            identifierTypesById={referenceData.identifierTypesById}
           />
 
           <InstanceIdentifiersView

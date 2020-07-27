@@ -8,7 +8,12 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import InstanceMovementDetails from './InstanceMovementDetails';
 
-const InstanceMovementDetailsContainer = ({ instance, onClose, mutator }) => {
+const InstanceMovementDetailsContainer = ({
+  instance,
+  onClose,
+  mutator,
+  referenceData,
+}) => {
   const [marc, setMarc] = useState();
 
   useEffect(() => {
@@ -22,6 +27,7 @@ const InstanceMovementDetailsContainer = ({ instance, onClose, mutator }) => {
       instance={instance}
       onClose={onClose}
       hasMarc={Boolean(marc)}
+      referenceData={referenceData}
     />
   );
 };
@@ -30,6 +36,7 @@ InstanceMovementDetailsContainer.propTypes = {
   instance: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   mutator: PropTypes.object.isRequired,
+  referenceData: PropTypes.object.isRequired,
 };
 
 InstanceMovementDetailsContainer.defaultProps = {

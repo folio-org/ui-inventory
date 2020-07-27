@@ -1,6 +1,7 @@
 import React, {
   useMemo,
   useCallback,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -13,12 +14,14 @@ import {
   Row,
   Col,
   Button,
+  Checkbox,
 } from '@folio/stripes/components';
 
 import {
   callNumberLabel
 } from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
+import DnDContext from '../../DnDContext';
 
 const Holding = ({
   holding,
@@ -28,13 +31,19 @@ const Holding = ({
 
   draggable,
   droppable,
-  ifItemsDragSelected,
-  selectItemsForDrag,
-  getDraggingItems,
-  activeDropZone,
+  selectHoldingsForDrag,
+  isHoldingDragSelected,
+  isDraggable,
 }) => {
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
+  const {
+    selectItemsForDrag,
+    isItemsDragSelected,
+    getDraggingItems,
+    activeDropZone,
+    isItemsDropable,
+  } = useContext(DnDContext);
 
   const viewHoldings = useCallback(() => {
     onViewHolding();
@@ -70,36 +79,55 @@ const Holding = ({
   }, [holding.id, viewHoldings, addItem]);
 
   return (
-    <Accordion
-      id={holding.id}
-      closedByDefault={false}
-      label={(
-        <FormattedMessage
-          id="ui-inventory.holdingsHeader"
-          values={{
-            location: labelLocation,
-            callNumber: callNumberLabel(holding),
-          }}
-        />
-      )}
-      displayWhenOpen={holdingButtonsGroup}
-    >
-      <Row>
-        <Col sm={12}>
-          <ItemsListContainer
-            key={`items_${holding.id}`}
-            holding={holding}
-
-            draggable={draggable}
-            droppable={droppable}
-            ifItemsDragSelected={ifItemsDragSelected}
-            selectItemsForDrag={selectItemsForDrag}
-            getDraggingItems={getDraggingItems}
-            activeDropZone={activeDropZone}
+    <div>
+      {isDraggable &&
+        <FormattedMessage id="ui-inventory.moveItems.selectItem">
+          {
+            (ariaLabel) => (
+              <span data-test-select-holding>
+                <Checkbox
+                  id={`select-holding-${holding.id}`}
+                  aria-label={ariaLabel}
+                  checked={isHoldingDragSelected(holding)}
+                  onChange={() => selectHoldingsForDrag(holding)}
+                />
+              </span>
+            )
+          }
+        </FormattedMessage>
+      }
+      <Accordion
+        id={holding.id}
+        closedByDefault={false}
+        label={(
+          <FormattedMessage
+            id="ui-inventory.holdingsHeader"
+            values={{
+              location: labelLocation,
+              callNumber: callNumberLabel(holding),
+            }}
           />
-        </Col>
-      </Row>
-    </Accordion>
+        )}
+        displayWhenOpen={holdingButtonsGroup}
+      >
+        <Row>
+          <Col sm={12}>
+            <ItemsListContainer
+              key={`items_${holding.id}`}
+              holding={holding}
+
+              draggable={draggable}
+              droppable={droppable}
+              isItemsDragSelected={isItemsDragSelected}
+              selectItemsForDrag={selectItemsForDrag}
+              getDraggingItems={getDraggingItems}
+              activeDropZone={activeDropZone}
+              isItemsDropable={isItemsDropable}
+            />
+          </Col>
+        </Row>
+      </Accordion>
+    </div>
   );
 };
 
@@ -111,10 +139,9 @@ Holding.propTypes = {
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
-  selectItemsForDrag: PropTypes.func.isRequired,
-  ifItemsDragSelected: PropTypes.func.isRequired,
-  getDraggingItems: PropTypes.func.isRequired,
-  activeDropZone: PropTypes.string,
+  isDraggable: PropTypes.bool,
+  selectHoldingsForDrag: PropTypes.func.isRequired,
+  isHoldingDragSelected: PropTypes.func.isRequired,
 };
 
 export default Holding;
