@@ -1,5 +1,4 @@
-import { faker } from '@bigtest/mirage';
-
+import faker from 'faker';
 import ApplicationFactory from './application';
 
 export default ApplicationFactory.extend({

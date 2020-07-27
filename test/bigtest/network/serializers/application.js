@@ -1,3 +1,5 @@
-import { RestSerializer } from '@bigtest/mirage';
+import { Serializer } from 'miragejs';
 
-export default RestSerializer;
+export default Serializer.extend({
+  serializeIds: 'always'
+});
