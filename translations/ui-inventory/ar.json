@@ -545,9 +545,9 @@
     "folio": "فوليو",
     "marc": "مارك",
     "effectiveLocationShort": "الموقع النشط",
-    "moveItems.move.holdings.count": "Move: {count, number} {count, plural, one {holding} other {holdings}}",
-    "moveItems.instance.dropZone": "Drop holding",
-    "moveItems.modal.confirmLabel": "Continue",
-    "moveItems.modal.title": "Confirm move",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved."
+    "moveItems.move.holdings.count": "نقل: {count, number} {count, plural, one {مقتنى} other {مقتنيات}}",
+    "moveItems.instance.dropZone": "إسقاط المقتنيات",
+    "moveItems.modal.confirmLabel": "متابعة",
+    "moveItems.modal.title": "تأكيد النقل",
+    "moveItems.modal.message": "سيتم نقل {count, number} {count, plural, one {مقتنى} other {مقتنيات}}"
 }
