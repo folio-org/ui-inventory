@@ -170,8 +170,10 @@ export default function configure() {
         return instances.where({ id: holding?.instanceId });
       }
 
-      if (left?.field === 'item.fullCallNumber') {
-        const item = items.where({ callNumber: left.term }).models[0];
+      // With the addition of a third condition to search for records by 'Item. Effective call number eye readable" in the CQL query,
+      // cqlParser.tree object gets a deeper structure in the 'left' and 'right' properties.
+      if (left?.left?.field === 'item.fullCallNumber') {
+        const item = items.where({ callNumber: left.left.term }).models[0];
         const holding = holdings.where({ id: item.holdingsRecordId }).models[0];
 
         return instances.where({ id: holding.instanceId });
