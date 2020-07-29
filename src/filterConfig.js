@@ -146,7 +146,11 @@ export const itemIndexes = [
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'identifiers =/@value/@identifierTypeId="<%= identifierTypeId %>" "%{query.query}"' },
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
-    queryTemplate: 'item.fullCallNumber=="%{query.query}" OR item.callNumberAndSuffix=="%{query.query}"' },
+    queryTemplate: `
+      item.fullCallNumber=="%{query.query}" 
+      OR item.callNumberAndSuffix=="%{query.query}" 
+      OR item.effectiveCallNumberComponents.callNumber=="%{query.query}"
+    ` },
   { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
     value: 'itemCallNumberNorm',
     queryTemplate: 'item.fullCallNumberNormalized="%{query.query}" OR item.callNumberAndSuffixNormalized="%{query.query}"' },
