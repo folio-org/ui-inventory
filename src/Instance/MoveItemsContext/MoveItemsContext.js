@@ -37,8 +37,9 @@ const MoveItemsContext = ({ children, moveItems }) => {
     }
 
     setIsMoving(true);
+    console.log('moveItemshhhhhhhhh', moveItems);
 
-    moveItems(from, to, items)
+    moveItems(to, items)
       .finally(() => {
         setIsMoving(false);
       });

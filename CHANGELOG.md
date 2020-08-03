@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Move (right to left) and confirm items and holdings or items to a new instance. Refs UIIN-1152.
 * Move and confirm items and holdings or items to a new instance. Refs UIIN-1101.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.

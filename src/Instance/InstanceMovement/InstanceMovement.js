@@ -23,6 +23,8 @@ const InstanceMovement = ({
       <MoveHoldingContext
         moveHoldings={moveHoldings}
         moveItems={moveItems}
+        leftInstance={instanceFrom}
+        rightInstance={instanceTo}
         withConfirmationModal
       >
         <InstanceMovementDetailsContainer
