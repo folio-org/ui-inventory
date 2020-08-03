@@ -16,7 +16,7 @@ const marcRecord = {
   },
 };
 
-describe.only('InstanceMovementPage', () => {
+describe('InstanceMovementPage', () => {
   setupApplication();
 
   const instanceMarcPage = new InstanceMarcPage();
