@@ -175,7 +175,7 @@ const MoveHoldingContext = ({
           message={
             intl.formatMessage(
               { id: 'ui-inventory.moveItems.modal.message' },
-              { 
+              {
                 count: movingItems.length,
                 targetName: <b>{movingTargetName}</b>
               }
@@ -194,7 +194,7 @@ MoveHoldingContext.propTypes = {
   children: PropTypes.node.isRequired,
   moveItems: PropTypes.func.isRequired,
   moveHoldings: PropTypes.func.isRequired,
-  leftInstance: PropTypes.object.isRequired, 
+  leftInstance: PropTypes.object.isRequired,
   rightInstance: PropTypes.object.isRequired,
 };
 
