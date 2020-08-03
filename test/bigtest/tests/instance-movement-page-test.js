@@ -76,7 +76,6 @@ describe.only('InstanceMovementPage', () => {
 
   it('should render instance details to', () => {
     expect(instanceMovementDetailsTo.isPresent).to.be.true;
-    expect(instanceMovementDetailsTo.emptyDropZone.isPresent).to.be.true;
     expect(instanceMovementDetailsTo.title.includes(titleInstanceTo)).to.be.true;
   });
 
