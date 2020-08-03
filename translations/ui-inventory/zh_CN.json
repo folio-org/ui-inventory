@@ -544,5 +544,10 @@
     "moveItems": "将馆藏/单件移至另一个实例",
     "folio": "FOLIO ID",
     "marc": "MARC",
-    "effectiveLocationShort": "有效馆藏地"
+    "effectiveLocationShort": "有效馆藏地",
+    "moveItems.move.holdings.count": "Move: {count, number} {count, plural, one {holding} other {holdings}}",
+    "moveItems.instance.dropZone": "Drop holding",
+    "moveItems.modal.confirmLabel": "Continue",
+    "moveItems.modal.title": "Confirm move",
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved."
 }
