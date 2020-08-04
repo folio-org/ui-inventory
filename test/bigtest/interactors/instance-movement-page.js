@@ -18,7 +18,6 @@ import {
     return this.timeout(10000).when(() => this.isLoaded);
   }
 
-  emptyDropZone = isPresent('[data-test-empty-drop-zone]');
   title = text('[data-test-pane-header-title]');
   close = clickable('[data-test-pane-header-dismiss-button]');
 
