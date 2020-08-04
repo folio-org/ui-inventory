@@ -387,7 +387,7 @@
     "hridHandling.label.startWith": "Inicia com",
     "hridHandling.label.assignPrefix": "Atribuir prefixo",
     "hridHandling.validation.enterValue": "Por favor, insira um valor",
-    "hridHandling.validation.maxLength": "Valor inválido. Máximo {maxLength} caracteres permitidos",
+    "hridHandling.validation.maxLength": "Valor inválido. No máximo {maxLength} caracteres são permitidos",
     "hridHandling.validation.startWithField": "Por favor, insira um valor numérico",
     "hridHandling.validation.assignPrefixField": "Por favor, insira um valor alfanumérico",
     "noBarcode": "Nenhum código de barras",
