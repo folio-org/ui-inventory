@@ -51,7 +51,7 @@ class ViewInstance extends React.Component {
     movableItems: {
       type: 'okapi',
       path: 'inventory/items/move',
-      fetch: true,
+      fetch: false,
       throwErrors: false,
     },
     marcRecord: {

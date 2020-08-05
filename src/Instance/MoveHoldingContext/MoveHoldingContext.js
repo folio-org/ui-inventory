@@ -34,7 +34,6 @@ const MoveHoldingContext = ({
   const [movingItems, setMovingItems] = useState([]);
   const [dragToId, setDragToId] = useState();
   const [isHoldingMoved, setisHoldingMoved] = useState();
-  const [movingTargetName, setMovingTargetName] = useState();
 
   const onConfirm = useCallback(() => {
     toggleMoveModal(false);
@@ -61,17 +60,16 @@ const MoveHoldingContext = ({
 
   const onDragEnd = useCallback((result) => {
     if (!result.destination) return;
+
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
-    const targetTitle = rightInstance.id === to ? rightInstance.title : leftInstance.title;
-    setDragToId(to);
-    setMovingTargetName(targetTitle);
     const fromSelectedMap = selectedItemsMap[from] || {};
     const items = isHoldingMoved
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
-
     const itemDropId = isHoldingMoved ? result.draggableId.slice(8) : result.draggableId;
+
+    setDragToId(to);
 
     if (!items.length) {
       items.push(itemDropId);
@@ -177,7 +175,7 @@ const MoveHoldingContext = ({
               { id: 'ui-inventory.moveItems.modal.message' },
               {
                 count: movingItems.length,
-                targetName: <b>{movingTargetName}</b>
+                targetName: <b>{rightInstance.id === dragToId ? rightInstance.title : leftInstance.title}</b>
               }
             )
           }
