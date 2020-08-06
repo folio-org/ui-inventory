@@ -5,7 +5,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
 import {
-  FormattedMessage,
+  useIntl,
 } from 'react-intl';
 
 import {
@@ -22,7 +22,10 @@ const MoveHoldingContext = ({
   children,
   moveItems,
   moveHoldings,
+  leftInstance,
+  rightInstance,
 }) => {
+  const intl = useIntl();
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
   const [selectedHoldingsMap, setSelectedHoldingsMap] = useState([]);
@@ -57,15 +60,16 @@ const MoveHoldingContext = ({
 
   const onDragEnd = useCallback((result) => {
     if (!result.destination) return;
+
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
-    setDragToId(to);
     const fromSelectedMap = selectedItemsMap[from] || {};
     const items = isHoldingMoved
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
-
     const itemDropId = isHoldingMoved ? result.draggableId.slice(8) : result.draggableId;
+
+    setDragToId(to);
 
     if (!items.length) {
       items.push(itemDropId);
@@ -163,16 +167,17 @@ const MoveHoldingContext = ({
       </DragDropContext>
       {isMoveModalOpened && (
         <ConfirmationModal
-          id="delete-row-confirmation"
-          confirmLabel={<FormattedMessage id="ui-inventory.moveItems.modal.confirmLabel" />}
-          heading={<FormattedMessage id="ui-inventory.moveItems.modal.title" />}
+          id="move-holding-confirmation"
+          confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
+          heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
           message={
-            <FormattedMessage
-              id="ui-inventory.moveItems.modal.message"
-              values={{
+            intl.formatMessage(
+              { id: 'ui-inventory.moveItems.modal.message' },
+              {
                 count: movingItems.length,
-              }}
-            />
+                targetName: <b>{rightInstance.id === dragToId ? rightInstance.title : leftInstance.title}</b>
+              }
+            )
           }
           onCancel={closeModal}
           onConfirm={onConfirm}
@@ -187,6 +192,8 @@ MoveHoldingContext.propTypes = {
   children: PropTypes.node.isRequired,
   moveItems: PropTypes.func.isRequired,
   moveHoldings: PropTypes.func.isRequired,
+  leftInstance: PropTypes.object.isRequired,
+  rightInstance: PropTypes.object.isRequired,
 };
 
 export default MoveHoldingContext;

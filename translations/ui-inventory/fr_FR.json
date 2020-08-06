@@ -544,5 +544,10 @@
     "moveItems": "Move holdings/items to another instance",
     "folio": "FOLIO",
     "marc": "MARC",
-    "effectiveLocationShort": "Emplacement effectif"
+    "effectiveLocationShort": "Emplacement effectif",
+    "moveItems.move.holdings.count": "Déplacer: {count, number} {count, plural, one { holding } other { holdings }}",
+    "moveItems.instance.dropZone": "Drop holding",
+    "moveItems.modal.confirmLabel": "Continuer",
+    "moveItems.modal.title": "Confirmer le déplacement",
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved to {targetName}"
 }

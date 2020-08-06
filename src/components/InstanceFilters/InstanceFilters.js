@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { sortBy } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useStripes } from '@folio/stripes/core';
 import {
   Accordion,
   FilterAccordionHeader,
-  formattedLanguageName,
-  languages,
+  languageOptions,
 } from '@folio/stripes/components';
 import {
   CheckboxFilter,
@@ -95,13 +94,9 @@ const InstanceFilters = props => {
     },
   ];
 
-  let languageOptions = languages.map(l => (
-    {
-      label: formattedLanguageName(l.alpha3, useIntl()),
-      value: l.alpha3,
-    }
-  ));
-  languageOptions = sortBy(languageOptions, ['label']);
+  const intl = useIntl();
+  const stripes = useStripes();
+  const langOptions = languageOptions(intl, stripes.locale);
 
   return (
     <React.Fragment>
@@ -133,7 +128,7 @@ const InstanceFilters = props => {
       >
         <MultiSelectionFilter
           name="language"
-          dataOptions={languageOptions}
+          dataOptions={langOptions}
           selectedValues={language}
           onChange={onChange}
         />

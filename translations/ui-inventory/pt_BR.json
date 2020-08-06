@@ -387,7 +387,7 @@
     "hridHandling.label.startWith": "Inicia com",
     "hridHandling.label.assignPrefix": "Atribuir prefixo",
     "hridHandling.validation.enterValue": "Por favor, insira um valor",
-    "hridHandling.validation.maxLength": "Valor inválido. Máximo {maxLength} caracteres permitidos",
+    "hridHandling.validation.maxLength": "Valor inválido. No máximo {maxLength} caracteres são permitidos",
     "hridHandling.validation.startWithField": "Por favor, insira um valor numérico",
     "hridHandling.validation.assignPrefixField": "Por favor, insira um valor alfanumérico",
     "noBarcode": "Nenhum código de barras",
@@ -544,5 +544,10 @@
     "moveItems": "Mover holdings/itens para outra instância",
     "folio": "FOLIO",
     "marc": "MARC",
-    "effectiveLocationShort": "Localização efetiva"
+    "effectiveLocationShort": "Localização efetiva",
+    "moveItems.move.holdings.count": "Mover: {count, number} {count, plural, one {holding} other {holdings}}",
+    "moveItems.instance.dropZone": "Soltar holding",
+    "moveItems.modal.confirmLabel": "Continuar",
+    "moveItems.modal.title": "Confirmar movimentação",
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} será movido para {targetName}"
 }

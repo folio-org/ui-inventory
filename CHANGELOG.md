@@ -28,6 +28,8 @@
 * In transit report does not export name of library. Refs UIIN-1058.
 * `Holdings - Call number, eye readable`. Add search only by the call number. Refs UIIN-1040.
 * Replace `bigtest/mirage` with `miragejs`.
+* `Item - Effective call number (item), eye readable`. Add search only by the call number. Refs UIIN-1041.
+* Move (right to left) and confirm items and holdings or items to a new instance. Refs UIIN-1152.
 * Add item `aged to lost` status. Refs UIIN-1006.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)

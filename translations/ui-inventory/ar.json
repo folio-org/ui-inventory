@@ -544,5 +544,10 @@
     "moveItems": "نقل المقتنيات/المواد إلى وعاء آخر",
     "folio": "فوليو",
     "marc": "مارك",
-    "effectiveLocationShort": "الموقع النشط"
+    "effectiveLocationShort": "الموقع النشط",
+    "moveItems.move.holdings.count": "نقل: {count, number} {count, plural, one {مقتنى} other {مقتنيات}}",
+    "moveItems.instance.dropZone": "إسقاط المقتنيات",
+    "moveItems.modal.confirmLabel": "متابعة",
+    "moveItems.modal.title": "تأكيد النقل",
+    "moveItems.modal.message": "سيتم نقل {count, number} {count, plural, one {مقتنى} other {مقتنيات}}"
 }

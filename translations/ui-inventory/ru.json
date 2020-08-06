@@ -544,5 +544,10 @@
     "moveItems": "Прикрепить холдинги/экземпляры к другому документу",
     "folio": "FOLIO",
     "marc": "MARC",
-    "effectiveLocationShort": "Effective location"
+    "effectiveLocationShort": "Effective location",
+    "moveItems.move.holdings.count": "Move: {count, number} {count, plural, one {holding} other {holdings}}",
+    "moveItems.instance.dropZone": "Удалить холдинг",
+    "moveItems.modal.confirmLabel": "Продолжить",
+    "moveItems.modal.title": "Подтвердить перемещение",
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved to {targetName}"
 }

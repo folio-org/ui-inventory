@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { sortBy } from 'lodash';
 
+import { useStripes } from '@folio/stripes/core';
 import {
-  formattedLanguageName,
-  languages,
+  languageOptions,
   Select,
 } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
-const renderLanguageField = ({ field, fieldIndex, canEdit, languageOptions }) => {
+const renderLanguageField = ({ field, fieldIndex, canEdit, langOptions }) => {
   const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.language" /> : null;
 
   return (
@@ -23,7 +22,7 @@ const renderLanguageField = ({ field, fieldIndex, canEdit, languageOptions }) =>
           name={field}
           component={Select}
           placeholder={placeholder}
-          dataOptions={languageOptions}
+          dataOptions={langOptions}
           required
           data-test-language-field-count={fieldIndex}
           disabled={!canEdit}
@@ -37,11 +36,11 @@ renderLanguageField.propTypes = {
   field: PropTypes.object,
   fieldIndex: PropTypes.number,
   canEdit: PropTypes.bool,
-  languageOptions: PropTypes.arrayOf(PropTypes.object),
+  langOptions: PropTypes.arrayOf(PropTypes.object),
 };
 renderLanguageField.defaultProps = {
   canEdit: true,
-  languageOptions: [],
+  langOptions: [],
 };
 
 const LanguageFields = props => {
@@ -50,15 +49,10 @@ const LanguageFields = props => {
     canEdit,
     canDelete,
   } = props;
-  const intl = useIntl();
 
-  let languageOptions = languages.map(l => (
-    {
-      label: formattedLanguageName(l.alpha3, intl),
-      value: l.alpha3,
-    }
-  ));
-  languageOptions = sortBy(languageOptions, ['label']);
+  const intl = useIntl();
+  const stripes = useStripes();
+  const langOptions = languageOptions(intl, stripes.locale);
 
   return (
     <RepeatableField
@@ -67,7 +61,7 @@ const LanguageFields = props => {
       addLabel={<FormattedMessage id="ui-inventory.addLanguage" />}
       addButtonId="clickable-add-language"
       template={[{
-        render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit, languageOptions }); },
+        render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit, langOptions }); },
       }]}
       canAdd={canAdd}
       canDelete={canDelete}

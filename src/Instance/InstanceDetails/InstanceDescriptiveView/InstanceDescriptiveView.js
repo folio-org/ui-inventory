@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useStripes } from '@folio/stripes/core';
 import {
   Accordion,
   Row,
@@ -39,6 +40,8 @@ const InstanceDescriptiveView = ({
 
     return (instance.natureOfContentTermIds || []).map(termId => natureOfContentTermsMap[termId]);
   }, [instance, natureOfContentTerms]);
+
+  const { locale } = useStripes();
   const intl = useIntl();
 
   return (
@@ -109,7 +112,7 @@ const InstanceDescriptiveView = ({
         <Col xs={12}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.language" />}
-            value={formatLanguages(instance.languages, intl)}
+            value={formatLanguages(instance.languages, intl, locale)}
           />
         </Col>
       </Row>

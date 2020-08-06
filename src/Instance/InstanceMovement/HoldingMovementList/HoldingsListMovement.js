@@ -64,7 +64,10 @@ const HoldingsListMovement = ({
             />
           ))
         ) : (
-          <div style={dropStyles}>
+          <div
+            data-test-empty-drop-zone
+            style={dropStyles}
+          >
             <FormattedMessage id="ui-inventory.moveItems.instance.dropZone" />
           </div>
         )
