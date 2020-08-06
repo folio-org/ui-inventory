@@ -549,5 +549,5 @@
     "moveItems.instance.dropZone": "Drop holding",
     "moveItems.modal.confirmLabel": "Continuer",
     "moveItems.modal.title": "Confirmer le déplacement",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved."
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved to {targetName}"
 }

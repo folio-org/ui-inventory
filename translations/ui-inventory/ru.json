@@ -549,5 +549,5 @@
     "moveItems.instance.dropZone": "Удалить холдинг",
     "moveItems.modal.confirmLabel": "Продолжить",
     "moveItems.modal.title": "Подтвердить перемещение",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved."
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved to {targetName}"
 }
