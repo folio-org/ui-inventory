@@ -2,7 +2,6 @@
 
 ## 5.0.0 (IN PROGRESS)
 
-* Move (right to left) and confirm items and holdings or items to a new instance. Refs UIIN-1152.
 * Move and confirm items and holdings or items to a new instance. Refs UIIN-1101.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
@@ -30,6 +29,7 @@
 * `Holdings - Call number, eye readable`. Add search only by the call number. Refs UIIN-1040.
 * Replace `bigtest/mirage` with `miragejs`.
 * `Item - Effective call number (item), eye readable`. Add search only by the call number. Refs UIIN-1041.
+* Move (right to left) and confirm items and holdings or items to a new instance. Refs UIIN-1152.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
