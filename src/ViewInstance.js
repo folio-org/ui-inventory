@@ -50,10 +50,9 @@ class ViewInstance extends React.Component {
     },
     movableItems: {
       type: 'okapi',
-      path: 'inventory/items',
+      path: 'inventory/items/move',
       fetch: false,
       throwErrors: false,
-      accumulate: true,
     },
     marcRecord: {
       type: 'okapi',
@@ -165,23 +164,12 @@ class ViewInstance extends React.Component {
     this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
   };
 
-  moveItems = (fromHolding, toHolding, items) => {
-    // TODO: replace temporary solution with correct one when implemented
+  moveItems = (toHolding, items) => {
     const { mutator } = this.props;
-
-    return mutator.movableItems.GET({
-      params: {
-        query: items.map(item => `id==${item}`).join(' or '),
-      },
+    return mutator.movableItems.POST({
+      toHoldingsRecordId: toHolding,
+      itemIds: items,
     })
-      .then(({ items: fetchedItems }) => {
-        const updatedPromises = fetchedItems.map((item) => mutator.movableItems.PUT({
-          ...item,
-          holdingsRecordId: toHolding,
-        }));
-
-        return Promise.all(updatedPromises);
-      })
       .then(() => {
         const message = (
           <FormattedMessage

@@ -38,7 +38,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
 
     setIsMoving(true);
 
-    moveItems(from, to, items)
+    moveItems(to, items)
       .finally(() => {
         setIsMoving(false);
       });

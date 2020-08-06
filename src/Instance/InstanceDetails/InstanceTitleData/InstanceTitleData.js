@@ -24,6 +24,7 @@ const InstanceTitleData = ({
   id,
   instance,
   titleTypes,
+  identifierTypesById,
 }) => {
   const precedingTitles = useMemo(() => {
     return checkIfArrayIsEmpty(instance.precedingTitles);
@@ -73,6 +74,7 @@ const InstanceTitleData = ({
         titleKey="precedingInstanceId"
         label={<FormattedMessage id="ui-inventory.precedingTitles" />}
         titles={precedingTitles}
+        identifierTypesById={identifierTypesById}
       />
 
       <br />
@@ -82,6 +84,7 @@ const InstanceTitleData = ({
         titleKey="succeedingInstanceId"
         label={<FormattedMessage id="ui-inventory.succeedingTitles" />}
         titles={succeedingTitles}
+        identifierTypesById={identifierTypesById}
       />
     </Accordion>
   );
@@ -91,6 +94,7 @@ InstanceTitleData.propTypes = {
   id: PropTypes.string.isRequired,
   instance: PropTypes.object,
   titleTypes: PropTypes.arrayOf(PropTypes.object),
+  identifierTypesById: PropTypes.func,
 };
 
 InstanceTitleData.defaultProps = {
