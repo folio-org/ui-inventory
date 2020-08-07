@@ -540,7 +540,6 @@
     "moveItems.move.items.count": "Mover: {count, number} {count, plural, one {item} other {itens}}",
     "moveItems.instance.actionMenu.enable": "Mover itens dentro de uma instância",
     "moveItems.instance.actionMenu.disable": "Interromper o movimento de itens em uma instância",
-    "moveItems.instance.success": "{count, number} {count, plural, one {item} other {itens}} foram movidos com sucesso.",
     "moveItems": "Mover holdings/itens para outra instância",
     "folio": "FOLIO",
     "marc": "MARC",
@@ -549,5 +548,11 @@
     "moveItems.instance.dropZone": "Soltar holding",
     "moveItems.modal.confirmLabel": "Continuar",
     "moveItems.modal.title": "Confirmar movimentação",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} será movido para {targetName}"
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} será movido para {targetName}",
+    "moveItems.instance.items.success": "{count, number} {count, plural, one {item foi} other {itens foram}} movido(s) com sucesso.",
+    "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding foi} other {holdings foram}} movida(s) com sucesso.",
+    "moveItems.instance.items.error": "Os seguintes itens não puderam ser movidos {items}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
+    "moveItems.instance.items.error.server": "Ocorreu um problema ao atualizar os seguintes itens {items}. Por favor, tente novamente ou notifique o administrador do sistema.",
+    "moveItems.instance.holdings.error": "As seguintes holdings não puderam ser movidas {holdings}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
+    "moveItems.instance.holdings.error.server": "Ocorreu um problema ao atualizar as seguintes holdings {holdings}. Por favor, tente novamente ou notifique o administrador do sistema."
 }
