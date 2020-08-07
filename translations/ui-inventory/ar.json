@@ -540,7 +540,6 @@
     "moveItems.move.items.count": "نقل: {count, number} {count, plural, one {مادة} other {مادة}}",
     "moveItems.instance.actionMenu.enable": "نقل المواد في وعاء",
     "moveItems.instance.actionMenu.disable": "إيقاف نقل المواد في وعاء",
-    "moveItems.instance.success": "تم نقل {count, number} {count, plural, one {مادة} other {مادة}}  بنجاح",
     "moveItems": "نقل المقتنيات/المواد إلى وعاء آخر",
     "folio": "فوليو",
     "marc": "مارك",
@@ -549,5 +548,11 @@
     "moveItems.instance.dropZone": "إسقاط المقتنيات",
     "moveItems.modal.confirmLabel": "متابعة",
     "moveItems.modal.title": "تأكيد النقل",
-    "moveItems.modal.message": "سيتم نقل {count, number} {count, plural, one {مقتنى} other {مقتنيات}}"
+    "moveItems.modal.message": "سيتم نقل {count, number} {count, plural, one {مقتنى} other {مقتنيات}}",
+    "moveItems.instance.items.success": "تم نقل {count, number} {count, plural, one {مادة} other {مادة}}  بنجاح",
+    "moveItems.instance.holdings.success": "{count, number} {count, plural, one {مقتنيات تم} other {مقتنيات تم}} نقلها بنجاح.",
+    "moveItems.instance.items.error": "تعذر نقل المواد التالية {items}. . قم بالنقر على حقول تسجيلة الوعاء وإعادة المحاولة مرة أخرى، أو قم بإخطار مدير النظام الخاص بك.",
+    "moveItems.instance.items.error.server": "حدثت مشكلة أثناء تحديث المواد التالية {items}.  يرجى إعادة المحاولة مرة أخرى أو إخطار مدير النظام الخاص بك.",
+    "moveItems.instance.holdings.error": "تعذر نقل المقتنيات التالية {holdings}. قم بالنقر على حقول تسجيلة الوعاء وإعادة المحاولة مرة أخرى، أو قم بإخطار مدير النظام الخاص بك.",
+    "moveItems.instance.holdings.error.server": "حدثت مشكلة أثناء تحديث المقتنيات التالية {holdings}. يرجى إعادة المحاولة مرة أخرى أو إخطار مدير النظام الخاص بك."
 }
