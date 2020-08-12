@@ -89,7 +89,7 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, select
   'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
   'status': intl.formatMessage({ id: 'ui-inventory.status' }),
   'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
-  'loanType': 'Loan type',
+  'loanType': intl.formatMessage({ id: 'ui-inventory.loanType' }),
   'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
   'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
   'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
