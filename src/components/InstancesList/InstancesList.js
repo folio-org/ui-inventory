@@ -138,11 +138,7 @@ class InstancesView extends React.Component {
   }
 
   renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment}>
-    <Pluggable
-                type="create-inventory-records"
-                id="clickable-create-inventory-records"
-              /></FilterNavigation>
+    <FilterNavigation segment={this.props.segment} />
   );
 
   generateInTransitItemReport = async () => {
