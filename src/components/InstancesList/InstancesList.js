@@ -12,8 +12,8 @@ import {
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
-
 import {
+  Pluggable,
   AppIcon,
   IfPermission,
   CalloutContext,
@@ -138,7 +138,11 @@ class InstancesView extends React.Component {
   }
 
   renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment} />
+    <FilterNavigation segment={this.props.segment}>
+    <Pluggable
+                type="create-inventory-records"
+                id="clickable-create-inventory-records"
+              /></FilterNavigation>
   );
 
   generateInTransitItemReport = async () => {
@@ -259,7 +263,6 @@ class InstancesView extends React.Component {
             <FormattedMessage id="stripes-smart-components.new" />
           </Button>
         </IfPermission>
-
         {this.getActionItem({
           id: 'dropdown-clickable-get-report',
           icon: 'report',
@@ -294,6 +297,10 @@ class InstancesView extends React.Component {
           onClickHandler: buildOnClickHandler(noop),
           isDisabled: true,
         })}
+        <Pluggable
+          type="create-inventory-records"
+          id="clickable-create-inventory-records"
+        />
       </Fragment>
     );
   };
