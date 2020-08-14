@@ -79,6 +79,7 @@ class InstancesView extends React.Component {
   static contextType = CalloutContext;
 
   state = {
+    showNewFastAddModal: false,
     inTransitItemsExportInProgress: false,
     instancesIdExportInProgress: false,
     showErrorModal: false,
@@ -213,6 +214,12 @@ class InstancesView extends React.Component {
     exportStringToCSV(cqlQuery);
   }
 
+  toggleNewFastAddModal() {
+    this.setState((state) => {
+      return { showNewFastAddModal: !state.showNewFastAddModal };
+    });
+  }
+
   getActionItem = ({ id, icon, messageId, onClickHandler, isDisabled = false }) => {
     return (
       <Button
@@ -260,6 +267,12 @@ class InstancesView extends React.Component {
           </Button>
         </IfPermission>
         {this.getActionItem({
+          id: 'new-fast-add-record',
+          icon: 'plus-sign',
+          messageId: 'ui-inventory.newFastAddRecord',
+          onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+        })}
+        {this.getActionItem({
           id: 'dropdown-clickable-get-report',
           icon: 'report',
           messageId: 'ui-inventory.inTransitReport',
@@ -293,10 +306,6 @@ class InstancesView extends React.Component {
           onClickHandler: buildOnClickHandler(noop),
           isDisabled: true,
         })}
-        <Pluggable
-          type="create-inventory-records"
-          id="clickable-create-inventory-records"
-        />
       </Fragment>
     );
   };
@@ -401,6 +410,13 @@ class InstancesView extends React.Component {
             hasNewButton={false}
           />
         </div>
+        <Pluggable
+          buttonVisible={false} // hide default plugin's button
+          open={this.state.showNewFastAddModal} // control the open modal via state var
+          type="create-inventory-records"
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
+        />
         <ErrorModal
           isOpen={this.state.showErrorModal}
           label={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.label" />}
