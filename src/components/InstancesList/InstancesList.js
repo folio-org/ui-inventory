@@ -214,7 +214,7 @@ class InstancesView extends React.Component {
     exportStringToCSV(cqlQuery);
   }
 
-  toggleNewFastAddModal() {
+  toggleNewFastAddModal = () => {
     this.setState((state) => {
       return { showNewFastAddModal: !state.showNewFastAddModal };
     });
