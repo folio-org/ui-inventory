@@ -404,6 +404,7 @@
   "copyItemDialog": "Copy item dialog",
   "copyItem": "Duplicate",
   "newRequest": "New Request",
+  "newFastAddRecord": "New Fast Add Record",
   "confirmLocation.selectBtn": "Select",
   "confirmLocation.message": "This location has a status of inactive. Are you sure you want to select this location?",
   "confirmLocation.header": "Inactive location",
