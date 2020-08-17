@@ -48,6 +48,7 @@ import {
   wrappingCell,
   emptyList,
   noValue,
+  holdingsStatementTypes,
 } from './constants';
 
 class ViewHoldingsRecord extends React.Component {
@@ -366,9 +367,9 @@ class ViewHoldingsRecord extends React.Component {
 
     const holdingsDetails = {
       numberOfItems: get(holdingsRecord, ['numberOfItems'], '-'),
-      holdingsStatements: get(holdingsRecord, ['holdingsStatements'], []),
-      holdingsStatementsForSupplements: get(holdingsRecord, ['holdingsStatementsForSupplements'], []),
-      holdingsStatementsForIndexes: get(holdingsRecord, ['holdingsStatementsForIndexes'], []),
+      holdingsStatement: get(holdingsRecord, ['holdingsStatements'], []),
+      holdingsStatementForSupplements: get(holdingsRecord, ['holdingsStatementsForSupplements'], []),
+      holdingsStatementForIndexes: get(holdingsRecord, ['holdingsStatementsForIndexes'], []),
       illPolicy: this.refLookup(referenceTables.illPolicies, get(holdingsRecord, ['illPolicyId'])).name || '-',
       digitizationPolicy: get(holdingsRecord, ['digitizationPolicy'], '-'),
       retentionPolicy: get(holdingsRecord, ['retentionPolicy'], '-'),
@@ -396,53 +397,31 @@ class ViewHoldingsRecord extends React.Component {
       acc07: !areAllFieldsEmpty([receivingHistory]),
     };
 
-    const holdingsDetailsTables = intl => [
-      {
-        id: 'list-holdingsstatements',
-        contentData: checkIfArrayIsEmpty(holdingsDetails.holdingsStatements),
-        visibleColumns: ['Holdings statement', 'Holdings statement note'],
-        columnMapping: {
-          'Holdings statement': intl.formatMessage({ id: 'ui-inventory.holdingsStatement' }),
-          'Holdings statement note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementNote' }),
-        },
-        columnWidths: { 'Holdings statement': '16%', 'Holdings statement note': '84%' },
-        formatter: {
-          'Holdings statement': x => get(x, ['statement']) || noValue,
-          'Holdings statement note': x => get(x, ['note']) || noValue,
-        },
-        ariaLabel: intl.formatMessage({ id: 'ui-inventory.holdingsStatements' })
+    const holdingsDetailsTables = intl => holdingsStatementTypes.map(({ type, title }) => ({
+      id: `list-${type}`,
+      contentData: checkIfArrayIsEmpty(holdingsDetails[type]),
+      visibleColumns: [
+        title,
+        `${title} public note`,
+        `${title} staff note`,
+      ],
+      columnMapping: {
+        [title]: intl.formatMessage({ id: `ui-inventory.${type}` }),
+        [`${title} public note`]: intl.formatMessage({ id: `ui-inventory.${type}PublicNote` }),
+        [`${title} staff note`]: intl.formatMessage({ id: `ui-inventory.${type}StaffNote` }),
       },
-      {
-        id: 'list-holdingsstatementsforsupplements',
-        contentData: checkIfArrayIsEmpty(holdingsDetails.holdingsStatementsForSupplements),
-        visibleColumns: ['Holdings statement for supplements', 'Holdings statement for supplements note'],
-        columnMapping: {
-          'Holdings statement for supplements': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
-          'Holdings statement for supplements note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsNote' }),
-        },
-        columnWidths: { 'Holdings statement for supplements': '16%', 'Holdings statement for supplements note': '84%' },
-        formatter: {
-          'Holdings statement for supplements': x => get(x, ['statement']) || noValue,
-          'Holdings statement for supplements note': x => get(x, ['note']) || noValue,
-        },
-        ariaLabel: intl.formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
+      columnWidths: {
+        [title]: '16%',
+        [`${title} public note`]: '42%',
+        [`${title} staff note`]: '42%',
       },
-      {
-        id: 'list-holdingsstatementsforindexes',
-        contentData: checkIfArrayIsEmpty(holdingsDetails.holdingsStatementsForIndexes),
-        visibleColumns: ['Holdings statement for indexes', 'Holdings statement for indexes note'],
-        columnMapping: {
-          'Holdings statement for indexes': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
-          'Holdings statement for indexes note': intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesNote' }),
-        },
-        columnWidths: { 'Holdings statement for indexes': '16%', 'Holdings statement for indexes note': '84%' },
-        formatter: {
-          'Holdings statement for indexes': x => get(x, ['statement']) || noValue,
-          'Holdings statement for indexes note': x => get(x, ['note']) || noValue,
-        },
-        ariaLabel: intl.formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
+      formatter: {
+        [title]: x => x?.statement || noValue,
+        [`${title} public note`]: x => x?.note || noValue,
+        [`${title} staff note`]:  x => x?.staffNote || noValue,
       },
-    ];
+      ariaLabel: intl.formatMessage({ id: `ui-inventory.${type}` })
+    }));
 
     const layoutNotes = content => {
       const notesList = isEmpty(content) ? emptyList : content;

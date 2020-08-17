@@ -18,7 +18,12 @@ const HoldingsStatementForIndexesFields = () => (
       },
       {
         name: 'note',
-        label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesNote" />,
+        label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesPublicNote" />,
+        component: TextField,
+      },
+      {
+        name: 'staffNote',
+        label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesStaffNote" />,
         component: TextField,
       },
     ]}
