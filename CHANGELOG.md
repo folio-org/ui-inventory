@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Add an fast add record button to action menu.  Addresses UIIN-907.
 * Move and confirm items and holdings or items to a new instance. Refs UIIN-1101.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
 * Select and move holdings with items or items to another instance. Refs UIIN-1098.
@@ -30,6 +31,10 @@
 * Replace `bigtest/mirage` with `miragejs`.
 * `Item - Effective call number (item), eye readable`. Add search only by the call number. Refs UIIN-1041.
 * Move (right to left) and confirm items and holdings or items to a new instance. Refs UIIN-1152.
+* Add item `aged to lost` status. Refs UIIN-1006.
+* Move items/holdings error message. Refs UIIN-1186.
+* Add loan type to items list. Refs UIIN-1004.
+* Add public and staff notes to `Holdings statements`. Refs UIIN-1215.
 * Drag and drop accessibility. UIIN-1127.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)

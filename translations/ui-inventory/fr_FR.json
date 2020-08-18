@@ -540,7 +540,6 @@
     "moveItems.move.items.count": "Move: {count, number} {count, plural, one {item} other {items}}",
     "moveItems.instance.actionMenu.enable": "Move items within an instance",
     "moveItems.instance.actionMenu.disable": "Stop items movement within an instance",
-    "moveItems.instance.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
     "moveItems": "Move holdings/items to another instance",
     "folio": "FOLIO",
     "marc": "MARC",
@@ -549,5 +548,11 @@
     "moveItems.instance.dropZone": "Drop holding",
     "moveItems.modal.confirmLabel": "Continuer",
     "moveItems.modal.title": "Confirmer le déplacement",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will bee moved."
+    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
+    "moveItems.instance.items.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
+    "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding has} other {holdings have}} been successfully moved.",
+    "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
+    "moveItems.instance.items.error.server": "There was a problem updating the following items {items}. Please try again or notify your systems administrator.",
+    "moveItems.instance.holdings.error": "The following holdings could not be moved {holdings}. Check the instance record fields and try again or notify your systems administrator.",
+    "moveItems.instance.holdings.error.server": "There was a problem updating the following holdings {holdings}. Please try again or notify your systems administrator."
 }

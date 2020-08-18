@@ -23,6 +23,7 @@ export default Factory.extend({
     {
       statement: lorem.sentence(),
       note: lorem.sentence(),
+      staffNote: lorem.sentence(),
     },
   ],
   holdingsStatementsForIndexes: [
@@ -33,12 +34,14 @@ export default Factory.extend({
     {
       statement: lorem.sentence(),
       note: lorem.sentence(),
+      staffNote: lorem.sentence(),
     },
   ],
   holdingsStatementsForSupplements: [
     {
       statement: lorem.sentence(),
       note: lorem.sentence(),
+      staffNote: lorem.sentence(),
     },
   ],
   notes: [

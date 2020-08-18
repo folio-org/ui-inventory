@@ -33,9 +33,9 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   noDeleteHoldingsRecordModalIsPresent = isPresent('[data-test-no-delete-holdingsrecord-modal]');
   administrativeDataAccordion = new AccordionInteractor('#acc01');
   statisticalCodesList = new MultiColumnListInteractor('#list-statistical-codes');
-  holdingsStatementsList = new MultiColumnListInteractor('#list-holdingsstatements');
-  holdingsStatementsForSupplementsList = new MultiColumnListInteractor('#list-holdingsstatementsforsupplements');
-  holdingsStatementsForIndexesList = new MultiColumnListInteractor('#list-holdingsstatementsforindexes');
+  holdingsStatementsList = new MultiColumnListInteractor('#list-holdingsStatement');
+  holdingsStatementsForSupplementsList = new MultiColumnListInteractor('#list-holdingsStatementForSupplements');
+  holdingsStatementsForIndexesList = new MultiColumnListInteractor('#list-holdingsStatementForIndexes');
   notes = collection('[id^="list-holdings-notes-"', MultiColumnListInteractor);
   electronicAccessList = new MultiColumnListInteractor('#holding-list-electronic-access');
   expandAll = scoped('[data-test-expand-all] button');

@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
-
 import { InstancesList } from '../components';
 
 const InstancesView = props => (

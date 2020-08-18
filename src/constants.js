@@ -17,6 +17,7 @@ export const itemStatusesMap = {
   WITHDRAWN: 'Withdrawn',
   CLAIMED_RETURNED: 'Claimed returned',
   LOST_AND_PAID: 'Lost and paid',
+  AGED_TO_LOST: 'Aged to lost',
 };
 
 export const requestStatuses = {
@@ -79,6 +80,21 @@ export const hridSettingsSections = [
   {
     type: 'items',
     title: 'ui-inventory.hridHandling.sectionHeader3',
+  },
+];
+
+export const holdingsStatementTypes = [
+  {
+    type: 'holdingsStatement',
+    title: 'Holdings statement',
+  },
+  {
+    type: 'holdingsStatementForSupplements',
+    title: 'Holdings statement for supplements',
+  },
+  {
+    type: 'holdingsStatementForIndexes',
+    title: 'Holdings statement for indexes',
   },
 ];
 

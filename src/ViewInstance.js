@@ -170,15 +170,34 @@ class ViewInstance extends React.Component {
       toHoldingsRecordId: toHolding,
       itemIds: items,
     })
-      .then(() => {
-        const message = (
+      .then(({ nonUpdatedIds }) => {
+        const hasErrors = Boolean(nonUpdatedIds?.length);
+
+        const message = hasErrors ? (
           <FormattedMessage
-            id="ui-inventory.moveItems.instance.success"
+            id="ui-inventory.moveItems.instance.items.error"
+            values={{ items: nonUpdatedIds.join(', ') }}
+          />
+        ) : (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.items.success"
             values={{ count: items.length }}
           />
         );
+        const type = hasErrors ? 'error' : 'success';
 
-        this.calloutRef.current.sendCallout({ message });
+        this.calloutRef.current.sendCallout({ type, message });
+      })
+      .catch(() => {
+        this.calloutRef.current.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-inventory.moveItems.instance.items.error.server"
+              values={{ items: items.join(', ') }}
+            />
+          ),
+        });
       });
   };
 

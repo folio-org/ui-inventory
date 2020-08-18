@@ -6,6 +6,8 @@ import HoldingsViewPage from '../interactors/holdings-view-page';
 import HoldingsEditPage from '../interactors/holdings-edit-page';
 import HoldingsCreatePage from '../interactors/holdings-create-page';
 
+import translation from '../../../translations/ui-inventory/en';
+
 describe('HoldingsViewPage', () => {
   setupApplication();
 
@@ -95,17 +97,53 @@ describe('HoldingsViewPage', () => {
         it('has correct amount of items', () => {
           expect(HoldingsViewPage.holdingsStatementsList.rowCount).to.be.equal(1);
         });
+
+        it('has correct amount of columns', () => {
+          expect(HoldingsViewPage.holdingsStatementsList.columnCount).to.be.equal(3);
+        });
+
+        it('renders correct header captions', () => {
+          const { headers } = HoldingsViewPage.holdingsStatementsList;
+
+          expect(headers(0).text).to.equal(translation.holdingsStatement);
+          expect(headers(1).text).to.equal(translation.holdingsStatementPublicNote);
+          expect(headers(2).text).to.equal(translation.holdingsStatementStaffNote);
+        });
       });
 
       describe('holdings statements for indexes list', () => {
         it('has correct amount of items', () => {
           expect(HoldingsViewPage.holdingsStatementsForIndexesList.rowCount).to.be.equal(2);
         });
+
+        it('has correct amount of columns', () => {
+          expect(HoldingsViewPage.holdingsStatementsForIndexesList.columnCount).to.be.equal(3);
+        });
+
+        it('renders correct header captions', () => {
+          const { headers } = HoldingsViewPage.holdingsStatementsForIndexesList;
+
+          expect(headers(0).text).to.equal(translation.holdingsStatementForIndexes);
+          expect(headers(1).text).to.equal(translation.holdingsStatementForIndexesPublicNote);
+          expect(headers(2).text).to.equal(translation.holdingsStatementForIndexesStaffNote);
+        });
       });
 
       describe('holdings statements for supplements list', () => {
         it('has correct amount of items', () => {
           expect(HoldingsViewPage.holdingsStatementsForSupplementsList.rowCount).to.be.equal(1);
+        });
+
+        it('has correct amount of columns', () => {
+          expect(HoldingsViewPage.holdingsStatementsForSupplementsList.columnCount).to.be.equal(3);
+        });
+
+        it('renders correct header captions', () => {
+          const { headers } = HoldingsViewPage.holdingsStatementsForSupplementsList;
+
+          expect(headers(0).text).to.equal(translation.holdingsStatementForSupplements);
+          expect(headers(1).text).to.equal(translation.holdingsStatementForSupplementsPublicNote);
+          expect(headers(2).text).to.equal(translation.holdingsStatementForSupplementsStaffNote);
         });
       });
 

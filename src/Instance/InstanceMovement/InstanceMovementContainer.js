@@ -50,20 +50,39 @@ const InstanceMovementContainer = ({
     });
   });
 
-  const moveHoldings = (toInstanceId, items) => {
+  const moveHoldings = (toInstanceId, holdings) => {
     return mutator.movableHoldings.POST({
       toInstanceId,
-      holdingsRecordIds: items,
+      holdingsRecordIds: holdings,
     })
-      .then(() => {
-        const message = (
+      .then(({ nonUpdatedIds }) => {
+        const hasErrors = Boolean(nonUpdatedIds?.length);
+
+        const message = hasErrors ? (
           <FormattedMessage
-            id="ui-inventory.moveItems.instance.success"
-            values={{ count: items.length }}
+            id="ui-inventory.moveItems.instance.holdings.error"
+            values={{ holdings: nonUpdatedIds.join(', ') }}
+          />
+        ) : (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.holdings.success"
+            values={{ count: holdings.length }}
           />
         );
+        const type = hasErrors ? 'error' : 'success';
 
-        callout.sendCallout({ message });
+        callout.sendCallout({ type, message });
+      })
+      .catch(() => {
+        callout.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-inventory.moveItems.instance.holdings.error.server"
+              values={{ holdings: holdings.join(', ') }}
+            />
+          ),
+        });
       });
   };
 
@@ -72,15 +91,34 @@ const InstanceMovementContainer = ({
       toHoldingsRecordId,
       itemIds: items,
     })
-      .then(() => {
-        const message = (
+      .then(({ nonUpdatedIds }) => {
+        const hasErrors = Boolean(nonUpdatedIds?.length);
+
+        const message = hasErrors ? (
           <FormattedMessage
-            id="ui-inventory.moveItems.instance.success"
+            id="ui-inventory.moveItems.instance.items.error"
+            values={{ items: nonUpdatedIds.join(', ') }}
+          />
+        ) : (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.items.success"
             values={{ count: items.length }}
           />
         );
+        const type = hasErrors ? 'error' : 'success';
 
-        callout.sendCallout({ message });
+        callout.sendCallout({ message, type });
+      })
+      .catch(() => {
+        callout.sendCallout({
+          type: 'error',
+          message: (
+            <FormattedMessage
+              id="ui-inventory.moveItems.instance.items.error.server"
+              values={{ items: items.join(', ') }}
+            />
+          ),
+        });
       });
   };
 

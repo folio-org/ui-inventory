@@ -15,21 +15,23 @@ const headersMap = {
   BARCODE: InstanceViewPage.itemsList.headers(0),
   STATUS: InstanceViewPage.itemsList.headers(1),
   MATERIAL_TYPE: InstanceViewPage.itemsList.headers(2),
-  EFFECTIVE_LOCATION: InstanceViewPage.itemsList.headers(3),
-  ENUMERATION: InstanceViewPage.itemsList.headers(4),
-  CHRONOLOGY: InstanceViewPage.itemsList.headers(5),
-  VOLUME: InstanceViewPage.itemsList.headers(6),
-  YEAR: InstanceViewPage.itemsList.headers(7),
+  LOAN_TYPE: InstanceViewPage.itemsList.headers(3),
+  EFFECTIVE_LOCATION: InstanceViewPage.itemsList.headers(4),
+  ENUMERATION: InstanceViewPage.itemsList.headers(5),
+  CHRONOLOGY: InstanceViewPage.itemsList.headers(6),
+  VOLUME: InstanceViewPage.itemsList.headers(7),
+  YEAR: InstanceViewPage.itemsList.headers(8),
 };
 const headersIndex = {
   BARCODE: 0,
   STATUS: 1,
   MATERIAL_TYPE: 2,
-  EFFECTIVE_LOCATION: 3,
-  ENUMERATION: 4,
-  CHRONOLOGY: 5,
-  VOLUME: 6,
-  YEAR: 7,
+  LOAN_TYPE: 3,
+  EFFECTIVE_LOCATION: 4,
+  ENUMERATION: 5,
+  CHRONOLOGY: 6,
+  VOLUME: 7,
+  YEAR: 8,
 };
 
 describe('InstanceViewPage', () => {
@@ -185,7 +187,7 @@ describe('InstanceViewPage', () => {
       });
 
       it('should display additional columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(10);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(11);
       });
 
       describe('select all action', () => {
@@ -256,13 +258,14 @@ describe('InstanceViewPage', () => {
 
     describe('items per holdings', () => {
       it('has correct amount of columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(8);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(9);
       });
 
       it('renders correct header captions', () => {
         expect(headersMap.BARCODE.text).to.be.equal(translation['item.barcode']);
         expect(headersMap.STATUS.text).to.be.equal(translation.status);
         expect(headersMap.MATERIAL_TYPE.text).to.be.equal(translation.materialType);
+        expect(headersMap.LOAN_TYPE.text).to.be.equal(translation.loanType);
         expect(headersMap.EFFECTIVE_LOCATION.text).to.be.equal(translation.effectiveLocationShort);
         expect(headersMap.ENUMERATION.text).to.be.equal(translation.enumeration);
         expect(headersMap.CHRONOLOGY.text).to.be.equal(translation.chronology);
