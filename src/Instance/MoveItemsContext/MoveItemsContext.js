@@ -50,6 +50,29 @@ const MoveItemsContext = ({ children, moveItems }) => {
     setActiveDropZone(undefined);
   }, [selectedItemsMap]);
 
+  const onSelect = useCallback(({ target }) => {
+    const to = target.dataset.toId;
+    const from = target.dataset.itemId;
+    const fromSelectedMap = selectedItemsMap[from] || {};
+    const items = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+
+    if (!items.length) {
+      items.push(from);
+    }
+
+    setIsMoving(true);
+    moveItems(to, items)
+      .finally(() => {
+        setIsMoving(false);
+      });
+
+    setSelectedItemsMap((prevItemsMap) => ({
+      ...prevItemsMap,
+      [from]: undefined,
+    }));
+    setActiveDropZone(undefined);
+  }, [selectedItemsMap]);
+
   const getDraggingItems = useCallback(() => {
     const fromHolding = selectedItemsMap[activeDropZone] || {};
 
@@ -85,6 +108,8 @@ const MoveItemsContext = ({ children, moveItems }) => {
           selectItemsForDrag,
           isItemsDragSelected,
           getDraggingItems,
+          selectedItemsMap,
+          onSelect,
         }}
       >
         {children}

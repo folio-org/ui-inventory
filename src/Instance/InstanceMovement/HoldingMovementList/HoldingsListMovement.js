@@ -38,31 +38,32 @@ const HoldingsListMovement = ({
   const dropStyles = useMemo(() => (
     getDropStyle(holdings.length)
   ), [holdings.length]);
-
   return (
     <>
       {
         holdings.length ? (
-          holdings.map((holding, index) => (
-            <HoldingContainer
-              key={`items_${holding.id}`}
-              instance={instance}
-              holding={holding}
-              referenceData={referenceData}
+          holdings.map((holding, index) => {
+            return (
+              <HoldingContainer
+                key={`items_${holding.id}`}
+                instance={instance}
+                holding={holding}
+                referenceData={referenceData}
 
-              isDraggable
-              draggable={draggable}
-              droppable={droppable}
-              activeDropZone={activeDropZone}
-              selectItemsForDrag={selectItemsForDrag}
-              selectHoldingsForDrag={selectHoldingsForDrag}
-              isHoldingDragSelected={isHoldingDragSelected}
-              isItemsDragSelected={isItemsDragSelected}
-              getDraggingItems={getDraggingItems}
-              holdingindex={index}
-              draggingHoldingsCount={draggingHoldingsCount}
-            />
-          ))
+                isDraggable
+                draggable={draggable}
+                droppable={droppable}
+                activeDropZone={activeDropZone}
+                selectItemsForDrag={selectItemsForDrag}
+                selectHoldingsForDrag={selectHoldingsForDrag}
+                isHoldingDragSelected={isHoldingDragSelected}
+                isItemsDragSelected={isItemsDragSelected}
+                getDraggingItems={getDraggingItems}
+                holdingindex={index}
+                draggingHoldingsCount={draggingHoldingsCount}
+              />
+            );
+          })
         ) : (
           <div
             data-test-empty-drop-zone

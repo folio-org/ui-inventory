@@ -1,6 +1,7 @@
 import React, {
   useEffect,
   useState,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,6 +12,7 @@ import {
 
 import HoldingsList from './HoldingsList';
 import { HoldingsListMovement } from '../InstanceMovement/HoldingMovementList';
+import DnDContext from '../DnDContext';
 
 const HoldingsListContainer = ({
   mutator,
@@ -19,6 +21,9 @@ const HoldingsListContainer = ({
   isHoldingsMove,
   ...rest
 }) => {
+  const {
+    setAllHoldings,
+  } = useContext(DnDContext);
   const [holdings, setHoldings] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +33,10 @@ const HoldingsListContainer = ({
     const fetchHoldingPromise = mutator.instanceHoldings.GET() || Promise.reject();
 
     fetchHoldingPromise
-      .then(setHoldings)
+      .then((result) => {
+        setHoldings(result);
+        setAllHoldings((prevState) => [...prevState, ...result]);
+      })
       .finally(() => {
         setIsLoading(false);
       });

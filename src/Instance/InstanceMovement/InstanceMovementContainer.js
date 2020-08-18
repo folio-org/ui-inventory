@@ -118,6 +118,15 @@ InstanceMovementContainer.manifest = Object.freeze({
     fetch: false,
     throwErrors: false,
   },
+  instanceHoldings: {
+    type: 'okapi',
+    records: 'holdingsRecords',
+    path: 'holdings-storage/holdings',
+    params: {
+      limit: '1000',
+    },
+    accumulate: true,
+  },
 });
 
 InstanceMovementContainer.propTypes = {
