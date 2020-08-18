@@ -83,6 +83,21 @@ export const hridSettingsSections = [
   },
 ];
 
+export const holdingsStatementTypes = [
+  {
+    type: 'holdingsStatement',
+    title: 'Holdings statement',
+  },
+  {
+    type: 'holdingsStatementForSupplements',
+    title: 'Holdings statement for supplements',
+  },
+  {
+    type: 'holdingsStatementForIndexes',
+    title: 'Holdings statement for indexes',
+  },
+];
+
 export const indentifierTypeNames = {
   ISBN: 'ISBN',
   ISSN: 'ISSN',

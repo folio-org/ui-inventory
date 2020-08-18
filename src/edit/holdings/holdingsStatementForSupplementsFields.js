@@ -18,7 +18,12 @@ const HoldingsStatementForSupplementsFields = () => (
       },
       {
         name: 'note',
-        label: <FormattedMessage id="ui-inventory.holdingsStatementForSupplementsNote" />,
+        label: <FormattedMessage id="ui-inventory.holdingsStatementForSupplementsPublicNote" />,
+        component: TextField,
+      },
+      {
+        name: 'staffNote',
+        label: <FormattedMessage id="ui-inventory.holdingsStatementForSupplementsStaffNote" />,
         component: TextField,
       },
     ]}

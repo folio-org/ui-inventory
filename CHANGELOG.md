@@ -34,6 +34,7 @@
 * Add item `aged to lost` status. Refs UIIN-1006.
 * Move items/holdings error message. Refs UIIN-1186.
 * Add loan type to items list. Refs UIIN-1004.
+* Add public and staff notes to `Holdings statements`. Refs UIIN-1215.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)

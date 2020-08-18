@@ -597,7 +597,7 @@ class HoldingsForm extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm={10}>
+                <Col sm={12}>
                   <HoldingsStatementFields />
                   <br />
                   <HoldingsStatementForSupplementsFields />
