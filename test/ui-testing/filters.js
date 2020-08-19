@@ -107,7 +107,7 @@ module.exports.test = function uiTest(uiTestCtx) {
       });
 
       describe('Should test instance language filters', () => {
-        const languageFilters = ['English', 'Spanish'];
+        const languageFilters = ['English', 'French'];
 
         it('should navigate to inventory\'s instance segment"', (done) => {
           navigateTo('#segment-navigation-instances', done);
