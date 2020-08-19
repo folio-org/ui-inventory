@@ -478,6 +478,15 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.item.move",
+        "displayName": "Inventory: Move items",
+        "subPermissions": [
+          "ui-inventory.item.create",
+          "inventory.items.move.item.post"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.item.markasmissing",
         "displayName": "Inventory: View, create, edit, mark missing items",
         "subPermissions": [
@@ -509,6 +518,16 @@
         "subPermissions": [
           "ui-inventory.holdings.create",
           "inventory-storage.holdings.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.holdings.move",
+        "displayName": "Inventory: Move holdings",
+        "subPermissions": [
+          "ui-inventory.instance.edit",
+          "ui-inventory.holdings.create",
+          "inventory.holdings.move.item.post"
         ],
         "visible": true
       },
@@ -655,7 +674,7 @@
     "@folio/plugin-create-inventory-records": "^1.0.0",
     "@folio/plugin-find-instance": "^3.0.0",
     "@folio/quick-marc": "^1.0.0"
-    
+
   },
   "resolutions": {
     "moment": "~2.24.0"
