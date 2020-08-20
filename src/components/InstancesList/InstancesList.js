@@ -268,7 +268,7 @@ class InstancesView extends React.Component {
         </IfPermission>
         {this.getActionItem({
           id: 'new-fast-add-record',
-          icon: 'plus-sign',
+          icon: 'lightning',
           messageId: 'ui-inventory.newFastAddRecord',
           onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
         })}
