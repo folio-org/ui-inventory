@@ -2,7 +2,6 @@ import React, {
   useMemo,
   useCallback,
   useContext,
-  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -16,15 +15,13 @@ import {
   Col,
   Button,
   Checkbox,
-  DropdownMenu,
-  Dropdown,
-  DropdownButton,
 } from '@folio/stripes/components';
 
 import {
   callNumberLabel
 } from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
+import MoveToDropdown from './MoveToDropdown';
 import DnDContext from '../../DnDContext';
 
 const Holding = ({
@@ -52,7 +49,6 @@ const Holding = ({
     onSelect,
   } = useContext(DnDContext);
 
-  const [isDropdownOpen, toggleDropDown] = useState(false);
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const filteredHoldings = allHoldings
@@ -76,71 +72,17 @@ const Holding = ({
     onAddItem();
   }, [onAddItem]);
 
-  const onDropdownToggle = useCallback(() => {
-    toggleDropDown(!isDropdownOpen);
-  }, [isDropdownOpen]);
-
   const holdingButtonsGroup = useMemo(() => {
     return (
       <>
-        {draggable && (
-          <Dropdown
-            open={isDropdownOpen}
-            onToggle={onDropdownToggle}
-          >
-            <DropdownButton
-              data-role="toggle"
-              id={`clickable-view-holdings-${holding.id}`}
-              data-test-move-holdings
-            >
-              <FormattedMessage id="ui-inventory.moveItems.moveButton" />
-            </DropdownButton>
-
-            <DropdownMenu
-              data-role="menu"
-              data-test-move-to-dropdown
-            >
-              {
-                instances && !selectedItems.length
-                  ? (
-                    <Button
-                      buttonStyle="dropdownItem"
-                      onClick={onSelect}
-                      data-item-id={holding.id}
-                      data-to-id={
-                        instances[0].id === holding.instanceId
-                          ? instances[1].id
-                          : instances[0].id
-                      }
-                      data-is-holding
-                    >
-                      {instances[0].id === holding.instanceId
-                        ? instances[1].title
-                        : instances[0].title}
-                    </Button>
-                  )
-                  : movetoHoldings.map(item => (
-                    <Button
-                      key={item.id}
-                      buttonStyle="dropdownItem"
-                      data-to-id={item.id}
-                      data-item-id={holding.id}
-                      onClick={onSelect}
-                    >
-                      {
-                        instances?.filter(instance => instance.id === item.instanceId)[0].title
-                      }
-                      {' '}
-                      {
-                      selectedItems.length
-                        ? `${item.labelLocation} ${item.callNumber}`
-                        : ''
-                      }
-                    </Button>
-                  ))}
-            </DropdownMenu>
-          </Dropdown>
-        )}
+        <MoveToDropdown
+          movetoHoldings={movetoHoldings}
+          instances={instances}
+          selectedItems={selectedItems}
+          onSelect={onSelect}
+          draggable={draggable}
+          holding={holding}
+        />
 
         <Button
           id={`clickable-view-holdings-${holding.id}`}
@@ -162,7 +104,7 @@ const Holding = ({
         </IfPermission>
       </>
     );
-  }, [holding.id, viewHoldings, addItem, isDropdownOpen, draggable]);
+  }, [holding.id, viewHoldings, addItem, draggable, movetoHoldings, selectedItems]);
 
   return (
     <div>

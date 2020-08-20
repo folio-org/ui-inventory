@@ -155,7 +155,6 @@ const MoveHoldingContext = ({
     if (!items.length) {
       items.push(from);
     }
-
     setMovingItems(items);
     if (isHolding) {
       toggleMoveModal(true);
