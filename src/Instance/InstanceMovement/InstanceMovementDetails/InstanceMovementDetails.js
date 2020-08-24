@@ -39,7 +39,7 @@ const InstanceMovementDetails = ({
   const getActionMenu = useCallback(({ onToggle }) => {
     if (
       instance.source !== 'MARC'
-      && !stripes.hasPerm('inventory.instances.item.put')
+      && !stripes.hasPerm('ui-inventory.instances.item.put')
     ) {
       return null;
     }
@@ -53,6 +53,9 @@ const InstanceMovementDetails = ({
     );
   }, [instance, hasMarc]);
 
+  const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
+  const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+
   return (
     <InstanceDetails
       instance={instance}
@@ -63,7 +66,7 @@ const InstanceMovementDetails = ({
     >
       <Droppable
         droppableId={`${instance.id}`}
-        isDropDisabled={isItemsDropable || activeDropZone === instance.id}
+        isDropDisabled={isItemsDropable || activeDropZone === instance.id || !canMoveHoldings}
       >
         {(provided) => (
           <div
@@ -74,9 +77,9 @@ const InstanceMovementDetails = ({
             <HoldingsListContainer
               instance={instance}
               referenceData={referenceData}
-              isHoldingsMove
-              draggable
-              droppable
+              isHoldingsMove={canMoveHoldings}
+              draggable={canMoveItems}
+              droppable={canMoveItems}
             />
 
             {provided.placeholder}

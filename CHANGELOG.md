@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* corrected icon for fast add dropdown option.  Addresses UIIN-907.
 * Add an fast add record button to action menu.  Addresses UIIN-907.
 * Move and confirm items and holdings or items to a new instance. Refs UIIN-1101.
 * Add Item screen : Incorrect aria label. Refs UIIN-1104.
@@ -35,6 +36,7 @@
 * Move items/holdings error message. Refs UIIN-1186.
 * Add loan type to items list. Refs UIIN-1004.
 * Add public and staff notes to `Holdings statements`. Refs UIIN-1215.
+* Moving holdings and items permissions. Refs UIIN-1120.
 * Drag and drop accessibility. UIIN-1127.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)

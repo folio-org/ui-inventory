@@ -255,6 +255,8 @@ class ViewInstance extends React.Component {
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
+    const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+    const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
       return null;
@@ -329,33 +331,41 @@ class ViewInstance extends React.Component {
           )
         }
 
-        <Button
-          id="move-instance-items"
-          buttonStyle="dropdownItem"
-          onClick={() => {
-            onToggle();
-            this.toggleItemsMovement();
-          }}
-        >
-          <Icon icon="transfer">
-            <FormattedMessage
-              id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-            />
-          </Icon>
-        </Button>
+        {
+          canMoveItems && (
+            <Button
+              id="move-instance-items"
+              buttonStyle="dropdownItem"
+              onClick={() => {
+                onToggle();
+                this.toggleItemsMovement();
+              }}
+            >
+              <Icon icon="transfer">
+                <FormattedMessage
+                  id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                />
+              </Icon>
+            </Button>
+          )
+        }
 
-        <Button
-          id="move-instance"
-          buttonStyle="dropdownItem"
-          onClick={() => {
-            onToggle();
-            this.toggleFindInstancePlugin();
-          }}
-        >
-          <Icon icon="arrow-right">
-            <FormattedMessage id="ui-inventory.moveItems" />
-          </Icon>
-        </Button>
+        {
+          (canMoveItems || canMoveHoldings) && (
+            <Button
+              id="move-instance"
+              buttonStyle="dropdownItem"
+              onClick={() => {
+                onToggle();
+                this.toggleFindInstancePlugin();
+              }}
+            >
+              <Icon icon="arrow-right">
+                <FormattedMessage id="ui-inventory.moveItems" />
+              </Icon>
+            </Button>
+          )
+        }
       </Fragment>
     );
   };

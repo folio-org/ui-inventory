@@ -516,7 +516,7 @@
     "permission.settings.nature-of-content-terms": "Настройки (Фонд): Создавать, редактировать, удалять описание содержания",
     "permission.settings.modes-of-issuance": "Настройки (Фонд): Создавать, редактировать, удалять локально заданные типы выпуска",
     "permission.settings.instance-note-types": "Настройки (Фонд): Создать, редактировать, удалить типы заметок о документах",
-    "permission.settings.ill-policies": "Settings (Inventory): Create, edit, delete ILL policies",
+    "permission.settings.ill-policies": "Настройки (Фонд): Создавать, редактировать, удалять правила МБА",
     "permission.settings.contributor-types": "Настройки (Фонд): Создавать, редактировать, удалять типы авторов",
     "permission.settings.call-number-types": "Настройки (Фонд): Создавать, редактировать, удалять типы шифров книг",
     "permission.settings.holdings-note-types": "Настройки (Фонд): Создавать, редактировать, удалять типы заметок о холдингах",
@@ -554,5 +554,12 @@
     "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
     "moveItems.instance.items.error.server": "There was a problem updating the following items {items}. Please try again or notify your systems administrator.",
     "moveItems.instance.holdings.error": "The following holdings could not be moved {holdings}. Check the instance record fields and try again or notify your systems administrator.",
-    "moveItems.instance.holdings.error.server": "There was a problem updating the following holdings {holdings}. Please try again or notify your systems administrator."
+    "moveItems.instance.holdings.error.server": "There was a problem updating the following holdings {holdings}. Please try again or notify your systems administrator.",
+    "newFastAddRecord": "New Fast Add Record",
+    "holdingsStatementPublicNote": "Holdings statement public note",
+    "holdingsStatementStaffNote": "Holdings statement staff note",
+    "holdingsStatementForIndexesPublicNote": "Holdings statement for indexes public note",
+    "holdingsStatementForIndexesStaffNote": "Holdings statement for indexes staff note",
+    "holdingsStatementForSupplementsPublicNote": "Holdings statement for supplements public note",
+    "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note"
 }

@@ -554,5 +554,12 @@
     "moveItems.instance.items.error": "تعذر نقل المواد التالية {items}. . قم بالنقر على حقول تسجيلة الوعاء وإعادة المحاولة مرة أخرى، أو قم بإخطار مدير النظام الخاص بك.",
     "moveItems.instance.items.error.server": "حدثت مشكلة أثناء تحديث المواد التالية {items}.  يرجى إعادة المحاولة مرة أخرى أو إخطار مدير النظام الخاص بك.",
     "moveItems.instance.holdings.error": "تعذر نقل المقتنيات التالية {holdings}. قم بالنقر على حقول تسجيلة الوعاء وإعادة المحاولة مرة أخرى، أو قم بإخطار مدير النظام الخاص بك.",
-    "moveItems.instance.holdings.error.server": "حدثت مشكلة أثناء تحديث المقتنيات التالية {holdings}. يرجى إعادة المحاولة مرة أخرى أو إخطار مدير النظام الخاص بك."
+    "moveItems.instance.holdings.error.server": "حدثت مشكلة أثناء تحديث المقتنيات التالية {holdings}. يرجى إعادة المحاولة مرة أخرى أو إخطار مدير النظام الخاص بك.",
+    "newFastAddRecord": "تسجيلة إضافة سريعة جديدة",
+    "holdingsStatementPublicNote": "ملاحظة بيان المقتنيات العامة",
+    "holdingsStatementStaffNote": "ملاحظة بيان المقتنيات للموظفين",
+    "holdingsStatementForIndexesPublicNote": "بيان المقتنيات لملاحظة الفهارس العامة",
+    "holdingsStatementForIndexesStaffNote": "بيان المقتنيات لملاحظة الفهارس للموظفين",
+    "holdingsStatementForSupplementsPublicNote": "بيان المقتنيات لملاحظة المكملات العامة",
+    "holdingsStatementForSupplementsStaffNote": "بيان المقتنيات لملاحظة المكملات للموظفين"
 }
