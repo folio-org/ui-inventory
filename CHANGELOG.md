@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* removed "recieved" status from search and sort menu.  Addresses UIIN-1199.
 * corrected icon for fast add dropdown option.  Addresses UIIN-907.
 * Add an fast add record button to action menu.  Addresses UIIN-907.
 * Move and confirm items and holdings or items to a new instance. Refs UIIN-1101.
