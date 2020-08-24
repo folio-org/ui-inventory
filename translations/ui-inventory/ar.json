@@ -561,5 +561,7 @@
     "holdingsStatementForIndexesPublicNote": "بيان المقتنيات لملاحظة الفهارس العامة",
     "holdingsStatementForIndexesStaffNote": "بيان المقتنيات لملاحظة الفهارس للموظفين",
     "holdingsStatementForSupplementsPublicNote": "بيان المقتنيات لملاحظة المكملات العامة",
-    "holdingsStatementForSupplementsStaffNote": "بيان المقتنيات لملاحظة المكملات للموظفين"
+    "holdingsStatementForSupplementsStaffNote": "بيان المقتنيات لملاحظة المكملات للموظفين",
+    "permission.item.move": "المخزون: انقل المواد",
+    "permission.holdings.move": "المخزون: انقل المقتنيات"
 }
