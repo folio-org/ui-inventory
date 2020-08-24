@@ -2,6 +2,11 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+
+import {
+  useStripes,
+} from '@folio/stripes/core';
+
 import {
   DropdownMenu,
   Dropdown,
@@ -24,6 +29,8 @@ const MoveToDropdown = ({
   holdings,
   labelLocation,
 }) => {
+  const stripes = useStripes();
+
   const filteredHoldings = allHoldings
     ? allHoldings.filter(item => item.id !== holding.id)
     : holdings.filter(item => item.id !== holding.id);
@@ -36,6 +43,8 @@ const MoveToDropdown = ({
   });
   const fromSelectedMap = selectedItemsMap[holding.id] || {};
   const selectedItems = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+  const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
+  const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
 
   const dropdownButton = useCallback(({ getTriggerProps }) => (
     <DropdownButton
@@ -54,7 +63,7 @@ const MoveToDropdown = ({
     >
       {
         instances && !selectedItems.length
-          ? (
+          ? canMoveHoldings && (
             <div
               role="button"
               tabIndex={0}
@@ -74,7 +83,7 @@ const MoveToDropdown = ({
                 : instances[0].title}
             </div>
           )
-          : movetoHoldings.map((item, index) => (
+          : canMoveItems && movetoHoldings.map((item, index) => (
             <div
               role="button"
               tabIndex={index}
