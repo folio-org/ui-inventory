@@ -23,12 +23,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
     setActiveDropZone(result.source.droppableId);
   }, []);
 
-  const onDragEnd = useCallback((result) => {
-    if (!result.destination && !result.target) return;
-    const isDropdownMove = Boolean(result.target);
-    const from = isDropdownMove ? result.target.dataset.itemId : result.source.droppableId;
-    const to = isDropdownMove ? result.target.dataset.toId : result.destination.droppableId;
-
+  const itemsMovement = useCallback((from, to, result) => {
     const fromSelectedMap = selectedItemsMap[from] || {};
     const items = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
@@ -48,6 +43,21 @@ const MoveItemsContext = ({ children, moveItems }) => {
       [from]: undefined,
     }));
     setActiveDropZone(undefined);
+  }, [selectedItemsMap]);
+
+  const onSelect = useCallback(({ target }) => {
+    const from = target.dataset.itemId;
+    const to = target.dataset.toId;
+
+    itemsMovement(from, to, target);
+  }, [selectedItemsMap]);
+
+  const onDragEnd = useCallback((result) => {
+    if (!result.destination) return;
+    const from = result.source.droppableId;
+    const to = result.destination.droppableId;
+
+    itemsMovement(from, to, result);
   }, [selectedItemsMap]);
 
   const getDraggingItems = useCallback(() => {
@@ -86,7 +96,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
           isItemsDragSelected,
           getDraggingItems,
           selectedItemsMap,
-          onSelect : onDragEnd,
+          onSelect,
         }}
       >
         {children}

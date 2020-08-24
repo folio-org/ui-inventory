@@ -47,22 +47,11 @@ const Holding = ({
     selectedItemsMap,
     allHoldings,
     onSelect,
+    selectedHoldingsMap,
   } = useContext(DnDContext);
 
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
-  const filteredHoldings = allHoldings
-    ? allHoldings.filter(item => item.id !== holding.id)
-    : holdings.filter(item => item.id !== holding.id);
-  const movetoHoldings = filteredHoldings.map(item => {
-    return {
-      ...item,
-      labelLocation: item.permanentLocationId ? locationsById[item.permanentLocationId].name : '',
-      callNumber: callNumberLabel(item),
-    };
-  });
-  const fromSelectedMap = selectedItemsMap[holding.id] || {};
-  const selectedItems = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
   const viewHoldings = useCallback(() => {
     onViewHolding();
@@ -76,12 +65,14 @@ const Holding = ({
     return (
       <>
         <MoveToDropdown
-          movetoHoldings={movetoHoldings}
+          allHoldings={allHoldings}
           instances={instances}
-          selectedItems={selectedItems}
+          selectedItemsMap={selectedItemsMap}
           onSelect={onSelect}
           draggable={draggable}
           holding={holding}
+          holdings={holdings}
+          labelLocation={labelLocation}
         />
 
         <Button
@@ -104,7 +95,7 @@ const Holding = ({
         </IfPermission>
       </>
     );
-  }, [holding.id, viewHoldings, addItem, draggable, movetoHoldings, selectedItems]);
+  }, [holding.id, viewHoldings, addItem, draggable, selectedItemsMap, selectedHoldingsMap]);
 
   return (
     <div>

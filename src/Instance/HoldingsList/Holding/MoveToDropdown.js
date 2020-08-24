@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Button,
   DropdownMenu,
   Dropdown,
   DropdownButton,
 } from '@folio/stripes/components';
 
+import {
+  callNumberLabel
+} from '../../../utils';
+
+import styles from './MoveToDropdown.css';
+
 const MoveToDropdown = ({
-  movetoHoldings,
+  allHoldings,
   instances,
-  selectedItems,
+  selectedItemsMap,
   onSelect,
   draggable,
   holding,
+  holdings,
+  labelLocation,
 }) => {
-  const dropdownButton = ({ getTriggerProps }) => (
+  const filteredHoldings = allHoldings
+    ? allHoldings.filter(item => item.id !== holding.id)
+    : holdings.filter(item => item.id !== holding.id);
+  const movetoHoldings = filteredHoldings.map(item => {
+    return {
+      ...item,
+      labelLocation,
+      callNumber: callNumberLabel(item),
+    };
+  });
+  const fromSelectedMap = selectedItemsMap[holding.id] || {};
+  const selectedItems = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+
+  const dropdownButton = useCallback(({ getTriggerProps }) => (
     <DropdownButton
       {...getTriggerProps()}
       id={`clickable-move-holdings-${holding.id}`}
@@ -25,9 +45,9 @@ const MoveToDropdown = ({
     >
       <FormattedMessage id="ui-inventory.moveItems.moveButton" />
     </DropdownButton>
-  );
+  ), [holding.id]);
 
-  const dropdownMenu = () => (
+  const dropdownMenu = useCallback(() => (
     <DropdownMenu
       data-role="menu"
       data-test-move-to-dropdown
@@ -35,9 +55,10 @@ const MoveToDropdown = ({
       {
         instances && !selectedItems.length
           ? (
-            <Button
-              buttonStyle="dropdownItem"
-              onClick={onSelect}
+            <div
+              role="button"
+              tabIndex={0}
+              className={styles.dropDownItem}
               data-item-id={holding.id}
               data-to-id={
                 instances[0].id === holding.instanceId
@@ -45,19 +66,24 @@ const MoveToDropdown = ({
                   : instances[0].id
               }
               data-is-holding
+              onClick={onSelect}
+              onKeyPress={onSelect}
             >
               {instances[0].id === holding.instanceId
                 ? instances[1].title
                 : instances[0].title}
-            </Button>
+            </div>
           )
-          : movetoHoldings.map(item => (
-            <Button
+          : movetoHoldings.map((item, index) => (
+            <div
+              role="button"
+              tabIndex={index}
+              className={styles.dropDownItem}
               key={item.id}
-              buttonStyle="dropdownItem"
               data-to-id={item.id}
               data-item-id={holding.id}
               onClick={onSelect}
+              onKeyPress={onSelect}
             >
               {
                 instances?.filter(instance => instance.id === item.instanceId)[0].title
@@ -68,28 +94,28 @@ const MoveToDropdown = ({
                 ? `${item.labelLocation} ${item.callNumber}`
                 : ''
               }
-            </Button>
+            </div>
           ))}
     </DropdownMenu>
-  );
+  ), [holding.id, selectedItems]);
 
   return draggable && (
     <Dropdown
       renderTrigger={dropdownButton}
       renderMenu={dropdownMenu}
-      // open={isDropdownOpen}
-      // onToggle={onDropdownToggle}
     />
   );
 };
 
 MoveToDropdown.propTypes = {
   holding: PropTypes.object.isRequired,
-  movetoHoldings: PropTypes.arrayOf(PropTypes.object),
+  allHoldings: PropTypes.arrayOf(PropTypes.object),
   draggable: PropTypes.bool,
   instances: PropTypes.arrayOf(PropTypes.object),
-  selectedItems: PropTypes.arrayOf(PropTypes.object),
+  selectedItemsMap: PropTypes.object.isRequired,
   onSelect: PropTypes.func.isRequired,
+  holdings: PropTypes.arrayOf(PropTypes.object),
+  labelLocation: PropTypes.string,
 };
 
 export default MoveToDropdown;

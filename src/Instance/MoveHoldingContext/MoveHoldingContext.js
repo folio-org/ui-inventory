@@ -204,6 +204,7 @@ const MoveHoldingContext = ({
             setAllHoldings,
             allHoldings,
             onSelect,
+            selectedHoldingsMap,
           }}
         >
           {children}
