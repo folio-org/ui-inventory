@@ -20,6 +20,7 @@ describe('InstanceMovementPage', () => {
   setupApplication();
 
   const instanceMarcPage = new InstanceMarcPage();
+  const instanceMovementDetails = new InstanceMovementDetails();
   let instanceMovementDetailsFrom;
   let instanceMovementDetailsTo;
 
@@ -162,6 +163,17 @@ describe('InstanceMovementPage', () => {
         expect(instanceMovementDetailsFrom.isPresent).to.be.true;
         expect(instanceMovementDetailsTo.isPresent).to.be.true;
       });
+    });
+  });
+
+  describe.only('Move action', () => {
+    beforeEach(async () => {
+      await instanceMovementDetailsFrom.MoveToDropdownButton.click();
+      await instanceMovementDetailsFrom.moveToDropdown.list(0).click();
+    });
+
+    it('should open dropdown menu', () => {
+      expect(instanceMovementDetails.confirmModal.confirmButton.isPresent).to.be.true;
     });
   });
 });

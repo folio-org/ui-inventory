@@ -21,7 +21,7 @@ import {
   callNumberLabel
 } from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
-import MoveToDropdown from './MoveToDropdown';
+import { MoveToDropdown } from './MoveToDropdown';
 import DnDContext from '../../DnDContext';
 
 const Holding = ({
@@ -43,15 +43,13 @@ const Holding = ({
     getDraggingItems,
     activeDropZone,
     isItemsDropable,
-    instances,
     selectedItemsMap,
-    allHoldings,
-    onSelect,
     selectedHoldingsMap,
   } = useContext(DnDContext);
 
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
+  const withMoveDropdown = draggable || isDraggable;
 
   const viewHoldings = useCallback(() => {
     onViewHolding();
@@ -64,16 +62,15 @@ const Holding = ({
   const holdingButtonsGroup = useMemo(() => {
     return (
       <>
-        <MoveToDropdown
-          allHoldings={allHoldings}
-          instances={instances}
-          selectedItemsMap={selectedItemsMap}
-          onSelect={onSelect}
-          draggable={draggable}
-          holding={holding}
-          holdings={holdings}
-          labelLocation={labelLocation}
-        />
+        {
+          withMoveDropdown && (
+            <MoveToDropdown
+              holding={holding}
+              holdings={holdings}
+              labelLocation={labelLocation}
+            />
+          )
+        }
 
         <Button
           id={`clickable-view-holdings-${holding.id}`}
@@ -95,7 +92,7 @@ const Holding = ({
         </IfPermission>
       </>
     );
-  }, [holding.id, viewHoldings, addItem, draggable, selectedItemsMap, selectedHoldingsMap]);
+  }, [holding.id, viewHoldings, addItem, withMoveDropdown, selectedItemsMap, selectedHoldingsMap]);
 
   return (
     <div>

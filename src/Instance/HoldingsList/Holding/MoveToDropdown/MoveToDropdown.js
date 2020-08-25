@@ -1,7 +1,9 @@
-import React, { useCallback } from 'react';
+import React, {
+  useCallback,
+  useContext,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 
 import {
   useStripes,
@@ -15,21 +17,24 @@ import {
 
 import {
   callNumberLabel
-} from '../../../utils';
+} from '../../../../utils';
+import DnDContext from '../../../DnDContext';
 
 import styles from './MoveToDropdown.css';
 
 const MoveToDropdown = ({
-  allHoldings,
-  instances,
-  selectedItemsMap,
-  onSelect,
-  draggable,
   holding,
   holdings,
   labelLocation,
 }) => {
   const stripes = useStripes();
+
+  const {
+    instances,
+    selectedItemsMap,
+    allHoldings,
+    onSelect,
+  } = useContext(DnDContext);
 
   const filteredHoldings = allHoldings
     ? allHoldings.filter(item => item.id !== holding.id)
@@ -108,7 +113,7 @@ const MoveToDropdown = ({
     </DropdownMenu>
   ), [holding.id, selectedItems]);
 
-  return draggable && (
+  return (
     <Dropdown
       renderTrigger={dropdownButton}
       renderMenu={dropdownMenu}
@@ -118,11 +123,6 @@ const MoveToDropdown = ({
 
 MoveToDropdown.propTypes = {
   holding: PropTypes.object.isRequired,
-  allHoldings: PropTypes.arrayOf(PropTypes.object),
-  draggable: PropTypes.bool,
-  instances: PropTypes.arrayOf(PropTypes.object),
-  selectedItemsMap: PropTypes.object.isRequired,
-  onSelect: PropTypes.func.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   labelLocation: PropTypes.string,
 };
