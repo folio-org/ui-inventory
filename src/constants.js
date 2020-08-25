@@ -28,6 +28,7 @@ export const requestStatuses = {
 };
 
 export const itemStatuses = [
+  { label: 'ui-inventory.item.status.agedToLost', value: 'Aged to lost' },
   { label: 'ui-inventory.item.status.available', value: 'Available' },
   { label: 'ui-inventory.item.status.awaitingPickup', value: 'Awaiting pickup' },
   { label: 'ui-inventory.item.status.awaitingDelivery', value: 'Awaiting delivery' },

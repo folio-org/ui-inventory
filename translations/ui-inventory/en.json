@@ -440,6 +440,7 @@
   "marc": "MARC",
   "unknownNoteType": "Unknown note type",
   "item.status": "Item status",
+  "item.status.agedToLost": "Aged to lost",
   "item.status.available": "Available",
   "item.status.awaitingPickup": "Awaiting pickup",
   "item.status.awaitingDelivery": "Awaiting delivery",
