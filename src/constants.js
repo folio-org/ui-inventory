@@ -39,7 +39,6 @@ export const itemStatuses = [
   { label: 'ui-inventory.item.status.onOrder', value: 'On order' },
   { label: 'ui-inventory.item.status.paged', value: 'Paged' },
   { label: 'ui-inventory.item.status.declaredLost', value: 'Declared lost' },
-  { label: 'ui-inventory.item.status.received', value: 'Received' },
   { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' },
   { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
   { label: 'ui-inventory.item.status.claimedReturned', value: 'Claimed returned' },
