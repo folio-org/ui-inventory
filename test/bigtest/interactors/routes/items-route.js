@@ -20,6 +20,8 @@ export default @interactor class ItemsRouteInteractor {
   permLocationFilter = scoped('#holdingsPermanentLocationAccordion', MultiSelectFilterInteractor);
   itemStatusFilter = scoped('#itemFilterAccordion', CheckboxFilterInteractor);
 
+  itemStatusFilterClickMissing = clickable('#itemFilterAccordion input[name="Missing"]');
+
   rows = collection('#list-inventory [data-row-index]');
 
   isDiscoverySuppressFilterPresent = isPresent('[data-test-filter-item-discovery-suppress]');
