@@ -450,7 +450,6 @@
   "item.status.onOrder": "On order",
   "item.status.paged": "Paged",
   "item.status.declaredLost": "Declared lost",
-  "item.status.received": "Received",
   "item.status.orderClosed": "Order closed",
   "item.status.withdrawn": "Withdrawn",
   "item.status.claimedReturned": "Claimed returned",

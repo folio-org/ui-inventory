@@ -39,7 +39,7 @@ const InstanceMovementDetails = ({
   const getActionMenu = useCallback(({ onToggle }) => {
     if (
       instance.source !== 'MARC'
-      && !stripes.hasPerm('ui-inventory.instances.item.put')
+      && !stripes.hasPerm('inventory.instances.item.put')
     ) {
       return null;
     }
