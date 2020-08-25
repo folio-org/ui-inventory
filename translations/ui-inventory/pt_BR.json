@@ -555,11 +555,13 @@
     "moveItems.instance.items.error.server": "Ocorreu um problema ao atualizar os seguintes itens {items}. Por favor, tente novamente ou notifique o administrador do sistema.",
     "moveItems.instance.holdings.error": "As seguintes holdings não puderam ser movidas {holdings}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
     "moveItems.instance.holdings.error.server": "Ocorreu um problema ao atualizar as seguintes holdings {holdings}. Por favor, tente novamente ou notifique o administrador do sistema.",
-    "newFastAddRecord": "New Fast Add Record",
+    "newFastAddRecord": "Novo registro rápido",
     "holdingsStatementPublicNote": "Holdings statement public note",
     "holdingsStatementStaffNote": "Holdings statement staff note",
     "holdingsStatementForIndexesPublicNote": "Holdings statement for indexes public note",
     "holdingsStatementForIndexesStaffNote": "Holdings statement for indexes staff note",
     "holdingsStatementForSupplementsPublicNote": "Holdings statement for supplements public note",
-    "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note"
+    "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note",
+    "permission.item.move": "Acervo: Mover itens",
+    "permission.holdings.move": "Acervo: Mover holdings"
 }
