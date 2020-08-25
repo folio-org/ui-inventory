@@ -166,7 +166,7 @@ describe('InstanceMovementPage', () => {
     });
   });
 
-  describe.only('Move action', () => {
+  describe('Move action', () => {
     beforeEach(async () => {
       await instanceMovementDetailsFrom.MoveToDropdownButton.click();
       await instanceMovementDetailsFrom.moveToDropdown.list(0).click();

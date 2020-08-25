@@ -210,6 +210,17 @@ describe('InstanceViewPage', () => {
           expect(InstanceViewPage.draggableItems().every(item => !item.dragSelector.isChecked)).to.be.true;
         });
       });
+
+      describe('move selected items', () => {
+        beforeEach(async () => {
+          await InstanceViewPage.dragItemsListSelectAll.clickInput();
+          await InstanceViewPage.MoveToDropdownButton.click();
+        });
+
+        it('should open dropdown list', () => {
+          expect(InstanceViewPage.moveToDropdown.isPresent).to.be.true;
+        });
+      });
     });
 
     describe('statistical codes list', () => {
