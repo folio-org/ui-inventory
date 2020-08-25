@@ -16,10 +16,9 @@ describe('ItemStatusFilter', () => {
   beforeEach(function () {
     this.visit('/inventory?segment=items');
   });
-
   describe('choose item status', () => {
     beforeEach(async () => {
-      await itemsRoute.itemStatusFilter.checkboxes.dataOptions(6).click();
+      await itemsRoute.itemStatusFilterClickMissing();
     });
 
     it('finds instances by chosen item status', () => {
