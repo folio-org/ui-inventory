@@ -23,7 +23,7 @@ const MoveItemsContext = ({ children, moveItems }) => {
     setActiveDropZone(result.source.droppableId);
   }, []);
 
-  const itemsMovement = useCallback((from, to, result) => {
+  const setAndMoveItems = useCallback((from, to, result) => {
     const fromSelectedMap = selectedItemsMap[from] || {};
     const items = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
@@ -49,16 +49,16 @@ const MoveItemsContext = ({ children, moveItems }) => {
     const from = target.dataset.itemId;
     const to = target.dataset.toId;
 
-    itemsMovement(from, to, target);
-  }, [selectedItemsMap]);
+    setAndMoveItems(from, to, target);
+  }, [setAndMoveItems]);
 
   const onDragEnd = useCallback((result) => {
     if (!result.destination) return;
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
 
-    itemsMovement(from, to, result);
-  }, [selectedItemsMap]);
+    setAndMoveItems(from, to, result);
+  }, [setAndMoveItems]);
 
   const getDraggingItems = useCallback(() => {
     const fromHolding = selectedItemsMap[activeDropZone] || {};
