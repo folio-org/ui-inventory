@@ -3,12 +3,13 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
 import ItemsList from './ItemsList';
 
-const ItemsListContainer = ({ holding, mutator, ...rest }) => {
+const ItemsListContainer = ({ holding, mutator, setOpen, ...rest }) => {
   const [items, setItems] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +17,10 @@ const ItemsListContainer = ({ holding, mutator, ...rest }) => {
     setIsLoading(true);
 
     mutator.instanceHoldingItems.GET()
-      .then(setItems)
+      .then(data => {
+        setItems(data);
+        if (!isEmpty(data)) setOpen(true);
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -50,6 +54,7 @@ ItemsListContainer.manifest = Object.freeze({
 ItemsListContainer.propTypes = {
   mutator: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
+  setOpen: PropTypes.func.isRequired,
 };
 
 export default stripesConnect(ItemsListContainer);
