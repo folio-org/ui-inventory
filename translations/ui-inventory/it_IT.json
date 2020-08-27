@@ -1,6 +1,6 @@
 {
     "inventory.label": "Inventory",
-    "resultCount": "{count, number} {count, plural, one {record trovato} other {records trovati}}",
+    "resultCount": "{count, number} {count, plural, one {record trovato} other {record trovati}}",
     "item.availability.itemStatus": "Stato item",
     "item.availability.itemStatusDate": "Data aggiornamento stato",
     "item.availability.requests": "Richieste",
@@ -335,7 +335,7 @@
     "confirmItemDeleteModal.heading": "Conferma eliminazione item",
     "confirmItemDeleteModal.confirm": "Conferma",
     "deleteHoldingsRecord": "Elimina",
-    "confirmHoldingsRecordDeleteModal.message": "Record holding HRID <strong>{hrid}</strong>, sezione <strong>{location}</strong> non ha records item associati o altre dipendenze e verrà <strong>eliminato</strong>.",
+    "confirmHoldingsRecordDeleteModal.message": "Record holding HRID <strong>{hrid}</strong>, sezione <strong>{location}</strong> non ha record item associati o altre dipendenze e verrà <strong>eliminato</strong>.",
     "confirmHoldingsRecordDeleteModal.heading": "Conferma eliminazione record holding",
     "confirmHoldingsRecordDeleteModal.confirm": "Conferma",
     "noHoldingsRecordDeleteModal.message": "Record holding HRID <strong>{hrid}</strong>, sezione <strong>{location}</strong> ha dipendenze e non può essere eliminato",
@@ -381,7 +381,7 @@
     "hridHandling.description.line1": "Dopo la migrazione iniziale dei dati, i nuovi HRID FOLIO vengono assegnati in sequenza, in base al numero iniziale in queste impostazioni",
     "hridHandling.description.line2": "A meno che non vengano modificati o rimossi, il prefisso predefinito verrà assegnato ai nuovi HRID FOLIO",
     "hridHandling.description.line3": "Gli HRID esistenti nei moduli Invetory e MARC non possono essere modificati",
-    "hridHandling.sectionHeader1": "Records istanze e bibliografico MARC per l’inventory",
+    "hridHandling.sectionHeader1": "Record istanze e bibliografico MARC per l’inventory",
     "hridHandling.sectionHeader2": "Records holding e holding MARC per l’inventory",
     "hridHandling.sectionHeader3": "Records item per l'inventory",
     "hridHandling.label.startWith": "Inizia con",
@@ -469,7 +469,6 @@
     "reports.inTransitItem.callNumberSuffix": "Suffisso collocazione",
     "saveInstancesUIIDS": "Salva le istanze UUID",
     "item.status.declaredLost": "Dichiarato perso",
-    "item.status.received": "Ricevuto",
     "item.status.orderClosed": "Ordine chiuso",
     "reports.inTransitItem.copyNumber": "Numero copia",
     "settings.goBack": "Torna alle impostazioni di Inventory",
@@ -563,5 +562,7 @@
     "holdingsStatementForSupplementsPublicNote": "Holdings statement for supplements public note",
     "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note",
     "permission.item.move": "Inventory: sposta item",
-    "permission.holdings.move": "Inventory: sposta holding"
+    "permission.holdings.move": "Inventory: sposta holding",
+    "item.status.agedToLost": "Aged to lost",
+    "moveItems.moveButton": "Move to"
 }

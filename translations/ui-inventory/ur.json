@@ -469,7 +469,6 @@
     "reports.inTransitItem.callNumberSuffix": "Call number suffix",
     "saveInstancesUIIDS": "Save instances UUIDs",
     "item.status.declaredLost": "Declared lost",
-    "item.status.received": "Received",
     "item.status.orderClosed": "Order closed",
     "reports.inTransitItem.copyNumber": "Copy number",
     "settings.goBack": "Go back to inventory settings",
@@ -563,5 +562,7 @@
     "holdingsStatementForSupplementsPublicNote": "Holdings statement for supplements public note",
     "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note",
     "permission.item.move": "Inventory: Move items",
-    "permission.holdings.move": "Inventory: Move holdings"
+    "permission.holdings.move": "Inventory: Move holdings",
+    "item.status.agedToLost": "Aged to lost",
+    "moveItems.moveButton": "Move to"
 }

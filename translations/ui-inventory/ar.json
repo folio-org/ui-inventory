@@ -469,7 +469,6 @@
     "reports.inTransitItem.callNumberSuffix": "لاحقة رقم الاستدعاء",
     "saveInstancesUIIDS": "حفظ UUIDs الأوعية",
     "item.status.declaredLost": "تم الإعلان عن فقدانه",
-    "item.status.received": "تم استلامه",
     "item.status.orderClosed": "تم إغلاق الطلبية",
     "reports.inTransitItem.copyNumber": "رقم النسخة",
     "settings.goBack": "العودة إلى إعدادات المخزون",
@@ -563,5 +562,7 @@
     "holdingsStatementForSupplementsPublicNote": "بيان المقتنيات لملاحظة المكملات العامة",
     "holdingsStatementForSupplementsStaffNote": "بيان المقتنيات لملاحظة المكملات للموظفين",
     "permission.item.move": "المخزون: انقل المواد",
-    "permission.holdings.move": "المخزون: انقل المقتنيات"
+    "permission.holdings.move": "المخزون: انقل المقتنيات",
+    "item.status.agedToLost": "تأخر وتم اعتباره مفقوداً",
+    "moveItems.moveButton": "نقل إلى"
 }

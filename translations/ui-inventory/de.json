@@ -469,7 +469,6 @@
     "reports.inTransitItem.callNumberSuffix": "Signatur-Suffix",
     "saveInstancesUIIDS": "Instanzen-UUIDs speichern",
     "item.status.declaredLost": "Für verloren erklärt",
-    "item.status.received": "Empfangen",
     "item.status.orderClosed": "Bestellung geschlossen",
     "reports.inTransitItem.copyNumber": "Exemplarnummer",
     "settings.goBack": "Zurück zu den Bestands-Einstellungen",
@@ -563,5 +562,7 @@
     "holdingsStatementForSupplementsPublicNote": "Holdings statement for supplements public note",
     "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note",
     "permission.item.move": "Inventory: Move items",
-    "permission.holdings.move": "Inventory: Move holdings"
+    "permission.holdings.move": "Inventory: Move holdings",
+    "item.status.agedToLost": "Aged to lost",
+    "moveItems.moveButton": "Move to"
 }
