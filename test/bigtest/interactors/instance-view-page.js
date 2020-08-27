@@ -41,6 +41,12 @@ import KeyValue from './KeyValue';
   dragSelector = scoped('[data-test-select-item]', CheckboxInteractor);
 }
 
+@interactor class DropdownList {
+  static defaultScope = '[data-test-move-to-dropdown]';
+
+  list = collection('div[role="button"]');
+}
+
 @interactor class InstanceViewPage {
   isLoaded = isPresent('[data-test-instance-header-title]');
 
@@ -73,6 +79,8 @@ import KeyValue from './KeyValue';
   precedingTitles = new MultiColumnListInteractor('#precedingTitles');
   succeedingTitles = new MultiColumnListInteractor('#succeedingTitles');
   natureOfContent = scoped('[data-test-nature-of-content-terms] div', KeyValue);
+  MoveToDropdownButton = scoped('[data-test-move-holdings]');
+  moveToDropdown = new DropdownList();
 
   notes = collection('[id^="list-instance-notes"]', MultiColumnListInteractor);
 

@@ -21,6 +21,7 @@ import {
   callNumberLabel
 } from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
+import { MoveToDropdown } from './MoveToDropdown';
 import DnDContext from '../../DnDContext';
 
 const Holding = ({
@@ -28,6 +29,7 @@ const Holding = ({
   referenceData,
   onViewHolding,
   onAddItem,
+  holdings,
 
   draggable,
   droppable,
@@ -35,15 +37,19 @@ const Holding = ({
   isHoldingDragSelected,
   isDraggable,
 }) => {
-  const { locationsById } = referenceData;
-  const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const {
     selectItemsForDrag,
     isItemsDragSelected,
     getDraggingItems,
     activeDropZone,
     isItemsDropable,
+    selectedItemsMap,
+    selectedHoldingsMap,
   } = useContext(DnDContext);
+
+  const { locationsById } = referenceData;
+  const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
+  const withMoveDropdown = draggable || isDraggable;
 
   const viewHoldings = useCallback(() => {
     onViewHolding();
@@ -56,6 +62,16 @@ const Holding = ({
   const holdingButtonsGroup = useMemo(() => {
     return (
       <>
+        {
+          withMoveDropdown && (
+            <MoveToDropdown
+              holding={holding}
+              holdings={holdings}
+              labelLocation={labelLocation}
+            />
+          )
+        }
+
         <Button
           id={`clickable-view-holdings-${holding.id}`}
           data-test-view-holdings
@@ -76,7 +92,7 @@ const Holding = ({
         </IfPermission>
       </>
     );
-  }, [holding.id, viewHoldings, addItem]);
+  }, [holding.id, viewHoldings, addItem, withMoveDropdown, selectedItemsMap, selectedHoldingsMap]);
 
   return (
     <div>
@@ -136,6 +152,7 @@ Holding.propTypes = {
   referenceData: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
+  holdings: PropTypes.arrayOf(PropTypes.object),
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,

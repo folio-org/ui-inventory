@@ -25,7 +25,6 @@ const InstanceMovement = ({
         moveItems={moveItems}
         leftInstance={instanceFrom}
         rightInstance={instanceTo}
-        withConfirmationModal
       >
         <InstanceMovementDetailsContainer
           referenceData={referenceData}

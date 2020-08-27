@@ -149,7 +149,10 @@ export default Factory.extend({
         'withItem',
         'withElectronicAccess',
       );
-      instance.holdings = [holding];
+      const secondHolding = server.create(
+        'holding',
+      );
+      instance.holdings = [holding, secondHolding];
       instance.save();
     }
   }),

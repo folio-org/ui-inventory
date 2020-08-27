@@ -34,6 +34,7 @@ const MoveHoldingContext = ({
   const [movingItems, setMovingItems] = useState([]);
   const [dragToId, setDragToId] = useState();
   const [isHoldingMoved, setisHoldingMoved] = useState();
+  const [allHoldings, setAllHoldings] = useState([]);
 
   const onConfirm = useCallback(() => {
     toggleMoveModal(false);
@@ -46,6 +47,7 @@ const MoveHoldingContext = ({
 
     setSelectedHoldingsMap([]);
     setActiveDropZone(undefined);
+    setAllHoldings([]);
   }, [movingItems, dragToId]);
 
   const onBeforeCapture = useCallback((result) => {
@@ -139,6 +141,40 @@ const MoveHoldingContext = ({
     toggleMoveModal(false);
   }, [toggleMoveModal]);
 
+  const onSelect = useCallback(({ target }) => {
+    const to = target.dataset.toId;
+    const from = target.dataset.itemId;
+    const isHolding = target.dataset.isHolding;
+    const fromSelectedMap = selectedItemsMap[from] || {};
+    const items = isHolding
+      ? selectedHoldingsMap
+      : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
+
+    setDragToId(to);
+
+    if (!items.length) {
+      items.push(from);
+    }
+    setMovingItems(items);
+    if (isHolding) {
+      toggleMoveModal(true);
+    } else {
+      setIsMoving(true);
+      moveItems(to, items)
+        .finally(() => {
+          setIsMoving(false);
+        });
+
+      setSelectedHoldingsMap([]);
+      setSelectedItemsMap((prevItemsMap) => ({
+        ...prevItemsMap,
+        [from]: undefined,
+      }));
+      setActiveDropZone(undefined);
+      setAllHoldings([]);
+    }
+  }, [selectedHoldingsMap, selectedItemsMap]);
+
   if (isMoving) {
     return <Loading size="large" />;
   }
@@ -160,6 +196,15 @@ const MoveHoldingContext = ({
             getDraggingItems,
             draggingHoldingsCount: selectedHoldingsMap.length,
             isItemsDropable: !isHoldingMoved,
+            instances: [
+              rightInstance,
+              leftInstance,
+            ],
+            selectedItemsMap,
+            setAllHoldings,
+            allHoldings,
+            onSelect,
+            selectedHoldingsMap,
           }}
         >
           {children}

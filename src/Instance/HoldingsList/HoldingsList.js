@@ -23,6 +23,7 @@ const HoldingsList = ({
 
             draggable={draggable}
             droppable={droppable}
+            holdings={holdings}
           />
         ))
       }

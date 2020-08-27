@@ -38,7 +38,6 @@ const HoldingsListMovement = ({
   const dropStyles = useMemo(() => (
     getDropStyle(holdings.length)
   ), [holdings.length]);
-
   return (
     <>
       {
