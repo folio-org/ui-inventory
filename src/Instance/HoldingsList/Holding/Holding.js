@@ -67,7 +67,7 @@ const Holding = ({
             <MoveToDropdown
               holding={holding}
               holdings={holdings}
-              labelLocation={labelLocation}
+              locationsById={locationsById}
             />
           )
         }
@@ -92,7 +92,7 @@ const Holding = ({
         </IfPermission>
       </>
     );
-  }, [holding.id, viewHoldings, addItem, withMoveDropdown, selectedItemsMap, selectedHoldingsMap]);
+  }, [holding.id, viewHoldings, addItem, withMoveDropdown, selectedItemsMap, selectedHoldingsMap, labelLocation]);
 
   return (
     <div>

@@ -25,7 +25,7 @@ import styles from './MoveToDropdown.css';
 const MoveToDropdown = ({
   holding,
   holdings,
-  labelLocation,
+  locationsById,
 }) => {
   const stripes = useStripes();
 
@@ -37,12 +37,12 @@ const MoveToDropdown = ({
   } = useContext(DnDContext);
 
   const filteredHoldings = allHoldings
-    ? allHoldings.filter(item => item.id !== holding.id)
+    ? allHoldings.filter(item => item.instanceId !== holding.instanceId)
     : holdings.filter(item => item.id !== holding.id);
   const movetoHoldings = filteredHoldings.map(item => {
     return {
       ...item,
-      labelLocation,
+      labelLocation: item.permanentLocationId ? locationsById[item.permanentLocationId].name : '',
       callNumber: callNumberLabel(item),
     };
   });
@@ -124,7 +124,7 @@ const MoveToDropdown = ({
 MoveToDropdown.propTypes = {
   holding: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  labelLocation: PropTypes.string,
+  locationsById: PropTypes.string,
 };
 
 export default MoveToDropdown;
