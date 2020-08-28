@@ -25,6 +25,7 @@ const InstanceMovement = ({
         moveItems={moveItems}
         leftInstance={instanceFrom}
         rightInstance={instanceTo}
+        referenceData={referenceData}
       >
         <InstanceMovementDetailsContainer
           referenceData={referenceData}
