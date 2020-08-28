@@ -39,6 +39,7 @@
 * Add public and staff notes to `Holdings statements`. Refs UIIN-1215.
 * Moving holdings and items permissions. Refs UIIN-1120.
 * Drag and drop accessibility. UIIN-1127.
+* Confirm items before moving to different holdings and/or instances. UIIN-1226.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
