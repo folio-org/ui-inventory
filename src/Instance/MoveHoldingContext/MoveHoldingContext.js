@@ -158,7 +158,7 @@ const MoveHoldingContext = ({
     toggleMoveModal(true);
   }, [selectedHoldingsMap, selectedItemsMap]);
 
-  const getMovingMessage = useMemo(() => {
+  const movingMessage = useMemo(() => {
     const { locationsById } = referenceData;
     const targetHolding = allHoldings.filter(item => item.id === dragToId);
     const callNumber = callNumberLabel(targetHolding[0]);
@@ -223,7 +223,7 @@ const MoveHoldingContext = ({
           id="move-holding-confirmation"
           confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
           heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
-          message={getMovingMessage}
+          message={movingMessage}
           onCancel={closeModal}
           onConfirm={onConfirm}
           open
