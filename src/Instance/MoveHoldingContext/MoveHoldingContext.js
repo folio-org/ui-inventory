@@ -1,6 +1,7 @@
 import React, {
   useState,
   useCallback,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -45,17 +46,13 @@ const MoveHoldingContext = ({
     toggleMoveModal(false);
     setIsMoving(true);
 
-    if (isHoldingMoved) {
-      moveHoldings(dragToId, movingItems)
-        .finally(() => {
-          setIsMoving(false);
-        });
-    } else {
-      moveItems(dragToId, movingItems)
-        .finally(() => {
-          setIsMoving(false);
-        });
-    }
+    const movingPromise = isHoldingMoved
+      ? moveHoldings(dragToId, movingItems)
+      : moveItems(dragToId, movingItems);
+
+    movingPromise.finally(() => {
+      setIsMoving(false);
+    });
 
     setSelectedItemsMap((prevItemsMap) => ({
       ...prevItemsMap,
@@ -161,7 +158,7 @@ const MoveHoldingContext = ({
     toggleMoveModal(true);
   }, [selectedHoldingsMap, selectedItemsMap]);
 
-  const getMovingMessage = useCallback(() => {
+  const getMovingMessage = useMemo(() => {
     const { locationsById } = referenceData;
     const targetHolding = allHoldings.filter(item => item.id === dragToId);
     const callNumber = callNumberLabel(targetHolding[0]);
@@ -226,7 +223,7 @@ const MoveHoldingContext = ({
           id="move-holding-confirmation"
           confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
           heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
-          message={getMovingMessage()}
+          message={getMovingMessage}
           onCancel={closeModal}
           onConfirm={onConfirm}
           open
