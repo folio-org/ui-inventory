@@ -547,7 +547,6 @@
     "moveItems.instance.dropZone": "Soltar holding",
     "moveItems.modal.confirmLabel": "Continuar",
     "moveItems.modal.title": "Confirmar movimentação",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} será movido para {targetName}",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {item foi} other {itens foram}} movido(s) com sucesso.",
     "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding foi} other {holdings foram}} movida(s) com sucesso.",
     "moveItems.instance.items.error": "Os seguintes itens não puderam ser movidos {items}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
@@ -564,5 +563,7 @@
     "permission.item.move": "Acervo: Mover itens",
     "permission.holdings.move": "Acervo: Mover holdings",
     "item.status.agedToLost": "Tempo ultrapassado para ser considerado perdido",
-    "moveItems.moveButton": "Mover para"
+    "moveItems.moveButton": "Mover para",
+    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} será(ão) movido(s) para {targetName}",
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {itens}} será(ão) movido(s) para {targetName}"
 }

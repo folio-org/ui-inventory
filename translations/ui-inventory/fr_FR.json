@@ -370,7 +370,7 @@
     "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
     "acquisition": "Acquisition",
     "holdingsNoteType": "Type de note des collections",
-    "itemNoteType": "Item note type",
+    "itemNoteType": "Type de note d'article",
     "formatSource": "Source du format",
     "formatTerm": "Terme de format",
     "formatCategory": "Catégorie de format",
@@ -547,7 +547,6 @@
     "moveItems.instance.dropZone": "Drop holding",
     "moveItems.modal.confirmLabel": "Continuer",
     "moveItems.modal.title": "Confirmer le déplacement",
-    "moveItems.modal.message": "{count, number} {count, plural, one { collection } other { collections }} sera déplacé vers {targetName}",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
     "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding has} other {holdings have}} been successfully moved.",
     "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
@@ -564,5 +563,7 @@
     "permission.item.move": "Inventaire: déplacer des éléments",
     "permission.holdings.move": "Inventory: Move holdings",
     "item.status.agedToLost": "Aged to lost",
-    "moveItems.moveButton": "Move to"
+    "moveItems.moveButton": "Déplacer vers",
+    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}"
 }

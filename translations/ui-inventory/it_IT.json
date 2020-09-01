@@ -547,7 +547,6 @@
     "moveItems.instance.dropZone": "Drop holding",
     "moveItems.modal.confirmLabel": "Continua",
     "moveItems.modal.title": "Confirm move",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
     "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding has} other {holdings have}} been successfully moved.",
     "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
@@ -564,5 +563,7 @@
     "permission.item.move": "Inventory: sposta item",
     "permission.holdings.move": "Inventory: sposta holding",
     "item.status.agedToLost": "Aged to lost",
-    "moveItems.moveButton": "Move to"
+    "moveItems.moveButton": "Move to",
+    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}"
 }
