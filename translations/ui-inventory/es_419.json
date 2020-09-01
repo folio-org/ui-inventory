@@ -547,7 +547,6 @@
     "moveItems.instance.dropZone": "Drop holding",
     "moveItems.modal.confirmLabel": "Continue",
     "moveItems.modal.title": "Confirm move",
-    "moveItems.modal.message": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
     "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding has} other {holdings have}} been successfully moved.",
     "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
@@ -561,8 +560,10 @@
     "holdingsStatementForIndexesStaffNote": "Holdings statement for indexes staff note",
     "holdingsStatementForSupplementsPublicNote": "Holdings statement for supplements public note",
     "holdingsStatementForSupplementsStaffNote": "Holdings statement for supplements staff note",
-    "permission.item.move": "Inventory: Move items",
-    "permission.holdings.move": "Inventory: Move holdings",
-    "item.status.agedToLost": "Aged to lost",
-    "moveItems.moveButton": "Move to"
+    "permission.item.move": "Inventario: mover artículos",
+    "permission.holdings.move": "Inventario: mover holdings",
+    "item.status.agedToLost": "Préstamo vencido a perdido",
+    "moveItems.moveButton": "Mover a",
+    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holding}} serán movidos a {targetName}",
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {artículo} other {artículos}} serán movidos a {targetName}"
 }

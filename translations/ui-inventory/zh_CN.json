@@ -547,7 +547,6 @@
     "moveItems.instance.dropZone": "放下馆藏",
     "moveItems.modal.confirmLabel": "继续",
     "moveItems.modal.title": "确认移动",
-    "moveItems.modal.message": "{count, number} {count, plural, one {馆藏} other {馆藏}}将移至{targetName}",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {单件} other {单件}}已成功移动。",
     "moveItems.instance.holdings.success": "{count, number} {count, plural, one {馆藏} other {馆藏}}已成功移动。",
     "moveItems.instance.items.error": "以下单件无法移动{items} 。检查实例记录字段，然后重试或通知系统管理员。",
@@ -564,5 +563,7 @@
     "permission.item.move": "典藏：移动单件",
     "permission.holdings.move": "典藏：移动馆藏",
     "item.status.agedToLost": "Aged to lost",
-    "moveItems.moveButton": "Move to"
+    "moveItems.moveButton": "Move to",
+    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}"
 }
