@@ -9,6 +9,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import {
   Checkbox,
@@ -164,6 +165,9 @@ const ItemsList = ({
 
     setItemsSorting(newItemsSorting);
   }, [itemsSorting]);
+
+  if (!draggable && isEmpty(items)) return null;
+
   return (
     <DropZone
       isItemsDropable={isItemsDropable}

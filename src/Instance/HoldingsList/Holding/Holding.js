@@ -2,6 +2,7 @@ import React, {
   useMemo,
   useCallback,
   useContext,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -50,6 +51,10 @@ const Holding = ({
   const { locationsById } = referenceData;
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const withMoveDropdown = draggable || isDraggable;
+
+  const [open, setOpen] = useState(false);
+
+  const handleAccordionToggle = () => setOpen(!open);
 
   const viewHoldings = useCallback(() => {
     onViewHolding();
@@ -114,7 +119,8 @@ const Holding = ({
       }
       <Accordion
         id={holding.id}
-        closedByDefault={false}
+        open={open}
+        onToggle={handleAccordionToggle}
         label={(
           <FormattedMessage
             id="ui-inventory.holdingsHeader"
@@ -125,12 +131,14 @@ const Holding = ({
           />
         )}
         displayWhenOpen={holdingButtonsGroup}
+        displayWhenClosed={holdingButtonsGroup}
       >
         <Row>
           <Col sm={12}>
             <ItemsListContainer
               key={`items_${holding.id}`}
               holding={holding}
+              setOpen={setOpen}
 
               draggable={draggable}
               droppable={droppable}
