@@ -354,14 +354,6 @@ class ItemView extends React.Component {
       borrowerLink = <Link to={`/users/view/${openLoan.userId}`}>{openLoan.borrower.barcode}</Link>;
     }
 
-    if (loanLink === 'Awaiting pickup') {
-      loanLink = (
-        <Link to={requestsUrl}>
-          {loanLink}
-        </Link>
-      );
-    }
-
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
 
