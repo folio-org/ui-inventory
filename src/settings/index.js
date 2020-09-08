@@ -24,6 +24,7 @@ import ClassificationTypesSettings from './ClassificationTypesSettings';
 import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
 import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 import NatureOfContentTermsSettings from './NatureOfContentTermsSettings';
+import FastAddSettings from './FastAdd/FastAddSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -144,6 +145,11 @@ class InventorySettings extends React.Component {
       {
         label: <FormattedMessage id="ui-inventory.instanceHoldingsItem" />,
         pages: [
+          {
+            route: 'fastAdd',
+            label: <FormattedMessage id="ui-inventory.fastAdd" />,
+            component: FastAddSettings,
+          },
           {
             route: 'hridHandling',
             label: <FormattedMessage id="ui-inventory.hridHandling" />,
