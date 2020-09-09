@@ -3,6 +3,7 @@
 ## 5.0.0 (IN PROGRESS)
 
 * changed order of items on holdings record action menu.  Addresses UIIN-1093.
+* removed link around awaiting pickup status in item detail view.  Addresses UIIN-1185.
 * removed "recieved" status from search and sort menu.  Addresses UIIN-1199.
 * corrected icon for fast add dropdown option.  Addresses UIIN-907.
 * Add an fast add record button to action menu.  Addresses UIIN-907.
