@@ -565,5 +565,9 @@
     "item.status.agedToLost": "Aged to lost",
     "moveItems.moveButton": "Move to",
     "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
-    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}"
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}",
+    "save": "Save",
+    "defaultDiscoverySuppress": "Suppress from discovery by default",
+    "defaultInstanceStatus": "Default instance status",
+    "fastAdd": "Fast add"
 }

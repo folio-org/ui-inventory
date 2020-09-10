@@ -565,5 +565,9 @@
     "item.status.agedToLost": "Tempo ultrapassado para ser considerado perdido",
     "moveItems.moveButton": "Mover para",
     "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} será(ão) movido(s) para {targetName}",
-    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {itens}} será(ão) movido(s) para {targetName}"
+    "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {itens}} será(ão) movido(s) para {targetName}",
+    "save": "Salvar",
+    "defaultDiscoverySuppress": "Suprimir da descoberta por padrão",
+    "defaultInstanceStatus": "Status padrão da instância",
+    "fastAdd": "Registro rápido"
 }
