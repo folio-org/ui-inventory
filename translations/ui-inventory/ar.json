@@ -565,5 +565,9 @@
     "item.status.agedToLost": "تأخر وتم اعتباره مفقوداً",
     "moveItems.moveButton": "نقل إلى",
     "moveItems.modal.message.holdings": "سيتم نقل {count, number} {count, plural, one {مقتنى} other {مقتنيات}} إلى {targetName}",
-    "moveItems.modal.message.items": "سيتم نقل {count, number} {count, plural, one {مادة} other {مادة}} إلى {targetName}"
+    "moveItems.modal.message.items": "سيتم نقل {count, number} {count, plural, one {مادة} other {مادة}} إلى {targetName}",
+    "save": "حفظ",
+    "defaultDiscoverySuppress": "حجب عن الاكتشاف افتراضياً",
+    "defaultInstanceStatus": "حالة االوعاء الافتراضية",
+    "fastAdd": "إضافة سريعة"
 }
