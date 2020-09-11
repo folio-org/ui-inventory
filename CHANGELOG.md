@@ -44,6 +44,7 @@
 * Confirm items before moving to different holdings and/or instances. UIIN-1226.
 * Hide an empty list when there are no items in `Holdings` record. Refs UIIN-1076.
 * Add settings page for fast add. Refs UIIN-1211.
+* Increment `react-intl` to `v5`. Refs UIIN-1252.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
