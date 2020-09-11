@@ -73,7 +73,7 @@ class FastAddSettings extends Component {
 
     return (
       <this.configManager
-        configName="fastAddsettings"
+        configName="fastAddSettings"
         moduleName="FAST_ADD"
         label={label}
         configFormComponent={FastAddForm}
@@ -92,11 +92,10 @@ class FastAddSettings extends Component {
                     {placeholder => (
                       <Field
                         component={Select}
-                        dataOptions={instanceStatuses}
+                        dataOptions={[{ label: `${placeholder}`, value: '' }, ...instanceStatuses]}
                         fullWidth
                         label={<FormattedMessage id="ui-inventory.defaultInstanceStatus" />}
                         name="instanceStatusCode"
-                        placeholder={placeholder}
                       />
                     )}
                   </FormattedMessage>
