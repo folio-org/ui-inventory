@@ -95,7 +95,16 @@ const InstanceAdministrativeView = ({
           />
         </Col>
       </Row>
-
+      <IfInterface name="shared-inventory-upsert-matchkey">
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.instanceMatchKey" />}
+              value={checkIfElementIsEmpty(instanceData.instanceMatchKey)}
+            />
+          </Col>
+        </Row>
+      </IfInterface>
       <Row>
         <Col xs={3}>
           <KeyValue

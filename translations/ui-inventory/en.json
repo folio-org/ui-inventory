@@ -351,6 +351,7 @@
   "instanceData": "Administrative data",
   "instanceId": "Instance UUID",
   "instanceHrid": "Instance HRID",
+  "instanceMatchKey": "Instance match key",
   "addStatisticalCode": "Add statistical code",
   "instanceStatus": "Instance status term",
   "selectInstanceStatus": "Select instance status",
