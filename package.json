@@ -368,6 +368,18 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.fast-add",
+        "displayName": "Settings (Inventory): Edit fast add settings",
+        "subPermissions": [
+          "inventory-storage.instance-statuses.collection.get",
+          "configuration.entries.collection.get",
+          "configuration.entries.item.post",
+          "configuration.entries.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.hrid-handling",
         "displayName": "Settings (Inventory): Create, edit and delete HRID handling",
         "subPermissions": [
@@ -595,7 +607,8 @@
           "inventory-storage.holdings-note-types.item.get",
           "inventory-storage.item-note-types.collection.get",
           "inventory-storage.item-note-types.item.get",
-          "inventory-storage.hrid-settings.item.get"
+          "inventory-storage.hrid-settings.item.get",
+          "configuration.entries.collection.get"
         ],
         "visible": true
       },
