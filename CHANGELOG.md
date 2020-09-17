@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Fived validator fucntion ofr statitical codes settings.  Addresses UIIN-1259.
 * changed order of items on holdings record action menu.  Addresses UIIN-1093.
 * removed link around awaiting pickup status in item detail view.  Addresses UIIN-1185.
 * removed "recieved" status from search and sort menu.  Addresses UIIN-1199.
