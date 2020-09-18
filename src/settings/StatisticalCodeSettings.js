@@ -46,7 +46,7 @@ class StatisticalCodeSettings extends React.Component {
 
     // if code has been entered, check to make sure the code value is unique
     if (item.code) {
-      const isDuplicated = items.some(({code}) => code === item.code);
+      const isDuplicated = items.some(({ code }) => code === item.code);
       if (isDuplicated) {
         errors.code = <FormattedMessage id="ui-inventory.uniqueCode" />;
       }
