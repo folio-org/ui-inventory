@@ -2,8 +2,9 @@
 
 ## 5.0.0 (IN PROGRESS)
 
-* changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
-* Fixed validator function for statitical codes settings.  Addresses UIIN-1259.
+* Changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
+* Reverting problematic code refactor in fix of UIIN-1259.
+* Fixed validator fucntion for statitical codes settings.  Addresses UIIN-1259.
 * changed order of items on holdings record action menu.  Addresses UIIN-1093.
 * removed link around awaiting pickup status in item detail view.  Addresses UIIN-1185.
 * removed "recieved" status from search and sort menu.  Addresses UIIN-1199.
