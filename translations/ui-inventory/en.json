@@ -17,6 +17,7 @@
   "item.availability.borrower": "Borrower",
   "item.availability.loanDate": "Loan date",
   "item.availability.dueDate": "Due date",
+  "uniqueCode": "Code must be unique",
   "fillIn": "Please fill this in to continue",
   "selectToContinue": "Please select to continue",
   "add": "Add",
