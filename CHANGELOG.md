@@ -2,7 +2,8 @@
 
 ## 5.0.0 (IN PROGRESS)
 
-* changed value of vlaue of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
+* changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
+* Fixed validator function for statitical codes settings.  Addresses UIIN-1259.
 * changed order of items on holdings record action menu.  Addresses UIIN-1093.
 * removed link around awaiting pickup status in item detail view.  Addresses UIIN-1185.
 * removed "recieved" status from search and sort menu.  Addresses UIIN-1199.
@@ -46,6 +47,7 @@
 * Hide an empty list when there are no items in `Holdings` record. Refs UIIN-1076.
 * Add settings page for fast add. Refs UIIN-1211.
 * Increment `react-intl` to `v5`. Refs UIIN-1252.
+* Create permission for Settings -> Inventory -> Fast add. Refs UIIN-1257.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)

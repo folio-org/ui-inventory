@@ -63,11 +63,18 @@ class FastAddSettings extends Component {
   }
 
   render() {
-    const { label, resources } = this.props;
+    const {
+      label,
+      resources,
+      stripes,
+    } = this.props;
+
     const instanceStatuses = get(resources, 'instanceStatuses.records', []).map(({ code, name }) => ({
       label: name,
       value: code,
     }));
+
+    const canEdit = stripes.hasPerm('ui-inventory.settings.fast-add');
 
     if (resources.instanceStatuses.isPending) return <LoadingPane />;
 
@@ -96,6 +103,7 @@ class FastAddSettings extends Component {
                         fullWidth
                         label={<FormattedMessage id="ui-inventory.defaultInstanceStatus" />}
                         name="instanceStatusCode"
+                        readOnly={!canEdit}
                       />
                     )}
                   </FormattedMessage>
@@ -121,6 +129,7 @@ class FastAddSettings extends Component {
                     fullWidth
                     label={<FormattedMessage id="ui-inventory.defaultDiscoverySuppress" />}
                     name="defaultDiscoverySuppress"
+                    readOnly={!canEdit}
                   />
                 </Col>
               </Row>

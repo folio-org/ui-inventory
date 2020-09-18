@@ -41,11 +41,19 @@ class StatisticalCodeSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  validate = (item) => {
+  validate = (item, index, items) => {
     const errors = validateNameAndCode(item);
 
+    // if code has been entered, check to make sure the code value is unique
+    if (item.code) {
+      const isDuplicated = items.some(({ code }) => code === item.code);
+      if (isDuplicated) {
+        errors.code = <FormattedMessage id="ui-inventory.uniqueCode" />;
+      }
+    }
+
     if (!item.statisticalCodeTypeId) {
-      errors.name = <FormattedMessage id="ui-inventory.selectToContinue" />;
+      errors.statisticalCodeTypeId = <FormattedMessage id="ui-inventory.selectToContinue" />;
     }
     return errors;
   };
@@ -82,7 +90,6 @@ class StatisticalCodeSettings extends React.Component {
         const record = _.isArray(statisticalCodeTypes)
           ? statisticalCodeTypes.find(element => element.id === item.statisticalCodeTypeId)
           : null;
-
         return record
           ? <p>{record.name}</p>
           : null;
@@ -116,6 +123,7 @@ class StatisticalCodeSettings extends React.Component {
             nameKey="name"
             id="statistical-codes"
             sortby="code"
+            validate={this.validate}
             editable={hasPerm}
           />
         )}

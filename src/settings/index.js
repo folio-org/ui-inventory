@@ -149,6 +149,7 @@ class InventorySettings extends React.Component {
             route: 'fastAdd',
             label: <FormattedMessage id="ui-inventory.fastAdd" />,
             component: FastAddSettings,
+            perm: this.addPerm('ui-inventory.settings.fast-add'),
           },
           {
             route: 'hridHandling',
