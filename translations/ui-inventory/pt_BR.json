@@ -569,5 +569,6 @@
     "save": "Salvar",
     "defaultDiscoverySuppress": "Suprimir da descoberta por padrão",
     "defaultInstanceStatus": "Status padrão da instância",
-    "fastAdd": "Registro rápido"
+    "fastAdd": "Registro rápido",
+    "uniqueCode": "O código deve ser único"
 }
