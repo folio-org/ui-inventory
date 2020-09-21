@@ -3,7 +3,9 @@ import React, {
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-
+import {
+  IfInterface,
+} from '@folio/stripes-core';
 import {
   Accordion,
   Row,
@@ -100,7 +102,7 @@ const InstanceAdministrativeView = ({
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-inventory.instanceMatchKey" />}
-              value={checkIfElementIsEmpty(instanceData.instanceMatchKey)}
+              value={checkIfElementIsEmpty(instance.matchKey)}
             />
           </Col>
         </Row>
