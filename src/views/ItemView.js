@@ -34,7 +34,10 @@ import {
   Modal,
 } from '@folio/stripes/components';
 
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  ViewMetaData,
+  ClipCopy,
+} from '@folio/stripes/smart-components';
 import {
   AppIcon,
   IfPermission,
@@ -760,16 +763,16 @@ class ItemView extends React.Component {
                     {item.discoverySuppress && <br />}
                     <Row>
                       <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemHrid" />}
-                          value={checkIfElementIsEmpty(administrativeData.hrid)}
-                        />
+                        <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>
+                          {checkIfElementIsEmpty(administrativeData.hrid)}
+                          {Boolean(administrativeData.hrid) && <ClipCopy text={administrativeData.hrid} />}
+                        </KeyValue>
                       </Col>
                       <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemBarcode" />}
-                          value={checkIfElementIsEmpty(administrativeData.barcode)}
-                        />
+                        <KeyValue label={<FormattedMessage id="ui-inventory.itemBarcode" />}>
+                          {checkIfElementIsEmpty(administrativeData.barcode)}
+                          {Boolean(administrativeData.barcode) && <ClipCopy text={administrativeData.barcode} />}
+                        </KeyValue>
                       </Col>
                       <Col xs={2}>
                         <KeyValue
