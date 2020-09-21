@@ -42,4 +42,46 @@ describe('Settings page for Fast add', () => {
       expect(FastAddSettings.cancelFormButtonDisabled).to.be.false;
     });
   });
+
+  describe('Patron has permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.fast-add': true,
+      },
+    });
+
+    beforeEach(async function () {
+      this.server.createList('instance-status', 3);
+
+      await this.visit('/settings/inventory/fastAdd');
+    });
+
+    it('both selectors should be selectable', () => {
+      expect(FastAddSettings.defaultInstanceStatusReadOnly).to.be.false;
+      expect(FastAddSettings.defaultDiscoverySuppressReadOnly).to.be.false;
+    });
+  });
+
+  describe('Patron does not have permissions', () => {
+    setupApplication({
+      hasAllPerms: false,
+      permissions: {
+        'settings.inventory.enabled': true,
+        'ui-inventory.settings.list.view': true,
+      },
+    });
+
+    beforeEach(async function () {
+      this.server.createList('instance-status', 3);
+
+      await this.visit('/settings/inventory/fastAdd');
+    });
+
+    it('both selectors should be read-only', () => {
+      expect(FastAddSettings.defaultInstanceStatusReadOnly).to.be.true;
+      expect(FastAddSettings.defaultDiscoverySuppressReadOnly).to.be.true;
+    });
+  });
 });
