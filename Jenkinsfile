@@ -1,3 +1,4 @@
+@Library ('folio_jenkins_shared_libs@python3-compatability') _
 
 buildNPM {
   publishModDescriptor = true
