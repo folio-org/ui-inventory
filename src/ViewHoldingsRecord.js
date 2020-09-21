@@ -27,7 +27,10 @@ import {
   Modal,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  ViewMetaData,
+  ClipCopy,
+} from '@folio/stripes/smart-components';
 import {
   AppIcon,
   IntlConsumer,
@@ -543,10 +546,10 @@ class ViewHoldingsRecord extends React.Component {
                             smOffset={0}
                             sm={2}
                           >
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
-                              value={checkIfElementIsEmpty(administrativeData.holdingsHrid)}
-                            />
+                            <KeyValue label={<FormattedMessage id="ui-inventory.holdingsHrid" />}>
+                              {checkIfElementIsEmpty(administrativeData.holdingsHrid)}
+                              {Boolean(administrativeData.holdingsHrid) && <ClipCopy text={administrativeData.holdingsHrid} />}
+                            </KeyValue>
                           </Col>
                           <Col>
                             <KeyValue

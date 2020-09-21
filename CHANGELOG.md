@@ -50,6 +50,7 @@
 * Create permission for Settings -> Inventory -> Fast add. Refs UIIN-1257.
 * Implement easy way to copy HRID in the Item record. Refs UIIN-1002.
 * Implement easy way to copy Barcode in the Item record. Refs UIIN-1250.
+* Implement easy way to copy HRID in the Holdings record. Refs UIIN-1001.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
