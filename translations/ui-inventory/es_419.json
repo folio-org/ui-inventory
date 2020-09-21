@@ -324,7 +324,7 @@
     "classificationIdentifierType": "Classification identifier type",
     "error.noMatch.oops": "Uh-oh!",
     "error.noMatch.how": "How did you get to {location}?",
-    "addCirculationNote": "Add check in / check out note",
+    "addCirculationNote": "Agregar nota de devolución / préstamo",
     "item.loanAndAvailability": "Loan and availability",
     "markAsMissing": "Marcar como perdido",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
@@ -569,5 +569,6 @@
     "save": "Save",
     "defaultDiscoverySuppress": "Suppress from discovery by default",
     "defaultInstanceStatus": "Default instance status",
-    "fastAdd": "Fast add"
+    "fastAdd": "Fast add",
+    "uniqueCode": "Code must be unique"
 }
