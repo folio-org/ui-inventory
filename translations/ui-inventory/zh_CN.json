@@ -569,5 +569,6 @@
     "save": "Save",
     "defaultDiscoverySuppress": "Suppress from discovery by default",
     "defaultInstanceStatus": "Default instance status",
-    "fastAdd": "Fast add"
+    "fastAdd": "Fast add",
+    "uniqueCode": "代码必须唯一"
 }
