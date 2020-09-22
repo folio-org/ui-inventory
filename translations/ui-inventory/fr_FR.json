@@ -570,5 +570,5 @@
     "defaultDiscoverySuppress": "Suppress from discovery by default",
     "defaultInstanceStatus": "Default instance status",
     "fastAdd": "Ajout rapide",
-    "uniqueCode": "Code must be unique"
+    "uniqueCode": "Le code doit être unique"
 }
