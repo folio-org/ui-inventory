@@ -10,7 +10,10 @@ import {
   Col,
   KeyValue,
 } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  ViewMetaData,
+  ClipCopy,
+} from '@folio/stripes/smart-components';
 
 import {
   getDateWithTime,
@@ -75,10 +78,16 @@ const InstanceAdministrativeView = ({
 
       <Row>
         <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-            value={checkIfElementIsEmpty(instance.hrid)}
-          />
+          <KeyValue label={<FormattedMessage id="ui-inventory.instanceHrid" />}>
+            {
+              Boolean(instance.hrid) && (
+                <>
+                  {instance.hrid}
+                  <ClipCopy text={instance.hrid} />
+                </>
+              )
+            }
+          </KeyValue>
         </Col>
 
         <Col xs={3}>
