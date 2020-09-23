@@ -61,12 +61,12 @@ describe('Holdings Sources', () => {
 
     beforeEach(mockData);
 
-    describe('viewing alternative title types list', () => {
+    describe('viewing holdings sources list', () => {
       beforeEach(async function () {
         await this.visit('/settings/inventory/holdingsSources');
       });
 
-      it('has an altenative title types list', () => {
+      it('does not show the holding sources list', () => {
         expect(HoldingsSources.hasList).to.be.false;
       });
     });
