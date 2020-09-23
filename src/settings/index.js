@@ -15,6 +15,7 @@ import InstanceStatusTypesSettings from './InstanceStatusTypesSettings';
 import HoldingsTypeSettings from './HoldingsTypeSettings';
 import ILLPolicy from './ILLPolicy';
 import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
+import HoldingsSourcesSettings from './HoldingsSourcesSettings';
 import CallNumberTypes from './CallNumberTypes';
 import HRIDHandlingSettings from './HRIDHandling/HRIDHandlingSettings';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
@@ -104,6 +105,12 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
             component: HoldingsNoteTypesSettings,
             perm: this.addPerm('ui-inventory.settings.holdings-note-types'),
+          },
+          {
+            route: 'holdingsSources',
+            label: <FormattedMessage id="ui-inventory.holdingsSources" />,
+            component: HoldingsSourcesSettings,
+            perm: this.addPerm('ui-inventory.settings.holdings-sources'),
           },
           {
             route: 'holdingsTypes',

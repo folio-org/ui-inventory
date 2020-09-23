@@ -46,7 +46,7 @@
       "inventory": "10.0",
       "source-storage-records": "2.0",
       "instance-storage": "7.0",
-      "holdings-storage": "3.0 4.0",
+      "holdings-storage": "3.0 4.4",
       "item-storage": "8.0",
       "loan-types": "2.0",
       "material-types": "2.0",
@@ -71,6 +71,7 @@
       "electronic-access-relationships": "1.0",
       "ill-policies": "1.0",
       "holdings-note-types": "1.0",
+      "holdings-sources": "1.0",
       "users": "15.0",
       "location-units": "2.0",
       "circulation": "9.0"
@@ -355,6 +356,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.holdings-sources",
+        "displayName": "Settings (Inventory): Create, edit, delete holdings sources",
+        "subPermissions": [
+          "inventory-storage.holdings-sources.collection.get",
+          "inventory-storage.holdings-sources.item.delete",
+          "inventory-storage.holdings-sources.item.get",
+          "inventory-storage.holdings-sources.item.post",
+          "inventory-storage.holdings-sources.item.put",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.item-note-types",
         "displayName": "Settings (Inventory): Create, edit, delete item note types",
         "subPermissions": [
@@ -437,6 +451,7 @@
           "inventory-storage.statistical-codes.collection.get",
           "inventory-storage.ill-policies.collection.get",
           "inventory-storage.holdings-note-types.collection.get",
+          "inventory-storage.holdings-sources.collection.get",
           "inventory-storage.holdings-types.collection.get",
           "inventory-storage.holdings.collection.get",
           "inventory-storage.holdings.item.get",
@@ -605,6 +620,8 @@
           "inventory-storage.call-number-types.item.get",
           "inventory-storage.holdings-note-types.collection.get",
           "inventory-storage.holdings-note-types.item.get",
+          "inventory-storage.holdings-sources.collection.get",
+          "inventory-storage.holdings-sources.item.get",
           "inventory-storage.item-note-types.collection.get",
           "inventory-storage.item-note-types.item.get",
           "inventory-storage.hrid-settings.item.get",
