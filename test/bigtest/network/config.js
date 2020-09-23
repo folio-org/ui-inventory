@@ -547,6 +547,9 @@ export default function configure() {
   this.get('/holdings-note-types');
   this.get('/holdings-note-types/:id');
 
+  this.get('/holdings-sources');
+  this.get('/holdings-sources/:id');
+
   this.get('/item-note-types');
   this.get('/item-note-types/:id');
 
