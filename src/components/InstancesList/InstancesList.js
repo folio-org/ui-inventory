@@ -267,12 +267,12 @@ class InstancesView extends React.Component {
           </Button>
         </IfPermission>
         <IfPermission perm="ui-plugin-create-inventory-records.create">
-        {this.getActionItem({
-          id: 'new-fast-add-record',
-          icon: 'lightning',
-          messageId: 'ui-inventory.newFastAddRecord',
-          onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-        })}
+          {this.getActionItem({
+            id: 'new-fast-add-record',
+            icon: 'lightning',
+            messageId: 'ui-inventory.newFastAddRecord',
+            onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+          })}
         </IfPermission>
         {this.getActionItem({
           id: 'dropdown-clickable-get-report',
