@@ -38,6 +38,7 @@ class HoldingsSourcesSettings extends React.Component {
             }}
             readOnlyFields={['source']}
             itemTemplate={{ source: 'local' }}
+            hiddenFields={['numberOfObjects']}
             nameKey="name"
             id="holdingsSources"
             sortby="name"

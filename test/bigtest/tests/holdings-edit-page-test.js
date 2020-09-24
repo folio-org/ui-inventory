@@ -28,6 +28,17 @@ describe('HoldingsEditPage', () => {
       title: 'ADVANCING RESEARCH',
     });
 
+    this.server.create('holdingsSource', {
+      'id' : 'd6510242-5ec3-42ed-b593-3585d2e48fd6',
+      'name' : 'FOLIO',
+      'source' : 'folio'
+    });
+    this.server.create('holdingsSource', {
+      'id' : 'e19eabab-a85c-4aef-a7b2-33bd9acef24e',
+      'name' : 'MARC',
+      'source' : 'folio'
+    });
+
     this.server.get('/holdings-storage/holdings/:id', holdings);
     this.server.get('/locations/:id', {});
     this.visit(`/inventory/view/${instance.id}/${holdings.id}?layer=editHoldingsRecord`);
@@ -47,6 +58,13 @@ describe('HoldingsEditPage', () => {
 
     it('should redirect to holding view page after click', () => {
       expect(HoldingsViewPage.isPresent).to.be.true;
+    });
+  });
+
+  describe('holdings source', () => {
+    it('displays the holdings source element', () => {
+      console.log('HoldingsEditPage.holdingSource', HoldingsEditPage.holdingSource);
+      expect(HoldingsEditPage.holdingSourcePresent).to.be.true;
     });
   });
 });

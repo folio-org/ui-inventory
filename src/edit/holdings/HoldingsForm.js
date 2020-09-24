@@ -276,6 +276,15 @@ class HoldingsForm extends React.Component {
       }),
     ) : [];
 
+    const holdingsSourceOptions = (referenceTables?.holdingsSources ?? []).map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.sourceId ||
+        (!initialValues.sourceId && referenceTables.holdingsSourcesByName?.FOLIO?.name === it.name),
+      }),
+    );
+
     const statisticalCodeOptions = referenceTables.statisticalCodes ? referenceTables.statisticalCodes.map(
       it => ({
         label: refLookup(referenceTables.statisticalCodeTypes, it.statisticalCodeTypeId).name + ':    ' + it.code + ' - ' + it.name,
@@ -368,6 +377,22 @@ class HoldingsForm extends React.Component {
                     component={TextField}
                     label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
                   />
+                </Col>
+                <Col sm={4}>
+                  <FormattedMessage id="ui-inventory.selectHoldingsSource">
+                    {placeholder => (
+                      <Field
+                        label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
+                        placeholder={placeholder}
+                        name="sourceId"
+                        id="additem_holdingsSource"
+                        disabled
+                        component={Select}
+                        fullWidth
+                        dataOptions={holdingsSourceOptions}
+                      />
+                    )}
+                  </FormattedMessage>
                 </Col>
               </Row>
               <Row>
