@@ -387,7 +387,7 @@
     "hridHandling.label.startWith": "بدء بـ",
     "hridHandling.label.assignPrefix": "تعيين بادئة",
     "hridHandling.validation.enterValue": "يرجى إدخال قيمة",
-    "hridHandling.validation.maxLength": "الحد الأقصى لطول الحقل هو",
+    "hridHandling.validation.maxLength": "قيمة غير صالحة. الحد الأقصى لطول الأحرف المسموح به هو {maxLength}",
     "hridHandling.validation.startWithField": "يرجى إدخال قيمة رقمية",
     "hridHandling.validation.assignPrefixField": "يرجى إدخال قيمة أبجدية عددية",
     "noBarcode": "بدون باركود",
@@ -494,7 +494,7 @@
     "withdrawnModal.confirm": "تأكيد",
     "item.status.withdrawn": "مسحوب",
     "saveInstancesUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للوعاء. يرجى إعادة المحاولة.",
-    "updatedDate": "تم تحديث التاريخ",
+    "updatedDate": "تاريخ التحديث",
     "itemEffectiveCallNumberNormalized": "رقم الاستدعاء النشط (مادة)، مطبّع",
     "callNumberNormalized": "رقم الاستدعاء، مطبّع",
     "item.status.claimedReturned": "تم إدعاء إعادته",
@@ -570,5 +570,7 @@
     "defaultDiscoverySuppress": "حجب عن الاكتشاف افتراضياً",
     "defaultInstanceStatus": "حالة االوعاء الافتراضية",
     "fastAdd": "إضافة سريعة",
-    "uniqueCode": "يجب أن يكون الرمز فريدًا"
+    "uniqueCode": "يجب أن يكون الرمز فريدًا",
+    "holdingsSources": "مصادر المقتنيات",
+    "holdingsSource": "مصدر المقتنيات"
 }

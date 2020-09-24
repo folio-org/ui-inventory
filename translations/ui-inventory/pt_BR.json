@@ -570,5 +570,7 @@
     "defaultDiscoverySuppress": "Suprimir da descoberta por padrão",
     "defaultInstanceStatus": "Status padrão da instância",
     "fastAdd": "Registro rápido",
-    "uniqueCode": "O código deve ser único"
+    "uniqueCode": "O código deve ser único",
+    "holdingsSources": "Fontes dos holdings",
+    "holdingsSource": "Fonte dos holdings"
 }
