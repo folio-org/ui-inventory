@@ -86,6 +86,7 @@
         "displayName": "Inventory: All permissions",
         "description": "Some subperms to support enabling/using the Inventory app",
         "subPermissions": [
+          "ui-plugin-create-inventory-records.create",
           "ui-inventory.instance.view",
           "ui-inventory.instance.create",
           "ui-inventory.holdings.create",

@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Modified permissions and built permission checking into fast add button.  Addresses UIIN-1210.
 * Changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
 * Reverting problematic code refactor in fix of UIIN-1259.
 * Fixed validator fucntion for statitical codes settings.  Addresses UIIN-1259.
