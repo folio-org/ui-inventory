@@ -347,8 +347,8 @@
     "makePrimary": "作为主要",
     "holdingsNoteTypes": "館藏附註類型",
     "itemNoteTypes": "單件附註類型",
-    "itemOnHoldingsRecordDeleteModal.message": "馆藏地<strong> {location} </strong>的馆藏记录HRID <strong> {hrid} </strong> </strong>有<strong>一条</strong>关联的单件记录。为了能够继续删除此馆藏记录，必须删除关联的单件记录。",
-    "itemsOnHoldingsRecordDeleteModal.message": "馆藏地<strong> {location} </strong>的馆藏记录HRID <strong> {hrid} </strong> </strong>有<strong> {itemCount} </strong>关联的单件记录。为了能够继续删除此馆藏记录，必须删除所有关联的单件记录。",
+    "itemOnHoldingsRecordDeleteModal.message": "馆藏地 <strong>{location}</strong> 的馆藏记录HRID <strong>{hrid}</strong> 有<strong>一条</strong>关联的单件记录。为了能够继续删除此馆藏记录，必须删除关联的单件记录。",
+    "itemsOnHoldingsRecordDeleteModal.message": "馆藏地<strong>{location}</strong>的馆藏记录HRID <strong> {hrid}</strong> 有 <strong>{itemCount}</strong>关联的单件记录。为了能够继续删除此馆藏记录，必须删除所有关联的单件记录。",
     "condition": "条件",
     "search.all": "關鍵字（題名、作者、識別號）",
     "subject": "主题",
@@ -570,5 +570,7 @@
     "defaultDiscoverySuppress": "Suppress from discovery by default",
     "defaultInstanceStatus": "Default instance status",
     "fastAdd": "Fast add",
-    "uniqueCode": "Code must be unique"
+    "uniqueCode": "Code must be unique",
+    "holdingsSources": "Holdings sources",
+    "holdingsSource": "Holdings source"
 }
