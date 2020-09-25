@@ -50,6 +50,8 @@
   "holdingsNoteType": "Holdings note type",
   "holdingsSources": "Holdings sources",
   "holdingsSource": "Holdings source",
+  "selectHoldingsSource": "Select holdings source",
+  "holdingsSourceLabel": "Source",
   "ILLPolicy": "ILL policy",
   "staffSuppress": "Staff suppress",
   "discoverySuppress": "Suppress from discovery",

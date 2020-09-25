@@ -28,6 +28,7 @@ const CreateHolding = ({
   mutator,
 }) => {
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.holdingInstance);
+  const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
 
   const onCancel = useCallback(() => {
     history.push({
@@ -45,7 +46,8 @@ const CreateHolding = ({
 
   const initialValues = useMemo(() => ({
     instanceId,
-  }), [instanceId]);
+    sourceId
+  }), [instanceId, sourceId]);
 
   if (isInstanceLoading) return <LoadingView />;
 
