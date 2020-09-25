@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Altering validation code to check for unique statistical code name.  Addresses UIIN-1276.
 * Modified permissions and built permission checking into fast add button.  Addresses UIIN-1210.
 * Changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
 * Reverting problematic code refactor in fix of UIIN-1259.
