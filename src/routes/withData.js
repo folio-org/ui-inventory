@@ -142,6 +142,15 @@ const dataManifest = {
     },
     records: 'loantypes',
   },
+  holdingsSources: {
+    type: 'okapi',
+    path: 'holdings-sources',
+    params: {
+      query: 'cql.allRecords=1 sortby name',
+      limit: '1000',
+    },
+    records: 'holdingsRecordsSources',
+  }
 };
 
 // HOC used to reuse data dictionaries
@@ -179,6 +188,7 @@ const withData = WrappedComponent => class WithDataComponent extends React.Compo
     data.locationsById = keyBy(data.locations, 'id');
     data.identifierTypesById = keyBy(data.identifierTypes, 'id');
     data.identifierTypesByName = keyBy(data.identifierTypes, 'name');
+    data.holdingsSourcesByName = keyBy(data.holdingsSources, 'name');
 
     data.query = resources.query;
 
