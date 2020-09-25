@@ -309,6 +309,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
+    const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -550,6 +551,12 @@ class ViewHoldingsRecord extends React.Component {
                               {checkIfElementIsEmpty(administrativeData.holdingsHrid)}
                               {Boolean(administrativeData.holdingsHrid) && <ClipCopy text={administrativeData.holdingsHrid} />}
                             </KeyValue>
+                          </Col>
+                          <Col sm={2}>
+                            <KeyValue
+                              label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
+                              value={checkIfElementIsEmpty(holdingsSourceName)}
+                            />
                           </Col>
                           <Col>
                             <KeyValue
