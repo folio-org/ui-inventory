@@ -44,12 +44,20 @@ class StatisticalCodeSettings extends React.Component {
   validate = (item, index, items) => {
     const errors = validateNameAndCode(item);
 
-    // if code has been entered, check to make sure the code value is unique
+    // if code/name has been entered, check to make sure the value is unique
     if (item.code) {
       const codes = items.map(({ code }) => code);
       const count = codes.filter(x => x === item.code).length;
       if (count > 1) {
         errors.code = <FormattedMessage id="ui-inventory.uniqueCode" />;
+      }
+    }
+
+    if (item.name) {
+      const names = items.map(({ name }) => name);
+      const count = names.filter(x => x === item.name).length;
+      if (count > 1) {
+        errors.name = <FormattedMessage id="ui-inventory.uniqueName" />;
       }
     }
 
