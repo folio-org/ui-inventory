@@ -572,5 +572,8 @@
     "fastAdd": "Ajout rapide",
     "uniqueCode": "Le code doit être unique",
     "holdingsSources": "Holdings sources",
-    "holdingsSource": "Holdings source"
+    "holdingsSource": "Holdings source",
+    "selectHoldingsSource": "Select holdings source",
+    "holdingsSourceLabel": "Source",
+    "uniqueName": "Name must be unique"
 }
