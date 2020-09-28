@@ -572,5 +572,8 @@
     "fastAdd": "إضافة سريعة",
     "uniqueCode": "يجب أن يكون الرمز فريدًا",
     "holdingsSources": "مصادر المقتنيات",
-    "holdingsSource": "مصدر المقتنيات"
+    "holdingsSource": "مصدر المقتنيات",
+    "selectHoldingsSource": "اختر مصدر المقتنيات",
+    "holdingsSourceLabel": "المصدر",
+    "uniqueName": "يجب أن يكون الاسم فريدًا"
 }
