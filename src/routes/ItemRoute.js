@@ -147,6 +147,13 @@ class ItemRoute extends React.Component {
   }
 }
 
+ItemRoute.propTypes = {
+  goTo: PropTypes.func,
+  match: PropTypes.object,
+  location: PropTypes.object,
+  resources: PropTypes.object,
+};
+
 export default flowRight(
   stripesConnect,
   withLocation,
