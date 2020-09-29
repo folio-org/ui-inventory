@@ -1,11 +1,67 @@
-import React from 'react';
+import keyBy from 'lodash/keyBy';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {
-  get,
-  keyBy,
-} from 'lodash';
 
-const dataManifest = {
+import { stripesConnect } from '@folio/stripes/core';
+
+import { DataContext } from '../contexts';
+
+// Provider which loads dictionary data used in various places in ui-inventory.
+// The data is fetched once when the ui-inventory module is loaded.
+const DataProvider = ({
+  children,
+  resources,
+}) => {
+  const { manifest } = DataProvider;
+
+  const isLoading = useCallback(() => {
+    for (const key in manifest) {
+      if (manifest[key].type === 'okapi' && !(resources?.[key]?.hasLoaded)) {
+        return true;
+      }
+    }
+
+    return false;
+  }, [resources, manifest]);
+
+  const data = useMemo(() => {
+    const loadedData = {};
+
+    Object.keys(manifest).forEach(key => {
+      loadedData[key] = resources?.[key]?.records ?? [];
+    });
+
+    const {
+      locations,
+      identifierTypes,
+      holdingsSources,
+    } = loadedData;
+
+    loadedData.locationsById = keyBy(locations, 'id');
+    loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
+    loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
+    loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
+
+    return loadedData;
+  }, [resources, manifest]);
+
+  if (isLoading()) {
+    return null;
+  }
+
+  return (
+    <DataContext.Provider value={data}>
+      {children}
+    </DataContext.Provider>
+  );
+};
+
+DataProvider.propTypes = {
+  resources: PropTypes.object.isRequired,
+  children: PropTypes.object,
+};
+
+DataProvider.manifest = {
   identifierTypes: {
     type: 'okapi',
     records: 'identifierTypes',
@@ -153,56 +209,4 @@ const dataManifest = {
   }
 };
 
-// HOC used to reuse data dictionaries
-const withData = WrappedComponent => class WithDataComponent extends React.Component {
-  static manifest = Object.freeze(Object.assign({}, dataManifest, WrappedComponent.manifest));
-
-  static propTypes = {
-    resources: PropTypes.object.isRequired,
-    mutator: PropTypes.object.isRequired,
-  };
-
-  isLoading = () => {
-    const { resources } = this.props;
-
-    for (const key in dataManifest) {
-      if (dataManifest[key].type === 'okapi' &&
-        !(resources[key] && resources[key].hasLoaded)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  getData = () => {
-    const { resources } = this.props;
-    const data = {};
-
-    for (const key in dataManifest) {
-      if (dataManifest[key].type === 'okapi') {
-        data[key] = get(resources, `${key}.records`, []);
-      }
-    }
-
-    data.locationsById = keyBy(data.locations, 'id');
-    data.identifierTypesById = keyBy(data.identifierTypes, 'id');
-    data.identifierTypesByName = keyBy(data.identifierTypes, 'name');
-    data.holdingsSourcesByName = keyBy(data.holdingsSources, 'name');
-
-    data.query = resources.query;
-
-    return data;
-  }
-
-  render() {
-    return (<WrappedComponent
-      getData={this.getData}
-      isLoading={this.isLoading}
-      {...this.props}
-    />);
-  }
-};
-
-
-export default withData;
+export default stripesConnect(DataProvider);

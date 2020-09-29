@@ -11,20 +11,15 @@ import { stripesConnect } from '@folio/stripes/core';
 import {
   requestStatuses,
 } from '../constants';
-import withData from './withData';
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
+import { DataContext } from '../contexts';
 
 const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc`;
 
 class ItemRoute extends React.Component {
-  static propTypes = {
-    isLoading: PropTypes.func,
-    getData: PropTypes.func,
-  };
-
   static manifest = Object.freeze({
     query: {},
     items: {
@@ -117,7 +112,6 @@ class ItemRoute extends React.Component {
 
   isLoading = () => {
     const {
-      isLoading,
       resources: {
         items,
         holdingsRecords,
@@ -127,8 +121,7 @@ class ItemRoute extends React.Component {
 
     if (!items?.hasLoaded ||
       !instances1?.hasLoaded ||
-      !holdingsRecords?.hasLoaded ||
-      isLoading()) {
+      !holdingsRecords?.hasLoaded) {
       return true;
     }
 
@@ -136,18 +129,20 @@ class ItemRoute extends React.Component {
   }
 
   render() {
-    const { getData } = this.props;
-
     if (this.isLoading()) {
       return <PaneLoading defaultWidth="100%" />;
     }
 
     return (
-      <ItemView
-        {...this.props}
-        onCloseViewItem={this.onClose}
-        referenceTables={getData()}
-      />
+      <DataContext.Consumer>
+        {data => (
+          <ItemView
+            {...this.props}
+            onCloseViewItem={this.onClose}
+            referenceTables={data}
+          />
+        )}
+      </DataContext.Consumer>
     );
   }
 }
@@ -155,5 +150,4 @@ class ItemRoute extends React.Component {
 export default flowRight(
   stripesConnect,
   withLocation,
-  withData,
 )(ItemRoute);

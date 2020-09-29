@@ -31,11 +31,13 @@ const HoldingsListContainer = ({
     setIsLoading(true);
 
     const fetchHoldingPromise = mutator.instanceHoldings.GET() || Promise.reject();
-
     fetchHoldingPromise
       .then((result) => {
         setHoldings(result);
-        setAllHoldings((prevState) => [...prevState, ...result]);
+
+        if (setAllHoldings) {
+          setAllHoldings((prevState) => [...prevState, ...result]);
+        }
       })
       .finally(() => {
         setIsLoading(false);
