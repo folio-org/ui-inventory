@@ -1,20 +1,13 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import {
-  stripesConnect,
-} from '@folio/stripes/core';
 
 import { InstanceEdit } from '../Instance';
+import { DataContext } from '../contexts';
 
-import withData from './withData';
-
-const InstanceEditRoute = ({ isLoading, getData }) => {
+const InstanceEditRoute = () => {
   const { id: instanceId } = useParams();
-
-  const isReferenceDataLoading = isLoading();
-  const referenceData = useMemo(() => getData(), [isReferenceDataLoading]);
+  const referenceData = useContext(DataContext);
 
   return (
     <InstanceEdit
@@ -24,9 +17,4 @@ const InstanceEditRoute = ({ isLoading, getData }) => {
   );
 };
 
-InstanceEditRoute.propTypes = {
-  isLoading: PropTypes.func.isRequired,
-  getData: PropTypes.func.isRequired,
-};
-
-export default stripesConnect(withData(InstanceEditRoute));
+export default InstanceEditRoute;

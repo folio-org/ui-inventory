@@ -4,14 +4,13 @@ import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import withData from './withData';
 import withLocation from '../withLocation';
 import { InstancesView } from '../views';
 import {
   getFilterConfig,
 } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
-import DataContext from '../contexts/DataContext';
+import { DataContext } from '../contexts';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
@@ -21,8 +20,6 @@ class InstancesRoute extends React.Component {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
-    isLoading: PropTypes.func,
-    getData: PropTypes.func,
     getParams: PropTypes.func,
   };
 
@@ -42,34 +39,29 @@ class InstancesRoute extends React.Component {
       disableRecordCreation,
       resources,
       mutator,
-      isLoading,
-      getData,
       getParams,
     } = this.props;
-
-    if (isLoading()) {
-      return null;
-    }
-
-    const data = getData();
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
+    const { query } = resources;
 
     return (
-      <DataContext.Provider value={data}>
-        <InstancesView
-          parentResources={resources}
-          parentMutator={mutator}
-          data={data}
-          browseOnly={browseOnly}
-          showSingleResult={showSingleResult}
-          onSelectRow={onSelectRow}
-          disableRecordCreation={disableRecordCreation}
-          renderFilters={renderer(data)}
-          segment={segment}
-          searchableIndexes={indexes}
-        />
-      </DataContext.Provider>
+      <DataContext.Consumer>
+        {data => (
+          <InstancesView
+            parentResources={resources}
+            parentMutator={mutator}
+            data={{ ...data, query }}
+            browseOnly={browseOnly}
+            showSingleResult={showSingleResult}
+            onSelectRow={onSelectRow}
+            disableRecordCreation={disableRecordCreation}
+            renderFilters={renderer({ ...data, query })}
+            segment={segment}
+            searchableIndexes={indexes}
+          />
+        )}
+      </DataContext.Consumer>
     );
   }
 }
@@ -77,5 +69,4 @@ class InstancesRoute extends React.Component {
 export default flowRight(
   stripesConnect,
   withLocation,
-  withData,
 )(InstancesRoute);

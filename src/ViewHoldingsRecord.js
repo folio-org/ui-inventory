@@ -259,13 +259,6 @@ class ViewHoldingsRecord extends React.Component {
       temporaryLocation,
     } = this.props.resources;
 
-    const {
-      holdingsTypes,
-      holdingsNoteTypes,
-      illPolicies,
-      callNumberTypes,
-    } = this.props.parentResources;
-
     if (!holdingsRecords || !holdingsRecords.hasLoaded) {
       return true;
     }
@@ -274,11 +267,7 @@ class ViewHoldingsRecord extends React.Component {
 
     if (!instances1 || !instances1.hasLoaded
       || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
-      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))
-      || !illPolicies || !illPolicies.hasLoaded
-      || !holdingsTypes || !holdingsTypes.hasLoaded
-      || !callNumberTypes || !callNumberTypes.hasLoaded
-      || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded) {
+      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))) {
       return true;
     }
 
@@ -869,20 +858,6 @@ ViewHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
-  parentResources: PropTypes.shape({
-    holdingsTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    illPolicies: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    callNumberTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsNoteTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }),
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
