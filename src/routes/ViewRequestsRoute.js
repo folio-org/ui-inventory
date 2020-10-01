@@ -6,11 +6,11 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import {
   batchFetch,
+  batchFetchRequests,
   buildQueryByItemsIds,
   useFetchItems,
   ViewRequests,
 } from '../Instance/ViewRequests';
-import { requestsStatusString } from './ItemRoute';
 
 const ViewRequestsRoute = ({ mutator, resources }) => {
   const { id: instanceId } = useParams();
@@ -26,7 +26,7 @@ const ViewRequestsRoute = ({ mutator, resources }) => {
     if (items?.length) {
       const requestsMapInitial = new Map(items.map(obj => [obj.id, 0]));
       const loansMapInitial = new Map(items.map(obj => [obj.id, []]));
-      batchFetch(mutator.allInstanceRequests, items, buildQueryByItemsIds, undefined, `and status==(${requestsStatusString}) sortby requestDate desc`)
+      batchFetchRequests(mutator.allInstanceRequests, items)
         .then(
           (responseRequests) => setRequestsMap(responseRequests.reduce((acc, r) => {
             acc.set(r.itemId, acc.get(r.itemId) + 1);

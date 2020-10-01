@@ -1,5 +1,7 @@
 import { range, chunk, flatten } from 'lodash';
 
+import { requestsStatusString } from '../../routes/ItemRoute';
+
 const LIMIT = 100;
 const CHUNKS_SIZE = 5;
 
@@ -89,4 +91,8 @@ export const batchFetch = (mutator, records, buildQuery, _params = {}, extraQuer
 
 export const batchFetchItems = (mutator, holdings) => {
   return batchFetch(mutator, holdings, buildQueryByHoldingsIds, undefined, 'sortby barcode asc');
+};
+
+export const batchFetchRequests = (mutator, items) => {
+  return batchFetch(mutator, items, buildQueryByItemsIds, undefined, `and status==(${requestsStatusString}) sortby requestDate desc`);
 };

@@ -106,7 +106,12 @@ function ViewRequests({ items, requestsMap, loansMap, onCloseViewRequests, insta
         defaultWidth="100%"
         dismissible
         onClose={onCloseViewRequests}
-        paneSub={`${items?.length} items found`}
+        paneSub={items?.length == null ? undefined : (
+          <FormattedMessage
+            id="ui-inventory.instanceRecordRequestsSubtitle"
+            values={{ count: items?.length }}
+          />
+        )}
         paneTitle={<FormattedMessage
           id="ui-inventory.instanceRecordRequestsTitle"
           values={{

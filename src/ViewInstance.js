@@ -24,7 +24,10 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
-import { batchFetchItems } from './Instance/ViewRequests/utils';
+import {
+  batchFetchItems,
+  batchFetchRequests,
+} from './Instance/ViewRequests/utils';
 
 import {
   HoldingsListContainer,
@@ -59,6 +62,15 @@ class ViewInstance extends React.Component {
       fetch: false,
       path: 'inventory/items',
       records: 'items',
+      throwErrors: false,
+      type: 'okapi',
+      shouldRefresh: () => false,
+    },
+    allInstanceRequests: {
+      accumulate: true,
+      fetch: false,
+      path: 'circulation/requests',
+      records: 'requests',
       throwErrors: false,
       type: 'okapi',
       shouldRefresh: () => false,
@@ -125,14 +137,28 @@ class ViewInstance extends React.Component {
       this.getMARCRecord();
     }
 
+    const { allInstanceHoldings, allInstanceItems } = resources;
     const instanceHoldings = resources.allInstanceHoldings.records;
-    if (instanceHoldings?.length && instanceHoldings !== prevResources.allInstanceHoldings.records) {
+    const shouldFetchItems = instanceHoldings !== prevResources.allInstanceHoldings.records ||
+      (!allInstanceItems.hasLoaded && !allInstanceHoldings.isPending && !allInstanceItems.isPending);
+    if (shouldFetchItems) {
       batchFetchItems(mutator.allInstanceItems, instanceHoldings)
         .then(
-          (items) => this.setState({ items }),
+          (items) => {
+            this.setState({ items });
+            return batchFetchRequests(mutator.allInstanceRequests, items);
+          },
           () => this.setState({ items: [] }),
+        )
+        .then(
+          (requests) => this.setState({ requests }),
+          () => this.setState({ requests: [] }),
         );
     }
+  }
+
+  componentWillUnmount() {
+    this.props.mutator.allInstanceItems.reset();
   }
 
   isMARCSource = () => {
@@ -285,7 +311,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes
     } = this.props;
-    const { items, marcRecord } = this.state;
+    const { items, marcRecord, requests } = this.state;
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -410,7 +436,10 @@ class ViewInstance extends React.Component {
             buttonStyle="dropdownItem"
           >
             <Icon icon="eye-open">
-              <FormattedMessage id="ui-inventory.viewRequests" />
+              <FormattedMessage
+                id="ui-inventory.viewRequests"
+                values={{ count: requests?.length || '?' }}
+              />
             </Icon>
           </Button>
         )}
@@ -523,6 +552,7 @@ ViewInstance.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   mutator: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
+    allInstanceRequests: PropTypes.object.isRequired,
     selectedInstance: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
     }),
@@ -540,9 +570,8 @@ ViewInstance.propTypes = {
   paneWidth: PropTypes.string.isRequired,
   referenceTables: PropTypes.object.isRequired,
   resources: PropTypes.shape({
-    allInstanceHoldings: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    allInstanceItems: PropTypes.object.isRequired,
+    allInstanceHoldings: PropTypes.object.isRequired,
     selectedInstance: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
