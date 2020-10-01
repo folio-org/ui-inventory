@@ -42,7 +42,6 @@ const ViewRequestsRoute = ({ mutator, resources }) => {
         }, loansMapInitial)))
         .catch(() => setLoansMap(new Map()));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   const onCloseViewRequests = useCallback(() => {

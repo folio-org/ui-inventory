@@ -13,7 +13,6 @@ function useFetchItems(mutatorItems, instanceHoldings) {
           () => setItems([])
         );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [instanceHoldings]);
 
   return items;

@@ -132,7 +132,6 @@ class ViewInstance extends React.Component {
           (items) => this.setState({ items }),
           () => this.setState({ items: [] }),
         );
-
     }
   }
 
