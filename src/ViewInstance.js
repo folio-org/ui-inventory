@@ -24,6 +24,7 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
+import { batchFetchItems } from './components/ViewRequests/utils';
 
 import {
   HoldingsListContainer,
@@ -41,12 +42,26 @@ class ViewInstance extends React.Component {
       clear: false,
       throwErrors: false,
     },
-    holdings: {
+    allInstanceHoldings: {
       type: 'okapi',
       records: 'holdingsRecords',
       path: 'holdings-storage/holdings',
-      fetch: false,
+      fetch: true,
       throwErrors: false,
+      params: {
+        query: 'instanceId==:{id}',
+        limit: '1000',
+      },
+      shouldRefresh: () => false,
+    },
+    allInstanceItems: {
+      accumulate: true,
+      fetch: false,
+      path: 'inventory/items',
+      records: 'items',
+      throwErrors: false,
+      type: 'okapi',
+      shouldRefresh: () => false,
     },
     movableItems: {
       type: 'okapi',
@@ -100,7 +115,7 @@ class ViewInstance extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { resources: prevResources } = prevProps;
-    const { resources } = this.props;
+    const { mutator, resources } = this.props;
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsId = instanceRecords[0]?.id;
     const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
@@ -108,6 +123,16 @@ class ViewInstance extends React.Component {
 
     if (isMARCSource && instanceRecordsId !== prevInstanceRecordsId) {
       this.getMARCRecord();
+    }
+
+    const instanceHoldings = resources.allInstanceHoldings.records;
+    if (instanceHoldings?.length && instanceHoldings !== prevResources.allInstanceHoldings.records) {
+      batchFetchItems(mutator.allInstanceItems, instanceHoldings)
+        .then(
+          (items) => this.setState({ items }),
+          () => this.setState({ items: [] }),
+        );
+
     }
   }
 
@@ -136,6 +161,16 @@ class ViewInstance extends React.Component {
 
     history.push({
       pathname: `/inventory/edit/${instanceId}/instance`,
+      search: location.search,
+    });
+  };
+
+  onClickViewRequests = () => {
+    const { history, location, match } = this.props;
+    const instanceId = match.params.id;
+
+    history.push({
+      pathname: `/inventory/view-requests/${instanceId}`,
       search: location.search,
     });
   };
@@ -251,7 +286,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes
     } = this.props;
-    const { marcRecord } = this.state;
+    const { items, marcRecord } = this.state;
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -366,6 +401,20 @@ class ViewInstance extends React.Component {
             </Button>
           )
         }
+        {!items?.length ? null : (
+          <Button
+            id="view-requests"
+            onClick={() => {
+              onToggle();
+              this.onClickViewRequests();
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="eye-open">
+              <FormattedMessage id="ui-inventory.viewRequests" />
+            </Icon>
+          </Button>
+        )}
       </Fragment>
     );
   };
@@ -474,6 +523,7 @@ ViewInstance.propTypes = {
   }),
   history: ReactRouterPropTypes.history.isRequired,
   mutator: PropTypes.shape({
+    allInstanceItems: PropTypes.object.isRequired,
     selectedInstance: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
     }),
@@ -491,6 +541,9 @@ ViewInstance.propTypes = {
   paneWidth: PropTypes.string.isRequired,
   referenceTables: PropTypes.object.isRequired,
   resources: PropTypes.shape({
+    allInstanceHoldings: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
     selectedInstance: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),

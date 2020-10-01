@@ -67,7 +67,7 @@ import {
   wrappingCell,
 } from '../constants';
 
-const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
+export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
   constructor(props) {

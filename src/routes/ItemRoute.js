@@ -16,7 +16,7 @@ import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
 
-const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
+export const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc`;
 
 class ItemRoute extends React.Component {

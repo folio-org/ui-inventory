@@ -11,3 +11,4 @@ export { default as TitleLabel } from './TitleLabel';
 export { default as TitleField } from './TitleField';
 export { default as TitlesView } from './TitlesView';
 export { PaneLoading, ViewLoading } from './Loading';
+export { default as ViewRequests } from './ViewRequests';
