@@ -38,7 +38,7 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
     });
   }, [item.barcode, callout]);
 
-  const highlightableBarcode = <Highlighter searchWords={[queryBarcode]} text={item.barcode} />;
+  const highlightableBarcode = <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} />;
   return (
     <>
       <Link
