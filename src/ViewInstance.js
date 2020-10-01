@@ -24,7 +24,7 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
-import { batchFetchItems } from './components/ViewRequests/utils';
+import { batchFetchItems } from './Instance/ViewRequests/utils';
 
 import {
   HoldingsListContainer,

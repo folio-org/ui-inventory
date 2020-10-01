@@ -7,10 +7,10 @@ import { stripesConnect } from '@folio/stripes/core';
 import {
   batchFetch,
   buildQueryByItemsIds,
-} from '../components/ViewRequests/utils';
-import useFetchItems from '../components/ViewRequests/useFetchItems';
+  useFetchItems,
+  ViewRequests,
+} from '../Instance/ViewRequests';
 import { requestsStatusString } from './ItemRoute';
-import { ViewRequests } from '../components';
 
 const ViewRequestsRoute = ({ mutator, resources }) => {
   const { id: instanceId } = useParams();

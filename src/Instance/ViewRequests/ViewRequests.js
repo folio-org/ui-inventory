@@ -12,7 +12,7 @@ import {
   TextLink,
 } from '@folio/stripes/components';
 
-import ItemBarcode from '../../Instance/ItemsList/ItemBarcode';
+import ItemBarcode from '../ItemsList/ItemBarcode';
 import { requestStatusFiltersString } from '../../views/ItemView';
 import { getDateWithTime } from '../../utils';
 
