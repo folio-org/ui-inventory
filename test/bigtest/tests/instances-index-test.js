@@ -2,6 +2,7 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 
 import { expect } from 'chai';
 
+import HighlighterInteractor from '@folio/stripes-components/lib/Highlighter/tests/interactor';
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import ItemPageInteractor from '../interactors/item-page';
@@ -16,6 +17,7 @@ describe('Instances', () => {
   });
 
   const itemInteractor = new ItemPageInteractor();
+  const highlighter = new HighlighterInteractor();
 
   describe('instance segment', () => {
     beforeEach(async function () {
@@ -63,6 +65,10 @@ describe('Instances', () => {
 
         it('loads the instance details', function () {
           expect(inventory.instance.isVisible).to.equal(true);
+        });
+
+        it('highlights the search term', function () {
+          expect(highlighter.highlightedWordCount).to.equal(1);
         });
       });
     });
