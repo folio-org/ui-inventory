@@ -59,13 +59,7 @@ const CreateItem = ({
     });
   }, [location.search, instanceId]);
 
-  const onSubmit = useCallback(async (item) => {
-    // for (let i = 0; i < 230; i++) {
-    //   await mutator.item.POST({
-    //     ...item,
-    //     barcode: `${i}${item.barcode}`.padStart(6, '0'),
-    //   });
-    // }
+  const onSubmit = useCallback((item) => {
     mutator.item.POST(item)
       .then(() => {
         onCancel();

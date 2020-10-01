@@ -37,13 +37,7 @@ const CreateHolding = ({
     });
   }, [location.search, instanceId]);
 
-  const onSubmit = useCallback(async (newHolding) => {
-    // for (let i = 0; i < 1100; i++) {
-    //   await mutator.holding.POST({
-    //     ...newHolding,
-    //     callNumber: `${i}`.padStart(4, '0')
-    //   });
-    // }
+  const onSubmit = useCallback((newHolding) => {
     mutator.holding.POST(newHolding)
       .then(() => {
         onCancel();

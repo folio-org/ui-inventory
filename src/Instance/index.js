@@ -6,4 +6,3 @@ export * from './InstanceDetails';
 export * from './InstanceMovement';
 export * from './InstanceMarc';
 export * from './InstanceEdit';
-export * from './ViewRequestsButton';
