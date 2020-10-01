@@ -58,6 +58,7 @@
 * Add Holdings sources to settings. Refs UIIN-1229.
 * Add Holdings source to holdings view and edit screens. Refs UIIN-1123.
 * Move dictionary data fetching above router. Fixes UIIN-1265.
+* Show service point an item was sent to. Refs UIIN-934.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)

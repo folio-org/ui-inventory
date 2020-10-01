@@ -457,6 +457,7 @@
   "item.status.checkedOut": "Checked out",
   "item.status.inProcess": "In process",
   "item.status.inTransit": "In transit",
+  "item.status.inTransitTo": "In transit to {servicePoint}",
   "item.status.missing": "Missing",
   "item.status.onOrder": "On order",
   "item.status.paged": "Paged",
