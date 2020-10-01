@@ -575,5 +575,5 @@
     "holdingsSource": "Holdings source",
     "selectHoldingsSource": "Select holdings source",
     "holdingsSourceLabel": "Source",
-    "uniqueName": "Name must be unique"
+    "uniqueName": "Le nom doit être unique"
 }
