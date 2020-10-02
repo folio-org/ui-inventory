@@ -458,7 +458,7 @@
           "inventory-storage.holdings.item.get",
           "inventory-storage.material-types.collection.get",
           "inventory-storage.loan-types.collection.get",
-          "inventory-storage.service-points.get",
+          "inventory-storage.service-points.item.get",
           "inventory-storage.service-points.collection.get",
           "inventory-storage.hrid-settings.item.get",
           "inventory-storage.instance-bulk.ids.get"
