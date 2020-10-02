@@ -7,6 +7,7 @@ import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import ItemPageInteractor from '../interactors/item-page';
 import InstanceCreatePage from '../interactors/instance-create-page';
+import InstanceViewPage from '../interactors/instance-view-page';
 
 describe('Instances', () => {
   setupApplication();
@@ -61,6 +62,7 @@ describe('Instances', () => {
       describe('clicking on the first item', function () {
         beforeEach(async function () {
           await inventory.instances(0).click();
+          await InstanceViewPage.whenLoaded();
         });
 
         it('loads the instance details', function () {
