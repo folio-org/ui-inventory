@@ -438,7 +438,7 @@ class ViewInstance extends React.Component {
             <Icon icon="eye-open">
               <FormattedMessage
                 id="ui-inventory.viewRequests"
-                values={{ count: requests?.length || '?' }}
+                values={{ count: requests?.length ?? '?' }}
               />
             </Icon>
           </Button>
