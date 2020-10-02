@@ -518,7 +518,8 @@
         "permissionName": "ui-inventory.item.markasmissing",
         "displayName": "Inventory: View, create, edit, mark missing items",
         "subPermissions": [
-          "ui-inventory.item.edit"
+          "ui-inventory.item.edit",
+          "inventory.items.item.mark-missing.post"
         ],
         "visible": true
       },
