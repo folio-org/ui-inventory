@@ -140,7 +140,7 @@ class ViewInstance extends React.Component {
     const { allInstanceHoldings, allInstanceItems } = resources;
     const instanceHoldings = resources.allInstanceHoldings.records;
     const shouldFetchItems = instanceHoldings !== prevResources.allInstanceHoldings.records ||
-      (!allInstanceItems.hasLoaded && !allInstanceHoldings.isPending && !allInstanceItems.isPending);
+      (!this.state.items && !allInstanceItems.hasLoaded && !allInstanceHoldings.isPending && !allInstanceItems.isPending);
     if (shouldFetchItems) {
       batchFetchItems(mutator.allInstanceItems, instanceHoldings)
         .then(
