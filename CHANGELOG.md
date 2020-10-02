@@ -58,6 +58,7 @@
 * Implement easy way to copy HRID in the Instance record. Refs UIIN-1000.
 * Add Holdings sources to settings. Refs UIIN-1229.
 * Add Holdings source to holdings view and edit screens. Refs UIIN-1123.
+* Highlight results when searching for item barcode. Refs UIIN-906.
 * Move dictionary data fetching above router. Fixes UIIN-1265.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)

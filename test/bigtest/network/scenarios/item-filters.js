@@ -19,6 +19,7 @@ export default function (server) {
   item.materialType = materialType.attrs;
   item.status.name = 'Missing';
   item.hrid = 'it00000000005';
+  item.barcode = '0100110101000011';
 
   item.save();
 }
