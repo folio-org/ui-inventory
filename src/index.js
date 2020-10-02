@@ -16,6 +16,7 @@ import {
   QuickMarcRoute,
   CreateItemRoute,
   CreateHoldingRoute,
+  ViewRequestsRoute,
 } from './routes';
 import Settings from './settings';
 import { DataProvider } from './providers';
@@ -57,6 +58,10 @@ const InventoryRouting = (props) => {
         <Route
           path={`${path}/edit/:id/instance`}
           component={InstanceEditRoute}
+        />
+        <Route
+          path={`${path}/view-requests/:id`}
+          component={ViewRequestsRoute}
         />
         <Route
           path={path}

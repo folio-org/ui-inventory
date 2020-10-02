@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Viewing Item Requests on Instance Record. Addresses UIIN-977.
 * Altering validation code to check for unique statistical code name.  Addresses UIIN-1276.
 * Modified permissions and built permission checking into fast add button.  Addresses UIIN-1210.
 * Changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
@@ -57,6 +58,7 @@
 * Implement easy way to copy HRID in the Instance record. Refs UIIN-1000.
 * Add Holdings sources to settings. Refs UIIN-1229.
 * Add Holdings source to holdings view and edit screens. Refs UIIN-1123.
+* Highlight results when searching for item barcode. Refs UIIN-906.
 * Move dictionary data fetching above router. Fixes UIIN-1265.
 * Show service point an item was sent to. Refs UIIN-934.
 

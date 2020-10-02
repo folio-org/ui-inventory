@@ -11,17 +11,20 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import queryString from 'query-string';
 
 import {
   CalloutContext,
   AppIcon,
 } from '@folio/stripes/core';
 import {
+  Highlighter,
   IconButton,
 } from '@folio/stripes/components';
 
 const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
   const { search } = location;
+  const queryBarcode = queryString.parse(search)?.query;
 
   const callout = useContext(CalloutContext);
   const onCopyToClipbaord = useCallback(() => {
@@ -35,6 +38,7 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
     });
   }, [item.barcode, callout]);
 
+  const highlightableBarcode = <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} />;
   return (
     <>
       <Link
@@ -43,7 +47,7 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
       >
         <span data-test-items-app-icon>
           <AppIcon app="inventory" iconKey="item" size="small">
-            {item.barcode || <FormattedMessage id="ui-inventory.noBarcode" />}
+            {highlightableBarcode || <FormattedMessage id="ui-inventory.noBarcode" />}
           </AppIcon>
         </span>
       </Link>

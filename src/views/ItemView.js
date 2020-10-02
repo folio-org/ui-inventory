@@ -68,7 +68,7 @@ import {
 } from '../constants';
 import ItemStatus from './ItemStatus';
 
-const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
+export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
   constructor(props) {
