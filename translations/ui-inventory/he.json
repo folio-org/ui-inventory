@@ -575,5 +575,10 @@
     "holdingsSource": "Holdings source",
     "selectHoldingsSource": "Select holdings source",
     "holdingsSourceLabel": "Source",
-    "uniqueName": "Name must be unique"
+    "uniqueName": "Name must be unique",
+    "viewRequests": "View requests ({count})",
+    "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
+    "instanceRecordRequestsSubtitle": "{count} items found",
+    "item.requestQueue": "Request queue",
+    "item.status.inTransitTo": "In transit to {servicePoint}"
 }

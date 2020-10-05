@@ -575,5 +575,10 @@
     "holdingsSource": "馆藏来源",
     "selectHoldingsSource": "选择馆藏来源",
     "holdingsSourceLabel": "来源",
-    "uniqueName": "Name must be unique"
+    "uniqueName": "Name must be unique",
+    "viewRequests": "View requests ({count})",
+    "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
+    "instanceRecordRequestsSubtitle": "{count} items found",
+    "item.requestQueue": "Request queue",
+    "item.status.inTransitTo": "In transit to {servicePoint}"
 }
