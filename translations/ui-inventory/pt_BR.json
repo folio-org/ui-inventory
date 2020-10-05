@@ -575,5 +575,10 @@
     "holdingsSource": "Fonte dos holdings",
     "selectHoldingsSource": "Selecione a fonte de holdings",
     "holdingsSourceLabel": "Fonte",
-    "uniqueName": "O nome deve ser único"
+    "uniqueName": "O nome deve ser único",
+    "viewRequests": "Exibir requisições ({count})",
+    "instanceRecordRequestsTitle": "Requisições de itens - {instanceResourceTitle}, {instancePublicationDate}",
+    "instanceRecordRequestsSubtitle": "{count} itens encontrados",
+    "item.requestQueue": "Fila de requisições",
+    "item.status.inTransitTo": "Em trânsito para {servicePoint}"
 }

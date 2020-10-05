@@ -575,5 +575,10 @@
     "holdingsSource": "مصدر المقتنيات",
     "selectHoldingsSource": "اختر مصدر المقتنيات",
     "holdingsSourceLabel": "المصدر",
-    "uniqueName": "يجب أن يكون الاسم فريدًا"
+    "uniqueName": "يجب أن يكون الاسم فريدًا",
+    "viewRequests": "عرض الطلبات ({count})",
+    "instanceRecordRequestsTitle": "طلبات على المواد - {instanceResourceTitle}، {instancePublicationDate}",
+    "instanceRecordRequestsSubtitle": "تم العثور على {count}  مادة",
+    "item.requestQueue": "صف الطلبات",
+    "item.status.inTransitTo": "في النقل إلى {servicePoint}"
 }
