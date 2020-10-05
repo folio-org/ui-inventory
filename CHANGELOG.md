@@ -62,6 +62,7 @@
 * Move dictionary data fetching above router. Fixes UIIN-1265.
 * Show service point an item was sent to. Refs UIIN-934.
 * Fix permission for mark as missing action. Fixes UIIN-1272.
+* Mark connected preceding and succeeding titles as connected. Fixes UIIN-1283.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
