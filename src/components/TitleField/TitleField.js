@@ -17,9 +17,6 @@ const TitleField = ({ field, index, fields, titleIdKey, isDisabled }) => {
     succeedingInstanceId,
     connected,
   } = instance;
-
-  console.log('instance', instance);
-
   const isConnected = connected || precedingInstanceId || succeedingInstanceId;
 
   const handleSelect = (inst) => {
