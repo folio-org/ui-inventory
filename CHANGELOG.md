@@ -179,6 +179,7 @@
 * Add support for connected and connected succeeding titles. Refs UIIN-962 and UIIN-963.
 * Add `parse` to `discoverySuppress` and `staffSuppress` filters. Refs STCOM-654.
 * Display the value in the 'Nature of content' field instead of the UUID. Fixes UIIN-1022.
+* Closing the 'View MARC' record takes you to a different app instead of the Instance details, sometimes. Fixes UIIN-1289.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)
