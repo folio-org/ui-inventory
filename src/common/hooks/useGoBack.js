@@ -11,7 +11,7 @@ const useGoBack = (defaultPath) => {
   const location = useLocation();
 
   const goBack = useCallback(() => {
-    if (history.action === 'PUSH') {
+    if (location.state?.hasPrevious) {
       history.goBack();
     } else {
       history.push({
@@ -19,7 +19,7 @@ const useGoBack = (defaultPath) => {
         search: location.search,
       });
     }
-  }, [defaultPath, history.action, location.search]);
+  }, [defaultPath, location.state?.hasPrevious, location.search]);
 
   return goBack;
 };

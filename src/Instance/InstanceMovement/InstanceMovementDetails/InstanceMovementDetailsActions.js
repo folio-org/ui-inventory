@@ -30,6 +30,9 @@ const InstanceMovementDetailsActions = ({
     history.push({
       pathname: `/inventory/viewsource/${instance.id}`,
       search: location.search,
+      state: {
+        hasPrevious: true,
+      },
     });
   }, [instance.id, location.search, onToggle]);
 
@@ -39,6 +42,9 @@ const InstanceMovementDetailsActions = ({
     history.push({
       pathname: `/inventory/edit/${instance.id}/instance`,
       search: location.search,
+      state: {
+        hasPrevious: true,
+      },
     });
   }, [instance.id, location.search, onToggle]);
 
