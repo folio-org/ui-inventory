@@ -12,6 +12,9 @@ import {
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
+import saveAs from 'file-saver';
+import moment from 'moment';
+
 import {
   Pluggable,
   AppIcon,
@@ -38,7 +41,6 @@ import {
 import {
   InTransitItemReport,
   InstancesIdReport,
-  exportStringToCSV,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
 import { buildQuery } from '../../routes/buildManifestObject';
@@ -207,11 +209,14 @@ class InstancesView extends React.Component {
   };
 
   generateCQLQueryReport = async () => {
-    const { data } = this.props;
+    if (process.env.NODE_ENV !== 'test') {
+      const { data } = this.props;
 
-    const cqlQuery = buildQuery(data.query, {}, data, { log: noop }, this.props);
+      const query = buildQuery(data.query, {}, data, { log: noop }, this.props);
+      const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
 
-    exportStringToCSV(cqlQuery);
+      saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
+    }
   }
 
   toggleNewFastAddModal = () => {
@@ -251,7 +256,7 @@ class InstancesView extends React.Component {
     };
 
     return (
-      <Fragment>
+      <>
         <IfPermission perm="ui-inventory.instance.create">
           <Button
             buttonStyle="dropdownItem"
@@ -308,7 +313,7 @@ class InstancesView extends React.Component {
           onClickHandler: buildOnClickHandler(noop),
           isDisabled: true,
         })}
-      </Fragment>
+      </>
     );
   };
 
