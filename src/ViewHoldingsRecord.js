@@ -27,7 +27,10 @@ import {
   Modal,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
+import {
+  ViewMetaData,
+  ClipCopy,
+} from '@folio/stripes/smart-components';
 import {
   AppIcon,
   IntlConsumer,
@@ -256,13 +259,6 @@ class ViewHoldingsRecord extends React.Component {
       temporaryLocation,
     } = this.props.resources;
 
-    const {
-      holdingsTypes,
-      holdingsNoteTypes,
-      illPolicies,
-      callNumberTypes,
-    } = this.props.parentResources;
-
     if (!holdingsRecords || !holdingsRecords.hasLoaded) {
       return true;
     }
@@ -271,11 +267,7 @@ class ViewHoldingsRecord extends React.Component {
 
     if (!instances1 || !instances1.hasLoaded
       || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
-      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))
-      || !illPolicies || !illPolicies.hasLoaded
-      || !holdingsTypes || !holdingsTypes.hasLoaded
-      || !callNumberTypes || !callNumberTypes.hasLoaded
-      || !holdingsNoteTypes || !holdingsNoteTypes.hasLoaded) {
+      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))) {
       return true;
     }
 
@@ -306,6 +298,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
+    const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -543,9 +536,15 @@ class ViewHoldingsRecord extends React.Component {
                             smOffset={0}
                             sm={2}
                           >
+                            <KeyValue label={<FormattedMessage id="ui-inventory.holdingsHrid" />}>
+                              {checkIfElementIsEmpty(administrativeData.holdingsHrid)}
+                              {Boolean(administrativeData.holdingsHrid) && <ClipCopy text={administrativeData.holdingsHrid} />}
+                            </KeyValue>
+                          </Col>
+                          <Col sm={2}>
                             <KeyValue
-                              label={<FormattedMessage id="ui-inventory.holdingsHrid" />}
-                              value={checkIfElementIsEmpty(administrativeData.holdingsHrid)}
+                              label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
+                              value={checkIfElementIsEmpty(holdingsSourceName)}
                             />
                           </Col>
                           <Col>
@@ -859,20 +858,6 @@ ViewHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
-  parentResources: PropTypes.shape({
-    holdingsTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    illPolicies: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    callNumberTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    holdingsNoteTypes: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }),
   resources: PropTypes.shape({
     instances1: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),

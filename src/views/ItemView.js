@@ -66,8 +66,9 @@ import {
   requestStatuses,
   wrappingCell,
 } from '../constants';
+import ItemStatus from './ItemStatus';
 
-const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
+export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -338,7 +339,7 @@ class ItemView extends React.Component {
       '-';
     const servicePointName = get(servicePoints, 'records[0].name', '-');
     const instance = instances1.records[0];
-    const item = items.records[0];
+    const item = items.records[0] || {};
     const holdingsRecord = holdingsRecords.records[0];
     const { locationsById } = referenceTables;
     const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
@@ -349,11 +350,9 @@ class ItemView extends React.Component {
 
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
-    let loanLink = item?.status?.name;
     let borrowerLink = '-';
 
     if (openLoan) {
-      loanLink = <Link to={`/users/view/${openLoan.userId}?filters=&layer=loan&loan=${openLoan.id}&query=&sort=`}>{item.status.name}</Link>;
       borrowerLink = <Link to={`/users/view/${openLoan.userId}`}>{openLoan.borrower.barcode}</Link>;
     }
 
@@ -530,7 +529,6 @@ class ItemView extends React.Component {
     const loanAndAvailability = {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
-      itemStatus: loanLink,
       itemStatusDate: getDateWithTime(item?.status?.date),
       requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
       borrower: borrowerLink,
@@ -1034,15 +1032,10 @@ class ItemView extends React.Component {
                         smOffset={0}
                         sm={4}
                       >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.item.availability.itemStatus" />}
-                          value={checkIfElementIsEmpty(loanAndAvailability.itemStatus)}
-                          subValue={
-                            <FormattedMessage
-                              id="ui-inventory.item.status.statusUpdatedLabel"
-                              values={{ statusDate: loanAndAvailability.itemStatusDate }}
-                            />
-                          }
+                        <ItemStatus
+                          itemId={item.id}
+                          status={item.status}
+                          openLoan={openLoan}
                         />
                       </Col>
                       <Col

@@ -17,8 +17,7 @@ const TitleField = ({ field, index, fields, titleIdKey, isDisabled }) => {
     succeedingInstanceId,
     connected,
   } = instance;
-
-  const isConnected = connected || (precedingInstanceId && succeedingInstanceId);
+  const isConnected = connected || precedingInstanceId || succeedingInstanceId;
 
   const handleSelect = (inst) => {
     update(index, {

@@ -2,10 +2,12 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 
 import { expect } from 'chai';
 
+import HighlighterInteractor from '@folio/stripes-components/lib/Highlighter/tests/interactor';
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import ItemPageInteractor from '../interactors/item-page';
 import InstanceCreatePage from '../interactors/instance-create-page';
+import InstanceViewPage from '../interactors/instance-view-page';
 
 describe('Instances', () => {
   setupApplication();
@@ -16,6 +18,7 @@ describe('Instances', () => {
   });
 
   const itemInteractor = new ItemPageInteractor();
+  const highlighter = new HighlighterInteractor();
 
   describe('instance segment', () => {
     beforeEach(async function () {
@@ -59,10 +62,15 @@ describe('Instances', () => {
       describe('clicking on the first item', function () {
         beforeEach(async function () {
           await inventory.instances(0).click();
+          await InstanceViewPage.whenLoaded();
         });
 
         it('loads the instance details', function () {
           expect(inventory.instance.isVisible).to.equal(true);
+        });
+
+        it('highlights the search term', function () {
+          expect(highlighter.highlightedWordCount).to.equal(1);
         });
       });
     });

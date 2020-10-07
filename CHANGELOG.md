@@ -3,6 +3,10 @@
 ## 5.0.0 (IN PROGRESS)
 
 * Display `Instance match key` field if `Instance.matchKey` present in back end UIIN-1293.
+* Viewing Item Requests on Instance Record. Addresses UIIN-977.
+* Altering validation code to check for unique statistical code name.  Addresses UIIN-1276.
+* Modified permissions and built permission checking into fast add button.  Addresses UIIN-1210.
+* Changed value of 'shouldRefresh' in statistical code settings.  Addresses UIIN-1268
 * Reverting problematic code refactor in fix of UIIN-1259.
 * Fixed validator fucntion for statitical codes settings.  Addresses UIIN-1259.
 * changed order of items on holdings record action menu.  Addresses UIIN-1093.
@@ -51,6 +55,16 @@
 * Create permission for Settings -> Inventory -> Fast add. Refs UIIN-1257.
 * Implement easy way to copy HRID in the Item record. Refs UIIN-1002.
 * Implement easy way to copy Barcode in the Item record. Refs UIIN-1250.
+* Implement easy way to copy HRID in the Holdings record. Refs UIIN-1001.
+* Implement easy way to copy HRID in the Instance record. Refs UIIN-1000.
+* Add Holdings sources to settings. Refs UIIN-1229.
+* Add Holdings source to holdings view and edit screens. Refs UIIN-1123.
+* Highlight results when searching for item barcode. Refs UIIN-906.
+* Move dictionary data fetching above router. Fixes UIIN-1265.
+* Show service point an item was sent to. Refs UIIN-934.
+* Fix permission for mark as missing action. Fixes UIIN-1272.
+* Mark connected preceding and succeeding titles as connected. Fixes UIIN-1283.
+* Implement instances search query saving to cql file instead of csv. Refs UIDEXP-155.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)
@@ -167,6 +181,7 @@
 * Add support for connected and connected succeeding titles. Refs UIIN-962 and UIIN-963.
 * Add `parse` to `discoverySuppress` and `staffSuppress` filters. Refs STCOM-654.
 * Display the value in the 'Nature of content' field instead of the UUID. Fixes UIIN-1022.
+* Closing the 'View MARC' record takes you to a different app instead of the Instance details, sometimes. Fixes UIIN-1289.
 
 ## [1.13.1](https://github.com/folio-org/ui-inventory/tree/v1.13.1) (2019-12-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v1.13.0...v1.13.1)

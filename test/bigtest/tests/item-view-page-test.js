@@ -280,6 +280,7 @@ describe('ItemViewPage', () => {
     });
   });
 
+
   describe('User does not have permissions', () => {
     setupApplication({
       hasAllPerms: false,
@@ -307,23 +308,23 @@ describe('ItemViewPage', () => {
         await ItemViewPage.whenLoaded();
       });
 
-      it('should show a dropdown menu in the pane header', () => {
+      it('should not show a dropdown menu in the pane header', () => {
         expect(ItemViewPage.hasHeaderDropdown).to.be.undefined;
       });
 
-      it('should show a duplicate menu item', () => {
+      it('should not show a duplicate menu item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasDuplicate).to.be.false;
       });
 
-      it('should show a mark as missing item', () => {
+      it('should not show a mark as missing item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.false;
       });
 
-      it('should show a delete menu item', () => {
+      it('should not show a delete menu item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.false;
       });
 
-      it('should show a new request item', () => {
+      it('should not show a new request item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.false;
       });
 

@@ -16,8 +16,10 @@ import {
   QuickMarcRoute,
   CreateItemRoute,
   CreateHoldingRoute,
+  ViewRequestsRoute,
 } from './routes';
 import Settings from './settings';
+import { DataProvider } from './providers';
 
 const InventoryRouting = (props) => {
   const { showSettings, match: { path } } = props;
@@ -27,40 +29,46 @@ const InventoryRouting = (props) => {
   }
 
   return (
-    <Switch>
-      <Route
-        path={`${path}/create/:id/holding`}
-        component={CreateHoldingRoute}
-      />
-      <Route
-        path={`${path}/create/:id/:holdingId/item`}
-        component={CreateItemRoute}
-      />
-      <Route
-        path={`${path}/move/:idFrom/:idTo/instance`}
-        component={InstanceMovementRoute}
-      />
-      <Route
-        path={`${path}/view/:id/:holdingsrecordid/:itemid`}
-        component={ItemRoute}
-      />
-      <Route
-        path={`${path}/quick-marc`}
-        component={QuickMarcRoute}
-      />
-      <Route
-        path={`${path}/viewsource/:id`}
-        component={InstanceMarcRoute}
-      />
-      <Route
-        path={`${path}/edit/:id/instance`}
-        component={InstanceEditRoute}
-      />
-      <Route
-        path={path}
-        component={InstancesRoute}
-      />
-    </Switch>
+    <DataProvider>
+      <Switch>
+        <Route
+          path={`${path}/create/:id/holding`}
+          component={CreateHoldingRoute}
+        />
+        <Route
+          path={`${path}/create/:id/:holdingId/item`}
+          component={CreateItemRoute}
+        />
+        <Route
+          path={`${path}/move/:idFrom/:idTo/instance`}
+          component={InstanceMovementRoute}
+        />
+        <Route
+          path={`${path}/view/:id/:holdingsrecordid/:itemid`}
+          component={ItemRoute}
+        />
+        <Route
+          path={`${path}/quick-marc`}
+          component={QuickMarcRoute}
+        />
+        <Route
+          path={`${path}/viewsource/:id`}
+          component={InstanceMarcRoute}
+        />
+        <Route
+          path={`${path}/edit/:id/instance`}
+          component={InstanceEditRoute}
+        />
+        <Route
+          path={`${path}/view-requests/:id`}
+          component={ViewRequestsRoute}
+        />
+        <Route
+          path={path}
+          component={InstancesRoute}
+        />
+      </Switch>
+    </DataProvider>
   );
 };
 
