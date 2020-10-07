@@ -75,9 +75,6 @@
       "location-units": "2.0",
       "circulation": "9.0"
     },
-    "optionalOkapiInterfaces": {
-      "shared-inventory-upsert-matchkey": "1.0"
-    },
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",

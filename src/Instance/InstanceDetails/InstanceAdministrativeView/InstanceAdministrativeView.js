@@ -4,9 +4,6 @@ import React, {
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
-  IfInterface,
-} from '@folio/stripes-core';
-import {
   Accordion,
   Row,
   Col,
@@ -97,16 +94,16 @@ const InstanceAdministrativeView = ({
           />
         </Col>
       </Row>
-      <IfInterface name="shared-inventory-upsert-matchkey">
+      {(instance.matchKey) &&
         <Row>
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-inventory.instanceMatchKey" />}
-              value={checkIfElementIsEmpty(instance.matchKey)}
+              value={instance.matchKey}
             />
           </Col>
         </Row>
-      </IfInterface>
+      }
       <Row>
         <Col xs={3}>
           <KeyValue
