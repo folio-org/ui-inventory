@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Display `Instance match key` field if `Instance.matchKey` present in back end UIIN-1293.
 * Reverting problematic code refactor in fix of UIIN-1259.
 * Fixed validator fucntion for statitical codes settings.  Addresses UIIN-1259.
 * changed order of items on holdings record action menu.  Addresses UIIN-1093.
