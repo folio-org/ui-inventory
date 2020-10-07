@@ -127,6 +127,7 @@ const Holding = ({
             values={{
               location: labelLocation,
               callNumber: callNumberLabel(holding),
+              copyNumber: holding.copyNumber,
             }}
           />
         )}
