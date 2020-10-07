@@ -580,5 +580,6 @@
     "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} articles trouvés",
     "item.requestQueue": "File d'attente",
-    "item.status.inTransitTo": "En transit vers {servicePoint}"
+    "item.status.inTransitTo": "En transit vers {servicePoint}",
+    "instanceMatchKey": "Instance match key"
 }

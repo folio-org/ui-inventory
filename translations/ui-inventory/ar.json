@@ -580,5 +580,6 @@
     "instanceRecordRequestsTitle": "طلبات على المواد - {instanceResourceTitle}، {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "تم العثور على {count}  مادة",
     "item.requestQueue": "صف الطلبات",
-    "item.status.inTransitTo": "في النقل إلى {servicePoint}"
+    "item.status.inTransitTo": "في النقل إلى {servicePoint}",
+    "instanceMatchKey": "Instance match key"
 }

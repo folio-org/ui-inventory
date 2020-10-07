@@ -77,7 +77,7 @@
     "loans": "貸出",
     "materialTypes": "資料種別",
     "materialType": "資料種別",
-    "holdingsHeader": "Holdings: {location} > {callNumber}",
+    "holdingsHeader": "Holdings: {location} > {callNumber} {copyNumber}",
     "viewHoldings": "View holdings",
     "holdingsRecord": "Holdings record",
     "viewHoldingsRecord": "View holdings record",
@@ -580,5 +580,6 @@
     "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} items found",
     "item.requestQueue": "Request queue",
-    "item.status.inTransitTo": "In transit to {servicePoint}"
+    "item.status.inTransitTo": "In transit to {servicePoint}",
+    "instanceMatchKey": "Instance match key"
 }

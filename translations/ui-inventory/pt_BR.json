@@ -580,5 +580,6 @@
     "instanceRecordRequestsTitle": "Requisições de itens - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} itens encontrados",
     "item.requestQueue": "Fila de requisições",
-    "item.status.inTransitTo": "Em trânsito para {servicePoint}"
+    "item.status.inTransitTo": "Em trânsito para {servicePoint}",
+    "instanceMatchKey": "Instance match key"
 }
