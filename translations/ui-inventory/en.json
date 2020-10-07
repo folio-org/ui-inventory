@@ -296,7 +296,7 @@
   "alternativeTitleType": "Alternative title type",
   "materialType": "Material type",
   "materialTypeRequired": "Material type *",
-  "holdingsHeader": "Holdings: {location} > {callNumber}",
+  "holdingsHeader": "Holdings: {location} > {callNumber} {copyNumber}",
   "holdingsDetails": "Holdings details",
   "numberOfItems": "Number of items",
   "acquisitions": "Acquisitions",
