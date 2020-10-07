@@ -5,6 +5,7 @@ import {
 const sorters = {
   'barcode': ({ barcode }) => barcode,
   'status': ({ status }) => status.name.toLowerCase(),
+  'copyNumber': ({ copyNumber }) => copyNumber?.toLowerCase(),
   'materialType': ({ materialType }) => materialType.name.toLowerCase(),
   'loanType': (item) => item.temporaryLoanType?.name?.toLowerCase() || item.permanentLoanType?.name?.toLowerCase(),
   'effectiveLocation': ({ effectiveLocation }) => effectiveLocation.name.toLowerCase(),

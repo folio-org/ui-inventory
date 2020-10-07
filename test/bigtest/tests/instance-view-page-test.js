@@ -14,24 +14,26 @@ import translation from '../../../translations/ui-inventory/en';
 const headersMap = {
   BARCODE: InstanceViewPage.itemsList.headers(0),
   STATUS: InstanceViewPage.itemsList.headers(1),
-  MATERIAL_TYPE: InstanceViewPage.itemsList.headers(2),
-  LOAN_TYPE: InstanceViewPage.itemsList.headers(3),
-  EFFECTIVE_LOCATION: InstanceViewPage.itemsList.headers(4),
-  ENUMERATION: InstanceViewPage.itemsList.headers(5),
-  CHRONOLOGY: InstanceViewPage.itemsList.headers(6),
-  VOLUME: InstanceViewPage.itemsList.headers(7),
-  YEAR: InstanceViewPage.itemsList.headers(8),
+  COPY_NUMBER: InstanceViewPage.itemsList.headers(2),
+  MATERIAL_TYPE: InstanceViewPage.itemsList.headers(3),
+  LOAN_TYPE: InstanceViewPage.itemsList.headers(4),
+  EFFECTIVE_LOCATION: InstanceViewPage.itemsList.headers(5),
+  ENUMERATION: InstanceViewPage.itemsList.headers(6),
+  CHRONOLOGY: InstanceViewPage.itemsList.headers(7),
+  VOLUME: InstanceViewPage.itemsList.headers(8),
+  YEAR: InstanceViewPage.itemsList.headers(9),
 };
 const headersIndex = {
   BARCODE: 0,
   STATUS: 1,
-  MATERIAL_TYPE: 2,
-  LOAN_TYPE: 3,
-  EFFECTIVE_LOCATION: 4,
-  ENUMERATION: 5,
-  CHRONOLOGY: 6,
-  VOLUME: 7,
-  YEAR: 8,
+  COPY_NUMBER: 2,
+  MATERIAL_TYPE: 3,
+  LOAN_TYPE: 4,
+  EFFECTIVE_LOCATION: 5,
+  ENUMERATION: 6,
+  CHRONOLOGY: 7,
+  VOLUME: 8,
+  YEAR: 9,
 };
 
 describe('InstanceViewPage', () => {
@@ -187,7 +189,7 @@ describe('InstanceViewPage', () => {
       });
 
       it('should display additional columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(11);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(12);
       });
 
       describe('select all action', () => {
@@ -269,12 +271,13 @@ describe('InstanceViewPage', () => {
 
     describe('items per holdings', () => {
       it('has correct amount of columns', () => {
-        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(9);
+        expect(InstanceViewPage.itemsList.columnCount).to.be.equal(10);
       });
 
       it('renders correct header captions', () => {
         expect(headersMap.BARCODE.text).to.be.equal(translation['item.barcode']);
         expect(headersMap.STATUS.text).to.be.equal(translation.status);
+        expect(headersMap.COPY_NUMBER.text).to.be.equal(translation.copyNumber);
         expect(headersMap.MATERIAL_TYPE.text).to.be.equal(translation.materialType);
         expect(headersMap.LOAN_TYPE.text).to.be.equal(translation.loanType);
         expect(headersMap.EFFECTIVE_LOCATION.text).to.be.equal(translation.effectiveLocationShort);
