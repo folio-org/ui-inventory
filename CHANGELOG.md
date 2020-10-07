@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Display `Instance match key` field if `Instance.matchKey` present in back end UIIN-1293.
 * Viewing Item Requests on Instance Record. Addresses UIIN-977.
 * Altering validation code to check for unique statistical code name.  Addresses UIIN-1276.
 * Modified permissions and built permission checking into fast add button.  Addresses UIIN-1210.

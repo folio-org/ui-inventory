@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-
 import {
   Accordion,
   Row,
@@ -104,7 +103,16 @@ const InstanceAdministrativeView = ({
           />
         </Col>
       </Row>
-
+      {(instance.matchKey) &&
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.instanceMatchKey" />}
+              value={instance.matchKey}
+            />
+          </Col>
+        </Row>
+      }
       <Row>
         <Col xs={3}>
           <KeyValue
