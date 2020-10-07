@@ -67,6 +67,7 @@ const getFormatter = (
     ) || noValue;
   },
   'status': x => x.status?.name || noValue,
+  'copyNumber': ({ copyNumber }) => copyNumber || noValue,
   'materialType': x => x.materialType?.name || noValue,
   'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || noValue,
   'effectiveLocation': x => x.effectiveLocation?.name || noValue,
@@ -89,6 +90,7 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, select
   ),
   'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
   'status': intl.formatMessage({ id: 'ui-inventory.status' }),
+  'copyNumber': intl.formatMessage({ id: 'ui-inventory.copyNumber' }),
   'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
   'loanType': intl.formatMessage({ id: 'ui-inventory.loanType' }),
   'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
@@ -100,6 +102,7 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, select
 const visibleColumns = [
   'barcode',
   'status',
+  'copyNumber',
   'materialType',
   'loanType',
   'effectiveLocation',
