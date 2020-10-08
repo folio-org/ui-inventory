@@ -77,7 +77,7 @@
     "loans": "Empréstimos",
     "materialTypes": "Tipos de materiais",
     "materialType": "Tipo de material",
-    "holdingsHeader": "Holdings: {location} > {callNumber}",
+    "holdingsHeader": "Holdings: {location} > {callNumber} {copyNumber}",
     "viewHoldings": "Visualizar holdings",
     "holdingsRecord": "Registro de holdings",
     "viewHoldingsRecord": "Visualizar registro de holdings",
@@ -581,5 +581,5 @@
     "instanceRecordRequestsSubtitle": "{count} itens encontrados",
     "item.requestQueue": "Fila de requisições",
     "item.status.inTransitTo": "Em trânsito para {servicePoint}",
-    "instanceMatchKey": "Instance match key"
+    "instanceMatchKey": "Chave de correspondência de instância"
 }
