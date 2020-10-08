@@ -16,23 +16,14 @@ describe('ItemStatusFilter', () => {
   beforeEach(function () {
     this.visit('/inventory?segment=items');
   });
-  describe('choose item status', () => {
+
+  describe('open item status filter', () => {
     beforeEach(async () => {
-      await itemsRoute.itemStatusFilterClickMissing();
+      await itemsRoute.itemStatusFilter.open();
     });
 
-    it('finds instances by chosen item status', () => {
-      expect(itemsRoute.rows().length).to.equal(1);
-    });
-
-    describe('clear item status filter', () => {
-      beforeEach(async () => {
-        await itemsRoute.itemStatusFilter.clear();
-      });
-
-      it('clears instances', () => {
-        expect(itemsRoute.rows().length).to.equal(0);
-      });
+    it('displays item status multiselect', () => {
+      expect(itemsRoute.itemStatusFilter.multiSelect.isPresent).to.equal(true);
     });
   });
 });
