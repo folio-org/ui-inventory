@@ -77,7 +77,7 @@
     "loans": "إعارات",
     "materialTypes": "أنواع المواد",
     "materialType": "نوع المادة",
-    "holdingsHeader": "المقتنيات: {location} > {callNumber}",
+    "holdingsHeader": "المقتنيات: {location} > {callNumber} {copyNumber}",
     "viewHoldings": "عرض المقتنيات",
     "holdingsRecord": "تسجيلة المقتنيات",
     "viewHoldingsRecord": "عرض تسجيلة المقتنيات",
@@ -581,5 +581,5 @@
     "instanceRecordRequestsSubtitle": "تم العثور على {count}  مادة",
     "item.requestQueue": "صف الطلبات",
     "item.status.inTransitTo": "في النقل إلى {servicePoint}",
-    "instanceMatchKey": "Instance match key"
+    "instanceMatchKey": "مفتاح تطابق الوعاء"
 }
