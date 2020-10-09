@@ -83,7 +83,7 @@ export default class ItemFilters extends React.Component {
           displayClearButton={!isEmpty(itemStatus)}
           onClearFilter={() => onClear('itemStatus')}
         >
-          <CheckboxFilter
+          <MultiSelectionFilter
             data-test-filter-item-status
             name="itemStatus"
             dataOptions={itemStatusesOptions}

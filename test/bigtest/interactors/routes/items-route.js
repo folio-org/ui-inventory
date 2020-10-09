@@ -8,7 +8,6 @@ import {
 
 import {
   MultiSelectFilterInteractor,
-  CheckboxFilterInteractor,
   SearchFieldFilterInteractor,
 } from '../filters';
 
@@ -18,7 +17,7 @@ export default @interactor class ItemsRouteInteractor {
   materialTypeFilter = scoped('#materialTypeAccordion', MultiSelectFilterInteractor);
   effectiveLocationFilter = scoped('#itemEffectiveLocationAccordion', MultiSelectFilterInteractor);
   permLocationFilter = scoped('#holdingsPermanentLocationAccordion', MultiSelectFilterInteractor);
-  itemStatusFilter = scoped('#itemFilterAccordion', CheckboxFilterInteractor);
+  itemStatusFilter = scoped('#itemFilterAccordion', MultiSelectFilterInteractor);
 
   itemStatusFilterClickMissing = clickable('#itemFilterAccordion input[name="Missing"]');
 
