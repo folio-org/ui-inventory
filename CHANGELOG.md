@@ -68,6 +68,7 @@
 * Instance record (detailed view). Add copy number to item list. Refs UIIN-1251.
 * Instance record (detailed view). Add holdings copy number to holdings accordion. Refs UIIN-1254.
 * Use `<MultiSelectionFilter>` for item status filter. Refs UIIN-1224.
+* Correctly filter languages pursuant to STCOM-492. Refs UIIN-1287.
 
 ## [4.0.1](https://github.com/folio-org/ui-inventory/tree/v4.0.1) (2020-07-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.0...v4.0.1)

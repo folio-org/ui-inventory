@@ -19,6 +19,7 @@ export const instanceFilterConfig = [
     name: 'language',
     cql: 'languages',
     values: [],
+    operator: '=',
   },
   {
     name: 'format',
