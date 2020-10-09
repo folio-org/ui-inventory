@@ -39,6 +39,7 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
   }, [item.barcode, callout]);
 
   const highlightableBarcode = <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} />;
+
   return (
     <>
       <Link
@@ -47,7 +48,7 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
       >
         <span data-test-items-app-icon>
           <AppIcon app="inventory" iconKey="item" size="small">
-            {highlightableBarcode || <FormattedMessage id="ui-inventory.noBarcode" />}
+            {item.barcode ? highlightableBarcode : <FormattedMessage id="ui-inventory.noBarcode" />}
           </AppIcon>
         </span>
       </Link>
