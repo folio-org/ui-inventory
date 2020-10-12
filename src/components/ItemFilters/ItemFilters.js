@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   Accordion,
   FilterAccordionHeader,
@@ -13,12 +13,13 @@ import {
 
 import { filterItemsBy } from '../../utils';
 
-export default class ItemFilters extends React.Component {
+class ItemFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.objectOf(PropTypes.array),
     onChange: PropTypes.func.isRequired,
     onClear: PropTypes.func.isRequired,
     data: PropTypes.object,
+    intl: PropTypes.object,
   };
 
   static defaultProps = {
@@ -44,6 +45,7 @@ export default class ItemFilters extends React.Component {
         itemStatuses,
         locations,
       },
+      intl,
       onChange,
       onClear,
     } = this.props;
@@ -54,9 +56,9 @@ export default class ItemFilters extends React.Component {
     }));
 
     const itemStatusesOptions = itemStatuses.map(({ label, value }) => ({
-      label: <FormattedMessage id={`${label}`} />,
+      label: intl.formatMessage({ id: label }),
       value,
-    }));
+    })).sort((a, b) => a.label.localeCompare(b.label));
 
     const locationOptions = locations.map(({ name, id }) => ({
       label: name,
@@ -163,3 +165,5 @@ export default class ItemFilters extends React.Component {
     );
   }
 }
+
+export default injectIntl(ItemFilters);
