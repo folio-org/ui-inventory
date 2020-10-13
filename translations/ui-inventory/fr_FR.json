@@ -77,7 +77,7 @@
     "loans": "Prêts",
     "materialTypes": "Types de matériel",
     "materialType": "Type de ressource",
-    "holdingsHeader": "Collections : {location} > {callNumber}",
+    "holdingsHeader": "Collections: {location} > {callNumber} {copyNumber}",
     "viewHoldings": "Voir les collections",
     "holdingsRecord": "Enregistrement",
     "viewHoldingsRecord": "Afficher les enregistrements",
@@ -581,5 +581,5 @@
     "instanceRecordRequestsSubtitle": "{count} articles trouvés",
     "item.requestQueue": "File d'attente",
     "item.status.inTransitTo": "En transit vers {servicePoint}",
-    "instanceMatchKey": "Instance match key"
+    "instanceMatchKey": "Clé de correspondance d'instance"
 }
