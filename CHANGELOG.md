@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 5.0.0 (IN PROGRESS)
+## [5.0.0](https://github.com/folio-org/ui-inventory/tree/v5.0.0) (2020-10-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v4.0.1...v5.0.0)
 
 * Display `Instance match key` field if `Instance.matchKey` present in back end UIIN-1293.
 * Viewing Item Requests on Instance Record. Addresses UIIN-977.
