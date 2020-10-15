@@ -705,8 +705,8 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^1.0.0",
-    "@folio/plugin-find-instance": "^3.0.0",
-    "@folio/quick-marc": "^1.0.0"
+    "@folio/plugin-find-instance": "^4.0.0",
+    "@folio/quick-marc": "^2.0.0"
 
   },
   "resolutions": {
