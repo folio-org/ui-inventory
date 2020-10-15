@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 5.0.1 IN PROGRESS
+## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
 
 * Update plugins to `stripes v5`-compatible versions. Refs UIIN-1301.
 
