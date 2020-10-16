@@ -567,7 +567,7 @@
     "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
     "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}",
     "save": "Speichern",
-    "defaultDiscoverySuppress": "Standardmäßig im Discovery-System unterdrücken",
+    "defaultDiscoverySuppress": "Standardmäßig Nachweis unterdrücken",
     "defaultInstanceStatus": "Standard-Instanzstatus",
     "fastAdd": "Fast add",
     "uniqueCode": "Code muss eindeutig sein",
