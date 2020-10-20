@@ -103,13 +103,13 @@ const visibleColumns = [
   'barcode',
   'status',
   'copyNumber',
-  'materialType',
   'loanType',
   'effectiveLocation',
   'enumeration',
   'chronology',
   'volume',
   'yearCaption',
+  'materialType',
 ];
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
