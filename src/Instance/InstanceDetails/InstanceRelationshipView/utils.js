@@ -37,7 +37,7 @@ export const formatChildInstances = (instance, search) => {
 
   return instance.childInstances.map(childInstance => (
     <div key={childInstance.subInstanceId}>
-      <Link to={`/inventory/view/${childInstance.subInstanceId}/${search}`}>
+      <Link to={`/inventory/view/${childInstance.subInstanceId}${search}`}>
         {childInstance.subInstanceId}
       </Link>
     </div>
@@ -53,7 +53,7 @@ export const formatParentInstance = (instance, search) => {
 
   return (
     <div>
-      <Link to={`/inventory/view/${parentInstance.superInstanceId}/${search}`}>
+      <Link to={`/inventory/view/${parentInstance.superInstanceId}${search}`}>
         {`${parentInstance.superInstanceId} (M)`}
       </Link>
     </div>
