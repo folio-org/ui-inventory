@@ -77,7 +77,7 @@
     "loans": "借阅",
     "materialTypes": "资料类型",
     "materialType": "资料类型",
-    "holdingsHeader": "馆藏： {location} > {callNumber}",
+    "holdingsHeader": "馆藏：{location} > {callNumber} {copyNumber}",
     "viewHoldings": "查看馆藏",
     "holdingsRecord": "馆藏记录",
     "viewHoldingsRecord": "查看馆藏记录",
@@ -575,11 +575,11 @@
     "holdingsSource": "馆藏来源",
     "selectHoldingsSource": "选择馆藏来源",
     "holdingsSourceLabel": "来源",
-    "uniqueName": "Name must be unique",
-    "viewRequests": "View requests ({count})",
-    "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
-    "instanceRecordRequestsSubtitle": "{count} items found",
-    "item.requestQueue": "Request queue",
-    "item.status.inTransitTo": "In transit to {servicePoint}",
-    "instanceMatchKey": "Instance match key"
+    "uniqueName": "名称必须唯一",
+    "viewRequests": "查看请求（ {count} ）",
+    "instanceRecordRequestsTitle": "对单件的请求- {instanceResourceTitle} ， {instancePublicationDate}",
+    "instanceRecordRequestsSubtitle": "找到{count}单件",
+    "item.requestQueue": "请求队列",
+    "item.status.inTransitTo": "正在运送到{servicePoint}",
+    "instanceMatchKey": "实例匹配键"
 }
