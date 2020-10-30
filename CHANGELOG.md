@@ -5,6 +5,7 @@
 * Move 'Material type' to far end of item table. Refs UIIN-1003.
 * Remove `onChangeIndex` prop passed to `SearchAndSort`. Fixes UIIN-1299.
 * Remove extraneous trailing slash. Refs UIIN-1316.
+* Show the number of open requests when the item status changes. Refs UIIN-1294.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

@@ -3,13 +3,24 @@ import { expect } from 'chai';
 import faker from 'faker';
 
 import setupApplication from '../helpers/setup-application';
+import DummyComponent from '../helpers/DummyComponent';
 import ItemViewPage from '../interactors/item-view-page';
 import ItemEditPage from '../interactors/item-edit-page';
 import ItemCreatePage from '../interactors/item-create-page';
 
 describe('ItemViewPage', () => {
   describe('User has permissions', () => {
-    setupApplication();
+    const requestsPath = '/requests';
+
+    setupApplication({
+      modules: [{
+        type: 'app',
+        name: '@folio/ui-requests',
+        displayName: 'Requests',
+        route: requestsPath,
+        module: DummyComponent,
+      }],
+    });
 
     describe('visiting the item view page', () => {
       let item;
@@ -137,6 +148,21 @@ describe('ItemViewPage', () => {
             expect(ItemViewPage.hasMarkAsMissingModal).to.exist;
           });
 
+          it('should display open requests number', () => {
+            expect(ItemViewPage.openRequestsNumber.text).to.equal('1');
+          });
+
+          describe('clicking on the open requests number link', () => {
+            beforeEach(async () => {
+              await ItemViewPage.openRequestsNumber.click();
+            });
+
+            it('should redirect to "requests"', function () {
+              expect(this.location.pathname).to.equal(requestsPath);
+              expect(this.location.search).includes(item.id);
+            });
+          });
+
           describe('clicking on "Confirm" button', () => {
             beforeEach(async () => {
               await ItemViewPage.confirmButton.click();
@@ -159,6 +185,21 @@ describe('ItemViewPage', () => {
 
           it('should open a withdrawn confirmation modal', () => {
             expect(ItemViewPage.hasMarkAsWithdrawnModal).to.exist;
+          });
+
+          it('should display open requests number', () => {
+            expect(ItemViewPage.openRequestsNumber.text).to.equal('1');
+          });
+
+          describe('clicking on the open requests number link', () => {
+            beforeEach(async () => {
+              await ItemViewPage.openRequestsNumber.click();
+            });
+
+            it('should redirect to "requests"', function () {
+              expect(this.location.pathname).to.equal(requestsPath);
+              expect(this.location.search).includes(item.id);
+            });
           });
 
           describe('clicking on "Confirm" button', () => {

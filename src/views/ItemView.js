@@ -1,6 +1,5 @@
 import {
   get,
-  upperFirst,
   cloneDeep,
   omit,
   map,
@@ -44,6 +43,7 @@ import {
   IntlConsumer,
 } from '@folio/stripes/core';
 
+import ModalContent from '../components/ModalContent';
 import {
   craftLayerUrl,
   callNumberLabel,
@@ -328,7 +328,16 @@ class ItemView extends React.Component {
     const {
       cannotDeleteItemModalMessageId,
       cannotDeleteItemModal,
+      itemMissingModal,
+      itemWithdrawnModal,
+      copiedItem,
+      confirmDeleteItemModal,
     } = this.state;
+
+    const {
+      MISSING,
+      WITHDRAWN,
+    } = itemStatusesMap;
 
     const staffMember = get(staffMembers, 'records[0]');
     const openLoan = get(openLoans, 'records[0]');
@@ -448,26 +457,6 @@ class ItemView extends React.Component {
           );
         });
     };
-
-    const itemValues = {
-      title: item.title,
-      barcode: item.barcode,
-      materialType: upperFirst(item?.materialType?.name ?? ''),
-    };
-
-    const missingModalMessage = (
-      <SafeHTMLMessage
-        id="ui-inventory.missingModal.message"
-        values={itemValues}
-      />
-    );
-
-    const withdrawnModalMessage = (
-      <SafeHTMLMessage
-        id="ui-inventory.withdrawnModal.message"
-        values={itemValues}
-      />
-    );
 
     const confirmDeleteItemModalMessage = (
       <SafeHTMLMessage
@@ -632,28 +621,44 @@ class ItemView extends React.Component {
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
             >
-              <ConfirmationModal
+              <Modal
                 data-test-missingConfirmation-modal
-                open={this.state.itemMissingModal}
-                heading={<FormattedMessage id="ui-inventory.missingModal.heading" />}
-                message={missingModalMessage}
-                onConfirm={this.markItemAsMissing}
-                onCancel={this.hideMissingModal}
-                confirmLabel={<FormattedMessage id="ui-inventory.missingModal.confirm" />}
-              />
-              <ConfirmationModal
+                open={itemMissingModal}
+                label={<FormattedMessage id="ui-inventory.missingModal.heading" />}
+                dismissible
+                size="small"
+                onClose={this.hideMissingModal}
+              >
+                <ModalContent
+                  item={item}
+                  itemRequestCount={requestRecords.length}
+                  status={MISSING}
+                  requestsUrl={requestsUrl}
+                  onConfirm={this.markItemAsMissing}
+                  onCancel={this.hideMissingModal}
+                />
+              </Modal>
+              <Modal
                 data-test-withdrawn-confirmation-modal
-                open={this.state.itemWithdrawnModal}
-                heading={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
-                message={withdrawnModalMessage}
-                onConfirm={this.markItemAsWithdrawn}
-                onCancel={this.hideWithdrawnModal}
-                confirmLabel={<FormattedMessage id="ui-inventory.withdrawnModal.confirm" />}
-              />
+                open={itemWithdrawnModal}
+                label={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
+                dismissible
+                size="small"
+                onClose={this.hideWithdrawnModal}
+              >
+                <ModalContent
+                  item={item}
+                  itemRequestCount={requestRecords.length}
+                  status={WITHDRAWN}
+                  requestsUrl={requestsUrl}
+                  onConfirm={this.markItemAsWithdrawn}
+                  onCancel={this.hideWithdrawnModal}
+                />
+              </Modal>
               <ConfirmationModal
                 id="confirmDeleteItemModal"
                 data-test-confirm-delete-item-modal
-                open={this.state.confirmDeleteItemModal}
+                open={confirmDeleteItemModal}
                 heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
                 message={confirmDeleteItemModalMessage}
                 onConfirm={() => { this.deleteItem(item); }}
@@ -1231,7 +1236,7 @@ class ItemView extends React.Component {
               <ItemForm
                 form={`itemform_${holdingsRecord.id}`}
                 onSubmit={(record) => { this.copyItem(record); }}
-                initialValues={this.state.copiedItem}
+                initialValues={copiedItem}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
                 instance={instance}
