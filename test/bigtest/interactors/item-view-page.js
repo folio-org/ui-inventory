@@ -1,5 +1,6 @@
 import {
   interactor,
+  Interactor,
   clickable,
   text,
   isPresent,
@@ -55,7 +56,8 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   collapseAllButton = new ButtonInteractor('[data-tast-expand-button]');
   loanAccordion = new AccordionSection('[data-test-item-view-page] #acc06');
   circulationHistoryAccordion = new AccordionSection('[data-test-item-view-page] #acc09');
-  confirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
+  confirmButton = new ButtonInteractor('[data-test-confirm-modal-confirm-button]');
+  openRequestsNumber = new Interactor('[class*=modalContent---] a');
   clickDismiss = clickable('[data-test-pane-header-dismiss-button]');
 
   whenLoaded() {
