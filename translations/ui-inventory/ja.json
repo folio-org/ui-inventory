@@ -434,7 +434,7 @@
     "reports.inTransitItem.tags": "タグ",
     "reports.inTransitItem.emptyReport.label": "エクスポートするものはありません",
     "reports.inTransitItem.emptyReport.message": "There are no items with the status In transit.",
-    "common.close": "Close",
+    "common.close": "閉じる",
     "filters.effectiveLocation": "有効な場所（アイテム）",
     "identifierAll": "Identifier (all)",
     "reports.inTransitItem.callNumber": "Call number",
