@@ -10,4 +10,5 @@ export { default as UnconnectedTitle } from './UnconnectedTitle';
 export { default as TitleLabel } from './TitleLabel';
 export { default as TitleField } from './TitleField';
 export { default as TitlesView } from './TitlesView';
+export { default as ModalContent } from './ModalContent';
 export { PaneLoading, ViewLoading } from './Loading';
