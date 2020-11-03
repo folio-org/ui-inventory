@@ -209,9 +209,8 @@ export function getQueryTemplate(queryIndex, indexes) {
   return get(searchableIndex, 'queryTemplate');
 }
 
-export function getIsbnIssnTemplate(queryTemplate, props, queryIndex) {
-  const { resources: { identifierTypes } } = props;
-  const identifierType = get(identifierTypes, 'records', [])
+export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
+  const identifierType = identifierTypes
     .find(({ name }) => name.toLowerCase() === queryIndex);
   const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
 
