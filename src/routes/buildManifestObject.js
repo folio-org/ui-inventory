@@ -20,7 +20,8 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex.match(/isbn|issn/)) {
-    queryTemplate = getIsbnIssnTemplate(queryTemplate, props, queryIndex);
+    const identifierTypes = resourceData?.identifier_types?.records ?? [];
+    queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
