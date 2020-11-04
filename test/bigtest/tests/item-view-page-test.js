@@ -149,7 +149,7 @@ describe('ItemViewPage', () => {
           });
 
           it('should display open requests number', () => {
-            expect(ItemViewPage.openRequestsNumber.text).to.equal('1');
+            expect(ItemViewPage.openRequestsNumber.text).to.equal('1 open request');
           });
 
           describe('clicking on the open requests number link', () => {
@@ -188,7 +188,7 @@ describe('ItemViewPage', () => {
           });
 
           it('should display open requests number', () => {
-            expect(ItemViewPage.openRequestsNumber.text).to.equal('1');
+            expect(ItemViewPage.openRequestsNumber.text).to.equal('1 open request');
           });
 
           describe('clicking on the open requests number link', () => {
