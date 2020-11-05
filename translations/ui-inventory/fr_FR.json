@@ -166,7 +166,7 @@
     "addPublicationFrequency": "Ajouter une fréquence",
     "addPublicationRange": "Ajouter une période",
     "publicationRange": "Période de publication",
-    "staffSuppress": "Staff suppress",
+    "staffSuppress": "Suppression du personnel",
     "discoverySuppress": "Supprimer de la *recherche*",
     "previouslyHeld": "Précédemment réservé",
     "addElectronicAccess": "Ajouter un accès électronique",
@@ -328,7 +328,7 @@
     "item.loanAndAvailability": "Prêt et disponibilité",
     "markAsMissing": "Marquer comme manquant",
     "missingModal.message": "<strong> {title} ( {materialType} ) </strong> (code-barres: {barcode} ) sera marqué comme <strong> manquant </strong> .",
-    "missingModal.heading": "Confirmer l'élément comme manquant",
+    "missingModal.heading": "Confirmer le statut de l'élément comme manquant",
     "missingModal.confirm": "Confirmer",
     "deleteItem": "Supprimer",
     "confirmItemDeleteModal.message": "Item HRID <strong>{hrid}, barcode {barcode}</strong> has no dependencies and will be <strong>deleted</strong>.",
@@ -581,5 +581,8 @@
     "instanceRecordRequestsSubtitle": "{count} articles trouvés",
     "item.requestQueue": "File d'attente",
     "item.status.inTransitTo": "En transit vers {servicePoint}",
-    "instanceMatchKey": "Clé de correspondance d'instance"
+    "instanceMatchKey": "Clé de correspondance d'instance",
+    "confirm": "Confirmer",
+    "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode})'s item status will be marked as <strong>{status}</strong>.",
+    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}"
 }
