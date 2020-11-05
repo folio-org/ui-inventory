@@ -37,6 +37,7 @@ import {
   getCurrentFilters,
   parseFiltersToStr,
   marshalInstance,
+  omitFromArray,
 } from '../../utils';
 import {
   InTransitItemReport,
@@ -129,9 +130,23 @@ class InstancesView extends React.Component {
   }
 
   copyInstance = (instance) => {
+    const {
+      precedingTitles,
+      succeedingTitles,
+    } = instance;
     let copiedInstance = omit(instance, ['id', 'hrid']);
+
+    if (precedingTitles?.length) {
+      copiedInstance.precedingTitles = omitFromArray(precedingTitles, 'id');
+    }
+
+    if (succeedingTitles?.length) {
+      copiedInstance.succeedingTitles = omitFromArray(succeedingTitles, 'id');
+    }
+
     copiedInstance = set(copiedInstance, 'source', 'FOLIO');
-    this.setState({ copiedInstance });
+
+    if (instance?.precedingTitles) { this.setState({ copiedInstance }); }
     this.openCreateInstance();
   }
 
