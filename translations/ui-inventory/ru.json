@@ -328,7 +328,7 @@
     "item.loanAndAvailability": "Книговыдача и доступность",
     "markAsMissing": "Отметить как отсутствующий",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
-    "missingModal.heading": "Confirm item as missing",
+    "missingModal.heading": "Confirm item status: Missing",
     "missingModal.confirm": "Подтвердить",
     "deleteItem": "Удалить",
     "confirmItemDeleteModal.message": "HRID экземпляра <strong>{hrid} , штрихкод {barcode}</strong> не имеет зависимостей и будет <strong>удален</strong>.",
@@ -581,5 +581,8 @@
     "instanceRecordRequestsSubtitle": "{count} items found",
     "item.requestQueue": "Request queue",
     "item.status.inTransitTo": "In transit to {servicePoint}",
-    "instanceMatchKey": "Instance match key"
+    "instanceMatchKey": "Instance match key",
+    "confirm": "Confirm",
+    "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode})'s item status will be marked as <strong>{status}</strong>.",
+    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}"
 }

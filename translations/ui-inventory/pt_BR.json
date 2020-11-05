@@ -328,7 +328,7 @@
     "item.loanAndAvailability": "Empréstimo e disponibilidade",
     "markAsMissing": "Marcar como desaparecido",
     "missingModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode} ) será marcado como <strong>desaparecido</strong>.",
-    "missingModal.heading": "Confirmar item como desaparecido",
+    "missingModal.heading": "Confirmar status do item: Não encontrado",
     "missingModal.confirm": "Confirmar",
     "deleteItem": "Excluir",
     "confirmItemDeleteModal.message": "O item HRID <strong>{hrid}, código de barras {barcode}</strong> não tem dependências e será <strong>excluído</strong>.",
@@ -490,7 +490,7 @@
     "isbnNormalized": "ISBN, normalizado",
     "markAsWithdrawn": "Marcar como descartado",
     "withdrawnModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) será marcado como <strong>descartado</strong>.",
-    "withdrawnModal.heading": "Confirmar item como descartado",
+    "withdrawnModal.heading": "Confirme o status do item: Retirado",
     "withdrawnModal.confirm": "Confirmar",
     "item.status.withdrawn": "Descartado",
     "saveInstancesUIIDS.error": "Ocorreu um erro ao salvar UUIDs de instâncias. Por favor, tente novamente.",
@@ -581,5 +581,8 @@
     "instanceRecordRequestsSubtitle": "{count} itens encontrados",
     "item.requestQueue": "Fila de requisições",
     "item.status.inTransitTo": "Em trânsito para {servicePoint}",
-    "instanceMatchKey": "Chave de correspondência de instância"
+    "instanceMatchKey": "Chave de correspondência de instância",
+    "confirm": "Confirmar",
+    "confirmModal.message": "<strong> {title} ({materialType}) </strong> (Código de barras: {barcode}) o status do item será marcado como <strong>{status}</strong>.",
+    "confirmModal.requestMessage": "{countIndex, plural, =-1 {Pode haver requisições em aberto para este item.} =0 {} one {Existe {openRequestValue} requisição aberta para este item.} other {Existem {openRequestValue} requisições abertas para este item.}}"
 }
