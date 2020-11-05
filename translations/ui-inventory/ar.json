@@ -562,7 +562,7 @@
     "holdingsStatementForSupplementsStaffNote": "بيان المقتنيات لملاحظة المكملات للموظفين",
     "permission.item.move": "المخزون: انقل المواد",
     "permission.holdings.move": "المخزون: انقل المقتنيات",
-    "item.status.agedToLost": "تأخر وتم اعتباره ضائعاً",
+    "item.status.agedToLost": "تقادمت وتم اعتبارها ضائعة",
     "moveItems.moveButton": "نقل إلى",
     "moveItems.modal.message.holdings": "سيتم نقل {count, number} {count, plural, one {مقتنى} other {مقتنيات}} إلى {targetName}",
     "moveItems.modal.message.items": "سيتم نقل {count, number} {count, plural, one {مادة} other {مادة}} إلى {targetName}",
@@ -581,5 +581,8 @@
     "instanceRecordRequestsSubtitle": "تم العثور على {count}  مادة",
     "item.requestQueue": "صف الطلبات",
     "item.status.inTransitTo": "في النقل إلى {servicePoint}",
-    "instanceMatchKey": "مفتاح تطابق الوعاء"
+    "instanceMatchKey": "مفتاح تطابق الوعاء",
+    "confirm": "تأكيد",
+    "confirmModal.message": "<strong>{title} ({materialType})</strong> المادة ذات (الباركود:{barcode}) سيتم الإشارة إليها كـ <strong> {status}</strong>.",
+    "confirmModal.requestMessage": "{countIndex, plural, =-1 {قد يكون هناك طلبات مفتوحة لهذه المادة.} =0 {} one {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.} other {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.}}"
 }
