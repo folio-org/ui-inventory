@@ -600,6 +600,20 @@ describe('InstanceViewPage', () => {
     it('should show succeding title', () => {
       expect(InstanceViewPage.succeedingTitles.rowCount).to.be.equal(1);
     });
+
+    describe('clicking on duplicate', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.headerDropdownMenu.clickDuplicate();
+      });
+
+      it('should redirect to instance create page', () => {
+        expect(InstanceCreatePage.$root).to.exist;
+      });
+
+      it('should have a source value of "FOLIO"', () => {
+        expect(InstanceCreatePage.sourceValue).to.equal('FOLIO');
+      });
+    });
   });
 
   describe('Nature of content field', () => {
