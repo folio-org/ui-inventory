@@ -16,6 +16,7 @@ import {
   groupBy,
   map,
   isObject,
+  omit,
 } from 'lodash';
 import moment from 'moment';
 
@@ -545,3 +546,17 @@ export const unmarshalInstance = (instance, identifierTypesById) => {
 
   return unmarshaledInstance;
 };
+
+/**
+ * Omit from array
+ *
+ * For example:
+ *
+ * omitFromArray([{id: 1, title: 'A'}, {id: 2, title: 'B'}], 'id')
+ *
+ * will produce:
+ *
+ * [{title: 'A'}, {title: 'B'}]
+ *
+ */
+export const omitFromArray = (array, path) => array.map(title => omit(title, path));
