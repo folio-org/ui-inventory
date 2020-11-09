@@ -7,6 +7,7 @@
 * Remove extraneous trailing slash. Refs UIIN-1316.
 * Show the number of open requests when the item status changes. Refs UIIN-1294.
 * Fix search by `identifierTypes`. Fixes UIIN-1312.
+* Omit `id` from preceding/succeeding titles when duplicating instance. Fixes UIIN-1324.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
