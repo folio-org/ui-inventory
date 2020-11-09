@@ -571,7 +571,7 @@ describe('InstanceViewPage', () => {
     });
   });
 
-  describe.only('Preceding and succeding titles', () => {
+  describe('Preceding and succeding titles', () => {
     setupApplication();
     beforeEach(async function () {
       const instance = this.server.create('instance', {
