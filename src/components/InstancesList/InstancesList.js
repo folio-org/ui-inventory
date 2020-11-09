@@ -146,7 +146,7 @@ class InstancesView extends React.Component {
 
     copiedInstance = set(copiedInstance, 'source', 'FOLIO');
 
-    if (instance?.precedingTitles) { this.setState({ copiedInstance }); }
+    this.setState({ copiedInstance });
     this.openCreateInstance();
   }
 
