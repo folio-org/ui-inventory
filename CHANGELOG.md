@@ -2,6 +2,9 @@
 
 ## 6.0.0 (IN PROGRESS)
 
+## [5.0.2](https://github.com/folio-org/ui-inventory/tree/v5.0.2) (2020-11-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.1...v5.0.2)
+
 * Move 'Material type' to far end of item table. Refs UIIN-1003.
 * Remove `onChangeIndex` prop passed to `SearchAndSort`. Fixes UIIN-1299.
 * Remove extraneous trailing slash. Refs UIIN-1316.
