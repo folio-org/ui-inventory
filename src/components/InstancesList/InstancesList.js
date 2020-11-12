@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   omit,
@@ -39,11 +39,13 @@ import {
   marshalInstance,
   omitFromArray,
 } from '../../utils';
+import { INSTANCES_ID_REPORT_TIMEOUT } from '../../constants';
 import {
   InTransitItemReport,
   InstancesIdReport,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
+
 import { buildQuery } from '../../routes/buildManifestObject';
 
 import css from './instances.css';
@@ -197,17 +199,30 @@ class InstancesView extends React.Component {
         reset,
         GET,
       } = this.props.parentMutator.recordsToExportIDs;
+      let infoCalloutTimer;
 
       try {
         reset();
 
+        infoCalloutTimer = setTimeout(() => {
+          sendCallout({
+            type: 'info',
+            message: <FormattedMessage id="ui-inventory.saveInstancesUIIDS.info" />,
+          });
+        }, INSTANCES_ID_REPORT_TIMEOUT);
+
         const items = await GET();
+
+        clearTimeout(infoCalloutTimer);
+
         const report = new InstancesIdReport();
 
         if (!isEmpty(items)) {
           report.toCSV(items);
         }
       } catch (error) {
+        clearTimeout(infoCalloutTimer);
+
         sendCallout({
           type: 'error',
           message: <FormattedMessage id="ui-inventory.saveInstancesUIIDS.error" />,
