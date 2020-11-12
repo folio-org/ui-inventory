@@ -88,6 +88,11 @@ class InstancesView extends React.Component {
     showErrorModal: false,
   };
 
+  onChangeIndex = (e) => {
+    const qindex = e.target.value;
+    this.props.updateLocation({ qindex });
+  };
+
   onFilterChangeHandler = ({ name, values }) => {
     const {
       data: { query },
@@ -385,6 +390,7 @@ class InstancesView extends React.Component {
             searchableIndexes={formattedSearchableIndexes}
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
+            onChangeIndex={this.onChangeIndex}
             initialResultCount={INITIAL_RESULT_COUNT}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstance}
