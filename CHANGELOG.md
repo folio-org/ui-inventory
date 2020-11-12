@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 6.0.0 (IN PROGRESS)
+## [5.0.3](https://github.com/folio-org/ui-inventory/tree/v5.0.3) (2020-11-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.1...v5.0.3)
 
 * Move 'Material type' to far end of item table. Refs UIIN-1003.
 * Remove extraneous trailing slash. Refs UIIN-1316.
