@@ -7,6 +7,8 @@
 * Remove extraneous trailing slash. Refs UIIN-1316.
 * Show the number of open requests when the item status changes. Refs UIIN-1294.
 * Fix search by `identifierTypes`. Fixes UIIN-1312.
+* Omit `id` from preceding/succeeding titles when duplicating instance. Fixes UIIN-1324.
+* Add info callout when saving file with the instance UUIDs takes longer. Refs UIIN-1329.
 * Do not escape quotes when submitting query-search queries. Refs UIIN-1319, UIIN-1320.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)

@@ -7,10 +7,10 @@ import {
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { INSTANCES_ID_REPORT_TIMEOUT } from '../../../src/constants';
 import setupApplication from '../helpers/setup-application';
 import InventoryInteractor from '../interactors/inventory';
 import InstancesRouteInteractor from '../interactors/routes/instances-route';
-import HRIDHandlingInteractor from '../interactors/settings/hrid-handling/hrid-handling';
 import wait from '../helpers/wait';
 
 describe('Instances', () => {
@@ -23,6 +23,23 @@ describe('Instances', () => {
 
   let xhr;
   let requests = [];
+
+  async function setupInstancedIdReportInfoCallout(server, timeout) {
+    server.get('/instance-bulk/ids', () => {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve([]), timeout);
+      });
+    });
+
+    // Timeout to skip enabling animation
+    await wait();
+
+    const clock = sinon.useFakeTimers();
+
+    await inventory.headerDropdownMenu.clickSaveInstancesUIIDsBtn();
+    clock.tick(timeout);
+    clock.restore();
+  }
 
   describe('searching by instance HRID to fill items list', function () {
     beforeEach(async function () {
@@ -54,7 +71,7 @@ describe('Instances', () => {
       });
     });
 
-    describe('clicking Save instances UIIDs button with API request set up to fail', () => {
+    describe('clicking save instances UIIDs button with API request set up to fail', () => {
       beforeEach(async function () {
         this.server.put('/instance-bulk/ids', {}, 500);
 
@@ -63,8 +80,28 @@ describe('Instances', () => {
         await inventory.headerDropdownMenu.clickSaveInstancesUIIDsBtn();
       });
 
-      it('should display then error callout', () => {
+      it('should display error callout', () => {
         expect(inventory.callout.errorCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe(`clicking save instances UIIDs button with API request which lasts more than ${INSTANCES_ID_REPORT_TIMEOUT} ms`, () => {
+      beforeEach(async function () {
+        await setupInstancedIdReportInfoCallout(this.server, INSTANCES_ID_REPORT_TIMEOUT + 1000);
+      });
+
+      it('should display info callout', () => {
+        expect(inventory.callout.infoCalloutIsPresent).to.be.true;
+      });
+    });
+
+    describe(`clicking save instances UIIDs button with API request which lasts less than ${INSTANCES_ID_REPORT_TIMEOUT} ms`, () => {
+      beforeEach(async function () {
+        await setupInstancedIdReportInfoCallout(this.server, INSTANCES_ID_REPORT_TIMEOUT - 1000);
+      });
+
+      it('should not display info callout', () => {
+        expect(inventory.callout.infoCalloutIsPresent).to.be.false;
       });
     });
   });
@@ -138,7 +175,7 @@ describe('Instances', () => {
       });
     });
 
-    describe('clicking Save instances UIIDs button with empty instances list', () => {
+    describe('clicking save instances UIIDs button with empty instances list', () => {
       beforeEach(async function () {
         xhr = sinon.useFakeXMLHttpRequest();
         requests = [];
