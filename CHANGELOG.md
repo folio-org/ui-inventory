@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 5.0.4 IN PROGRESS
+
+* Do not escape quotes when submitting query-search queries. Refs UIIN-1319, UIIN-1320.
+
 ## [5.0.3](https://github.com/folio-org/ui-inventory/tree/v5.0.3) (2020-11-12)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.1...v5.0.3)
 
