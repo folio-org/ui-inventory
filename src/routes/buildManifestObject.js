@@ -33,12 +33,17 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   resourceData.query = { ...query, qindex: '' };
 
+  // makeQueryFunction escapes quote and backslash characters by default,
+  // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
+  // we assume the user knows what they are doing and wants to run the CQL as-is.
   return makeQueryFunction(
     CQL_FIND_ALL,
     queryTemplate,
     sortMap,
     filters,
-    2
+    2,
+    null,
+    queryIndex !== 'querySearch',
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
