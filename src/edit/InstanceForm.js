@@ -215,6 +215,7 @@ class InstanceForm extends React.Component {
       submitting,
       copy,
     } = this.props;
+
     const cancelButton = (
       <Button
         buttonStyle="default mega"

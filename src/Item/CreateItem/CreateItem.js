@@ -60,7 +60,7 @@ const CreateItem = ({
   }, [location.search, instanceId]);
 
   const onSubmit = useCallback((item) => {
-    mutator.item.POST(item)
+    return mutator.item.POST(item)
       .then(() => {
         onCancel();
       });

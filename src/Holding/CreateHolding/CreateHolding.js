@@ -38,7 +38,7 @@ const CreateHolding = ({
   }, [location.search, instanceId]);
 
   const onSubmit = useCallback((newHolding) => {
-    mutator.holding.POST(newHolding)
+    return mutator.holding.POST(newHolding)
       .then(() => {
         onCancel();
       });

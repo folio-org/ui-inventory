@@ -219,6 +219,7 @@ class ItemForm extends React.Component {
       submitting,
       copy,
     } = this.props;
+
     const cancelButton = (
       <Button
         data-test-inventory-cancel-item-edit-action
