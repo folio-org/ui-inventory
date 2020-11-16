@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   TextField,
+  TextArea,
   Select,
 } from '@folio/stripes/components';
 
@@ -42,8 +43,9 @@ const AlternativeTitles = props => {
             {
               name: 'alternativeTitle',
               label: <FormattedMessage id="ui-inventory.alternativeTitle" />,
-              component: TextField,
+              component: TextArea,
               required: true,
+              rows: 1,
               disabled: !canEdit
             }
           ]}

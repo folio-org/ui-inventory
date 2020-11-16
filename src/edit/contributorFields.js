@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   TextField,
+  TextArea,
   Select,
 } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
@@ -39,7 +40,8 @@ const ContributorFields = props => {
             {
               label: <FormattedMessage id="ui-inventory.name" />,
               name: 'name',
-              component: TextField,
+              component: TextArea,
+              rows: 1,
               required: true,
               disabled: !canEdit,
             }, {
@@ -60,7 +62,8 @@ const ContributorFields = props => {
             }, {
               label: <FormattedMessage id="ui-inventory.typeFreeText" />,
               name: 'contributorTypeText',
-              component: TextField,
+              rows: 1,
+              component: TextArea,
               disabled: !canEdit,
             }, {
               name: 'primary',

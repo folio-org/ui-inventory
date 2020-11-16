@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { TextField } from '@folio/stripes/components';
+import { TextField, TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -23,7 +23,8 @@ const PublicationFields = props => {
         {
           name: 'publisher',
           label: <FormattedMessage id="ui-inventory.publisher" />,
-          component: TextField,
+          component: TextArea,
+          rows: 1,
           disabled: !canEdit,
         },
         {
@@ -35,7 +36,8 @@ const PublicationFields = props => {
         {
           name: 'place',
           label: <FormattedMessage id="ui-inventory.place" />,
-          component: TextField,
+          component: TextArea,
+          rows: 1,
           disabled: !canEdit,
         },
         {

@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { TextField } from '@folio/stripes/components';
+import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -20,8 +20,9 @@ const SeriesFields = props => {
       addLabel={<FormattedMessage id="ui-inventory.addSeries" />}
       addButtonId="clickable-add-series"
       template={[{
-        component: TextField,
+        component: TextArea,
         disabled: !canEdit,
+        rows: 1,
       }]}
       canAdd={canAdd}
       canDelete={canDelete}

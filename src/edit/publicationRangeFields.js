@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { TextField } from '@folio/stripes/components';
+import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -21,7 +21,8 @@ const PublicationRangeFields = props => {
       addButtonId="clickable-add-publicationfrequency"
       template={[{
         label: <FormattedMessage id="ui-inventory.publicationRange" />,
-        component: TextField,
+        component: TextArea,
+        rows: 1,
         disabled: !canEdit,
       }]}
       canAdd={canAdd}

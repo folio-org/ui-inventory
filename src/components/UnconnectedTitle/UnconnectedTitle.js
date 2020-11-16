@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   TextField,
+  TextArea,
 } from '@folio/stripes/components';
 
 import InstancePlugin from '../InstancePlugin';
@@ -17,7 +18,8 @@ const UnconnectedTitle = ({ field, onSelect, isDisabled }) => (
   <Row>
     <Col xs>
       <Field
-        component={TextField}
+        component={TextArea}
+        rows={1}
         label={
           <TitleLabel
             label={<FormattedMessage id="ui-inventory.precedingField.title" />}
