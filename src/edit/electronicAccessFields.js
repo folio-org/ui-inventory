@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  TextField,
+  TextArea,
   Select
 } from '@folio/stripes/components';
 
@@ -41,25 +41,29 @@ const ElectronicAccessFields = props => {
             {
               name: 'uri',
               label: <FormattedMessage id="ui-inventory.uri" />,
-              component: TextField,
+              component: TextArea,
+              rows: 1,
               disabled: !canEdit,
             },
             {
               name: 'linkText',
               label: <FormattedMessage id="ui-inventory.linkText" />,
-              component: TextField,
+              component: TextArea,
+              rows: 1,
               disabled: !canEdit,
             },
             {
               name: 'materialsSpecification',
               label: <FormattedMessage id="ui-inventory.materialsSpecification" />,
-              component: TextField,
+              component: TextArea,
+              rows: 1,
               disabled: !canEdit,
             },
             {
               name: 'publicNote',
               label: <FormattedMessage id="ui-inventory.urlPublicNote" />,
-              component: TextField,
+              component: TextArea,
+              rows: 1,
               disabled: !canEdit,
             },
           ]}

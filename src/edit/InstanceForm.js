@@ -18,6 +18,7 @@ import {
   Col,
   Button,
   TextField,
+  TextArea,
   Select,
   Checkbox,
   Headline,
@@ -477,7 +478,8 @@ class InstanceForm extends React.Component {
                     )}
                     name="title"
                     id="input_instance_title"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                     required
                     disabled={this.isFieldBlocked('title')}
@@ -500,7 +502,8 @@ class InstanceForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.indexTitle" />}
                     name="indexTitle"
                     id="input_index_title"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                     disabled={this.isFieldBlocked('indexTitle')}
                   />

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {
   TextField,
+  TextArea,
   Select,
   Checkbox,
 } from '@folio/stripes/components';
@@ -41,7 +42,8 @@ const NoteFields = props => {
           name: 'note',
           label: <FormattedMessage id="ui-inventory.note" />,
           disabled: !canEdit,
-          component: TextField,
+          component: TextArea,
+          rows: 1,
         },
         {
           name: 'staffOnly',

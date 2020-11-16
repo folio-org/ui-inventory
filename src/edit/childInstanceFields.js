@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import {
-  TextField,
+  TextArea,
   Select,
 } from '@folio/stripes/components';
 
@@ -34,7 +34,8 @@ const ChildInstanceFields = props => {
             {
               label: intl.formatMessage({ id: 'ui-inventory.childInstance' }),
               name: 'subInstanceId',
-              component: TextField,
+              component: TextArea,
+              rows: 1,
               required: true,
               disabled: !canEdit,
             },
