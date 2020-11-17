@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 5.0.5 IN PROGRESS
+
+* Return promise when submitting instance, holdings record or item form. Fixes UIIN-1339 and UIIN-1340.
+
 ## [5.0.4](https://github.com/folio-org/ui-inventory/tree/v5.0.4) (2020-11-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.3...v5.0.4)
 

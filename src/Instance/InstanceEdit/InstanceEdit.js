@@ -43,7 +43,7 @@ const InstanceEdit = ({
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
   const onSubmit = useCallback((updatedInstance) => {
-    mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
+    return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
       .then(() => {
         goBack();
       });

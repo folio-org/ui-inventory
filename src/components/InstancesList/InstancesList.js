@@ -127,7 +127,7 @@ class InstancesView extends React.Component {
   };
 
   onCreate = (instance) => {
-    this.createInstance(instance).then(() => this.closeNewInstance());
+    return this.createInstance(instance).then(() => this.closeNewInstance());
   }
 
   openCreateInstance = () => {
