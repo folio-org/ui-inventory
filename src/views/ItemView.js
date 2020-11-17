@@ -98,7 +98,7 @@ class ItemView extends React.Component {
       delete item.barcode;
     }
 
-    this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
+    return this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
   };
 
   copyItem = item => {
@@ -1219,7 +1219,7 @@ class ItemView extends React.Component {
             >
               <ItemForm
                 form={`itemform_${item.id}`}
-                onSubmit={(record) => { this.saveItem(record); }}
+                onSubmit={record => this.saveItem(record)}
                 initialValues={item}
                 onCancel={this.onClickCloseEditItem}
                 okapi={okapi}
