@@ -24,7 +24,8 @@ import {
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   Button,
-  Icon
+  Icon,
+  Checkbox,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -45,6 +46,7 @@ import {
   InstancesIdReport,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
+import CheckboxColumn from './CheckboxColumn';
 
 import { buildQuery } from '../../routes/buildManifestObject';
 
@@ -365,6 +367,11 @@ class InstancesView extends React.Component {
     } = this.props;
 
     const resultsFormatter = {
+      'select': () => (
+        <CheckboxColumn>
+          <Checkbox aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })} />
+        </CheckboxColumn>
+      ),
       'title': ({ title }) => (
         <AppIcon
           size="small"
@@ -410,14 +417,18 @@ class InstancesView extends React.Component {
               previouslyHeld: false,
               source: 'FOLIO',
             }}
-            visibleColumns={visibleColumns || ['title', 'contributors', 'publishers', 'relation']}
+            visibleColumns={visibleColumns || ['select', 'title', 'contributors', 'publishers', 'relation']}
             columnMapping={{
+              select: '',
               title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
               contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
               publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
               relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
             }}
-            columnWidths={{ title: '40%' }}
+            columnWidths={{
+              select: '30px',
+              title: '40%',
+            }}
             resultsFormatter={resultsFormatter}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"

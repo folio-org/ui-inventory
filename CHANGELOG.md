@@ -12,6 +12,7 @@
 * Do not escape quotes when submitting query-search queries. Refs UIIN-1319, UIIN-1320.
 * Use `TextArea` for some data fields on instance form. Refs UIIN-1278.
 * Return promise when submitting instance, holdings record or item form. Fixes UIIN-1339 and UIIN-1340.
+* Add select row checkboxes to inventory instance search result. Refs UIIN-1349.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
