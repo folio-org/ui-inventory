@@ -5,6 +5,7 @@
   "instances.columns.contributors": "Contributors",
   "instances.columns.publishers": "Publishers",
   "instances.columns.relation": "Relation",
+  "instances.rows.select": "Select instance",
   "instances.resourceType": "Resource Type",
   "instances.language": "Language",
   "holdingsRecord.awaitingResources": "Awaiting resources",

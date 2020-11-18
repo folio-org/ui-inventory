@@ -139,7 +139,7 @@ describe('Instance filters', () => {
     beforeEach(async function () {
       await inventory.clickSelectStaffSuppressFilter();
       await inventory.clickSelectDiscoverySuppressFilter();
-      await instancesRoute.headers(1).click();
+      await instancesRoute.headers(2).click();
     });
 
     it('adds filters to the URL', function () {
