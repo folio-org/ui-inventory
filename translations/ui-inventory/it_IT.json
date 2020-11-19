@@ -569,7 +569,7 @@
     "save": "Save",
     "defaultDiscoverySuppress": "Suppress from discovery by default",
     "defaultInstanceStatus": "Default instance status",
-    "fastAdd": "Fast add",
+    "fastAdd": "Aggiunta rapida",
     "uniqueCode": "Code must be unique",
     "holdingsSources": "Holdings sources",
     "holdingsSource": "Holdings source",
@@ -584,5 +584,7 @@
     "instanceMatchKey": "Instance match key",
     "confirm": "Confirm",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode})'s item status will be marked as <strong>{status}</strong>.",
-    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}"
+    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}",
+    "saveInstancesUIIDS.info": "Request to save instances UUIDs has been received. File download may take a few minutes.",
+    "instances.rows.select": "Select instance"
 }

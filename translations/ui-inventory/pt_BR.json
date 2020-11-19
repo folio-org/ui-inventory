@@ -584,5 +584,7 @@
     "instanceMatchKey": "Chave de correspondência de instância",
     "confirm": "Confirmar",
     "confirmModal.message": "<strong> {title} ({materialType}) </strong> (Código de barras: {barcode}) o status do item será marcado como <strong>{status}</strong>.",
-    "confirmModal.requestMessage": "{countIndex, plural, =-1 {Pode haver requisições em aberto para este item.} =0 {} one {Existe {openRequestValue} requisição aberta para este item.} other {Existem {openRequestValue} requisições abertas para este item.}}"
+    "confirmModal.requestMessage": "{countIndex, plural, =-1 {Pode haver requisições em aberto para este item.} =0 {} one {Existe {openRequestValue} requisição aberta para este item.} other {Existem {openRequestValue} requisições abertas para este item.}}",
+    "saveInstancesUIIDS.info": "A solicitação para salvar UUIDs de instâncias foi recebida. O download do arquivo pode demorar alguns minutos.",
+    "instances.rows.select": "Selecionar instância"
 }

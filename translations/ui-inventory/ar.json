@@ -584,5 +584,7 @@
     "instanceMatchKey": "مفتاح تطابق الوعاء",
     "confirm": "تأكيد",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> المادة ذات (الباركود:{barcode}) سيتم الإشارة إليها كـ <strong> {status}</strong>.",
-    "confirmModal.requestMessage": "{countIndex, plural, =-1 {قد يكون هناك طلبات مفتوحة لهذه المادة.} =0 {} one {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.} other {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.}}"
+    "confirmModal.requestMessage": "{countIndex, plural, =-1 {قد يكون هناك طلبات مفتوحة لهذه المادة.} =0 {} one {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.} other {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.}}",
+    "saveInstancesUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للأوعية. قد يستغرق تنزيل الملف بضع دقائق.",
+    "instances.rows.select": "اختر وعاء"
 }
