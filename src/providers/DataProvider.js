@@ -198,6 +198,16 @@ DataProvider.manifest = {
     },
     records: 'loantypes',
   },
+  tagsRecords: {
+    params: {
+      limit: '5000',
+      query: 'cql.allRecords=1 sortby label',
+    },
+    path: 'tags',
+    records: 'tags',
+    throwErrors: false,
+    type: 'okapi',
+  },
   holdingsSources: {
     type: 'okapi',
     path: 'holdings-sources',

@@ -76,6 +76,12 @@ export const instanceFilterConfig = [
     operator: '==',
     values: [],
   },
+  {
+    name: 'tags',
+    cql: 'tags.tagList',
+    values: [],
+    operator: '=',
+  },
 ];
 
 export const instanceIndexes = [
@@ -107,8 +113,8 @@ export const holdingIndexes = [
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
     queryTemplate: `
-      holdingsRecords.fullCallNumber=="%{query.query}" 
-      OR holdingsRecords.callNumberAndSuffix=="%{query.query}" 
+      holdingsRecords.fullCallNumber=="%{query.query}"
+      OR holdingsRecords.callNumberAndSuffix=="%{query.query}"
       OR holdingsRecords.callNumber=="%{query.query}"
     ` },
   { label: 'ui-inventory.callNumberNormalized',
@@ -148,8 +154,8 @@ export const itemIndexes = [
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
     queryTemplate: `
-      item.fullCallNumber=="%{query.query}" 
-      OR item.callNumberAndSuffix=="%{query.query}" 
+      item.fullCallNumber=="%{query.query}"
+      OR item.callNumberAndSuffix=="%{query.query}"
       OR item.effectiveCallNumberComponents.callNumber=="%{query.query}"
     ` },
   { label: 'ui-inventory.itemEffectiveCallNumberNormalized',

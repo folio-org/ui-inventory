@@ -14,6 +14,7 @@ const instanceFilterRenderer = data => onChange => {
     modesOfIssuance,
     natureOfContentTerms,
     query,
+    tagsRecords,
   } = data;
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
@@ -25,6 +26,7 @@ const instanceFilterRenderer = data => onChange => {
         resourceTypes: instanceTypes,
         instanceFormats,
         modesOfIssuance,
+        tagsRecords,
         natureOfContentTerms
       }}
       onChange={onChange}
