@@ -97,7 +97,7 @@ const InstanceDetails = ({
         }
       </PaneMenu>
     );
-  }, [showTagsHelperApp, tagsEnabled, tags, setHelperApp]);
+  }, [tagsEnabled, tags, setHelperApp]);
 
   return (
     <>
