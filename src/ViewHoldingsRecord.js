@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   get,
@@ -200,7 +200,7 @@ class ViewHoldingsRecord extends React.Component {
     const firstRecordOfHoldings = resources.holdingsRecords.records[0];
 
     return (
-      <Fragment>
+      <>
         {
           canEdit &&
           <Button
@@ -249,7 +249,7 @@ class ViewHoldingsRecord extends React.Component {
             </Icon>
           </Button>
         }
-      </Fragment>
+      </>
     );
   };
 
@@ -861,24 +861,18 @@ ViewHoldingsRecord.propTypes = {
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    instances1: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    instances1: PropTypes.object,
     items: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    holdingsRecords: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    holdingsRecords: PropTypes.object,
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    permanentLocation: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    temporaryLocation: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
+    permanentLocation: PropTypes.object,
+    temporaryLocation: PropTypes.object,
+    permanentLocationQuery: PropTypes.object,
+    temporaryLocationQuery: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,

@@ -2,7 +2,6 @@ import {
   get,
 } from 'lodash';
 import React, {
-  Fragment,
   createRef,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -324,7 +323,7 @@ class ViewInstance extends React.Component {
     }
 
     return (
-      <Fragment>
+      <>
         <IfPermission perm="ui-inventory.instance.edit">
           <Button
             id="edit-instance"
@@ -444,7 +443,7 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         )}
-      </Fragment>
+      </>
     );
   };
 
@@ -550,6 +549,8 @@ ViewInstance.propTypes = {
     path: PropTypes.string.isRequired,
     params: PropTypes.shape({
       id: PropTypes.string,
+      holdingsrecordid: PropTypes.string,
+      itemid: PropTypes.string,
     }),
   }),
   history: ReactRouterPropTypes.history.isRequired,
@@ -566,6 +567,7 @@ ViewInstance.propTypes = {
       GET: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
+    movableItems: PropTypes.object.isRequired,
   }),
   okapi: PropTypes.object,
   onClose: PropTypes.func,

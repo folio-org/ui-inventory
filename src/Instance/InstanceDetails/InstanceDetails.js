@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -61,6 +61,7 @@ const InstanceDetails = ({
   const intl = useIntl();
 
   const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
+  const instanceTitle = instance?.title;
 
   const title = useMemo(() => {
     return (
@@ -69,13 +70,13 @@ const InstanceDetails = ({
           intl.formatMessage({
             id: 'ui-inventory.instanceRecordTitle',
           }, {
-            title: instance.title,
+            title: instanceTitle,
             publisherAndDate: publicationInfo ?? '',
           })
         }
       </span>
     );
-  }, [instance, publicationInfo]);
+  }, [instanceTitle, intl, publicationInfo]);
 
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
@@ -97,7 +98,7 @@ const InstanceDetails = ({
         }
       </PaneMenu>
     );
-  }, [tagsEnabled, tags, setHelperApp]);
+  }, [tagsEnabled, tags, intl]);
 
   return (
     <>
@@ -215,11 +216,13 @@ InstanceDetails.propTypes = {
   instance: PropTypes.object,
   referenceData: PropTypes.object,
   tagsToggle: PropTypes.func,
+  tagsEnabled: PropTypes.bool,
 };
 
 InstanceDetails.defaultProps = {
   instance: {},
   referenceData: {},
+  tagsEnabled: false,
 };
 
 export default InstanceDetails;

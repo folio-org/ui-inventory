@@ -1,7 +1,6 @@
 import ApplicationSerializer from './application';
 
 const { isArray } = Array;
-const { assign } = Object;
 
 export default ApplicationSerializer.extend({
 
@@ -10,19 +9,17 @@ export default ApplicationSerializer.extend({
 
     function serializeOne(record) {
       const url = new URL(request.url);
-      return assign({}, record, {
+      return { ...record,
         '@context': `${url.origin}/inventory/instance/context`,
         'links': {
           self: `${url.origin}/inventory/instances/${record.id}`
-        }
-      });
+        } };
     }
 
     if (isArray(json.instances)) {
-      return assign({}, json, {
+      return { ...json,
         instances: json.instances.map(serializeOne),
-        totalRecords: json.instances.length
-      });
+        totalRecords: json.instances.length };
     }
     return serializeOne(json.instance);
   }

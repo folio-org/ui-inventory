@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -74,11 +74,9 @@ function validate(values) {
 function checkUniqueBarcode(okapi, barcode) {
   return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
     {
-      headers: Object.assign({}, {
-        'X-Okapi-Tenant': okapi.tenant,
+      headers: { 'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json',
-      })
+        'Content-Type': 'application/json' }
     });
 }
 
@@ -358,14 +356,14 @@ class ItemForm extends React.Component {
               <span data-test-header-title>
                 {instance.title}
                 {(instance.publication && instance.publication.length > 0) &&
-                  <Fragment>
+                  <>
                     {', '}
                     {instance.publication[0].publisher}
                     {instance.publication[0].dateOfPublication
                       ? `, ${instance.publication[0].dateOfPublication}`
                       : null
                     }
-                  </Fragment>
+                  </>
                 }
               </span>
             }
@@ -392,7 +390,7 @@ class ItemForm extends React.Component {
             </Row>
             <Row>
               { initialValues.id &&
-                <React.Fragment>
+                <>
                   <Col xs="4">
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
@@ -405,7 +403,7 @@ class ItemForm extends React.Component {
                       value={effectiveCallNumber(initialValues)}
                     />
                   </Col>
-                </React.Fragment>
+                </>
               }
               <Col end="xs">
                 <ExpandAllButton

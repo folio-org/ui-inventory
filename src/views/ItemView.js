@@ -6,7 +6,7 @@ import {
   isEmpty,
   values,
 } from 'lodash';
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
@@ -216,7 +216,7 @@ class ItemView extends React.Component {
     }
 
     return (
-      <Fragment>
+      <>
         { canEdit && (
         <Button
           href={this.craftLayerUrl('editItem')}
@@ -305,7 +305,7 @@ class ItemView extends React.Component {
           </Icon>
         </Button>
         )}
-      </Fragment>
+      </>
     );
   };
 
@@ -1267,6 +1267,9 @@ ItemView.propTypes = {
     holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     callNumberTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     borrower: PropTypes.object,
+    staffMembers: PropTypes.object,
+    servicePoints: PropTypes.object,
+    openLoans: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,

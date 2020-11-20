@@ -38,9 +38,13 @@ HoldingsList.propTypes = {
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
+  // eslint-disable-next-line react/no-unused-prop-types
   selectItemsForDrag: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   isItemsDragSelected: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   getDraggingItems: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   activeDropZone: PropTypes.string,
 };
 

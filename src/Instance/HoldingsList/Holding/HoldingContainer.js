@@ -145,6 +145,7 @@ HoldingContainer.propTypes = {
   referenceData: PropTypes.object.isRequired,
   holdingindex: PropTypes.number.isRequired,
   isDraggable: PropTypes.bool,
+  draggingHoldingsCount: PropTypes.number,
 };
 
 export default withRouter(HoldingContainer);

@@ -2,7 +2,7 @@
  * Primary Toggle Button
  */
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Label } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
@@ -32,7 +32,7 @@ const PrimaryToggleButton = ({
   };
 
   return (
-    <Fragment>
+    <>
       { label && <Label>{label}</Label>}
       <Button
         data-test-primary-toggle-button
@@ -44,13 +44,15 @@ const PrimaryToggleButton = ({
       >
         <FormattedMessage id={`ui-inventory.${isPrimary ? 'primary' : 'makePrimary'}`} />
       </Button>
-    </Fragment>
+    </>
   );
 };
 
 PrimaryToggleButton.propTypes = {
   fields: PropTypes.shape({
     forEach: PropTypes.func,
+    update: PropTypes.func,
+    value: PropTypes.object,
   }).isRequired,
   label: PropTypes.node,
   input: PropTypes.shape({

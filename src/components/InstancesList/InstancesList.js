@@ -396,7 +396,7 @@ class InstancesView extends React.Component {
     });
 
     return (
-      <React.Fragment>
+      <>
         <div data-test-inventory-instances>
           <SearchAndSort
             actionMenu={this.getActionMenu}
@@ -465,7 +465,7 @@ class InstancesView extends React.Component {
           content={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.message" />}
           onClose={this.onErrorModalClose}
         />
-      </React.Fragment>
+      </>
     );
   }
 }

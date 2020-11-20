@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 
 import { Settings } from '@folio/stripes/smart-components';
 
@@ -215,5 +216,9 @@ class InventorySettings extends React.Component {
     );
   }
 }
+
+InventorySettings.propTypes = {
+  stripes: PropTypes.object,
+};
 
 export default InventorySettings;

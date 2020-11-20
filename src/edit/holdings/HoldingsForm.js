@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -322,13 +322,13 @@ class HoldingsForm extends React.Component {
             }
             paneSub={
               (instance.publication && instance.publication.length > 0) ?
-                <Fragment>
+                <>
                   {instance.publication[0].publisher}
                   {instance.publication[0].dateOfPublication
                     ? `, ${instance.publication[0].dateOfPublication}`
                     : null
                   }
-                </Fragment>
+                </>
                 : null
             }
           >
