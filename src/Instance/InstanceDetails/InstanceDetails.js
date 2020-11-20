@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -11,7 +11,9 @@ import {
   AccordionStatus,
   Col,
   ExpandAllButton,
+  IconButton,
   Pane,
+  PaneMenu,
   Row,
 } from '@folio/stripes/components';
 
@@ -27,6 +29,7 @@ import { InstanceSubjectView } from './InstanceSubjectView';
 import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
+import HelperApp from '../../components/HelperApp';
 
 import {
   getAccordionState,
@@ -52,6 +55,7 @@ const InstanceDetails = ({
   onClose,
   actionMenu,
   referenceData,
+  tagsEnabled,
   ...rest
 }) => {
   const intl = useIntl();
@@ -74,109 +78,138 @@ const InstanceDetails = ({
   }, [instance, publicationInfo]);
 
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
+  const [helperApp, setHelperApp] = useState();
+
+  const showTagsHelperApp = useCallback(() => {
+    setHelperApp('tags');
+  }, []);
+
+  const tags = instance?.tags?.tagList;
+
+  const detailsLastMenu = useMemo(() => {
+    return (
+      <PaneMenu>
+        {
+          tagsEnabled && (
+            <IconButton
+              icon="tag"
+              id="clickable-show-tags"
+              onClick={showTagsHelperApp}
+              badgeCount={tags?.length}
+              ariaLabel={intl.formatMessage({ id: 'ui-inventory.showTags' })}
+            />
+          )
+        }
+      </PaneMenu>
+    );
+  }, [showTagsHelperApp, tagsEnabled, tags]);
 
   return (
-    <Pane
-      {...rest}
-      data-test-instance-details
-      appIcon={<AppIcon app="inventory" iconKey="instance" />}
-      paneTitle={title}
-      paneSub={publicationInfo}
-      dismissible
-      onClose={onClose}
-      actionMenu={actionMenu}
-      defaultWidth="fill"
-    >
-      <TitleManager record={instance.title} />
+    <>
+      <Pane
+        {...rest}
+        data-test-instance-details
+        appIcon={<AppIcon app="inventory" iconKey="instance" />}
+        paneTitle={title}
+        paneSub={publicationInfo}
+        dismissible
+        onClose={onClose}
+        actionMenu={actionMenu}
+        defaultWidth="fill"
+        lastMenu={detailsLastMenu}
+      >
+        <TitleManager record={instance.title} />
 
-      <AccordionStatus>
-        <Row end="xs">
-          <Col
-            data-test-expand-all
-            xs
-          >
-            <ExpandAllButton />
-          </Col>
-        </Row>
+        <AccordionStatus>
+          <Row end="xs">
+            <Col
+              data-test-expand-all
+              xs
+            >
+              <ExpandAllButton />
+            </Col>
+          </Row>
 
-        <InstanceTitle
-          instance={instance}
-          instanceTypes={referenceData.instanceTypes}
-        />
-
-        <AccordionSet initialStatus={accordionState}>
-          {children}
-
-          <InstanceNewHolding instance={instance} />
-
-          <InstanceAdministrativeView
-            id={accordions.administrative}
+          <InstanceTitle
             instance={instance}
-            instanceStatuses={referenceData.instanceStatuses}
-            issuanceModes={referenceData.modesOfIssuance}
-            statisticalCodes={referenceData.statisticalCodes}
-            statisticalCodeTypes={referenceData.statisticalCodeTypes}
+            instanceTypes={referenceData.instanceTypes}
           />
 
-          <InstanceTitleData
-            id={accordions.title}
-            instance={instance}
-            titleTypes={referenceData.alternativeTitleTypes}
-            identifierTypesById={referenceData.identifierTypesById}
-          />
+          <AccordionSet initialStatus={accordionState}>
+            {children}
 
-          <InstanceIdentifiersView
-            id={accordions.identifiers}
-            identifiers={instance.identifiers}
-            identifierTypes={referenceData.identifierTypes}
-          />
+            <InstanceNewHolding instance={instance} />
 
-          <InstanceContributorsView
-            id={accordions.contributors}
-            contributors={instance.contributors}
-            contributorTypes={referenceData.contributorTypes}
-            contributorNameTypes={referenceData.contributorNameTypes}
-          />
+            <InstanceAdministrativeView
+              id={accordions.administrative}
+              instance={instance}
+              instanceStatuses={referenceData.instanceStatuses}
+              issuanceModes={referenceData.modesOfIssuance}
+              statisticalCodes={referenceData.statisticalCodes}
+              statisticalCodeTypes={referenceData.statisticalCodeTypes}
+            />
 
-          <InstanceDescriptiveView
-            id={accordions.descriptiveData}
-            instance={instance}
-            resourceTypes={referenceData.instanceTypes}
-            resourceFormats={referenceData.instanceFormats}
-            natureOfContentTerms={referenceData.natureOfContentTerms}
-          />
+            <InstanceTitleData
+              id={accordions.title}
+              instance={instance}
+              titleTypes={referenceData.alternativeTitleTypes}
+              identifierTypesById={referenceData.identifierTypesById}
+            />
 
-          <InstanceNotesView
-            id={accordions.notes}
-            instance={instance}
-            noteTypes={referenceData.instanceNoteTypes}
-          />
+            <InstanceIdentifiersView
+              id={accordions.identifiers}
+              identifiers={instance.identifiers}
+              identifierTypes={referenceData.identifierTypes}
+            />
 
-          <InstanceElecAccessView
-            id={accordions.electronicAccess}
-            electronicAccessLines={instance.electronicAccess}
-            electronicAccessRelationships={referenceData.electronicAccessRelationships}
-          />
+            <InstanceContributorsView
+              id={accordions.contributors}
+              contributors={instance.contributors}
+              contributorTypes={referenceData.contributorTypes}
+              contributorNameTypes={referenceData.contributorNameTypes}
+            />
 
-          <InstanceSubjectView
-            id={accordions.subjects}
-            subjects={instance.subjects}
-          />
+            <InstanceDescriptiveView
+              id={accordions.descriptiveData}
+              instance={instance}
+              resourceTypes={referenceData.instanceTypes}
+              resourceFormats={referenceData.instanceFormats}
+              natureOfContentTerms={referenceData.natureOfContentTerms}
+            />
 
-          <InstanceClassificationView
-            id={accordions.classifications}
-            classifications={instance?.classifications}
-            classificationTypes={referenceData.classificationTypes}
-          />
+            <InstanceNotesView
+              id={accordions.notes}
+              instance={instance}
+              noteTypes={referenceData.instanceNoteTypes}
+            />
 
-          <InstanceRelationshipView
-            id={accordions.relationship}
-            instance={instance}
-            relationTypes={referenceData.instanceRelationshipTypes}
-          />
-        </AccordionSet>
-      </AccordionStatus>
-    </Pane>
+            <InstanceElecAccessView
+              id={accordions.electronicAccess}
+              electronicAccessLines={instance.electronicAccess}
+              electronicAccessRelationships={referenceData.electronicAccessRelationships}
+            />
+
+            <InstanceSubjectView
+              id={accordions.subjects}
+              subjects={instance.subjects}
+            />
+
+            <InstanceClassificationView
+              id={accordions.classifications}
+              classifications={instance?.classifications}
+              classificationTypes={referenceData.classificationTypes}
+            />
+
+            <InstanceRelationshipView
+              id={accordions.relationship}
+              instance={instance}
+              relationTypes={referenceData.instanceRelationshipTypes}
+            />
+          </AccordionSet>
+        </AccordionStatus>
+      </Pane>
+      { helperApp && <HelperApp appName={helperApp} onClose={setHelperApp} />}
+    </>
   );
 };
 
@@ -186,6 +219,7 @@ InstanceDetails.propTypes = {
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
   referenceData: PropTypes.object,
+  tagsToggle: PropTypes.func,
 };
 
 InstanceDetails.defaultProps = {

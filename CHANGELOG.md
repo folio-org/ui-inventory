@@ -2,6 +2,7 @@
 
 ## 6.0.0 (IN PROGRESS)
 
+* Assign tags to Inventory Instances. Refs UIIN-307.
 * Move 'Material type' to far end of item table. Refs UIIN-1003.
 * Remove `onChangeIndex` prop passed to `SearchAndSort`. Fixes UIIN-1299.
 * Remove extraneous trailing slash. Refs UIIN-1316.
