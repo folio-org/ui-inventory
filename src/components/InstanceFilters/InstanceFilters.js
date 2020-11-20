@@ -99,7 +99,7 @@ const InstanceFilters = props => {
   const langOptions = languageOptions(intl, stripes.locale);
 
   return (
-    <React.Fragment>
+    <>
       <Accordion
         label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
         id="effectiveLocation"
@@ -286,7 +286,7 @@ const InstanceFilters = props => {
           onChange={onChange}
         />
       </Accordion>
-    </React.Fragment>
+    </>
   );
 };
 

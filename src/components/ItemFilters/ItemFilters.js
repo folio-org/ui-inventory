@@ -76,7 +76,7 @@ class ItemFilters extends React.Component {
     ];
 
     return (
-      <React.Fragment>
+      <>
         <Accordion
           label={<FormattedMessage id="ui-inventory.item.status" />}
           id="itemFilterAccordion"
@@ -161,7 +161,7 @@ class ItemFilters extends React.Component {
             onChange={onChange}
           />
         </Accordion>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -57,7 +57,7 @@ export default class HoldingsRecordFilters extends React.Component {
     ];
 
     return (
-      <React.Fragment>
+      <>
         <Accordion
           label={<FormattedMessage id="ui-inventory.filters.effectiveLocation" />}
           id="holdingsEffectiveLocationAccordion"
@@ -108,7 +108,7 @@ export default class HoldingsRecordFilters extends React.Component {
             onChange={onChange}
           />
         </Accordion>
-      </React.Fragment>
+      </>
     );
   }
 }

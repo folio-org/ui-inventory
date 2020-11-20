@@ -60,7 +60,7 @@ export const noValue = (
     role="text"
     aria-label="no value set"
   >
-    {'-'}
+    -
   </span>
 );
 
