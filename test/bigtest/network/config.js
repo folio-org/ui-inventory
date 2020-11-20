@@ -621,4 +621,9 @@ export default function configure() {
       }],
     totalRecords: 1
   });
+
+  this.get('/tags', {
+    tags: [],
+    totalRecords: 0
+  });
 }
