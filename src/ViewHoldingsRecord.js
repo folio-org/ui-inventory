@@ -30,6 +30,7 @@ import {
 import {
   ViewMetaData,
   ClipCopy,
+  TagsAccordion,
 } from '@folio/stripes/smart-components';
 import {
   AppIcon,
@@ -87,6 +88,17 @@ class ViewHoldingsRecord extends React.Component {
     temporaryLocation: {
       type: 'okapi',
       path: 'locations/%{temporaryLocationQuery.id}',
+    },
+    configTags: {
+      type: 'okapi',
+      path: 'configurations/entries',
+      records: 'configs',
+      throwErrors: false,
+      GET: {
+        params: {
+          query: '(module=TAGS and configName=tags_enabled)',
+        },
+      },
     },
   });
 
@@ -285,6 +297,7 @@ class ViewHoldingsRecord extends React.Component {
         permanentLocation,
         temporaryLocation,
         items,
+        configTags,
       },
       referenceTables,
       okapi,
@@ -301,6 +314,7 @@ class ViewHoldingsRecord extends React.Component {
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
     const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
+    const tagsEnabled = configTags?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -454,6 +468,9 @@ class ViewHoldingsRecord extends React.Component {
         );
       });
     };
+
+    const getEntity = () => holdingsRecord;
+    const getEntityTags = () => holdingsRecord?.tags?.tagList || [];
 
     return (
       <IntlConsumer>
@@ -717,6 +734,15 @@ class ViewHoldingsRecord extends React.Component {
                           </Col>
                         </Row>
                       </Accordion>
+
+                      {tagsEnabled && (
+                        <TagsAccordion
+                          link={`holdings-storage/holdings/${holdingsRecord.id}`}
+                          getEntity={getEntity}
+                          getEntityTags={getEntityTags}
+                          entityTagsPath="tags"
+                        />
+                      )}
 
                       <Accordion
                         id="acc04"

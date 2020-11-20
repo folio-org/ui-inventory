@@ -2,6 +2,7 @@
 
 ## 6.0.0 (IN PROGRESS)
 
+* Assign tags to Inventory Holdings. Refs-UIIN-308.
 * Filter Instance by Tags. Refs UIIN-763.
 * Assign tags to Inventory Instances. Refs UIIN-307.
 * Move 'Material type' to far end of item table. Refs UIIN-1003.
