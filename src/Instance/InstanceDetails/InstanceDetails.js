@@ -79,11 +79,6 @@ const InstanceDetails = ({
 
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
-
-  const showTagsHelperApp = useCallback(() => {
-    setHelperApp('tags');
-  }, []);
-
   const tags = instance?.tags?.tagList;
 
   const detailsLastMenu = useMemo(() => {
@@ -94,7 +89,7 @@ const InstanceDetails = ({
             <IconButton
               icon="tag"
               id="clickable-show-tags"
-              onClick={showTagsHelperApp}
+              onClick={() => setHelperApp('tags')}
               badgeCount={tags?.length}
               ariaLabel={intl.formatMessage({ id: 'ui-inventory.showTags' })}
             />
@@ -102,7 +97,7 @@ const InstanceDetails = ({
         }
       </PaneMenu>
     );
-  }, [showTagsHelperApp, tagsEnabled, tags]);
+  }, [showTagsHelperApp, tagsEnabled, tags, setHelperApp]);
 
   return (
     <>
