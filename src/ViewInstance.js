@@ -19,6 +19,7 @@ import {
   Icon,
   Callout,
 } from '@folio/stripes/components';
+import { withTags } from '@folio/stripes/smart-components';
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
@@ -454,6 +455,7 @@ class ViewInstance extends React.Component {
       stripes,
       onClose,
       paneWidth,
+      tagsEnabled,
     } = this.props;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
@@ -486,6 +488,7 @@ class ViewInstance extends React.Component {
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
           referenceData={referenceTables}
+          tagsEnabled={tagsEnabled}
         >
           {
             (!holdingsrecordid && !itemid) ?
@@ -582,7 +585,8 @@ ViewInstance.propTypes = {
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
   }).isRequired,
+  tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default withLocation(ViewInstance);
+export default withLocation(withTags(ViewInstance));
