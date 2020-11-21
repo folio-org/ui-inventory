@@ -198,9 +198,9 @@ DataProvider.manifest = {
     },
     records: 'loantypes',
   },
-  tagsRecords: {
+  tags: {
     params: {
-      limit: '5000',
+      limit: '10000',
       query: 'cql.allRecords=1 sortby label',
     },
     path: 'tags',
