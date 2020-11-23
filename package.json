@@ -74,7 +74,8 @@
       "holdings-sources": "1.0",
       "users": "15.0",
       "location-units": "2.0",
-      "circulation": "9.0"
+      "circulation": "9.0",
+      "configuration": "2.0"
     },
     "permissionSets": [
       {
