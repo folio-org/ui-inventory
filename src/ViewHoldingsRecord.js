@@ -89,16 +89,10 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'locations/%{temporaryLocationQuery.id}',
     },
-    configTags: {
+    tagSettings: {
       type: 'okapi',
-      path: 'configurations/entries',
       records: 'configs',
-      throwErrors: false,
-      GET: {
-        params: {
-          query: '(module=TAGS and configName=tags_enabled)',
-        },
-      },
+      path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
     },
   });
 
@@ -288,6 +282,9 @@ class ViewHoldingsRecord extends React.Component {
     return false;
   };
 
+  getEntity = () => this.props.resources.holdingsRecords.records[0];
+  getEntityTags = () => this.props.resources.holdingsRecords.records[0]?.tags?.tagList || [];
+
   render() {
     const {
       location,
@@ -297,7 +294,7 @@ class ViewHoldingsRecord extends React.Component {
         permanentLocation,
         temporaryLocation,
         items,
-        configTags,
+        tagSettings,
       },
       referenceTables,
       okapi,
@@ -314,7 +311,7 @@ class ViewHoldingsRecord extends React.Component {
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
     const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
-    const tagsEnabled = configTags?.records?.[0]?.value === 'true';
+    const tagsEnabled = tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -468,9 +465,6 @@ class ViewHoldingsRecord extends React.Component {
         );
       });
     };
-
-    const getEntity = () => holdingsRecord;
-    const getEntityTags = () => holdingsRecord?.tags?.tagList || [];
 
     return (
       <IntlConsumer>
@@ -738,8 +732,8 @@ class ViewHoldingsRecord extends React.Component {
                       {tagsEnabled && (
                         <TagsAccordion
                           link={`holdings-storage/holdings/${holdingsRecord.id}`}
-                          getEntity={getEntity}
-                          getEntityTags={getEntityTags}
+                          getEntity={this.getEntity}
+                          getEntityTags={this.getEntityTags}
                           entityTagsPath="tags"
                         />
                       )}
@@ -895,7 +889,7 @@ ViewHoldingsRecord.propTypes = {
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    configTags: PropTypes.shape({
+    tagSettings: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     permanentLocation: PropTypes.object,
