@@ -27,6 +27,7 @@ export default Factory.extend({
   childInstances: () => [],
   parentInstances: () => [],
   statisticalCodeIds: () => [],
+  tags: () => ({ tagList: [] }),
   hrid: i => `in0000000000${i + 1}`,
   metadata: {
     createdDate: date.between('2019-01-01', '2020-01-01'),
@@ -182,9 +183,11 @@ export default Factory.extend({
     afterCreate(instance, server) {
       const holding = server.create(
         'holding',
-        { callNumber: 'Call Number',
+        {
+          callNumber: 'Call Number',
           callNumberPrefix: 'Prefix',
-          callNumberSuffix: 'Suffix' },
+          callNumberSuffix: 'Suffix'
+        },
       );
 
       instance.holdings = [holding];

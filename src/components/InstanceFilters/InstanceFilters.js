@@ -35,6 +35,7 @@ const InstanceFilters = props => {
       createdDate = [],
       updatedDate = [],
       source = [],
+      tags = [],
     },
     data: {
       locations,
@@ -42,6 +43,7 @@ const InstanceFilters = props => {
       instanceFormats,
       modesOfIssuance,
       natureOfContentTerms,
+      tagsRecords,
     },
     onChange,
     onClear,
@@ -72,6 +74,8 @@ const InstanceFilters = props => {
     value: id,
   }));
 
+  const tagsOptions = tagsRecords.map(({ label }) => ({ label, value: label }));
+
   const suppressedOptions = [
     {
       label: <FormattedMessage id="ui-inventory.yes" />,
@@ -97,6 +101,7 @@ const InstanceFilters = props => {
   const intl = useIntl();
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
+  const noTagsSelected = tags?.length === 0;
 
   return (
     <>
@@ -284,6 +289,21 @@ const InstanceFilters = props => {
           dataOptions={sourceOptions}
           selectedValues={source}
           onChange={onChange}
+        />
+      </Accordion>
+      <Accordion
+        closedByDefault={noTagsSelected}
+        displayClearButton={!noTagsSelected}
+        header={FilterAccordionHeader}
+        id="instances-filter-accordion-tags"
+        label={intl.formatMessage({ id: 'ui-inventory.filter.tags' })}
+        onClearFilter={() => onClear('tags')}
+      >
+        <MultiSelectionFilter
+          dataOptions={tagsOptions}
+          name="tags"
+          onChange={onChange}
+          selectedValues={tags}
         />
       </Accordion>
     </>

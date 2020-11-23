@@ -2,44 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { Tags } from '@folio/stripes/smart-components';
-import { withStripes, stripesConnect } from '@folio/stripes/core';
 
-class HelperApp extends React.Component {
-  static propTypes = {
-    match: PropTypes.object,
-    stripes: PropTypes.object,
-    onClose: PropTypes.func,
-    appName: PropTypes.string,
-  };
+const HELPER_APPS = {
+  tags: Tags,
+};
 
-  constructor(props) {
-    super(props);
-    this.helperApps = {
-      tags: stripesConnect(Tags)
-    };
-  }
+function HelperApp({
+  appName,
+  match: { params },
+  onClose,
+}) {
+  const HelperAppComponent = HELPER_APPS[appName];
 
-  renderHelperApp = () => {
-    const {
-      match: { params },
-      appName,
-      onClose,
-    } = this.props;
-
-    const HelperAppComponent = this.helperApps[appName];
-
-    return (
-      <HelperAppComponent
-        link={`inventory/instances/${params.id}`}
-        onToggle={onClose}
-        {...this.props}
-      />
-    );
-  }
-
-  render() {
-    return this.renderHelperApp();
-  }
+  return (
+    <HelperAppComponent
+      link={`inventory/instances/${params.id}`}
+      onToggle={onClose}
+    />
+  );
 }
 
-export default withRouter(withStripes(HelperApp));
+HelperApp.propTypes = {
+  appName: PropTypes.string,
+  match: PropTypes.object,
+  onClose: PropTypes.func,
+};
+
+export default withRouter(HelperApp);
