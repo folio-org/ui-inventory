@@ -895,6 +895,9 @@ ViewHoldingsRecord.propTypes = {
     locations: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    configTags: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
     permanentLocation: PropTypes.object,
     temporaryLocation: PropTypes.object,
     permanentLocationQuery: PropTypes.object,
