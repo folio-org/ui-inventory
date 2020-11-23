@@ -11,6 +11,8 @@ import {
   MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
 
+import TagsFilter from '../TagsFilter';
+
 export default class HoldingsRecordFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.objectOf(PropTypes.array),
@@ -32,9 +34,11 @@ export default class HoldingsRecordFilters extends React.Component {
         discoverySuppress = [],
         effectiveLocation = [],
         holdingsPermanentLocation = [],
+        tags = [],
       },
       data: {
         locations,
+        tagsRecords,
       },
       onChange,
       onClear,
@@ -108,6 +112,12 @@ export default class HoldingsRecordFilters extends React.Component {
             onChange={onChange}
           />
         </Accordion>
+        <TagsFilter
+          onChange={onChange}
+          onClear={onClear}
+          selectedValues={tags}
+          tagsRecords={tagsRecords}
+        />
       </>
     );
   }

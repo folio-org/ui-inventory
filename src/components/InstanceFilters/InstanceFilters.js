@@ -20,6 +20,7 @@ import {
   makeDateRangeFilterString,
 } from '../../utils';
 import { DATE_FORMAT } from '../../constants';
+import TagsFilter from '../TagsFilter';
 
 const InstanceFilters = props => {
   const {
@@ -74,8 +75,6 @@ const InstanceFilters = props => {
     value: id,
   }));
 
-  const tagsOptions = tagsRecords.map(({ label }) => ({ label, value: label }));
-
   const suppressedOptions = [
     {
       label: <FormattedMessage id="ui-inventory.yes" />,
@@ -101,7 +100,6 @@ const InstanceFilters = props => {
   const intl = useIntl();
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
-  const noTagsSelected = tags?.length === 0;
 
   return (
     <>
@@ -291,21 +289,12 @@ const InstanceFilters = props => {
           onChange={onChange}
         />
       </Accordion>
-      <Accordion
-        closedByDefault={noTagsSelected}
-        displayClearButton={!noTagsSelected}
-        header={FilterAccordionHeader}
-        id="instances-filter-accordion-tags"
-        label={intl.formatMessage({ id: 'ui-inventory.filter.tags' })}
-        onClearFilter={() => onClear('tags')}
-      >
-        <MultiSelectionFilter
-          dataOptions={tagsOptions}
-          name="tags"
-          onChange={onChange}
-          selectedValues={tags}
-        />
-      </Accordion>
+      <TagsFilter
+        onChange={onChange}
+        onClear={onClear}
+        selectedValues={tags}
+        tagsRecords={tagsRecords}
+      />
     </>
   );
 };
