@@ -38,7 +38,7 @@ function TagsFilter({ onChange, onClear, selectedValues, tagsRecords }) {
 }
 
 TagsFilter.propTypes = {
-  selectedValues: PropTypes.arrayOf(PropTypes.object),
+  selectedValues: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   tagsRecords: PropTypes.arrayOf(PropTypes.object),
