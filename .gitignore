@@ -8,6 +8,7 @@ yarn.lock
 ModuleDescriptor.json
 yarn-error.log
 .npmrc
+junit.xml
 
 # stripes
 .stripesclirc
