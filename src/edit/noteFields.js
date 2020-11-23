@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
-  TextField,
   TextArea,
   Select,
   Checkbox,

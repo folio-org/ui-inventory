@@ -30,6 +30,7 @@ import {
 import {
   ViewMetaData,
   ClipCopy,
+  TagsAccordion,
 } from '@folio/stripes/smart-components';
 import {
   AppIcon,
@@ -87,6 +88,11 @@ class ViewHoldingsRecord extends React.Component {
     temporaryLocation: {
       type: 'okapi',
       path: 'locations/%{temporaryLocationQuery.id}',
+    },
+    tagSettings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
     },
   });
 
@@ -276,6 +282,9 @@ class ViewHoldingsRecord extends React.Component {
     return false;
   };
 
+  getEntity = () => this.props.resources.holdingsRecords.records[0];
+  getEntityTags = () => this.props.resources.holdingsRecords.records[0]?.tags?.tagList || [];
+
   render() {
     const {
       location,
@@ -285,6 +294,7 @@ class ViewHoldingsRecord extends React.Component {
         permanentLocation,
         temporaryLocation,
         items,
+        tagSettings,
       },
       referenceTables,
       okapi,
@@ -301,6 +311,7 @@ class ViewHoldingsRecord extends React.Component {
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
     const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
+    const tagsEnabled = tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage
@@ -718,6 +729,15 @@ class ViewHoldingsRecord extends React.Component {
                         </Row>
                       </Accordion>
 
+                      {tagsEnabled && (
+                        <TagsAccordion
+                          link={`holdings-storage/holdings/${holdingsRecord.id}`}
+                          getEntity={this.getEntity}
+                          getEntityTags={this.getEntityTags}
+                          entityTagsPath="tags"
+                        />
+                      )}
+
                       <Accordion
                         id="acc04"
                         label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
@@ -867,6 +887,9 @@ ViewHoldingsRecord.propTypes = {
     }),
     holdingsRecords: PropTypes.object,
     locations: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    tagSettings: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     permanentLocation: PropTypes.object,
