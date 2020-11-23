@@ -199,7 +199,13 @@ export const itemFilterConfig = [
     cql: 'item.discoverySuppress',
     values: [],
     parse: buildOptionalBooleanQuery('item.discoverySuppress'),
-  }
+  },
+  {
+    name: 'tags',
+    cql: 'item.tags.tagList',
+    values: [],
+    operator: '=',
+  },
 ];
 
 export const itemSortMap = {
