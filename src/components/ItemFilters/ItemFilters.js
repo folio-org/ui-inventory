@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { filterItemsBy } from '../../utils';
+import TagsFilter from '../TagsFilter';
 
 class ItemFilters extends React.Component {
   static propTypes = {
@@ -39,11 +40,13 @@ class ItemFilters extends React.Component {
         effectiveLocation = [],
         holdingsPermanentLocation = [],
         discoverySuppress = [],
+        tags = [],
       },
       data: {
         materialTypes,
         itemStatuses,
         locations,
+        tagsRecords,
       },
       intl,
       onChange,
@@ -161,6 +164,12 @@ class ItemFilters extends React.Component {
             onChange={onChange}
           />
         </Accordion>
+        <TagsFilter
+          onChange={onChange}
+          onClear={onClear}
+          selectedValues={tags}
+          tagsRecords={tagsRecords}
+        />
       </>
     );
   }

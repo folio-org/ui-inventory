@@ -2,6 +2,7 @@
 
 ## 6.0.0 (IN PROGRESS)
 
+* Filter Item by Tags. Refs UIIN-765.
 * Filter Holdings by Tags. Refs UIIN-764.
 * Assign tags to Inventory Holdings. Refs UIIN-308.
 * Filter Instance by Tags. Refs UIIN-763.
