@@ -143,6 +143,12 @@ export const holdingFilterConfig = [
     values: [],
     parse: buildOptionalBooleanQuery('holdingsRecords.discoverySuppress'),
   },
+  {
+    name: 'tags',
+    cql: 'holdingsRecords.tags.tagList',
+    values: [],
+    operator: '=',
+  },
 ];
 
 export const itemIndexes = [
