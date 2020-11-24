@@ -199,11 +199,7 @@ DataProvider.manifest = {
     records: 'loantypes',
   },
   tags: {
-    params: {
-      limit: '10000',
-      query: 'cql.allRecords=1 sortby label',
-    },
-    path: 'tags',
+    path: 'tags?limit=10000',  // the same as Tags component in stripes-smart-components
     records: 'tags',
     throwErrors: false,
     type: 'okapi',

@@ -36,7 +36,7 @@ const InstanceFilters = props => {
       createdDate = [],
       updatedDate = [],
       source = [],
-      tags = [],
+      tags,
     },
     data: {
       locations,

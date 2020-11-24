@@ -34,7 +34,7 @@ export default class HoldingsRecordFilters extends React.Component {
         discoverySuppress = [],
         effectiveLocation = [],
         holdingsPermanentLocation = [],
-        tags = [],
+        tags,
       },
       data: {
         locations,
