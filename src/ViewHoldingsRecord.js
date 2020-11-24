@@ -311,7 +311,7 @@ class ViewHoldingsRecord extends React.Component {
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
     const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
-    const tagsEnabled = tagSettings?.records?.[0]?.value === 'true';
+    const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <SafeHTMLMessage

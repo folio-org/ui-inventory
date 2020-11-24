@@ -36,6 +36,7 @@ import {
 import {
   ViewMetaData,
   ClipCopy,
+  TagsAccordion,
 } from '@folio/stripes/smart-components';
 import {
   AppIcon,
@@ -309,6 +310,9 @@ class ItemView extends React.Component {
     );
   };
 
+  getEntity = () => this.props.resources.items.records[0];
+  getEntityTags = () => this.props.resources.items.records[0]?.tags?.tagList || [];
+
   render() {
     const {
       location,
@@ -320,6 +324,7 @@ class ItemView extends React.Component {
         staffMembers,
         servicePoints,
         openLoans,
+        tagSettings,
       },
       referenceTables,
       okapi,
@@ -353,6 +358,7 @@ class ItemView extends React.Component {
     const { locationsById } = referenceTables;
     const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
     const temporaryHoldingsLocation = locationsById[holdingsRecord.temporaryLocationId];
+    const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const requestRecords = (requests || {}).records || [];
     const query = location.search ? queryString.parse(location.search) : {};
@@ -1002,6 +1008,16 @@ class ItemView extends React.Component {
                       </Col>
                     </Row>
                   </Accordion>
+
+                  {tagsEnabled && (
+                    <TagsAccordion
+                      link={`inventory/items/${item.id}`}
+                      getEntity={this.getEntity}
+                      getEntityTags={this.getEntityTags}
+                      entityTagsPath="tags"
+                    />
+                  )}
+
                   <Accordion
                     id="acc05"
                     label={<FormattedMessage id="ui-inventory.itemNotes" />}
@@ -1270,6 +1286,7 @@ ItemView.propTypes = {
     staffMembers: PropTypes.object,
     servicePoints: PropTypes.object,
     openLoans: PropTypes.object,
+    tagSettings: PropTypes.object,
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
