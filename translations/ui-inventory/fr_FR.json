@@ -218,7 +218,7 @@
     "staffOnly": "Pour le personnel uniquement",
     "nonPublicNote": "Note non publique",
     "actionNote": "Note d'action",
-    "reproductionNote": "Reproduction note",
+    "reproductionNote": "Note de reproduction",
     "binding": "Binding",
     "provenance": "Provenance",
     "copyNotes": "Copier des notes",
@@ -302,7 +302,7 @@
     "addStatisticalCode": "Ajouter un code statistique",
     "selectHoldingsType": "Select holdings type",
     "publicDisplay": "Affichage public",
-    "addReceivingHistory": "Add receiving history",
+    "addReceivingHistory": "Ajouter l'historique de réception",
     "selectIllPolicy": "Sélectionner la politique de PEB",
     "newRequest": "Nouvelle demande",
     "instances.resourceType": "Type de ressource",
@@ -343,7 +343,7 @@
     "noItemDeleteModal.requestMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> has a request associated and cannot be deleted until the request has been fulfilled, or the request has been cancelled. If you want to continue with the deletion of the item record, go to the Request app and clear the dependency.",
     "noItemDeleteModal.orderMessage": "L'élément HRID <strong> {hrid} </strong> avec le code-barres <strong> {barcode} </strong> est en commande et ne peut pas être <strong> supprimé </strong> tant que toutes les dépendances avec l'application Commande n'ont pas été effacées. Si vous souhaitez continuer la suppression de l'enregistrement d'article, accédez à l'application Commande et supprimez les dépendances.",
     "holdingRecord": "Enregistrement {callNumber} {location} {callNumber}",
-    "instanceRecordTitle": "Instance record {title} {publisherAndDate}",
+    "instanceRecordTitle": "Enregistrement d'instance {title} {publisherAndDate}",
     "makePrimary": "Définir comme principal(e)",
     "holdingsNoteTypes": "Type de notes sur les collections",
     "itemNoteTypes": "Types de note d'article",
@@ -584,5 +584,9 @@
     "instanceMatchKey": "Clé de correspondance d'instance",
     "confirm": "Confirmer",
     "confirmModal.message": "Le statut de l'exemplaire <strong>{title} ({materialType})</strong> (code à barres: {barcode})sera marqué comme : <strong>{status}</strong>.",
-    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}"
+    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}",
+    "saveInstancesUIIDS.info": "Request to save instances UUIDs has been received. File download may take a few minutes.",
+    "instances.rows.select": "Sélectionnez une instance",
+    "showTags": "Show tags",
+    "filter.tags": "Tags"
 }
