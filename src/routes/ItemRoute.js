@@ -93,6 +93,11 @@ class ItemRoute extends React.Component {
       records: 'loans',
     },
     requestOnItem: {},
+    tagSettings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
+    },
   });
 
   onClose = () => {
