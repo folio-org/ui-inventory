@@ -16,7 +16,9 @@ function TagsFilter({ onChange, onClear, selectedValues, tagsRecords }) {
   const intl = useIntl();
   const onClearFilter = useCallback(() => onClear(FILTER_NAME), [onClear]);
 
-  const tagsOptions = tagsRecords.map(({ label }) => ({ label, value: label }));
+  const tagsOptions = tagsRecords
+    .map(({ label }) => ({ label, value: label }))
+    .sort((a, b) => a.label.localeCompare((b.label)));
   const noTagsSelected = selectedValues?.length === 0;
 
   return (
@@ -45,7 +47,6 @@ TagsFilter.propTypes = {
 };
 
 TagsFilter.defaultProps = {
-  selectedValues: [],
   tagsRecords: [],
 };
 

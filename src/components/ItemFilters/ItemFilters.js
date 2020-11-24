@@ -40,7 +40,7 @@ class ItemFilters extends React.Component {
         effectiveLocation = [],
         holdingsPermanentLocation = [],
         discoverySuppress = [],
-        tags = [],
+        tags,
       },
       data: {
         materialTypes,
