@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { TextField } from '@folio/stripes/components';
+import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../../components/RepeatableField';
 
@@ -14,17 +14,20 @@ const HoldingsStatementForIndexesFields = () => (
       {
         name: 'statement',
         label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexes" />,
-        component: TextField,
+        component: TextArea,
+        rows: 1,
       },
       {
         name: 'note',
         label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesPublicNote" />,
-        component: TextField,
+        component: TextArea,
+        rows: 1,
       },
       {
         name: 'staffNote',
         label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesStaffNote" />,
-        component: TextField,
+        component: TextArea,
+        rows: 1,
       },
     ]}
   />
