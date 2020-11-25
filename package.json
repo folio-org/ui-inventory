@@ -654,9 +654,10 @@
   "scripts": {
     "start": "stripes serve",
     "lint": "eslint .",
-    "test": "yarn run test:unit && yarn run test:e2e",
+    "test": "yarn run test:unit && yarn run test:e2e:ci",
     "test:unit": "jest --ci --coverage",
-    "test:e2e": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e": "stripes test karma",
+    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
