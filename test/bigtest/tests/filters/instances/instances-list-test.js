@@ -75,7 +75,7 @@ describe('Instances list', () => {
         });
       });
 
-      describe('applying filters so previously selected items no longer displayed', () => {
+      describe('applying filters so previously selected items are no longer displayed', () => {
         beforeEach(async () => {
           await inventory.source.open();
           await inventory.source.checkboxes.dataOptions(5).click();
