@@ -561,6 +561,7 @@ class ItemView extends React.Component {
       acc07: !areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
       acc08: !areAllFieldsEmpty(values(electronicAccess)),
       acc09: !areAllFieldsEmpty(values(circulationHistory)),
+      itemTags: item?.tags?.tagList?.length,
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
@@ -1015,6 +1016,7 @@ class ItemView extends React.Component {
                       getEntity={this.getEntity}
                       getEntityTags={this.getEntityTags}
                       entityTagsPath="tags"
+                      id="itemTags"
                     />
                   )}
 

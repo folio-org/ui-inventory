@@ -401,6 +401,7 @@ class ViewHoldingsRecord extends React.Component {
       acc05: !areAllFieldsEmpty([electronicAccess]),
       acc06: !areAllFieldsEmpty(Object.values(acquisition)),
       acc07: !areAllFieldsEmpty([receivingHistory]),
+      holdingTags: holdingsRecord?.tags?.tagList?.length,
     };
 
     const holdingsDetailsTables = intl => holdingsStatementTypes.map(({ type, title }) => ({
@@ -735,6 +736,7 @@ class ViewHoldingsRecord extends React.Component {
                           getEntity={this.getEntity}
                           getEntityTags={this.getEntityTags}
                           entityTagsPath="tags"
+                          id="holdingTags"
                         />
                       )}
 
