@@ -90,6 +90,7 @@ class InstancesView extends React.Component {
     inTransitItemsExportInProgress: false,
     instancesIdExportInProgress: false,
     showErrorModal: false,
+    selectedRows: {},
   };
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -348,6 +349,25 @@ class InstancesView extends React.Component {
     this.setState({ showErrorModal: false });
   };
 
+  toggleRowSelection = rowId => {
+    this.setState(({ selectedRows }) => {
+      const isRowSelected = Boolean(selectedRows[rowId]);
+      const newSelectedRows = { ...selectedRows };
+
+      if (isRowSelected) {
+        delete newSelectedRows[rowId];
+      } else {
+        newSelectedRows[rowId] = true;
+      }
+
+      return { selectedRows: newSelectedRows };
+    });
+  };
+
+  handleResetAll = () => {
+    this.setState({ selectedRows: {} });
+  }
+
   render() {
     const {
       showSingleResult,
@@ -367,9 +387,13 @@ class InstancesView extends React.Component {
     } = this.props;
 
     const resultsFormatter = {
-      'select': () => (
+      'select': ({ id }) => (
         <CheckboxColumn>
-          <Checkbox aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })} />
+          <Checkbox
+            checked={Boolean(this.state.selectedRows[id])}
+            aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
+            onChange={() => this.toggleRowSelection(id)}
+          />
         </CheckboxColumn>
       ),
       'title': ({ title }) => (
@@ -450,6 +474,7 @@ class InstancesView extends React.Component {
             pageAmount={100}
             pagingType="click"
             hasNewButton={false}
+            onResetAll={this.handleResetAll}
           />
         </div>
         <Pluggable
