@@ -654,10 +654,9 @@
   "scripts": {
     "start": "stripes serve",
     "lint": "eslint .",
-    "test": "yarn run test:unit && yarn run test:e2e:ci",
+    "test": "yarn run test:e2e",
     "test:unit": "jest --ci --coverage",
-    "test:e2e": "stripes test karma",
-    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
@@ -671,7 +670,6 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.0.0",
     "@folio/stripes": "^5.0.0",
-    "@folio/stripes-acq-components": "^2.2.0",
     "@folio/stripes-cli": "^1.13.0",
     "@folio/stripes-components": "^8.0.0",
     "@folio/stripes-core": "^6.0.0",
