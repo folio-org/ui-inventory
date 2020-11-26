@@ -29,7 +29,7 @@ function TagsFilter({ onChange, onClear, selectedValues, tagsRecords }) {
   return (
     <Accordion
       closedByDefault={!hasTagsSelected}
-      displayClearButton={selectedValues?.length}
+      displayClearButton={!!selectedValues?.length}
       header={FilterAccordionHeader}
       label={intl.formatMessage({ id: 'ui-inventory.filter.tags' })}
       onClearFilter={onClearFilter}
