@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Select,
-  TextField,
+  TextArea,
   Checkbox,
 } from '@folio/stripes/components';
 
@@ -28,7 +28,8 @@ const Note = ({ noteTypeOptions }) => (
           {
             name: 'note',
             label: <FormattedMessage id="ui-inventory.note" />,
-            component: TextField,
+            component: TextArea,
+            rows: 1,
           },
           {
             name: 'staffOnly',

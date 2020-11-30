@@ -12,6 +12,7 @@ import {
   Row,
   Col,
   Button,
+  TextArea,
   TextField,
   Select,
   Checkbox,
@@ -580,7 +581,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
                     name="callNumberPrefix"
                     id="additem_callnumberprefix"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -589,7 +591,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.callNumber" />}
                     name="callNumber"
                     id="additem_callnumber"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -598,7 +601,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
                     name="callNumberSuffix"
                     id="additem_callnumbersuffix"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -653,7 +657,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
                     name="digitizationPolicy"
                     id="edit_digitizationpolicy"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                   />
                 </Col>
                 <Col sm={3}>
@@ -661,7 +666,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
                     name="retentionPolicy"
                     id="edit_retentionpolicy"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                   />
                 </Col>
               </Row>
@@ -741,12 +747,14 @@ class HoldingsForm extends React.Component {
                       {
                         name: 'enumeration',
                         label: <FormattedMessage id="ui-inventory.enumeration" />,
-                        component: TextField,
+                        component: TextArea,
+                        rows: 1,
                       },
                       {
                         name: 'chronology',
                         label: <FormattedMessage id="ui-inventory.chronology" />,
-                        component: TextField,
+                        component: TextArea,
+                        rows: 1,
                       },
                     ]}
                   />
