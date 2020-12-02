@@ -21,6 +21,7 @@
 * Add select row checkboxes to inventory instance search result. Refs UIIN-1349.
 * Implement records selection on the inventory search screen. Refs UIIN-1350.
 * Replace most holdings-record `<TextField>` elements with `<TextArea>`s to support scrolling. Refs UIIN-1279.
+* Replace some item record `<TextField>` elements with `<TextArea>`s to support scrolling. Refs UIIN-1280.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

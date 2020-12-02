@@ -22,6 +22,7 @@ import {
   Datepicker,
   ExpandAllButton,
   ConfirmationModal,
+  TextArea,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -568,7 +569,8 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
                     name="itemLevelCallNumberPrefix"
                     id="additem_callnumberprefix"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -577,7 +579,8 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.callNumber" />}
                     name="itemLevelCallNumber"
                     id="additem_callnumber"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -586,7 +589,8 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
                     name="itemLevelCallNumberSuffix"
                     id="additem_callnumbersuffix"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -605,7 +609,8 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
                     name="descriptionOfPieces"
                     id="input_descriptionofpieces"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                   />
                 </Col>
               </Row>
@@ -622,7 +627,8 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.enumeration" />}
                     name="enumeration"
                     id="additem_enumeration"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -631,7 +637,8 @@ class ItemForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.chronology" />}
                     name="chronology"
                     id="additem_chronology"
-                    component={TextField}
+                    component={TextArea}
+                    rows={1}
                     fullWidth
                   />
                 </Col>
@@ -749,7 +756,8 @@ class ItemForm extends React.Component {
                       {
                         name: 'note',
                         label: <FormattedMessage id="ui-inventory.note" />,
-                        component: TextField,
+                        component: TextArea,
+                        rows: 1,
                       },
                       {
                         name: 'staffOnly',
