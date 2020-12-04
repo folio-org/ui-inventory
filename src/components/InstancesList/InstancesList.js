@@ -5,6 +5,7 @@ import {
   get,
   set,
   flowRight,
+  size,
   isEmpty,
   noop,
 } from 'lodash';
@@ -368,6 +369,19 @@ class InstancesView extends React.Component {
     this.setState({ selectedRows: {} });
   }
 
+  renderPaneSub() {
+    const selectedRowsCount = size(this.state.selectedRows);
+
+    return selectedRowsCount
+      ? (
+        <FormattedMessage
+          id="ui-inventory.instances.rows.recordsSelected"
+          values={{ count: selectedRowsCount }}
+        />
+      )
+      : null;
+  }
+
   render() {
     const {
       showSingleResult,
@@ -453,6 +467,7 @@ class InstancesView extends React.Component {
               select: '30px',
               title: '40%',
             }}
+            customPaneSub={this.renderPaneSub()}
             resultsFormatter={resultsFormatter}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"

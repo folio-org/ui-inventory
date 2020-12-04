@@ -28,6 +28,15 @@ describe('Instances list', () => {
       },
       source: 'MARC',
     }, 'withHoldingAndItem');
+    this.server.create('instance', {
+      title: 'A Brief History of Tomorrow',
+      contributors: [{ name: 'Yuval Noah Harari' }],
+      metadata: {
+        createdDate: '2020-03-04',
+        updatedDate: '2020-04-15',
+      },
+      source: 'MARC',
+    }, 'withHoldingAndItem');
 
     this.visit('/inventory');
   });
@@ -39,7 +48,7 @@ describe('Instances list', () => {
     });
 
     it('should have proper list results size', () => {
-      expect(instancesRoute.rows().length).to.equal(1);
+      expect(instancesRoute.rows().length).to.equal(2);
     });
 
     it('should render nothing for select row column header', () => {
@@ -50,17 +59,35 @@ describe('Instances list', () => {
       expect(instancesRoute.selectRowCheckboxes(0).isChecked).to.be.false;
     });
 
+    it('should not display information about selected items', () => {
+      expect(instancesRoute.customPaneSub.isPresent).to.be.false;
+    });
+
     describe('selecting row', () => {
       beforeEach(async () => {
         await instancesRoute.selectRowCheckboxes(0).clickInput();
       });
 
       it('should have proper list results size', () => {
-        expect(instancesRoute.rows().length).to.equal(1);
+        expect(instancesRoute.rows().length).to.equal(2);
       });
 
       it('should display checked select row checkbox', () => {
         expect(instancesRoute.selectRowCheckboxes(0).isChecked).to.be.true;
+      });
+
+      it('should display selected rows count message in the sub header', () => {
+        expect(instancesRoute.customPaneSub.text).to.equal('1 record selected');
+      });
+
+      describe('selecting more than one row', () => {
+        beforeEach(async () => {
+          await instancesRoute.selectRowCheckboxes(1).clickInput();
+        });
+
+        it('should display selected rows count message (plural form) in the sub header', () => {
+          expect(instancesRoute.customPaneSub.text).to.equal('2 records selected');
+        });
       });
 
       describe('clicking on reset all button and reapplying previous filter', () => {
@@ -72,6 +99,10 @@ describe('Instances list', () => {
 
         it('should reset the selected state for the previously selected row', () => {
           expect(instancesRoute.selectRowCheckboxes(0).isChecked).to.be.false;
+        });
+
+        it('should reset selected rows count message in the subheader by hiding it', () => {
+          expect(instancesRoute.customPaneSub.isPresent).to.be.false;
         });
       });
 
@@ -85,6 +116,10 @@ describe('Instances list', () => {
           expect(instancesRoute.rows().length).to.equal(0);
         });
 
+        it('should display selected rows count message in the sub header', () => {
+          expect(instancesRoute.customPaneSub.text).to.equal('1 record selected');
+        });
+
         describe('applying filters so previously selected items is displayed again', () => {
           beforeEach(async () => {
             await inventory.source.open();
@@ -93,6 +128,10 @@ describe('Instances list', () => {
 
           it('should preserve the selected state for the previously selected row', () => {
             expect(instancesRoute.selectRowCheckboxes(0).isChecked).to.be.true;
+          });
+
+          it('should display selected rows count message in the sub header', () => {
+            expect(instancesRoute.customPaneSub.text).to.equal('1 record selected');
           });
         });
       });
