@@ -24,6 +24,7 @@
 * Replace some item record `<TextField>` elements with `<TextArea>`s to support scrolling. Refs UIIN-1280.
 * Add selected instances count in the sub header. Refs UIIN-1364.
 * Update title in Holdings detailed view. Fixes UIIN-1310.
+* Modify display of statistical codes in instance detail view. Refs UIIN-1150.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
