@@ -633,7 +633,7 @@ describe('InstanceViewPage', () => {
     });
   });
 
-  describe.only('Empty fields', () => {
+  describe('Empty fields', () => {
     setupApplication({ scenarios: ['fetch-items-success'] });
 
     visitingViewInventoryPageWithoutContent();
