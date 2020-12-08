@@ -15,15 +15,13 @@ import {
 
 const noValue = <NoValue />;
 
-const visibleColumns = ['type', 'code', 'name'];
+const visibleColumns = ['type', 'name'];
 const getColumnMapping = intl => ({
   type: intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-  code: intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-  name: intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
+  name: intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
 });
 const formatter = {
   type: item => item.type || noValue,
-  code: item => item.code || noValue,
   name: item => item.name || noValue,
 };
 const columnWidths = {
