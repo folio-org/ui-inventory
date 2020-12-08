@@ -633,7 +633,7 @@ describe('InstanceViewPage', () => {
     });
   });
 
-  describe('Empty fields', () => {
+  describe.only('Empty fields', () => {
     setupApplication({ scenarios: ['fetch-items-success'] });
 
     visitingViewInventoryPageWithoutContent();
@@ -646,7 +646,6 @@ describe('InstanceViewPage', () => {
       it('has correct values - dashes', () => {
         expect(InstanceViewPage.statisticalCodesList.rows(0).cells(0).content).to.be.equal('-');
         expect(InstanceViewPage.statisticalCodesList.rows(0).cells(1).content).to.be.equal('-');
-        expect(InstanceViewPage.statisticalCodesList.rows(0).cells(2).content).to.be.equal('-');
       });
     });
 
