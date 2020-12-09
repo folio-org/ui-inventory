@@ -1,3 +1,6 @@
 .actionIcon {
   margin-right: 10px;
 }
+.cellAlign {
+  align-items: flex-start;
+}
