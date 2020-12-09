@@ -76,7 +76,7 @@ export function buildManifestObject() {
       records: 'ids',
       accumulate: true,
       fetch: false,
-      path: 'instance-bulk/ids',
+      path: 'record-bulk/ids',
       throwErrors: false,
       GET: {
         params: {

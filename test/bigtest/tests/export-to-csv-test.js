@@ -25,7 +25,7 @@ describe('Instances', () => {
   let requests = [];
 
   async function setupInstancedIdReportInfoCallout(server, timeout) {
-    server.get('/instance-bulk/ids', () => {
+    server.get('/record-bulk/ids', () => {
       return new Promise((resolve) => {
         setTimeout(() => resolve([]), timeout);
       });
@@ -73,7 +73,7 @@ describe('Instances', () => {
 
     describe('clicking save instances UIIDs button with API request set up to fail', () => {
       beforeEach(async function () {
-        this.server.put('/instance-bulk/ids', {}, 500);
+        this.server.put('/record-bulk/ids', {}, 500);
 
         // Timeout to skip enabling animation
         await wait();
