@@ -382,6 +382,10 @@ class InstancesView extends React.Component {
       : null;
   }
 
+  formatCellStyles(defaultCellStyle) {
+    return `${defaultCellStyle} ${css.cellAlign}`;
+  }
+
   render() {
     const {
       showSingleResult,
@@ -467,6 +471,7 @@ class InstancesView extends React.Component {
               select: '30px',
               title: '40%',
             }}
+            getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
             resultsFormatter={resultsFormatter}
             onCreate={this.onCreate}
