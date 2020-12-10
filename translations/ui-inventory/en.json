@@ -483,6 +483,7 @@
   "saveInstancesUIIDS.error": "Error occurred while saving instances UUIDs. Please try again.",
   "saveInstancesCQLQuery": "Save instances CQL query",
   "exportInstancesInMARC": "Export instances (MARC)",
+  "exportInstancesInMARCLimitExceeded": "Selected record limit of {count, number} exceeded",
   "exportInstancesInJSON": "Export instances (JSON)",
   "reports.inTransitItem.barcode": "Item barcode",
   "reports.inTransitItem.title": "Title",
