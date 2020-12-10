@@ -77,7 +77,7 @@
       "circulation": "9.0",
       "configuration": "2.0",
       "tags": "1.0",
-      "inventory-record-bulk": "8.0"
+      "inventory-record-bulk": "1.0"
     },
     "permissionSets": [
       {
