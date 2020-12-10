@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import { sourceSuppressor } from '../utils';
+
 class HoldingsSourcesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -21,6 +23,7 @@ class HoldingsSourcesSettings extends React.Component {
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.holdings-sources');
+    const suppress = sourceSuppressor('folio');
 
     return (
       <IntlConsumer>
@@ -41,6 +44,7 @@ class HoldingsSourcesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['numberOfObjects']}
             nameKey="name"
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             id="holdingsSources"
             sortby="name"
             editable={hasPerm}
