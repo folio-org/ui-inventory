@@ -149,10 +149,6 @@ describe('Instances', () => {
       expect(inventory.headerDropdownMenu.isExportInstancesMARCIconPresent).to.be.true;
     });
 
-    it('should disable action button for export instances (MARC) if there are not items in search result', () => {
-      expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.true;
-    });
-
     it('should display action button for export instances (JSON)', () => {
       expect(inventory.headerDropdownMenu.exportInstancesJSONBtnIsVisible).to.be.true;
     });

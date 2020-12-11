@@ -41,7 +41,10 @@ import {
   marshalInstance,
   omitFromArray,
 } from '../../utils';
-import { INSTANCES_ID_REPORT_TIMEOUT } from '../../constants';
+import {
+  INSTANCES_ID_REPORT_TIMEOUT,
+  QUICK_EXPORT_LIMIT,
+} from '../../constants';
 import {
   InTransitItemReport,
   InstancesIdReport,
@@ -274,7 +277,9 @@ class InstancesView extends React.Component {
 
   getActionMenu = ({ onToggle }) => {
     const { parentResources } = this.props;
+    const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
+    const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -333,8 +338,19 @@ class InstancesView extends React.Component {
           icon: 'download',
           messageId: 'ui-inventory.exportInstancesInMARC',
           onClickHandler: buildOnClickHandler(noop),
-          isDisabled: true,
+          isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
         })}
+        {isQuickExportLimitExceeded && (
+          <span
+            className={css.feedbackError}
+            data-test-quick-marc-export-limit-exceeded
+          >
+            <FormattedMessage
+              id="ui-inventory.exportInstancesInMARCLimitExceeded"
+              values={{ count: QUICK_EXPORT_LIMIT }}
+            />
+          </span>
+        )}
         {this.getActionItem({
           id: 'dropdown-clickable-export-json',
           icon: 'download',

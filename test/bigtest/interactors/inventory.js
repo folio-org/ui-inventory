@@ -70,6 +70,7 @@ export default @interactor class InventoryInteractor {
 
   headerDropdown = scoped('[data-test-pane-header-actions-button]');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
+  headerDropdownMenuQuickMarcExportLimitExceeded = new Interactor('[data-test-quick-marc-export-limit-exceeded]');
 
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
   formatFilter = scoped('#format', MultiSelectFilterInteractor);
