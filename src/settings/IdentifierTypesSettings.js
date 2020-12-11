@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import { sourceSuppressor } from '../utils';
+
 class IdentifierTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -19,11 +21,9 @@ class IdentifierTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'folio';
-  suppressDelete = term => term.source === 'folio';
-
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.identifier-types');
+    const suppress = sourceSuppressor('folio');
 
     return (
       <IntlConsumer>
@@ -45,7 +45,7 @@ class IdentifierTypesSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             id="identifier-types"
             sortby="name"
             editable={hasPerm}

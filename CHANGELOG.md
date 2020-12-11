@@ -22,6 +22,14 @@
 * Implement records selection on the inventory search screen. Refs UIIN-1350.
 * Replace most holdings-record `<TextField>` elements with `<TextArea>`s to support scrolling. Refs UIIN-1279.
 * Replace some item record `<TextField>` elements with `<TextArea>`s to support scrolling. Refs UIIN-1280.
+* Add selected instances count in the sub header. Refs UIIN-1364.
+* Update title in Holdings detailed view. Fixes UIIN-1310.
+* Modify display of statistical codes in instance detail view. Refs UIIN-1150.
+* Result list. Align text in the columns in the top. Refs UIIN-1356.
+* Update API endpoint for retrieving instances UUIDs. Refs UIIN-1368.
+* Make holdings sources with source value `folio` non-editable in Settings. Refs UIIN-1314.
+* Add quick instances UUIDs export limit reached warning. Refs UIIN-1367.
+* Refactor the suppress actions in `Settings` into a single util function. Refs UIIN-1373.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

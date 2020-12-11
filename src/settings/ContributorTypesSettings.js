@@ -7,6 +7,8 @@ import { IntlConsumer } from '@folio/stripes/core';
 
 import validateNameAndCode from './validateNameAndCode';
 
+import { sourceSuppressor } from '../utils';
+
 class ContributorTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -21,11 +23,9 @@ class ContributorTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'marcrelator';
-  suppressDelete = term => term.source === 'marcrelator';
-
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.contributor-types');
+    const suppress = sourceSuppressor('marcrelator');
 
     return (
       <IntlConsumer>
@@ -48,7 +48,7 @@ class ContributorTypesSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             id="contributor-types"
             sortby="name"
             validate={validateNameAndCode}

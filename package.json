@@ -76,7 +76,8 @@
       "location-units": "2.0",
       "circulation": "9.0",
       "configuration": "2.0",
-      "tags": "1.0"
+      "tags": "1.0",
+      "inventory-record-bulk": "1.0"
     },
     "permissionSets": [
       {
@@ -346,6 +347,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.single-record-import",
+        "displayName": "Settings (Inventory): Configure single-record import",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "copycat.target-profiles.collection.get",
+          "copycat.target-profiles.item.get",
+          "copycat.target-profiles.item.post",
+          "copycat.target-profiles.item.put",
+          "copycat.target-profiles.item.delete"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.holdings-note-types",
         "displayName": "Settings (Inventory): Create, edit, delete holdings note types",
         "subPermissions": [
@@ -463,7 +477,7 @@
           "inventory-storage.service-points.item.get",
           "inventory-storage.service-points.collection.get",
           "inventory-storage.hrid-settings.item.get",
-          "inventory-storage.instance-bulk.ids.get"
+          "inventory-storage.record-bulk.ids.get"
         ],
         "visible": true
       },
@@ -648,15 +662,24 @@
           "inventory.items.item.mark-withdrawn.post"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.single-record-import",
+        "displayName": "Inventory: Import single record",
+        "subPermissions": [
+          "copycat.imports.post"
+        ],
+        "visible": true
       }
     ]
   },
   "scripts": {
     "start": "stripes serve",
     "lint": "eslint .",
-    "test": "yarn run test:e2e",
+    "test": "yarn run test:e2e:ci",
     "test:unit": "jest --ci --coverage",
-    "test:e2e": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e": "stripes test karma",
+    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

@@ -498,7 +498,7 @@ class ViewHoldingsRecord extends React.Component {
                   paneTitle={
                     <span data-test-header-title>
                       <FormattedMessage
-                        id="ui-inventory.holdingRecord"
+                        id="ui-inventory.holdingsTitle"
                         values={{
                           location: get(holdingsPermanentLocation, 'name', ''),
                           callNumber: callNumberLabel(holdingsRecord)
@@ -516,7 +516,7 @@ class ViewHoldingsRecord extends React.Component {
                       {instance.title}
                       {(instance.publication && instance.publication.length > 0) &&
                         <span>
-                          <em>, </em>
+                          <em>. </em>
                           <em>
                             {instance.publication[0].publisher}
                             {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
