@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import { sourceSuppressor } from '../utils';
+
 class ModesOfIssuanceSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -19,11 +21,9 @@ class ModesOfIssuanceSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdamodeissue';
-  suppressDelete = term => term.source === 'rdamodeissue';
-
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.modes-of-issuance');
+    const suppress = sourceSuppressor('rdamodeissue');
 
     return (
       <IntlConsumer>
@@ -45,7 +45,7 @@ class ModesOfIssuanceSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             id="modes-of-issuance"
             sortby="name"
             editable={hasPerm}
