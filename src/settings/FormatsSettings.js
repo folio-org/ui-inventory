@@ -7,6 +7,8 @@ import { IntlConsumer } from '@folio/stripes/core';
 
 import validateNameAndCode from './validateNameAndCode';
 
+import { sourceSuppressor } from '../utils';
+
 class FormatSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -21,11 +23,9 @@ class FormatSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'rdacarrier';
-  suppressDelete = term => term.source === 'rdacarrier';
-
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-formats');
+    const suppress = sourceSuppressor('rdacarrier');
 
     return (
       <IntlConsumer>
@@ -48,7 +48,7 @@ class FormatSettings extends React.Component {
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             id="formats"
             sortby="name"
             validate={validateNameAndCode}

@@ -7,6 +7,8 @@ import { IntlConsumer } from '@folio/stripes/core';
 
 import validateNameAndCode from './validateNameAndCode';
 
+import { sourceSuppressor } from '../utils';
+
 class InstanceStatusTypesSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -21,11 +23,9 @@ class InstanceStatusTypesSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'marcrelator';
-  suppressDelete = term => term.source === 'marcrelator';
-
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-statuses');
+    const suppress = sourceSuppressor('marcrelator');
 
     return (
       <IntlConsumer>
@@ -47,7 +47,7 @@ class InstanceStatusTypesSettings extends React.Component {
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             id="instanceStatus-types"
             sortby="name"
             validate={validateNameAndCode}
