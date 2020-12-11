@@ -279,7 +279,7 @@ class InstancesView extends React.Component {
     const { parentResources } = this.props;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
-    const isSelectedRowsCountExceededLimit = selectedRowsCount > QUICK_EXPORT_LIMIT;
+    const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -338,10 +338,13 @@ class InstancesView extends React.Component {
           icon: 'download',
           messageId: 'ui-inventory.exportInstancesInMARC',
           onClickHandler: buildOnClickHandler(noop),
-          isDisabled: true,
+          isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
         })}
-        {isSelectedRowsCountExceededLimit && (
-          <span className={css.feedbackError}>
+        {isQuickExportLimitExceeded && (
+          <span
+            className={css.feedbackError}
+            data-test-quick-marc-export-limit-exceeded
+          >
             <FormattedMessage
               id="ui-inventory.exportInstancesInMARCLimitExceeded"
               values={{ count: QUICK_EXPORT_LIMIT }}
