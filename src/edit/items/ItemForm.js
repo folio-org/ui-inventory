@@ -851,7 +851,8 @@ class ItemForm extends React.Component {
                       {
                         name: 'note',
                         label: <FormattedMessage id="ui-inventory.note" />,
-                        component: TextField,
+                        component: TextArea,
+                        rows: 1,
                       },
                       {
                         name: 'staffOnly',
