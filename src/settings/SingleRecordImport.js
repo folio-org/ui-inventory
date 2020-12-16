@@ -32,10 +32,14 @@ class SingleRecordImport extends React.Component {
             label={<FormattedMessage id="ui-inventory.targetProfiles" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.targetProfile' })}
             objectLabel={<FormattedMessage id="ui-inventory.targetProfiles" />}
-            visibleFields={['name', 'url']}
+            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'importProfileId']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               url: intl.formatMessage({ id: 'ui-inventory.url' }),
+              authentication: intl.formatMessage({ id: 'ui-inventory.authentication' }),
+              externalIdQueryMap: intl.formatMessage({ id: 'ui-inventory.externalIdQueryMap' }),
+              internalIdEmbedPath: intl.formatMessage({ id: 'ui-inventory.internalIdEmbedPath' }),
+              importProfileId: intl.formatMessage({ id: 'ui-inventory.importProfileId' }),
             }}
             nameKey="name"
             hiddenFields={['lastUpdated', 'numberOfObjects']}
