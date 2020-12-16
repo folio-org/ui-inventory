@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import { sourceSuppressor } from '../utils';
+
 class NatureOfContentTermsSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -19,11 +21,9 @@ class NatureOfContentTermsSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
-  suppressEdit = term => term.source === 'folio';
-  suppressDelete = term => term.source === 'folio';
-
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.nature-of-content-terms');
+    const suppress = sourceSuppressor('folio');
 
     return (
       <IntlConsumer>
@@ -43,7 +43,7 @@ class NatureOfContentTermsSettings extends React.Component {
             readOnlyFields={['source']}
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}
-            actionSuppressor={{ edit: this.suppressEdit, delete: this.suppressDelete }}
+            actionSuppressor={{ edit: suppress, delete: suppress }}
             nameKey="name"
             id="natureOfContentTerms"
             sortby="name"

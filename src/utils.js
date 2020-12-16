@@ -560,3 +560,5 @@ export const unmarshalInstance = (instance, identifierTypesById) => {
  *
  */
 export const omitFromArray = (array, path) => array.map(title => omit(title, path));
+
+export const sourceSuppressor = sourceValue => term => term.source === sourceValue;

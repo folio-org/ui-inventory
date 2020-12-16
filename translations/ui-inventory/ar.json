@@ -588,5 +588,12 @@
     "saveInstancesUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للأوعية. قد يستغرق تنزيل الملف بضع دقائق.",
     "instances.rows.select": "اختر وعاء",
     "showTags": "عرض الوسوم",
-    "filter.tags": "الوسوم"
+    "filter.tags": "الوسوم",
+    "instances.rows.recordsSelected": "تم تحديد {count, number} {count, plural, one {تسجيلة} other {تسجيلة}}",
+    "exportInstancesInMARCLimitExceeded": "تم تجاوز حد {count, number} للتسجيلات المحددة",
+    "integrations": "تكاملات",
+    "singleRecordImport": "استيراد تسجيلة مفردة",
+    "targetProfiles": "البروفايلات المستهدفة",
+    "targetProfile": "البروفايل المستهدف",
+    "permission.settings.single-record-import": "الإعدادات (المخزون): هيئ استيراد تسجيلة مفردة"
 }

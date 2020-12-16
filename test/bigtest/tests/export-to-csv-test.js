@@ -25,7 +25,7 @@ describe('Instances', () => {
   let requests = [];
 
   async function setupInstancedIdReportInfoCallout(server, timeout) {
-    server.get('/instance-bulk/ids', () => {
+    server.get('/record-bulk/ids', () => {
       return new Promise((resolve) => {
         setTimeout(() => resolve([]), timeout);
       });
@@ -73,7 +73,7 @@ describe('Instances', () => {
 
     describe('clicking save instances UIIDs button with API request set up to fail', () => {
       beforeEach(async function () {
-        this.server.put('/instance-bulk/ids', {}, 500);
+        this.server.put('/record-bulk/ids', {}, 500);
 
         // Timeout to skip enabling animation
         await wait();
@@ -147,10 +147,6 @@ describe('Instances', () => {
 
     it('should display correct icon for export instances (MARC)', () => {
       expect(inventory.headerDropdownMenu.isExportInstancesMARCIconPresent).to.be.true;
-    });
-
-    it('should disable action button for export instances (MARC) if there are not items in search result', () => {
-      expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.true;
     });
 
     it('should display action button for export instances (JSON)', () => {
