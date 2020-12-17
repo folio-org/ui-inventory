@@ -305,14 +305,20 @@ class InstancesView extends React.Component {
             <FormattedMessage id="stripes-smart-components.new" />
           </Button>
         </IfPermission>
-        <IfPermission perm="ui-plugin-create-inventory-records.create">
-          {this.getActionItem({
-            id: 'new-fast-add-record',
-            icon: 'lightning',
-            messageId: 'ui-inventory.newFastAddRecord',
-            onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-          })}
-        </IfPermission>
+        <Pluggable
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
+          open={this.state.showNewFastAddModal} // control the open modal via state var
+          renderTrigger={() => (
+            this.getActionItem({
+              id: 'new-fast-add-record',
+              icon: 'lightning',
+              messageId: 'ui-inventory.newFastAddRecord',
+              onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+            })
+          )}
+          type="create-inventory-records"
+        />
         {this.getActionItem({
           id: 'dropdown-clickable-get-report',
           icon: 'report',
@@ -513,13 +519,6 @@ class InstancesView extends React.Component {
             onResetAll={this.handleResetAll}
           />
         </div>
-        <Pluggable
-          buttonVisible={false} // hide default plugin's button
-          open={this.state.showNewFastAddModal} // control the open modal via state var
-          type="create-inventory-records"
-          id="clickable-create-inventory-records"
-          onClose={this.toggleNewFastAddModal}
-        />
         <ErrorModal
           isOpen={this.state.showErrorModal}
           label={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.label" />}
