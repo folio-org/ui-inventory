@@ -27,6 +27,7 @@
 * Modify display of statistical codes in instance detail view. Refs UIIN-1150.
 * Result list. Align text in the columns in the top. Refs UIIN-1356.
 * Update API endpoint for retrieving instances UUIDs. Refs UIIN-1368.
+* Include missing item-status values. Refs UIIN-1385.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
