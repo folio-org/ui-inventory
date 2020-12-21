@@ -1,6 +1,14 @@
+@import '@folio/stripes-components/lib/variables';
+
 .actionIcon {
   margin-right: 10px;
 }
 .cellAlign {
   align-items: flex-start;
+}
+
+.feedbackError {
+  margin-left: 26px;
+  font-weight: var(--text-weight-bold);
+  color: var(--error);
 }

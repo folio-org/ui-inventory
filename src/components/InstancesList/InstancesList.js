@@ -41,7 +41,10 @@ import {
   marshalInstance,
   omitFromArray,
 } from '../../utils';
-import { INSTANCES_ID_REPORT_TIMEOUT } from '../../constants';
+import {
+  INSTANCES_ID_REPORT_TIMEOUT,
+  QUICK_EXPORT_LIMIT,
+} from '../../constants';
 import {
   InTransitItemReport,
   InstancesIdReport,
@@ -274,7 +277,9 @@ class InstancesView extends React.Component {
 
   getActionMenu = ({ onToggle }) => {
     const { parentResources } = this.props;
+    const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
+    const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -300,14 +305,20 @@ class InstancesView extends React.Component {
             <FormattedMessage id="stripes-smart-components.new" />
           </Button>
         </IfPermission>
-        <IfPermission perm="ui-plugin-create-inventory-records.create">
-          {this.getActionItem({
-            id: 'new-fast-add-record',
-            icon: 'lightning',
-            messageId: 'ui-inventory.newFastAddRecord',
-            onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-          })}
-        </IfPermission>
+        <Pluggable
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
+          open={this.state.showNewFastAddModal} // control the open modal via state var
+          renderTrigger={() => (
+            this.getActionItem({
+              id: 'new-fast-add-record',
+              icon: 'lightning',
+              messageId: 'ui-inventory.newFastAddRecord',
+              onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+            })
+          )}
+          type="create-inventory-records"
+        />
         {this.getActionItem({
           id: 'dropdown-clickable-get-report',
           icon: 'report',
@@ -333,8 +344,19 @@ class InstancesView extends React.Component {
           icon: 'download',
           messageId: 'ui-inventory.exportInstancesInMARC',
           onClickHandler: buildOnClickHandler(noop),
-          isDisabled: true,
+          isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
         })}
+        {isQuickExportLimitExceeded && (
+          <span
+            className={css.feedbackError}
+            data-test-quick-marc-export-limit-exceeded
+          >
+            <FormattedMessage
+              id="ui-inventory.exportInstancesInMARCLimitExceeded"
+              values={{ count: QUICK_EXPORT_LIMIT }}
+            />
+          </span>
+        )}
         {this.getActionItem({
           id: 'dropdown-clickable-export-json',
           icon: 'download',
@@ -497,13 +519,6 @@ class InstancesView extends React.Component {
             onResetAll={this.handleResetAll}
           />
         </div>
-        <Pluggable
-          buttonVisible={false} // hide default plugin's button
-          open={this.state.showNewFastAddModal} // control the open modal via state var
-          type="create-inventory-records"
-          id="clickable-create-inventory-records"
-          onClose={this.toggleNewFastAddModal}
-        />
         <ErrorModal
           isOpen={this.state.showErrorModal}
           label={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.label" />}

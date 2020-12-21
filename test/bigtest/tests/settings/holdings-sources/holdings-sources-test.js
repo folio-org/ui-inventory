@@ -5,19 +5,6 @@ import setupApplication from '../../../helpers/setup-application';
 import HoldingsSources from '../../../interactors/settings/holdings-sources/holdings-sources';
 
 describe('Holdings Sources', () => {
-  function mockData() {
-    this.server.create('holdingsSource', {
-      'id' : 'd6510242-5ec3-42ed-b593-3585d2e48fd6',
-      'name' : 'FOLIO',
-      'source' : 'folio'
-    });
-    this.server.create('holdingsSource', {
-      'id' : 'e19eabab-a85c-4aef-a7b2-33bd9acef24e',
-      'name' : 'MARC',
-      'source' : 'folio'
-    });
-  }
-
   describe('User has permissions', () => {
     setupApplication({
       hasAllPerms: false,
@@ -28,11 +15,11 @@ describe('Holdings Sources', () => {
       }
     });
 
-    beforeEach(mockData);
-
     describe('viewing holdings sources list', () => {
-      beforeEach(function () {
-        this.visit('/settings/inventory/holdingsSources');
+      beforeEach(async function () {
+        this.server.createList('holdingsSource', 2);
+
+        await this.visit('/settings/inventory/holdingsSources');
       });
 
       it('has a holdings sources list', () => {
@@ -49,6 +36,31 @@ describe('Holdings Sources', () => {
         expect(HoldingsSources.hasDeleteButton).to.be.true;
       });
     });
+
+    describe('viewing holdings sources list with source value "folio"', () => {
+      beforeEach(async function () {
+        this.server.createList('holdingsSource', 2, { source: 'folio' });
+
+        await this.visit('/settings/inventory/holdingsSources');
+      });
+
+      it('has a holdings sources list', () => {
+        expect(HoldingsSources.hasList).to.be.true;
+      });
+
+      it('list has 2 items', () => {
+        expect(HoldingsSources.rowCount).to.equal(2);
+      });
+
+      it('list has new buttons', () => {
+        expect(HoldingsSources.hasCreateButton).to.be.true;
+      });
+
+      it('list does not have edit, delete buttons', () => {
+        expect(HoldingsSources.hasEditButton).to.be.false;
+        expect(HoldingsSources.hasDeleteButton).to.be.false;
+      });
+    });
   });
 
   describe('User does not have permissions to see the list', () => {
@@ -59,10 +71,10 @@ describe('Holdings Sources', () => {
       }
     });
 
-    beforeEach(mockData);
-
     describe('viewing holdings sources list', () => {
       beforeEach(async function () {
+        this.server.createList('holdingsSource', 2);
+
         await this.visit('/settings/inventory/holdingsSources');
       });
 
@@ -80,11 +92,12 @@ describe('Holdings Sources', () => {
         'ui-inventory.settings.list.view': true
       }
     });
-    beforeEach(mockData);
 
     describe('viewing holdings holdings sources list', () => {
-      beforeEach(function () {
-        this.visit('/settings/inventory/holdingsSources');
+      beforeEach(async function () {
+        this.server.createList('holdingsSource', 2);
+
+        await this.visit('/settings/inventory/holdingsSources');
       });
 
       it('has a holdings sources list', () => {

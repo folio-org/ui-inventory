@@ -588,5 +588,12 @@
     "saveInstancesUIIDS.info": "A solicitação para salvar UUIDs de instâncias foi recebida. O download do arquivo pode demorar alguns minutos.",
     "instances.rows.select": "Selecionar instância",
     "showTags": "Mostrar tags",
-    "filter.tags": "Tags"
+    "filter.tags": "Tags",
+    "instances.rows.recordsSelected": "{count, number} {count, plural, one {registro selecionado} other {registros selecionados}}",
+    "exportInstancesInMARCLimitExceeded": "Selected record limit of {count, number} exceeded",
+    "integrations": "Integrações",
+    "singleRecordImport": "Single Record Import",
+    "targetProfiles": "Target profiles",
+    "targetProfile": "target profile",
+    "permission.settings.single-record-import": "Settings (Inventory): Configure single-record import"
 }

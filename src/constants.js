@@ -112,3 +112,5 @@ export const indentifierTypeNames = {
 export const DATE_FORMAT = 'YYYY-MM-DD';
 
 export const INSTANCES_ID_REPORT_TIMEOUT = 2000;
+
+export const QUICK_EXPORT_LIMIT = process.env.NODE_ENV !== 'test' ? 100 : 2;

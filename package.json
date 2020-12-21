@@ -347,6 +347,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.single-record-import",
+        "displayName": "Settings (Inventory): Configure single-record import",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "copycat.target-profiles.collection.get",
+          "copycat.target-profiles.item.get",
+          "copycat.target-profiles.item.post",
+          "copycat.target-profiles.item.put",
+          "copycat.target-profiles.item.delete"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.holdings-note-types",
         "displayName": "Settings (Inventory): Create, edit, delete holdings note types",
         "subPermissions": [
@@ -649,6 +662,14 @@
           "inventory.items.item.mark-withdrawn.post"
         ],
         "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.single-record-import",
+        "displayName": "Inventory: Import single record",
+        "subPermissions": [
+          "copycat.imports.post"
+        ],
+        "visible": true
       }
     ]
   },
@@ -725,7 +746,7 @@
     "react-router-dom": "^5.0.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-create-inventory-records": "^1.0.0",
+    "@folio/plugin-create-inventory-records": "^2.0.0",
     "@folio/plugin-find-instance": "^4.0.0",
     "@folio/quick-marc": "^2.0.0"
 

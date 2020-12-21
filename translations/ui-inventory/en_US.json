@@ -13,6 +13,7 @@
     "createInstance": "Create instance",
     "updateInstance": "Update instance",
     "itemRecord": "Item record",
+    "itemRecordWithDescription": "Item record ({materialType}, {status})",
     "editInstance": "Edit",
     "instanceDetails": "Instance details",
     "addHoldings": "Add holdings",
@@ -42,6 +43,7 @@
     "edition": "Edition",
     "titleData": "Title data",
     "instanceRecord": "Instance record",
+    "instanceRecordWithType": "Instance record ({instanceTypeName})",
     "contentData": "Content data",
     "descriptiveData": "Descriptive data",
     "selectMaterialType": "Select material type",
@@ -588,5 +590,12 @@
     "saveInstancesUIIDS.info": "Request to save instances UUIDs has been received. File download may take a few minutes.",
     "instances.rows.select": "Select instance",
     "showTags": "Show tags",
-    "filter.tags": "Tags"
+    "filter.tags": "Tags",
+    "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} selected",
+    "exportInstancesInMARCLimitExceeded": "Selected record limit of {count, number} exceeded",
+    "integrations": "Integrations",
+    "singleRecordImport": "Single Record Import",
+    "targetProfiles": "Target profiles",
+    "targetProfile": "target profile",
+    "permission.settings.single-record-import": "Settings (Inventory): Configure single-record import"
 }

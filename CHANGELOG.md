@@ -27,6 +27,11 @@
 * Modify display of statistical codes in instance detail view. Refs UIIN-1150.
 * Result list. Align text in the columns in the top. Refs UIIN-1356.
 * Update API endpoint for retrieving instances UUIDs. Refs UIIN-1368.
+* Make holdings sources with source value `folio` non-editable in Settings. Refs UIIN-1314.
+* Add quick instances UUIDs export limit reached warning. Refs UIIN-1367.
+* Refactor the suppress actions in `Settings` into a single util function. Refs UIIN-1373.
+* Clean up display of instance and item detail record headers (remove 'dead' icons). Refs UIIN-1361.
+* Upgraded to create-inventory plugin v2.0.0.
 * Include missing item-status values. Refs UIIN-1385.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)

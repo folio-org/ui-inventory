@@ -18,6 +18,7 @@ import ILLPolicy from './ILLPolicy';
 import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import HoldingsSourcesSettings from './HoldingsSourcesSettings';
 import CallNumberTypes from './CallNumberTypes';
+import SingleRecordImport from './SingleRecordImport';
 import HRIDHandlingSettings from './HRIDHandling/HRIDHandlingSettings';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
@@ -195,7 +196,18 @@ class InventorySettings extends React.Component {
             perm: this.addPerm('ui-inventory.settings.call-number-types'),
           },
         ]
-      }
+      },
+      {
+        label: <FormattedMessage id="ui-inventory.integrations" />,
+        pages: [
+          {
+            route: 'singleRecordImport',
+            label: <FormattedMessage id="ui-inventory.singleRecordImport" />,
+            component: SingleRecordImport,
+            perm: 'ui-inventory.settings.single-record-import',
+          },
+        ]
+      },
     ];
   }
 
