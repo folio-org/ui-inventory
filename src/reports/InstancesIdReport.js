@@ -1,25 +1,22 @@
-import { get } from 'lodash';
 import moment from 'moment';
 
 import { exportCsv } from '@folio/stripes/util';
 
 class InstancesIdReport {
-  parse(records) {
-    return records.map(record => {
-      const toCSV = {
-        id: get(record, 'id'),
-      };
-
-      return toCSV;
-    });
+  constructor(fileNamePrefix) {
+    this.fileNamePrefix = fileNamePrefix;
   }
 
-  toCSV(records = []) {
-    const parsedRecords = this.parse(records);
+  parse(records, recordFinder = record => record) {
+    return records.map(record => ({ id: recordFinder(record) }));
+  }
+
+  toCSV(records, recordFinder) {
+    const parsedRecords = this.parse(records, recordFinder);
 
     exportCsv(parsedRecords, {
       header: false,
-      filename: 'SearchInstanceUUIDs' + moment().format(),
+      filename: `${this.fileNamePrefix}${moment().format()}`,
     });
   }
 }
