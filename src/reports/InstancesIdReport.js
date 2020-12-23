@@ -1,6 +1,9 @@
 import moment from 'moment';
+import { noop } from 'lodash';
 
 import { exportCsv } from '@folio/stripes/util';
+
+import { isTestEnv } from '../utils';
 
 class InstancesIdReport {
   constructor(fileNamePrefix) {
@@ -13,11 +16,13 @@ class InstancesIdReport {
 
   toCSV(records, recordFinder) {
     const parsedRecords = this.parse(records, recordFinder);
-
-    exportCsv(parsedRecords, {
+    const fileTitle = {
       header: false,
       filename: `${this.fileNamePrefix}${moment().format()}`,
-    });
+    };
+    const generateReport = !isTestEnv() ? exportCsv : noop;
+
+    generateReport(parsedRecords, fileTitle);
   }
 }
 

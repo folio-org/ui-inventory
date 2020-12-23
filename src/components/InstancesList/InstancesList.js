@@ -40,6 +40,7 @@ import {
   parseFiltersToStr,
   marshalInstance,
   omitFromArray,
+  isTestEnv,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -270,7 +271,7 @@ class InstancesView extends React.Component {
   };
 
   generateCQLQueryReport = async () => {
-    if (process.env.NODE_ENV !== 'test') {
+    if (!isTestEnv()) {
       const { data } = this.props;
 
       const query = buildQuery(data.query, {}, data, { log: noop }, this.props);
