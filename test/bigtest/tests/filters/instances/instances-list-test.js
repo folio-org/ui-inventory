@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import InstancesRouteInteractor from '../../../interactors/routes/instances-route';
 import InventoryInteractor from '../../../interactors/inventory';
+import SelectedRecordsModalInteractor from '../../../interactors/selected-records-modal';
 import { QUICK_EXPORT_LIMIT } from '../../../../../src/constants';
 
 describe('Instances list', () => {
@@ -19,6 +20,7 @@ describe('Instances list', () => {
     scope: '[data-test-inventory-instances]',
   });
   const instancesAmount = 3;
+  const selectedRecordsModalInteractor = new SelectedRecordsModalInteractor();
 
   beforeEach(function () {
     for (let i = 0; i < instancesAmount; i++) {
@@ -29,6 +31,12 @@ describe('Instances list', () => {
           createdDate: '2020-03-04',
           updatedDate: '2020-04-15',
         },
+        publication:[{
+          dateOfPublication: 'c2004',
+          place: 'Cambridge, Mass. ',
+          publisher: 'MIT Press',
+          role: 'Publisher',
+        }],
         source: 'MARC',
       }, 'withHoldingAndItem');
     }
@@ -76,6 +84,10 @@ describe('Instances list', () => {
       it('should disable action button for export instances (MARC) if there are no selected rows', () => {
         expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.true;
       });
+
+      it('should disable action button for showing selected records if there are no selected rows', () => {
+        expect(inventory.headerDropdownMenu.showSelectedRecordsBtn.$root.disabled).to.be.true;
+      });
     });
 
     describe('selecting rows to exceed the quick export limit', () => {
@@ -119,6 +131,34 @@ describe('Instances list', () => {
 
         it('should enable action button for export instances (MARC) when there are selected rows', () => {
           expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.false;
+        });
+
+        describe('clicking on show selected records action button', () => {
+          beforeEach(async () => {
+            await inventory.headerDropdownMenu.showSelectedRecordsBtn.click();
+          });
+
+          it('should open selected records modal', () => {
+            expect(selectedRecordsModalInteractor.isPresent).to.be.true;
+          });
+
+          it('should display correct amount of records in modal', () => {
+            expect(selectedRecordsModalInteractor.selectedRecordsList.rowCount).to.equal(1);
+          });
+
+          it('should display correct data in list', () => {
+            expect(selectedRecordsModalInteractor.selectedRecordsList.rows(0).cells(0).content).to.be.equal('Homo Deus: A Brief History of Tomorrow 1');
+            expect(selectedRecordsModalInteractor.selectedRecordsList.rows(0).cells(1).content).to.be.equal('Yuval Noah Harari');
+            expect(selectedRecordsModalInteractor.selectedRecordsList.rows(0).cells(2).content).to.be.equal('MIT Press (c2004)');
+          });
+
+          describe('clicking cancel button in selected records modal', async () => {
+            await selectedRecordsModalInteractor.cancelButton.click();
+
+            it('should close the modal', () => {
+              expect(selectedRecordsModalInteractor.isPresent).to.be.false;
+            });
+          });
         });
       });
 
