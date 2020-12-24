@@ -11,6 +11,7 @@ import {
   Interactor,
 } from '@bigtest/interactor';
 
+import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import {
@@ -37,6 +38,7 @@ import {
   exportInstancesJSONBtnIsVisible = isVisible('#dropdown-clickable-export-json');
   isExportInstancesJSONBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');
   isExportInstancesJSONIconPresent = isPresent('#dropdown-clickable-export-json [class*=icon-download]');
+  showSelectedRecordsBtn = new ButtonInteractor('#dropdown-clickable-show-selected-records');
 }
 
 export default @interactor class InventoryInteractor {
