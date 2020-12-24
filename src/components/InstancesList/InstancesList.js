@@ -40,6 +40,7 @@ import {
   parseFiltersToStr,
   marshalInstance,
   omitFromArray,
+  isTestEnv,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -94,6 +95,7 @@ class InstancesView extends React.Component {
     showNewFastAddModal: false,
     inTransitItemsExportInProgress: false,
     instancesIdExportInProgress: false,
+    instancesQuickExportInProgress: false,
     showErrorModal: false,
     selectedRows: {},
     isSelectedRecordsModalOpened: false,
@@ -224,10 +226,10 @@ class InstancesView extends React.Component {
 
         clearTimeout(infoCalloutTimer);
 
-        const report = new InstancesIdReport();
+        const report = new InstancesIdReport('SearchInstanceUUIDs');
 
         if (!isEmpty(items)) {
-          report.toCSV(items);
+          report.toCSV(items, record => record.id);
         }
       } catch (error) {
         clearTimeout(infoCalloutTimer);
@@ -242,8 +244,34 @@ class InstancesView extends React.Component {
     });
   };
 
+  triggerQuickExport = async (sendCallout) => {
+    const { instancesQuickExportInProgress } = this.state;
+
+    if (instancesQuickExportInProgress) return;
+
+    this.setState({ instancesQuickExportInProgress: true });
+
+    try {
+      const instanceIds = Object.keys(this.state.selectedRows).slice(0, QUICK_EXPORT_LIMIT);
+
+      await this.props.parentMutator.quickExport.POST({
+        uuids: instanceIds,
+        type: 'uuid',
+        recordType: 'INSTANCE'
+      });
+      new InstancesIdReport('QuickInstanceExport').toCSV(instanceIds);
+    } catch (error) {
+      sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-inventory.communicationProblem" />,
+      });
+    } finally {
+      this.setState({ instancesQuickExportInProgress: false });
+    }
+  };
+
   generateCQLQueryReport = async () => {
-    if (process.env.NODE_ENV !== 'test') {
+    if (!isTestEnv()) {
       const { data } = this.props;
 
       const query = buildQuery(data.query, {}, data, { log: noop }, this.props);
@@ -345,7 +373,7 @@ class InstancesView extends React.Component {
           id: 'dropdown-clickable-export-marc',
           icon: 'download',
           messageId: 'ui-inventory.exportInstancesInMARC',
-          onClickHandler: buildOnClickHandler(noop),
+          onClickHandler: buildOnClickHandler(this.triggerQuickExport),
           isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
         })}
         {isQuickExportLimitExceeded && (

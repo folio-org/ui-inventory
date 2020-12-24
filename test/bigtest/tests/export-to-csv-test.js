@@ -142,7 +142,7 @@ describe('Instances', () => {
     });
 
     it('should display action button for export instances (MARC)', () => {
-      expect(inventory.headerDropdownMenu.exportInstancesMARCBtnIsVisible).to.be.true;
+      expect(inventory.headerDropdownMenu.exportInstancesMARCBtn.isVisible).to.be.true;
     });
 
     it('should display correct icon for export instances (MARC)', () => {

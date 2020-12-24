@@ -82,7 +82,7 @@ describe('Instances list', () => {
       });
 
       it('should disable action button for export instances (MARC) if there are no selected rows', () => {
-        expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.true;
+        expect(inventory.headerDropdownMenu.exportInstancesMARCBtn.$root.disabled).to.be.true;
       });
 
       it('should disable action button for showing selected records if there are no selected rows', () => {
@@ -103,7 +103,7 @@ describe('Instances list', () => {
       });
 
       it('should disable action button for export instances (MARC)', () => {
-        expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.true;
+        expect(inventory.headerDropdownMenu.exportInstancesMARCBtn.$root.disabled).to.be.true;
       });
     });
 
@@ -130,7 +130,7 @@ describe('Instances list', () => {
         });
 
         it('should enable action button for export instances (MARC) when there are selected rows', () => {
-          expect(inventory.headerDropdownMenu.isExportInstancesMARCBtnDisabled).to.be.false;
+          expect(inventory.headerDropdownMenu.exportInstancesMARCBtn.$root.disabled).to.be.false;
         });
 
         describe('clicking on show selected records action button', () => {
@@ -169,6 +169,28 @@ describe('Instances list', () => {
 
         it('should display selected rows count message (plural form) in the sub header', () => {
           expect(instancesRoute.customPaneSub.text).to.equal('2 records selected');
+        });
+
+        describe('clicking on export instances (MARC) button', () => {
+          beforeEach(async () => {
+            await inventory.headerDropdownMenu.exportInstancesMARCBtn.click();
+          });
+
+          it('should not display error callout', () => {
+            expect(inventory.callout.errorCalloutIsPresent).to.be.false;
+          });
+        });
+
+        describe('clicking on export instances (MARC) button with API request set up to fail', () => {
+          beforeEach(async function () {
+            this.server.post('/data-export/quick-export', {}, 500);
+
+            await inventory.headerDropdownMenu.exportInstancesMARCBtn.click();
+          });
+
+          it('should display error callout', () => {
+            expect(inventory.callout.errorCalloutIsPresent).to.be.true;
+          });
         });
       });
 

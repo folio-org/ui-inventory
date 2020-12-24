@@ -32,8 +32,7 @@ import {
   isSaveInstancesCQLQueryDisabled = property('#dropdown-clickable-get-cql-query', 'disabled');
   isSaveInstancesCQLQueryIconPresent = isPresent('#dropdown-clickable-get-cql-query [class*=icon-search]');
   isTransitItemsReportIconPresent = isPresent('#dropdown-clickable-get-report [class*=icon-report]');
-  exportInstancesMARCBtnIsVisible = isVisible('#dropdown-clickable-export-marc');
-  isExportInstancesMARCBtnDisabled = property('#dropdown-clickable-export-marc', 'disabled');
+  exportInstancesMARCBtn = new ButtonInteractor('#dropdown-clickable-export-marc');
   isExportInstancesMARCIconPresent = isPresent('#dropdown-clickable-export-marc [class*=icon-download]');
   exportInstancesJSONBtnIsVisible = isVisible('#dropdown-clickable-export-json');
   isExportInstancesJSONBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');

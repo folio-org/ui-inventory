@@ -77,7 +77,8 @@
       "circulation": "9.0",
       "configuration": "2.0",
       "tags": "1.0",
-      "inventory-record-bulk": "1.0"
+      "inventory-record-bulk": "1.0",
+      "data-export": "3.0"
     },
     "permissionSets": [
       {
@@ -477,7 +478,8 @@
           "inventory-storage.service-points.item.get",
           "inventory-storage.service-points.collection.get",
           "inventory-storage.hrid-settings.item.get",
-          "inventory-storage.record-bulk.ids.get"
+          "inventory-storage.record-bulk.ids.get",
+          "data-export.quick.export.post"
         ],
         "visible": true
       },
