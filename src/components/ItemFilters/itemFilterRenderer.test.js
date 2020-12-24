@@ -1,9 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { screen } from '@testing-library/react';
 import { noop } from 'lodash';
 
-// import '@folio/stripes-acq-components/test/jest/__mock__';
+import '../../../test/jest/__mock__';
 
 import itemFilterRenderer from './itemFilterRenderer';
+import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
+import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 const DATA = {
   materialTypes: [],
@@ -11,38 +15,41 @@ const DATA = {
   tags: [],
 };
 
-const renderFilters = (data = DATA, onChange = noop) => (render(
-  itemFilterRenderer(data)(onChange)
-));
+const renderFilters = (data = DATA, onChange = noop) => renderWithIntl(
+  <Router>
+    {itemFilterRenderer(data)(onChange)}
+  </Router>,
+  translationsProperties
+);
 
-xdescribe('itemFilterRenderer fn', () => {
+describe('itemFilterRenderer fn', () => {
   it('displays filter by tags accordion', () => {
     renderFilters();
-    expect(screen.getByText('ui-inventory.filter.tags')).toBeDefined();
+    expect(screen.getByText('Tags')).toBeDefined();
   });
 
   it('displays filter by status accordion', () => {
     renderFilters();
-    expect(screen.getByText('ui-inventory.item.status')).toBeDefined();
+    expect(screen.getByText('Item status')).toBeDefined();
   });
 
   it('displays filter by effectiveLocation accordion', () => {
     renderFilters();
-    expect(screen.getByText('ui-inventory.filters.effectiveLocation')).toBeDefined();
+    expect(screen.getByText('Effective location (item)')).toBeDefined();
   });
 
   it('displays filter by permanentLocation accordion', () => {
     renderFilters();
-    expect(screen.getByText('ui-inventory.holdings.permanentLocation')).toBeDefined();
+    expect(screen.getByText('Holdings permanent location')).toBeDefined();
   });
 
   it('displays filter by materialType accordion', () => {
     renderFilters();
-    expect(screen.getByText('ui-inventory.materialType')).toBeDefined();
+    expect(screen.getByText('Material type')).toBeDefined();
   });
 
   it('displays filter by discoverySuppress accordion', () => {
     renderFilters();
-    expect(screen.getByText('ui-inventory.discoverySuppress')).toBeDefined();
+    expect(screen.getByText('Suppress from discovery')).toBeDefined();
   });
 });
