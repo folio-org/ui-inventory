@@ -1,10 +1,17 @@
 import React from 'react';
-import { render, cleanup, fireEvent, screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import {
+  cleanup,
+  fireEvent,
+  screen,
+} from '@testing-library/react';
 import { noop } from 'lodash';
 
-// import '@folio/stripes-acq-components/test/jest/__mock__';
+import '../../../test/jest/__mock__';
 
 import TagsFilter from './TagsFilter';
+import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
+import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 const TAGS = [{
   'id': 'd3c8b511-41e7-422e-a483-18778d0596e5',
@@ -33,18 +40,21 @@ const TAGS = [{
   }
 }];
 
-const filterAccordionTitle = 'ui-inventory.filter.tags';
+const filterAccordionTitle = 'Tags';
 
-const renderFilter = (tagsRecords, selectedValues, onChange = noop, onClear = noop) => (render(
-  <TagsFilter
-    onChange={onChange}
-    onClear={onClear}
-    selectedValues={selectedValues}
-    tagsRecords={tagsRecords}
-  />,
+const renderFilter = (tagsRecords, selectedValues, onChange = noop, onClear = noop) => (renderWithIntl(
+  <Router>
+    <TagsFilter
+      onChange={onChange}
+      onClear={onClear}
+      selectedValues={selectedValues}
+      tagsRecords={tagsRecords}
+    />
+  </Router>,
+  translationsProperties,
 ));
 
-xdescribe('TagsFilter component', () => {
+describe('TagsFilter component', () => {
   afterEach(cleanup);
 
   it('should display filter without tags', () => {
@@ -83,12 +93,12 @@ xdescribe('TagsFilter component', () => {
     const onClear = jest.fn();
 
     renderFilter(TAGS, ['urgent'], undefined, onClear);
-    fireEvent.click(screen.getAllByLabelText('Clear selected filters for "ui-inventory.filter.tags"')[0]);
+    fireEvent.click(screen.getAllByLabelText('Clear selected filters for "Tags"')[0]);
     expect(onClear).toHaveBeenCalled();
   });
 
   it('should display filter accordion without tags and selected values', () => {
     renderFilter(undefined, ['urgent']);
-    expect(screen.getByText('stripes-components.multiSelection.defaultEmptyMessage')).toBeDefined();
+    expect(screen.getByText('No matching items found!')).toBeDefined();
   });
 });
