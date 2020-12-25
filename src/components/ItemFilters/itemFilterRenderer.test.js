@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { screen } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';
@@ -15,41 +15,35 @@ const DATA = {
   tags: [],
 };
 
-const renderFilters = (data = DATA, onChange = noop) => renderWithIntl(
-  <Router>
-    {itemFilterRenderer(data)(onChange)}
-  </Router>,
+const renderFilters = (data = DATA, onChange = noop) => (renderWithIntl(
+  <Router>{itemFilterRenderer(data)(onChange)}</Router>,
   translationsProperties
-);
+));
 
 describe('itemFilterRenderer fn', () => {
-  it('displays filter by tags accordion', () => {
-    renderFilters();
-    expect(screen.getByText('Tags')).toBeDefined();
+  beforeEach(() => renderFilters());
+
+  it('should display filter by tags accordion', () => {
+    expect(screen.getByText('Tags')).toBeInTheDocument();
   });
 
-  it('displays filter by status accordion', () => {
-    renderFilters();
-    expect(screen.getByText('Item status')).toBeDefined();
+  it('should display filter by status accordion', () => {
+    expect(screen.getByText('Item status')).toBeInTheDocument();
   });
 
-  it('displays filter by effectiveLocation accordion', () => {
-    renderFilters();
-    expect(screen.getByText('Effective location (item)')).toBeDefined();
+  it('should display filter by effectiveLocation accordion', () => {
+    expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
   });
 
-  it('displays filter by permanentLocation accordion', () => {
-    renderFilters();
-    expect(screen.getByText('Holdings permanent location')).toBeDefined();
+  it('should display filter by permanentLocation accordion', () => {
+    expect(screen.getByText('Holdings permanent location')).toBeInTheDocument();
   });
 
-  it('displays filter by materialType accordion', () => {
-    renderFilters();
-    expect(screen.getByText('Material type')).toBeDefined();
+  it('should display filter by materialType accordion', () => {
+    expect(screen.getByText('Material type')).toBeInTheDocument();
   });
 
-  it('displays filter by discoverySuppress accordion', () => {
-    renderFilters();
-    expect(screen.getByText('Suppress from discovery')).toBeDefined();
+  it('should display filter by discoverySuppress accordion', () => {
+    expect(screen.getByText('Suppress from discovery')).toBeInTheDocument();
   });
 });
