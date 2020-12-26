@@ -5,6 +5,15 @@
     "filenames",
     "jest"
   ],
+  "overrides": [
+    {
+      "files": ["*test.js", "test/**"],
+      "rules": {
+        "react/prop-types": "off",
+        "import/prefer-default-export": "off"
+      }
+    }
+  ],
   "env": {
     "jest/globals": true
   }
