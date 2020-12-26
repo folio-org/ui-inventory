@@ -61,7 +61,7 @@ import css from './instances.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-class InstancesView extends React.Component {
+class InstancesList extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
@@ -596,4 +596,4 @@ class InstancesView extends React.Component {
 export default flowRight(
   injectIntl,
   withLocation,
-)(InstancesView);
+)(InstancesList);

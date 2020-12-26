@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
 import { noop } from 'lodash';
 
 import {
@@ -17,20 +20,18 @@ const SelectedRecordsModal = ({
   formatter,
   onCancel,
 }) => {
+  const intl = useIntl();
+
   const renderFooter = () => (
     <ModalFooter>
       <Button
-        data-test-selected-records-save
         buttonStyle="primary"
         disabled
         onClick={noop}
       >
         <FormattedMessage id="ui-inventory.saveAndClose" />
       </Button>
-      <Button
-        data-test-selected-records-cancel
-        onClick={onCancel}
-      >
+      <Button onClick={onCancel}>
         <FormattedMessage id="ui-inventory.cancel" />
       </Button>
     </ModalFooter>
@@ -38,9 +39,8 @@ const SelectedRecordsModal = ({
 
   return (
     <Modal
-      data-test-selected-records-modal
       open={isOpen}
-      label={<FormattedMessage id="ui-inventory.instances.selectedRecords" />}
+      label={intl.formatMessage({ id: 'ui-inventory.instances.selectedRecords' })}
       dismissible
       size="large"
       footer={renderFooter()}

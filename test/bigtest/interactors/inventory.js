@@ -11,7 +11,6 @@ import {
   Interactor,
 } from '@bigtest/interactor';
 
-import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 
 import {
@@ -32,12 +31,10 @@ import {
   isSaveInstancesCQLQueryDisabled = property('#dropdown-clickable-get-cql-query', 'disabled');
   isSaveInstancesCQLQueryIconPresent = isPresent('#dropdown-clickable-get-cql-query [class*=icon-search]');
   isTransitItemsReportIconPresent = isPresent('#dropdown-clickable-get-report [class*=icon-report]');
-  exportInstancesMARCBtn = new ButtonInteractor('#dropdown-clickable-export-marc');
   isExportInstancesMARCIconPresent = isPresent('#dropdown-clickable-export-marc [class*=icon-download]');
   exportInstancesJSONBtnIsVisible = isVisible('#dropdown-clickable-export-json');
   isExportInstancesJSONBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');
   isExportInstancesJSONIconPresent = isPresent('#dropdown-clickable-export-json [class*=icon-download]');
-  showSelectedRecordsBtn = new ButtonInteractor('#dropdown-clickable-show-selected-records');
 }
 
 export default @interactor class InventoryInteractor {
@@ -71,7 +68,6 @@ export default @interactor class InventoryInteractor {
 
   headerDropdown = scoped('[data-test-pane-header-actions-button]');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
-  headerDropdownMenuQuickMarcExportLimitExceeded = new Interactor('[data-test-quick-marc-export-limit-exceeded]');
 
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
   formatFilter = scoped('#format', MultiSelectFilterInteractor);

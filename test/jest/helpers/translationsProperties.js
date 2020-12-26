@@ -1,4 +1,5 @@
 import stripesComponentsTranslations from '@folio/stripes-components/translations/stripes-components/en';
+import stripesSmartComponentsTranslations from '@folio/stripes-smart-components/translations/stripes-smart-components/en';
 
 import translations from '../../../translations/ui-inventory/en';
 
@@ -13,11 +14,7 @@ const translationsProperties = [
   },
   {
     prefix: 'stripes-smart-components',
-    translations: {
-      hideSearchPane: 'hideSearchPane',
-      showSearchPane: 'showSearchPane',
-      numberOfFilters: 'numberOfFilters',
-    },
+    translations: stripesSmartComponentsTranslations,
   },
 ];
 
