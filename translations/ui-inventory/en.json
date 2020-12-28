@@ -454,7 +454,7 @@
   "duplicateItem": "Duplicate",
   "items.damageStatus.damaged": "Damaged",
   "items.damageStatus.notdamaged": "Not damaged",
-  "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
+  "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clipboard",
   "instanceNotes": "Instance notes",
   "filters.instances": "Instance",
   "filters.holdings": "Holdings",
