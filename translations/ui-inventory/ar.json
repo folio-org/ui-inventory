@@ -604,5 +604,9 @@
     "instances.showSelectedRecords": "عرض التسجيلات المحددة",
     "instances.selectedRecords": "التسجيلات المحددة",
     "saveAndClose": "حفظ وإغلاق",
-    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
+    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "error.noMatch.oops": "",
+    "error.noMatch.how": "",
+    "hridHandling.toast.error": "",
+    "item.status.received": ""
 }

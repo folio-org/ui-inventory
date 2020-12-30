@@ -604,5 +604,9 @@
     "instances.showSelectedRecords": "Show selected records",
     "instances.selectedRecords": "Selected records",
     "saveAndClose": "Save & close",
-    "communicationProblem": "Server communication problem. Please try again"
+    "communicationProblem": "Server communication problem. Please try again",
+    "error.noMatch.oops": "",
+    "error.noMatch.how": "",
+    "hridHandling.toast.error": "",
+    "item.status.received": ""
 }
