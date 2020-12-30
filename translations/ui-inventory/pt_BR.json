@@ -601,8 +601,8 @@
     "item.status.restricted": "Restrito",
     "item.status.unavailable": "Indisponível",
     "item.status.unknown": "Desconhecido",
-    "instances.showSelectedRecords": "Show selected records",
-    "instances.selectedRecords": "Selected records",
-    "saveAndClose": "Save & close",
-    "communicationProblem": "Server communication problem. Please try again"
+    "instances.showSelectedRecords": "Mostrar registros selecionados",
+    "instances.selectedRecords": "Registros selecionados",
+    "saveAndClose": "Salvar e fechar",
+    "communicationProblem": "Problema de comunicação do servidor. Por favor, tente novamente"
 }
