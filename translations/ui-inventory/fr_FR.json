@@ -588,7 +588,7 @@
     "filter.tags": "Tags",
     "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} selected",
     "exportInstancesInMARCLimitExceeded": "Selected record limit of {count, number} exceeded",
-    "integrations": "Integrations",
+    "integrations": "Intégrations",
     "singleRecordImport": "Single Record Import",
     "targetProfiles": "Target profiles",
     "targetProfile": "target profile",
@@ -601,8 +601,8 @@
     "item.status.restricted": "Restreint",
     "item.status.unavailable": "Indisponible",
     "item.status.unknown": "Inconnu",
-    "instances.showSelectedRecords": "Show selected records",
-    "instances.selectedRecords": "Selected records",
-    "saveAndClose": "Save & close",
+    "instances.showSelectedRecords": "Afficher les enregistrements sélectionnés",
+    "instances.selectedRecords": "Enregistrements sélectionnés",
+    "saveAndClose": "Sauvegarder et fermer",
     "communicationProblem": "Server communication problem. Please try again"
 }
