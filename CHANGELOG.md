@@ -33,6 +33,7 @@
 * Clean up display of instance and item detail record headers (remove 'dead' icons). Refs UIIN-1361.
 * Upgraded to create-inventory plugin v2.0.0.
 * Include missing item-status values. Refs UIIN-1385.
+* Disable sorting by `relation` column. Refs UIIN-1303.
 * Add show selected records action menu. Refs UIIN-1375.
 * Implement quick export of instances in MARC Bib output format. Refs UIIN-1382.
 * Add jest setup. Refs UIIN-1375.

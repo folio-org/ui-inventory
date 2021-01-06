@@ -573,6 +573,7 @@ class InstancesList extends React.Component {
             pagingType="click"
             hasNewButton={false}
             onResetAll={this.handleResetAll}
+            sortableColumns={["title","contributors","publishers"]}
           />
         </div>
         <ErrorModal
