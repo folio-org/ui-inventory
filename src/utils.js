@@ -176,7 +176,7 @@ export const buildOptionalBooleanQuery = name => values => {
   }
 };
 
-// A clojure function which takes the name of the attribute used
+// A closure function which takes the name of the attribute used
 // for filtering purposes and returns a function which can be used as a custom
 // filter function in <MultiSelection>.
 // https://github.com/folio-org/stripes-components/tree/master/lib/MultiSelection#common-props
