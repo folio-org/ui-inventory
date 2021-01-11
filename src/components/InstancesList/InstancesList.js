@@ -409,10 +409,9 @@ class InstancesList extends React.Component {
     this.setState({ showErrorModal: false });
   };
 
-  toggleRowSelection = ({
-    id: rowId,
-    ...rowData
-  }) => {
+  toggleRowSelection = rowData => {
+    const { id: rowId } = rowData;
+
     this.setState(({ selectedRows }) => {
       const isRowSelected = Boolean(selectedRows[rowId]);
       const newSelectedRows = { ...selectedRows };
@@ -429,6 +428,13 @@ class InstancesList extends React.Component {
 
   handleResetAll = () => {
     this.setState({ selectedRows: {} });
+  }
+
+  handleSelectedRecordsModalSave = selectedRecords => {
+    this.setState({
+      isSelectedRecordsModalOpened: false,
+      selectedRows: selectedRecords,
+    });
   }
 
   handleSelectedRecordsModalCancel = () => {
@@ -584,9 +590,10 @@ class InstancesList extends React.Component {
         />
         <SelectedRecordsModal
           isOpen={isSelectedRecordsModalOpened}
-          selectedRecords={selectedRows}
+          records={selectedRows}
           columnMapping={columnMapping}
           formatter={resultsFormatter}
+          onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
       </>

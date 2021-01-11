@@ -3,6 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {
   screen,
   getByText,
+  getByRole,
+  getAllByRole,
   fireEvent,
   waitForElementToBeRemoved,
   waitFor,
@@ -182,8 +184,9 @@ describe('InstancesRoute', () => {
         expect(screen.getByText('1 record selected')).toBeInTheDocument();
       });
 
-      describe('clicking on show selected records action button', () => {
+      describe('selecting one more row and clicking on show selected records action button', () => {
         beforeEach(() => {
+          userEvent.click(selectRowCheckboxes[1]);
           userEvent.click(screen.getByRole('button', { name: 'Actions' }));
           userEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
         });
@@ -199,25 +202,52 @@ describe('InstancesRoute', () => {
         it('should display correct amount of records in modal', () => {
           const modal = screen.getByRole('document', { label: 'Selected records' });
 
-          expect(modal.querySelectorAll('.mclRowContainer > [role=row]').length).toEqual(1);
+          expect(modal.querySelectorAll('.mclRowContainer > [role=row]').length).toEqual(2);
         });
 
         it('should display correct data in list', () => {
-          const cells = screen.getAllByRole('gridcell');
+          const modal = screen.getByRole('document', { label: 'Selected records' });
+          const row = modal.querySelector('.mclRowContainer > [role=row]');
+          const cells = getAllByRole(row, 'gridcell');
 
-          expect(getByText(cells[0], '#youthaction')).toBeVisible();
-          expect(getByText(cells[1], 'Kirshner, Benjamin ; Middaugh, Ellen')).toBeVisible();
-          expect(getByText(cells[2], 'Information Age Publishing, Inc. (2015)')).toBeVisible();
+          expect(getByRole(cells[0], 'checkbox', { name: 'Select instance' })).toBeVisible();
+          expect(getByText(cells[1], '#youthaction')).toBeVisible();
+          expect(getByText(cells[2], 'Kirshner, Benjamin ; Middaugh, Ellen')).toBeVisible();
+          expect(getByText(cells[3], 'Information Age Publishing, Inc. (2015)')).toBeVisible();
         });
 
-        it('should close the modal upon click on cancel button', () => {
-          userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+        it('should have all rows selected', () => {
+          const modal = screen.getByRole('document', { label: 'Selected records' });
+          const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
 
-          return waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
+          selectRowCheckboxesInModal.forEach(checkbox => expect(checkbox).toBeChecked());
         });
 
-        it('should display disabled save button', () => {
-          expect(screen.getByRole('button', { name: 'Save & close' })).toBeDisabled();
+        describe('unselecting rows in the modal', () => {
+          beforeEach(() => {
+            const modal = screen.getByRole('document', { label: 'Selected records' });
+            const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
+
+            selectRowCheckboxesInModal.forEach(userEvent.click);
+          });
+
+          it('should preserve the selected state for the corresponding rows in the results list after close of the modal upon click on cancel button', async () => {
+            userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+            await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
+
+            expect(selectRowCheckboxes[0]).toBeChecked();
+            expect(selectRowCheckboxes[1]).toBeChecked();
+          });
+
+          it('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
+            userEvent.click(screen.getByRole('button', { name: 'Save & close' }));
+
+            await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
+
+            expect(selectRowCheckboxes[0]).not.toBeChecked();
+            expect(selectRowCheckboxes[1]).not.toBeChecked();
+          });
         });
       });
 
