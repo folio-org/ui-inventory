@@ -38,6 +38,7 @@
 * Implement quick export of instances in MARC Bib output format. Refs UIIN-1382.
 * Add jest setup. Refs UIIN-1375.
 * Cover select instances functionality with jest/rtl tests. Refs UIIN-1390.
+* Fix type ahead for location filters. Fixes UIIN-1393 and UIIN-1395.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
