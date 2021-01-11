@@ -190,7 +190,7 @@ export function filterItemsBy(name) {
     // Escaped filter regex used to filter items on the list.
     const esFilter = new RegExp(escapeRegExp(filter), 'i');
 
-    // Regex used to return filtered items in alphabetic order.
+    // Regex used to return filtered items in alphabetical order.
     const regex = new RegExp(`^${esFilter}`, 'i');
 
     const renderedItems = list
