@@ -46,7 +46,7 @@
     "descriptiveData": "Beschreibende Daten",
     "selectMaterialType": "Materialart auwählen",
     "selectLoanType": "Ausleihtyp auswählen",
-    "loanTypePermanent": "Ausleihtyp (permanent)",
+    "loanTypePermanent": "Permanenter Ausleihtyp",
     "selectTemporaryLocation": "Vorläufigen Standort auswählen",
     "loanTypeTemporary": "Ausleihtyp (vorläufig)",
     "enumeration": "Zählung",
