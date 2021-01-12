@@ -86,6 +86,13 @@ export function buildManifestObject() {
         staticFallback: { params: {} },
       },
     },
+    quickExport: {
+      type: 'okapi',
+      fetch: false,
+      path: 'data-export/quick-export',
+      throwErrors: false,
+      clientGeneratePk: false,
+    },
     itemsInTransitReport: {
       type: 'okapi',
       records: 'items',

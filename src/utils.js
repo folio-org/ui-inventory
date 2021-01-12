@@ -176,16 +176,25 @@ export const buildOptionalBooleanQuery = name => values => {
   }
 };
 
+// A closure function which takes the name of the attribute used
+// for filtering purposes and returns a function which can be used as a custom
+// filter function in <MultiSelection>.
+// https://github.com/folio-org/stripes-components/tree/master/lib/MultiSelection#common-props
+
 export function filterItemsBy(name) {
   return (filter, list) => {
     if (!filter) {
       return { renderedItems: list };
     }
 
-    const esFilter = escapeRegExp(filter);
+    // Escaped filter regex used to filter items on the list.
+    const esFilter = new RegExp(escapeRegExp(filter), 'i');
+
+    // Regex used to return filtered items in alphabetical order.
     const regex = new RegExp(`^${esFilter}`, 'i');
+
     const renderedItems = list
-      .filter(item => item[name].match(new RegExp(esFilter, 'i')))
+      .filter(item => item[name].match(esFilter))
       .sort((item1, item2) => {
         const match1 = item1[name].match(regex);
         const match2 = item2[name].match(regex);
@@ -562,3 +571,19 @@ export const unmarshalInstance = (instance, identifierTypesById) => {
 export const omitFromArray = (array, path) => array.map(title => omit(title, path));
 
 export const sourceSuppressor = sourceValue => term => term.source === sourceValue;
+
+export const getNextSelectedRowsState = (selectedRows, row) => {
+  const { id } = row;
+  const isRowSelected = Boolean(selectedRows[id]);
+  const newSelectedRows = { ...selectedRows };
+
+  if (isRowSelected) {
+    delete newSelectedRows[id];
+  } else {
+    newSelectedRows[id] = row;
+  }
+
+  return newSelectedRows;
+};
+
+export const isTestEnv = () => process.env.NODE_ENV === 'test';

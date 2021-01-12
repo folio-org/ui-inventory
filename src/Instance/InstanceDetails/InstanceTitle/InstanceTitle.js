@@ -30,16 +30,10 @@ const InstanceTitle = ({ instance, instanceTypes }) => {
                 iconKey="instance"
                 size="small"
               >
-                <FormattedMessage id="ui-inventory.instanceRecord" />
-              </AppIcon>
-            </Layout>
-            <Layout className="margin-end-gutter display-flex flex-align-items-center">
-              <AppIcon
-                app="inventory"
-                iconKey="resource-type"
-                size="small"
-              >
-                {instanceTypeName}
+                <FormattedMessage
+                  id="ui-inventory.instanceRecordWithType"
+                  values={{ instanceTypeName }}
+                />
               </AppIcon>
             </Layout>
           </Layout>

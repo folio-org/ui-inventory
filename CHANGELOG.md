@@ -30,6 +30,16 @@
 * Make holdings sources with source value `folio` non-editable in Settings. Refs UIIN-1314.
 * Add quick instances UUIDs export limit reached warning. Refs UIIN-1367.
 * Refactor the suppress actions in `Settings` into a single util function. Refs UIIN-1373.
+* Clean up display of instance and item detail record headers (remove 'dead' icons). Refs UIIN-1361.
+* Upgraded to create-inventory plugin v2.0.0.
+* Include missing item-status values. Refs UIIN-1385.
+* Disable sorting by `relation` column. Refs UIIN-1303.
+* Add show selected records action menu. Refs UIIN-1375.
+* Implement quick export of instances in MARC Bib output format. Refs UIIN-1382.
+* Add jest setup. Refs UIIN-1375.
+* Cover select instances functionality with jest/rtl tests. Refs UIIN-1390.
+* Fix type ahead for location filters. Fixes UIIN-1393 and UIIN-1395.
+* Add checkboxes on the show selected instances records modal. Refs UIIN-1391.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

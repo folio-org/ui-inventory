@@ -77,7 +77,8 @@
       "circulation": "9.0",
       "configuration": "2.0",
       "tags": "1.0",
-      "inventory-record-bulk": "1.0"
+      "inventory-record-bulk": "1.0",
+      "data-export": "3.0"
     },
     "permissionSets": [
       {
@@ -477,7 +478,8 @@
           "inventory-storage.service-points.item.get",
           "inventory-storage.service-points.collection.get",
           "inventory-storage.hrid-settings.item.get",
-          "inventory-storage.record-bulk.ids.get"
+          "inventory-storage.record-bulk.ids.get",
+          "data-export.quick.export.post"
         ],
         "visible": true
       },
@@ -676,7 +678,7 @@
   "scripts": {
     "start": "stripes serve",
     "lint": "eslint .",
-    "test": "yarn run test:e2e:ci",
+    "test": "yarn run test:unit && yarn run test:e2e:ci",
     "test:unit": "jest --ci --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
@@ -699,6 +701,7 @@
     "@folio/stripes-smart-components": "^5.0.0",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
+    "@testing-library/user-event": "^12.1.10",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "chai": "^4.2.0",
@@ -746,7 +749,7 @@
     "react-router-dom": "^5.0.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-create-inventory-records": "^1.0.0",
+    "@folio/plugin-create-inventory-records": "^2.0.0",
     "@folio/plugin-find-instance": "^4.0.0",
     "@folio/quick-marc": "^2.0.0"
 

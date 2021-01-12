@@ -141,14 +141,6 @@ describe('Instances', () => {
       expect(inventory.headerDropdownMenu.isSaveInstancesCQLQueryDisabled).to.be.true;
     });
 
-    it('should display action button for export instances (MARC)', () => {
-      expect(inventory.headerDropdownMenu.exportInstancesMARCBtnIsVisible).to.be.true;
-    });
-
-    it('should display correct icon for export instances (MARC)', () => {
-      expect(inventory.headerDropdownMenu.isExportInstancesMARCIconPresent).to.be.true;
-    });
-
     it('should display action button for export instances (JSON)', () => {
       expect(inventory.headerDropdownMenu.exportInstancesJSONBtnIsVisible).to.be.true;
     });

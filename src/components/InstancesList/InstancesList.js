@@ -37,9 +37,11 @@ import formatters from '../../referenceFormatters';
 import withLocation from '../../withLocation';
 import {
   getCurrentFilters,
+  getNextSelectedRowsState,
   parseFiltersToStr,
   marshalInstance,
   omitFromArray,
+  isTestEnv,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -51,6 +53,7 @@ import {
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
+import SelectedRecordsModal from '../SelectedRecordsModal';
 
 import { buildQuery } from '../../routes/buildManifestObject';
 
@@ -59,7 +62,7 @@ import css from './instances.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-class InstancesView extends React.Component {
+class InstancesList extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
@@ -93,8 +96,10 @@ class InstancesView extends React.Component {
     showNewFastAddModal: false,
     inTransitItemsExportInProgress: false,
     instancesIdExportInProgress: false,
+    instancesQuickExportInProgress: false,
     showErrorModal: false,
     selectedRows: {},
+    isSelectedRecordsModalOpened: false,
   };
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -222,10 +227,10 @@ class InstancesView extends React.Component {
 
         clearTimeout(infoCalloutTimer);
 
-        const report = new InstancesIdReport();
+        const report = new InstancesIdReport('SearchInstanceUUIDs');
 
         if (!isEmpty(items)) {
-          report.toCSV(items);
+          report.toCSV(items, record => record.id);
         }
       } catch (error) {
         clearTimeout(infoCalloutTimer);
@@ -240,8 +245,34 @@ class InstancesView extends React.Component {
     });
   };
 
+  triggerQuickExport = async (sendCallout) => {
+    const { instancesQuickExportInProgress } = this.state;
+
+    if (instancesQuickExportInProgress) return;
+
+    this.setState({ instancesQuickExportInProgress: true });
+
+    try {
+      const instanceIds = Object.keys(this.state.selectedRows).slice(0, QUICK_EXPORT_LIMIT);
+
+      await this.props.parentMutator.quickExport.POST({
+        uuids: instanceIds,
+        type: 'uuid',
+        recordType: 'INSTANCE'
+      });
+      new InstancesIdReport('QuickInstanceExport').toCSV(instanceIds);
+    } catch (error) {
+      sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-inventory.communicationProblem" />,
+      });
+    } finally {
+      this.setState({ instancesQuickExportInProgress: false });
+    }
+  };
+
   generateCQLQueryReport = async () => {
-    if (process.env.NODE_ENV !== 'test') {
+    if (!isTestEnv()) {
       const { data } = this.props;
 
       const query = buildQuery(data.query, {}, data, { log: noop }, this.props);
@@ -305,14 +336,20 @@ class InstancesView extends React.Component {
             <FormattedMessage id="stripes-smart-components.new" />
           </Button>
         </IfPermission>
-        <IfPermission perm="ui-plugin-create-inventory-records.create">
-          {this.getActionItem({
-            id: 'new-fast-add-record',
-            icon: 'lightning',
-            messageId: 'ui-inventory.newFastAddRecord',
-            onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-          })}
-        </IfPermission>
+        <Pluggable
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
+          open={this.state.showNewFastAddModal} // control the open modal via state var
+          renderTrigger={() => (
+            this.getActionItem({
+              id: 'new-fast-add-record',
+              icon: 'lightning',
+              messageId: 'ui-inventory.newFastAddRecord',
+              onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+            })
+          )}
+          type="create-inventory-records"
+        />
         {this.getActionItem({
           id: 'dropdown-clickable-get-report',
           icon: 'report',
@@ -337,7 +374,7 @@ class InstancesView extends React.Component {
           id: 'dropdown-clickable-export-marc',
           icon: 'download',
           messageId: 'ui-inventory.exportInstancesInMARC',
-          onClickHandler: buildOnClickHandler(noop),
+          onClickHandler: buildOnClickHandler(this.triggerQuickExport),
           isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
         })}
         {isQuickExportLimitExceeded && (
@@ -358,6 +395,13 @@ class InstancesView extends React.Component {
           onClickHandler: buildOnClickHandler(noop),
           isDisabled: true,
         })}
+        {this.getActionItem({
+          id: 'dropdown-clickable-show-selected-records',
+          icon: 'eye-open',
+          messageId: 'ui-inventory.instances.showSelectedRecords',
+          onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
+          isDisabled: !selectedRowsCount,
+        })}
       </>
     );
   };
@@ -366,23 +410,23 @@ class InstancesView extends React.Component {
     this.setState({ showErrorModal: false });
   };
 
-  toggleRowSelection = rowId => {
-    this.setState(({ selectedRows }) => {
-      const isRowSelected = Boolean(selectedRows[rowId]);
-      const newSelectedRows = { ...selectedRows };
-
-      if (isRowSelected) {
-        delete newSelectedRows[rowId];
-      } else {
-        newSelectedRows[rowId] = true;
-      }
-
-      return { selectedRows: newSelectedRows };
-    });
+  toggleRowSelection = row => {
+    this.setState(({ selectedRows }) => ({ selectedRows: getNextSelectedRowsState(selectedRows, row) }));
   };
 
   handleResetAll = () => {
     this.setState({ selectedRows: {} });
+  }
+
+  handleSelectedRecordsModalSave = selectedRecords => {
+    this.setState({
+      isSelectedRecordsModalOpened: false,
+      selectedRows: selectedRecords,
+    });
+  }
+
+  handleSelectedRecordsModalCancel = () => {
+    this.setState({ isSelectedRecordsModalOpened: false });
   }
 
   renderPaneSub() {
@@ -419,14 +463,24 @@ class InstancesView extends React.Component {
         path,
       }
     } = this.props;
+    const {
+      isSelectedRecordsModalOpened,
+      selectedRows,
+    } = this.state;
 
     const resultsFormatter = {
-      'select': ({ id }) => (
+      'select': ({
+        id,
+        ...rowData
+      }) => (
         <CheckboxColumn>
           <Checkbox
-            checked={Boolean(this.state.selectedRows[id])}
+            checked={Boolean(selectedRows[id])}
             aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
-            onChange={() => this.toggleRowSelection(id)}
+            onChange={() => this.toggleRowSelection({
+              id,
+              ...rowData
+            })}
           />
         </CheckboxColumn>
       ),
@@ -444,6 +498,14 @@ class InstancesView extends React.Component {
       'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+    };
+
+    const columnMapping = {
+      select: '',
+      title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
+      contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
+      publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+      relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
     };
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
@@ -476,13 +538,7 @@ class InstancesView extends React.Component {
               source: 'FOLIO',
             }}
             visibleColumns={visibleColumns || ['select', 'title', 'contributors', 'publishers', 'relation']}
-            columnMapping={{
-              select: '',
-              title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-              contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-              publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-              relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-            }}
+            columnMapping={columnMapping}
             columnWidths={{
               select: '30px',
               title: '40%',
@@ -511,20 +567,22 @@ class InstancesView extends React.Component {
             pagingType="click"
             hasNewButton={false}
             onResetAll={this.handleResetAll}
+            sortableColumns={['title', 'contributors', 'publishers']}
           />
         </div>
-        <Pluggable
-          buttonVisible={false} // hide default plugin's button
-          open={this.state.showNewFastAddModal} // control the open modal via state var
-          type="create-inventory-records"
-          id="clickable-create-inventory-records"
-          onClose={this.toggleNewFastAddModal}
-        />
         <ErrorModal
           isOpen={this.state.showErrorModal}
           label={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.label" />}
           content={<FormattedMessage id="ui-inventory.reports.inTransitItem.emptyReport.message" />}
           onClose={this.onErrorModalClose}
+        />
+        <SelectedRecordsModal
+          isOpen={isSelectedRecordsModalOpened}
+          records={selectedRows}
+          columnMapping={columnMapping}
+          formatter={resultsFormatter}
+          onSave={this.handleSelectedRecordsModalSave}
+          onCancel={this.handleSelectedRecordsModalCancel}
         />
       </>
     );
@@ -534,4 +592,4 @@ class InstancesView extends React.Component {
 export default flowRight(
   injectIntl,
   withLocation,
-)(InstancesView);
+)(InstancesList);

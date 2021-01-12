@@ -724,23 +724,13 @@ class ItemView extends React.Component {
                     size="small"
                   />
                   {' '}
-                  <FormattedMessage id="ui-inventory.itemRecord" />
-                  {' '}
-                  <AppIcon
-                    app="inventory"
-                    iconKey="material-type"
-                    size="small"
+                  <FormattedMessage
+                    id="ui-inventory.itemRecordWithDescription"
+                    values={{
+                      materialType: item?.materialType?.name,
+                      status: item?.status?.name
+                    }}
                   />
-                  {' '}
-                  {get(item, ['materialType', 'name'], '')}
-                  {' '}
-                  <AppIcon
-                    app="inventory"
-                    iconKey="item-status"
-                    size="small"
-                  />
-                  {' '}
-                  {get(item, ['status', 'name'], '')}
                 </Col>
               </Row>
               <br />
