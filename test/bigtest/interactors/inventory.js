@@ -31,8 +31,6 @@ import {
   isSaveInstancesCQLQueryDisabled = property('#dropdown-clickable-get-cql-query', 'disabled');
   isSaveInstancesCQLQueryIconPresent = isPresent('#dropdown-clickable-get-cql-query [class*=icon-search]');
   isTransitItemsReportIconPresent = isPresent('#dropdown-clickable-get-report [class*=icon-report]');
-  exportInstancesMARCBtnIsVisible = isVisible('#dropdown-clickable-export-marc');
-  isExportInstancesMARCBtnDisabled = property('#dropdown-clickable-export-marc', 'disabled');
   isExportInstancesMARCIconPresent = isPresent('#dropdown-clickable-export-marc [class*=icon-download]');
   exportInstancesJSONBtnIsVisible = isVisible('#dropdown-clickable-export-json');
   isExportInstancesJSONBtnDisabled = property('#dropdown-clickable-export-json', 'disabled');
@@ -70,7 +68,6 @@ export default @interactor class InventoryInteractor {
 
   headerDropdown = scoped('[data-test-pane-header-actions-button]');
   headerDropdownMenu = new InventoryHeaderDropdownMenu();
-  headerDropdownMenuQuickMarcExportLimitExceeded = new Interactor('[data-test-quick-marc-export-limit-exceeded]');
 
   resourceTypeFilter = scoped('#resource', MultiSelectFilterInteractor);
   formatFilter = scoped('#format', MultiSelectFilterInteractor);

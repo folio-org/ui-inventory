@@ -141,7 +141,7 @@ const HRIDHandlingForm = ({
 
     return mutator.hridSettings.PUT(data)
       .then(() => showCallout('success', 'ui-inventory.hridHandling.toast.updated'))
-      .catch(() => showCallout('error', 'ui-inventory.hridHandling.toast.error'));
+      .catch(() => showCallout('error', 'ui-inventory.communicationProblem'));
   };
 
   return (

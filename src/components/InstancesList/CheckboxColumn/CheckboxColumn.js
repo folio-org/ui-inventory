@@ -5,7 +5,6 @@ const CheckboxColumn = ({ children }) => (
   <div // eslint-disable-line jsx-a11y/click-events-have-key-events
     tabIndex="0"
     role="button"
-    data-test-select-row
     onClick={e => e.stopPropagation()}
   >
     {children}
