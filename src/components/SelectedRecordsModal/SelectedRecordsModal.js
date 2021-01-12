@@ -15,6 +15,8 @@ import {
   Checkbox,
   MultiColumnList
 } from '@folio/stripes/components';
+
+import { getNextSelectedRowsState } from '../../utils';
 import CheckboxColumn from '../InstancesList/CheckboxColumn';
 
 const SelectedRecordsModal = ({
@@ -34,19 +36,8 @@ const SelectedRecordsModal = ({
     }
   }, [records, isOpen]);
 
-  const toggleRowSelection = rowData => {
-    setSelectedRecords(state => {
-      const isRowSelected = Boolean(selectedRecords[rowData.id]);
-      const newSelectedRows = { ...state };
-
-      if (isRowSelected) {
-        delete newSelectedRows[rowData.id];
-      } else {
-        newSelectedRows[rowData.id] = rowData;
-      }
-
-      return newSelectedRows;
-    });
+  const toggleRowSelection = row => {
+    setSelectedRecords(state => getNextSelectedRowsState(state, row));
   };
 
   const resultsFormatter = {

@@ -572,4 +572,18 @@ export const omitFromArray = (array, path) => array.map(title => omit(title, pat
 
 export const sourceSuppressor = sourceValue => term => term.source === sourceValue;
 
+export const getNextSelectedRowsState = (selectedRows, row) => {
+  const { id } = row;
+  const isRowSelected = Boolean(selectedRows[id]);
+  const newSelectedRows = { ...selectedRows };
+
+  if (isRowSelected) {
+    delete newSelectedRows[id];
+  } else {
+    newSelectedRows[id] = row;
+  }
+
+  return newSelectedRows;
+};
+
 export const isTestEnv = () => process.env.NODE_ENV === 'test';

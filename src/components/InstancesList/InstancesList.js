@@ -37,6 +37,7 @@ import formatters from '../../referenceFormatters';
 import withLocation from '../../withLocation';
 import {
   getCurrentFilters,
+  getNextSelectedRowsState,
   parseFiltersToStr,
   marshalInstance,
   omitFromArray,
@@ -409,21 +410,8 @@ class InstancesList extends React.Component {
     this.setState({ showErrorModal: false });
   };
 
-  toggleRowSelection = rowData => {
-    const { id: rowId } = rowData;
-
-    this.setState(({ selectedRows }) => {
-      const isRowSelected = Boolean(selectedRows[rowId]);
-      const newSelectedRows = { ...selectedRows };
-
-      if (isRowSelected) {
-        delete newSelectedRows[rowId];
-      } else {
-        newSelectedRows[rowId] = rowData;
-      }
-
-      return { selectedRows: newSelectedRows };
-    });
+  toggleRowSelection = row => {
+    this.setState(({ selectedRows }) => ({ selectedRows: getNextSelectedRowsState(selectedRows, row) }));
   };
 
   handleResetAll = () => {
