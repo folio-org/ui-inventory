@@ -37,6 +37,7 @@ import formatters from '../../referenceFormatters';
 import withLocation from '../../withLocation';
 import {
   getCurrentFilters,
+  getNextSelectedRowsState,
   parseFiltersToStr,
   marshalInstance,
   omitFromArray,
@@ -409,26 +410,19 @@ class InstancesList extends React.Component {
     this.setState({ showErrorModal: false });
   };
 
-  toggleRowSelection = ({
-    id: rowId,
-    ...rowData
-  }) => {
-    this.setState(({ selectedRows }) => {
-      const isRowSelected = Boolean(selectedRows[rowId]);
-      const newSelectedRows = { ...selectedRows };
-
-      if (isRowSelected) {
-        delete newSelectedRows[rowId];
-      } else {
-        newSelectedRows[rowId] = rowData;
-      }
-
-      return { selectedRows: newSelectedRows };
-    });
+  toggleRowSelection = row => {
+    this.setState(({ selectedRows }) => ({ selectedRows: getNextSelectedRowsState(selectedRows, row) }));
   };
 
   handleResetAll = () => {
     this.setState({ selectedRows: {} });
+  }
+
+  handleSelectedRecordsModalSave = selectedRecords => {
+    this.setState({
+      isSelectedRecordsModalOpened: false,
+      selectedRows: selectedRecords,
+    });
   }
 
   handleSelectedRecordsModalCancel = () => {
@@ -573,7 +567,7 @@ class InstancesList extends React.Component {
             pagingType="click"
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={["title","contributors","publishers"]}
+            sortableColumns={['title', 'contributors', 'publishers']}
           />
         </div>
         <ErrorModal
@@ -584,9 +578,10 @@ class InstancesList extends React.Component {
         />
         <SelectedRecordsModal
           isOpen={isSelectedRecordsModalOpened}
-          selectedRecords={selectedRows}
+          records={selectedRows}
           columnMapping={columnMapping}
           formatter={resultsFormatter}
+          onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
       </>
