@@ -10,6 +10,9 @@ import {
   CheckboxFilter,
   MultiSelectionFilter,
 } from '@folio/stripes/smart-components';
+import {
+  filterItemsBy,
+} from '../../utils';
 
 export default class HoldingsRecordFilters extends React.Component {
   static propTypes = {
@@ -71,6 +74,7 @@ export default class HoldingsRecordFilters extends React.Component {
             name="effectiveLocation"
             dataOptions={locationOptions}
             selectedValues={effectiveLocation}
+            filter={filterItemsBy('label')}
             onChange={onChange}
           />
         </Accordion>
@@ -87,6 +91,7 @@ export default class HoldingsRecordFilters extends React.Component {
             name="holdingsPermanentLocation"
             dataOptions={locationOptions}
             selectedValues={holdingsPermanentLocation}
+            filter={filterItemsBy('label')}
             onChange={onChange}
           />
         </Accordion>

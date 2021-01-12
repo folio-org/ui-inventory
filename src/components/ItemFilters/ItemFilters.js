@@ -107,6 +107,7 @@ class ItemFilters extends React.Component {
             dataOptions={locationOptions}
             selectedValues={effectiveLocation}
             onChange={onChange}
+            filter={filterItemsBy('label')}
           />
         </Accordion>
         <Accordion
@@ -123,6 +124,7 @@ class ItemFilters extends React.Component {
             dataOptions={locationOptions}
             selectedValues={holdingsPermanentLocation}
             onChange={onChange}
+            filter={filterItemsBy('label')}
           />
         </Accordion>
         <Accordion
