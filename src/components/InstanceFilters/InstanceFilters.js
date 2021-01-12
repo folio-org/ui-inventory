@@ -116,6 +116,7 @@ const InstanceFilters = props => {
           name="effectiveLocation"
           dataOptions={effectiveLocationOptions}
           selectedValues={effectiveLocation}
+          filter={filterItemsBy('label')}
           onChange={onChange}
         />
       </Accordion>
