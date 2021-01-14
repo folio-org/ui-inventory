@@ -18,6 +18,15 @@ export const itemStatusesMap = {
   CLAIMED_RETURNED: 'Claimed returned',
   LOST_AND_PAID: 'Lost and paid',
   AGED_TO_LOST: 'Aged to lost',
+  ORDER_CLOSED: 'Order closed',
+  INTELLECTUAL_ITEM: 'Intellectual item',
+  RESTRICTED: 'Restricted',
+};
+
+// Matching mutator names to the corresponding item status
+export const itemStatusMutators = {
+  INTELLECTUAL_ITEM: 'markAsIntellectualItem',
+  RESTRICTED: 'markAsRestricted',
 };
 
 export const requestStatuses = {
