@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 5.0.6 IN PROGRESS
+## [5.0.6](https://github.com/folio-org/ui-inventory/tree/v5.0.6) (2021-01-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.5...v5.0.6)
 
 * Fix type ahead for location filters. Fixes UIIN-1393 and UIIN-1395.
 
