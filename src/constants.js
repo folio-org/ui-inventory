@@ -23,7 +23,7 @@ export const itemStatusesMap = {
   RESTRICTED: 'Restricted',
 };
 
-// Matching mutator names to the corresponding item status
+// Matching mutator names to the corresponding item statuses
 export const itemStatusMutators = {
   INTELLECTUAL_ITEM: 'markAsIntellectualItem',
   RESTRICTED: 'markAsRestricted',

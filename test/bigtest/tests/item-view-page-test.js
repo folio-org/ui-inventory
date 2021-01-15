@@ -8,6 +8,11 @@ import ItemViewPage from '../interactors/item-view-page';
 import ItemEditPage from '../interactors/item-edit-page';
 import ItemCreatePage from '../interactors/item-create-page';
 
+const itemStatusesMap = {
+  Intellectual: 'Intellectual item',
+  Restricted: 'Restricted',
+};
+
 describe('ItemViewPage', () => {
   describe('User has permissions', () => {
     const requestsPath = '/requests';
@@ -109,6 +114,14 @@ describe('ItemViewPage', () => {
 
         it('should show a mark as withdrawn item', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsWithdrawn).to.be.true;
+        });
+
+        it('should show a mark as intellectual item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.true;
+        });
+
+        it('should show a mark as restricted', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.true;
         });
 
         it('should show a delete menu item', () => {
@@ -213,6 +226,47 @@ describe('ItemViewPage', () => {
 
             it('should change item status to "Withdrawn"', () => {
               expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal('Withdrawn');
+            });
+          });
+        });
+
+        Object.keys(itemStatusesMap).forEach(status => {
+          describe(`clicking on mark as ${status}`, () => {
+            beforeEach(async () => {
+              await ItemViewPage.headerDropdownMenu[`clickMarkAs${status}`]();
+            });
+
+            it('should open an item status modal', () => {
+              expect(ItemViewPage.hasItemStatusModal).to.exist;
+            });
+
+            it('should display open requests number', () => {
+              expect(ItemViewPage.openRequestsNumber.text).to.equal('1 open request');
+            });
+
+            describe('clicking on the open requests number link', () => {
+              beforeEach(async () => {
+                await ItemViewPage.openRequestsNumber.click();
+              });
+
+              it('should redirect to "requests"', function () {
+                expect(this.location.pathname).to.equal(requestsPath);
+                expect(this.location.search).includes(item.id);
+              });
+            });
+
+            describe('clicking on "Confirm" button', () => {
+              beforeEach(async () => {
+                await ItemViewPage.confirmButton.click();
+              });
+
+              it('should close an item status modal', () => {
+                expect(ItemViewPage.hasItemStatusModal).to.be.false;
+              });
+
+              it(`should change item status to ${status}`, () => {
+                expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal(itemStatusesMap[status]);
+              });
             });
           });
         });
