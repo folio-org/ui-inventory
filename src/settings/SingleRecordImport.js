@@ -27,19 +27,19 @@ class SingleRecordImport extends React.Component {
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
-            baseUrl="copycat/target-profiles"
-            records="targetprofiles"
+            baseUrl="copycat/profiles"
+            records="profiles"
             label={<FormattedMessage id="ui-inventory.targetProfiles" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.targetProfile' })}
             objectLabel={<FormattedMessage id="ui-inventory.targetProfiles" />}
-            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'importProfileId']}
+            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               url: intl.formatMessage({ id: 'ui-inventory.url' }),
               authentication: intl.formatMessage({ id: 'ui-inventory.authentication' }),
               externalIdQueryMap: intl.formatMessage({ id: 'ui-inventory.externalIdQueryMap' }),
               internalIdEmbedPath: intl.formatMessage({ id: 'ui-inventory.internalIdEmbedPath' }),
-              importProfileId: intl.formatMessage({ id: 'ui-inventory.importProfileId' }),
+              importProfileId: intl.formatMessage({ id: 'ui-inventory.jobProfileId' }),
             }}
             nameKey="name"
             hiddenFields={['lastUpdated', 'numberOfObjects']}

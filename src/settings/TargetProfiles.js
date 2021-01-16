@@ -10,11 +10,11 @@ class TargetProfiles extends React.Component {
   static manifest = Object.freeze({
     entries: {
       type: 'okapi',
-      records: 'targetprofiles',
-      path: 'copycat/target-profiles',
+      records: 'profiles',
+      path: 'copycat/profiles',
       resourceShouldRefresh: true,
       GET: {
-        path: 'copycat/target-profiles?query=cql.allRecords=1 sortby name&limit=1000',
+        path: 'copycat/profiles?query=cql.allRecords=1 sortby name&limit=1000',
       },
     },
   });

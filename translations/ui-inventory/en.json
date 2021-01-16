@@ -286,7 +286,7 @@
   "authentication": "Authentication",
   "externalIdQueryMap": "External ID query map",
   "internalIdEmbedPath": "Internal ID embed path",
-  "importProfileId": "Import profile ID",
+  "jobProfileId": "Job profile ID",
   "urls": "URLs",
   "addUrl": "Add URL",
   "items": "Items",

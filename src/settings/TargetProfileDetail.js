@@ -66,8 +66,8 @@ class TargetProfileDetail extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={<FormattedMessage id="ui-inventory.importProfileId" />}
-              value={initialValues.importProfileId}
+              label={<FormattedMessage id="ui-inventory.jobProfileId" />}
+              value={initialValues.jobProfileId}
             />
           </Col>
         </Row>
