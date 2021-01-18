@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col, TextField, Button } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -10,7 +9,6 @@ class TargetProfileForm extends React.Component {
     pristine: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
     initialValues: PropTypes.object,
-    onSubmit: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
   };
 
