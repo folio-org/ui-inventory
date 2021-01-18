@@ -54,6 +54,7 @@ import {
 import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
+import ImportRecordModal from '../ImportRecordModal';
 
 import { buildQuery } from '../../routes/buildManifestObject';
 
@@ -100,6 +101,7 @@ class InstancesList extends React.Component {
     showErrorModal: false,
     selectedRows: {},
     isSelectedRecordsModalOpened: false,
+    isImportRecordModalOpened: false,
   };
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -402,6 +404,12 @@ class InstancesList extends React.Component {
           onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
           isDisabled: !selectedRowsCount,
         })}
+        {this.getActionItem({
+          id: 'dropdown-clickable-import-record',
+          icon: 'lightning',
+          messageId: 'ui-inventory.copycat.import',
+          onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+        })}
       </>
     );
   };
@@ -427,6 +435,17 @@ class InstancesList extends React.Component {
 
   handleSelectedRecordsModalCancel = () => {
     this.setState({ isSelectedRecordsModalOpened: false });
+  }
+
+  handleImportRecordModalGo = () => {
+    this.setState({
+      isImportRecordModalOpened: false,
+    });
+    alert('XXX now actually do the import!'); // eslint-disable-line no-alert
+  }
+
+  handleImportRecordModalCancel = () => {
+    this.setState({ isImportRecordModalOpened: false });
   }
 
   renderPaneSub() {
@@ -465,6 +484,7 @@ class InstancesList extends React.Component {
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
+      isImportRecordModalOpened,
       selectedRows,
     } = this.state;
 
@@ -583,6 +603,12 @@ class InstancesList extends React.Component {
           formatter={resultsFormatter}
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
+        />
+        <ImportRecordModal
+          isOpen={isImportRecordModalOpened}
+          currentOclcNumber={undefined}
+          onGo={this.handleImportRecordModalGo}
+          onCancel={this.handleImportRecordModalCancel}
         />
       </>
     );
