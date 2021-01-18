@@ -612,5 +612,6 @@
   "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}",
 
   "filter.tags": "Tags",
-  "showTags": "Show tags"
+  "showTags": "Show tags",
+  "copycat.import": "Import"
 }
