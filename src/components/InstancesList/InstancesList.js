@@ -437,11 +437,12 @@ class InstancesList extends React.Component {
     this.setState({ isSelectedRecordsModalOpened: false });
   }
 
-  handleImportRecordModalGo = () => {
+  handleImportRecordModalSubmit = (args) => {
     this.setState({
       isImportRecordModalOpened: false,
     });
-    alert('XXX now actually do the import!'); // eslint-disable-line no-alert
+    console.log('handleImportRecordModalSubmit: args =', args); // eslint-disable-line no-console
+    // XXX now actually do the import!
   }
 
   handleImportRecordModalCancel = () => {
@@ -607,8 +608,8 @@ class InstancesList extends React.Component {
         <ImportRecordModal
           isOpen={isImportRecordModalOpened}
           currentOclcNumber={undefined}
-          onGo={this.handleImportRecordModalGo}
-          onCancel={this.handleImportRecordModalCancel}
+          handleSubmit={this.handleImportRecordModalSubmit}
+          handleCancel={this.handleImportRecordModalCancel}
         />
       </>
     );
