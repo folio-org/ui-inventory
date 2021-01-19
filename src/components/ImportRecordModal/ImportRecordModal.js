@@ -1,31 +1,22 @@
-// See ~/git/folio/stripes/ui-users/src/components/Accounts/Actions/CancellationModal.js
-// for an example of a modal using final-form
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl, FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
-import setFieldData from 'final-form-set-field-data';
-import stripesFinalForm from '@folio/stripes/final-form';
+import { Form, Field } from 'react-final-form';
 
 import {
   Modal,
   ModalFooter,
-  TextField,
   Button,
+  TextField,
   Row,
   Col,
 } from '@folio/stripes/components';
 
-import css from './modal.css';
-
 const ImportRecordModal = ({
   isOpen,
   currentOclcNumber, // eslint-disable-line no-unused-vars
-  handleSubmit,
+  handleSubmit: onSubmit,
   handleCancel,
-  submitting,
-  // form: { getState },
 }) => {
   const intl = useIntl();
   // const { values: { externalIdentifier } } = getState();
@@ -35,7 +26,7 @@ const ImportRecordModal = ({
     <ModalFooter>
       <Button
         buttonStyle="primary"
-        onClick={() => handleSubmit()}
+        onClick={() => onSubmit()}
       >
         <FormattedMessage id="ui-inventory.copycat.import" />
       </Button>
@@ -55,7 +46,23 @@ const ImportRecordModal = ({
       footer={renderFooter()}
       onClose={handleCancel}
     >
-      Hello
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
+            <Row>
+              <Col>External identifier</Col>
+            </Row>
+            <Row>
+              <Col>
+                <Field name="externalIdentifier" component={TextField} placeholder="e.g. OCLC number" />
+              </Col>
+            </Row>
+            <Button type="submit">Import</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
+          </form>
+        )}
+      />
     </Modal>
   );
 };
@@ -66,13 +73,6 @@ ImportRecordModal.propTypes = {
   currentOclcNumber: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
-  // The final-form HOC provides these
-  form: PropTypes.object.isRequired,
-  submitting: PropTypes.bool,
-
 };
 
-export default stripesFinalForm({
-  subscription: { values: true },
-  mutators: { setFieldData }
-})(ImportRecordModal);
+export default ImportRecordModal;
