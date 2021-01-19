@@ -693,12 +693,12 @@
     "@bigtest/interactor": "^0.7.0",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^5.0.0",
-    "@folio/stripes": "^5.0.0",
-    "@folio/stripes-cli": "^1.13.0",
-    "@folio/stripes-components": "^8.0.0",
-    "@folio/stripes-core": "^6.0.0",
-    "@folio/stripes-smart-components": "^5.0.0",
+    "@folio/eslint-config-stripes": "^5.3.0",
+    "@folio/stripes": "^6.0.0",
+    "@folio/stripes-cli": "^1.20.0",
+    "@folio/stripes-components": "^9.0.0",
+    "@folio/stripes-core": "^7.0.0",
+    "@folio/stripes-smart-components": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.1.10",
@@ -716,8 +716,8 @@
     "jest-css-modules": "^2.1.0",
     "jest-junit": "^12.0.0",
     "miragejs": "^0.1.40",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-intl": "^5.8.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
@@ -725,6 +725,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
+    "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
     "lodash": "^4.17.4",
@@ -738,11 +739,10 @@
     "react-final-form-listeners": "^1.0.2",
     "react-hot-loader": "^4.3.12",
     "react-router-prop-types": "^1.0.4",
-    "redux-form": "^7.0.3",
-    "file-saver": "^2.0.0"
+    "redux-form": "^8.3.7"
   },
   "peerDependencies": {
-    "@folio/stripes": "^5.0.0",
+    "@folio/stripes": "^6.0.0",
     "react": "*",
     "react-intl": "^5.8.0",
     "react-router": "^5.0.1",
@@ -752,7 +752,6 @@
     "@folio/plugin-create-inventory-records": "^2.0.0",
     "@folio/plugin-find-instance": "^4.0.0",
     "@folio/quick-marc": "^2.0.0"
-
   },
   "resolutions": {
     "babel-eslint/@babel/parser": "7.7.5",
