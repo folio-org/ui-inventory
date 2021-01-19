@@ -2,15 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
-
-import {
-  Modal,
-  ModalFooter,
-  Button,
-  TextField,
-  Row,
-  Col,
-} from '@folio/stripes/components';
+import { Modal, ModalFooter, Row, Col, TextField, Button } from '@folio/stripes/components';
 
 const ImportRecordModal = ({
   isOpen,
@@ -19,14 +11,12 @@ const ImportRecordModal = ({
   handleCancel,
 }) => {
   const intl = useIntl();
-  // const { values: { externalIdentifier } } = getState();
-  // const submitButtonDisabled = !externalIdentifier || submitting;
 
-  const renderFooter = () => (
+  const renderFooter = (submitFunction) => (
     <ModalFooter>
       <Button
         buttonStyle="primary"
-        onClick={() => onSubmit()}
+        onClick={() => submitFunction()}
       >
         <FormattedMessage id="ui-inventory.copycat.import" />
       </Button>
@@ -37,33 +27,29 @@ const ImportRecordModal = ({
   );
 
   return (
-    <Modal
-      id="import-record-modal"
-      open={isOpen}
-      label={intl.formatMessage({ id: 'ui-inventory.singleRecordImport' })}
-      dismissible
-      size="small"
-      footer={renderFooter()}
-      onClose={handleCancel}
-    >
-      <Form
-        onSubmit={onSubmit}
-        render={({ handleSubmit }) => (
-          <form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <Modal
+            id="import-record-modal"
+            open={isOpen}
+            label={intl.formatMessage({ id: 'ui-inventory.singleRecordImport' })}
+            dismissible
+            size="small"
+            footer={renderFooter(handleSubmit)}
+            onClose={handleCancel}
+          >
             <Row>
-              <Col>External identifier</Col>
-            </Row>
-            <Row>
-              <Col>
+              <Col xs="6">External identifier</Col>
+              <Col xs="6">
                 <Field name="externalIdentifier" component={TextField} placeholder="e.g. OCLC number" />
-              </Col>
+`              </Col>
             </Row>
-            <Button type="submit">Import</Button>
-            <Button onClick={handleCancel}>Cancel</Button>
-          </form>
-        )}
-      />
-    </Modal>
+          </Modal>
+        </form>
+      )}
+    />
   );
 };
 
