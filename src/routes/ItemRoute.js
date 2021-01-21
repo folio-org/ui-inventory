@@ -44,6 +44,22 @@ class ItemRoute extends React.Component {
       clientGeneratePk: false,
       fetch: false,
     },
+    markAsIntellectualItem: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-intellectual-item',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
+    markAsRestricted: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-restricted',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',

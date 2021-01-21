@@ -441,6 +441,22 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-intellectual-item', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Intellectual item' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-restricted', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Restricted' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id', ({ items }, request) => {
     const body = JSON.parse(request.requestBody);
     const item = items.create(body);

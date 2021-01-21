@@ -6,6 +6,11 @@ import {
   isEmpty,
   values,
 } from 'lodash';
+import {
+  humanize,
+  dasherize,
+} from 'inflected';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -50,6 +55,7 @@ import {
   callNumberLabel,
   canMarkItemAsMissing,
   canMarkItemAsWithdrawn,
+  canMarkItemWithStatus,
   canMarkRequestAsOpen,
   canCreateNewRequest,
   areAllFieldsEmpty,
@@ -63,6 +69,7 @@ import ItemForm from '../edit/items/ItemForm';
 import withLocation from '../withLocation';
 import {
   itemStatusesMap,
+  itemStatusMutators,
   noValue,
   requestStatuses,
   wrappingCell,
@@ -79,6 +86,7 @@ class ItemView extends React.Component {
       itemWithdrawnModal: false,
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
+      selectedItemStatus: '',
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -143,6 +151,18 @@ class ItemView extends React.Component {
     );
   }
 
+  markItemWithStatus = status => {
+    const {
+      mutator: {
+        [itemStatusMutators[status]]: {
+          POST,
+        },
+      },
+    } = this.props;
+
+    POST({}).then(this.clearSelectedItemStatus);
+  }
+
   markRequestAsOpen() {
     const request = this.props.resources?.requests?.records?.[0];
 
@@ -161,6 +181,10 @@ class ItemView extends React.Component {
 
   hideWithdrawnModal = () => {
     this.setState({ itemWithdrawnModal: false });
+  };
+
+  clearSelectedItemStatus = () => {
+    this.setState({ selectedItemStatus: '' });
   };
 
   hideConfirmDeleteItemModal = () => {
@@ -295,6 +319,33 @@ class ItemView extends React.Component {
           </Button>
           )}
         </IfPermission>
+        { canMarkItemWithStatus(firstItem) && (
+          Object.keys(itemStatusMutators).map(
+            status => {
+              const buttonId = `clickable-${dasherize(status.toLowerCase())}`;
+              const itemStatus = humanize(status.toLowerCase(), { capitalize: false });
+
+              return (
+                <Button
+                  key={status}
+                  id={buttonId}
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.setState({ selectedItemStatus: status });
+                  }}
+                >
+                  <Icon icon="flag">
+                    <FormattedMessage
+                      id="ui-inventory.markAs"
+                      values={{ itemStatus }}
+                    />
+                  </Icon>
+                </Button>
+              );
+            }
+          )
+        )}
         { canCreateNewRequest(firstItem, stripes) && (
         <Button
           to={newRequestLink}
@@ -335,6 +386,7 @@ class ItemView extends React.Component {
       cannotDeleteItemModal,
       itemMissingModal,
       itemWithdrawnModal,
+      selectedItemStatus,
       copiedItem,
       confirmDeleteItemModal,
     } = this.state;
@@ -659,6 +711,26 @@ class ItemView extends React.Component {
                   requestsUrl={requestsUrl}
                   onConfirm={this.markItemAsWithdrawn}
                   onCancel={this.hideWithdrawnModal}
+                />
+              </Modal>
+              <Modal
+                data-test-item-status-modal
+                open={!!selectedItemStatus}
+                label={<FormattedMessage
+                  id="ui-inventory.itemStatusModal.heading"
+                  values={{ itemStatus: itemStatusesMap[selectedItemStatus] }}
+                />}
+                dismissible
+                size="small"
+                onClose={this.clearSelectedItemStatus}
+              >
+                <ModalContent
+                  item={item}
+                  itemRequestCount={requestRecords.length}
+                  status={itemStatusesMap[selectedItemStatus]}
+                  requestsUrl={requestsUrl}
+                  onConfirm={() => this.markItemWithStatus(selectedItemStatus)}
+                  onCancel={this.clearSelectedItemStatus}
                 />
               </Modal>
               <ConfirmationModal
@@ -1291,6 +1363,12 @@ ItemView.propTypes = {
       POST: PropTypes.func.isRequired,
     }),
     markItemAsMissing: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsIntellectualItem: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsRestricted: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
