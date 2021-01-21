@@ -118,6 +118,15 @@ export const indentifierTypeNames = {
   ISSN: 'ISSN',
 };
 
+export const actionMenuDisplayPerms = [
+  'ui-inventory.item.create',
+  'ui-inventory.item.edit',
+  'ui-inventory.item.delete',
+  'ui-requests.create',
+  'ui-inventory.items.mark-items-withdrawn',
+  'ui-inventory.items.mark-intellectual-item',
+];
+
 export const DATE_FORMAT = 'YYYY-MM-DD';
 
 export const INSTANCES_ID_REPORT_TIMEOUT = 2000;
