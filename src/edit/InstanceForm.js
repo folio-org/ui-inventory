@@ -8,7 +8,7 @@ import {
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { stripesConnect, withOkapiKy } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -24,6 +24,7 @@ import {
   Headline,
   Datepicker,
   PaneFooter,
+  LoadingView,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -170,6 +171,7 @@ class InstanceForm extends React.Component {
         instanceSection12: true,
       },
       blockables: [],
+      loadedExternalRecord: false,
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
@@ -183,6 +185,44 @@ class InstanceForm extends React.Component {
     if (!records || !records.length) return;
     const { blockedFields: blockables } = records[0];
     this.setState({ blockables });
+  }
+
+  componentDidUpdate() {
+    const xid = this.props.resources.query?.xid;
+    if (typeof xid !== 'undefined' && !this.state.loadedExternalRecord) {
+      this.loadExternalRecord(xid);
+    }
+  }
+
+  loadExternalRecord = (xid) => {
+    console.log(`loading external record '${xid}'`);
+    this.props.okapiKy('copycat/imports', {
+      method: 'POST',
+      json: {
+        externalIdentifier: xid,
+        // internalIdentifier: undefined,
+        profileId: 'c6ef3fc0-c3a4-4569-bc87-08e7011e40c1' // XXX hardwiring is bad
+      },
+    }).catch(err => {
+      console.log('Hard fail! err =', err);
+      // XXX Fully refuse instead of setting loadedExternalRecord true
+      this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
+    }).then(res => {
+      if (!res.ok) {
+        console.log('Soft fail! res =', res);
+        // XXX Fully refuse instead of setting loadedExternalRecord true
+        this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
+      } else {
+        console.log('Imported! res =', res);
+        // XXX Pluck the ID of the new record from res; but for now:
+        const newRecordId = '7fbd5d84-62d1-44c6-9c45-6cb173998bbd';
+        this.props.mutator.query.update({
+          layer: undefined,
+          xid: undefined,
+          _path: `/inventory/edit/${newRecordId}/instance`,
+        });
+      }
+    });
   }
 
   onToggleSection({ id }) {
@@ -254,10 +294,15 @@ class InstanceForm extends React.Component {
 
   render() {
     const {
+      resources,
       onCancel,
       initialValues,
       referenceTables,
     } = this.props;
+
+    if (typeof resources.query?.xid !== 'undefined' && !this.state.loadedExternalRecord) {
+      return <LoadingView />;
+    }
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -763,8 +808,17 @@ InstanceForm.propTypes = {
     blockedFields: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    query: PropTypes.shape({
+      xid: PropTypes.string,
+    }).isRequired,
   }),
+  mutator: PropTypes.shape({
+    query: PropTypes.shape({
+      update: PropTypes.func.isRequired,
+    }).isRequired,
+  }).isRequired,
   instanceSource: PropTypes.string,
+  okapiKy: PropTypes.func.isRequired,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
@@ -774,4 +828,4 @@ InstanceForm.defaultProps = {
 export default stripesFinalForm({
   validate,
   navigationCheck: true,
-})(InstanceForm);
+})(withOkapiKy(InstanceForm));
