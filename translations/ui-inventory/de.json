@@ -604,5 +604,7 @@
     "instances.showSelectedRecords": "Ausgewählte Datensätze anzeigen",
     "instances.selectedRecords": "Ausgewählte Datensätze",
     "saveAndClose": "Speichern & schließen",
-    "communicationProblem": "Problem mit der Serverkommunikation. Bitte erneut versuchen"
+    "communicationProblem": "Problem mit der Serverkommunikation. Bitte erneut versuchen",
+    "markAs": "Mark as {itemStatus}",
+    "itemStatusModal.heading": "Confirm item status: {itemStatus}"
 }

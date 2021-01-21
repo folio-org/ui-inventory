@@ -604,5 +604,7 @@
     "instances.showSelectedRecords": "عرض التسجيلات المحددة",
     "instances.selectedRecords": "التسجيلات المحددة",
     "saveAndClose": "حفظ وإغلاق",
-    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
+    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "markAs": "Mark as {itemStatus}",
+    "itemStatusModal.heading": "Confirm item status: {itemStatus}"
 }
