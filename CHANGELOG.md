@@ -43,6 +43,7 @@
 * Update to stripes v6. Refs UIIN-1402.
 * Add ability to mark item as Intellectual item and Restricted. Refs UIIN-1374.
 * Add permission for marking an item intellectual. Refs UIIN-1336.
+* Add permission for marking an item restricted. Refs UIIN-1335.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

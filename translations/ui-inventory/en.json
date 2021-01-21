@@ -590,6 +590,7 @@
   "permission.settings.list.view": "Settings (Inventory): Display list of settings pages",
   "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn",
   "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
+  "permission.items.mark-restricted": "Inventory: Mark items restricted",
   
   "moveItems.moveButton": "Move to",
   "moveItems.selectAll": "Select/unselect all items for movement",
