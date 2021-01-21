@@ -252,6 +252,7 @@
   "remove": "Remove",
   "markAsMissing": "Mark as missing",
   "markAsWithdrawn": "Mark as withdrawn",
+  "markAs": "Mark as {itemStatus}",
   "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
   "missingModal.heading": "Confirm item status: Missing",
   "missingModal.confirm": "Confirm",
@@ -260,6 +261,7 @@
   "withdrawnModal.confirm": "Confirm",
   "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode})'s item status will be marked as <strong>{status}</strong>.",
   "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests for this item.} =0 {} one {There is {openRequestValue} for this item.} other {There are {openRequestValue} for this item.}}",
+  "itemStatusModal.heading": "Confirm item status: {itemStatus}",
   "deleteHoldingsRecord": "Delete",
   "confirmHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong>, location <strong>{location}</strong> has no item records associated or other dependencies and will be <strong>deleted</strong>.",
   "confirmHoldingsRecordDeleteModal.heading": "Confirm deletion of holdings record",
@@ -587,7 +589,8 @@
   "permission.instance.view-staff-suppressed-records": "Inventory: View instance records being suppressed for staff",
   "permission.settings.list.view": "Settings (Inventory): Display list of settings pages",
   "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn",
-
+  "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
+  
   "moveItems.moveButton": "Move to",
   "moveItems.selectAll": "Select/unselect all items for movement",
   "moveItems.selectItem": "Select/unselect item for movement",

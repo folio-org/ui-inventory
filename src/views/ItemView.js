@@ -6,6 +6,11 @@ import {
   isEmpty,
   values,
 } from 'lodash';
+import {
+  humanize,
+  dasherize,
+} from 'inflected';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
@@ -50,6 +55,7 @@ import {
   callNumberLabel,
   canMarkItemAsMissing,
   canMarkItemAsWithdrawn,
+  canMarkItemWithStatus,
   canMarkRequestAsOpen,
   canCreateNewRequest,
   areAllFieldsEmpty,
@@ -63,9 +69,11 @@ import ItemForm from '../edit/items/ItemForm';
 import withLocation from '../withLocation';
 import {
   itemStatusesMap,
+  itemStatusMutators,
   noValue,
   requestStatuses,
   wrappingCell,
+  actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
 
@@ -79,6 +87,7 @@ class ItemView extends React.Component {
       itemWithdrawnModal: false,
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
+      selectedItemStatus: '',
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -143,6 +152,18 @@ class ItemView extends React.Component {
     );
   }
 
+  markItemWithStatus = status => {
+    const {
+      mutator: {
+        [itemStatusMutators[status]]: {
+          POST,
+        },
+      },
+    } = this.props;
+
+    POST({}).then(this.clearSelectedItemStatus);
+  }
+
   markRequestAsOpen() {
     const request = this.props.resources?.requests?.records?.[0];
 
@@ -161,6 +182,10 @@ class ItemView extends React.Component {
 
   hideWithdrawnModal = () => {
     this.setState({ itemWithdrawnModal: false });
+  };
+
+  clearSelectedItemStatus = () => {
+    this.setState({ selectedItemStatus: '' });
   };
 
   hideConfirmDeleteItemModal = () => {
@@ -202,6 +227,7 @@ class ItemView extends React.Component {
       resources,
       stripes,
     } = this.props;
+
     const firstItem = get(resources, 'items.records[0]');
     const request = get(resources, 'requests.records[0]');
     const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
@@ -209,10 +235,9 @@ class ItemView extends React.Component {
     const canEdit = stripes.hasPerm('ui-inventory.item.edit');
     const canMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
-    const allCreateNewRequest = stripes.hasPerm('ui-requests.create');
-    const canWithdrawn = stripes.hasPerm('ui-inventory.items.mark-items-withdrawn');
+    const canDisplayActionMenu = actionMenuDisplayPerms.some(perm => stripes.hasPerm(perm));
 
-    if (!canCreate && !canEdit && !canDelete && !allCreateNewRequest && !canWithdrawn) {
+    if (!canDisplayActionMenu) {
       return null;
     }
 
@@ -295,6 +320,35 @@ class ItemView extends React.Component {
           </Button>
           )}
         </IfPermission>
+        { canMarkItemWithStatus(firstItem) && (
+          Object.keys(itemStatusMutators).map(
+            status => {
+              const dasherizedStatus = dasherize(status.toLowerCase());
+              const itemStatus = humanize(status.toLowerCase(), { capitalize: false });
+
+              return (
+                <IfPermission perm={`ui-inventory.items.mark-${dasherizedStatus}`}>
+                  <Button
+                    key={status}
+                    id={`clickable-${dasherizedStatus}`}
+                    buttonStyle="dropdownItem"
+                    onClick={() => {
+                      onToggle();
+                      this.setState({ selectedItemStatus: status });
+                    }}
+                  >
+                    <Icon icon="flag">
+                      <FormattedMessage
+                        id="ui-inventory.markAs"
+                        values={{ itemStatus }}
+                      />
+                    </Icon>
+                  </Button>
+                </IfPermission>
+              );
+            }
+          )
+        )}
         { canCreateNewRequest(firstItem, stripes) && (
         <Button
           to={newRequestLink}
@@ -335,6 +389,7 @@ class ItemView extends React.Component {
       cannotDeleteItemModal,
       itemMissingModal,
       itemWithdrawnModal,
+      selectedItemStatus,
       copiedItem,
       confirmDeleteItemModal,
     } = this.state;
@@ -659,6 +714,26 @@ class ItemView extends React.Component {
                   requestsUrl={requestsUrl}
                   onConfirm={this.markItemAsWithdrawn}
                   onCancel={this.hideWithdrawnModal}
+                />
+              </Modal>
+              <Modal
+                data-test-item-status-modal
+                open={!!selectedItemStatus}
+                label={<FormattedMessage
+                  id="ui-inventory.itemStatusModal.heading"
+                  values={{ itemStatus: itemStatusesMap[selectedItemStatus] }}
+                />}
+                dismissible
+                size="small"
+                onClose={this.clearSelectedItemStatus}
+              >
+                <ModalContent
+                  item={item}
+                  itemRequestCount={requestRecords.length}
+                  status={itemStatusesMap[selectedItemStatus]}
+                  requestsUrl={requestsUrl}
+                  onConfirm={() => this.markItemWithStatus(selectedItemStatus)}
+                  onCancel={this.clearSelectedItemStatus}
                 />
               </Modal>
               <ConfirmationModal
@@ -1291,6 +1366,12 @@ ItemView.propTypes = {
       POST: PropTypes.func.isRequired,
     }),
     markItemAsMissing: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsIntellectualItem: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsRestricted: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
