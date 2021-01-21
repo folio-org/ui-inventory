@@ -674,6 +674,14 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.items.mark-restricted",
+        "displayName": "Inventory: Mark items restricted",
+        "subPermissions": [
+          "inventory.items.item.mark-restricted.post"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.single-record-import",
         "displayName": "Inventory: Import single record",
         "subPermissions": [
