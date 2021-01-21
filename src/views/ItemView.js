@@ -73,6 +73,7 @@ import {
   noValue,
   requestStatuses,
   wrappingCell,
+  actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
 
@@ -226,6 +227,7 @@ class ItemView extends React.Component {
       resources,
       stripes,
     } = this.props;
+
     const firstItem = get(resources, 'items.records[0]');
     const request = get(resources, 'requests.records[0]');
     const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
@@ -233,10 +235,9 @@ class ItemView extends React.Component {
     const canEdit = stripes.hasPerm('ui-inventory.item.edit');
     const canMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
     const canDelete = stripes.hasPerm('ui-inventory.item.delete');
-    const allCreateNewRequest = stripes.hasPerm('ui-requests.create');
-    const canWithdrawn = stripes.hasPerm('ui-inventory.items.mark-items-withdrawn');
+    const canDisplayActionMenu = actionMenuDisplayPerms.some(perm => stripes.hasPerm(perm));
 
-    if (!canCreate && !canEdit && !canDelete && !allCreateNewRequest && !canWithdrawn) {
+    if (!canDisplayActionMenu) {
       return null;
     }
 
@@ -322,26 +323,28 @@ class ItemView extends React.Component {
         { canMarkItemWithStatus(firstItem) && (
           Object.keys(itemStatusMutators).map(
             status => {
-              const buttonId = `clickable-${dasherize(status.toLowerCase())}`;
+              const dasherizedStatus = dasherize(status.toLowerCase());
               const itemStatus = humanize(status.toLowerCase(), { capitalize: false });
 
               return (
-                <Button
-                  key={status}
-                  id={buttonId}
-                  buttonStyle="dropdownItem"
-                  onClick={() => {
-                    onToggle();
-                    this.setState({ selectedItemStatus: status });
-                  }}
-                >
-                  <Icon icon="flag">
-                    <FormattedMessage
-                      id="ui-inventory.markAs"
-                      values={{ itemStatus }}
-                    />
-                  </Icon>
-                </Button>
+                <IfPermission perm={`ui-inventory.items.mark-${dasherizedStatus}`}>
+                  <Button
+                    key={status}
+                    id={`clickable-${dasherizedStatus}`}
+                    buttonStyle="dropdownItem"
+                    onClick={() => {
+                      onToggle();
+                      this.setState({ selectedItemStatus: status });
+                    }}
+                  >
+                    <Icon icon="flag">
+                      <FormattedMessage
+                        id="ui-inventory.markAs"
+                        values={{ itemStatus }}
+                      />
+                    </Icon>
+                  </Button>
+                </IfPermission>
               );
             }
           )
