@@ -223,9 +223,8 @@ class InstanceForm extends React.Component {
       }
     }).catch(err => {
       console.log('Hard fail! err =', err);
-      this.context.sendCallout({ type: 'error', message: `${err}` });
-      // XXX Fully refuse instead of setting loadedExternalRecord true
-      this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
+      this.context.sendCallout({ type: 'error', message: `Something went wrong: ${err}` });
+      this.props.mutator.query.update({ layer: undefined, xid: undefined });
     });
   }
 
