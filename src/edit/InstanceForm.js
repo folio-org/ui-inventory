@@ -8,7 +8,7 @@ import {
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect, withOkapiKy } from '@folio/stripes/core';
+import { stripesConnect, withOkapiKy, CalloutContext } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -25,7 +25,6 @@ import {
   Datepicker,
   PaneFooter,
   LoadingView,
-  Callout,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -153,6 +152,8 @@ class InstanceForm extends React.Component {
     },
   });
 
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
 
@@ -177,7 +178,6 @@ class InstanceForm extends React.Component {
 
     this.onToggleSection = this.onToggleSection.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
-    this.callout = React.createRef();
   }
 
   componentDidMount() {
@@ -205,12 +205,8 @@ class InstanceForm extends React.Component {
         // internalIdentifier: undefined,
         profileId: 'c6ef3fc0-c3a4-4569-bc87-08e7011e40c1' // XXX hardwiring is bad
       },
-    }).catch(err => {
-      console.log('Hard fail! err =', err);
-      this.callout.current.sendCallout({ type: 'error', message: `${err}` });
-      // XXX Fully refuse instead of setting loadedExternalRecord true
-      this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
     }).then(res => {
+      console.log('then clause');
       if (!res.ok) {
         console.log('Soft fail! res =', res);
         // XXX Fully refuse instead of setting loadedExternalRecord true
@@ -225,6 +221,11 @@ class InstanceForm extends React.Component {
           _path: `/inventory/edit/${newRecordId}/instance`,
         });
       }
+    }).catch(err => {
+      console.log('Hard fail! err =', err);
+      this.context.sendCallout({ type: 'error', message: `${err}` });
+      // XXX Fully refuse instead of setting loadedExternalRecord true
+      this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
     });
   }
 
@@ -786,7 +787,6 @@ class InstanceForm extends React.Component {
               />
             </div>
           </Pane>
-          <Callout ref={this.callout} />
         </Paneset>
       </form>
     );
