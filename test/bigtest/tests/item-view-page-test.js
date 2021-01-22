@@ -415,6 +415,14 @@ describe('ItemViewPage', () => {
         expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.false;
       });
 
+      it('should not show a mark as intellectual item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.false;
+      });
+
+      it('should not show a mark as restricted item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.false;
+      });
+
       it('should not show a delete menu item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.false;
       });
