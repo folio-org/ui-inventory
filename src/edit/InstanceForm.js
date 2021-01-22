@@ -207,11 +207,7 @@ class InstanceForm extends React.Component {
       },
     }).then(res => {
       console.log('then clause');
-      if (!res.ok) {
-        console.log('Soft fail! res =', res);
-        // XXX Fully refuse instead of setting loadedExternalRecord true
-        this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
-      } else {
+      if (res.ok) {
         console.log('Imported! res =', res);
         // XXX Pluck the ID of the new record from res; but for now:
         const newRecordId = '7fbd5d84-62d1-44c6-9c45-6cb173998bbd';
@@ -220,6 +216,10 @@ class InstanceForm extends React.Component {
           xid: undefined,
           _path: `/inventory/edit/${newRecordId}/instance`,
         });
+      } else {
+        console.log('Soft fail! res =', res);
+        // XXX Fully refuse instead of setting loadedExternalRecord true
+        this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
       }
     }).catch(err => {
       console.log('Hard fail! err =', err);
