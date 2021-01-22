@@ -25,6 +25,7 @@ import {
   Datepicker,
   PaneFooter,
   LoadingView,
+  Callout,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -176,6 +177,7 @@ class InstanceForm extends React.Component {
 
     this.onToggleSection = this.onToggleSection.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
+    this.callout = React.createRef();
   }
 
   componentDidMount() {
@@ -205,6 +207,7 @@ class InstanceForm extends React.Component {
       },
     }).catch(err => {
       console.log('Hard fail! err =', err);
+      this.callout.current.sendCallout({ type: 'error', message: `${err}` });
       // XXX Fully refuse instead of setting loadedExternalRecord true
       this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
     }).then(res => {
@@ -783,6 +786,7 @@ class InstanceForm extends React.Component {
               />
             </div>
           </Pane>
+          <Callout ref={this.callout} />
         </Paneset>
       </form>
     );
