@@ -196,7 +196,7 @@ class InstanceForm extends React.Component {
 
   loadExternalRecord = (xid) => {
     console.log(`loading external record '${xid}'`);
-    this.props.okapiKy('copycat/imports', {
+    this.props.okapiKy('copycat/ximports', {
       method: 'POST',
       json: {
         externalIdentifier: xid,
