@@ -605,8 +605,10 @@
     "instances.selectedRecords": "Registros selecionados",
     "saveAndClose": "Salvar e fechar",
     "communicationProblem": "Problema de comunicação do servidor. Por favor, tente novamente",
-    "markAs": "Mark as {itemStatus}",
-    "itemStatusModal.heading": "Confirm item status: {itemStatus}",
-    "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
-    "permission.items.mark-restricted": "Inventory: Mark items restricted"
+    "markAs": "Marcar como {itemStatus}",
+    "itemStatusModal.heading": "Confirmar o status do item: {itemStatus}",
+    "permission.items.mark-intellectual-item": "Acervo: Marcar itens como item intelectual",
+    "permission.items.mark-restricted": "Acervo: Marcar itens como restritos",
+    "actions": "Ações",
+    "showColumns": "Mostrar colunas"
 }

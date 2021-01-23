@@ -608,5 +608,7 @@
     "markAs": "Markér som {itemStatus}",
     "itemStatusModal.heading": "Bekræft eksemplarstatus: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
-    "permission.items.mark-restricted": "Inventory: Mark items restricted"
+    "permission.items.mark-restricted": "Inventory: Mark items restricted",
+    "actions": "Actions",
+    "showColumns": "Show columns"
 }
