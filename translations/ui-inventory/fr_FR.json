@@ -604,5 +604,9 @@
     "instances.showSelectedRecords": "Afficher les enregistrements sélectionnés",
     "instances.selectedRecords": "Enregistrements sélectionnés",
     "saveAndClose": "Sauvegarder et fermer",
-    "communicationProblem": "Server communication problem. Please try again"
+    "communicationProblem": "Server communication problem. Please try again",
+    "markAs": "Mark as {itemStatus}",
+    "itemStatusModal.heading": "Confirm item status: {itemStatus}",
+    "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
+    "permission.items.mark-restricted": "Inventory: Mark items restricted"
 }
