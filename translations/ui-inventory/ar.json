@@ -604,5 +604,9 @@
     "instances.showSelectedRecords": "عرض التسجيلات المحددة",
     "instances.selectedRecords": "التسجيلات المحددة",
     "saveAndClose": "حفظ وإغلاق",
-    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة."
+    "communicationProblem": "توجد مشكلة في الاتصال بالخادم. يرجى إعادة المحاولة.",
+    "markAs": "الإشارة إليها كـ {itemStatus}",
+    "itemStatusModal.heading": "تأكيد حالة المادة: {itemStatus}",
+    "permission.items.mark-intellectual-item": "المخزون: الإشارة للمواد كمادة فكرية",
+    "permission.items.mark-restricted": "المخزون: الإشارة للمواد كمقيدة"
 }
