@@ -608,5 +608,7 @@
     "markAs": "الإشارة إليها كـ {itemStatus}",
     "itemStatusModal.heading": "تأكيد حالة المادة: {itemStatus}",
     "permission.items.mark-intellectual-item": "المخزون: الإشارة للمواد كمادة فكرية",
-    "permission.items.mark-restricted": "المخزون: الإشارة للمواد كمقيدة"
+    "permission.items.mark-restricted": "المخزون: الإشارة للمواد كمقيدة",
+    "actions": "الإجراءات",
+    "showColumns": "عرض الأعمدة"
 }
