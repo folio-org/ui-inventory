@@ -38,31 +38,25 @@ const HRIDHandlingForm = ({
     getState,
   },
 }) => {
-  const fieldsValues = getState().values;
-
   useEffect(() => {
-    if (removeZeroes) {
-      keys(fieldsValues).forEach(key => {
-        const entityStartNumber = fieldsValues[key].startNumber;
+    const fieldsValues = getState().values;
 
-        if (entityStartNumber) {
+    keys(fieldsValues).forEach(key => {
+      const entityStartNumber = fieldsValues[key].startNumber;
+
+      if (entityStartNumber) {
+        if (removeZeroes) {
           const updatedStartNumber = parseInt(entityStartNumber);
 
           change(`${key}.startNumber`, updatedStartNumber);
-        }
-      });
-    } else {
-      keys(fieldsValues).forEach(key => {
-        const entityStartNumber = fieldsValues[key].startNumber;
-
-        if (entityStartNumber) {
+        } else {
           const value = entityStartNumber.toString();
           const updatedStartNumber = value.padStart(11, '0');
 
           change(`${key}.startNumber`, updatedStartNumber);
         }
-      });
-    }
+      }
+    });
   }, [removeZeroes]);
 
   const isButtonDisabled = pristine || submitting;
