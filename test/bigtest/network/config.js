@@ -441,6 +441,22 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-in-process', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'In process' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-in-process-non-requestable', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'In process (non-requestable)' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id/mark-intellectual-item', ({ items }, request) => {
     const item = items.find(request.params.id);
 
@@ -449,10 +465,34 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-long-missing', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Long missing' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id/mark-restricted', ({ items }, request) => {
     const item = items.find(request.params.id);
 
     item.update({ status: { name: 'Restricted' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-unavailable', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Unavailable' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-unknown', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Unknown' } });
 
     return item.attrs;
   });
