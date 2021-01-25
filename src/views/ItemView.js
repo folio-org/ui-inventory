@@ -6,10 +6,7 @@ import {
   isEmpty,
   values,
 } from 'lodash';
-import {
-  humanize,
-  dasherize,
-} from 'inflected';
+import { parameterize } from 'inflected';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -323,29 +320,50 @@ class ItemView extends React.Component {
         { canMarkItemWithStatus(firstItem) && (
           Object.keys(itemStatusMutators).map(
             status => {
-              const dasherizedStatus = dasherize(status.toLowerCase());
-              const itemStatus = humanize(status.toLowerCase(), { capitalize: false });
+              const itemStatus = itemStatusesMap[status].toLowerCase();
+              const parameterizedStatus = parameterize(itemStatus);
 
-              return (
-                <IfPermission perm={`ui-inventory.items.mark-${dasherizedStatus}`}>
-                  <Button
-                    key={status}
-                    id={`clickable-${dasherizedStatus}`}
-                    buttonStyle="dropdownItem"
-                    onClick={() => {
-                      onToggle();
-                      this.setState({ selectedItemStatus: status });
-                    }}
-                  >
-                    <Icon icon="flag">
-                      <FormattedMessage
-                        id="ui-inventory.markAs"
-                        values={{ itemStatus }}
-                      />
-                    </Icon>
-                  </Button>
-                </IfPermission>
+              const actionMenuItem = (
+                <Button
+                  key={status}
+                  id={`clickable-${parameterizedStatus}`}
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.setState({ selectedItemStatus: status });
+                  }}
+                >
+                  <Icon icon="flag">
+                    <FormattedMessage
+                      id="ui-inventory.markAs"
+                      values={{ itemStatus }}
+                    />
+                  </Icon>
+                </Button>
               );
+
+              /**
+                This is a temporary condition for displaying new item statuses, and as soon as
+                  https://issues.folio.org/browse/UIIN-894 (LONG_MISSING),
+                  https://issues.folio.org/browse/UIIN-1166 (IN_PROCESS),
+                  https://issues.folio.org/browse/UIIN-1307 (UNAVAILABLE),
+                  https://issues.folio.org/browse/UIIN-1308 (IN_PROCESS_NON_REQUESTABLE),
+                  https://issues.folio.org/browse/UIIN-1326 (UNKNOWN)
+                are implemented, it will need to be removed.
+                Each "mark as" menu item will eventually be returned in the <IfPermission /> wrapper.
+              */
+              const isPermImplemented = [
+                'INTELLECTUAL_ITEM',
+                'RESTRICTED',
+              ].includes(status);
+
+              return isPermImplemented
+                ? (
+                  <IfPermission perm={`ui-inventory.items.mark-${parameterizedStatus}`}>
+                    {actionMenuItem}
+                  </IfPermission>
+                )
+                : actionMenuItem;
             }
           )
         )}
@@ -1368,10 +1386,25 @@ ItemView.propTypes = {
     markItemAsMissing: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
+    markAsInProcess: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsInProcessNonRequestable: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
     markAsIntellectualItem: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
+    markAsLongMissing: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
     markAsRestricted: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsUnavailable: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsUnknown: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),

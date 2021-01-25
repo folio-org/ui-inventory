@@ -44,6 +44,22 @@ class ItemRoute extends React.Component {
       clientGeneratePk: false,
       fetch: false,
     },
+    markAsInProcess: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-in-process',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
+    markAsInProcessNonRequestable: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-in-process-non-requestable',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
     markAsIntellectualItem: {
       type: 'okapi',
       POST: {
@@ -52,10 +68,34 @@ class ItemRoute extends React.Component {
       clientGeneratePk: false,
       fetch: false,
     },
+    markAsLongMissing: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-long-missing',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
     markAsRestricted: {
       type: 'okapi',
       POST: {
         path: 'inventory/items/:{itemid}/mark-restricted',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
+    markAsUnavailable: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-unavailable',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
+    markAsUnknown: {
+      type: 'okapi',
+      POST: {
+        path: 'inventory/items/:{itemid}/mark-unknown',
       },
       clientGeneratePk: false,
       fetch: false,
