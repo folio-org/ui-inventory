@@ -9,8 +9,13 @@ import ItemEditPage from '../interactors/item-edit-page';
 import ItemCreatePage from '../interactors/item-create-page';
 
 const itemStatusesMap = {
+  InProcess: 'In process',
+  InProcessNonRequestable: 'In process (non-requestable)',
   Intellectual: 'Intellectual item',
+  LongMissing: 'Long missing',
   Restricted: 'Restricted',
+  Unavailable: 'Unavailable',
+  Unknown: 'Unknown',
 };
 
 describe('ItemViewPage', () => {
@@ -116,12 +121,32 @@ describe('ItemViewPage', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsWithdrawn).to.be.true;
         });
 
+        it('should show a mark as in process', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcess).to.be.true;
+        });
+
+        it('should show a mark as in process (non-requestable)', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcessNonRequestable).to.be.true;
+        });
+
         it('should show a mark as intellectual item', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.true;
         });
 
+        it('should show a mark as long missing', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsLongMissing).to.be.true;
+        });
+
         it('should show a mark as restricted', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.true;
+        });
+
+        it('should show a mark as unavailable', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnavailable).to.be.true;
+        });
+
+        it('should show a mark as unknown', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnknown).to.be.true;
         });
 
         it('should show a delete menu item', () => {
@@ -231,7 +256,9 @@ describe('ItemViewPage', () => {
         });
 
         Object.keys(itemStatusesMap).forEach(status => {
-          describe(`clicking on mark as ${status}`, () => {
+          const statusName = itemStatusesMap[status];
+
+          describe(`clicking on mark as ${statusName}`, () => {
             beforeEach(async () => {
               await ItemViewPage.headerDropdownMenu[`clickMarkAs${status}`]();
             });
@@ -264,8 +291,8 @@ describe('ItemViewPage', () => {
                 expect(ItemViewPage.hasItemStatusModal).to.be.false;
               });
 
-              it(`should change item status to ${status}`, () => {
-                expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal(itemStatusesMap[status]);
+              it(`should change item status to ${statusName}`, () => {
+                expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal(statusName);
               });
             });
           });
