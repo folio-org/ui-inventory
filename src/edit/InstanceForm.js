@@ -7,6 +7,7 @@ import {
   isEmpty,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import ky from 'ky';
 
 import { stripesConnect, withOkapiKy, CalloutContext } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -197,34 +198,43 @@ class InstanceForm extends React.Component {
   }
 
   loadExternalRecord = (xid) => {
-    console.log(`loading external record '${xid}'`);
     this.props.okapiKy('copycat/imports', {
+      timeout: 30000,
       method: 'POST',
       json: {
         externalIdentifier: xid,
         // internalIdentifier: undefined,
-        profileId: 'c6ef3fc0-c3a4-4569-bc87-08e7011e40c1' // XXX hardwiring is bad
+        profileId: 'ba451d09-c157-45f5-acc7-4a5d32edeaed' // XXX hardwiring is bad
       },
     }).then(res => {
-      console.log('then clause');
-      if (res.ok) {
-        console.log('Imported! res =', res);
-        // XXX Pluck the ID of the new record from res; but for now:
-        const newRecordId = '7fbd5d84-62d1-44c6-9c45-6cb173998bbd';
+      // No need to check res.ok, as ky throws non-2xx responses
+      res.json().then(json => {
         this.props.mutator.query.update({
+          _path: `/inventory/view/${json.internalIdentifier}`,
           layer: undefined,
           xid: undefined,
-          _path: `/inventory/edit/${newRecordId}/instance`,
         });
-      } else {
-        console.log('Soft fail! res =', res);
-        // XXX Fully refuse instead of setting loadedExternalRecord true
-        this.setState({ loadedExternalRecord: true }); // XXX ... but for now.
-      }
+      });
+      this.context.sendCallout({ message: `Added record ${xid}` });
     }).catch(err => {
-      console.log('Hard fail! err =', err);
-      this.context.sendCallout({ type: 'error', message: `Something went wrong: ${err}` });
       this.props.mutator.query.update({ layer: undefined, xid: undefined });
+
+      if (!(err instanceof ky.HTTPError)) {
+        this.context.sendCallout({ type: 'error', message: `Something went wrong: ${err}` });
+      } else {
+        const res = err.response;
+        res.text().then(text => {
+          let detail = text;
+          if (res.headers.get('content-type') === 'application/json') {
+            const obj = JSON.parse(text);
+            detail = obj.errors[0].message;
+          }
+
+          const message = `Something went wrong: ${err}: ${detail}`;
+          console.log(message); // eslint-disable-line no-console
+          this.context.sendCallout({ type: 'error', message });
+        });
+      }
     });
   }
 
