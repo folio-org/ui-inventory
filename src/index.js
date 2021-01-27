@@ -17,6 +17,7 @@ import {
   CreateItemRoute,
   CreateHoldingRoute,
   ViewRequestsRoute,
+  ImportRoute
 } from './routes';
 import Settings from './settings';
 import { DataProvider } from './providers';
@@ -62,6 +63,14 @@ const InventoryRouting = (props) => {
         <Route
           path={`${path}/view-requests/:id`}
           component={ViewRequestsRoute}
+        />
+        <Route
+          path={`${path}/import/:id`}
+          component={ImportRoute}
+        />
+        <Route
+          path={`${path}/import`}
+          component={ImportRoute}
         />
         <Route
           path={path}

@@ -614,6 +614,7 @@
   "filter.tags": "Tags",
   "showTags": "Show tags",
   "copycat.import": "Import",
+  "copycat.reimport": "Re-import",
   "copycat.idToImport": "ID to import",
   "copycat.externalIdentifier": "External identifier"
 }
