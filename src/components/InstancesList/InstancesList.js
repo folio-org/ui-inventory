@@ -443,7 +443,6 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
     });
     console.log('handleImportRecordModalSubmit: externalIdentifier =', externalIdentifier); // eslint-disable-line no-console
-    // XXX now actually do the import!
     this.props.updateLocation({ layer: 'create', xid: externalIdentifier });
   }
 
