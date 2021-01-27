@@ -6,7 +6,7 @@ import { Modal, ModalFooter, TextField, Button } from '@folio/stripes/components
 
 const ImportRecordModal = ({
   isOpen,
-  currentOclcNumber, // eslint-disable-line no-unused-vars
+  currentExternalIdentifier, // eslint-disable-line no-unused-vars
   handleSubmit: onSubmit,
   handleCancel,
 }) => {
@@ -50,7 +50,7 @@ const ImportRecordModal = ({
 
 ImportRecordModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  currentOclcNumber: PropTypes.string,
+  currentExternalIdentifier: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
 };

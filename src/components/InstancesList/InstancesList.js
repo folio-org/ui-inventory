@@ -609,7 +609,7 @@ class InstancesList extends React.Component {
         />
         <ImportRecordModal
           isOpen={isImportRecordModalOpened}
-          currentOclcNumber={undefined}
+          currentExternalIdentifier={undefined}
           handleSubmit={this.handleImportRecordModalSubmit}
           handleCancel={this.handleImportRecordModalCancel}
         />
