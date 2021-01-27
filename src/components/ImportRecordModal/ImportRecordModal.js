@@ -39,6 +39,7 @@ const ImportRecordModal = ({
               name="externalIdentifier"
               component={TextField}
               label={<FormattedMessage id="ui-inventory.copycat.externalIdentifier" />}
+              autoFocus
             />
           </Modal>
         </form>
