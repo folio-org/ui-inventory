@@ -440,7 +440,7 @@ class InstancesList extends React.Component {
   handleImportRecordModalSubmit = (args) => {
     const { externalIdentifier } = args;
 
-    this.setState({ isImportRecordModalOpened: false, });
+    this.setState({ isImportRecordModalOpened: false });
     console.log('handleImportRecordModalSubmit: externalIdentifier =', externalIdentifier); // eslint-disable-line no-console
     this.props.updateLocation({ layer: 'create', xid: externalIdentifier });
   }
