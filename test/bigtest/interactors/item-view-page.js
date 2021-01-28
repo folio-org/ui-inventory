@@ -28,6 +28,22 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   clickMarkAsMissing = clickable('[data-test-mark-as-missing-item]');
   hasMarkAsWithdrawn = isPresent('[data-test-mark-as-withdrawn-item]');
   clickMarkAsWithdrawn = clickable('[data-test-mark-as-withdrawn-item]')
+
+  hasMarkAsInProcess = isPresent('#clickable-in-process');
+  clickMarkAsInProcess = clickable('#clickable-in-process')
+  hasMarkAsInProcessNonRequestable = isPresent('#clickable-in-process-non-requestable');
+  clickMarkAsInProcessNonRequestable = clickable('#clickable-in-process-non-requestable')
+  hasMarkAsIntellectual = isPresent('#clickable-intellectual-item');
+  clickMarkAsIntellectual = clickable('#clickable-intellectual-item')
+  hasMarkAsLongMissing = isPresent('#clickable-long-missing');
+  clickMarkAsLongMissing = clickable('#clickable-long-missing')
+  hasMarkAsRestricted = isPresent('#clickable-restricted');
+  clickMarkAsRestricted = clickable('#clickable-restricted')
+  hasMarkAsUnavailable = isPresent('#clickable-unavailable');
+  clickMarkAsUnavailable = clickable('#clickable-unavailable')
+  hasMarkAsUnknown = isPresent('#clickable-unknown');
+  clickMarkAsUnknown = clickable('#clickable-unknown')
+
   hasDeleteItem = isPresent('[data-test-inventory-delete-item-action]');
   clickDelete = clickable('[data-test-inventory-delete-item-action]');
 }
@@ -47,6 +63,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   markAsMissingModal = scoped('[data-test-missingConfirmation-modal]');
   hasMarkAsWithdrawnModal = isPresent('[data-test-withdrawn-confirmation-modal]');
   markAsWithdrawnModal = scoped('[data-test-withdrawn-confirmation-modal]');
+  hasItemStatusModal = isPresent('[data-test-item-status-modal]');
   cannotDeleteItemModal = new ModalInteractor('[data-test-cannot-delete-item-modal]');
   cannotDeleteItemModalBackButton = new ButtonInteractor('[data-test-cannot-delete-item-back-action]');
   confirmDeleteItemModal = new ConfirmationModalInteractor('#confirmDeleteItemModal');

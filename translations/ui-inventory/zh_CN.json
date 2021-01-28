@@ -604,5 +604,11 @@
     "instances.showSelectedRecords": "显示已选记录",
     "instances.selectedRecords": "已选记录",
     "saveAndClose": "保存并关闭",
-    "communicationProblem": "服务器通信问题。请再试"
+    "communicationProblem": "服务器通信问题。请再试",
+    "markAs": "Mark as {itemStatus}",
+    "itemStatusModal.heading": "Confirm item status: {itemStatus}",
+    "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
+    "permission.items.mark-restricted": "Inventory: Mark items restricted",
+    "actions": "Actions",
+    "showColumns": "Show columns"
 }

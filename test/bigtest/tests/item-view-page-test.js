@@ -8,6 +8,16 @@ import ItemViewPage from '../interactors/item-view-page';
 import ItemEditPage from '../interactors/item-edit-page';
 import ItemCreatePage from '../interactors/item-create-page';
 
+const itemStatusesMap = {
+  InProcess: 'In process',
+  InProcessNonRequestable: 'In process (non-requestable)',
+  Intellectual: 'Intellectual item',
+  LongMissing: 'Long missing',
+  Restricted: 'Restricted',
+  Unavailable: 'Unavailable',
+  Unknown: 'Unknown',
+};
+
 describe('ItemViewPage', () => {
   describe('User has permissions', () => {
     const requestsPath = '/requests';
@@ -109,6 +119,34 @@ describe('ItemViewPage', () => {
 
         it('should show a mark as withdrawn item', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsWithdrawn).to.be.true;
+        });
+
+        it('should show a mark as in process', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcess).to.be.true;
+        });
+
+        it('should show a mark as in process (non-requestable)', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcessNonRequestable).to.be.true;
+        });
+
+        it('should show a mark as intellectual item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.true;
+        });
+
+        it('should show a mark as long missing', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsLongMissing).to.be.true;
+        });
+
+        it('should show a mark as restricted', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.true;
+        });
+
+        it('should show a mark as unavailable', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnavailable).to.be.true;
+        });
+
+        it('should show a mark as unknown', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnknown).to.be.true;
         });
 
         it('should show a delete menu item', () => {
@@ -213,6 +251,49 @@ describe('ItemViewPage', () => {
 
             it('should change item status to "Withdrawn"', () => {
               expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal('Withdrawn');
+            });
+          });
+        });
+
+        Object.keys(itemStatusesMap).forEach(status => {
+          const statusName = itemStatusesMap[status];
+
+          describe(`clicking on mark as ${statusName}`, () => {
+            beforeEach(async () => {
+              await ItemViewPage.headerDropdownMenu[`clickMarkAs${status}`]();
+            });
+
+            it('should open an item status modal', () => {
+              expect(ItemViewPage.hasItemStatusModal).to.exist;
+            });
+
+            it('should display open requests number', () => {
+              expect(ItemViewPage.openRequestsNumber.text).to.equal('1 open request');
+            });
+
+            describe('clicking on the open requests number link', () => {
+              beforeEach(async () => {
+                await ItemViewPage.openRequestsNumber.click();
+              });
+
+              it('should redirect to "requests"', function () {
+                expect(this.location.pathname).to.equal(requestsPath);
+                expect(this.location.search).includes(item.id);
+              });
+            });
+
+            describe('clicking on "Confirm" button', () => {
+              beforeEach(async () => {
+                await ItemViewPage.confirmButton.click();
+              });
+
+              it('should close an item status modal', () => {
+                expect(ItemViewPage.hasItemStatusModal).to.be.false;
+              });
+
+              it(`should change item status to ${statusName}`, () => {
+                expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal(statusName);
+              });
             });
           });
         });
@@ -359,6 +440,14 @@ describe('ItemViewPage', () => {
 
       it('should not show a mark as missing item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasMarkAsMissing).to.be.false;
+      });
+
+      it('should not show a mark as intellectual item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.false;
+      });
+
+      it('should not show a mark as restricted item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.false;
       });
 
       it('should not show a delete menu item', () => {

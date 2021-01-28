@@ -5,19 +5,38 @@ const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
 
 export const itemStatusesMap = {
-  CHECKED_OUT: 'Checked out',
-  ON_ORDER: 'On order',
-  AVAILABLE: 'Available',
-  IN_TRANSIT,
-  IN_PROCESS: 'In process',
-  AWAITING_PICKUP,
-  PAGED: 'Paged',
-  AWAITING_DELIVERY,
-  MISSING: 'Missing',
-  WITHDRAWN: 'Withdrawn',
-  CLAIMED_RETURNED: 'Claimed returned',
-  LOST_AND_PAID: 'Lost and paid',
   AGED_TO_LOST: 'Aged to lost',
+  AVAILABLE: 'Available',
+  AWAITING_PICKUP,
+  AWAITING_DELIVERY,
+  CHECKED_OUT: 'Checked out',
+  CLAIMED_RETURNED: 'Claimed returned',
+  DECLARED_LOST: 'Declared lost',
+  IN_PROCESS: 'In process',
+  IN_PROCESS_NON_REQUESTABLE: 'In process (non-requestable)',
+  IN_TRANSIT,
+  INTELLECTUAL_ITEM: 'Intellectual item',
+  LONG_MISSING: 'Long missing',
+  LOST_AND_PAID: 'Lost and paid',
+  MISSING: 'Missing',
+  ON_ORDER: 'On order',
+  ORDER_CLOSED: 'Order closed',
+  PAGED: 'Paged',
+  RESTRICTED: 'Restricted',
+  UNAVAILABLE: 'Unavailable',
+  UNKNOWN: 'Unknown',
+  WITHDRAWN: 'Withdrawn',
+};
+
+// Matching mutator names to the corresponding item statuses
+export const itemStatusMutators = {
+  IN_PROCESS: 'markAsInProcess',
+  IN_PROCESS_NON_REQUESTABLE: 'markAsInProcessNonRequestable',
+  INTELLECTUAL_ITEM: 'markAsIntellectualItem',
+  LONG_MISSING: 'markAsLongMissing',
+  RESTRICTED: 'markAsRestricted',
+  UNAVAILABLE: 'markAsUnavailable',
+  UNKNOWN: 'markAsUnknown',
 };
 
 export const requestStatuses = {
@@ -43,9 +62,9 @@ export const itemStatuses = [
   { label: 'ui-inventory.item.status.lostAndPaid', value: 'Lost and paid' },
   { label: 'ui-inventory.item.status.missing', value: 'Missing' },
   { label: 'ui-inventory.item.status.onOrder', value: 'On order' },
+  { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' },
   { label: 'ui-inventory.item.status.paged', value: 'Paged' },
   { label: 'ui-inventory.item.status.restricted', value: 'Restricted' },
-  { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' },
   { label: 'ui-inventory.item.status.unavailable', value: 'Unavailable' },
   { label: 'ui-inventory.item.status.unknown', value: 'Unknown' },
   { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
@@ -108,6 +127,16 @@ export const indentifierTypeNames = {
   ISBN: 'ISBN',
   ISSN: 'ISSN',
 };
+
+export const actionMenuDisplayPerms = [
+  'ui-inventory.item.create',
+  'ui-inventory.item.edit',
+  'ui-inventory.item.delete',
+  'ui-requests.create',
+  'ui-inventory.items.mark-items-withdrawn',
+  'ui-inventory.items.mark-intellectual-item',
+  'ui-inventory.items.mark-restricted',
+];
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 

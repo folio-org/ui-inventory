@@ -27,6 +27,7 @@ import {
   Button,
   Icon,
   Checkbox,
+  MenuSection,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -57,11 +58,19 @@ import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
 
 import { buildQuery } from '../../routes/buildManifestObject';
+import {
+  getItem,
+  setItem,
+} from '../../storage';
 
 import css from './instances.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
+const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
+const ALL_COLUMNS = [...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS];
+const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
   static defaultProps = {
@@ -77,7 +86,6 @@ class InstancesList extends React.Component {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
-    visibleColumns: PropTypes.arrayOf(PropTypes.string),
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
@@ -93,16 +101,30 @@ class InstancesList extends React.Component {
 
   static contextType = CalloutContext;
 
-  state = {
-    showNewFastAddModal: false,
-    inTransitItemsExportInProgress: false,
-    instancesIdExportInProgress: false,
-    instancesQuickExportInProgress: false,
-    showErrorModal: false,
-    selectedRows: {},
-    isSelectedRecordsModalOpened: false,
-    isImportRecordModalOpened: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showNewFastAddModal: false,
+      inTransitItemsExportInProgress: false,
+      instancesIdExportInProgress: false,
+      instancesQuickExportInProgress: false,
+      showErrorModal: false,
+      selectedRows: {},
+      isSelectedRecordsModalOpened: false,
+      visibleColumns: this.getInitialToggableColumns(),
+      isImportRecordModalOpened: false,
+    };
+  }
+
+  getInitialToggableColumns = () => {
+    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
+  }
+
+  getVisibleColumns = () => {
+    const visibleColumns = new Set([...this.state.visibleColumns, ...NON_TOGGLEABLE_COLUMNS]);
+    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+  }
 
   onFilterChangeHandler = ({ name, values }) => {
     const {
@@ -308,11 +330,21 @@ class InstancesList extends React.Component {
     );
   }
 
+  handleToggleColumn = ({ target: { value: key } }) => {
+    this.setState(({ visibleColumns }) => ({
+      visibleColumns: visibleColumns.includes(key) ? visibleColumns.filter(k => key !== k) : [...visibleColumns, key]
+    }), () => {
+      setItem(VISIBLE_COLUMNS_STORAGE_KEY, this.state.visibleColumns);
+    });
+  }
+
   getActionMenu = ({ onToggle }) => {
-    const { parentResources } = this.props;
+    const { parentResources, intl } = this.props;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
+    const visibleColumns = this.getVisibleColumns();
+    const columnMapping = this.getColumnMapping();
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -324,95 +356,125 @@ class InstancesList extends React.Component {
 
     return (
       <>
-        <IfPermission perm="ui-inventory.instance.create">
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-newinventory"
-            onClick={buildOnClickHandler(this.openCreateInstance)}
-          >
-            <Icon
-              icon="plus-sign"
-              size="medium"
-              iconClassName={css.actionIcon}
-            />
-            <FormattedMessage id="stripes-smart-components.new" />
-          </Button>
-        </IfPermission>
-        <Pluggable
-          id="clickable-create-inventory-records"
-          onClose={this.toggleNewFastAddModal}
-          open={this.state.showNewFastAddModal} // control the open modal via state var
-          renderTrigger={() => (
-            this.getActionItem({
-              id: 'new-fast-add-record',
-              icon: 'lightning',
-              messageId: 'ui-inventory.newFastAddRecord',
-              onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-            })
+        <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
+          <IfPermission perm="ui-inventory.instance.create">
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-newinventory"
+              onClick={buildOnClickHandler(this.openCreateInstance)}
+            >
+              <Icon
+                icon="plus-sign"
+                size="medium"
+                iconClassName={css.actionIcon}
+              />
+              <FormattedMessage id="stripes-smart-components.new" />
+            </Button>
+          </IfPermission>
+          <Pluggable
+            id="clickable-create-inventory-records"
+            onClose={this.toggleNewFastAddModal}
+            open={this.state.showNewFastAddModal} // control the open modal via state var
+            renderTrigger={() => (
+              this.getActionItem({
+                id: 'new-fast-add-record',
+                icon: 'lightning',
+                messageId: 'ui-inventory.newFastAddRecord',
+                onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+              })
+            )}
+            type="create-inventory-records"
+          />
+          {this.getActionItem({
+            id: 'dropdown-clickable-get-report',
+            icon: 'report',
+            messageId: 'ui-inventory.inTransitReport',
+            onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
+          })}
+          {this.getActionItem({
+            id: 'dropdown-clickable-get-items-uiids',
+            icon: 'save',
+            messageId: 'ui-inventory.saveInstancesUIIDS',
+            onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
+            isDisabled: isInstancesListEmpty,
+          })}
+          {this.getActionItem({
+            id: 'dropdown-clickable-get-cql-query',
+            icon: 'search',
+            messageId: 'ui-inventory.saveInstancesCQLQuery',
+            onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
+            isDisabled: isInstancesListEmpty,
+          })}
+          {this.getActionItem({
+            id: 'dropdown-clickable-export-marc',
+            icon: 'download',
+            messageId: 'ui-inventory.exportInstancesInMARC',
+            onClickHandler: buildOnClickHandler(this.triggerQuickExport),
+            isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
+          })}
+          {this.getActionItem({
+            id: 'dropdown-clickable-import-record',
+            icon: 'lightning',
+            messageId: 'ui-inventory.copycat.import',
+            onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+          })}
+          {isQuickExportLimitExceeded && (
+            <span
+              className={css.feedbackError}
+              data-test-quick-marc-export-limit-exceeded
+            >
+              <FormattedMessage
+                id="ui-inventory.exportInstancesInMARCLimitExceeded"
+                values={{ count: QUICK_EXPORT_LIMIT }}
+              />
+            </span>
           )}
-          type="create-inventory-records"
-        />
-        {this.getActionItem({
-          id: 'dropdown-clickable-get-report',
-          icon: 'report',
-          messageId: 'ui-inventory.inTransitReport',
-          onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
-        })}
-        {this.getActionItem({
-          id: 'dropdown-clickable-get-items-uiids',
-          icon: 'save',
-          messageId: 'ui-inventory.saveInstancesUIIDS',
-          onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
-          isDisabled: isInstancesListEmpty,
-        })}
-        {this.getActionItem({
-          id: 'dropdown-clickable-get-cql-query',
-          icon: 'search',
-          messageId: 'ui-inventory.saveInstancesCQLQuery',
-          onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
-          isDisabled: isInstancesListEmpty,
-        })}
-        {this.getActionItem({
-          id: 'dropdown-clickable-export-marc',
-          icon: 'download',
-          messageId: 'ui-inventory.exportInstancesInMARC',
-          onClickHandler: buildOnClickHandler(this.triggerQuickExport),
-          isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
-        })}
-        {isQuickExportLimitExceeded && (
-          <span
-            className={css.feedbackError}
-            data-test-quick-marc-export-limit-exceeded
-          >
-            <FormattedMessage
-              id="ui-inventory.exportInstancesInMARCLimitExceeded"
-              values={{ count: QUICK_EXPORT_LIMIT }}
+          {this.getActionItem({
+            id: 'dropdown-clickable-export-json',
+            icon: 'download',
+            messageId: 'ui-inventory.exportInstancesInJSON',
+            onClickHandler: buildOnClickHandler(noop),
+            isDisabled: true,
+          })}
+          {this.getActionItem({
+            id: 'dropdown-clickable-show-selected-records',
+            icon: 'eye-open',
+            messageId: 'ui-inventory.instances.showSelectedRecords',
+            onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
+            isDisabled: !selectedRowsCount,
+          })}
+        </MenuSection>
+        <MenuSection label={intl.formatMessage({ id: 'ui-inventory.showColumns' })} id="columns-menu-section">
+          {TOGGLEABLE_COLUMNS.map(key => (
+            <Checkbox
+              key={key}
+              name={key}
+              data-testid={key}
+              label={columnMapping[key]}
+              id={`inventory-search-column-checkbox-${key}`}
+              checked={visibleColumns.includes(key)}
+              value={key}
+              onChange={this.handleToggleColumn}
             />
-          </span>
-        )}
-        {this.getActionItem({
-          id: 'dropdown-clickable-export-json',
-          icon: 'download',
-          messageId: 'ui-inventory.exportInstancesInJSON',
-          onClickHandler: buildOnClickHandler(noop),
-          isDisabled: true,
-        })}
-        {this.getActionItem({
-          id: 'dropdown-clickable-show-selected-records',
-          icon: 'eye-open',
-          messageId: 'ui-inventory.instances.showSelectedRecords',
-          onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
-          isDisabled: !selectedRowsCount,
-        })}
-        {this.getActionItem({
-          id: 'dropdown-clickable-import-record',
-          icon: 'lightning',
-          messageId: 'ui-inventory.copycat.import',
-          onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-        })}
+          ))}
+        </MenuSection>
       </>
     );
   };
+
+  getColumnMapping = () => {
+    const { intl } = this.props;
+
+    const columnMapping = {
+      select: '',
+      title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
+      contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
+      publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+      relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+    };
+
+    return columnMapping;
+  }
 
   onErrorModalClose = () => {
     this.setState({ showErrorModal: false });
@@ -472,7 +534,6 @@ class InstancesList extends React.Component {
       browseOnly,
       onSelectRow,
       disableRecordCreation,
-      visibleColumns,
       intl,
       data,
       parentResources,
@@ -521,13 +582,8 @@ class InstancesList extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
     };
 
-    const columnMapping = {
-      select: '',
-      title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
-      contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
-      publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-      relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-    };
+    const visibleColumns = this.getVisibleColumns();
+    const columnMapping = this.getColumnMapping();
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -558,7 +614,7 @@ class InstancesList extends React.Component {
               previouslyHeld: false,
               source: 'FOLIO',
             }}
-            visibleColumns={visibleColumns || ['select', 'title', 'contributors', 'publishers', 'relation']}
+            visibleColumns={visibleColumns}
             columnMapping={columnMapping}
             columnWidths={{
               select: '30px',

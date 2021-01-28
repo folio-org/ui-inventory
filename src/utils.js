@@ -66,6 +66,20 @@ export function canMarkItemAsWithdrawn(item) {
   ], item?.status?.name);
 }
 
+export function canMarkItemWithStatus(item) {
+  return includes([
+    itemStatusesMap.ORDER_CLOSED,
+    itemStatusesMap.AVAILABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.MISSING,
+    itemStatusesMap.WITHDRAWN,
+    itemStatusesMap.AWAITING_DELIVERY,
+    itemStatusesMap.PAGED,
+    itemStatusesMap.LOST_AND_PAID,
+  ], item?.status?.name);
+}
+
 export function canCreateNewRequest(item, stripes) {
   return stripes.hasPerm('ui-requests.create') &&
     includes([

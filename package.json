@@ -668,6 +668,22 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.items.mark-intellectual-item",
+        "displayName": "Inventory: Mark items intellectual item",
+        "subPermissions": [
+          "inventory.items.item.mark-intellectual-item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-restricted",
+        "displayName": "Inventory: Mark items restricted",
+        "subPermissions": [
+          "inventory.items.item.mark-restricted.post"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.single-record-import",
         "displayName": "Inventory: Import single record",
         "subPermissions": [
@@ -727,6 +743,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
+    "@testing-library/dom": "^7.29.4",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",

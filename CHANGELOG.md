@@ -41,6 +41,10 @@
 * Fix type ahead for location filters. Fixes UIIN-1393 and UIIN-1395.
 * Add checkboxes on the show selected instances records modal. Refs UIIN-1391.
 * Update to stripes v6. Refs UIIN-1402.
+* Add ability to mark item as Intellectual item and Restricted. Refs UIIN-1374.
+* Add permission for marking an item intellectual. Refs UIIN-1336.
+* Add permission for marking an item restricted. Refs UIIN-1335.
+* Add ability to mark an item with new statuses (In process, In process (non-requestable), Long missing, Unavailable, Unknown). Refs UIIN-756.
 * Add support for maintaining copy-cataloguing profiles in the settings area. Towards UIIN-1401. Entails adding new interfaces `copycat-imports` and `copycat-profiles`.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
