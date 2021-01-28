@@ -650,14 +650,6 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
-        "displayName": "Inventory: View instance records being suppressed for staff",
-        "subPermissions": [
-          "ui-inventory.instance.view"
-        ],
-        "visible": true
-      },
-      {
         "permissionName": "ui-inventory.items.mark-items-withdrawn",
         "displayName": "Inventory: Mark items withdrawn",
         "subPermissions": [
