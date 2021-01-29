@@ -21,6 +21,7 @@ import {
   AppIcon,
   IfPermission,
   CalloutContext,
+  stripesConnect,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -97,9 +98,18 @@ class InstancesList extends React.Component {
     }).isRequired,
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
+    }),
   };
 
   static contextType = CalloutContext;
+
+  static manifest = Object.freeze({
+    query: {},
+  });
 
   constructor(props) {
     super(props);
@@ -504,7 +514,7 @@ class InstancesList extends React.Component {
 
     this.setState({ isImportRecordModalOpened: false });
     console.log('handleImportRecordModalSubmit: externalIdentifier =', externalIdentifier); // eslint-disable-line no-console
-    this.props.updateLocation({ layer: 'create', xid: externalIdentifier });
+    this.props.mutator.query.update({ _path: '/inventory/import', xid: externalIdentifier });
   }
 
   handleImportRecordModalCancel = () => {
@@ -675,4 +685,4 @@ class InstancesList extends React.Component {
 export default flowRight(
   injectIntl,
   withLocation,
-)(InstancesList);
+)(stripesConnect(InstancesList));
