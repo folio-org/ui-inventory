@@ -7,9 +7,8 @@ import {
   isEmpty,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import ky from 'ky';
 
-import { stripesConnect, withOkapiKy, CalloutContext } from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -25,7 +24,6 @@ import {
   Headline,
   Datepicker,
   PaneFooter,
-  LoadingView,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -153,8 +151,6 @@ class InstanceForm extends React.Component {
     },
   });
 
-  static contextType = CalloutContext;
-
   constructor(props) {
     super(props);
 
@@ -174,7 +170,6 @@ class InstanceForm extends React.Component {
         instanceSection12: true,
       },
       blockables: [],
-      loadedExternalRecord: false,
     };
 
     this.onToggleSection = this.onToggleSection.bind(this);
@@ -188,54 +183,6 @@ class InstanceForm extends React.Component {
     if (!records || !records.length) return;
     const { blockedFields: blockables } = records[0];
     this.setState({ blockables });
-  }
-
-  componentDidUpdate() {
-    const xid = this.props.resources.query?.xid;
-    if (typeof xid !== 'undefined' && !this.state.loadedExternalRecord) {
-      this.loadExternalRecord(xid);
-    }
-  }
-
-  loadExternalRecord = (xid) => {
-    this.props.okapiKy('copycat/imports', {
-      timeout: 30000,
-      method: 'POST',
-      json: {
-        externalIdentifier: xid,
-        // internalIdentifier: undefined,
-        profileId: 'ba451d09-c157-45f5-acc7-4a5d32edeaed' // XXX hardwiring is bad
-      },
-    }).then(res => {
-      // No need to check res.ok, as ky throws non-2xx responses
-      res.json().then(json => {
-        this.props.mutator.query.update({
-          _path: `/inventory/view/${json.internalIdentifier}`,
-          layer: undefined,
-          xid: undefined,
-        });
-      });
-      this.context.sendCallout({ message: `Added record ${xid}` });
-    }).catch(err => {
-      this.props.mutator.query.update({ layer: undefined, xid: undefined });
-
-      if (!(err instanceof ky.HTTPError)) {
-        this.context.sendCallout({ type: 'error', message: `Something went wrong: ${err}` });
-      } else {
-        const res = err.response;
-        res.text().then(text => {
-          let detail = text;
-          if (res.headers.get('content-type') === 'application/json') {
-            const obj = JSON.parse(text);
-            detail = obj.errors[0].message;
-          }
-
-          const message = `Something went wrong: ${err}: ${detail}`;
-          console.log(message); // eslint-disable-line no-console
-          this.context.sendCallout({ type: 'error', message });
-        });
-      }
-    });
   }
 
   onToggleSection({ id }) {
@@ -307,15 +254,10 @@ class InstanceForm extends React.Component {
 
   render() {
     const {
-      resources,
       onCancel,
       initialValues,
       referenceTables,
     } = this.props;
-
-    if (typeof resources.query?.xid !== 'undefined' && !this.state.loadedExternalRecord) {
-      return <LoadingView />;
-    }
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -821,17 +763,8 @@ InstanceForm.propTypes = {
     blockedFields: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    query: PropTypes.shape({
-      xid: PropTypes.string,
-    }).isRequired,
   }),
-  mutator: PropTypes.shape({
-    query: PropTypes.shape({
-      update: PropTypes.func.isRequired,
-    }).isRequired,
-  }).isRequired,
   instanceSource: PropTypes.string,
-  okapiKy: PropTypes.func.isRequired,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
@@ -841,4 +774,4 @@ InstanceForm.defaultProps = {
 export default stripesFinalForm({
   validate,
   navigationCheck: true,
-})(withOkapiKy(InstanceForm));
+})(InstanceForm);
