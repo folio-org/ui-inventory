@@ -10,17 +10,6 @@ const ImportRecordModal = ({
   handleSubmit: onSubmit,
   handleCancel,
 }) => {
-  const renderFooter = (submitFunction) => (
-    <ModalFooter>
-      <Button buttonStyle="primary" onClick={() => submitFunction()}>
-        <FormattedMessage id="ui-inventory.copycat.import" />
-      </Button>
-      <Button onClick={handleCancel}>
-        <FormattedMessage id="ui-inventory.cancel" />
-      </Button>
-    </ModalFooter>
-  );
-
   return (
     <Modal
       id="import-record-modal"
@@ -40,7 +29,14 @@ const ImportRecordModal = ({
               label={<FormattedMessage id="ui-inventory.copycat.externalIdentifier" />}
               autoFocus
             />
-            {renderFooter(handleSubmit)}
+            <ModalFooter>
+              <Button buttonStyle="primary" onClick={() => handleSubmit()}>
+                <FormattedMessage id="ui-inventory.copycat.import" />
+              </Button>
+              <Button onClick={handleCancel}>
+                <FormattedMessage id="ui-inventory.cancel" />
+              </Button>
+            </ModalFooter>
           </form>
         )}
       />
