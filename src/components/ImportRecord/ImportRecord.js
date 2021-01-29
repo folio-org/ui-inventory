@@ -92,7 +92,7 @@ class ImportRecord extends React.Component {
 
   render() {
     const { id } = this.props;
-    this.props.stripes.logger.log('action', id ? `Re-importing record ID ${this.props.id}` : 'importing new record');
+    this.props.stripes.logger.log('action', id ? `re-importing record ID ${this.props.id}` : 'importing new record');
     return <LoadingView />;
   }
 }
