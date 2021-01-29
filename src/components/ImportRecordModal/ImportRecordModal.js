@@ -22,29 +22,29 @@ const ImportRecordModal = ({
   );
 
   return (
-    <Form
-      onSubmit={onSubmit}
-      render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <Modal
-            id="import-record-modal"
-            open={isOpen}
-            label={<FormattedMessage id="ui-inventory.singleRecordImport" />}
-            dismissible
-            size="small"
-            footer={renderFooter(handleSubmit)}
-            onClose={handleCancel}
-          >
+    <Modal
+      id="import-record-modal"
+      open={isOpen}
+      label={<FormattedMessage id="ui-inventory.singleRecordImport" />}
+      dismissible
+      size="small"
+      onClose={handleCancel}
+    >
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit }) => (
+          <form onSubmit={handleSubmit}>
             <Field
               name="externalIdentifier"
               component={TextField}
               label={<FormattedMessage id="ui-inventory.copycat.externalIdentifier" />}
               autoFocus
             />
-          </Modal>
-        </form>
-      )}
-    />
+            {renderFooter(handleSubmit)}
+          </form>
+        )}
+      />
+    </Modal>
   );
 };
 
