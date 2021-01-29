@@ -72,7 +72,7 @@ class ImportRecord extends React.Component {
       });
 
       if (!(err instanceof ky.HTTPError)) {
-        this.context.sendCallout({ type: 'error', message: `Something went wrong: ${err}` });
+        this.context.sendCallout({ timeout: 10000, type: 'error', message: `Something went wrong: ${err}` });
       } else {
         const res = err.response;
         res.text().then(text => {
@@ -84,7 +84,7 @@ class ImportRecord extends React.Component {
 
           const message = `Something went wrong: ${err}: ${detail}`;
           this.props.stripes.logger.log('action', message);
-          this.context.sendCallout({ type: 'error', message });
+          this.context.sendCallout({ timeout: 10000, type: 'error', message });
         });
       }
     });
