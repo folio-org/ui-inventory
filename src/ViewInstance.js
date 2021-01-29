@@ -305,16 +305,11 @@ class ViewInstance extends React.Component {
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
   };
 
-  // XXX This largely duplicates code in components/InstancesList/InstancesList.js
   handleImportRecordModalSubmit = (args) => {
-    const { externalIdentifier } = args;
-    const id = this.props.match.params.id;
-
     this.setState({ isImportRecordModalOpened: false });
-    this.props.mutator.query.update({ _path: `/inventory/import/${id}`, xid: externalIdentifier });
+    this.props.mutator.query.update({ _path: `/inventory/import/${this.props.match.params.id}`, xid: args.externalIdentifier });
   }
 
-  // XXX This duplicates code in components/InstancesList/InstancesList.js
   handleImportRecordModalCancel = () => {
     this.setState({ isImportRecordModalOpened: false });
   }
