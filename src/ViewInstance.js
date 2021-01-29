@@ -311,7 +311,6 @@ class ViewInstance extends React.Component {
     const id = this.props.match.params.id;
 
     this.setState({ isImportRecordModalOpened: false });
-    console.log('handleImportRecordModalSubmit: externalIdentifier =', externalIdentifier); // eslint-disable-line no-console
     this.props.mutator.query.update({ _path: `/inventory/import/${id}`, xid: externalIdentifier });
   }
 
