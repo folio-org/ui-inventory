@@ -44,13 +44,15 @@ class ImportRecord extends React.Component {
   }
 
   loadExternalRecord = (xid) => {
+    const { id } = this.props;
+
     this.props.okapiKy('copycat/imports', {
       timeout: 30000,
       method: 'POST',
       json: {
         externalIdentifier: xid,
-        internalIdentifier: this.props.id,
-        profileId: 'ba451d09-c157-45f5-acc7-4a5d32edeaed' // XXX hardwiring is bad
+        internalIdentifier: id,
+        profileId: 'cd9f6888-9716-4b76-b732-9018ed7e49cd' // XXX hardwiring is bad
       },
     }).then(res => {
       // No need to check res.ok, as ky throws non-2xx responses
@@ -61,9 +63,13 @@ class ImportRecord extends React.Component {
           xid: undefined,
         });
       });
-      this.context.sendCallout({ message: `Updated record ${xid}` });
+      this.context.sendCallout({ message: `${id ? 'Updated' : 'Created'} record ${xid}` });
     }).catch(err => {
-      this.props.mutator.query.update({ layer: undefined, xid: undefined });
+      this.props.mutator.query.update({
+        _path: `/inventory${id ? `/view/${id}` : ''}`,
+        layer: undefined,
+        xid: undefined,
+      });
 
       if (!(err instanceof ky.HTTPError)) {
         this.context.sendCallout({ type: 'error', message: `Something went wrong: ${err}` });
@@ -77,7 +83,7 @@ class ImportRecord extends React.Component {
           }
 
           const message = `Something went wrong: ${err}: ${detail}`;
-          this.stripes.logger.log('action', message);
+          this.props.stripes.logger.log('action', message);
           this.context.sendCallout({ type: 'error', message });
         });
       }
@@ -85,7 +91,8 @@ class ImportRecord extends React.Component {
   }
 
   render() {
-    this.props.stripes.logger.log('action', `ImportRecord with ID ${this.props.id}`);
+    const { id } = this.props;
+    this.props.stripes.logger.log('action', id ? `Re-importing record ID ${this.props.id}` : 'importing new record');
     return <LoadingView />;
   }
 }
