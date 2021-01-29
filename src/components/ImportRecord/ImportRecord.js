@@ -52,7 +52,7 @@ class ImportRecord extends React.Component {
       json: {
         externalIdentifier: xid,
         internalIdentifier: id,
-        profileId: 'cd9f6888-9716-4b76-b732-9018ed7e49cd' // XXX hardwiring is bad
+        profileId: 'ae1f6118-4e89-4823-9b5b-16239861f234' // XXX hardwiring is bad
       },
     }).then(res => {
       // No need to check res.ok, as ky throws non-2xx responses
