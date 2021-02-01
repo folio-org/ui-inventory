@@ -45,6 +45,7 @@
 * Add permission for marking an item intellectual. Refs UIIN-1336.
 * Add permission for marking an item restricted. Refs UIIN-1335.
 * Add ability to mark an item with new statuses (In process, In process (non-requestable), Long missing, Unavailable, Unknown). Refs UIIN-756.
+* Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

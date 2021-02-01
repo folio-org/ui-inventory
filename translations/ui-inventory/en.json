@@ -140,6 +140,7 @@
   "selectAlternativeTitleType": "Select alternative title type",
   "settings.goBack": "Go back to inventory settings",
   "hridHandling": "HRID handling",
+  "hridHandling.checkbox.label": "Remove leading zeroes from HRID",
   "hridHandling.description.line1": "After initial data migration, new FOLIO HRIDs are assigned sequentially, based on the starting number in these settings",
   "hridHandling.description.line2": "Unless changed or removed, the default prefix will be assigned to new FOLIO HRIDs",
   "hridHandling.description.line3": "HRIDs in existing FOLIO Inventory and MARC records cannot be changed",
