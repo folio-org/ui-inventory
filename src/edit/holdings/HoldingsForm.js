@@ -16,17 +16,12 @@ import {
   TextField,
   Select,
   Checkbox,
-  ConfirmationModal,
   PaneFooter,
 } from '@folio/stripes/components';
 
-import { AppIcon, IntlConsumer } from '@folio/stripes-core';
+import { AppIcon } from '@folio/stripes-core';
 
-import {
-  LocationSelection,
-  LocationLookup,
-  ViewMetaData,
-} from '@folio/stripes/smart-components';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -37,8 +32,10 @@ import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplem
 import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
 import Note from './note';
 import { validateOptionalField } from '../../utils';
-
+import { RemoteStorageApiProvider } from '../../RemoteStorage';
 import styles from './HoldingsForm.css';
+import { Locations } from './Locations';
+
 
 // eslint-disable-next-line no-unused-vars
 function validate(values, props) {
@@ -70,6 +67,7 @@ class HoldingsForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     copy: PropTypes.bool,
+    itemCount: PropTypes.number,
     onCancel: PropTypes.func,
     initialValues: PropTypes.object,
     instance: PropTypes.object,
@@ -90,8 +88,6 @@ class HoldingsForm extends React.Component {
     super(props);
 
     this.state = {
-      confirmPermanentLocation: false,
-      confirmTemporaryLocation: false,
       accordions: {
         accordion01: true,
         accordion02: true,
@@ -103,75 +99,6 @@ class HoldingsForm extends React.Component {
       },
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-  }
-
-  componentDidMount() {
-    const { initialValues } = this.props;
-    const prevPermanentLocation = initialValues.permanentLocation || {};
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ prevPermanentLocation });
-
-    const prevTemporaryLocation = initialValues.temporaryLocation || {};
-    // eslint-disable-next-line react/no-did-mount-set-state
-    this.setState({ prevTemporaryLocation });
-  }
-
-  selectPermanentLocation(permanentLocation) {
-    const { form: { change } } = this.props;
-
-    if (!permanentLocation) {
-      change('permanentLocationId', '');
-      return;
-    }
-
-    if (permanentLocation.isActive) {
-      this.setState({ prevPermanentLocation: permanentLocation });
-      setTimeout(() => change('permanentLocationId', permanentLocation.id));
-    } else {
-      this.setState({ confirmPermanentLocation: true, permanentLocation });
-    }
-  }
-
-  selectTemporaryLocation(temporaryLocation) {
-    const { form: { change } } = this.props;
-
-    if (!temporaryLocation) {
-      change('temporaryLocationId', '');
-      return;
-    }
-
-    if (temporaryLocation.isActive) {
-      this.setState({ prevTemporaryLocation: temporaryLocation });
-      setTimeout(() => change('temporaryLocationId', temporaryLocation.id));
-    } else {
-      this.setState({ confirmTemporaryLocation: true, temporaryLocation });
-    }
-  }
-
-  confirmPermanentLocation(confirm) {
-    const {
-      permanentLocation,
-      prevPermanentLocation,
-    } = this.state;
-    const { form: { change } } = this.props;
-    const confirmPermanentLocation = false;
-    const value = (confirm) ? permanentLocation.id : prevPermanentLocation.id;
-    const prevPermanentLoc = (confirm) ? permanentLocation : prevPermanentLocation;
-    setTimeout(() => change('permanentLocationId', value));
-    this.setState({ confirmPermanentLocation, prevPermanentLocation: prevPermanentLoc });
-  }
-
-  confirmTemporaryLocation(confirm) {
-    const {
-      temporaryLocation,
-      prevTemporaryLocation,
-    } = this.state;
-    const { form: { change } } = this.props;
-    const confirmTemporaryLocation = false;
-    const value = (confirm) ? temporaryLocation.id : prevTemporaryLocation.id;
-    const prevTemporaryLoc = (confirm) ? temporaryLocation : prevTemporaryLocation;
-    setTimeout(() => change('temporaryLocationId', value));
-    this.setState({ confirmTemporaryLocation, prevTemporaryLocation: prevTemporaryLoc });
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -240,11 +167,7 @@ class HoldingsForm extends React.Component {
       referenceTables,
     } = this.props;
 
-    const {
-      accordions,
-      confirmPermanentLocation,
-      confirmTemporaryLocation,
-    } = this.state;
+    const { accordions } = this.state;
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -457,68 +380,9 @@ class HoldingsForm extends React.Component {
                 </Col>
               </Row>
               <br />
-              <Row>
-                <Col sm={4}>
-                  <IntlConsumer>
-                    {intl => (
-                      <Field
-                        label={intl.formatMessage({ id: 'ui-inventory.permanentLocation' })}
-                        placeholder={intl.formatMessage({ id: 'ui-inventory.selectLocation' })}
-                        name="permanentLocationId"
-                        id="additem_permanentlocation"
-                        component={LocationSelection}
-                        fullWidth
-                        marginBottom0
-                        onSelect={loc => this.selectPermanentLocation(loc)}
-                        required
-                      />
-                    )}
-                  </IntlConsumer>
-                  <LocationLookup onLocationSelected={loc => this.selectPermanentLocation(loc)} />
-                </Col>
-                <Col sm={4}>
-                  <IntlConsumer>
-                    {intl => (
-                      <Field
-                        label={intl.formatMessage({ id: 'ui-inventory.temporaryLocation' })}
-                        placeholder={intl.formatMessage({ id: 'ui-inventory.selectLocation' })}
-                        name="temporaryLocationId"
-                        id="additem_temporarylocation"
-                        component={LocationSelection}
-                        fullWidth
-                        marginBottom0
-                        onSelect={this.onSelectLocationHandler}
-                      />
-                    )}
-                  </IntlConsumer>
-                  <LocationLookup
-                    onLocationSelected={this.onSelectLocationHandler}
-                    isTemporaryLocation
-                  />
-                </Col>
-              </Row>
-              <ConfirmationModal
-                id="confirmPermanentLocationModal"
-                open={confirmPermanentLocation}
-                heading={<FormattedMessage id="ui-inventory.confirmLocation.header" />}
-                message={<FormattedMessage id="ui-inventory.confirmLocation.message" />}
-                confirmLabel={<FormattedMessage id="ui-inventory.confirmLocation.selectBtn" />}
-                buttonStyle="default"
-                cancelButtonStyle="primary"
-                onConfirm={() => { this.confirmPermanentLocation(true); }}
-                onCancel={() => { this.confirmPermanentLocation(false); }}
-              />
-              <ConfirmationModal
-                id="confirmTemporaryLocationModal"
-                open={confirmTemporaryLocation}
-                heading={<FormattedMessage id="ui-inventory.confirmLocation.header" />}
-                message={<FormattedMessage id="ui-inventory.confirmLocation.message" />}
-                confirmLabel={<FormattedMessage id="ui-inventory.confirmLocation.selectBtn" />}
-                buttonStyle="default"
-                cancelButtonStyle="primary"
-                onConfirm={() => { this.confirmTemporaryLocation(true); }}
-                onCancel={() => { this.confirmTemporaryLocation(false); }}
-              />
+              <RemoteStorageApiProvider>
+                <Locations {...this.props} />
+              </RemoteStorageApiProvider>
               <Row>
                 <Col sm={4}>
                   <Field
