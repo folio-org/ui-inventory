@@ -33,8 +33,9 @@ import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFiel
 import Note from './note';
 import { validateOptionalField } from '../../utils';
 import { RemoteStorageApiProvider } from '../../RemoteStorage';
+import { LocationSelectionWithCheck } from '../common';
 import styles from './HoldingsForm.css';
-import { Locations } from './Locations';
+import { RemoteStorageWarning } from './RemoteStorageWarning';
 
 
 // eslint-disable-next-line no-unused-vars
@@ -381,7 +382,31 @@ class HoldingsForm extends React.Component {
               </Row>
               <br />
               <RemoteStorageApiProvider>
-                <Locations {...this.props} />
+                <Row>
+                  <Col sm={4}>
+                    <Field
+                      label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                      name="permanentLocationId"
+                      id="additem_permanentlocation"
+                      component={LocationSelectionWithCheck}
+                      fullWidth
+                      marginBottom0
+                    />
+                  </Col>
+                  <Col sm={4}>
+                    <Field
+                      label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                      name="temporaryLocationId"
+                      id="additem_temporarylocation"
+                      component={LocationSelectionWithCheck}
+                      fullWidth
+                      marginBottom0
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <RemoteStorageWarning {...this.props} />
+                </Row>
               </RemoteStorageApiProvider>
               <Row>
                 <Col sm={4}>

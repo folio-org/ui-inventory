@@ -37,9 +37,10 @@ import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
 import { validateOptionalField } from '../../utils';
 import { RemoteStorageApiProvider } from '../../RemoteStorage';
+import { LocationSelectionWithCheck } from '../common';
 
 import styles from './ItemForm.css';
-import { Locations } from './Locations';
+import { RemoteStorageWarning } from './RemoteStorageWarning';
 
 
 function validate(values) {
@@ -816,7 +817,31 @@ class ItemForm extends React.Component {
               label={<FormattedMessage id="ui-inventory.location" />}
             >
               <RemoteStorageApiProvider>
-                <Locations />
+                <Row>
+                  <Col sm={4}>
+                    <Field
+                      label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                      name="permanentLocation.id"
+                      id="additem_permanentlocation"
+                      component={LocationSelectionWithCheck}
+                      fullWidth
+                      marginBottom0
+                    />
+                  </Col>
+                  <Col sm={4}>
+                    <Field
+                      label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                      name="temporaryLocation.id"
+                      id="additem_temporarylocation"
+                      component={LocationSelectionWithCheck}
+                      fullWidth
+                      marginBottom0
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <RemoteStorageWarning />
+                </Row>
               </RemoteStorageApiProvider>
             </Accordion>
             <Accordion
