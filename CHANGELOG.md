@@ -44,6 +44,7 @@
 * Add ability to mark item as Intellectual item and Restricted. Refs UIIN-1374.
 * Add permission for marking an item intellectual. Refs UIIN-1336.
 * Add permission for marking an item restricted. Refs UIIN-1335.
+* Add confirmation and warning when storage locations is changed to non-remote storage location. Refs UIIN-1321.
 * Add ability to mark an item with new statuses (In process, In process (non-requestable), Long missing, Unavailable, Unknown). Refs UIIN-756.
 * Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398
 

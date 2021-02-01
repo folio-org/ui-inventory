@@ -23,7 +23,7 @@ const ElectronicAccessFields = props => {
 
   return (
     <FormattedMessage id="ui-inventory.selectType">
-      {placeholder => (
+      {([placeholder]) => (
         <RepeatableField
           name="electronicAccess"
           label={<FormattedMessage id="ui-inventory.electronicAccess" />}
