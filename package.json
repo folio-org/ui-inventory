@@ -80,6 +80,10 @@
       "inventory-record-bulk": "1.0",
       "data-export": "3.0"
     },
+    "optionalOkapiInterfaces": {
+      "remote-storage-configurations": "1.0",
+      "remote-storage-mappings": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
