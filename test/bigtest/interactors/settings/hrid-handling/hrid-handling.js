@@ -9,6 +9,7 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
 import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/interactor';
 import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/interactor';
 import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
+import CheckboxInteractor from '@folio/stripes-components/lib/Checkbox/tests/interactor';
 
 @interactor
 class StartWithFieldInteractor {
@@ -33,6 +34,7 @@ class AssignPrefixFieldInteractor {
   assignPrefixFields = new AssignPrefixFieldInteractor();
   callout = new CalloutInteractor();
   confirmationModal = new ConfirmationModalInteractor('#confirm-edit-hrid-settings-modal');
+  removeZeroesCheckbox = new CheckboxInteractor('[data-test-remove-zeroes-checkbox]');
 }
 
 export default new HRIDHandlingInteractor();
