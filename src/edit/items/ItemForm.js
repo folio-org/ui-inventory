@@ -392,7 +392,7 @@ class ItemForm extends React.Component {
             <Row>
               { initialValues.id &&
                 <>
-                  <Col xs="4">
+                  <Col xs={4}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
                       value={effectiveLocation}
@@ -524,7 +524,7 @@ class ItemForm extends React.Component {
               <Row>
                 <Col sm={3}>
                   <FormattedMessage id="ui-inventory.selectMaterialType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
                         placeholder={placeholder}
@@ -551,7 +551,7 @@ class ItemForm extends React.Component {
               <Row>
                 <Col sm={2}>
                   <FormattedMessage id="ui-inventory.selectCallNumberType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.callNumberType" />}
                         placeholder={placeholder}
@@ -705,7 +705,7 @@ class ItemForm extends React.Component {
               <Row>
                 <Col sm={3}>
                   <FormattedMessage id="ui-inventory.selectStatus">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         name="itemDamagedStatusId"
                         id="input_item_damaged_status_id"
@@ -785,7 +785,7 @@ class ItemForm extends React.Component {
               <Row>
                 <Col sm={6}>
                   <FormattedMessage id="ui-inventory.selectLoanType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
                         placeholder={placeholder}
@@ -802,7 +802,7 @@ class ItemForm extends React.Component {
               <Row>
                 <Col sm={6}>
                   <FormattedMessage id="ui-inventory.selectLoanType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
                         name="temporaryLoanType.id"

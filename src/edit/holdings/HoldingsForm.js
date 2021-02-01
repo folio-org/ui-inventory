@@ -381,7 +381,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={4}>
                   <FormattedMessage id="ui-inventory.selectHoldingsSource">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
                         placeholder={placeholder}
@@ -412,7 +412,7 @@ class HoldingsForm extends React.Component {
               <Row>
                 <Col sm={4}>
                   <FormattedMessage id="ui-inventory.selectHoldingsType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.holdingsType" />}
                         placeholder={placeholder}
@@ -563,7 +563,7 @@ class HoldingsForm extends React.Component {
                 </Col>
                 <Col sm={2}>
                   <FormattedMessage id="ui-inventory.selectCallNumberType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.callNumberType" />}
                         placeholder={placeholder}
@@ -639,7 +639,7 @@ class HoldingsForm extends React.Component {
               <Row>
                 <Col sm={3}>
                   <FormattedMessage id="ui-inventory.selectIllPolicy">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.illPolicy" />}
                         placeholder={placeholder}

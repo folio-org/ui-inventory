@@ -23,7 +23,7 @@ const ParentInstanceFields = props => {
 
   return (
     <FormattedMessage id="ui-inventory.selectType">
-      {placeholder => (
+      {([placeholder]) => (
         <RepeatableField
           name="parentInstances"
           label={<FormattedMessage id="ui-inventory.parentInstances" />}

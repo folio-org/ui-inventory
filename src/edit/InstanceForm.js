@@ -411,7 +411,7 @@ class InstanceForm extends React.Component {
                 </Row>
                 <Col sm={10}>
                   <FormattedMessage id="ui-inventory.selectInstanceStatus">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.instanceStatus" />}
                         name="statusId"
@@ -426,7 +426,7 @@ class InstanceForm extends React.Component {
                 </Col>
                 <Col sm={10}>
                   <FormattedMessage id="ui-inventory.selectModeOfIssuance">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
                         name="modeOfIssuanceId"
@@ -589,7 +589,7 @@ class InstanceForm extends React.Component {
                 />
                 <Col sm={10}>
                   <FormattedMessage id="ui-inventory.selectResourceType">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         label={(
                           <FormattedMessage id="ui-inventory.resourceType">

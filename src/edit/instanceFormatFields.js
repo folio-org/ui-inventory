@@ -19,7 +19,7 @@ const renderInstanceFormatField = ({ field, fieldIndex, canEdit }, instanceForma
 
   return (
     <FormattedMessage id="ui-inventory.selectInstanceFormat">
-      {placeholder => (
+      {([placeholder]) => (
         <Field
           label={label}
           name={field}
