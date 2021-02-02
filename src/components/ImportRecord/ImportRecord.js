@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import ky from 'ky';
 import { stripesConnect, withOkapiKy, CalloutContext } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
@@ -22,6 +23,9 @@ class ImportRecord extends React.Component {
       }).isRequired,
     }).isRequired,
     okapiKy: PropTypes.func.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   static contextType = CalloutContext;
@@ -44,7 +48,7 @@ class ImportRecord extends React.Component {
   }
 
   loadExternalRecord = (xid) => {
-    const { id } = this.props;
+    const { id, intl } = this.props;
 
     this.props.okapiKy('copycat/imports', {
       timeout: 30000,
@@ -52,7 +56,7 @@ class ImportRecord extends React.Component {
       json: {
         externalIdentifier: xid,
         internalIdentifier: id,
-        profileId: 'ae1f6118-4e89-4823-9b5b-16239861f234' // XXX hardwiring is bad
+        profileId: 'f26df83c-aa25-40b6-876e-96852c3d4fd4' // XXX hardwired to UUID in mod-copycat reference data
       },
     }).then(res => {
       // No need to check res.ok, as ky throws non-2xx responses
@@ -63,7 +67,11 @@ class ImportRecord extends React.Component {
           xid: undefined,
         });
       });
-      this.context.sendCallout({ message: `${id ? 'Updated' : 'Created'} record ${xid}` });
+      const message = <FormattedMessage
+        id={`ui-inventory.copycat.callout.${id ? 'updated' : 'created'}`}
+        values={{ xid }}
+      />;
+      this.context.sendCallout({ message });
     }).catch(err => {
       this.props.mutator.query.update({
         _path: `/inventory${id ? `/view/${id}` : ''}`,
@@ -72,7 +80,8 @@ class ImportRecord extends React.Component {
       });
 
       if (!(err instanceof ky.HTTPError)) {
-        this.context.sendCallout({ timeout: 10000, type: 'error', message: `Something went wrong: ${err}` });
+        const message = <FormattedMessage id="ui-inventory.copycat.callout.simpleError" values={{ err: err.toString() }} />;
+        this.context.sendCallout({ timeout: 10000, type: 'error', message });
       } else {
         const res = err.response;
         res.text().then(text => {
@@ -82,7 +91,7 @@ class ImportRecord extends React.Component {
             detail = obj.errors[0].message;
           }
 
-          const message = `Something went wrong: ${err}: ${detail}`;
+          const message = intl.formatMessage({ id: 'ui-inventory.copycat.callout.complexError' }, { err: err.toString(), detail });
           this.props.stripes.logger.log('action', message);
           this.context.sendCallout({ timeout: 10000, type: 'error', message });
         });
@@ -97,4 +106,4 @@ class ImportRecord extends React.Component {
   }
 }
 
-export default withOkapiKy(stripesConnect(ImportRecord));
+export default withOkapiKy(stripesConnect(injectIntl(ImportRecord)));
