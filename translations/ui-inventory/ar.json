@@ -608,13 +608,13 @@
     "permission.items.mark-restricted": "المخزون: الإشارة للمواد كمقيدة",
     "actions": "الإجراءات",
     "showColumns": "عرض الأعمدة",
-    "hridHandling.checkbox.label": "Remove leading zeroes from HRID",
-    "location.confirm.confirmBtn": "Yes",
-    "location.confirm.common.header": "Attention!",
-    "location.confirm.header": "Inactive location",
-    "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
-    "location.confirm.removeFromRemote.header": "Removing from remote storage",
+    "hridHandling.checkbox.label": "إزالة الأصفار البادئة من رقم التعريف القابل للقراءة بشريًا للمقتنيات",
+    "location.confirm.confirmBtn": "نعم",
+    "location.confirm.common.header": "انتبه!",
+    "location.confirm.inactive.message": "حالة هذا الموقع غير نشطة. هل أنت متأكد من أنك تريد تحديد هذا الموقع؟",
+    "location.confirm.removeFromRemote.header": "إزالة من التخزين البعيد",
     "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
     "location.item.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
-    "location.holdings.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location. This includes {itemCount, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}."
+    "location.holdings.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location. This includes {itemCount, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
+    "location.confirm.inactive.header": "موقع غير نشط"
 }
