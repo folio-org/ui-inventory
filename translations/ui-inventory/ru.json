@@ -117,9 +117,6 @@
     "removeIdentifier": "Удалить идентификатор {num}",
     "editItemDialog": "Edit item dialog",
     "copyItemDialog": "Копировать диалоговое окно для экземпляра",
-    "confirmLocation.selectBtn": "Выбрать",
-    "confirmLocation.message": "Это местоположение имеет статус неактивного. Вы уверены, что хотите выбрать это место?",
-    "confirmLocation.header": "Место хранения недоступно",
     "contributorType": "Тип автора",
     "contributorTypes": "Типы автора",
     "onePublicationFieldToContinue": "Please fill in one or more publication fields to continue",
@@ -610,5 +607,14 @@
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
     "permission.items.mark-restricted": "Inventory: Mark items restricted",
     "actions": "Actions",
-    "showColumns": "Show columns"
+    "showColumns": "Show columns",
+    "hridHandling.checkbox.label": "Remove leading zeroes from HRID",
+    "location.confirm.confirmBtn": "Yes",
+    "location.confirm.common.header": "Attention!",
+    "location.confirm.header": "Inactive location",
+    "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
+    "location.confirm.removeFromRemote.header": "Removing from remote storage",
+    "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
+    "location.item.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
+    "location.holdings.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location. This includes {itemCount, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}."
 }
