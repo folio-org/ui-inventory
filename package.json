@@ -82,6 +82,10 @@
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0"
     },
+    "optionalOkapiInterfaces": {
+      "remote-storage-configurations": "1.0",
+      "remote-storage-mappings": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
@@ -648,14 +652,6 @@
           "inventory-storage.item-note-types.item.get",
           "inventory-storage.hrid-settings.item.get",
           "configuration.entries.collection.get"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
-        "displayName": "Inventory: View instance records being suppressed for staff",
-        "subPermissions": [
-          "ui-inventory.instance.view"
         ],
         "visible": true
       },

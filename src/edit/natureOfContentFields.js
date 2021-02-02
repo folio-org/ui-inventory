@@ -18,7 +18,7 @@ const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfCont
 
   return (
     <FormattedMessage id="ui-inventory.selectNatureOfContentTerm">
-      {placeholder => (
+      {([placeholder]) => (
         <Field
           label={label}
           name={field}

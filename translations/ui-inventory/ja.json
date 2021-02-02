@@ -609,6 +609,6 @@
     "itemStatusModal.heading": "Confirm item status: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
     "permission.items.mark-restricted": "Inventory: Mark items restricted",
-    "actions": "Actions",
+    "actions": "操作",
     "showColumns": "Show columns"
 }

@@ -851,6 +851,7 @@ class ViewHoldingsRecord extends React.Component {
                 instance={instance}
                 referenceTables={referenceTables}
                 stripes={this.props.stripes}
+                itemCount={itemCount}
               />
             </Layer>
             <Layer

@@ -96,7 +96,7 @@ class FastAddSettings extends Component {
                   data-test-default-instance-status
                 >
                   <FormattedMessage id="ui-inventory.selectInstanceStatus">
-                    {placeholder => (
+                    {([placeholder]) => (
                       <Field
                         component={Select}
                         dataOptions={[{ label: `${placeholder}`, value: '' }, ...instanceStatuses]}
