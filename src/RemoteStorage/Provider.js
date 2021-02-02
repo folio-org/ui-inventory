@@ -1,21 +1,27 @@
-import React from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-const Context = React.createContext({});
+const Context = createContext({});
 
-export const useRemoteStorageApi = () => React.useContext(Context);
+export const useRemoteStorageApi = () => useContext(Context);
 
 const Provider = ({ resources, mutator, ...rest }) => {
-  const [persistentMutator] = React.useState(mutator);
+  const [persistentMutator] = useState(mutator);
 
-  React.useEffect(() => {
+  useEffect(() => {
     persistentMutator.mappings.reset();
     persistentMutator.mappings.GET();
   }, [persistentMutator]);
 
-  const remoteMap = React.useMemo(
+  const remoteMap = useMemo(
     () => Object.fromEntries(resources.mappings.records.map(
       ({ folioLocationId, configurationId }) => [folioLocationId, configurationId]
     )),

@@ -444,7 +444,7 @@
   "newFastAddRecord": "New Fast Add Record",
   "location.confirm.confirmBtn": "Yes",
   "location.confirm.common.header": "Attention!",
-  "location.confirm.header": "Inactive location",
+  "location.confirm.inactive.header": "Inactive location",
   "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
   "location.confirm.removeFromRemote.header": "Removing from remote storage",
   "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
