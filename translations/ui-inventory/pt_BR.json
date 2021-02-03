@@ -117,9 +117,6 @@
     "removeIdentifier": "Remover identificador {num}",
     "editItemDialog": "Caixa de diálogo de edição do item",
     "copyItemDialog": "Caixa de diálogo de cópia do item",
-    "confirmLocation.selectBtn": "Selecione",
-    "confirmLocation.message": "Esta localização tem um status de inativo. Tem certeza de que deseja selecionar esta localização?",
-    "confirmLocation.header": "Localização inativa",
     "contributorType": "Tipo de autor",
     "contributorTypes": "Tipos de autores",
     "onePublicationFieldToContinue": "Por favor, preencha um ou mais campos de publicação para continuar",
@@ -610,5 +607,14 @@
     "permission.items.mark-intellectual-item": "Acervo: Marcar itens como item intelectual",
     "permission.items.mark-restricted": "Acervo: Marcar itens como restritos",
     "actions": "Ações",
-    "showColumns": "Mostrar colunas"
+    "showColumns": "Mostrar colunas",
+    "hridHandling.checkbox.label": "Remove leading zeroes from HRID",
+    "location.confirm.confirmBtn": "Yes",
+    "location.confirm.common.header": "Attention!",
+    "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
+    "location.confirm.removeFromRemote.header": "Removing from remote storage",
+    "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
+    "location.item.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
+    "location.holdings.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location. This includes {itemCount, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
+    "location.confirm.inactive.header": "Inactive location"
 }

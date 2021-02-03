@@ -117,9 +117,6 @@
     "removeIdentifier": "إزالة المعرّف {num}",
     "editItemDialog": "مربع حوار تحرير المادة",
     "copyItemDialog": "مربع حوار نسخ المادة",
-    "confirmLocation.selectBtn": "تحديد",
-    "confirmLocation.message": "حالة هذا الموقع غير نشطة. هل أنت متأكد من أنك تريد تحديد هذا الموقع؟",
-    "confirmLocation.header": "موقع غير نشط",
     "contributorType": "نوع المساهم",
     "contributorTypes": "أنواع المساهمين",
     "onePublicationFieldToContinue": "يرجى ملء حقل واحد أو أكثر من حقول النشر للمتابعة",
@@ -610,5 +607,14 @@
     "permission.items.mark-intellectual-item": "المخزون: الإشارة للمواد كمادة فكرية",
     "permission.items.mark-restricted": "المخزون: الإشارة للمواد كمقيدة",
     "actions": "الإجراءات",
-    "showColumns": "عرض الأعمدة"
+    "showColumns": "عرض الأعمدة",
+    "hridHandling.checkbox.label": "إزالة الأصفار البادئة من رقم التعريف القابل للقراءة بشريًا للمقتنيات",
+    "location.confirm.confirmBtn": "نعم",
+    "location.confirm.common.header": "انتبه!",
+    "location.confirm.inactive.message": "حالة هذا الموقع غير نشطة. هل أنت متأكد من أنك تريد تحديد هذا الموقع؟",
+    "location.confirm.removeFromRemote.header": "إزالة من التخزين البعيد",
+    "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
+    "location.item.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
+    "location.holdings.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location. This includes {itemCount, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
+    "location.confirm.inactive.header": "موقع غير نشط"
 }
