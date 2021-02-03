@@ -613,8 +613,8 @@
     "location.confirm.common.header": "انتبه!",
     "location.confirm.inactive.message": "حالة هذا الموقع غير نشطة. هل أنت متأكد من أنك تريد تحديد هذا الموقع؟",
     "location.confirm.removeFromRemote.header": "إزالة من التخزين البعيد",
-    "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
-    "location.item.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
-    "location.holdings.removeFromRemote.warning": "To remove this item from remote storage, run an exception report or communicate this directly to your remote storage location. This includes {itemCount, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
+    "location.confirm.removeFromRemote.message": "هل أنت متأكد من أنك تريد إزالة هذه المادة من المخزون البعيد؟",
+    "location.item.removeFromRemote.warning": "لإزالة هذه المادة من المخزون البعيد، قم بتشغيل تقرير استثناء أو تواصل بذلك مباشرةً مع موقع مخزونك البعيد.",
+    "location.holdings.removeFromRemote.warning": "لإزالة هذه المادة من المخزون البعيد، قم بتشغيل تقرير استثناء أو تواصل بذلك مباشرةً مع موقع مخزونك البعيد. يشمل ذلك {itemCount, plural, =0 {<strong>بدون</strong>عناوين } one {<strong>#</strong> عنواناً } other {<strong>#</strong> عنواناً}}.",
     "location.confirm.inactive.header": "موقع غير نشط"
 }
