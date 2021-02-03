@@ -101,7 +101,7 @@ describe('InstancesRoute', () => {
 
       describe('hiding contributors column', () => {
         beforeEach(() => {
-          userEvent.click(screen.getByTestId('contributors'));
+          userEvent.click(document.querySelector('[data-test-column-manager-checkbox="contributors"]'));
         });
 
         it('should hide contributors column', () => {
