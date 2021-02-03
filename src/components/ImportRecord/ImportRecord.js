@@ -42,25 +42,25 @@ class ImportRecord extends React.Component {
       .catch(err => this.failure(xid, err));
   }
 
-  success(xid, res) {
+  async success(xid, res) {
     const { id, updateLocation } = this.props;
 
     // No need to check res.ok, as ky throws non-2xx responses
-    res.json().then(json => {
-      updateLocation({
-        _path: `/inventory/view/${json.internalIdentifier}`,
-        layer: undefined,
-        xid: undefined,
-      });
-    });
     const message = <FormattedMessage
       id={`ui-inventory.copycat.callout.${id ? 'updated' : 'created'}`}
       values={{ xid }}
     />;
     this.context.sendCallout({ message });
+
+    const json = await res.json();
+    updateLocation({
+      _path: `/inventory/view/${json.internalIdentifier}`,
+      layer: undefined,
+      xid: undefined,
+    });
   }
 
-  failure(xid, err) {
+  async failure(xid, err) {
     const { id, updateLocation, intl } = this.props;
 
     updateLocation({
@@ -74,17 +74,17 @@ class ImportRecord extends React.Component {
       this.context.sendCallout({ timeout: 10000, type: 'error', message });
     } else {
       const res = err.response;
-      res.text().then(text => {
-        let detail = text;
-        if (res.headers.get('content-type') === 'application/json') {
-          const obj = JSON.parse(text);
-          detail = obj.errors[0].message;
-        }
+      const text = await res.text();
 
-        const message = intl.formatMessage({ id: 'ui-inventory.copycat.callout.complexError' }, { err: err.toString(), detail });
-        this.props.stripes.logger.log('action', message);
-        this.context.sendCallout({ timeout: 10000, type: 'error', message });
-      });
+      let detail = text;
+      if (res.headers.get('content-type') === 'application/json') {
+        const obj = JSON.parse(text);
+        detail = obj.errors[0].message;
+      }
+
+      const message = intl.formatMessage({ id: 'ui-inventory.copycat.callout.complexError' }, { err: err.toString(), detail });
+      this.props.stripes.logger.log('action', message);
+      this.context.sendCallout({ timeout: 10000, type: 'error', message });
     }
   }
 
