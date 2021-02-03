@@ -7,6 +7,10 @@ import { LoadingView } from '@folio/stripes/components';
 import withLocation from '../../withLocation';
 
 
+// This is hardwired to the UUID in mod-copycat reference data
+const PROFILE_ID = 'f26df83c-aa25-40b6-876e-96852c3d4fd4';
+
+
 class ImportRecord extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -35,7 +39,7 @@ class ImportRecord extends React.Component {
       json: {
         externalIdentifier: xid,
         internalIdentifier: this.props.id,
-        profileId: 'f26df83c-aa25-40b6-876e-96852c3d4fd4' // XXX hardwired to UUID in mod-copycat reference data
+        profileId: PROFILE_ID,
       },
     })
       .then(res => this.success(xid, res))
