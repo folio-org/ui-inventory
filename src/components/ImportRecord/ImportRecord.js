@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import ky from 'ky';
-import { stripesConnect, withOkapiKy, CalloutContext } from '@folio/stripes/core';
+import { withOkapiKy, CalloutContext } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
+import withLocation from '../../withLocation';
 
 
 class ImportRecord extends React.Component {
@@ -12,43 +13,23 @@ class ImportRecord extends React.Component {
     stripes: PropTypes.shape({
       logger: PropTypes.object.isRequired,
     }).isRequired,
-    resources: PropTypes.shape({
-      query: PropTypes.shape({
-        xid: PropTypes.string,
-      }).isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      query: PropTypes.shape({
-        update: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
     okapiKy: PropTypes.func.isRequired,
     intl: PropTypes.shape({
       formatMessage: PropTypes.func.isRequired,
     }).isRequired,
+    getParams: PropTypes.func.isRequired,
+    updateLocation: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
 
-  static manifest = Object.freeze({
-    query: {},
-  });
-
-  constructor(props) {
-    super(props);
-    this.loading = false;
-  }
-
-  componentDidUpdate() {
-    if (!this.loading) {
-      const xid = this.props.resources.query?.xid;
-      this.loading = true;
-      this.loadExternalRecord(xid);
-    }
+  componentDidMount() {
+    const xid = this.props.getParams().xid;
+    this.loadExternalRecord(xid);
   }
 
   loadExternalRecord = (xid) => {
-    const { id, intl } = this.props;
+    const { id, intl, updateLocation } = this.props;
 
     this.props.okapiKy('copycat/imports', {
       timeout: 30000,
@@ -61,7 +42,7 @@ class ImportRecord extends React.Component {
     }).then(res => {
       // No need to check res.ok, as ky throws non-2xx responses
       res.json().then(json => {
-        this.props.mutator.query.update({
+        updateLocation({
           _path: `/inventory/view/${json.internalIdentifier}`,
           layer: undefined,
           xid: undefined,
@@ -73,7 +54,7 @@ class ImportRecord extends React.Component {
       />;
       this.context.sendCallout({ message });
     }).catch(err => {
-      this.props.mutator.query.update({
+      updateLocation({
         _path: `/inventory${id ? `/view/${id}` : ''}`,
         layer: undefined,
         xid: undefined,
@@ -106,4 +87,4 @@ class ImportRecord extends React.Component {
   }
 }
 
-export default withOkapiKy(stripesConnect(injectIntl(ImportRecord)));
+export default withOkapiKy(injectIntl(withLocation(ImportRecord)));
