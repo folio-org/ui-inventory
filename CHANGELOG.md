@@ -46,6 +46,8 @@
 * Add permission for marking an item restricted. Refs UIIN-1335.
 * Add confirmation and warning when storage locations is changed to non-remote storage location. Refs UIIN-1321.
 * Add ability to mark an item with new statuses (In process, In process (non-requestable), Long missing, Unavailable, Unknown). Refs UIIN-756.
+* Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398.
+* Add ability to switch between new item statuses. Refs UIIN-1305.
 * Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398
 * Add support for maintaining copy-cataloguing profiles in the settings area. Towards UIIN-1401. Entails adding new interface `copycat-profiles`.
 * Add support for importing MARC records from external Z39.50 sources. Towards UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.

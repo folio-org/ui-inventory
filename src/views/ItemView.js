@@ -318,8 +318,9 @@ class ItemView extends React.Component {
           )}
         </IfPermission>
         { canMarkItemWithStatus(firstItem) && (
-          Object.keys(itemStatusMutators).map(
-            status => {
+          Object.keys(itemStatusMutators)
+            .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
+            .map(status => {
               const itemStatus = itemStatusesMap[status].toLowerCase();
               const parameterizedStatus = parameterize(itemStatus);
 
@@ -364,8 +365,7 @@ class ItemView extends React.Component {
                   </IfPermission>
                 )
                 : actionMenuItem;
-            }
-          )
+            })
         )}
         { canCreateNewRequest(firstItem, stripes) && (
         <Button
