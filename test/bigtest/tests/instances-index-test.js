@@ -101,6 +101,7 @@ describe('Instances', () => {
         await inventory.fillSearchField(item.barcode);
         await inventory.clickSearch();
         await inventory.openInstance();
+        await inventory.whenOpenItemVisibile();
         await inventory.openItem();
         await itemInteractor.closeItem();
       });
