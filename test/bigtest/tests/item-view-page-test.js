@@ -400,8 +400,39 @@ describe('ItemViewPage', () => {
         });
       });
     });
-  });
 
+    Object.keys(itemStatusesMap).forEach(status => {
+      const statusName = itemStatusesMap[status];
+
+      describe(`visiting the item with status ${statusName} view page`, () => {
+        beforeEach(async function () {
+          const instance = this.server.create(
+            'instance',
+            'withHoldingAndItemStatus',
+            {
+              title: 'ADVANCING RESEARCH',
+              itemStatus: statusName,
+            }
+          );
+          const holding = this.server.schema.instances.first().holdings.models[0];
+          const item = holding.items.models[0].attrs;
+
+          this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
+          await ItemViewPage.whenLoaded();
+        });
+
+        describe('clicking pane header dropdown menu', () => {
+          beforeEach(async () => {
+            await ItemViewPage.headerDropdown.click();
+          });
+
+          it(`should not display the "mark as ${statusName}" menu item`, () => {
+            expect(ItemViewPage.headerDropdownMenu[`hasMarkAs${status}`]).to.be.false;
+          });
+        });
+      });
+    });
+  });
 
   describe('User does not have permissions', () => {
     setupApplication({

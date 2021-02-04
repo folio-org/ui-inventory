@@ -43,40 +43,58 @@ export function craftLayerUrl(mode, location) { // eslint-disable-line import/pr
 export function canMarkItemAsMissing(item) {
   return includes([
     itemStatusesMap.AVAILABLE,
-    itemStatusesMap.IN_TRANSIT,
-    itemStatusesMap.AWAITING_PICKUP,
-    itemStatusesMap.PAGED,
-    itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AWAITING_DELIVERY,
-    itemStatusesMap.WITHDRAWN,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.INTELLECTUAL_ITEM,
+    itemStatusesMap.IN_PROCESS,
+    itemStatusesMap.IN_PROCESS_NON_REQUESTABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.LONG_MISSING,
     itemStatusesMap.LOST_AND_PAID,
+    itemStatusesMap.PAGED,
+    itemStatusesMap.RESTRICTED,
+    itemStatusesMap.UNAVAILABLE,
+    itemStatusesMap.UNKNOWN,
+    itemStatusesMap.WITHDRAWN,
   ], item?.status?.name);
 }
 
 export function canMarkItemAsWithdrawn(item) {
   return includes([
-    itemStatusesMap.IN_PROCESS,
     itemStatusesMap.AVAILABLE,
-    itemStatusesMap.IN_TRANSIT,
-    itemStatusesMap.AWAITING_PICKUP,
-    itemStatusesMap.MISSING,
     itemStatusesMap.AWAITING_DELIVERY,
-    itemStatusesMap.PAGED,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.INTELLECTUAL_ITEM,
+    itemStatusesMap.IN_PROCESS,
+    itemStatusesMap.IN_PROCESS_NON_REQUESTABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.LONG_MISSING,
     itemStatusesMap.LOST_AND_PAID,
+    itemStatusesMap.MISSING,
+    itemStatusesMap.PAGED,
+    itemStatusesMap.RESTRICTED,
+    itemStatusesMap.UNAVAILABLE,
+    itemStatusesMap.UNKNOWN,
   ], item?.status?.name);
 }
 
 export function canMarkItemWithStatus(item) {
   return includes([
-    itemStatusesMap.ORDER_CLOSED,
     itemStatusesMap.AVAILABLE,
-    itemStatusesMap.IN_TRANSIT,
-    itemStatusesMap.AWAITING_PICKUP,
-    itemStatusesMap.MISSING,
-    itemStatusesMap.WITHDRAWN,
     itemStatusesMap.AWAITING_DELIVERY,
-    itemStatusesMap.PAGED,
+    itemStatusesMap.AWAITING_PICKUP,
+    itemStatusesMap.INTELLECTUAL_ITEM,
+    itemStatusesMap.IN_PROCESS_NON_REQUESTABLE,
+    itemStatusesMap.IN_TRANSIT,
+    itemStatusesMap.LONG_MISSING,
     itemStatusesMap.LOST_AND_PAID,
+    itemStatusesMap.MISSING,
+    itemStatusesMap.ORDER_CLOSED,
+    itemStatusesMap.PAGED,
+    itemStatusesMap.RESTRICTED,
+    itemStatusesMap.UNAVAILABLE,
+    itemStatusesMap.UNKNOWN,
+    itemStatusesMap.WITHDRAWN,
   ], item?.status?.name);
 }
 
