@@ -20,7 +20,9 @@ import {
   Pluggable,
   AppIcon,
   IfPermission,
+  IfInterface,
   CalloutContext,
+  stripesConnect,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -55,6 +57,7 @@ import {
 import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
+import ImportRecordModal from '../ImportRecordModal';
 
 import { buildQuery } from '../../routes/buildManifestObject';
 import {
@@ -96,9 +99,18 @@ class InstancesList extends React.Component {
     }).isRequired,
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    mutator: PropTypes.shape({
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
+    }),
   };
 
   static contextType = CalloutContext;
+
+  static manifest = Object.freeze({
+    query: {},
+  });
 
   constructor(props) {
     super(props);
@@ -112,6 +124,7 @@ class InstancesList extends React.Component {
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
+      isImportRecordModalOpened: false,
     };
   }
 
@@ -410,6 +423,14 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.triggerQuickExport),
             isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
           })}
+          <IfInterface name="copycat-imports">
+            {this.getActionItem({
+              id: 'dropdown-clickable-import-record',
+              icon: 'lightning',
+              messageId: 'ui-inventory.copycat.import',
+              onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+            })}
+          </IfInterface>
           {isQuickExportLimitExceeded && (
             <span
               className={css.feedbackError}
@@ -491,6 +512,15 @@ class InstancesList extends React.Component {
     this.setState({ isSelectedRecordsModalOpened: false });
   }
 
+  handleImportRecordModalSubmit = (args) => {
+    this.setState({ isImportRecordModalOpened: false });
+    this.props.mutator.query.update({ _path: '/inventory/import', xid: args.externalIdentifier });
+  }
+
+  handleImportRecordModalCancel = () => {
+    this.setState({ isImportRecordModalOpened: false });
+  }
+
   renderPaneSub() {
     const selectedRowsCount = size(this.state.selectedRows);
 
@@ -526,6 +556,7 @@ class InstancesList extends React.Component {
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
+      isImportRecordModalOpened,
       selectedRows,
     } = this.state;
 
@@ -640,6 +671,12 @@ class InstancesList extends React.Component {
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
+        <ImportRecordModal
+          isOpen={isImportRecordModalOpened}
+          currentExternalIdentifier={undefined}
+          handleSubmit={this.handleImportRecordModalSubmit}
+          handleCancel={this.handleImportRecordModalCancel}
+        />
       </>
     );
   }
@@ -648,4 +685,4 @@ class InstancesList extends React.Component {
 export default flowRight(
   injectIntl,
   withLocation,
-)(InstancesList);
+)(stripesConnect(InstancesList));

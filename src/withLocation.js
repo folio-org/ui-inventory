@@ -25,10 +25,13 @@ function withLocation(WrappedComponent) {
     };
 
     updateLocation = (newParams) => {
-      const {
-        location: { pathname },
-        history,
-      } = this.props;
+      let { location: { pathname } } = this.props;
+      const { history } = this.props;
+
+      if (newParams._path) {
+        pathname = newParams._path;
+        delete newParams._path;
+      }
       const prevParams = this.getParams();
       const params = Object.assign(prevParams, newParams);
       const cleanParams = omitBy(params, isNil);

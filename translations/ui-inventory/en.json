@@ -286,6 +286,10 @@
   "querySearch": "Query search",
   "addSubject": "Add subject",
   "url": "URL",
+  "authentication": "Authentication",
+  "externalIdQueryMap": "External ID query map",
+  "internalIdEmbedPath": "Internal ID embed path",
+  "jobProfileId": "Job profile ID",
   "urls": "URLs",
   "addUrl": "Add URL",
   "items": "Items",
@@ -621,5 +625,13 @@
   "showTags": "Show tags",
 
   "actions": "Actions",
-  "showColumns": "Show columns"
+  "showColumns": "Show columns",
+  "copycat.import": "Import",
+  "copycat.reimport": "Re-import",
+  "copycat.idToImport": "ID to import",
+  "copycat.externalIdentifier": "External identifier",
+  "copycat.callout.updated": "Updated record {xid}",
+  "copycat.callout.created": "Created record {xid}",
+  "copycat.callout.simpleError": "Something went wrong: {err}",
+  "copycat.callout.complexError": "Something went wrong: {err}: {detail}"
 }

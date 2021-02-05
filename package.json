@@ -81,6 +81,8 @@
       "data-export": "3.0"
     },
     "optionalOkapiInterfaces": {
+      "copycat-imports": "1.0",
+      "copycat-profiles": "1.0",
       "remote-storage-configurations": "1.0",
       "remote-storage-mappings": "1.0"
     },
@@ -356,11 +358,11 @@
         "displayName": "Settings (Inventory): Configure single-record import",
         "subPermissions": [
           "settings.inventory.enabled",
-          "copycat.target-profiles.collection.get",
-          "copycat.target-profiles.item.get",
-          "copycat.target-profiles.item.post",
-          "copycat.target-profiles.item.put",
-          "copycat.target-profiles.item.delete"
+          "copycat.profiles.collection.get",
+          "copycat.profiles.item.get",
+          "copycat.profiles.item.post",
+          "copycat.profiles.item.put",
+          "copycat.profiles.item.delete"
         ],
         "visible": true
       },
@@ -741,6 +743,7 @@
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
+    "ky": "^0.23.0",
     "lodash": "^4.17.4",
     "moment": "~2.24.0",
     "prop-types": "^15.5.10",

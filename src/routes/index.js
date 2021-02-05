@@ -7,3 +7,4 @@ export { default as CreateHoldingRoute } from './CreateHoldingRoute';
 export { default as InstanceMarcRoute } from './InstanceMarcRoute';
 export { default as InstanceEditRoute } from './InstanceEditRoute';
 export { default as ViewRequestsRoute } from './ViewRequestsRoute';
+export { default as ImportRoute } from './ImportRoute';

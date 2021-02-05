@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   AppIcon,
   IfPermission,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -35,6 +36,8 @@ import {
 
   InstanceDetails,
 } from './Instance';
+
+import ImportRecordModal from './components/ImportRecordModal';
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -110,6 +113,7 @@ class ViewInstance extends React.Component {
       marcRecord: null,
       findInstancePluginOpened: false,
       isItemsMovement: false,
+      isImportRecordModalOpened: false,
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
@@ -302,6 +306,15 @@ class ViewInstance extends React.Component {
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
   };
 
+  handleImportRecordModalSubmit = (args) => {
+    this.setState({ isImportRecordModalOpened: false });
+    this.props.mutator.query.update({ _path: `/inventory/import/${this.props.match.params.id}`, xid: args.externalIdentifier });
+  }
+
+  handleImportRecordModalCancel = () => {
+    this.setState({ isImportRecordModalOpened: false });
+  }
+
   toggleFindInstancePlugin = () => {
     this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
   };
@@ -443,6 +456,21 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         )}
+
+        <IfInterface name="copycat-imports">
+          <Button
+            id="dropdown-clickable-reimport-record"
+            onClick={() => {
+              onToggle();
+              this.setState({ isImportRecordModalOpened: true });
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="lightning">
+              <FormattedMessage id="ui-inventory.copycat.reimport" />
+            </Icon>
+          </Button>
+        </IfInterface>
       </>
     );
   };
@@ -532,6 +560,13 @@ class ViewInstance extends React.Component {
             />
           )
         }
+
+        <ImportRecordModal
+          isOpen={this.state.isImportRecordModalOpened}
+          currentExternalIdentifier={undefined}
+          handleSubmit={this.handleImportRecordModalSubmit}
+          handleCancel={this.handleImportRecordModalCancel}
+        />
       </>
     );
   }
