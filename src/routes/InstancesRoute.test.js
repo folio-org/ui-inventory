@@ -32,6 +32,7 @@ import InstancesRoute from './InstancesRoute';
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
+  hasInterface: () => true,
   logger: { log: noop },
   locale: 'en-US',
   plugins: {},
