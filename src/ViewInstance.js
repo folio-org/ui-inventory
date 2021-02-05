@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   AppIcon,
   IfPermission,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -456,18 +457,20 @@ class ViewInstance extends React.Component {
           </Button>
         )}
 
-        <Button
-          id="dropdown-clickable-reimport-record"
-          onClick={() => {
-            onToggle();
-            this.setState({ isImportRecordModalOpened: true });
-          }}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="lightning">
-            <FormattedMessage id="ui-inventory.copycat.reimport" />
-          </Icon>
-        </Button>
+        <IfInterface name="copycat-imports">
+          <Button
+            id="dropdown-clickable-reimport-record"
+            onClick={() => {
+              onToggle();
+              this.setState({ isImportRecordModalOpened: true });
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="lightning">
+              <FormattedMessage id="ui-inventory.copycat.reimport" />
+            </Icon>
+          </Button>
+        </IfInterface>
       </>
     );
   };

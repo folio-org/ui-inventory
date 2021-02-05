@@ -20,6 +20,7 @@ import {
   Pluggable,
   AppIcon,
   IfPermission,
+  IfInterface,
   CalloutContext,
   stripesConnect,
 } from '@folio/stripes/core';
@@ -422,12 +423,14 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.triggerQuickExport),
             isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
           })}
-          {this.getActionItem({
-            id: 'dropdown-clickable-import-record',
-            icon: 'lightning',
-            messageId: 'ui-inventory.copycat.import',
-            onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-          })}
+          <IfInterface name="copycat-imports">
+            {this.getActionItem({
+              id: 'dropdown-clickable-import-record',
+              icon: 'lightning',
+              messageId: 'ui-inventory.copycat.import',
+              onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+            })}
+          </IfInterface>
           {isQuickExportLimitExceeded && (
             <span
               className={css.feedbackError}
