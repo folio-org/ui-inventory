@@ -743,6 +743,7 @@
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
+    "ky": "^0.23.0",
     "lodash": "^4.17.4",
     "moment": "~2.24.0",
     "prop-types": "^15.5.10",
@@ -758,7 +759,6 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^6.0.0",
-    "ky": "^0.23.0",
     "react": "*",
     "react-intl": "^5.8.0",
     "react-router": "^5.0.1",
