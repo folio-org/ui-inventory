@@ -33,7 +33,6 @@ import {
 import {
   HoldingsListContainer,
   MoveItemsContext,
-
   InstanceDetails,
 } from './Instance';
 
@@ -210,6 +209,16 @@ class ViewInstance extends React.Component {
 
     history.push({
       pathname: `/inventory/quick-marc/edit/${instanceId}`,
+      search: location.search,
+    });
+  };
+
+  duplicateInstanceMarc = () => {
+    const { history, location, match } = this.props;
+    const instanceId = match.params.id;
+
+    history.push({
+      pathname: `/inventory/quick-marc/duplicate/${instanceId}`,
       search: location.search,
     });
   };
@@ -397,6 +406,22 @@ class ViewInstance extends React.Component {
                 >
                   <Icon icon="edit">
                     <FormattedMessage id="ui-inventory.editInstanceMarc" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+
+              <IfPermission perm="records-editor.records.item.post">
+                <Button
+                  id="duplicate-instance-marc"
+                  buttonStyle="dropdownItem"
+                  disabled={!marcRecord} // enable this button when https://issues.folio.org/browse/UIQM-66 is done
+                  onClick={() => {
+                    onToggle();
+                    this.duplicateInstanceMarc();
+                  }}
+                >
+                  <Icon icon="edit">
+                    <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
                   </Icon>
                 </Button>
               </IfPermission>
