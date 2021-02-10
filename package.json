@@ -681,8 +681,9 @@
       },
       {
         "permissionName": "ui-inventory.single-record-import",
-        "displayName": "Inventory: Import single record",
+        "displayName": "Inventory: Import single bibliographic records",
         "subPermissions": [
+          "ui-inventory.instance.view",
           "copycat.imports.post"
         ],
         "visible": true
