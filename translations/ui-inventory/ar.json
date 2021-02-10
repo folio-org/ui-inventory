@@ -578,7 +578,7 @@
     "instanceMatchKey": "مفتاح تطابق الوعاء",
     "confirm": "تأكيد",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> المادة ذات (الباركود:{barcode}) سيتم الإشارة إليها كـ <strong> {status}</strong>.",
-    "confirmModal.requestMessage": "{countIndex, plural, =-1 {قد يكون هناك طلبات مفتوحة لهذه المادة.} =0 {} one {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.} other {يوجد {openRequestValue} طلباً مفتوحاً لهذه المادة.}}",
+    "confirmModal.requestMessage": "{countIndex, plural, =-1 {قد يكون هناك طلبات مفتوحة لهذه المادة.} =0 {} one {يوجد {openRequestValue} لهذه المادة.} other {يوجد {openRequestValue} لهذه المادة.}}",
     "saveInstancesUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للأوعية. قد يستغرق تنزيل الملف بضع دقائق.",
     "instances.rows.select": "اختر وعاء",
     "showTags": "عرض الوسوم",
@@ -628,5 +628,6 @@
     "copycat.callout.updated": "تم تحديث التسجيلة {xid}",
     "copycat.callout.created": "تم إنشاء التسجيلة {xid}",
     "copycat.callout.simpleError": "لقد حدث خطأ ما: {err}",
-    "copycat.callout.complexError": "لقد حدث خطأ ما: {err}: {detail}"
+    "copycat.callout.complexError": "لقد حدث خطأ ما: {err}: {detail}",
+    "permission.single-record-import": "Inventory: Import single bibliographic records"
 }
