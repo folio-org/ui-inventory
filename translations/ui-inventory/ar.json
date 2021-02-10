@@ -616,5 +616,17 @@
     "location.confirm.removeFromRemote.message": "هل أنت متأكد من أنك تريد إزالة هذه المادة من المخزون البعيد؟",
     "location.item.removeFromRemote.warning": "لإزالة هذه المادة من المخزون البعيد، قم بتشغيل تقرير استثناء أو تواصل بذلك مباشرةً مع موقع مخزونك البعيد.",
     "location.holdings.removeFromRemote.warning": "لإزالة هذه المادة من المخزون البعيد، قم بتشغيل تقرير استثناء أو تواصل بذلك مباشرةً مع موقع مخزونك البعيد. يشمل ذلك {itemCount, plural, =0 {<strong>بدون</strong>عناوين } one {<strong>#</strong> عنواناً } other {<strong>#</strong> عنواناً}}.",
-    "location.confirm.inactive.header": "موقع غير نشط"
+    "location.confirm.inactive.header": "موقع غير نشط",
+    "authentication": "الاستيثاق",
+    "externalIdQueryMap": "خريطة استعلام المعرّف الخارجي",
+    "internalIdEmbedPath": "مسار تضمين المعرّف الخارجي",
+    "jobProfileId": "معرّف وضع الوظيفة",
+    "copycat.import": "استيراد",
+    "copycat.reimport": "إعادة استيراد",
+    "copycat.idToImport": "معرّف للاستيراد",
+    "copycat.externalIdentifier": "معرّف خارجي",
+    "copycat.callout.updated": "تم تحديث التسجيلة {xid}",
+    "copycat.callout.created": "تم إنشاء التسجيلة {xid}",
+    "copycat.callout.simpleError": "لقد حدث خطأ ما: {err}",
+    "copycat.callout.complexError": "لقد حدث خطأ ما: {err}: {detail}"
 }
