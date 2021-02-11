@@ -628,5 +628,6 @@
     "copycat.callout.updated": "Aktualisierter Datensatz {xid}",
     "copycat.callout.created": "Erstellter Datensatz {xid}",
     "copycat.callout.simpleError": "Fehler ist aufgetreten: {err}",
-    "copycat.callout.complexError": "Fehler ist aufgetreten: {err}: {detail}"
+    "copycat.callout.complexError": "Fehler ist aufgetreten: {err}: {detail}",
+    "permission.single-record-import": "Inventory: Import single bibliographic records"
 }
