@@ -110,6 +110,7 @@ export function canCreateNewRequest(item, stripes) {
       itemStatusesMap.MISSING,
       itemStatusesMap.AWAITING_DELIVERY,
       itemStatusesMap.PAGED,
+      itemStatusesMap.RESTRICTED,
     ], item?.status?.name);
 }
 
