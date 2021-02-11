@@ -414,7 +414,7 @@ class ViewInstance extends React.Component {
                 <Button
                   id="duplicate-instance-marc"
                   buttonStyle="dropdownItem"
-                  disabled={!marcRecord} // enable this button when https://issues.folio.org/browse/UIQM-66 is done
+                  disabled // enable this button when https://issues.folio.org/browse/UIQM-66 is done
                   onClick={() => {
                     onToggle();
                     this.duplicateInstanceMarc();
