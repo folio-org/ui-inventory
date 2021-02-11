@@ -603,6 +603,11 @@
   "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
   "permission.items.mark-restricted": "Inventory: Mark items restricted",
   "permission.single-record-import": "Inventory: Import single bibliographic records",
+  "permission.items.mark-unknown": "Inventory: Mark items unknown",
+  "permission.items.mark-unavailable": "Inventory: Mark items unavailable",
+  "permission.items.mark-long-missing": "Inventory: Mark items long missing",
+  "permission.items.mark-in-process-non-requestable": "Inventory: Mark items in process (non-requestable)",
+
   "moveItems.moveButton": "Move to",
   "moveItems.selectAll": "Select/unselect all items for movement",
   "moveItems.selectItem": "Select/unselect item for movement",
