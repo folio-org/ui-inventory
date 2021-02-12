@@ -401,6 +401,34 @@ describe('ItemViewPage', () => {
       });
     });
 
+    describe('visiting the restricted item view page', () => {
+      beforeEach(async function () {
+        const instance = this.server.create(
+          'instance',
+          'withHoldingAndItemStatus',
+          {
+            title: 'ADVANCING RESEARCH',
+            itemStatus: 'Restricted',
+          }
+        );
+        const holding = this.server.schema.instances.first().holdings.models[0];
+        const item = holding.items.models[0].attrs;
+
+        this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
+        await ItemViewPage.whenLoaded();
+      });
+
+      describe('clicking pane header dropdown menu', () => {
+        beforeEach(async () => {
+          await ItemViewPage.headerDropdown.click();
+        });
+
+        it('should show a new request item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
+        });
+      });
+    });
+
     Object.keys(itemStatusesMap).forEach(status => {
       const statusName = itemStatusesMap[status];
 
