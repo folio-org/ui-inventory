@@ -37,7 +37,7 @@
   "itemRecord": "Item record",
   "itemRecordWithDescription": "Item record ({materialType}, {status})",
   "code": "code",
-  "duplicateInstance": "Duplicate",
+  "duplicateInstance": "Duplicate instance record",
   "save": "Save",
   "saveAndClose": "Save & close",
   "cancel": "Cancel",
