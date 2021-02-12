@@ -203,24 +203,22 @@ class ViewInstance extends React.Component {
     });
   };
 
-  editInstanceMarc = () => {
+  redirectToQuickMarcPage = (page) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
 
     history.push({
-      pathname: `/inventory/quick-marc/edit/${instanceId}`,
+      pathname: `/inventory/quick-marc/${page}/${instanceId}`,
       search: location.search,
     });
   };
 
-  duplicateInstanceMarc = () => {
-    const { history, location, match } = this.props;
-    const instanceId = match.params.id;
+  editInstanceMarc = () => {
+    this.redirectToQuickMarcPage('edit');
+  };
 
-    history.push({
-      pathname: `/inventory/quick-marc/duplicate/${instanceId}`,
-      search: location.search,
-    });
+  duplicateInstanceMarc = () => {
+    this.redirectToQuickMarcPage('duplicate');
   };
 
   selectInstanse = (selectedInstance) => {
