@@ -509,6 +509,22 @@ describe('ItemViewPage', () => {
         expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.false;
       });
 
+      it('should not show a mark as unknown item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnknown).to.be.false;
+      });
+
+      it('should not show a mark as unavailable item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnavailable).to.be.false;
+      });
+
+      it('should not show a mark as long missing item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsLongMissing).to.be.false;
+      });
+
+      it('should not show a mark as in process (non-requestable) item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcessNonRequestable).to.be.false;
+      });
+
       it('should not show a delete menu item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasDeleteItem).to.be.false;
       });
