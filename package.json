@@ -603,7 +603,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.list.view",
-        "displayName": "Settings (Inventory): Display list of settings pages",
+        "displayName": "Settings (Inventory): View list of settings pages",
         "subPermissions": [
           "settings.inventory.enabled",
           "users.collection.get",
@@ -681,8 +681,9 @@
       },
       {
         "permissionName": "ui-inventory.single-record-import",
-        "displayName": "Inventory: Import single record",
+        "displayName": "Inventory: Import single bibliographic records",
         "subPermissions": [
+          "ui-inventory.instance.view",
           "copycat.imports.post"
         ],
         "visible": true
@@ -709,7 +710,7 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.3.0",
     "@folio/stripes": "^6.0.0",
-    "@folio/stripes-cli": "^1.20.0",
+    "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^9.0.0",
     "@folio/stripes-core": "^7.0.0",
     "@folio/stripes-smart-components": "^6.0.0",
