@@ -514,6 +514,7 @@ class InstancesList extends React.Component {
 
   handleImportRecordModalSubmit = (args) => {
     this.setState({ isImportRecordModalOpened: false });
+    console.log('handleImportRecordModalSubmit: args =', args);
     this.props.mutator.query.update({ _path: '/inventory/import', xid: args.externalIdentifier });
   }
 
