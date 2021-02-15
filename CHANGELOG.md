@@ -54,6 +54,7 @@
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
 * Show new request option for item with status restricted. Refs UIIN-1306.
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
+* Rename `Settings (Inventory): Display list of settings pages` permission to `Settings (Inventory): View list of settings pages`. Refs UIIN-1399.
 * Add ability to duplicate MARC bib record. Refs UIIN-1407.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)

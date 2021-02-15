@@ -603,7 +603,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.list.view",
-        "displayName": "Settings (Inventory): Display list of settings pages",
+        "displayName": "Settings (Inventory): View list of settings pages",
         "subPermissions": [
           "settings.inventory.enabled",
           "users.collection.get",
