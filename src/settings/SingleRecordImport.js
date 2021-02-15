@@ -32,14 +32,16 @@ class SingleRecordImport extends React.Component {
             label={<FormattedMessage id="ui-inventory.targetProfiles" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.targetProfile' })}
             objectLabel={<FormattedMessage id="ui-inventory.targetProfiles" />}
-            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId']}
+            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId', 'externalIdentifierType', 'enabled']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               url: intl.formatMessage({ id: 'ui-inventory.url' }),
               authentication: intl.formatMessage({ id: 'ui-inventory.authentication' }),
               externalIdQueryMap: intl.formatMessage({ id: 'ui-inventory.externalIdQueryMap' }),
               internalIdEmbedPath: intl.formatMessage({ id: 'ui-inventory.internalIdEmbedPath' }),
-              importProfileId: intl.formatMessage({ id: 'ui-inventory.jobProfileId' }),
+              jobProfileId: intl.formatMessage({ id: 'ui-inventory.jobProfileId' }),
+              externalIdentifierType: intl.formatMessage({ id: 'ui-inventory.externalIdentifierType' }),
+              enabled: intl.formatMessage({ id: 'ui-inventory.enabled' }),
             }}
             nameKey="name"
             hiddenFields={['lastUpdated', 'numberOfObjects']}
