@@ -1,4 +1,3 @@
-// /* eslint-disable */
 /* OMFG ESLint. If we have to cuddle the else, we can't
  * can't place comments before the condition.
  * CUDDLING THE ELSE IS WRONG. Yes, I'm shouting. Come fight me.
@@ -21,9 +20,10 @@ const atoiComparator = (a, b) => {
 
 /**
  * Parse a string numerically by extracting the first three sets of numbers
- * and comparing them. Further numeric values are ignored. If are present
+ * and comparing them. Further numeric values are ignored. If numbers are present
  * in only one string, that string sorts first. If no numbers are present,
- * compare alphabetically.
+ * compare alphabetically. If numbers compare equally, compare the full string
+ * alphabetically.
  *
  * @param string a:
  * @param string b:
@@ -90,16 +90,16 @@ const loanTypeComparator = (a, b) => {
 };
 
 const sorters = {
-  'barcode': (a, b) => a.barcode.localeCompare(b.barcode),
-  'status': (a, b) => a.status.name.toLowerCase().localeCompare(b.status.name.toLowerCase()),
-  'copyNumber': (a, b) => a.copyNumber?.toLowerCase().localeCompare(b.copyNumber.name.toLowerCase()),
-  'materialType': (a, b) => a.materialType.name.toLowerCase().localeCompare(b.materialType.name.toLowerCase()),
-  'loanType': loanTypeComparator,
-  'effectiveLocation': (a, b) => a.effectiveLocation.name.toLowerCase().localeCompare(b.effectiveLocation.name.toLowerCase()),
+  'barcode': (a, b) => a.barcode?.localeCompare(b.barcode),
+  'chronology': (a, b) => a.chronology?.localeCompare(b.chronology),
+  'copyNumber': (a, b) => a.copyNumber?.toLowerCase().localeCompare(b.copyNumber?.toLowerCase()),
+  'effectiveLocation': (a, b) => a.effectiveLocation?.name?.toLowerCase().localeCompare(b.effectiveLocation?.name?.toLowerCase()),
   'enumeration': enumerationComparator,
-  'chronology': (a, b) => a.chronology.localeCompare(b.chronology),
-  'volume': (a, b) => a.volume.localeCompare(b.volume),
-  'yearCaption': (a, b) => a.yearCaption.localeCompare(b.yearCaption),
+  'loanType': loanTypeComparator,
+  'materialType': (a, b) => a.materialType?.name?.toLowerCase().localeCompare(b.materialType?.name?.toLowerCase()),
+  'status': (a, b) => a.status?.name?.toLowerCase().localeCompare(b.status?.name?.toLowerCase()),
+  'volume': (a, b) => a.volume?.localeCompare(b.volume),
+  'yearCaption': (a, b) => a.yearCaption?.localeCompare(b.yearCaption),
 };
 
 // eslint-disable-next-line
