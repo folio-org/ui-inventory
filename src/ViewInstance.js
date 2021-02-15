@@ -33,7 +33,6 @@ import {
 import {
   HoldingsListContainer,
   MoveItemsContext,
-
   InstanceDetails,
 } from './Instance';
 
@@ -204,14 +203,22 @@ class ViewInstance extends React.Component {
     });
   };
 
-  editInstanceMarc = () => {
+  redirectToQuickMarcPage = (page) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
 
     history.push({
-      pathname: `/inventory/quick-marc/edit/${instanceId}`,
+      pathname: `/inventory/quick-marc/${page}/${instanceId}`,
       search: location.search,
     });
+  };
+
+  editInstanceMarc = () => {
+    this.redirectToQuickMarcPage('edit');
+  };
+
+  duplicateInstanceMarc = () => {
+    this.redirectToQuickMarcPage('duplicate');
   };
 
   selectInstanse = (selectedInstance) => {
@@ -397,6 +404,22 @@ class ViewInstance extends React.Component {
                 >
                   <Icon icon="edit">
                     <FormattedMessage id="ui-inventory.editInstanceMarc" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+
+              <IfPermission perm="records-editor.records.item.post">
+                <Button
+                  id="duplicate-instance-marc"
+                  buttonStyle="dropdownItem"
+                  disabled // enable this button when https://issues.folio.org/browse/UIQM-66 is done
+                  onClick={() => {
+                    onToggle();
+                    this.duplicateInstanceMarc();
+                  }}
+                >
+                  <Icon icon="duplicate">
+                    <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
                   </Icon>
                 </Button>
               </IfPermission>
