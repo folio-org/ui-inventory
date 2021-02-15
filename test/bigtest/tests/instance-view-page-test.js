@@ -37,9 +37,11 @@ const headersIndex = {
 };
 
 describe('InstanceViewPage', () => {
+  let instance;
+
   const visitingViewInventoryPageWithContent = () => {
     beforeEach(async function () {
-      const instance = this.server.create(
+      instance = this.server.create(
         'instance',
         'withHoldingAndItem',
         'withStatisticalCodeIds',
@@ -56,10 +58,29 @@ describe('InstanceViewPage', () => {
 
   const visitingViewInventoryPageWithoutContent = () => {
     beforeEach(async function () {
-      const instance = this.server.create(
+      instance = this.server.create(
         'instance',
         { title: 'ADVANCING RESEARCH' }
       );
+      this.visit(`/inventory/view/${instance.id}`);
+      await InstanceViewPage.whenLoaded();
+    });
+  };
+
+  const visitingViewInventoryPageWithMarcSource = () => {
+    beforeEach(async function () {
+      instance = this.server.create(
+        'instance',
+        'withHoldingAndItem',
+        'withStatisticalCodeIds',
+        'withAlternativeTitles',
+        'withSeriesStatement',
+        'withSubjects',
+        'withNotes',
+        { title: 'ADVANCING RESEARCH' },
+      );
+      instance.source = 'MARC';
+      instance.save();
       this.visit(`/inventory/view/${instance.id}`);
       await InstanceViewPage.whenLoaded();
     });
@@ -562,6 +583,10 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.headerDropdownMenu.hasEditMarcButton).to.be.false;
     });
 
+    it('should not render a duplicate source button', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasDuplicateMarcButton).to.be.false;
+    });
+
     it('should render an add item button', () => {
       expect(InstanceViewPage.hasButtonAddItem).to.be.false;
     });
@@ -574,7 +599,7 @@ describe('InstanceViewPage', () => {
   describe('Preceding and succeding titles', () => {
     setupApplication();
     beforeEach(async function () {
-      const instance = this.server.create('instance', {
+      instance = this.server.create('instance', {
         title: 'ADVANCING RESEARCH',
         precedingTitles: [{
           id: 'da672352-7856-4241-ac06-ae62f0bade4c',
@@ -623,7 +648,7 @@ describe('InstanceViewPage', () => {
 
     beforeEach(async function () {
       const natureOfContentTerm = this.server.create('nature-of-content-term', { name });
-      const instance = this.server.create('instance', { natureOfContentTermIds: [natureOfContentTerm.id] });
+      instance = this.server.create('instance', { natureOfContentTermIds: [natureOfContentTerm.id] });
       this.visit(`/inventory/view/${instance.id}`);
       await InstanceViewPage.whenLoaded();
     });
@@ -694,6 +719,41 @@ describe('InstanceViewPage', () => {
     describe('Nature of content field', () => {
       it('should display dash', () => {
         expect(InstanceViewPage.natureOfContent.value.text).to.equal('-');
+      });
+    });
+  });
+
+  describe('Source is MARC', () => {
+    setupApplication({ scenarios: ['fetch-items-success'] });
+
+    visitingViewInventoryPageWithMarcSource();
+
+    it('should render an view source button', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasEditMarcButton).to.be.true;
+    });
+
+    it('should render a duplicate source button', () => {
+      expect(InstanceViewPage.headerDropdownMenu.hasDuplicateMarcButton).to.be.true;
+    });
+
+    describe('when clicking on Edit MARC button', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.headerDropdownMenu.clickEditMarcButton();
+      });
+
+      it('should redirect to MARC edit page', function () {
+        expect(this.location.pathname).to.equal(`/inventory/quick-marc/edit/${instance.id}`);
+      });
+    });
+
+    // TODO: enable this when https://issues.folio.org/browse/UIQM-66 is done
+    describe.skip('when clicking on Duplicate MARC button', () => {
+      beforeEach(async () => {
+        await InstanceViewPage.headerDropdownMenu.clickDuplicateMarcButton();
+      });
+
+      it('should redirect to MARC duplicate page', function () {
+        expect(this.location.pathname).to.equal(`/inventory/quick-marc/duplicate/${instance.id}`);
       });
     });
   });

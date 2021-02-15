@@ -52,6 +52,10 @@
 * Add support for maintaining copy-cataloguing profiles in the settings area. Towards UIIN-1401. Entails adding new interface `copycat-profiles`.
 * Add support for importing MARC records from external Z39.50 sources. Towards UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
+* Show new request option for item with status restricted. Refs UIIN-1306.
+* Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
+* Rename `Settings (Inventory): Display list of settings pages` permission to `Settings (Inventory): View list of settings pages`. Refs UIIN-1399.
+* Add ability to duplicate MARC bib record. Refs UIIN-1407.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
