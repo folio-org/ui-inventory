@@ -31,7 +31,14 @@ const Provider = ({ resources, mutator, ...rest }) => {
   const checkMoveFromRemoteToNonRemote =
     ({ fromLocationId, toLocationId }) => (fromLocationId in remoteMap) && !(toLocationId in remoteMap);
 
-  const context = { checkMoveFromRemoteToNonRemote };
+  const checkIsRemoteLocation = (locationId) => {
+    if (locationId in remoteMap) {
+      return '(Remote)';
+    }
+    return '';
+  };
+
+  const context = { checkMoveFromRemoteToNonRemote, checkIsRemoteLocation };
 
   return (
     <Context.Provider value={context} {...rest} />

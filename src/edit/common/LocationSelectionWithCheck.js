@@ -20,7 +20,7 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
 
   const { formatMessage } = useIntl();
 
-  const { checkMoveFromRemoteToNonRemote } = useRemoteStorageApi();
+  const { checkMoveFromRemoteToNonRemote, checkIsRemoteLocation } = useRemoteStorageApi();
 
   const [selectedValue, setSelectedValue] = useState(value);
   const [rollbackValue, setRollbackValue] = useState(value);
@@ -75,6 +75,7 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
         placeholder={formatMessage({ id: 'ui-inventory.selectLocation' })}
         value={selectedValue}
         onSelect={handleSelect}
+        checkIsRemoteLocation={checkIsRemoteLocation}
         {...restInput}
         {...rest}
       />
