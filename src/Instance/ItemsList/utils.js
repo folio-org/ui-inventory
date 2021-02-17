@@ -62,10 +62,7 @@ const alphaNumericComparator = (a, b) => {
 
 /**
  * enumerationComparator
- * Parse an object's enumeration value numerically by extracting the
- * first three sets of numbers in the string and comparing them. Further
- * values are ignored. If are present in only one string, that string sorts
- * first. If no numbers are present, compare alphabetically.
+ * Sort by numbers embedded in the enumeration field using the alphaNumericComparator.
  *
  * @param object a: an object containing the property "enumeration".
  * @param object b: an object containing the property "enumeration".
@@ -73,6 +70,30 @@ const alphaNumericComparator = (a, b) => {
  */
 const enumerationComparator = (a, b) => {
   return alphaNumericComparator((a.enumeration ?? ''), (b.enumeration ?? ''));
+};
+
+/**
+ * copyNumberComparator
+ * Sort by numbers embedded in the enumeration field using the alphaNumericComparator.
+ *
+ * @param object a: an object containing the property "copyNumber".
+ * @param object b: an object containing the property "copyNumber".
+ * @return int < 0 if a is before b, 0 if they are equal, > 0 if a is after b
+ */
+const copyNumberComparator = (a, b) => {
+  return alphaNumericComparator((a.copyNumber ?? ''), (b.copyNumber ?? ''));
+};
+
+/**
+ * volumeComparator
+ * Sort by numbers embedded in the volume field using the alphaNumericComparator.
+ *
+ * @param object a: an object containing the property "copyNumber".
+ * @param object b: an object containing the property "copyNumber".
+ * @return int < 0 if a is before b, 0 if they are equal, > 0 if a is after b
+ */
+const volumeComparator = (a, b) => {
+  return alphaNumericComparator((a.volume ?? ''), (b.volume ?? ''));
 };
 
 /**
@@ -92,13 +113,13 @@ const loanTypeComparator = (a, b) => {
 const sorters = {
   'barcode': (a, b) => a.barcode?.localeCompare(b.barcode),
   'chronology': (a, b) => a.chronology?.localeCompare(b.chronology),
-  'copyNumber': (a, b) => a.copyNumber?.toLowerCase().localeCompare(b.copyNumber?.toLowerCase()),
+  'copyNumber': copyNumberComparator,
   'effectiveLocation': (a, b) => a.effectiveLocation?.name?.toLowerCase().localeCompare(b.effectiveLocation?.name?.toLowerCase()),
   'enumeration': enumerationComparator,
   'loanType': loanTypeComparator,
   'materialType': (a, b) => a.materialType?.name?.toLowerCase().localeCompare(b.materialType?.name?.toLowerCase()),
   'status': (a, b) => a.status?.name?.toLowerCase().localeCompare(b.status?.name?.toLowerCase()),
-  'volume': (a, b) => a.volume?.localeCompare(b.volume),
+  'volume': volumeComparator,
 
   // this is kinda brittle. to create a sortable string
   // it replicates ItemsList.getFormatter('yearCaption')
