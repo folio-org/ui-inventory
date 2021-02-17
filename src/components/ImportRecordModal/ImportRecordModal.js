@@ -20,6 +20,12 @@ const ImportRecordModal = ({
   console.log('profiles =', profiles);
   const options = !profiles ? [] : profiles.map(p => ({ value: p.id, label: p.name }));
 
+  const profileById = {};
+  for (let i = 0; i < options.length; i++) {
+    const p = options[i];
+    profileById[p.value] = p.label;
+  }
+
   return (
     <Modal
       id="import-record-modal"
@@ -32,7 +38,7 @@ const ImportRecordModal = ({
       {!profiles ? <Loading /> : (
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit }) => (
+          render={({ handleSubmit, values }) => (
             <form onSubmit={handleSubmit}>
               {profiles.length === 1 ? (
                 <Field name="externalIdentifierType" initialValue={currentProfile.id}>
@@ -49,7 +55,7 @@ const ImportRecordModal = ({
                 label={
                   <FormattedMessage
                     id="ui-inventory.copycat.enterIdentifier"
-                    values={{ identifierName: currentProfile.name }}
+                    values={{ identifierName: profileById[values.externalIdentifierType] }}
                   />}
                 autoFocus
               />
