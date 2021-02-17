@@ -249,7 +249,7 @@
     "illPolicy": "ILL policy",
     "loanTypePermanentRequired": "Permanent loan type *",
     "materialTypeRequired": "Material type *",
-    "duplicateInstance": "Duplicate",
+    "duplicateInstance": "Duplicate instance record",
     "cancel": "Отмена",
     "newInstance": "New instance",
     "duplicateHoldings": "Дубликат",
@@ -628,5 +628,7 @@
     "copycat.callout.updated": "Updated record {xid}",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
-    "copycat.callout.complexError": "Something went wrong: {err}: {detail}"
+    "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
+    "permission.single-record-import": "Inventory: Import single bibliographic records",
+    "duplicateInstanceMarc": "Duplicate MARC bibliographic record"
 }

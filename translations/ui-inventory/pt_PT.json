@@ -249,7 +249,7 @@
     "illPolicy": "ILL policy",
     "loanTypePermanentRequired": "Tipo de empréstimo permanente *",
     "materialTypeRequired": "Material type *",
-    "duplicateInstance": "Duplicate",
+    "duplicateInstance": "Duplicate instance record",
     "cancel": "Cancelar",
     "newInstance": "New instance",
     "duplicateHoldings": "Duplicate",
@@ -526,7 +526,7 @@
     "permission.holdings.edit": "Inventory: View, create, edit holdings",
     "permission.holdings.delete": "Inventory: View, create, edit, delete holdings",
     "permission.instance.view-staff-suppressed-records": "Inventory: View instance records being suppressed for staff",
-    "permission.settings.list.view": "Settings (Inventory): Display list of settings pages",
+    "permission.settings.list.view": "Settings (Inventory): View list of settings pages",
     "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn",
     "moveItems.selectAll": "Select/unselect all items for movement",
     "moveItems.selectItem": "Select/unselect item for movement",
@@ -628,5 +628,7 @@
     "copycat.callout.updated": "Updated record {xid}",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
-    "copycat.callout.complexError": "Something went wrong: {err}: {detail}"
+    "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
+    "permission.single-record-import": "Inventory: Import single bibliographic records",
+    "duplicateInstanceMarc": "Duplicate MARC bibliographic record"
 }

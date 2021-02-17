@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import HRIDHandlingInteractor from '../../../interactors/settings/hrid-handling/hrid-handling';
 import translation from '../../../../../translations/ui-inventory/en';
+import wait from '../../../helpers/wait';
 
 const START_WITH_MAX_LENGTH = 11;
 const ASSIGN_PREFIX_MAX_LENGTH = 10;
@@ -60,9 +61,12 @@ describe('Setting of HRID Handling', () => {
     expect(HRIDHandlingInteractor.submitFormButton.isPresent).to.be.true;
   });
 
+  checkInitialValues();
+
   describe('when "remove leading zeroes" checkbox', () => {
     describe('is checked', () => {
       beforeEach(async () => {
+        await wait();
         await HRIDHandlingInteractor.removeZeroesCheckbox.clickAndBlur();
       });
 

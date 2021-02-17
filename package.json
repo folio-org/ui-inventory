@@ -603,7 +603,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.list.view",
-        "displayName": "Settings (Inventory): Display list of settings pages",
+        "displayName": "Settings (Inventory): View list of settings pages",
         "subPermissions": [
           "settings.inventory.enabled",
           "users.collection.get",
@@ -676,6 +676,38 @@
         "displayName": "Inventory: Mark items restricted",
         "subPermissions": [
           "inventory.items.item.mark-restricted.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-unknown",
+        "displayName": "Inventory: Mark items unknown",
+        "subPermissions": [
+          "inventory.items.item.mark-unknown.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-unavailable",
+        "displayName": "Inventory: Mark items unavailable",
+        "subPermissions": [
+          "inventory.items.item.mark-unavailable.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-long-missing",
+        "displayName": "Inventory: Mark items long missing",
+        "subPermissions": [
+          "inventory.items.item.mark-long-missing.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-in-process-non-requestable",
+        "displayName": "Inventory: Mark items in process (non-requestable)",
+        "subPermissions": [
+          "inventory.items.item.mark-in-process-non-requestable.post"
         ],
         "visible": true
       },
