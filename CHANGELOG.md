@@ -56,7 +56,8 @@
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
 * Rename `Settings (Inventory): Display list of settings pages` permission to `Settings (Inventory): View list of settings pages`. Refs UIIN-1399.
 * Add ability to duplicate MARC bib record. Refs UIIN-1407.
-* Parse item.enumeration numerically for sorting if possible. Refs UIIN-1412.
+* Add permission for marking item as In process (non-requestable), Long missing, Unavailable, Unknown. Refs UIIN-1308, UIIN-894, UIIN-1307, UIIN-1326.
+* Parse `item.enumeration` numerically for sorting if possible. Refs UIIN-1412.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
