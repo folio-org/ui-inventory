@@ -76,6 +76,34 @@ describe('item sort handlers', () => {
     expect(list).toEqual(sortItems(shuffled, { column: 'enumeration' }));
   });
 
+  it('should sort by enumeration, numeric-extraction ascending', () => {
+    const list = [
+      { barcode: 'k612', enumeration: 'x.5:1' },        // 5, 1, 0 => x
+      { barcode: 'l612', enumeration: 'y.5:1' },        // 5, 1, 0 => y
+      { barcode: 'm612', enumeration: 'z.5:1' },        // 5, 1, 0 => z
+
+      { barcode: 'n612', enumeration: 'v.10:no.1-6' },  // 10, 1, 6
+      { barcode: 'o612', enumeration: 'v.10:no.7-12' }, // 10, 7, 12
+      { barcode: 'p612', enumeration: 'v.11:no.1-6' },  // 11, 1, 6
+      { barcode: 'q612', enumeration: 'v.11:no.7-12' }, // 11, 7, 12
+      { barcode: 'r612', enumeration: 'v.12:no.1-6' },  // 12, 1, 6
+      { barcode: 's612', enumeration: 'v.20:no1,no2' }, // 20, 1, 2
+      { barcode: 't612', enumeration: 'v.200:no.1-6' }, // 200, 1, 6
+
+      { barcode: 'u612' },                              // [null]
+      { barcode: 'v612', enumeration: 'alpha' },        // alpha
+      { barcode: 'w612', enumeration: 'beta' },         // beta
+      { barcode: 'x612', enumeration: 'gamma' },        // gamma
+
+    ];
+
+    const shuffled = [...list].sort(() => Math.random() - 0.5);
+
+    expect(list).toEqual(sortItems(shuffled, { column: 'enumeration' }));
+  });
+
+
+
   it('should sort by enumeration, numeric-extraction descending', () => {
     const list = [
       { barcode: 'w612', enumeration: 'gamma' },        // gamma
@@ -154,6 +182,7 @@ describe('item sort handlers', () => {
     const list = [
       { barcode: 'a612', yearCaption: [1999, 2000] },
       { barcode: 'b612', yearCaption: [2000, 2001] },
+      { barcode: 'c612' },
       { barcode: 'c612', yearCaption: ['a', 'b'] },
       { barcode: 'd612', yearCaption: ['c', 'd'] },
     ];
@@ -176,5 +205,21 @@ describe('item sort handlers', () => {
     const shuffled = [...list].sort(() => Math.random() - 0.5);
 
     expect(list).toEqual(sortItems(shuffled, { column: 'volume' }));
+  });
+
+
+  it('should sort by loanType, ascending', () => {
+    const list = [
+      { barcode: 'a612', temporaryLoanType: { name: 'a' }, permanentLoanType: { name: 'z' }  },
+      { barcode: 'b612', temporaryLoanType: { name: 'b' } },
+      { barcode: 'c612', temporaryLoanType: { name: 'c' } },
+      { barcode: 'd612', permanentLoanType: { name: 'w' } },
+      { barcode: 'e612', permanentLoanType: { name: 'x' } },
+      { barcode: 'a612', permanentLoanType: { name: 'y' } },
+    ];
+
+    const shuffled = [...list].sort(() => Math.random() - 0.5);
+
+    expect(list).toEqual(sortItems(shuffled, { column: 'loanType' }));
   });
 });
