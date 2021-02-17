@@ -16,8 +16,6 @@ const ImportRecordModal = ({
   const container = containerContainer && containerContainer.length ? containerContainer[0] : undefined;
   const profiles = container?.profiles;
   const currentProfile = profiles ? profiles[0] : undefined;
-
-  console.log('profiles =', profiles);
   const options = !profiles ? [] : profiles.map(p => ({ value: p.id, label: p.name }));
 
   const profileById = {};
