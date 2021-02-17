@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
 import { stripesConnect } from '@folio/stripes-core';
-import { Loading, Modal, ModalFooter, TextField, Button } from '@folio/stripes/components';
+import { Loading, Modal, Select, TextField, ModalFooter, Button } from '@folio/stripes/components';
 
 const ImportRecordModal = ({
   isOpen,
@@ -14,9 +14,11 @@ const ImportRecordModal = ({
 }) => {
   const containerContainer = resources.copycatProfiles.records;
   const container = containerContainer && containerContainer.length ? containerContainer[0] : undefined;
-  const nprofiles = container?.totalRecords;
   const profiles = container?.profiles;
   const currentProfile = profiles ? profiles[0] : undefined;
+
+  console.log('profiles =', profiles);
+  const options = !profiles ? [] : profiles.map(p => ({ value: p.id, label: p.name }));
 
   return (
     <Modal
@@ -32,11 +34,14 @@ const ImportRecordModal = ({
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <Field name="externalIdentifierType" initialValue={currentProfile.id}>
-                {props2 => <input type="hidden" {...props2.input} />}
-              </Field>
-              {nprofiles > 1 && (
-                <p>XXX TODO dropdown of {nprofiles} profiles</p>
+              {profiles.length === 1 ? (
+                <Field name="externalIdentifierType" initialValue={currentProfile.id}>
+                  {props2 => <input type="hidden" {...props2.input} />}
+                </Field>
+              ) : (
+                <Field name="externalIdentifierType" initialValue={currentProfile.id}>
+                  {props2 => <Select {...props2.input} dataOptions={options} />}
+                </Field>
               )}
               <Field
                 name="externalIdentifier"
