@@ -54,8 +54,14 @@ class ImportRecord extends React.Component {
     this.context.sendCallout({ message });
 
     const json = await res.json();
+    let path = '/inventory/view';
+    if (json.internalIdentifier) {
+      // This SHOULD always be true, but in practice it sometimes is not
+      path += `/${json.internalIdentifier}`;
+    }
+
     updateLocation({
-      _path: `/inventory/view/${json.internalIdentifier}`,
+      _path: path,
       layer: undefined,
       xid: undefined,
     });
