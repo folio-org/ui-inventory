@@ -99,7 +99,16 @@ const sorters = {
   'materialType': (a, b) => a.materialType?.name?.toLowerCase().localeCompare(b.materialType?.name?.toLowerCase()),
   'status': (a, b) => a.status?.name?.toLowerCase().localeCompare(b.status?.name?.toLowerCase()),
   'volume': (a, b) => a.volume?.localeCompare(b.volume),
-  'yearCaption': (a, b) => a.yearCaption?.localeCompare(b.yearCaption),
+
+  // this is kinda brittle. to create a sortable string
+  // it replicates ItemsList.getFormatter('yearCaption')
+  // but I'm not sure of a better way.
+  'yearCaption': (a, b) => {
+    const as = a.yearCaption?.length ? a.yearCaption.join(', ') : '';
+    const bs = b.yearCaption?.length ? b.yearCaption.join(', ') : '';
+
+    return as.localeCompare(bs);
+  },
 };
 
 // eslint-disable-next-line
