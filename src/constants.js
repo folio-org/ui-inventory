@@ -136,6 +136,10 @@ export const actionMenuDisplayPerms = [
   'ui-inventory.items.mark-items-withdrawn',
   'ui-inventory.items.mark-intellectual-item',
   'ui-inventory.items.mark-restricted',
+  'ui-inventory.items.mark-unknown',
+  'ui-inventory.items.mark-unavailable',
+  'ui-inventory.items.mark-long-missing',
+  'ui-inventory.items.mark-in-process-non-requestable',
 ];
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
