@@ -308,7 +308,11 @@ class ViewInstance extends React.Component {
 
   handleImportRecordModalSubmit = (args) => {
     this.setState({ isImportRecordModalOpened: false });
-    this.props.mutator.query.update({ _path: `/inventory/import/${this.props.match.params.id}`, xid: args.externalIdentifier });
+    this.props.mutator.query.update({
+      _path: `/inventory/import/${this.props.match.params.id}`,
+      xidtype: args.externalIdentifierType,
+      xid: args.externalIdentifier,
+    });
   }
 
   handleImportRecordModalCancel = () => {

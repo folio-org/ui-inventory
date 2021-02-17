@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'redux-form';
 
+import { Checkbox } from '@folio/stripes/components';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
@@ -42,6 +44,11 @@ class SingleRecordImport extends React.Component {
               jobProfileId: intl.formatMessage({ id: 'ui-inventory.jobProfileId' }),
               externalIdentifierType: intl.formatMessage({ id: 'ui-inventory.externalIdentifierType' }),
               enabled: intl.formatMessage({ id: 'ui-inventory.enabled' }),
+            }}
+            fieldComponents={{
+              enabled: ({ fieldProps }) => (
+                <Field {...fieldProps} component={Checkbox} type="checkbox" />
+              )
             }}
             nameKey="name"
             hiddenFields={['lastUpdated', 'numberOfObjects']}

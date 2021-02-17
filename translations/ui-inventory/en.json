@@ -631,7 +631,7 @@
   "copycat.import": "Import",
   "copycat.reimport": "Re-import",
   "copycat.idToImport": "ID to import",
-  "copycat.externalIdentifier": "External identifier",
+  "copycat.enterIdentifier": "Enter {identifierName} identifier",
   "copycat.callout.updated": "Updated record {xid}",
   "copycat.callout.created": "Created record {xid}",
   "copycat.callout.simpleError": "Something went wrong: {err}",

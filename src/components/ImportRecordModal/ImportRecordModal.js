@@ -13,11 +13,10 @@ const ImportRecordModal = ({
   resources,
 }) => {
   const containerContainer = resources.copycatProfiles.records;
-  console.log('containerContainer =', containerContainer);
   const container = containerContainer && containerContainer.length ? containerContainer[0] : undefined;
   const nprofiles = container?.totalRecords;
   const profiles = container?.profiles;
-  console.log(' nprofiles =', nprofiles, ' -- profiles =', profiles);
+  const currentProfile = profiles ? profiles[0] : undefined;
 
   return (
     <Modal
@@ -33,43 +32,20 @@ const ImportRecordModal = ({
           onSubmit={onSubmit}
           render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              {nprofiles === 1 ? (
-                <>
-                  <input
-                    type="hidden"
-                    name="externalIdentifierType1"
-                    value={profiles[0].externalIdentifierType}
-                  />
-                  <Field
-                    name="externalIdentifierType2"
-                    component={TextField}
-                    label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
-                    value={profiles[0].externalIdentifierType}
-                  />
-                  <Field
-                    component="input"
-                    type="hidden"
-                    name="externalIdentifierType3"
-                    value={profiles[0].externalIdentifierType}
-                  />
-                  <Field name="externalIdentifierType4">
-                    {(props2) => (
-                      <input
-                        type="hidden"
-                        {...props2.input}
-                        value={profiles[0].externalIdentifierType}
-                      />
-                    )}
-                  </Field>
-                  <p>one profile with ID {profiles[0].externalIdentifierType}</p>
-                </>
-              ) : (
-                <p>dropdown of {nprofiles} profiles</p>
+              <Field name="externalIdentifierType" initialValue={currentProfile.id}>
+                {props2 => <input type="hidden" {...props2.input} />}
+              </Field>
+              {nprofiles > 1 && (
+                <p>XXX TODO dropdown of {nprofiles} profiles</p>
               )}
               <Field
                 name="externalIdentifier"
                 component={TextField}
-                label={<FormattedMessage id="ui-inventory.copycat.externalIdentifier" />}
+                label={
+                  <FormattedMessage
+                    id="ui-inventory.copycat.enterIdentifier"
+                    values={{ identifierName: currentProfile.name }}
+                  />}
                 autoFocus
               />
               <ModalFooter>
