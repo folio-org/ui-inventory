@@ -162,7 +162,7 @@ class HRIDHandlingSettings extends Component {
         render={form => (
           <>
             <FormattedMessage id="ui-inventory.hridHandling.checkbox.label">
-              {label => (
+              {([label]) => (
                 <div data-test-remove-zeroes-checkbox>
                   <Field
                     name="commonRetainLeadingZeroes"
@@ -199,7 +199,7 @@ class HRIDHandlingSettings extends Component {
                 <Row className={css.inputRow}>
                   <Col className={css.inputLabel}>
                     <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
-                      {inputLabel => (
+                      {([inputLabel]) => (
                         <div>
                           {inputLabel}
                           <span className={css.asterisk}>*</span>

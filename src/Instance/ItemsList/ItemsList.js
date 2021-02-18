@@ -42,7 +42,7 @@ const getFormatter = (
   'select': (item) => (
     <FormattedMessage id="ui-inventory.moveItems.selectItem">
       {
-        (ariaLabel) => (
+        ([ariaLabel]) => (
           <span data-test-select-item>
             <Checkbox
               id={`select-item-${item.id}`}

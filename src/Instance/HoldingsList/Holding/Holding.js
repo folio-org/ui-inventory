@@ -104,7 +104,7 @@ const Holding = ({
       {isDraggable &&
         <FormattedMessage id="ui-inventory.moveItems.selectItem">
           {
-            (ariaLabel) => (
+            ([ariaLabel]) => (
               <span data-test-select-holding>
                 <Checkbox
                   id={`select-holding-${holding.id}`}
@@ -166,8 +166,8 @@ Holding.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   isDraggable: PropTypes.bool,
-  selectHoldingsForDrag: PropTypes.func.isRequired,
-  isHoldingDragSelected: PropTypes.func.isRequired,
+  selectHoldingsForDrag: PropTypes.func,
+  isHoldingDragSelected: PropTypes.func,
 };
 
 export default Holding;
