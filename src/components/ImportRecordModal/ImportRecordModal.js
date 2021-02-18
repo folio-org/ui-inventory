@@ -10,6 +10,7 @@ const ImportRecordModal = ({
   currentExternalIdentifier, // eslint-disable-line no-unused-vars
   handleSubmit: onSubmit,
   handleCancel,
+  id,
   resources,
 }) => {
   const containerContainer = resources?.copycatProfiles.records;
@@ -47,7 +48,7 @@ const ImportRecordModal = ({
                 component={TextField}
                 label={
                   <FormattedMessage
-                    id="ui-inventory.copycat.enterIdentifier"
+                    id={`ui-inventory.copycat.enterIdentifier${id ? 'ForUpdate' : ''}`}
                     values={{ identifierName: profileById[values.externalIdentifierType] }}
                   />}
                 autoFocus
@@ -73,6 +74,7 @@ ImportRecordModal.propTypes = {
   currentExternalIdentifier: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
+  id: PropTypes.string, // only when updating an existing record
   resources: PropTypes.shape({
     copycatProfiles: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
