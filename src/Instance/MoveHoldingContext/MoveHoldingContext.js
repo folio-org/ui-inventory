@@ -2,6 +2,7 @@ import React, {
   useState,
   useCallback,
   useMemo,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -13,6 +14,7 @@ import {
   Loading,
   ConfirmationModal,
 } from '@folio/stripes/components';
+import { DataContext } from '../../contexts';
 import DnDContext from '../DnDContext';
 import {
   isItemsSelected,
@@ -28,9 +30,10 @@ const MoveHoldingContext = ({
   moveHoldings,
   leftInstance,
   rightInstance,
-  referenceData,
 }) => {
   const intl = useIntl();
+  const { locationsById } = useContext(DataContext);
+
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
   const [selectedHoldingsMap, setSelectedHoldingsMap] = useState([]);
@@ -159,7 +162,6 @@ const MoveHoldingContext = ({
   }, [selectedHoldingsMap, selectedItemsMap]);
 
   const movingMessage = useMemo(() => {
-    const { locationsById } = referenceData;
     const targetHolding = allHoldings.filter(item => item.id === dragToId);
     const callNumber = callNumberLabel(targetHolding[0]);
     const labelLocation = targetHolding[0]?.permanentLocationId ? locationsById[targetHolding[0].permanentLocationId].name : '';
@@ -239,7 +241,6 @@ MoveHoldingContext.propTypes = {
   moveHoldings: PropTypes.func.isRequired,
   leftInstance: PropTypes.object.isRequired,
   rightInstance: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
 };
 
 export default MoveHoldingContext;

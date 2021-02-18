@@ -541,7 +541,6 @@ class ViewInstance extends React.Component {
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
-          referenceData={referenceTables}
           tagsEnabled={tagsEnabled}
         >
           {
@@ -551,7 +550,6 @@ class ViewInstance extends React.Component {
                   moveItems={this.moveItems}
                 >
                   <HoldingsListContainer
-                    referenceData={referenceTables}
                     instance={instance}
                     draggable={this.state.isItemsMovement}
                     droppable

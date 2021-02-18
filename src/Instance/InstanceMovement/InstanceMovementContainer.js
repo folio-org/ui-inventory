@@ -22,7 +22,6 @@ import InstanceMovement from './InstanceMovement';
 
 const InstanceMovementContainer = ({
   mutator,
-  referenceData,
   idFrom,
   idTo,
 
@@ -126,7 +125,6 @@ const InstanceMovementContainer = ({
 
   return (
     <InstanceMovement
-      referenceData={referenceData}
       instanceFrom={instanceFrom}
       instanceTo={instanceTo}
       onClose={onClose}
@@ -174,11 +172,6 @@ InstanceMovementContainer.propTypes = {
   mutator:  PropTypes.object.isRequired,
   idFrom: PropTypes.string.isRequired,
   idTo: PropTypes.string.isRequired,
-  referenceData: PropTypes.object,
-};
-
-InstanceMovementContainer.defaultProps = {
-  referenceData: {},
 };
 
 export default withRouter(stripesConnect(InstanceMovementContainer));

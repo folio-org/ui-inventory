@@ -24,10 +24,10 @@ import {
 import { ItemsListContainer } from '../../ItemsList';
 import { MoveToDropdown } from './MoveToDropdown';
 import DnDContext from '../../DnDContext';
+import { DataContext } from '../../../contexts';
 
 const Holding = ({
   holding,
-  referenceData,
   onViewHolding,
   onAddItem,
   holdings,
@@ -48,7 +48,7 @@ const Holding = ({
     selectedHoldingsMap,
   } = useContext(DnDContext);
 
-  const { locationsById } = referenceData;
+  const { locationsById } = useContext(DataContext);
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const withMoveDropdown = draggable || isDraggable;
 
@@ -158,7 +158,6 @@ const Holding = ({
 
 Holding.propTypes = {
   holding: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),

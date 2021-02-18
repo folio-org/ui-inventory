@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -35,6 +35,7 @@ import {
   getAccordionState,
   getPublishingInfo,
 } from './utils';
+import { DataContext } from '../../contexts';
 
 const accordions = {
   administrative: 'acc01',
@@ -54,11 +55,12 @@ const InstanceDetails = ({
   instance,
   onClose,
   actionMenu,
-  referenceData,
   tagsEnabled,
   ...rest
 }) => {
   const intl = useIntl();
+
+  const referenceData = useContext(DataContext);
 
   const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
   const instanceTitle = instance?.title;
@@ -214,14 +216,12 @@ InstanceDetails.propTypes = {
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
-  referenceData: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
 };
 
 InstanceDetails.defaultProps = {
   instance: {},
-  referenceData: {},
   tagsEnabled: false,
 };
 

@@ -14,7 +14,6 @@ const InstanceMovement = ({
   instanceFrom,
   instanceTo,
   onClose,
-  referenceData,
   moveHoldings,
   moveItems,
 }) => {
@@ -25,17 +24,14 @@ const InstanceMovement = ({
         moveItems={moveItems}
         leftInstance={instanceFrom}
         rightInstance={instanceTo}
-        referenceData={referenceData}
       >
         <InstanceMovementDetailsContainer
-          referenceData={referenceData}
           instance={instanceFrom}
           onClose={onClose}
           data-test-movement-from-instance-details
         />
 
         <InstanceMovementDetailsContainer
-          referenceData={referenceData}
           instance={instanceTo}
           onClose={onClose}
           data-test-movement-to-instance-details
@@ -49,7 +45,6 @@ InstanceMovement.propTypes = {
   instanceFrom: PropTypes.object,
   instanceTo: PropTypes.object,
   onClose: PropTypes.func.isRequired,
-  referenceData: PropTypes.object.isRequired,
   moveHoldings: PropTypes.func.isRequired,
   moveItems: PropTypes.func.isRequired,
 };

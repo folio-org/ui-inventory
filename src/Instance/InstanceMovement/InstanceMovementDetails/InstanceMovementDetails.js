@@ -23,7 +23,6 @@ const InstanceMovementDetails = ({
   instance,
   onClose,
   hasMarc,
-  referenceData,
 }) => {
   const stripes = useStripes();
 
@@ -59,7 +58,6 @@ const InstanceMovementDetails = ({
   return (
     <InstanceDetails
       instance={instance}
-      referenceData={referenceData}
       onClose={closeInstance}
       actionMenu={getActionMenu}
       data-test-instance-movement-details={instance.id}
@@ -76,7 +74,6 @@ const InstanceMovementDetails = ({
           >
             <HoldingsListContainer
               instance={instance}
-              referenceData={referenceData}
               isHoldingsMove={canMoveHoldings}
               draggable={canMoveItems}
               droppable={canMoveItems}
@@ -94,7 +91,6 @@ InstanceMovementDetails.propTypes = {
   instance: PropTypes.object,
   hasMarc: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
-  referenceData: PropTypes.object.isRequired,
 };
 
 InstanceMovementDetails.defaultProps = {

@@ -52,14 +52,12 @@ const HoldingsListContainer = ({
         {...rest}
         holdings={holdings}
         instance={instance}
-        referenceData={referenceData}
       />
     ) : (
       <HoldingsList
         {...rest}
         holdings={holdings}
         instance={instance}
-        referenceData={referenceData}
       />
     )
   );
@@ -81,7 +79,6 @@ HoldingsListContainer.manifest = Object.freeze({
 HoldingsListContainer.propTypes = {
   mutator: PropTypes.object.isRequired,
   instance: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
   isHoldingsMove: PropTypes.bool,
 };
 

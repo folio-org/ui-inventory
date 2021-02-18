@@ -33,7 +33,6 @@ const DraggableHolding = ({
   snapshot,
   draggingHoldingsCount,
   holding,
-  referenceData,
   onViewHolding,
   onAddItem,
   ...rest
@@ -66,7 +65,6 @@ const DraggableHolding = ({
               {...rest}
               isDraggable
               holding={holding}
-              referenceData={referenceData}
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
             />
@@ -86,7 +84,6 @@ const HoldingContainer = ({
 
   instance,
   holding,
-  referenceData,
   isDraggable,
   holdingIndex,
   draggingHoldingsCount,
@@ -118,7 +115,6 @@ const HoldingContainer = ({
           snapshot={snapshot}
           draggingHoldingsCount={draggingHoldingsCount}
           holding={holding}
-          referenceData={referenceData}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           {...rest}
@@ -129,7 +125,6 @@ const HoldingContainer = ({
     <Holding
       {...rest}
       holding={holding}
-      referenceData={referenceData}
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
     />
