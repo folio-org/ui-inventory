@@ -684,5 +684,8 @@ export default function configure() {
     totalRecords: 0
   });
 
-  this.get('/copycat/profiles', {});
+  // XXX for now, comment this out: its absence only causes ugly
+  // warning messages when the tests run, but its presence causes
+  // mysteriously failures elsewhere on the test suite.
+  // this.get('/copycat/profiles', {});
 }
