@@ -17,12 +17,7 @@ const ImportRecordModal = ({
   const profiles = container?.profiles;
   const currentProfile = profiles ? profiles[0] : undefined;
   const options = !profiles ? [] : profiles.map(p => ({ value: p.id, label: p.name }));
-
-  const profileById = {};
-  for (let i = 0; i < options.length; i++) {
-    const p = options[i];
-    profileById[p.value] = p.label;
-  }
+  const profileById = Object.fromEntries(options.map(o => [o.value, o.label]));
 
   return (
     <Modal
