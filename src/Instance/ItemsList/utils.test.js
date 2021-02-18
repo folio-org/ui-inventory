@@ -178,19 +178,48 @@ describe('item sort handlers', () => {
     expect(list).toEqual(sortItems(shuffled, { column: 'copyNumber' }));
   });
 
+  /**
+   * note: array-to-string is a straight string comparator,
+   * NOT a numeric-extraction comparator, so here, empty
+   * string floats to the top, _before_ numeric (or any)
+   * array values.
+   */
   it('should sort by yearCaption, array-to-string, ascending', () => {
     const list = [
-      { barcode: 'a612', yearCaption: [1999, 2000] },
-      { barcode: 'b612', yearCaption: [2000, 2001] },
-      { barcode: 'c612' },
-      { barcode: 'c612', yearCaption: ['a', 'b'] },
-      { barcode: 'd612', yearCaption: ['c', 'd'] },
+      { barcode: 'a612' },
+      { barcode: 'b612', yearCaption: [1999, 2000] },
+      { barcode: 'c612', yearCaption: [2000, 2001] },
+      { barcode: 'd612', yearCaption: ['a', 'b'] },
+      { barcode: 'e612', yearCaption: ['c', 'd'] },
     ];
 
     const shuffled = [...list].sort(() => Math.random() - 0.5);
 
     expect(list).toEqual(sortItems(shuffled, { column: 'yearCaption'}));
   });
+
+  // force a specific coverage scenario: a length 0
+  it('should sort by yearCaption, array-to-string, ascending', () => {
+    const list = [
+      { barcode: 'a612', yearCaption: [] },
+      { barcode: 'b612', yearCaption: [1999, 2000] },
+    ];
+
+    const shuffled = [list[1], list[0]];
+    expect(list).toEqual(sortItems(shuffled, { column: 'yearCaption' }));
+  });
+
+  // force a specific coverage scenario: a undefined
+  it('should sort by yearCaption, array-to-string, ascending', () => {
+    const list = [
+      { barcode: 'a612' },
+      { barcode: 'b612', yearCaption: [1999, 2000] },
+    ];
+
+    const shuffled = [list[1], list[0]];
+    expect(list).toEqual(sortItems(shuffled, { column: 'yearCaption' }));
+  });
+
 
   it('should sort by volume, numeric-extraction, ascending', () => {
     const list = [
@@ -199,7 +228,8 @@ describe('item sort handlers', () => {
       { barcode: 'c612', volume: '5' },
       { barcode: 'd612', volume: '20' },
       { barcode: 'e612', volume: '100' },
-      { barcode: 'a612' },
+      { barcode: 'f612' },
+      { barcode: 'g612', volume: 'a' },
     ];
 
     const shuffled = [...list].sort(() => Math.random() - 0.5);
@@ -213,6 +243,7 @@ describe('item sort handlers', () => {
       { barcode: 'a612', temporaryLoanType: { name: 'a' }, permanentLoanType: { name: 'z' }  },
       { barcode: 'b612', temporaryLoanType: { name: 'b' } },
       { barcode: 'c612', temporaryLoanType: { name: 'c' } },
+
       { barcode: 'd612', permanentLoanType: { name: 'w' } },
       { barcode: 'e612', permanentLoanType: { name: 'x' } },
       { barcode: 'a612', permanentLoanType: { name: 'y' } },
