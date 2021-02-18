@@ -638,6 +638,7 @@
   "copycat.reimport": "Re-import",
   "copycat.idToImport": "ID to import",
   "copycat.enterIdentifier": "Enter {identifierName} identifier",
+  "copycat.enterIdentifierForUpdate": "Enter the {identifierName} identifier to be used to overlay the current MARC data",
   "copycat.callout.updated": "Updated record {xid}",
   "copycat.callout.created": "Created record {xid}",
   "copycat.callout.simpleError": "Something went wrong: {err}",

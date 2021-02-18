@@ -593,6 +593,7 @@ class ViewInstance extends React.Component {
           currentExternalIdentifier={undefined}
           handleSubmit={this.handleImportRecordModalSubmit}
           handleCancel={this.handleImportRecordModalCancel}
+          id={id}
         />
       </>
     );
