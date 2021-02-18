@@ -12,7 +12,7 @@ const ImportRecordModal = ({
   handleCancel,
   resources,
 }) => {
-  const containerContainer = resources.copycatProfiles.records;
+  const containerContainer = resources?.copycatProfiles.records;
   const container = containerContainer && containerContainer.length ? containerContainer[0] : undefined;
   const profiles = container?.profiles;
   const currentProfile = profiles ? profiles[0] : undefined;
@@ -82,7 +82,7 @@ ImportRecordModal.propTypes = {
     copycatProfiles: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }).isRequired
-  }).isRequired,
+  }),
 };
 
 ImportRecordModal.manifest = Object.freeze({

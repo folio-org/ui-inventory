@@ -683,4 +683,6 @@ export default function configure() {
     tags: [],
     totalRecords: 0
   });
+
+  this.get('/copycat/profiles', {});
 }
