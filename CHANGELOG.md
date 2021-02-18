@@ -53,6 +53,7 @@
 * Add support for importing MARC records from external Z39.50 sources. Fixes UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.
 * When multiple Z39.50 services are configured, offer a choice at import time. Fixes UIIN-1426.
 * Modify language of Import Record modal when updating a record. Fixes UIIN-1424.
+* Inventory app now degrades gracefully in the absence of mod-copycat. Fixes UIIN-1428.
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
 * Show new request option for item with status restricted. Refs UIIN-1306.
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.

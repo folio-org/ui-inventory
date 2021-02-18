@@ -588,13 +588,15 @@ class ViewInstance extends React.Component {
           )
         }
 
-        <ImportRecordModal
-          isOpen={this.state.isImportRecordModalOpened}
-          currentExternalIdentifier={undefined}
-          handleSubmit={this.handleImportRecordModalSubmit}
-          handleCancel={this.handleImportRecordModalCancel}
-          id={id}
-        />
+        <IfInterface name="copycat-imports">
+          <ImportRecordModal
+            isOpen={this.state.isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+            id={id}
+          />
+        </IfInterface>
       </>
     );
   }
