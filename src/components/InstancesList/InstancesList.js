@@ -675,12 +675,14 @@ class InstancesList extends React.Component {
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
-        <ImportRecordModal
-          isOpen={isImportRecordModalOpened}
-          currentExternalIdentifier={undefined}
-          handleSubmit={this.handleImportRecordModalSubmit}
-          handleCancel={this.handleImportRecordModalCancel}
-        />
+        <IfInterface name="copycat-imports">
+          <ImportRecordModal
+            isOpen={isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+          />
+        </IfInterface>
       </>
     );
   }
