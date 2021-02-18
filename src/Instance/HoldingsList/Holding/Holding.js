@@ -43,7 +43,7 @@ const Holding = ({
     isItemsDragSelected,
     getDraggingItems,
     activeDropZone,
-    isItemsDropable,
+    isItemsDroppable,
     selectedItemsMap,
     selectedHoldingsMap,
   } = useContext(DnDContext);
@@ -147,7 +147,7 @@ const Holding = ({
               selectItemsForDrag={selectItemsForDrag}
               getDraggingItems={getDraggingItems}
               activeDropZone={activeDropZone}
-              isItemsDropable={isItemsDropable}
+              isItemsDroppable={isItemsDroppable}
             />
           </Col>
         </Row>

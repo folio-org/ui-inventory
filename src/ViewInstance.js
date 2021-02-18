@@ -221,7 +221,7 @@ class ViewInstance extends React.Component {
     this.redirectToQuickMarcPage('duplicate');
   };
 
-  selectInstanse = (selectedInstance) => {
+  selectInstance = (selectedInstance) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
 
@@ -581,7 +581,7 @@ class ViewInstance extends React.Component {
         {
           this.state.findInstancePluginOpened && (
             <InstancePlugin
-              onSelect={this.selectInstanse}
+              onSelect={this.selectInstance}
               onClose={this.toggleFindInstancePlugin}
               withTrigger={false}
             />

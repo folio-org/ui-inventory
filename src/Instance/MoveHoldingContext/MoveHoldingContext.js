@@ -203,7 +203,7 @@ const MoveHoldingContext = ({
             isHoldingDragSelected,
             getDraggingItems,
             draggingHoldingsCount: selectedHoldingsMap.length,
-            isItemsDropable: !isHoldingMoved,
+            isItemsDroppable: !isHoldingMoved,
             instances: [
               rightInstance,
               leftInstance,

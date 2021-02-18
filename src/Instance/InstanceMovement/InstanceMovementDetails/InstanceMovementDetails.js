@@ -33,7 +33,7 @@ const InstanceMovementDetails = ({
 
   const {
     activeDropZone,
-    isItemsDropable,
+    isItemsDroppable,
   } = useContext(DnDContext);
 
   const getActionMenu = useCallback(({ onToggle }) => {
@@ -66,7 +66,7 @@ const InstanceMovementDetails = ({
     >
       <Droppable
         droppableId={`${instance.id}`}
-        isDropDisabled={isItemsDropable || activeDropZone === instance.id || !canMoveHoldings}
+        isDropDisabled={isItemsDroppable || activeDropZone === instance.id || !canMoveHoldings}
       >
         {(provided) => (
           <div

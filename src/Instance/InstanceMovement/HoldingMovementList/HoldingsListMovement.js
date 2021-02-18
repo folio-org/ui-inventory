@@ -58,7 +58,7 @@ const HoldingsListMovement = ({
               isHoldingDragSelected={isHoldingDragSelected}
               isItemsDragSelected={isItemsDragSelected}
               getDraggingItems={getDraggingItems}
-              holdingindex={index}
+              holdingIndex={index}
               draggingHoldingsCount={draggingHoldingsCount}
             />
           ))
