@@ -629,5 +629,6 @@
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
     "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
-    "permission.single-record-import": "Inventory: Import single bibliographic records"
+    "permission.single-record-import": "Inventory: Import single bibliographic records",
+    "duplicateInstanceMarc": "Duplicate MARC bibliographic record"
 }

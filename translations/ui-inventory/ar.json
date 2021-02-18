@@ -629,5 +629,6 @@
     "copycat.callout.created": "تم إنشاء التسجيلة {xid}",
     "copycat.callout.simpleError": "لقد حدث خطأ ما: {err}",
     "copycat.callout.complexError": "لقد حدث خطأ ما: {err}: {detail}",
-    "permission.single-record-import": "Inventory: Import single bibliographic records"
+    "permission.single-record-import": "المخزون: تصدير التسجيلات البيبلوغرافية المفردة",
+    "duplicateInstanceMarc": "Duplicate MARC bibliographic record"
 }
