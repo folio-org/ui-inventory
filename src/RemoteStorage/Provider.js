@@ -3,7 +3,7 @@ import React, {
   useContext,
 } from 'react';
 
-import { useRemoteStorageMappings } from '@folio/stripes-smart-components';
+import { useRemoteStorageMappings } from '@folio/stripes/smart-components';
 
 const Context = createContext({});
 
