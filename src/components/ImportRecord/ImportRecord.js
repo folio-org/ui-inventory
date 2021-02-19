@@ -7,10 +7,6 @@ import { LoadingView } from '@folio/stripes/components';
 import withLocation from '../../withLocation';
 
 
-// This is hardwired to the UUID in mod-copycat reference data
-const PROFILE_ID = 'f26df83c-aa25-40b6-876e-96852c3d4fd4';
-
-
 class ImportRecord extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -28,18 +24,19 @@ class ImportRecord extends React.Component {
   static contextType = CalloutContext;
 
   componentDidMount() {
+    const xidtype = this.props.getParams().xidtype;
     const xid = this.props.getParams().xid;
-    this.loadExternalRecord(xid);
+    this.loadExternalRecord(xidtype, xid);
   }
 
-  loadExternalRecord = (xid) => {
+  loadExternalRecord = (xidtype, xid) => {
     this.props.okapiKy('copycat/imports', {
       timeout: 30000,
       method: 'POST',
       json: {
         externalIdentifier: xid,
         internalIdentifier: this.props.id,
-        profileId: PROFILE_ID,
+        profileId: xidtype,
       },
     })
       .then(res => this.success(xid, res))
@@ -57,8 +54,14 @@ class ImportRecord extends React.Component {
     this.context.sendCallout({ message });
 
     const json = await res.json();
+    let path = '/inventory/view';
+    if (json.internalIdentifier) {
+      // This SHOULD always be true, but in practice it sometimes is not
+      path += `/${json.internalIdentifier}`;
+    }
+
     updateLocation({
-      _path: `/inventory/view/${json.internalIdentifier}`,
+      _path: path,
       layer: undefined,
       xid: undefined,
     });
