@@ -315,7 +315,11 @@ class ViewInstance extends React.Component {
 
   handleImportRecordModalSubmit = (args) => {
     this.setState({ isImportRecordModalOpened: false });
-    this.props.mutator.query.update({ _path: `/inventory/import/${this.props.match.params.id}`, xid: args.externalIdentifier });
+    this.props.mutator.query.update({
+      _path: `/inventory/import/${this.props.match.params.id}`,
+      xidtype: args.externalIdentifierType,
+      xid: args.externalIdentifier,
+    });
   }
 
   handleImportRecordModalCancel = () => {
@@ -584,12 +588,15 @@ class ViewInstance extends React.Component {
           )
         }
 
-        <ImportRecordModal
-          isOpen={this.state.isImportRecordModalOpened}
-          currentExternalIdentifier={undefined}
-          handleSubmit={this.handleImportRecordModalSubmit}
-          handleCancel={this.handleImportRecordModalCancel}
-        />
+        <IfInterface name="copycat-imports">
+          <ImportRecordModal
+            isOpen={this.state.isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+            id={id}
+          />
+        </IfInterface>
       </>
     );
   }
