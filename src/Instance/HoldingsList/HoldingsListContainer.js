@@ -16,7 +16,6 @@ import DnDContext from '../DnDContext';
 
 const HoldingsListContainer = ({
   mutator,
-  referenceData,
   instance,
   isHoldingsMove,
   ...rest

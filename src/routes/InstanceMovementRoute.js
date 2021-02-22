@@ -5,7 +5,6 @@ import { withRouter } from 'react-router';
 import { InstanceMovementContainer } from '../Instance';
 
 const InstanceMovementRoute = ({ match }) => {
-
   return (
     <InstanceMovementContainer
       idFrom={match.params.idFrom}
