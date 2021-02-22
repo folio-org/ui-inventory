@@ -54,7 +54,7 @@ const ImportRecordModal = ({
                 autoFocus
               />
               <ModalFooter>
-                <Button buttonStyle="primary" onClick={() => handleSubmit()}>
+                <Button buttonStyle="primary" disabled={!values.externalIdentifier} onClick={() => handleSubmit()}>
                   <FormattedMessage id="ui-inventory.copycat.import" />
                 </Button>
                 <Button onClick={handleCancel}>

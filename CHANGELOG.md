@@ -55,6 +55,7 @@
 * Modify language of Import Record modal when updating a record. Fixes UIIN-1424.
 * Inventory app now degrades gracefully in the absence of mod-copycat. Fixes UIIN-1428.
 * Modify language of Settings/Inventory/Single record import. Fixes UIIN-1429.
+* Disable the single-record-import modal's Import button until something has been entered. Fixes UIIN-1431.
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
 * Show new request option for item with status restricted. Refs UIIN-1306.
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
