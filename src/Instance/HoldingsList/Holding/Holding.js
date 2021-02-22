@@ -24,10 +24,10 @@ import {
 import { ItemsListContainer } from '../../ItemsList';
 import { MoveToDropdown } from './MoveToDropdown';
 import DnDContext from '../../DnDContext';
+import { DataContext } from '../../../contexts';
 
 const Holding = ({
   holding,
-  referenceData,
   onViewHolding,
   onAddItem,
   holdings,
@@ -43,12 +43,12 @@ const Holding = ({
     isItemsDragSelected,
     getDraggingItems,
     activeDropZone,
-    isItemsDropable,
+    isItemsDroppable,
     selectedItemsMap,
     selectedHoldingsMap,
   } = useContext(DnDContext);
 
-  const { locationsById } = referenceData;
+  const { locationsById } = useContext(DataContext);
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const withMoveDropdown = draggable || isDraggable;
 
@@ -104,7 +104,7 @@ const Holding = ({
       {isDraggable &&
         <FormattedMessage id="ui-inventory.moveItems.selectItem">
           {
-            (ariaLabel) => (
+            ([ariaLabel]) => (
               <span data-test-select-holding>
                 <Checkbox
                   id={`select-holding-${holding.id}`}
@@ -147,7 +147,7 @@ const Holding = ({
               selectItemsForDrag={selectItemsForDrag}
               getDraggingItems={getDraggingItems}
               activeDropZone={activeDropZone}
-              isItemsDropable={isItemsDropable}
+              isItemsDroppable={isItemsDroppable}
             />
           </Col>
         </Row>
@@ -158,7 +158,6 @@ const Holding = ({
 
 Holding.propTypes = {
   holding: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
@@ -166,8 +165,8 @@ Holding.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   isDraggable: PropTypes.bool,
-  selectHoldingsForDrag: PropTypes.func.isRequired,
-  isHoldingDragSelected: PropTypes.func.isRequired,
+  selectHoldingsForDrag: PropTypes.func,
+  isHoldingDragSelected: PropTypes.func,
 };
 
 export default Holding;

@@ -201,7 +201,7 @@ class FieldRow extends React.Component {
                       id="stripes-components.removeFields"
                       values={{ item: label, num: fieldIndex + 1 }}
                     >
-                      {ariaLabel => (
+                      {([ariaLabel]) => (
                         <Button
                           buttonStyle="link"
                           style={{ padding: 0, marginBottom: '12px' }}

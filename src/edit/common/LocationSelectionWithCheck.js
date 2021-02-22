@@ -85,6 +85,7 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
         confirmLabel={formatMessage({ id: 'ui-inventory.location.confirm.confirmBtn' })}
         buttonStyle="default"
         cancelButtonStyle="primary"
+        bodyTag="div"
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         {...modal}

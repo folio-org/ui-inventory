@@ -221,7 +221,7 @@ class ViewInstance extends React.Component {
     this.redirectToQuickMarcPage('duplicate');
   };
 
-  selectInstanse = (selectedInstance) => {
+  selectInstance = (selectedInstance) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
 
@@ -541,7 +541,6 @@ class ViewInstance extends React.Component {
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
-          referenceData={referenceTables}
           tagsEnabled={tagsEnabled}
         >
           {
@@ -551,7 +550,6 @@ class ViewInstance extends React.Component {
                   moveItems={this.moveItems}
                 >
                   <HoldingsListContainer
-                    referenceData={referenceTables}
                     instance={instance}
                     draggable={this.state.isItemsMovement}
                     droppable
@@ -581,7 +579,7 @@ class ViewInstance extends React.Component {
         {
           this.state.findInstancePluginOpened && (
             <InstancePlugin
-              onSelect={this.selectInstanse}
+              onSelect={this.selectInstance}
               onClose={this.toggleFindInstancePlugin}
               withTrigger={false}
             />

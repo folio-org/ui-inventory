@@ -124,7 +124,7 @@ const MoveToDropdown = ({
 MoveToDropdown.propTypes = {
   holding: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  locationsById: PropTypes.string,
+  locationsById: PropTypes.object,
 };
 
 export default MoveToDropdown;
