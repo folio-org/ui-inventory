@@ -609,8 +609,8 @@
     "actions": "Ações",
     "showColumns": "Mostrar colunas",
     "hridHandling.checkbox.label": "Remove leading zeroes from HRID",
-    "location.confirm.confirmBtn": "Yes",
-    "location.confirm.common.header": "Attention!",
+    "location.confirm.confirmBtn": "Sim",
+    "location.confirm.common.header": "Atenção!",
     "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
     "location.confirm.removeFromRemote.header": "Removing from remote storage",
     "location.confirm.removeFromRemote.message": "Are you sure you want to remove this item from remote storage?",
@@ -621,7 +621,7 @@
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
     "jobProfileId": "Job profile ID",
-    "copycat.import": "Import",
+    "copycat.import": "Importar",
     "copycat.reimport": "Overlay",
     "copycat.idToImport": "ID to import",
     "copycat.callout.updated": "Updated record {xid}",
@@ -635,7 +635,7 @@
     "permission.items.mark-long-missing": "Inventory: Mark items long missing",
     "permission.items.mark-in-process-non-requestable": "Inventory: Mark items in process (non-requestable)",
     "externalIdentifierType": "External identifier type",
-    "enabled": "Enabled",
+    "enabled": "Habilitado",
     "copycat.enterIdentifier": "Enter {identifierName} identifier",
     "copycat.enterIdentifierForUpdate": "Enter the {identifierName} identifier to be used to overlay the current data"
 }

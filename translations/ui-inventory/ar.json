@@ -587,8 +587,8 @@
     "exportInstancesInMARCLimitExceeded": "تم تجاوز حد {count, number} للتسجيلات المحددة",
     "integrations": "تكاملات",
     "singleRecordImport": "استيراد تسجيلة مفردة",
-    "targetProfiles": "البروفايلات المستهدفة",
-    "targetProfile": "البروفايل المستهدف",
+    "targetProfiles": "بروفايلات Z39.50 المستهدفة",
+    "targetProfile": "بروفايل Z39.50 المستهدف",
     "permission.settings.single-record-import": "الإعدادات (المخزون): هيئ استيراد تسجيلة مفردة",
     "itemRecordWithDescription": "تسجيلة المادة ({materialType}, {status})",
     "instanceRecordWithType": "تسجيلة الوعاء ({instanceTypeName})",
@@ -622,7 +622,7 @@
     "internalIdEmbedPath": "مسار تضمين المعرّف الخارجي",
     "jobProfileId": "معرّف وضع الوظيفة",
     "copycat.import": "استيراد",
-    "copycat.reimport": "إعادة استيراد",
+    "copycat.reimport": "تغطية",
     "copycat.idToImport": "معرّف للاستيراد",
     "copycat.callout.updated": "تم تحديث التسجيلة {xid}",
     "copycat.callout.created": "تم إنشاء التسجيلة {xid}",
@@ -637,5 +637,5 @@
     "externalIdentifierType": "نوع المعرّف الخارجي",
     "enabled": "مفعّل",
     "copycat.enterIdentifier": "قم بإدخال معرّف {identifierName}",
-    "copycat.enterIdentifierForUpdate": "قم بإدخال معرّف {identifierName} ليتم استخدامه لتغطية بيانات مارك الحالية"
+    "copycat.enterIdentifierForUpdate": "قم بإدخال معرّف {identifierName} ليتم استخدامه لتغطية البيانات الحالية"
 }
