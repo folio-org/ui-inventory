@@ -109,22 +109,22 @@ describe('InstanceViewPage', () => {
       });
     });
 
-    describe('collapse all clicked', () => {
+    describe('expand all clicked', () => {
       beforeEach(async () => {
         await InstanceViewPage.expandAll.click();
       });
 
-      it('accordion should not be displayed', () => {
-        expect(InstanceViewPage.accordion.isOpen).to.be.false;
+      it('accordion should be displayed', () => {
+        expect(InstanceViewPage.accordion.isOpen).to.be.true;
       });
 
-      describe('expand all', () => {
+      describe('collapse all', () => {
         beforeEach(async () => {
           await InstanceViewPage.expandAll.click();
         });
 
-        it('accordion should be displayed', () => {
-          expect(InstanceViewPage.accordion.isOpen).to.be.true;
+        it('accordion should not be displayed', () => {
+          expect(InstanceViewPage.accordion.isOpen).to.be.false;
         });
       });
     });
