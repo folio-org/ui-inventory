@@ -18,16 +18,18 @@ import {
 import {
   callNumberLabel
 } from '../../../../utils';
+import { DataContext } from '../../../../contexts';
 import DnDContext from '../../../DnDContext';
 
 import styles from './MoveToDropdown.css';
 
-const MoveToDropdown = ({
+export const MoveToDropdown = ({
   holding,
   holdings,
-  locationsById,
 }) => {
   const stripes = useStripes();
+
+  const { locationsById } = useContext(DataContext);
 
   const {
     instances,
@@ -37,8 +39,8 @@ const MoveToDropdown = ({
   } = useContext(DnDContext);
 
   const filteredHoldings = allHoldings
-    ? allHoldings.filter(item => item.instanceId !== holding.instanceId)
-    : holdings.filter(item => item.id !== holding.id);
+    ? allHoldings.filter(el => el.instanceId !== holding.instanceId)
+    : holdings.filter(el => el.id !== holding.id);
   const movetoHoldings = filteredHoldings.map(item => {
     return {
       ...item,
