@@ -83,7 +83,6 @@
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
-      "remote-storage-configurations": "1.0",
       "remote-storage-mappings": "1.0"
     },
     "permissionSets": [
