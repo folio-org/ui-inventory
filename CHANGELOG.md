@@ -64,7 +64,7 @@
 * Add permission for marking item as In process (non-requestable), Long missing, Unavailable, Unknown. Refs UIIN-1308, UIIN-894, UIIN-1307, UIIN-1326.
 * Parse `item.enumeration` numerically for sorting if possible. Refs UIIN-1412.
 * Allow the selection of remote storage locations. Refs UIIN-1290.
-
+* Add ability to search by `allTitles` index. Refs UIIN-1434.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
