@@ -560,6 +560,7 @@
   "precedingField.title": "Title",
   "precedingField.notConnected": "Not connected",
   "precedingField.connected": "Connected",
+  "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
 
   "editInstanceMarc": "Edit in quickMARC",
   "duplicateInstanceMarc": "Duplicate MARC bibliographic record",

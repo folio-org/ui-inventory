@@ -1,52 +1,106 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Row, Col, TextField, Button } from '@folio/stripes/components';
-import stripesFinalForm from '@folio/stripes/final-form';
+import { Form, Field } from 'react-final-form';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Prompt } from 'react-router-dom';
 
-class TargetProfileForm extends React.Component {
-  static propTypes = {
-    pristine: PropTypes.bool.isRequired,
-    submitting: PropTypes.bool.isRequired,
-    initialValues: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
-  };
+import {
+  Button,
+  Checkbox,
+  Col,
+  IconButton,
+  Pane,
+  PaneFooter,
+  PaneMenu,
+  Paneset,
+  Row,
+  TextField,
+} from '@folio/stripes/components';
 
-  render() {
-    const { pristine, submitting, initialValues, handleSubmit } = this.props;
-
-    return (
-      <form
-        id="form-loan-rules"
-        data-test-circulation-rules-form
-        onSubmit={handleSubmit}
-      >
-        <Row end="xs">
-          <Col xs={3}>
-            <FormattedMessage id="ui-inventory.name">
-              {placeholder => (
-                <TextField
-                  aria-label={placeholder}
-                  placeholder={placeholder}
-                  value={initialValues.name}
+const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl }) => (
+  <Form onSubmit={onSubmit} initialValues={initialValues}>
+    {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+      <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
+        <Paneset isRoot>
+          <Pane
+            defaultWidth="100%"
+            paneTitle={initialValues?.id
+              ? initialValues?.name
+              : <FormattedMessage id="stripes-components.addNew" />
+            }
+            firstMenu={
+              <PaneMenu>
+                <FormattedMessage id="stripes-components.cancel">
+                  {ariaLabel => (
+                    <IconButton
+                      icon="times"
+                      id="close-targetprofile-form-button"
+                      onClick={onCancel}
+                      aria-label={ariaLabel}
+                    />
+                  )}
+                </FormattedMessage>
+              </PaneMenu>
+            }
+            footer={
+              <PaneFooter
+                renderEnd={
+                  <Button
+                    buttonStyle="primary mega"
+                    disabled={pristine || submitting}
+                    marginBottom0
+                    onClick={handleSubmit}
+                    type="submit"
+                  >
+                    <FormattedMessage id="stripes-components.saveAndClose" />
+                  </Button>
+                }
+                renderStart={
+                  <Button buttonStyle="default mega" marginBottom0 onClick={onCancel}>
+                    <FormattedMessage id="stripes-components.cancel" />
+                  </Button>
+                }
+              />
+            }
+          >
+            <Row>
+              <Col xs={8} data-test-notice-template-name>
+                <Field
+                  label={<FormattedMessage id="ui-inventory.name" />}
+                  name="name"
+                  required
+                  id="input-targetprofile-name"
+                  component={TextField}
                 />
-              )}
-            </FormattedMessage>
-          </Col>
-          <Col xs={3}>
-            <Button
-              fullWidth
-              id="clickable-save-loan-rules"
-              type="submit"
-              disabled={pristine || submitting}
-            >
-              <FormattedMessage id="ui-inventory.save" />
-            </Button>
-          </Col>
-        </Row>
+              </Col>
+              <Col xs={4}>
+                <Field
+                  label={<FormattedMessage id="ui-inventory.enabled" />}
+                  name="enabled"
+                  id="input-targetprofile-enabled"
+                  component={Checkbox}
+                  defaultChecked={initialValues?.enabled}
+                />
+              </Col>
+            </Row>
+          </Pane>
+        </Paneset>
+        <Prompt
+          when={!pristine && !(submitting || submitSucceeded)}
+          message={intl.formatMessage({ id: 'ui-inventory.confirmDirtyNavigate' })}
+        />
       </form>
-    );
-  }
-}
+    )}
+  </Form>
+);
 
-export default stripesFinalForm({ navigationCheck: true })(TargetProfileForm);
+TargetProfileForm.propTypes = {
+  initialValues: PropTypes.object,
+  onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default injectIntl(TargetProfileForm);
