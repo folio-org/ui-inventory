@@ -434,6 +434,7 @@
         "subPermissions": [
           "module.inventory.enabled",
           "users.collection.get",
+          "tags.collection.get",
           "source-storage.records.get",
           "circulation.loans.collection.get",
           "circulation.loans.collection.get",

@@ -110,4 +110,27 @@ describe('SearchFieldFilter', () => {
       });
     });
   });
+
+  describe('selecting the "Title (all)" search option', function () {
+    beforeEach(async function () {
+      const alternativeTitleType = this.server.create('alternative-title-type');
+      const alternativeTitle = 'Петро Прокопович - український пасічник, викладач і науковець';
+
+      this.server.create('instance', {
+        title: 'Petro Prokopovich – Ukrainian beekeeper, teacher and scientist',
+        contributors: [{ name: 'Mykola Haydak' }],
+        alternativeTitles: [
+          { alternativeTitleTypeId: alternativeTitleType.id, alternativeTitle },
+        ],
+      }, 'withHoldingAndItem');
+
+      await instancesRoute.searchFieldFilter.searchField.selectIndex('Title (all)');
+      await instancesRoute.searchFieldFilter.searchField.fillInput(alternativeTitle);
+      await instancesRoute.searchFieldFilter.clickSearch();
+    });
+
+    it('should find instances by alternative title', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+  });
 });
