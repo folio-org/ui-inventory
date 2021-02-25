@@ -24,7 +24,7 @@ function makeOptions(resource) {
 }
 
 const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => (
-  <Form onSubmit={onSubmit} initialValues={initialValues}>
+  <Form onSubmit={onSubmit} initialValues={{ ...initialValues, displayName: undefined }}>
     {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
       <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
         <Paneset isRoot>
