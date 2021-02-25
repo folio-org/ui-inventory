@@ -6,8 +6,8 @@ import { Translate } from '../common';
 
 export const ForItems = ({ count = 1 }) => (
   <Translate
-    id="To remove {something} from remote storage..."
-    something={<Translate id="{count} items" count={count} />}
+    id="remote.warning.common"
+    something={<Translate id="remote.items" count={count} />}
   />
 );
 
@@ -19,11 +19,11 @@ ForItems.propTypes = {
 export const ForHoldings = ({ itemCount = 0 }) => (
   <>
     <Translate
-      id="To remove {something} from remote storage..."
-      something={<Translate id="the holdings" />}
+      id="remote.warning.common"
+      something={<Translate id="remote.holdings" />}
     />
     {' '}
-    <Translate id="This includes {count} titles" count={itemCount} />
+    <Translate id="remote.warning.titles" count={itemCount} />
   </>
 );
 
