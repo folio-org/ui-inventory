@@ -24,9 +24,7 @@ const InstanceMovementContainer = ({
   mutator,
   idFrom,
   idTo,
-
   history,
-  location,
 }) => {
   const callout = useContext(CalloutContext);
   const {
@@ -45,9 +43,9 @@ const InstanceMovementContainer = ({
 
     history.push({
       pathname: `/inventory/view/${instanceId}`,
-      search: location.search,
+      search: history.location.search,
     });
-  }, [history, location, instanceFrom, instanceTo]);
+  }, [history, instanceFrom, instanceTo]);
 
   const moveHoldings = (toInstanceId, holdings) => {
     return mutator.movableHoldings.POST({
@@ -124,8 +122,6 @@ InstanceMovementContainer.manifest = Object.freeze({
 
 InstanceMovementContainer.propTypes = {
   history:  PropTypes.object.isRequired,
-  location:  PropTypes.object.isRequired,
-
   mutator:  PropTypes.object.isRequired,
   idFrom: PropTypes.string.isRequired,
   idTo: PropTypes.string.isRequired,
