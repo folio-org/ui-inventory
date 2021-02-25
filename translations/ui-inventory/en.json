@@ -290,6 +290,7 @@
   "externalIdQueryMap": "External ID query map",
   "internalIdEmbedPath": "Internal ID embed path",
   "jobProfileId": "Job profile ID",
+  "targetOptions": "Target options",
   "externalIdentifierType": "External identifier type",
   "enabled": "Enabled",
   "urls": "URLs",
