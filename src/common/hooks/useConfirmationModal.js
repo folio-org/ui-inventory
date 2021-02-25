@@ -1,8 +1,13 @@
 import { useState } from 'react';
+import { noop } from 'lodash';
+
 
 export const useConfirmationModal = props => {
   const [open, setOpen] = useState(false);
-  const [callbacks, setCallbacks] = useState();
+  const [callbacks, setCallbacks] = useState({
+    resolve: noop,
+    reject: noop,
+  });
 
   const wait = () => {
     setOpen(true);
