@@ -126,7 +126,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                   name="enabled"
                   id="input-targetprofile-enabled"
                   component={Checkbox}
-                  defaultChecked={initialValues?.enabled}
+                  type="checkbox"
                 />
               </Col>
             </Row>
