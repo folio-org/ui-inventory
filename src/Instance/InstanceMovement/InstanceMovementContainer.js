@@ -39,15 +39,15 @@ const InstanceMovementContainer = ({
   } = useInstance(idTo, mutator.movableInstance);
 
   const onClose = useCallback((closedInstance) => {
-    const instanceId = closedInstance.id === instanceFrom.id
-      ? instanceTo.id
-      : instanceFrom.id;
+    const instanceId = closedInstance.id === instanceFrom?.id
+      ? instanceTo?.id
+      : instanceFrom?.id;
 
     history.push({
       pathname: `/inventory/view/${instanceId}`,
       search: location.search,
     });
-  });
+  }, [history, location, instanceFrom, instanceTo]);
 
   const moveHoldings = (toInstanceId, holdings) => {
     return mutator.movableHoldings.POST({
@@ -85,42 +85,6 @@ const InstanceMovementContainer = ({
       });
   };
 
-  const moveItems = (toHoldingsRecordId, items) => {
-    return mutator.movableItems.POST({
-      toHoldingsRecordId,
-      itemIds: items,
-    })
-      .then(({ nonUpdatedIds }) => {
-        const hasErrors = Boolean(nonUpdatedIds?.length);
-
-        const message = hasErrors ? (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.error"
-            values={{ items: nonUpdatedIds.join(', ') }}
-          />
-        ) : (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.success"
-            values={{ count: items.length }}
-          />
-        );
-        const type = hasErrors ? 'error' : 'success';
-
-        callout.sendCallout({ message, type });
-      })
-      .catch(() => {
-        callout.sendCallout({
-          type: 'error',
-          message: (
-            <FormattedMessage
-              id="ui-inventory.moveItems.instance.items.error.server"
-              values={{ items: items.join(', ') }}
-            />
-          ),
-        });
-      });
-  };
-
   if (isInstanceFromLoading || isInstanceToLoading) return <LoadingView />;
 
   return (
@@ -129,7 +93,6 @@ const InstanceMovementContainer = ({
       instanceTo={instanceTo}
       onClose={onClose}
       moveHoldings={moveHoldings}
-      moveItems={moveItems}
     />
   );
 };
@@ -145,12 +108,6 @@ InstanceMovementContainer.manifest = Object.freeze({
   movableHoldings: {
     type: 'okapi',
     path: 'inventory/holdings/move',
-    fetch: false,
-    throwErrors: false,
-  },
-  movableItems: {
-    type: 'okapi',
-    path: 'inventory/items/move',
     fetch: false,
     throwErrors: false,
   },
