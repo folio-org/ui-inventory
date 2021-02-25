@@ -638,7 +638,7 @@
   "showColumns": "Show columns",
   "copycat.import": "Import",
   "copycat.reimport": "Overlay",
-  "copycat.idToImport": "ID to import",
+  "copycat.noProfiles": "No profiles enabled",
   "copycat.enterIdentifier": "Enter {identifierName} identifier",
   "copycat.enterIdentifierForUpdate": "Enter the {identifierName} identifier to be used to overlay the current data",
   "copycat.callout.updated": "Updated record {xid}",
