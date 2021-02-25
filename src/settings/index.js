@@ -198,7 +198,10 @@ class InventorySettings extends React.Component {
           },
         ]
       },
-      {
+    ];
+
+    if (this.props.stripes.hasInterface('copycat-imports')) {
+      this.sections.push({
         label: <FormattedMessage id="ui-inventory.integrations" />,
         pages: [
           {
@@ -215,8 +218,8 @@ class InventorySettings extends React.Component {
             perm: 'ui-inventory.settings.single-record-import',
           },
         ]
-      },
-    ];
+      });
+    }
   }
 
   addPerm = permission => {
