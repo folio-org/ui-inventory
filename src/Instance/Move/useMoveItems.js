@@ -26,7 +26,7 @@ export const useMoveItems = () => {
       const message = (
         <FormattedMessage
           id="ui-inventory.moveItems.instance.items.success"
-          values={{ count: variables?.itemIds.length }}
+          values={{ count: variables?.itemIds?.length ?? 0 }}
         />
       );
 
