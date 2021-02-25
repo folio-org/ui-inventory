@@ -1,11 +1,17 @@
+import { useCallback } from 'react';
+
 import { useRemoteStorageMappings } from '@folio/stripes/smart-components';
+
 import { useHoldings } from '../providers';
 
 
 export const useByLocation = () => {
   const remoteMap = useRemoteStorageMappings();
 
-  return ({ fromLocationId, toLocationId }) => (fromLocationId in remoteMap) && !(toLocationId in remoteMap);
+  return useCallback(
+    ({ fromLocationId, toLocationId }) => (fromLocationId in remoteMap) && !(toLocationId in remoteMap),
+    [remoteMap]
+  );
 };
 
 
@@ -13,12 +19,15 @@ export const useByHoldings = () => {
   const { holdingsById } = useHoldings();
   const check = useByLocation();
 
-  return ({ fromHoldingsId, toHoldingsId }) => {
-    if (holdingsById === undefined) return false;
+  return useCallback(
+    ({ fromHoldingsId, toHoldingsId }) => {
+      if (holdingsById === undefined) return false;
 
-    const fromLocationId = holdingsById[fromHoldingsId]?.permanentLocationId;
-    const toLocationId = holdingsById[toHoldingsId]?.permanentLocationId;
+      const fromLocationId = holdingsById[fromHoldingsId]?.permanentLocationId;
+      const toLocationId = holdingsById[toHoldingsId]?.permanentLocationId;
 
-    return check({ fromLocationId, toLocationId });
-  };
+      return check({ fromLocationId, toLocationId });
+    },
+    [check, holdingsById]
+  );
 };
