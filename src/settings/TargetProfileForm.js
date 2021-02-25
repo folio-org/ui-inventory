@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
+import { stripesConnect } from '@folio/stripes-core';
 
 import {
   Button,
@@ -14,10 +15,15 @@ import {
   PaneMenu,
   Paneset,
   Row,
+  Select,
   TextField,
 } from '@folio/stripes/components';
 
-const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl }) => (
+function makeOptions(resource) {
+  return (resource.records || []).map(p => ({ value: p.id, label: p.name }));
+}
+
+const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => (
   <Form onSubmit={onSubmit} initialValues={initialValues}>
     {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
       <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
@@ -112,7 +118,8 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl }) => (
                   label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
                   name="externalIdentifierType"
                   id="input-targetprofile-externalIdentifierType"
-                  component={TextField}
+                  component={Select}
+                  dataOptions={makeOptions(resources.identifierTypes)}
                 />
                 <Field
                   label={<FormattedMessage id="ui-inventory.enabled" />}
@@ -141,6 +148,19 @@ TargetProfileForm.propTypes = {
   intl: PropTypes.shape({
     formatMessage: PropTypes.func.isRequired,
   }).isRequired,
+  resources: PropTypes.shape({
+    identifierTypes: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired
+  }),
 };
 
-export default injectIntl(TargetProfileForm);
+TargetProfileForm.manifest = Object.freeze({
+  identifierTypes: {
+    type: 'okapi',
+    records: 'identifierTypes',
+    path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+  },
+});
+
+export default stripesConnect(injectIntl(TargetProfileForm));
