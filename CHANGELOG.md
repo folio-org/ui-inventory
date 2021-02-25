@@ -65,6 +65,7 @@
 * Parse `item.enumeration` numerically for sorting if possible. Refs UIIN-1412.
 * Allow the selection of remote storage locations. Refs UIIN-1290.
 * Add ability to search by `allTitles` index. Refs UIIN-1434.
+* Add `tags.collection.get` as subpermission to `Inventory: View instances, holdings, and items` permission. Fixes UIIN-1422.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
