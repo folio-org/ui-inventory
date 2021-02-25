@@ -1,22 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { stripesConnect } from '@folio/stripes/core';
 import { Col, Row, KeyValue } from '@folio/stripes/components';
-import { ViewMetaData } from '@folio/stripes/smart-components';
 
 
 class TargetProfileDetail extends React.Component {
   static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
+    initialValues: PropTypes.object.isRequired,
+    resources: PropTypes.shape({
+      identifierType: PropTypes.shape({
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string,
+          }).isRequired,
+        ),
+      }).isRequired,
     }).isRequired,
-    initialValues: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.ConnectedViewMetaData = props.stripes.connect(ViewMetaData);
-  }
+  static manifest = Object.freeze({
+    identifierType: {
+      type: 'okapi',
+      path: 'identifier-types?query=id=!{initialValues.externalIdentifierType}',
+      records: 'identifierTypes',
+    },
+  });
 
   render() {
     const { initialValues } = this.props;
@@ -71,9 +80,33 @@ class TargetProfileDetail extends React.Component {
             />
           </Col>
         </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.targetOptions" />}
+              value={initialValues.targetOptions}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
+              value={this.props.resources.identifierType.records?.[0]?.name}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.enabled" />}
+              value={initialValues.enabled ? '✓' : '✕'}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }
 }
 
-export default TargetProfileDetail;
+export default stripesConnect(TargetProfileDetail);
