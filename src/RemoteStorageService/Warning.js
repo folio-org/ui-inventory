@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Translate } from '../common';
+import { FormattedMessage } from 'react-intl';
 
 
 export const ForItems = ({ count = 1 }) => (
-  <Translate
-    id="remote.warning.common"
-    something={<Translate id="remote.items" count={count} />}
+  <FormattedMessage
+    id="ui-inventory.remote.warning.common"
+    values={{ something: <FormattedMessage id="ui-inventory.remote.items" values={{ count }} /> }}
   />
 );
 
@@ -18,12 +17,12 @@ ForItems.propTypes = {
 
 export const ForHoldings = ({ itemCount = 0 }) => (
   <>
-    <Translate
-      id="remote.warning.common"
-      something={<Translate id="remote.holdings" />}
+    <FormattedMessage
+      id="ui-inventory.remote.warning.common"
+      values={{ something: <FormattedMessage id="ui-inventory.remote.holdings" /> }}
     />
     {' '}
-    <Translate id="remote.warning.titles" count={itemCount} />
+    <FormattedMessage id="ui-inventory.remote.warning.titles" values={{ count: itemCount }} />
   </>
 );
 
