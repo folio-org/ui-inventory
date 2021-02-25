@@ -64,7 +64,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl }) => (
             }
           >
             <Row>
-              <Col xs={8} data-test-notice-template-name>
+              <Col xs={12}>
                 <Field
                   label={<FormattedMessage id="ui-inventory.name" />}
                   name="name"
@@ -72,8 +72,48 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl }) => (
                   id="input-targetprofile-name"
                   component={TextField}
                 />
-              </Col>
-              <Col xs={4}>
+                <Field
+                  label={<FormattedMessage id="ui-inventory.url" />}
+                  name="url"
+                  id="input-targetprofile-url"
+                  component={TextField}
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.authentication" />}
+                  name="authentication"
+                  id="input-targetprofile-authentication"
+                  component={TextField}
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
+                  name="externalIdQueryMap"
+                  id="input-targetprofile-externalIdQueryMap"
+                  component={TextField}
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
+                  name="internalIdEmbedPath"
+                  id="input-targetprofile-internalIdEmbedPath"
+                  component={TextField}
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.jobProfileId" />}
+                  name="jobProfileId"
+                  id="input-targetprofile-jobProfileId"
+                  component={TextField}
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.targetOptions" />}
+                  name="targetOptions"
+                  id="input-targetprofile-targetOptions"
+                  component={TextField}
+                />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
+                  name="externalIdentifierType"
+                  id="input-targetprofile-externalIdentifierType"
+                  component={TextField}
+                />
                 <Field
                   label={<FormattedMessage id="ui-inventory.enabled" />}
                   name="enabled"
