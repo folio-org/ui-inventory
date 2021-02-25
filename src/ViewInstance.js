@@ -505,7 +505,6 @@ class ViewInstance extends React.Component {
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
-      referenceTables,
       stripes,
       onClose,
       paneWidth,
@@ -636,7 +635,6 @@ ViewInstance.propTypes = {
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
-  referenceTables: PropTypes.object.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,
