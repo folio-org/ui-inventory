@@ -928,6 +928,14 @@ class ItemView extends React.Component {
                       </Col>
                     </Row>
                     <Row>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                          value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
                       <Col
                         smOffset={0}
                         sm={4}
