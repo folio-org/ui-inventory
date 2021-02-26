@@ -34,7 +34,7 @@ class SingleRecordImport extends React.Component {
             label={<FormattedMessage id="ui-inventory.targetProfiles" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.targetProfile' })}
             objectLabel={<FormattedMessage id="ui-inventory.targetProfiles" />}
-            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId', 'externalIdentifierType', 'enabled']}
+            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId', 'targetOptions', 'externalIdentifierType', 'enabled']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               url: intl.formatMessage({ id: 'ui-inventory.url' }),
@@ -42,6 +42,7 @@ class SingleRecordImport extends React.Component {
               externalIdQueryMap: intl.formatMessage({ id: 'ui-inventory.externalIdQueryMap' }),
               internalIdEmbedPath: intl.formatMessage({ id: 'ui-inventory.internalIdEmbedPath' }),
               jobProfileId: intl.formatMessage({ id: 'ui-inventory.jobProfileId' }),
+              targetOptions: intl.formatMessage({ id: 'ui-inventory.targetOptions' }),
               externalIdentifierType: intl.formatMessage({ id: 'ui-inventory.externalIdentifierType' }),
               enabled: intl.formatMessage({ id: 'ui-inventory.enabled' }),
             }}

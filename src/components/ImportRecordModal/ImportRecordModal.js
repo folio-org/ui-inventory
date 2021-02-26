@@ -34,7 +34,11 @@ const ImportRecordModal = ({
           onSubmit={onSubmit}
           render={({ handleSubmit, values }) => (
             <form onSubmit={handleSubmit}>
-              {profiles.length === 1 ? (
+              {!profiles || profiles.length === 0 ? (
+                <p>
+                  <FormattedMessage id="ui-inventory.copycat.noProfiles" />
+                </p>
+              ) : profiles.length === 1 ? (
                 <Field name="externalIdentifierType" initialValue={currentProfile.id}>
                   {props2 => <input type="hidden" {...props2.input} />}
                 </Field>
@@ -43,16 +47,18 @@ const ImportRecordModal = ({
                   {props2 => <Select {...props2.input} dataOptions={options} />}
                 </Field>
               )}
-              <Field
-                name="externalIdentifier"
-                component={TextField}
-                label={
-                  <FormattedMessage
-                    id={`ui-inventory.copycat.enterIdentifier${id ? 'ForUpdate' : ''}`}
-                    values={{ identifierName: profileById[values.externalIdentifierType] }}
-                  />}
-                autoFocus
-              />
+              {currentProfile && (
+                <Field
+                  name="externalIdentifier"
+                  component={TextField}
+                  label={
+                    <FormattedMessage
+                      id={`ui-inventory.copycat.enterIdentifier${id ? 'ForUpdate' : ''}`}
+                      values={{ identifierName: profileById[values.externalIdentifierType] }}
+                    />}
+                  autoFocus
+                />
+              )}
               <ModalFooter>
                 <Button buttonStyle="primary" disabled={!values.externalIdentifier} onClick={() => handleSubmit()}>
                   <FormattedMessage id="ui-inventory.copycat.import" />

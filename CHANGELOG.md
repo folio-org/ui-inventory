@@ -56,6 +56,7 @@
 * Inventory app now degrades gracefully in the absence of mod-copycat. Fixes UIIN-1428.
 * Modify language of Settings/Inventory/Single record import. Fixes UIIN-1429.
 * Disable the single-record-import modal's Import button until something has been entered. Fixes UIIN-1431.
+* Better settings UI for maintaining copycat targets. Fixes UIIN-1437.
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
 * Show new request option for item with status restricted. Refs UIIN-1306.
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
@@ -64,7 +65,8 @@
 * Add permission for marking item as In process (non-requestable), Long missing, Unavailable, Unknown. Refs UIIN-1308, UIIN-894, UIIN-1307, UIIN-1326.
 * Parse `item.enumeration` numerically for sorting if possible. Refs UIIN-1412.
 * Allow the selection of remote storage locations. Refs UIIN-1290.
-
+* Add ability to search by `allTitles` index. Refs UIIN-1434.
+* Add `tags.collection.get` as subpermission to `Inventory: View instances, holdings, and items` permission. Fixes UIIN-1422.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

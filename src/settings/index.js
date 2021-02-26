@@ -19,7 +19,7 @@ import HoldingsNoteTypesSettings from './HoldingsNoteTypesSettings';
 import HoldingsSourcesSettings from './HoldingsSourcesSettings';
 import CallNumberTypes from './CallNumberTypes';
 import SingleRecordImport from './SingleRecordImport';
-// import TargetProfiles from './TargetProfiles';
+import TargetProfiles from './TargetProfiles';
 import HRIDHandlingSettings from './HRIDHandling/HRIDHandlingSettings';
 import StatisticalCodeTypes from './StatisticalCodeTypes';
 import AlternativeTitleTypesSettings from './AlternativeTitleTypesSettings';
@@ -198,7 +198,10 @@ class InventorySettings extends React.Component {
           },
         ]
       },
-      {
+    ];
+
+    if (this.props.stripes.hasInterface('copycat-imports')) {
+      this.sections.push({
         label: <FormattedMessage id="ui-inventory.integrations" />,
         pages: [
           {
@@ -208,17 +211,15 @@ class InventorySettings extends React.Component {
             component: SingleRecordImport,
             perm: 'ui-inventory.settings.single-record-import',
           },
-          /*
           {
             route: 'targetProfiles',
             label: <FormattedMessage id="ui-inventory.targetProfiles" />,
             component: TargetProfiles,
             perm: 'ui-inventory.settings.single-record-import',
           },
-          */
         ]
-      },
-    ];
+      });
+    }
   }
 
   addPerm = permission => {
