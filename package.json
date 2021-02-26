@@ -83,7 +83,6 @@
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
-      "remote-storage-configurations": "1.0",
       "remote-storage-mappings": "1.0"
     },
     "permissionSets": [
@@ -724,12 +723,12 @@
     ]
   },
   "scripts": {
-    "start": "yarn stripes serve",
+    "start": "stripes serve",
     "lint": "eslint .",
     "test": "yarn run test:unit && yarn run test:e2e:ci",
     "test:unit": "jest --ci --coverage",
-    "test:e2e": "yarn stripes test karma",
-    "test:e2e:ci": "yarn stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e": "stripes test karma",
+    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
@@ -767,6 +766,7 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-intl": "^5.8.0",
+    "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.0.0"
@@ -795,6 +795,7 @@
     "@folio/stripes": "^6.0.0",
     "react": "*",
     "react-intl": "^5.8.0",
+    "react-query": "^3.6.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },

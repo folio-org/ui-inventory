@@ -15,13 +15,11 @@ const InstanceMovement = ({
   instanceTo,
   onClose,
   moveHoldings,
-  moveItems,
 }) => {
   return (
     <Paneset data-test-movement>
       <MoveHoldingContext
         moveHoldings={moveHoldings}
-        moveItems={moveItems}
         leftInstance={instanceFrom}
         rightInstance={instanceTo}
       >
@@ -46,7 +44,6 @@ InstanceMovement.propTypes = {
   instanceTo: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   moveHoldings: PropTypes.func.isRequired,
-  moveItems: PropTypes.func.isRequired,
 };
 
 InstanceMovement.defaultProps = {

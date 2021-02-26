@@ -235,43 +235,6 @@ class ViewInstance extends React.Component {
     this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
   };
 
-  moveItems = (toHolding, items) => {
-    const { mutator } = this.props;
-    return mutator.movableItems.POST({
-      toHoldingsRecordId: toHolding,
-      itemIds: items,
-    })
-      .then(({ nonUpdatedIds }) => {
-        const hasErrors = Boolean(nonUpdatedIds?.length);
-
-        const message = hasErrors ? (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.error"
-            values={{ items: nonUpdatedIds.join(', ') }}
-          />
-        ) : (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.success"
-            values={{ count: items.length }}
-          />
-        );
-        const type = hasErrors ? 'error' : 'success';
-
-        this.calloutRef.current.sendCallout({ type, message });
-      })
-      .catch(() => {
-        this.calloutRef.current.sendCallout({
-          type: 'error',
-          message: (
-            <FormattedMessage
-              id="ui-inventory.moveItems.instance.items.error.server"
-              values={{ items: items.join(', ') }}
-            />
-          ),
-        });
-      });
-  };
-
   goBack = (e) => {
     if (e) e.preventDefault();
 
@@ -545,9 +508,7 @@ class ViewInstance extends React.Component {
           {
             (!holdingsrecordid && !itemid) ?
               (
-                <MoveItemsContext
-                  moveItems={this.moveItems}
-                >
+                <MoveItemsContext>
                   <HoldingsListContainer
                     instance={instance}
                     draggable={this.state.isItemsMovement}

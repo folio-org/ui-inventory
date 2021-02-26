@@ -72,7 +72,6 @@ const Holding = ({
             <MoveToDropdown
               holding={holding}
               holdings={holdings}
-              locationsById={locationsById}
             />
           )
         }
