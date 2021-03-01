@@ -3,7 +3,7 @@
     "resultCount": "تم العثور على {count, number} {count, plural, one { تسجيلة } other { تسجيلة }}",
     "item.availability.itemStatus": "حالة المادة",
     "item.availability.itemStatusDate": "تاريخ حالة المادة",
-    "item.availability.requests": "طلبات",
+    "item.availability.requests": "الطلبات",
     "item.availability.borrower": "المستعير",
     "item.availability.loanDate": "تاريخ الإعارة",
     "item.availability.dueDate": "تاريخ الاستحقاق",
