@@ -54,7 +54,7 @@ import KeyValue from './KeyValue';
   isLoaded = isPresent('[data-test-instance-header-title]');
 
   whenLoaded() {
-    return this.when(() => this.isLoaded);
+    return this.when(() => this.isLoaded).timeout(5000);
   }
 
   title = text('[data-test-instance-header-title]');
@@ -94,5 +94,5 @@ import KeyValue from './KeyValue';
 
 export default new InstanceViewPage({
   scope: '[data-test-instance-details]',
-  timeout: 20000,
+  timeout: 30000,
 });
