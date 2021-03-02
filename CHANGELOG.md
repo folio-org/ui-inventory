@@ -49,7 +49,7 @@
 * Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398.
 * Add ability to switch between new item statuses. Refs UIIN-1305.
 * Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398
-* Add support for maintaining copy-cataloguing profiles in the settings area. Towards UIIN-1401. Entails adding new interface `copycat-profiles`.
+* Add support for maintaining copy-cataloguing profiles in the settings area. Fixes UIIN-1401. Entails adding new interface `copycat-profiles`.
 * Add support for importing MARC records from external Z39.50 sources. Fixes UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.
 * When multiple Z39.50 services are configured, offer a choice at import time. Fixes UIIN-1426.
 * Modify language of Import Record modal when updating a record. Fixes UIIN-1424.
