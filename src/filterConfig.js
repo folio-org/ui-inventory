@@ -25,6 +25,7 @@ export const instanceFilterConfig = [
     name: 'format',
     cql: 'instanceFormatIds',
     values: [],
+    operator: '=',
   },
   {
     name: 'resource',
