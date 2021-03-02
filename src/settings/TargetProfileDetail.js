@@ -75,11 +75,20 @@ class TargetProfileDetail extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={<FormattedMessage id="ui-inventory.jobProfileId" />}
-              value={initialValues.jobProfileId}
+              label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
+              value={initialValues.createJobProfileId}
             />
           </Col>
         </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
+              value={initialValues.updateJobProfileId}
+            />
+          </Col>
+        </Row>
+        {/*
         <Row>
           <Col xs={12}>
             <KeyValue
@@ -88,6 +97,7 @@ class TargetProfileDetail extends React.Component {
             />
           </Col>
         </Row>
+        */}
         <Row>
           <Col xs={12}>
             <KeyValue
