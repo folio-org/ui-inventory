@@ -83,7 +83,6 @@
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
-      "remote-storage-configurations": "1.0",
       "remote-storage-mappings": "1.0"
     },
     "permissionSets": [
@@ -434,6 +433,7 @@
         "subPermissions": [
           "module.inventory.enabled",
           "users.collection.get",
+          "tags.collection.get",
           "source-storage.records.get",
           "circulation.loans.collection.get",
           "circulation.loans.collection.get",
@@ -766,6 +766,7 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-intl": "^5.8.0",
+    "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.0.0"
@@ -794,6 +795,7 @@
     "@folio/stripes": "^6.0.0",
     "react": "*",
     "react-intl": "^5.8.0",
+    "react-query": "^3.6.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },

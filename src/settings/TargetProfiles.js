@@ -36,7 +36,8 @@ class TargetProfiles extends React.Component {
   };
 
   render() {
-    const entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
+    const entryList = sortBy((this.props.resources.entries || {}).records || [], ['name'])
+      .map(entry => ({ ...entry, displayName: `${entry.enabled ? '✓' : '✕'} ${entry.name}` }));
 
     return (
       <EntryManager
@@ -48,7 +49,7 @@ class TargetProfiles extends React.Component {
         paneTitle={this.props.label}
         entryLabel={this.props.label}
         entryFormComponent={TargetProfileForm}
-        nameKey="name"
+        nameKey="displayName"
         permissions={{
           put: 'ui-inventory.single-record-import',
           post: 'ui-inventory.single-record-import',

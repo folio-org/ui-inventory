@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'redux-form';
 
+import { Checkbox } from '@folio/stripes/components';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
@@ -32,7 +34,7 @@ class SingleRecordImport extends React.Component {
             label={<FormattedMessage id="ui-inventory.targetProfiles" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.targetProfile' })}
             objectLabel={<FormattedMessage id="ui-inventory.targetProfiles" />}
-            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId', 'externalIdentifierType', 'enabled']}
+            visibleFields={['name', 'url', 'authentication', 'externalIdQueryMap', 'internalIdEmbedPath', 'jobProfileId', 'targetOptions', 'externalIdentifierType', 'enabled']}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               url: intl.formatMessage({ id: 'ui-inventory.url' }),
@@ -40,8 +42,14 @@ class SingleRecordImport extends React.Component {
               externalIdQueryMap: intl.formatMessage({ id: 'ui-inventory.externalIdQueryMap' }),
               internalIdEmbedPath: intl.formatMessage({ id: 'ui-inventory.internalIdEmbedPath' }),
               jobProfileId: intl.formatMessage({ id: 'ui-inventory.jobProfileId' }),
+              targetOptions: intl.formatMessage({ id: 'ui-inventory.targetOptions' }),
               externalIdentifierType: intl.formatMessage({ id: 'ui-inventory.externalIdentifierType' }),
               enabled: intl.formatMessage({ id: 'ui-inventory.enabled' }),
+            }}
+            fieldComponents={{
+              enabled: ({ fieldProps }) => (
+                <Field {...fieldProps} component={Checkbox} type="checkbox" />
+              )
             }}
             nameKey="name"
             hiddenFields={['lastUpdated', 'numberOfObjects']}

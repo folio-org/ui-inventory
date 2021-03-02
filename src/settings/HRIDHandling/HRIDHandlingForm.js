@@ -65,7 +65,7 @@ const HRIDHandlingForm = ({
 
   const closeButton = (
     <FormattedMessage id="ui-inventory.settings.goBack">
-      {ariaLabel => (
+      {([ariaLabel]) => (
         <PaneCloseLink
           ariaLabel={ariaLabel}
           to="/settings/inventory"

@@ -1,60 +1,43 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useContext, memo } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
-
+import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
 
-const ItemsListContainer = ({ holding, mutator, setOpen, ...rest }) => {
-  const [items, setItems] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    mutator.instanceHoldingItems.GET()
-      .then(data => {
-        setItems(data);
-        if (!isEmpty(data)) setOpen(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) return null;
+const ItemsListContainer = ({
+  holding,
+  items,
+  draggable,
+  droppable,
+}) => {
+  const {
+    selectItemsForDrag,
+    isItemsDragSelected,
+    getDraggingItems,
+    activeDropZone,
+    isItemsDroppable,
+  } = useContext(DnDContext);
 
   return (
     <ItemsList
-      {...rest}
+      isItemsDragSelected={isItemsDragSelected}
+      selectItemsForDrag={selectItemsForDrag}
+      getDraggingItems={getDraggingItems}
+      activeDropZone={activeDropZone}
+      isItemsDroppable={isItemsDroppable}
       holding={holding}
       items={items}
+      draggable={draggable}
+      droppable={droppable}
     />
   );
 };
 
-ItemsListContainer.manifest = Object.freeze({
-  instanceHoldingItems: {
-    type: 'okapi',
-    records: 'items',
-    path: 'inventory/items',
-    params: {
-      query: 'holdingsRecordId==!{holding.id}',
-      limit: '5000',
-    },
-    accumulate: true,
-    resourceShouldRefresh: true,
-  },
-});
-
 ItemsListContainer.propTypes = {
-  mutator: PropTypes.object.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
   holding: PropTypes.object.isRequired,
-  setOpen: PropTypes.func.isRequired,
+  draggable: PropTypes.bool,
+  droppable: PropTypes.bool
 };
 
-export default stripesConnect(ItemsListContainer);
+export default memo(ItemsListContainer);

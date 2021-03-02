@@ -360,7 +360,10 @@ class ItemView extends React.Component {
 
               return isPermImplemented
                 ? (
-                  <IfPermission perm={`ui-inventory.items.mark-${parameterizedStatus}`}>
+                  <IfPermission
+                    perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+                    key={parameterizedStatus}
+                  >
                     {actionMenuItem}
                   </IfPermission>
                 )
@@ -684,7 +687,7 @@ class ItemView extends React.Component {
                   app="inventory"
                   iconKey="item"
                 />
-            )}
+              )}
               paneTitle={(
                 <span data-test-header-item-title>
                   <FormattedMessage
@@ -695,7 +698,7 @@ class ItemView extends React.Component {
                     }}
                   />
                 </span>
-            )}
+              )}
               dismissible
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
@@ -922,6 +925,14 @@ class ItemView extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <KeyValue value={checkIfElementIsEmpty(itemData.materialType)} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                          value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                        />
                       </Col>
                     </Row>
                     <Row>

@@ -1,110 +1,30 @@
-import React, {
-  useMemo,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  IfPermission,
-} from '@folio/stripes/core';
-import {
-  Accordion,
-  Row,
-  Col,
-  Button,
-  Checkbox,
-} from '@folio/stripes/components';
+import { Checkbox } from '@folio/stripes/components';
 
-import {
-  callNumberLabel
-} from '../../../utils';
 import { ItemsListContainer } from '../../ItemsList';
-import { MoveToDropdown } from './MoveToDropdown';
-import DnDContext from '../../DnDContext';
+
+import HoldingAccordion from './HoldingAccordion';
 
 const Holding = ({
   holding,
-  referenceData,
   onViewHolding,
   onAddItem,
   holdings,
-
   draggable,
   droppable,
   selectHoldingsForDrag,
   isHoldingDragSelected,
   isDraggable,
 }) => {
-  const {
-    selectItemsForDrag,
-    isItemsDragSelected,
-    getDraggingItems,
-    activeDropZone,
-    isItemsDropable,
-    selectedItemsMap,
-    selectedHoldingsMap,
-  } = useContext(DnDContext);
-
-  const { locationsById } = referenceData;
-  const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
-  const withMoveDropdown = draggable || isDraggable;
-
-  const [open, setOpen] = useState(false);
-
-  const handleAccordionToggle = () => setOpen(!open);
-
-  const viewHoldings = useCallback(() => {
-    onViewHolding();
-  }, [onViewHolding]);
-
-  const addItem = useCallback(() => {
-    onAddItem();
-  }, [onAddItem]);
-
-  const holdingButtonsGroup = useMemo(() => {
-    return (
-      <>
-        {
-          withMoveDropdown && (
-            <MoveToDropdown
-              holding={holding}
-              holdings={holdings}
-              locationsById={locationsById}
-            />
-          )
-        }
-
-        <Button
-          id={`clickable-view-holdings-${holding.id}`}
-          data-test-view-holdings
-          onClick={viewHoldings}
-        >
-          <FormattedMessage id="ui-inventory.viewHoldings" />
-        </Button>
-
-        <IfPermission perm="ui-inventory.item.create">
-          <Button
-            id={`clickable-new-item-${holding.id}`}
-            data-test-add-item
-            onClick={addItem}
-            buttonStyle="primary paneHeaderNewButton"
-          >
-            <FormattedMessage id="ui-inventory.addItem" />
-          </Button>
-        </IfPermission>
-      </>
-    );
-  }, [holding.id, viewHoldings, addItem, withMoveDropdown, selectedItemsMap, selectedHoldingsMap, labelLocation]);
-
   return (
     <div>
       {isDraggable &&
         <FormattedMessage id="ui-inventory.moveItems.selectItem">
           {
-            (ariaLabel) => (
+            ([ariaLabel]) => (
               <span data-test-select-holding>
                 <Checkbox
                   id={`select-holding-${holding.id}`}
@@ -117,57 +37,39 @@ const Holding = ({
           }
         </FormattedMessage>
       }
-      <Accordion
-        id={holding.id}
-        open={open}
-        onToggle={handleAccordionToggle}
-        label={(
-          <FormattedMessage
-            id="ui-inventory.holdingsHeader"
-            values={{
-              location: labelLocation,
-              callNumber: callNumberLabel(holding),
-              copyNumber: holding.copyNumber,
-            }}
-          />
-        )}
-        displayWhenOpen={holdingButtonsGroup}
-        displayWhenClosed={holdingButtonsGroup}
+      <HoldingAccordion
+        key={`items_${holding.id}`}
+        holding={holding}
+        withMoveDropdown={draggable || isDraggable}
+        holdings={holdings}
+        onViewHolding={onViewHolding}
+        onAddItem={onAddItem}
       >
-        <Row>
-          <Col sm={12}>
+        {
+          ({ items }) => (
             <ItemsListContainer
-              key={`items_${holding.id}`}
               holding={holding}
-              setOpen={setOpen}
-
               draggable={draggable}
               droppable={droppable}
-              isItemsDragSelected={isItemsDragSelected}
-              selectItemsForDrag={selectItemsForDrag}
-              getDraggingItems={getDraggingItems}
-              activeDropZone={activeDropZone}
-              isItemsDropable={isItemsDropable}
+              items={items}
             />
-          </Col>
-        </Row>
-      </Accordion>
+          )
+        }
+      </HoldingAccordion>
     </div>
   );
 };
 
 Holding.propTypes = {
   holding: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   isDraggable: PropTypes.bool,
-  selectHoldingsForDrag: PropTypes.func.isRequired,
-  isHoldingDragSelected: PropTypes.func.isRequired,
+  selectHoldingsForDrag: PropTypes.func,
+  isHoldingDragSelected: PropTypes.func,
 };
 
 export default Holding;

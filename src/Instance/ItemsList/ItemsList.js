@@ -42,7 +42,7 @@ const getFormatter = (
   'select': (item) => (
     <FormattedMessage id="ui-inventory.moveItems.selectItem">
       {
-        (ariaLabel) => (
+        ([ariaLabel]) => (
           <span data-test-select-item>
             <Checkbox
               id={`select-item-${item.id}`}
@@ -124,7 +124,7 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
   activeDropZone,
-  isItemsDropable,
+  isItemsDroppable,
 }) => {
   const intl = useIntl();
 
@@ -173,7 +173,7 @@ const ItemsList = ({
 
   return (
     <DropZone
-      isItemsDropable={isItemsDropable}
+      isItemsDroppable={isItemsDroppable}
       droppableId={holding.id}
       isDropDisabled={!droppable || activeDropZone === holding.id}
     >
@@ -206,12 +206,12 @@ ItemsList.propTypes = {
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   activeDropZone: PropTypes.string,
-  isItemsDropable: PropTypes.bool,
+  isItemsDroppable: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   items: [],
-  isItemsDropable: true,
+  isItemsDroppable: true,
 };
 
 export default ItemsList;

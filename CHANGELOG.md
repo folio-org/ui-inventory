@@ -50,13 +50,26 @@
 * Add ability to switch between new item statuses. Refs UIIN-1305.
 * Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398
 * Add support for maintaining copy-cataloguing profiles in the settings area. Towards UIIN-1401. Entails adding new interface `copycat-profiles`.
-* Add support for importing MARC records from external Z39.50 sources. Towards UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.
+* Add support for importing MARC records from external Z39.50 sources. Fixes UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.
+* When multiple Z39.50 services are configured, offer a choice at import time. Fixes UIIN-1426.
+* Modify language of Import Record modal when updating a record. Fixes UIIN-1424.
+* Inventory app now degrades gracefully in the absence of mod-copycat. Fixes UIIN-1428.
+* Modify language of Settings/Inventory/Single record import. Fixes UIIN-1429.
+* Disable the single-record-import modal's Import button until something has been entered. Fixes UIIN-1431.
+* Better settings UI for maintaining copycat targets. Fixes UIIN-1437.
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
 * Show new request option for item with status restricted. Refs UIIN-1306.
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
 * Rename `Settings (Inventory): Display list of settings pages` permission to `Settings (Inventory): View list of settings pages`. Refs UIIN-1399.
 * Add ability to duplicate MARC bib record. Refs UIIN-1407.
 * Add permission for marking item as In process (non-requestable), Long missing, Unavailable, Unknown. Refs UIIN-1308, UIIN-894, UIIN-1307, UIIN-1326.
+* Parse `item.enumeration` numerically for sorting if possible. Refs UIIN-1412.
+* Allow the selection of remote storage locations. Refs UIIN-1290.
+* Add ability to search by `allTitles` index. Refs UIIN-1434.
+* Add `tags.collection.get` as subpermission to `Inventory: View instances, holdings, and items` permission. Fixes UIIN-1422.
+* Display shelving order on the item record. Refs UIIN-816.
+* Add item counter to each holding record. Refs UIIN-803.
+* Fix instance format filter. Refs UIIN-1423.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

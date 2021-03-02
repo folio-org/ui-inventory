@@ -23,7 +23,6 @@ const HoldingsListMovement = ({
 
   draggable,
   droppable,
-  referenceData,
 }) => {
   const {
     selectItemsForDrag,
@@ -47,7 +46,6 @@ const HoldingsListMovement = ({
               key={`items_${holding.id}`}
               instance={instance}
               holding={holding}
-              referenceData={referenceData}
 
               isDraggable
               draggable={draggable}
@@ -58,7 +56,7 @@ const HoldingsListMovement = ({
               isHoldingDragSelected={isHoldingDragSelected}
               isItemsDragSelected={isItemsDragSelected}
               getDraggingItems={getDraggingItems}
-              holdingindex={index}
+              holdingIndex={index}
               draggingHoldingsCount={draggingHoldingsCount}
             />
           ))
@@ -81,7 +79,6 @@ HoldingsListMovement.propTypes = {
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
-  referenceData: PropTypes.object.isRequired,
 };
 
 HoldingsListMovement.defaultProps = {

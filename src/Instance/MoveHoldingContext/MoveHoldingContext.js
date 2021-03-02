@@ -2,6 +2,7 @@ import React, {
   useState,
   useCallback,
   useMemo,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -13,46 +14,62 @@ import {
   Loading,
   ConfirmationModal,
 } from '@folio/stripes/components';
-import DnDContext from '../DnDContext';
+import { MessageBanner } from '@folio/stripes-components';
+
+import {
+  callNumberLabel
+} from '../../utils';
+import { DataContext } from '../../contexts';
+import { useHoldings, useInstanceHoldingsQuery } from '../../providers';
+import * as RemoteStorage from '../../RemoteStorageService';
+
 import {
   isItemsSelected,
   selectItems,
 } from '../utils';
-import {
-  callNumberLabel
-} from '../../utils';
+import DnDContext from '../DnDContext';
+import { useMoveItems } from '../Move';
+
 
 const MoveHoldingContext = ({
   children,
-  moveItems,
   moveHoldings,
   leftInstance,
   rightInstance,
-  referenceData,
 }) => {
   const intl = useIntl();
+
+  const { locationsById } = useContext(DataContext);
+
+  const { holdingsById } = useHoldings();
+
+  const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
+  const { moveItems, isMoving: isItemsMoving } = useMoveItems();
+
+  const { holdingsRecords: leftHoldings } = useInstanceHoldingsQuery(leftInstance.id);
+  const { holdingsRecords: rightHoldings } = useInstanceHoldingsQuery(rightInstance.id);
+  const allHoldings = [...(leftHoldings ?? []), ...(rightHoldings ?? [])];
+
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
   const [selectedHoldingsMap, setSelectedHoldingsMap] = useState([]);
   const [activeDropZone, setActiveDropZone] = useState();
-  const [isMoveModalOpened, toggleMoveModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [movingItems, setMovingItems] = useState([]);
   const [dragToId, setDragToId] = useState();
   const [dragFromId, setDragFromId] = useState();
-  const [isHoldingMoved, setisHoldingMoved] = useState();
-  const [allHoldings, setAllHoldings] = useState([]);
+  const [isHoldingMoved, setIsHoldingMoved] = useState();
 
   const onConfirm = useCallback(() => {
-    toggleMoveModal(false);
-    setIsMoving(true);
+    setIsModalOpen(false);
 
-    const movingPromise = isHoldingMoved
-      ? moveHoldings(dragToId, movingItems)
-      : moveItems(dragToId, movingItems);
-
-    movingPromise.finally(() => {
-      setIsMoving(false);
-    });
+    if (isHoldingMoved) {
+      setIsMoving(true);
+      moveHoldings(dragToId, movingItems)
+        .finally(() => { setIsMoving(false); });
+    } else {
+      moveItems(dragFromId, dragToId, movingItems);
+    }
 
     setSelectedItemsMap((prevItemsMap) => ({
       ...prevItemsMap,
@@ -60,13 +77,12 @@ const MoveHoldingContext = ({
     }));
     setSelectedHoldingsMap([]);
     setActiveDropZone(undefined);
-    setAllHoldings([]);
   }, [movingItems, dragToId]);
 
   const onBeforeCapture = useCallback((result) => {
     const isHolding = result.draggableId.slice(0, 8) === 'holding-';
 
-    setisHoldingMoved(isHolding);
+    setIsHoldingMoved(isHolding);
   }, [selectedHoldingsMap]);
 
   const onDragStart = useCallback((result) => {
@@ -91,7 +107,7 @@ const MoveHoldingContext = ({
       items.push(itemDropId);
     }
     setMovingItems(items);
-    toggleMoveModal(true);
+    setIsModalOpen(true);
   }, [selectedItemsMap, selectedHoldingsMap, isHoldingMoved]);
 
   const getDraggingItems = useCallback(() => {
@@ -135,8 +151,8 @@ const MoveHoldingContext = ({
   }, []);
 
   const closeModal = useCallback(() => {
-    toggleMoveModal(false);
-  }, [toggleMoveModal]);
+    setIsModalOpen(false);
+  }, [setIsModalOpen]);
 
   const onSelect = useCallback(({ target }) => {
     const to = target.dataset.toId;
@@ -147,7 +163,7 @@ const MoveHoldingContext = ({
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
-    setisHoldingMoved(isHolding);
+    setIsHoldingMoved(isHolding);
     setDragToId(to);
     setDragFromId(from);
 
@@ -155,35 +171,63 @@ const MoveHoldingContext = ({
       items.push(from);
     }
     setMovingItems(items);
-    toggleMoveModal(true);
+    setIsModalOpen(true);
   }, [selectedHoldingsMap, selectedItemsMap]);
 
-  const movingMessage = useMemo(() => {
-    const { locationsById } = referenceData;
-    const targetHolding = allHoldings.filter(item => item.id === dragToId);
-    const callNumber = callNumberLabel(targetHolding[0]);
-    const labelLocation = targetHolding[0]?.permanentLocationId ? locationsById[targetHolding[0].permanentLocationId].name : '';
+  const movingMessage = useMemo(
+    () => {
+      const targetHolding = holdingsById[dragToId];
+      const callNumber = callNumberLabel(targetHolding);
+      const labelLocation = targetHolding?.permanentLocationId ? locationsById[targetHolding.permanentLocationId].name : '';
 
-    if (isHoldingMoved) {
-      return intl.formatMessage(
-        { id: 'ui-inventory.moveItems.modal.message.holdings' },
-        {
-          count: movingItems.length,
-          targetName: <b>{rightInstance.id === dragToId ? rightInstance.title : leftInstance.title}</b>
-        }
-      );
-    } else {
-      return intl.formatMessage(
+      const count = movingItems.length;
+
+      if (isHoldingMoved) {
+        return intl.formatMessage(
+          { id: 'ui-inventory.moveItems.modal.message.holdings' },
+          {
+            count,
+            targetName: <b>{rightInstance.id === dragToId ? rightInstance.title : leftInstance.title}</b>
+          }
+        );
+      }
+
+      const moveMsg = intl.formatMessage(
         { id: 'ui-inventory.moveItems.modal.message.items' },
         {
-          count: movingItems.length,
+          count,
           targetName: <b>{`${labelLocation} ${callNumber}`}</b>
         }
       );
-    }
-  }, [allHoldings, movingItems, isHoldingMoved]);
 
-  if (isMoving) {
+      return (
+        <>
+          {moveMsg}
+          <MessageBanner
+            show={checkFromRemoteToNonRemote({ fromHoldingsId: dragFromId, toHoldingsId: dragToId })}
+            type="warning"
+          >
+            <RemoteStorage.Confirmation.Message count={count} />
+          </MessageBanner>
+        </>
+      );
+    },
+    [
+      holdingsById,
+      dragToId,
+      locationsById,
+      movingItems.length,
+      isHoldingMoved,
+      intl,
+      checkFromRemoteToNonRemote,
+      dragFromId,
+      rightInstance.id,
+      rightInstance.title,
+      leftInstance.title
+    ],
+  );
+
+  if (isMoving || isItemsMoving) {
     return <Loading size="large" />;
   }
 
@@ -203,13 +247,12 @@ const MoveHoldingContext = ({
             isHoldingDragSelected,
             getDraggingItems,
             draggingHoldingsCount: selectedHoldingsMap.length,
-            isItemsDropable: !isHoldingMoved,
+            isItemsDroppable: !isHoldingMoved,
             instances: [
               rightInstance,
               leftInstance,
             ],
             selectedItemsMap,
-            setAllHoldings,
             allHoldings,
             onSelect,
             selectedHoldingsMap,
@@ -218,28 +261,25 @@ const MoveHoldingContext = ({
           {children}
         </DnDContext.Provider>
       </DragDropContext>
-      {isMoveModalOpened && (
-        <ConfirmationModal
-          id="move-holding-confirmation"
-          confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
-          heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
-          message={movingMessage}
-          onCancel={closeModal}
-          onConfirm={onConfirm}
-          open
-        />
-      )}
+      <ConfirmationModal
+        id="move-holding-confirmation"
+        confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
+        heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
+        message={movingMessage}
+        onCancel={closeModal}
+        onConfirm={onConfirm}
+        open={isModalOpen}
+        bodyTag="div"
+      />
     </>
   );
 };
 
 MoveHoldingContext.propTypes = {
   children: PropTypes.node.isRequired,
-  moveItems: PropTypes.func.isRequired,
   moveHoldings: PropTypes.func.isRequired,
   leftInstance: PropTypes.object.isRequired,
   rightInstance: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
 };
 
 export default MoveHoldingContext;
