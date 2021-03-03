@@ -29,6 +29,12 @@ class TargetProfileDetail extends React.Component {
 
   render() {
     const { initialValues } = this.props;
+    const t = initialValues.targetOptions;
+    const targetOptions = !t ? null : (
+      <ul>
+        {Object.keys(t).sort().map(key => <li key={key}>{key}: {t[key]}</li>)}
+      </ul>
+    );
 
     return (
       <div>
@@ -88,16 +94,14 @@ class TargetProfileDetail extends React.Component {
             />
           </Col>
         </Row>
-        {/*
         <Row>
           <Col xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-inventory.targetOptions" />}
-              value={initialValues.targetOptions}
+              value={targetOptions}
             />
           </Col>
         </Row>
-        */}
         <Row>
           <Col xs={12}>
             <KeyValue
