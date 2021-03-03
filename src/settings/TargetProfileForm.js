@@ -103,17 +103,25 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                   component={TextField}
                 />
                 <Field
-                  label={<FormattedMessage id="ui-inventory.jobProfileId" />}
-                  name="jobProfileId"
-                  id="input-targetprofile-jobProfileId"
+                  label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
+                  name="createJobProfileId"
+                  id="input-targetprofile-createJobProfileId"
                   component={TextField}
                 />
+                <Field
+                  label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
+                  name="updateJobProfileId"
+                  id="input-targetprofile-updateJobProfileId"
+                  component={TextField}
+                />
+                {/*
                 <Field
                   label={<FormattedMessage id="ui-inventory.targetOptions" />}
                   name="targetOptions"
                   id="input-targetprofile-targetOptions"
                   component={TextField}
                 />
+                */}
                 <Field
                   label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
                   name="externalIdentifierType"
