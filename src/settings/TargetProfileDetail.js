@@ -32,7 +32,7 @@ class TargetProfileDetail extends React.Component {
     const t = initialValues.targetOptions;
     const targetOptions = !t ? null : (
       <ul>
-        {Object.keys(t).sort().map(key => <li>{key}: {t[key]}</li>)}
+        {Object.keys(t).sort().map(key => <li key={key}>{key}: {t[key]}</li>)}
       </ul>
     );
 
