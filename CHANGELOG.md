@@ -57,6 +57,7 @@
 * Modify language of Settings/Inventory/Single record import. Fixes UIIN-1429.
 * Disable the single-record-import modal's Import button until something has been entered. Fixes UIIN-1431.
 * Better settings UI for maintaining copycat targets. Fixes UIIN-1437.
+* In "Z39.50 target profiles" settings, support the `targetOptions` field. Fixes UIIN-1445.
 * Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
 * Show new request option for item with status restricted. Refs UIIN-1306.
 * Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.

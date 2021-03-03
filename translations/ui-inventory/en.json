@@ -292,6 +292,7 @@
   "createJobProfileId": "Job profile ID for create",
   "updateJobProfileId": "Job profile ID for update",
   "targetOptions": "Target options",
+  "button.addTargetOption": "Add target option",
   "externalIdentifierType": "External identifier type",
   "enabled": "Enabled",
   "urls": "URLs",
