@@ -193,6 +193,8 @@ export default function configure() {
 
       if (field === 'source') return instances.where({ source: term });
 
+      if (field === 'discoverySuppress') return instances.where({ discoverySuppress: term });
+
       if (field === 'identifiers') {
         const idType = identifierTypes.where({ name: term }).models[0];
 

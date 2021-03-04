@@ -29,6 +29,7 @@ export default Factory.extend({
   statisticalCodeIds: () => [],
   tags: () => ({ tagList: [] }),
   hrid: i => `in0000000000${i + 1}`,
+  discoverySuppress: null,
   metadata: {
     createdDate: date.between('2019-01-01', '2020-01-01'),
     updatedDate: date.between('2019-01-01', '2020-01-01'),
@@ -139,6 +140,26 @@ export default Factory.extend({
   withHolding: trait({
     afterCreate(instance, server) {
       const holding = server.create('holding');
+      instance.holdings = [holding];
+      instance.save();
+    }
+  }),
+
+  withDiscoverySuppressHolding: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding', { discoverySuppress: true });
+      instance.holdings = [holding];
+      instance.save();
+    }
+  }),
+
+  withHoldingAndDiscoverySuppressItem: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding');
+      const item = server.create('item', { discoverySuppress: true });
+
+      holding.items = [item];
+      holding.save();
       instance.holdings = [holding];
       instance.save();
     }
