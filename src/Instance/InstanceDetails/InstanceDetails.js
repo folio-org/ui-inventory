@@ -15,6 +15,7 @@ import {
   Pane,
   PaneMenu,
   Row,
+  TextField,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -119,11 +120,14 @@ const InstanceDetails = ({
         <TitleManager record={instance.title} />
 
         <AccordionStatus>
-          <Row end="xs">
-            <Col
-              data-test-expand-all
-              xs
-            >
+          <Row>
+            <Col xs={10}>
+              {
+                instance.discoverySuppress &&
+                <TextField fullWidth readOnly value={intl.formatMessage({ id: 'ui-inventory.instance.suppressedFromDiscovery' })} error=" " />
+              }
+            </Col>
+            <Col data-test-expand-all xs={2}>
               <ExpandAllButton />
             </Col>
           </Row>
