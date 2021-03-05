@@ -74,6 +74,7 @@
 * Change label Duplicate MARC bib record to Derive new MARC bib record. Refs UIIN-1436.
 * Add a warning icon for instance/holdings/item marked as Suppressed from discovery. Refs UIIN-1380.
 * Fix nature of content filter. Fixes UIIN-1441.
+* Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
