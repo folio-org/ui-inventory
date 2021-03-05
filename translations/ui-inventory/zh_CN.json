@@ -616,7 +616,6 @@
     "authentication": "认证",
     "externalIdQueryMap": "外部ID查询图",
     "internalIdEmbedPath": "内部ID嵌入路径",
-    "jobProfileId": "任务配置文件ID",
     "copycat.import": "导入",
     "copycat.reimport": "覆盖",
     "copycat.callout.updated": "已更新记录{xid}",
@@ -641,5 +640,8 @@
     "remote.warning.common": "要从远程存储中移除{something} ，请运行异常报告或将其直接传达给您的远程存储馆藏地。",
     "remote.warning.titles": "这包括{count, plural, =0 { <strong> 无 </strong>标题} one { <strong> # </strong>标题} other { <strong> # </strong>标题}} 。",
     "remote.holdings": "馆藏",
-    "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}"
+    "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
+    "createJobProfileId": "Job profile ID for create",
+    "updateJobProfileId": "Job profile ID for update",
+    "button.addTargetOption": "Add target option"
 }
