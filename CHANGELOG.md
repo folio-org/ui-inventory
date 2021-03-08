@@ -69,6 +69,7 @@
 * Add ability to search by `allTitles` index. Refs UIIN-1434.
 * Add `tags.collection.get` as subpermission to `Inventory: View instances, holdings, and items` permission. Fixes UIIN-1422.
 * Display shelving order on the item record. Refs UIIN-816.
+* Passed the same ID down to the instance details pane and the loading pane. Fixes UIIN-1384.
 * Add item counter to each holding record. Refs UIIN-803.
 * Fix instance format filter. Refs UIIN-1423.
 * Change label Duplicate MARC bib record to Derive new MARC bib record. Refs UIIN-1436.

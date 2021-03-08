@@ -500,6 +500,7 @@ class ViewInstance extends React.Component {
     return (
       <>
         <InstanceDetails
+          id="pane-instancedetails"
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
