@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import { stripesConnect } from '@folio/stripes-core';
@@ -14,17 +16,51 @@ import {
   PaneFooter,
   PaneMenu,
   Paneset,
+  RepeatableField,
   Row,
   Select,
   TextField,
 } from '@folio/stripes/components';
 
+
+function massageInitialValues(values) {
+  const massaged = {
+    ...values,
+    displayName: undefined
+  };
+
+  const asHash = values.targetOptions || {};
+  const asArray = [];
+  Object.keys(asHash).sort().forEach((key) => {
+    asArray.push({ key, value: asHash[key] });
+  });
+
+  massaged.targetOptions = asArray;
+  return massaged;
+}
+
+
+function massageAndSubmit(rawOnSubmit, values, ...args) {
+  const asHash = {};
+  values.targetOptions.forEach(entry => {
+    asHash[entry.key] = entry.value;
+  });
+  values.targetOptions = asHash;
+
+  return rawOnSubmit(values, ...args);
+}
+
 function makeOptions(resource) {
   return (resource.records || []).map(p => ({ value: p.id, label: p.name }));
 }
 
+
 const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => (
-  <Form onSubmit={onSubmit} initialValues={{ ...initialValues, displayName: undefined }}>
+  <Form
+    mutators={{ ...arrayMutators }}
+    initialValues={massageInitialValues(initialValues)}
+    onSubmit={(...args) => massageAndSubmit(onSubmit, ...args)}
+  >
     {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
       <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
         <Paneset isRoot>
@@ -103,16 +139,42 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                   component={TextField}
                 />
                 <Field
-                  label={<FormattedMessage id="ui-inventory.jobProfileId" />}
-                  name="jobProfileId"
-                  id="input-targetprofile-jobProfileId"
+                  label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
+                  name="createJobProfileId"
+                  id="input-targetprofile-createJobProfileId"
                   component={TextField}
                 />
                 <Field
-                  label={<FormattedMessage id="ui-inventory.targetOptions" />}
+                  label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
+                  name="updateJobProfileId"
+                  id="input-targetprofile-updateJobProfileId"
+                  component={TextField}
+                />
+                <FieldArray
+                  legend={<FormattedMessage id="ui-inventory.targetOptions" />}
                   name="targetOptions"
                   id="input-targetprofile-targetOptions"
-                  component={TextField}
+                  component={RepeatableField}
+                  addLabel={<FormattedMessage id="ui-inventory.button.addTargetOption" />}
+                  onAdd={fields => fields.push('')}
+                  renderField={field => (
+                    <Row>
+                      <Col xs={3}>
+                        <Field
+                          component={TextField}
+                          label="Key"
+                          name={`${field}.key`}
+                        />
+                      </Col>
+                      <Col xs={9}>
+                        <Field
+                          component={TextField}
+                          label="Value"
+                          name={`${field}.value`}
+                        />
+                      </Col>
+                    </Row>
+                  )}
                 />
                 <Field
                   label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}

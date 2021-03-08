@@ -54,7 +54,7 @@ import KeyValue from './KeyValue';
   isLoaded = isPresent('[data-test-instance-header-title]');
 
   whenLoaded() {
-    return this.when(() => this.isLoaded);
+    return this.when(() => this.isLoaded).timeout(5000);
   }
 
   title = text('[data-test-instance-header-title]');
@@ -69,6 +69,7 @@ import KeyValue from './KeyValue';
   alternativeTitlesList = new MultiColumnListInteractor('#list-alternative-titles');
   items = collection('[id^="list-items"] div[class^=mclRow]', Item);
   draggableItems = collection('[id^="list-items"] div[draggable]', Item);
+  hasWarnIcon = isPresent('[class*=status-warn]');
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
   hasButtonAddItem = isPresent('[data-test-add-item]');
@@ -94,5 +95,5 @@ import KeyValue from './KeyValue';
 
 export default new InstanceViewPage({
   scope: '[data-test-instance-details]',
-  timeout: 20000,
+  timeout: 30000,
 });

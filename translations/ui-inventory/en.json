@@ -289,8 +289,10 @@
   "authentication": "Authentication",
   "externalIdQueryMap": "External ID query map",
   "internalIdEmbedPath": "Internal ID embed path",
-  "jobProfileId": "Job profile ID",
+  "createJobProfileId": "Job profile ID for create",
+  "updateJobProfileId": "Job profile ID for update",
   "targetOptions": "Target options",
+  "button.addTargetOption": "Add target option",
   "externalIdentifierType": "External identifier type",
   "enabled": "Enabled",
   "urls": "URLs",
@@ -559,7 +561,7 @@
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
 
   "editInstanceMarc": "Edit in quickMARC",
-  "duplicateInstanceMarc": "Duplicate MARC bibliographic record",
+  "duplicateInstanceMarc": "Derive new MARC bibliographic record",
   "quickMarcNotAvailable": "No plugin available!",
 
   "permission.all-permissions.TEMPORARY": "Inventory: All permissions",

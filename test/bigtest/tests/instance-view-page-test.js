@@ -109,22 +109,22 @@ describe('InstanceViewPage', () => {
       });
     });
 
-    describe('collapse all clicked', () => {
+    describe('expand all clicked', () => {
       beforeEach(async () => {
         await InstanceViewPage.expandAll.click();
       });
 
-      it('accordion should not be displayed', () => {
-        expect(InstanceViewPage.accordion.isOpen).to.be.false;
+      it('accordion should be displayed', () => {
+        expect(InstanceViewPage.accordion.isOpen).to.be.true;
       });
 
-      describe('expand all', () => {
+      describe('collapse all', () => {
         beforeEach(async () => {
           await InstanceViewPage.expandAll.click();
         });
 
-        it('accordion should be displayed', () => {
-          expect(InstanceViewPage.accordion.isOpen).to.be.true;
+        it('accordion should not be displayed', () => {
+          expect(InstanceViewPage.accordion.isOpen).to.be.false;
         });
       });
     });
@@ -655,6 +655,34 @@ describe('InstanceViewPage', () => {
 
     it('should display nature of content value', () => {
       expect(InstanceViewPage.natureOfContent.value.text).to.equal(name);
+    });
+  });
+
+  describe('Suppress from discovery holding', () => {
+    setupApplication();
+
+    beforeEach(async function () {
+      instance = this.server.create('instance', 'withDiscoverySuppressHolding');
+      this.visit(`/inventory/view/${instance.id}`);
+      await InstanceViewPage.whenLoaded();
+    });
+
+    it('should have a warning icon in the title field', () => {
+      expect(InstanceViewPage.hasWarnIcon).to.be.true;
+    });
+  });
+
+  describe('Suppress from discovery item', () => {
+    setupApplication();
+
+    beforeEach(async function () {
+      instance = this.server.create('instance', 'withHoldingAndDiscoverySuppressItem');
+      this.visit(`/inventory/view/${instance.id}`);
+      await InstanceViewPage.whenLoaded();
+    });
+
+    it('should have a warning icon in the barcode field', () => {
+      expect(InstanceViewPage.hasWarnIcon).to.be.true;
     });
   });
 

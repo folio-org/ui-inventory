@@ -616,7 +616,6 @@
     "authentication": "Authentication",
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
-    "jobProfileId": "Job profile ID",
     "copycat.import": "Import",
     "copycat.reimport": "Re-import",
     "copycat.callout.updated": "Updated record {xid}",
@@ -641,5 +640,8 @@
     "remote.warning.common": "To remove {something} from remote storage, run an exception report or communicate this directly to your remote storage location.",
     "remote.warning.titles": "This includes {count, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
     "remote.holdings": "the holdings",
-    "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}"
+    "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
+    "createJobProfileId": "Job profile ID for create",
+    "updateJobProfileId": "Job profile ID for update",
+    "button.addTargetOption": "Add target option"
 }

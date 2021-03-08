@@ -25,6 +25,7 @@ export const instanceFilterConfig = [
     name: 'format',
     cql: 'instanceFormatIds',
     values: [],
+    operator: '=',
   },
   {
     name: 'resource',
@@ -40,6 +41,7 @@ export const instanceFilterConfig = [
     name: 'natureOfContent',
     cql: 'natureOfContentTermIds',
     values: [],
+    operator: '=',
   },
   {
     name: 'location',
