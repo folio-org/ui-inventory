@@ -11,6 +11,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   AppIcon,
   IfPermission,
+  IfInterface,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -32,9 +33,10 @@ import {
 import {
   HoldingsListContainer,
   MoveItemsContext,
-
   InstanceDetails,
 } from './Instance';
+
+import ImportRecordModal from './components/ImportRecordModal';
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -110,6 +112,7 @@ class ViewInstance extends React.Component {
       marcRecord: null,
       findInstancePluginOpened: false,
       isItemsMovement: false,
+      isImportRecordModalOpened: false,
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
@@ -200,17 +203,25 @@ class ViewInstance extends React.Component {
     });
   };
 
-  editInstanceMarc = () => {
+  redirectToQuickMarcPage = (page) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
 
     history.push({
-      pathname: `/inventory/quick-marc/edit/${instanceId}`,
+      pathname: `/inventory/quick-marc/${page}/${instanceId}`,
       search: location.search,
     });
   };
 
-  selectInstanse = (selectedInstance) => {
+  editInstanceMarc = () => {
+    this.redirectToQuickMarcPage('edit');
+  };
+
+  duplicateInstanceMarc = () => {
+    this.redirectToQuickMarcPage('duplicate');
+  };
+
+  selectInstance = (selectedInstance) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
 
@@ -222,43 +233,6 @@ class ViewInstance extends React.Component {
 
   toggleItemsMovement = () => {
     this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
-  };
-
-  moveItems = (toHolding, items) => {
-    const { mutator } = this.props;
-    return mutator.movableItems.POST({
-      toHoldingsRecordId: toHolding,
-      itemIds: items,
-    })
-      .then(({ nonUpdatedIds }) => {
-        const hasErrors = Boolean(nonUpdatedIds?.length);
-
-        const message = hasErrors ? (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.error"
-            values={{ items: nonUpdatedIds.join(', ') }}
-          />
-        ) : (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.success"
-            values={{ count: items.length }}
-          />
-        );
-        const type = hasErrors ? 'error' : 'success';
-
-        this.calloutRef.current.sendCallout({ type, message });
-      })
-      .catch(() => {
-        this.calloutRef.current.sendCallout({
-          type: 'error',
-          message: (
-            <FormattedMessage
-              id="ui-inventory.moveItems.instance.items.error.server"
-              values={{ items: items.join(', ') }}
-            />
-          ),
-        });
-      });
   };
 
   goBack = (e) => {
@@ -301,6 +275,19 @@ class ViewInstance extends React.Component {
     }
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
   };
+
+  handleImportRecordModalSubmit = (args) => {
+    this.setState({ isImportRecordModalOpened: false });
+    this.props.mutator.query.update({
+      _path: `/inventory/import/${this.props.match.params.id}`,
+      xidtype: args.externalIdentifierType,
+      xid: args.externalIdentifier,
+    });
+  }
+
+  handleImportRecordModalCancel = () => {
+    this.setState({ isImportRecordModalOpened: false });
+  }
 
   toggleFindInstancePlugin = () => {
     this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
@@ -387,6 +374,22 @@ class ViewInstance extends React.Component {
                   </Icon>
                 </Button>
               </IfPermission>
+
+              <IfPermission perm="records-editor.records.item.post">
+                <Button
+                  id="duplicate-instance-marc"
+                  buttonStyle="dropdownItem"
+                  disabled // enable this button when https://issues.folio.org/browse/UIQM-66 is done
+                  onClick={() => {
+                    onToggle();
+                    this.duplicateInstanceMarc();
+                  }}
+                >
+                  <Icon icon="duplicate">
+                    <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
+                  </Icon>
+                </Button>
+              </IfPermission>
             </>
           )
         }
@@ -443,6 +446,21 @@ class ViewInstance extends React.Component {
             </Icon>
           </Button>
         )}
+
+        <IfInterface name="copycat-imports">
+          <Button
+            id="dropdown-clickable-reimport-record"
+            onClick={() => {
+              onToggle();
+              this.setState({ isImportRecordModalOpened: true });
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="lightning">
+              <FormattedMessage id="ui-inventory.copycat.reimport" />
+            </Icon>
+          </Button>
+        </IfInterface>
       </>
     );
   };
@@ -450,7 +468,6 @@ class ViewInstance extends React.Component {
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
-      referenceTables,
       stripes,
       onClose,
       paneWidth,
@@ -486,17 +503,13 @@ class ViewInstance extends React.Component {
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
-          referenceData={referenceTables}
           tagsEnabled={tagsEnabled}
         >
           {
             (!holdingsrecordid && !itemid) ?
               (
-                <MoveItemsContext
-                  moveItems={this.moveItems}
-                >
+                <MoveItemsContext>
                   <HoldingsListContainer
-                    referenceData={referenceTables}
                     instance={instance}
                     draggable={this.state.isItemsMovement}
                     droppable
@@ -526,12 +539,22 @@ class ViewInstance extends React.Component {
         {
           this.state.findInstancePluginOpened && (
             <InstancePlugin
-              onSelect={this.selectInstanse}
+              onSelect={this.selectInstance}
               onClose={this.toggleFindInstancePlugin}
               withTrigger={false}
             />
           )
         }
+
+        <IfInterface name="copycat-imports">
+          <ImportRecordModal
+            isOpen={this.state.isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+            id={id}
+          />
+        </IfInterface>
       </>
     );
   }
@@ -573,7 +596,6 @@ ViewInstance.propTypes = {
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
-  referenceTables: PropTypes.object.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,

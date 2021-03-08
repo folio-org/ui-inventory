@@ -27,6 +27,9 @@ import KeyValue from './KeyValue';
   hasDuplicateButton = isPresent('#copy-instance');
   hasViewSourceButton = isPresent('#clickable-view-source');
   hasEditMarcButton = isPresent('#edit-instance-marc');
+  clickEditMarcButton = clickable('#edit-instance-marc');
+  hasDuplicateMarcButton = isPresent('#duplicate-instance-marc');
+  clickDuplicateMarcButton = clickable('#duplicate-instance-marc');
   hasMoveWithinInstanceButton = isPresent('#move-instance-items');
   clickMoveWithinInstance = clickable('#move-instance-items');
   disabledNewViewSourceButton = property('#clickable-view-source', 'disabled');
@@ -51,7 +54,7 @@ import KeyValue from './KeyValue';
   isLoaded = isPresent('[data-test-instance-header-title]');
 
   whenLoaded() {
-    return this.when(() => this.isLoaded);
+    return this.when(() => this.isLoaded).timeout(5000);
   }
 
   title = text('[data-test-instance-header-title]');
@@ -66,6 +69,7 @@ import KeyValue from './KeyValue';
   alternativeTitlesList = new MultiColumnListInteractor('#list-alternative-titles');
   items = collection('[id^="list-items"] div[class^=mclRow]', Item);
   draggableItems = collection('[id^="list-items"] div[draggable]', Item);
+  hasWarnIcon = isPresent('[class*=status-warn]');
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
   hasButtonAddItem = isPresent('[data-test-add-item]');
@@ -91,5 +95,5 @@ import KeyValue from './KeyValue';
 
 export default new InstanceViewPage({
   scope: '[data-test-instance-details]',
-  timeout: 20000,
+  timeout: 30000,
 });

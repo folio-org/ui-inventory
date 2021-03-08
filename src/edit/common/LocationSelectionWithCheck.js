@@ -6,7 +6,7 @@ import { LocationLookup } from '@folio/stripes-smart-components';
 import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
 import { ConfirmationModal, MessageBanner } from '@folio/stripes-components';
 
-import { useRemoteStorageApi } from '../../RemoteStorage';
+import * as RemoteStorage from '../../RemoteStorageService';
 
 
 const MODAL_CLOSED = {
@@ -20,7 +20,7 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
 
   const { formatMessage } = useIntl();
 
-  const { checkMoveFromRemoteToNonRemote } = useRemoteStorageApi();
+  const checkFromRemoteToNonRemote = RemoteStorage.Check.useByLocation();
 
   const [selectedValue, setSelectedValue] = useState(value);
   const [rollbackValue, setRollbackValue] = useState(value);
@@ -35,20 +35,20 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
 
     const isNotSameLocation = toLocationId !== value;
     const isNewLocationInactive = location && !location.isActive;
-    const isMovingFromRemote = checkMoveFromRemoteToNonRemote({ fromLocationId, toLocationId });
+    const isMovingFromRemote = checkFromRemoteToNonRemote({ fromLocationId, toLocationId });
     const isConfirmationNeeded = (isNewLocationInactive || isMovingFromRemote) && isNotSameLocation;
 
     if (isConfirmationNeeded) {
       const heading =
         (isNewLocationInactive && isMovingFromRemote && formatMessage({ id: 'ui-inventory.location.confirm.common.header' }))
         || (isNewLocationInactive && formatMessage({ id: 'ui-inventory.location.confirm.inactive.header' }))
-        || (isMovingFromRemote && formatMessage({ id: 'ui-inventory.location.confirm.removeFromRemote.header' }));
+        || (isMovingFromRemote && <RemoteStorage.Confirmation.Heading />);
 
       const messages = [
         isNewLocationInactive && formatMessage({ id: 'ui-inventory.location.confirm.inactive.message' }),
-        isMovingFromRemote && formatMessage({ id: 'ui-inventory.location.confirm.removeFromRemote.message' }),
+        isMovingFromRemote && <RemoteStorage.Confirmation.Message />,
       ];
-      const message = messages.filter(Boolean).map(m => <MessageBanner type="warning">{m}</MessageBanner>);
+      const message = messages.filter(Boolean).map(m => <MessageBanner type="warning" key={m}>{m}</MessageBanner>);
 
       setRollbackValue(isMovingFromRemote ? fromLocationId : value);
       setModal({ open: true, heading, message });
@@ -85,6 +85,7 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
         confirmLabel={formatMessage({ id: 'ui-inventory.location.confirm.confirmBtn' })}
         buttonStyle="default"
         cancelButtonStyle="primary"
+        bodyTag="div"
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         {...modal}

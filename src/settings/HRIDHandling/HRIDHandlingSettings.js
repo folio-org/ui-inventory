@@ -13,6 +13,7 @@ import {
   keys,
   omit,
   parseInt,
+  isEqual,
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes-core';
@@ -67,7 +68,6 @@ class HRIDHandlingSettings extends Component {
     super(props);
 
     this.state = {
-      removeZeroes: false,
       isConfirmModalOpen: false,
       fieldsValues: {},
     };
@@ -81,11 +81,11 @@ class HRIDHandlingSettings extends Component {
     });
   }
 
-  getInitialValues(removeZeroes) {
+  getInitialValues() {
     const { resources } = this.props;
     const settings = get(resources, ['hridSettings', 'records', '0'], {});
 
-    if (!removeZeroes) {
+    if (settings.commonRetainLeadingZeroes) {
       keys(settings).forEach(key => {
         if (settings[key].startNumber) {
           const value = settings[key].startNumber.toString();
@@ -98,8 +98,26 @@ class HRIDHandlingSettings extends Component {
     return { ...settings };
   }
 
-  toggleRemoveZeroes() {
-    this.setState(prevSate => ({ removeZeroes: !prevSate.removeZeroes }));
+  toggleRemoveZeroes(form, removeZeroes) {
+    const fieldsValues = form.getState().values;
+    const fieldsToUpdate = omit(fieldsValues, ['id', 'commonRetainLeadingZeroes']);
+
+    keys(fieldsToUpdate).forEach(key => {
+      const entityStartNumber = fieldsValues[key].startNumber;
+
+      if (entityStartNumber) {
+        if (removeZeroes) {
+          const updatedStartNumber = parseInt(entityStartNumber);
+
+          form.change(`${key}.startNumber`, updatedStartNumber);
+        } else {
+          const value = entityStartNumber.toString();
+          const updatedStartNumber = value.padStart(11, '0');
+
+          form.change(`${key}.startNumber`, updatedStartNumber);
+        }
+      }
+    });
   }
 
   onBeforeSave(data) {
@@ -134,25 +152,37 @@ class HRIDHandlingSettings extends Component {
 
   render() {
     const { mutator } = this.props;
-    const initialValues = this.getInitialValues(this.state.removeZeroes);
+    const initialValues = this.getInitialValues();
 
     return (
       <HRIDHandlingForm
         initialValues={initialValues}
         mutator={mutator}
-        removeZeroes={this.state.removeZeroes}
         onSubmit={data => this.onSubmit(data)}
-        render={reset => (
+        render={form => (
           <>
             <FormattedMessage id="ui-inventory.hridHandling.checkbox.label">
-              {label => (
+              {([label]) => (
                 <div data-test-remove-zeroes-checkbox>
-                  <Checkbox
-                    label={label}
-                    checked={this.state.removeZeroes}
-                    onChange={() => this.toggleRemoveZeroes()}
-                    inline
-                    labelClass={css.checkboxLabel}
+                  <Field
+                    name="commonRetainLeadingZeroes"
+                    type="checkbox"
+                    isEqual={isEqual}
+                    format={value => (value === undefined ? false : !value)}
+                    parse={value => !value}
+                    render={fieldProps => (
+                      <Checkbox
+                        {...fieldProps.input}
+                        label={label}
+                        checked={fieldProps.input.checked}
+                        onChange={event => {
+                          fieldProps.input.onChange(event);
+                          this.toggleRemoveZeroes(form, event.target.checked);
+                        }}
+                        inline
+                        labelClass={css.checkboxLabel}
+                      />
+                    )}
                   />
                 </div>
               )}
@@ -169,7 +199,7 @@ class HRIDHandlingSettings extends Component {
                 <Row className={css.inputRow}>
                   <Col className={css.inputLabel}>
                     <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
-                      {inputLabel => (
+                      {([inputLabel]) => (
                         <div>
                           {inputLabel}
                           <span className={css.asterisk}>*</span>
@@ -227,7 +257,7 @@ class HRIDHandlingSettings extends Component {
               }}
               onCancel={() => {
                 this.setState({ isConfirmModalOpen: false });
-                reset();
+                form.reset();
               }}
               buttonStyle="default"
               cancelButtonStyle="primary"

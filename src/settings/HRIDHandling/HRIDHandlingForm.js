@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -14,10 +14,6 @@ import {
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import {
-  keys,
-  parseInt,
-} from 'lodash';
 import css from './HRIDHandling.css';
 
 const HRID_DESCRIPTIONS_ID = [
@@ -31,34 +27,8 @@ const HRIDHandlingForm = ({
   pristine,
   submitting,
   render,
-  removeZeroes,
-  form: {
-    change,
-    reset,
-    getState,
-  },
+  form,
 }) => {
-  useEffect(() => {
-    const fieldsValues = getState().values;
-
-    keys(fieldsValues).forEach(key => {
-      const entityStartNumber = fieldsValues[key].startNumber;
-
-      if (entityStartNumber) {
-        if (removeZeroes) {
-          const updatedStartNumber = parseInt(entityStartNumber);
-
-          change(`${key}.startNumber`, updatedStartNumber);
-        } else {
-          const value = entityStartNumber.toString();
-          const updatedStartNumber = value.padStart(11, '0');
-
-          change(`${key}.startNumber`, updatedStartNumber);
-        }
-      }
-    });
-  }, [removeZeroes]);
-
   const isButtonDisabled = pristine || submitting;
 
   const saveButton = (
@@ -78,7 +48,7 @@ const HRIDHandlingForm = ({
       data-test-cancel-button
       buttonStyle="default mega"
       disabled={isButtonDisabled}
-      onClick={reset}
+      onClick={form.reset}
       marginBottom0
     >
       <FormattedMessage id="stripes-components.cancel" />
@@ -95,7 +65,7 @@ const HRIDHandlingForm = ({
 
   const closeButton = (
     <FormattedMessage id="ui-inventory.settings.goBack">
-      {ariaLabel => (
+      {([ariaLabel]) => (
         <PaneCloseLink
           ariaLabel={ariaLabel}
           to="/settings/inventory"
@@ -144,7 +114,7 @@ const HRIDHandlingForm = ({
           </Col>
         </Row>
         {description}
-        {render(reset)}
+        {render(form)}
       </Pane>
     </form>
   );
@@ -154,13 +124,8 @@ HRIDHandlingForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  form: PropTypes.shape({
-    change: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-  }).isRequired,
+  form: PropTypes.shape({ reset: PropTypes.func.isRequired }).isRequired,
   render: PropTypes.func,
-  removeZeroes: PropTypes.bool,
 };
 
 export default stripesFinalForm({

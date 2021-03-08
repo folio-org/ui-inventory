@@ -150,6 +150,10 @@ export default function configure() {
           inst.contributors[0].name.match(right.term));
       }
 
+      if (field === 'allTitles') {
+        return instances.all().filter(inst => inst.alternativeTitles.some(el => el.alternativeTitle === term));
+      }
+
       // With the addition of a third condition to search for records by 'Holdings. Call number readable by eye" in the CQL query,
       // cqlParser.tree object gets a deeper structure in the 'left' and 'right' properties.
       if (left?.left?.field === 'holdingsRecords.fullCallNumber') {
@@ -188,6 +192,10 @@ export default function configure() {
       }
 
       if (field === 'source') return instances.where({ source: term });
+
+      if (field === 'staffSuppress') return instances.where({ staffSuppress: term });
+
+      if (field === 'discoverySuppress') return instances.where({ discoverySuppress: term });
 
       if (field === 'identifiers') {
         const idType = identifierTypes.where({ name: term }).models[0];
@@ -683,4 +691,9 @@ export default function configure() {
     tags: [],
     totalRecords: 0
   });
+
+  // XXX for now, comment this out: its absence only causes ugly
+  // warning messages when the tests run, but its presence causes
+  // mysteriously failures elsewhere on the test suite.
+  // this.get('/copycat/profiles', {});
 }

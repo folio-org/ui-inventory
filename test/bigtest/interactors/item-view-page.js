@@ -83,5 +83,5 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 }
 
 export default new ItemViewPage({
-  timeout: 10000,
+  timeout: 50000,
 });

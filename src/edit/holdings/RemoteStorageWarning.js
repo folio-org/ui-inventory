@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { useFormState } from 'react-final-form';
 
 import { MessageBanner } from '@folio/stripes/components';
 
-import { useFormState } from 'react-final-form';
-import { useRemoteStorageApi } from '../../RemoteStorage';
+import * as RemoteStorage from '../../RemoteStorageService';
 
 
 export const RemoteStorageWarning = ({ itemCount }) => {
   const { initialValues, values } = useFormState();
 
-  const { checkMoveFromRemoteToNonRemote } = useRemoteStorageApi();
+  const checkFromRemoteToNonRemote = RemoteStorage.Check.useByLocation();
 
   const permanentLocation = {
     fromLocationId: initialValues.permanentLocationId,
@@ -24,14 +23,11 @@ export const RemoteStorageWarning = ({ itemCount }) => {
   };
 
   const isWarningShown =
-    checkMoveFromRemoteToNonRemote(permanentLocation) || checkMoveFromRemoteToNonRemote(temporaryLocation);
+    checkFromRemoteToNonRemote(permanentLocation) || checkFromRemoteToNonRemote(temporaryLocation);
 
   return (
     <MessageBanner dismissable type="warning" show={isWarningShown}>
-      <FormattedMessage
-        id="ui-inventory.location.holdings.removeFromRemote.warning"
-        values={{ itemCount }}
-      />
+      <RemoteStorage.Warning.ForHoldings itemCount={itemCount} />
     </MessageBanner>
   );
 };

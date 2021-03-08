@@ -33,7 +33,6 @@ const DraggableHolding = ({
   snapshot,
   draggingHoldingsCount,
   holding,
-  referenceData,
   onViewHolding,
   onAddItem,
   ...rest
@@ -66,7 +65,6 @@ const DraggableHolding = ({
               {...rest}
               isDraggable
               holding={holding}
-              referenceData={referenceData}
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
             />
@@ -86,9 +84,8 @@ const HoldingContainer = ({
 
   instance,
   holding,
-  referenceData,
   isDraggable,
-  holdingindex,
+  holdingIndex,
   draggingHoldingsCount,
   ...rest
 }) => {
@@ -110,7 +107,7 @@ const HoldingContainer = ({
     <Draggable
       key={`${holding.id}`}
       draggableId={`holding-${holding.id}`}
-      index={holdingindex}
+      index={holdingIndex}
     >
       {(provided, snapshot) => (
         <DraggableHolding
@@ -118,7 +115,6 @@ const HoldingContainer = ({
           snapshot={snapshot}
           draggingHoldingsCount={draggingHoldingsCount}
           holding={holding}
-          referenceData={referenceData}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           {...rest}
@@ -129,7 +125,6 @@ const HoldingContainer = ({
     <Holding
       {...rest}
       holding={holding}
-      referenceData={referenceData}
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
     />
@@ -142,8 +137,7 @@ HoldingContainer.propTypes = {
 
   instance: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
-  holdingindex: PropTypes.number.isRequired,
+  holdingIndex: PropTypes.number,
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
 };

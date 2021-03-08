@@ -12,6 +12,7 @@ const hridSettings = {
     prefix: 'it',
     startNumber: 1,
   },
+  commonRetainLeadingZeroes: true,
 };
 
 export default hridSettings;

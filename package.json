@@ -81,7 +81,8 @@
       "data-export": "3.0"
     },
     "optionalOkapiInterfaces": {
-      "remote-storage-configurations": "1.0",
+      "copycat-imports": "1.0",
+      "copycat-profiles": "1.0",
       "remote-storage-mappings": "1.0"
     },
     "permissionSets": [
@@ -356,11 +357,11 @@
         "displayName": "Settings (Inventory): Configure single-record import",
         "subPermissions": [
           "settings.inventory.enabled",
-          "copycat.target-profiles.collection.get",
-          "copycat.target-profiles.item.get",
-          "copycat.target-profiles.item.post",
-          "copycat.target-profiles.item.put",
-          "copycat.target-profiles.item.delete"
+          "copycat.profiles.collection.get",
+          "copycat.profiles.item.get",
+          "copycat.profiles.item.post",
+          "copycat.profiles.item.put",
+          "copycat.profiles.item.delete"
         ],
         "visible": true
       },
@@ -432,6 +433,7 @@
         "subPermissions": [
           "module.inventory.enabled",
           "users.collection.get",
+          "tags.collection.get",
           "source-storage.records.get",
           "circulation.loans.collection.get",
           "circulation.loans.collection.get",
@@ -601,7 +603,7 @@
       },
       {
         "permissionName": "ui-inventory.settings.list.view",
-        "displayName": "Settings (Inventory): Display list of settings pages",
+        "displayName": "Settings (Inventory): View list of settings pages",
         "subPermissions": [
           "settings.inventory.enabled",
           "users.collection.get",
@@ -678,9 +680,42 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.single-record-import",
-        "displayName": "Inventory: Import single record",
+        "permissionName": "ui-inventory.items.mark-unknown",
+        "displayName": "Inventory: Mark items unknown",
         "subPermissions": [
+          "inventory.items.item.mark-unknown.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-unavailable",
+        "displayName": "Inventory: Mark items unavailable",
+        "subPermissions": [
+          "inventory.items.item.mark-unavailable.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-long-missing",
+        "displayName": "Inventory: Mark items long missing",
+        "subPermissions": [
+          "inventory.items.item.mark-long-missing.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.mark-in-process-non-requestable",
+        "displayName": "Inventory: Mark items in process (non-requestable)",
+        "subPermissions": [
+          "inventory.items.item.mark-in-process-non-requestable.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.single-record-import",
+        "displayName": "Inventory: Import single bibliographic records",
+        "subPermissions": [
+          "ui-inventory.instance.view",
           "copycat.imports.post"
         ],
         "visible": true
@@ -707,7 +742,7 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.3.0",
     "@folio/stripes": "^6.0.0",
-    "@folio/stripes-cli": "^1.20.0",
+    "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^9.0.0",
     "@folio/stripes-core": "^7.0.0",
     "@folio/stripes-smart-components": "^6.0.0",
@@ -731,6 +766,7 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-intl": "^5.8.0",
+    "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.0.0"
@@ -741,6 +777,7 @@
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
+    "ky": "^0.23.0",
     "lodash": "^4.17.4",
     "moment": "~2.24.0",
     "prop-types": "^15.5.10",
@@ -758,6 +795,7 @@
     "@folio/stripes": "^6.0.0",
     "react": "*",
     "react-intl": "^5.8.0",
+    "react-query": "^3.6.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"
   },

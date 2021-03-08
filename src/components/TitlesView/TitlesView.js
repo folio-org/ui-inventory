@@ -75,7 +75,7 @@ TitlesViews.propTypes = {
   label: PropTypes.node.isRequired,
   titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   titleKey: PropTypes.string.isRequired,
-  identifierTypesById: PropTypes.func,
+  identifierTypesById: PropTypes.object,
 };
 
 export default TitlesViews;

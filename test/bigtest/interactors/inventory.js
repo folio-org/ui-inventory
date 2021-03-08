@@ -56,6 +56,7 @@ export default @interactor class InventoryInteractor {
 
   instance = scoped('[data-test-instance-details]');
   chooseSearchOption = selectable('#input-inventory-search-qindex');
+  openItemBtnPresent = isPresent('[data-test-items] a');
 
   fillSearchField = fillable('#input-inventory-search');
   clickSearch = clickable('[data-test-search-and-sort-submit]');
@@ -77,6 +78,7 @@ export default @interactor class InventoryInteractor {
   source = new CheckboxFilterInteractor('#source');
   callout = new CalloutInteractor();
   resetAll = clickable('#clickable-reset-all');
+  hasWarnIcon = isPresent('[class^=warnIcon---]');
 
   whenLoaded() {
     return this.when(() => this.isLoaded);
@@ -84,5 +86,9 @@ export default @interactor class InventoryInteractor {
 
   whenInstanceLoaded() {
     return this.when(() => this.instance.isVisible);
+  }
+
+  whenOpenItemVisibile() {
+    return this.when(() => this.openItemBtnPresent);
   }
 }

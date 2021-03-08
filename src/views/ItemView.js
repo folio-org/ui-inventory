@@ -318,8 +318,9 @@ class ItemView extends React.Component {
           )}
         </IfPermission>
         { canMarkItemWithStatus(firstItem) && (
-          Object.keys(itemStatusMutators).map(
-            status => {
+          Object.keys(itemStatusMutators)
+            .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
+            .map(status => {
               const itemStatus = itemStatusesMap[status].toLowerCase();
               const parameterizedStatus = parameterize(itemStatus);
 
@@ -344,28 +345,30 @@ class ItemView extends React.Component {
 
               /**
                 This is a temporary condition for displaying new item statuses, and as soon as
-                  https://issues.folio.org/browse/UIIN-894 (LONG_MISSING),
                   https://issues.folio.org/browse/UIIN-1166 (IN_PROCESS),
-                  https://issues.folio.org/browse/UIIN-1307 (UNAVAILABLE),
-                  https://issues.folio.org/browse/UIIN-1308 (IN_PROCESS_NON_REQUESTABLE),
-                  https://issues.folio.org/browse/UIIN-1326 (UNKNOWN)
-                are implemented, it will need to be removed.
+                is implemented, it will need to be removed.
                 Each "mark as" menu item will eventually be returned in the <IfPermission /> wrapper.
               */
               const isPermImplemented = [
                 'INTELLECTUAL_ITEM',
                 'RESTRICTED',
+                'UNKNOWN',
+                'UNAVAILABLE',
+                'LONG_MISSING',
+                'IN_PROCESS_NON_REQUESTABLE',
               ].includes(status);
 
               return isPermImplemented
                 ? (
-                  <IfPermission perm={`ui-inventory.items.mark-${parameterizedStatus}`}>
+                  <IfPermission
+                    perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+                    key={parameterizedStatus}
+                  >
                     {actionMenuItem}
                   </IfPermission>
                 )
                 : actionMenuItem;
-            }
-          )
+            })
         )}
         { canCreateNewRequest(firstItem, stripes) && (
         <Button
@@ -684,7 +687,7 @@ class ItemView extends React.Component {
                   app="inventory"
                   iconKey="item"
                 />
-            )}
+              )}
               paneTitle={(
                 <span data-test-header-item-title>
                   <FormattedMessage
@@ -695,7 +698,7 @@ class ItemView extends React.Component {
                     }}
                   />
                 </span>
-            )}
+              )}
               dismissible
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
@@ -922,6 +925,14 @@ class ItemView extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <KeyValue value={checkIfElementIsEmpty(itemData.materialType)} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                          value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                        />
                       </Col>
                     </Row>
                     <Row>

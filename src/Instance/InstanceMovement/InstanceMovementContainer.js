@@ -22,12 +22,9 @@ import InstanceMovement from './InstanceMovement';
 
 const InstanceMovementContainer = ({
   mutator,
-  referenceData,
   idFrom,
   idTo,
-
   history,
-  location,
 }) => {
   const callout = useContext(CalloutContext);
   const {
@@ -40,15 +37,15 @@ const InstanceMovementContainer = ({
   } = useInstance(idTo, mutator.movableInstance);
 
   const onClose = useCallback((closedInstance) => {
-    const instanceId = closedInstance.id === instanceFrom.id
-      ? instanceTo.id
-      : instanceFrom.id;
+    const instanceId = closedInstance.id === instanceFrom?.id
+      ? instanceTo?.id
+      : instanceFrom?.id;
 
     history.push({
       pathname: `/inventory/view/${instanceId}`,
-      search: location.search,
+      search: history.location.search,
     });
-  });
+  }, [history, instanceFrom, instanceTo]);
 
   const moveHoldings = (toInstanceId, holdings) => {
     return mutator.movableHoldings.POST({
@@ -86,52 +83,14 @@ const InstanceMovementContainer = ({
       });
   };
 
-  const moveItems = (toHoldingsRecordId, items) => {
-    return mutator.movableItems.POST({
-      toHoldingsRecordId,
-      itemIds: items,
-    })
-      .then(({ nonUpdatedIds }) => {
-        const hasErrors = Boolean(nonUpdatedIds?.length);
-
-        const message = hasErrors ? (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.error"
-            values={{ items: nonUpdatedIds.join(', ') }}
-          />
-        ) : (
-          <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.success"
-            values={{ count: items.length }}
-          />
-        );
-        const type = hasErrors ? 'error' : 'success';
-
-        callout.sendCallout({ message, type });
-      })
-      .catch(() => {
-        callout.sendCallout({
-          type: 'error',
-          message: (
-            <FormattedMessage
-              id="ui-inventory.moveItems.instance.items.error.server"
-              values={{ items: items.join(', ') }}
-            />
-          ),
-        });
-      });
-  };
-
   if (isInstanceFromLoading || isInstanceToLoading) return <LoadingView />;
 
   return (
     <InstanceMovement
-      referenceData={referenceData}
       instanceFrom={instanceFrom}
       instanceTo={instanceTo}
       onClose={onClose}
       moveHoldings={moveHoldings}
-      moveItems={moveItems}
     />
   );
 };
@@ -150,12 +109,6 @@ InstanceMovementContainer.manifest = Object.freeze({
     fetch: false,
     throwErrors: false,
   },
-  movableItems: {
-    type: 'okapi',
-    path: 'inventory/items/move',
-    fetch: false,
-    throwErrors: false,
-  },
   instanceHoldings: {
     type: 'okapi',
     records: 'holdingsRecords',
@@ -169,16 +122,9 @@ InstanceMovementContainer.manifest = Object.freeze({
 
 InstanceMovementContainer.propTypes = {
   history:  PropTypes.object.isRequired,
-  location:  PropTypes.object.isRequired,
-
   mutator:  PropTypes.object.isRequired,
   idFrom: PropTypes.string.isRequired,
   idTo: PropTypes.string.isRequired,
-  referenceData: PropTypes.object,
-};
-
-InstanceMovementContainer.defaultProps = {
-  referenceData: {},
 };
 
 export default withRouter(stripesConnect(InstanceMovementContainer));
