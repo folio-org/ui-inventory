@@ -41,6 +41,7 @@ export const instanceFilterConfig = [
     name: 'natureOfContent',
     cql: 'natureOfContentTermIds',
     values: [],
+    operator: '=',
   },
   {
     name: 'location',

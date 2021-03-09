@@ -11,6 +11,7 @@ import {
   Accordion,
   Row,
   Col,
+  Icon,
 } from '@folio/stripes/components';
 
 import { DataContext } from '../../../contexts';
@@ -66,14 +67,25 @@ const HoldingAccordion = ({
       open={open}
       onToggle={handleAccordionToggle}
       label={(
-        <FormattedMessage
-          id="ui-inventory.holdingsHeader"
-          values={{
-            location: labelLocation,
-            callNumber: callNumberLabel(holding),
-            copyNumber: holding.copyNumber,
-          }}
-        />
+        <>
+          <FormattedMessage
+            id="ui-inventory.holdingsHeader"
+            values={{
+              location: labelLocation,
+              callNumber: callNumberLabel(holding),
+              copyNumber: holding.copyNumber,
+            }}
+          />
+          {holding.discoverySuppress &&
+          <span>
+            <Icon
+              size="medium"
+              icon="exclamation-circle"
+              status="warn"
+            />
+          </span>
+          }
+        </>
       )}
       displayWhenOpen={holdingButtonsGroup}
       displayWhenClosed={holdingButtonsGroup}

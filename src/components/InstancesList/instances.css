@@ -3,6 +3,9 @@
 .actionIcon {
   margin-right: 10px;
 }
+.warnIcon {
+  margin-left: var(--gutter-static-one-third);
+}
 .cellAlign {
   align-items: flex-start;
 }

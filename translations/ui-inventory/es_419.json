@@ -232,7 +232,7 @@
     "instanceRelationshipsAnalyticsBoundWith": "Relación de instancia (analíticas y encuadernadas con)",
     "instanceStatusTypes": "Instance status types",
     "instanceStatusType": "Instance status type",
-    "instanceHoldingsItem": "Instances, Holdings, Items",
+    "instanceHoldingsItem": "Instancias, existencias, artículos",
     "URLrelationship": "Relación URL",
     "urlRelationshipTerm": "Término de la relación URL",
     "digitizationPolicy": "Digitization policy",
@@ -616,7 +616,6 @@
     "authentication": "Authentication",
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
-    "jobProfileId": "Job profile ID",
     "copycat.import": "Import",
     "copycat.reimport": "Overlay",
     "copycat.callout.updated": "Updated record {xid}",
@@ -624,7 +623,7 @@
     "copycat.callout.simpleError": "Something went wrong: {err}",
     "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
     "permission.single-record-import": "Inventory: Import single bibliographic records",
-    "duplicateInstanceMarc": "Duplicate MARC bibliographic record",
+    "duplicateInstanceMarc": "Derive new MARC bibliographic record",
     "permission.items.mark-unknown": "Inventory: Mark items unknown",
     "permission.items.mark-unavailable": "Inventory: Mark items unavailable",
     "permission.items.mark-long-missing": "Inventory: Mark items long missing",
@@ -641,5 +640,8 @@
     "remote.warning.common": "To remove {something} from remote storage, run an exception report or communicate this directly to your remote storage location.",
     "remote.warning.titles": "This includes {count, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
     "remote.holdings": "the holdings",
-    "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}"
+    "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
+    "createJobProfileId": "Job profile ID for create",
+    "updateJobProfileId": "Job profile ID for update",
+    "button.addTargetOption": "Add target option"
 }
