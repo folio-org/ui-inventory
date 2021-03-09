@@ -379,6 +379,7 @@ class ViewInstance extends React.Component {
                 <Button
                   id="duplicate-instance-marc"
                   buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
                   onClick={() => {
                     onToggle();
                     this.duplicateInstanceMarc();
