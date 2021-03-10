@@ -658,34 +658,6 @@ describe('InstanceViewPage', () => {
     });
   });
 
-  describe('Suppress from discovery holding', () => {
-    setupApplication();
-
-    beforeEach(async function () {
-      instance = this.server.create('instance', 'withDiscoverySuppressHolding');
-      this.visit(`/inventory/view/${instance.id}`);
-      await InstanceViewPage.whenLoaded();
-    });
-
-    it('should have a warning icon in the title field', () => {
-      expect(InstanceViewPage.hasWarnIcon).to.be.true;
-    });
-  });
-
-  describe('Suppress from discovery item', () => {
-    setupApplication();
-
-    beforeEach(async function () {
-      instance = this.server.create('instance', 'withHoldingAndDiscoverySuppressItem');
-      this.visit(`/inventory/view/${instance.id}`);
-      await InstanceViewPage.whenLoaded();
-    });
-
-    it('should have a warning icon in the barcode field', () => {
-      expect(InstanceViewPage.hasWarnIcon).to.be.true;
-    });
-  });
-
   describe('Empty fields', () => {
     setupApplication({ scenarios: ['fetch-items-success'] });
 

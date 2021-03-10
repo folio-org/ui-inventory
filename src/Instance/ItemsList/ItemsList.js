@@ -58,22 +58,12 @@ const getFormatter = (
   'barcode': item => {
     return (
       item.id && (
-      <>
         <ItemBarcode
           item={item}
           holdingId={holding.id}
           instanceId={holding.instanceId}
         />
-        {item.discoverySuppress &&
-        <span>
-          <Icon
-            size="medium"
-            icon="exclamation-circle"
-            status="warn"
-          />
-        </span>
-        }
-      </>)
+      )
     ) || noValue;
   },
   'status': x => x.status?.name || noValue,
