@@ -580,11 +580,7 @@ class InstancesList extends React.Component {
           />
         </CheckboxColumn>
       ),
-      'title': ({
-        title,
-        discoverySuppress,
-        staffSuppress,
-      }) => (
+      'title': ({ title }) => (
         <AppIcon
           size="small"
           app="inventory"
@@ -592,15 +588,6 @@ class InstancesList extends React.Component {
           iconAlignment="baseline"
         >
           {title}
-          {(discoverySuppress || staffSuppress) &&
-          <span className={css.warnIcon}>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
-          }
         </AppIcon>
       ),
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),

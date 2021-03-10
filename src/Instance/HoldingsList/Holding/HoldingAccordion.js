@@ -67,25 +67,14 @@ const HoldingAccordion = ({
       open={open}
       onToggle={handleAccordionToggle}
       label={(
-        <>
-          <FormattedMessage
-            id="ui-inventory.holdingsHeader"
-            values={{
-              location: labelLocation,
-              callNumber: callNumberLabel(holding),
-              copyNumber: holding.copyNumber,
-            }}
-          />
-          {holding.discoverySuppress &&
-          <span>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
-          }
-        </>
+        <FormattedMessage
+          id="ui-inventory.holdingsHeader"
+          values={{
+            location: labelLocation,
+            callNumber: callNumberLabel(holding),
+            copyNumber: holding.copyNumber,
+          }}
+        />
       )}
       displayWhenOpen={holdingButtonsGroup}
       displayWhenClosed={holdingButtonsGroup}
