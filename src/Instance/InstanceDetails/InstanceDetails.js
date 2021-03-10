@@ -15,7 +15,6 @@ import {
   Pane,
   PaneMenu,
   Row,
-  TextField,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -31,7 +30,6 @@ import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import HelperApp from '../../components/HelperApp';
-import { WarningMessage } from '../../components';
 
 import {
   getAccordionState,
@@ -121,13 +119,11 @@ const InstanceDetails = ({
         <TitleManager record={instance.title} />
 
         <AccordionStatus>
-          <Row>
-            <Col xs={10}>
-              {
-                instance.discoverySuppress && <WarningMessage fill id="ui-inventory.instance.suppressedFromDiscovery" />
-              }
-            </Col>
-            <Col data-test-expand-all xs={2}>
+          <Row end="xs">
+            <Col
+              data-test-expand-all
+              xs
+            >
               <ExpandAllButton />
             </Col>
           </Row>
