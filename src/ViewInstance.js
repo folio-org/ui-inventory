@@ -379,7 +379,7 @@ class ViewInstance extends React.Component {
                 <Button
                   id="duplicate-instance-marc"
                   buttonStyle="dropdownItem"
-                  disabled // enable this button when https://issues.folio.org/browse/UIQM-66 is done
+                  disabled={!marcRecord}
                   onClick={() => {
                     onToggle();
                     this.duplicateInstanceMarc();
@@ -500,6 +500,7 @@ class ViewInstance extends React.Component {
     return (
       <>
         <InstanceDetails
+          id="pane-instancedetails"
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
