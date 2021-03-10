@@ -76,6 +76,7 @@
 * Add a warning icon for instance/holdings/item marked as Suppressed from discovery. Refs UIIN-1380.
 * Fix nature of content filter. Fixes UIIN-1441.
 * Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
+* Add visual display when instance is suppressed from discovery. Refs UIIN-1377 and UIIN-1386.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
