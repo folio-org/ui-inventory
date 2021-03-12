@@ -641,7 +641,7 @@
     "remote.warning.titles": "يحتوي ذلك على {count, plural, =0 {<strong>لا</strong> عنوان } one {<strong>#</strong> عنواناً } other {<strong>#</strong> عنواناً}}.",
     "remote.holdings": "المقتنيات",
     "remote.items": "{count, plural, zero {مادة} one {مادة} two {مادتين} few {مواد} many {مواد} other {مواد}}",
-    "createJobProfileId": "معرّف وضع الوظيفة للإنشاء",
-    "updateJobProfileId": "معرّف وضع الوظيفة للتحديث",
+    "createJobProfileId": "معرّف بروفايل المهمة للإنشاء",
+    "updateJobProfileId": "معرّف بروفايل المهمة للتحديث",
     "button.addTargetOption": "إضافة خيار مستهدف"
 }
