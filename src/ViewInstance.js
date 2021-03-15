@@ -448,18 +448,20 @@ class ViewInstance extends React.Component {
         )}
 
         <IfInterface name="copycat-imports">
-          <Button
-            id="dropdown-clickable-reimport-record"
-            onClick={() => {
-              onToggle();
-              this.setState({ isImportRecordModalOpened: true });
-            }}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="lightning">
-              <FormattedMessage id="ui-inventory.copycat.reimport" />
-            </Icon>
-          </Button>
+          <IfPermission perm="copycat.profiles.collection.get">
+            <Button
+              id="dropdown-clickable-reimport-record"
+              onClick={() => {
+                onToggle();
+                this.setState({ isImportRecordModalOpened: true });
+              }}
+              buttonStyle="dropdownItem"
+            >
+              <Icon icon="lightning">
+                <FormattedMessage id="ui-inventory.copycat.reimport" />
+              </Icon>
+            </Button>
+          </IfPermission>
         </IfInterface>
       </>
     );
@@ -548,13 +550,15 @@ class ViewInstance extends React.Component {
         }
 
         <IfInterface name="copycat-imports">
-          <ImportRecordModal
-            isOpen={this.state.isImportRecordModalOpened}
-            currentExternalIdentifier={undefined}
-            handleSubmit={this.handleImportRecordModalSubmit}
-            handleCancel={this.handleImportRecordModalCancel}
-            id={id}
-          />
+          <IfPermission perm="copycat.profiles.collection.get">
+            <ImportRecordModal
+              isOpen={this.state.isImportRecordModalOpened}
+              currentExternalIdentifier={undefined}
+              handleSubmit={this.handleImportRecordModalSubmit}
+              handleCancel={this.handleImportRecordModalCancel}
+              id={id}
+            />
+          </IfPermission>
         </IfInterface>
       </>
     );

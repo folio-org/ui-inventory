@@ -716,6 +716,7 @@
         "displayName": "Inventory: Import single bibliographic records",
         "subPermissions": [
           "ui-inventory.instance.view",
+          "copycat.profiles.collection.get",
           "copycat.imports.post"
         ],
         "visible": true

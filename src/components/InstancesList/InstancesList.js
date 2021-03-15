@@ -424,12 +424,14 @@ class InstancesList extends React.Component {
             isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
           })}
           <IfInterface name="copycat-imports">
-            {this.getActionItem({
-              id: 'dropdown-clickable-import-record',
-              icon: 'lightning',
-              messageId: 'ui-inventory.copycat.import',
-              onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-            })}
+            <IfPermission perm="copycat.profiles.collection.get">
+              {this.getActionItem({
+                id: 'dropdown-clickable-import-record',
+                icon: 'lightning',
+                messageId: 'ui-inventory.copycat.import',
+                onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+              })}
+            </IfPermission>
           </IfInterface>
           {isQuickExportLimitExceeded && (
             <span
@@ -676,12 +678,14 @@ class InstancesList extends React.Component {
           onCancel={this.handleSelectedRecordsModalCancel}
         />
         <IfInterface name="copycat-imports">
-          <ImportRecordModal
-            isOpen={isImportRecordModalOpened}
-            currentExternalIdentifier={undefined}
-            handleSubmit={this.handleImportRecordModalSubmit}
-            handleCancel={this.handleImportRecordModalCancel}
-          />
+          <IfPermission perm="copycat.profiles.collection.get">
+            <ImportRecordModal
+              isOpen={isImportRecordModalOpened}
+              currentExternalIdentifier={undefined}
+              handleSubmit={this.handleImportRecordModalSubmit}
+              handleCancel={this.handleImportRecordModalCancel}
+            />
+          </IfPermission>
         </IfInterface>
       </>
     );
