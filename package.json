@@ -78,7 +78,7 @@
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
-      "data-export": "3.0"
+      "data-export": "4.0"
     },
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",

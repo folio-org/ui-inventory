@@ -69,7 +69,6 @@ import KeyValue from './KeyValue';
   alternativeTitlesList = new MultiColumnListInteractor('#list-alternative-titles');
   items = collection('[id^="list-items"] div[class^=mclRow]', Item);
   draggableItems = collection('[id^="list-items"] div[draggable]', Item);
-  hasWarnIcon = isPresent('[class*=status-warn]');
   hasViewHoldingsButton = isPresent('[data-test-view-holdings]');
   clickViewHoldings = clickable('[data-test-view-holdings]');
   hasButtonAddItem = isPresent('[data-test-add-item]');

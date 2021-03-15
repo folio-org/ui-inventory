@@ -623,7 +623,7 @@
     "copycat.callout.simpleError": "لقد حدث خطأ ما: {err}",
     "copycat.callout.complexError": "لقد حدث خطأ ما: {err}: {detail}",
     "permission.single-record-import": "المخزون: تصدير التسجيلات البيبلوغرافية المفردة",
-    "duplicateInstanceMarc": "تكرار تسجيلة مارك البيبلوغرافية",
+    "duplicateInstanceMarc": "اشتقاق تسجيلة مارك بيبلوغرافية جديدة",
     "permission.items.mark-unknown": "المخزون: علّم المواد غير معروفة",
     "permission.items.mark-unavailable": "المخزون: علّم المواد غير متاحة",
     "permission.items.mark-long-missing": "المخزون: علّم المواد مفقودة منذ وقت طويل",
@@ -641,7 +641,7 @@
     "remote.warning.titles": "يحتوي ذلك على {count, plural, =0 {<strong>لا</strong> عنوان } one {<strong>#</strong> عنواناً } other {<strong>#</strong> عنواناً}}.",
     "remote.holdings": "المقتنيات",
     "remote.items": "{count, plural, zero {مادة} one {مادة} two {مادتين} few {مواد} many {مواد} other {مواد}}",
-    "createJobProfileId": "معرّف وضع الوظيفة للإنشاء",
-    "updateJobProfileId": "معرّف وضع الوظيفة للتحديث",
+    "createJobProfileId": "معرّف بروفايل المهمة للإنشاء",
+    "updateJobProfileId": "معرّف بروفايل المهمة للتحديث",
     "button.addTargetOption": "إضافة خيار مستهدف"
 }
