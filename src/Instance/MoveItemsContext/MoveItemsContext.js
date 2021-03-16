@@ -16,7 +16,7 @@ import {
   isItemsSelected,
   selectItems,
 } from '../utils';
-import { useMoveItems } from '../Move';
+import * as Move from '../Move';
 import { Confirmation } from './Confirmation';
 
 
@@ -32,7 +32,7 @@ const MoveItemsContext = ({ children }) => {
   }, []);
 
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
-  const { moveItems, isMoving } = useMoveItems();
+  const { moveItems, isMoving } = Move.useItems();
 
   const setAndMoveItems = useCallback(async (fromHoldingsId, toHoldingsId, result) => {
     const fromSelectedMap = selectedItemsMap[fromHoldingsId] || {};
