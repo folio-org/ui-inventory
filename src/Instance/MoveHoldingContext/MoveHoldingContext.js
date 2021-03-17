@@ -12,7 +12,6 @@ import {
 
 import {
   Loading,
-  ConfirmationModal,
 } from '@folio/stripes/components';
 import { MessageBanner } from '@folio/stripes-components';
 
@@ -28,7 +27,7 @@ import {
   selectItems,
 } from '../utils';
 import DnDContext from '../DnDContext';
-import { useMoveItems } from '../Move';
+import * as Move from '../Move';
 
 
 const MoveHoldingContext = ({
@@ -44,7 +43,7 @@ const MoveHoldingContext = ({
   const { holdingsById } = useHoldings();
 
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
-  const { moveItems, isMoving: isItemsMoving } = useMoveItems();
+  const { moveItems, isMoving: isItemsMoving } = Move.useItems();
 
   const { holdingsRecords: leftHoldings } = useInstanceHoldingsQuery(leftInstance.id);
   const { holdingsRecords: rightHoldings } = useInstanceHoldingsQuery(rightInstance.id);
@@ -261,15 +260,12 @@ const MoveHoldingContext = ({
           {children}
         </DnDContext.Provider>
       </DragDropContext>
-      <ConfirmationModal
+      <Move.ConfirmationModal
         id="move-holding-confirmation"
-        confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
-        heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
         message={movingMessage}
         onCancel={closeModal}
         onConfirm={onConfirm}
         open={isModalOpen}
-        bodyTag="div"
       />
     </>
   );

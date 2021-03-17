@@ -8,7 +8,7 @@ import { CalloutContext } from '@folio/stripes-core';
 import { useMoveItemsMutation } from '../../common';
 import * as RemoteStorage from '../../RemoteStorageService';
 
-export const useMoveItems = () => {
+export const useItems = () => {
   const callout = useContext(CalloutContext);
 
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
@@ -54,4 +54,4 @@ export const useMoveItems = () => {
   };
 };
 
-export default useMoveItems;
+export default useItems;
