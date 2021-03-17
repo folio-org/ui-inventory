@@ -14,4 +14,20 @@ export const validateTitles = (instance, type, errors, message) => {
   }
 };
 
+export const validateSubInstances = (instance, type, errors, message) => {
+  const errorList = [];
+
+  instance[type] = (instance?.[type] ?? []).forEach((inst, index) => {
+    const { instanceRelationshipTypeId } = inst;
+
+    if (!instanceRelationshipTypeId) {
+      errorList[index] = { instanceRelationshipTypeId: message };
+    }
+  });
+
+  if (errorList.length) {
+    errors[type] = errorList;
+  }
+};
+
 export default {};
