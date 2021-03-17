@@ -1,2 +1,2 @@
-export * from './useMoveItems';
-
+export * from './useItems';
+export * from './ConfirmationModal';
