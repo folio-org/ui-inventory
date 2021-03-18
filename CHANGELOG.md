@@ -75,6 +75,7 @@
 * Change label Duplicate MARC bib record to Derive new MARC bib record. Refs UIIN-1436.
 * Fix nature of content filter. Fixes UIIN-1441.
 * Update `data-export` interface to `4.0`. Refs UIIN-1448.
+* Update `@folio/react-intl-safe-html`, `@folio/plugin-find-instance`, and `@folio/quick-marc` for compatibility with `@folio/stripes` `v6`.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
