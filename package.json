@@ -773,7 +773,7 @@
     "sinon": "^7.0.0"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^2.0.0",
+    "@folio/react-intl-safe-html": "^3.0.0",
     "@testing-library/dom": "^7.29.4",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
@@ -802,8 +802,8 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^2.0.0",
-    "@folio/plugin-find-instance": "^4.0.0",
-    "@folio/quick-marc": "^2.0.0"
+    "@folio/plugin-find-instance": "^5.0.0",
+    "@folio/quick-marc": "^3.0.0"
   },
   "resolutions": {
     "babel-eslint/@babel/parser": "7.7.5",
