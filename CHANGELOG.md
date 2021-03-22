@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 6.0.0 (IN PROGRESS)
+## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
 
 * Assign tags to Inventory Items. Refs UIIN-309.
 * Filter Item by Tags. Refs UIIN-765.
@@ -77,6 +78,31 @@
 * Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
 * Enabled `<ColumnManager>` in the results list. Refs STSMACOM-468.
 * Update `data-export` interface to `4.0`. Refs UIIN-1448.
+* Update `@folio/react-intl-safe-html`, `@folio/plugin-find-instance`, and `@folio/quick-marc` for compatibility with `@folio/stripes` `v6`.
+
+## [5.0.6](https://github.com/folio-org/ui-inventory/tree/v5.0.6) (2021-01-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.5...v5.0.6)
+
+* Fix type ahead for location filters. Fixes UIIN-1393 and UIIN-1395.
+
+## [5.0.5](https://github.com/folio-org/ui-inventory/tree/v5.0.5) (2020-11-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.4...v5.0.5)
+
+* Return promise when submitting instance, holdings record or item form. Fixes UIIN-1339 and UIIN-1340.
+
+## [5.0.4](https://github.com/folio-org/ui-inventory/tree/v5.0.4) (2020-11-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.3...v5.0.4)
+
+* Do not escape quotes when submitting query-search queries. Refs UIIN-1319, UIIN-1320.
+
+## [5.0.3](https://github.com/folio-org/ui-inventory/tree/v5.0.3) (2020-11-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.1...v5.0.3)
+
+* Move 'Material type' to far end of item table. Refs UIIN-1003.
+* Remove extraneous trailing slash. Refs UIIN-1316.
+* Show the number of open requests when the item status changes. Refs UIIN-1294.
+* Fix search by `identifierTypes`. Fixes UIIN-1312.
+* Omit `id` from preceding/succeeding titles when duplicating instance. Fixes UIIN-1324.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)
