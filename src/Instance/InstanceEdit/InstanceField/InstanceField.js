@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import InstancePlugin from '../../../components/InstancePlugin';
+import TitleLabel from '../../../components/TitleLabel';
 import { getIdentifiers } from '../../../utils';
 import { indentifierTypeNames } from '../../../constants';
 import useReferenceData from '../../../hooks/useReferenceData';
@@ -29,6 +30,7 @@ const InstanceField = ({
   const { update, value } = fields;
   const instance = value[index];
   const {
+    id,
     hrid,
     title,
     identifiers,
@@ -55,7 +57,13 @@ const InstanceField = ({
       <Col xs={2}>
         <KeyValue
           data-test={`instance-title-${index}`}
-          label={<FormattedMessage id="ui-inventory.precedingField.title" />}
+          label={
+            <TitleLabel
+              label={<FormattedMessage id="ui-inventory.precedingField.title" />}
+              subLabel={id && <FormattedMessage id="ui-inventory.precedingField.connected" />}
+              required
+            />
+          }
           value={title || <FormattedMessage id="ui-inventory.notAvailable" />}
         />
       </Col>
