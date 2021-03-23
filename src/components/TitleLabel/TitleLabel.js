@@ -15,8 +15,14 @@ const TitleLabel = ({ label, subLabel, required }) => (
 );
 
 TitleLabel.propTypes = {
-  label: PropTypes.string.isRequired,
-  subLabel: PropTypes.func,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
+  subLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   required: PropTypes.bool,
 };
 
