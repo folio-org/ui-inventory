@@ -727,7 +727,7 @@
     "start": "stripes serve",
     "lint": "eslint .",
     "test": "yarn run test:unit",
-    "test:unit": "jest --ci --coverage",
+    "test:unit": "jest --silent --ci --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
   },
@@ -776,6 +776,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@testing-library/dom": "^7.29.4",
+    "@testing-library/react-hooks": "^5.1.0",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
