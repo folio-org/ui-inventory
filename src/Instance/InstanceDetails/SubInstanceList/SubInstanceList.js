@@ -6,11 +6,14 @@ import { Link } from 'react-router-dom';
 import {
   MultiColumnList,
   KeyValue,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { getIdentifiers } from '../../../utils';
 import { indentifierTypeNames } from '../../../constants';
 import useReferenceData from '../../../hooks/useReferenceData';
+
+const noValue = <NoValue />;
 
 const SubInstanceList = ({
   titles,
@@ -33,12 +36,12 @@ const SubInstanceList = ({
       >
         {row.title}
       </Link> :
-      row.title || '-'),
-    hrid: row => row.hrid || '-',
-    publisher: row => row.publication?.[0]?.publisher ?? '-',
-    publisherDate: row => row.publication?.[0]?.dateOfPublication ?? '-',
-    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById) || '-',
-    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById) || '-',
+      row.title || noValue),
+    hrid: row => row.hrid || noValue,
+    publisher: row => row.publication?.[0]?.publisher ?? noValue,
+    publisherDate: row => row.publication?.[0]?.dateOfPublication ?? noValue,
+    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById) || noValue,
+    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById) || noValue,
   };
 
   const visibleColumns = [
