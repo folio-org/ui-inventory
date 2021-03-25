@@ -99,6 +99,18 @@ describe('InstanceViewPage', () => {
       expect(InstanceViewPage.accordion.isOpen).to.be.true;
     });
 
+    it('displays the instance headline under header', () => {
+      expect(InstanceViewPage.headlineInViewInstance).to.be.true;
+    });
+
+    it('displays the instance title in the pane header', () => {
+      expect(InstanceViewPage.title).to.equal('Instance record ADVANCING RESEARCH');
+    });
+
+    it('should render a View holdings button at the bottom of opened instance', () => {
+      expect(InstanceViewPage.hasViewHoldingsButton).to.be.true;
+    });
+
     describe('accordion toggle', () => {
       beforeEach(async () => {
         await InstanceViewPage.accordion.clickHeader();
@@ -127,22 +139,6 @@ describe('InstanceViewPage', () => {
           expect(InstanceViewPage.accordion.isOpen).to.be.false;
         });
       });
-    });
-
-    it('should be collapse all button displayed', () => {
-      expect(InstanceViewPage.hasExpandAll).to.be.true;
-    });
-
-    it('displays the instance headline under header', () => {
-      expect(InstanceViewPage.headlineInViewInstance).to.be.true;
-    });
-
-    it('displays the instance title in the pane header', () => {
-      expect(InstanceViewPage.title).to.equal('Instance record ADVANCING RESEARCH');
-    });
-
-    it('should render a View holdings button at the bottom of opened instance', () => {
-      expect(InstanceViewPage.hasViewHoldingsButton).to.be.true;
     });
 
     describe('pane header dropdown menu', () => {

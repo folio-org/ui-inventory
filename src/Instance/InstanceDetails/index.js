@@ -11,4 +11,5 @@ export * from './InstanceTitle';
 export * from './InstanceNotesView';
 export * from './InstanceNewHolding';
 
+export { default as SubInstanceList } from './SubInstanceList';
 export { default as InstanceDetails } from './InstanceDetails';
