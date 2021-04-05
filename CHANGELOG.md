@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## IN PROGRESS
+
+* Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
+
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
 

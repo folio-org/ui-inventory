@@ -72,6 +72,8 @@ const MoveItemsContext = ({ children }) => {
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
 
+    if (from === to) return Promise.resolve();
+
     return setAndMoveItems(from, to, result);
   }, [setAndMoveItems]);
 

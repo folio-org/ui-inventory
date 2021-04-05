@@ -119,12 +119,9 @@ const ItemsList = ({
   items,
 
   draggable,
-  droppable,
   isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
-  activeDropZone,
-  isItemsDroppable,
 }) => {
   const intl = useIntl();
 
@@ -172,27 +169,22 @@ const ItemsList = ({
   if (!draggable && isEmpty(items)) return null;
 
   return (
-    <DropZone
-      isItemsDroppable={isItemsDroppable}
-      droppableId={holding.id}
-      isDropDisabled={!droppable || activeDropZone === holding.id}
-    >
-      <MultiColumnList
-        id={`list-items-${holding.id}`}
-        contentData={records}
-        rowMetadata={rowMetadata}
-        formatter={formatter}
-        visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
-        columnMapping={columnMapping}
-        ariaLabel={ariaLabel}
-        interactive={false}
-        onHeaderClick={onHeaderClick}
-        sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-        sortedColumn={itemsSorting.column}
-        rowFormatter={ItemsListRow}
-        rowProps={rowProps}
-      />
-    </DropZone>
+
+    <MultiColumnList
+      id={`list-items-${holding.id}`}
+      contentData={records}
+      rowMetadata={rowMetadata}
+      formatter={formatter}
+      visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
+      columnMapping={columnMapping}
+      ariaLabel={ariaLabel}
+      interactive={false}
+      onHeaderClick={onHeaderClick}
+      sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+      sortedColumn={itemsSorting.column}
+      rowFormatter={ItemsListRow}
+      rowProps={rowProps}
+    />
   );
 };
 
