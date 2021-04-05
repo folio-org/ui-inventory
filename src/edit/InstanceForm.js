@@ -44,8 +44,6 @@ import NoteFields from './noteFields';
 import ElectronicAccessFields from './electronicAccessFields';
 import InstanceFormatFields from './instanceFormatFields';
 import LanguageFields from './languageFields';
-import ChildInstanceFields from './childInstanceFields';
-import ParentInstanceFields from './parentInstanceFields';
 import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
@@ -53,7 +51,13 @@ import {
   psTitleRelationshipId,
   validateOptionalField,
 } from '../utils';
-import { validateTitles } from '../validation';
+import {
+  validateTitles,
+  validateSubInstances,
+} from '../validation';
+
+import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
+import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 
 import styles from './InstanceForm.css';
 
@@ -134,6 +138,9 @@ function validate(values) {
 
   validateTitles(values, 'preceding', errors, requiredTextMessage);
   validateTitles(values, 'succeeding', errors, requiredTextMessage);
+
+  validateSubInstances(values, 'parentInstances', errors, requiredTextMessage);
+  validateSubInstances(values, 'childInstances', errors, requiredTextMessage);
 
   return errors;
 }
@@ -302,6 +309,10 @@ class InstanceForm extends React.Component {
     // we don't want the type selection box for parent/child to include the preceding-succeeding type
     const rTypes = referenceTables.instanceRelationshipTypes;
     const mostParentChildRelationships = filter(rTypes, rt => rt.id !== psTitleRelationshipId(rTypes));
+    const relationshipTypes = mostParentChildRelationships.map(it => ({
+      label: it.name,
+      value: it.id,
+    }));
 
     return (
       <form
@@ -651,7 +662,7 @@ class InstanceForm extends React.Component {
                     <FormattedMessage id="ui-inventory.electronicAccess" />
                   </h3>
                 )}
-                onToggle={!this.onToggleSection}
+                onToggle={this.onToggleSection}
                 open={this.state.sections.instanceSection08}
                 id="instanceSection08"
               >
@@ -706,28 +717,18 @@ class InstanceForm extends React.Component {
                 id="instanceSection11"
               >
                 <ParentInstanceFields
-                  instanceRelationshipTypes={mostParentChildRelationships}
+                  relationshipTypes={relationshipTypes}
                   canAdd={!this.isFieldBlocked('parentInstances')}
                   canEdit={!this.isFieldBlocked('parentInstances')}
                   canDelete={!this.isFieldBlocked('publicInstances')}
                 />
                 <ChildInstanceFields
-                  instanceRelationshipTypes={mostParentChildRelationships}
+                  relationshipTypes={relationshipTypes}
                   canAdd={!this.isFieldBlocked('childInstances')}
                   canEdit={!this.isFieldBlocked('childInstances')}
                   canDelete={!this.isFieldBlocked('childInstances')}
                 />
               </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.relatedInstances" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection12}
-                id="instanceSection12"
-              />
             </div>
           </Pane>
         </Paneset>

@@ -21,6 +21,8 @@ export default function configure() {
 
   this.get('/instance-types/:id');
 
+  this.get('/remote-storage/mappings', {});
+
   this.get('/instance-formats');
   this.get('/instance-formats/:id');
 

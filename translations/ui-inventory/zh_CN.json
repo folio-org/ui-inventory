@@ -623,7 +623,7 @@
     "copycat.callout.simpleError": "发生错误： {err}",
     "copycat.callout.complexError": "发生错误： {err} ： {detail}",
     "permission.single-record-import": "典藏：导入单个书目记录",
-    "duplicateInstanceMarc": "复制MARC书目记录",
+    "duplicateInstanceMarc": "衍生新MARC书目记录",
     "permission.items.mark-unknown": "典藏：标记单件未知",
     "permission.items.mark-unavailable": "典藏：标记单件不可用",
     "permission.items.mark-long-missing": "典藏：标记单件遗失已久",
@@ -641,7 +641,7 @@
     "remote.warning.titles": "这包括{count, plural, =0 { <strong> 无 </strong>标题} one { <strong> # </strong>标题} other { <strong> # </strong>标题}} 。",
     "remote.holdings": "馆藏",
     "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
-    "createJobProfileId": "Job profile ID for create",
-    "updateJobProfileId": "Job profile ID for update",
-    "button.addTargetOption": "Add target option"
+    "createJobProfileId": "用于创建的任务配置文件ID",
+    "updateJobProfileId": "用于更新的任务配置文件ID",
+    "button.addTargetOption": "添加目标选项"
 }
