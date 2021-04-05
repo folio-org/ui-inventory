@@ -22,7 +22,6 @@ import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
 import ItemsListRow from './ItemsListRow';
-import DropZone from './DropZone';
 import {
   sortItems,
 } from './utils';
@@ -193,17 +192,13 @@ ItemsList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
 
   draggable: PropTypes.bool,
-  droppable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
-  activeDropZone: PropTypes.string,
-  isItemsDroppable: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   items: [],
-  isItemsDroppable: true,
 };
 
 export default ItemsList;
