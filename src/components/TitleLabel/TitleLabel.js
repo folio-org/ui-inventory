@@ -10,13 +10,19 @@ import {
 const TitleLabel = ({ label, subLabel, required }) => (
   <Layout className="flex justified full">
     <Label required={required}>{label}</Label>
-    <Label style={{ fontWeight: 'normal' }}>{subLabel}</Label>
+    {subLabel && <Label style={{ fontWeight: 'normal' }}>{subLabel}</Label>}
   </Layout>
 );
 
 TitleLabel.propTypes = {
-  label: PropTypes.string.isRequired,
-  subLabel: PropTypes.func.isRequired,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
+  subLabel: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   required: PropTypes.bool,
 };
 

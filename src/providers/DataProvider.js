@@ -35,12 +35,14 @@ const DataProvider = ({
       locations,
       identifierTypes,
       holdingsSources,
+      instanceRelationshipTypes,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
     loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
     loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
+    loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
 
     return loadedData;
   }, [resources, manifest]);
