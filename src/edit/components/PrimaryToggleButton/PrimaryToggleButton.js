@@ -52,7 +52,7 @@ PrimaryToggleButton.propTypes = {
   fields: PropTypes.shape({
     forEach: PropTypes.func,
     update: PropTypes.func,
-    value: PropTypes.object,
+    value: PropTypes.any,
   }).isRequired,
   label: PropTypes.node,
   input: PropTypes.shape({

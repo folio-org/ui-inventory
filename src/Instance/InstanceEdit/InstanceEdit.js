@@ -24,6 +24,7 @@ import {
   marshalInstance,
   unmarshalInstance,
 } from '../../utils';
+import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 
 const InstanceEdit = ({
   instanceId,
@@ -35,10 +36,16 @@ const InstanceEdit = ({
 
   const [initialValues, setInitialValues] = useState();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
+  const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
+  const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
 
   useEffect(() => {
-    setInitialValues(unmarshalInstance(instance, identifierTypesById));
-  }, [instance, identifierTypesById]);
+    setInitialValues({
+      ...unmarshalInstance(instance, identifierTypesById),
+      parentInstances,
+      childInstances,
+    });
+  }, [instance, identifierTypesById, parentInstances, childInstances]);
 
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
