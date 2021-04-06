@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Checkbox } from '@folio/stripes/components';
 
-import { ItemsListContainer } from '../../ItemsList';
+import { ItemsListContainer, DropZone } from '../../ItemsList';
 
 import HoldingAccordion from './HoldingAccordion';
 
@@ -18,6 +18,7 @@ const Holding = ({
   selectHoldingsForDrag,
   isHoldingDragSelected,
   isDraggable,
+  isItemsDroppable,
 }) => {
   return (
     <div>
@@ -37,25 +38,32 @@ const Holding = ({
           }
         </FormattedMessage>
       }
-      <HoldingAccordion
-        key={`items_${holding.id}`}
-        holding={holding}
-        withMoveDropdown={draggable || isDraggable}
-        holdings={holdings}
-        onViewHolding={onViewHolding}
-        onAddItem={onAddItem}
+      <DropZone
+        isItemsDroppable={isItemsDroppable}
+        droppableId={holding.id}
+        isDropDisabled={!droppable}
       >
-        {
-          ({ items }) => (
-            <ItemsListContainer
-              holding={holding}
-              draggable={draggable}
-              droppable={droppable}
-              items={items}
-            />
-          )
-        }
-      </HoldingAccordion>
+        <HoldingAccordion
+          key={`items_${holding.id}`}
+          holding={holding}
+          withMoveDropdown={draggable || isDraggable}
+          holdings={holdings}
+          onViewHolding={onViewHolding}
+          onAddItem={onAddItem}
+        >
+          {
+            ({ items, handleAccordionToggle }) => (
+              <ItemsListContainer
+                holding={holding}
+                draggable={draggable}
+                droppable={droppable}
+                items={items}
+                handleAccordionToggle={handleAccordionToggle}
+              />
+            )
+          }
+        </HoldingAccordion>
+      </DropZone>
     </div>
   );
 };
@@ -70,6 +78,11 @@ Holding.propTypes = {
   isDraggable: PropTypes.bool,
   selectHoldingsForDrag: PropTypes.func,
   isHoldingDragSelected: PropTypes.func,
+  isItemsDroppable: PropTypes.bool,
+};
+
+Holding.defaultProps = {
+  isItemsDroppable: true,
 };
 
 export default Holding;

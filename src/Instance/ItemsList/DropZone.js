@@ -12,6 +12,7 @@ const DropZone = ({
     <Droppable
       droppableId={droppableId}
       isDropDisabled={isDropDisabled}
+      ignoreContainerClipping
     >
       {(provided) => (
         <div
