@@ -22,7 +22,6 @@ import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
 import ItemsListRow from './ItemsListRow';
-import DropZone from './DropZone';
 import {
   sortItems,
 } from './utils';
@@ -119,12 +118,9 @@ const ItemsList = ({
   items,
 
   draggable,
-  droppable,
   isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
-  activeDropZone,
-  isItemsDroppable,
 }) => {
   const intl = useIntl();
 
@@ -172,27 +168,22 @@ const ItemsList = ({
   if (!draggable && isEmpty(items)) return null;
 
   return (
-    <DropZone
-      isItemsDroppable={isItemsDroppable}
-      droppableId={holding.id}
-      isDropDisabled={!droppable || activeDropZone === holding.id}
-    >
-      <MultiColumnList
-        id={`list-items-${holding.id}`}
-        contentData={records}
-        rowMetadata={rowMetadata}
-        formatter={formatter}
-        visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
-        columnMapping={columnMapping}
-        ariaLabel={ariaLabel}
-        interactive={false}
-        onHeaderClick={onHeaderClick}
-        sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-        sortedColumn={itemsSorting.column}
-        rowFormatter={ItemsListRow}
-        rowProps={rowProps}
-      />
-    </DropZone>
+
+    <MultiColumnList
+      id={`list-items-${holding.id}`}
+      contentData={records}
+      rowMetadata={rowMetadata}
+      formatter={formatter}
+      visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
+      columnMapping={columnMapping}
+      ariaLabel={ariaLabel}
+      interactive={false}
+      onHeaderClick={onHeaderClick}
+      sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+      sortedColumn={itemsSorting.column}
+      rowFormatter={ItemsListRow}
+      rowProps={rowProps}
+    />
   );
 };
 
@@ -201,17 +192,13 @@ ItemsList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
 
   draggable: PropTypes.bool,
-  droppable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
-  activeDropZone: PropTypes.string,
-  isItemsDroppable: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   items: [],
-  isItemsDroppable: true,
 };
 
 export default ItemsList;
