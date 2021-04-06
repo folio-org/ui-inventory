@@ -483,7 +483,7 @@
     "item.status.statusUpdatedLabel": "status zaktualizowany {statusDate}",
     "isbnNormalized": "ISBN, znormalizowany",
     "markAsWithdrawn": "Oznacz jako wycofane",
-    "withdrawnModal.message": "<strong>{tytuł} ({materialType}</strong>) (Kod kreskowy: {kod kreskowy}) zostanie oznaczony jako <strong>wycofany</strong>.",
+    "withdrawnModal.message": "<strong>{title} ({materialType}</strong>) (Kod kreskowy: {barcode}) zostanie oznaczony jako <strong>wycofany</strong>.",
     "withdrawnModal.heading": "Potwierdź status egzemplarza: Wycofany",
     "withdrawnModal.confirm": "Potwierdź",
     "item.status.withdrawn": "Wycofany",
