@@ -77,6 +77,7 @@
 * Fix nature of content filter. Fixes UIIN-1441.
 * Update `data-export` interface to `4.0`. Refs UIIN-1448.
 * Update `@folio/react-intl-safe-html`, `@folio/plugin-find-instance`, and `@folio/quick-marc` for compatibility with `@folio/stripes` `v6`.
+* Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
 
 ## [5.0.6](https://github.com/folio-org/ui-inventory/tree/v5.0.6) (2021-01-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.5...v5.0.6)
