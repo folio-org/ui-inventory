@@ -102,7 +102,11 @@ DataProvider.manifest = {
   locations: {
     type: 'okapi',
     records: 'locations',
-    path: 'locations?limit=1000&query=cql.allRecords=1 sortby name',
+    path: 'locations',
+    params: {
+      limit: (q, p, r, l, props) => props?.stripes?.config?.maxUnpagedResourceCount || 1000,
+      query: 'cql.allRecords=1 sortby name',
+    },
   },
   instanceRelationshipTypes: {
     type: 'okapi',
