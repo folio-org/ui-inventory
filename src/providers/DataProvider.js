@@ -104,7 +104,7 @@ DataProvider.manifest = {
     records: 'locations',
     path: 'locations',
     params: {
-      limit: (q, p, r, l, props) => props?.stripes?.config?.maxLocationsToLoad || 1000,
+      limit: (q, p, r, l, props) => props?.stripes?.config?.maxUnpagedResourceCount || 1000,
       query: 'cql.allRecords=1 sortby name',
     },
   },
