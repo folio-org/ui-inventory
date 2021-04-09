@@ -73,7 +73,7 @@ const InstanceAdministrativeView = ({
         }
         {
           instance.staffSuppress &&
-          <Col xs={3}>
+          <Col xs={4}>
             <WarningMessage id="ui-inventory.staffSuppressed" />
           </Col>
         }

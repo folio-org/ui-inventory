@@ -31,6 +31,7 @@ import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import HelperApp from '../../components/HelperApp';
+import { WarningMessage } from '../../components';
 
 import {
   getAccordionState,
@@ -123,8 +124,7 @@ const InstanceDetails = ({
           <Row>
             <Col xs={10}>
               {
-                instance.discoverySuppress &&
-                <TextField fullWidth readOnly value={intl.formatMessage({ id: 'ui-inventory.instance.suppressedFromDiscovery' })} error=" " />
+                instance.discoverySuppress && <WarningMessage fill id="ui-inventory.instance.suppressedFromDiscovery" />
               }
             </Col>
             <Col data-test-expand-all xs={2}>

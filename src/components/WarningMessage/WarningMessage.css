@@ -1,3 +1,17 @@
-.icon {
+@import "@folio/stripes-components/lib/variables.css";
+
+.fill {
+  padding: 3px;
+  border: 1px solid var(--error);
+  background-color: color(var(--error) alpha(-95%));
+}
+
+.iconStart {
   margin-right: 0.2em;
+  background: none;
+}
+
+.iconEnd {
+  margin-left: 0.2em;
+  background: none;
 }
