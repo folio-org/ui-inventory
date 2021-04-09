@@ -39,7 +39,4 @@ WarningMessage.defaultProps = {
   fill: false,
 };
 
-
-
 export default WarningMessage;
-
