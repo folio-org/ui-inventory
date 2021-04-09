@@ -12,3 +12,4 @@ export { default as TitleField } from './TitleField';
 export { default as TitlesView } from './TitlesView';
 export { default as ModalContent } from './ModalContent';
 export { PaneLoading, ViewLoading } from './Loading';
+export { default as WarningMessage } from './WarningMessage';

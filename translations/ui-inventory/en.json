@@ -649,5 +649,10 @@
   "remote.warning.common": "To remove {something} from remote storage, run an exception report or communicate this directly to your remote storage location.",
   "remote.warning.titles": "This includes {count, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
   "remote.holdings": "the holdings",
-  "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}"
+  "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
+  "instance.suppressedFromDiscovery": "Instance is marked suppressed from discovery",
+  "holdingsRecord.suppressedFromDiscovery": "Holdings is marked suppressed from discovery",
+  "item.suppressedFromDiscovery": "Item is marked suppressed from discovery",
+  "discoverySuppressed": "Suppressed from discovery",
+  "staffSuppressed": "Staff suppressed"
 }
