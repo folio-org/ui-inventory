@@ -1,5 +1,12 @@
 # Change history for ui-inventory
 
+## 7.0.0 (IN PROGRESS)
+
+* Improve relationship with parent and child instances. Refs UIIN-1044.
+* Move items among holdings, even if the list of holdings is loooooooooong. Refs UIIN-1446.
+* Allow the `limit` for the locations query to be specified via stripes config. Refs UIIN-1480.
+* Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
+
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
 
