@@ -1,8 +1,10 @@
 # Change history for ui-inventory
 
-## (IN PROGRESS)
+## 7.0.0 (IN PROGRESS)
 
 * It is possible to configure the maximum number of location to fetch in the Stripes config file, typically `stripes.config.js`, using the `maxUnpagedResourceCount` entry in the `config` area. Fixes UIIN-1480.
+* Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
+* Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
@@ -81,7 +83,6 @@
 * Fix nature of content filter. Fixes UIIN-1441.
 * Update `data-export` interface to `4.0`. Refs UIIN-1448.
 * Update `@folio/react-intl-safe-html`, `@folio/plugin-find-instance`, and `@folio/quick-marc` for compatibility with `@folio/stripes` `v6`.
-* Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
 
 ## [5.0.6](https://github.com/folio-org/ui-inventory/tree/v5.0.6) (2021-01-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.5...v5.0.6)
