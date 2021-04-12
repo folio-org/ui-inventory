@@ -643,5 +643,10 @@
     "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
     "createJobProfileId": "Job profile ID for create",
     "updateJobProfileId": "Job profile ID for update",
-    "button.addTargetOption": "Add target option"
+    "button.addTargetOption": "Add target option",
+    "instance.suppressedFromDiscovery": "Instance is marked suppressed from discovery",
+    "holdingsRecord.suppressedFromDiscovery": "Holdings is marked suppressed from discovery",
+    "item.suppressedFromDiscovery": "Item is marked suppressed from discovery",
+    "discoverySuppressed": "Suppressed from discovery",
+    "staffSuppressed": "Staff suppressed"
 }

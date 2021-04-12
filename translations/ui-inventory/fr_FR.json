@@ -643,5 +643,10 @@
     "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
     "createJobProfileId": "ID du profil de tâche pour création",
     "updateJobProfileId": "ID du profil de tâche pour mise à jour",
-    "button.addTargetOption": "Ajouter une option cible"
+    "button.addTargetOption": "Ajouter une option cible",
+    "instance.suppressedFromDiscovery": "Instance is marked suppressed from discovery",
+    "holdingsRecord.suppressedFromDiscovery": "Holdings is marked suppressed from discovery",
+    "item.suppressedFromDiscovery": "Item is marked suppressed from discovery",
+    "discoverySuppressed": "Suppressed from discovery",
+    "staffSuppressed": "Staff suppressed"
 }
