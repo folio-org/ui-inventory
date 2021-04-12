@@ -643,5 +643,10 @@
     "remote.items": "{count, plural, zero {مادة} one {مادة} two {مادتين} few {مواد} many {مواد} other {مواد}}",
     "createJobProfileId": "معرّف بروفايل المهمة للإنشاء",
     "updateJobProfileId": "معرّف بروفايل المهمة للتحديث",
-    "button.addTargetOption": "إضافة خيار مستهدف"
+    "button.addTargetOption": "إضافة خيار مستهدف",
+    "instance.suppressedFromDiscovery": "توجد علامة محجوب من الاكتشاف على الوعاء",
+    "holdingsRecord.suppressedFromDiscovery": "توجد علامة محجوب من الاكتشاف على المقتنيات",
+    "item.suppressedFromDiscovery": "توجد علامة محجوب من الاكتشاف على المادة",
+    "discoverySuppressed": "محجوب من الاكتشاف",
+    "staffSuppressed": "تم حجب الموظفين"
 }
