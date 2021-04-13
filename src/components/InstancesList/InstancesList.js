@@ -582,7 +582,11 @@ class InstancesList extends React.Component {
           />
         </CheckboxColumn>
       ),
-      'title': ({ title, discoverySuppress }) => (
+      'title': ({
+        title,
+        discoverySuppress,
+        staffSuppress,
+      }) => (
         <AppIcon
           size="small"
           app="inventory"
@@ -590,7 +594,7 @@ class InstancesList extends React.Component {
           iconAlignment="baseline"
         >
           {title}
-          {discoverySuppress &&
+          {(discoverySuppress || staffSuppress) &&
           <span className={css.warnIcon}>
             <Icon
               size="medium"

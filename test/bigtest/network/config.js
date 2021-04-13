@@ -195,6 +195,8 @@ export default function configure() {
 
       if (field === 'source') return instances.where({ source: term });
 
+      if (field === 'staffSuppress') return instances.where({ staffSuppress: term });
+
       if (field === 'discoverySuppress') return instances.where({ discoverySuppress: term });
 
       if (field === 'identifiers') {
