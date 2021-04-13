@@ -28,7 +28,6 @@ describe('Instance filters', () => {
         updatedDate: '2020-04-15',
       },
       source: 'MARC',
-      staffSuppress: true,
       discoverySuppress: true,
     }, 'withHoldingAndItem');
 
@@ -134,6 +133,20 @@ describe('Instance filters', () => {
       it('should not find any instance by source', () => {
         expect(instancesRoute.rows().length).to.equal(0);
       });
+    });
+  });
+
+  describe('filtering by discovery suppress', () => {
+    beforeEach(async function () {
+      await inventory.clickSelectDiscoverySuppressFilter();
+    });
+
+    it('should find an instance with discovery suppress equal to true', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+
+    it('instance title should have a warning icon', () => {
+      expect(inventory.hasWarnIcon).to.be.true;
     });
   });
 
