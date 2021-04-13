@@ -145,6 +145,26 @@ export default Factory.extend({
     }
   }),
 
+  withDiscoverySuppressHolding: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding', { discoverySuppress: true });
+      instance.holdings = [holding];
+      instance.save();
+    }
+  }),
+
+  withHoldingAndDiscoverySuppressItem: trait({
+    afterCreate(instance, server) {
+      const holding = server.create('holding');
+      const item = server.create('item', { discoverySuppress: true });
+
+      holding.items = [item];
+      holding.save();
+      instance.holdings = [holding];
+      instance.save();
+    }
+  }),
+
   withHoldingAndItem: trait({
     afterCreate(instance, server) {
       const holding = server.create(
