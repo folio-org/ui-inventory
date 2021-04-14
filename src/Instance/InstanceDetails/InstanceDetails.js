@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useContext } from 'react';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,7 +15,7 @@ import {
   Pane,
   PaneMenu,
   Row,
-  TextField,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -31,7 +31,6 @@ import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import HelperApp from '../../components/HelperApp';
-import { WarningMessage } from '../../components';
 
 import {
   getAccordionState,
@@ -123,9 +122,9 @@ const InstanceDetails = ({
         <AccordionStatus>
           <Row>
             <Col xs={10}>
-              {
-                instance.discoverySuppress && <WarningMessage fill id="ui-inventory.instance.suppressedFromDiscovery" />
-              }
+              <MessageBanner show={instance.discoverySuppress} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
+              </MessageBanner>
             </Col>
             <Col data-test-expand-all xs={2}>
               <ExpandAllButton />
