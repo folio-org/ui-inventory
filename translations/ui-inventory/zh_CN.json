@@ -644,9 +644,10 @@
     "createJobProfileId": "用于创建的任务配置文件ID",
     "updateJobProfileId": "用于更新的任务配置文件ID",
     "button.addTargetOption": "添加目标选项",
-    "instance.suppressedFromDiscovery": "Instance is marked suppressed from discovery",
-    "holdingsRecord.suppressedFromDiscovery": "Holdings is marked suppressed from discovery",
-    "item.suppressedFromDiscovery": "Item is marked suppressed from discovery",
-    "discoverySuppressed": "Suppressed from discovery",
-    "staffSuppressed": "Staff suppressed"
+    "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+    "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+    "warning.discoverySuppressed": "Warning: Suppressed from discovery",
+    "warning.staffSuppressed": "Warning: Staff suppressed",
+    "warning.previouslyHeld": "Warning: Previously held"
 }
