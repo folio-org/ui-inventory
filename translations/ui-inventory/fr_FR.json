@@ -386,7 +386,7 @@
     "hridHandling.validation.startWithField": "Merci de saisir une valeur numérique",
     "hridHandling.validation.assignPrefixField": "Merci de saisir une valeur alphanumérique",
     "noBarcode": "Pas de code-barres",
-    "items.successfullyCopiedMessage": "Le code-barres de l'élément {barcode} a été copié avec succès dans le presse-papiers.",
+    "items.successfullyCopiedMessage": "Le code-barres de l'exemplaire {barcode} a été copié avec succès dans le presse-papiers.",
     "filters.instances": "Instance",
     "filters.holdings": "Collections",
     "filters.items": "Exemplaire",
@@ -644,9 +644,10 @@
     "createJobProfileId": "ID du profil de tâche pour création",
     "updateJobProfileId": "ID du profil de tâche pour mise à jour",
     "button.addTargetOption": "Ajouter une option cible",
-    "instance.suppressedFromDiscovery": "Instance is marked suppressed from discovery",
-    "holdingsRecord.suppressedFromDiscovery": "Holdings is marked suppressed from discovery",
-    "item.suppressedFromDiscovery": "Item is marked suppressed from discovery",
-    "discoverySuppressed": "Suppressed from discovery",
-    "staffSuppressed": "Staff suppressed"
+    "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+    "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+    "warning.discoverySuppressed": "Warning: Suppressed from discovery",
+    "warning.staffSuppressed": "Warning: Staff suppressed",
+    "warning.previouslyHeld": "Warning: Previously held"
 }

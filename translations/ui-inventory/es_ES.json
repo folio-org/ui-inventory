@@ -644,9 +644,10 @@
     "createJobProfileId": "Job profile ID for create",
     "updateJobProfileId": "Job profile ID for update",
     "button.addTargetOption": "Add target option",
-    "instance.suppressedFromDiscovery": "Instance is marked suppressed from discovery",
-    "holdingsRecord.suppressedFromDiscovery": "Holdings is marked suppressed from discovery",
-    "item.suppressedFromDiscovery": "Item is marked suppressed from discovery",
-    "discoverySuppressed": "Suppressed from discovery",
-    "staffSuppressed": "Staff suppressed"
+    "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+    "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+    "warning.discoverySuppressed": "Warning: Suppressed from discovery",
+    "warning.staffSuppressed": "Warning: Staff suppressed",
+    "warning.previouslyHeld": "Warning: Previously held"
 }
