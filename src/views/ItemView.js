@@ -33,6 +33,7 @@ import {
   Icon,
   ConfirmationModal,
   Modal,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import {
@@ -833,11 +834,16 @@ class ItemView extends React.Component {
               <AccordionStatus>
                 <Row>
                   {effectiveLocationDisplay}
-                  <Col xs={8}>
+                  <Col xs={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
                       value={effectiveCallNumber(item)}
                     />
+                  </Col>
+                  <Col xs={6}>
+                    <MessageBanner show={item.discoverySuppress} type="warning">
+                      <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
+                    </MessageBanner>
                   </Col>
                   <Col end="xs">
                     <ExpandAllButton />
@@ -850,12 +856,6 @@ class ItemView extends React.Component {
                     label={<FormattedMessage id="ui-inventory.administrativeData" />}
                   >
                     <ViewMetaData metadata={item.metadata} />
-                    <Row>
-                      <Col xs={12}>
-                        {item.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-                      </Col>
-                    </Row>
-                    {item.discoverySuppress && <br />}
                     <Row>
                       <Col xs={2}>
                         <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>

@@ -26,7 +26,7 @@ import {
   Button,
   Modal,
   ConfirmationModal,
-  TextField,
+  MessageBanner,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -55,7 +55,6 @@ import {
   noValue,
   holdingsStatementTypes,
 } from './constants';
-import { WarningMessage } from './components';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -531,10 +530,9 @@ class ViewHoldingsRecord extends React.Component {
                   <AccordionStatus>
                     <Row>
                       <Col xs={10}>
-                        {
-                          holdingsRecord.discoverySuppress &&
-                          <TextField fullWidth readOnly value={intl.formatMessage({ id: 'ui-inventory.holdingsRecord.suppressedFromDiscovery' })} error=" " />
-                        }
+                        <MessageBanner show={holdingsRecord.discoverySuppress} type="warning">
+                          <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
+                        </MessageBanner>
                       </Col>
                       <Col data-test-expand-all xs={2}>
                         <ExpandAllButton />
@@ -546,11 +544,6 @@ class ViewHoldingsRecord extends React.Component {
                         label={<FormattedMessage id="ui-inventory.administrativeData" />}
                       >
                         <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                        <Row>
-                          <Col xs={12}>
-                            {holdingsRecord.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
-                          </Col>
-                        </Row>
                         <br />
                         <Row>
                           <Col

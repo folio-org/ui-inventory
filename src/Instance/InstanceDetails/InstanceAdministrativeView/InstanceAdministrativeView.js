@@ -8,13 +8,12 @@ import {
   Row,
   Col,
   KeyValue,
+  MessageBanner,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
   ClipCopy,
 } from '@folio/stripes/smart-components';
-
-import { WarningMessage } from '../../../components';
 
 import {
   getDateWithTime,
@@ -68,19 +67,25 @@ const InstanceAdministrativeView = ({
         {
           instance.discoverySuppress &&
           <Col xs={5}>
-            <WarningMessage id="ui-inventory.discoverySuppressed" />
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-inventory.warning.discoverySuppressed" />
+            </MessageBanner>
           </Col>
         }
         {
           instance.staffSuppress &&
           <Col xs={4}>
-            <WarningMessage id="ui-inventory.staffSuppressed" />
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-inventory.warning.staffSuppressed" />
+            </MessageBanner>
           </Col>
         }
         {
           instance.previouslyHeld &&
           <Col xs={3}>
-            <WarningMessage id="ui-inventory.previouslyHeld" />
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-inventory.warning.previouslyHeld" />
+            </MessageBanner>
           </Col>
         }
       </Row>
