@@ -2,7 +2,6 @@ import React from 'react';
 import {
   FormattedMessage,
   FormattedTime,
-  FormattedDate,
 } from 'react-intl';
 import {
   includes,
@@ -19,6 +18,8 @@ import {
   omit,
 } from 'lodash';
 import moment from 'moment';
+
+import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
   itemStatusesMap,
@@ -377,7 +378,7 @@ export const convertArrayToBlocks = elements => (!isEmpty(elements)
 
 export const getDate = dateValue => {
   return dateValue ? (
-    <FormattedDate
+    <FormattedUTCDate
       value={dateValue}
       day="numeric"
       month="numeric"
