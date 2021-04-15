@@ -8,56 +8,73 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import {
   Loading,
 } from '@folio/stripes/components';
+
+import { useConfirmationModal } from '../../common';
+import * as RemoteStorage from '../../RemoteStorageService';
 import DnDContext from '../DnDContext';
 import {
   isItemsSelected,
   selectItems,
 } from '../utils';
+import * as Move from '../Move';
+import { Confirmation } from './Confirmation';
 
-const MoveItemsContext = ({ children, moveItems }) => {
-  const [isMoving, setIsMoving] = useState(false);
+
+const MoveItemsContext = ({ children }) => {
+  const confirmation = useConfirmationModal();
+
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
   const [activeDropZone, setActiveDropZone] = useState();
+  const [count, setCount] = useState();
 
   const onDragStart = useCallback((result) => {
     setActiveDropZone(result.source.droppableId);
   }, []);
 
-  const setAndMoveItems = useCallback((from, to, result) => {
-    const fromSelectedMap = selectedItemsMap[from] || {};
+  const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
+  const { moveItems, isMoving } = Move.useItems();
+
+  const setAndMoveItems = useCallback(async (fromHoldingsId, toHoldingsId, result) => {
+    const fromSelectedMap = selectedItemsMap[fromHoldingsId] || {};
     const items = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
     if (!items.length) {
       items.push(result.draggableId);
     }
 
-    setIsMoving(true);
+    setCount(items.length);
 
-    moveItems(to, items)
-      .finally(() => {
-        setIsMoving(false);
-      });
+    try {
+      if (checkFromRemoteToNonRemote({ fromHoldingsId, toHoldingsId })) await confirmation.wait();
+    } catch {
+      return;
+    }
+
+    moveItems(fromHoldingsId, toHoldingsId, items);
 
     setSelectedItemsMap((prevItemsMap) => ({
       ...prevItemsMap,
-      [from]: undefined,
+      [fromHoldingsId]: undefined,
     }));
     setActiveDropZone(undefined);
-  }, [selectedItemsMap]);
+  }, [selectedItemsMap, checkFromRemoteToNonRemote, confirmation, moveItems]);
 
   const onSelect = useCallback(({ target }) => {
     const from = target.dataset.itemId;
     const to = target.dataset.toId;
 
-    setAndMoveItems(from, to, target);
+    return setAndMoveItems(from, to, target);
   }, [setAndMoveItems]);
 
   const onDragEnd = useCallback((result) => {
-    if (!result.destination) return;
+    if (!result.destination) return Promise.resolve();
+
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
 
-    setAndMoveItems(from, to, result);
+    if (from === to) return Promise.resolve();
+
+    return setAndMoveItems(from, to, result);
   }, [setAndMoveItems]);
 
   const getDraggingItems = useCallback(() => {
@@ -101,13 +118,16 @@ const MoveItemsContext = ({ children, moveItems }) => {
       >
         {children}
       </DnDContext.Provider>
+      <Confirmation
+        count={count}
+        {...confirmation.props}
+      />
     </DragDropContext>
   );
 };
 
 MoveItemsContext.propTypes = {
   children: PropTypes.node.isRequired,
-  moveItems: PropTypes.func.isRequired,
 };
 
 export default MoveItemsContext;

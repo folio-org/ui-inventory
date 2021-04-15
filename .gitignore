@@ -5,6 +5,7 @@ artifacts
 node_modules
 .idea
 yarn.lock
+package-lock.json
 ModuleDescriptor.json
 yarn-error.log
 .npmrc

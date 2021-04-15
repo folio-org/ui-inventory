@@ -35,12 +35,14 @@ const DataProvider = ({
       locations,
       identifierTypes,
       holdingsSources,
+      instanceRelationshipTypes,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
     loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
     loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
+    loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
 
     return loadedData;
   }, [resources, manifest]);
@@ -100,7 +102,11 @@ DataProvider.manifest = {
   locations: {
     type: 'okapi',
     records: 'locations',
-    path: 'locations?limit=1000&query=cql.allRecords=1 sortby name',
+    path: 'locations',
+    params: {
+      limit: (q, p, r, l, props) => props?.stripes?.config?.maxUnpagedResourceCount || 1000,
+      query: 'cql.allRecords=1 sortby name',
+    },
   },
   instanceRelationshipTypes: {
     type: 'okapi',

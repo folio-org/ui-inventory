@@ -26,6 +26,7 @@ import {
   Button,
   Modal,
   ConfirmationModal,
+  MessageBanner,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -527,8 +528,13 @@ class ViewHoldingsRecord extends React.Component {
                   </Row>
                   <hr />
                   <AccordionStatus>
-                    <Row end="xs">
-                      <Col xs>
+                    <Row>
+                      <Col xs={10}>
+                        <MessageBanner show={holdingsRecord.discoverySuppress} type="warning">
+                          <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
+                        </MessageBanner>
+                      </Col>
+                      <Col data-test-expand-all xs={2}>
                         <ExpandAllButton />
                       </Col>
                     </Row>
@@ -538,11 +544,6 @@ class ViewHoldingsRecord extends React.Component {
                         label={<FormattedMessage id="ui-inventory.administrativeData" />}
                       >
                         <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                        <Row>
-                          <Col xs={12}>
-                            {holdingsRecord.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-                          </Col>
-                        </Row>
                         <br />
                         <Row>
                           <Col
@@ -851,6 +852,7 @@ class ViewHoldingsRecord extends React.Component {
                 instance={instance}
                 referenceTables={referenceTables}
                 stripes={this.props.stripes}
+                itemCount={itemCount}
               />
             </Layer>
             <Layer

@@ -1,6 +1,4 @@
-import React, {
-  useMemo,
-} from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -8,39 +6,18 @@ import PropTypes from 'prop-types';
 import {
   Row,
   Col,
-  KeyValue,
   Accordion,
 } from '@folio/stripes/components';
 
-import {
-  getChildInstancesLabel,
-  getParentInstanceLabel,
-  formatChildInstances,
-  formatParentInstance,
-} from './utils';
+import useLoadSubInstances from '../../../hooks/useLoadSubInstances';
+import SubInstanceList from '../SubInstanceList';
 
 const InstanceRelationshipView = ({
-  location,
-
   id,
   instance,
-  relationTypes,
 }) => {
-  const childInstancesLabel = useMemo(() => (
-    getChildInstancesLabel(instance, relationTypes)
-  ), [instance, relationTypes]);
-
-  const parentInstanceLabel = useMemo(() => (
-    getParentInstanceLabel(instance, relationTypes)
-  ), [instance, relationTypes]);
-
-  const formattedChildInstances = useMemo(() => (
-    formatChildInstances(instance, location.search)
-  ), [instance, location.search]);
-
-  const formattedParentInstances = useMemo(() => (
-    formatParentInstance(instance, location.search)
-  ), [instance, location.search]);
+  const parentInstances = useLoadSubInstances(instance.parentInstances, 'superInstanceId');
+  const childInstances = useLoadSubInstances(instance.childInstances, 'subInstanceId');
 
   return (
     <Accordion
@@ -49,17 +26,21 @@ const InstanceRelationshipView = ({
     >
       <Row>
         <Col xs={12}>
-          <KeyValue
-            label={childInstancesLabel}
-            value={formattedChildInstances}
+          <SubInstanceList
+            id="childInstances"
+            titleKey="subInstanceId"
+            label={<FormattedMessage id="ui-inventory.childInstances" />}
+            titles={childInstances}
           />
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <KeyValue
-            label={parentInstanceLabel}
-            value={formattedParentInstances}
+          <SubInstanceList
+            id="parentInstances"
+            titleKey="superInstanceId"
+            label={<FormattedMessage id="ui-inventory.parentInstances" />}
+            titles={parentInstances}
           />
         </Col>
       </Row>
@@ -70,13 +51,6 @@ const InstanceRelationshipView = ({
 InstanceRelationshipView.propTypes = {
   id: PropTypes.string.isRequired,
   instance: PropTypes.object.isRequired,
-  relationTypes: PropTypes.arrayOf(PropTypes.object),
-
-  location: PropTypes.object.isRequired,
-};
-
-InstanceRelationshipView.defaultProps = {
-  relationTypes: [],
 };
 
 export default withRouter(InstanceRelationshipView);

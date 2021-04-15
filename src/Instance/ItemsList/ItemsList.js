@@ -22,7 +22,6 @@ import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
 import ItemsListRow from './ItemsListRow';
-import DropZone from './DropZone';
 import {
   sortItems,
 } from './utils';
@@ -42,7 +41,7 @@ const getFormatter = (
   'select': (item) => (
     <FormattedMessage id="ui-inventory.moveItems.selectItem">
       {
-        (ariaLabel) => (
+        ([ariaLabel]) => (
           <span data-test-select-item>
             <Checkbox
               id={`select-item-${item.id}`}
@@ -58,12 +57,22 @@ const getFormatter = (
   'barcode': item => {
     return (
       item.id && (
+      <>
         <ItemBarcode
           item={item}
           holdingId={holding.id}
           instanceId={holding.instanceId}
         />
-      )
+        {item.discoverySuppress &&
+        <span>
+          <Icon
+            size="medium"
+            icon="exclamation-circle"
+            status="warn"
+          />
+        </span>
+        }
+      </>)
     ) || noValue;
   },
   'status': x => x.status?.name || noValue,
@@ -119,12 +128,9 @@ const ItemsList = ({
   items,
 
   draggable,
-  droppable,
   isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
-  activeDropZone,
-  isItemsDropable,
 }) => {
   const intl = useIntl();
 
@@ -172,27 +178,22 @@ const ItemsList = ({
   if (!draggable && isEmpty(items)) return null;
 
   return (
-    <DropZone
-      isItemsDropable={isItemsDropable}
-      droppableId={holding.id}
-      isDropDisabled={!droppable || activeDropZone === holding.id}
-    >
-      <MultiColumnList
-        id={`list-items-${holding.id}`}
-        contentData={records}
-        rowMetadata={rowMetadata}
-        formatter={formatter}
-        visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
-        columnMapping={columnMapping}
-        ariaLabel={ariaLabel}
-        interactive={false}
-        onHeaderClick={onHeaderClick}
-        sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-        sortedColumn={itemsSorting.column}
-        rowFormatter={ItemsListRow}
-        rowProps={rowProps}
-      />
-    </DropZone>
+
+    <MultiColumnList
+      id={`list-items-${holding.id}`}
+      contentData={records}
+      rowMetadata={rowMetadata}
+      formatter={formatter}
+      visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
+      columnMapping={columnMapping}
+      ariaLabel={ariaLabel}
+      interactive={false}
+      onHeaderClick={onHeaderClick}
+      sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+      sortedColumn={itemsSorting.column}
+      rowFormatter={ItemsListRow}
+      rowProps={rowProps}
+    />
   );
 };
 
@@ -201,17 +202,13 @@ ItemsList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
 
   draggable: PropTypes.bool,
-  droppable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
-  activeDropZone: PropTypes.string,
-  isItemsDropable: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   items: [],
-  isItemsDropable: true,
 };
 
 export default ItemsList;

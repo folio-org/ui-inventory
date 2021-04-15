@@ -88,7 +88,7 @@ class StatisticalCodeSettings extends React.Component {
           fullWidth
         >
           <FormattedMessage id="ui-inventory.selectStatisticalCode">
-            {(message) => <option value="">{message}</option>}
+            {([message]) => <option value="">{message}</option>}
           </FormattedMessage>
           {statisticalCodeTypesOptions}
         </Field>

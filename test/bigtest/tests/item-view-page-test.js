@@ -9,8 +9,13 @@ import ItemEditPage from '../interactors/item-edit-page';
 import ItemCreatePage from '../interactors/item-create-page';
 
 const itemStatusesMap = {
+  InProcess: 'In process',
+  InProcessNonRequestable: 'In process (non-requestable)',
   Intellectual: 'Intellectual item',
+  LongMissing: 'Long missing',
   Restricted: 'Restricted',
+  Unavailable: 'Unavailable',
+  Unknown: 'Unknown',
 };
 
 describe('ItemViewPage', () => {
@@ -116,12 +121,32 @@ describe('ItemViewPage', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsWithdrawn).to.be.true;
         });
 
+        it('should show a mark as in process', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcess).to.be.true;
+        });
+
+        it('should show a mark as in process (non-requestable)', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcessNonRequestable).to.be.true;
+        });
+
         it('should show a mark as intellectual item', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.true;
         });
 
+        it('should show a mark as long missing', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsLongMissing).to.be.true;
+        });
+
         it('should show a mark as restricted', () => {
           expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.true;
+        });
+
+        it('should show a mark as unavailable', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnavailable).to.be.true;
+        });
+
+        it('should show a mark as unknown', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnknown).to.be.true;
         });
 
         it('should show a delete menu item', () => {
@@ -231,7 +256,9 @@ describe('ItemViewPage', () => {
         });
 
         Object.keys(itemStatusesMap).forEach(status => {
-          describe(`clicking on mark as ${status}`, () => {
+          const statusName = itemStatusesMap[status];
+
+          describe(`clicking on mark as ${statusName}`, () => {
             beforeEach(async () => {
               await ItemViewPage.headerDropdownMenu[`clickMarkAs${status}`]();
             });
@@ -264,8 +291,8 @@ describe('ItemViewPage', () => {
                 expect(ItemViewPage.hasItemStatusModal).to.be.false;
               });
 
-              it(`should change item status to ${status}`, () => {
-                expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal(itemStatusesMap[status]);
+              it(`should change item status to ${statusName}`, () => {
+                expect(ItemViewPage.loanAccordion.keyValues(2).text).to.be.equal(statusName);
               });
             });
           });
@@ -373,8 +400,67 @@ describe('ItemViewPage', () => {
         });
       });
     });
-  });
 
+    describe('visiting the restricted item view page', () => {
+      beforeEach(async function () {
+        const instance = this.server.create(
+          'instance',
+          'withHoldingAndItemStatus',
+          {
+            title: 'ADVANCING RESEARCH',
+            itemStatus: 'Restricted',
+          }
+        );
+        const holding = this.server.schema.instances.first().holdings.models[0];
+        const item = holding.items.models[0].attrs;
+
+        this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
+        await ItemViewPage.whenLoaded();
+      });
+
+      describe('clicking pane header dropdown menu', () => {
+        beforeEach(async () => {
+          await ItemViewPage.headerDropdown.click();
+        });
+
+        it('should show a new request item', () => {
+          expect(ItemViewPage.headerDropdownMenu.hasNewRequestItem).to.be.true;
+        });
+      });
+    });
+
+    Object.keys(itemStatusesMap).forEach(status => {
+      const statusName = itemStatusesMap[status];
+
+      describe(`visiting the item with status ${statusName} view page`, () => {
+        beforeEach(async function () {
+          const instance = this.server.create(
+            'instance',
+            'withHoldingAndItemStatus',
+            {
+              title: 'ADVANCING RESEARCH',
+              itemStatus: statusName,
+            }
+          );
+          const holding = this.server.schema.instances.first().holdings.models[0];
+          const item = holding.items.models[0].attrs;
+
+          this.visit(`/inventory/view/${instance.id}/${holding.id}/${item.id}`);
+          await ItemViewPage.whenLoaded();
+        });
+
+        describe('clicking pane header dropdown menu', () => {
+          beforeEach(async () => {
+            await ItemViewPage.headerDropdown.click();
+          });
+
+          it(`should not display the "mark as ${statusName}" menu item`, () => {
+            expect(ItemViewPage.headerDropdownMenu[`hasMarkAs${status}`]).to.be.false;
+          });
+        });
+      });
+    });
+  });
 
   describe('User does not have permissions', () => {
     setupApplication({
@@ -417,6 +503,26 @@ describe('ItemViewPage', () => {
 
       it('should not show a mark as intellectual item', () => {
         expect(ItemViewPage.headerDropdownMenu.hasMarkAsIntellectual).to.be.false;
+      });
+
+      it('should not show a mark as restricted item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsRestricted).to.be.false;
+      });
+
+      it('should not show a mark as unknown item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnknown).to.be.false;
+      });
+
+      it('should not show a mark as unavailable item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsUnavailable).to.be.false;
+      });
+
+      it('should not show a mark as long missing item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsLongMissing).to.be.false;
+      });
+
+      it('should not show a mark as in process (non-requestable) item', () => {
+        expect(ItemViewPage.headerDropdownMenu.hasMarkAsInProcessNonRequestable).to.be.false;
       });
 
       it('should not show a delete menu item', () => {

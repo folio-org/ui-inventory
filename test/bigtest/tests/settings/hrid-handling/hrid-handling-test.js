@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import setupApplication from '../../../helpers/setup-application';
 import HRIDHandlingInteractor from '../../../interactors/settings/hrid-handling/hrid-handling';
 import translation from '../../../../../translations/ui-inventory/en';
+import wait from '../../../helpers/wait';
 
 const START_WITH_MAX_LENGTH = 11;
 const ASSIGN_PREFIX_MAX_LENGTH = 10;
@@ -36,6 +37,14 @@ describe('Setting of HRID Handling', () => {
     expect(HRIDHandlingInteractor.isPresent).to.be.true;
   });
 
+  it('has "remove leading zeroes" checkbox', () => {
+    expect(HRIDHandlingInteractor.removeZeroesCheckbox.isPresent).to.be.true;
+  });
+
+  it('"remove leading zeroes" checkbox is unchecked by default', () => {
+    expect(HRIDHandlingInteractor.removeZeroesCheckbox.isChecked).to.be.false;
+  });
+
   it('has 3 startWith fields', () => {
     expect(HRIDHandlingInteractor.startWithFields.fields().length).to.be.equal(3);
   });
@@ -50,6 +59,36 @@ describe('Setting of HRID Handling', () => {
 
   it('has "Save & close" button at the bottom', () => {
     expect(HRIDHandlingInteractor.submitFormButton.isPresent).to.be.true;
+  });
+
+  checkInitialValues();
+
+  describe('when "remove leading zeroes" checkbox', () => {
+    describe('is checked', () => {
+      beforeEach(async () => {
+        await wait();
+        await HRIDHandlingInteractor.removeZeroesCheckbox.clickAndBlur();
+      });
+
+      it('leading zeroes should be removed for "start with" fields', () => {
+        HRIDHandlingInteractor.startWithFields.fields().forEach(field => {
+          expect(field.val).to.be.equal('1');
+        });
+      });
+    });
+
+    describe('is unchecked', () => {
+      beforeEach(async () => {
+        await HRIDHandlingInteractor.removeZeroesCheckbox.clickAndBlur();
+        await HRIDHandlingInteractor.removeZeroesCheckbox.clickAndBlur();
+      });
+
+      it('leading zeroes should be added for "start with" fields', () => {
+        HRIDHandlingInteractor.startWithFields.fields().forEach(field => {
+          expect(field.val).to.be.equal('00000000001');
+        });
+      });
+    });
   });
 
   describe('when is pristine', () => {

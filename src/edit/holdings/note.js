@@ -12,7 +12,7 @@ import RepeatableField from '../../components/RepeatableField';
 
 const Note = ({ noteTypeOptions }) => (
   <FormattedMessage id="ui-inventory.selectType">
-    {placeholder => (
+    {([placeholder]) => (
       <RepeatableField
         name="notes"
         addButtonId="clickable-add-note"

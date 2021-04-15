@@ -21,6 +21,8 @@ export default function configure() {
 
   this.get('/instance-types/:id');
 
+  this.get('/remote-storage/mappings', {});
+
   this.get('/instance-formats');
   this.get('/instance-formats/:id');
 
@@ -150,6 +152,10 @@ export default function configure() {
           inst.contributors[0].name.match(right.term));
       }
 
+      if (field === 'allTitles') {
+        return instances.all().filter(inst => inst.alternativeTitles.some(el => el.alternativeTitle === term));
+      }
+
       // With the addition of a third condition to search for records by 'Holdings. Call number readable by eye" in the CQL query,
       // cqlParser.tree object gets a deeper structure in the 'left' and 'right' properties.
       if (left?.left?.field === 'holdingsRecords.fullCallNumber') {
@@ -188,6 +194,10 @@ export default function configure() {
       }
 
       if (field === 'source') return instances.where({ source: term });
+
+      if (field === 'staffSuppress') return instances.where({ staffSuppress: term });
+
+      if (field === 'discoverySuppress') return instances.where({ discoverySuppress: term });
 
       if (field === 'identifiers') {
         const idType = identifierTypes.where({ name: term }).models[0];
@@ -441,6 +451,22 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-in-process', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'In process' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-in-process-non-requestable', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'In process (non-requestable)' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id/mark-intellectual-item', ({ items }, request) => {
     const item = items.find(request.params.id);
 
@@ -449,10 +475,34 @@ export default function configure() {
     return item.attrs;
   });
 
+  this.post('/inventory/items/:id/mark-long-missing', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Long missing' } });
+
+    return item.attrs;
+  });
+
   this.post('/inventory/items/:id/mark-restricted', ({ items }, request) => {
     const item = items.find(request.params.id);
 
     item.update({ status: { name: 'Restricted' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-unavailable', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Unavailable' } });
+
+    return item.attrs;
+  });
+
+  this.post('/inventory/items/:id/mark-unknown', ({ items }, request) => {
+    const item = items.find(request.params.id);
+
+    item.update({ status: { name: 'Unknown' } });
 
     return item.attrs;
   });
@@ -643,4 +693,9 @@ export default function configure() {
     tags: [],
     totalRecords: 0
   });
+
+  // XXX for now, comment this out: its absence only causes ugly
+  // warning messages when the tests run, but its presence causes
+  // mysteriously failures elsewhere on the test suite.
+  // this.get('/copycat/profiles', {});
 }

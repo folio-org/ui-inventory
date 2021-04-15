@@ -23,7 +23,7 @@ const AlternativeTitles = props => {
 
   return (
     <FormattedMessage id="ui-inventory.selectAlternativeTitleType">
-      {placeholder => (
+      {([placeholder]) => (
         <RepeatableField
           name="alternativeTitles"
           label={<FormattedMessage id="ui-inventory.alternativeTitles" />}

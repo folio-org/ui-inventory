@@ -16,7 +16,7 @@ const renderLanguageField = ({ field, fieldIndex, canEdit, langOptions }) => {
 
   return (
     <FormattedMessage id="ui-inventory.selectLanguage">
-      {placeholder => (
+      {([placeholder]) => (
         <Field
           label={label}
           name={field}

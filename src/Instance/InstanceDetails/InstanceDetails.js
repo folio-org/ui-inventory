@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+import React, { useMemo, useState, useContext } from 'react';
+import { useIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,6 +15,7 @@ import {
   Pane,
   PaneMenu,
   Row,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -35,6 +36,7 @@ import {
   getAccordionState,
   getPublishingInfo,
 } from './utils';
+import { DataContext } from '../../contexts';
 
 const accordions = {
   administrative: 'acc01',
@@ -54,11 +56,12 @@ const InstanceDetails = ({
   instance,
   onClose,
   actionMenu,
-  referenceData,
   tagsEnabled,
   ...rest
 }) => {
   const intl = useIntl();
+
+  const referenceData = useContext(DataContext);
 
   const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
   const instanceTitle = instance?.title;
@@ -117,11 +120,13 @@ const InstanceDetails = ({
         <TitleManager record={instance.title} />
 
         <AccordionStatus>
-          <Row end="xs">
-            <Col
-              data-test-expand-all
-              xs
-            >
+          <Row>
+            <Col xs={10}>
+              <MessageBanner show={instance.discoverySuppress} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
+              </MessageBanner>
+            </Col>
+            <Col data-test-expand-all xs={2}>
               <ExpandAllButton />
             </Col>
           </Row>
@@ -199,7 +204,6 @@ const InstanceDetails = ({
             <InstanceRelationshipView
               id={accordions.relationship}
               instance={instance}
-              relationTypes={referenceData.instanceRelationshipTypes}
             />
           </AccordionSet>
         </AccordionStatus>
@@ -214,14 +218,12 @@ InstanceDetails.propTypes = {
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
-  referenceData: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
 };
 
 InstanceDetails.defaultProps = {
   instance: {},
-  referenceData: {},
   tagsEnabled: false,
 };
 

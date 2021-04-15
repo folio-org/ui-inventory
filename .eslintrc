@@ -12,6 +12,12 @@
         "react/prop-types": "off",
         "import/prefer-default-export": "off"
       }
+    },
+    {
+      "files": [ "src/**"],
+      "rules": {
+        "react-hooks/exhaustive-deps": "off"
+      }
     }
   ],
   "env": {

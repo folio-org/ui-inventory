@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { Droppable } from 'react-beautiful-dnd';
 
 const DropZone = ({
-  isItemsDropable,
+  isItemsDroppable,
   children,
   droppableId,
   isDropDisabled,
 }) => {
-  return isItemsDropable ? (
+  return isItemsDroppable ? (
     <Droppable
       droppableId={droppableId}
       isDropDisabled={isDropDisabled}
+      ignoreContainerClipping
     >
       {(provided) => (
         <div
@@ -32,7 +33,7 @@ const DropZone = ({
 };
 
 DropZone.propTypes = {
-  isItemsDropable: PropTypes.bool.isRequired,
+  isItemsDroppable: PropTypes.bool.isRequired,
   droppableId: PropTypes.string.isRequired,
   isDropDisabled: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([

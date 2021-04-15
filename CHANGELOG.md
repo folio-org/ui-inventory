@@ -1,6 +1,21 @@
 # Change history for ui-inventory
 
-## 6.0.0 (IN PROGRESS)
+## 7.0.0 (IN PROGRESS)
+
+* Improve relationship with parent and child instances. Refs UIIN-1044.
+* Move items among holdings, even if the list of holdings is loooooooooong. Refs UIIN-1446.
+* Allow the `limit` for the locations query to be specified via stripes config. Refs UIIN-1480.
+* Add visual display when holdings record is suppressed from discovery. Refs UIIN-1378.
+* Add visual display when instance is suppressed from discovery. Refs UIIN-1377 and UIIN-1386.
+* Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
+* Add a warning icon for instance/holdings/item marked as Suppressed from discovery. Refs UIIN-1380.
+* Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
+* Add visual display when item is suppressed from discovery. Refs UIIN-1379.
+* Also support `circulation` `10.0`. Refs UIIN-1488.
+* Fix date display on item view. Fixes UIIN-1481.
+
+## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
 
 * Assign tags to Inventory Items. Refs UIIN-309.
 * Filter Item by Tags. Refs UIIN-765.
@@ -43,6 +58,64 @@
 * Update to stripes v6. Refs UIIN-1402.
 * Add ability to mark item as Intellectual item and Restricted. Refs UIIN-1374.
 * Add permission for marking an item intellectual. Refs UIIN-1336.
+* Add permission for marking an item restricted. Refs UIIN-1335.
+* Add confirmation and warning when storage locations is changed to non-remote storage location. Refs UIIN-1321.
+* Add ability to mark an item with new statuses (In process, In process (non-requestable), Long missing, Unavailable, Unknown). Refs UIIN-756.
+* Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398.
+* Add ability to switch between new item statuses. Refs UIIN-1305.
+* Add option to remove leading zeroes from Inventory HRIDs. Refs UIIN-1398
+* Add support for maintaining copy-cataloguing profiles in the settings area. Fixes UIIN-1401. Entails adding new interface `copycat-profiles`.
+* Add support for importing MARC records from external Z39.50 sources. Fixes UUIN-1317 and UUIN-1318. Entails adding new interface `copycat-imports`.
+* When multiple Z39.50 services are configured, offer a choice at import time. Fixes UIIN-1426.
+* Modify language of Import Record modal when updating a record. Fixes UIIN-1424.
+* Inventory app now degrades gracefully in the absence of mod-copycat. Fixes UIIN-1428.
+* Modify language of Settings/Inventory/Single record import. Fixes UIIN-1429.
+* Disable the single-record-import modal's Import button until something has been entered. Fixes UIIN-1431.
+* Better settings UI for maintaining copycat targets. Fixes UIIN-1437.
+* In "Z39.50 target profiles" settings, support the `targetOptions` field. Fixes UIIN-1445.
+* Update to `stripes-cli v2.0.0`. Refs UIIN-1410.
+* Show new request option for item with status restricted. Refs UIIN-1306.
+* Connect the `Remove leading zeroes from HRID` field to the `HRID handling` form. Refs UIIN-1413.
+* Rename `Settings (Inventory): Display list of settings pages` permission to `Settings (Inventory): View list of settings pages`. Refs UIIN-1399.
+* Add ability to duplicate MARC bib record. Refs UIIN-1407.
+* Add permission for marking item as In process (non-requestable), Long missing, Unavailable, Unknown. Refs UIIN-1308, UIIN-894, UIIN-1307, UIIN-1326.
+* Parse `item.enumeration` numerically for sorting if possible. Refs UIIN-1412.
+* Allow the selection of remote storage locations. Refs UIIN-1290.
+* Add ability to search by `allTitles` index. Refs UIIN-1434.
+* Add `tags.collection.get` as subpermission to `Inventory: View instances, holdings, and items` permission. Fixes UIIN-1422.
+* Display shelving order on the item record. Refs UIIN-816.
+* Passed the same ID down to the instance details pane and the loading pane. Fixes UIIN-1384.
+* Add item counter to each holding record. Refs UIIN-803.
+* Fix instance format filter. Refs UIIN-1423.
+* Change label Duplicate MARC bib record to Derive new MARC bib record. Refs UIIN-1436.
+* Fix nature of content filter. Fixes UIIN-1441.
+* Update `data-export` interface to `4.0`. Refs UIIN-1448.
+* Update `@folio/react-intl-safe-html`, `@folio/plugin-find-instance`, and `@folio/quick-marc` for compatibility with `@folio/stripes` `v6`.
+* Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
+
+## [5.0.6](https://github.com/folio-org/ui-inventory/tree/v5.0.6) (2021-01-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.5...v5.0.6)
+
+* Fix type ahead for location filters. Fixes UIIN-1393 and UIIN-1395.
+
+## [5.0.5](https://github.com/folio-org/ui-inventory/tree/v5.0.5) (2020-11-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.4...v5.0.5)
+
+* Return promise when submitting instance, holdings record or item form. Fixes UIIN-1339 and UIIN-1340.
+
+## [5.0.4](https://github.com/folio-org/ui-inventory/tree/v5.0.4) (2020-11-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.3...v5.0.4)
+
+* Do not escape quotes when submitting query-search queries. Refs UIIN-1319, UIIN-1320.
+
+## [5.0.3](https://github.com/folio-org/ui-inventory/tree/v5.0.3) (2020-11-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.1...v5.0.3)
+
+* Move 'Material type' to far end of item table. Refs UIIN-1003.
+* Remove extraneous trailing slash. Refs UIIN-1316.
+* Show the number of open requests when the item status changes. Refs UIIN-1294.
+* Fix search by `identifierTypes`. Fixes UIIN-1312.
+* Omit `id` from preceding/succeeding titles when duplicating instance. Fixes UIIN-1324.
 
 ## [5.0.1](https://github.com/folio-org/ui-inventory/tree/v5.0.1) (2020-10-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.0...v5.0.1)

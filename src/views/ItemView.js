@@ -6,10 +6,7 @@ import {
   isEmpty,
   values,
 } from 'lodash';
-import {
-  humanize,
-  dasherize,
-} from 'inflected';
+import { parameterize } from 'inflected';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -36,6 +33,7 @@ import {
   Icon,
   ConfirmationModal,
   Modal,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import {
@@ -321,33 +319,57 @@ class ItemView extends React.Component {
           )}
         </IfPermission>
         { canMarkItemWithStatus(firstItem) && (
-          Object.keys(itemStatusMutators).map(
-            status => {
-              const dasherizedStatus = dasherize(status.toLowerCase());
-              const itemStatus = humanize(status.toLowerCase(), { capitalize: false });
+          Object.keys(itemStatusMutators)
+            .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
+            .map(status => {
+              const itemStatus = itemStatusesMap[status].toLowerCase();
+              const parameterizedStatus = parameterize(itemStatus);
 
-              return (
-                <IfPermission perm={`ui-inventory.items.mark-${dasherizedStatus}`}>
-                  <Button
-                    key={status}
-                    id={`clickable-${dasherizedStatus}`}
-                    buttonStyle="dropdownItem"
-                    onClick={() => {
-                      onToggle();
-                      this.setState({ selectedItemStatus: status });
-                    }}
-                  >
-                    <Icon icon="flag">
-                      <FormattedMessage
-                        id="ui-inventory.markAs"
-                        values={{ itemStatus }}
-                      />
-                    </Icon>
-                  </Button>
-                </IfPermission>
+              const actionMenuItem = (
+                <Button
+                  key={status}
+                  id={`clickable-${parameterizedStatus}`}
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.setState({ selectedItemStatus: status });
+                  }}
+                >
+                  <Icon icon="flag">
+                    <FormattedMessage
+                      id="ui-inventory.markAs"
+                      values={{ itemStatus }}
+                    />
+                  </Icon>
+                </Button>
               );
-            }
-          )
+
+              /**
+                This is a temporary condition for displaying new item statuses, and as soon as
+                  https://issues.folio.org/browse/UIIN-1166 (IN_PROCESS),
+                is implemented, it will need to be removed.
+                Each "mark as" menu item will eventually be returned in the <IfPermission /> wrapper.
+              */
+              const isPermImplemented = [
+                'INTELLECTUAL_ITEM',
+                'RESTRICTED',
+                'UNKNOWN',
+                'UNAVAILABLE',
+                'LONG_MISSING',
+                'IN_PROCESS_NON_REQUESTABLE',
+              ].includes(status);
+
+              return isPermImplemented
+                ? (
+                  <IfPermission
+                    perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+                    key={parameterizedStatus}
+                  >
+                    {actionMenuItem}
+                  </IfPermission>
+                )
+                : actionMenuItem;
+            })
         )}
         { canCreateNewRequest(firstItem, stripes) && (
         <Button
@@ -666,7 +688,7 @@ class ItemView extends React.Component {
                   app="inventory"
                   iconKey="item"
                 />
-            )}
+              )}
               paneTitle={(
                 <span data-test-header-item-title>
                   <FormattedMessage
@@ -677,7 +699,7 @@ class ItemView extends React.Component {
                     }}
                   />
                 </span>
-            )}
+              )}
               dismissible
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
@@ -812,11 +834,16 @@ class ItemView extends React.Component {
               <AccordionStatus>
                 <Row>
                   {effectiveLocationDisplay}
-                  <Col xs={8}>
+                  <Col xs={2}>
                     <KeyValue
                       label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
                       value={effectiveCallNumber(item)}
                     />
+                  </Col>
+                  <Col xs={6}>
+                    <MessageBanner show={item.discoverySuppress} type="warning">
+                      <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
+                    </MessageBanner>
                   </Col>
                   <Col end="xs">
                     <ExpandAllButton />
@@ -829,12 +856,6 @@ class ItemView extends React.Component {
                     label={<FormattedMessage id="ui-inventory.administrativeData" />}
                   >
                     <ViewMetaData metadata={item.metadata} />
-                    <Row>
-                      <Col xs={12}>
-                        {item.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-                      </Col>
-                    </Row>
-                    {item.discoverySuppress && <br />}
                     <Row>
                       <Col xs={2}>
                         <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>
@@ -904,6 +925,14 @@ class ItemView extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <KeyValue value={checkIfElementIsEmpty(itemData.materialType)} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                          value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                        />
                       </Col>
                     </Row>
                     <Row>
@@ -1368,10 +1397,25 @@ ItemView.propTypes = {
     markItemAsMissing: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
+    markAsInProcess: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsInProcessNonRequestable: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
     markAsIntellectualItem: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
+    markAsLongMissing: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
     markAsRestricted: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsUnavailable: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+    }),
+    markAsUnknown: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),

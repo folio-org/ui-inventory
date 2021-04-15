@@ -94,7 +94,7 @@ InstanceTitleData.propTypes = {
   id: PropTypes.string.isRequired,
   instance: PropTypes.object,
   titleTypes: PropTypes.arrayOf(PropTypes.object),
-  identifierTypesById: PropTypes.func,
+  identifierTypesById: PropTypes.object,
 };
 
 InstanceTitleData.defaultProps = {

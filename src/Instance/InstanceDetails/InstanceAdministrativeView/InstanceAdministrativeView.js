@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   KeyValue,
+  MessageBanner,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -62,15 +63,31 @@ const InstanceAdministrativeView = ({
       label={<FormattedMessage id="ui-inventory.instanceData" />}
     >
       {instance.metadata && <ViewMetaData metadata={instance.metadata} />}
-
       <Row>
-        <Col xs={12}>
-          {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-          {instance.discoverySuppress && instance.staffSuppress && '|'}
-          {instance.staffSuppress && <FormattedMessage id="ui-inventory.staffSuppress" />}
-          {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
-          {instance.previouslyHeld && <FormattedMessage id="ui-inventory.previouslyHeld" />}
-        </Col>
+        {
+          instance.discoverySuppress &&
+          <Col xs={5}>
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-inventory.warning.discoverySuppressed" />
+            </MessageBanner>
+          </Col>
+        }
+        {
+          instance.staffSuppress &&
+          <Col xs={4}>
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-inventory.warning.staffSuppressed" />
+            </MessageBanner>
+          </Col>
+        }
+        {
+          instance.previouslyHeld &&
+          <Col xs={3}>
+            <MessageBanner type="warning">
+              <FormattedMessage id="ui-inventory.warning.previouslyHeld" />
+            </MessageBanner>
+          </Col>
+        }
       </Row>
 
       {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
