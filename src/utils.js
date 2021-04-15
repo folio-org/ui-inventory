@@ -382,6 +382,7 @@ export const getDate = dateValue => {
       day="numeric"
       month="numeric"
       year="numeric"
+      timeZone="UTC"
     />
   ) : '-';
 };
