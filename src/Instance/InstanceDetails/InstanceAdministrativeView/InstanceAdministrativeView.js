@@ -19,6 +19,7 @@ import {
   getDateWithTime,
   checkIfElementIsEmpty,
 } from '../../../utils';
+import { WarningMessage } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
 
@@ -67,25 +68,19 @@ const InstanceAdministrativeView = ({
         {
           instance.discoverySuppress &&
           <Col xs={5}>
-            <MessageBanner type="warning">
-              <FormattedMessage id="ui-inventory.warning.discoverySuppressed" />
-            </MessageBanner>
+            <WarningMessage id="ui-inventory.discoverySuppressed" />
           </Col>
         }
         {
           instance.staffSuppress &&
           <Col xs={4}>
-            <MessageBanner type="warning">
-              <FormattedMessage id="ui-inventory.warning.staffSuppressed" />
-            </MessageBanner>
+            <WarningMessage id="ui-inventory.staffSuppressed" />
           </Col>
         }
         {
           instance.previouslyHeld &&
           <Col xs={3}>
-            <MessageBanner type="warning">
-              <FormattedMessage id="ui-inventory.warning.previouslyHeld" />
-            </MessageBanner>
+            <WarningMessage id="ui-inventory.previouslyHeld" />
           </Col>
         }
       </Row>

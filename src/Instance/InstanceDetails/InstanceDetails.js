@@ -122,8 +122,11 @@ const InstanceDetails = ({
         <AccordionStatus>
           <Row>
             <Col xs={10}>
-              <MessageBanner show={instance.discoverySuppress} type="warning">
+              <MessageBanner show={instance.discoverySuppress && !instance.staffSuppress} type="warning">
                 <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
+              </MessageBanner>
+              <MessageBanner show={instance.discoverySuppress && instance.staffSuppress} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed" />
               </MessageBanner>
             </Col>
             <Col data-test-expand-all xs={2}>

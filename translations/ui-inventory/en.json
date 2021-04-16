@@ -651,9 +651,10 @@
   "remote.holdings": "the holdings",
   "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
   "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+  "warning.instance.staffSuppressed": "Warning: Instance is marked staff suppressed",
+  "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Warning: Instance is marked suppressed from discovery and staff suppressed",
   "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
   "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
-  "warning.discoverySuppressed": "Warning: Suppressed from discovery",
-  "warning.staffSuppressed": "Warning: Staff suppressed",
-  "warning.previouslyHeld": "Warning: Previously held"
+  "discoverySuppressed": "Suppressed from discovery",
+  "staffSuppressed": "Staff suppressed"
 }
