@@ -843,7 +843,7 @@ class ItemView extends React.Component {
                   </Col>
                   <Col xs={7}>
                     <Row middle="xs">
-                      <MessageBanner show={!!item.discoverySuppress} type="warning">
+                      <MessageBanner show={Boolean(item.discoverySuppress)} type="warning">
                         <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
                       </MessageBanner>
                     </Row>

@@ -535,7 +535,7 @@ class ViewHoldingsRecord extends React.Component {
                       <Col xs={11}>
                         <Row center="xs" middle="xs">
                           <Col>
-                            <MessageBanner show={!!holdingsRecord.discoverySuppress} type="warning">
+                            <MessageBanner show={Boolean(holdingsRecord.discoverySuppress)} type="warning">
                               <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
                             </MessageBanner>
                           </Col>
