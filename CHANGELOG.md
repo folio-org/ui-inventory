@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 7.0.0 (IN PROGRESS)
+## [7.0.0](https://github.com/folio-org/ui-inventory/tree/v7.0.0) (2021-04-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v6.0.0...v7.0.0)
 
 * It is possible to configure the maximum number of location to fetch in the Stripes config file, typically `stripes.config.js`, using the `maxUnpagedResourceCount` entry in the `config` area. Fixes UIIN-1480.
 * Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
