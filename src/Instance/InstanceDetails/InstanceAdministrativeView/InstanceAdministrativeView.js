@@ -8,7 +8,6 @@ import {
   Row,
   Col,
   KeyValue,
-  MessageBanner,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
