@@ -5,6 +5,7 @@
 * It is possible to configure the maximum number of location to fetch in the Stripes config file, typically `stripes.config.js`, using the `maxUnpagedResourceCount` entry in the `config` area. Fixes UIIN-1480.
 * Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
 * Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
+* Lock `stripes-cli` to `~2.1.1`, and thus `stripes-webpack` to `~1.1.0`. See STCLI-176.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
