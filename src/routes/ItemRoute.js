@@ -17,7 +17,7 @@ import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
 
 export const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
-const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc`;
+const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
 class ItemRoute extends React.Component {
   static manifest = Object.freeze({
@@ -134,6 +134,7 @@ class ItemRoute extends React.Component {
       },
       resourceShouldRefresh: true,
     },
+    // return a count of the requests matching the given item and status
     requests: {
       type: 'okapi',
       path: getRequestsPath,

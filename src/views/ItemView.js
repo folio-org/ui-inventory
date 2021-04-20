@@ -436,7 +436,7 @@ class ItemView extends React.Component {
     const temporaryHoldingsLocation = locationsById[holdingsRecord.temporaryLocationId];
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
-    const requestRecords = (requests || {}).records || [];
+    const requestCount = requests.other?.totalRecords ?? 0;
     const query = location.search ? queryString.parse(location.search) : {};
 
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
@@ -601,7 +601,7 @@ class ItemView extends React.Component {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatusDate: getDateWithTime(item?.status?.date),
-      requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
+      requestLink: requestCount ? <Link to={requestsUrl}>{requestCount}</Link> : 0,
       borrower: borrowerLink,
       loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : '-',
       dueDate: openLoan ? getDateWithTime(openLoan.dueDate) : '-',
@@ -713,7 +713,7 @@ class ItemView extends React.Component {
               >
                 <ModalContent
                   item={item}
-                  itemRequestCount={requestRecords.length}
+                  itemRequestCount={requestCount}
                   status={MISSING}
                   requestsUrl={requestsUrl}
                   onConfirm={this.markItemAsMissing}
@@ -730,7 +730,7 @@ class ItemView extends React.Component {
               >
                 <ModalContent
                   item={item}
-                  itemRequestCount={requestRecords.length}
+                  itemRequestCount={requestCount}
                   status={WITHDRAWN}
                   requestsUrl={requestsUrl}
                   onConfirm={this.markItemAsWithdrawn}
@@ -750,7 +750,7 @@ class ItemView extends React.Component {
               >
                 <ModalContent
                   item={item}
-                  itemRequestCount={requestRecords.length}
+                  itemRequestCount={requestCount}
                   status={itemStatusesMap[selectedItemStatus]}
                   requestsUrl={requestsUrl}
                   onConfirm={() => this.markItemWithStatus(selectedItemStatus)}
@@ -1371,7 +1371,10 @@ ItemView.propTypes = {
   resources: PropTypes.shape({
     instances1: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     loanTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
-    requests: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    requests: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+      other: PropTypes.object,
+    }),
     loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
