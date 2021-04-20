@@ -55,6 +55,9 @@ import {
   noValue,
   holdingsStatementTypes,
 } from './constants';
+import { WarningMessage } from './components';
+
+import css from './View.css';
 
 class ViewHoldingsRecord extends React.Component {
   static manifest = Object.freeze({
@@ -528,14 +531,22 @@ class ViewHoldingsRecord extends React.Component {
                   </Row>
                   <hr />
                   <AccordionStatus>
-                    <Row>
-                      <Col xs={10}>
-                        <MessageBanner show={holdingsRecord.discoverySuppress} type="warning">
-                          <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
-                        </MessageBanner>
+                    <Row className={css.rowMarginBottom}>
+                      <Col xs={11}>
+                        <Row center="xs" middle="xs">
+                          <Col>
+                            <MessageBanner show={Boolean(holdingsRecord.discoverySuppress)} type="warning">
+                              <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
+                            </MessageBanner>
+                          </Col>
+                        </Row>
                       </Col>
-                      <Col data-test-expand-all xs={2}>
-                        <ExpandAllButton />
+                      <Col data-test-expand-all xs={1}>
+                        <Row end="xs">
+                          <Col>
+                            <ExpandAllButton />
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                     <AccordionSet initialStatus={initialAccordionsState}>
@@ -544,6 +555,11 @@ class ViewHoldingsRecord extends React.Component {
                         label={<FormattedMessage id="ui-inventory.administrativeData" />}
                       >
                         <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                        <Row>
+                          <Col xs={12}>
+                            {holdingsRecord.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
+                          </Col>
+                        </Row>
                         <br />
                         <Row>
                           <Col

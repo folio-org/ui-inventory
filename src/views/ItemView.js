@@ -74,6 +74,7 @@ import {
   actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
+import { WarningMessage } from '../components';
 
 export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -668,7 +669,7 @@ class ItemView extends React.Component {
     };
 
     const effectiveLocationDisplay = (
-      <Col xs={4} smOffset={0}>
+      <Col xs={2}>
         <KeyValue
           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
           value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
@@ -840,13 +841,19 @@ class ItemView extends React.Component {
                       value={effectiveCallNumber(item)}
                     />
                   </Col>
-                  <Col xs={6}>
-                    <MessageBanner show={item.discoverySuppress} type="warning">
-                      <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
-                    </MessageBanner>
+                  <Col xs={7}>
+                    <Row middle="xs">
+                      <MessageBanner show={Boolean(item.discoverySuppress)} type="warning">
+                        <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
+                      </MessageBanner>
+                    </Row>
                   </Col>
-                  <Col end="xs">
-                    <ExpandAllButton />
+                  <Col xs={1}>
+                    <Row end="xs">
+                      <Col>
+                        <ExpandAllButton />
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
                 <br />
@@ -856,6 +863,12 @@ class ItemView extends React.Component {
                     label={<FormattedMessage id="ui-inventory.administrativeData" />}
                   >
                     <ViewMetaData metadata={item.metadata} />
+                    <Row>
+                      <Col xs={12}>
+                        {item.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
+                      </Col>
+                    </Row>
+                    {item.discoverySuppress && <br />}
                     <Row>
                       <Col xs={2}>
                         <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>
