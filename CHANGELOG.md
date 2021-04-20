@@ -8,6 +8,11 @@
 * Add visual display when holdings record is suppressed from discovery. Refs UIIN-1378.
 * Add visual display when instance is suppressed from discovery. Refs UIIN-1377 and UIIN-1386.
 * Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
+* Add a warning icon for instance/holdings/item marked as Suppressed from discovery. Refs UIIN-1380.
+* Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
+* Add visual display when item is suppressed from discovery. Refs UIIN-1379.
+* Also support `circulation` `10.0`. Refs UIIN-1488.
+* Fix date display on item view. Fixes UIIN-1481.
 * Display correct open-request count for items. Refs UIIN-1469.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)

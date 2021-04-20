@@ -78,6 +78,7 @@ export default @interactor class InventoryInteractor {
   source = new CheckboxFilterInteractor('#source');
   callout = new CalloutInteractor();
   resetAll = clickable('#clickable-reset-all');
+  hasWarnIcon = isPresent('[class^=warnIcon---]');
 
   whenLoaded() {
     return this.when(() => this.isLoaded);

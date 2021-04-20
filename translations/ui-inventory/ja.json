@@ -643,5 +643,11 @@
     "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
     "createJobProfileId": "Job profile ID for create",
     "updateJobProfileId": "Job profile ID for update",
-    "button.addTargetOption": "Add target option"
+    "button.addTargetOption": "Add target option",
+    "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+    "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+    "warning.discoverySuppressed": "Warning: Suppressed from discovery",
+    "warning.staffSuppressed": "Warning: Staff suppressed",
+    "warning.previouslyHeld": "Warning: Previously held"
 }

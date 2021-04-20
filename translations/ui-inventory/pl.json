@@ -643,5 +643,11 @@
     "remote.items": "{count, plural, one {egzemplarz} few {egzemplarzy} many {egzemplarzy} other {egzemplarze}}",
     "createJobProfileId": "Identyfikator profilu zadania do tworzenia",
     "updateJobProfileId": "Identyfikator profilu zadania do aktualizacji",
-    "button.addTargetOption": "Dodaj opcję docelową"
+    "button.addTargetOption": "Dodaj opcję docelową",
+    "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+    "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+    "warning.discoverySuppressed": "Warning: Suppressed from discovery",
+    "warning.staffSuppressed": "Warning: Staff suppressed",
+    "warning.previouslyHeld": "Warning: Previously held"
 }
