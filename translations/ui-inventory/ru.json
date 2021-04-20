@@ -77,7 +77,7 @@
     "loans": "Книговыдачи",
     "materialTypes": "Типы материалов",
     "materialType": "Тип материала",
-    "holdingsHeader": "Холдинги: {location} > {callNumber}",
+    "holdingsHeader": "Холдинги: {location} > {callNumber} {copyNumber}",
     "viewHoldings": "Просмотр холдингов",
     "holdingsRecord": "Холдинговая запись",
     "viewHoldingsRecord": "Просмотреть холдинговую запись",
