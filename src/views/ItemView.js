@@ -1371,7 +1371,10 @@ ItemView.propTypes = {
   resources: PropTypes.shape({
     instances1: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     loanTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
-    requests: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    requests: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+      other: PropTypes.object,
+    }),
     loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
