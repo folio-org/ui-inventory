@@ -640,6 +640,8 @@
   "copycat.enterIdentifier": "Enter {identifierName} identifier",
   "copycat.enterIdentifierForUpdate": "Enter the {identifierName} identifier to be used to overlay the current data",
   "copycat.callout.updated": "Updated record {xid}",
+  "copycat.callout.no-id.created": "Record {xid} has been queued for import, but is not yet available",
+  "copycat.callout.no-id.updated": "Record {xid} has been queued for update, but the process is not yet complete",
   "copycat.callout.created": "Created record {xid}",
   "copycat.callout.simpleError": "Something went wrong: {err}",
   "copycat.callout.complexError": "Something went wrong: {err}: {detail}",

@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 7.0.2 (IN PROGRESS)
+
+* Warn with yellow toast when result of Single Record Import is unknown. Fixes UIIN-1495.
+
 ## [7.0.1](https://github.com/folio-org/ui-inventory/tree/v7.0.1) (2021-04-22)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.0...v7.0.1)
 
