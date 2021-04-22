@@ -647,7 +647,8 @@
     "warning.instance.suppressedFromDiscovery": "تحذير: توجد علامة محجوب من الاكتشاف على الوعاء",
     "warning.holdingsRecord.suppressedFromDiscovery": "تحذير: توجد علامة محجوب من الاكتشاف على المقتنيات",
     "warning.item.suppressedFromDiscovery": "تحذير: توجد علامة محجوب من الاكتشاف على المادة",
-    "warning.discoverySuppressed": "تحذير: محجوب من الاكتشاف",
-    "warning.staffSuppressed": "تحذير: تم حجب الموظفين",
-    "warning.previouslyHeld": "تحذير: تم حجزه من قبل"
+    "warning.instance.staffSuppressed": "تحذير: توجد علامة محجوب عن الموظفين على الوعاء",
+    "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "تحذير: توجد علامة محجوب من الاكتشاف ومحجوب عن الموظفين على الوعاء",
+    "discoverySuppressed": "محجوب من الاكتشاف",
+    "staffSuppressed": "تم حجب الموظفين"
 }
