@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 7.0.1
+## [7.0.1](https://github.com/folio-org/ui-inventory/tree/v7.0.1) (2021-04-22)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.0...v7.0.1)
 
 * Display correct open-request count for items. Refs UIIN-1469.
 * Fix date display on item view. Fixes UIIN-1481.
