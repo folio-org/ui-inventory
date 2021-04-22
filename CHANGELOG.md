@@ -14,6 +14,7 @@
 * Also support `circulation` `10.0`. Refs UIIN-1488.
 * Fix date display on item view. Fixes UIIN-1481.
 * Display correct open-request count for items. Refs UIIN-1469.
+* Warn with yellow toast when result of Single Record Import is unknown. Fixes UIIN-1495.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
