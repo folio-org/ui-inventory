@@ -17,6 +17,7 @@
 * Fix items in transit export. Fixes UIIN-1492.
 * Warn with yellow toast when result of Single Record Import is unknown. Fixes UIIN-1495.
 * Patch: Display shelving order on the item record. Refs UIIN-816.
+* Add <Pluggable> instance to the Instance action menu for plugin type `copyright-permissions-checker`
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)

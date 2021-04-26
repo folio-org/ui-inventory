@@ -12,6 +12,7 @@ import {
   AppIcon,
   IfPermission,
   IfInterface,
+  Pluggable,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -29,6 +30,8 @@ import {
   batchFetchItems,
   batchFetchRequests,
 } from './Instance/ViewRequests/utils';
+import { indentifierTypeNames } from './constants';
+import { DataContext } from './contexts';
 
 import {
   HoldingsListContainer,
@@ -113,6 +116,7 @@ class ViewInstance extends React.Component {
       findInstancePluginOpened: false,
       isItemsMovement: false,
       isImportRecordModalOpened: false,
+      isCopyrightModalOpened: false
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
@@ -289,8 +293,42 @@ class ViewInstance extends React.Component {
     this.setState({ isImportRecordModalOpened: false });
   }
 
+  toggleCopyrightModal = () => {
+    this.setState(prevState => ({ isCopyrightModalOpened: !prevState.isCopyrightModalOpened }));
+  };
+
   toggleFindInstancePlugin = () => {
     this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
+  };
+
+  // Get all identifiers for all records
+  getIdentifiers = (data) => {
+    const { identifierTypesById } = data;
+    const { ISBN, ISSN } = indentifierTypeNames;
+    const records = this.props?.resources?.selectedInstance?.records;
+    if (!records) {
+      return null;
+    }
+    const allIdentifiers = [].concat(
+      records.map(record => record.identifiers)
+    )[0];
+    const result = [];
+    allIdentifiers.forEach(({ identifierTypeId, value }) => {
+      const ident = identifierTypesById[identifierTypeId];
+      if (
+        (ident?.name === ISBN ||
+        ident?.name === ISSN) &&
+        value
+      ) {
+        result.push({
+          type: ident.name,
+          value
+        });
+      }
+    });
+    // We can't make any meaningful assessment of which is
+    // the best identifier to return, so just return the first
+    return result.length > 0 ? result[0] : null;
   };
 
   createActionMenuGetter = instance => ({ onToggle }) => {
@@ -463,6 +501,31 @@ class ViewInstance extends React.Component {
             </Button>
           </IfPermission>
         </IfInterface>
+        <DataContext.Consumer>
+          {data => (
+            <Pluggable
+              id="copyright-permissions-checker"
+              toggle={this.toggleCopyrightModal}
+              open={this.state.isCopyrightModalOpened}
+              identifier={this.getIdentifiers(data)}
+              type="copyright-permissions-checker"
+              renderTrigger={({ menuText }) => (
+                <Button
+                  id="copyright-permissions-check"
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.toggleCopyrightModal();
+                  }}
+                >
+                  <Icon icon="report">
+                    {menuText}
+                  </Icon>
+                </Button>
+              )}
+            />
+          )}
+        </DataContext.Consumer>
       </>
     );
   };
