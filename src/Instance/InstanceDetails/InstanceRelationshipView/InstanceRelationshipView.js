@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 import useLoadSubInstances from '../../../hooks/useLoadSubInstances';
-import SubInstanceList from '../SubInstanceList';
+import SubInstanceGroup from '../SubInstanceGroup';
 
 const InstanceRelationshipView = ({
   id,
@@ -26,7 +26,7 @@ const InstanceRelationshipView = ({
     >
       <Row>
         <Col xs={12}>
-          <SubInstanceList
+          <SubInstanceGroup
             id="childInstances"
             titleKey="subInstanceId"
             label={<FormattedMessage id="ui-inventory.childInstances" />}
@@ -36,7 +36,7 @@ const InstanceRelationshipView = ({
       </Row>
       <Row>
         <Col xs={12}>
-          <SubInstanceList
+          <SubInstanceGroup
             id="parentInstances"
             titleKey="superInstanceId"
             label={<FormattedMessage id="ui-inventory.parentInstances" />}

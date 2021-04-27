@@ -11,6 +11,7 @@
   "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} selected",
   "instances.resourceType": "Resource Type",
   "instances.language": "Language",
+  "instances.typeOfRelation": "Type of relation: {name}",
   "holdingsRecord.awaitingResources": "Awaiting resources",
   "holdings.permanentLocation": "Holdings permanent location",
   "resultCount": "{count, number} {count, plural, one {record found} other {records found}}",

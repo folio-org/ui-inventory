@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 import {
   MultiColumnList,
-  KeyValue,
   NoValue,
 } from '@folio/stripes/components';
 
@@ -68,18 +67,16 @@ const SubInstanceList = ({
   };
 
   return (
-    <KeyValue label={label}>
-      <MultiColumnList
-        id={id}
-        contentData={titles}
-        visibleColumns={visibleColumns}
-        columnMapping={columnMapping}
-        columnWidths={columnWidths}
-        formatter={formatter}
-        ariaLabel={label}
-        interactive={false}
-      />
-    </KeyValue>
+    <MultiColumnList
+      id={id}
+      contentData={titles}
+      visibleColumns={visibleColumns}
+      columnMapping={columnMapping}
+      columnWidths={columnWidths}
+      formatter={formatter}
+      ariaLabel={label}
+      interactive={false}
+    />
   );
 };
 

@@ -1,40 +1,58 @@
-import { keyBy } from 'lodash';
+import {
+  keyBy,
+  isEqual,
+  sortBy,
+  chain,
+} from 'lodash';
 import {
   useEffect,
   useState
 } from 'react';
 
 import useInstancesQuery from './useInstancesQuery';
+import useReferenceData from './useReferenceData';
 
 // Loads full instance records
 // for given sub instance ids (parentInstances/childInstaces).
 const useLoadSubInstances = (instanceIds = [], subId) => {
+  const { instanceRelationshipTypesById } = useReferenceData();
   const instanstcesById = keyBy(instanceIds, subId);
   const [subInstances, setSubInstances] = useState([]);
   const results = useInstancesQuery(instanceIds.map(inst => inst[subId]));
   const allLoaded = results.reduce((acc, { isSuccess }) => (isSuccess && acc), true);
-
-  useEffect(() => {
-    if (allLoaded && !subInstances.length && results.length) {
-      const instances = results.map(({
-        data: {
-          id,
-          title,
-          hrid,
-          publication,
-          identifiers,
-        }
-      }) => ({
+  const instances = chain(results)
+    .filter(({ data }) => data)
+    .map(({
+      data: {
+        id,
+        title,
+        hrid,
+        publication,
+        identifiers,
+      },
+    }) => {
+      const instance = {
         ...instanstcesById[id],
         title,
         hrid,
         publication,
         identifiers,
-      }));
+      };
+      const { instanceRelationshipTypeId } = instance;
 
+      instance.instanceRelationshipType = instanceRelationshipTypesById?.[instanceRelationshipTypeId]?.name;
+
+      return instance;
+    })
+    .sortBy('title')
+    .value();
+  const shouldUpdateSubInstances = allLoaded && !isEqual(subInstances, instances);
+
+  useEffect(() => {
+    if (shouldUpdateSubInstances) {
       setSubInstances(instances);
     }
-  }, [allLoaded, subInstances, results, instanstcesById]);
+  }, [shouldUpdateSubInstances]);
 
   return subInstances;
 };

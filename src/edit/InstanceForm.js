@@ -716,18 +716,19 @@ class InstanceForm extends React.Component {
                 open={this.state.sections.instanceSection11}
                 id="instanceSection11"
               >
-                <ParentInstanceFields
-                  relationshipTypes={relationshipTypes}
-                  canAdd={!this.isFieldBlocked('parentInstances')}
-                  canEdit={!this.isFieldBlocked('parentInstances')}
-                  canDelete={!this.isFieldBlocked('publicInstances')}
-                />
                 <ChildInstanceFields
                   relationshipTypes={relationshipTypes}
                   canAdd={!this.isFieldBlocked('childInstances')}
                   canEdit={!this.isFieldBlocked('childInstances')}
                   canDelete={!this.isFieldBlocked('childInstances')}
                 />
+                <ParentInstanceFields
+                  relationshipTypes={relationshipTypes}
+                  canAdd={!this.isFieldBlocked('parentInstances')}
+                  canEdit={!this.isFieldBlocked('parentInstances')}
+                  canDelete={!this.isFieldBlocked('publicInstances')}
+                />
+
               </Accordion>
             </div>
           </Pane>
