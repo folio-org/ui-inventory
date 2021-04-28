@@ -74,6 +74,7 @@ export const instances = [
       'staffOnly': false
     }],
     'modeOfIssuanceId': '9d18a02f-5897-4c31-9106-c9abb5c7ae8b',
+    'instanceRelationshipTypeId': '30773a27-b485-4dab-aeb6-b8c04fa3cb17',
     'discoverySuppress': false,
     'statisticalCodeIds': [],
     'statusUpdatedDate': '2020-12-24T13:14:31.537+0000',

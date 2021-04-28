@@ -15,7 +15,6 @@ import useReferenceData from './useReferenceData';
 // Loads full instance records
 // for given sub instance ids (parentInstances/childInstaces).
 const useLoadSubInstances = (instanceIds = [], subId) => {
-  const { instanceRelationshipTypesById } = useReferenceData();
   const instanstcesById = keyBy(instanceIds, subId);
   const [subInstances, setSubInstances] = useState([]);
   const results = useInstancesQuery(instanceIds.map(inst => inst[subId]));
@@ -30,22 +29,16 @@ const useLoadSubInstances = (instanceIds = [], subId) => {
         publication,
         identifiers,
       },
-    }) => {
-      const instance = {
-        ...instanstcesById[id],
-        title,
-        hrid,
-        publication,
-        identifiers,
-      };
-      const { instanceRelationshipTypeId } = instance;
-
-      instance.instanceRelationshipType = instanceRelationshipTypesById?.[instanceRelationshipTypeId]?.name;
-
-      return instance;
-    })
+    }) => ({
+      ...instanstcesById[id],
+      title,
+      hrid,
+      publication,
+      identifiers,
+    }))
     .sortBy('title')
     .value();
+
   const shouldUpdateSubInstances = allLoaded && !isEqual(subInstances, instances);
 
   useEffect(() => {

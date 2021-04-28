@@ -209,7 +209,8 @@ const InstanceDetails = ({
 
             <InstanceRelationshipView
               id={accordions.relationship}
-              instance={instance}
+              parentInstances={instance.parentInstances}
+              childInstances={instance.childInstances}
             />
           </AccordionSet>
         </AccordionStatus>
