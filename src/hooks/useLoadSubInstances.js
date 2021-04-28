@@ -1,7 +1,6 @@
 import {
   keyBy,
   isEqual,
-  sortBy,
   chain,
 } from 'lodash';
 import {
@@ -10,7 +9,6 @@ import {
 } from 'react';
 
 import useInstancesQuery from './useInstancesQuery';
-import useReferenceData from './useReferenceData';
 
 // Loads full instance records
 // for given sub instance ids (parentInstances/childInstaces).
