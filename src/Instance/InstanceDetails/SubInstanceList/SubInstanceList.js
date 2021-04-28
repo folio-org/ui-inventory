@@ -8,9 +8,14 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { getIdentifiers } from '../../../utils';
+import {
+  getIdentifiers,
+  formatCellStyles,
+} from '../../../utils';
 import { indentifierTypeNames } from '../../../constants';
 import useReferenceData from '../../../hooks/useReferenceData';
+
+import css from './SubInstanceList.css';
 
 const noValue = <NoValue />;
 
@@ -74,6 +79,7 @@ const SubInstanceList = ({
       columnMapping={columnMapping}
       columnWidths={columnWidths}
       formatter={formatter}
+      getCellClass={formatCellStyles(css.cellAlign)}
       ariaLabel={label}
       interactive={false}
     />
