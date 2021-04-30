@@ -580,6 +580,7 @@ class ItemView extends React.Component {
       copyNumber: get(item, 'copyNumber', '-'),
       numberOfPieces: get(item, 'numberOfPieces', '-'),
       descriptionOfPieces: get(item, 'descriptionOfPieces', '-'),
+      effectiveShelvingOrder: get(item, 'effectiveShelvingOrder', '-'),
     };
 
     const enumerationData = {
