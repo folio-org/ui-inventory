@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 7.0.3
+
+* Patch: Display shelving order on the item record. Refs UIIN-816.
+
 ## [7.0.2](https://github.com/folio-org/ui-inventory/tree/v7.0.2) (2021-04-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.1...v7.0.2)
 
