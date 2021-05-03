@@ -10,14 +10,15 @@ import {
 } from '@folio/stripes/components';
 
 import useLoadSubInstances from '../../../hooks/useLoadSubInstances';
-import SubInstanceList from '../SubInstanceList';
+import SubInstanceGroup from '../SubInstanceGroup';
 
 const InstanceRelationshipView = ({
   id,
-  instance,
+  parentInstances,
+  childInstances,
 }) => {
-  const parentInstances = useLoadSubInstances(instance.parentInstances, 'superInstanceId');
-  const childInstances = useLoadSubInstances(instance.childInstances, 'subInstanceId');
+  const parents = useLoadSubInstances(parentInstances, 'superInstanceId');
+  const children = useLoadSubInstances(childInstances, 'subInstanceId');
 
   return (
     <Accordion
@@ -26,31 +27,32 @@ const InstanceRelationshipView = ({
     >
       <Row>
         <Col xs={12}>
-          <SubInstanceList
+          <SubInstanceGroup
             id="childInstances"
             titleKey="subInstanceId"
             label={<FormattedMessage id="ui-inventory.childInstances" />}
-            titles={childInstances}
+            titles={children}
           />
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <SubInstanceList
+          <SubInstanceGroup
             id="parentInstances"
             titleKey="superInstanceId"
             label={<FormattedMessage id="ui-inventory.parentInstances" />}
-            titles={parentInstances}
+            titles={parents}
           />
         </Col>
-      </Row>
+      </Row>3
     </Accordion>
   );
 };
 
 InstanceRelationshipView.propTypes = {
   id: PropTypes.string.isRequired,
-  instance: PropTypes.object.isRequired,
+  parentInstances: PropTypes.arrayOf(PropTypes.object),
+  childInstances: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default withRouter(InstanceRelationshipView);
