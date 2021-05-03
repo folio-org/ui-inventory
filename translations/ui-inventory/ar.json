@@ -650,5 +650,8 @@
     "warning.instance.staffSuppressed": "تحذير: توجد علامة محجوب عن الموظفين على الوعاء",
     "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "تحذير: توجد علامة محجوب من الاكتشاف ومحجوب عن الموظفين على الوعاء",
     "discoverySuppressed": "محجوب من الاكتشاف",
-    "staffSuppressed": "تم حجب الموظفين"
+    "staffSuppressed": "تم حجب الموظفين",
+    "copycat.callout.no-id.created": "تم وضع التسجيلة {xid} في الصف للاستيراد، لكنها غير متاحة بعد",
+    "copycat.callout.no-id.updated": "تم وضع التسجيلة {xid} في الصف للتحديث، لكن العملية لم تكتمل بعد",
+    "instances.typeOfRelation": "Type of relation: {name}"
 }
