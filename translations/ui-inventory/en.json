@@ -659,5 +659,6 @@
   "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
   "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
   "discoverySuppressed": "Suppressed from discovery",
-  "staffSuppressed": "Staff suppressed"
+  "staffSuppressed": "Staff suppressed",
+  "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
 }

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import {
   MultiColumnList,
   NoValue,
+  IconButton,
 } from '@folio/stripes/components';
 
 import {
@@ -14,6 +16,7 @@ import {
 } from '../../../utils';
 import { indentifierTypeNames } from '../../../constants';
 import useReferenceData from '../../../hooks/useReferenceData';
+import useCallout from '../../../hooks/useCallout';
 
 import css from './SubInstanceList.css';
 
@@ -32,6 +35,13 @@ const SubInstanceList = ({
   const {
     identifierTypesById,
   } = useReferenceData();
+  const callout = useCallout();
+  const onCopyToClipbaord = useCallback(hrid => {
+    callout.sendCallout({
+      type: 'success',
+      message: <FormattedMessage id="ui-inventory.hridCopied" values={{ hrid }} />,
+    });
+  }, [callout]);
 
   const formatter = {
     title: row => (row[titleKey] ?
@@ -41,7 +51,19 @@ const SubInstanceList = ({
         {row.title}
       </Link> :
       row.title || noValue),
-    hrid: row => row.hrid || noValue,
+    hrid: row => (
+      row.hrid ?
+        <>
+          {row.hrid}
+          <CopyToClipboard
+            text={row.hrid}
+            onCopy={() => onCopyToClipbaord(row.hrid)}
+          >
+            <IconButton icon="clipboard" />
+          </CopyToClipboard>
+        </> :
+        noValue
+    ),
     publisher: row => row.publication?.[0]?.publisher ?? noValue,
     publisherDate: row => row.publication?.[0]?.dateOfPublication ?? noValue,
     issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById) || noValue,
@@ -68,7 +90,7 @@ const SubInstanceList = ({
 
   const columnWidths = {
     title: '40%',
-    hrid: '25%',
+    hrid: '30%',
   };
 
   return (
