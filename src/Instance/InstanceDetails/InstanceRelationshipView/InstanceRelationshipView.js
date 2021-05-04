@@ -44,7 +44,7 @@ const InstanceRelationshipView = ({
             titles={parents}
           />
         </Col>
-      </Row>3
+      </Row>
     </Accordion>
   );
 };
