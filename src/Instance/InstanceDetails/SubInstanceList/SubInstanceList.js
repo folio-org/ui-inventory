@@ -20,8 +20,6 @@ import useCallout from '../../../hooks/useCallout';
 
 import css from './SubInstanceList.css';
 
-import css from './SubInstanceList.css';
-
 const noValue = <NoValue />;
 
 const SubInstanceList = ({
