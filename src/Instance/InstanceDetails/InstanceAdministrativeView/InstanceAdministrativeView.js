@@ -18,6 +18,7 @@ import {
   getDateWithTime,
   checkIfElementIsEmpty,
 } from '../../../utils';
+import { WarningMessage } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
 
@@ -62,15 +63,25 @@ const InstanceAdministrativeView = ({
       label={<FormattedMessage id="ui-inventory.instanceData" />}
     >
       {instance.metadata && <ViewMetaData metadata={instance.metadata} />}
-
       <Row>
-        <Col xs={12}>
-          {instance.discoverySuppress && <FormattedMessage id="ui-inventory.discoverySuppress" />}
-          {instance.discoverySuppress && instance.staffSuppress && '|'}
-          {instance.staffSuppress && <FormattedMessage id="ui-inventory.staffSuppress" />}
-          {(instance.discoverySuppress || instance.staffSuppress) && instance.previouslyHeld && '|'}
-          {instance.previouslyHeld && <FormattedMessage id="ui-inventory.previouslyHeld" />}
-        </Col>
+        {
+          instance.discoverySuppress &&
+          <Col xs={5}>
+            <WarningMessage id="ui-inventory.discoverySuppressed" />
+          </Col>
+        }
+        {
+          instance.staffSuppress &&
+          <Col xs={4}>
+            <WarningMessage id="ui-inventory.staffSuppressed" />
+          </Col>
+        }
+        {
+          instance.previouslyHeld &&
+          <Col xs={3}>
+            <WarningMessage id="ui-inventory.previouslyHeld" />
+          </Col>
+        }
       </Row>
 
       {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}

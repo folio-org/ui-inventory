@@ -137,6 +137,34 @@ describe('Instance filters', () => {
     });
   });
 
+  describe('filtering by staff suppress', () => {
+    beforeEach(async function () {
+      await inventory.clickSelectStaffSuppressFilter();
+    });
+
+    it('should find an instance with staff suppress equal to true', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+
+    it('instance title should have a warning icon', () => {
+      expect(inventory.hasWarnIcon).to.be.true;
+    });
+  });
+
+  describe('filtering by discovery suppress', () => {
+    beforeEach(async function () {
+      await inventory.clickSelectDiscoverySuppressFilter();
+    });
+
+    it('should find an instance with discovery suppress equal to true', () => {
+      expect(instancesRoute.rows().length).to.equal(1);
+    });
+
+    it('instance title should have a warning icon', () => {
+      expect(inventory.hasWarnIcon).to.be.true;
+    });
+  });
+
   describe('setting filters and sorting', () => {
     beforeEach(async function () {
       await inventory.clickSelectStaffSuppressFilter();

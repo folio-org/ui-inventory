@@ -194,23 +194,29 @@ class InstancesList extends React.Component {
 
   generateInTransitItemReport = async () => {
     const {
-      reset,
-      GET,
-    } = this.props.parentMutator.itemsInTransitReport;
+      intl: {
+        formatMessage,
+      },
+      parentMutator,
+    } = this.props;
+    const { sendCallout, removeCallout } = this.context;
+    const calloutId = sendCallout({
+      type: 'info',
+      message: <FormattedMessage id="ui-inventory.exportInProgress" />,
+      timeout: 0,
+    });
 
     try {
-      reset();
-      const items = await GET();
+      const report = new InTransitItemReport(parentMutator, formatMessage);
+      const items = await report.toCSV();
 
-      if (!isEmpty(items)) {
-        const report = new InTransitItemReport({ formatMessage: this.props.intl.formatMessage });
-        report.toCSV(items);
-      } else {
+      if (!items?.length) {
         this.setState({ showErrorModal: true });
       }
     } catch (error) {
       throw new Error(error);
     } finally {
+      removeCallout(calloutId);
       this.setState({ inTransitItemsExportInProgress: false });
     }
   };
@@ -332,6 +338,7 @@ class InstancesList extends React.Component {
 
   getActionMenu = ({ onToggle, renderColumnsMenu }) => {
     const { parentResources, intl } = this.props;
+    const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
@@ -375,12 +382,20 @@ class InstancesList extends React.Component {
             )}
             type="create-inventory-records"
           />
-          {this.getActionItem({
-            id: 'dropdown-clickable-get-report',
-            icon: 'report',
-            messageId: 'ui-inventory.inTransitReport',
-            onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
-          })}
+          {
+            inTransitItemsExportInProgress ?
+              this.getActionItem({
+                id: 'dropdown-clickable-get-report',
+                icon: 'report',
+                messageId: 'ui-inventory.exportInProgress',
+              }) :
+              this.getActionItem({
+                id: 'dropdown-clickable-get-report',
+                icon: 'report',
+                messageId: 'ui-inventory.inTransitReport',
+                onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
+              })
+          }
           {this.getActionItem({
             id: 'dropdown-clickable-get-items-uiids',
             icon: 'save',
@@ -548,7 +563,11 @@ class InstancesList extends React.Component {
           />
         </CheckboxColumn>
       ),
-      'title': ({ title }) => (
+      'title': ({
+        title,
+        discoverySuppress,
+        staffSuppress,
+      }) => (
         <AppIcon
           size="small"
           app="inventory"
@@ -556,6 +575,15 @@ class InstancesList extends React.Component {
           iconAlignment="baseline"
         >
           {title}
+          {(discoverySuppress || staffSuppress) &&
+          <span className={css.warnIcon}>
+            <Icon
+              size="medium"
+              icon="exclamation-circle"
+              status="warn"
+            />
+          </span>
+          }
         </AppIcon>
       ),
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),

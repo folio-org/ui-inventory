@@ -11,6 +11,7 @@
   "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} selected",
   "instances.resourceType": "Resource Type",
   "instances.language": "Language",
+  "instances.typeOfRelation": "Type of relation: {name}",
   "holdingsRecord.awaitingResources": "Awaiting resources",
   "holdings.permanentLocation": "Holdings permanent location",
   "resultCount": "{count, number} {count, plural, one {record found} other {records found}}",
@@ -640,6 +641,8 @@
   "copycat.enterIdentifier": "Enter {identifierName} identifier",
   "copycat.enterIdentifierForUpdate": "Enter the {identifierName} identifier to be used to overlay the current data",
   "copycat.callout.updated": "Updated record {xid}",
+  "copycat.callout.no-id.created": "Record {xid} has been queued for import, but is not yet available",
+  "copycat.callout.no-id.updated": "Record {xid} has been queued for update, but the process is not yet complete",
   "copycat.callout.created": "Created record {xid}",
   "copycat.callout.simpleError": "Something went wrong: {err}",
   "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
@@ -649,5 +652,13 @@
   "remote.warning.common": "To remove {something} from remote storage, run an exception report or communicate this directly to your remote storage location.",
   "remote.warning.titles": "This includes {count, plural, =0 {<strong>no</strong> titles} one {<strong>#</strong> title} other {<strong>#</strong> titles}}.",
   "remote.holdings": "the holdings",
-  "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}"
+  "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
+  "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+  "warning.instance.staffSuppressed": "Warning: Instance is marked staff suppressed",
+  "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Warning: Instance is marked suppressed from discovery and staff suppressed",
+  "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+  "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+  "discoverySuppressed": "Suppressed from discovery",
+  "staffSuppressed": "Staff suppressed",
+  "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
 }

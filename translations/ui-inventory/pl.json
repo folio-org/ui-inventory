@@ -483,7 +483,7 @@
     "item.status.statusUpdatedLabel": "status zaktualizowany {statusDate}",
     "isbnNormalized": "ISBN, znormalizowany",
     "markAsWithdrawn": "Oznacz jako wycofane",
-    "withdrawnModal.message": "<strong>{tytuł} ({materialType}</strong>) (Kod kreskowy: {kod kreskowy}) zostanie oznaczony jako <strong>wycofany</strong>.",
+    "withdrawnModal.message": "<strong>{title} ({materialType}</strong>) (Kod kreskowy: {barcode}) zostanie oznaczony jako <strong>wycofany</strong>.",
     "withdrawnModal.heading": "Potwierdź status egzemplarza: Wycofany",
     "withdrawnModal.confirm": "Potwierdź",
     "item.status.withdrawn": "Wycofany",
@@ -643,5 +643,16 @@
     "remote.items": "{count, plural, one {egzemplarz} few {egzemplarzy} many {egzemplarzy} other {egzemplarze}}",
     "createJobProfileId": "Identyfikator profilu zadania do tworzenia",
     "updateJobProfileId": "Identyfikator profilu zadania do aktualizacji",
-    "button.addTargetOption": "Dodaj opcję docelową"
+    "button.addTargetOption": "Dodaj opcję docelową",
+    "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
+    "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
+    "warning.instance.staffSuppressed": "Warning: Instance is marked staff suppressed",
+    "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Warning: Instance is marked suppressed from discovery and staff suppressed",
+    "discoverySuppressed": "Suppressed from discovery",
+    "staffSuppressed": "Staff suppressed",
+    "copycat.callout.no-id.created": "Record {xid} has been queued for import, but is not yet available",
+    "copycat.callout.no-id.updated": "Record {xid} has been queued for update, but the process is not yet complete",
+    "instances.typeOfRelation": "Type of relation: {name}",
+    "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
 }

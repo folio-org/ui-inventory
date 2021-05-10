@@ -1,5 +1,23 @@
 # Change history for ui-inventory
 
+## 7.0.0 (IN PROGRESS)
+
+* Improve relationship with parent and child instances. Refs UIIN-1044.
+* Move items among holdings, even if the list of holdings is loooooooooong. Refs UIIN-1446.
+* Allow the `limit` for the locations query to be specified via stripes config. Refs UIIN-1480.
+* Add visual display when holdings record is suppressed from discovery. Refs UIIN-1378.
+* Add visual display when instance is suppressed from discovery. Refs UIIN-1377 and UIIN-1386.
+* Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
+* Add a warning icon for instance/holdings/item marked as Suppressed from discovery. Refs UIIN-1380.
+* Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
+* Add visual display when item is suppressed from discovery. Refs UIIN-1379.
+* Also support `circulation` `10.0`. Refs UIIN-1488.
+* Fix date display on item view. Fixes UIIN-1481.
+* Display correct open-request count for items. Refs UIIN-1469.
+* Fix items in transit export. Fixes UIIN-1492.
+* Warn with yellow toast when result of Single Record Import is unknown. Fixes UIIN-1495.
+* Patch: Display shelving order on the item record. Refs UIIN-816.
+
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
 

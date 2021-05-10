@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useContext } from 'react';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -15,6 +15,7 @@ import {
   Pane,
   PaneMenu,
   Row,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -119,11 +120,19 @@ const InstanceDetails = ({
         <TitleManager record={instance.title} />
 
         <AccordionStatus>
-          <Row end="xs">
-            <Col
-              data-test-expand-all
-              xs
-            >
+          <Row>
+            <Col xs={10}>
+              <MessageBanner show={Boolean(instance.staffSuppress && !instance.discoverySuppress)} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.staffSuppressed" />
+              </MessageBanner>
+              <MessageBanner show={Boolean(instance.discoverySuppress && !instance.staffSuppress)} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
+              </MessageBanner>
+              <MessageBanner show={Boolean(instance.discoverySuppress && instance.staffSuppress)} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed" />
+              </MessageBanner>
+            </Col>
+            <Col data-test-expand-all xs={2}>
               <ExpandAllButton />
             </Col>
           </Row>
@@ -200,7 +209,8 @@ const InstanceDetails = ({
 
             <InstanceRelationshipView
               id={accordions.relationship}
-              instance={instance}
+              parentInstances={instance.parentInstances}
+              childInstances={instance.childInstances}
             />
           </AccordionSet>
         </AccordionStatus>

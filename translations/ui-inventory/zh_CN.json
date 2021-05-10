@@ -643,5 +643,16 @@
     "remote.items": "{count, plural, one {this item} other {<strong>#</strong> items}}",
     "createJobProfileId": "用于创建的任务配置文件ID",
     "updateJobProfileId": "用于更新的任务配置文件ID",
-    "button.addTargetOption": "添加目标选项"
+    "button.addTargetOption": "添加目标选项",
+    "warning.instance.suppressedFromDiscovery": "警告：实例被标记为在发现中隐藏",
+    "warning.holdingsRecord.suppressedFromDiscovery": "警告：馆藏被标记为在发现中隐藏",
+    "warning.item.suppressedFromDiscovery": "警告：单件被标记为在发现中隐藏",
+    "warning.instance.staffSuppressed": "警告：实例被标记为对员工隐藏",
+    "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "警告：实例被标记为在发现中隐藏及对员工隐藏",
+    "discoverySuppressed": "在发现中隐藏",
+    "staffSuppressed": "已对员工隐藏",
+    "copycat.callout.no-id.created": "记录{xid}已排队等待导入，但尚不可用",
+    "copycat.callout.no-id.updated": "记录{xid}已排队等待更新，但该过程尚未完成",
+    "instances.typeOfRelation": "Type of relation: {name}",
+    "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
 }
