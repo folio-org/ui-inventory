@@ -309,26 +309,23 @@ class ViewInstance extends React.Component {
     if (!records) {
       return null;
     }
-    const allIdentifiers = [].concat(
-      records.map(record => record.identifiers)
-    )[0];
-    const result = [];
-    allIdentifiers.forEach(({ identifierTypeId, value }) => {
-      const ident = identifierTypesById[identifierTypeId];
-      if (
-        (ident?.name === ISBN ||
-        ident?.name === ISSN) &&
-        value
-      ) {
-        result.push({
-          type: ident.name,
-          value
-        });
-      }
-    });
     // We can't make any meaningful assessment of which is
     // the best identifier to return, so just return the first
-    return result.length > 0 ? result[0] : null;
+    // we find
+    for (const record of records) {
+      for (const identifiers of record.identifiers) {
+        const { identifierTypeId, value } = identifiers;
+        const ident = identifierTypesById[identifierTypeId];
+        if (
+          (ident?.name === ISBN ||
+            ident?.name === ISSN) &&
+          value
+        ) {
+          return { type: ident.name, value };
+        }
+      }
+    }
+    return null;
   };
 
   createActionMenuGetter = instance => ({ onToggle }) => {
