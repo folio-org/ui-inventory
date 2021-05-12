@@ -221,6 +221,8 @@
   "itemBarcode": "Item barcode",
   "item.barcode": "Item: barcode",
   "item.requestQueue": "Request queue",
+  "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+  "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
   "noBarcode": "No barcode",
   "itemHrid": "Item HRID",
   "itemIdentifier": "Item identifier",
