@@ -2,9 +2,10 @@ import {
   get,
 } from 'lodash';
 import React, {
-  createRef,
+  createRef
 } from 'react';
 import PropTypes from 'prop-types';
+import { parse } from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -30,7 +31,7 @@ import {
   batchFetchItems,
   batchFetchRequests,
 } from './Instance/ViewRequests/utils';
-import { indentifierTypeNames } from './constants';
+import { indentifierTypeNames, layers } from './constants';
 import { DataContext } from './contexts';
 
 import {
@@ -38,6 +39,7 @@ import {
   MoveItemsContext,
   InstanceDetails,
 } from './Instance';
+import { CalloutRenderer } from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
 
@@ -116,7 +118,8 @@ class ViewInstance extends React.Component {
       findInstancePluginOpened: false,
       isItemsMovement: false,
       isImportRecordModalOpened: false,
-      isCopyrightModalOpened: false
+      isCopyrightModalOpened: false,
+      afterCreate: false,
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
@@ -142,6 +145,13 @@ class ViewInstance extends React.Component {
 
     if (isMARCSource && instanceRecordsId !== prevInstanceRecordsId) {
       this.getMARCRecord();
+    }
+
+    // component got updated after a new record was created
+    if (parse(prevProps?.location?.search)?.layer === layers.CREATE &&
+      !parse(this.props?.location?.search)?.layer && !this.state.afterCreate) {
+      // eslint-disable-next-line
+      this.setState({ afterCreate: true });
     }
 
     const { allInstanceHoldings, allInstanceItems } = resources;
@@ -598,6 +608,12 @@ class ViewInstance extends React.Component {
         </InstanceDetails>
 
         <Callout ref={this.calloutRef} />
+
+        {this.state.afterCreate &&
+          <CalloutRenderer
+            message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance.hrid }} />}
+          />
+        }
 
         {
           this.state.findInstancePluginOpened && (

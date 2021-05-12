@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 import {
   stripesConnect,
@@ -25,6 +26,7 @@ import {
   unmarshalInstance,
 } from '../../utils';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
+import useCallout from '../../hooks/useCallout';
 
 const InstanceEdit = ({
   instanceId,
@@ -35,6 +37,7 @@ const InstanceEdit = ({
   const { identifierTypesById, identifierTypesByName } = referenceData;
 
   const [initialValues, setInitialValues] = useState();
+  const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
@@ -52,9 +55,16 @@ const InstanceEdit = ({
   const onSubmit = useCallback((updatedInstance) => {
     return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
       .then(() => {
+        callout.sendCallout({
+          type: 'success',
+          message: <FormattedMessage
+            id="ui-inventory.instance.successfullySaved"
+            values={{ hrid: updatedInstance.hrid }}
+          />,
+        });
         goBack();
       });
-  }, [goBack, identifierTypesByName]);
+  }, [goBack, identifierTypesByName, callout]);
 
   if (isInstanceLoading) return <LoadingView />;
 
