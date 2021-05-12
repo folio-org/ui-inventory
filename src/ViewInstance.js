@@ -31,9 +31,8 @@ import {
   batchFetchItems,
   batchFetchRequests,
 } from './Instance/ViewRequests/utils';
-import { indentifierTypeNames } from './constants';
+import { indentifierTypeNames, layers } from './constants';
 import { DataContext } from './contexts';
-import { layers } from './constants';
 
 import {
   HoldingsListContainer,
