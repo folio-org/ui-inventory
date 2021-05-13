@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 import {
   stripesConnect,
@@ -16,17 +17,18 @@ import {
 import {
   useInstance,
 } from '../../common/hooks';
+import useCallout from '../../hooks/useCallout';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 
 const CreateHolding = ({
   history,
   location,
-
   instanceId,
   referenceData,
   stripes,
   mutator,
 }) => {
+  const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.holdingInstance);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
 
@@ -39,10 +41,17 @@ const CreateHolding = ({
 
   const onSubmit = useCallback((newHolding) => {
     return mutator.holding.POST(newHolding)
-      .then(() => {
+      .then((holdingsRecord) => {
+        callout.sendCallout({
+          type: 'success',
+          message: <FormattedMessage
+            id="ui-inventory.holdingsRecord.successfullySaved"
+            values={{ hrid: holdingsRecord.hrid }}
+          />,
+        });
         onCancel();
       });
-  }, [onCancel]);
+  }, [onCancel, callout]);
 
   const initialValues = useMemo(() => ({
     instanceId,

@@ -45,6 +45,7 @@ import {
   AppIcon,
   IfPermission,
   IntlConsumer,
+  CalloutContext,
 } from '@folio/stripes/core';
 
 import ModalContent from '../components/ModalContent';
@@ -79,6 +80,8 @@ import { WarningMessage } from '../components';
 export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -107,7 +110,16 @@ class ItemView extends React.Component {
       delete item.barcode;
     }
 
-    return this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
+    return this.props.mutator.items.PUT(item).then(() => {
+      this.context.sendCallout({
+        type: 'success',
+        message: <FormattedMessage
+          id="ui-inventory.item.successfullySaved"
+          values={{ hrid: item.hrid }}
+        />,
+      });
+      this.onClickCloseEditItem();
+    });
   };
 
   copyItem = item => {
