@@ -36,6 +36,7 @@ import {
 import {
   AppIcon,
   IntlConsumer,
+  CalloutContext,
 } from '@folio/stripes/core';
 
 import {
@@ -60,6 +61,8 @@ import { WarningMessage } from './components';
 import css from './View.css';
 
 class ViewHoldingsRecord extends React.Component {
+  static contextType = CalloutContext;
+
   static manifest = Object.freeze({
     query: {},
     permanentLocationQuery: {},
@@ -147,6 +150,13 @@ class ViewHoldingsRecord extends React.Component {
     if (holdings.temporaryLocationId === '') delete holdings.temporaryLocationId;
 
     return this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
+      this.context.sendCallout({
+        type: 'success',
+        message: <FormattedMessage
+          id="ui-inventory.holdingsRecord.successfullySaved"
+          values={{ hrid: holdingsRecord.hrid }}
+        />,
+      });
       this.onClickCloseEditHoldingsRecord();
     });
   }
