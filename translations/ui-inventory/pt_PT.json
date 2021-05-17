@@ -649,10 +649,13 @@
     "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
     "warning.instance.staffSuppressed": "Warning: Instance is marked staff suppressed",
     "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Warning: Instance is marked suppressed from discovery and staff suppressed",
-    "discoverySuppressed": "Suppressed from discovery",
+    "discoverySuppressed": "Suprimido do sistema de descoberta",
     "staffSuppressed": "Staff suppressed",
     "copycat.callout.no-id.created": "Record {xid} has been queued for import, but is not yet available",
     "copycat.callout.no-id.updated": "Record {xid} has been queued for update, but the process is not yet complete",
     "instances.typeOfRelation": "Type of relation: {name}",
-    "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
+    "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
+    "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
 }

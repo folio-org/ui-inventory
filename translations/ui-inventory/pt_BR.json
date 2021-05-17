@@ -249,7 +249,7 @@
     "illPolicy": "Política de EEB",
     "loanTypePermanentRequired": "Tipo de empréstimo permanente *",
     "materialTypeRequired": "Tipo de material *",
-    "duplicateInstance": "Duplicar",
+    "duplicateInstance": "Duplicar registro de instância",
     "cancel": "Cancelar",
     "newInstance": "Nova instância",
     "duplicateHoldings": "Duplicar",
@@ -653,6 +653,9 @@
     "staffSuppressed": "Suprimido pela equipe",
     "copycat.callout.no-id.created": "O registro {xid} foi enfileirado para importação, mas ainda não está disponível",
     "copycat.callout.no-id.updated": "O registro {xid} foi enfileirado para atualização, mas o processo ainda não está completo",
-    "instances.typeOfRelation": "Type of relation: {name}",
-    "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
+    "instances.typeOfRelation": "Tipo de relação: {name}",
+    "hridCopied": "A instância HRID {hrid} foi copiada com sucesso para a área de transferência",
+    "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
 }
