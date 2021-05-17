@@ -654,5 +654,8 @@
     "copycat.callout.no-id.created": "L'enregistrement {xid} a été mis en file d'attente pour l'importation, mais n'est pas encore disponible",
     "copycat.callout.no-id.updated": "L'enregistrement {xid} a été mis en file d'attente pour mise à jour, mais le processus n'est pas encore terminé",
     "instances.typeOfRelation": "Type de relation: {name}",
-    "hridCopied": "L'instance HRID {hrid} été copiée avec succès dans le presse-papiers"
+    "hridCopied": "L'instance HRID {hrid} été copiée avec succès dans le presse-papiers",
+    "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
 }
