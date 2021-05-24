@@ -63,7 +63,7 @@ export function buildManifestObject() {
     records: {
       type: 'okapi',
       records: 'instances',
-      accumulate: false,
+      resultDensity: 'sparse',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
       path: 'inventory/instances',
