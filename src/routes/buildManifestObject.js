@@ -63,6 +63,7 @@ export function buildManifestObject() {
     records: {
       type: 'okapi',
       records: 'instances',
+      accumulate: false,
       resultOffset: '%{resultOffset}',
       perRequest: 100,
       path: 'inventory/instances',
@@ -104,14 +105,14 @@ export function buildManifestObject() {
       type: 'okapi',
       path: 'inventory/instances',
       records: 'instances',
-      accumulate: true,
+      accumulate: false,
       fetch: false,
     },
     holdings: {
       type: 'okapi',
       path: 'holdings-storage/holdings',
       records: 'holdingsRecords',
-      accumulate: true,
+      accumulate: false,
       fetch: false,
     },
     locations: {

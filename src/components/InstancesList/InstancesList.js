@@ -23,6 +23,7 @@ import {
   IfInterface,
   CalloutContext,
   stripesConnect,
+  withNamespace,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -30,6 +31,7 @@ import {
   Icon,
   Checkbox,
   MenuSection,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -78,6 +80,7 @@ class InstancesList extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
+    listingNamespaceKey: 'inventorySearch'
   };
 
   static propTypes = {
@@ -97,6 +100,9 @@ class InstancesList extends React.Component {
       path: PropTypes.string.isRequired,
       params: PropTypes.object.isRequired,
     }).isRequired,
+    namespace: PropTypes.string,
+    getNamespace: PropTypes.func,
+    listingNamespaceKey: PropTypes.string,
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
     mutator: PropTypes.shape({
@@ -115,6 +121,10 @@ class InstancesList extends React.Component {
   constructor(props) {
     super(props);
 
+    const { getNamespace, listingNamespaceKey } = props;
+    this.sessionScrollKey = getNamespace({ key: listingNamespaceKey });
+    const scrollPosition = getItem(this.sessionScrollKey);
+
     this.state = {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
@@ -125,6 +135,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
+      resultsScrollPosition: scrollPosition,
     };
   }
 
@@ -579,6 +590,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
+      resultsScrollPosition,
     } = this.state;
 
     const resultsFormatter = {
@@ -636,6 +648,10 @@ class InstancesList extends React.Component {
       return { ...index, label };
     });
 
+    const storeScrollPosition = (e, scrollTop) => {
+      setItem(this.sessionScrollKey, scrollTop);
+    };
+
     return (
       <>
         <div data-test-inventory-instances>
@@ -685,10 +701,13 @@ class InstancesList extends React.Component {
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType="click"
+            pagingType={MCLPagingTypes.PREV_NEXT}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            resultsVirtualize={false}
+            resultsOnScroll={storeScrollPosition}
+            resultsInitialScrollPosition={resultsScrollPosition}
           />
         </div>
         <ErrorModal
@@ -723,4 +742,6 @@ class InstancesList extends React.Component {
 export default flowRight(
   injectIntl,
   withLocation,
-)(stripesConnect(InstancesList));
+)(stripesConnect(
+  withNamespace(InstancesList)
+));
