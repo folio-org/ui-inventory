@@ -612,7 +612,7 @@
     "location.confirm.confirmBtn": "Yes",
     "location.confirm.common.header": "Attention!",
     "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
-    "location.confirm.inactive.header": "Inactive location",
+    "location.confirm.inactive.header": "無効な場所",
     "authentication": "Authentication",
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
