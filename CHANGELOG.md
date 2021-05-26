@@ -21,6 +21,7 @@
 * Add callout after instance record is saved. Refs UIIN-1468.
 * Add callout after item or holdings record are saved. Refs UIIN-1485, UIIN-1486.
 * Also support `circulation` `11.0`. Refs UIIN-1511.
+* Update "remote-storage-mappings" interface. Refs UIIN-1512
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
