@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 
-import { LocationLookup } from '@folio/stripes-smart-components';
-import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
-import { ConfirmationModal, MessageBanner } from '@folio/stripes-components';
+import { LocationLookup, LocationSelection } from '@folio/stripes/smart-components';
+import { ConfirmationModal, MessageBanner } from '@folio/stripes/components';
 
 import * as RemoteStorage from '../../RemoteStorageService';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form, Field } from 'react-final-form';
-import { stripesConnect } from '@folio/stripes-core';
+import { stripesConnect } from '@folio/stripes/core';
 import { Loading, Modal, Select, TextField, ModalFooter, Button } from '@folio/stripes/components';
 
 const ImportRecordModal = ({
