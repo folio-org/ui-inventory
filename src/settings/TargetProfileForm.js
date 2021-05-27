@@ -5,7 +5,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
-import { stripesConnect } from '@folio/stripes-core';
+import { stripesConnect } from '@folio/stripes/core';
 
 import {
   Button,

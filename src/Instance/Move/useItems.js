@@ -3,7 +3,7 @@ import React, {
   useContext,
 } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { CalloutContext } from '@folio/stripes-core';
+import { CalloutContext } from '@folio/stripes/core';
 
 import { useMoveItemsMutation } from '../../common';
 import * as RemoteStorage from '../../RemoteStorageService';

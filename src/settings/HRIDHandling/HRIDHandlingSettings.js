@@ -16,18 +16,16 @@ import {
   isEqual,
 } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes-core';
+import { stripesConnect } from '@folio/stripes/core';
 import {
   Col,
   Checkbox,
   Headline,
   Row,
   TextField,
-} from '@folio/stripes/components';
-import {
   Callout,
   ConfirmationModal,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import HRIDHandlingForm from './HRIDHandlingForm';
 

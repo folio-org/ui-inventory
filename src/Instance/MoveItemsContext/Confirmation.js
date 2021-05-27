@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { MessageBanner } from '@folio/stripes-components';
+import { MessageBanner } from '@folio/stripes/components';
 
 import * as RemoteStorage from '../../RemoteStorageService';
 import * as Move from '../Move';
