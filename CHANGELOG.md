@@ -100,6 +100,8 @@
 * Fix instance format filter. Refs UIIN-1423.
 * Change label Duplicate MARC bib record to Derive new MARC bib record. Refs UIIN-1436.
 * Fix nature of content filter. Fixes UIIN-1441.
+* Add a warning icon for instance marked as Staff suppressed. Refs UIIN-1381.
+* Enabled `<ColumnManager>` in the results list. Refs STSMACOM-468.
 * Update `data-export` interface to `4.0`. Refs UIIN-1448.
 * Update `@folio/react-intl-safe-html`, `@folio/plugin-find-instance`, and `@folio/quick-marc` for compatibility with `@folio/stripes` `v6`.
 * Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446

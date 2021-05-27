@@ -72,7 +72,6 @@ const RESULT_COUNT_INCREMENT = 30;
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
 const ALL_COLUMNS = [...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS];
-const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
   static defaultProps = {
@@ -123,18 +122,8 @@ class InstancesList extends React.Component {
       showErrorModal: false,
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
-      visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
     };
-  }
-
-  getInitialToggableColumns = () => {
-    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
-  }
-
-  getVisibleColumns = () => {
-    const visibleColumns = new Set([...this.state.visibleColumns, ...NON_TOGGLEABLE_COLUMNS]);
-    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -354,22 +343,12 @@ class InstancesList extends React.Component {
     );
   }
 
-  handleToggleColumn = ({ target: { value: key } }) => {
-    this.setState(({ visibleColumns }) => ({
-      visibleColumns: visibleColumns.includes(key) ? visibleColumns.filter(k => key !== k) : [...visibleColumns, key]
-    }), () => {
-      setItem(VISIBLE_COLUMNS_STORAGE_KEY, this.state.visibleColumns);
-    });
-  }
-
-  getActionMenu = ({ onToggle }) => {
+  getActionMenu = ({ onToggle, renderColumnsMenu }) => {
     const { parentResources, intl } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
-    const visibleColumns = this.getVisibleColumns();
-    const columnMapping = this.getColumnMapping();
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -481,20 +460,7 @@ class InstancesList extends React.Component {
             isDisabled: !selectedRowsCount,
           })}
         </MenuSection>
-        <MenuSection label={intl.formatMessage({ id: 'ui-inventory.showColumns' })} id="columns-menu-section">
-          {TOGGLEABLE_COLUMNS.map(key => (
-            <Checkbox
-              key={key}
-              name={key}
-              data-testid={key}
-              label={columnMapping[key]}
-              id={`inventory-search-column-checkbox-${key}`}
-              checked={visibleColumns.includes(key)}
-              value={key}
-              onChange={this.handleToggleColumn}
-            />
-          ))}
-        </MenuSection>
+        {renderColumnsMenu}
       </>
     );
   };
@@ -633,7 +599,6 @@ class InstancesList extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
     };
 
-    const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
@@ -643,11 +608,16 @@ class InstancesList extends React.Component {
       return { ...index, label };
     });
 
+    const columnManagerProps = {
+      excludeKeys: ['select', 'title']
+    };
+
     return (
       <>
         <div data-test-inventory-instances>
           <SearchAndSort
             actionMenu={this.getActionMenu}
+            columnManagerProps={columnManagerProps}
             packageInfo={packageInfo}
             objectName="inventory"
             maxSortKeys={1}
@@ -665,7 +635,6 @@ class InstancesList extends React.Component {
               previouslyHeld: false,
               source: 'FOLIO',
             }}
-            visibleColumns={visibleColumns}
             columnMapping={columnMapping}
             columnWidths={{
               select: '30px',
