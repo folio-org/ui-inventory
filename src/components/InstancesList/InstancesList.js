@@ -199,8 +199,15 @@ class InstancesList extends React.Component {
     this.openCreateInstance();
   }
 
+  refocusOnInputSearch = () => {
+    // when navigation button is clicked to change the search segment
+    // the focus stays on the button so refocus back on the input search.
+    // https://issues.folio.org/browse/UIIN-1358
+    document.getElementById('input-inventory-search').focus();
+  }
+
   renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment} />
+    <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
   );
 
   generateInTransitItemReport = async () => {

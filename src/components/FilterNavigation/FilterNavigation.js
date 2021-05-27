@@ -8,7 +8,7 @@ import {
 
 import { segments } from '../../constants';
 
-const FilterNavigation = ({ segment }) => (
+const FilterNavigation = ({ segment, onChange }) => (
   <ButtonGroup
     fullWidth
     data-test-filters-navigation
@@ -20,6 +20,7 @@ const FilterNavigation = ({ segment }) => (
           to={`/inventory?segment=${name}&sort=title`}
           buttonStyle={`${segment === name ? 'primary' : 'default'}`}
           id={`segment-navigation-${name}`}
+          onClick={onChange}
         >
           <FormattedMessage id={`ui-inventory.filters.${name}`} />
         </Button>
@@ -30,6 +31,7 @@ const FilterNavigation = ({ segment }) => (
 
 FilterNavigation.propTypes = {
   segment: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 FilterNavigation.defaultProps = {
