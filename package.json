@@ -78,7 +78,8 @@
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
-      "data-export": "4.0"
+      "data-export": "4.0",
+      "orders.holding-summary": "1.0"
     },
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
@@ -485,7 +486,8 @@
           "inventory-storage.service-points.collection.get",
           "inventory-storage.hrid-settings.item.get",
           "inventory-storage.record-bulk.ids.get",
-          "data-export.quick.export.post"
+          "data-export.quick.export.post",
+          "orders.holding-summary.collection.get"
         ],
         "visible": true
       },

@@ -57,6 +57,7 @@ import {
   holdingsStatementTypes,
 } from './constants';
 import { WarningMessage } from './components';
+import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
 
 import css from './View.css';
 
@@ -399,12 +400,6 @@ class ViewHoldingsRecord extends React.Component {
 
     const electronicAccess = get(holdingsRecord, ['electronicAccess'], []);
 
-    const acquisition = {
-      acquisitionMethod: get(holdingsRecord, ['acquisitionMethod'], '-'),
-      acquisitionFormat: get(holdingsRecord, ['acquisitionFormat'], '-'),
-      receiptStatus: get(holdingsRecord, ['receiptStatus'], '-'),
-    };
-
     const receivingHistory = get(holdingsRecord, ['receivingHistory', 'entries'], []);
 
     const initialAccordionsState = {
@@ -413,7 +408,7 @@ class ViewHoldingsRecord extends React.Component {
       acc03: !areAllFieldsEmpty(Object.values(holdingsDetails)),
       acc04: !areAllFieldsEmpty([holdingsNotes]),
       acc05: !areAllFieldsEmpty([electronicAccess]),
-      acc06: !areAllFieldsEmpty(Object.values(acquisition)),
+      acc06: false,
       acc07: !areAllFieldsEmpty([receivingHistory]),
     };
 
@@ -818,26 +813,7 @@ class ViewHoldingsRecord extends React.Component {
                         id="acc06"
                         label={<FormattedMessage id="ui-inventory.acquisition" />}
                       >
-                        <Row>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
-                              value={checkIfElementIsEmpty(acquisition.acquisitionMethod)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                              value={checkIfElementIsEmpty(acquisition.acquisitionFormat)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.receiptStatus" />}
-                              value={checkIfElementIsEmpty(acquisition.receiptStatus)}
-                            />
-                          </Col>
-                        </Row>
+                        <HoldingAquisitions holding={holdingsRecord} />
                       </Accordion>
 
                       <Accordion
