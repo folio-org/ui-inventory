@@ -22,7 +22,12 @@ const columnMapping = {
 };
 const formatter = {
   poLineNumber: i => <Link to={`/orders/lines/view/${i.poLineId}`}>{i.poLineNumber}</Link>,
-  orderStatus: i => <FormattedMessage id={`ui-inventory.acq.orderStatus.${i.orderStatus}`} />,
+  orderStatus: i => (
+    <>
+      <FormattedMessage id={`ui-inventory.acq.orderStatus.${i.orderStatus}`} />
+      {i.orderCloseReason?.reason && ` - ${i.orderCloseReason.reason}`}
+    </>
+  ),
   polReceiptStatus: i => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${i.polReceiptStatus}`} />,
   orderSentDate: i => getDateWithTime(i.orderSentDate),
   orderType: i => <FormattedMessage id={`ui-inventory.acq.orderType.${i.orderType}`} />,
