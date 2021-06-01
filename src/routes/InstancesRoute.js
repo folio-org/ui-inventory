@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
-import { stripesConnect, withNamespace } from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
 
 import withLocation from '../withLocation';
 import { InstancesView } from '../views';
@@ -69,7 +69,7 @@ class InstancesRoute extends React.Component {
   }
 }
 
-export default withNamespace(flowRight(
+export default flowRight(
   stripesConnect,
   withLocation,
-)(InstancesRoute));
+)(InstancesRoute);

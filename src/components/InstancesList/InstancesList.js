@@ -23,6 +23,7 @@ import {
   IfInterface,
   CalloutContext,
   stripesConnect,
+  withNamespace,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -745,7 +746,7 @@ class InstancesList extends React.Component {
   }
 }
 
-export default flowRight(
+export default withNamespace(flowRight(
   injectIntl,
   withLocation,
-)(stripesConnect(InstancesList));
+)(stripesConnect(InstancesList)));
