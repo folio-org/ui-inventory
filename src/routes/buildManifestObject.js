@@ -66,6 +66,7 @@ export function buildManifestObject() {
       resultOffset: '%{resultOffset}',
       perRequest: 100,
       path: 'inventory/instances',
+      resultDensity: 'sparse',
       GET: {
         params: { query: buildQuery },
         staticFallback: { params: {} },
@@ -104,15 +105,17 @@ export function buildManifestObject() {
       type: 'okapi',
       path: 'inventory/instances',
       records: 'instances',
-      accumulate: true,
+      accumulate: false,
       fetch: false,
+      resultDensity: 'sparse',
     },
     holdings: {
       type: 'okapi',
       path: 'holdings-storage/holdings',
       records: 'holdingsRecords',
-      accumulate: true,
+      accumulate: false,
       fetch: false,
+      resultDensity: 'sparse',
     },
     locations: {
       type: 'okapi',

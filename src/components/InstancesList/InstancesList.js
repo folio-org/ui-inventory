@@ -97,6 +97,7 @@ class InstancesList extends React.Component {
       path: PropTypes.string.isRequired,
       params: PropTypes.object.isRequired,
     }).isRequired,
+    namespace: PropTypes.string,
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
     mutator: PropTypes.shape({
@@ -362,6 +363,16 @@ class InstancesList extends React.Component {
     });
   }
 
+  onMarkPosition = (position) => {
+    const { namespace } = this.props;
+    setItem(`${namespace}.position`, position);
+  }
+
+  resetMarkedPosition = () => {
+    const { namespace } = this.props;
+    setItem(`${namespace}.position`, null);
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { parentResources, intl } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
@@ -580,13 +591,16 @@ class InstancesList extends React.Component {
       searchableIndexes,
       match: {
         path,
-      }
+      },
+      namespace,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
     } = this.state;
+
+    const itemToView = getItem(`${namespace}.position`);
 
     const resultsFormatter = {
       'select': ({
@@ -692,10 +706,14 @@ class InstancesList extends React.Component {
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType="click"
+            pagingType="prev-next"
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            resultsVirtualize={false}
+            resultsOnMarkPosition={this.onMarkPosition}
+            resultsOnResetMarkedPosition={this.resetMarkedPosition}
+            resultsCachedPosition={itemToView}
           />
         </div>
         <ErrorModal

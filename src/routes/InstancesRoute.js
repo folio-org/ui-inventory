@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { stripesConnect, withNamespace } from '@folio/stripes/core';
 
 import withLocation from '../withLocation';
 import { InstancesView } from '../views';
@@ -39,12 +39,13 @@ class InstancesRoute extends React.Component {
       disableRecordCreation,
       resources,
       mutator,
+      namespace,
+      getNamespace,
       getParams,
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
-
     return (
       <DataContext.Consumer>
         {data => (
@@ -59,6 +60,8 @@ class InstancesRoute extends React.Component {
             renderFilters={renderer({ ...data, query })}
             segment={segment}
             searchableIndexes={indexes}
+            namespace={namespace}
+            getNamespace={getNamespace}
           />
         )}
       </DataContext.Consumer>
@@ -66,7 +69,7 @@ class InstancesRoute extends React.Component {
   }
 }
 
-export default flowRight(
+export default withNamespace(flowRight(
   stripesConnect,
   withLocation,
-)(InstancesRoute);
+)(InstancesRoute));
