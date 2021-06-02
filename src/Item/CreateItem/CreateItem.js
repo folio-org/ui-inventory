@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 
 import {
   stripesConnect,
@@ -16,11 +17,11 @@ import {
 } from '@folio/stripes/components';
 
 import ItemForm from '../../edit/items/ItemForm';
+import useCallout from '../../hooks/useCallout';
 
 const CreateItem = ({
   history,
   location,
-
   stripes,
   referenceData,
   mutator,
@@ -30,6 +31,7 @@ const CreateItem = ({
   const [isLoading, setIsLoading] = useState(true);
   const [instance, setInstance] = useState({});
   const [holding, setHolding] = useState({});
+  const callout = useCallout();
 
   const initialValues = useMemo(() => ({
     status: { name: 'Available' },
@@ -61,10 +63,17 @@ const CreateItem = ({
 
   const onSubmit = useCallback((item) => {
     return mutator.item.POST(item)
-      .then(() => {
+      .then((itemRecord) => {
+        callout.sendCallout({
+          type: 'success',
+          message: <FormattedMessage
+            id="ui-inventory.item.successfullySaved"
+            values={{ hrid: itemRecord.hrid }}
+          />,
+        });
         onCancel();
       });
-  }, [onCancel]);
+  }, [onCancel, callout]);
 
   if (isLoading) return <LoadingView />;
 

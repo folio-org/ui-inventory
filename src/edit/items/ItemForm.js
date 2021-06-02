@@ -25,7 +25,7 @@ import {
 } from '@folio/stripes/components';
 import {
   AppIcon,
-} from '@folio/stripes-core';
+} from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import {
   ViewMetaData,

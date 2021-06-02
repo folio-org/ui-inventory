@@ -199,29 +199,42 @@ class InstancesList extends React.Component {
     this.openCreateInstance();
   }
 
+  refocusOnInputSearch = () => {
+    // when navigation button is clicked to change the search segment
+    // the focus stays on the button so refocus back on the input search.
+    // https://issues.folio.org/browse/UIIN-1358
+    document.getElementById('input-inventory-search').focus();
+  }
+
   renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment} />
+    <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
   );
 
   generateInTransitItemReport = async () => {
     const {
-      reset,
-      GET,
-    } = this.props.parentMutator.itemsInTransitReport;
+      intl: {
+        formatMessage,
+      },
+      parentMutator,
+    } = this.props;
+    const { sendCallout, removeCallout } = this.context;
+    const calloutId = sendCallout({
+      type: 'info',
+      message: <FormattedMessage id="ui-inventory.exportInProgress" />,
+      timeout: 0,
+    });
 
     try {
-      reset();
-      const items = await GET();
+      const report = new InTransitItemReport(parentMutator, formatMessage);
+      const items = await report.toCSV();
 
-      if (!isEmpty(items)) {
-        const report = new InTransitItemReport({ formatMessage: this.props.intl.formatMessage });
-        report.toCSV(items);
-      } else {
+      if (!items?.length) {
         this.setState({ showErrorModal: true });
       }
     } catch (error) {
       throw new Error(error);
     } finally {
+      removeCallout(calloutId);
       this.setState({ inTransitItemsExportInProgress: false });
     }
   };
@@ -351,6 +364,7 @@ class InstancesList extends React.Component {
 
   getActionMenu = ({ onToggle }) => {
     const { parentResources, intl } = this.props;
+    const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
@@ -396,12 +410,20 @@ class InstancesList extends React.Component {
             )}
             type="create-inventory-records"
           />
-          {this.getActionItem({
-            id: 'dropdown-clickable-get-report',
-            icon: 'report',
-            messageId: 'ui-inventory.inTransitReport',
-            onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
-          })}
+          {
+            inTransitItemsExportInProgress ?
+              this.getActionItem({
+                id: 'dropdown-clickable-get-report',
+                icon: 'report',
+                messageId: 'ui-inventory.exportInProgress',
+              }) :
+              this.getActionItem({
+                id: 'dropdown-clickable-get-report',
+                icon: 'report',
+                messageId: 'ui-inventory.inTransitReport',
+                onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
+              })
+          }
           {this.getActionItem({
             id: 'dropdown-clickable-get-items-uiids',
             icon: 'save',

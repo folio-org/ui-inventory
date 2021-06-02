@@ -47,24 +47,32 @@ class ImportRecord extends React.Component {
     const { id, updateLocation } = this.props;
 
     // No need to check res.ok, as ky throws non-2xx responses
-    const message = <FormattedMessage
-      id={`ui-inventory.copycat.callout.${id ? 'updated' : 'created'}`}
-      values={{ xid }}
-    />;
-    this.context.sendCallout({ message });
-
     const json = await res.json();
-    let path = '/inventory/view';
     if (json.internalIdentifier) {
       // This SHOULD always be true, but in practice it sometimes is not
-      path += `/${json.internalIdentifier}`;
+      const message = <FormattedMessage
+        id={`ui-inventory.copycat.callout.${id ? 'updated' : 'created'}`}
+        values={{ xid }}
+      />;
+      this.context.sendCallout({ message });
+      updateLocation({
+        _path: `/inventory/view/${json.internalIdentifier}`,
+        layer: undefined,
+        xid: undefined,
+      });
+    } else {
+      // No internalIdentifier returned => mod-copycat gave up polling
+      const message = <FormattedMessage
+        id={`ui-inventory.copycat.callout.no-id.${id ? 'updated' : 'created'}`}
+        values={{ xid }}
+      />;
+      this.context.sendCallout({ type: 'warning', message });
+      updateLocation({
+        _path: `/inventory/view${id ? `/${id}` : ''}`,
+        layer: undefined,
+        xid: undefined,
+      });
     }
-
-    updateLocation({
-      _path: path,
-      layer: undefined,
-      xid: undefined,
-    });
   }
 
   async failure(xid, err) {

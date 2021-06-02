@@ -13,3 +13,4 @@ export * from './InstanceNewHolding';
 
 export { default as SubInstanceList } from './SubInstanceList';
 export { default as InstanceDetails } from './InstanceDetails';
+export { default as SubInstanceGroup } from './SubInstanceGroup';

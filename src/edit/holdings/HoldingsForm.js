@@ -19,7 +19,7 @@ import {
   PaneFooter,
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes-core';
+import { AppIcon } from '@folio/stripes/core';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
 

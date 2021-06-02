@@ -13,6 +13,17 @@
 * Add visual display when item is suppressed from discovery. Refs UIIN-1379.
 * Also support `circulation` `10.0`. Refs UIIN-1488.
 * Fix date display on item view. Fixes UIIN-1481.
+* Display correct open-request count for items. Refs UIIN-1469.
+* Fix items in transit export. Fixes UIIN-1492.
+* Warn with yellow toast when result of Single Record Import is unknown. Fixes UIIN-1495.
+* Patch: Display shelving order on the item record. Refs UIIN-816.
+* Add <Pluggable> instance to the Instance action menu for plugin type `copyright-permissions-checker`.
+* Add callout after instance record is saved. Refs UIIN-1468.
+* Add callout after item or holdings record are saved. Refs UIIN-1485, UIIN-1486.
+* Also support `circulation` `11.0`. Refs UIIN-1511.
+* Update "remote-storage-mappings" interface. Refs UIIN-1512.
+* Fix stripes import paths. Refs UIIN-1516.
+* Focus on on search box when changing inventory segments. Fixes UIIN-1358.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)

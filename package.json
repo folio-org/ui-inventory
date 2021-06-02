@@ -74,7 +74,7 @@
       "holdings-sources": "1.0",
       "users": "15.0",
       "location-units": "2.0",
-      "circulation": "9.0 10.0",
+      "circulation": "9.0 10.0 11.0",
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
@@ -83,7 +83,7 @@
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
-      "remote-storage-mappings": "1.0"
+      "remote-storage-mappings": "1.0 2.0"
     },
     "permissionSets": [
       {
@@ -732,12 +732,12 @@
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.0",
+    "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.7.4",
+    "@babel/preset-react": "^7.9.0",
     "@bigtest/interactor": "^0.7.0",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",

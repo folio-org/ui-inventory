@@ -18,6 +18,8 @@ import {
 import {
   identifierTypes,
   instances,
+  instanceRelationshipTypes,
+  childInstances,
 } from '../../../../test/fixtures';
 
 import InstanceRelationshipView from './InstanceRelationshipView';
@@ -30,8 +32,10 @@ const InstanceRelationshipViewSetup = () => (
       <DataContext.Provider value={{
         contributorTypes: [],
         identifierTypes,
+        instanceRelationshipTypes,
         identifierTypesById: keyBy(identifierTypes, 'id'),
         identifierTypesByName: keyBy(identifierTypes, 'name'),
+        instanceRelationshipTypesById: keyBy(instanceRelationshipTypes, 'name'),
         instanceFormats: [],
         modesOfIssuance: [],
         natureOfContentTerms: [],
@@ -40,7 +44,7 @@ const InstanceRelationshipViewSetup = () => (
       >
         <InstanceRelationshipView
           id="accordion-id"
-          instance={instances[0]}
+          childInstances={childInstances}
         />
       </DataContext.Provider>
     </StripesContext.Provider>
@@ -65,6 +69,6 @@ describe('InstanceRelationshipView', () => {
   });
 
   it('should render child instances', () => {
-    expect(document.querySelectorAll('[role="row"]').length).toEqual(8);
+    expect(document.querySelectorAll('[role="gridcell"]').length).toEqual(6);
   });
 });

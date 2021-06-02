@@ -12,8 +12,8 @@ import {
 
 import {
   Loading,
+  MessageBanner,
 } from '@folio/stripes/components';
-import { MessageBanner } from '@folio/stripes-components';
 
 import {
   callNumberLabel

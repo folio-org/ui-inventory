@@ -1,4 +1,8 @@
-import { keyBy } from 'lodash';
+import {
+  keyBy,
+  isEqual,
+  chain,
+} from 'lodash';
 import {
   useEffect,
   useState
@@ -13,28 +17,33 @@ const useLoadSubInstances = (instanceIds = [], subId) => {
   const [subInstances, setSubInstances] = useState([]);
   const results = useInstancesQuery(instanceIds.map(inst => inst[subId]));
   const allLoaded = results.reduce((acc, { isSuccess }) => (isSuccess && acc), true);
-
-  useEffect(() => {
-    if (allLoaded && !subInstances.length && results.length) {
-      const instances = results.map(({
-        data: {
-          id,
-          title,
-          hrid,
-          publication,
-          identifiers,
-        }
-      }) => ({
-        ...instanstcesById[id],
+  const instances = chain(results)
+    .filter(({ data }) => data)
+    .map(({
+      data: {
+        id,
         title,
         hrid,
         publication,
         identifiers,
-      }));
+      },
+    }) => ({
+      ...instanstcesById[id],
+      title,
+      hrid,
+      publication,
+      identifiers,
+    }))
+    .sortBy('title')
+    .value();
 
+  const shouldUpdateSubInstances = allLoaded && !isEqual(subInstances, instances);
+
+  useEffect(() => {
+    if (shouldUpdateSubInstances) {
       setSubInstances(instances);
     }
-  }, [allLoaded, subInstances, results, instanstcesById]);
+  }, [shouldUpdateSubInstances]);
 
   return subInstances;
 };

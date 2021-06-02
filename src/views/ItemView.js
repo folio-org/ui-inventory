@@ -45,6 +45,7 @@ import {
   AppIcon,
   IfPermission,
   IntlConsumer,
+  CalloutContext,
 } from '@folio/stripes/core';
 
 import ModalContent from '../components/ModalContent';
@@ -74,10 +75,13 @@ import {
   actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
+import { WarningMessage } from '../components';
 
 export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +110,16 @@ class ItemView extends React.Component {
       delete item.barcode;
     }
 
-    return this.props.mutator.items.PUT(item).then(() => this.onClickCloseEditItem());
+    return this.props.mutator.items.PUT(item).then(() => {
+      this.context.sendCallout({
+        type: 'success',
+        message: <FormattedMessage
+          id="ui-inventory.item.successfullySaved"
+          values={{ hrid: item.hrid }}
+        />,
+      });
+      this.onClickCloseEditItem();
+    });
   };
 
   copyItem = item => {
@@ -437,7 +450,7 @@ class ItemView extends React.Component {
     const temporaryHoldingsLocation = locationsById[holdingsRecord.temporaryLocationId];
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
-    const requestRecords = (requests || {}).records || [];
+    const requestCount = requests.other?.totalRecords ?? 0;
     const query = location.search ? queryString.parse(location.search) : {};
 
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
@@ -579,6 +592,7 @@ class ItemView extends React.Component {
       copyNumber: get(item, 'copyNumber', '-'),
       numberOfPieces: get(item, 'numberOfPieces', '-'),
       descriptionOfPieces: get(item, 'descriptionOfPieces', '-'),
+      effectiveShelvingOrder: get(item, 'effectiveShelvingOrder', '-'),
     };
 
     const enumerationData = {
@@ -602,7 +616,7 @@ class ItemView extends React.Component {
       permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
       temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
       itemStatusDate: getDateWithTime(item?.status?.date),
-      requestLink: !isEmpty(requestRecords) ? <Link to={requestsUrl}>{requestRecords.length}</Link> : 0,
+      requestLink: requestCount ? <Link to={requestsUrl}>{requestCount}</Link> : 0,
       borrower: borrowerLink,
       loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : '-',
       dueDate: openLoan ? getDateWithTime(openLoan.dueDate) : '-',
@@ -668,7 +682,7 @@ class ItemView extends React.Component {
     };
 
     const effectiveLocationDisplay = (
-      <Col xs={4} smOffset={0}>
+      <Col xs={2}>
         <KeyValue
           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
           value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
@@ -714,7 +728,7 @@ class ItemView extends React.Component {
               >
                 <ModalContent
                   item={item}
-                  itemRequestCount={requestRecords.length}
+                  itemRequestCount={requestCount}
                   status={MISSING}
                   requestsUrl={requestsUrl}
                   onConfirm={this.markItemAsMissing}
@@ -731,7 +745,7 @@ class ItemView extends React.Component {
               >
                 <ModalContent
                   item={item}
-                  itemRequestCount={requestRecords.length}
+                  itemRequestCount={requestCount}
                   status={WITHDRAWN}
                   requestsUrl={requestsUrl}
                   onConfirm={this.markItemAsWithdrawn}
@@ -751,7 +765,7 @@ class ItemView extends React.Component {
               >
                 <ModalContent
                   item={item}
-                  itemRequestCount={requestRecords.length}
+                  itemRequestCount={requestCount}
                   status={itemStatusesMap[selectedItemStatus]}
                   requestsUrl={requestsUrl}
                   onConfirm={() => this.markItemWithStatus(selectedItemStatus)}
@@ -840,13 +854,19 @@ class ItemView extends React.Component {
                       value={effectiveCallNumber(item)}
                     />
                   </Col>
-                  <Col xs={6}>
-                    <MessageBanner show={item.discoverySuppress} type="warning">
-                      <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
-                    </MessageBanner>
+                  <Col xs={7}>
+                    <Row middle="xs">
+                      <MessageBanner show={Boolean(item.discoverySuppress)} type="warning">
+                        <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
+                      </MessageBanner>
+                    </Row>
                   </Col>
-                  <Col end="xs">
-                    <ExpandAllButton />
+                  <Col xs={1}>
+                    <Row end="xs">
+                      <Col>
+                        <ExpandAllButton />
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
                 <br />
@@ -856,6 +876,12 @@ class ItemView extends React.Component {
                     label={<FormattedMessage id="ui-inventory.administrativeData" />}
                   >
                     <ViewMetaData metadata={item.metadata} />
+                    <Row>
+                      <Col xs={12}>
+                        {item.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
+                      </Col>
+                    </Row>
+                    {item.discoverySuppress && <br />}
                     <Row>
                       <Col xs={2}>
                         <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>
@@ -1371,7 +1397,10 @@ ItemView.propTypes = {
   resources: PropTypes.shape({
     instances1: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     loanTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
-    requests: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    requests: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+      other: PropTypes.object,
+    }),
     loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
