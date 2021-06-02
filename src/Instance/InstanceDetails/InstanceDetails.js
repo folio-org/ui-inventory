@@ -36,6 +36,7 @@ import {
   getAccordionState,
   getPublishingInfo,
 } from './utils';
+import { getDate } from '../../utils';
 import { DataContext } from '../../contexts';
 
 const accordions = {
@@ -66,6 +67,7 @@ const InstanceDetails = ({
   const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
   const instanceTitle = instance?.title;
 
+  // Detail pane title (first line)
   const title = useMemo(() => {
     return (
       <span data-test-instance-header-title>
@@ -80,6 +82,22 @@ const InstanceDetails = ({
       </span>
     );
   }, [instanceTitle, intl, publicationInfo]);
+
+  // ... and subtitle (second line)
+  const subTitle = useMemo(() => {
+    return (
+      <span>
+        {
+          intl.formatMessage({
+            id: 'ui-inventory.instanceRecordSubtitle',
+          }, {
+            hrid: instance?.hrid,
+            updatedDate: getDate(instance?.metadata?.updatedDate),
+          })
+        }
+      </span>
+    );
+  }, [instance]);
 
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
@@ -110,7 +128,7 @@ const InstanceDetails = ({
         data-test-instance-details
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
         paneTitle={title}
-        paneSub={publicationInfo}
+        paneSub={subTitle}
         dismissible
         onClose={onClose}
         actionMenu={actionMenu}
