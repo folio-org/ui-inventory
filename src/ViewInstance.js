@@ -35,7 +35,7 @@ import {
   batchFetchRequests,
 } from './Instance/ViewRequests/utils';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
-import { getDate } from '../src/utils';
+import { getDate } from './utils';
 import { indentifierTypeNames, layers } from './constants';
 import { DataContext } from './contexts';
 
@@ -542,13 +542,16 @@ class ViewInstance extends React.Component {
     );
   };
 
+  // Assemble a pane title that will be used for both the instance
+  // and holdings detail views -- the strings are the same except for
+  // a label of 'instance' or 'holding'.
   createTitle = (instance, label) => {
     const publicationInfo = getPublishingInfo(instance);
     const instanceTitle = instance?.title;
-    const labelId = label == 'instance' ?
+    const labelId = label === 'instance' ?
       'ui-inventory.instanceRecordTitle' :
-      'ui-inventory.holdingsPaneTitle'
-  
+      'ui-inventory.holdingsPaneTitle';
+
     // Pane title for both instance and holdings detail panes
     return (
       this.props.intl.formatMessage({
@@ -697,6 +700,9 @@ ViewInstance.propTypes = {
     }),
   }),
   history: ReactRouterPropTypes.history.isRequired,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired,
+  }),
   mutator: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceRequests: PropTypes.object.isRequired,

@@ -43,7 +43,6 @@ import {
   craftLayerUrl,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
-  callNumberLabel,
   checkIfArrayIsEmpty,
   staffOnlyFormatter,
   getSortedNotes,
@@ -56,7 +55,6 @@ import {
   noValue,
   holdingsStatementTypes,
 } from './constants';
-import { getPublishingInfo } from '../src/Instance/InstanceDetails/utils';
 import { WarningMessage } from './components';
 
 import css from './View.css';
@@ -353,8 +351,6 @@ class ViewHoldingsRecord extends React.Component {
       />
     );
 
-    console.log("HR", holdingsRecord)
-
     const noHoldingsRecordDeleteFooter = (
       <Button onClick={this.hideNoHoldingsRecordDeleteModal}>
         <FormattedMessage id="stripes-core.button.cancel" />
@@ -512,17 +508,6 @@ class ViewHoldingsRecord extends React.Component {
                 <Pane
                   defaultWidth={this.props.paneWidth}
                   appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-                  // paneTitle={
-                  //   <span data-test-header-title>
-                  //     <FormattedMessage
-                  //       id="ui-inventory.holdingsPaneTitle"
-                  //       values={{
-                  //         title: holdingsRecord?.title,
-                  //         publisherAndDate: callNumberLabel(holdingsRecord)
-                  //       }}
-                  //     />
-                  //   </span>
-                  // }
                   paneTitle={this.props.paneTitle}
                   paneSub={this.props.paneSubtitle}
                   dismissible
@@ -932,6 +917,8 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
+  paneTitle: PropTypes.string,
+  paneSubtitle: PropTypes.string,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
@@ -949,5 +936,9 @@ ViewHoldingsRecord.propTypes = {
   goTo: PropTypes.func.isRequired,
 };
 
+ViewHoldingsRecord.defaultProps = {
+  paneTitle: '',
+  paneSubtitle: '',
+};
 
 export default withLocation(ViewHoldingsRecord);

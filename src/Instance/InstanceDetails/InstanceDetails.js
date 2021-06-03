@@ -32,11 +32,7 @@ import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import HelperApp from '../../components/HelperApp';
 
-import {
-  getAccordionState,
-  getPublishingInfo,
-} from './utils';
-import { getDate } from '../../utils';
+import { getAccordionState } from './utils';
 import { DataContext } from '../../contexts';
 
 const accordions = {
@@ -209,6 +205,8 @@ InstanceDetails.propTypes = {
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
+  paneTitle: PropTypes.string,
+  paneSubtitle: PropTypes.string,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
 };
@@ -216,6 +214,8 @@ InstanceDetails.propTypes = {
 InstanceDetails.defaultProps = {
   instance: {},
   tagsEnabled: false,
+  paneTitle: '',
+  paneSubtitle: '',
 };
 
 export default InstanceDetails;
