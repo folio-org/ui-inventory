@@ -47,7 +47,7 @@ describe('Instances', () => {
       });
     });
 
-    describe.only('search by barcode', function () {
+    describe('search by barcode', function () {
       beforeEach(async function () {
         const item = this.server.schema.instances.first().holdings.models[0].items.models[0];
         await inventory.chooseSearchOption('Barcode');
