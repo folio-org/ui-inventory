@@ -102,6 +102,8 @@
   "updateItem": "Update item",
   "instanceTitle": "Instance: {title}.",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
+  "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+  "holdingsPaneSubtitle": "Subtitle",
   "waitingForResources": "Waiting for resources",
   "fetchingMarcRecord": "Fetching MARC record",
   "viewMarcSource": "View MARC source",

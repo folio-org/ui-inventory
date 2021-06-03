@@ -56,6 +56,7 @@ import {
   noValue,
   holdingsStatementTypes,
 } from './constants';
+import { getPublishingInfo } from '../src/Instance/InstanceDetails/utils';
 import { WarningMessage } from './components';
 
 import css from './View.css';
@@ -352,6 +353,8 @@ class ViewHoldingsRecord extends React.Component {
       />
     );
 
+    console.log("HR", holdingsRecord)
+
     const noHoldingsRecordDeleteFooter = (
       <Button onClick={this.hideNoHoldingsRecordDeleteModal}>
         <FormattedMessage id="stripes-core.button.cancel" />
@@ -509,17 +512,19 @@ class ViewHoldingsRecord extends React.Component {
                 <Pane
                   defaultWidth={this.props.paneWidth}
                   appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-                  paneTitle={
-                    <span data-test-header-title>
-                      <FormattedMessage
-                        id="ui-inventory.holdingsTitle"
-                        values={{
-                          location: get(holdingsPermanentLocation, 'name', ''),
-                          callNumber: callNumberLabel(holdingsRecord)
-                        }}
-                      />
-                    </span>
-                  }
+                  // paneTitle={
+                  //   <span data-test-header-title>
+                  //     <FormattedMessage
+                  //       id="ui-inventory.holdingsPaneTitle"
+                  //       values={{
+                  //         title: holdingsRecord?.title,
+                  //         publisherAndDate: callNumberLabel(holdingsRecord)
+                  //       }}
+                  //     />
+                  //   </span>
+                  // }
+                  paneTitle={this.props.paneTitle}
+                  paneSub={this.props.paneSubtitle}
                   dismissible
                   onClose={this.props.onCloseViewHoldingsRecord}
                   actionMenu={this.getPaneHeaderActionMenu}

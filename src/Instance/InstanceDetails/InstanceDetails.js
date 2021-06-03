@@ -55,6 +55,8 @@ const accordions = {
 const InstanceDetails = ({
   children,
   instance,
+  paneTitle,
+  paneSubtitle,
   onClose,
   actionMenu,
   tagsEnabled,
@@ -63,42 +65,6 @@ const InstanceDetails = ({
   const intl = useIntl();
 
   const referenceData = useContext(DataContext);
-
-  const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
-  const instanceTitle = instance?.title;
-
-  // Detail pane title (first line)
-  const title = useMemo(() => {
-    return (
-      <span data-test-instance-header-title>
-        {
-          intl.formatMessage({
-            id: 'ui-inventory.instanceRecordTitle',
-          }, {
-            title: instanceTitle,
-            publisherAndDate: publicationInfo ?? '',
-          })
-        }
-      </span>
-    );
-  }, [instanceTitle, intl, publicationInfo]);
-
-  // ... and subtitle (second line)
-  const subTitle = useMemo(() => {
-    return (
-      <span>
-        {
-          intl.formatMessage({
-            id: 'ui-inventory.instanceRecordSubtitle',
-          }, {
-            hrid: instance?.hrid,
-            updatedDate: getDate(instance?.metadata?.updatedDate),
-          })
-        }
-      </span>
-    );
-  }, [instance]);
-
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
@@ -127,8 +93,8 @@ const InstanceDetails = ({
         {...rest}
         data-test-instance-details
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={title}
-        paneSub={subTitle}
+        paneTitle={paneTitle}
+        paneSub={paneSubtitle}
         dismissible
         onClose={onClose}
         actionMenu={actionMenu}
