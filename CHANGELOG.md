@@ -24,7 +24,7 @@
 * Update "remote-storage-mappings" interface. Refs UIIN-1512.
 * Fix stripes import paths. Refs UIIN-1516.
 * Focus on on search box when changing inventory segments. Fixes UIIN-1358.
-* Update instance detail view header. Refs UIIN-1309.
+* Update detail view headers. Refs UIIN-1309, UIIN-1311, UIIN-1470.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)

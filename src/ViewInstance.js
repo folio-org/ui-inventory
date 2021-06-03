@@ -554,12 +554,14 @@ class ViewInstance extends React.Component {
 
     // Pane title for both instance and holdings detail panes
     return (
-      this.props.intl.formatMessage({
-        id: labelId,
-      }, {
-        title: instanceTitle,
-        publisherAndDate: publicationInfo ?? '',
-      })
+      <span data-test-header-title>
+        {this.props.intl.formatMessage({
+          id: labelId,
+        }, {
+          title: instanceTitle,
+          publisherAndDate: publicationInfo ?? '',
+        })}
+      </span>
     );
   }
 
