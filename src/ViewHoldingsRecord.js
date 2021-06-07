@@ -43,7 +43,6 @@ import {
   craftLayerUrl,
   areAllFieldsEmpty,
   checkIfElementIsEmpty,
-  callNumberLabel,
   checkIfArrayIsEmpty,
   staffOnlyFormatter,
   getSortedNotes,
@@ -509,17 +508,8 @@ class ViewHoldingsRecord extends React.Component {
                 <Pane
                   defaultWidth={this.props.paneWidth}
                   appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-                  paneTitle={
-                    <span data-test-header-title>
-                      <FormattedMessage
-                        id="ui-inventory.holdingsTitle"
-                        values={{
-                          location: get(holdingsPermanentLocation, 'name', ''),
-                          callNumber: callNumberLabel(holdingsRecord)
-                        }}
-                      />
-                    </span>
-                  }
+                  paneTitle={this.props.paneTitle}
+                  paneSub={this.props.paneSubtitle}
                   dismissible
                   onClose={this.props.onCloseViewHoldingsRecord}
                   actionMenu={this.getPaneHeaderActionMenu}
@@ -927,6 +917,8 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
+  paneTitle: PropTypes.string,
+  paneSubtitle: PropTypes.string,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
@@ -944,5 +936,9 @@ ViewHoldingsRecord.propTypes = {
   goTo: PropTypes.func.isRequired,
 };
 
+ViewHoldingsRecord.defaultProps = {
+  paneTitle: '',
+  paneSubtitle: '',
+};
 
 export default withLocation(ViewHoldingsRecord);

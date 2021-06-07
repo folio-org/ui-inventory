@@ -44,7 +44,7 @@
     ],
     "okapiInterfaces": {
       "inventory": "10.10",
-      "source-storage-records": "2.0",
+      "source-storage-records": "3.0",
       "instance-storage": "7.0",
       "holdings-storage": "3.0 4.4",
       "item-storage": "8.0",

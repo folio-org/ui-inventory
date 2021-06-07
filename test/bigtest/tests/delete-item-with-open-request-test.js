@@ -60,7 +60,7 @@ describe('Delete item with open request', () => {
     });
 
     it('displays the title in the pane header', () => {
-      expect(ItemViewPage.title).to.equal(`Item record ${item.barcode} ${item.status.name}`);
+      expect(ItemViewPage.title).to.equal(`Item • ${item.barcode} • ${item.status.name}`);
     });
 
     describe('pane header dropdown menu, click delete', () => {
