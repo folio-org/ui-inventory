@@ -58,8 +58,6 @@ class InstancesRoute extends React.Component {
             renderFilters={renderer({ ...data, query })}
             segment={segment}
             searchableIndexes={indexes}
-            namespace={namespace}
-            getNamespace={getNamespace}
           />
         )}
       </DataContext.Consumer>
