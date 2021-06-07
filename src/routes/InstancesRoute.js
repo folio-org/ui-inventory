@@ -39,8 +39,6 @@ class InstancesRoute extends React.Component {
       disableRecordCreation,
       resources,
       mutator,
-      namespace,
-      getNamespace,
       getParams,
     } = this.props;
     const { segment } = getParams(this.props);
