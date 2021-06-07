@@ -279,7 +279,6 @@
     "createItem": "Create item",
     "updateItem": "Update item",
     "holdingsTitle": " Holdings: {location} > {callNumber}",
-    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
     "addContributor": "Add contributor",
     "selectIdentifierType": "Select identifier type",
     "selectAlternativeTitleType": "Select alternative title type",
@@ -340,7 +339,6 @@
     "noItemDeleteModal.orderMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is on order and cannot be <strong>deleted</strong> until all dependencies with the Order app have been cleared. If you want to continue with the deletion of the item record, go to the Order app and clear the dependencies.",
     "holdingRecord": "Holding record {location} {callNumber}",
     "instanceRecordTitle": "Instance • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
     "makePrimary": "Make primary",
     "holdingsNoteTypes": "Holdings note types",
     "itemNoteTypes": "Item note types",
@@ -659,5 +657,7 @@
     "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
     "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
-    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
+    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
 }
