@@ -657,5 +657,7 @@
     "hridCopied": "实例HRID {hrid}已成功复制到剪贴板",
     "item.successfullySaved": "<strong>单件 </strong>-HRID <strong> {hrid} </strong>已成功保存。",
     "holdingsRecord.successfullySaved": "<strong>馆藏</strong> -HRID <strong> {hrid} </strong>已成功保存。",
-    "instance.successfullySaved": "<strong>实例</strong> -HRID <strong> {hrid} </strong>已成功保存。"
+    "instance.successfullySaved": "<strong>实例</strong> -HRID <strong> {hrid} </strong>已成功保存。",
+    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
 }
