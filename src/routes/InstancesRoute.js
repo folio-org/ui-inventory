@@ -44,7 +44,6 @@ class InstancesRoute extends React.Component {
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
-
     return (
       <DataContext.Consumer>
         {data => (
