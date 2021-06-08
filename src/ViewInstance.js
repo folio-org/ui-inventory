@@ -121,7 +121,7 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const isMARCSource = this.isMARCSource();
+    const isMARCSource = this.isMARCSource(this.props.resources);
 
     if (isMARCSource) {
       this.getMARCRecord();
@@ -134,9 +134,13 @@ class ViewInstance extends React.Component {
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsId = instanceRecords[0]?.id;
     const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
-    const isMARCSource = this.isMARCSource();
+    const prevIsMARCSource = this.isMARCSource(prevResources);
+    const isMARCSource = this.isMARCSource(resources);
 
-    if (isMARCSource && instanceRecordsId !== prevInstanceRecordsId) {
+    const isViewingAnotherRecord = instanceRecordsId !== prevInstanceRecordsId;
+    const recordSourceWasChanged = isMARCSource !== prevIsMARCSource;
+
+    if (isMARCSource && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
     }
 
@@ -164,8 +168,7 @@ class ViewInstance extends React.Component {
     this.props.mutator.allInstanceItems.reset();
   }
 
-  isMARCSource = () => {
-    const { resources } = this.props;
+  isMARCSource = (resources) => {
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsSource = instanceRecords?.[0]?.source;
 
