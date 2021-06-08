@@ -8,7 +8,7 @@ import { screen } from '@testing-library/react';
 import '../../../test/jest/__mock__';
 
 import { StripesContext } from '@folio/stripes-core/src/StripesContext';
-import { ModuleHierarchyProvider }  from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
