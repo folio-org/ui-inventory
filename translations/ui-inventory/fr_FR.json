@@ -657,5 +657,7 @@
     "hridCopied": "L'instance HRID {hrid} été copiée avec succès dans le presse-papiers",
     "item.successfullySaved": "Le HRID de l' <strong> exemplaire </strong> - <strong> {hrid} </strong> a bien été enregistré.",
     "holdingsRecord.successfullySaved": "L' <strong> </strong> HRID des collections<strong> {hrid} </strong> a bien été enregistré.",
-    "instance.successfullySaved": "L ' <strong>  </strong> HRID de l'instance <strong> {hrid} </strong> a bien été enregistré."
+    "instance.successfullySaved": "L ' <strong>  </strong> HRID de l'instance <strong> {hrid} </strong> a bien été enregistré.",
+    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
 }
