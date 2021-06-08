@@ -32,10 +32,7 @@ import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import HelperApp from '../../components/HelperApp';
 
-import {
-  getAccordionState,
-  getPublishingInfo,
-} from './utils';
+import { getAccordionState } from './utils';
 import { DataContext } from '../../contexts';
 
 const accordions = {
@@ -54,6 +51,8 @@ const accordions = {
 const InstanceDetails = ({
   children,
   instance,
+  paneTitle,
+  paneSubtitle,
   onClose,
   actionMenu,
   tagsEnabled,
@@ -62,25 +61,6 @@ const InstanceDetails = ({
   const intl = useIntl();
 
   const referenceData = useContext(DataContext);
-
-  const publicationInfo = useMemo(() => getPublishingInfo(instance), [instance]);
-  const instanceTitle = instance?.title;
-
-  const title = useMemo(() => {
-    return (
-      <span data-test-instance-header-title>
-        {
-          intl.formatMessage({
-            id: 'ui-inventory.instanceRecordTitle',
-          }, {
-            title: instanceTitle,
-            publisherAndDate: publicationInfo ?? '',
-          })
-        }
-      </span>
-    );
-  }, [instanceTitle, intl, publicationInfo]);
-
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
@@ -109,8 +89,8 @@ const InstanceDetails = ({
         {...rest}
         data-test-instance-details
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={title}
-        paneSub={publicationInfo}
+        paneTitle={paneTitle}
+        paneSub={paneSubtitle}
         dismissible
         onClose={onClose}
         actionMenu={actionMenu}
@@ -225,6 +205,8 @@ InstanceDetails.propTypes = {
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
+  paneTitle: PropTypes.string,
+  paneSubtitle: PropTypes.string,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
 };
@@ -232,6 +214,8 @@ InstanceDetails.propTypes = {
 InstanceDetails.defaultProps = {
   instance: {},
   tagsEnabled: false,
+  paneTitle: '',
+  paneSubtitle: '',
 };
 
 export default InstanceDetails;
