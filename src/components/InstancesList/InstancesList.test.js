@@ -8,6 +8,7 @@ import { screen } from '@testing-library/react';
 import '../../../test/jest/__mock__';
 
 import { StripesContext } from '@folio/stripes-core/src/StripesContext';
+import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -48,28 +49,30 @@ const InstancesListSetup = ({
 } = {}) => (
   <Router>
     <StripesContext.Provider value={stripesStub}>
-      <InstancesList
-        parentResources={{
-          query,
-          records: {
-            hasLoaded: true,
-            resource: 'records',
-            records: instances,
-            other: { totalRecords: instances.length },
-          },
-          resultCount: instances.length,
-          resultOffset: 0,
-        }}
-        parentMutator={{ resultCount: { replace: noop } }}
-        data={{
-          ...data,
-          query
-        }}
-        onSelectRow={noop}
-        renderFilters={renderer({ ...data, query })}
-        segment={segment}
-        searchableIndexes={indexes}
-      />
+      <ModuleHierarchyProvider value={['@folio/inventory']}>
+        <InstancesList
+          parentResources={{
+            query,
+            records: {
+              hasLoaded: true,
+              resource: 'records',
+              records: instances,
+              other: { totalRecords: instances.length },
+            },
+            resultCount: instances.length,
+            resultOffset: 0,
+          }}
+          parentMutator={{ resultCount: { replace: noop } }}
+          data={{
+            ...data,
+            query
+          }}
+          onSelectRow={noop}
+          renderFilters={renderer({ ...data, query })}
+          segment={segment}
+          searchableIndexes={indexes}
+        />
+      </ModuleHierarchyProvider>
     </StripesContext.Provider>
   </Router>
 );

@@ -16,6 +16,8 @@ import '../../test/jest/__mock__';
 
 import { CalloutContext } from '@folio/stripes-core';
 import { StripesContext } from '@folio/stripes-core/src/StripesContext';
+import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+
 import {
   Layer,
   Paneset
@@ -46,45 +48,47 @@ const InstancesRouteSetup = ({
   <Router>
     <StripesContext.Provider value={stripesStub}>
       <CalloutContext.Provider value={{ sendCallout }}>
-        <DataContext.Provider value={{
-          contributorTypes: [],
-          instanceTypes: [],
-          locations: [],
-          instanceFormats: [],
-          modesOfIssuance: [],
-          natureOfContentTerms: [],
-          tagsRecords: [],
-        }}
-        >
-          <Paneset>
-            <Layer
-              isOpen
-              contentLabel="label"
-            >
-              <OverlayContainer />
-              <InstancesRoute
-                resources={{
-                  query: {
-                    query: '',
-                    sort: 'title',
-                  },
-                  records: {
-                    hasLoaded: true,
-                    resource: 'records',
-                    records: instances,
-                    other: { totalRecords: instances.length },
-                  },
-                  resultCount: instances.length,
-                  resultOffset: 0,
-                }}
-                mutator={{
-                  quickExport: { POST: quickExportPOST },
-                  resultCount: { replace: noop },
-                }}
-              />
-            </Layer>
-          </Paneset>
-        </DataContext.Provider>
+        <ModuleHierarchyProvider value={['@folio/inventory']}>
+          <DataContext.Provider value={{
+            contributorTypes: [],
+            instanceTypes: [],
+            locations: [],
+            instanceFormats: [],
+            modesOfIssuance: [],
+            natureOfContentTerms: [],
+            tagsRecords: [],
+          }}
+          >
+            <Paneset>
+              <Layer
+                isOpen
+                contentLabel="label"
+              >
+                <OverlayContainer />
+                <InstancesRoute
+                  resources={{
+                    query: {
+                      query: '',
+                      sort: 'title',
+                    },
+                    records: {
+                      hasLoaded: true,
+                      resource: 'records',
+                      records: instances,
+                      other: { totalRecords: instances.length },
+                    },
+                    resultCount: instances.length,
+                    resultOffset: 0,
+                  }}
+                  mutator={{
+                    quickExport: { POST: quickExportPOST },
+                    resultCount: { replace: noop },
+                  }}
+                />
+              </Layer>
+            </Paneset>
+          </DataContext.Provider>
+        </ModuleHierarchyProvider>
       </CalloutContext.Provider>
     </StripesContext.Provider>
   </Router>
