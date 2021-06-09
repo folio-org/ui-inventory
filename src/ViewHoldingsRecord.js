@@ -535,6 +535,7 @@ class ViewHoldingsRecord extends React.Component {
                             {instance.publication[0].publisher}
                             {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
                           </em>
+                          {instance.isBoundWith ? ' (bound with)' : ''}
                         </span>
                       }
                     </Col>

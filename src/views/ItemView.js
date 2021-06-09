@@ -839,7 +839,8 @@ class ItemView extends React.Component {
                     id="ui-inventory.itemRecordWithDescription"
                     values={{
                       materialType: item?.materialType?.name,
-                      status: item?.status?.name
+                      status: item?.status?.name,
+                      boundWith: (item?.isBoundWith ? ', Bound with' : '')
                     }}
                   />
                 </Col>

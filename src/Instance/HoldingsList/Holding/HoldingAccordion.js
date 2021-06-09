@@ -103,7 +103,7 @@ HoldingAccordion.manifest = Object.freeze({
   instanceHoldingItems: {
     type: 'okapi',
     records: 'items',
-    path: 'inventory/items',
+    path: 'inventory/items-by-holdings-id',
     params: {
       query: 'holdingsRecordId==!{holding.id}',
       limit: '5000',

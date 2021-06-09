@@ -32,7 +32,7 @@ const InstanceTitle = ({ instance, instanceTypes }) => {
               >
                 <FormattedMessage
                   id="ui-inventory.instanceRecordWithType"
-                  values={{ instanceTypeName }}
+                  values={{ instanceTypeName, boundWith: (instance.isBoundWith ? ', Bound with' : '') }}
                 />
               </AppIcon>
             </Layout>

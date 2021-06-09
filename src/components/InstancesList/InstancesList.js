@@ -601,6 +601,7 @@ class InstancesList extends React.Component {
         title,
         discoverySuppress,
         staffSuppress,
+        isBoundWith,
       }) => (
         <AppIcon
           size="small"
@@ -616,6 +617,11 @@ class InstancesList extends React.Component {
               icon="exclamation-circle"
               status="warn"
             />
+          </span>
+          }
+          {(isBoundWith) &&
+          <span className={css.warnIcon}>
+            <AppIcon size="small" app="@folio/inventory" iconKey="bound-with" />
           </span>
           }
         </AppIcon>

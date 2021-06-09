@@ -40,6 +40,11 @@
         "name": "instance",
         "alt": "",
         "title": "Instance"
+      },
+      {
+        "name": "bound-with",
+        "alt": "",
+        "title": "bound-with"
       }
     ],
     "okapiInterfaces": {
