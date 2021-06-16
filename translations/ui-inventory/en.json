@@ -665,5 +665,6 @@
   "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
   "discoverySuppressed": "Suppressed from discovery",
   "staffSuppressed": "Staff suppressed",
-  "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
+  "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
+  "instance.saveError": "Saving instance failed"
 }

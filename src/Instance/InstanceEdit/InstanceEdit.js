@@ -13,13 +13,13 @@ import {
 } from '@folio/stripes/core';
 import {
   LoadingView,
+  ErrorModal,
 } from '@folio/stripes/components';
 
 import {
   useInstance,
   useGoBack,
 } from '../../common/hooks';
-import DataContext from '../../contexts/DataContext';
 import InstanceForm from '../../edit/InstanceForm';
 import {
   marshalInstance,
@@ -35,7 +35,7 @@ const InstanceEdit = ({
   mutator,
 }) => {
   const { identifierTypesById, identifierTypesByName } = referenceData;
-
+  const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
@@ -52,26 +52,29 @@ const InstanceEdit = ({
 
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
+  const onSuccess = useCallback((updatedInstance) => {
+    callout.sendCallout({
+      type: 'success',
+      message: <FormattedMessage
+        id="ui-inventory.instance.successfullySaved"
+        values={{ hrid: updatedInstance.hrid }}
+      />,
+    });
+    goBack();
+  }, [callout, goBack]);
+
   const onSubmit = useCallback((updatedInstance) => {
     return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
-      .then(() => {
-        callout.sendCallout({
-          type: 'success',
-          message: <FormattedMessage
-            id="ui-inventory.instance.successfullySaved"
-            values={{ hrid: updatedInstance.hrid }}
-          />,
-        });
-        goBack();
-      });
-  }, [goBack, identifierTypesByName, callout]);
+      .then(() => onSuccess(updatedInstance))
+      .catch(err => setHttpError(err));
+  }, [identifierTypesByName, setHttpError]);
 
   if (isInstanceLoading) return <LoadingView />;
 
   if (!instance) return null;
 
   return (
-    <DataContext.Provider value={referenceData}>
+    <>
       <InstanceForm
         onSubmit={onSubmit}
         initialValues={initialValues}
@@ -80,7 +83,15 @@ const InstanceEdit = ({
         stripes={stripes}
         onCancel={goBack}
       />
-    </DataContext.Provider>
+      { httpError &&
+        <ErrorModal
+          open
+          label={<FormattedMessage id="ui-inventory.instance.saveError" />}
+          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          onClose={() => setHttpError()}
+        />
+       }
+    </>
   );
 };
 
