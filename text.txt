@@ -1,9 +1,0 @@
-yarn run v1.22.10
-$ /Users/mkuklis/projects/folio/form/node_modules/.bin/jest -t InstanceEdit
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
-yarn run v1.22.10
-$ /Users/mkuklis/projects/folio/form/node_modules/.bin/jest -t InstanceEdit
-Done in 11.02s.
-yarn run v1.22.10
-$ /Users/mkuklis/projects/folio/form/node_modules/.bin/jest -t InstanceEdit
-Done in 10.49s.
