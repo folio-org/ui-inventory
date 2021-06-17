@@ -326,7 +326,7 @@
     "missingModal.heading": "Exemplar als fehlend bestätigen",
     "missingModal.confirm": "Bestätigen",
     "deleteItem": "Löschen",
-    "confirmItemDeleteModal.message": "Exemplarsatz HRID <strong>{hrid}, Barcode</strong> hat keine Abhängigkeiten und wird <strong>gelöscht</strong>.",
+    "confirmItemDeleteModal.message": "Exemplarsatz HRID <strong>{hrid}, barcode {barcode}</strong> hat keine Abhängigkeiten und wird <strong>gelöscht</strong>.",
     "confirmItemDeleteModal.heading": "Löschen von Exemplar bestätigen",
     "confirmItemDeleteModal.confirm": "Bestätigen",
     "deleteHoldingsRecord": "Löschen",
@@ -349,7 +349,7 @@
     "subject": "Schlagwort",
     "isbn": "ISBN",
     "issn": "ISSN",
-    "marcSourceRecord.notFoundError": "Kann den bibliografischen MARC-Datensatz für die \"{Name}\"-Instanz nicht finden!",
+    "marcSourceRecord.notFoundError": "Kann den bibliografischen MARC-Datensatz für die \"{name}\"-Instanz nicht finden!",
     "instanceNoteTypes": "Anmerkungstypen der Instanz",
     "modesOfIssuance": "Erscheinungsweise",
     "resourceIdentifierTypes": "Ressourcen-Identifiertypen",
@@ -659,5 +659,6 @@
     "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+    "instance.saveError": "Saving instance failed"
 }

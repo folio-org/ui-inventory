@@ -659,5 +659,6 @@
     "holdingsRecord.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للمقتنيات</strong> بنجاح.",
     "instance.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للوعاء</strong> بنجاح.",
     "holdingsPaneTitle": "المقتنيات • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • آخر تحديث: {updatedDate}"
+    "instanceRecordSubtitle": "{hrid} • آخر تحديث: {updatedDate}",
+    "instance.saveError": "فشل حفظ الوعاء"
 }

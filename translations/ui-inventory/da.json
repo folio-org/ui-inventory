@@ -305,7 +305,7 @@
     "instances.resourceType": "Resource Type",
     "instances.language": "Language",
     "holdingsRecord.awaitingResources": "Awaiting resources",
-    "addLabel": "Tilføj",
+    "addLabel": "Tilføj {label}",
     "source": "Source",
     "freeText": "Free text",
     "createNewItem": "Create New Item",
@@ -659,5 +659,6 @@
     "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+    "instance.saveError": "Saving instance failed"
 }

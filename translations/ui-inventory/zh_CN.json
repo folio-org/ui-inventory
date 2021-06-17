@@ -659,5 +659,6 @@
     "holdingsRecord.successfullySaved": "<strong>馆藏</strong> -HRID <strong> {hrid} </strong>已成功保存。",
     "instance.successfullySaved": "<strong>实例</strong> -HRID <strong> {hrid} </strong>已成功保存。",
     "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+    "instance.saveError": "Saving instance failed"
 }
