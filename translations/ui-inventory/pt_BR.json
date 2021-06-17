@@ -659,5 +659,6 @@
     "holdingsRecord.successfullySaved": "O <strong>acervo</strong> - HRID <strong>{hrid}</strong> foi salvo com sucesso.",
     "instance.successfullySaved": "A <strong> instância </strong> - HRID <strong> {hrid} </strong> foi salva com sucesso.",
     "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}"
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+    "instance.saveError": "Saving instance failed"
 }
