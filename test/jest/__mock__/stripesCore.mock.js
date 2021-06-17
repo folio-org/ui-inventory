@@ -4,7 +4,7 @@ jest.mock('@folio/stripes/core', () => {
   const STRIPES = {
     actionNames: [],
     clone: () => ({ ...STRIPES }),
-    connect: () => { },
+    connect: Comp => Comp,
     config: {},
     currency: 'USD',
     hasInterface: () => true,
