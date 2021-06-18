@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 7.0.0 (IN PROGRESS)
+## [7.1.0](https://github.com/folio-org/ui-inventory/tree/v7.1.0) (2021-06-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.1.0)
 
 * Improve relationship with parent and child instances. Refs UIIN-1044.
 * Move items among holdings, even if the list of holdings is loooooooooong. Refs UIIN-1446.
@@ -28,6 +29,31 @@
 * Update version of interfaces due to supporting MARC Authority records. Refs UIIN-1528.
 * Fix instance MARC record not loading when adding OCLC number. Refs UIIN-1532.
 * Show error modal when saving instance fails. Fixes UIIN-1527.
+
+## [7.0.3](https://github.com/folio-org/ui-inventory/tree/v7.0.3) (2021-04-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.2...v7.0.3)
+
+* Patch: Display shelving order on the item record. Refs UIIN-816.
+
+## [7.0.2](https://github.com/folio-org/ui-inventory/tree/v7.0.2) (2021-04-23)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.1...v7.0.2)
+
+* Warn with yellow toast when result of Single Record Import is unknown. Fixes UIIN-1495.
+* Fix items in transit export. Fixes UIIN-1492.
+
+## [7.0.1](https://github.com/folio-org/ui-inventory/tree/v7.0.1) (2021-04-22)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.0...v7.0.1)
+
+* Display correct open-request count for items. Refs UIIN-1469.
+* Fix date display on item view. Fixes UIIN-1481.
+
+## [7.0.0](https://github.com/folio-org/ui-inventory/tree/v7.0.0) (2021-04-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v6.0.0...v7.0.0)
+
+* It is possible to configure the maximum number of location to fetch in the Stripes config file, typically `stripes.config.js`, using the `maxUnpagedResourceCount` entry in the `config` area. Fixes UIIN-1480.
+* Unable to move item to separate holding (same instance) when list of items scrolls down and off the screen. Refs UIIN-1446
+* Use the `contributorsNames` index, available in `inventory` since `10.10`. Refs UIIN-1451.
+* Lock `stripes-cli` to `~2.1.1`, and thus `stripes-webpack` to `~1.1.0`. See STCLI-176.
 
 ## [6.0.0](https://github.com/folio-org/ui-inventory/tree/v6.0.0) (2021-03-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v5.0.6...v6.0.0)
