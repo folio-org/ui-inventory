@@ -27,8 +27,12 @@
 * Focus on on search box when changing inventory segments. Fixes UIIN-1358.
 * Update detail view headers. Refs UIIN-1309, UIIN-1311, UIIN-1470.
 * Update version of interfaces due to supporting MARC Authority records. Refs UIIN-1528.
-* Fix instance MARC record not loading when adding OCLC number. Refs UIIN-1532.
 * Show error modal when saving instance fails. Fixes UIIN-1527.
+
+## [7.0.4](https://github.com/folio-org/ui-inventory/tree/v7.0.4) (2021-06-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.0.4)
+
+* Fix instance MARC record not loading when adding OCLC number. Refs UIIN-1532.
 
 ## [7.0.3](https://github.com/folio-org/ui-inventory/tree/v7.0.3) (2021-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.2...v7.0.3)
