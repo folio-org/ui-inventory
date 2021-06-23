@@ -407,7 +407,7 @@
     "item.status.inTransit": "في النقل",
     "item.status.missing": "مفقودة",
     "item.status.onOrder": "في الطلب",
-    "item.status.paged": "مستدعى",
+    "item.status.paged": "تنبيه للالتقاط",
     "querySearch": "بحث الاستعلام",
     "holdings.permanentLocation": "موقع المقتنيات الدائم",
     "inTransitReport": "تقرير المواد الموجودة في النقل (CSV)",
