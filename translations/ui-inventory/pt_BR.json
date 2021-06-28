@@ -526,7 +526,7 @@
     "permission.holdings.edit": "Acervo: Ver, criar, editar holdings",
     "permission.holdings.delete": "Acervo: Ver, criar, editar, excluir holdings",
     "permission.instance.view-staff-suppressed-records": "Acervo: Visualizar os registros da instância que estão sendo suprimidos para a equipe",
-    "permission.settings.list.view": "Configurações (Acervo): Exibe a lista de páginas de configurações",
+    "permission.settings.list.view": "Configurações (Inventário): Ver lista de páginas de ajustes",
     "permission.items.mark-items-withdrawn": "Acervo: Marcar itens como descartado",
     "moveItems.selectAll": "Marque/desmarque todos os itens para movimento",
     "moveItems.selectItem": "Marque/desmarque o item para movimento",
@@ -587,8 +587,8 @@
     "exportInstancesInMARCLimitExceeded": "Limite de registro selecionado de {count, number} foi excedido",
     "integrations": "Integrações",
     "singleRecordImport": "Importação de registro único",
-    "targetProfiles": "Perfis de destino",
-    "targetProfile": "perfil destino",
+    "targetProfiles": "Perfis de destino Z39.50",
+    "targetProfile": "Perfil de destino Z39.50",
     "permission.settings.single-record-import": "Configurações (Inventário): Configurar importação de registro único",
     "itemRecordWithDescription": "Registro do item ({materialType}, {status})",
     "instanceRecordWithType": "Registo da instância ({instanceTypeName})",
@@ -655,7 +655,10 @@
     "copycat.callout.no-id.updated": "O registro {xid} foi enfileirado para atualização, mas o processo ainda não está completo",
     "instances.typeOfRelation": "Tipo de relação: {name}",
     "hridCopied": "A instância HRID {hrid} foi copiada com sucesso para a área de transferência",
-    "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
-    "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
-    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
+    "item.successfullySaved": "O <strong>item</strong> - HRID <strong>{hrid}</strong> foi salvo com sucesso.",
+    "holdingsRecord.successfullySaved": "O <strong>acervo</strong> - HRID <strong>{hrid}</strong> foi salvo com sucesso.",
+    "instance.successfullySaved": "A <strong> instância </strong> - HRID <strong> {hrid} </strong> foi salva com sucesso.",
+    "holdingsPaneTitle": "Holding • {title} • {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Última atualização: {updatedDate}",
+    "instance.saveError": "Falha ao salvar instância"
 }

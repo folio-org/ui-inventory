@@ -104,7 +104,7 @@ describe('InstanceViewPage', () => {
     });
 
     it('displays the instance title in the pane header', () => {
-      expect(InstanceViewPage.title).to.equal('Instance record ADVANCING RESEARCH');
+      expect(InstanceViewPage.title).to.equal('Instance • ADVANCING RESEARCH •');
     });
 
     it('should render a View holdings button at the bottom of opened instance', () => {

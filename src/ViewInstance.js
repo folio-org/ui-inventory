@@ -7,7 +7,10 @@ import React, {
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 
 import {
   AppIcon,
@@ -31,6 +34,8 @@ import {
   batchFetchItems,
   batchFetchRequests,
 } from './Instance/ViewRequests/utils';
+import { getPublishingInfo } from './Instance/InstanceDetails/utils';
+import { getDate } from './utils';
 import { indentifierTypeNames, layers } from './constants';
 import { DataContext } from './contexts';
 
@@ -128,7 +133,7 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const isMARCSource = this.isMARCSource();
+    const isMARCSource = this.isMARCSource(this.props.resources);
 
     if (isMARCSource) {
       this.getMARCRecord();
@@ -141,9 +146,13 @@ class ViewInstance extends React.Component {
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsId = instanceRecords[0]?.id;
     const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
-    const isMARCSource = this.isMARCSource();
+    const prevIsMARCSource = this.isMARCSource(prevResources);
+    const isMARCSource = this.isMARCSource(resources);
 
-    if (isMARCSource && instanceRecordsId !== prevInstanceRecordsId) {
+    const isViewingAnotherRecord = instanceRecordsId !== prevInstanceRecordsId;
+    const recordSourceWasChanged = isMARCSource !== prevIsMARCSource;
+
+    if (isMARCSource && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
     }
 
@@ -178,8 +187,7 @@ class ViewInstance extends React.Component {
     this.props.mutator.allInstanceItems.reset();
   }
 
-  isMARCSource = () => {
-    const { resources } = this.props;
+  isMARCSource = (resources) => {
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsSource = instanceRecords?.[0]?.source;
 
@@ -537,6 +545,29 @@ class ViewInstance extends React.Component {
     );
   };
 
+  // Assemble a pane title that will be used for both the instance
+  // and holdings detail views -- the strings are the same except for
+  // a label of 'instance' or 'holding'.
+  createTitle = (instance, label) => {
+    const publicationInfo = getPublishingInfo(instance);
+    const instanceTitle = instance?.title;
+    const labelId = label === 'instance' ?
+      'ui-inventory.instanceRecordTitle' :
+      'ui-inventory.holdingsPaneTitle';
+
+    // Pane title for both instance and holdings detail panes
+    return (
+      <span data-test-header-title>
+        {this.props.intl.formatMessage({
+          id: labelId,
+        }, {
+          title: instanceTitle,
+          publisherAndDate: publicationInfo ?? '',
+        })}
+      </span>
+    );
+  }
+
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
@@ -544,6 +575,9 @@ class ViewInstance extends React.Component {
       onClose,
       paneWidth,
       tagsEnabled,
+      intl: {
+        formatMessage,
+      },
     } = this.props;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
@@ -569,10 +603,21 @@ class ViewInstance extends React.Component {
       );
     }
 
+    // Pane subtitle (second line) for both instance and holdings detail views
+    const subtitle =
+      formatMessage({
+        id: 'ui-inventory.instanceRecordSubtitle',
+      }, {
+        hrid: instance?.hrid,
+        updatedDate: getDate(instance?.metadata?.updatedDate),
+      });
+
     return (
       <>
         <InstanceDetails
           id="pane-instancedetails"
+          paneTitle={this.createTitle(instance, 'instance')}
+          paneSubtitle={subtitle}
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
@@ -600,6 +645,8 @@ class ViewInstance extends React.Component {
                   id={id}
                   holdingsrecordid={holdingsrecordid}
                   onCloseViewHoldingsRecord={this.goBack}
+                  paneTitle={this.createTitle(instance, 'holding')}
+                  paneSubtitle={subtitle}
                   {...this.props}
                 />
               )
@@ -658,6 +705,9 @@ ViewInstance.propTypes = {
     }),
   }),
   history: ReactRouterPropTypes.history.isRequired,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired,
+  }),
   mutator: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceRequests: PropTypes.object.isRequired,
@@ -694,4 +744,4 @@ ViewInstance.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default withLocation(withTags(ViewInstance));
+export default injectIntl(withLocation(withTags(ViewInstance)));

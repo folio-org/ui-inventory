@@ -49,7 +49,7 @@
   "viewRequests": "View requests ({count})",
   "instanceDetails": "Instance details",
   "addHoldings": "Add holdings",
-  "itemDotStatus": "Item record {barcode} {status}",
+  "itemDotStatus": "Item • {barcode} • {status}",
   "instances": "Instances",
   "instance": "Instance: ",
   "holdings": "Holdings",
@@ -102,6 +102,7 @@
   "updateItem": "Update item",
   "instanceTitle": "Instance: {title}.",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
+  "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
   "waitingForResources": "Waiting for resources",
   "fetchingMarcRecord": "Fetching MARC record",
   "viewMarcSource": "View MARC source",
@@ -208,7 +209,8 @@
   "titleData": "Title data",
   "instanceRecord": "Instance record",
   "instanceRecordWithType": "Instance record ({instanceTypeName})",
-  "instanceRecordTitle": "Instance record {title} {publisherAndDate}",
+  "instanceRecordTitle": "Instance • {title} •  {publisherAndDate}",
+  "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
   "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
   "instanceRecordRequestsSubtitle": "{count} items found",
   "contentData": "Content data",
@@ -663,5 +665,6 @@
   "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
   "discoverySuppressed": "Suppressed from discovery",
   "staffSuppressed": "Staff suppressed",
-  "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard"
+  "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
+  "instance.saveError": "Saving instance failed"
 }

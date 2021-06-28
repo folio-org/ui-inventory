@@ -66,6 +66,7 @@ export function buildManifestObject() {
       resultOffset: '%{resultOffset}',
       perRequest: 100,
       path: 'inventory/instances',
+      resultDensity: 'sparse',
       GET: {
         params: { query: buildQuery },
         staticFallback: { params: {} },

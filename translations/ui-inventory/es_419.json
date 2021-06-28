@@ -382,7 +382,7 @@
     "hridHandling.label.startWith": "Empezar con",
     "hridHandling.label.assignPrefix": "Asignar prefijo",
     "hridHandling.validation.enterValue": "Por favor, introduzca un valor",
-    "hridHandling.validation.maxLength": "La longitud máxima del campo es",
+    "hridHandling.validation.maxLength": "Valor no válido. Máximo {maxLength} caracteres permitidos",
     "hridHandling.validation.startWithField": "Por favor, introduzca un valor numérico",
     "hridHandling.validation.assignPrefixField": "Por favor, introduzca un valor alfanumérico",
     "noBarcode": "Sin código de barras",
@@ -657,5 +657,8 @@
     "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
     "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
-    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
+    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+    "instance.saveError": "Saving instance failed"
 }

@@ -337,7 +337,7 @@
     "noItemDeleteModal.checkoutMessage": "L'élément HRID <strong> {hrid} </strong> avec code-barres <strong> {barcode} </strong> est emprunté et ne peut pas être supprimé tant qu'il n'est pas retourné et identifié comme 'Disponible'",
     "noItemDeleteModal.requestMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> has a request associated and cannot be deleted until the request has been fulfilled, or the request has been cancelled. If you want to continue with the deletion of the item record, go to the Request app and clear the dependency.",
     "noItemDeleteModal.orderMessage": "L'élément HRID <strong> {hrid} </strong> avec le code-barres <strong> {barcode} </strong> est en commande et ne peut pas être <strong> supprimé </strong> tant que toutes les dépendances avec l'application Commande n'ont pas été effacées. Si vous souhaitez continuer la suppression de l'enregistrement d'exemplaire, accédez à l'application Commande et supprimez les dépendances.",
-    "holdingRecord": "Enregistrement {callNumber} {location} {callNumber}",
+    "holdingRecord": "Enregistrement {callNumber} {location}",
     "instanceRecordTitle": "Enregistrement d'instance {title} {publisherAndDate}",
     "makePrimary": "Définir comme principal(e)",
     "holdingsNoteTypes": "Type de notes sur les collections",
@@ -657,5 +657,8 @@
     "hridCopied": "L'instance HRID {hrid} été copiée avec succès dans le presse-papiers",
     "item.successfullySaved": "Le HRID de l' <strong> exemplaire </strong> - <strong> {hrid} </strong> a bien été enregistré.",
     "holdingsRecord.successfullySaved": "L' <strong> </strong> HRID des collections<strong> {hrid} </strong> a bien été enregistré.",
-    "instance.successfullySaved": "L ' <strong>  </strong> HRID de l'instance <strong> {hrid} </strong> a bien été enregistré."
+    "instance.successfullySaved": "L ' <strong>  </strong> HRID de l'instance <strong> {hrid} </strong> a bien été enregistré.",
+    "holdingsPaneTitle": "Collections • {title} • {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Dernière mise à jour : {updatedDate}",
+    "instance.saveError": "La sauvegarde de l'instance a échoué"
 }

@@ -16,7 +16,7 @@
     "editInstance": "編集",
     "instanceDetails": "インスタンスの詳細",
     "addHoldings": "Add holdings",
-    "itemDotStatus": "Item record {barcode} {status}",
+    "itemDotStatus": "Item • {barcode} • {status}",
     "instances": "インスタンス",
     "instance": "インスタンス：",
     "holdings": "所蔵",
@@ -338,7 +338,7 @@
     "noItemDeleteModal.requestMessage": "バーコード<strong> {barcode} </strong>のアイテムHRID <strong> {hrid} </strong>にリクエストがいっぱいになったか、リクエストがキャンセルされたリクエストが関連付けられています。",
     "noItemDeleteModal.orderMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is on order and cannot be <strong>deleted</strong> until all dependencies with the Order app have been cleared. If you want to continue with the deletion of the item record, go to the Order app and clear the dependencies.",
     "holdingRecord": "Holding record {location} {callNumber}",
-    "instanceRecordTitle": "Instance record {title} {publisherAndDate}",
+    "instanceRecordTitle": "Instance • {title} •  {publisherAndDate}",
     "makePrimary": "Make primary",
     "holdingsNoteTypes": "所蔵ノートタイプ",
     "itemNoteTypes": "アイテムノートタイプ",
@@ -657,5 +657,8 @@
     "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
     "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
-    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved."
+    "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
+    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+    "instance.saveError": "Saving instance failed"
 }
