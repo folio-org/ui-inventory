@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 7.x (IN PROGRESS)
+
+* Add bound-with indicator to item view. Refs UIIN-1518.
+
 ## [7.1.0](https://github.com/folio-org/ui-inventory/tree/v7.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.1.0)
 

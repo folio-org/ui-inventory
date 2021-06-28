@@ -836,10 +836,14 @@ class ItemView extends React.Component {
                   />
                   {' '}
                   <FormattedMessage
-                    id="ui-inventory.itemRecordWithDescription"
+                    id={
+                      item?.isBoundWith ?
+                        'ui-inventory.itemRecordWithDescriptionBW' :
+                        'ui-inventory.itemRecordWithDescription'
+                    }
                     values={{
                       materialType: item?.materialType?.name,
-                      status: item?.status?.name
+                      status: item?.status?.name,
                     }}
                   />
                 </Col>

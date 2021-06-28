@@ -591,6 +591,7 @@
     "targetProfile": "Z39.50 target profile",
     "permission.settings.single-record-import": "Settings (Inventory): Configure single-record import",
     "itemRecordWithDescription": "Item record ({materialType}, {status})",
+    "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, Bound with)",
     "instanceRecordWithType": "Instance record ({instanceTypeName})",
     "item.status.inProcessNonRequestable": "In process (non-requestable)",
     "item.status.intellectualItem": "Intellectual item",
