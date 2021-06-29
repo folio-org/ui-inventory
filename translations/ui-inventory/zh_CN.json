@@ -16,7 +16,7 @@
     "editInstance": "编辑",
     "instanceDetails": "实例详情",
     "addHoldings": "添加馆藏",
-    "itemDotStatus": "单件记录{barcode} {status}",
+    "itemDotStatus": "单件{barcode} {status}",
     "instances": "实例",
     "instance": "实例：",
     "holdings": "馆藏",
@@ -338,7 +338,7 @@
     "noItemDeleteModal.requestMessage": "条码为<strong> {barcode} </strong>的单件HRID <strong> {hrid} </strong>与一个请求相关联，在该请求得到满足或取消前不能将其删除。如果要继续删除单件记录，请转到“请求”应用并清除依赖性。",
     "noItemDeleteModal.orderMessage": "条码为<strong> {barcode} </strong>的单件HRID <strong> {hrid} </strong>订购中，在所有订单应用的依赖项清除前无法<strong>删除</strong>。如果要继续删除单件记录，请转到订单应用并清除依赖项。",
     "holdingRecord": "馆藏记录{location} {callNumber}",
-    "instanceRecordTitle": "实例记录{title} {publisherAndDate}",
+    "instanceRecordTitle": "实例{title} {publisherAndDate}",
     "makePrimary": "作为主要",
     "holdingsNoteTypes": "馆藏附注类型",
     "itemNoteTypes": "单件附注类型",
@@ -658,7 +658,7 @@
     "item.successfullySaved": "<strong>单件 </strong>-HRID <strong> {hrid} </strong>已成功保存。",
     "holdingsRecord.successfullySaved": "<strong>馆藏</strong> -HRID <strong> {hrid} </strong>已成功保存。",
     "instance.successfullySaved": "<strong>实例</strong> -HRID <strong> {hrid} </strong>已成功保存。",
-    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
-    "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
-    "instance.saveError": "Saving instance failed"
+    "holdingsPaneTitle": "馆藏 • {title} • {publisherAndDate}",
+    "instanceRecordSubtitle": "{hrid} • 上次更新：{updatedDate}",
+    "instance.saveError": "保存实例失败"
 }
