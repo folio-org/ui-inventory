@@ -345,7 +345,7 @@
     "itemOnHoldingsRecordDeleteModal.message": "رقم التعريف القابل للقراءة بشريًا لتسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> له تسجيلة مادة <strong>واحدة</strong> مرتبطة به. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف تسجيلة المادة المرتبطة به.",
     "itemsOnHoldingsRecordDeleteModal.message": "رقم التعريف القابل للقراءة بشريًا لتسجيلة المقتنيات <strong>{hrid}</strong> بالموقع <strong>{location}</strong> له <strong>{itemCount}</strong> تسجيلة مادة مرتبطة به. لتتمكن من متابعة حذف تسجيلة المقتنيات، يجب حذف جميع تسجيلات المواد المرتبطة به.",
     "condition": "شرط",
-    "search.all": "الكلمة المفتاحية (العنوان، المساهم، المعرّف)",
+    "search.all": "الكلمة الرئيسية (العنوان، المساهم، المعرّف)",
     "subject": "الموضوع",
     "isbn": "ردمك",
     "issn": "ردمد",
