@@ -567,7 +567,6 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
  * @param relationshipIdKey string ("subInstanceId" or "superInstanceId")
  *
  */
-
 export const marshalRelationship = (instance, relationshipName, relationshipIdKey) => {
   instance[relationshipName] = (instance?.[relationshipName] ?? []).map((inst) => {
     const {
@@ -580,7 +579,7 @@ export const marshalRelationship = (instance, relationshipName, relationshipIdKe
       instanceRelationshipTypeId,
     };
 
-    // if relationshipId is different from the id it means this an existing relationship record
+    // if relationshipId is different from the id it means this is an existing relationship record
     // https://issues.folio.org/browse/UIIN-1546?focusedCommentId=106757&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-106757
     if (inst[relationshipIdKey] !== id) {
       relationshipRecord.id = id;
