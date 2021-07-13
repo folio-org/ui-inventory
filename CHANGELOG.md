@@ -3,6 +3,7 @@
 ## [7.2.0] IN PROGRESS
 
 * Parse `parentInstances` and `childInstances` before instance record is saved. Fixes UIIN-1546.
+* Unfold instance relationship accordion when relationships are present. Fixes UIIN-1534.
 
 ## [7.1.0](https://github.com/folio-org/ui-inventory/tree/v7.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.1.0)

@@ -122,7 +122,7 @@ const InstanceDetails = ({
             instanceTypes={referenceData.instanceTypes}
           />
 
-          <AccordionSet initialStatus={accordionState}>
+          <AccordionSet initialStatus={accordionState} accordionStatus={accordionState}>
             {children}
 
             <InstanceNewHolding instance={instance} />
@@ -205,8 +205,11 @@ InstanceDetails.propTypes = {
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
-  paneTitle: PropTypes.string,
-  paneSubtitle: PropTypes.string,
+  paneTitle: PropTypes.object,
+  paneSubtitle: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+  ])),
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
 };
@@ -214,8 +217,6 @@ InstanceDetails.propTypes = {
 InstanceDetails.defaultProps = {
   instance: {},
   tagsEnabled: false,
-  paneTitle: '',
-  paneSubtitle: '',
 };
 
 export default InstanceDetails;
