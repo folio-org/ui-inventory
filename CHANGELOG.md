@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [7.2.0] IN PROGRESS
+## [7.1.1](https://github.com/folio-org/ui-inventory/tree/v7.1.1) (2021-07-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.0...v7.1.1)
 
 * Parse `parentInstances` and `childInstances` before instance record is saved. Fixes UIIN-1546.
 * Unfold instance relationship accordion when relationships are present. Fixes UIIN-1534.
