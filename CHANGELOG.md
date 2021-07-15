@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [7.1.2](https://github.com/folio-org/ui-inventory/tree/v7.1.2) (2021-07-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.1...v7.1.2)
+
+* Update `stripes` to `^6.2.0` and `stripes-core` to `^7.2.0`.
+
 ## [7.1.1](https://github.com/folio-org/ui-inventory/tree/v7.1.1) (2021-07-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.0...v7.1.1)
 
