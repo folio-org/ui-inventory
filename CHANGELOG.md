@@ -1,7 +1,14 @@
 # Change history for ui-inventory
 
+## [7.0.6](https://github.com/folio-org/ui-inventory/tree/v7.0.6) (2021-07-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.5...v7.0.6
+
+* Align stripes dependencies.
+
 ## [7.0.5](https://github.com/folio-org/ui-inventory/tree/v7.0.5) (2021-07-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.4...v7.0.5)
+
+* Parse parentInstances and childInstances before instance record is saved. Fixes UIIN-1546.
 
 ## [7.0.4](https://github.com/folio-org/ui-inventory/tree/v7.0.4) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.0.4)
