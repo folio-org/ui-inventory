@@ -1,8 +1,19 @@
 # Change history for ui-inventory
 
-## 7.x (IN PROGRESS)
+## 8.0 (IN PROGRESS)
 
 * Add bound-with indicator to item view. Refs UIIN-1518.
+
+## [7.1.2](https://github.com/folio-org/ui-inventory/tree/v7.1.2) (2021-07-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.1...v7.1.2)
+
+* Update `stripes` to `^6.2.0` and `stripes-core` to `^7.2.0`.
+
+## [7.1.1](https://github.com/folio-org/ui-inventory/tree/v7.1.1) (2021-07-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.0...v7.1.1)
+
+* Parse `parentInstances` and `childInstances` before instance record is saved. Fixes UIIN-1546.
+* Unfold instance relationship accordion when relationships are present. Fixes UIIN-1534.
 
 ## [7.1.0](https://github.com/folio-org/ui-inventory/tree/v7.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.1.0)

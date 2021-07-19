@@ -559,6 +559,37 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
 };
 
 /**
+ * Marshal parent/child instances
+ * to the format required by the server.
+ *
+ * @param instance instance object
+ * @param relationshipName string ("parentInstances" or "childInstances")
+ * @param relationshipIdKey string ("subInstanceId" or "superInstanceId")
+ *
+ */
+export const marshalRelationship = (instance, relationshipName, relationshipIdKey) => {
+  instance[relationshipName] = (instance?.[relationshipName] ?? []).map((inst) => {
+    const {
+      id,
+      instanceRelationshipTypeId,
+    } = inst;
+
+    const relationshipRecord = {
+      [relationshipIdKey]: inst[relationshipIdKey],
+      instanceRelationshipTypeId,
+    };
+
+    // if relationshipId is different from the id it means this is an existing relationship record
+    // https://issues.folio.org/browse/UIIN-1546?focusedCommentId=106757&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-106757
+    if (inst[relationshipIdKey] !== id) {
+      relationshipRecord.id = id;
+    }
+
+    return relationshipRecord;
+  });
+};
+
+/**
  * Marshal given instance to the format required by the server.
  *
  * @param instance instance object
@@ -570,6 +601,9 @@ export const marshalInstance = (instance, identifierTypesByName) => {
 
   marshalTitles(marshaledInstance, identifierTypesByName, 'preceding');
   marshalTitles(marshaledInstance, identifierTypesByName, 'succeeding');
+
+  marshalRelationship(marshaledInstance, 'parentInstances', 'superInstanceId');
+  marshalRelationship(marshaledInstance, 'childInstances', 'subInstanceId');
 
   return marshaledInstance;
 };
