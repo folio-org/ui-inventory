@@ -54,7 +54,7 @@ class ViewInstance extends React.Component {
     selectedInstance: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
-      clear: false,
+      resourceShouldRefresh: true,
       throwErrors: false,
     },
     allInstanceHoldings: {
