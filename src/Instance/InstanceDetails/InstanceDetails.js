@@ -122,7 +122,7 @@ const InstanceDetails = ({
             instanceTypes={referenceData.instanceTypes}
           />
 
-          <AccordionSet initialStatus={accordionState} accordionStatus={accordionState}>
+          <AccordionSet initialStatus={accordionState}>
             {children}
 
             <InstanceNewHolding instance={instance} />
