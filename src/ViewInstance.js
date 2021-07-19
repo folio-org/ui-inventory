@@ -1,4 +1,5 @@
 import {
+  find,
   get,
 } from 'lodash';
 import React, {
@@ -568,20 +569,28 @@ class ViewInstance extends React.Component {
     );
   }
 
+  // Pane subtitle (second line) for both instance and holdings detail panes
+  createSubtitle = (record) => {
+    return this.props.intl.formatMessage({
+      id: 'ui-inventory.instanceRecordSubtitle',
+    }, {
+      hrid: record?.hrid,
+      updatedDate: getDate(record?.metadata?.updatedDate),
+    });
+  }
+
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
+      resources: { allInstanceHoldings },
       stripes,
       onClose,
       paneWidth,
       tagsEnabled,
-      intl: {
-        formatMessage,
-      },
     } = this.props;
-
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
+    const holdingsRecord = find(allInstanceHoldings.records, { id: holdingsrecordid });
 
     if (!instance) {
       return (
@@ -603,21 +612,12 @@ class ViewInstance extends React.Component {
       );
     }
 
-    // Pane subtitle (second line) for both instance and holdings detail views
-    const subtitle =
-      formatMessage({
-        id: 'ui-inventory.instanceRecordSubtitle',
-      }, {
-        hrid: instance?.hrid,
-        updatedDate: getDate(instance?.metadata?.updatedDate),
-      });
-
     return (
       <>
         <InstanceDetails
           id="pane-instancedetails"
           paneTitle={this.createTitle(instance, 'instance')}
-          paneSubtitle={subtitle}
+          paneSubtitle={this.createSubtitle(instance)}
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
           instance={instance}
@@ -646,7 +646,7 @@ class ViewInstance extends React.Component {
                   holdingsrecordid={holdingsrecordid}
                   onCloseViewHoldingsRecord={this.goBack}
                   paneTitle={this.createTitle(instance, 'holding')}
-                  paneSubtitle={subtitle}
+                  paneSubtitle={this.createSubtitle(holdingsRecord)}
                   {...this.props}
                 />
               )
