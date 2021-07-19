@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [7.1.3] IN PROGRESS
+
+* Fix collapse and expand buttons on instance view. Fixes UIIN-1556.
+
 ## [7.1.2](https://github.com/folio-org/ui-inventory/tree/v7.1.2) (2021-07-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.1...v7.1.2)
 
