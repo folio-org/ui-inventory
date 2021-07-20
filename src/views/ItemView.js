@@ -714,6 +714,15 @@ class ItemView extends React.Component {
                   />
                 </span>
               )}
+              paneSub={(
+                <FormattedMessage
+                  id="ui-inventory.instanceRecordSubtitle"
+                  values={{
+                    hrid: item?.hrid,
+                    updatedDate: getDate(item?.metadata?.updatedDate),
+                  }}
+                />
+              )}
               dismissible
               onClose={this.props.onCloseViewItem}
               actionMenu={this.getActionMenu}
