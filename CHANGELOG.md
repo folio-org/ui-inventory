@@ -4,6 +4,8 @@
 
 * Fix collapse and expand buttons on instance view. Fixes UIIN-1556.
 * Add bound-with indicator to item view. Refs UIIN-1518.
+* Show correct HRID for holdings record in detail view pane header. Refs UIIN-1470.
+* Show pane subtitle for item view. Refs UIIN-1535.
 * Keyboard cannot move item to other holding by drag 'n' drop. Refs UIIN-1490.
 
 ## [7.1.2](https://github.com/folio-org/ui-inventory/tree/v7.1.2) (2021-07-14)
