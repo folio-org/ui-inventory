@@ -70,14 +70,16 @@ class StatisticalCodeSettings extends React.Component {
 
   render() {
     const statisticalCodeTypes = _.get(this.props.resources, ['statisticalCodeTypes', 'records'], []);
-    const statisticalCodeTypesOptions = (statisticalCodeTypes).map(statisticalCodeType => (
-      <option
-        key={statisticalCodeType.id}
-        value={statisticalCodeType.id}
-      >
-        {statisticalCodeType.name}
-      </option>
-    ));
+    const statisticalCodeTypesOptions = (statisticalCodeTypes)
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map(statisticalCodeType => (
+        <option
+          key={statisticalCodeType.id}
+          value={statisticalCodeType.id}
+        >
+          {statisticalCodeType.name}
+        </option>
+      ));
 
     const fieldComponents = {
       'statisticalCodeTypeId': ({ fieldProps }) => (
