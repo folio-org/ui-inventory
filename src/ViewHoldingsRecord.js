@@ -799,12 +799,16 @@ class ViewHoldingsRecord extends React.Component {
                         />
                       </Accordion>
 
-                      <Accordion
-                        id="acc06"
-                        label={<FormattedMessage id="ui-inventory.acquisition" />}
-                      >
-                        <HoldingAquisitions holding={holdingsRecord} />
-                      </Accordion>
+                      {
+                        this.props.stripes.hasInterface('orders.holding-summary') && (
+                          <Accordion
+                            id="acc06"
+                            label={<FormattedMessage id="ui-inventory.acquisition" />}
+                          >
+                            <HoldingAquisitions holding={holdingsRecord} />
+                          </Accordion>
+                        )
+                      }
 
                       <Accordion
                         id="acc07"
@@ -873,6 +877,7 @@ ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
+    hasInterface: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.object,
