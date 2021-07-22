@@ -253,6 +253,7 @@ class ItemForm extends React.Component {
         selected: it.id === initialValues.statisticalCodeId,
       }),
     ) : [];
+    statisticalCodeOptions.sort((a, b) => a.label.localeCompare(b.label));
 
     const itemDamagedStatusOptions = itemDamagedStatuses ? itemDamagedStatuses.map(
       it => ({
