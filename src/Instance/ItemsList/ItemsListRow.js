@@ -52,7 +52,7 @@ const Row = ({
 
       className={rowClass}
       role="row"
-      tabIndex="0"
+      tabIndex="-1"
 
       style={rowStyles}
     >
