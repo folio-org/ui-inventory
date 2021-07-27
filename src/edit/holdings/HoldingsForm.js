@@ -215,6 +215,7 @@ class HoldingsForm extends React.Component {
         selected: it.id === initialValues.statisticalCodeId,
       }),
     ) : [];
+    statisticalCodeOptions.sort((a, b) => a.label.localeCompare(b.label));
 
     const illPolicyOptions = referenceTables.illPolicies ? referenceTables.illPolicies.map(
       it => ({
