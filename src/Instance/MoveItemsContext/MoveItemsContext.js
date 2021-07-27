@@ -16,6 +16,7 @@ import {
   isItemsSelected,
   selectItems,
 } from '../utils';
+import useNoKeyboardSensors from './useNoKeyboardSensors';
 import * as Move from '../Move';
 import { Confirmation } from './Confirmation';
 
@@ -105,6 +106,7 @@ const MoveItemsContext = ({ children }) => {
     <DragDropContext
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      sensors={[useNoKeyboardSensors]}
     >
       <DnDContext.Provider
         value={{
