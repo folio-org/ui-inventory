@@ -667,5 +667,23 @@
   "discoverySuppressed": "Suppressed from discovery",
   "staffSuppressed": "Staff suppressed",
   "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
-  "instance.saveError": "Saving instance failed"
+  "instance.saveError": "Saving instance failed",
+
+  "acq.polNumber": "POL number",
+  "acq.orderStatus": "Order status",
+  "acq.orderStatus.Closed": "Closed",
+  "acq.orderStatus.Open": "Open",
+  "acq.orderStatus.Pending": "Pending",
+  "acq.receiptStatus": "POL receipt status",
+  "acq.receiptStatus.Awaiting Receipt": "Awaiting receipt",
+  "acq.receiptStatus.Cancelled": "Cancelled",
+  "acq.receiptStatus.Fully Received": "Fully received",
+  "acq.receiptStatus.Ongoing": "Ongoing",
+  "acq.receiptStatus.Partially Received": "Partially received",
+  "acq.receiptStatus.Pending": "Pending",
+  "acq.receiptStatus.Receipt Not Required": "Receipt not required",
+  "acq.orderSentDate": "Order sent date",
+  "acq.orderType": "Order type",
+  "acq.orderType.One-Time": "One-time",
+  "acq.orderType.Ongoing": "Ongoing"
 }
