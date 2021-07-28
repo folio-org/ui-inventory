@@ -643,7 +643,7 @@ class ViewInstance extends React.Component {
                         callNumber: holdingsRecord?.callNumber,
                       }}
                     />
-                  }               
+                  }
                   paneSubtitle={this.createSubtitle(holdingsRecord)}
                   {...this.props}
                 />
@@ -731,6 +731,7 @@ ViewInstance.propTypes = {
     selectedInstance: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    locations: PropTypes.object.isRequired,
   }).isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
