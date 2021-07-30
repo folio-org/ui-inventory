@@ -111,6 +111,11 @@ class ViewInstance extends React.Component {
       records: 'instanceRelationshipTypes',
       path: 'instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
     },
+    locations: {
+      type: 'okapi',
+      records: 'locations',
+      path: 'locations?limit=1000',
+    }
   });
 
   constructor(props) {
@@ -546,29 +551,6 @@ class ViewInstance extends React.Component {
     );
   };
 
-  // Assemble a pane title that will be used for both the instance
-  // and holdings detail views -- the strings are the same except for
-  // a label of 'instance' or 'holding'.
-  createTitle = (instance, label) => {
-    const publicationInfo = getPublishingInfo(instance);
-    const instanceTitle = instance?.title;
-    const labelId = label === 'instance' ?
-      'ui-inventory.instanceRecordTitle' :
-      'ui-inventory.holdingsPaneTitle';
-
-    // Pane title for both instance and holdings detail panes
-    return (
-      <span data-test-header-title>
-        {this.props.intl.formatMessage({
-          id: labelId,
-        }, {
-          title: instanceTitle,
-          publisherAndDate: publicationInfo ?? '',
-        })}
-      </span>
-    );
-  }
-
   // Pane subtitle (second line) for both instance and holdings detail panes
   createSubtitle = (record) => {
     return this.props.intl.formatMessage({
@@ -582,7 +564,7 @@ class ViewInstance extends React.Component {
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
-      resources: { allInstanceHoldings },
+      resources: { allInstanceHoldings, locations },
       stripes,
       onClose,
       paneWidth,
@@ -616,7 +598,15 @@ class ViewInstance extends React.Component {
       <>
         <InstanceDetails
           id="pane-instancedetails"
-          paneTitle={this.createTitle(instance, 'instance')}
+          paneTitle={
+            <FormattedMessage
+              id="ui-inventory.instanceRecordTitle"
+              values={{
+                title: instance?.title,
+                publisherAndDate: getPublishingInfo(instance),
+              }}
+            />
+          }
           paneSubtitle={this.createSubtitle(instance)}
           onClose={onClose}
           actionMenu={this.createActionMenuGetter(instance)}
@@ -645,7 +635,15 @@ class ViewInstance extends React.Component {
                   id={id}
                   holdingsrecordid={holdingsrecordid}
                   onCloseViewHoldingsRecord={this.goBack}
-                  paneTitle={this.createTitle(instance, 'holding')}
+                  paneTitle={
+                    <FormattedMessage
+                      id="ui-inventory.holdingsPaneTitle"
+                      values={{
+                        location: find(locations.records, { id: holdingsRecord.effectiveLocationId })?.name,
+                        callNumber: holdingsRecord?.callNumber,
+                      }}
+                    />
+                  }
                   paneSubtitle={this.createSubtitle(holdingsRecord)}
                   {...this.props}
                 />
@@ -733,6 +731,7 @@ ViewInstance.propTypes = {
     selectedInstance: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
+    locations: PropTypes.object.isRequired,
   }).isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
