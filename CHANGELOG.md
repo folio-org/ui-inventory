@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [7.1.3] IN PROGRESS
+## [7.1.3](https://github.com/folio-org/ui-inventory/tree/v7.1.3) (2021-07-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.2...v7.1.3)
 
 * Fix collapse and expand buttons on instance view. Fixes UIIN-1556.
 * Sort statistical codes by code-type, then code, then name. Refs UIIN-1550.
