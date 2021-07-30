@@ -164,6 +164,7 @@ class HoldingsForm extends React.Component {
       initialValues,
       instance,
       referenceTables,
+      copy,
     } = this.props;
 
     const { accordions } = this.state;
@@ -307,7 +308,7 @@ class HoldingsForm extends React.Component {
                     {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
-                        placeholder={placeholder}
+                        placeholder={copy ? placeholder : instance.source}
                         name="sourceId"
                         id="additem_holdingsSource"
                         disabled
