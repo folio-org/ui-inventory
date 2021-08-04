@@ -658,7 +658,7 @@
     "item.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للمادة</strong> بنجاح.",
     "holdingsRecord.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للمقتنيات</strong> بنجاح.",
     "instance.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للوعاء</strong> بنجاح.",
-    "holdingsPaneTitle": "المقتنيات • {title} •  {publisherAndDate}",
+    "holdingsPaneTitle": "المقتنيات • {location} • {callNumber}",
     "instanceRecordSubtitle": "{hrid} • آخر تحديث: {updatedDate}",
     "instance.saveError": "فشل حفظ الوعاء",
     "itemRecordWithDescriptionBW": "تسجيلة المادة ({materialType}, {status}, مرتبطة بـ)",
