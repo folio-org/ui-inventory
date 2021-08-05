@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [7.1.4] IN PROGRESS
+## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v7.1.4)
 
 * Sort statistical code types on Statistical code settings page. Refs UIIN-1547.
 
