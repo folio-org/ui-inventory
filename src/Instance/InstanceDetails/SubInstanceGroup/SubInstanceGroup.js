@@ -22,7 +22,7 @@ const SubInstanceGroup = ({
       {
         instanceRelationshipTypes.map(({ id: typeId, name }) => (
           titlesByInstanceRelationshipTypeId[typeId] &&
-          <>
+          <div key={`${id}-${typeId}`}>
             <FormattedMessage
               id="ui-inventory.instances.typeOfRelation"
               values={{ name }}
@@ -34,7 +34,7 @@ const SubInstanceGroup = ({
               titleKey={titleKey}
               label={name}
             />
-          </>
+          </div>
         ))
       }
     </KeyValue>

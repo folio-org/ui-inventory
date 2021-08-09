@@ -1,5 +1,29 @@
 # Change history for ui-inventory
 
+## [7.1.3] IN PROGRESS
+
+* Fix collapse and expand buttons on instance view. Fixes UIIN-1556.
+* Add bound-with indicator to item view. Refs UIIN-1518.
+* Show correct HRID for holdings record in detail view pane header. Refs UIIN-1470.
+* Show pane subtitle for item view. Refs UIIN-1535.
+* Holdings record. Show connected holding POLs in acq accordion. Refs UIIN-574.
+* Sort statistical code types on Statistical code settings page. Refs UIIN-1547.
+* Keyboard cannot move item to other holding by drag 'n' drop. Refs UIIN-1490.
+* Sort statistical codes by code-type, then code, then name. Refs UIIN-1550.
+* Populate a value in Source field when View/Edit Inventory Holdings Record. Refs UIIN-1548.
+* Fix instance duplication when child or parent records are present. Fixes UIIN-1562.
+
+## [7.1.2](https://github.com/folio-org/ui-inventory/tree/v7.1.2) (2021-07-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.1...v7.1.2)
+
+* Update `stripes` to `^6.2.0` and `stripes-core` to `^7.2.0`.
+
+## [7.1.1](https://github.com/folio-org/ui-inventory/tree/v7.1.1) (2021-07-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.0...v7.1.1)
+
+* Parse `parentInstances` and `childInstances` before instance record is saved. Fixes UIIN-1546.
+* Unfold instance relationship accordion when relationships are present. Fixes UIIN-1534.
+
 ## [7.1.0](https://github.com/folio-org/ui-inventory/tree/v7.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.1.0)
 

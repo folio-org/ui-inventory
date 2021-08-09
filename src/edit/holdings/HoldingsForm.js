@@ -93,7 +93,6 @@ class HoldingsForm extends React.Component {
         accordion02: true,
         accordion03: true,
         accordion04: true,
-        accordion05: true,
         accordion06: true,
         accordion07: true,
       },
@@ -165,6 +164,7 @@ class HoldingsForm extends React.Component {
       initialValues,
       instance,
       referenceTables,
+      copy,
     } = this.props;
 
     const { accordions } = this.state;
@@ -216,6 +216,7 @@ class HoldingsForm extends React.Component {
         selected: it.id === initialValues.statisticalCodeId,
       }),
     ) : [];
+    statisticalCodeOptions.sort((a, b) => a.label.localeCompare(b.label));
 
     const illPolicyOptions = referenceTables.illPolicies ? referenceTables.illPolicies.map(
       it => ({
@@ -307,7 +308,7 @@ class HoldingsForm extends React.Component {
                     {([placeholder]) => (
                       <Field
                         label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
-                        placeholder={placeholder}
+                        placeholder={copy ? placeholder : instance.source}
                         name="sourceId"
                         id="additem_holdingsSource"
                         disabled
@@ -577,39 +578,6 @@ class HoldingsForm extends React.Component {
               label={<FormattedMessage id="ui-inventory.electronicAccess" />}
             >
               <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
-            </Accordion>
-            <Accordion
-              open={accordions.accordion05}
-              id="accordion05"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.acquisition" />}
-            >
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
-                    name="acquisitionMethod"
-                    id="edit_acquisitionmethod"
-                    component={TextField}
-                  />
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                    name="acquisitionFormat"
-                    id="edit_acquisitionformat"
-                    component={TextField}
-                  />
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.receiptStatus" />}
-                    name="receiptStatus"
-                    id="edit_receiptstatus"
-                    component={TextField}
-                  />
-                </Col>
-              </Row>
             </Accordion>
             <Accordion
               open={accordions.accordion07}

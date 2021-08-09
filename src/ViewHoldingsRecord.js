@@ -56,6 +56,7 @@ import {
   holdingsStatementTypes,
 } from './constants';
 import { WarningMessage } from './components';
+import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
 
 import css from './View.css';
 
@@ -318,12 +319,16 @@ class ViewHoldingsRecord extends React.Component {
     }
 
     const instance = instances1.records[0];
-    const holdingsRecord = holdingsRecords.records[0];
+    const instanceSource = referenceTables?.holdingsSources?.find(holdingsSource => holdingsSource.name === instance.source);
+    const holdingsRecord = {
+      ...holdingsRecords.records[0],
+      sourceId: instanceSource.id,
+    };
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
-    const holdingsSourceName = referenceTables?.holdingsSourcesByName?.FOLIO?.name;
+    const holdingsSourceName = instanceSource.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
@@ -398,12 +403,6 @@ class ViewHoldingsRecord extends React.Component {
 
     const electronicAccess = get(holdingsRecord, ['electronicAccess'], []);
 
-    const acquisition = {
-      acquisitionMethod: get(holdingsRecord, ['acquisitionMethod'], '-'),
-      acquisitionFormat: get(holdingsRecord, ['acquisitionFormat'], '-'),
-      receiptStatus: get(holdingsRecord, ['receiptStatus'], '-'),
-    };
-
     const receivingHistory = get(holdingsRecord, ['receivingHistory', 'entries'], []);
 
     const initialAccordionsState = {
@@ -412,7 +411,7 @@ class ViewHoldingsRecord extends React.Component {
       acc03: !areAllFieldsEmpty(Object.values(holdingsDetails)),
       acc04: !areAllFieldsEmpty([holdingsNotes]),
       acc05: !areAllFieldsEmpty([electronicAccess]),
-      acc06: !areAllFieldsEmpty(Object.values(acquisition)),
+      acc06: false,
       acc07: !areAllFieldsEmpty([receivingHistory]),
     };
 
@@ -804,31 +803,16 @@ class ViewHoldingsRecord extends React.Component {
                         />
                       </Accordion>
 
-                      <Accordion
-                        id="acc06"
-                        label={<FormattedMessage id="ui-inventory.acquisition" />}
-                      >
-                        <Row>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
-                              value={checkIfElementIsEmpty(acquisition.acquisitionMethod)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
-                              value={checkIfElementIsEmpty(acquisition.acquisitionFormat)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.receiptStatus" />}
-                              value={checkIfElementIsEmpty(acquisition.receiptStatus)}
-                            />
-                          </Col>
-                        </Row>
-                      </Accordion>
+                      {
+                        this.props.stripes.hasInterface('orders.holding-summary') && (
+                          <Accordion
+                            id="acc06"
+                            label={<FormattedMessage id="ui-inventory.acquisition" />}
+                          >
+                            <HoldingAquisitions holding={holdingsRecord} />
+                          </Accordion>
+                        )
+                      }
 
                       <Accordion
                         id="acc07"
@@ -897,6 +881,7 @@ ViewHoldingsRecord.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
+    hasInterface: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.object,

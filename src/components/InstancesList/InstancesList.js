@@ -162,11 +162,11 @@ class InstancesList extends React.Component {
     this.props.updateLocation({ layer: null });
   };
 
-  createInstance = (instance) => {
+  createInstance = (instanceData) => {
     const { data: { identifierTypesByName } } = this.props;
 
     // Massage record to add preceeding and succeeding title fields
-    marshalInstance(instance, identifierTypesByName);
+    const instance = marshalInstance(instanceData, identifierTypesByName);
 
     // POST item record
     return this.props.parentMutator.records.POST(instance);
@@ -184,6 +184,8 @@ class InstancesList extends React.Component {
     const {
       precedingTitles,
       succeedingTitles,
+      childInstances,
+      parentInstances,
     } = instance;
     let copiedInstance = omit(instance, ['id', 'hrid']);
 
@@ -193,6 +195,14 @@ class InstancesList extends React.Component {
 
     if (succeedingTitles?.length) {
       copiedInstance.succeedingTitles = omitFromArray(succeedingTitles, 'id');
+    }
+
+    if (childInstances?.length) {
+      copiedInstance.childInstances = omitFromArray(childInstances, 'id');
+    }
+
+    if (parentInstances?.length) {
+      copiedInstance.parentInstances = omitFromArray(parentInstances, 'id');
     }
 
     copiedInstance = set(copiedInstance, 'source', 'FOLIO');
