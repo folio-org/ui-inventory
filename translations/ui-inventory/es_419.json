@@ -658,7 +658,7 @@
     "item.successfullySaved": "El ejemplar 1 - HRID 1{hrid}1 ha sido guardado exitosamente.",
     "holdingsRecord.successfullySaved": "La 1 existencia 1 - HRID 1 {hrid} 1 ha sido guardada exitosamente.",
     "instance.successfullySaved": "La 1 instancia 1 - HRID 1{hrid} 1 ha sido guardada exitosamente.",
-    "holdingsPaneTitle": "Existencias",
+    "holdingsPaneTitle": "Existencias {localización} • {Número de pedido}",
     "instanceRecordSubtitle": "{hrid} • Última actualización: {updatedDate}",
     "instance.saveError": "Error al guardar la instancia",
     "itemRecordWithDescriptionBW": "Registro del ítem ({materialType}, {status}, Atado con)",
