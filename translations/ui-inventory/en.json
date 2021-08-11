@@ -47,7 +47,7 @@
   "newInstance": "New instance",
   "editInstance": "Edit",
   "moveItems": "Move holdings/items to another instance",
-  "viewRequests": "View requests ({count})",
+  "viewRequests": "View requests",
   "instanceDetails": "Instance details",
   "addHoldings": "Add holdings",
   "itemDotStatus": "Item • {barcode} • {status}",

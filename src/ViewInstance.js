@@ -31,10 +31,6 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
-import {
-  batchFetchItems,
-  batchFetchRequests,
-} from './Instance/ViewRequests/utils';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import { getDate } from './utils';
 import { indentifierTypeNames, layers } from './constants';
@@ -148,7 +144,10 @@ class ViewInstance extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { resources: prevResources } = prevProps;
-    const { mutator, resources } = this.props;
+    const {
+      // mutator,
+      resources,
+    } = this.props;
     const instanceRecords = resources?.selectedInstance?.records;
     const instanceRecordsId = instanceRecords[0]?.id;
     const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
@@ -167,25 +166,6 @@ class ViewInstance extends React.Component {
       !parse(this.props?.location?.search)?.layer && !this.state.afterCreate) {
       // eslint-disable-next-line
       this.setState({ afterCreate: true });
-    }
-
-    const { allInstanceHoldings, allInstanceItems } = resources;
-    const instanceHoldings = resources.allInstanceHoldings.records;
-    const shouldFetchItems = instanceHoldings !== prevResources.allInstanceHoldings.records ||
-      (!this.state.items && !allInstanceItems.hasLoaded && !allInstanceHoldings.isPending && !allInstanceItems.isPending);
-    if (shouldFetchItems) {
-      batchFetchItems(mutator.allInstanceItems, instanceHoldings)
-        .then(
-          (items) => {
-            this.setState({ items });
-            return batchFetchRequests(mutator.allInstanceRequests, items);
-          },
-          () => this.setState({ items: [] }),
-        )
-        .then(
-          (requests) => this.setState({ requests }),
-          () => this.setState({ requests: [] }),
-        );
     }
   }
 
@@ -357,7 +337,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes
     } = this.props;
-    const { items, marcRecord, requests } = this.state;
+    const { marcRecord, requests } = this.state;
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -488,23 +468,22 @@ class ViewInstance extends React.Component {
             </Button>
           )
         }
-        {!items?.length ? null : (
-          <Button
-            id="view-requests"
-            onClick={() => {
-              onToggle();
-              this.onClickViewRequests();
-            }}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="eye-open">
-              <FormattedMessage
-                id="ui-inventory.viewRequests"
-                values={{ count: requests?.length ?? '?' }}
-              />
-            </Icon>
-          </Button>
-        )}
+
+        <Button
+          id="view-requests"
+          onClick={() => {
+            onToggle();
+            this.onClickViewRequests();
+          }}
+          buttonStyle="dropdownItem"
+        >
+          <Icon icon="eye-open">
+            <FormattedMessage
+              id="ui-inventory.viewRequests"
+              values={{ count: requests?.length ?? '' }}
+            />
+          </Icon>
+        </Button>
 
         <IfInterface name="copycat-imports">
           <IfPermission perm="copycat.profiles.collection.get">
