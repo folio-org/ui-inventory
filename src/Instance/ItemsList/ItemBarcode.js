@@ -62,6 +62,9 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
           </div>
         </CopyToClipboard>
       }
+        {(item.isBoundWith) &&
+         <span><AppIcon size="small" app="@folio/inventory" iconKey="bound-with" /></span>
+        }
     </>
   );
 };
