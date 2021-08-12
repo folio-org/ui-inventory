@@ -1,12 +1,17 @@
 import React, { useContext, memo } from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  Loading,
+} from '@folio/stripes/components';
+
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
 
+import useHoldingItemsQuery from '../../hooks/useHoldingItemsQuery';
+
 const ItemsListContainer = ({
   holding,
-  items,
   draggable,
   droppable,
 }) => {
@@ -17,6 +22,11 @@ const ItemsListContainer = ({
     activeDropZone,
     isItemsDroppable,
   } = useContext(DnDContext);
+  const { isLoading, items } = useHoldingItemsQuery(holding.id);
+
+  if (isLoading) {
+    return <Loading size="large" />;
+  }
 
   return (
     <ItemsList
@@ -34,7 +44,6 @@ const ItemsListContainer = ({
 };
 
 ItemsListContainer.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
   holding: PropTypes.object.isRequired,
   draggable: PropTypes.bool,
   droppable: PropTypes.bool

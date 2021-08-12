@@ -36,11 +36,13 @@ const HoldingAccordionSetup = ({
           onViewHolding={noop}
           onAddItem={noop}
           withMoveDropdown={false}
-          mutator={{
+          resources={{
             instanceHoldingItems: {
-              GET: () => new Promise(resolve => resolve(items)),
-              reset: noop,
-            },
+              records: items,
+              other: {
+                totalRecords: 3,
+              }
+            }
           }}
         >
           {() => null}
