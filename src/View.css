@@ -5,3 +5,12 @@
 .multiTitle {
   color: red;
 }
+
+.warnIcon {
+  margin-left: var(--gutter-static-one-third);
+}
+
+.boundWithIcon {
+  background-color: transparent !important;
+  margin-left: var(--gutter-static-one-third);
+}
