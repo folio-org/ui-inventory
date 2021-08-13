@@ -6,6 +6,7 @@ import { IfPermission } from '@folio/stripes/core';
 import {
   Button,
   Badge,
+  Icon,
 } from '@folio/stripes/components';
 
 import { MoveToDropdown } from './MoveToDropdown';
@@ -48,7 +49,7 @@ const HoldingButtonsGroup = ({
         <FormattedMessage id="ui-inventory.addItem" />
       </Button>
     </IfPermission>
-    {!isOpen && <Badge>{itemCount}</Badge>}
+    {!isOpen && <Badge>{itemCount !== undefined ? itemCount : <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
   </>
 );
 
