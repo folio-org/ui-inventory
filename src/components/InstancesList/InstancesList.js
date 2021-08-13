@@ -632,6 +632,7 @@ class InstancesList extends React.Component {
       'title': ({
         title,
         discoverySuppress,
+        isBoundWith,
         staffSuppress,
       }) => (
         <AppIcon
@@ -641,6 +642,14 @@ class InstancesList extends React.Component {
           iconAlignment="baseline"
         >
           {title}
+          {(isBoundWith) &&
+            <AppIcon
+              size="small"
+              app="@folio/inventory"
+              iconKey="bound-with"
+              iconClassName={css.boundWithIcon}
+            />
+          }
           {(discoverySuppress || staffSuppress) &&
           <span className={css.warnIcon}>
             <Icon
