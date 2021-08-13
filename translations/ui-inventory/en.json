@@ -102,6 +102,7 @@
   "createNewItem": "Create New Item",
   "updateItem": "Update item",
   "instanceTitle": "Instance: {title}.",
+  "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
   "holdingsPaneTitle": "Holdings • {location} • {callNumber}",
   "waitingForResources": "Waiting for resources",
