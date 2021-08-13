@@ -11,6 +11,7 @@
 * Keyboard cannot move item to other holding by drag 'n' drop. Refs UIIN-1490.
 * Sort statistical codes by code-type, then code, then name. Refs UIIN-1550.
 * Populate a value in Source field when View/Edit Inventory Holdings Record. Refs UIIN-1548.
+* Improve performance on instance view. Fixes UIIN-1560.
 * Fix instance duplication when child or parent records are present. Fixes UIIN-1562.
 * Add bound-with icons and item detail view header note. Refs UIIN-1522, UIIN-1523, UIIN-1524.
 * Retrieve and display select Piece information on Holding. Refs UIIN-1502.
