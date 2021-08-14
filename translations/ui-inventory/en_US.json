@@ -358,6 +358,7 @@
     "natureOfContentTerms": "Nature of content",
     "natureOfContentTerm": "Nature of content term",
     "instanceTitle": "Instance: {title}.",
+    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}",
     "items.damageStatus.damaged": "Damaged",
     "items.damageStatus.notdamaged": "Not damaged",
     "instanceNotes": "Instance notes",

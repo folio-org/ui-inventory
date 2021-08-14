@@ -6,6 +6,12 @@
 .warnIcon {
   margin-left: var(--gutter-static-one-third);
 }
+
+.boundWithIcon {
+  background-color: transparent !important;
+  margin-left: var(--gutter-static-one-third);
+}
+
 .cellAlign {
   align-items: flex-start;
 }

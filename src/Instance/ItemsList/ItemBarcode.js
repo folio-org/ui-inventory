@@ -21,6 +21,7 @@ import {
   Highlighter,
   IconButton,
 } from '@folio/stripes/components';
+import css from '../../View.css';
 
 const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
   const { search } = location;
@@ -61,6 +62,14 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
             <IconButton icon="clipboard" />
           </div>
         </CopyToClipboard>
+      }
+      {(item.isBoundWith) &&
+        <AppIcon
+          size="small"
+          app="@folio/inventory"
+          iconKey="bound-with"
+          iconClassName={css.boundWithIcon}
+        />
       }
     </>
   );

@@ -27,6 +27,11 @@
         "title": "Inventory"
       },
       {
+        "name": "bound-with",
+        "alt": "Bound with one or more instances or holdings",
+        "title": "Bound-with"
+      },
+      {
         "name": "holdings",
         "alt": "",
         "title": "Holding"
