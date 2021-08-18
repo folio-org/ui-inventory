@@ -9,6 +9,7 @@ import {
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 
 import {
@@ -516,7 +517,9 @@ class ViewHoldingsRecord extends React.Component {
                   <Row center="xs">
                     <Col sm={6}>
                       <FormattedMessage id="ui-inventory.instance" />
-                      {instance.title}
+                      <Link to={`/inventory/view/${instance.id}`}>
+                        {instance.title}
+                      </Link>
                       {(instance.publication && instance.publication.length > 0) &&
                         <span>
                           <em>. </em>

@@ -10,7 +10,7 @@
 * Populate a value in Source field when View/Edit Inventory Holdings Record. Refs UIIN-1548.
 * Fix instance duplication when child or parent records are present. Fixes UIIN-1562.
 * Add bound-with icons and item detail view header note. Refs UIIN-1522, UIIN-1523, UIIN-1524.
-* Add links to item view header. Refs UIIN-1500.
+* Add links to item view header and holdings view header. Refs UIIN-1500, UIIN-1501.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
