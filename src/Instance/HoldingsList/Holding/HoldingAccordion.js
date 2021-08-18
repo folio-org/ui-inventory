@@ -1,5 +1,4 @@
 import React, {
-  useEffect,
   useState,
   useContext,
 } from 'react';
@@ -25,21 +24,23 @@ const HoldingAccordion = ({
   onViewHolding,
   onAddItem,
   withMoveDropdown,
-  mutator: {
-    instanceHoldingItems: {
-      reset,
-      GET,
-    },
+  resources: {
+    instanceHoldingItems,
   },
 }) => {
-  const [items, setItems] = useState();
-  const [isLoading, setIsLoading] = useState(true);
   const { locationsById } = useContext(DataContext);
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const [open, setOpen] = useState(false);
-  const handleAccordionToggle = () => setOpen(!open);
-  const itemCount = items?.length ?? 0;
+  const [openFirstTime, setOpenFirstTime] = useState(false);
+  const handleAccordionToggle = () => {
+    if (!open && !openFirstTime) {
+      setOpenFirstTime(true);
+    }
 
+    setOpen(!open);
+  };
+
+  const itemCount = instanceHoldingItems?.other?.totalRecords;
   const holdingButtonsGroup = <HoldingButtonsGroup
     holding={holding}
     holdings={holdings}
@@ -50,16 +51,6 @@ const HoldingAccordion = ({
     withMoveDropdown={withMoveDropdown}
     isOpen={open}
   />;
-
-  useEffect(() => {
-    setIsLoading(true);
-    reset();
-    GET()
-      .then(setItems)
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  if (isLoading) return null;
 
   return (
     <Accordion
@@ -90,11 +81,14 @@ const HoldingAccordion = ({
       displayWhenOpen={holdingButtonsGroup}
       displayWhenClosed={holdingButtonsGroup}
     >
-      <Row>
-        <Col sm={12}>
-          {children({ items })}
-        </Col>
-      </Row>
+      {
+        (open || openFirstTime) &&
+        <Row>
+          <Col sm={12}>
+            {children}
+          </Col>
+        </Row>
+      }
     </Accordion>
   );
 };
@@ -106,16 +100,15 @@ HoldingAccordion.manifest = Object.freeze({
     path: 'inventory/items',
     params: {
       query: 'holdingsRecordId==!{holding.id}',
-      limit: '5000',
+      limit: '1',
     },
-    accumulate: true,
     resourceShouldRefresh: true,
     abortOnUnmount: true,
   },
 });
 
 HoldingAccordion.propTypes = {
-  mutator: PropTypes.object.isRequired,
+  resources: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,

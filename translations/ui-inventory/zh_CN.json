@@ -678,5 +678,6 @@
     "acq.orderSentDate": "订单发送日期",
     "acq.orderType": "订购类型",
     "acq.orderType.One-Time": "一次性",
-    "acq.orderType.Ongoing": "进行中"
+    "acq.orderType.Ongoing": "进行中",
+    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}"
 }

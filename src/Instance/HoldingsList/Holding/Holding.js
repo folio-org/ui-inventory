@@ -51,17 +51,11 @@ const Holding = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
         >
-          {
-            ({ items, handleAccordionToggle }) => (
-              <ItemsListContainer
-                holding={holding}
-                draggable={draggable}
-                droppable={droppable}
-                items={items}
-                handleAccordionToggle={handleAccordionToggle}
-              />
-            )
-          }
+          <ItemsListContainer
+            holding={holding}
+            draggable={draggable}
+            droppable={droppable}
+          />
         </HoldingAccordion>
       </DropZone>
     </div>

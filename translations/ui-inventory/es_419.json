@@ -594,7 +594,7 @@
     "instanceRecordWithType": "Registro de instancia ({instanceTypeName})",
     "item.status.inProcessNonRequestable": "En proceso (no disponible)",
     "item.status.intellectualItem": "Ejemplar intelectual.",
-    "item.status.longMissing": "Long missing",
+    "item.status.longMissing": "Desaparecido hace mucho tiempo",
     "item.status.restricted": "Restringido",
     "item.status.unavailable": "No disponible",
     "item.status.unknown": "Desconocido",
@@ -658,7 +658,7 @@
     "item.successfullySaved": "El ejemplar 1 - HRID 1{hrid}1 ha sido guardado exitosamente.",
     "holdingsRecord.successfullySaved": "La 1 existencia 1 - HRID 1 {hrid} 1 ha sido guardada exitosamente.",
     "instance.successfullySaved": "La 1 instancia 1 - HRID 1{hrid} 1 ha sido guardada exitosamente.",
-    "holdingsPaneTitle": "Existencias",
+    "holdingsPaneTitle": "Existencias {localización} • {Número de pedido}",
     "instanceRecordSubtitle": "{hrid} • Última actualización: {updatedDate}",
     "instance.saveError": "Error al guardar la instancia",
     "itemRecordWithDescriptionBW": "Registro del ítem ({materialType}, {status}, Atado con)",
@@ -678,5 +678,6 @@
     "acq.orderSentDate": "Fecha de envío del pedido",
     "acq.orderType": "Tipo de pedido",
     "acq.orderType.One-Time": "Una sola vez",
-    "acq.orderType.Ongoing": "Continúa"
+    "acq.orderType.Ongoing": "Continúa",
+    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}"
 }

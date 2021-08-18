@@ -76,6 +76,7 @@ import {
 } from '../constants';
 import ItemStatus from './ItemStatus';
 import { WarningMessage } from '../components';
+import css from '../View.css';
 
 export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -690,6 +691,8 @@ class ItemView extends React.Component {
       </Col>
     );
 
+    const boundWithCount = item?.boundWithTitles?.length;
+
     return (
       <IntlConsumer>
         {intl => (
@@ -824,6 +827,19 @@ class ItemView extends React.Component {
                     </em>
                   </span>
                   )}
+                  { boundWithCount > 0 &&
+                    <>
+                      {' '}
+                      <span className={css.multiTitle}>
+                        <FormattedMessage
+                          id="ui-inventory.boundWith"
+                          values={{
+                            boundWithCount,
+                          }}
+                        />
+                      </span>
+                    </>
+                  }
                   <div>
                     <FormattedMessage
                       id="ui-inventory.holdingsTitle"
