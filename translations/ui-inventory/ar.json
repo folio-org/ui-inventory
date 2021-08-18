@@ -570,7 +570,7 @@
     "selectHoldingsSource": "اختر مصدر المقتنيات",
     "holdingsSourceLabel": "المصدر",
     "uniqueName": "يجب أن يكون الاسم فريدًا",
-    "viewRequests": "عرض الطلبات ({count})",
+    "viewRequests": "عرض الطلبات",
     "instanceRecordRequestsTitle": "طلبات على المواد - {instanceResourceTitle}، {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "تم العثور على {count}  مادة",
     "item.requestQueue": "صف الطلبات",
@@ -678,5 +678,6 @@
     "acq.orderSentDate": "تاريخ إرسال الطلبية",
     "acq.orderType": "نوع الطلبية",
     "acq.orderType.One-Time": "لمرة واحدة",
-    "acq.orderType.Ongoing": "جاري"
+    "acq.orderType.Ongoing": "جاري",
+    "boundWith": "و {boundWithCount, plural, one {عنواناً آخر} other {عنواناً آخر}}"
 }

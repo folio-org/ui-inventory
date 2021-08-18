@@ -570,7 +570,7 @@
     "selectHoldingsSource": "Select holdings source",
     "holdingsSourceLabel": "Source",
     "uniqueName": "Name must be unique",
-    "viewRequests": "View requests ({count})",
+    "viewRequests": "View requests",
     "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} items found",
     "item.requestQueue": "Request queue",
@@ -678,5 +678,6 @@
     "acq.orderSentDate": "Order sent date",
     "acq.orderType": "Order type",
     "acq.orderType.One-Time": "One-time",
-    "acq.orderType.Ongoing": "Ongoing"
+    "acq.orderType.Ongoing": "Ongoing",
+    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}"
 }
