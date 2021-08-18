@@ -57,6 +57,7 @@ import {
 } from './constants';
 import { WarningMessage } from './components';
 import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
+import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 
 import css from './View.css';
 
@@ -403,8 +404,6 @@ class ViewHoldingsRecord extends React.Component {
 
     const electronicAccess = get(holdingsRecord, ['electronicAccess'], []);
 
-    const receivingHistory = get(holdingsRecord, ['receivingHistory', 'entries'], []);
-
     const initialAccordionsState = {
       acc01: !areAllFieldsEmpty(Object.values(administrativeData)),
       acc02: !areAllFieldsEmpty(Object.values(locationAccordion)),
@@ -412,7 +411,6 @@ class ViewHoldingsRecord extends React.Component {
       acc04: !areAllFieldsEmpty([holdingsNotes]),
       acc05: !areAllFieldsEmpty([electronicAccess]),
       acc06: false,
-      acc07: !areAllFieldsEmpty([receivingHistory]),
     };
 
     const holdingsDetailsTables = intl => holdingsStatementTypes.map(({ type, title }) => ({
@@ -814,27 +812,7 @@ class ViewHoldingsRecord extends React.Component {
                         )
                       }
 
-                      <Accordion
-                        id="acc07"
-                        label={<FormattedMessage id="ui-inventory.receivingHistory" />}
-                      >
-                        <MultiColumnList
-                          id="list-retrieving-history"
-                          contentData={checkIfArrayIsEmpty(receivingHistory)}
-                          visibleColumns={['Enumeration', 'Chronology']}
-                          columnMapping={{
-                            'Enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
-                            'Chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
-                          }}
-                          columnWidths={{ 'Enumeration': '16%' }}
-                          formatter={{
-                            'Enumeration': x => x.enumeration || noValue,
-                            'Chronology': x => x.chronology || noValue,
-                          }}
-                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.receivingHistory' })}
-                          containerRef={ref => { this.resultsList = ref; }}
-                        />
-                      </Accordion>
+                      <HoldingReceivingHistory holding={holdingsRecord} />
                     </AccordionSet>
                   </AccordionStatus>
                 </Pane>
