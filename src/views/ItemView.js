@@ -815,10 +815,10 @@ class ItemView extends React.Component {
 
               <Row center="xs">
                 <Col sm={6}>
-                  <FormattedMessage
-                    id="ui-inventory.instanceTitle"
-                    values={{ title: instance.title }}
-                  />
+                  <FormattedMessage id="ui-inventory.instanceTitle" />
+                  <Link to={`/inventory/view/${instance.id}`}>
+                    {` ${instance.title}. `}
+                  </Link>
                   {(instance.publication && instance.publication.length > 0) && (
                   <span>
                     <em>
@@ -841,13 +841,10 @@ class ItemView extends React.Component {
                     </>
                   }
                   <div>
-                    <FormattedMessage
-                      id="ui-inventory.holdingsTitle"
-                      values={{
-                        location: holdingLocation.permanentLocation,
-                        callNumber: callNumberLabel(holdingsRecord),
-                      }}
-                    />
+                    <FormattedMessage id="ui-inventory.holdingsLabelShort" />
+                    <Link to={`/inventory/view/${instance.id}/${holdingsRecord.id}`}>
+                      { ` ${holdingLocation.permanentLocation} > ${callNumberLabel(holdingsRecord)}` }
+                    </Link>
                   </div>
                 </Col>
               </Row>
