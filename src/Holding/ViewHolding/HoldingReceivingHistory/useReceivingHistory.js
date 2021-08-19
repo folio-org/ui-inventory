@@ -16,7 +16,7 @@ const useReceivingHistory = (holding, options = {}) => {
     .get('orders/pieces', {
       searchParams: {
         limit: LIMIT_MAX,
-        query: `holdingId==${holding.id} and displayOnHolding=="true"`,
+        query: `holdingId==${holding.id} and displayOnHolding=="true" and receivingStatus="Received"`,
       },
       enabled: stripes.hasInterface('pieces'),
     })
