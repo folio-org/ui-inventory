@@ -686,5 +686,11 @@
   "acq.orderSentDate": "Order sent date",
   "acq.orderType": "Order type",
   "acq.orderType.One-Time": "One-time",
-  "acq.orderType.Ongoing": "Ongoing"
+  "acq.orderType.Ongoing": "Ongoing",
+
+  "receivingHistory.receivedDate": "Receipt date",
+  "receivingHistory.comment": "Comment",
+  "receivingHistory.source": "Source",
+  "receivingHistory.source.receiving": "Receiving",
+  "receivingHistory.source.user": "User"
 }

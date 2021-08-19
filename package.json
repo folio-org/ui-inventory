@@ -89,7 +89,8 @@
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
       "remote-storage-mappings": "1.0 2.0",
-      "orders.holding-summary": "1.0"
+      "orders.holding-summary": "1.0",
+      "pieces": "2.0"
     },
     "permissionSets": [
       {
@@ -492,7 +493,8 @@
           "inventory-storage.hrid-settings.item.get",
           "inventory-storage.record-bulk.ids.get",
           "data-export.quick.export.post",
-          "orders.holding-summary.collection.get"
+          "orders.holding-summary.collection.get",
+          "orders.pieces.collection.get"
         ],
         "visible": true
       },
