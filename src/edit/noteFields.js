@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -18,8 +18,9 @@ const NoteFields = props => {
     canDelete,
   } = props;
 
+  const translate = useIntl();
   const instanceNoteTypeOptions = instanceNoteTypes.map(it => ({
-    label: it.name,
+    label: translate.formatMessage({ id: `ui-inventory.instanceNoteTypes.name.${it.name}`, defaultMessage: it.name }),
     value: it.id,
   }));
 
@@ -35,7 +36,7 @@ const NoteFields = props => {
           label: <FormattedMessage id="ui-inventory.noteType" />,
           component: Select,
           disabled: !canEdit,
-          dataOptions: [{ label: 'Select type', value: '' }, ...instanceNoteTypeOptions],
+          dataOptions: [{ label: translate.formatMessage({ id: 'ui-inventory.selectType', defaultMessage: 'Select type' }), value: '' }, ...instanceNoteTypeOptions],
         },
         {
           name: 'note',

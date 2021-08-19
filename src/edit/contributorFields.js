@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   TextArea,
   Select,
@@ -17,13 +17,15 @@ const ContributorFields = props => {
     canEdit,
     canDelete,
   } = props;
+
+  const translate = useIntl();
   const contributorNameTypeOptions = contributorNameTypes.map(it => ({
-    label: it.name,
+    label: translate.formatMessage({ id: `ui-inventory.contributorNameTypes.name.${it.name}`, defaultMessage: it.name }),
     value: it.id,
   }));
 
   const contributorTypeOptions = contributorTypes.map(it => ({
-    label: it.name,
+    label: translate.formatMessage({ id: `ui-inventory.contributorTypes.name.${it.name}`, defaultMessage: it.name }),
     value: it.id,
   }));
 

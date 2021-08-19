@@ -29,6 +29,9 @@ class LoanTypesSettings extends React.Component {
             {...this.props}
             baseUrl="loan-types"
             records="loantypes"
+            tableName="loantypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.loanTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.loanType' })}
             objectLabel={<FormattedMessage id="ui-inventory.loans" />}

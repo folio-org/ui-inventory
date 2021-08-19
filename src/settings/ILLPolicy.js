@@ -29,6 +29,9 @@ class ILLPolicy extends React.Component {
             {...this.props}
             baseUrl="ill-policies"
             records="illPolicies"
+            tableName="illPolicies"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.ILLPolicy" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.ILLPolicy' })}
             objectLabel={<FormattedMessage id="ui-inventory.ILLPolicy" />}

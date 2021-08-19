@@ -32,6 +32,9 @@ class ClassificationTypesSettings extends React.Component {
             {...this.props}
             baseUrl="classification-types"
             records="classificationTypes"
+            tableName="classificationTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.classificationIdentifierTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.classificationIdentifierType' })}
             objectLabel={<FormattedMessage id="ui-inventory.classificationIdentifierTypes" />}

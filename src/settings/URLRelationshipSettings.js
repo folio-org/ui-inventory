@@ -29,6 +29,9 @@ class URLRelationshipSettings extends React.Component {
             {...this.props}
             baseUrl="electronic-access-relationships"
             records="electronicAccessRelationships"
+            tableName="electronicAccessRelationships"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.URLrelationship" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.urlRelationshipTerm' })}
             objectLabel={<FormattedMessage id="ui-inventory.URLrelationship" />}

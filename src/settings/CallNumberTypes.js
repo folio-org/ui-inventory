@@ -29,6 +29,9 @@ class CallNumberTypes extends React.Component {
             {...this.props}
             baseUrl="call-number-types"
             records="callNumberTypes"
+            tableName="callNumberTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.callNumberTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.callNumberType' })}
             objectLabel={<FormattedMessage id="ui-inventory.callNumberTypes" />}

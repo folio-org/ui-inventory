@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Select } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
-const renderInstanceFormatField = ({ field, fieldIndex, canEdit }, instanceFormats) => {
+const renderInstanceFormatField = ({ field, fieldIndex, canEdit }, instanceFormats, translate) => {
   const instanceFormatOptions = instanceFormats
     ? instanceFormats.map(it => ({
-      label: it.name,
+      label: translate.formatMessage({ id: `ui-inventory.instanceFormats.name.${it.name}`, defaultMessage: it.name }),
       value: it.id,
     }))
     : [];
@@ -51,6 +51,8 @@ const InstanceFormatFields = props => {
     canDelete,
   } = props;
 
+  const translate = useIntl();
+
   return (
     <RepeatableField
       name="instanceFormatIds"
@@ -58,7 +60,7 @@ const InstanceFormatFields = props => {
       addLabel={<FormattedMessage id="ui-inventory.addInstanceFormat" />}
       addButtonId="clickable-add-instanceformat"
       template={[{
-        render(fieldObj) { return renderInstanceFormatField({ ...fieldObj, canEdit }, instanceFormats); },
+        render(fieldObj) { return renderInstanceFormatField({ ...fieldObj, canEdit }, instanceFormats, translate); },
       }]}
       canAdd={canAdd}
       canDelete={canDelete}

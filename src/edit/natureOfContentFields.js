@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Select } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
-const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfContentTerms) => {
+const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfContentTerms, translate) => {
   const natureOfContentTermOptions = natureOfContentTerms
     ? natureOfContentTerms.map(it => ({
-      label: it.name,
+      label: translate.formatMessage({ id: `ui-inventory.natureOfContentTerms.name.${it.name}`, defaultMessage: it.name }),
       value: it.id,
     }))
     : [];
@@ -50,6 +50,8 @@ const NatureOfContentFields = props => {
     natureOfContentTerms,
   } = props;
 
+  const translate = useIntl();
+
   return (
     <RepeatableField
       name="natureOfContentTermIds"
@@ -57,7 +59,7 @@ const NatureOfContentFields = props => {
       addLabel={<FormattedMessage id="ui-inventory.addNatureOfContentTerm" />}
       addButtonId="clickable-add-nature-of-content"
       template={[{
-        render(fieldObj) { return renderNatureOfContentField({ ...fieldObj, canEdit }, natureOfContentTerms); },
+        render(fieldObj) { return renderNatureOfContentField({ ...fieldObj, canEdit }, natureOfContentTerms, translate); },
       }]}
       canAdd={canAdd}
       canDelete={canDelete}

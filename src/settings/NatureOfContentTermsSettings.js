@@ -32,6 +32,9 @@ class NatureOfContentTermsSettings extends React.Component {
             {...this.props}
             baseUrl="nature-of-content-terms"
             records="natureOfContentTerms"
+            tableName="natureOfContentTerms"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.natureOfContentTerm' })}
             objectLabel={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}

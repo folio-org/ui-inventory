@@ -50,28 +50,30 @@ const InstanceFilters = props => {
     onClear,
   } = props;
 
+  const intl = useIntl();
+
   const effectiveLocationOptions = locations.map(({ name, id }) => ({
-    label: name,
+    label: intl.formatMessage({ id: `ui-tenant-settings.locations.name.${name}`, defaultMessage: `${name}` }),
     value: id,
   }));
 
   const resourceTypeOptions = resourceTypes.map(({ name, id }) => ({
-    label: name,
+    label: intl.formatMessage({ id: `ui-inventory.instanceTypes.name.${name}`, defaultMessage: `${name}` }),
     value: id,
   }));
 
   const instanceFormatOptions = instanceFormats.map(({ name, id }) => ({
-    label: name,
+    label: intl.formatMessage({ id: `ui-inventory.instanceFormats.name.${name}`, defaultMessage: `${name}` }),
     value: id,
   }));
 
   const modeOfIssuanceOptions = modesOfIssuance.map(({ name, id }) => ({
-    label: name,
+    label: intl.formatMessage({ id: `ui-inventory.issuanceModes.name.${name}`, defaultMessage: `${name}` }),
     value: id,
   }));
 
   const natureOfContentOptions = natureOfContentTerms.map(({ name, id }) => ({
-    label: name,
+    label: intl.formatMessage({ id: `ui-inventory.natureOfContentTerms.name.${name}`, defaultMessage: `${name}` }),
     value: id,
   }));
 
@@ -97,7 +99,6 @@ const InstanceFilters = props => {
     },
   ];
 
-  const intl = useIntl();
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
 

@@ -29,6 +29,9 @@ class AlternativeTitleTypesSettings extends React.Component {
             {...this.props}
             baseUrl="alternative-title-types"
             records="alternativeTitleTypes"
+            appName="ui-inventory"
+            tableName="alternativeTitleTypes"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' })}
             objectLabel={<FormattedMessage id="ui-inventory.alternativeTitleTypes" />}

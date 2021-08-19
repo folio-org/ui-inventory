@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { IntlConsumer } from '@folio/stripes/core';
 import {
@@ -17,8 +17,10 @@ const ClassificationFields = props => {
     canEdit,
     canDelete,
   } = props;
+
+  const translate = useIntl();
   const classificationTypeOptions = classificationTypes.map(it => ({
-    label: it.name,
+    label: translate.formatMessage({ id: `ui-inventory.classificationTypes.name.${it.name}`, defaultMessage: `${it.name}` }),
     value: it.id,
   }));
 
