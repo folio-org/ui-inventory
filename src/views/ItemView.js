@@ -692,6 +692,11 @@ class ItemView extends React.Component {
     );
 
     const boundWithCount = item?.boundWithTitles?.length;
+    const linkedInstanceTitle = (
+      <Link to={`/inventory/view/${instance.id}`}>
+        {` ${instance.title}. `}
+      </Link>
+    );
 
     return (
       <IntlConsumer>
@@ -815,10 +820,10 @@ class ItemView extends React.Component {
 
               <Row center="xs">
                 <Col sm={6}>
-                  <FormattedMessage id="ui-inventory.instanceTitle" />
-                  <Link to={`/inventory/view/${instance.id}`}>
-                    {` ${instance.title}. `}
-                  </Link>
+                  <FormattedMessage
+                    id="ui-inventory.instanceTitle"
+                    values={{ title: linkedInstanceTitle }}
+                  />
                   {(instance.publication && instance.publication.length > 0) && (
                   <span>
                     <em>
