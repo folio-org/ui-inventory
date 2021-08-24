@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   TextArea,
@@ -16,8 +16,10 @@ const ElectronicAccessFields = props => {
     canEdit,
     canDelete,
   } = props;
+
+  const intl = useIntl();
   const relationshipOptions = relationship.map(it => ({
-    label: it.name,
+    label: intl.formatMessage({ id: `ui-inventory.electronicAccessRelationships.name.${it.name}`, defaultMessage: it.name }),
     value: it.id,
   }));
 

@@ -29,6 +29,9 @@ class InstanceNoteTypesSettings extends React.Component {
             {...this.props}
             baseUrl="instance-note-types"
             records="instanceNoteTypes"
+            tableName="instanceNoteTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.instanceNoteTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceNoteType' })}
             objectLabel={<FormattedMessage id="ui-inventory.instanceNoteTypes" />}

@@ -117,6 +117,9 @@ class StatisticalCodeSettings extends React.Component {
             stripes={this.props.stripes}
             baseUrl="statistical-codes"
             records="statisticalCodes"
+            tableName="statisticalCodes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             formatter={formatter}
             fieldComponents={fieldComponents}
             label={<FormattedMessage id="ui-inventory.statisticalCodes" />}

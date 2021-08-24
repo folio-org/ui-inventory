@@ -34,6 +34,9 @@ class FormatSettings extends React.Component {
             {...this.props}
             baseUrl="instance-formats"
             records="instanceFormats"
+            tableName="instanceFormats"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.formats" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.format' })}
             objectLabel={<FormattedMessage id="ui-inventory.instances" />}

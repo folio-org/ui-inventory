@@ -32,6 +32,9 @@ class IdentifierTypesSettings extends React.Component {
             {...this.props}
             baseUrl="identifier-types"
             records="identifierTypes"
+            tableName="identifierTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.resourceIdentifierTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.resourceIdentifierType' })}
             objectLabel={<FormattedMessage id="ui-inventory.resourceIdentifierTypes" />}

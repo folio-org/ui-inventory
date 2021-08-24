@@ -34,6 +34,9 @@ class ContributorTypesSettings extends React.Component {
             {...this.props}
             baseUrl="contributor-types"
             records="contributorTypes"
+            tableName="contributorTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.contributorTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.contributorType' })}
             objectLabel={<FormattedMessage id="ui-inventory.contributors" />}

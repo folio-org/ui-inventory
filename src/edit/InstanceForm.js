@@ -6,7 +6,7 @@ import {
   filter,
   isEmpty,
 } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -264,16 +264,33 @@ class InstanceForm extends React.Component {
       onCancel,
       initialValues,
       referenceTables,
+      intl,
     } = this.props;
+
+    referenceTables.statisticalCodeTypes.forEach(trans => {
+      trans.translatedName = intl.formatMessage({ id: `ui-inventory.statisticalCodeTypes.name.${trans.name}`, defaultMessage: trans.name });
+    });
+
+    referenceTables.statisticalCodes.forEach(trans => {
+      trans.translatedName = intl.formatMessage({ id: `ui-inventory.statisticalCodes.name.${trans.name}`, defaultMessage: trans.name });
+    });
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
       return ref || {};
     };
 
+    referenceTables.statisticalCodeTypes.forEach(trans => {
+      trans.translatedName = intl.formatMessage({ id: `ui-inventory.statisticalCodeTypes.name.${trans.name}`, defaultMessage: trans.name });
+    });
+
+    referenceTables.statisticalCodes.forEach(trans => {
+      trans.translatedName = intl.formatMessage({ id: `ui-inventory.statisticalCodes.name.${trans.name}`, defaultMessage: trans.name });
+    });
+
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
       it => ({
-        label: it.name,
+        label: intl.formatMessage({ id: `ui-inventory.instanceTypes.name.${it.name}`, defaultMessage: it.name }),
         value: it.id,
         selected: it.id === initialValues.instanceTypeId,
       }),
@@ -281,7 +298,7 @@ class InstanceForm extends React.Component {
 
     const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses.map(
       it => ({
-        label: `${it.name} (${it.source}: ${it.code})`,
+        label: `${intl.formatMessage({ id: `ui-inventory.instanceStatuses.name.${it.name}`, defaultMessage: it.name })} (${it.source}: ${it.code})`,
         value: it.id,
         selected: it.id === initialValues.instanceFormatId,
       }),
@@ -289,7 +306,7 @@ class InstanceForm extends React.Component {
 
     const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance.map(
       it => ({
-        label: it.name,
+        label: `${intl.formatMessage({ id: `ui-inventory.issuanceModes.name.${it.name}`, defaultMessage: it.name })} (${it.source})`,
         value: it.id,
         selected: it.id === initialValues.modeOfIssuanceId,
       }),
@@ -298,21 +315,30 @@ class InstanceForm extends React.Component {
     const statisticalCodeOptions = referenceTables.statisticalCodes
       .map(
         code => ({
-          label: refLookup(referenceTables.statisticalCodeTypes, code.statisticalCodeTypeId).name + ':    ' + code.code + ' - ' + code.name,
+          label: refLookup(referenceTables.statisticalCodeTypes, code.statisticalCodeTypeId).translatedName + ':    ' + code.code + ' - ' + code.translatedName,
           value: code.id,
           selected: code.id === initialValues.statisticalCodeId,
         })
       )
       .sort((a, b) => a.label.localeCompare(b.label));
+      /** kware end editing */
+
 
     // Since preceding/succeeding title relationships are split out from other parent/child instances,
     // we don't want the type selection box for parent/child to include the preceding-succeeding type
     const rTypes = referenceTables.instanceRelationshipTypes;
     const mostParentChildRelationships = filter(rTypes, rt => rt.id !== psTitleRelationshipId(rTypes));
+    // const relationshipTypes = mostParentChildRelationships.map(it => ({
+    //   label: it.name,
+    //   value: it.id,
+    // }));
+
+    /** kware start editing */
     const relationshipTypes = mostParentChildRelationships.map(it => ({
-      label: it.name,
+      label: intl.formatMessage({ id: `ui-inventory.instanceRelationshipTypes.name.${it.name}`, defaultMessage: it.name }),
       value: it.id,
     }));
+    /** kware end editing */
 
     return (
       <form
@@ -460,9 +486,12 @@ class InstanceForm extends React.Component {
                         {
                           label: <FormattedMessage id="ui-inventory.statisticalCode" />,
                           component: Select,
-                          dataOptions: [{
-                            label: 'Select code', value: '',
-                          }, ...statisticalCodeOptions],
+                          // dataOptions: [{
+                          //   label: 'Select code', value: '',
+                          // }, ...statisticalCodeOptions],
+                          /** kware start editing */
+                          dataOptions: [{ label: this.props.intl.formatMessage({ id: 'ui-inventory.selectCode', defaultMessage: 'Select code' }), value: '' }, ...statisticalCodeOptions],
+                          /** kware end editing */
                           disabled: this.isFieldBlocked('statisticalCodeIds'),
                         }
                       ]}
@@ -759,13 +788,23 @@ InstanceForm.propTypes = {
     }),
   }),
   instanceSource: PropTypes.string,
+  /** kware start editing */
+  intl: PropTypes.object,
+  /** kware end editing */
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
   initialValues: {},
 };
 
+// export default stripesFinalForm({
+//   validate,
+//   navigationCheck: true,
+// })(InstanceForm);
+
+/** kware start editing */
 export default stripesFinalForm({
   validate,
   navigationCheck: true,
-})(InstanceForm);
+})(injectIntl(InstanceForm));
+/** kware end editing */

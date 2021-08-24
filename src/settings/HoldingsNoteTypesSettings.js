@@ -29,6 +29,9 @@ class HoldingsNoteTypesSettings extends React.Component {
             {...this.props}
             baseUrl="holdings-note-types"
             records="holdingsNoteTypes"
+            tableName="holdingsNoteTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.holdingsNoteTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.holdingsNoteType' })}
             objectLabel={<FormattedMessage id="ui-inventory.holdingsNoteTypes" />}

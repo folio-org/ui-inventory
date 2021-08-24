@@ -29,6 +29,9 @@ class MaterialTypesSettings extends React.Component {
             {...this.props}
             baseUrl="material-types"
             records="mtypes"
+            tableName="materialTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.materialTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.materialType' })}
             objectLabel={<FormattedMessage id="ui-inventory.items" />}

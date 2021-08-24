@@ -29,6 +29,9 @@ class StatisticalCodeTypes extends React.Component {
             {...this.props}
             baseUrl="statistical-code-types"
             records="statisticalCodeTypes"
+            tableName="statisticalCodeTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.statisticalCodeTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' })}
             objectLabel={<FormattedMessage id="ui-inventory.statisticalCodeTypes" />}

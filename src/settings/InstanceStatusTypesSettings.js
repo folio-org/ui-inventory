@@ -34,6 +34,9 @@ class InstanceStatusTypesSettings extends React.Component {
             {...this.props}
             baseUrl="instance-statuses"
             records="instanceStatuses"
+            tableName="instanceStatuses"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.instanceStatusTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceStatusType' })}
             objectLabel={<FormattedMessage id="ui-inventory.contributors" />}

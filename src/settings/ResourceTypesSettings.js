@@ -34,6 +34,9 @@ class ResourceTypesSettings extends React.Component {
             {...this.props}
             baseUrl="instance-types"
             records="instanceTypes"
+            tableName="instanceTypes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.resourceTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.resourceType' })}
             objectLabel={<FormattedMessage id="ui-inventory.resourceTypes" />}

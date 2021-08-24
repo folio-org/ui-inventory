@@ -32,6 +32,9 @@ class ModesOfIssuanceSettings extends React.Component {
             {...this.props}
             baseUrl="modes-of-issuance"
             records="issuanceModes"
+            tableName="issuanceModes"
+            appName="ui-inventory"
+            translatableFields={['name']}
             label={<FormattedMessage id="ui-inventory.modesOfIssuance" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.modeOfIssuance' })}
             objectLabel={<FormattedMessage id="ui-inventory.modesOfIssuance" />}
