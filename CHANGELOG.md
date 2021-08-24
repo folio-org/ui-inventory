@@ -14,7 +14,7 @@
 * Fix instance duplication when child or parent records are present. Fixes UIIN-1562.
 * Add bound-with icons and item detail view header note. Refs UIIN-1522, UIIN-1523, UIIN-1524.
 * Retrieve and display select Piece information on Holding. Refs UIIN-1502.
-
+* Make sure building inventory module works with `babel-plugin-lodash`. Refs UIIN-1569.
 
 ## [7.1.2](https://github.com/folio-org/ui-inventory/tree/v7.1.2) (2021-07-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.1...v7.1.2)

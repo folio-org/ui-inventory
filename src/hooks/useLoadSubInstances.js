@@ -1,7 +1,10 @@
 import {
   keyBy,
   isEqual,
-  chain,
+  map,
+  flow,
+  sortBy,
+  filter,
 } from 'lodash';
 import {
   useEffect,
@@ -17,9 +20,9 @@ const useLoadSubInstances = (instanceIds = [], subId) => {
   const [subInstances, setSubInstances] = useState([]);
   const results = useInstancesQuery(instanceIds.map(inst => inst[subId]));
   const allLoaded = results.reduce((acc, { isSuccess }) => (isSuccess && acc), true);
-  const instances = chain(results)
-    .filter(({ data }) => data)
-    .map(({
+  const instances = flow(
+    items => filter(items, ({ data }) => data),
+    items => map(items, ({
       data: {
         id,
         title,
@@ -33,10 +36,9 @@ const useLoadSubInstances = (instanceIds = [], subId) => {
       hrid,
       publication,
       identifiers,
-    }))
-    .sortBy('title')
-    .value();
-
+    })),
+    items => sortBy(items, 'title')
+  )(results);
   const shouldUpdateSubInstances = allLoaded && !isEqual(subInstances, instances);
 
   useEffect(() => {
