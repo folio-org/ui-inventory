@@ -679,5 +679,10 @@
     "acq.orderType": "Tipo de pedido",
     "acq.orderType.One-Time": "Uma vez",
     "acq.orderType.Ongoing": "Em curso",
-    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}"
+    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}",
+    "receivingHistory.receivedDate": "Receipt date",
+    "receivingHistory.comment": "Comment",
+    "receivingHistory.source": "Source",
+    "receivingHistory.source.receiving": "Receiving",
+    "receivingHistory.source.user": "User"
 }

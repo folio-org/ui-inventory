@@ -679,5 +679,10 @@
     "acq.orderType": "Type de commande",
     "acq.orderType.One-Time": "One-time",
     "acq.orderType.Ongoing": "Ongoing",
-    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}"
+    "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}",
+    "receivingHistory.receivedDate": "Date de réception",
+    "receivingHistory.comment": "Commentaire",
+    "receivingHistory.source": "Source",
+    "receivingHistory.source.receiving": "Receiving",
+    "receivingHistory.source.user": "Utilisateur"
 }
