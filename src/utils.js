@@ -657,3 +657,15 @@ export const getNextSelectedRowsState = (selectedRows, row) => {
 export const isTestEnv = () => process.env.NODE_ENV === 'test';
 
 export const formatCellStyles = css => defaultCellStyle => `${defaultCellStyle} ${css}`;
+
+export const handleKeyCommand = (handler, { disabled } = {}) => {
+  return (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (!disabled) {
+      handler();
+    }
+  };
+};

@@ -8,7 +8,7 @@ import {
 } from 'lodash';
 import { parameterize } from 'inflected';
 
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
@@ -34,6 +34,10 @@ import {
   ConfirmationModal,
   Modal,
   MessageBanner,
+  checkScope,
+  HasCommand,
+  collapseAllSections,
+  expandAllSections,
 } from '@folio/stripes/components';
 
 import {
@@ -63,6 +67,7 @@ import {
   getDate,
   getDateWithTime,
   checkIfArrayIsEmpty,
+  handleKeyCommand,
 } from '../utils';
 import ItemForm from '../edit/items/ItemForm';
 import withLocation from '../withLocation';
@@ -94,6 +99,7 @@ class ItemView extends React.Component {
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
+    this.accordionStatusRef = createRef();
   }
 
   onClickEditItem = e => {
@@ -418,6 +424,7 @@ class ItemView extends React.Component {
       },
       referenceTables,
       okapi,
+      goTo,
     } = this.props;
 
     const {
@@ -698,724 +705,746 @@ class ItemView extends React.Component {
       </Link>
     );
 
+    const shortcuts = [
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'search',
+        handler: handleKeyCommand(() => goTo('/inventory')),
+      },
+    ];
+
+
     return (
       <IntlConsumer>
         {intl => (
-          <Paneset isRoot>
-            <Pane
-              data-test-item-view-page
-              defaultWidth="100%"
-              appIcon={(
-                <AppIcon
-                  app="inventory"
-                  iconKey="item"
-                />
-              )}
-              paneTitle={(
-                <span data-test-header-item-title>
-                  <FormattedMessage
-                    id="ui-inventory.itemDotStatus"
-                    values={{
-                      barcode: get(item, 'barcode', ''),
-                      status: get(item, 'status.name', ''),
-                    }}
-                  />
-                </span>
-              )}
-              paneSub={(
-                <FormattedMessage
-                  id="ui-inventory.instanceRecordSubtitle"
-                  values={{
-                    hrid: item?.hrid,
-                    updatedDate: getDate(item?.metadata?.updatedDate),
-                  }}
-                />
-              )}
-              dismissible
-              onClose={this.props.onCloseViewItem}
-              actionMenu={this.getActionMenu}
-            >
-              <Modal
-                data-test-missingConfirmation-modal
-                open={itemMissingModal}
-                label={<FormattedMessage id="ui-inventory.missingModal.heading" />}
-                dismissible
-                size="small"
-                onClose={this.hideMissingModal}
-              >
-                <ModalContent
-                  item={item}
-                  itemRequestCount={requestCount}
-                  status={MISSING}
-                  requestsUrl={requestsUrl}
-                  onConfirm={this.markItemAsMissing}
-                  onCancel={this.hideMissingModal}
-                />
-              </Modal>
-              <Modal
-                data-test-withdrawn-confirmation-modal
-                open={itemWithdrawnModal}
-                label={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
-                dismissible
-                size="small"
-                onClose={this.hideWithdrawnModal}
-              >
-                <ModalContent
-                  item={item}
-                  itemRequestCount={requestCount}
-                  status={WITHDRAWN}
-                  requestsUrl={requestsUrl}
-                  onConfirm={this.markItemAsWithdrawn}
-                  onCancel={this.hideWithdrawnModal}
-                />
-              </Modal>
-              <Modal
-                data-test-item-status-modal
-                open={!!selectedItemStatus}
-                label={<FormattedMessage
-                  id="ui-inventory.itemStatusModal.heading"
-                  values={{ itemStatus: itemStatusesMap[selectedItemStatus] }}
-                />}
-                dismissible
-                size="small"
-                onClose={this.clearSelectedItemStatus}
-              >
-                <ModalContent
-                  item={item}
-                  itemRequestCount={requestCount}
-                  status={itemStatusesMap[selectedItemStatus]}
-                  requestsUrl={requestsUrl}
-                  onConfirm={() => this.markItemWithStatus(selectedItemStatus)}
-                  onCancel={this.clearSelectedItemStatus}
-                />
-              </Modal>
-              <ConfirmationModal
-                id="confirmDeleteItemModal"
-                data-test-confirm-delete-item-modal
-                open={confirmDeleteItemModal}
-                heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-                message={confirmDeleteItemModalMessage}
-                onConfirm={() => { this.deleteItem(item); }}
-                onCancel={this.hideConfirmDeleteItemModal}
-                confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
-              />
-              {cannotDeleteItemModal && (
-              <Modal
-                id="cannotDeleteItemModal"
-                data-test-cannot-delete-item-modal
-                label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
-                open={cannotDeleteItemModal}
-                footer={cannotDeleteItemFooter}
-              >
-                <SafeHTMLMessage
-                  id={cannotDeleteItemModalMessageId}
-                  values={{
-                    hrid: item.hrid,
-                    barcode: item.barcode,
-                    status: item.status.name,
-                  }}
-                />
-              </Modal>
-              )}
-
-              <Row center="xs">
-                <Col sm={6}>
-                  <FormattedMessage
-                    id="ui-inventory.instanceTitle"
-                    values={{ title: linkedInstanceTitle }}
-                  />
-                  {(instance.publication && instance.publication.length > 0) && (
-                  <span>
-                    <em>
-                      {` ${instance.publication[0].publisher}`}
-                      {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                    </em>
-                  </span>
-                  )}
-                  { boundWithCount > 0 &&
-                    <>
-                      {' '}
-                      <span className={css.multiTitle}>
-                        <FormattedMessage
-                          id="ui-inventory.boundWith"
-                          values={{
-                            boundWithCount,
-                          }}
-                        />
-                      </span>
-                    </>
-                  }
-                  <div>
-                    <FormattedMessage id="ui-inventory.holdingsLabelShort" />
-                    <Link to={`/inventory/view/${instance.id}/${holdingsRecord.id}`}>
-                      { ` ${holdingLocation.permanentLocation} > ${callNumberLabel(holdingsRecord)}` }
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-              <hr />
-              <Row>
-                <Col sm={12}>
+          <HasCommand
+            commands={shortcuts}
+            isWithinScope={checkScope}
+            scope={document.body}
+          >
+            <Paneset isRoot>
+              <Pane
+                data-test-item-view-page
+                defaultWidth="100%"
+                appIcon={(
                   <AppIcon
                     app="inventory"
                     iconKey="item"
-                    size="small"
                   />
-                  {' '}
+                )}
+                paneTitle={(
+                  <span data-test-header-item-title>
+                    <FormattedMessage
+                      id="ui-inventory.itemDotStatus"
+                      values={{
+                        barcode: get(item, 'barcode', ''),
+                        status: get(item, 'status.name', ''),
+                      }}
+                    />
+                  </span>
+                )}
+                paneSub={(
                   <FormattedMessage
-                    id={
-                      item?.isBoundWith ?
-                        'ui-inventory.itemRecordWithDescriptionBW' :
-                        'ui-inventory.itemRecordWithDescription'
-                    }
+                    id="ui-inventory.instanceRecordSubtitle"
                     values={{
-                      materialType: item?.materialType?.name,
-                      status: item?.status?.name,
+                      hrid: item?.hrid,
+                      updatedDate: getDate(item?.metadata?.updatedDate),
                     }}
                   />
-                </Col>
-              </Row>
-              <br />
-              <AccordionStatus>
-                <Row>
-                  {effectiveLocationDisplay}
-                  <Col xs={2}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
-                      value={effectiveCallNumber(item)}
+                )}
+                dismissible
+                onClose={this.props.onCloseViewItem}
+                actionMenu={this.getActionMenu}
+              >
+
+                <Modal
+                  data-test-missingConfirmation-modal
+                  open={itemMissingModal}
+                  label={<FormattedMessage id="ui-inventory.missingModal.heading" />}
+                  dismissible
+                  size="small"
+                  onClose={this.hideMissingModal}
+                >
+                  <ModalContent
+                    item={item}
+                    itemRequestCount={requestCount}
+                    status={MISSING}
+                    requestsUrl={requestsUrl}
+                    onConfirm={this.markItemAsMissing}
+                    onCancel={this.hideMissingModal}
+                  />
+                </Modal>
+                <Modal
+                  data-test-withdrawn-confirmation-modal
+                  open={itemWithdrawnModal}
+                  label={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
+                  dismissible
+                  size="small"
+                  onClose={this.hideWithdrawnModal}
+                >
+                  <ModalContent
+                    item={item}
+                    itemRequestCount={requestCount}
+                    status={WITHDRAWN}
+                    requestsUrl={requestsUrl}
+                    onConfirm={this.markItemAsWithdrawn}
+                    onCancel={this.hideWithdrawnModal}
+                  />
+                </Modal>
+                <Modal
+                  data-test-item-status-modal
+                  open={!!selectedItemStatus}
+                  label={<FormattedMessage
+                    id="ui-inventory.itemStatusModal.heading"
+                    values={{ itemStatus: itemStatusesMap[selectedItemStatus] }}
+                  />}
+                  dismissible
+                  size="small"
+                  onClose={this.clearSelectedItemStatus}
+                >
+                  <ModalContent
+                    item={item}
+                    itemRequestCount={requestCount}
+                    status={itemStatusesMap[selectedItemStatus]}
+                    requestsUrl={requestsUrl}
+                    onConfirm={() => this.markItemWithStatus(selectedItemStatus)}
+                    onCancel={this.clearSelectedItemStatus}
+                  />
+                </Modal>
+                <ConfirmationModal
+                  id="confirmDeleteItemModal"
+                  data-test-confirm-delete-item-modal
+                  open={confirmDeleteItemModal}
+                  heading={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+                  message={confirmDeleteItemModalMessage}
+                  onConfirm={() => { this.deleteItem(item); }}
+                  onCancel={this.hideConfirmDeleteItemModal}
+                  confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+                />
+                {cannotDeleteItemModal && (
+                <Modal
+                  id="cannotDeleteItemModal"
+                  data-test-cannot-delete-item-modal
+                  label={<FormattedMessage id="ui-inventory.confirmItemDeleteModal.heading" />}
+                  open={cannotDeleteItemModal}
+                  footer={cannotDeleteItemFooter}
+                >
+                  <SafeHTMLMessage
+                    id={cannotDeleteItemModalMessageId}
+                    values={{
+                      hrid: item.hrid,
+                      barcode: item.barcode,
+                      status: item.status.name,
+                    }}
+                  />
+                </Modal>
+                )}
+
+                <Row center="xs">
+                  <Col sm={6}>
+                    <FormattedMessage
+                      id="ui-inventory.instanceTitle"
+                      values={{ title: linkedInstanceTitle }}
                     />
+                    {(instance.publication && instance.publication.length > 0) && (
+                    <span>
+                      <em>
+                        {` ${instance.publication[0].publisher}`}
+                        {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                      </em>
+                    </span>
+                    )}
+                    { boundWithCount > 0 &&
+                      <>
+                        {' '}
+                        <span className={css.multiTitle}>
+                          <FormattedMessage
+                            id="ui-inventory.boundWith"
+                            values={{
+                              boundWithCount,
+                            }}
+                          />
+                        </span>
+                      </>
+                    }
+                    <div>
+                      <FormattedMessage id="ui-inventory.holdingsLabelShort" />
+                      <Link to={`/inventory/view/${instance.id}/${holdingsRecord.id}`}>
+                        { ` ${holdingLocation.permanentLocation} > ${callNumberLabel(holdingsRecord)}` }
+                      </Link>
+                    </div>
                   </Col>
-                  <Col xs={7}>
-                    <Row middle="xs">
-                      <MessageBanner show={Boolean(item.discoverySuppress)} type="warning">
-                        <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
-                      </MessageBanner>
-                    </Row>
-                  </Col>
-                  <Col xs={1}>
-                    <Row end="xs">
-                      <Col>
-                        <ExpandAllButton />
-                      </Col>
-                    </Row>
+                </Row>
+                <hr />
+                <Row>
+                  <Col sm={12}>
+                    <AppIcon
+                      app="inventory"
+                      iconKey="item"
+                      size="small"
+                    />
+                    {' '}
+                    <FormattedMessage
+                      id={
+                        item?.isBoundWith ?
+                          'ui-inventory.itemRecordWithDescriptionBW' :
+                          'ui-inventory.itemRecordWithDescription'
+                      }
+                      values={{
+                        materialType: item?.materialType?.name,
+                        status: item?.status?.name,
+                      }}
+                    />
                   </Col>
                 </Row>
                 <br />
-                <AccordionSet initialStatus={initialAccordionsState}>
-                  <Accordion
-                    id="acc01"
-                    label={<FormattedMessage id="ui-inventory.administrativeData" />}
-                  >
-                    <ViewMetaData metadata={item.metadata} />
-                    <Row>
-                      <Col xs={12}>
-                        {item.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
-                      </Col>
-                    </Row>
-                    {item.discoverySuppress && <br />}
-                    <Row>
-                      <Col xs={2}>
-                        <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>
-                          {checkIfElementIsEmpty(administrativeData.hrid)}
-                          {Boolean(administrativeData.hrid) && <ClipCopy text={administrativeData.hrid} />}
-                        </KeyValue>
-                      </Col>
-                      <Col xs={2}>
-                        <KeyValue label={<FormattedMessage id="ui-inventory.itemBarcode" />}>
-                          {checkIfElementIsEmpty(administrativeData.barcode)}
-                          {Boolean(administrativeData.barcode) && <ClipCopy text={administrativeData.barcode} />}
-                        </KeyValue>
-                      </Col>
-                      <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.accessionNumber" />}
-                          value={checkIfElementIsEmpty(administrativeData.accessionNumber)}
+                <AccordionStatus ref={this.accordionStatusRef}>
+                  <Row>
+                    {effectiveLocationDisplay}
+                    <Col xs={2}>
+                      <KeyValue
+                        label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
+                        value={effectiveCallNumber(item)}
+                      />
+                    </Col>
+                    <Col xs={7}>
+                      <Row middle="xs">
+                        <MessageBanner show={Boolean(item.discoverySuppress)} type="warning">
+                          <FormattedMessage id="ui-inventory.warning.item.suppressedFromDiscovery" />
+                        </MessageBanner>
+                      </Row>
+                    </Col>
+                    <Col xs={1}>
+                      <Row end="xs">
+                        <Col>
+                          <ExpandAllButton />
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <br />
+                  <AccordionSet initialStatus={initialAccordionsState}>
+                    <Accordion
+                      id="acc01"
+                      label={<FormattedMessage id="ui-inventory.administrativeData" />}
+                    >
+                      <ViewMetaData metadata={item.metadata} />
+                      <Row>
+                        <Col xs={12}>
+                          {item.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
+                        </Col>
+                      </Row>
+                      {item.discoverySuppress && <br />}
+                      <Row>
+                        <Col xs={2}>
+                          <KeyValue label={<FormattedMessage id="ui-inventory.itemHrid" />}>
+                            {checkIfElementIsEmpty(administrativeData.hrid)}
+                            {Boolean(administrativeData.hrid) && <ClipCopy text={administrativeData.hrid} />}
+                          </KeyValue>
+                        </Col>
+                        <Col xs={2}>
+                          <KeyValue label={<FormattedMessage id="ui-inventory.itemBarcode" />}>
+                            {checkIfElementIsEmpty(administrativeData.barcode)}
+                            {Boolean(administrativeData.barcode) && <ClipCopy text={administrativeData.barcode} />}
+                          </KeyValue>
+                        </Col>
+                        <Col xs={2}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.accessionNumber" />}
+                            value={checkIfElementIsEmpty(administrativeData.accessionNumber)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={2}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
+                            value={checkIfElementIsEmpty(administrativeData.identifier)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={2}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.formerId" />}
+                            value={convertArrayToBlocks(administrativeData.formerIds)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <MultiColumnList
+                          id="item-list-statistical-codes"
+                          contentData={statisticalCodeContent}
+                          visibleColumns={['Statistical code type', 'Statistical code']}
+                          columnMapping={{
+                            'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                            'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                          }}
+                          formatter={statisticalCodeFormatter}
+                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                          containerRef={ref => { this.resultsList = ref; }}
                         />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col xs={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
-                          value={checkIfElementIsEmpty(administrativeData.identifier)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={2}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.formerId" />}
-                          value={convertArrayToBlocks(administrativeData.formerIds)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
+                      </Row>
+                    </Accordion>
+                    <Accordion
+                      id="acc02"
+                      label={<FormattedMessage id="ui-inventory.itemData" />}
+                    >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <strong>
+                            <FormattedMessage id="ui-inventory.materialType" />
+                          </strong>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={3}>
+                          <KeyValue value={checkIfElementIsEmpty(itemData.materialType)} />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={3}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                            value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <strong>
+                            <FormattedMessage id="ui-inventory.itemCallNumber" />
+                          </strong>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={2}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                            value={checkIfElementIsEmpty(itemData.callNumberType)}
+                          />
+                        </Col>
+                        <Col sm={2}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
+                            value={checkIfElementIsEmpty(itemData.callNumberPrefix)}
+                          />
+                        </Col>
+                        <Col sm={2}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.callNumber" />}
+                            value={checkIfElementIsEmpty(itemData.callNumber)}
+                          />
+                        </Col>
+                        <Col sm={2}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
+                            value={checkIfElementIsEmpty(itemData.callNumberSuffix)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={2}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                            value={checkIfElementIsEmpty(itemData.copyNumber)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={2}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
+                            value={checkIfElementIsEmpty(itemData.numberOfPieces)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
+                            value={checkIfElementIsEmpty(itemData.descriptionOfPieces)}
+                          />
+                        </Col>
+                      </Row>
+                    </Accordion>
+                    <Accordion
+                      id="acc03"
+                      label={<FormattedMessage id="ui-inventory.enumerationData" />}
+                    >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.enumeration" />}
+                            value={checkIfElementIsEmpty(enumerationData.enumeration)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.chronology" />}
+                            value={checkIfElementIsEmpty(enumerationData.chronology)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.volume" />}
+                            value={checkIfElementIsEmpty(enumerationData.volume)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={8}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.yearCaption" />}
+                            value={convertArrayToBlocks(enumerationData.yearCaption)}
+                          />
+                        </Col>
+                      </Row>
+                    </Accordion>
+                    <Accordion
+                      id="acc04"
+                      label={<FormattedMessage id="ui-inventory.condition" />}
+                    >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
+                            value={checkIfElementIsEmpty(condition.numberOfMissingPieces)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.missingPieces" />}
+                            value={checkIfElementIsEmpty(condition.missingPieces)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.date" />}
+                            value={checkIfElementIsEmpty(condition.missingPiecesDate)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
+                            value={checkIfElementIsEmpty(condition.itemDamagedStatus)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.date" />}
+                            value={checkIfElementIsEmpty(condition.itemDamagedStatusDate)}
+                          />
+                        </Col>
+                      </Row>
+                    </Accordion>
+
+                    {tagsEnabled && (
+                      <TagsAccordion
+                        link={`inventory/items/${item.id}`}
+                        getEntity={this.getEntity}
+                        getEntityTags={this.getEntityTags}
+                        entityTagsPath="tags"
+                      />
+                    )}
+
+                    <Accordion
+                      id="acc05"
+                      label={<FormattedMessage id="ui-inventory.itemNotes" />}
+                    >
+                      {!isEmpty(itemNotes.notes) ? itemNotes.notes : emptyNotes}
+                    </Accordion>
+                    <Accordion
+                      id="acc06"
+                      label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
+                    >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
+                            value={checkIfElementIsEmpty(loanAndAvailability.permanentLoanType)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
+                            value={checkIfElementIsEmpty(loanAndAvailability.temporaryLoanType)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <ItemStatus
+                            itemId={item.id}
+                            status={item.status}
+                            openLoan={openLoan}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.item.availability.requests" />}
+                            value={checkIfElementIsEmpty(loanAndAvailability.requestLink)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.item.availability.borrower" />}
+                            value={checkIfElementIsEmpty(loanAndAvailability.borrower)}
+                          />
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.loanDate" />}>
+                            {checkIfElementIsEmpty(loanAndAvailability.loanDate)}
+                          </KeyValue>
+                        </Col>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.dueDate" />}>
+                            {checkIfElementIsEmpty(loanAndAvailability.dueDate)}
+                          </KeyValue>
+                        </Col>
+                      </Row>
+                      {!isEmpty(loanAndAvailability.circulationNotes) ? loanAndAvailability.circulationNotes : emptyNotes}
+                    </Accordion>
+                    <Accordion
+                      id="acc07"
+                      label={<FormattedMessage id="ui-inventory.location" />}
+                    >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <strong>
+                            <FormattedMessage id="ui-inventory.holdingsLocation" />
+                          </strong>
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                            value={checkIfElementIsEmpty(holdingLocation.permanentLocation)}
+                          />
+                        </Col>
+                        <Col sm={4}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                            value={checkIfElementIsEmpty(holdingLocation.temporaryLocation)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <strong>
+                            <FormattedMessage id="ui-inventory.itemLocation" />
+                          </strong>
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                            value={checkIfElementIsEmpty(itemLocation.permanentLocation)}
+                          />
+                        </Col>
+                        <Col sm={4}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                            value={checkIfElementIsEmpty(itemLocation.temporaryLocation)}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        {effectiveLocationDisplay}
+                      </Row>
+                    </Accordion>
+                    <Accordion
+                      id="acc08"
+                      label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+                    >
                       <MultiColumnList
-                        id="item-list-statistical-codes"
-                        contentData={statisticalCodeContent}
-                        visibleColumns={['Statistical code type', 'Statistical code']}
+                        id="item-list-electronic-access"
+                        contentData={checkIfArrayIsEmpty(electronicAccess.electronicAccess)}
+                        visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
                         columnMapping={{
-                          'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                          'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                          'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                          'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                          'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                          'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                          'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
                         }}
-                        formatter={statisticalCodeFormatter}
-                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                        columnWidths={{
+                          'URL relationship': '16%',
+                          'URI': '16%',
+                          'Link text': '16%',
+                          'Materials specified': '16%',
+                          'URL public note': '32%',
+                        }}
+                        formatter={electronicAccessFormatter}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
                         containerRef={ref => { this.resultsList = ref; }}
                       />
-                    </Row>
-                  </Accordion>
-                  <Accordion
-                    id="acc02"
-                    label={<FormattedMessage id="ui-inventory.itemData" />}
-                  >
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <strong>
-                          <FormattedMessage id="ui-inventory.materialType" />
-                        </strong>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm={3}>
-                        <KeyValue value={checkIfElementIsEmpty(itemData.materialType)} />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm={3}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
-                          value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <strong>
-                          <FormattedMessage id="ui-inventory.itemCallNumber" />
-                        </strong>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                          value={checkIfElementIsEmpty(itemData.callNumberType)}
-                        />
-                      </Col>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                          value={checkIfElementIsEmpty(itemData.callNumberPrefix)}
-                        />
-                      </Col>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.callNumber" />}
-                          value={checkIfElementIsEmpty(itemData.callNumber)}
-                        />
-                      </Col>
-                      <Col sm={2}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                          value={checkIfElementIsEmpty(itemData.callNumberSuffix)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={2}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                          value={checkIfElementIsEmpty(itemData.copyNumber)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={2}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                          value={checkIfElementIsEmpty(itemData.numberOfPieces)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
-                          value={checkIfElementIsEmpty(itemData.descriptionOfPieces)}
-                        />
-                      </Col>
-                    </Row>
-                  </Accordion>
-                  <Accordion
-                    id="acc03"
-                    label={<FormattedMessage id="ui-inventory.enumerationData" />}
-                  >
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.enumeration" />}
-                          value={checkIfElementIsEmpty(enumerationData.enumeration)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.chronology" />}
-                          value={checkIfElementIsEmpty(enumerationData.chronology)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.volume" />}
-                          value={checkIfElementIsEmpty(enumerationData.volume)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={8}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.yearCaption" />}
-                          value={convertArrayToBlocks(enumerationData.yearCaption)}
-                        />
-                      </Col>
-                    </Row>
-                  </Accordion>
-                  <Accordion
-                    id="acc04"
-                    label={<FormattedMessage id="ui-inventory.condition" />}
-                  >
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
-                          value={checkIfElementIsEmpty(condition.numberOfMissingPieces)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.missingPieces" />}
-                          value={checkIfElementIsEmpty(condition.missingPieces)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.date" />}
-                          value={checkIfElementIsEmpty(condition.missingPiecesDate)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                          value={checkIfElementIsEmpty(condition.itemDamagedStatus)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.date" />}
-                          value={checkIfElementIsEmpty(condition.itemDamagedStatusDate)}
-                        />
-                      </Col>
-                    </Row>
-                  </Accordion>
-
-                  {tagsEnabled && (
-                    <TagsAccordion
-                      link={`inventory/items/${item.id}`}
-                      getEntity={this.getEntity}
-                      getEntityTags={this.getEntityTags}
-                      entityTagsPath="tags"
-                    />
-                  )}
-
-                  <Accordion
-                    id="acc05"
-                    label={<FormattedMessage id="ui-inventory.itemNotes" />}
-                  >
-                    {!isEmpty(itemNotes.notes) ? itemNotes.notes : emptyNotes}
-                  </Accordion>
-                  <Accordion
-                    id="acc06"
-                    label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
-                  >
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.permanentLoantype" />}
-                          value={checkIfElementIsEmpty(loanAndAvailability.permanentLoanType)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.temporaryLoantype" />}
-                          value={checkIfElementIsEmpty(loanAndAvailability.temporaryLoanType)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <ItemStatus
-                          itemId={item.id}
-                          status={item.status}
-                          openLoan={openLoan}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.item.availability.requests" />}
-                          value={checkIfElementIsEmpty(loanAndAvailability.requestLink)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.item.availability.borrower" />}
-                          value={checkIfElementIsEmpty(loanAndAvailability.borrower)}
-                        />
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.loanDate" />}>
-                          {checkIfElementIsEmpty(loanAndAvailability.loanDate)}
-                        </KeyValue>
-                      </Col>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue label={<FormattedMessage id="ui-inventory.item.availability.dueDate" />}>
-                          {checkIfElementIsEmpty(loanAndAvailability.dueDate)}
-                        </KeyValue>
-                      </Col>
-                    </Row>
-                    {!isEmpty(loanAndAvailability.circulationNotes) ? loanAndAvailability.circulationNotes : emptyNotes}
-                  </Accordion>
-                  <Accordion
-                    id="acc07"
-                    label={<FormattedMessage id="ui-inventory.location" />}
-                  >
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <strong>
-                          <FormattedMessage id="ui-inventory.holdingsLocation" />
-                        </strong>
-                      </Col>
-                    </Row>
-                    <br />
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                          value={checkIfElementIsEmpty(holdingLocation.permanentLocation)}
-                        />
-                      </Col>
-                      <Col sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                          value={checkIfElementIsEmpty(holdingLocation.temporaryLocation)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <strong>
-                          <FormattedMessage id="ui-inventory.itemLocation" />
-                        </strong>
-                      </Col>
-                    </Row>
-                    <br />
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                          value={checkIfElementIsEmpty(itemLocation.permanentLocation)}
-                        />
-                      </Col>
-                      <Col sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                          value={checkIfElementIsEmpty(itemLocation.temporaryLocation)}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      {effectiveLocationDisplay}
-                    </Row>
-                  </Accordion>
-                  <Accordion
-                    id="acc08"
-                    label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-                  >
-                    <MultiColumnList
-                      id="item-list-electronic-access"
-                      contentData={checkIfArrayIsEmpty(electronicAccess.electronicAccess)}
-                      visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                      columnMapping={{
-                        'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                        'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                        'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                        'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                        'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                      }}
-                      columnWidths={{
-                        'URL relationship': '16%',
-                        'URI': '16%',
-                        'Link text': '16%',
-                        'Materials specified': '16%',
-                        'URL public note': '32%',
-                      }}
-                      formatter={electronicAccessFormatter}
-                      ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
-                      containerRef={ref => { this.resultsList = ref; }}
-                    />
-                  </Accordion>
-                  <Accordion
-                    id="acc09"
-                    label={<FormattedMessage id="ui-inventory.circulationHistory" />}
-                  >
-                    <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <FormattedMessage
-                          tagName="strong"
-                          id="ui-inventory.mostRecentCheckIn"
-                        />
-                      </Col>
-                    </Row>
-                    <br />
-                    <Row>
-                      <Col sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.checkInDate" />}
-                          value={checkIfElementIsEmpty(circulationHistory.checkInDate)}
-                        />
-                      </Col>
-                      <Col sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.servicePoint" />}
-                          value={checkIfElementIsEmpty(circulationHistory.servicePointName)}
-                        />
-                      </Col>
-                      <Col sm={4}>
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.source" />}
-                          value={checkIfElementIsEmpty(circulationHistory.source)}
-                        />
-                      </Col>
-                    </Row>
-                  </Accordion>
-                </AccordionSet>
-              </AccordionStatus>
-            </Pane>
-            <Layer
-              isOpen={query.layer ? query.layer === 'editItem' : false}
-              contentLabel={intl.formatMessage({ id: 'ui-inventory.editItemDialog' })}
-            >
-              <ItemForm
-                form={`itemform_${item.id}`}
-                onSubmit={record => this.saveItem(record)}
-                initialValues={item}
-                onCancel={this.onClickCloseEditItem}
-                okapi={okapi}
-                instance={instance}
-                holdingsRecord={holdingsRecord}
-                referenceTables={referenceTables}
-                stripes={this.props.stripes}
-              />
-            </Layer>
-            <Layer
-              isOpen={query.layer === 'copyItem'}
-              contentLabel={intl.formatMessage({ id: 'ui-inventory.copyItemDialog' })}
-            >
-              <ItemForm
-                form={`itemform_${holdingsRecord.id}`}
-                onSubmit={(record) => { this.copyItem(record); }}
-                initialValues={copiedItem}
-                onCancel={this.onClickCloseEditItem}
-                okapi={okapi}
-                instance={instance}
-                copy
-                holdingsRecord={holdingsRecord}
-                referenceTables={referenceTables}
-                stripes={this.props.stripes}
-              />
-            </Layer>
-          </Paneset>
-        )
-        }
+                    </Accordion>
+                    <Accordion
+                      id="acc09"
+                      label={<FormattedMessage id="ui-inventory.circulationHistory" />}
+                    >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <FormattedMessage
+                            tagName="strong"
+                            id="ui-inventory.mostRecentCheckIn"
+                          />
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col sm={4}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.checkInDate" />}
+                            value={checkIfElementIsEmpty(circulationHistory.checkInDate)}
+                          />
+                        </Col>
+                        <Col sm={4}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.servicePoint" />}
+                            value={checkIfElementIsEmpty(circulationHistory.servicePointName)}
+                          />
+                        </Col>
+                        <Col sm={4}>
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.source" />}
+                            value={checkIfElementIsEmpty(circulationHistory.source)}
+                          />
+                        </Col>
+                      </Row>
+                    </Accordion>
+                  </AccordionSet>
+                </AccordionStatus>
+              </Pane>
+              <Layer
+                isOpen={query.layer ? query.layer === 'editItem' : false}
+                contentLabel={intl.formatMessage({ id: 'ui-inventory.editItemDialog' })}
+              >
+                <ItemForm
+                  form={`itemform_${item.id}`}
+                  onSubmit={record => this.saveItem(record)}
+                  initialValues={item}
+                  onCancel={this.onClickCloseEditItem}
+                  okapi={okapi}
+                  instance={instance}
+                  holdingsRecord={holdingsRecord}
+                  referenceTables={referenceTables}
+                  stripes={this.props.stripes}
+                />
+              </Layer>
+              <Layer
+                isOpen={query.layer === 'copyItem'}
+                contentLabel={intl.formatMessage({ id: 'ui-inventory.copyItemDialog' })}
+              >
+                <ItemForm
+                  form={`itemform_${holdingsRecord.id}`}
+                  onSubmit={(record) => { this.copyItem(record); }}
+                  initialValues={copiedItem}
+                  onCancel={this.onClickCloseEditItem}
+                  okapi={okapi}
+                  instance={instance}
+                  copy
+                  holdingsRecord={holdingsRecord}
+                  referenceTables={referenceTables}
+                  stripes={this.props.stripes}
+                />
+              </Layer>
+            </Paneset>
+          </HasCommand>
+        )}
       </IntlConsumer>
     );
   }
