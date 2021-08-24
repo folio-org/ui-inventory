@@ -9,7 +9,6 @@ import {
   Accordion,
 } from '@folio/stripes/components';
 
-import useLoadSubInstances from '../../../hooks/useLoadSubInstances';
 import SubInstanceGroup from '../SubInstanceGroup';
 
 const InstanceRelationshipView = ({
@@ -17,9 +16,6 @@ const InstanceRelationshipView = ({
   parentInstances,
   childInstances,
 }) => {
-  const parents = useLoadSubInstances(parentInstances, 'superInstanceId');
-  const children = useLoadSubInstances(childInstances, 'subInstanceId');
-
   return (
     <Accordion
       id={id}
@@ -31,7 +27,7 @@ const InstanceRelationshipView = ({
             id="childInstances"
             titleKey="subInstanceId"
             label={<FormattedMessage id="ui-inventory.childInstances" />}
-            titles={children}
+            titles={childInstances}
           />
         </Col>
       </Row>
@@ -41,7 +37,7 @@ const InstanceRelationshipView = ({
             id="parentInstances"
             titleKey="superInstanceId"
             label={<FormattedMessage id="ui-inventory.parentInstances" />}
-            titles={parents}
+            titles={parentInstances}
           />
         </Col>
       </Row>

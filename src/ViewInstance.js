@@ -18,6 +18,7 @@ import {
   IfPermission,
   IfInterface,
   Pluggable,
+  stripesConnect,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -25,7 +26,6 @@ import {
   Icon,
   Callout,
 } from '@folio/stripes/components';
-import { withTags } from '@folio/stripes/smart-components';
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
@@ -48,12 +48,6 @@ import ImportRecordModal from './components/ImportRecordModal';
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    selectedInstance: {
-      type: 'okapi',
-      path: 'inventory/instances/:{id}',
-      resourceShouldRefresh: true,
-      throwErrors: false,
-    },
     allInstanceHoldings: {
       type: 'okapi',
       records: 'holdingsRecords',
@@ -135,7 +129,7 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const isMARCSource = this.isMARCSource(this.props.resources);
+    const isMARCSource = this.isMARCSource(this.props.selectedInstance);
 
     if (isMARCSource) {
       this.getMARCRecord();
@@ -143,17 +137,12 @@ class ViewInstance extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { resources: prevResources } = prevProps;
-    const {
-      // mutator,
-      resources,
-    } = this.props;
-    const instanceRecords = resources?.selectedInstance?.records;
-    const instanceRecordsId = instanceRecords[0]?.id;
-    const prevInstanceRecordsId = prevResources?.selectedInstance?.records[0]?.id;
-    const prevIsMARCSource = this.isMARCSource(prevResources);
-    const isMARCSource = this.isMARCSource(resources);
-
+    const { selectedInstance: prevInstance } = prevProps;
+    const { selectedInstance: instance } = this.props;
+    const instanceRecordsId = instance?.id;
+    const prevInstanceRecordsId = prevInstance?.id;
+    const prevIsMARCSource = this.isMARCSource(prevInstance);
+    const isMARCSource = this.isMARCSource(instance);
     const isViewingAnotherRecord = instanceRecordsId !== prevInstanceRecordsId;
     const recordSourceWasChanged = isMARCSource !== prevIsMARCSource;
 
@@ -173,9 +162,8 @@ class ViewInstance extends React.Component {
     this.props.mutator.allInstanceItems.reset();
   }
 
-  isMARCSource = (resources) => {
-    const instanceRecords = resources?.selectedInstance?.records;
-    const instanceRecordsSource = instanceRecords?.[0]?.source;
+  isMARCSource = (instance) => {
+    const instanceRecordsSource = instance?.source;
 
     return instanceRecordsSource === 'MARC';
   };
@@ -309,24 +297,24 @@ class ViewInstance extends React.Component {
   getIdentifiers = (data) => {
     const { identifierTypesById } = data;
     const { ISBN, ISSN } = indentifierTypeNames;
-    const records = this.props?.resources?.selectedInstance?.records;
-    if (!records) {
+    const selectedInstance = this.props?.selectedInstance;
+
+    if (!selectedInstance) {
       return null;
     }
+
     // We can't make any meaningful assessment of which is
     // the best identifier to return, so just return the first
     // we find
-    for (const record of records) {
-      for (const identifiers of record.identifiers) {
-        const { identifierTypeId, value } = identifiers;
-        const ident = identifierTypesById[identifierTypeId];
-        if (
-          (ident?.name === ISBN ||
-            ident?.name === ISSN) &&
-          value
-        ) {
-          return { type: ident.name, value };
-        }
+    for (const identifiers of selectedInstance.identifiers) {
+      const { identifierTypeId, value } = identifiers;
+      const ident = identifierTypesById[identifierTypeId];
+      if (
+        (ident?.name === ISBN ||
+          ident?.name === ISSN) &&
+        value
+      ) {
+        return { type: ident.name, value };
       }
     }
     return null;
@@ -667,6 +655,7 @@ class ViewInstance extends React.Component {
 
 ViewInstance.propTypes = {
   getSearchParams: PropTypes.func.isRequired,
+  selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
   getParams: PropTypes.func.isRequired,
   location: PropTypes.shape({
@@ -688,9 +677,6 @@ ViewInstance.propTypes = {
   mutator: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceRequests: PropTypes.object.isRequired,
-    selectedInstance: PropTypes.shape({
-      PUT: PropTypes.func.isRequired,
-    }),
     holdings: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),
@@ -707,9 +693,6 @@ ViewInstance.propTypes = {
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,
-    selectedInstance: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
     locations: PropTypes.object.isRequired,
   }).isRequired,
   stripes: PropTypes.shape({
@@ -722,4 +705,4 @@ ViewInstance.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default injectIntl(withLocation(withTags(ViewInstance)));
+export default injectIntl(withLocation(stripesConnect(ViewInstance)));
