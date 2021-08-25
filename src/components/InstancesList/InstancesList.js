@@ -36,7 +36,7 @@ import {
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
-import ViewInstance from '../../ViewInstance';
+import ViewInstanceWrapper from '../../ViewInstanceWrapper';
 import formatters from '../../referenceFormatters';
 import withLocation from '../../withLocation';
 import {
@@ -691,7 +691,7 @@ class InstancesList extends React.Component {
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
-            viewRecordComponent={ViewInstance}
+            viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
