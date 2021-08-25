@@ -25,7 +25,6 @@ import {
   stripesConnect,
   withNamespace,
 } from '@folio/stripes/core';
-import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   Button,
   Icon,
@@ -62,6 +61,7 @@ import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
+import SearchAndSort from '../SearchAndSort';
 
 import { buildQuery } from '../../routes/buildManifestObject';
 import {
@@ -85,6 +85,7 @@ class InstancesList extends React.Component {
   };
 
   static propTypes = {
+    booleanOperators: PropTypes.arrayOf(PropTypes.object),
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
@@ -92,6 +93,7 @@ class InstancesList extends React.Component {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
+    operators: PropTypes.arrayOf(PropTypes.object),
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
@@ -104,6 +106,7 @@ class InstancesList extends React.Component {
     namespace: PropTypes.string,
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    searchableIndexesES: PropTypes.arrayOf(PropTypes.object).isRequired,
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
@@ -219,7 +222,7 @@ class InstancesList extends React.Component {
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
-    document.getElementById('input-inventory-search').focus();
+    document.getElementById('textArea').focus();
   }
 
   renderNavigation = () => (
@@ -597,6 +600,8 @@ class InstancesList extends React.Component {
       showSingleResult,
       browseOnly,
       onSelectRow,
+      operators,
+      booleanOperators,
       disableRecordCreation,
       intl,
       data,
@@ -604,6 +609,7 @@ class InstancesList extends React.Component {
       parentMutator,
       renderFilters,
       searchableIndexes,
+      searchableIndexesES,
       match: {
         path,
       },
@@ -667,8 +673,8 @@ class InstancesList extends React.Component {
         </AppIcon>
       ),
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
-      'publishers': r => r.publication.map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
-      'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
+      'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
+      'publication date': r => (r?.publication ?? []).map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
     };
 
@@ -682,16 +688,10 @@ class InstancesList extends React.Component {
       return { ...index, label };
     });
 
-    const shortcuts = [
-      {
-        name: 'new',
-        handler: handleKeyCommand(() => {
-          if (stripes.hasPerm('ui-inventory.instance.create')) {
-            this.openCreateInstance();
-          }
-        }),
-      },
-    ];
+    const formattedSearchableIndexesES = searchableIndexesES.map(searchIndex => {
+      const label = intl.formatMessage({ id: searchIndex.label });
+      return { ...searchIndex, label };
+    });
 
     return (
       <HasCommand
@@ -707,6 +707,9 @@ class InstancesList extends React.Component {
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
             searchableIndexes={formattedSearchableIndexes}
+            searchableIndexesES={formattedSearchableIndexesES}
+            operators={operators}
+            booleanOperators={booleanOperators}
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}

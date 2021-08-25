@@ -13,6 +13,8 @@ const DATA = {
   materialTypes: [],
   locations: [],
   tags: [],
+  query: {},
+  parentResources: { facets: { records: [] } },
 };
 
 const renderFilters = (data = DATA, onChange = noop) => (renderWithIntl(
