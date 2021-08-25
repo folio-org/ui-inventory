@@ -278,6 +278,7 @@
     "typeOfRelation": "Type of relation",
     "createItem": "Create item",
     "updateItem": "Update item",
+    "holdingsLabelShort": "Holdings:",
     "holdingsTitle": " Holdings: {location} > {callNumber}",
     "addContributor": "Add contributor",
     "selectIdentifierType": "Select identifier type",
