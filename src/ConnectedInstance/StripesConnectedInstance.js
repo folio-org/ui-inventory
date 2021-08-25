@@ -4,9 +4,8 @@ export default class StripesConnectedInstance {
     this.logger = logger;
 
     const id = this.props.match.params.id;
-    const selInstance = (this.props.resources.selectedInstance || {}).records;
-    // Why do we need to do this find?
-    this.obj = (selInstance && id) ? selInstance.find(i => i.id === id) : null;
+    const selInstance = this.props.selectedInstance;
+    this.obj = (selInstance?.id === id) ? selInstance : null;
   }
 
   instance() {

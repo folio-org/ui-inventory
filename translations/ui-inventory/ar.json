@@ -679,5 +679,10 @@
     "acq.orderType": "نوع الطلبية",
     "acq.orderType.One-Time": "لمرة واحدة",
     "acq.orderType.Ongoing": "جاري",
-    "boundWith": "و {boundWithCount, plural, one {عنواناً آخر} other {عنواناً آخر}}"
+    "boundWith": "و {boundWithCount, plural, one {عنواناً آخر} other {عنواناً آخر}}",
+    "receivingHistory.receivedDate": "تاريخ الاستلام",
+    "receivingHistory.comment": "تعليق",
+    "receivingHistory.source": "المصدر",
+    "receivingHistory.source.receiving": "الاستلام",
+    "receivingHistory.source.user": "المستخدم"
 }
