@@ -14,6 +14,7 @@
 * Add links to item view header and holdings view header. Refs UIIN-1500, UIIN-1501.
 * Retrieve and display select Piece information on Holding. Refs UIIN-1502.
 * Make sure building inventory module works with `babel-plugin-lodash`. Refs UIIN-1569.
+* Implement keyboard shortcuts in Inventory. Refs UIIN-1411.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)

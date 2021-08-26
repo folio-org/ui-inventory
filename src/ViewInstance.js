@@ -25,6 +25,10 @@ import {
   Button,
   Icon,
   Callout,
+  checkScope,
+  HasCommand,
+  collapseAllSections,
+  expandAllSections,
 } from '@folio/stripes/components';
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -32,7 +36,7 @@ import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
-import { getDate } from './utils';
+import { getDate, handleKeyCommand } from './utils';
 import { indentifierTypeNames, layers } from './constants';
 import { DataContext } from './contexts';
 
@@ -126,6 +130,7 @@ class ViewInstance extends React.Component {
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
 
     this.calloutRef = createRef();
+    this.accordionStatusRef = createRef();
   }
 
   componentDidMount() {
@@ -533,13 +538,46 @@ class ViewInstance extends React.Component {
       match: { params: { id, holdingsrecordid, itemid } },
       resources: { allInstanceHoldings, locations },
       stripes,
+      onCopy,
       onClose,
       paneWidth,
       tagsEnabled,
+      updateLocation,
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
     const holdingsRecord = find(allInstanceHoldings.records, { id: holdingsrecordid });
+
+    const shortcuts = [
+      {
+        name: 'new',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.instance.create')) {
+            updateLocation({ layer: 'create' });
+          }
+        }),
+      },
+      {
+        name: 'edit',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.instance.edit')) this.onClickEditInstance();
+        }),
+      },
+      {
+        name: 'duplicateRecord',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.instance.create')) onCopy(instance);
+        }),
+      },
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      },
+    ];
 
     if (!instance) {
       return (
@@ -563,91 +601,98 @@ class ViewInstance extends React.Component {
 
     return (
       <>
-        <InstanceDetails
-          id="pane-instancedetails"
-          paneTitle={
-            <FormattedMessage
-              id="ui-inventory.instanceRecordTitle"
-              values={{
-                title: instance?.title,
-                publisherAndDate: getPublishingInfo(instance),
-              }}
-            />
-          }
-          paneSubtitle={this.createSubtitle(instance)}
-          onClose={onClose}
-          actionMenu={this.createActionMenuGetter(instance)}
-          instance={instance}
-          tagsEnabled={tagsEnabled}
+        <HasCommand
+          commands={shortcuts}
+          isWithinScope={checkScope}
+          scope={document.body}
         >
-          {
-            (!holdingsrecordid && !itemid) ?
-              (
-                <MoveItemsContext>
-                  <HoldingsListContainer
-                    instance={instance}
-                    draggable={this.state.isItemsMovement}
-                    droppable
-                  />
-                </MoveItemsContext>
-              )
-              :
-              null
-          }
-
-          {
-            (holdingsrecordid && !itemid)
-              ? (
-                <this.cViewHoldingsRecord
-                  id={id}
-                  holdingsrecordid={holdingsrecordid}
-                  onCloseViewHoldingsRecord={this.goBack}
-                  paneTitle={
-                    <FormattedMessage
-                      id="ui-inventory.holdingsPaneTitle"
-                      values={{
-                        location: find(locations.records, { id: holdingsRecord.effectiveLocationId })?.name,
-                        callNumber: holdingsRecord?.callNumber,
-                      }}
+          <InstanceDetails
+            id="pane-instancedetails"
+            paneTitle={
+              <FormattedMessage
+                id="ui-inventory.instanceRecordTitle"
+                values={{
+                  title: instance?.title,
+                  publisherAndDate: getPublishingInfo(instance),
+                }}
+              />
+            }
+            paneSubtitle={this.createSubtitle(instance)}
+            onClose={onClose}
+            actionMenu={this.createActionMenuGetter(instance)}
+            instance={instance}
+            tagsEnabled={tagsEnabled}
+            ref={this.accordionStatusRef}
+          >
+            {
+              (!holdingsrecordid && !itemid) ?
+                (
+                  <MoveItemsContext>
+                    <HoldingsListContainer
+                      instance={instance}
+                      draggable={this.state.isItemsMovement}
+                      droppable
                     />
-                  }
-                  paneSubtitle={this.createSubtitle(holdingsRecord)}
-                  {...this.props}
-                />
-              )
-              : null
+                  </MoveItemsContext>
+                )
+                :
+                null
+            }
+
+            {
+              (holdingsrecordid && !itemid)
+                ? (
+                  <this.cViewHoldingsRecord
+                    id={id}
+                    holdingsrecordid={holdingsrecordid}
+                    onCloseViewHoldingsRecord={this.goBack}
+                    paneTitle={
+                      <FormattedMessage
+                        id="ui-inventory.holdingsPaneTitle"
+                        values={{
+                          location: find(locations.records, { id: holdingsRecord?.effectiveLocationId })?.name,
+                          callNumber: holdingsRecord?.callNumber,
+                        }}
+                      />
+                    }
+                    paneSubtitle={this.createSubtitle(holdingsRecord)}
+                    {...this.props}
+                  />
+                )
+                : null
+            }
+          </InstanceDetails>
+
+          <Callout ref={this.calloutRef} />
+
+          {this.state.afterCreate &&
+            <CalloutRenderer
+              message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance.hrid }} />}
+            />
           }
-        </InstanceDetails>
 
-        <Callout ref={this.calloutRef} />
+          {
+            this.state.findInstancePluginOpened && (
+              <InstancePlugin
+                onSelect={this.selectInstance}
+                onClose={this.toggleFindInstancePlugin}
+                withTrigger={false}
+              />
+            )
+          }
 
-        {this.state.afterCreate &&
-          <CalloutRenderer
-            message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance.hrid }} />}
-          />
-        }
-
-        {
-          this.state.findInstancePluginOpened && (
-            <InstancePlugin
-              onSelect={this.selectInstance}
-              onClose={this.toggleFindInstancePlugin}
-              withTrigger={false}
-            />
-          )
-        }
-
-        <IfInterface name="copycat-imports">
-          <IfPermission perm="copycat.profiles.collection.get">
-            <ImportRecordModal
-              isOpen={this.state.isImportRecordModalOpened}
-              currentExternalIdentifier={undefined}
-              handleSubmit={this.handleImportRecordModalSubmit}
-              handleCancel={this.handleImportRecordModalCancel}
-              id={id}
-            />
-          </IfPermission>
-        </IfInterface>
+          <IfInterface name="copycat-imports">
+            <IfPermission perm="copycat.profiles.collection.get">
+              <ImportRecordModal
+                isOpen={this.state.isImportRecordModalOpened}
+                currentExternalIdentifier={undefined}
+                handleSubmit={this.handleImportRecordModalSubmit}
+                handleCancel={this.handleImportRecordModalCancel}
+                id={id}
+              />
+            </IfPermission>
+          </IfInterface>
+        </HasCommand>
       </>
     );
   }
