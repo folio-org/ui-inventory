@@ -693,6 +693,17 @@ class InstancesList extends React.Component {
       return { ...searchIndex, label };
     });
 
+    const shortcuts = [
+      {
+        name: 'new',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.instance.create')) {
+            this.openCreateInstance();
+          }
+        }),
+      },
+    ];
+
     return (
       <HasCommand
         commands={shortcuts}
