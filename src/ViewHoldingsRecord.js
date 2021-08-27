@@ -328,16 +328,14 @@ class ViewHoldingsRecord extends React.Component {
     }
 
     const instance = instances1.records[0];
-    const instanceSource = referenceTables?.holdingsSources?.find(holdingsSource => holdingsSource.name === instance.source);
-    const holdingsRecord = {
-      ...holdingsRecords.records[0],
-      sourceId: instanceSource.id,
-    };
+    const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance.source);
+    const holdingsRecord = holdingsRecords.records[0];
+    const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
     const itemCount = get(items, 'records.length', 0);
     const query = location.search ? queryString.parse(location.search) : {};
-    const holdingsSourceName = instanceSource.name;
+    const holdingsSourceName = holdingsSource?.name || instanceSource.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
