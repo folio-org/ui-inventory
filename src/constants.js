@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
@@ -259,3 +260,18 @@ export const FACETS_SETTINGS = {
   [FACETS_CQL.ITEMS_STATUSES]: FACETS_OPTIONS.ITEMS_STATUSES_OPTIONS,
   [FACETS_CQL.HOLDINGS_PERMANENT_LOCATION]: FACETS_OPTIONS.HOLDINGS_PERMANENT_LOCATION_OPTIONS,
 };
+
+const commandsMap = {
+  expandCollapse: 'spacebar',
+  close: 'esc',
+  copy: 'mod+c',
+  cut: 'mod+x',
+  paste: 'mod+v',
+  find: 'mod+f',
+};
+
+export const commands = Object.entries(commandsMap).map(([name, shortcut]) => ({
+  name,
+  label: <FormattedMessage id={`ui-inventory.shortcut.${name}`} />,
+  shortcut,
+}));

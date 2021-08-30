@@ -15,6 +15,8 @@
 * Retrieve and display select Piece information on Holding. Refs UIIN-1502.
 * Make sure building inventory module works with `babel-plugin-lodash`. Refs UIIN-1569.
 * Implement keyboard shortcuts in Inventory. Refs UIIN-1411.
+* Implement Keyboard Shortcut overview. Refs UIIN-1498.
+* Fix inventory Holdings record is populated with Source=MARC with no underlying SRS record. Fixes UIIN-1570.
 * Incorporate `ui-inventory-search` facets. Refs UIIN-1567.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)

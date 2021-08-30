@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Route,
@@ -6,12 +6,18 @@ import {
 } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { FormattedMessage } from 'react-intl';
 
+import { AppContextMenu } from '@folio/stripes/core';
 import {
   checkScope,
   CommandList,
   defaultKeyboardShortcuts,
   HasCommand,
+  KeyboardShortcutsModal,
+  NavList,
+  NavListItem,
+  NavListSection,
 } from '@folio/stripes/components';
 
 import {
@@ -28,8 +34,10 @@ import {
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider } from './providers';
+import { commands } from './constants';
 
 const InventoryRouting = (props) => {
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
 
   const focusSearchField = () => {
@@ -40,10 +48,16 @@ const InventoryRouting = (props) => {
     }
   };
 
+  const toggleModal = () => setIsShortcutsModalOpen(prev => !prev);
+
   const shortcuts = [
     {
       name: 'search',
-      handler: () => focusSearchField(),
+      handler: focusSearchField,
+    },
+    {
+      name: 'openShortcutModal',
+      handler: toggleModal,
     },
   ];
 
@@ -60,6 +74,23 @@ const InventoryRouting = (props) => {
             isWithinScope={checkScope}
             scope={document.body}
           >
+            <AppContextMenu>
+              {(handleToggle) => (
+                <NavList>
+                  <NavListSection>
+                    <NavListItem
+                      id="keyboard-shortcuts-item"
+                      onClick={() => {
+                        handleToggle();
+                        toggleModal();
+                      }}
+                    >
+                      <FormattedMessage id="ui-inventory.appMenu.keyboardShortcuts" />
+                    </NavListItem>
+                  </NavListSection>
+                </NavList>
+              )}
+            </AppContextMenu>
             <Switch>
               <Route
                 path={`${path}/create/:id/holding`}
@@ -108,6 +139,12 @@ const InventoryRouting = (props) => {
             </Switch>
           </HasCommand>
         </CommandList>
+        {isShortcutsModalOpen && (
+          <KeyboardShortcutsModal
+            allCommands={[...defaultKeyboardShortcuts, ...commands]}
+            onClose={toggleModal}
+          />
+        )}
       </HoldingsProvider>
     </DataProvider>
   );
