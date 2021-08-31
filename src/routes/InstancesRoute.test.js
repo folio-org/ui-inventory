@@ -57,7 +57,6 @@ const InstancesRouteSetup = ({
             modesOfIssuance: [],
             natureOfContentTerms: [],
             tagsRecords: [],
-            facets: [],
           }}
           >
             <Paneset>
@@ -77,11 +76,6 @@ const InstancesRouteSetup = ({
                       resource: 'records',
                       records: instances,
                       other: { totalRecords: instances.length },
-                    },
-                    facets: {
-                      hasLoaded: true,
-                      resource: 'facets',
-                      records: [],
                     },
                     resultCount: instances.length,
                     resultOffset: 0,

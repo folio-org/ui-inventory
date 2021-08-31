@@ -13,8 +13,6 @@ const itemFilterRenderer = data => onChange => {
     materialTypes,
     locations,
     tags,
-    onFetchFacets,
-    parentResources,
   } = data;
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
@@ -26,9 +24,6 @@ const itemFilterRenderer = data => onChange => {
         itemStatuses,
         locations,
         tagsRecords: tags,
-        query,
-        onFetchFacets,
-        parentResources,
       }}
       onChange={onChange}
       onClear={(name) => onChange({ name, values: [] })}

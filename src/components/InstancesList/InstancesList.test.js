@@ -19,7 +19,6 @@ import InstancesList from './InstancesList';
 const segment = 'instances';
 const {
   indexes,
-  indexesES,
   renderer,
 } = getFilterConfig(segment);
 
@@ -39,58 +38,46 @@ const data = {
   modesOfIssuance: [],
   natureOfContentTerms: [],
   tagsRecords: [],
-  facets: [],
 };
 const query = {
   query: '',
   sort: 'title',
 };
 
-const resources = {
-  query,
-  records: {
-    hasLoaded: true,
-    resource: 'records',
-    records: instancesFixture,
-    other: { totalRecords: instancesFixture.length },
-  },
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [],
-    other: { totalRecords: 0 }
-  },
-  resultCount: instancesFixture.length,
-  resultOffset: 0,
-};
-
-const InstancesListSetup = () => (
+const InstancesListSetup = ({
+  instances = instancesFixture,
+} = {}) => (
   <Router>
     <StripesContext.Provider value={stripesStub}>
       <ModuleHierarchyProvider value={['@folio/inventory']}>
         <InstancesList
-          parentResources={resources}
+          parentResources={{
+            query,
+            records: {
+              hasLoaded: true,
+              resource: 'records',
+              records: instances,
+              other: { totalRecords: instances.length },
+            },
+            resultCount: instances.length,
+            resultOffset: 0,
+          }}
           parentMutator={{ resultCount: { replace: noop } }}
           data={{
             ...data,
             query
           }}
           onSelectRow={noop}
-          renderFilters={renderer({
-            ...data,
-            query,
-            parentResources: resources,
-          })}
+          renderFilters={renderer({ ...data, query })}
           segment={segment}
           searchableIndexes={indexes}
-          searchableIndexesES={indexesES}
         />
       </ModuleHierarchyProvider>
     </StripesContext.Provider>
   </Router>
 );
 
-describe('InstancesList', () => {
+describe('InstancesRoute', () => {
   describe('rendering InstancesList', () => {
     beforeEach(() => {
       renderWithIntl(

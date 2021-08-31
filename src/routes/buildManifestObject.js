@@ -25,28 +25,27 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
-  if (queryIndex === 'advancedSearch' && queryValue.match('sortby')) {
+  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';
+  } else if (!query.sort) {
+    // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
+    query.sort = 'title';
   }
 
   resourceData.query = { ...query, qindex: '' };
 
   // makeQueryFunction escapes quote and backslash characters by default,
-  // but when submitting a raw CQL query (i.e. when queryIndex === 'advancedSearch')
+  // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
   // we assume the user knows what they are doing and wants to run the CQL as-is.
-  const cql = makeQueryFunction(
+  return makeQueryFunction(
     CQL_FIND_ALL,
     queryTemplate,
     sortMap,
     filters,
     2,
     null,
-    queryIndex !== 'advancedSearch',
+    queryIndex !== 'querySearch',
   )(queryParams, pathComponents, resourceData, logger, props);
-
-  return cql === undefined
-    ? CQL_FIND_ALL
-    : cql;
 }
 
 export function buildManifestObject() {
@@ -56,7 +55,7 @@ export function buildManifestObject() {
       initialValue: {
         query: '',
         filters: '',
-        sort: '',
+        sort: 'title',
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -66,7 +65,8 @@ export function buildManifestObject() {
       records: 'instances',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
-      path: 'search/instances',
+      path: 'inventory/instances',
+      resultDensity: 'sparse',
       GET: {
         params: { query: buildQuery },
         staticFallback: { params: {} },
@@ -77,11 +77,12 @@ export function buildManifestObject() {
       records: 'ids',
       accumulate: true,
       fetch: false,
-      path: 'search/instances/ids',
+      path: 'record-bulk/ids',
       throwErrors: false,
       GET: {
         params: {
           query: buildQuery,
+          limit: '2147483647',
         },
         staticFallback: { params: {} },
       },
@@ -93,19 +94,47 @@ export function buildManifestObject() {
       throwErrors: false,
       clientGeneratePk: false,
     },
-    itemsInTransitReport: {
+    requests: {
       type: 'okapi',
-      records: 'items',
-      path: 'inventory-reports/items-in-transit',
+      path: 'request-storage/requests',
+      records: 'requests',
       accumulate: true,
       fetch: false,
     },
-    facets: {
+    instances: {
       type: 'okapi',
-      records: 'facets',
-      path: 'search/instances/facets',
-      fetch: false,
+      path: 'inventory/instances',
+      records: 'instances',
       accumulate: true,
+      fetch: false,
+    },
+    holdings: {
+      type: 'okapi',
+      path: 'holdings-storage/holdings',
+      records: 'holdingsRecords',
+      accumulate: true,
+      fetch: false,
+    },
+    locations: {
+      type: 'okapi',
+      records: 'locations',
+      path: 'locations',
+      accumulate: true,
+      fetch: false,
+    },
+    servicePoints: {
+      type: 'okapi',
+      path: 'service-points',
+      records: 'servicepoints',
+      accumulate: true,
+      fetch: false,
+    },
+    itemsInTransitReport: {
+      type: 'okapi',
+      records: 'items',
+      path: 'item-storage/items',
+      accumulate: true,
+      fetch: false,
     },
   };
 }
