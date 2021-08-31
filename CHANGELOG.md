@@ -17,6 +17,7 @@
 * Implement keyboard shortcuts in Inventory. Refs UIIN-1411.
 * Implement Keyboard Shortcut overview. Refs UIIN-1498.
 * Fix inventory Holdings record is populated with Source=MARC with no underlying SRS record. Fixes UIIN-1570.
+* Replace okapiInterfaces dependencies for inventory to `11.0`. Refs FOLIO-3179.
 * Incorporate `ui-inventory-search` facets. Refs UIIN-1567.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)

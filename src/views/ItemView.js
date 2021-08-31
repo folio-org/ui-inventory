@@ -425,6 +425,7 @@ class ItemView extends React.Component {
       referenceTables,
       okapi,
       goTo,
+      stripes,
     } = this.props;
 
     const {
@@ -706,6 +707,12 @@ class ItemView extends React.Component {
     );
 
     const shortcuts = [
+      {
+        name: 'edit',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.item.edit')) this.onClickEditItem();
+        }),
+      },
       {
         name: 'expandAllSections',
         handler: (e) => expandAllSections(e, this.accordionStatusRef),
