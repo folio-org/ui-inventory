@@ -321,6 +321,7 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       okapi,
       goTo,
+      stripes,
     } = this.props;
 
     if (this.isAwaitingResource()) {
@@ -483,6 +484,12 @@ class ViewHoldingsRecord extends React.Component {
     };
 
     const shortcuts = [
+      {
+        name: 'edit',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.holdings.edit')) this.onClickEditHoldingsRecord();
+        }),
+      },
       {
         name: 'expandAllSections',
         handler: (e) => expandAllSections(e, this.accordionStatusRef),
