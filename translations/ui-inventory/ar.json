@@ -684,5 +684,13 @@
     "receivingHistory.comment": "تعليق",
     "receivingHistory.source": "المصدر",
     "receivingHistory.source.receiving": "الاستلام",
-    "receivingHistory.source.user": "المستخدم"
+    "receivingHistory.source.user": "المستخدم",
+    "holdingsLabelShort": "المقتنيات:",
+    "appMenu.keyboardShortcuts": "اختصارات لوحة المفاتيح",
+    "shortcut.expandCollapse": "توسيع أو طي قسم",
+    "shortcut.close": "إغلاق النموذج أو النافذة المنبثقة",
+    "shortcut.copy": "نسخ",
+    "shortcut.cut": "قص",
+    "shortcut.paste": "لصق",
+    "shortcut.find": "بحث"
 }
