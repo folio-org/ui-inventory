@@ -8,3 +8,4 @@ export { default as InstanceMarcRoute } from './InstanceMarcRoute';
 export { default as InstanceEditRoute } from './InstanceEditRoute';
 export { default as ViewRequestsRoute } from './ViewRequestsRoute';
 export { default as ImportRoute } from './ImportRoute';
+export { default as HoldingsMarcRoute } from './HoldingsMarcRoute';

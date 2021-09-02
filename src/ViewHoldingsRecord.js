@@ -108,11 +108,18 @@ class ViewHoldingsRecord extends React.Component {
       records: 'configs',
       path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
     },
+    marcRecord: {
+      type: 'okapi',
+      path: 'source-storage/records/:{holdingsrecordid}/formatted?idType=HOLDINGS',
+      accumulate: true,
+      throwErrors: false,
+    },
   });
 
   constructor(props) {
     super(props);
     this.state = {
+      marcRecord: null,
       confirmHoldingsRecordDeleteModal: false,
       noHoldingsRecordDeleteModal: false,
     };
@@ -139,6 +146,47 @@ class ViewHoldingsRecord extends React.Component {
 
     return null;
   }
+
+  componentDidMount() {
+    if (this.props.resources.instances1?.records[0]?.source) {
+      if (this.isMARCSource() && !this.state.markRecord) {
+        this.getMARCRecord();
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.resources.instances1?.records[0]?.source !== this.props.resources.instances1?.records[0]?.source) {
+      if (this.isMARCSource() && !this.state.markRecord) {
+        this.getMARCRecord();
+      }
+    }
+  }
+
+  isMARCSource = () => {
+    const {
+      referenceTables,
+      resources: {
+        instances1,
+      },
+    } = this.props;
+
+    const instance = instances1.records[0];
+    const instanceSource = referenceTables?.holdingsSources?.find(holdingsSource => holdingsSource.name === instance?.source);
+
+    return instanceSource?.name === 'MARC';
+  };
+
+  getMARCRecord = () => {
+    const { mutator } = this.props;
+
+    mutator.marcRecord.GET()
+      .then(data => this.setState({ marcRecord: data }))
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.error('MARC record getting ERROR: ', error);
+      });
+  };
 
   // Edit Holdings records handlers
   onClickEditHoldingsRecord = (e) => {
@@ -211,15 +259,48 @@ class ViewHoldingsRecord extends React.Component {
     return ref || {};
   }
 
+  handleViewSource = (e, instance) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const {
+      location,
+      goTo,
+    } = this.props;
+    const { marcRecord } = this.state;
+
+    if (!marcRecord) {
+      const message = (
+        <FormattedMessage
+          id="ui-inventory.marcSourceRecord.notFoundError"
+          values={{ name: instance.title }}
+        />
+      );
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message,
+      });
+      return;
+    }
+
+    goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
+  };
+
   getPaneHeaderActionMenu = ({ onToggle }) => {
     const {
       resources,
       stripes,
     } = this.props;
+    const { marcRecord } = this.state;
+    const { instances1 } = resources;
 
     const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
     const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
     const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
+
+    const instance = instances1.records[0];
+    const isSourceMARC = this.isMARCSource();
 
     if (!canCreate && !canEdit && !canDelete) {
       return null;
@@ -260,6 +341,21 @@ class ViewHoldingsRecord extends React.Component {
             </Icon>
           </Button>
         }
+        {isSourceMARC && (
+          <Button
+            id="clickable-view-source"
+            buttonStyle="dropdownItem"
+            disabled={!marcRecord}
+            onClick={(e) => {
+              onToggle();
+              this.handleViewSource(e, instance);
+            }}
+          >
+            <Icon icon="document">
+              <FormattedMessage id="ui-inventory.viewSource" />
+            </Icon>
+          </Button>
+        )}
         {
           canDelete &&
           <Button
@@ -927,6 +1023,9 @@ ViewHoldingsRecord.propTypes = {
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
+    }),
+    marcRecord: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
     permanentLocationQuery: PropTypes.object.isRequired,

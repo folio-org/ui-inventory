@@ -30,7 +30,8 @@ import {
   CreateItemRoute,
   CreateHoldingRoute,
   ViewRequestsRoute,
-  ImportRoute
+  ImportRoute,
+  HoldingsMarcRoute,
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider } from './providers';
@@ -111,6 +112,10 @@ const InventoryRouting = (props) => {
               <Route
                 path={`${path}/quick-marc`}
                 component={QuickMarcRoute}
+              />
+              <Route
+                path={`${path}/viewsource/:id/:holdingsrecordid`}
+                component={HoldingsMarcRoute}
               />
               <Route
                 path={`${path}/viewsource/:id`}

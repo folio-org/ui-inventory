@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -8,33 +7,35 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
-import InstanceMarcField from './InstanceMarcField';
-import styles from './InstanceMarc.css';
+import MarcField from './MarcField';
 
-const InstanceMarc = ({
-  instance,
+import styles from './MarcView.css';
+
+const MarcView = ({
+  paneTitle,
+  marcTitle,
   marc,
   onClose,
 }) => {
   return (
     <Paneset isRoot>
       <Pane
-        paneTitle={instance.title}
+        paneTitle={paneTitle}
         defaultWidth="fill"
         dismissible
         onClose={onClose}
         data-test-instance-marc
       >
-        <section className={styles.instanceMarcWrapper}>
+        <section className={styles.marcWrapper}>
           <Headline
             size="large"
             margin="small"
             tag="h3"
           >
-            <FormattedMessage id="ui-inventory.marcSourceRecord" />
+            {marcTitle}
           </Headline>
 
-          <table className={styles.instanceMarc}>
+          <table className={styles.marc}>
             <tbody>
               <tr data-test-instance-marc-field>
                 <td colSpan="4">
@@ -45,7 +46,7 @@ const InstanceMarc = ({
               {
                 marc.fields
                   .map((field, idx) => (
-                    <InstanceMarcField
+                    <MarcField
                       field={field}
                       key={idx}
                     />
@@ -59,10 +60,14 @@ const InstanceMarc = ({
   );
 };
 
-InstanceMarc.propTypes = {
-  instance: PropTypes.object.isRequired,
+MarcView.propTypes = {
   marc: PropTypes.object.isRequired,
+  marcTitle: PropTypes.node.isRequired,
+  paneTitle: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.string,
+  ]).isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default InstanceMarc;
+export default MarcView;
