@@ -111,6 +111,8 @@
   "fetchingMarcRecord": "Fetching MARC record",
   "viewMarcSource": "View MARC source",
   "marcSourceRecord": "MARC bibliographic record",
+  "marcHoldingsRecord": "MARC holdings record",
+  "marcHoldingsRecord.paneTitle": "Holdings record - {title}",
   "marcSourceRecord.notFoundError": "Cannot find MARC bibliographic record for \"{name}\" instance!",
   "contributors": "Contributors",
   "addContributor": "Add contributor",
