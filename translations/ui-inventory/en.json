@@ -103,7 +103,7 @@
   "createNewItem": "Create New Item",
   "updateItem": "Update item",
   "instanceTitle": "Instance: {title}.",
-  "boundWith": "and {boundWithCount, plural, one {one more title} other {and other titles}}",
+  "boundWith": "and {boundWithCount, plural, one {one more title} other {other titles}}",
   "boundWithTitles": "Bound-with titles",
   "holdingsLabelShort": "Holdings:",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
