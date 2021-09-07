@@ -1,5 +1,6 @@
 {
   "meta.title": "Inventory",
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "inventory.label": "Inventory",
   "instances.columns.title": "Title",
   "instances.columns.contributors": "Contributors",
@@ -695,5 +696,12 @@
   "receivingHistory.comment": "Comment",
   "receivingHistory.source": "Source",
   "receivingHistory.source.receiving": "Receiving",
-  "receivingHistory.source.user": "User"
+  "receivingHistory.source.user": "User",
+
+  "shortcut.expandCollapse": "Expand or collapse an accordion",
+  "shortcut.close": "Close a modal or pop-up",
+  "shortcut.copy": "Copy",
+  "shortcut.cut": "Cut",
+  "shortcut.paste": "Paste",
+  "shortcut.find": "Find"
 }

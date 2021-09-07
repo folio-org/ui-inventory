@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import {
-  cloneDeep,
   filter,
   isEmpty,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
+  AccordionStatus,
+  AccordionSet,
   Paneset,
   Pane,
   Row,
@@ -24,6 +26,10 @@ import {
   Headline,
   Datepicker,
   PaneFooter,
+  checkScope,
+  HasCommand,
+  collapseAllSections,
+  expandAllSections,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
@@ -48,6 +54,7 @@ import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
+  handleKeyCommand,
   psTitleRelationshipId,
   validateOptionalField,
 } from '../utils';
@@ -162,25 +169,11 @@ class InstanceForm extends React.Component {
     super(props);
 
     this.state = {
-      sections: {
-        instanceSection01: true,
-        instanceSection02: true,
-        instanceSection03: true,
-        instanceSection04: true,
-        instanceSection05: true,
-        instanceSection06: true,
-        instanceSection07: true,
-        instanceSection08: true,
-        instanceSection09: true,
-        instanceSection10: true,
-        instanceSection11: true,
-        instanceSection12: true,
-      },
       blockables: [],
     };
 
-    this.onToggleSection = this.onToggleSection.bind(this);
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
+    this.accordionStatusRef = createRef();
   }
 
   componentDidMount() {
@@ -190,14 +183,6 @@ class InstanceForm extends React.Component {
     if (!records || !records.length) return;
     const { blockedFields: blockables } = records[0];
     this.setState({ blockables });
-  }
-
-  onToggleSection({ id }) {
-    this.setState((curState) => {
-      const newState = cloneDeep(curState); // remember to safely copy state! using lodash's cloneDeep() for example.
-      newState.sections[id] = !curState.sections[id];
-      return newState;
-    });
   }
 
   getPaneTitle() {
@@ -264,6 +249,10 @@ class InstanceForm extends React.Component {
       onCancel,
       initialValues,
       referenceTables,
+      handleSubmit,
+      pristine,
+      submitting,
+      history,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
@@ -314,425 +303,440 @@ class InstanceForm extends React.Component {
       value: it.id,
     }));
 
+    const shortcuts = [
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'save',
+        handler: handleKeyCommand(handleSubmit, { disabled: pristine || submitting }),
+      },
+      {
+        name: 'cancel',
+        shortcut: 'esc',
+        handler: handleKeyCommand(onCancel),
+      },
+      {
+        name: 'search',
+        handler: handleKeyCommand(() => history.push('/inventory')),
+      },
+    ];
+
     return (
       <form
         data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}
         className={styles.instanceForm}
       >
-        <Paneset isRoot>
-          <Pane
-            defaultWidth="100%"
-            dismissible
-            onClose={onCancel}
-            footer={this.getFooter()}
-            paneTitle={this.getPaneTitle()}
-            actionMenu={this.getActionMenu}
-          >
-            <div>
-              <Headline
-                size="large"
-                tag="h3"
-              >
-                <FormattedMessage id="ui-inventory.instanceRecord" />
-              </Headline>
-              <Accordion
-                label={
-                  <h3>
-                    <FormattedMessage id="ui-inventory.administrativeData" />
-                  </h3>
-                }
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection01}
-                id="instanceSection01"
-              >
-                {(initialValues.metadata && initialValues.metadata.createdDate) &&
-                  <this.cViewMetaData metadata={initialValues.metadata} />
-                }
-                <Row>
-                  <Col sm={3}>
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
-                      name="discoverySuppress"
-                      id="input_discovery_suppress"
-                      component={Checkbox}
-                      type="checkbox"
-                      disabled={this.isFieldBlocked('discoverySuppress')}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.staffSuppress" />}
-                      name="staffSuppress"
-                      id="input_staff_suppress"
-                      component={Checkbox}
-                      type="checkbox"
-                      disabled={this.isFieldBlocked('staffSuppress')}
-                    />
-                  </Col>
-                  <Col sm={3}>
-                    <Field
-                      label={<FormattedMessage id="ui-inventory.previouslyHeld" />}
-                      name="previouslyHeld"
-                      id="input_previously_held"
-                      component={Checkbox}
-                      type="checkbox"
-                      disabled={this.isFieldBlocked('previouslyHeld')}
-                    />
-                  </Col>
-                </Row>
-                <br />
-                <Row>
-                  <Col
-                    xs={10}
-                    sm={5}
-                  >
-                    <Field
-                      name="hrid"
-                      type="text"
-                      disabled
-                      component={TextField}
-                      label={<FormattedMessage id="ui-inventory.instanceHrid" />}
-                    />
-                  </Col>
-                  <Col xs={10} sm={5}>
-                    <Field
-                      name="source"
-                      type="text"
-                      component={TextField}
-                      disabled
-                      label={<FormattedMessage id="ui-inventory.metadataSource" />}
-                      required
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col
-                    xs={10}
-                    sm={5}
-                  >
-                    <Field
-                      name="catalogedDate"
-                      dateFormat="YYYY-MM-DD"
-                      backendDateStandard="YYYY-MM-DD"
-                      component={Datepicker}
-                      label={<FormattedMessage id="ui-inventory.catalogedDate" />}
-                      disabled={this.isFieldBlocked('catalogedDate')}
-                    />
-                  </Col>
-                </Row>
-                <Col sm={10}>
-                  <FormattedMessage id="ui-inventory.selectInstanceStatus">
-                    {([placeholder]) => (
+        <HasCommand
+          commands={shortcuts}
+          isWithinScope={checkScope}
+          scope={document.body}
+        >
+          <Paneset isRoot>
+            <Pane
+              defaultWidth="100%"
+              dismissible
+              onClose={onCancel}
+              footer={this.getFooter()}
+              paneTitle={this.getPaneTitle()}
+              actionMenu={this.getActionMenu}
+            >
+              <div>
+                <Headline
+                  size="large"
+                  tag="h3"
+                >
+                  <FormattedMessage id="ui-inventory.instanceRecord" />
+                </Headline>
+                <AccordionStatus ref={this.accordionStatusRef}>
+                  <AccordionSet>
+                    <Accordion
+                      label={
+                        <h3>
+                          <FormattedMessage id="ui-inventory.administrativeData" />
+                        </h3>
+                      }
+                      id="instanceSection01"
+                    >
+                      {(initialValues.metadata && initialValues.metadata.createdDate) &&
+                        <this.cViewMetaData metadata={initialValues.metadata} />
+                      }
+                      <Row>
+                        <Col sm={3}>
+                          <Field
+                            label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+                            name="discoverySuppress"
+                            id="input_discovery_suppress"
+                            component={Checkbox}
+                            type="checkbox"
+                            disabled={this.isFieldBlocked('discoverySuppress')}
+                          />
+                        </Col>
+                        <Col sm={3}>
+                          <Field
+                            label={<FormattedMessage id="ui-inventory.staffSuppress" />}
+                            name="staffSuppress"
+                            id="input_staff_suppress"
+                            component={Checkbox}
+                            type="checkbox"
+                            disabled={this.isFieldBlocked('staffSuppress')}
+                          />
+                        </Col>
+                        <Col sm={3}>
+                          <Field
+                            label={<FormattedMessage id="ui-inventory.previouslyHeld" />}
+                            name="previouslyHeld"
+                            id="input_previously_held"
+                            component={Checkbox}
+                            type="checkbox"
+                            disabled={this.isFieldBlocked('previouslyHeld')}
+                          />
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col
+                          xs={10}
+                          sm={5}
+                        >
+                          <Field
+                            name="hrid"
+                            type="text"
+                            disabled
+                            component={TextField}
+                            label={<FormattedMessage id="ui-inventory.instanceHrid" />}
+                          />
+                        </Col>
+                        <Col xs={10} sm={5}>
+                          <Field
+                            name="source"
+                            type="text"
+                            component={TextField}
+                            disabled
+                            label={<FormattedMessage id="ui-inventory.metadataSource" />}
+                            required
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          xs={10}
+                          sm={5}
+                        >
+                          <Field
+                            name="catalogedDate"
+                            dateFormat="YYYY-MM-DD"
+                            backendDateStandard="YYYY-MM-DD"
+                            component={Datepicker}
+                            label={<FormattedMessage id="ui-inventory.catalogedDate" />}
+                            disabled={this.isFieldBlocked('catalogedDate')}
+                          />
+                        </Col>
+                      </Row>
+                      <Col sm={10}>
+                        <FormattedMessage id="ui-inventory.selectInstanceStatus">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.instanceStatus" />}
+                              name="statusId"
+                              type="text"
+                              component={Select}
+                              placeholder={placeholder}
+                              dataOptions={instanceStatusOptions}
+                              disabled={this.isFieldBlocked('statusId')}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                      <Col sm={10}>
+                        <FormattedMessage id="ui-inventory.selectModeOfIssuance">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+                              name="modeOfIssuanceId"
+                              type="text"
+                              component={Select}
+                              placeholder={placeholder}
+                              dataOptions={modeOfIssuanceOptions}
+                              disabled={this.isFieldBlocked('modeOfIssuanceId')}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                      <Row>
+                        <Col sm={10}>
+                          <RepeatableField
+                            name="statisticalCodeIds"
+                            addButtonId="clickable-add-statistical-code"
+                            addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
+                            template={[
+                              {
+                                label: <FormattedMessage id="ui-inventory.statisticalCode" />,
+                                component: Select,
+                                dataOptions: [{
+                                  label: 'Select code', value: '',
+                                }, ...statisticalCodeOptions],
+                                disabled: this.isFieldBlocked('statisticalCodeIds'),
+                              }
+                            ]}
+                            canAdd={!this.isFieldBlocked('statisticalCodeIds')}
+                          />
+                        </Col>
+                      </Row>
+                    </Accordion>
+                    <Accordion
+                      label={
+                        <h3>
+                          <FormattedMessage id="ui-inventory.titleData" />
+                        </h3>
+                      }
+                      id="instanceSection02"
+                    >
+                      <Col sm={10}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.resourceTitle" />}
+                          name="title"
+                          id="input_instance_title"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                          required
+                          disabled={this.isFieldBlocked('title')}
+                        />
+                      </Col>
                       <Field
-                        label={<FormattedMessage id="ui-inventory.instanceStatus" />}
-                        name="statusId"
-                        type="text"
-                        component={Select}
-                        placeholder={placeholder}
-                        dataOptions={instanceStatusOptions}
-                        disabled={this.isFieldBlocked('statusId')}
+                        type="hidden"
+                        name="source"
+                        component="input"
+                        disabled={this.isFieldBlocked('source')}
                       />
-                    )}
-                  </FormattedMessage>
-                </Col>
-                <Col sm={10}>
-                  <FormattedMessage id="ui-inventory.selectModeOfIssuance">
-                    {([placeholder]) => (
-                      <Field
-                        label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
-                        name="modeOfIssuanceId"
-                        type="text"
-                        component={Select}
-                        placeholder={placeholder}
-                        dataOptions={modeOfIssuanceOptions}
-                        disabled={this.isFieldBlocked('modeOfIssuanceId')}
+                      <AlternativeTitles
+                        alternativeTitleTypes={referenceTables.alternativeTitleTypes}
+                        canAdd={!this.isFieldBlocked('alternativeTitles')}
+                        canEdit={!this.isFieldBlocked('alternativeTitles')}
+                        canDelete={!this.isFieldBlocked('alternativeTitles')}
                       />
-                    )}
-                  </FormattedMessage>
-                </Col>
-                <Row>
-                  <Col sm={10}>
-                    <RepeatableField
-                      name="statisticalCodeIds"
-                      addButtonId="clickable-add-statistical-code"
-                      addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
-                      template={[
-                        {
-                          label: <FormattedMessage id="ui-inventory.statisticalCode" />,
-                          component: Select,
-                          dataOptions: [{
-                            label: 'Select code', value: '',
-                          }, ...statisticalCodeOptions],
-                          disabled: this.isFieldBlocked('statisticalCodeIds'),
-                        }
-                      ]}
-                      canAdd={!this.isFieldBlocked('statisticalCodeIds')}
-                    />
-                  </Col>
-                </Row>
-              </Accordion>
-              <Accordion
-                label={
-                  <h3>
-                    <FormattedMessage id="ui-inventory.titleData" />
-                  </h3>
-                }
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection02}
-                id="instanceSection02"
-              >
-                <Col sm={10}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.resourceTitle" />}
-                    name="title"
-                    id="input_instance_title"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                    required
-                    disabled={this.isFieldBlocked('title')}
-                  />
-                </Col>
-                <Field
-                  type="hidden"
-                  name="source"
-                  component="input"
-                  disabled={this.isFieldBlocked('source')}
-                />
-                <AlternativeTitles
-                  alternativeTitleTypes={referenceTables.alternativeTitleTypes}
-                  canAdd={!this.isFieldBlocked('alternativeTitles')}
-                  canEdit={!this.isFieldBlocked('alternativeTitles')}
-                  canDelete={!this.isFieldBlocked('alternativeTitles')}
-                />
-                <Col sm={10}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.indexTitle" />}
-                    name="indexTitle"
-                    id="input_index_title"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                    disabled={this.isFieldBlocked('indexTitle')}
-                  />
-                </Col>
-                <SeriesFields
-                  canAdd={!this.isFieldBlocked('series')}
-                  canEdit={!this.isFieldBlocked('series')}
-                  canDelete={!this.isFieldBlocked('series')}
-                />
-                <PrecedingTitleFields
-                  canAdd={!this.isFieldBlocked('precedingTitles')}
-                  canEdit={!this.isFieldBlocked('precedingTitles')}
-                  canDelete={!this.isFieldBlocked('precedingTitles')}
-                  isDisabled={this.isFieldBlocked('precedingTitles')}
-                />
-                <SucceedingTitleFields
-                  canAdd={!this.isFieldBlocked('succeedingTitles')}
-                  canEdit={!this.isFieldBlocked('succeedingTitles')}
-                  canDelete={!this.isFieldBlocked('succeedingTitles')}
-                  isDisabled={this.isFieldBlocked('succeedingTitles')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.identifier" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection03}
-                id="instanceSection03"
-              >
-                <IdentifierFields
-                  identifierTypes={referenceTables.identifierTypes}
-                  canAdd={!this.isFieldBlocked('identifiers')}
-                  canEdit={!this.isFieldBlocked('identifiers')}
-                  canDelete={!this.isFieldBlocked('identifiers')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.contributor" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection04}
-                id="instanceSection04"
-              >
-                <ContributorFields
-                  contributorNameTypes={referenceTables.contributorNameTypes}
-                  contributorTypes={referenceTables.contributorTypes}
-                  canAdd={!this.isFieldBlocked('contributors')}
-                  canEdit={!this.isFieldBlocked('contributors')}
-                  canDelete={!this.isFieldBlocked('contributors')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.descriptiveData" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection05}
-                id="instanceSection05"
-              >
-                <PublicationFields
-                  canAdd={!this.isFieldBlocked('publication')}
-                  canEdit={!this.isFieldBlocked('publication')}
-                  canDelete={!this.isFieldBlocked('publication')}
-                />
-                <EditionFields
-                  canAdd={!this.isFieldBlocked('editions')}
-                  canEdit={!this.isFieldBlocked('editions')}
-                  canDelete={!this.isFieldBlocked('editions')}
-                />
-                <DescriptionFields
-                  canAdd={!this.isFieldBlocked('physicalDescriptions')}
-                  canEdit={!this.isFieldBlocked('physicalDescriptions')}
-                  canDelete={!this.isFieldBlocked('physicalDescriptions')}
-                />
-                <Col sm={10}>
-                  <FormattedMessage id="ui-inventory.selectResourceType">
-                    {([placeholder]) => (
-                      <Field
-                        label={<FormattedMessage id="ui-inventory.resourceType" />}
-                        name="instanceTypeId"
-                        id="select_instance_type"
-                        type="text"
-                        required
-                        component={Select}
-                        placeholder={placeholder}
-                        dataOptions={instanceTypeOptions}
-                        disabled={this.isFieldBlocked('instanceTypeId')}
+                      <Col sm={10}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.indexTitle" />}
+                          name="indexTitle"
+                          id="input_index_title"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                          disabled={this.isFieldBlocked('indexTitle')}
+                        />
+                      </Col>
+                      <SeriesFields
+                        canAdd={!this.isFieldBlocked('series')}
+                        canEdit={!this.isFieldBlocked('series')}
+                        canDelete={!this.isFieldBlocked('series')}
                       />
-                    )}
-                  </FormattedMessage>
-                </Col>
-                <NatureOfContentFields
-                  natureOfContentTerms={referenceTables.natureOfContentTerms}
-                  canAdd={!this.isFieldBlocked('natureOfContent')}
-                  canEdit={!this.isFieldBlocked('natureOfContent')}
-                  canDelete={!this.isFieldBlocked('natureOfContent')}
-                />
-                <InstanceFormatFields
-                  instanceFormats={referenceTables.instanceFormats}
-                  canAdd={!this.isFieldBlocked('instanceFormatIds')}
-                  canEdit={!this.isFieldBlocked('instanceFormatIds')}
-                  canDelete={!this.isFieldBlocked('instanceFormatIds')}
-                />
-                <LanguageFields
-                  canAdd={!this.isFieldBlocked('languages')}
-                  canEdit={!this.isFieldBlocked('languages')}
-                  canDelete={!this.isFieldBlocked('languages')}
-                />
-                <PublicationFrequencyFields
-                  canAdd={!this.isFieldBlocked('publicationFrequency')}
-                  canEdit={!this.isFieldBlocked('publicationFrequency')}
-                  canDelete={!this.isFieldBlocked('publicationFrequency')}
-                />
-                <PublicationRangeFields
-                  canAdd={!this.isFieldBlocked('publicationRange')}
-                  canEdit={!this.isFieldBlocked('publicationRange')}
-                  canDelete={!this.isFieldBlocked('publicationRange')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.instanceNotes" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection07}
-                id="instanceSection07"
-              >
-                <NoteFields
-                  canAdd={!this.isFieldBlocked('notes')}
-                  canEdit={!this.isFieldBlocked('notes')}
-                  canDelete={!this.isFieldBlocked('notes')}
-                  instanceNoteTypes={referenceTables.instanceNoteTypes}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.electronicAccess" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection08}
-                id="instanceSection08"
-              >
-                <ElectronicAccessFields
-                  relationship={referenceTables.electronicAccessRelationships}
-                  canAdd={!this.isFieldBlocked('electronicAccess')}
-                  canEdit={!this.isFieldBlocked('electronicAccess')}
-                  canDelete={!this.isFieldBlocked('electronicAccess')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.subject" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection09}
-                id="instanceSection09"
-              >
-                <SubjectFields
-                  canAdd={!this.isFieldBlocked('subjects')}
-                  canEdit={!this.isFieldBlocked('subjects')}
-                  canDelete={!this.isFieldBlocked('subjects')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.classification" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection10}
-                id="instanceSection10"
-              >
-                <ClassificationFields
-                  classificationTypes={referenceTables.classificationTypes}
-                  canAdd={!this.isFieldBlocked('classifications')}
-                  canEdit={!this.isFieldBlocked('classifications')}
-                  canDelete={!this.isFieldBlocked('classifications')}
-                />
-              </Accordion>
-              <Accordion
-                label={(
-                  <h3>
-                    <FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />
-                  </h3>
-                )}
-                onToggle={this.onToggleSection}
-                open={this.state.sections.instanceSection11}
-                id="instanceSection11"
-              >
-                <ChildInstanceFields
-                  relationshipTypes={relationshipTypes}
-                  canAdd={!this.isFieldBlocked('childInstances')}
-                  canEdit={!this.isFieldBlocked('childInstances')}
-                  canDelete={!this.isFieldBlocked('childInstances')}
-                />
-                <ParentInstanceFields
-                  relationshipTypes={relationshipTypes}
-                  canAdd={!this.isFieldBlocked('parentInstances')}
-                  canEdit={!this.isFieldBlocked('parentInstances')}
-                  canDelete={!this.isFieldBlocked('publicInstances')}
-                />
+                      <PrecedingTitleFields
+                        canAdd={!this.isFieldBlocked('precedingTitles')}
+                        canEdit={!this.isFieldBlocked('precedingTitles')}
+                        canDelete={!this.isFieldBlocked('precedingTitles')}
+                        isDisabled={this.isFieldBlocked('precedingTitles')}
+                      />
+                      <SucceedingTitleFields
+                        canAdd={!this.isFieldBlocked('succeedingTitles')}
+                        canEdit={!this.isFieldBlocked('succeedingTitles')}
+                        canDelete={!this.isFieldBlocked('succeedingTitles')}
+                        isDisabled={this.isFieldBlocked('succeedingTitles')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.identifier" />
+                        </h3>
+                      )}
+                      id="instanceSection03"
+                    >
+                      <IdentifierFields
+                        identifierTypes={referenceTables.identifierTypes}
+                        canAdd={!this.isFieldBlocked('identifiers')}
+                        canEdit={!this.isFieldBlocked('identifiers')}
+                        canDelete={!this.isFieldBlocked('identifiers')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.contributor" />
+                        </h3>
+                      )}
+                      id="instanceSection04"
+                    >
+                      <ContributorFields
+                        contributorNameTypes={referenceTables.contributorNameTypes}
+                        contributorTypes={referenceTables.contributorTypes}
+                        canAdd={!this.isFieldBlocked('contributors')}
+                        canEdit={!this.isFieldBlocked('contributors')}
+                        canDelete={!this.isFieldBlocked('contributors')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.descriptiveData" />
+                        </h3>
+                      )}
+                      id="instanceSection05"
+                    >
+                      <PublicationFields
+                        canAdd={!this.isFieldBlocked('publication')}
+                        canEdit={!this.isFieldBlocked('publication')}
+                        canDelete={!this.isFieldBlocked('publication')}
+                      />
+                      <EditionFields
+                        canAdd={!this.isFieldBlocked('editions')}
+                        canEdit={!this.isFieldBlocked('editions')}
+                        canDelete={!this.isFieldBlocked('editions')}
+                      />
+                      <DescriptionFields
+                        canAdd={!this.isFieldBlocked('physicalDescriptions')}
+                        canEdit={!this.isFieldBlocked('physicalDescriptions')}
+                        canDelete={!this.isFieldBlocked('physicalDescriptions')}
+                      />
+                      <Col sm={10}>
+                        <FormattedMessage id="ui-inventory.selectResourceType">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.resourceType" />}
+                              name="instanceTypeId"
+                              id="select_instance_type"
+                              type="text"
+                              required
+                              component={Select}
+                              placeholder={placeholder}
+                              dataOptions={instanceTypeOptions}
+                              disabled={this.isFieldBlocked('instanceTypeId')}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                      <NatureOfContentFields
+                        natureOfContentTerms={referenceTables.natureOfContentTerms}
+                        canAdd={!this.isFieldBlocked('natureOfContent')}
+                        canEdit={!this.isFieldBlocked('natureOfContent')}
+                        canDelete={!this.isFieldBlocked('natureOfContent')}
+                      />
+                      <InstanceFormatFields
+                        instanceFormats={referenceTables.instanceFormats}
+                        canAdd={!this.isFieldBlocked('instanceFormatIds')}
+                        canEdit={!this.isFieldBlocked('instanceFormatIds')}
+                        canDelete={!this.isFieldBlocked('instanceFormatIds')}
+                      />
+                      <LanguageFields
+                        canAdd={!this.isFieldBlocked('languages')}
+                        canEdit={!this.isFieldBlocked('languages')}
+                        canDelete={!this.isFieldBlocked('languages')}
+                      />
+                      <PublicationFrequencyFields
+                        canAdd={!this.isFieldBlocked('publicationFrequency')}
+                        canEdit={!this.isFieldBlocked('publicationFrequency')}
+                        canDelete={!this.isFieldBlocked('publicationFrequency')}
+                      />
+                      <PublicationRangeFields
+                        canAdd={!this.isFieldBlocked('publicationRange')}
+                        canEdit={!this.isFieldBlocked('publicationRange')}
+                        canDelete={!this.isFieldBlocked('publicationRange')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.instanceNotes" />
+                        </h3>
+                      )}
+                      id="instanceSection07"
+                    >
+                      <NoteFields
+                        canAdd={!this.isFieldBlocked('notes')}
+                        canEdit={!this.isFieldBlocked('notes')}
+                        canDelete={!this.isFieldBlocked('notes')}
+                        instanceNoteTypes={referenceTables.instanceNoteTypes}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.electronicAccess" />
+                        </h3>
+                      )}
 
-              </Accordion>
-            </div>
-          </Pane>
-        </Paneset>
+                      id="instanceSection08"
+                    >
+                      <ElectronicAccessFields
+                        relationship={referenceTables.electronicAccessRelationships}
+                        canAdd={!this.isFieldBlocked('electronicAccess')}
+                        canEdit={!this.isFieldBlocked('electronicAccess')}
+                        canDelete={!this.isFieldBlocked('electronicAccess')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.subject" />
+                        </h3>
+                      )}
+                      id="instanceSection09"
+                    >
+                      <SubjectFields
+                        canAdd={!this.isFieldBlocked('subjects')}
+                        canEdit={!this.isFieldBlocked('subjects')}
+                        canDelete={!this.isFieldBlocked('subjects')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.classification" />
+                        </h3>
+                      )}
+                      id="instanceSection10"
+                    >
+                      <ClassificationFields
+                        classificationTypes={referenceTables.classificationTypes}
+                        canAdd={!this.isFieldBlocked('classifications')}
+                        canEdit={!this.isFieldBlocked('classifications')}
+                        canDelete={!this.isFieldBlocked('classifications')}
+                      />
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.instanceRelationshipAnalyticsBoundWith" />
+                        </h3>
+                      )}
+                      id="instanceSection11"
+                    >
+                      <ChildInstanceFields
+                        relationshipTypes={relationshipTypes}
+                        canAdd={!this.isFieldBlocked('childInstances')}
+                        canEdit={!this.isFieldBlocked('childInstances')}
+                        canDelete={!this.isFieldBlocked('childInstances')}
+                      />
+                      <ParentInstanceFields
+                        relationshipTypes={relationshipTypes}
+                        canAdd={!this.isFieldBlocked('parentInstances')}
+                        canEdit={!this.isFieldBlocked('parentInstances')}
+                        canDelete={!this.isFieldBlocked('publicInstances')}
+                      />
+
+                    </Accordion>
+                  </AccordionSet>
+                </AccordionStatus>
+              </div>
+            </Pane>
+          </Paneset>
+        </HasCommand>
       </form>
     );
   }
@@ -759,13 +763,14 @@ InstanceForm.propTypes = {
     }),
   }),
   instanceSource: PropTypes.string,
+  history: PropTypes.object.isRequired,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
   initialValues: {},
 };
 
-export default stripesFinalForm({
+export default withRouter(stripesFinalForm({
   validate,
   navigationCheck: true,
-})(InstanceForm);
+})(InstanceForm));

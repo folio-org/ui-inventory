@@ -31,6 +31,8 @@ import {
   Icon,
   Checkbox,
   MenuSection,
+  checkScope,
+  HasCommand,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -46,6 +48,7 @@ import {
   marshalInstance,
   omitFromArray,
   isTestEnv,
+  handleKeyCommand,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -106,6 +109,7 @@ class InstancesList extends React.Component {
         update: PropTypes.func.isRequired,
       }).isRequired,
     }),
+    stripes: PropTypes.object.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -604,6 +608,7 @@ class InstancesList extends React.Component {
         path,
       },
       namespace,
+      stripes,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -677,8 +682,23 @@ class InstancesList extends React.Component {
       return { ...index, label };
     });
 
+    const shortcuts = [
+      {
+        name: 'new',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.instance.create')) {
+            this.openCreateInstance();
+          }
+        }),
+      },
+    ];
+
     return (
-      <>
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
         <div data-test-inventory-instances>
           <SearchAndSort
             actionMenu={this.getActionMenu}
@@ -760,7 +780,7 @@ class InstancesList extends React.Component {
             />
           </IfPermission>
         </IfInterface>
-      </>
+      </HasCommand>
     );
   }
 }
