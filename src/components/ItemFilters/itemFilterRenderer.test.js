@@ -24,26 +24,26 @@ describe('itemFilterRenderer fn', () => {
   beforeEach(() => renderFilters());
 
   it('should display filter by tags accordion', () => {
-    expect(screen.getByText('Tags')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.filter.tags')).toBeInTheDocument();
   });
 
   it('should display filter by status accordion', () => {
-    expect(screen.getByText('Item status')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.item.status')).toBeInTheDocument();
   });
 
   it('should display filter by effectiveLocation accordion', () => {
-    expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.filters.effectiveLocation')).toBeInTheDocument();
   });
 
   it('should display filter by permanentLocation accordion', () => {
-    expect(screen.getByText('Holdings permanent location')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.holdings.permanentLocation')).toBeInTheDocument();
   });
 
   it('should display filter by materialType accordion', () => {
-    expect(screen.getByText('Material type')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.materialType')).toBeInTheDocument();
   });
 
   it('should display filter by discoverySuppress accordion', () => {
-    expect(screen.getByText('Suppress from discovery')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.discoverySuppress')).toBeInTheDocument();
   });
 });
