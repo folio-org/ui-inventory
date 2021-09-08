@@ -69,7 +69,7 @@ describe('HoldingAccordion', () => {
 
   describe('opening accordion', () => {
     beforeEach(() => {
-      userEvent.click(screen.getByText(/Holdings:/));
+      userEvent.click(screen.getByText('ui-inventory.holdingsLabelShort'));
     });
 
     it('should hide item counter', async () => {

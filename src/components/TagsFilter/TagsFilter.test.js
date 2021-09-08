@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   cleanup,
+  configure,
   fireEvent,
   screen,
 } from '@testing-library/react';
@@ -12,6 +13,10 @@ import '../../../test/jest/__mock__';
 import TagsFilter from './TagsFilter';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
+
+configure({
+  testIdAttribute: 'data-test',
+});
 
 const TAGS = [{
   'id': 'd3c8b511-41e7-422e-a483-18778d0596e5',
@@ -40,7 +45,7 @@ const TAGS = [{
   }
 }];
 
-const filterAccordionTitle = 'Tags';
+const filterAccordionTitle = 'ui-inventory.filter.tags';
 
 const renderFilter = (tagsRecords, selectedValues, onChange = noop, onClear = noop) => (renderWithIntl(
   <Router>
@@ -93,12 +98,12 @@ describe('TagsFilter component', () => {
     const onClear = jest.fn();
 
     renderFilter(TAGS, ['urgent'], undefined, onClear);
-    fireEvent.click(screen.getAllByLabelText('Clear selected filters for "Tags"')[0]);
+    fireEvent.click(screen.getByTestId('clear-button'));
     expect(onClear).toHaveBeenCalled();
   });
 
   it('should display filter accordion without tags and selected values', () => {
     renderFilter(undefined, ['urgent']);
-    expect(screen.getByText('No matching items found!')).toBeDefined();
+    expect(screen.getByText('stripes-components.multiSelection.defaultEmptyMessage')).toBeDefined();
   });
 });
