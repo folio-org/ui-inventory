@@ -19,6 +19,7 @@
 * Fix inventory Holdings record is populated with Source=MARC with no underlying SRS record. Fixes UIIN-1570.
 * Replace okapiInterfaces dependencies for inventory to `11.0`. Refs FOLIO-3179.
 * Add accordion to `<ItemView>` for bound-with related items. Refs UIIN-1521.
+* Add View source for MARC Holdings. Refs UIIN-1549.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
