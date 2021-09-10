@@ -14,9 +14,10 @@ const useHoldingItemsQuery = (holdingsRecordId, options = {}) => {
   };
 
   const queryFn = () => ky.get('inventory/items', { searchParams }).json();
-  const { data, isLoading } = useQuery({ queryKey, queryFn, ...options });
+  const { data, isLoading, isFetching } = useQuery({ queryKey, queryFn, ...options });
 
   return {
+    isFetching,
     isLoading,
     items: data?.items,
   };
