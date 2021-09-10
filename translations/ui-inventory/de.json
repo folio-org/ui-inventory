@@ -570,7 +570,7 @@
     "selectHoldingsSource": "Bestandsquelle auswählen",
     "holdingsSourceLabel": "Quelle",
     "uniqueName": "Name muss eindeutig sein",
-    "viewRequests": "({count}) Bestandsanfragen anzeigen",
+    "viewRequests": "Bestandsanfragen anzeigen",
     "instanceRecordRequestsTitle": "Bestandsanfragen für Exemplar - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} Exemplare gefunden",
     "item.requestQueue": "Bestandsanfrage-Warteliste",
