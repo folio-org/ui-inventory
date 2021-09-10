@@ -98,7 +98,7 @@ describe('TagsFilter component', () => {
     const onClear = jest.fn();
 
     renderFilter(TAGS, ['urgent'], undefined, onClear);
-    fireEvent.click(screen.getByTestId('clear-button'));
+    fireEvent.click(screen.getByLabelText(/clear selected filters for/i));
     expect(onClear).toHaveBeenCalled();
   });
 

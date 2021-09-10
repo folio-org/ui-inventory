@@ -48,7 +48,7 @@ const InstancesRouteSetup = ({
   <Router>
     <StripesContext.Provider value={stripesStub}>
       <CalloutContext.Provider value={{ sendCallout }}>
-        <ModuleHierarchyProvider value={['@folio/inventory']}>
+        <ModuleHierarchyProvider module="@folio/inventory">
           <DataContext.Provider value={{
             contributorTypes: [],
             instanceTypes: [],

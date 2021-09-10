@@ -76,13 +76,13 @@ describe('InstanceEdit', () => {
   describe('saving instance', () => {
     beforeEach(async () => {
       await act(async () => {
-        await userEvent.type(screen.getByRole('textbox', { name: /resource title/i }), 'new title');
-        userEvent.click(screen.getByText(/save and close/i));
+        await userEvent.type(screen.getByRole('textbox', { name: 'ui-inventory.resourceTitle' }), 'new title');
+        userEvent.click(screen.getByText('stripes-core.button.saveAndClose'));
       });
     });
 
     it('should show error modal', () => {
-      expect(screen.getByRole('heading', { name: /saving instance failed/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: 'ui-inventory.instance.saveError' })).toBeInTheDocument();
     });
   });
 });

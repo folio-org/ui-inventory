@@ -49,7 +49,7 @@ const InstancesListSetup = ({
 } = {}) => (
   <Router>
     <StripesContext.Provider value={stripesStub}>
-      <ModuleHierarchyProvider value={['@folio/inventory']}>
+      <ModuleHierarchyProvider module="@folio/inventory">
         <InstancesList
           parentResources={{
             query,
@@ -96,11 +96,11 @@ describe('InstancesRoute', () => {
 
     describe('opening action menu', () => {
       beforeEach(() => {
-        userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        userEvent.click(screen.getByRole('button', { name: 'stripes-components.paneMenuActionsToggleLabel' }));
       });
 
       it('should disable toggable columns', () => {
-        expect(screen.getByText(/show columns/i)).toBeInTheDocument();
+        expect(screen.getByText('ui-inventory.showColumns')).toBeInTheDocument();
       });
 
       describe('hiding contributors column', () => {

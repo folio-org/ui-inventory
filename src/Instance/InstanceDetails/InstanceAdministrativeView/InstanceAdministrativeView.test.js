@@ -31,7 +31,7 @@ describe('InstanceAdministrativeView', () => {
     });
 
     it('should show supress from discovery warning', () => {
-      expect(screen.getByText(/suppressed from discovery/i)).toBeInTheDocument();
+      expect(screen.getByText('ui-inventory.discoverySuppressed')).toBeInTheDocument();
     });
   });
 });

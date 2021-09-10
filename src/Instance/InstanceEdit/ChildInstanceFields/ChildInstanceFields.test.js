@@ -77,7 +77,7 @@ describe('ChildInstanceFields', () => {
 
   describe('add child instance', () => {
     beforeEach(async () => {
-      await Button('Add child instance').click();
+      await Button('ui-inventory.addChildInstance').click();
     });
 
     it('should add child instance', () => {

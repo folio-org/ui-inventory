@@ -45,6 +45,7 @@ const InstanceRelationshipViewSetup = () => (
         <InstanceRelationshipView
           id="accordion-id"
           childInstances={childInstances}
+          parentIstances={[]}
         />
       </DataContext.Provider>
     </StripesContext.Provider>
