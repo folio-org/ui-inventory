@@ -7,53 +7,39 @@ import { screen } from '@testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
 import DataContext from '../../../contexts/DataContext';
 
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 import { items as itemsFixture } from '../../../../test/fixtures/items';
 import HoldingAccordion from './HoldingAccordion';
+import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 
-const stripesStub = {
-  connect: Component => <Component />,
-  hasPerm: () => true,
-  hasInterface: () => true,
-  logger: { log: noop },
-  locale: 'en-US',
-  plugins: {},
-};
+jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
 
-const HoldingAccordionSetup = ({
-  items = itemsFixture,
-} = {}) => (
+const HoldingAccordionSetup = () => (
   <Router>
     <DataContext.Provider value={{ locationsById: {} }}>
-      <StripesContext.Provider value={stripesStub}>
-        <HoldingAccordion
-          holding={{ id: '123' }}
-          holdings={[]}
-          onViewHolding={noop}
-          onAddItem={noop}
-          withMoveDropdown={false}
-          resources={{
-            instanceHoldingItems: {
-              records: items,
-              other: {
-                totalRecords: 3,
-              }
-            }
-          }}
-        >
-          {() => null}
-        </HoldingAccordion>
-      </StripesContext.Provider>
+      <HoldingAccordion
+        holding={{ id: '123' }}
+        holdings={[]}
+        onViewHolding={noop}
+        onAddItem={noop}
+        withMoveDropdown={false}
+      >
+        {() => null}
+      </HoldingAccordion>
     </DataContext.Provider>
   </Router>
 );
 
 describe('HoldingAccordion', () => {
   beforeEach(async () => {
+    useHoldingItemsQuery.mockReturnValue({
+      isFetching: false,
+      items: itemsFixture,
+    });
+
     await act(async () => {
       await renderWithIntl(<HoldingAccordionSetup />, translations);
     });
