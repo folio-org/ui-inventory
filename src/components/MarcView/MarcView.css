@@ -1,8 +1,8 @@
-.instanceMarcWrapper {
+.marcWrapper {
   margin-left: 20px;
 }
 
-.instanceMarc {
+.marc {
   table-layout: fixed;
   border: 0;
   font-family: courier;
