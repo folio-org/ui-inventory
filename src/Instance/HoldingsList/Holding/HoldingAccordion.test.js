@@ -37,7 +37,7 @@ describe('HoldingAccordion', () => {
   beforeEach(async () => {
     useHoldingItemsQuery.mockReturnValue({
       isFetching: false,
-      items: itemsFixture,
+      totalRecords: itemsFixture.length,
     });
 
     await act(async () => {

@@ -36,12 +36,16 @@ const HoldingAccordion = ({
 
     setOpen(!open);
   };
-  const { items, isFetching } = useHoldingItemsQuery(holding.id);
+
+  const searchParams = {
+    limit: 1,
+  };
+  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams });
 
   const holdingButtonsGroup = <HoldingButtonsGroup
     holding={holding}
     holdings={holdings}
-    itemCount={isFetching ? null : items.length}
+    itemCount={isFetching ? null : totalRecords}
     locationsById={locationsById}
     onViewHolding={onViewHolding}
     onAddItem={onAddItem}
