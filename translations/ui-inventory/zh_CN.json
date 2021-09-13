@@ -692,5 +692,7 @@
     "shortcut.copy": "复制",
     "shortcut.cut": "剪切",
     "shortcut.paste": "粘贴",
-    "shortcut.find": "查找"
+    "shortcut.find": "查找",
+    "marcHoldingsRecord": "MARC holdings record",
+    "marcHoldingsRecord.paneTitle": "Holdings record - {title}"
 }

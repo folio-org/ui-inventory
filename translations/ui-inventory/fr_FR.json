@@ -692,5 +692,7 @@
     "shortcut.copy": "Copier",
     "shortcut.cut": "Couper",
     "shortcut.paste": "Coller",
-    "shortcut.find": "Trouver"
+    "shortcut.find": "Trouver",
+    "marcHoldingsRecord": "MARC holdings record",
+    "marcHoldingsRecord.paneTitle": "Holdings record - {title}"
 }

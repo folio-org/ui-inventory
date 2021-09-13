@@ -692,5 +692,7 @@
     "shortcut.copy": "نسخ",
     "shortcut.cut": "قص",
     "shortcut.paste": "لصق",
-    "shortcut.find": "بحث"
+    "shortcut.find": "بحث",
+    "marcHoldingsRecord": "تسجيلة مقتنيات مارك",
+    "marcHoldingsRecord.paneTitle": "تسجيلة المقتنيات - {title}"
 }

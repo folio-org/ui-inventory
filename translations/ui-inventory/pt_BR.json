@@ -692,5 +692,7 @@
     "shortcut.copy": "Copiar",
     "shortcut.cut": "Cortar",
     "shortcut.paste": "Colar",
-    "shortcut.find": "Pesquisar"
+    "shortcut.find": "Pesquisar",
+    "marcHoldingsRecord": "MARC holdings record",
+    "marcHoldingsRecord.paneTitle": "Holdings record - {title}"
 }
