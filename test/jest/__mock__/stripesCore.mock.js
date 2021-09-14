@@ -88,5 +88,7 @@ jest.mock('@folio/stripes/core', () => {
 
     // eslint-disable-next-line react/prop-types
     IfPermission: props => <>{props.children}</>,
+
+    useNamespace: () => ['@folio/inventory'],
   };
 }, { virtual: true });

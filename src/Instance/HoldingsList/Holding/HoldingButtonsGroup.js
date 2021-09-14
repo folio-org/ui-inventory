@@ -49,7 +49,7 @@ const HoldingButtonsGroup = ({
         <FormattedMessage id="ui-inventory.addItem" />
       </Button>
     </IfPermission>
-    {!isOpen && <Badge>{itemCount !== undefined ? itemCount : <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
+    {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
   </>
 );
 
@@ -57,7 +57,7 @@ HoldingButtonsGroup.propTypes = {
   holding: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object).isRequired,
   isOpen: PropTypes.bool.isRequired,
-  itemCount: PropTypes.number.isRequired,
+  itemCount: PropTypes.number,
   locationsById: PropTypes.object.isRequired,
   onAddItem: PropTypes.func.isRequired,
   onViewHolding: PropTypes.func.isRequired,

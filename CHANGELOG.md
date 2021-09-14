@@ -20,6 +20,7 @@
 * Replace okapiInterfaces dependencies for inventory to `11.0`. Refs FOLIO-3179.
 * Add accordion to `<ItemView>` for bound-with related items. Refs UIIN-1521.
 * Add View source for MARC Holdings. Refs UIIN-1549.
+* Item count bug when there are multiple holdings on an instance. Refs UIIN-1617.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
