@@ -684,5 +684,13 @@
     "receivingHistory.comment": "Comentario",
     "receivingHistory.source": "Fuente",
     "receivingHistory.source.receiving": "Recepción",
-    "receivingHistory.source.user": "Usuario"
+    "receivingHistory.source.user": "Usuario",
+    "holdingsLabelShort": "Holdings:",
+    "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+    "shortcut.expandCollapse": "Expand or collapse an accordion",
+    "shortcut.close": "Close a modal or pop-up",
+    "shortcut.copy": "Copy",
+    "shortcut.cut": "Cut",
+    "shortcut.paste": "Paste",
+    "shortcut.find": "Find"
 }

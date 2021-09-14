@@ -5,7 +5,7 @@ import {
   normalizeIndicator,
 } from './utils';
 
-const InstanceMarcField = ({
+const MarcField = ({
   field,
 }) => {
   const fieldTag = Object.keys(field)[0];
@@ -39,8 +39,8 @@ const InstanceMarcField = ({
   );
 };
 
-InstanceMarcField.propTypes = {
+MarcField.propTypes = {
   field: PropTypes.object.isRequired,
 };
 
-export default InstanceMarcField;
+export default MarcField;

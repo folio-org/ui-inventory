@@ -748,6 +748,7 @@
     "start": "stripes serve",
     "lint": "eslint .",
     "test": "yarn run test:unit",
+    "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"

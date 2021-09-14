@@ -651,6 +651,8 @@ class ItemView extends React.Component {
       source,
     };
 
+    const boundWithTitles = item?.boundWithTitles;
+
     const initialAccordionsState = {
       acc01: !areAllFieldsEmpty(values(administrativeData)),
       acc02: !areAllFieldsEmpty(values(itemData)),
@@ -661,6 +663,7 @@ class ItemView extends React.Component {
       acc07: !areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
       acc08: !areAllFieldsEmpty(values(electronicAccess)),
       acc09: !areAllFieldsEmpty(values(circulationHistory)),
+      acc10: !areAllFieldsEmpty(values(boundWithTitles)),
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
@@ -688,6 +691,12 @@ class ItemView extends React.Component {
       'Link text': x => get(x, ['linkText']) || noValue,
       'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
       'URL public note': x => get(x, ['publicNote']) || noValue,
+    };
+
+    const boundWithTitleFormatter = {
+      'Instance HRID': x => x.briefInstance?.hrid,
+      'Instance title': x => x.briefInstance?.title,
+      'Holdings HRID': x => x.briefHoldingsRecord?.hrid,
     };
 
     const effectiveLocationDisplay = (
@@ -1412,6 +1421,23 @@ class ItemView extends React.Component {
                           />
                         </Col>
                       </Row>
+                    </Accordion>
+                    <Accordion
+                      id="acc10"
+                      label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
+                    >
+                      <MultiColumnList
+                        id="item-list-bound-with-titles"
+                        contentData={checkIfArrayIsEmpty(boundWithTitles)}
+                        visibleColumns={['Instance HRID', 'Instance title', 'Holdings HRID']}
+                        columnMapping={{
+                          'Instance HRID': intl.formatMessage({ id: 'ui-inventory.instanceHrid' }),
+                          'Instance title': intl.formatMessage({ id: 'ui-inventory.instanceTitleLabel' }),
+                          'Holdings HRID': intl.formatMessage({ id: 'ui-inventory.holdingsHrid' }),
+                        }}
+                        formatter={boundWithTitleFormatter}
+                        ariaLabel={intl.formatMessage({ id: 'ui-inventory.boundWithTitles' })}
+                      />
                     </Accordion>
                   </AccordionSet>
                 </AccordionStatus>

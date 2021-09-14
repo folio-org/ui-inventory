@@ -17,3 +17,4 @@ export { default as CalloutRenderer } from './CalloutRenderer';
 export { default as CheckboxFacet } from './CheckboxFacet';
 export { default as SearchAndSort } from './SearchAndSort';
 export { default as SearchField } from './SearchField';
+export { default as MarcContainer } from './MarcView';

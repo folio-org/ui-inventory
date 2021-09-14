@@ -4,16 +4,22 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import { MarcContainer } from '../../components';
 
-const InstanceMarcContainer = ({ mutator, instanceId }) => {
+const HoldingsMarcContainer = ({
+  mutator,
+  instanceId,
+  holdingsrecordid,
+}) => {
   return (
     <MarcContainer
       mutator={mutator}
       instanceId={instanceId}
+      holdingsRecordId={holdingsrecordid}
+      isHoldingsRecord
     />
   );
 };
 
-InstanceMarcContainer.manifest = Object.freeze({
+HoldingsMarcContainer.manifest = Object.freeze({
   marcInstance: {
     type: 'okapi',
     records: 'instances',
@@ -23,15 +29,16 @@ InstanceMarcContainer.manifest = Object.freeze({
   },
   marcRecord: {
     type: 'okapi',
-    path: 'source-storage/records/!{instanceId}/formatted?idType=INSTANCE',
+    path: 'source-storage/records/!{holdingsrecordid}/formatted?idType=HOLDINGS',
     accumulate: true,
     throwErrors: false,
   },
 });
 
-InstanceMarcContainer.propTypes = {
-  mutator: PropTypes.object.isRequired,
+HoldingsMarcContainer.propTypes = {
+  holdingsrecordid: PropTypes.string.isRequired,
   instanceId: PropTypes.string.isRequired,
+  mutator: PropTypes.object.isRequired,
 };
 
-export default stripesConnect(InstanceMarcContainer);
+export default stripesConnect(HoldingsMarcContainer);
