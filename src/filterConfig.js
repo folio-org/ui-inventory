@@ -8,81 +8,86 @@ import {
   buildDateRangeQuery,
   buildOptionalBooleanQuery,
 } from './utils';
+import {
+  FACETS,
+  FACETS_CQL
+} from './constants';
+import {
+  AND,
+  NOT,
+  OR
+} from './components/ElasticQueryField/constants';
 
 export const instanceFilterConfig = [
   {
-    name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'language',
-    cql: 'languages',
-    values: [],
-    operator: '=',
-  },
-  {
-    name: 'format',
-    cql: 'instanceFormatIds',
-    values: [],
-    operator: '=',
-  },
-  {
-    name: 'resource',
-    cql: 'instanceTypeId',
+    name: FACETS.LANGUAGE,
+    cql: FACETS_CQL.LANGUAGES,
     values: [],
   },
   {
-    name: 'mode',
-    cql: 'modeOfIssuanceId',
+    name: FACETS.FORMAT,
+    cql: FACETS_CQL.INSTANCE_FORMAT,
     values: [],
   },
   {
-    name: 'natureOfContent',
-    cql: 'natureOfContentTermIds',
+    name: FACETS.RESOURCE,
+    cql: FACETS_CQL.INSTANCE_TYPE,
     values: [],
-    operator: '=',
+  },
+  {
+    name: FACETS.MODE,
+    cql: FACETS_CQL.MODE_OF_ISSUANCE,
+    values: [],
+  },
+  {
+    name: FACETS.NATURE_OF_CONTENT,
+    cql: FACETS_CQL.NATURE_OF_CONTENT,
+    values: [],
   },
   {
     name: 'location',
-    cql: 'holdingsRecords.permanentLocationId',
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'staffSuppress',
-    cql: 'staffSuppress',
+    name: FACETS_CQL.STAFF_SUPPRESS,
+    cql: FACETS_CQL.STAFF_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('staffSuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.STAFF_SUPPRESS),
   },
   {
-    name: 'discoverySuppress',
-    cql: 'discoverySuppress',
+    name: FACETS.INSTANCES_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('discoverySuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS),
   },
   {
-    name: 'createdDate',
-    cql: 'metadata.createdDate',
+    name: FACETS.CREATED_DATE,
+    cql: FACETS_CQL.CREATED_DATE,
     values: [],
-    parse: buildDateRangeQuery('createdDate'),
+    parse: buildDateRangeQuery(FACETS.CREATED_DATE),
   },
   {
-    name: 'updatedDate',
-    cql: 'metadata.updatedDate',
+    name: FACETS.UPDATED_DATE,
+    cql: FACETS_CQL.UPDATED_DATE,
     values: [],
-    parse: buildDateRangeQuery('updatedDate'),
+    parse: buildDateRangeQuery(FACETS.UPDATED_DATE),
   },
   {
-    name: 'source',
-    cql: 'source',
+    name: FACETS.SOURCE,
+    cql: FACETS_CQL.SOURCE,
     operator: '==',
     values: [],
   },
   {
-    name: 'tags',
-    cql: 'tags.tagList',
+    name: FACETS.INSTANCES_TAGS,
+    cql: FACETS_CQL.INSTANCES_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
@@ -98,7 +103,24 @@ export const instanceIndexes = [
   // { label: 'ui-inventory.barcode', value: 'item.barcode', queryTemplate: 'item.barcode=="%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
+];
+
+export const instanceIndexesES = [
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all' },
+  { label: 'ui-inventory.title', value: 'Title', queryTemplate: 'title all' },
+  { label: 'ui-inventory.contributor', value: 'Contributor', queryTemplate: 'contributors=' },
+  { label: 'ui-inventory.identifierAll', value: 'Identifier', queryTemplate: 'identifiers.value==' },
+  { label: 'ui-inventory.issn', value: 'ISSN', queryTemplate: 'issn==' },
+  { label: 'ui-inventory.isbn', value: 'ISBN', queryTemplate: 'isbn==' },
+  { label: 'ui-inventory.subject', value: 'Subject', queryTemplate: 'subjects all' },
+  { label: 'ui-inventory.instanceId', value: 'UUID', queryTemplate: 'id==' },
+  { label: 'ui-inventory.instanceHrid', value: 'HRID', queryTemplate: 'hrid==' },
+  { label: 'ui-inventory.electronicAccessAll', value: 'Electronic access (all)', queryTemplate: 'electronicAccess==' },
+  { label: 'ui-inventory.electronicAccessURI', value: 'Electronic access (URI)', queryTemplate: 'electronicAccess.uri==' },
+  { label: 'ui-inventory.electronicAccessPublicNote', value: 'Electronic access (Public Note)', queryTemplate: 'electronicAccess.publicNote all' },
+  { label: 'ui-inventory.electronicAccessLinkText', value: 'Electronic access (Link text)', queryTemplate: 'electronicAccess.linkText all' },
+  { label: 'ui-inventory.electronicAccessMaterialsSpecified', value: 'Electronic access (Materials specified)', queryTemplate: 'electronicAccess.materialsSpecification all' },
 ];
 
 export const instanceSortMap = {
@@ -123,33 +145,45 @@ export const holdingIndexes = [
     value: 'callNumberNormalized',
     queryTemplate: 'holdingsRecords.fullCallNumberNormalized="%{query.query}" OR holdingsRecords.callNumberAndSuffixNormalized="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdingsRecords.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
+];
+
+export const holdingIndexesES = [
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all' },
+  { label: 'ui-inventory.issn', value: 'ISSN', queryTemplate: 'issn==' },
+  { label: 'ui-inventory.isbn', value: 'ISBN', queryTemplate: 'isbn==' },
+  { label: 'ui-inventory.callNumber', value: 'Call Number', queryTemplate: 'holdings.fullCallNumber==' },
+  { label: 'ui-inventory.holdingsHrid', value: 'HRID', queryTemplate: 'holdings.hrid==' },
+  { label: 'ui-inventory.electronicAccessAll', value: 'Electronic access (all)', queryTemplate: 'electronicAccess==' },
+  { label: 'ui-inventory.electronicAccessURI', value: 'Electronic access (URI)', queryTemplate: 'electronicAccess.uri==' },
+  { label: 'ui-inventory.electronicAccessPublicNote', value: 'Electronic access (Public Note)', queryTemplate: 'electronicAccess.publicNote all' },
+  { label: 'ui-inventory.electronicAccessLinkText', value: 'Electronic access (Link text)', queryTemplate: 'electronicAccess.linkText all' },
+  { label: 'ui-inventory.electronicAccessMaterialsSpecified', value: 'Electronic access (Materials specified)', queryTemplate: 'electronicAccess.materialsSpecification all' },
 ];
 
 export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
-    name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'holdingsPermanentLocation',
-    cql: 'holdingsRecords.permanentLocationId',
+    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'discoverySuppress',
-    cql: 'holdingsRecords.discoverySuppress',
+    name: FACETS.HOLDINGS_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('holdingsRecords.discoverySuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS),
   },
   {
-    name: 'tags',
-    cql: 'holdingsRecords.tags.tagList',
+    name: FACETS.HOLDINGS_TAGS,
+    cql: FACETS_CQL.HOLDINGS_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
@@ -170,44 +204,66 @@ export const itemIndexes = [
     value: 'itemCallNumberNorm',
     queryTemplate: 'item.fullCallNumberNormalized="%{query.query}" OR item.callNumberAndSuffixNormalized="%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'item.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
+];
 
+export const itemIndexesES = [
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all' },
+  { label: 'ui-inventory.barcode', value: 'Barcode', queryTemplate: 'items.barcode==' },
+  { label: 'ui-inventory.issn', value: 'ISSN', queryTemplate: 'issn==' },
+  { label: 'ui-inventory.isbn', value: 'ISBN', queryTemplate: 'isbn==' },
+  { label: 'ui-inventory.callNumber', value: 'Call Number', queryTemplate: 'items.effectiveCallNumberComponents==' },
+  { label: 'ui-inventory.itemHrid', value: 'Item HRID', queryTemplate: 'items.hrid==' },
+  { label: 'ui-inventory.electronicAccessAll', value: 'Electronic access (all)', queryTemplate: 'electronicAccess==' },
+  { label: 'ui-inventory.electronicAccessURI', value: 'Electronic access (URI)', queryTemplate: 'electronicAccess.uri==' },
+  { label: 'ui-inventory.electronicAccessPublicNote', value: 'Electronic access (Public Note)', queryTemplate: 'electronicAccess.publicNote all' },
+  { label: 'ui-inventory.electronicAccessLinkText', value: 'Electronic access (Link text)', queryTemplate: 'electronicAccess.linkText all' },
+  { label: 'ui-inventory.electronicAccessMaterialsSpecified', value: 'Electronic access (Materials specified)', queryTemplate: 'electronicAccess.materialsSpecification all' },
 ];
 
 export const itemFilterConfig = [
   {
-    name: 'materialType',
-    cql: 'item.materialTypeId',
+    name: FACETS.MATERIAL_TYPE,
+    cql: FACETS_CQL.MATERIAL_TYPES,
     values: [],
   },
   {
-    name: 'itemStatus',
-    cql: 'item.status.name',
+    name: FACETS.ITEM_STATUS,
+    cql: FACETS_CQL.ITEMS_STATUSES,
     operator: '==',
     values: [],
   },
   {
-    name: 'effectiveLocation',
-    cql: 'item.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'holdingsPermanentLocation',
-    cql: 'holdingsRecords.permanentLocationId',
+    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'discoverySuppress',
-    cql: 'item.discoverySuppress',
+    name: FACETS.ITEMS_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
     values: [],
-    parse: buildOptionalBooleanQuery('item.discoverySuppress'),
+    parse: buildOptionalBooleanQuery(FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS),
   },
   {
-    name: 'tags',
-    cql: 'item.tags.tagList',
+    name: FACETS.ITEMS_TAGS,
+    cql: FACETS_CQL.ITEMS_TAGS,
     values: [],
-    operator: '=',
   },
+];
+
+const operators = [
+  { label: '=', queryTemplate: '' },
+];
+
+const booleanOperators = [
+  { label: AND },
+  { label: OR },
+  { label: NOT },
 ];
 
 export const itemSortMap = {
@@ -222,18 +278,27 @@ const config = {
     indexes: instanceIndexes,
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
+    indexesES: instanceIndexesES,
+    operators,
+    booleanOperators,
   },
   holdings: {
     filters: holdingFilterConfig,
     indexes: holdingIndexes,
     sortMap: holdingSortMap,
     renderer: holdingsRecordFilterRenderer,
+    indexesES: holdingIndexesES,
+    operators,
+    booleanOperators,
   },
   items: {
     filters: itemFilterConfig,
     indexes: itemIndexes,
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
+    indexesES: itemIndexesES,
+    operators,
+    booleanOperators,
   }
 };
 
