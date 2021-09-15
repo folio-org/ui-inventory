@@ -241,6 +241,7 @@
   "accessionNumber": "Accession number",
   "status": "Status",
   "loanTypeTemporary": "Temporary loan type",
+  "caption": "Caption",
   "enumeration": "Enumeration",
   "enumerationData": "Enumeration data",
   "volume": "Volume",
