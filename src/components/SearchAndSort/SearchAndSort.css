@@ -1,0 +1,21 @@
+
+@import '@folio/stripes-components/lib/variables';
+
+/**
+ * SearchAndSort
+ */
+
+/* reset button wrap - minor alignment adjustment */
+.resetButtonWrap {
+  margin-left: -3px;
+}
+
+.searchField {
+  margin-bottom: calc(var(--control-margin-bottom) / 2);
+}
+
+.delimiter {
+  & > span:not(:last-child)::after {
+    content: "\00a0\B7\00a0";
+  }
+}

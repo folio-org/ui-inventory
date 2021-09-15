@@ -14,4 +14,7 @@ export { default as ModalContent } from './ModalContent';
 export { PaneLoading, ViewLoading } from './Loading';
 export { default as WarningMessage } from './WarningMessage';
 export { default as CalloutRenderer } from './CalloutRenderer';
+export { default as CheckboxFacet } from './CheckboxFacet';
+export { default as SearchAndSort } from './SearchAndSort';
+export { default as SearchField } from './SearchField';
 export { default as MarcContainer } from './MarcView';
