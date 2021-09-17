@@ -96,6 +96,7 @@ class ItemView extends React.Component {
       confirmDeleteItemModal: false,
       cannotDeleteItemModal: false,
       selectedItemStatus: '',
+      olModal: false,
     };
 
     this.craftLayerUrl = craftLayerUrl.bind(this);
@@ -117,16 +118,22 @@ class ItemView extends React.Component {
       delete item.barcode;
     }
 
-    return this.props.mutator.items.PUT(item).then(() => {
-      this.context.sendCallout({
-        type: 'success',
-        message: <FormattedMessage
-          id="ui-inventory.item.successfullySaved"
-          values={{ hrid: item.hrid }}
-        />,
+    return this.props.mutator.items.PUT(item)
+      .then(() => {
+        this.context.sendCallout({
+          type: 'success',
+          message: <FormattedMessage
+            id="ui-inventory.item.successfullySaved"
+            values={{ hrid: item.hrid }}
+          />,
+        });
+        this.onClickCloseEditItem();
+      })
+      .catch((res) => {
+        res.text().then(text => {
+          this.setState({ olModal: true });
+        });
       });
-      this.onClickCloseEditItem();
-    });
   };
 
   copyItem = item => {
@@ -193,6 +200,10 @@ class ItemView extends React.Component {
       this.props.mutator.requests.PUT(newRequestRecord);
     }
   }
+
+  hideOlModal = () => {
+    this.setState({ olModal: false });
+  };
 
   hideMissingModal = () => {
     this.setState({ itemMissingModal: false });
@@ -1456,6 +1467,8 @@ class ItemView extends React.Component {
                   holdingsRecord={holdingsRecord}
                   referenceTables={referenceTables}
                   stripes={this.props.stripes}
+                  olModal={this.state.olModal}
+                  hideOlModal={this.hideOlModal}
                 />
               </Layer>
               <Layer

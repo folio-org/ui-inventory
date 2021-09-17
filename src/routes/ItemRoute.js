@@ -26,7 +26,7 @@ class ItemRoute extends React.Component {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
-      resourceShouldRefresh: true,
+      throwErrors: false,
     },
     markItemAsWithdrawn: {
       type: 'okapi',

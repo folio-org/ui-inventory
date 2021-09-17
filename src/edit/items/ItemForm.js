@@ -9,6 +9,7 @@ import { OnChange } from 'react-final-form-listeners';
 import { withRouter } from 'react-router';
 
 import {
+  Modal,
   Paneset,
   Pane,
   PaneFooter,
@@ -855,6 +856,16 @@ class ItemForm extends React.Component {
                   </Accordion>
                 </AccordionSet>
               </AccordionStatus>
+              <Modal
+                data-test-missingConfirmation-modal
+                open={this.props.olModal}
+                label="Optimistic Locking Conflict"
+                dismissible
+                size="small"
+                onClose={this.props.hideOlModal}
+              >
+                <h1>Boom shakalaka</h1>
+              </Modal>
             </Pane>
           </Paneset>
         </HasCommand>
