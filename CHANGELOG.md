@@ -23,6 +23,7 @@
 * Item count bug when there are multiple holdings on an instance. Refs UIIN-1617.
 * Incorporate `ui-inventory-search` facets. Refs UIIN-1567.
 * Update received piece table columns. Refs UIIN-1632.
+* Restore `mod-inventory` endpoints for non-search requests. UIIN-1634.
 * Delete Inventory and MARC holdings records when record Source = MARC. Refs UIIN-1559.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
