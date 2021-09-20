@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { get, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -6,6 +6,7 @@ import {
   Field,
 } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
+import { withRouter } from 'react-router';
 
 import {
   Paneset,
@@ -22,6 +23,12 @@ import {
   Datepicker,
   ExpandAllButton,
   TextArea,
+  AccordionSet,
+  AccordionStatus,
+  checkScope,
+  HasCommand,
+  collapseAllSections,
+  expandAllSections,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -35,7 +42,7 @@ import { effectiveCallNumber } from '@folio/stripes/util';
 import RepeatableField from '../../components/RepeatableField';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { validateOptionalField } from '../../utils';
+import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 
 import styles from './ItemForm.css';
@@ -104,20 +111,9 @@ function validateBarcode(props) {
 class ItemForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      accordions: {
-        acc01: true,
-        acc02: true,
-        acc03: true,
-        acc04: true,
-        acc05: true,
-        acc06: true,
-        acc07: true,
-        acc08: true,
-        acc09: true,
-      },
-    };
+
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.accordionStatusRef = createRef();
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -197,9 +193,10 @@ class ItemForm extends React.Component {
         itemDamagedStatuses,
       },
       handleSubmit,
+      pristine,
+      submitting,
+      history,
     } = this.props;
-
-    const { accordions } = this.state;
 
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
 
@@ -267,587 +264,600 @@ class ItemForm extends React.Component {
     const labelCallNumber = holdingsRecord.callNumber || '';
     const effectiveLocation = get(initialValues, ['effectiveLocation', 'name'], '-');
 
+    const shortcuts = [
+      {
+        name: 'cancel',
+        shortcut: 'esc',
+        handler: handleKeyCommand(onCancel),
+      },
+      {
+        name: 'save',
+        handler: handleKeyCommand(handleSubmit, { disabled: pristine || submitting }),
+      },
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'search',
+        handler: handleKeyCommand(() => history.push('/inventory')),
+      },
+    ];
+
     return (
       <form
         data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
         className={styles.itemForm}
         onSubmit={handleSubmit}
       >
-        <Paneset isRoot>
-          <Pane
-            defaultWidth="100%"
-            dismissible
-            onClose={onCancel}
-            footer={this.getFooter()}
-            appIcon={<AppIcon app="inventory" iconKey="item" />}
-            paneTitle={
-              <span data-test-header-title>
-                {instance.title}
-                {(instance.publication && instance.publication.length > 0) &&
-                  <>
-                    {', '}
-                    {instance.publication[0].publisher}
-                    {instance.publication[0].dateOfPublication
-                      ? `, ${instance.publication[0].dateOfPublication}`
-                      : null
-                    }
-                  </>
-                }
-              </span>
-            }
-            paneSub={
-              <span data-test-header-sub>
-                <FormattedMessage
-                  id="ui-inventory.holdingsTitle"
-                  values={{
-                    location: labelLocation,
-                    callNumber: labelCallNumber,
-                  }}
-                />
-              </span>
-            }
-          >
-            <Row>
-              <Col
-                sm={5}
-              >
-                <h2>
-                  <FormattedMessage id="ui-inventory.itemRecord" />
-                </h2>
-              </Col>
-            </Row>
-            <Row>
-              { initialValues.id &&
-                <>
-                  <Col xs={4}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
-                      value={effectiveLocation}
-                    />
-                  </Col>
-                  <Col xs={8}>
-                    <KeyValue
-                      label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
-                      value={effectiveCallNumber(initialValues)}
-                    />
-                  </Col>
-                </>
+        <HasCommand
+          commands={shortcuts}
+          isWithinScope={checkScope}
+          scope={document.body}
+        >
+          <Paneset isRoot>
+            <Pane
+              defaultWidth="100%"
+              dismissible
+              onClose={onCancel}
+              footer={this.getFooter()}
+              appIcon={<AppIcon app="inventory" iconKey="item" />}
+              paneTitle={
+                <span data-test-header-title>
+                  {instance.title}
+                  {(instance.publication && instance.publication.length > 0) &&
+                    <>
+                      {', '}
+                      {instance.publication[0].publisher}
+                      {instance.publication[0].dateOfPublication
+                        ? `, ${instance.publication[0].dateOfPublication}`
+                        : null
+                      }
+                    </>
+                  }
+                </span>
               }
-              <Col end="xs">
-                <ExpandAllButton
-                  accordionStatus={accordions}
-                  onToggle={this.handleExpandAll}
-                />
-              </Col>
-            </Row>
-            <Accordion
-              open={accordions.acc01}
-              id="acc01"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.administrativeData" />}
+              paneSub={
+                <span data-test-header-sub>
+                  <FormattedMessage
+                    id="ui-inventory.holdingsTitle"
+                    values={{
+                      location: labelLocation,
+                      callNumber: labelCallNumber,
+                    }}
+                  />
+                </span>
+              }
             >
               <Row>
                 <Col
                   sm={5}
                 >
-                  {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                  <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                  <h2>
+                    <FormattedMessage id="ui-inventory.itemRecord" />
+                  </h2>
+                </Col>
+              </Row>
+              <AccordionStatus ref={this.accordionStatusRef}>
+                <Row>
+                  { initialValues.id &&
+                    <>
+                      <Col xs={4}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
+                          value={effectiveLocation}
+                        />
+                      </Col>
+                      <Col xs={8}>
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
+                          value={effectiveCallNumber(initialValues)}
+                        />
+                      </Col>
+                    </>
                   }
-                  {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
-                    name="discoverySuppress"
-                    id="input_discovery_suppress"
-                    component={Checkbox}
-                    type="checkbox"
-                  />
-                </Col>
-              </Row>
-              <br />
-              <Row>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.itemHrid" />}
-                    name="hrid"
-                    id="additem_hrid"
-                    disabled
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.barcode" />}
-                    name="barcode"
-                    id="additem_barcode"
-                    validate={validateBarcode(this.props)}
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.accessionNumber" />}
-                    name="accessionNumber"
-                    id="additem_accessionnumber"
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
-                    name="itemIdentifier"
-                    id="additem_itemidentifier"
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={8}>
-                  <RepeatableField
-                    name="formerIds"
-                    addButtonId="clickable-add-former-id"
-                    addLabel={<FormattedMessage id="ui-inventory.addFormerId" />}
-                    template={[{
-                      component: TextField,
-                      label: <FormattedMessage id="ui-inventory.formerId" />,
-                    }]}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="statisticalCodeIds"
-                    addButtonId="clickable-add-statistical-code"
-                    addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
-                    template={[
-                      {
-                        label: <FormattedMessage id="ui-inventory.statisticalCode" />,
-                        component: Select,
-                        dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
-                      }
-                    ]}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc02}
-              id="acc02"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.itemData" />}
-            >
-              <Row>
-                <Col sm={3}>
-                  <FormattedMessage id="ui-inventory.selectMaterialType">
-                    {([placeholder]) => (
-                      <Field
-                        label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
-                        placeholder={placeholder}
-                        name="materialType.id"
-                        id="additem_materialType"
-                        component={Select}
-                        fullWidth
-                        dataOptions={materialTypeOptions}
-                      />
-                    )}
-                  </FormattedMessage>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                    name="copyNumber"
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={2}>
-                  <FormattedMessage id="ui-inventory.selectCallNumberType">
-                    {([placeholder]) => (
-                      <Field
-                        label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                        placeholder={placeholder}
-                        name="itemLevelCallNumberTypeId"
-                        id="additem_callnumbertype"
-                        component={Select}
-                        fullWidth
-                        dataOptions={callNumberTypeOptions}
-                      />
-                    )}
-                  </FormattedMessage>
-                </Col>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                    name="itemLevelCallNumberPrefix"
-                    id="additem_callnumberprefix"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                  />
-                </Col>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.callNumber" />}
-                    name="itemLevelCallNumber"
-                    id="additem_callnumber"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                  />
-                </Col>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                    name="itemLevelCallNumberSuffix"
-                    id="additem_callnumbersuffix"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
-                    name="numberOfPieces"
-                    id="additem_numberofpieces"
-                    component={TextField}
-                  />
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
-                    name="descriptionOfPieces"
-                    id="input_descriptionofpieces"
-                    component={TextArea}
-                    rows={1}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc03}
-              id="acc03"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.enumerationData" />}
-            >
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.enumeration" />}
-                    name="enumeration"
-                    id="additem_enumeration"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                  />
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.chronology" />}
-                    name="chronology"
-                    id="additem_chronology"
-                    component={TextArea}
-                    rows={1}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.volume" />}
-                    name="volume"
-                    id="additem_volume"
-                    component={TextField}
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={6}>
-                  <RepeatableField
-                    name="yearCaption"
-                    addButtonId="clickable-add-year-caption"
-                    addLabel={<FormattedMessage id="ui-inventory.addYearCaption" />}
-                    template={[{
-                      component: TextField,
-                      label: <FormattedMessage id="ui-inventory.yearCaption" />
-                    }]}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc04}
-              id="acc04"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.condition" />}
-            >
-              <Row>
-                <Col sm={3}>
-                  <Field
-                    name="numberOfMissingPieces"
-                    id="input_number_of_missing_pieces"
-                    component={TextField}
-                    label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
-                  />
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    name="missingPieces"
-                    id="input_missing_pieces"
-                    component={TextField}
-                    label={<FormattedMessage id="ui-inventory.missingPieces" />}
-                  />
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    name="missingPiecesDate"
-                    id="input_missing_pieces_date"
-                    dateFormat="YYYY-MM-DD"
-                    backendDateStandard="YYYY-MM-DD"
-                    component={Datepicker}
-                    label={<FormattedMessage id="ui-inventory.date" />}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={3}>
-                  <FormattedMessage id="ui-inventory.selectStatus">
-                    {([placeholder]) => (
-                      <Field
-                        name="itemDamagedStatusId"
-                        id="input_item_damaged_status_id"
-                        component={Select}
-                        placeholder={placeholder}
-                        label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                        dataOptions={itemDamagedStatusOptions}
-                      />
-                    )}
-                  </FormattedMessage>
-                  <OnChange name="itemDamagedStatusId">
-                    {() => {
-                      this.setItemDamagedStatusDate();
-                    }}
-                  </OnChange>
-                </Col>
-                <Col sm={3}>
-                  <Field
-                    name="itemDamagedStatusDate"
-                    id="input_missing_pieces_date"
-                    dateFormat="YYYY-MM-DD"
-                    backendDateStandard="YYYY-MM-DD"
-                    component={Datepicker}
-                    label={<FormattedMessage id="ui-inventory.date" />}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc05}
-              id="acc05"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.itemNotes" />}
-            >
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="notes"
-                    addButtonId="clickable-add-note"
-                    addLabel={<FormattedMessage id="ui-inventory.addNote" />}
-                    template={[
-                      {
-                        name: 'itemNoteTypeId',
-                        label: <FormattedMessage id="ui-inventory.noteType" />,
-                        component: Select,
-                        dataOptions: [{ label: 'Select type', value: '' }, ...itemNoteTypeOptions],
-                      },
-                      {
-                        name: 'note',
-                        label: <FormattedMessage id="ui-inventory.note" />,
-                        component: TextArea,
-                        rows: 1,
-                      },
-                      {
-                        name: 'staffOnly',
-                        label: <FormattedMessage id="ui-inventory.staffOnly" />,
-                        component: Checkbox,
-                        type: 'checkbox',
-                        inline: true,
-                        vertical: true,
-                        columnSize: {
-                          xs: 3,
-                          lg: 2,
+                  <Col end="xs">
+                    <ExpandAllButton />
+                  </Col>
+                </Row>
+                <AccordionSet>
+                  <Accordion
+                    id="acc01"
+                    label={<FormattedMessage id="ui-inventory.administrativeData" />}
+                  >
+                    <Row>
+                      <Col
+                        sm={5}
+                      >
+                        {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
+                        <this.cViewMetaData metadata={holdingsRecord.metadata} />
                         }
-                      }
-                    ]}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc06}
-              id="acc06"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
-            >
-              <Row>
-                <Col sm={6}>
-                  <FormattedMessage id="ui-inventory.selectLoanType">
-                    {([placeholder]) => (
-                      <Field
-                        label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
-                        placeholder={placeholder}
-                        name="permanentLoanType.id"
-                        id="additem_loanTypePerm"
-                        component={Select}
-                        fullWidth
-                        dataOptions={loanTypeOptions}
-                      />
-                    )}
-                  </FormattedMessage>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={6}>
-                  <FormattedMessage id="ui-inventory.selectLoanType">
-                    {([placeholder]) => (
-                      <Field
-                        label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
-                        name="temporaryLoanType.id"
-                        id="additem_loanTypeTemp"
-                        component={Select}
-                        fullWidth
-                        dataOptions={[{
-                          label: placeholder,
-                          value: '',
-                          selected: !initialValues.loanType,
-                        }, ...loanTypeOptions]}
-                      />
-                    )}
-                  </FormattedMessage>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={2}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.status" />}
-                    name="status.name"
-                    id="additem_status"
-                    component={TextField}
-                    disabled
-                    fullWidth
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={10}>
-                  <RepeatableField
-                    name="circulationNotes"
-                    addButtonId="clickable-add-note"
-                    addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
-                    template={[
-                      {
-                        name: 'noteType',
-                        label: <FormattedMessage id="ui-inventory.noteType" />,
-                        component: Select,
-                        dataOptions: [
-                          { label: 'Select type', value: '' },
-                          { label: 'Check in note', value: 'Check in' },
-                          { label: 'Check out note', value: 'Check out' }
-                        ],
-                      },
-                      {
-                        name: 'note',
-                        label: <FormattedMessage id="ui-inventory.note" />,
-                        component: TextArea,
-                        rows: 1,
-                      },
-                      {
-                        name: 'staffOnly',
-                        label: <FormattedMessage id="ui-inventory.staffOnly" />,
-                        component: Checkbox,
-                        type: 'checkbox',
-                        inline: true,
-                        vertical: true,
-                        columnSize: {
-                          xs: 3,
-                          lg: 2,
-                        }
-                      }
-                    ]}
-                  />
-                </Col>
-              </Row>
-            </Accordion>
-            {/*
-              acquisition info isn't available yet but accordions MUST contain
-              child elements. this is commented out for now in an effort to
-              keep the console free of warnings.
+                        {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+                          name="discoverySuppress"
+                          id="input_discovery_suppress"
+                          component={Checkbox}
+                          type="checkbox"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.itemHrid" />}
+                          name="hrid"
+                          id="additem_hrid"
+                          disabled
+                          component={TextField}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.barcode" />}
+                          name="barcode"
+                          id="additem_barcode"
+                          validate={validateBarcode(this.props)}
+                          component={TextField}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.accessionNumber" />}
+                          name="accessionNumber"
+                          id="additem_accessionnumber"
+                          component={TextField}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.itemIdentifier" />}
+                          name="itemIdentifier"
+                          id="additem_itemidentifier"
+                          component={TextField}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={8}>
+                        <RepeatableField
+                          name="formerIds"
+                          addButtonId="clickable-add-former-id"
+                          addLabel={<FormattedMessage id="ui-inventory.addFormerId" />}
+                          template={[{
+                            component: TextField,
+                            label: <FormattedMessage id="ui-inventory.formerId" />,
+                          }]}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={10}>
+                        <RepeatableField
+                          name="statisticalCodeIds"
+                          addButtonId="clickable-add-statistical-code"
+                          addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
+                          template={[
+                            {
+                              label: <FormattedMessage id="ui-inventory.statisticalCode" />,
+                              component: Select,
+                              dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
+                            }
+                          ]}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    id="acc02"
+                    label={<FormattedMessage id="ui-inventory.itemData" />}
+                  >
+                    <Row>
+                      <Col sm={3}>
+                        <FormattedMessage id="ui-inventory.selectMaterialType">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
+                              placeholder={placeholder}
+                              name="materialType.id"
+                              id="additem_materialType"
+                              component={Select}
+                              fullWidth
+                              dataOptions={materialTypeOptions}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                          name="copyNumber"
+                          component={TextField}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={2}>
+                        <FormattedMessage id="ui-inventory.selectCallNumberType">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                              placeholder={placeholder}
+                              name="itemLevelCallNumberTypeId"
+                              id="additem_callnumbertype"
+                              component={Select}
+                              fullWidth
+                              dataOptions={callNumberTypeOptions}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
+                          name="itemLevelCallNumberPrefix"
+                          id="additem_callnumberprefix"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.callNumber" />}
+                          name="itemLevelCallNumber"
+                          id="additem_callnumber"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
+                          name="itemLevelCallNumberSuffix"
+                          id="additem_callnumbersuffix"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.numberOfPieces" />}
+                          name="numberOfPieces"
+                          id="additem_numberofpieces"
+                          component={TextField}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.descriptionOfPieces" />}
+                          name="descriptionOfPieces"
+                          id="input_descriptionofpieces"
+                          component={TextArea}
+                          rows={1}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    id="acc03"
+                    label={<FormattedMessage id="ui-inventory.enumerationData" />}
+                  >
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.enumeration" />}
+                          name="enumeration"
+                          id="additem_enumeration"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.chronology" />}
+                          name="chronology"
+                          id="additem_chronology"
+                          component={TextArea}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.volume" />}
+                          name="volume"
+                          id="additem_volume"
+                          component={TextField}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={6}>
+                        <RepeatableField
+                          name="yearCaption"
+                          addButtonId="clickable-add-year-caption"
+                          addLabel={<FormattedMessage id="ui-inventory.addYearCaption" />}
+                          template={[{
+                            component: TextField,
+                            label: <FormattedMessage id="ui-inventory.yearCaption" />
+                          }]}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    id="acc04"
+                    label={<FormattedMessage id="ui-inventory.condition" />}
+                  >
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          name="numberOfMissingPieces"
+                          id="input_number_of_missing_pieces"
+                          component={TextField}
+                          label={<FormattedMessage id="ui-inventory.numberOfMissingPieces" />}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          name="missingPieces"
+                          id="input_missing_pieces"
+                          component={TextField}
+                          label={<FormattedMessage id="ui-inventory.missingPieces" />}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          name="missingPiecesDate"
+                          id="input_missing_pieces_date"
+                          dateFormat="YYYY-MM-DD"
+                          backendDateStandard="YYYY-MM-DD"
+                          component={Datepicker}
+                          label={<FormattedMessage id="ui-inventory.date" />}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <FormattedMessage id="ui-inventory.selectStatus">
+                          {([placeholder]) => (
+                            <Field
+                              name="itemDamagedStatusId"
+                              id="input_item_damaged_status_id"
+                              component={Select}
+                              placeholder={placeholder}
+                              label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
+                              dataOptions={itemDamagedStatusOptions}
+                            />
+                          )}
+                        </FormattedMessage>
+                        <OnChange name="itemDamagedStatusId">
+                          {() => {
+                            this.setItemDamagedStatusDate();
+                          }}
+                        </OnChange>
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          name="itemDamagedStatusDate"
+                          id="input_missing_pieces_date"
+                          dateFormat="YYYY-MM-DD"
+                          backendDateStandard="YYYY-MM-DD"
+                          component={Datepicker}
+                          label={<FormattedMessage id="ui-inventory.date" />}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    id="acc05"
+                    label={<FormattedMessage id="ui-inventory.itemNotes" />}
+                  >
+                    <Row>
+                      <Col sm={10}>
+                        <RepeatableField
+                          name="notes"
+                          addButtonId="clickable-add-note"
+                          addLabel={<FormattedMessage id="ui-inventory.addNote" />}
+                          template={[
+                            {
+                              name: 'itemNoteTypeId',
+                              label: <FormattedMessage id="ui-inventory.noteType" />,
+                              component: Select,
+                              dataOptions: [{ label: 'Select type', value: '' }, ...itemNoteTypeOptions],
+                            },
+                            {
+                              name: 'note',
+                              label: <FormattedMessage id="ui-inventory.note" />,
+                              component: TextArea,
+                              rows: 1,
+                            },
+                            {
+                              name: 'staffOnly',
+                              label: <FormattedMessage id="ui-inventory.staffOnly" />,
+                              component: Checkbox,
+                              type: 'checkbox',
+                              inline: true,
+                              vertical: true,
+                              columnSize: {
+                                xs: 3,
+                                lg: 2,
+                              }
+                            }
+                          ]}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    id="acc06"
+                    label={<FormattedMessage id="ui-inventory.item.loanAndAvailability" />}
+                  >
+                    <Row>
+                      <Col sm={6}>
+                        <FormattedMessage id="ui-inventory.selectLoanType">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
+                              placeholder={placeholder}
+                              name="permanentLoanType.id"
+                              id="additem_loanTypePerm"
+                              component={Select}
+                              fullWidth
+                              dataOptions={loanTypeOptions}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={6}>
+                        <FormattedMessage id="ui-inventory.selectLoanType">
+                          {([placeholder]) => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.loanTypeTemporary" />}
+                              name="temporaryLoanType.id"
+                              id="additem_loanTypeTemp"
+                              component={Select}
+                              fullWidth
+                              dataOptions={[{
+                                label: placeholder,
+                                value: '',
+                                selected: !initialValues.loanType,
+                              }, ...loanTypeOptions]}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={2}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.status" />}
+                          name="status.name"
+                          id="additem_status"
+                          component={TextField}
+                          disabled
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={10}>
+                        <RepeatableField
+                          name="circulationNotes"
+                          addButtonId="clickable-add-note"
+                          addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
+                          template={[
+                            {
+                              name: 'noteType',
+                              label: <FormattedMessage id="ui-inventory.noteType" />,
+                              component: Select,
+                              dataOptions: [
+                                { label: 'Select type', value: '' },
+                                { label: 'Check in note', value: 'Check in' },
+                                { label: 'Check out note', value: 'Check out' }
+                              ],
+                            },
+                            {
+                              name: 'note',
+                              label: <FormattedMessage id="ui-inventory.note" />,
+                              component: TextArea,
+                              rows: 1,
+                            },
+                            {
+                              name: 'staffOnly',
+                              label: <FormattedMessage id="ui-inventory.staffOnly" />,
+                              component: Checkbox,
+                              type: 'checkbox',
+                              inline: true,
+                              vertical: true,
+                              columnSize: {
+                                xs: 3,
+                                lg: 2,
+                              }
+                            }
+                          ]}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  {/*
+                    acquisition info isn't available yet but accordions MUST contain
+                    child elements. this is commented out for now in an effort to
+                    keep the console free of warnings.
 
-            <Accordion
-              open={accordions.acc07}
-              id="acc07"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.acquisition" />}
-            />
-            */}
-            <Accordion
-              open={accordions.acc08}
-              id="acc08"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.location" />}
-            >
-              <Row>
-                <Col sm={4}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                    name="permanentLocation.id"
-                    id="additem_permanentlocation"
-                    component={LocationSelectionWithCheck}
-                    fullWidth
-                    marginBottom0
+                  <Accordion
+                    id="acc07"
+                    label={<FormattedMessage id="ui-inventory.acquisition" />}
                   />
-                </Col>
-                <Col sm={4}>
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                    name="temporaryLocation.id"
-                    id="additem_temporarylocation"
-                    component={LocationSelectionWithCheck}
-                    fullWidth
-                    marginBottom0
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <RemoteStorageWarning />
-              </Row>
-            </Accordion>
-            <Accordion
-              open={accordions.acc09}
-              id="acc09"
-              onToggle={this.handleAccordionToggle}
-              label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-            >
-              <ElectronicAccessFields relationship={electronicAccessRelationships} />
-            </Accordion>
-          </Pane>
-        </Paneset>
+                  */}
+                  <Accordion
+                    id="acc08"
+                    label={<FormattedMessage id="ui-inventory.location" />}
+                  >
+                    <Row>
+                      <Col sm={4}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.permanentLocation" />}
+                          name="permanentLocation.id"
+                          id="additem_permanentlocation"
+                          component={LocationSelectionWithCheck}
+                          fullWidth
+                          marginBottom0
+                        />
+                      </Col>
+                      <Col sm={4}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
+                          name="temporaryLocation.id"
+                          id="additem_temporarylocation"
+                          component={LocationSelectionWithCheck}
+                          fullWidth
+                          marginBottom0
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <RemoteStorageWarning />
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    id="acc09"
+                    label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+                  >
+                    <ElectronicAccessFields relationship={electronicAccessRelationships} />
+                  </Accordion>
+                </AccordionSet>
+              </AccordionStatus>
+            </Pane>
+          </Paneset>
+        </HasCommand>
       </form>
     );
   }
@@ -871,14 +881,15 @@ ItemForm.propTypes = {
   form: PropTypes.shape({
     change: PropTypes.func.isRequired,
   }).isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 ItemForm.defaultProps = {
   initialValues: {},
 };
 
-export default stripesFinalForm({
+export default withRouter(stripesFinalForm({
   validate,
   mutators,
   navigationCheck: true,
-})(ItemForm);
+})(ItemForm));

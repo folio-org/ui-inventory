@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, forwardRef } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -48,7 +48,7 @@ const accordions = {
   relationship: 'acc10',
 };
 
-const InstanceDetails = ({
+const InstanceDetails = forwardRef(({
   children,
   instance,
   paneTitle,
@@ -57,7 +57,7 @@ const InstanceDetails = ({
   actionMenu,
   tagsEnabled,
   ...rest
-}) => {
+}, ref) => {
   const intl = useIntl();
 
   const referenceData = useContext(DataContext);
@@ -99,7 +99,7 @@ const InstanceDetails = ({
       >
         <TitleManager record={instance.title} />
 
-        <AccordionStatus>
+        <AccordionStatus ref={ref}>
           <Row>
             <Col xs={10}>
               <MessageBanner show={Boolean(instance.staffSuppress && !instance.discoverySuppress)} type="warning">
@@ -198,7 +198,7 @@ const InstanceDetails = ({
       { helperApp && <HelperApp appName={helperApp} onClose={setHelperApp} />}
     </>
   );
-};
+});
 
 InstanceDetails.propTypes = {
   children: PropTypes.node,

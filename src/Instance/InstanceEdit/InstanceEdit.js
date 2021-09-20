@@ -83,14 +83,14 @@ const InstanceEdit = ({
         stripes={stripes}
         onCancel={goBack}
       />
-      { httpError &&
+      {httpError &&
         <ErrorModal
           open
           label={<FormattedMessage id="ui-inventory.instance.saveError" />}
           content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
           onClose={() => setHttpError()}
         />
-       }
+      }
     </>
   );
 };

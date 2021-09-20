@@ -657,3 +657,26 @@ export const getNextSelectedRowsState = (selectedRows, row) => {
 export const isTestEnv = () => process.env.NODE_ENV === 'test';
 
 export const formatCellStyles = css => defaultCellStyle => `${defaultCellStyle} ${css}`;
+
+export const handleKeyCommand = (handler, { disabled } = {}) => {
+  return (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    if (!disabled) {
+      handler();
+    }
+  };
+};
+
+/**
+ * Accent Fold
+ *
+ * For example:
+ * LÒpez => Lopez
+ *
+ * Link:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+*/
+export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');

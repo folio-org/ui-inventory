@@ -5,7 +5,6 @@ import React, {
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
 import {
   Accordion,
   Row,
@@ -16,6 +15,7 @@ import {
 import { DataContext } from '../../../contexts';
 import { callNumberLabel } from '../../../utils';
 import HoldingButtonsGroup from './HoldingButtonsGroup';
+import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 
 const HoldingAccordion = ({
   children,
@@ -24,9 +24,6 @@ const HoldingAccordion = ({
   onViewHolding,
   onAddItem,
   withMoveDropdown,
-  resources: {
-    instanceHoldingItems,
-  },
 }) => {
   const { locationsById } = useContext(DataContext);
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
@@ -40,11 +37,15 @@ const HoldingAccordion = ({
     setOpen(!open);
   };
 
-  const itemCount = instanceHoldingItems?.other?.totalRecords;
+  const searchParams = {
+    limit: 1,
+  };
+  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams });
+
   const holdingButtonsGroup = <HoldingButtonsGroup
     holding={holding}
     holdings={holdings}
-    itemCount={itemCount}
+    itemCount={isFetching ? null : totalRecords}
     locationsById={locationsById}
     onViewHolding={onViewHolding}
     onAddItem={onAddItem}
@@ -93,22 +94,7 @@ const HoldingAccordion = ({
   );
 };
 
-HoldingAccordion.manifest = Object.freeze({
-  instanceHoldingItems: {
-    type: 'okapi',
-    records: 'items',
-    path: 'inventory/items',
-    params: {
-      query: 'holdingsRecordId==!{holding.id}',
-      limit: '1',
-    },
-    resourceShouldRefresh: true,
-    abortOnUnmount: true,
-  },
-});
-
 HoldingAccordion.propTypes = {
-  resources: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
@@ -117,4 +103,4 @@ HoldingAccordion.propTypes = {
   children: PropTypes.func,
 };
 
-export default stripesConnect(HoldingAccordion);
+export default HoldingAccordion;

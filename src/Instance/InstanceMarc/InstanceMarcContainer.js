@@ -1,67 +1,14 @@
-import React, {
-  useState,
-  useEffect,
-} from 'react';
 import PropTypes from 'prop-types';
 
 import { stripesConnect } from '@folio/stripes/core';
-import {
-  LoadingView,
-} from '@folio/stripes/components';
 
-import {
-  useInstance,
-  useGoBack,
-} from '../../common/hooks';
-
-import {
-  isControlField,
-} from './utils';
-import InstanceMarc from './InstanceMarc';
+import { MarcContainer } from '../../components';
 
 const InstanceMarcContainer = ({ mutator, instanceId }) => {
-  const goBack = useGoBack(`/inventory/view/${instanceId}`);
-
-  const [marc, setMarc] = useState();
-  const [isMarcLoading, setIsMarcLoading] = useState(true);
-
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.marcInstance);
-
-  useEffect(() => {
-    setIsMarcLoading(true);
-
-    mutator.marcRecord.GET()
-      .then((marcResponse) => {
-        const parsedMarc = marcResponse.parsedRecord.content;
-
-        setMarc({
-          leader: parsedMarc.leader,
-          fields: [
-            ...parsedMarc.fields.filter(isControlField),
-            ...parsedMarc.fields.filter(field => !isControlField(field)),
-          ],
-        });
-      })
-      .catch(error => {
-        // eslint-disable-next-line no-console
-        console.error('MARC record getting ERROR: ', error);
-
-        goBack();
-      })
-      .finally(() => {
-        setIsMarcLoading(false);
-      });
-  }, []);
-
-  if (isMarcLoading || isInstanceLoading) return <LoadingView />;
-
-  if (!(marc && instance)) return null;
-
   return (
-    <InstanceMarc
-      instance={instance}
-      marc={marc}
-      onClose={goBack}
+    <MarcContainer
+      mutator={mutator}
+      instanceId={instanceId}
     />
   );
 };

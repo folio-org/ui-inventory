@@ -48,11 +48,12 @@
       }
     ],
     "okapiInterfaces": {
-      "inventory": "10.10",
+      "inventory": "10.10 11.0",
       "source-storage-records": "3.0",
-      "instance-storage": "7.0",
-      "holdings-storage": "3.0 4.4",
-      "item-storage": "8.0",
+      "search": "0.5",
+      "instance-storage": "7.0 8.0",
+      "holdings-storage": "3.0 4.4 5.0",
+      "item-storage": "8.0 9.0",
       "loan-types": "2.0",
       "material-types": "2.0",
       "item-note-types": "1.0",
@@ -95,7 +96,18 @@
     "permissionSets": [
       {
         "permissionName": "module.inventory.enabled",
-        "displayName": "Inventory: Module is enabled"
+        "displayName": "Inventory: Module is enabled",
+        "subPermissions": [
+          "search.index.indices.item.post",
+          "search.index.mappings.item.post",
+          "search.index.records.collection.post",
+          "search.instances.collection.get",
+          "search.config.languages.item.post",
+          "search.config.languages.collection.get",
+          "search.config.languages.item.delete",
+          "search.index.inventory.reindex.post",
+          "search.instances.facets.collection.get"
+        ]
       },
       {
         "permissionName": "ui-inventory.all-permissions.TEMPORARY",
@@ -736,6 +748,7 @@
     "start": "stripes serve",
     "lint": "eslint .",
     "test": "yarn run test:unit",
+    "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
@@ -754,7 +767,9 @@
     "@folio/stripes": "^6.2.0",
     "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^9.0.0",
+    "@folio/stripes-connect": "^6.2.0",
     "@folio/stripes-core": "^7.2.0",
+    "@folio/stripes-util": "^3.0.0",
     "@folio/stripes-smart-components": "^6.1.0",
     "@folio/stripes-testing": "^3.0.0",
     "@testing-library/jest-dom": "^5.11.1",
@@ -780,12 +795,14 @@
     "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
-    "sinon": "^7.0.0"
+    "sinon": "^7.0.0",
+    "storybook-readme": "^5.0.8"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
+    "classnames": "^2.3.1",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
