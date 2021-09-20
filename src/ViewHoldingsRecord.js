@@ -108,11 +108,15 @@ class ViewHoldingsRecord extends React.Component {
       records: 'configs',
       path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
     },
+    marcRecordId: {},
     marcRecord: {
       type: 'okapi',
       path: 'source-storage/records/:{holdingsrecordid}/formatted?idType=HOLDINGS',
       accumulate: true,
       throwErrors: false,
+      DELETE: {
+        path: 'source-storage/records/%{marcRecordId}',
+      },
     },
   });
 
@@ -227,8 +231,23 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   deleteHoldingsRecord = (holdingsRecord) => {
-    this.props.onCloseViewHoldingsRecord();
-    this.props.mutator.holdingsRecords.DELETE(holdingsRecord);
+    const {
+      onCloseViewHoldingsRecord,
+      mutator,
+    } = this.props;
+    const { marcRecord } = this.state;
+
+    onCloseViewHoldingsRecord();
+
+    mutator.holdingsRecords.DELETE(holdingsRecord)
+      .then(() => {
+        const isSourceMARC = this.isMARCSource();
+
+        if (isSourceMARC) {
+          mutator.marcRecordId.replace(marcRecord.id);
+          mutator.marcRecord.DELETE(marcRecord.id);
+        }
+      });
   }
 
   onCopy(record) {
@@ -1024,8 +1043,12 @@ ViewHoldingsRecord.propTypes = {
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
     }),
+    marcRecordId: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
+    }).isRequired,
     marcRecord: PropTypes.shape({
       GET: PropTypes.func.isRequired,
+      DELETE: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
     permanentLocationQuery: PropTypes.object.isRequired,
