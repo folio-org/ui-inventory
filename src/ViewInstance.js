@@ -215,11 +215,11 @@ class ViewInstance extends React.Component {
   };
 
   editInstanceMarc = () => {
-    this.redirectToQuickMarcPage('edit');
+    this.redirectToQuickMarcPage('edit-bib');
   };
 
   duplicateInstanceMarc = () => {
-    this.redirectToQuickMarcPage('duplicate');
+    this.redirectToQuickMarcPage('duplicate-bib');
   };
 
   selectInstance = (selectedInstance) => {
