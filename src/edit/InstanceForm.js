@@ -190,7 +190,7 @@ class InstanceForm extends React.Component {
       initialValues,
     } = this.props;
 
-    const titleTranslationKey = initialValues.id ? 'ui-inventory.editInstance' : 'ui-inventory.newInstance';
+    const titleTranslationKey = initialValues.id ? 'ui-inventory.edit' : 'ui-inventory.newInstance';
 
     return (
       <span data-test-header-title>
