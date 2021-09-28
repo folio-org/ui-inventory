@@ -1,10 +1,16 @@
 import {
   areAllFieldsEmpty,
+  buildDateRangeQuery,
+  buildOptionalBooleanQuery,
   canMarkItemAsMissing,
   canMarkItemAsWithdrawn,
   canMarkItemWithStatus,
   canMarkRequestAsOpen,
   craftLayerUrl,
+  getQueryTemplate,
+  makeDateRangeFilterString,
+  parseFiltersToStr,
+  retrieveDatesFromDateRangeFilterString,
 } from './utils';
 
 describe('areAllFieldsEmpty', () => {
@@ -65,5 +71,58 @@ describe('canMarkRequestAsOpen', () => {
       holdShelfExpirationDate: new Date(),
     };
     expect(canMarkRequestAsOpen(request)).toBe(false);
+  });
+});
+
+describe('parseFiltersToStr', () => {
+  it('remaps filters to a comma-joined string', () => {
+    const filters = {
+      location: ['main', 'annex'],
+      language: ['ind'],
+    };
+    const expected = 'location.main,location.annex,language.ind';
+    expect(parseFiltersToStr(filters)).toEqual(expected);
+  });
+});
+
+// Date functions are being skipped for now because the util functions aren't
+// being used.
+describe.skip('retrieveDatesFromDateRangeFilterString', () => {
+  it('', () => {
+    
+  });
+});
+
+describe.skip('makeDateRangeFilterString', () => {
+  it('', () => {
+    
+  });
+});
+
+describe.skip('buildDateRangeQuery', () => {
+  it('', () => {
+    
+  });
+});
+
+describe('buildOptionalBooleanQuery', () => {
+  it('returns expected filter strings', () => {
+    const func = buildOptionalBooleanQuery('test');
+    // 2 values
+    expect(func(['a', 'b'])).toBe('cql.allRecords=1');
+    // 1 value ('false')
+    expect(func(['false'])).toBe('cql.allRecords=1 not test=="true"');
+    // More than 2 values
+    expect(func(['a', 'b', 'c'])).toBe('test=="a" or "b" or "c"');
+  });
+});
+
+describe('getQueryTemplate', () => {
+  it('returns a query template', () => {
+    const indexes = [
+      { value: 'title', queryTemplate: 'get a title' },
+      { value: 'isbn', queryTemplate: 'get an isbn' },
+    ];
+    expect(getQueryTemplate('isbn', indexes)).toBe('get an isbn');
   });
 });
