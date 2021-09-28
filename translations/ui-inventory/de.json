@@ -716,5 +716,7 @@
     "electronicAccessPublicNote": "Elektronischer Zugang - Öffentliche Anmerkung",
     "electronicAccessLinkText": "Elektronischer Zugang - Linktext",
     "electronicAccessMaterialsSpecified": "Elektronischer Zugang - aufgeführte Materialien",
-    "caption": "Bezeichnung"
+    "caption": "Bezeichnung",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]"
 }
