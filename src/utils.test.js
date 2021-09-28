@@ -27,7 +27,7 @@ describe('areAllFieldsEmpty', () => {
 
 describe('craftLayerUrl', () => {
   it('returns a properly formatted URL', () => {
-    const location= {
+    const location = {
       pathname: 'https://folio/inventory/items/',
       search: 'petrichor',
     };
@@ -43,12 +43,12 @@ describe('can mark items', () => {
   ];
   markFunctions.forEach(f => {
     it(`${f.name} returns true for an item with a listed status`, () => {
-      const item = { status: { name: 'Available' }};
+      const item = { status: { name: 'Available' } };
       expect(f(item)).toBe(true);
     });
-  
+
     it(`${f.name} returns false for an item with an unlisted status`, () => {
-      const item = { status: { name: 'Available but neglected' }};
+      const item = { status: { name: 'Available but neglected' } };
       expect(f(item)).toBe(false);
     });
   });
@@ -89,19 +89,19 @@ describe('parseFiltersToStr', () => {
 // being used.
 describe.skip('retrieveDatesFromDateRangeFilterString', () => {
   it('', () => {
-    
+
   });
 });
 
 describe.skip('makeDateRangeFilterString', () => {
   it('', () => {
-    
+
   });
 });
 
 describe.skip('buildDateRangeQuery', () => {
   it('', () => {
-    
+
   });
 });
 
