@@ -78,7 +78,10 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
         {...rest}
       />
 
-      <LocationLookup onLocationSelected={handleSelect} />
+      <LocationLookup
+        onLocationSelected={handleSelect}
+        disabled={rest.disabled}
+      />
 
       <ConfirmationModal
         confirmLabel={formatMessage({ id: 'ui-inventory.location.confirm.confirmBtn' })}

@@ -76,6 +76,7 @@ class HoldingsForm extends React.Component {
     onCancel: PropTypes.func,
     initialValues: PropTypes.object,
     instance: PropTypes.object,
+    isMARCRecord: PropTypes.bool,
     referenceTables: PropTypes.object.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -88,6 +89,7 @@ class HoldingsForm extends React.Component {
 
   static defaultProps = {
     initialValues: {},
+    isMARCRecord: false,
   };
 
   constructor(props) {
@@ -148,6 +150,7 @@ class HoldingsForm extends React.Component {
       pristine,
       submitting,
       goTo,
+      isMARCRecord,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
@@ -336,7 +339,9 @@ class HoldingsForm extends React.Component {
                           template={[{
                             label: <FormattedMessage id="ui-inventory.formerHoldingsId" />,
                             component: TextField,
+                            disabled: isMARCRecord,
                           }]}
+                          canAdd={!isMARCRecord}
                         />
                       </Col>
                     </Row>
@@ -352,6 +357,7 @@ class HoldingsForm extends React.Component {
                               component={Select}
                               fullWidth
                               dataOptions={holdingsTypeOptions}
+                              disabled={isMARCRecord}
                             />
                           )}
                         </FormattedMessage>
@@ -395,6 +401,7 @@ class HoldingsForm extends React.Component {
                           component={LocationSelectionWithCheck}
                           fullWidth
                           marginBottom0
+                          disabled={isMARCRecord}
                         />
                       </Col>
                       <Col sm={4}>
@@ -429,6 +436,7 @@ class HoldingsForm extends React.Component {
                           id="additem_shelvingtitle"
                           component={TextField}
                           fullWidth
+                          disabled={isMARCRecord}
                         />
                       </Col>
                     </Row>
@@ -451,6 +459,7 @@ class HoldingsForm extends React.Component {
                           id="additem_copynumber"
                           component={TextField}
                           fullWidth
+                          disabled={isMARCRecord}
                         />
                       </Col>
                       <Col sm={2}>
@@ -464,6 +473,7 @@ class HoldingsForm extends React.Component {
                               component={Select}
                               fullWidth
                               dataOptions={callNumberTypeOptions}
+                              disabled={isMARCRecord}
                             />
                           )}
                         </FormattedMessage>
@@ -476,6 +486,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
+                          disabled={isMARCRecord}
                         />
                       </Col>
                       <Col sm={2}>
@@ -486,6 +497,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
+                          disabled={isMARCRecord}
                         />
                       </Col>
                       <Col sm={2}>
@@ -496,6 +508,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
+                          disabled={isMARCRecord}
                         />
                       </Col>
                     </Row>
@@ -517,11 +530,11 @@ class HoldingsForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={12}>
-                        <HoldingsStatementFields />
+                        <HoldingsStatementFields isMARCRecord={isMARCRecord} />
                         <br />
-                        <HoldingsStatementForSupplementsFields />
+                        <HoldingsStatementForSupplementsFields isMARCRecord={isMARCRecord} />
                         <br />
-                        <HoldingsStatementForIndexesFields />
+                        <HoldingsStatementForIndexesFields isMARCRecord={isMARCRecord} />
                         <br />
                       </Col>
                     </Row>
@@ -568,7 +581,10 @@ class HoldingsForm extends React.Component {
                   >
                     <Row>
                       <Col sm={10}>
-                        <Note noteTypeOptions={holdingsNoteTypeOptions} />
+                        <Note
+                          isMARCRecord={isMARCRecord}
+                          noteTypeOptions={holdingsNoteTypeOptions}
+                        />
                       </Col>
                     </Row>
                   </Accordion>
@@ -576,7 +592,10 @@ class HoldingsForm extends React.Component {
                     id="accordion06"
                     label={<FormattedMessage id="ui-inventory.electronicAccess" />}
                   >
-                    <ElectronicAccessFields relationship={referenceTables.electronicAccessRelationships} />
+                    <ElectronicAccessFields
+                      isMARCRecord={isMARCRecord}
+                      relationship={referenceTables.electronicAccessRelationships}
+                    />
                   </Accordion>
                   <Accordion
                     id="accordion07"

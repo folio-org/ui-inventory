@@ -15,6 +15,7 @@ const ElectronicAccessFields = props => {
     canAdd,
     canEdit,
     canDelete,
+    isMARCRecord,
   } = props;
   const relationshipOptions = relationship.map(it => ({
     label: it.name,
@@ -36,38 +37,38 @@ const ElectronicAccessFields = props => {
               component: Select,
               placeholder,
               dataOptions: relationshipOptions,
-              disabled: !canEdit,
+              disabled: !canEdit || isMARCRecord,
             },
             {
               name: 'uri',
               label: <FormattedMessage id="ui-inventory.uri" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
+              disabled: !canEdit || isMARCRecord,
             },
             {
               name: 'linkText',
               label: <FormattedMessage id="ui-inventory.linkText" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
+              disabled: !canEdit || isMARCRecord,
             },
             {
               name: 'materialsSpecification',
               label: <FormattedMessage id="ui-inventory.materialsSpecification" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
+              disabled: !canEdit || isMARCRecord,
             },
             {
               name: 'publicNote',
               label: <FormattedMessage id="ui-inventory.urlPublicNote" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
+              disabled: !canEdit || isMARCRecord,
             },
           ]}
-          canAdd={canAdd}
+          canAdd={canAdd && !isMARCRecord}
           canDelete={canDelete}
         />
       )}
@@ -80,12 +81,14 @@ ElectronicAccessFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  isMARCRecord: PropTypes.bool,
 };
 
 ElectronicAccessFields.defaultProps = {
   canAdd: true,
   canEdit: true,
   canDelete: true,
+  isMARCRecord: false,
 };
 
 export default ElectronicAccessFields;

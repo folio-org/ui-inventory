@@ -10,7 +10,7 @@ import {
 
 import RepeatableField from '../../components/RepeatableField';
 
-const Note = ({ noteTypeOptions }) => (
+const Note = ({ noteTypeOptions, isMARCRecord }) => (
   <FormattedMessage id="ui-inventory.selectType">
     {([placeholder]) => (
       <RepeatableField
@@ -24,12 +24,14 @@ const Note = ({ noteTypeOptions }) => (
             component: Select,
             placeholder,
             dataOptions: noteTypeOptions,
+            disabled: isMARCRecord,
           },
           {
             name: 'note',
             label: <FormattedMessage id="ui-inventory.note" />,
             component: TextArea,
             rows: 1,
+            disabled: isMARCRecord,
           },
           {
             name: 'staffOnly',
@@ -41,9 +43,11 @@ const Note = ({ noteTypeOptions }) => (
             columnSize: {
               xs: 3,
               lg: 2,
-            }
+            },
+            disabled: isMARCRecord,
           }
         ]}
+        canAdd={!isMARCRecord}
       />
     )}
   </FormattedMessage>
@@ -51,6 +55,11 @@ const Note = ({ noteTypeOptions }) => (
 
 Note.propTypes = {
   noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
+  isMARCRecord: PropTypes.bool,
+};
+
+Note.defaultProps = {
+  isMARCRecord: false,
 };
 
 export default Note;
