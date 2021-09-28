@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { Pluggable } from '@folio/stripes/core';
 
 const QuickMarcRoute = ({ match, history, location }) => {
-  const onClose = useCallback((instanceId) => {
+  const onClose = useCallback((recordRoute) => {
     history.push({
-      pathname: `/inventory/view/${instanceId}`,
+      pathname: `/inventory/view/${recordRoute}`,
       search: location.search,
     });
   }, [location.search]);

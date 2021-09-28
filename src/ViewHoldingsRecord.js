@@ -306,6 +306,25 @@ class ViewHoldingsRecord extends React.Component {
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
   };
 
+  handleEditInQuickMarc = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const {
+      location,
+      goTo,
+      resources: {
+        holdingsRecords,
+        instances1,
+      },
+    } = this.props;
+
+    const holdingsRecord = holdingsRecords.records[0];
+
+    goTo(`/inventory/quick-marc/edit-holdings/${instances1.records[0].id}/${holdingsRecord.id}${location.search}`);
+  }
+
   getPaneHeaderActionMenu = ({ onToggle }) => {
     const {
       resources,
@@ -361,19 +380,34 @@ class ViewHoldingsRecord extends React.Component {
           </Button>
         }
         {isSourceMARC && (
-          <Button
-            id="clickable-view-source"
-            buttonStyle="dropdownItem"
-            disabled={!marcRecord}
-            onClick={(e) => {
-              onToggle();
-              this.handleViewSource(e, instance);
-            }}
-          >
-            <Icon icon="document">
-              <FormattedMessage id="ui-inventory.viewSource" />
-            </Icon>
-          </Button>
+          <>
+            <Button
+              id="clickable-view-source"
+              buttonStyle="dropdownItem"
+              disabled={!marcRecord}
+              onClick={(e) => {
+                onToggle();
+                this.handleViewSource(e, instance);
+              }}
+            >
+              <Icon icon="document">
+                <FormattedMessage id="ui-inventory.viewSource" />
+              </Icon>
+            </Button>
+            <Button
+              id="clickable-edit-marc-holdings"
+              buttonStyle="dropdownItem"
+              disabled={!marcRecord}
+              onClick={(e) => {
+                onToggle();
+                this.handleEditInQuickMarc(e);
+              }}
+            >
+              <Icon icon="edit">
+                <FormattedMessage id="ui-inventory.editMARCHoldings" />
+              </Icon>
+            </Button>
+          </>
         )}
         {
           canDelete &&
