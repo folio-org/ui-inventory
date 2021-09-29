@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## [7.2.0] IN PROGRESS
+## [8.0.0] IN PROGRESS
 
 * Add bound-with indicator to item view. Refs UIIN-1518.
 * Show correct HRID for holdings record in detail view pane header. Refs UIIN-1470.
@@ -26,6 +26,8 @@
 * Restore `mod-inventory` endpoints for non-search requests. UIIN-1634.
 * Delete Inventory and MARC holdings records when record Source = MARC. Refs UIIN-1559.
 * Update react-final-form to 6.5.6 to fix breaking change.
+* Increment `stripes` to `v7`, `react` to `v17`. Refs UIIN-1564.
+* Edit MARC Holdings via quickMARC. Refs UIIN-1636.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
