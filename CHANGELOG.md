@@ -25,6 +25,7 @@
 * Update received piece table columns. Refs UIIN-1632.
 * Restore `mod-inventory` endpoints for non-search requests. UIIN-1634.
 * Delete Inventory and MARC holdings records when record Source = MARC. Refs UIIN-1559.
+* Update react-final-form to 6.5.6 to fix breaking change.
 * Increment `stripes` to `v7`, `react` to `v17`. Refs UIIN-1564.
 * Edit MARC Holdings via quickMARC. Refs UIIN-1636.
 
