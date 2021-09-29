@@ -577,6 +577,8 @@
 
   "editInstanceMarc": "Edit in quickMARC",
   "duplicateInstanceMarc": "Derive new MARC bibliographic record",
+  "editMARCHoldings": "Edit in quickMARC",
+  "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
   "quickMarcNotAvailable": "No plugin available!",
 
   "permission.all-permissions.TEMPORARY": "Inventory: All permissions",
