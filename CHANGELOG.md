@@ -25,6 +25,7 @@
 * Update received piece table columns. Refs UIIN-1632.
 * Restore `mod-inventory` endpoints for non-search requests. UIIN-1634.
 * Delete Inventory and MARC holdings records when record Source = MARC. Refs UIIN-1559.
+* Update react-final-form to 6.5.6 to fix breaking change.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
