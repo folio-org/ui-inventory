@@ -517,6 +517,17 @@ export const formattedLanguageName = (code, intl) => {
   else return language.name;
 };
 
+/**
+ * Given
+ *   @param selectedLanguagesId an array of language codes corresponding to selected filters,
+ *     e.g. ['eng', 'ger'],
+ *   @param intl a react-intl object
+ *   @param langs an array of language codes and counts of the number of records containing those languages
+ *     in the ElasticSearch index, e.g. [{id: 'eng', totalRecords: 17}, {id: 'ger', totalRecords: 3}]
+ * @return an array of language options that have no record count, e.g.
+ *   [{label: 'English', value: 'eng', count: 0}, {label: 'German', value: 'ger', count: 0}]
+ * This function is called by languageOptionsES() below.
+ */
 const getSelectedLangsWithoutCount = (selectedLanguagesId, intl, langs) => {
   const selectedLangsWithoutCount = [];
 
@@ -538,6 +549,16 @@ const getSelectedLangsWithoutCount = (selectedLanguagesId, intl, langs) => {
   return selectedLangsWithoutCount;
 };
 
+/**
+ * Given
+ *   @param selectedLanguagesId an array of language codes corresponding to selected filters,
+ *    e.g. ['eng', 'ger'],
+ *   @param intl a react-intl object
+ *   @param langs an array of language codes and counts of the number of records containing those languages
+ *    in the ElasticSearch index, e.g. [{id: 'eng', totalRecords: 17}, {id: 'ger', totalRecords: 3}]
+ * @return an array of language options for use in the ElasticSearch language filter, e.g.
+ *   [{label: 'English', value: 'eng', count: 17}, {label: 'German', value: 'ger', count: 3}]
+ */
 export const languageOptionsES = (selectedLanguagesId, intl, langs = []) => {
   const restLangs = langs.reduce((accum, { id, totalRecords }) => {
     if (!totalRecords) return accum;
