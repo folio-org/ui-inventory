@@ -19,6 +19,8 @@ import {
 } from '../../common/hooks';
 
 import InstanceMovement from './InstanceMovement';
+import { DataContext } from '../../contexts';
+import { useHoldings } from '../../providers';
 
 const InstanceMovementContainer = ({
   mutator,
@@ -27,6 +29,9 @@ const InstanceMovementContainer = ({
   history,
 }) => {
   const callout = useContext(CalloutContext);
+  const { holdingsSourcesByName } = useContext(DataContext);
+  const { holdingsById } = useHoldings();
+
   const {
     instance: instanceFrom,
     isLoading: isInstanceFromLoading,
@@ -47,7 +52,37 @@ const InstanceMovementContainer = ({
     });
   }, [history, instanceFrom, instanceTo]);
 
+  const changeHridForMarcHoldings = (fields, hrid) => {
+    return fields.map(field => {
+      if (field.tag === '004') {
+        return { ...field, content: hrid };
+      }
+
+      return field;
+    });
+  };
+
   const moveHoldings = (toInstanceId, holdings) => {
+    const marcHoldingsIds = holdings.filter((holdingsId) => {
+      return holdingsById[holdingsId].sourceId === holdingsSourcesByName.MARC.id;
+    });
+
+    if (marcHoldingsIds.length) {
+      marcHoldingsIds.forEach((marcHoldingsId) => {
+        mutator.recordsEditorId.update({ externalId: marcHoldingsId });
+        mutator.recordsEditor.GET()
+          .then(({ fields, parsedRecordId, ...data }) => {
+            mutator.recordsEditorId.update({ id: parsedRecordId });
+
+            return mutator.recordsEditor.PUT({
+              ...data,
+              parsedRecordId,
+              fields: changeHridForMarcHoldings(fields, instanceTo.hrid),
+            });
+          });
+      });
+    }
+
     return mutator.movableHoldings.POST({
       toInstanceId,
       holdingsRecordIds: holdings,
@@ -118,6 +153,24 @@ InstanceMovementContainer.manifest = Object.freeze({
     },
     accumulate: true,
   },
+  recordsEditor: {
+    type: 'okapi',
+    path: 'records-editor/records',
+    fetch: false,
+    accumulate: true,
+    GET: {
+      params: {
+        externalId: '%{recordsEditorId.externalId}',
+      },
+    },
+    PUT: {
+      path: 'records-editor/records/%{recordsEditorId.id}',
+    },
+    headers: {
+      accept: 'application/json',
+    },
+  },
+  recordsEditorId: {},
 });
 
 InstanceMovementContainer.propTypes = {
