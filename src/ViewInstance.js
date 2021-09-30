@@ -24,6 +24,7 @@ import {
   Pane,
   Button,
   Icon,
+  MenuSection,
   Callout,
   checkScope,
   HasCommand,
@@ -328,14 +329,20 @@ class ViewInstance extends React.Component {
   createActionMenuGetter = instance => ({ onToggle }) => {
     const {
       onCopy,
-      stripes
+      stripes,
+      intl,
     } = this.props;
     const { marcRecord, requests } = this.state;
+
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
+    const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
+    const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
+
+    const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
       return null;
@@ -343,38 +350,91 @@ class ViewInstance extends React.Component {
 
     return (
       <>
-        <IfPermission perm="ui-inventory.instance.edit">
-          <Button
-            id="edit-instance"
-            onClick={() => {
-              onToggle();
-              this.onClickEditInstance();
-            }}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editInstance" />
-            </Icon>
-          </Button>
-        </IfPermission>
-        <IfPermission perm="ui-inventory.instance.create">
-          <Button
-            id="copy-instance"
-            onClick={() => {
-              onToggle();
-              onCopy(instance);
-            }}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-inventory.duplicateInstance" />
-            </Icon>
-          </Button>
-        </IfPermission>
+        <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
+          <IfPermission perm="ui-inventory.instance.edit">
+            <Button
+              id="edit-instance"
+              onClick={() => {
+                onToggle();
+                this.onClickEditInstance();
+              }}
+              buttonStyle="dropdownItem"
+            >
+              <Icon icon="edit">
+                <FormattedMessage id="ui-inventory.editInstance" />
+              </Icon>
+            </Button>
+          </IfPermission>
+          <IfPermission perm="ui-inventory.instance.create">
+            <Button
+              id="copy-instance"
+              onClick={() => {
+                onToggle();
+                onCopy(instance);
+              }}
+              buttonStyle="dropdownItem"
+            >
+              <Icon icon="duplicate">
+                <FormattedMessage id="ui-inventory.duplicateInstance" />
+              </Icon>
+            </Button>
+          </IfPermission>
 
-        {
-          isSourceMARC && (
-            <>
+          {
+            canMoveItems && (
+              <Button
+                id="move-instance-items"
+                buttonStyle="dropdownItem"
+                onClick={() => {
+                  onToggle();
+                  this.toggleItemsMovement();
+                }}
+              >
+                <Icon icon="transfer">
+                  <FormattedMessage
+                    id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                  />
+                </Icon>
+              </Button>
+            )
+          }
+
+          {
+            (canMoveItems || canMoveHoldings) && (
+              <Button
+                id="move-instance"
+                buttonStyle="dropdownItem"
+                onClick={() => {
+                  onToggle();
+                  this.toggleFindInstancePlugin();
+                }}
+              >
+                <Icon icon="arrow-right">
+                  <FormattedMessage id="ui-inventory.moveItems" />
+                </Icon>
+              </Button>
+            )
+          }
+
+          <IfInterface name="copycat-imports">
+            <IfPermission perm="copycat.profiles.collection.get">
+              <Button
+                id="dropdown-clickable-reimport-record"
+                onClick={() => {
+                  onToggle();
+                  this.setState({ isImportRecordModalOpened: true });
+                }}
+                buttonStyle="dropdownItem"
+              >
+                <Icon icon="lightning">
+                  <FormattedMessage id="ui-inventory.copycat.reimport" />
+                </Icon>
+              </Button>
+            </IfPermission>
+          </IfInterface>
+
+          {
+            canEditDeriveMARCRecord && (
               <IfPermission perm="ui-inventory.instance.view">
                 <Button
                   id="clickable-view-source"
@@ -390,7 +450,29 @@ class ViewInstance extends React.Component {
                   </Icon>
                 </Button>
               </IfPermission>
+            )
+          }
 
+          <Button
+            id="view-requests"
+            onClick={() => {
+              onToggle();
+              this.onClickViewRequests();
+            }}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="eye-open">
+              <FormattedMessage
+                id="ui-inventory.viewRequests"
+                values={{ count: requests?.length ?? '' }}
+              />
+            </Icon>
+          </Button>
+        </MenuSection>
+
+        {
+          canEditDeriveMARCRecord && (
+            <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
               <IfPermission perm="records-editor.records.item.put">
                 <Button
                   id="edit-instance-marc"
@@ -422,78 +504,10 @@ class ViewInstance extends React.Component {
                   </Icon>
                 </Button>
               </IfPermission>
-            </>
+            </MenuSection>
           )
         }
 
-        {
-          canMoveItems && (
-            <Button
-              id="move-instance-items"
-              buttonStyle="dropdownItem"
-              onClick={() => {
-                onToggle();
-                this.toggleItemsMovement();
-              }}
-            >
-              <Icon icon="transfer">
-                <FormattedMessage
-                  id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-                />
-              </Icon>
-            </Button>
-          )
-        }
-
-        {
-          (canMoveItems || canMoveHoldings) && (
-            <Button
-              id="move-instance"
-              buttonStyle="dropdownItem"
-              onClick={() => {
-                onToggle();
-                this.toggleFindInstancePlugin();
-              }}
-            >
-              <Icon icon="arrow-right">
-                <FormattedMessage id="ui-inventory.moveItems" />
-              </Icon>
-            </Button>
-          )
-        }
-
-        <Button
-          id="view-requests"
-          onClick={() => {
-            onToggle();
-            this.onClickViewRequests();
-          }}
-          buttonStyle="dropdownItem"
-        >
-          <Icon icon="eye-open">
-            <FormattedMessage
-              id="ui-inventory.viewRequests"
-              values={{ count: requests?.length ?? '' }}
-            />
-          </Icon>
-        </Button>
-
-        <IfInterface name="copycat-imports">
-          <IfPermission perm="copycat.profiles.collection.get">
-            <Button
-              id="dropdown-clickable-reimport-record"
-              onClick={() => {
-                onToggle();
-                this.setState({ isImportRecordModalOpened: true });
-              }}
-              buttonStyle="dropdownItem"
-            >
-              <Icon icon="lightning">
-                <FormattedMessage id="ui-inventory.copycat.reimport" />
-              </Icon>
-            </Button>
-          </IfPermission>
-        </IfInterface>
         <DataContext.Consumer>
           {data => (
             <Pluggable
@@ -584,7 +598,7 @@ class ViewInstance extends React.Component {
         <Pane
           id="pane-instancedetails"
           defaultWidth={paneWidth}
-          paneTitle={<FormattedMessage id="ui-inventory.editInstance" />}
+          paneTitle={<FormattedMessage id="ui-inventory.edit" />}
           appIcon={<AppIcon app="inventory" iconKey="instance" />}
           dismissible
           onClose={onClose}
