@@ -570,7 +570,7 @@
     "selectHoldingsSource": "Select holdings source",
     "holdingsSourceLabel": "Source",
     "uniqueName": "Name must be unique",
-    "viewRequests": "View requests ({count})",
+    "viewRequests": "View requests",
     "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} items found",
     "item.requestQueue": "Request queue",
@@ -658,7 +658,7 @@
     "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
     "instance.successfullySaved": "The <strong>instance</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
-    "holdingsPaneTitle": "Holding • {title} •  {publisherAndDate}",
+    "holdingsPaneTitle": "Holding • {location} • {callNumber}",
     "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
     "instance.saveError": "Saving instance failed",
     "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, Bound with)",
@@ -718,5 +718,7 @@
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
     "caption": "Caption",
     "editMARCHoldings": "Edit in quickMARC",
-    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]"
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

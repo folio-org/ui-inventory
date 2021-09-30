@@ -718,5 +718,7 @@
     "electronicAccessMaterialsSpecified": "电子访问 - 指定资料",
     "caption": "卷期标识",
     "editMARCHoldings": "Edit in quickMARC",
-    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]"
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

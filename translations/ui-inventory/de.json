@@ -718,5 +718,7 @@
     "electronicAccessMaterialsSpecified": "Elektronischer Zugang - aufgeführte Materialien",
     "caption": "Bezeichnung",
     "editMARCHoldings": "Edit in quickMARC",
-    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]"
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }
