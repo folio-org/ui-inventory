@@ -718,5 +718,7 @@
     "electronicAccessMaterialsSpecified": "الوصول الإلكتروني - المواد المحددة",
     "caption": "لقطة",
     "editMARCHoldings": "تحرير في مارك السريع",
-    "editMARCHoldings.paneTitle": "الموقع: {location} > {callNumber}"
+    "editMARCHoldings.paneTitle": "الموقع: {location} > {callNumber}",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }
