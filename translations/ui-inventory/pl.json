@@ -570,7 +570,7 @@
     "selectHoldingsSource": "Wybierz źródło zasobów",
     "holdingsSourceLabel": "Źródło",
     "uniqueName": "Nazwa musi być niepowtarzalna",
-    "viewRequests": "Wyświetl zamówienia ({count})",
+    "viewRequests": "Wyświetl zamówienia",
     "instanceRecordRequestsTitle": "Zamówienia na egzemplarze - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "Znaleziono {count} egzemplarzy",
     "item.requestQueue": "Kolejka zamówień",
@@ -716,5 +716,9 @@
     "electronicAccessPublicNote": "Electronic access - Public note",
     "electronicAccessLinkText": "Electronic access - Link Text",
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-    "caption": "Caption"
+    "caption": "Caption",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

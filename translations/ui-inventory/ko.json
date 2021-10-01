@@ -13,7 +13,7 @@
     "createInstance": "Create instance",
     "updateInstance": "Update instance",
     "itemRecord": "Item record",
-    "editInstance": "Edit",
+    "editInstance": "Edit instance",
     "instanceDetails": "인스턴스 상세 정보",
     "addHoldings": "Add holdings",
     "itemDotStatus": "Item • {barcode} • {status}",
@@ -476,7 +476,7 @@
     "precedingField.connected": "Connected",
     "exportInstancesInMARC": "인스턴스 내보내기 (MARC)",
     "exportInstancesInJSON": "인스턴스 내보내기 (JSON)",
-    "editInstanceMarc": "Edit in quickMARC",
+    "editInstanceMarc": "Edit MARC bibliographic record",
     "quickMarcNotAvailable": "No plugin available!",
     "saveInstancesCQLQuery": "Save instances CQL query",
     "createdDate": "Date created",
@@ -617,7 +617,7 @@
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
-    "copycat.reimport": "Overlay",
+    "copycat.reimport": "Overlay source bibliographic record",
     "copycat.callout.updated": "Updated record {xid}",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
@@ -716,5 +716,9 @@
     "electronicAccessPublicNote": "Electronic access - Public note",
     "electronicAccessLinkText": "Electronic access - Link Text",
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-    "caption": "Caption"
+    "caption": "Caption",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

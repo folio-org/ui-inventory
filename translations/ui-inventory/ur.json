@@ -13,7 +13,7 @@
     "createInstance": "Create instance",
     "updateInstance": "Update instance",
     "itemRecord": "Item record",
-    "editInstance": "Edit",
+    "editInstance": "Edit instance",
     "instanceDetails": "Instance details",
     "addHoldings": "Add holdings",
     "itemDotStatus": "Item • {barcode} • {status}",
@@ -249,7 +249,7 @@
     "illPolicy": "ILL policy",
     "loanTypePermanentRequired": "Permanent loan type *",
     "materialTypeRequired": "Material type *",
-    "duplicateInstance": "Duplicate instance record",
+    "duplicateInstance": "Duplicate instance",
     "cancel": "Cancel",
     "newInstance": "New instance",
     "duplicateHoldings": "Duplicate",
@@ -617,7 +617,7 @@
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
-    "copycat.reimport": "Overlay",
+    "copycat.reimport": "Overlay source bibliographic record",
     "copycat.callout.updated": "Updated record {xid}",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
@@ -716,5 +716,9 @@
     "electronicAccessPublicNote": "Electronic access - Public note",
     "electronicAccessLinkText": "Electronic access - Link Text",
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-    "caption": "Caption"
+    "caption": "Caption",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

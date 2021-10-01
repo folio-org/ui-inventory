@@ -570,7 +570,7 @@
     "selectHoldingsSource": "Sélectionnez la source des fonds documentaires",
     "holdingsSourceLabel": "Source",
     "uniqueName": "Le nom doit être unique",
-    "viewRequests": "Afficher les demandes / réservations ( {count} )",
+    "viewRequests": "Afficher les demandes / réservations",
     "instanceRecordRequestsTitle": "Réservations sur les exemplaires - {instanceResourceTitle} , {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} exemplaires trouvés",
     "item.requestQueue": "File d'attente",
@@ -658,7 +658,7 @@
     "item.successfullySaved": "Le HRID de l' <strong> exemplaire </strong> - <strong> {hrid} </strong> a bien été enregistré.",
     "holdingsRecord.successfullySaved": "L' <strong> </strong> HRID des collections<strong> {hrid} </strong> a bien été enregistré.",
     "instance.successfullySaved": "L ' <strong>  </strong> HRID de l'instance <strong> {hrid} </strong> a bien été enregistré.",
-    "holdingsPaneTitle": "Collections • {title} • {publisherAndDate}",
+    "holdingsPaneTitle": "Collections • {location} • {callNumber}",
     "instanceRecordSubtitle": "{hrid} • Dernière mise à jour : {updatedDate}",
     "instance.saveError": "La sauvegarde de l'instance a échoué",
     "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, Bound with)",
@@ -716,5 +716,9 @@
     "electronicAccessPublicNote": "Electronic access - Public note",
     "electronicAccessLinkText": "Electronic access - Link Text",
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-    "caption": "Caption"
+    "caption": "Caption",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Modifier"
 }

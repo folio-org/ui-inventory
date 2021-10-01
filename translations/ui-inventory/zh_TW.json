@@ -570,7 +570,7 @@
     "selectHoldingsSource": "選擇館藏來源",
     "holdingsSourceLabel": "來源",
     "uniqueName": "名称必须唯一",
-    "viewRequests": "查看请求（ {count} ）",
+    "viewRequests": "查看请求",
     "instanceRecordRequestsTitle": "对单件的请求- {instanceResourceTitle} ， {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "找到{count}单件",
     "item.requestQueue": "请求队列",
@@ -716,5 +716,9 @@
     "electronicAccessPublicNote": "Electronic access - Public note",
     "electronicAccessLinkText": "Electronic access - Link Text",
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-    "caption": "Caption"
+    "caption": "Caption",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

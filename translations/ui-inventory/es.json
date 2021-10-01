@@ -546,7 +546,7 @@
     "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
     "moveItems.instance.items.error.server": "There was a problem updating the following items {items}. Please try again or notify your systems administrator.",
     "moveItems.instance.holdings.error": "The following holdings could not be moved {holdings}. Check the instance record fields and try again or notify your systems administrator.",
-    "moveItems.instance.holdings.error.server": "There was a problem updating the following holdings {holdings}. Please try again or notify your systems administrator.",
+    "moveItems.instance.holdings.error.server": "Hubo un problema al actualizar las siguientes existencias {holdings}. Vuelva a intentarlo o notifique a su administrador de sistemas.",
     "newFastAddRecord": "New Fast Add Record",
     "holdingsStatementPublicNote": "Holdings statement public note",
     "holdingsStatementStaffNote": "Holdings statement staff note",
@@ -570,7 +570,7 @@
     "selectHoldingsSource": "Seleccionar fuente de existencias",
     "holdingsSourceLabel": "Fuente",
     "uniqueName": "El nombre debe ser único",
-    "viewRequests": "Ver solicitudes ( {count} )",
+    "viewRequests": "Ver solicitudes",
     "instanceRecordRequestsTitle": "Solicitudes de artículos - {instanceResourceTitle}, {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "{count} elementos encontrados",
     "item.requestQueue": "Cola de solicitudes",
@@ -617,7 +617,7 @@
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
-    "copycat.reimport": "Overlay",
+    "copycat.reimport": "Overlay source bibliographic record",
     "copycat.callout.updated": "Updated record {xid}",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
@@ -716,5 +716,9 @@
     "electronicAccessPublicNote": "Electronic access - Public note",
     "electronicAccessLinkText": "Electronic access - Link Text",
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-    "caption": "Caption"
+    "caption": "Caption",
+    "editMARCHoldings": "Edit in quickMARC",
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }
