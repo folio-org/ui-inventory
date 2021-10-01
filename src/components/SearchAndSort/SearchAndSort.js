@@ -43,7 +43,7 @@ import {
   AppIcon,
   IntlConsumer,
 } from '@folio/stripes-core';
-import Tags from '@folio/stripes-smart-components/lib/Tags';
+import { Tags } from '@folio/stripes/smart-components';
 import isEvent from 'redux-form/lib/events/isEvent';
 import SearchField from '../SearchField';
 
