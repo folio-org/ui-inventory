@@ -67,21 +67,19 @@ const InstanceMovementContainer = ({
       return holdingsById[holdingsId].sourceId === holdingsSourcesByName.MARC.id;
     });
 
-    if (marcHoldingsIds.length) {
-      marcHoldingsIds.forEach((marcHoldingsId) => {
-        mutator.recordsEditorId.update({ externalId: marcHoldingsId });
-        mutator.recordsEditor.GET()
-          .then(({ fields, parsedRecordId, ...data }) => {
-            mutator.recordsEditorId.update({ id: parsedRecordId });
+    marcHoldingsIds.forEach((marcHoldingsId) => {
+      mutator.recordsEditorId.update({ externalId: marcHoldingsId });
+      mutator.recordsEditor.GET()
+        .then(({ fields, parsedRecordId, ...data }) => {
+          mutator.recordsEditorId.update({ id: parsedRecordId });
 
-            return mutator.recordsEditor.PUT({
-              ...data,
-              parsedRecordId,
-              fields: changeHridForMarcHoldings(fields, instanceTo.hrid),
-            });
+          return mutator.recordsEditor.PUT({
+            ...data,
+            parsedRecordId,
+            fields: changeHridForMarcHoldings(fields, instanceTo.hrid),
           });
-      });
-    }
+        });
+    });
 
     return mutator.movableHoldings.POST({
       toInstanceId,
