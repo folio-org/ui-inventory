@@ -13,7 +13,7 @@
     "createInstance": "إنشاء وعاء",
     "updateInstance": "تحديث الوعاء",
     "itemRecord": "تسجيلة المادة",
-    "editInstance": "تحرير",
+    "editInstance": "تحرير الوعاء",
     "instanceDetails": "تفاصيل الوعاء",
     "addHoldings": "إضافة مقتنيات",
     "itemDotStatus": "المادة • {barcode} • {status}",
@@ -249,7 +249,7 @@
     "illPolicy": "سياسة الإعارة بين المكتبات",
     "loanTypePermanentRequired": "نوع الإعارة الدائمة*",
     "materialTypeRequired": "نوع المادة*",
-    "duplicateInstance": "تكرار تسجيلة الوعاء",
+    "duplicateInstance": "نسخ الوعاء",
     "cancel": "إلغاء",
     "newInstance": "وعاء جديد",
     "duplicateHoldings": "تكرار",
@@ -476,7 +476,7 @@
     "precedingField.connected": "متصل",
     "exportInstancesInMARC": "تصدير الأوعية (مارك)",
     "exportInstancesInJSON": "تصدير الأوعية (JSON)",
-    "editInstanceMarc": "تحرير في مارك السريع",
+    "editInstanceMarc": "تحرير تسجيلة مارك البيبلوغرافية",
     "quickMarcNotAvailable": "لا توجد برامج مساعدة!",
     "saveInstancesCQLQuery": "حفظ استعلام CQL الأوعية",
     "createdDate": "تاريخ الإنشاء",
@@ -720,5 +720,5 @@
     "editMARCHoldings": "تحرير في مارك السريع",
     "editMARCHoldings.paneTitle": "الموقع: {location} > {callNumber}",
     "quickMARC.label": "quickMARC",
-    "edit": "Edit"
+    "edit": "تحرير"
 }
