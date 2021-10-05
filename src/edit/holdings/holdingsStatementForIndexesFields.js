@@ -6,7 +6,7 @@ import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../../components/RepeatableField';
 
-const HoldingsStatementForIndexesFields = ({ isMARCRecord }) => (
+const HoldingsStatementForIndexesFields = ({ canAdd, canEdit }) => (
   <RepeatableField
     name="holdingsStatementsForIndexes"
     addLabel={<FormattedMessage id="ui-inventory.addHoldingsStatementForIndexes" />}
@@ -17,33 +17,33 @@ const HoldingsStatementForIndexesFields = ({ isMARCRecord }) => (
         label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexes" />,
         component: TextArea,
         rows: 1,
-        disabled: isMARCRecord,
       },
       {
         name: 'note',
         label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesPublicNote" />,
         component: TextArea,
         rows: 1,
-        disabled: isMARCRecord,
       },
       {
         name: 'staffNote',
         label: <FormattedMessage id="ui-inventory.holdingsStatementForIndexesStaffNote" />,
         component: TextArea,
         rows: 1,
-        disabled: isMARCRecord,
       },
     ]}
-    canAdd={!isMARCRecord}
+    canAdd={canAdd}
+    canEdit={canEdit}
   />
 );
 
 HoldingsStatementForIndexesFields.propTypes = {
-  isMARCRecord: PropTypes.bool,
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
 };
 
 HoldingsStatementForIndexesFields.defaultProps = {
-  isMARCRecord: false,
+  canAdd: true,
+  canEdit: true,
 };
 
 export default HoldingsStatementForIndexesFields;

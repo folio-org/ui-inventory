@@ -339,9 +339,9 @@ class HoldingsForm extends React.Component {
                           template={[{
                             label: <FormattedMessage id="ui-inventory.formerHoldingsId" />,
                             component: TextField,
-                            disabled: isMARCRecord,
                           }]}
                           canAdd={!isMARCRecord}
+                          canEdit={!isMARCRecord}
                         />
                       </Col>
                     </Row>
@@ -530,11 +530,20 @@ class HoldingsForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={12}>
-                        <HoldingsStatementFields isMARCRecord={isMARCRecord} />
+                        <HoldingsStatementFields
+                          canAdd={!isMARCRecord}
+                          canEdit={!isMARCRecord}
+                        />
                         <br />
-                        <HoldingsStatementForSupplementsFields isMARCRecord={isMARCRecord} />
+                        <HoldingsStatementForSupplementsFields
+                          canAdd={!isMARCRecord}
+                          canEdit={!isMARCRecord}
+                        />
                         <br />
-                        <HoldingsStatementForIndexesFields isMARCRecord={isMARCRecord} />
+                        <HoldingsStatementForIndexesFields
+                          canAdd={!isMARCRecord}
+                          canEdit={!isMARCRecord}
+                        />
                         <br />
                       </Col>
                     </Row>
@@ -582,7 +591,8 @@ class HoldingsForm extends React.Component {
                     <Row>
                       <Col sm={10}>
                         <Note
-                          isMARCRecord={isMARCRecord}
+                          canAdd={!isMARCRecord}
+                          canEdit={!isMARCRecord}
                           noteTypeOptions={holdingsNoteTypeOptions}
                         />
                       </Col>
@@ -593,7 +603,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.electronicAccess" />}
                   >
                     <ElectronicAccessFields
-                      isMARCRecord={isMARCRecord}
+                      canAdd={!isMARCRecord}
+                      canEdit={!isMARCRecord}
                       relationship={referenceTables.electronicAccessRelationships}
                     />
                   </Accordion>
