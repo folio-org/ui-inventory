@@ -29,6 +29,7 @@
 * Increment `stripes` to `v7`, `react` to `v17`. Refs UIIN-1564.
 * Edit MARC Holdings via quickMARC. Refs UIIN-1636.
 * Instance record: Update Instance record Actions menu. Refs UIIN-1625.
+* Add ability to move MARC holdings between instances. Refs UIIN-1633.
 * Make mapped fields read-only for MARC holdings records. Refs UIIN-1639.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
