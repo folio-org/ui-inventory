@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [8.0.0] IN PROGRESS
+## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
 
 * Add bound-with indicator to item view. Refs UIIN-1518.
 * Show correct HRID for holdings record in detail view pane header. Refs UIIN-1470.
