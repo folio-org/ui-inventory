@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../../components/RepeatableField';
 
-const HoldingsStatementForIndexesFields = () => (
+const HoldingsStatementForIndexesFields = ({ canAdd, canEdit }) => (
   <RepeatableField
     name="holdingsStatementsForIndexes"
     addLabel={<FormattedMessage id="ui-inventory.addHoldingsStatementForIndexes" />}
@@ -30,7 +31,19 @@ const HoldingsStatementForIndexesFields = () => (
         rows: 1,
       },
     ]}
+    canAdd={canAdd}
+    canEdit={canEdit}
   />
 );
+
+HoldingsStatementForIndexesFields.propTypes = {
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
+};
+
+HoldingsStatementForIndexesFields.defaultProps = {
+  canAdd: true,
+  canEdit: true,
+};
 
 export default HoldingsStatementForIndexesFields;

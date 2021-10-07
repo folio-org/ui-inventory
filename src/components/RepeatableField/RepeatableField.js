@@ -65,13 +65,20 @@ class RepeatableField extends React.Component {
       canDelete,
     } = this.props;
 
+    const mappedTemplate = canEdit
+      ? template
+      : template.map(field => ({
+        ...field,
+        disabled: true,
+      }));
+
     return (
       <FieldArray
         name={name}
         component={FieldRow}
         onAddField={this.handleAddField}
         formatter={this.buildComponentFromTemplate}
-        template={template}
+        template={mappedTemplate}
         containerRef={ref => {
           this.container = ref;
         }}
@@ -82,7 +89,6 @@ class RepeatableField extends React.Component {
         addLabel={addLabel}
         addButtonId={addButtonId}
         canAdd={canAdd}
-        canEdit={canEdit}
         canDelete={canDelete}
         lastRowRef={ref => {
           this.lastRow = ref;
