@@ -617,7 +617,7 @@
     "externalIdQueryMap": "خريطة استعلام المعرّف الخارجي",
     "internalIdEmbedPath": "مسار تضمين المعرّف الخارجي",
     "copycat.import": "استيراد",
-    "copycat.reimport": "تغطية",
+    "copycat.reimport": "تراكب التسجيلة البيبلوغرافية المصدر",
     "copycat.callout.updated": "تم تحديث التسجيلة {xid}",
     "copycat.callout.created": "تم إنشاء التسجيلة {xid}",
     "copycat.callout.simpleError": "لقد حدث خطأ ما: {err}",
