@@ -1017,6 +1017,7 @@ class ViewHoldingsRecord extends React.Component {
                 stripes={this.props.stripes}
                 itemCount={itemCount}
                 goTo={goTo}
+                isMARCRecord={this.isMARCSource()}
               />
             </Layer>
             <Layer
