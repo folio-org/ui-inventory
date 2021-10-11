@@ -171,14 +171,14 @@ class ViewHoldingsRecord extends React.Component {
     const {
       referenceTables,
       resources: {
-        instances1,
+        holdingsRecords,
       },
     } = this.props;
 
-    const instance = instances1.records[0];
-    const instanceSource = referenceTables?.holdingsSources?.find(holdingsSource => holdingsSource.name === instance?.source);
+    const holdingsRecord = holdingsRecords.records[0];
+    const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord?.sourceId);
 
-    return instanceSource?.name === 'MARC';
+    return holdingsSource?.name === 'MARC';
   };
 
   getMARCRecord = () => {
@@ -251,13 +251,23 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   onCopy(record) {
+    const {
+      updateLocation,
+      referenceTables,
+    } = this.props;
+
+    const FOLIOSourceId = referenceTables?.holdingsSourcesByName.FOLIO.id;
+
     this.setState((state) => {
       const newState = cloneDeep(state);
+
       newState.copiedRecord = omit(record, ['id', 'hrid', 'formerIds']);
+      newState.copiedRecord.sourceId = FOLIOSourceId;
+
       return newState;
     });
 
-    this.props.updateLocation({ layer: 'copyHoldingsRecord' });
+    updateLocation({ layer: 'copyHoldingsRecord' });
   }
 
   hideConfirmHoldingsRecordDeleteModal = () => {
