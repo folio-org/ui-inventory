@@ -24,7 +24,10 @@ import {
   expandAllSections,
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  AppIcon,
+} from '@folio/stripes/core';
 
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
@@ -66,7 +69,19 @@ function validate(values, props) {
   return errors;
 }
 
+@stripesConnect
 class HoldingsForm extends React.Component {
+  static manifest = Object.freeze({
+    query: {},
+    holdingsBlockedFields: {
+      type: 'okapi',
+      path: 'inventory/config/holdings/blocked-fields',
+      clear: false,
+      accumulate: true,
+      throwErrors: false,
+    },
+  });
+
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
@@ -78,6 +93,11 @@ class HoldingsForm extends React.Component {
     instance: PropTypes.object,
     isMARCRecord: PropTypes.bool,
     referenceTables: PropTypes.object.isRequired,
+    mutator: PropTypes.shape({
+      holdingsBlockedFields: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -97,6 +117,16 @@ class HoldingsForm extends React.Component {
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
+    this.state = {
+      blockedFields: [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.mutator.holdingsBlockedFields.GET()
+      .then(({ blockedFields }) => {
+        this.setState({ blockedFields });
+      });
   }
 
   getFooter = () => {
@@ -135,6 +165,17 @@ class HoldingsForm extends React.Component {
         renderEnd={saveButton}
       />
     );
+  };
+
+  isFieldBlocked = (fieldName) => {
+    const { isMARCRecord } = this.props;
+    const { blockedFields } = this.state;
+
+    if (!isMARCRecord || !blockedFields?.length) {
+      return false;
+    }
+
+    return blockedFields.includes(fieldName);
   };
 
   onSelectLocationHandler = loc => this.selectTemporaryLocation(loc);
@@ -299,6 +340,7 @@ class HoldingsForm extends React.Component {
                           id="input_discovery_suppress"
                           component={Checkbox}
                           type="checkbox"
+                          disabled={this.isFieldBlocked('discoverySuppress')}
                         />
                       </Col>
                     </Row>
@@ -340,8 +382,8 @@ class HoldingsForm extends React.Component {
                             label: <FormattedMessage id="ui-inventory.formerHoldingsId" />,
                             component: TextField,
                           }]}
-                          canAdd={!isMARCRecord}
-                          canEdit={!isMARCRecord}
+                          canAdd={!this.isFieldBlocked('formerIds')}
+                          canEdit={!this.isFieldBlocked('formerIds')}
                         />
                       </Col>
                     </Row>
@@ -357,7 +399,7 @@ class HoldingsForm extends React.Component {
                               component={Select}
                               fullWidth
                               dataOptions={holdingsTypeOptions}
-                              disabled={isMARCRecord}
+                              disabled={this.isFieldBlocked('holdingsTypeId')}
                             />
                           )}
                         </FormattedMessage>
@@ -376,6 +418,8 @@ class HoldingsForm extends React.Component {
                               dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
                             }
                           ]}
+                          canAdd={!this.isFieldBlocked('statisticalCodeIds')}
+                          canEdit={!this.isFieldBlocked('statisticalCodeIds')}
                         />
                       </Col>
                     </Row>
@@ -401,7 +445,7 @@ class HoldingsForm extends React.Component {
                           component={LocationSelectionWithCheck}
                           fullWidth
                           marginBottom0
-                          disabled={isMARCRecord}
+                          disabled={this.isFieldBlocked('permanentLocationId')}
                         />
                       </Col>
                       <Col sm={4}>
@@ -412,6 +456,7 @@ class HoldingsForm extends React.Component {
                           component={LocationSelectionWithCheck}
                           fullWidth
                           marginBottom0
+                          disabled={this.isFieldBlocked('temporaryLocationId')}
                         />
                       </Col>
                     </Row>
@@ -436,7 +481,7 @@ class HoldingsForm extends React.Component {
                           id="additem_shelvingtitle"
                           component={TextField}
                           fullWidth
-                          disabled={isMARCRecord}
+                          disabled={this.isFieldBlocked('shelvingTitle')}
                         />
                       </Col>
                     </Row>
@@ -459,7 +504,7 @@ class HoldingsForm extends React.Component {
                           id="additem_copynumber"
                           component={TextField}
                           fullWidth
-                          disabled={isMARCRecord}
+                          disabled={this.isFieldBlocked('copyNumber')}
                         />
                       </Col>
                       <Col sm={2}>
@@ -473,7 +518,7 @@ class HoldingsForm extends React.Component {
                               component={Select}
                               fullWidth
                               dataOptions={callNumberTypeOptions}
-                              disabled={isMARCRecord}
+                              disabled={this.isFieldBlocked('callNumberTypeId')}
                             />
                           )}
                         </FormattedMessage>
@@ -486,7 +531,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
-                          disabled={isMARCRecord}
+                          disabled={this.isFieldBlocked('callNumberPrefix')}
                         />
                       </Col>
                       <Col sm={2}>
@@ -497,7 +542,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
-                          disabled={isMARCRecord}
+                          disabled={this.isFieldBlocked('callNumber')}
                         />
                       </Col>
                       <Col sm={2}>
@@ -508,7 +553,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
-                          disabled={isMARCRecord}
+                          disabled={this.isFieldBlocked('callNumberSuffix')}
                         />
                       </Col>
                     </Row>
@@ -525,24 +570,25 @@ class HoldingsForm extends React.Component {
                           id="edititem_numberofitems"
                           component={TextField}
                           fullWidth
+                          disabled={this.isFieldBlocked('numberOfItems')}
                         />
                       </Col>
                     </Row>
                     <Row>
                       <Col sm={12}>
                         <HoldingsStatementFields
-                          canAdd={!isMARCRecord}
-                          canEdit={!isMARCRecord}
+                          canAdd={!this.isFieldBlocked('holdingsStatements')}
+                          canEdit={!this.isFieldBlocked('holdingsStatements')}
                         />
                         <br />
                         <HoldingsStatementForSupplementsFields
-                          canAdd={!isMARCRecord}
-                          canEdit={!isMARCRecord}
+                          canAdd={!this.isFieldBlocked('holdingsStatementsForSupplements')}
+                          canEdit={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                         />
                         <br />
                         <HoldingsStatementForIndexesFields
-                          canAdd={!isMARCRecord}
-                          canEdit={!isMARCRecord}
+                          canAdd={!this.isFieldBlocked('holdingsStatementsForIndexes')}
+                          canEdit={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                         />
                         <br />
                       </Col>
@@ -560,6 +606,7 @@ class HoldingsForm extends React.Component {
                               component={Select}
                               fullWidth
                               dataOptions={illPolicyOptions}
+                              disabled={this.isFieldBlocked('illPolicyId')}
                             />
                           )}
                         </FormattedMessage>
@@ -571,6 +618,7 @@ class HoldingsForm extends React.Component {
                           id="edit_digitizationpolicy"
                           component={TextArea}
                           rows={1}
+                          disabled={this.isFieldBlocked('digitizationPolicy')}
                         />
                       </Col>
                       <Col sm={3}>
@@ -580,6 +628,7 @@ class HoldingsForm extends React.Component {
                           id="edit_retentionpolicy"
                           component={TextArea}
                           rows={1}
+                          disabled={this.isFieldBlocked('retentionPolicy')}
                         />
                       </Col>
                     </Row>
@@ -591,8 +640,8 @@ class HoldingsForm extends React.Component {
                     <Row>
                       <Col sm={10}>
                         <Note
-                          canAdd={!isMARCRecord}
-                          canEdit={!isMARCRecord}
+                          canAdd={!this.isFieldBlocked('notes')}
+                          canEdit={!this.isFieldBlocked('notes')}
                           noteTypeOptions={holdingsNoteTypeOptions}
                         />
                       </Col>
@@ -603,8 +652,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.electronicAccess" />}
                   >
                     <ElectronicAccessFields
-                      canAdd={!isMARCRecord}
-                      canEdit={!isMARCRecord}
+                      canAdd={!this.isFieldBlocked('electronicAccess')}
+                      canEdit={!this.isFieldBlocked('electronicAccess')}
                       relationship={referenceTables.electronicAccessRelationships}
                     />
                   </Accordion>
@@ -638,6 +687,8 @@ class HoldingsForm extends React.Component {
                               rows: 1,
                             },
                           ]}
+                          canAdd={!this.isFieldBlocked('receivingHistory.entries')}
+                          canEdit={!this.isFieldBlocked('receivingHistory.entries')}
                         />
                       </Col>
                     </Row>

@@ -95,12 +95,6 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
-    blockedFields: {
-      type: 'okapi',
-      path: 'inventory/config/instances/blocked-fields',
-      clear: false,
-      throwErrors: false,
-    },
     instanceRelationshipTypes: {
       type: 'okapi',
       records: 'instanceRelationshipTypes',
