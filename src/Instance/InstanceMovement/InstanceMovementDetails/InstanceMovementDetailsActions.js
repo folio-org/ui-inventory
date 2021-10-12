@@ -57,7 +57,7 @@ const InstanceMovementDetailsActions = ({
           buttonStyle="dropdownItem"
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editInstance" />
+            <FormattedMessage id="ui-inventory.edit" />
           </Icon>
         </Button>
       </IfPermission>

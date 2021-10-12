@@ -36,39 +36,35 @@ const ElectronicAccessFields = props => {
               component: Select,
               placeholder,
               dataOptions: relationshipOptions,
-              disabled: !canEdit,
             },
             {
               name: 'uri',
               label: <FormattedMessage id="ui-inventory.uri" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
             },
             {
               name: 'linkText',
               label: <FormattedMessage id="ui-inventory.linkText" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
             },
             {
               name: 'materialsSpecification',
               label: <FormattedMessage id="ui-inventory.materialsSpecification" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
             },
             {
               name: 'publicNote',
               label: <FormattedMessage id="ui-inventory.urlPublicNote" />,
               component: TextArea,
               rows: 1,
-              disabled: !canEdit,
             },
           ]}
           canAdd={canAdd}
           canDelete={canDelete}
+          canEdit={canEdit}
         />
       )}
     </FormattedMessage>

@@ -10,7 +10,7 @@ import {
 
 import RepeatableField from '../../components/RepeatableField';
 
-const Note = ({ noteTypeOptions }) => (
+const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
   <FormattedMessage id="ui-inventory.selectType">
     {([placeholder]) => (
       <RepeatableField
@@ -41,16 +41,25 @@ const Note = ({ noteTypeOptions }) => (
             columnSize: {
               xs: 3,
               lg: 2,
-            }
+            },
           }
         ]}
+        canAdd={canAdd}
+        canEdit={canEdit}
       />
     )}
   </FormattedMessage>
 );
 
 Note.propTypes = {
+  canAdd: PropTypes.bool,
+  canEdit: PropTypes.bool,
   noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
+};
+
+Note.defaultProps = {
+  canAdd: true,
+  canEdit: true,
 };
 
 export default Note;

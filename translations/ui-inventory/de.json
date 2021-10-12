@@ -700,7 +700,7 @@
     "advancedSearch": "Erweiterte Suche",
     "showMoreOptions": "Weitere Optionen anzeigen",
     "more": "Mehr",
-    "noMatchingOptions": "Keine passenden Optionen",
+    "noMatchingOptions": "Keine übereinstimmenden Optionen",
     "elasticOptionsInfo": "Wenn die Ergebnisse der automatischen Vervollständigung verfügbar sind, die Auf- und Abwärtspfeile zur Überprüfung und die Eingabetaste zur Auswahl verwenden",
     "elasticWarning": "Der eingegebene Wert ist keiner der vorgeschlagenen",
     "parser.emptyQuery": "Die zu verarbeitende Abfrage darf nicht leer sein",
@@ -718,5 +718,7 @@
     "electronicAccessMaterialsSpecified": "Elektronischer Zugang - aufgeführte Materialien",
     "caption": "Bezeichnung",
     "editMARCHoldings": "Edit in quickMARC",
-    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]"
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

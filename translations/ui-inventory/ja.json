@@ -249,7 +249,7 @@
     "illPolicy": "ILLポリシー",
     "loanTypePermanentRequired": "恒久的な貸出タイプ *",
     "materialTypeRequired": "資料種別 *",
-    "duplicateInstance": "Duplicate instance record",
+    "duplicateInstance": "Duplicate instance",
     "cancel": "キャンセル",
     "newInstance": "新規インスタンス",
     "duplicateHoldings": "Duplicate",
@@ -476,7 +476,7 @@
     "precedingField.connected": "Connected",
     "exportInstancesInMARC": "インスタンスのエクスポート（MARC）",
     "exportInstancesInJSON": "インスタンスのエクスポート（JSON）",
-    "editInstanceMarc": "Edit in quickMARC",
+    "editInstanceMarc": "Edit MARC bibliographic record",
     "quickMarcNotAvailable": "No plugin available!",
     "saveInstancesCQLQuery": "インスタンスCQLクエリを保存",
     "createdDate": "作成日",
@@ -617,7 +617,7 @@
     "externalIdQueryMap": "External ID query map",
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
-    "copycat.reimport": "Overlay",
+    "copycat.reimport": "Overlay source bibliographic record",
     "copycat.callout.updated": "Updated record {xid}",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
@@ -718,5 +718,7 @@
     "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
     "caption": "Caption",
     "editMARCHoldings": "Edit in quickMARC",
-    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]"
+    "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
+    "quickMARC.label": "quickMARC",
+    "edit": "Edit"
 }

@@ -1,6 +1,11 @@
 # Change history for ui-inventory
 
-## [8.0.0] IN PROGRESS
+## [8.1.0] IN PROGRESS
+
+* Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
+
+## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
 
 * Add bound-with indicator to item view. Refs UIIN-1518.
 * Show correct HRID for holdings record in detail view pane header. Refs UIIN-1470.
@@ -28,6 +33,9 @@
 * Update react-final-form to 6.5.6 to fix breaking change.
 * Increment `stripes` to `v7`, `react` to `v17`. Refs UIIN-1564.
 * Edit MARC Holdings via quickMARC. Refs UIIN-1636.
+* Instance record: Update Instance record Actions menu. Refs UIIN-1625.
+* Add ability to move MARC holdings between instances. Refs UIIN-1633.
+* Make mapped fields read-only for MARC holdings records. Refs UIIN-1639.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
