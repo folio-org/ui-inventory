@@ -54,7 +54,7 @@ import {
   QUICK_EXPORT_LIMIT,
 } from '../../constants';
 import {
-  InTransitItemReport,
+  InTransitItemsReport,
   InstancesIdReport,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
@@ -244,7 +244,7 @@ class InstancesList extends React.Component {
     });
 
     try {
-      const report = new InTransitItemReport(parentMutator, formatMessage);
+      const report = new InTransitItemsReport(parentMutator, formatMessage);
       const items = await report.toCSV();
 
       if (!items?.length) {

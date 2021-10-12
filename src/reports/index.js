@@ -1,2 +1,2 @@
-export { default as InTransitItemReport } from './InTransitItemReport';
+export { default as InTransitItemsReport } from './InTransitItemsReport';
 export { default as InstancesIdReport } from './InstancesIdReport';
