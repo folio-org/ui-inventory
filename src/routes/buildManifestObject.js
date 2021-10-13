@@ -87,6 +87,20 @@ export function buildManifestObject() {
         staticFallback: { params: {} },
       },
     },
+    holdingsToExportIDs: {
+      type: 'okapi',
+      records: 'ids',
+      accumulate: true,
+      fetch: false,
+      path: 'search/holdings/ids',
+      throwErrors: false,
+      GET: {
+        params: {
+          query: buildQuery,
+        },
+        staticFallback: { params: {} },
+      },
+    },
     quickExport: {
       type: 'okapi',
       fetch: false,
