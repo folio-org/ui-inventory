@@ -191,7 +191,6 @@ class HoldingsForm extends React.Component {
       pristine,
       submitting,
       goTo,
-      isMARCRecord,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
