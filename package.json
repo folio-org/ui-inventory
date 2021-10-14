@@ -591,7 +591,8 @@
         "displayName": "Inventory: View, create, edit holdings",
         "subPermissions": [
           "ui-inventory.holdings.create",
-          "inventory-storage.holdings.item.put"
+          "inventory-storage.holdings.item.put",
+          "inventory.config.holdings.blocked-fields.get"
         ],
         "visible": true
       },
