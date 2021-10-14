@@ -54,8 +54,8 @@ import {
   QUICK_EXPORT_LIMIT,
 } from '../../constants';
 import {
-  InTransitItemReport,
-  InstancesIdReport,
+  IdReportGenerator,
+  InTransitItemsReport,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
@@ -128,6 +128,7 @@ class InstancesList extends React.Component {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
       instancesIdExportInProgress: false,
+      holdingsIdExportInProgress: false,
       instancesQuickExportInProgress: false,
       showErrorModal: false,
       selectedRows: {},
@@ -244,7 +245,7 @@ class InstancesList extends React.Component {
     });
 
     try {
-      const report = new InTransitItemReport(parentMutator, formatMessage);
+      const report = new InTransitItemsReport(parentMutator, formatMessage);
       const items = await report.toCSV();
 
       if (!items?.length) {
@@ -294,7 +295,7 @@ class InstancesList extends React.Component {
 
         clearTimeout(infoCalloutTimer);
 
-        const report = new InstancesIdReport('SearchInstanceUUIDs');
+        const report = new IdReportGenerator('SearchInstanceUUIDs');
 
         if (!isEmpty(items)) {
           report.toCSV(items, record => record.id);
@@ -327,7 +328,7 @@ class InstancesList extends React.Component {
         type: 'uuid',
         recordType: 'INSTANCE'
       });
-      new InstancesIdReport('QuickInstanceExport').toCSV(instanceIds);
+      new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (error) {
       sendCallout({
         type: 'error',
@@ -354,6 +355,50 @@ class InstancesList extends React.Component {
       return { showNewFastAddModal: !state.showNewFastAddModal };
     });
   }
+
+  generateHoldingsIdReport = async (sendCallout) => {
+    const { holdingsIdExportInProgress } = this.state;
+
+    if (holdingsIdExportInProgress) return;
+
+    this.setState({ holdingsIdExportInProgress: true }, async () => {
+      const {
+        reset,
+        GET,
+      } = this.props.parentMutator.holdingsToExportIDs;
+      let infoCalloutTimer;
+
+      try {
+        reset();
+
+        infoCalloutTimer = setTimeout(() => {
+          sendCallout({
+            type: 'info',
+            message: <FormattedMessage id="ui-inventory.saveHoldingsUIIDS.info" />,
+          });
+        }, INSTANCES_ID_REPORT_TIMEOUT);
+
+        const items = await GET();
+
+        clearTimeout(infoCalloutTimer);
+
+        const report = new IdReportGenerator('SearchHoldingsUUIDs');
+
+        if (!isEmpty(items)) {
+          report.toCSV(items, record => record.id);
+        }
+      } catch (error) {
+        clearTimeout(infoCalloutTimer);
+
+        sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.saveHoldingsUIIDS.error" />,
+        });
+      } finally {
+        this.setState({ instancesIdExportInProgress: false });
+      }
+    });
+  };
 
   getActionItem = ({ id, icon, messageId, onClickHandler, isDisabled = false }) => {
     return (
@@ -392,7 +437,7 @@ class InstancesList extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl } = this.props;
+    const { parentResources, intl, segment } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
@@ -458,6 +503,13 @@ class InstancesList extends React.Component {
             icon: 'save',
             messageId: 'ui-inventory.saveInstancesUIIDS',
             onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
+            isDisabled: isInstancesListEmpty,
+          })}
+          {segment === 'holdings' && this.getActionItem({
+            id: 'dropdown-clickable-get-items-uiids',
+            icon: 'save',
+            messageId: 'ui-inventory.saveHoldingsUIIDS',
+            onClickHandler: buildOnClickHandler(this.generateHoldingsIdReport),
             isDisabled: isInstancesListEmpty,
           })}
           {this.getActionItem({
