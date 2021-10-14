@@ -720,5 +720,8 @@
     "editMARCHoldings": "Edit in quickMARC",
     "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
     "quickMARC.label": "quickMARC",
-    "edit": "Edit"
+    "edit": "Edit",
+    "saveHoldingsUIIDS": "Save Holdings UUIDs",
+    "saveHoldingsUIIDS.info": "Request to save holdings UUIDs has been received. File download may take a few minutes.",
+    "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again."
 }
