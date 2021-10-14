@@ -2,6 +2,7 @@ import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import get from 'lodash/get';
 
 import {
   Paneset,
@@ -69,15 +70,13 @@ function validate(values, props) {
   return errors;
 }
 
-@stripesConnect
 class HoldingsForm extends React.Component {
   static manifest = Object.freeze({
     query: {},
     holdingsBlockedFields: {
       type: 'okapi',
-      path: 'inventory/config/holdings/blocked-fields',
+      path: 'inventory/config/instances/blocked-fields',
       clear: false,
-      accumulate: true,
       throwErrors: false,
     },
   });
@@ -93,9 +92,12 @@ class HoldingsForm extends React.Component {
     instance: PropTypes.object,
     isMARCRecord: PropTypes.bool,
     referenceTables: PropTypes.object.isRequired,
-    mutator: PropTypes.shape({
+    resources: PropTypes.shape({
       holdingsBlockedFields: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
+        hasLoaded: PropTypes.bool.isRequired,
+        records: PropTypes.arrayOf(PropTypes.shape({
+          blockedFields: PropTypes.arrayOf(PropTypes.string).isRequired,
+        })).isRequired,
       }).isRequired,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -117,16 +119,6 @@ class HoldingsForm extends React.Component {
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-    this.state = {
-      blockedFields: [],
-    };
-  }
-
-  componentDidMount() {
-    this.props.mutator.holdingsBlockedFields.GET()
-      .then(({ blockedFields }) => {
-        this.setState({ blockedFields });
-      });
   }
 
   getFooter = () => {
@@ -137,6 +129,7 @@ class HoldingsForm extends React.Component {
       copy,
       handleSubmit,
     } = this.props;
+
     const cancelButton = (
       <Button
         buttonStyle="default mega"
@@ -168,12 +161,18 @@ class HoldingsForm extends React.Component {
   };
 
   isFieldBlocked = (fieldName) => {
-    const { isMARCRecord } = this.props;
-    const { blockedFields } = this.state;
+    const {
+      resources: { holdingsBlockedFields },
+      isMARCRecord,
+    } = this.props;
 
-    if (!isMARCRecord || !blockedFields?.length) {
-      return false;
-    }
+    if (!holdingsBlockedFields || !isMARCRecord) return false;
+
+    const { records } = holdingsBlockedFields;
+
+    if (!records || !records.length) return false;
+
+    const { blockedFields } = records[0];
 
     return blockedFields.includes(fieldName);
   };
@@ -705,4 +704,4 @@ class HoldingsForm extends React.Component {
 export default stripesFinalForm({
   navigationCheck: true,
   validate,
-})(HoldingsForm);
+})(stripesConnect(HoldingsForm));
