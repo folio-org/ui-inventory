@@ -20,18 +20,22 @@ const getSelectedFacetOptionsWithoutCount = (selectedFiltersId, entries, facetDa
       const selectedFilterWithCount = entries.find(filter => filter.id === selectedFilterId);
 
       if (!selectedFilterWithCount) {
-        const {
-          name = '',
-          id,
-          label = '',
-        } = facetDataMap.get(selectedFilterId);
+        const facet = facetDataMap.get(selectedFilterId);
 
-        const option = {
-          label: name || label,
-          value: id,
-          count: 0,
-        };
-        selectedFiltersWithoutCount.push(option);
+        if (facet) {
+          const {
+            name = '',
+            id,
+            label = '',
+          } = facetDataMap.get(selectedFilterId);
+
+          const option = {
+            label: name || label,
+            value: id,
+            count: 0,
+          };
+          selectedFiltersWithoutCount.push(option);
+        }
       }
     });
   }
@@ -45,18 +49,22 @@ export const getFacetOptions = (selectedFiltersId, entries, facetData, key) => {
   const restFilters = entries.reduce((accum, entry) => {
     if (!entry.totalRecords) return accum;
 
-    const {
-      name = '',
-      id,
-      label = '',
-    } = facetDataMap.get(entry.id);
+    const facet = facetDataMap.get(entry.id);
 
-    const option = {
-      label: name || label,
-      value: id,
-      count: entry.totalRecords,
-    };
-    accum.push(option);
+    if (facet) {
+      const {
+        name = '',
+        id,
+        label = '',
+      } = facetDataMap.get(entry.id);
+
+      const option = {
+        label: name || label,
+        value: id,
+        count: entry.totalRecords,
+      };
+      accum.push(option);
+    }
     return accum;
   }, []);
 
