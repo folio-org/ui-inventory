@@ -131,7 +131,7 @@ export default class CheckboxFacet extends React.Component {
         selectedValues={selectedValues}
         showMore={filteredOptions.length > more}
         showSearch={isFilterable}
-        onMoreClick={() => this.onMoreClick(filteredOptions.length - 1)}
+        onMoreClick={() => this.onMoreClick(filteredOptions.length)}
         onSearch={this.onFacetSearch}
         onChange={this.onFasetChange}
         onFetch={onFetch}
