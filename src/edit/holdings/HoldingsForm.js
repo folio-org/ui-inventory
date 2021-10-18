@@ -2,7 +2,6 @@ import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import get from 'lodash/get';
 
 import {
   Paneset,
@@ -75,7 +74,7 @@ class HoldingsForm extends React.Component {
     query: {},
     holdingsBlockedFields: {
       type: 'okapi',
-      path: 'inventory/config/instances/blocked-fields',
+      path: 'inventory/config/holdings/blocked-fields',
       clear: false,
       throwErrors: false,
     },
