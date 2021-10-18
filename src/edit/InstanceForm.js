@@ -156,7 +156,7 @@ function validate(values) {
 class InstanceForm extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    instanceBlockedFields: {
+    blockedFields: {
       type: 'okapi',
       path: 'inventory/config/instances/blocked-fields',
       clear: false,
@@ -177,10 +177,12 @@ class InstanceForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.mutator.instanceBlockedFields.GET()
-      .then(({ blockedFields }) => {
-        this.setState({ blockables: blockedFields });
-      });
+    const { resources: { blockedFields } } = this.props;
+    if (!blockedFields) return;
+    const { records } = blockedFields;
+    if (!records || !records.length) return;
+    const { blockedFields: blockables } = records[0];
+    this.setState({ blockables });
   }
 
   getPaneTitle() {
@@ -755,11 +757,11 @@ InstanceForm.propTypes = {
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
   }).isRequired,
-  mutator: PropTypes.shape({
-    instanceBlockedFields: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
+  resources: PropTypes.shape({
+    blockedFields: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
     }),
-  }).isRequired,
+  }),
   instanceSource: PropTypes.string,
   history: PropTypes.object.isRequired,
 };
