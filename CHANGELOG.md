@@ -2,6 +2,8 @@
 
 ## [8.1.0] IN PROGRESS
 
+* Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
+* Fix tag filter. Fixes UIIN-1809.
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
@@ -87,6 +89,7 @@
 * Update detail view headers. Refs UIIN-1309, UIIN-1311, UIIN-1470.
 * Update version of interfaces due to supporting MARC Authority records. Refs UIIN-1528.
 * Show error modal when saving instance fails. Fixes UIIN-1527.
+* Fix impossibility to create `in transit` items report. Refs UIIN-1642.
 
 ## [7.0.4](https://github.com/folio-org/ui-inventory/tree/v7.0.4) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.0.4)
