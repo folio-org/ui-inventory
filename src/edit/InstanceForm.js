@@ -152,15 +152,13 @@ function validate(values) {
   return errors;
 }
 
-@stripesConnect
 class InstanceForm extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    blockedFields: {
+    instanceBlockedFields: {
       type: 'okapi',
       path: 'inventory/config/instances/blocked-fields',
       clear: false,
-      accumulate: true,
       throwErrors: false,
     },
   });
@@ -168,21 +166,8 @@ class InstanceForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      blockables: [],
-    };
-
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-  }
-
-  componentDidMount() {
-    const { resources: { blockedFields } } = this.props;
-    if (!blockedFields) return;
-    const { records } = blockedFields;
-    if (!records || !records.length) return;
-    const { blockedFields: blockables } = records[0];
-    this.setState({ blockables });
   }
 
   getPaneTitle() {
@@ -237,11 +222,21 @@ class InstanceForm extends React.Component {
     );
   };
 
-  isFieldBlocked = fieldName => {
-    const { instanceSource } = this.props;
-    const { blockables } = this.state;
-    if (instanceSource !== 'MARC' || !blockables || !blockables.length) return false;
-    return blockables.includes(fieldName);
+  isFieldBlocked = (fieldName) => {
+    const {
+      instanceSource,
+      resources: { instanceBlockedFields },
+    } = this.props;
+
+    if (!instanceBlockedFields || instanceSource !== 'MARC') return false;
+
+    const { records } = instanceBlockedFields;
+
+    if (!records || !records.length) return false;
+
+    const { blockedFields } = records[0];
+
+    return blockedFields.includes(fieldName);
   };
 
   render() {
@@ -758,7 +753,7 @@ InstanceForm.propTypes = {
     logger: PropTypes.object.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    blockedFields: PropTypes.shape({
+    instanceBlockedFields: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }),
@@ -773,4 +768,4 @@ InstanceForm.defaultProps = {
 export default withRouter(stripesFinalForm({
   validate,
   navigationCheck: true,
-})(InstanceForm));
+})(stripesConnect(InstanceForm)));

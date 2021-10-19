@@ -102,6 +102,7 @@
           "search.index.mappings.item.post",
           "search.index.records.collection.post",
           "search.instances.collection.get",
+          "search.instances.ids.collection.get",
           "search.config.languages.item.post",
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
@@ -591,7 +592,8 @@
         "displayName": "Inventory: View, create, edit holdings",
         "subPermissions": [
           "ui-inventory.holdings.create",
-          "inventory-storage.holdings.item.put"
+          "inventory-storage.holdings.item.put",
+          "inventory.config.holdings.blocked-fields.get"
         ],
         "visible": true
       },
@@ -831,7 +833,7 @@
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
     "@folio/plugin-find-instance": "^6.0.0",
-    "@folio/quick-marc": "^4.0.0"
+    "@folio/quick-marc": "^5.0.0"
   },
   "resolutions": {
     "babel-eslint/@babel/parser": "7.7.5",

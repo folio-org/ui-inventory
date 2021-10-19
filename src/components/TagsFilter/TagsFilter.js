@@ -8,46 +8,60 @@ import {
   FilterAccordionHeader,
   filterState,
 } from '@folio/stripes/components';
-import {
-  MultiSelectionFilter,
-} from '@folio/stripes/smart-components';
 
-const FILTER_NAME = 'tags';
+import CheckboxFacet from '../CheckboxFacet';
 
-function TagsFilter({ onChange, onClear, selectedValues, tagsRecords }) {
+const TagsFilter = ({
+  id,
+  name,
+  onChange,
+  onFetch,
+  onSearch,
+  onClear,
+  selectedValues,
+  tagsRecords,
+  isPending,
+}) => {
   const intl = useIntl();
-  const onClearFilter = useCallback(() => onClear(FILTER_NAME), [onClear]);
+  const onClearFilter = useCallback(() => onClear(name), [onClear, name]);
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const hasTagsSelected = !!Object.keys(filterState(urlParams.get('filters')))
-    .find((key) => key.startsWith(`${FILTER_NAME}.`));
+    .find((key) => key.startsWith(`${name}.`));
 
-  const tagsOptions = tagsRecords
-    .map(({ label }) => ({ label, value: label }))
-    .sort((a, b) => a.label.localeCompare((b.label)));
-
+  const tagsOptions = tagsRecords.map(({ label, count }) => ({ label, value: label, count }));
   return (
     <Accordion
+      id={id}
       closedByDefault={!hasTagsSelected}
       displayClearButton={!!selectedValues?.length}
       header={FilterAccordionHeader}
       label={intl.formatMessage({ id: 'ui-inventory.filter.tags' })}
       onClearFilter={onClearFilter}
     >
-      <MultiSelectionFilter
+      <CheckboxFacet
         dataOptions={tagsOptions}
-        name={FILTER_NAME}
+        name={name}
         onChange={onChange}
+        onSearch={onSearch}
+        onFetch={onFetch}
         selectedValues={selectedValues}
+        isFilterable
+        isPending={isPending}
       />
     </Accordion>
   );
-}
+};
 
 TagsFilter.propTypes = {
+  id: PropTypes.string,
+  isPending: PropTypes.bool,
+  name: PropTypes.string,
   selectedValues: PropTypes.arrayOf(PropTypes.string),
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
+  onFetch: PropTypes.func,
+  onSearch: PropTypes.func,
   tagsRecords: PropTypes.arrayOf(PropTypes.object),
 };
 

@@ -45,6 +45,7 @@ const filterAccordionTitle = 'Tags';
 const renderFilter = (tagsRecords, selectedValues, onChange = noop, onClear = noop) => (renderWithIntl(
   <Router>
     <TagsFilter
+      name="tags"
       onChange={onChange}
       onClear={onClear}
       selectedValues={selectedValues}
@@ -85,7 +86,7 @@ describe('TagsFilter component', () => {
     const onChangeFilter = jest.fn();
 
     renderFilter(TAGS, ['urgent'], onChangeFilter);
-    fireEvent.click(screen.getAllByText('urgent')[1]); // last element is the option in the list
+    fireEvent.click(screen.queryByText('urgent')); // last element is the option in the list
     expect(onChangeFilter).toHaveBeenCalled();
   });
 
@@ -97,8 +98,9 @@ describe('TagsFilter component', () => {
     expect(onClear).toHaveBeenCalled();
   });
 
+
   it('should display filter accordion without tags and selected values', () => {
     renderFilter(undefined, ['urgent']);
-    expect(screen.getByText('No matching items found!')).toBeDefined();
+    expect(screen.getByText('No matching options')).toBeDefined();
   });
 });

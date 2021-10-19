@@ -5,7 +5,7 @@ import { exportCsv } from '@folio/stripes/util';
 
 import { isTestEnv } from '../utils';
 
-class InstancesIdReport {
+class IdReportGenerator {
   constructor(fileNamePrefix) {
     this.fileNamePrefix = fileNamePrefix;
   }
@@ -26,4 +26,4 @@ class InstancesIdReport {
   }
 }
 
-export default InstancesIdReport;
+export default IdReportGenerator;
