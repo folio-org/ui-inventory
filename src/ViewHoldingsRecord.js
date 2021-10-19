@@ -443,14 +443,11 @@ class ViewHoldingsRecord extends React.Component {
 
   isAwaitingResource = () => {
     const {
-      resources: {
-        holdingsRecords,
-        instances1,
-        permanentLocation,
-        temporaryLocation,
-      },
-      match: { params: { holdingsrecordid } },
-    } = this.props;
+      holdingsRecords,
+      instances1,
+      permanentLocation,
+      temporaryLocation,
+    } = this.props.resources;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) {
       return true;
@@ -458,7 +455,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const holdingsRecord = holdingsRecords.records[0];
 
-    if (!instances1 || !instances1.hasLoaded || holdingsRecord.id !== holdingsrecordid
+    if (!instances1 || !instances1.hasLoaded
       || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
       || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))) {
       return true;
@@ -1092,7 +1089,6 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  match: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
