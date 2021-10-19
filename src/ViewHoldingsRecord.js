@@ -52,6 +52,7 @@ import {
   staffOnlyFormatter,
   getSortedNotes,
   handleKeyCommand,
+  getDate,
 } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
@@ -442,11 +443,14 @@ class ViewHoldingsRecord extends React.Component {
 
   isAwaitingResource = () => {
     const {
-      holdingsRecords,
-      instances1,
-      permanentLocation,
-      temporaryLocation,
-    } = this.props.resources;
+      resources: {
+        holdingsRecords,
+        instances1,
+        permanentLocation,
+        temporaryLocation,
+      },
+      match: { params: { holdingsrecordid } },
+    } = this.props;
 
     if (!holdingsRecords || !holdingsRecords.hasLoaded) {
       return true;
@@ -454,7 +458,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const holdingsRecord = holdingsRecords.records[0];
 
-    if (!instances1 || !instances1.hasLoaded
+    if (!instances1 || !instances1.hasLoaded || holdingsRecord.id !== holdingsrecordid
       || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
       || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))) {
       return true;
@@ -697,8 +701,18 @@ class ViewHoldingsRecord extends React.Component {
                   <Pane
                     defaultWidth={this.props.paneWidth}
                     appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-                    paneTitle={this.props.paneTitle}
-                    paneSub={this.props.paneSubtitle}
+                    paneTitle={intl.formatMessage({
+                      id: 'ui-inventory.holdingsPaneTitle',
+                    }, {
+                      location: referenceTables?.locationsById[holdingsRecord?.effectiveLocationId]?.name,
+                      callNumber: holdingsRecord?.callNumber,
+                    })}
+                    paneSub={intl.formatMessage({
+                      id: 'ui-inventory.instanceRecordSubtitle',
+                    }, {
+                      hrid: holdingsRecord?.hrid,
+                      updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
+                    })}
                     dismissible
                     onClose={this.props.onCloseViewHoldingsRecord}
                     actionMenu={this.getPaneHeaderActionMenu}
@@ -1078,8 +1092,7 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  paneTitle: PropTypes.string,
-  paneSubtitle: PropTypes.string,
+  match: PropTypes.object,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
@@ -1102,11 +1115,6 @@ ViewHoldingsRecord.propTypes = {
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
   updateLocation: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
-};
-
-ViewHoldingsRecord.defaultProps = {
-  paneTitle: '',
-  paneSubtitle: '',
 };
 
 export default withLocation(ViewHoldingsRecord);
