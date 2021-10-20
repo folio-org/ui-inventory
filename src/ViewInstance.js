@@ -1,7 +1,4 @@
-import {
-  find,
-  get,
-} from 'lodash';
+import { get } from 'lodash';
 import React, {
   createRef
 } from 'react';
@@ -537,7 +534,7 @@ class ViewInstance extends React.Component {
     );
   };
 
-  // Pane subtitle (second line) for both instance and holdings detail panes
+  // Pane subtitle (second line) for instance details pane
   createSubtitle = (record) => {
     return this.props.intl.formatMessage({
       id: 'ui-inventory.instanceRecordSubtitle',
@@ -550,7 +547,6 @@ class ViewInstance extends React.Component {
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
-      resources: { allInstanceHoldings, locations },
       stripes,
       onCopy,
       onClose,
@@ -560,7 +556,6 @@ class ViewInstance extends React.Component {
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
-    const holdingsRecord = find(allInstanceHoldings.records, { id: holdingsrecordid });
 
     const shortcuts = [
       {
@@ -660,16 +655,6 @@ class ViewInstance extends React.Component {
                     id={id}
                     holdingsrecordid={holdingsrecordid}
                     onCloseViewHoldingsRecord={this.goBack}
-                    paneTitle={
-                      <FormattedMessage
-                        id="ui-inventory.holdingsPaneTitle"
-                        values={{
-                          location: find(locations.records, { id: holdingsRecord?.effectiveLocationId })?.name,
-                          callNumber: holdingsRecord?.callNumber,
-                        }}
-                      />
-                    }
-                    paneSubtitle={this.createSubtitle(holdingsRecord)}
                     {...this.props}
                   />
                 )
