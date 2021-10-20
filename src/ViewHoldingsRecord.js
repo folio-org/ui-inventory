@@ -161,7 +161,11 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.resources.instances1?.records[0]?.source !== this.props.resources.instances1?.records[0]?.source) {
+    const wasHoldingsRecordsPending = prevProps.resources.holdingsRecords?.isPending;
+    const isHoldingsRecordsPending = this.props.resources.holdingsRecords?.isPending;
+    const hasHoldingsRecordsLoaded = this.props.resources.holdingsRecords?.hasLoaded;
+
+    if (wasHoldingsRecordsPending !== isHoldingsRecordsPending && hasHoldingsRecordsLoaded) {
       if (this.isMARCSource() && !this.state.markRecord) {
         this.getMARCRecord();
       }
@@ -449,7 +453,7 @@ class ViewHoldingsRecord extends React.Component {
       temporaryLocation,
     } = this.props.resources;
 
-    if (!holdingsRecords || !holdingsRecords.hasLoaded) {
+    if (!holdingsRecords || holdingsRecords.isPending) {
       return true;
     }
 
