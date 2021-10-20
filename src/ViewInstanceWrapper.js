@@ -13,7 +13,7 @@ const ViewInstanceWrapper = (props) => {
     resources,
   } = props;
   const instance = resources.instance?.records?.[0];
-  const selectedInstance = instance?.id === id ? instance : null;
+  let selectedInstance = instance?.id === id ? instance : null;
 
   // only load after instance is present
   const parentInstances = useLoadSubInstances(selectedInstance?.parentInstances, 'superInstanceId');
@@ -21,11 +21,11 @@ const ViewInstanceWrapper = (props) => {
 
   if (selectedInstance) {
     if (parentInstances?.length) {
-      selectedInstance.parentInstances = parentInstances;
+      selectedInstance = { ...selectedInstance, parentInstances };
     }
 
     if (childInstances?.length) {
-      selectedInstance.childInstances = childInstances;
+      selectedInstance = { ...childInstances, childInstances };
     }
   }
 
