@@ -77,6 +77,12 @@ class ViewHoldingsRecord extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh || (action.meta.name === 'holdingsRecords' && action.meta.path === 'inventory');
+      },
+      PUT: {
+        path: 'inventory/holdings/:{holdingsrecordid}',
+      },
       POST: {
         path: 'holdings-storage/holdings',
       },

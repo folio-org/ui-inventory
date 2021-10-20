@@ -8,6 +8,7 @@
 * Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
 * Call read-only fields for FOLIO holdings endpoint to get list of read-only fields. Refs UIIN-1655.
 * Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
+* Change PUT endpoint for Holdings editing. Refs UIIN-1660.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
