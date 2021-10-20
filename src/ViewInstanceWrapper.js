@@ -25,7 +25,7 @@ const ViewInstanceWrapper = (props) => {
     }
 
     if (childInstances?.length) {
-      selectedInstance = { ...childInstances, childInstances };
+      selectedInstance = { ...selectedInstance, childInstances };
     }
   }
 
