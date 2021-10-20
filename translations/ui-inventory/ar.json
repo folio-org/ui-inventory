@@ -721,7 +721,7 @@
     "editMARCHoldings.paneTitle": "الموقع: {location} > {callNumber}",
     "quickMARC.label": "quickMARC",
     "edit": "تحرير",
-    "saveHoldingsUIIDS": "Save Holdings UUIDs",
-    "saveHoldingsUIIDS.info": "Request to save holdings UUIDs has been received. File download may take a few minutes.",
-    "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again."
+    "saveHoldingsUIIDS": "حفظ المعرفات الفريد العمومية للمقتنيات",
+    "saveHoldingsUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للمقتنيات. قد يستغرق تنزيل الملف بضع دقائق.",
+    "saveHoldingsUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للمقتنيات. يرجى إعادة المحاولة."
 }
