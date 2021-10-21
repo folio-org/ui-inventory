@@ -24,6 +24,7 @@
 * Use correct metadata on item form. Fixes UIIN-1656.
 * Fix after saving and updating a holdings record, the user is returned to the instance record. Fixes UIIN-1854
 * Retrieve and display Order information on Instance record. Refs UIIN-1835.
+* Add date filters. Refs UIIN-1651, UIIN-1653.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
