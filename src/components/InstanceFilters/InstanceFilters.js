@@ -17,6 +17,7 @@ import {
   processFacetOptions
 } from '../../facetUtils';
 import {
+  DATE_FORMAT,
   FACETS,
   FACETS_OPTIONS,
   FACETS_SETTINGS,
@@ -24,6 +25,11 @@ import {
 } from '../../constants';
 import { useFacets } from '../../common/hooks';
 import { languageOptionsES } from './languages';
+import DateRangeFilter from '../SearchAndSort/components/DateRangeFilter';
+import {
+  makeDateRangeFilterString,
+  retrieveDatesFromDateRangeFilterString,
+} from '../../utils';
 
 const InstanceFilters = props => {
   const {
@@ -66,6 +72,8 @@ const InstanceFilters = props => {
     [FACETS_OPTIONS.NATURE_OF_CONTENT_OPTIONS]: [],
     [FACETS_OPTIONS.SUPPRESSED_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_DISCOVERY_SUPPRESS_OPTIONS]: [],
+    [FACETS_OPTIONS.CREATED_DATE_OPTIONS]: [],
+    [FACETS_OPTIONS.UPDATED_DATE_OPTIONS]: [],
     [FACETS_OPTIONS.SOURCE_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_TAGS_OPTIONS]: [],
   };
@@ -115,6 +123,12 @@ const InstanceFilters = props => {
             break;
           case FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS], recordValues);
+            break;
+          case FACETS_CQL.CREATED_DATE:
+            accum[name] = getSourceOptions(activeFilters[FACETS.CREATED_DATE], recordValues);
+            break;
+          case FACETS_CQL.UPDATED_DATE:
+            accum[name] = getSourceOptions(activeFilters[FACETS.UPDATED_DATE], recordValues);
             break;
           case FACETS_CQL.SOURCE:
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);
@@ -302,46 +316,40 @@ const InstanceFilters = props => {
           onChange={onChange}
         />
       </Accordion>
-      {
-        // uncomment when BE side is ready
-
-        /*
-        <Accordion
-          label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
-          id={FACETS.CREATED_DATE}
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
+        id={FACETS.CREATED_DATE}
+        name={FACETS.CREATED_DATE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.CREATED_DATE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.CREATED_DATE)}
+      >
+        <DateRangeFilter
           name={FACETS.CREATED_DATE}
-          closedByDefault
-          header={FilterAccordionHeader}
-          displayClearButton={activeFilters[FACETS.CREATED_DATE]?.length > 0}
-          onClearFilter={() => onClear(FACETS.CREATED_DATE)}
-        >
-          <DateRangeFilter
-            name={FACETS.CREATED_DATE}
-            dateFormat={DATE_FORMAT}
-            selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.CREATED_DATE]?.[0])}
-            onChange={onChange}
-            makeFilterString={makeDateRangeFilterString}
-          />
-        </Accordion>
-        <Accordion
-          label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
-          id={FACETS.UPDATED_DATE}
+          dateFormat={DATE_FORMAT}
+          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.CREATED_DATE]?.[0])}
+          onChange={onChange}
+          makeFilterString={makeDateRangeFilterString}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
+        id={FACETS.UPDATED_DATE}
+        name={FACETS.UPDATED_DATE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.UPDATED_DATE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.UPDATED_DATE)}
+      >
+        <DateRangeFilter
           name={FACETS.UPDATED_DATE}
-          closedByDefault
-          header={FilterAccordionHeader}
-          displayClearButton={activeFilters[FACETS.UPDATED_DATE]?.length > 0}
-          onClearFilter={() => onClear(FACETS.UPDATED_DATE)}
-        >
-          <DateRangeFilter
-            name={FACETS.UPDATED_DATE}
-            dateFormat={DATE_FORMAT}
-            selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.UPDATED_DATE]?.[0])}
-            onChange={onChange}
-            makeFilterString={makeDateRangeFilterString}
-          />
-        </Accordion>
-        */
-      }
+          dateFormat={DATE_FORMAT}
+          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.UPDATED_DATE]?.[0])}
+          onChange={onChange}
+          makeFilterString={makeDateRangeFilterString}
+        />
+      </Accordion>
       <Accordion
         label={<FormattedMessage id={`ui-inventory.${FACETS.SOURCE}`} />}
         id={FACETS.SOURCE}
