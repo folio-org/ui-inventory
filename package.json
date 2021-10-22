@@ -593,7 +593,8 @@
         "subPermissions": [
           "ui-inventory.holdings.create",
           "inventory-storage.holdings.item.put",
-          "inventory.config.holdings.blocked-fields.get"
+          "inventory.config.holdings.blocked-fields.get",
+          "inventory.holdings.item.put"
         ],
         "visible": true
       },
