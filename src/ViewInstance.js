@@ -197,12 +197,21 @@ class ViewInstance extends React.Component {
   };
 
   redirectToQuickMarcPage = (page) => {
-    const { history, location, match } = this.props;
-    const instanceId = match.params.id;
+    const {
+      history,
+      location,
+      stripes,
+    } = this.props;
+
+    const ci = makeConnectedInstance(this.props, stripes.logger);
+    const instance = ci.instance();
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.append('relatedRecordVersion', instance._version);
 
     history.push({
-      pathname: `/inventory/quick-marc/${page}/${instanceId}`,
-      search: location.search,
+      pathname: `/inventory/quick-marc/${page}/${instance.id}`,
+      search: searchParams.toString(),
     });
   };
 

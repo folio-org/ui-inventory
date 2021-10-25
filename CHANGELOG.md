@@ -12,6 +12,7 @@
 * Fix parent and child relationship rendering. Fixes UIIN-1816 and UIIN-1814.
 * Add date filters. Refs UIIN-1651, UIIN-1653.
 * Change PUT endpoint for Holdings editing. Refs UIIN-1660.
+* Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
