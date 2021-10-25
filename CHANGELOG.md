@@ -4,7 +4,6 @@
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
-* Fix tag filter. Fixes UIIN-1809.
 * Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
 * Call read-only fields for FOLIO holdings endpoint to get list of read-only fields. Refs UIIN-1655.
 * Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
