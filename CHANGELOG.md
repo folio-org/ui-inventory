@@ -10,7 +10,6 @@
 * Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
 * Use `instanceFormatIds` instead of `instanceFormatIds` when executing facet query for formats. Fixes UIIN-1815.
 * Fix parent and child relationship rendering. Fixes UIIN-1816 and UIIN-1814.
-* Add date filters. Refs UIIN-1651, UIIN-1653.
 * Change PUT endpoint for Holdings editing. Refs UIIN-1660.
 * Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
 * Bump data-export interface version to 5.0

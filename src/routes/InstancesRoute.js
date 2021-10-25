@@ -43,7 +43,11 @@ class InstancesRoute extends React.Component {
     let index = 0;
 
     return reduce(accordions, (accum, isFacetOpened, facetName) => {
-      if (isFacetOpened) {
+      if (
+        isFacetOpened &&
+        facetName !== FACETS.UPDATED_DATE &&
+        facetName !== FACETS.CREATED_DATE
+      ) {
         const facetNameToRequest = FACETS_TO_REQUEST[facetName];
         const defaultFiltersNumber = `:${DEFAULT_FILTERS_NUMBER}`;
         const isFacetValue = accordionsData?.[facetName]?.value;

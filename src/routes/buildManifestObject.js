@@ -121,7 +121,6 @@ export function buildManifestObject() {
       path: 'search/instances/facets',
       fetch: false,
       accumulate: true,
-      throwErrors: false,
     },
   };
 }
