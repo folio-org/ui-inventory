@@ -50,7 +50,6 @@
     "okapiInterfaces": {
       "inventory": "10.10 11.0",
       "source-storage-records": "3.0",
-      "search": "0.5",
       "instance-storage": "7.0 8.0",
       "holdings-storage": "3.0 4.4 5.0",
       "item-storage": "8.0 9.0",
@@ -771,10 +770,9 @@
     "@folio/eslint-config-stripes": "^5.3.0",
     "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.0.0",
-    "@folio/stripes-components": "^10.0.0",
-    "@folio/stripes-connect": "^7.0.0",
-    "@folio/stripes-core": "^8.0.0",
-    "@folio/stripes-smart-components": "^7.0.0",
+    "@folio/stripes-components": "^9.0.0",
+    "@folio/stripes-core": "^7.2.0",
+    "@folio/stripes-smart-components": "^6.1.0",
     "@folio/stripes-testing": "^3.0.0",
     "@folio/stripes-util": "^5.0.0",
     "@formatjs/cli": "^4.2.20",
@@ -801,14 +799,12 @@
     "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
-    "sinon": "^7.0.0",
-    "storybook-readme": "^5.0.8"
+    "sinon": "^7.0.0"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
-    "classnames": "^2.3.1",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
