@@ -754,7 +754,9 @@
     "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
     "test:e2e": "stripes test karma",
-    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-inventory ./translations/ui-inventory/compiled"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -775,6 +777,7 @@
     "@folio/stripes-smart-components": "^7.0.0",
     "@folio/stripes-testing": "^3.0.0",
     "@folio/stripes-util": "^5.0.0",
+    "@formatjs/cli": "^4.2.20",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.1.10",
