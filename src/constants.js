@@ -183,7 +183,7 @@ export const FACETS_CQL = {
   EFFECTIVE_LOCATION: 'items.effectiveLocationId',
   LANGUAGES: 'languages',
   INSTANCE_TYPE: 'instanceTypeId',
-  INSTANCE_FORMAT: 'instanceFormatIds',
+  INSTANCE_FORMAT: 'instanceFormatId',
   MODE_OF_ISSUANCE: 'modeOfIssuanceId',
   NATURE_OF_CONTENT: 'natureOfContentTermIds',
   STAFF_SUPPRESS: 'staffSuppress',

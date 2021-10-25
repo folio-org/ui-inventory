@@ -8,7 +8,6 @@
 * Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
 * Call read-only fields for FOLIO holdings endpoint to get list of read-only fields. Refs UIIN-1655.
 * Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
-* Use `instanceFormatIds` instead of `instanceFormatIds` when executing facet query for formats. Fixes UIIN-1815.
 * Fix parent and child relationship rendering. Fixes UIIN-1816 and UIIN-1814.
 * Change PUT endpoint for Holdings editing. Refs UIIN-1660.
 * Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
