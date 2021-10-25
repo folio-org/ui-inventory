@@ -754,7 +754,9 @@
     "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
     "test:e2e": "stripes test karma",
-    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-inventory ./translations/ui-inventory/compiled"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
