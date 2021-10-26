@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## [8.1.0] IN PROGRESS
+## [9.0.0] IN PROGRESS
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
