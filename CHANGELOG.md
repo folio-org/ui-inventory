@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [8.0.1] IN PROGRESS
+## [8.0.1](https://github.com/folio-org/ui-inventory/tree/v8.0.1) (2021-10-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v8.0.1)
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
