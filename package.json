@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "9.0.0",
+  "version": "8.0.1",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -84,7 +84,7 @@
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
-      "data-export": "5.0"
+      "data-export": "4.0"
     },
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
