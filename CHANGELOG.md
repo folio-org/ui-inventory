@@ -12,6 +12,7 @@
 * Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
 * Bump data-export interface version to 5.0.
 * Revert elastic search. Refs UIIN-1822.
+* Use correct `css-loader` syntax. Refs UIIN-1826.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
