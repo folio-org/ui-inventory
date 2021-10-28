@@ -16,12 +16,6 @@ import { instances as instancesFixture } from '../../../test/fixtures/instances'
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
-const segment = 'instances';
-const {
-  indexes,
-  renderer,
-} = getFilterConfig(segment);
-
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
@@ -38,44 +32,65 @@ const data = {
   modesOfIssuance: [],
   natureOfContentTerms: [],
   tagsRecords: [],
+  facets: [],
 };
 const query = {
   query: '',
   sort: 'title',
 };
 
-const InstancesListSetup = ({
-  instances = instancesFixture,
-} = {}) => (
-  <Router>
-    <StripesContext.Provider value={stripesStub}>
-      <ModuleHierarchyProvider value={['@folio/inventory']}>
-        <InstancesList
-          parentResources={{
-            query,
-            records: {
-              hasLoaded: true,
-              resource: 'records',
-              records: instances,
-              other: { totalRecords: instances.length },
-            },
-            resultCount: instances.length,
-            resultOffset: 0,
-          }}
-          parentMutator={{ resultCount: { replace: noop } }}
-          data={{
-            ...data,
-            query
-          }}
-          onSelectRow={noop}
-          renderFilters={renderer({ ...data, query })}
-          segment={segment}
-          searchableIndexes={indexes}
-        />
-      </ModuleHierarchyProvider>
-    </StripesContext.Provider>
-  </Router>
-);
+const resources = {
+  query,
+  records: {
+    hasLoaded: true,
+    resource: 'records',
+    records: instancesFixture,
+    other: { totalRecords: instancesFixture.length },
+  },
+  facets: {
+    hasLoaded: true,
+    resource: 'facets',
+    records: [],
+    other: { totalRecords: 0 }
+  },
+  resultCount: instancesFixture.length,
+  resultOffset: 0,
+};
+
+const renderInstancesList = ({ segment }) => {
+  const {
+    indexes,
+    indexesES,
+    renderer,
+  } = getFilterConfig(segment);
+
+  return renderWithIntl(
+    <Router>
+      <StripesContext.Provider value={stripesStub}>
+        <ModuleHierarchyProvider module="@folio/inventory">
+          <InstancesList
+            parentResources={resources}
+            parentMutator={{ resultCount: { replace: noop } }}
+            data={{
+              ...data,
+              query
+            }}
+            onSelectRow={noop}
+            renderFilters={renderer({
+              ...data,
+              query,
+              parentResources: resources,
+            })}
+            segment={segment}
+            searchableIndexes={indexes}
+            searchableIndexesES={indexesES}
+          />
+        </ModuleHierarchyProvider>
+      </StripesContext.Provider>
+    </Router>,
+    translationsProperties
+  );
+};
 
 describe('InstancesList', () => {
   describe('rendering InstancesList with instances segment', () => {

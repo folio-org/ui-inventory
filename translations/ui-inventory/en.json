@@ -683,7 +683,7 @@
   "staffSuppressed": "Staff suppressed",
   "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
   "instance.saveError": "Saving instance failed",
-
+  "instance.suppressedFromDiscovery": "Suppressed from discovery",
   "acq.polNumber": "POL number",
   "acq.orderStatus": "Order status",
   "acq.orderStatus.Closed": "Closed",
