@@ -4,16 +4,14 @@
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
-* Fix tag filter. Fixes UIIN-1809.
 * Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
 * Call read-only fields for FOLIO holdings endpoint to get list of read-only fields. Refs UIIN-1655.
 * Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
-* Use `instanceFormatIds` instead of `instanceFormatIds` when executing facet query for formats. Fixes UIIN-1815.
 * Fix parent and child relationship rendering. Fixes UIIN-1816 and UIIN-1814.
-* Add date filters. Refs UIIN-1651, UIIN-1653.
 * Change PUT endpoint for Holdings editing. Refs UIIN-1660.
 * Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
-* Bump data-export interface version to 5.0
+* Bump data-export interface version to 5.0.
+* Revert elastic search. Refs UIIN-1822.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
@@ -37,7 +35,6 @@
 * Add accordion to `<ItemView>` for bound-with related items. Refs UIIN-1521.
 * Add View source for MARC Holdings. Refs UIIN-1549.
 * Item count bug when there are multiple holdings on an instance. Refs UIIN-1617.
-* Incorporate `ui-inventory-search` facets. Refs UIIN-1567.
 * Update received piece table columns. Refs UIIN-1632.
 * Restore `mod-inventory` endpoints for non-search requests. UIIN-1634.
 * Delete Inventory and MARC holdings records when record Source = MARC. Refs UIIN-1559.

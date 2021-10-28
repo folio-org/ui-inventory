@@ -50,7 +50,6 @@
     "okapiInterfaces": {
       "inventory": "10.10 11.0",
       "source-storage-records": "3.0",
-      "search": "0.5",
       "instance-storage": "7.0 8.0",
       "holdings-storage": "3.0 4.4 5.0",
       "item-storage": "8.0 9.0",
@@ -801,14 +800,12 @@
     "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
-    "sinon": "^7.0.0",
-    "storybook-readme": "^5.0.8"
+    "sinon": "^7.0.0"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
-    "classnames": "^2.3.1",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
