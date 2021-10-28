@@ -49,6 +49,7 @@
     ],
     "okapiInterfaces": {
       "inventory": "10.10 11.0",
+      "search": "0.5",
       "source-storage-records": "3.0",
       "instance-storage": "7.0 8.0",
       "holdings-storage": "3.0 4.4 5.0",
@@ -834,7 +835,7 @@
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
     "@folio/plugin-find-instance": "^6.0.0",
-    "@folio/quick-marc": "^5.0.0"
+    "@folio/quick-marc": "^4.0.1"
   },
   "resolutions": {
     "babel-eslint/@babel/parser": "7.7.5",

@@ -6,7 +6,6 @@ import {
 
 import {
   buildDateRangeQuery,
-  buildOptionalBooleanQuery,
 } from './utils';
 
 export const instanceFilterConfig = [
@@ -52,13 +51,13 @@ export const instanceFilterConfig = [
     name: 'staffSuppress',
     cql: 'staffSuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('staffSuppress'),
+    operator: '==',
   },
   {
     name: 'discoverySuppress',
     cql: 'discoverySuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('discoverySuppress'),
+    operator: '==',
   },
   {
     name: 'createdDate',
@@ -133,7 +132,7 @@ export const holdingFilterConfig = [
     name: 'discoverySuppress',
     cql: 'holdings.discoverySuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('holdings.discoverySuppress'),
+    operator: '==',
   },
   {
     name: 'tags',
@@ -182,7 +181,7 @@ export const itemFilterConfig = [
     name: 'discoverySuppress',
     cql: 'items.discoverySuppress',
     values: [],
-    parse: buildOptionalBooleanQuery('items.discoverySuppress'),
+    operator: '==',
   },
   {
     name: 'tags',
