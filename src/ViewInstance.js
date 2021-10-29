@@ -347,7 +347,8 @@ class ViewInstance extends React.Component {
     const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
     const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
 
-    const canCreateEditDeriveMARCRecord = isSourceMARC && (canCreateMARCHoldings || canEditMARCRecord || canDeriveMARCRecord);
+    const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
+    const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
       return null;
@@ -439,7 +440,7 @@ class ViewInstance extends React.Component {
           </IfInterface>
 
           {
-            canCreateEditDeriveMARCRecord && (
+            (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
               <IfPermission perm="ui-inventory.instance.view">
                 <Button
                   id="clickable-view-source"
@@ -476,7 +477,7 @@ class ViewInstance extends React.Component {
         </MenuSection>
 
         {
-          canCreateEditDeriveMARCRecord && (
+          (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
             <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
               <IfPermission perm="records-editor.records.item.put">
                 <Button
@@ -514,7 +515,7 @@ class ViewInstance extends React.Component {
                 <Button
                   id="create-holdings-marc"
                   buttonStyle="dropdownItem"
-                  disabled={!marcRecord}
+                  disabled={!canCreateMARCHoldings}
                   onClick={() => {
                     onToggle();
                     this.createHoldingsMarc();
