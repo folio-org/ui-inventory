@@ -684,7 +684,7 @@
   "staffSuppressed": "Staff suppressed",
   "hridCopied": "The instance HRID {hrid} was successfully copied to the clipboard",
   "instance.saveError": "Saving instance failed",
-
+  "instance.suppressedFromDiscovery": "Suppressed from discovery",
   "acq.polNumber": "POL number",
   "acq.orderStatus": "Order status",
   "acq.orderStatus.Closed": "Closed",
@@ -709,31 +709,10 @@
   "receivingHistory.source.receiving": "Receiving",
   "receivingHistory.source.user": "User",
 
-  "advancedSearch": "Advanced search",
-  "showMoreOptions": "Show more options",
-  "more": "More",
-  "noMatchingOptions": "No matching options",
-  "elasticOptionsInfo": "When autocomplete results are available use up and down arrows to review and enter to select",
-  "elasticWarning": "The entered value is not one of the suggested",
-  "parser.emptyQuery": "The query to be parsed cannot be empty",
-  "parser.eof": "Invalid search clause",
-  "parser.invalidModifier": "Invalid modifier",
-  "parser.invalidRelation": "Invalid relation within the modifier",
-  "parser.invalidSearchClause": "Invalid search clause",
-  "parser.missingCloseParenthesis": "Missing closing parenthesis",
-  "parser.strOrQuotedExpression": "Expecting string or a quoted expression",
-  "POC": "Proof of concept",
-  "electronicAccessAll": "Electronic access all fields",
-  "electronicAccessURI": "Electronic access - URI",
-  "electronicAccessPublicNote": "Electronic access - Public note",
-  "electronicAccessLinkText": "Electronic access - Link Text",
-  "electronicAccessMaterialsSpecified": "Electronic access - Materials Specified",
-
   "shortcut.expandCollapse": "Expand or collapse an accordion",
   "shortcut.close": "Close a modal or pop-up",
   "shortcut.copy": "Copy",
   "shortcut.cut": "Cut",
   "shortcut.paste": "Paste",
   "shortcut.find": "Find"
-
 }

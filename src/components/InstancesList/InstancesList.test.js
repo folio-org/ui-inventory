@@ -67,7 +67,7 @@ const renderInstancesList = ({ segment }) => {
   return renderWithIntl(
     <Router>
       <StripesContext.Provider value={stripesStub}>
-        <ModuleHierarchyProvider value={['@folio/inventory']}>
+        <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
             parentResources={resources}
             parentMutator={{ resultCount: { replace: noop } }}
