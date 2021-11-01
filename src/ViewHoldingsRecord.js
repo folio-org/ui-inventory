@@ -343,10 +343,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const holdingsRecord = holdingsRecords.records[0];
 
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.append('relatedRecordVersion', holdingsRecord._version);
-
-    goTo(`/inventory/quick-marc/edit-holdings/${instances1.records[0].id}/${holdingsRecord.id}?${searchParams.toString()}`);
+    goTo(`/inventory/quick-marc/edit-holdings/${instances1.records[0].id}/${holdingsRecord.id}${location.search}`);
   }
 
   getPaneHeaderActionMenu = ({ onToggle }) => {

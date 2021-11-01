@@ -6,12 +6,9 @@ import { Pluggable } from '@folio/stripes/core';
 
 const QuickMarcRoute = ({ match, history, location }) => {
   const onClose = useCallback((recordRoute) => {
-    const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.delete('relatedRecordVersion');
-
     history.push({
       pathname: `/inventory/view/${recordRoute}`,
-      search: newSearchParams.toString(),
+      search: location.search,
     });
   }, [location.search]);
 
