@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.0.0] IN PROGRESS
+## [8.0.2](https://github.com/folio-org/ui-inventory/tree/v8.0.2) (2021-11-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.1...v8.0.2)
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
@@ -9,11 +10,16 @@
 * Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
 * Fix parent and child relationship rendering. Fixes UIIN-1816 and UIIN-1814.
 * Change PUT endpoint for Holdings editing. Refs UIIN-1660.
-* Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
-* Bump data-export interface version to 5.0.
 * Revert elastic search. Refs UIIN-1822.
 * Use correct `css-loader` syntax. Refs UIIN-1826.
 * Fix suppressed from discovery filter. Fixes UIIN-1832.
+
+## [8.0.1](https://github.com/folio-org/ui-inventory/tree/v8.0.1) (2021-10-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v8.0.1)
+
+* Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
+* Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
+* Fix tag filter. Fixes UIIN-1809.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
