@@ -16,6 +16,7 @@
 * Fix suppressed from discovery filter. Fixes UIIN-1832.
 * Create a MARC Holdings Record. Refs UIIN-1828.
 * Change search operators for ISBN and ISSN to '='. Fixes UIIN-1846.
+* Allow user to sort receiving history table. Refs UIIN-1824.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
