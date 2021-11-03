@@ -440,7 +440,7 @@ class ViewInstance extends React.Component {
           </IfInterface>
 
           {
-            (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
+            canEditDeriveMARCRecord && (
               <IfPermission perm="ui-inventory.instance.view">
                 <Button
                   id="clickable-view-source"
