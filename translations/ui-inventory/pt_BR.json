@@ -705,5 +705,5 @@
     "saveHoldingsUIIDS": "Salvar UUIDs de acervos",
     "saveHoldingsUIIDS.info": "A solicitação para salvar UUIDs de acervos foi recebida. O download do arquivo pode demorar alguns minutos.",
     "saveHoldingsUIIDS.error": "Ocorreu um erro ao salvar UUIDs de acervos. Por favor, tente novamente.",
-    "instance.suppressedFromDiscovery": "Suppressed from discovery"
+    "instance.suppressedFromDiscovery": "Suprimido da descoberta"
 }
