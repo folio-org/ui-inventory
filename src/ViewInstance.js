@@ -223,6 +223,10 @@ class ViewInstance extends React.Component {
     this.redirectToQuickMarcPage('duplicate-bib');
   };
 
+  createHoldingsMarc = () => {
+    this.redirectToQuickMarcPage('create-holdings');
+  };
+
   selectInstance = (selectedInstance) => {
     const { history, location, match } = this.props;
     const instanceId = match.params.id;
@@ -338,10 +342,12 @@ class ViewInstance extends React.Component {
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+    const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
     const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
 
+    const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
     const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
@@ -471,7 +477,7 @@ class ViewInstance extends React.Component {
         </MenuSection>
 
         {
-          canEditDeriveMARCRecord && (
+          (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
             <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
               <IfPermission perm="records-editor.records.item.put">
                 <Button
@@ -501,6 +507,22 @@ class ViewInstance extends React.Component {
                 >
                   <Icon icon="duplicate">
                     <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+
+              <IfPermission perm="ui-quick-marc.quick-marc-holdings-editor.create">
+                <Button
+                  id="create-holdings-marc"
+                  buttonStyle="dropdownItem"
+                  disabled={!canCreateMARCHoldings}
+                  onClick={() => {
+                    onToggle();
+                    this.createHoldingsMarc();
+                  }}
+                >
+                  <Icon icon="plus-sign">
+                    <FormattedMessage id="ui-inventory.createMARCHoldings" />
                   </Icon>
                 </Button>
               </IfPermission>

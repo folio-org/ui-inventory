@@ -582,6 +582,7 @@
 
   "editInstanceMarc": "Edit MARC bibliographic record",
   "duplicateInstanceMarc": "Derive new MARC bibliographic record",
+  "createMARCHoldings": "Add MARC holdings record",
   "editMARCHoldings": "Edit in quickMARC",
   "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
   "quickMarcNotAvailable": "No plugin available!",
