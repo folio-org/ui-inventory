@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [8.0.3](https://github.com/folio-org/ui-inventory/tree/v8.0.3) (2021-11-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.2...v8.0.3)
+
+* Revert: Change PUT endpoint for Holdings editing. Refs UIIN-1660.
+
 ## [8.0.2](https://github.com/folio-org/ui-inventory/tree/v8.0.2) (2021-11-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.1...v8.0.2)
 
