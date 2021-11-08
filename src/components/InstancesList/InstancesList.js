@@ -236,7 +236,6 @@ class InstancesList extends React.Component {
     } = this.props;
     const { sendCallout, removeCallout } = this.context;
     const calloutId = sendCallout({
-      type: 'info',
       message: <FormattedMessage id="ui-inventory.exportInProgress" />,
       timeout: 0,
     });
