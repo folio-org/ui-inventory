@@ -520,6 +520,7 @@
   "item.status.withdrawn": "Withdrawn",
   "item.status.statusUpdatedLabel": "status updated {statusDate}",
   "item.status.inTransitTo": "In transit to {servicePoint}",
+  "exportInProgress": "Export in progress",
   "inTransitReport": "In transit items report (CSV)",
   "saveInstancesUIIDS": "Save instances UUIDs",
   "saveInstancesUIIDS.info": "Request to save instances UUIDs has been received. File download may take a few minutes.",
