@@ -422,7 +422,7 @@
     "reports.inTransitItem.checkInDateTime": "Rückgabedatum und Uhrzeit",
     "reports.inTransitItem.destinationServicePoint": "Ziel-Servicestelle",
     "reports.inTransitItem.requestType": "Bestandsanfragetyp",
-    "reports.inTransitItem.requesterPatronGroup": "Requester patron group",
+    "reports.inTransitItem.requesterPatronGroup": "Personengruppe",
     "reports.inTransitItem.requestCreationDate": "Erstellungsdatum Bestandsanfrage",
     "reports.inTransitItem.requestExpirationDate": "Ablaufdatum Bestandsanfrage",
     "reports.inTransitItem.requestPickupServicePoint": "Bestandsanfrage Abholservicestelle ",
@@ -663,7 +663,7 @@
     "instance.saveError": "Speichern der Instanz fehlgeschlagen",
     "itemRecordWithDescriptionBW": "Exemplardatensatz ({materialType}, {status}, Konvolut)",
     "acq.polNumber": "Bestellpostennummer",
-    "acq.orderStatus": "Bestellstatus",
+    "acq.orderStatus": "Bestellungsstatus",
     "acq.orderStatus.Closed": "Abgeschlossen",
     "acq.orderStatus.Open": "Offen",
     "acq.orderStatus.Pending": "Ausstehend",
@@ -705,5 +705,6 @@
     "saveHoldingsUIIDS": "Save Holdings UUIDs",
     "saveHoldingsUIIDS.info": "Request to save holdings UUIDs has been received. File download may take a few minutes.",
     "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again.",
-    "instance.suppressedFromDiscovery": "Suppressed from discovery"
+    "instance.suppressedFromDiscovery": "Suppressed from discovery",
+    "createMARCHoldings": "Add MARC holdings record"
 }

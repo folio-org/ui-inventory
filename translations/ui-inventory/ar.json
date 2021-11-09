@@ -705,5 +705,6 @@
     "saveHoldingsUIIDS": "حفظ المعرفات الفريد العمومية للمقتنيات",
     "saveHoldingsUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للمقتنيات. قد يستغرق تنزيل الملف بضع دقائق.",
     "saveHoldingsUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للمقتنيات. يرجى إعادة المحاولة.",
-    "instance.suppressedFromDiscovery": "محجوب من الاكتشاف"
+    "instance.suppressedFromDiscovery": "محجوب من الاكتشاف",
+    "createMARCHoldings": "إضافة تسجيلة مقتنيات مارك"
 }
