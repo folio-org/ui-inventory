@@ -1,7 +1,7 @@
 # Change history for ui-inventory
 
 ## [8.0.4](https://github.com/folio-org/ui-inventory/tree/v8.0.4) (2021-11-08)
-[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.4...v8.0.4)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.3...v8.0.4)
 
 * Change search operators for ISBN and ISSN to '='. Fixes UIIN-1846.
 
