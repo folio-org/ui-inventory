@@ -90,8 +90,8 @@ export const instanceIndexes = [
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
   { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn=="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn=="%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
@@ -106,8 +106,8 @@ export const instanceSortMap = {
 
 export const holdingIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn=="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn=="%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'callNumberER',
     queryTemplate: 'holdings.fullCallNumber=="%{query.query}"' },
@@ -145,8 +145,8 @@ export const holdingFilterConfig = [
 export const itemIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn=="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn=="%{query.query}"' },
+  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
+  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
     value: 'itemCallNumberER',
     queryTemplate: 'items.effectiveCallNumberComponents=="%{query.query}"' },
