@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [8.0.5](https://github.com/folio-org/ui-inventory/tree/v8.0.5) (2021-11-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.4...v8.0.5)
+
+* Change search operator for "Identifier (all)" index to '='. Fixes UIIN-1855.
+
 ## [8.0.4](https://github.com/folio-org/ui-inventory/tree/v8.0.4) (2021-11-08)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.3...v8.0.4)
 
