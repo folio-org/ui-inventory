@@ -363,32 +363,14 @@ class ItemView extends React.Component {
                   </Icon>
                 </Button>
               );
-
-              /**
-                This is a temporary condition for displaying new item statuses, and as soon as
-                  https://issues.folio.org/browse/UIIN-1166 (IN_PROCESS),
-                is implemented, it will need to be removed.
-                Each "mark as" menu item will eventually be returned in the <IfPermission /> wrapper.
-              */
-              const isPermImplemented = [
-                'INTELLECTUAL_ITEM',
-                'RESTRICTED',
-                'UNKNOWN',
-                'UNAVAILABLE',
-                'LONG_MISSING',
-                'IN_PROCESS_NON_REQUESTABLE',
-              ].includes(status);
-
-              return isPermImplemented
-                ? (
-                  <IfPermission
-                    perm={`ui-inventory.items.mark-${parameterizedStatus}`}
-                    key={parameterizedStatus}
-                  >
-                    {actionMenuItem}
-                  </IfPermission>
-                )
-                : actionMenuItem;
+              return (
+                <IfPermission
+                  perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+                  key={parameterizedStatus}
+                >
+                  {actionMenuItem}
+                </IfPermission>
+              );
             })
         )}
         { canCreateNewRequest(firstItem, stripes) && (

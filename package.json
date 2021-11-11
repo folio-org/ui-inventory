@@ -736,6 +736,14 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.items.mark-items-in-process",
+        "displayName": "Inventory: Mark items in process",
+        "subPermissions": [
+          "inventory.items.item.mark-in-process.post"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.single-record-import",
         "displayName": "Inventory: Import single bibliographic records",
         "subPermissions": [
