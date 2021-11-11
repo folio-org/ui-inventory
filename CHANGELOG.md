@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## [8.0.6](https://github.com/folio-org/ui-inventory/tree/v8.0.6) (2021-11-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.5...v8.0.6)
+
 ## [8.0.5](https://github.com/folio-org/ui-inventory/tree/v8.0.5) (2021-11-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.4...v8.0.5)
 
