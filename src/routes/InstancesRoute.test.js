@@ -289,6 +289,8 @@ describe('InstancesRoute', () => {
 
       describe('should reset instances selection upon click on on reset all button', () => {
         beforeEach(async () => {
+          await waitFor(() => expect(screen.getByLabelText('Search')).toBeInTheDocument());
+
           const input = screen.getByLabelText('Search');
 
           fireEvent.change(input, { target: { value: '23' } });
