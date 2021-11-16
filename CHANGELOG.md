@@ -19,6 +19,7 @@
 * Allow user to sort receiving history table. Refs UIIN-1824.
 * Change search operator for "Identifier (all)" index to '='. Fixes UIIN-1855.
 * Fix successful toast appears after clicking on `In transit items report (CSV)`. Refs UIIN-1838.
+* Holdings record with source MARC - do not allow user to delete mapped field values. Refs UIIN-1853.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
