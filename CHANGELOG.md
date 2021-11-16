@@ -1,8 +1,25 @@
 # Change history for ui-inventory
 
-## [8.1.0] IN PROGRESS
+## [9.0.0] IN PROGRESS
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
+* Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
+* Fix MARC Holdings record > View Source and Edit in quickMARC actions are not available. Fixes UIIN-1806
+* Call read-only fields for FOLIO holdings endpoint to get list of read-only fields. Refs UIIN-1655.
+* Add missing `search.instances.ids.collection.get` permission to `module.inventory.enabled`. Refs UIIN-1812.
+* Fix parent and child relationship rendering. Fixes UIIN-1816 and UIIN-1814.
+* Change PUT endpoint for Holdings editing. Refs UIIN-1660.
+* Optimistic locking: update payload when update a marc record. Refs UIIN-1819.
+* Bump data-export interface version to 5.0.
+* Revert elastic search. Refs UIIN-1822.
+* Use correct `css-loader` syntax. Refs UIIN-1826.
+* Fix suppressed from discovery filter. Fixes UIIN-1832.
+* Create a MARC Holdings Record. Refs UIIN-1828.
+* Change search operators for ISBN and ISSN to '='. Fixes UIIN-1846.
+* Allow user to sort receiving history table. Refs UIIN-1824.
+* Change search operator for "Identifier (all)" index to '='. Fixes UIIN-1855.
+* Fix successful toast appears after clicking on `In transit items report (CSV)`. Refs UIIN-1838.
+* Add permission for marking item as `In process`. Fixes UIIN-1654.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
@@ -26,7 +43,6 @@
 * Add accordion to `<ItemView>` for bound-with related items. Refs UIIN-1521.
 * Add View source for MARC Holdings. Refs UIIN-1549.
 * Item count bug when there are multiple holdings on an instance. Refs UIIN-1617.
-* Incorporate `ui-inventory-search` facets. Refs UIIN-1567.
 * Update received piece table columns. Refs UIIN-1632.
 * Restore `mod-inventory` endpoints for non-search requests. UIIN-1634.
 * Delete Inventory and MARC holdings records when record Source = MARC. Refs UIIN-1559.
@@ -87,6 +103,7 @@
 * Update detail view headers. Refs UIIN-1309, UIIN-1311, UIIN-1470.
 * Update version of interfaces due to supporting MARC Authority records. Refs UIIN-1528.
 * Show error modal when saving instance fails. Fixes UIIN-1527.
+* Fix impossibility to create `in transit` items report. Refs UIIN-1642.
 
 ## [7.0.4](https://github.com/folio-org/ui-inventory/tree/v7.0.4) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.0.3...v7.0.4)

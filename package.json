@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -49,8 +49,8 @@
     ],
     "okapiInterfaces": {
       "inventory": "10.10 11.0",
-      "source-storage-records": "3.0",
       "search": "0.5",
+      "source-storage-records": "3.0",
       "instance-storage": "7.0 8.0",
       "holdings-storage": "3.0 4.4 5.0",
       "item-storage": "8.0 9.0",
@@ -84,7 +84,7 @@
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
-      "data-export": "4.0"
+      "data-export": "5.0"
     },
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
@@ -102,6 +102,7 @@
           "search.index.mappings.item.post",
           "search.index.records.collection.post",
           "search.instances.collection.get",
+          "search.instances.ids.collection.get",
           "search.config.languages.item.post",
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
@@ -591,7 +592,9 @@
         "displayName": "Inventory: View, create, edit holdings",
         "subPermissions": [
           "ui-inventory.holdings.create",
-          "inventory-storage.holdings.item.put"
+          "inventory-storage.holdings.item.put",
+          "inventory.config.holdings.blocked-fields.get",
+          "inventory.holdings.item.put"
         ],
         "visible": true
       },
@@ -733,6 +736,14 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.items.mark-items-in-process",
+        "displayName": "Inventory: Mark items in process",
+        "subPermissions": [
+          "inventory.items.item.mark-in-process.post"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.single-record-import",
         "displayName": "Inventory: Import single bibliographic records",
         "subPermissions": [
@@ -751,7 +762,9 @@
     "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
     "test:e2e": "stripes test karma",
-    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage"
+    "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-inventory ./translations/ui-inventory/compiled"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -772,6 +785,7 @@
     "@folio/stripes-smart-components": "^7.0.0",
     "@folio/stripes-testing": "^3.0.0",
     "@folio/stripes-util": "^5.0.0",
+    "@formatjs/cli": "^4.2.20",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.1.10",
@@ -795,14 +809,12 @@
     "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
-    "sinon": "^7.0.0",
-    "storybook-readme": "^5.0.8"
+    "sinon": "^7.0.0"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
-    "classnames": "^2.3.1",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
@@ -831,7 +843,7 @@
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
     "@folio/plugin-find-instance": "^6.0.0",
-    "@folio/quick-marc": "^4.0.0"
+    "@folio/quick-marc": "^4.0.1"
   },
   "resolutions": {
     "babel-eslint/@babel/parser": "7.7.5",

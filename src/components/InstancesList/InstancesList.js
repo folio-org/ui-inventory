@@ -25,6 +25,7 @@ import {
   stripesConnect,
   withNamespace,
 } from '@folio/stripes/core';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   Button,
   Icon,
@@ -54,14 +55,13 @@ import {
   QUICK_EXPORT_LIMIT,
 } from '../../constants';
 import {
-  InTransitItemReport,
-  InstancesIdReport,
+  IdReportGenerator,
+  InTransitItemsReport,
 } from '../../reports';
 import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
-import SearchAndSort from '../SearchAndSort';
 
 import { buildQuery } from '../../routes/buildManifestObject';
 import {
@@ -85,7 +85,6 @@ class InstancesList extends React.Component {
   };
 
   static propTypes = {
-    booleanOperators: PropTypes.arrayOf(PropTypes.object),
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
@@ -93,7 +92,6 @@ class InstancesList extends React.Component {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
-    operators: PropTypes.arrayOf(PropTypes.object),
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
@@ -106,7 +104,6 @@ class InstancesList extends React.Component {
     namespace: PropTypes.string,
     renderFilters: PropTypes.func.isRequired,
     searchableIndexes: PropTypes.arrayOf(PropTypes.object).isRequired,
-    searchableIndexesES: PropTypes.arrayOf(PropTypes.object).isRequired,
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
@@ -128,6 +125,7 @@ class InstancesList extends React.Component {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
       instancesIdExportInProgress: false,
+      holdingsIdExportInProgress: false,
       instancesQuickExportInProgress: false,
       showErrorModal: false,
       selectedRows: {},
@@ -222,7 +220,7 @@ class InstancesList extends React.Component {
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
-    document.getElementById('textArea').focus();
+    document.getElementById('input-inventory-search').focus();
   }
 
   renderNavigation = () => (
@@ -238,13 +236,12 @@ class InstancesList extends React.Component {
     } = this.props;
     const { sendCallout, removeCallout } = this.context;
     const calloutId = sendCallout({
-      type: 'info',
       message: <FormattedMessage id="ui-inventory.exportInProgress" />,
       timeout: 0,
     });
 
     try {
-      const report = new InTransitItemReport(parentMutator, formatMessage);
+      const report = new InTransitItemsReport(parentMutator, formatMessage);
       const items = await report.toCSV();
 
       if (!items?.length) {
@@ -294,7 +291,7 @@ class InstancesList extends React.Component {
 
         clearTimeout(infoCalloutTimer);
 
-        const report = new InstancesIdReport('SearchInstanceUUIDs');
+        const report = new IdReportGenerator('SearchInstanceUUIDs');
 
         if (!isEmpty(items)) {
           report.toCSV(items, record => record.id);
@@ -327,7 +324,7 @@ class InstancesList extends React.Component {
         type: 'uuid',
         recordType: 'INSTANCE'
       });
-      new InstancesIdReport('QuickInstanceExport').toCSV(instanceIds);
+      new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (error) {
       sendCallout({
         type: 'error',
@@ -354,6 +351,50 @@ class InstancesList extends React.Component {
       return { showNewFastAddModal: !state.showNewFastAddModal };
     });
   }
+
+  generateHoldingsIdReport = async (sendCallout) => {
+    const { holdingsIdExportInProgress } = this.state;
+
+    if (holdingsIdExportInProgress) return;
+
+    this.setState({ holdingsIdExportInProgress: true }, async () => {
+      const {
+        reset,
+        GET,
+      } = this.props.parentMutator.holdingsToExportIDs;
+      let infoCalloutTimer;
+
+      try {
+        reset();
+
+        infoCalloutTimer = setTimeout(() => {
+          sendCallout({
+            type: 'info',
+            message: <FormattedMessage id="ui-inventory.saveHoldingsUIIDS.info" />,
+          });
+        }, INSTANCES_ID_REPORT_TIMEOUT);
+
+        const items = await GET();
+
+        clearTimeout(infoCalloutTimer);
+
+        const report = new IdReportGenerator('SearchHoldingsUUIDs');
+
+        if (!isEmpty(items)) {
+          report.toCSV(items, record => record.id);
+        }
+      } catch (error) {
+        clearTimeout(infoCalloutTimer);
+
+        sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.saveHoldingsUIIDS.error" />,
+        });
+      } finally {
+        this.setState({ instancesIdExportInProgress: false });
+      }
+    });
+  };
 
   getActionItem = ({ id, icon, messageId, onClickHandler, isDisabled = false }) => {
     return (
@@ -392,7 +433,7 @@ class InstancesList extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl } = this.props;
+    const { parentResources, intl, segment } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
@@ -458,6 +499,13 @@ class InstancesList extends React.Component {
             icon: 'save',
             messageId: 'ui-inventory.saveInstancesUIIDS',
             onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
+            isDisabled: isInstancesListEmpty,
+          })}
+          {segment === 'holdings' && this.getActionItem({
+            id: 'dropdown-clickable-get-items-uiids',
+            icon: 'save',
+            messageId: 'ui-inventory.saveHoldingsUIIDS',
+            onClickHandler: buildOnClickHandler(this.generateHoldingsIdReport),
             isDisabled: isInstancesListEmpty,
           })}
           {this.getActionItem({
@@ -600,8 +648,6 @@ class InstancesList extends React.Component {
       showSingleResult,
       browseOnly,
       onSelectRow,
-      operators,
-      booleanOperators,
       disableRecordCreation,
       intl,
       data,
@@ -609,7 +655,6 @@ class InstancesList extends React.Component {
       parentMutator,
       renderFilters,
       searchableIndexes,
-      searchableIndexesES,
       match: {
         path,
       },
@@ -674,7 +719,7 @@ class InstancesList extends React.Component {
       ),
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
-      'publication date': r => (r?.publication ?? []).map(p => p.dateOfPublication).join(', '),
+      'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
     };
 
@@ -686,11 +731,6 @@ class InstancesList extends React.Component {
       const label = prefix + intl.formatMessage({ id: index.label });
 
       return { ...index, label };
-    });
-
-    const formattedSearchableIndexesES = searchableIndexesES.map(searchIndex => {
-      const label = intl.formatMessage({ id: searchIndex.label });
-      return { ...searchIndex, label };
     });
 
     const shortcuts = [
@@ -718,9 +758,6 @@ class InstancesList extends React.Component {
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
             searchableIndexes={formattedSearchableIndexes}
-            searchableIndexesES={formattedSearchableIndexesES}
-            operators={operators}
-            booleanOperators={booleanOperators}
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}

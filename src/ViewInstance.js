@@ -1,7 +1,4 @@
-import {
-  find,
-  get,
-} from 'lodash';
+import { get } from 'lodash';
 import React, {
   createRef
 } from 'react';
@@ -93,12 +90,6 @@ class ViewInstance extends React.Component {
       type: 'okapi',
       path: 'source-storage/records/:{id}/formatted?idType=INSTANCE',
       accumulate: true,
-      throwErrors: false,
-    },
-    blockedFields: {
-      type: 'okapi',
-      path: 'inventory/config/instances/blocked-fields',
-      clear: false,
       throwErrors: false,
     },
     instanceRelationshipTypes: {
@@ -206,12 +197,21 @@ class ViewInstance extends React.Component {
   };
 
   redirectToQuickMarcPage = (page) => {
-    const { history, location, match } = this.props;
-    const instanceId = match.params.id;
+    const {
+      history,
+      location,
+      stripes,
+    } = this.props;
+
+    const ci = makeConnectedInstance(this.props, stripes.logger);
+    const instance = ci.instance();
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.append('relatedRecordVersion', instance._version);
 
     history.push({
-      pathname: `/inventory/quick-marc/${page}/${instanceId}`,
-      search: location.search,
+      pathname: `/inventory/quick-marc/${page}/${instance.id}`,
+      search: searchParams.toString(),
     });
   };
 
@@ -221,6 +221,10 @@ class ViewInstance extends React.Component {
 
   duplicateInstanceMarc = () => {
     this.redirectToQuickMarcPage('duplicate-bib');
+  };
+
+  createHoldingsMarc = () => {
+    this.redirectToQuickMarcPage('create-holdings');
   };
 
   selectInstance = (selectedInstance) => {
@@ -338,10 +342,12 @@ class ViewInstance extends React.Component {
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+    const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
     const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
 
+    const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
     const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
@@ -471,7 +477,7 @@ class ViewInstance extends React.Component {
         </MenuSection>
 
         {
-          canEditDeriveMARCRecord && (
+          (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
             <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
               <IfPermission perm="records-editor.records.item.put">
                 <Button
@@ -501,6 +507,22 @@ class ViewInstance extends React.Component {
                 >
                   <Icon icon="duplicate">
                     <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+
+              <IfPermission perm="ui-quick-marc.quick-marc-holdings-editor.create">
+                <Button
+                  id="create-holdings-marc"
+                  buttonStyle="dropdownItem"
+                  disabled={!canCreateMARCHoldings}
+                  onClick={() => {
+                    onToggle();
+                    this.createHoldingsMarc();
+                  }}
+                >
+                  <Icon icon="plus-sign">
+                    <FormattedMessage id="ui-inventory.createMARCHoldings" />
                   </Icon>
                 </Button>
               </IfPermission>
@@ -537,7 +559,7 @@ class ViewInstance extends React.Component {
     );
   };
 
-  // Pane subtitle (second line) for both instance and holdings detail panes
+  // Pane subtitle (second line) for instance details pane
   createSubtitle = (record) => {
     return this.props.intl.formatMessage({
       id: 'ui-inventory.instanceRecordSubtitle',
@@ -550,7 +572,6 @@ class ViewInstance extends React.Component {
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
-      resources: { allInstanceHoldings, locations },
       stripes,
       onCopy,
       onClose,
@@ -560,7 +581,6 @@ class ViewInstance extends React.Component {
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
-    const holdingsRecord = find(allInstanceHoldings.records, { id: holdingsrecordid });
 
     const shortcuts = [
       {
@@ -660,16 +680,6 @@ class ViewInstance extends React.Component {
                     id={id}
                     holdingsrecordid={holdingsrecordid}
                     onCloseViewHoldingsRecord={this.goBack}
-                    paneTitle={
-                      <FormattedMessage
-                        id="ui-inventory.holdingsPaneTitle"
-                        values={{
-                          location: find(locations.records, { id: holdingsRecord?.effectiveLocationId })?.name,
-                          callNumber: holdingsRecord?.callNumber,
-                        }}
-                      />
-                    }
-                    paneSubtitle={this.createSubtitle(holdingsRecord)}
                     {...this.props}
                   />
                 )

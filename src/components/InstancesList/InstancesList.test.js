@@ -16,13 +16,6 @@ import { instances as instancesFixture } from '../../../test/fixtures/instances'
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
-const segment = 'instances';
-const {
-  indexes,
-  indexesES,
-  renderer,
-} = getFilterConfig(segment);
-
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
@@ -64,39 +57,45 @@ const resources = {
   resultOffset: 0,
 };
 
-const InstancesListSetup = () => (
-  <Router>
-    <StripesContext.Provider value={stripesStub}>
-      <ModuleHierarchyProvider value={['@folio/inventory']}>
-        <InstancesList
-          parentResources={resources}
-          parentMutator={{ resultCount: { replace: noop } }}
-          data={{
-            ...data,
-            query
-          }}
-          onSelectRow={noop}
-          renderFilters={renderer({
-            ...data,
-            query,
-            parentResources: resources,
-          })}
-          segment={segment}
-          searchableIndexes={indexes}
-          searchableIndexesES={indexesES}
-        />
-      </ModuleHierarchyProvider>
-    </StripesContext.Provider>
-  </Router>
-);
+const renderInstancesList = ({ segment }) => {
+  const {
+    indexes,
+    indexesES,
+    renderer,
+  } = getFilterConfig(segment);
+
+  return renderWithIntl(
+    <Router>
+      <StripesContext.Provider value={stripesStub}>
+        <ModuleHierarchyProvider module="@folio/inventory">
+          <InstancesList
+            parentResources={resources}
+            parentMutator={{ resultCount: { replace: noop } }}
+            data={{
+              ...data,
+              query
+            }}
+            onSelectRow={noop}
+            renderFilters={renderer({
+              ...data,
+              query,
+              parentResources: resources,
+            })}
+            segment={segment}
+            searchableIndexes={indexes}
+            searchableIndexesES={indexesES}
+          />
+        </ModuleHierarchyProvider>
+      </StripesContext.Provider>
+    </Router>,
+    translationsProperties
+  );
+};
 
 describe('InstancesList', () => {
-  describe('rendering InstancesList', () => {
+  describe('rendering InstancesList with instances segment', () => {
     beforeEach(() => {
-      renderWithIntl(
-        <InstancesListSetup />,
-        translationsProperties
-      );
+      renderInstancesList({ segment: 'instances' });
     });
 
     afterEach(() => {
@@ -125,6 +124,16 @@ describe('InstancesList', () => {
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
         });
       });
+    });
+  });
+
+  describe('rendering InstancesList with holdings segment', () => {
+    it('should show Save Holdings UUIDs button', () => {
+      renderInstancesList({ segment: 'holdings' });
+
+      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+      expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
     });
   });
 });

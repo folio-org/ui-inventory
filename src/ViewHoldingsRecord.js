@@ -52,6 +52,7 @@ import {
   staffOnlyFormatter,
   getSortedNotes,
   handleKeyCommand,
+  getDate,
 } from './utils';
 import HoldingsForm from './edit/holdings/HoldingsForm';
 import withLocation from './withLocation';
@@ -77,6 +78,12 @@ class ViewHoldingsRecord extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh || (action.meta.name === 'holdingsRecords' && action.meta.path === 'inventory');
+      },
+      PUT: {
+        path: 'inventory/holdings/:{holdingsrecordid}',
+      },
       POST: {
         path: 'holdings-storage/holdings',
       },
@@ -160,7 +167,11 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.resources.instances1?.records[0]?.source !== this.props.resources.instances1?.records[0]?.source) {
+    const wasHoldingsRecordsPending = prevProps.resources.holdingsRecords?.isPending;
+    const isHoldingsRecordsPending = this.props.resources.holdingsRecords?.isPending;
+    const hasHoldingsRecordsLoaded = this.props.resources.holdingsRecords?.hasLoaded;
+
+    if (wasHoldingsRecordsPending !== isHoldingsRecordsPending && hasHoldingsRecordsLoaded) {
       if (this.isMARCSource() && !this.state.markRecord) {
         this.getMARCRecord();
       }
@@ -332,7 +343,10 @@ class ViewHoldingsRecord extends React.Component {
 
     const holdingsRecord = holdingsRecords.records[0];
 
-    goTo(`/inventory/quick-marc/edit-holdings/${instances1.records[0].id}/${holdingsRecord.id}${location.search}`);
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.append('relatedRecordVersion', holdingsRecord._version);
+
+    goTo(`/inventory/quick-marc/edit-holdings/${instances1.records[0].id}/${holdingsRecord.id}?${searchParams.toString()}`);
   }
 
   getPaneHeaderActionMenu = ({ onToggle }) => {
@@ -448,7 +462,7 @@ class ViewHoldingsRecord extends React.Component {
       temporaryLocation,
     } = this.props.resources;
 
-    if (!holdingsRecords || !holdingsRecords.hasLoaded) {
+    if (!holdingsRecords || holdingsRecords.isPending) {
       return true;
     }
 
@@ -697,8 +711,18 @@ class ViewHoldingsRecord extends React.Component {
                   <Pane
                     defaultWidth={this.props.paneWidth}
                     appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-                    paneTitle={this.props.paneTitle}
-                    paneSub={this.props.paneSubtitle}
+                    paneTitle={intl.formatMessage({
+                      id: 'ui-inventory.holdingsPaneTitle',
+                    }, {
+                      location: referenceTables?.locationsById[holdingsRecord?.effectiveLocationId]?.name,
+                      callNumber: holdingsRecord?.callNumber,
+                    })}
+                    paneSub={intl.formatMessage({
+                      id: 'ui-inventory.instanceRecordSubtitle',
+                    }, {
+                      hrid: holdingsRecord?.hrid,
+                      updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
+                    })}
                     dismissible
                     onClose={this.props.onCloseViewHoldingsRecord}
                     actionMenu={this.getPaneHeaderActionMenu}
@@ -1078,8 +1102,6 @@ ViewHoldingsRecord.propTypes = {
   }).isRequired,
   okapi: PropTypes.object,
   location: PropTypes.object,
-  paneTitle: PropTypes.string,
-  paneSubtitle: PropTypes.string,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
@@ -1102,11 +1124,6 @@ ViewHoldingsRecord.propTypes = {
   onCloseViewHoldingsRecord: PropTypes.func.isRequired,
   updateLocation: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
-};
-
-ViewHoldingsRecord.defaultProps = {
-  paneTitle: '',
-  paneSubtitle: '',
 };
 
 export default withLocation(ViewHoldingsRecord);
