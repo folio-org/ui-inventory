@@ -133,7 +133,7 @@ describe('InstancesList', () => {
 
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
-      expect(screen.getByRole('button', { name: 'Save Holdings UUIDs' })).toBeVisible();
+      expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
     });
   });
 });
