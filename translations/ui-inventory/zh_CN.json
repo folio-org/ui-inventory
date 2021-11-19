@@ -706,5 +706,6 @@
     "saveHoldingsUIIDS.info": "已收到保存馆藏UUID的请求。文件下载可能需要几分钟时间。",
     "saveHoldingsUIIDS.error": "保存馆藏UUID时出错。请再试一次。",
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
-    "createMARCHoldings": "Add MARC holdings record"
+    "createMARCHoldings": "Add MARC holdings record",
+    "exportInProgress": "Export in progress"
 }
