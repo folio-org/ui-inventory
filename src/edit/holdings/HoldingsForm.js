@@ -381,6 +381,7 @@ class HoldingsForm extends React.Component {
                           }]}
                           canAdd={!this.isFieldBlocked('formerIds')}
                           canEdit={!this.isFieldBlocked('formerIds')}
+                          canDelete={!this.isFieldBlocked('formerIds')}
                         />
                       </Col>
                     </Row>
@@ -417,6 +418,7 @@ class HoldingsForm extends React.Component {
                           ]}
                           canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                           canEdit={!this.isFieldBlocked('statisticalCodeIds')}
+                          canDelete={!this.isFieldBlocked('statisticalCodeIds')}
                         />
                       </Col>
                     </Row>
@@ -576,16 +578,19 @@ class HoldingsForm extends React.Component {
                         <HoldingsStatementFields
                           canAdd={!this.isFieldBlocked('holdingsStatements')}
                           canEdit={!this.isFieldBlocked('holdingsStatements')}
+                          canDelete={!this.isFieldBlocked('holdingsStatements')}
                         />
                         <br />
                         <HoldingsStatementForSupplementsFields
                           canAdd={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                           canEdit={!this.isFieldBlocked('holdingsStatementsForSupplements')}
+                          canDelete={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                         />
                         <br />
                         <HoldingsStatementForIndexesFields
                           canAdd={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                           canEdit={!this.isFieldBlocked('holdingsStatementsForIndexes')}
+                          canDelete={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                         />
                         <br />
                       </Col>
@@ -686,6 +691,7 @@ class HoldingsForm extends React.Component {
                           ]}
                           canAdd={!this.isFieldBlocked('receivingHistory.entries')}
                           canEdit={!this.isFieldBlocked('receivingHistory.entries')}
+                          canDelete={!this.isFieldBlocked('receivingHistory.entries')}
                         />
                       </Col>
                     </Row>
