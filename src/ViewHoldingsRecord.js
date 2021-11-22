@@ -78,8 +78,10 @@ class ViewHoldingsRecord extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh || (action.meta.name === 'holdingsRecords' && action.meta.path === 'inventory');
+      resourceShouldRefresh: false,
+      accumulate: true,
+      GET: {
+        path: 'holdings-storage/holdings/:{holdingsrecordid}',
       },
       PUT: {
         path: 'inventory/holdings/:{holdingsrecordid}',
@@ -159,6 +161,8 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidMount() {
+    this.props.mutator.holdingsRecords.GET();
+
     if (this.props.resources.instances1?.records[0]?.source) {
       if (this.isMARCSource() && !this.state.markRecord) {
         this.getMARCRecord();
@@ -176,6 +180,10 @@ class ViewHoldingsRecord extends React.Component {
         this.getMARCRecord();
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.props.mutator.holdingsRecords.reset();
   }
 
   isMARCSource = () => {
@@ -220,6 +228,8 @@ class ViewHoldingsRecord extends React.Component {
     if (holdings.permanentLocationId === '') delete holdings.permanentLocationId;
     if (holdings.temporaryLocationId === '') delete holdings.temporaryLocationId;
 
+    this.setState({ isLoadingUpdatedHoldingsRecord: true });
+
     return this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
       this.context.sendCallout({
         type: 'success',
@@ -227,6 +237,9 @@ class ViewHoldingsRecord extends React.Component {
           id="ui-inventory.holdingsRecord.successfullySaved"
           values={{ hrid: holdingsRecord.hrid }}
         />,
+      });
+      this.props.mutator.holdingsRecords.GET().then(() => {
+        this.setState({ isLoadingUpdatedHoldingsRecord: false });
       });
       this.onClickCloseEditHoldingsRecord();
     });
@@ -462,7 +475,11 @@ class ViewHoldingsRecord extends React.Component {
       temporaryLocation,
     } = this.props.resources;
 
-    if (!holdingsRecords || holdingsRecords.isPending) {
+    if (this.state.isLoadingUpdatedHoldingsRecord) {
+      return false;
+    }
+
+    if (!holdingsRecords || holdingsRecords.isPending || !holdingsRecords.records.length) {
       return true;
     }
 
@@ -1106,9 +1123,11 @@ ViewHoldingsRecord.propTypes = {
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     holdingsRecords: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
     }),
     marcRecordId: PropTypes.shape({
       replace: PropTypes.func.isRequired,
