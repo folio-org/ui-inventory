@@ -20,6 +20,7 @@
 * Change search operator for "Identifier (all)" index to '='. Fixes UIIN-1855.
 * Fix successful toast appears after clicking on `In transit items report (CSV)`. Refs UIIN-1838.
 * Add permission for marking item as `In process`. Fixes UIIN-1654.
+* Holdings record with source MARC - do not allow user to delete mapped field values. Refs UIIN-1853.
 * Fix after saving and updating a holdings record, the user is returned to the instance record. Fixes UIIN-1854
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)

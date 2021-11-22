@@ -702,9 +702,10 @@
     "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
     "quickMARC.label": "quickMARC",
     "edit": "Modifier",
-    "saveHoldingsUIIDS": "Save Holdings UUIDs",
+    "saveHoldingsUIIDS": "Save holdings UUIDs",
     "saveHoldingsUIIDS.info": "Request to save holdings UUIDs has been received. File download may take a few minutes.",
     "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again.",
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
-    "createMARCHoldings": "Add MARC holdings record"
+    "createMARCHoldings": "Add MARC holdings record",
+    "exportInProgress": "Export en cours"
 }
