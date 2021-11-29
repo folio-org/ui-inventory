@@ -375,7 +375,7 @@ class ItemForm extends React.Component {
                       <Col
                         sm={5}
                       >
-                        {(item.metadata && item.metadata.createdDate) &&
+                        {(item?.metadata && item?.metadata?.createdDate) &&
                         <this.cViewMetaData metadata={item.metadata} />
                         }
                         {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
