@@ -181,6 +181,7 @@ class ItemForm extends React.Component {
       initialValues,
       instance,
       holdingsRecord,
+
       referenceTables: {
         locationsById,
         materialTypes,
@@ -199,6 +200,7 @@ class ItemForm extends React.Component {
     } = this.props;
 
     const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
+    const item = initialValues;
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -373,8 +375,8 @@ class ItemForm extends React.Component {
                       <Col
                         sm={5}
                       >
-                        {(holdingsRecord.metadata && holdingsRecord.metadata.createdDate) &&
-                        <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                        {(item?.metadata && item?.metadata?.createdDate) &&
+                        <this.cViewMetaData metadata={item.metadata} />
                         }
                         {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                       </Col>
