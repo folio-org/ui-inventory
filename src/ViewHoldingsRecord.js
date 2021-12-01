@@ -226,6 +226,8 @@ class ViewHoldingsRecord extends React.Component {
     if (holdings.permanentLocationId === '') delete holdings.permanentLocationId;
     if (holdings.temporaryLocationId === '') delete holdings.temporaryLocationId;
 
+    // adding a local state variable to overcome a delay in `isPending`
+    // is false between PUT to update and GET request to refresh a record
     this.setState({ isLoadingUpdatedHoldingsRecord: true });
 
     return this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
