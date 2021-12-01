@@ -6,6 +6,7 @@ import {
   cloneDeep,
   omit,
   orderBy,
+  last,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -78,8 +79,10 @@ class ViewHoldingsRecord extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh || (action.meta.name === 'holdingsRecords' && action.meta.path === 'inventory');
+      resourceShouldRefresh: false,
+      accumulate: true,
+      GET: {
+        path: 'holdings-storage/holdings/:{holdingsrecordid}',
       },
       PUT: {
         path: 'inventory/holdings/:{holdingsrecordid}',
@@ -159,6 +162,8 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidMount() {
+    this.props.mutator.holdingsRecords.GET();
+
     if (this.props.resources.instances1?.records[0]?.source) {
       if (this.isMARCSource() && !this.state.markRecord) {
         this.getMARCRecord();
@@ -178,15 +183,16 @@ class ViewHoldingsRecord extends React.Component {
     }
   }
 
+  getMostRecentHolding = () => {
+    return last(this.props.resources.holdingsRecords.records);
+  }
+
   isMARCSource = () => {
     const {
       referenceTables,
-      resources: {
-        holdingsRecords,
-      },
     } = this.props;
 
-    const holdingsRecord = holdingsRecords.records[0];
+    const holdingsRecord = this.getMostRecentHolding();
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord?.sourceId);
 
     return holdingsSource?.name === 'MARC';
@@ -220,6 +226,10 @@ class ViewHoldingsRecord extends React.Component {
     if (holdings.permanentLocationId === '') delete holdings.permanentLocationId;
     if (holdings.temporaryLocationId === '') delete holdings.temporaryLocationId;
 
+    // adding a local state variable to overcome a delay in `isPending`
+    // is false between PUT to update and GET request to refresh a record
+    this.setState({ isLoadingUpdatedHoldingsRecord: true });
+
     return this.props.mutator.holdingsRecords.PUT(holdings).then(() => {
       this.context.sendCallout({
         type: 'success',
@@ -228,7 +238,11 @@ class ViewHoldingsRecord extends React.Component {
           values={{ hrid: holdingsRecord.hrid }}
         />,
       });
-      this.onClickCloseEditHoldingsRecord();
+
+      this.props.mutator.holdingsRecords.GET().then(() => {
+        this.setState({ isLoadingUpdatedHoldingsRecord: false });
+        this.onClickCloseEditHoldingsRecord();
+      });
     });
   }
 
@@ -336,12 +350,11 @@ class ViewHoldingsRecord extends React.Component {
       location,
       goTo,
       resources: {
-        holdingsRecords,
         instances1,
       },
     } = this.props;
 
-    const holdingsRecord = holdingsRecords.records[0];
+    const holdingsRecord = this.getMostRecentHolding();
 
     const searchParams = new URLSearchParams(location.search);
     searchParams.append('relatedRecordVersion', holdingsRecord._version);
@@ -368,7 +381,7 @@ class ViewHoldingsRecord extends React.Component {
       return null;
     }
 
-    const firstRecordOfHoldings = resources.holdingsRecords.records[0];
+    const firstRecordOfHoldings = this.getMostRecentHolding();
 
     return (
       <>
@@ -462,11 +475,15 @@ class ViewHoldingsRecord extends React.Component {
       temporaryLocation,
     } = this.props.resources;
 
-    if (!holdingsRecords || holdingsRecords.isPending) {
+    if (this.state.isLoadingUpdatedHoldingsRecord) {
+      return false;
+    }
+
+    if (!holdingsRecords || holdingsRecords.isPending || !holdingsRecords.records.length) {
       return true;
     }
 
-    const holdingsRecord = holdingsRecords.records[0];
+    const holdingsRecord = this.getMostRecentHolding();
 
     if (!instances1 || !instances1.hasLoaded
       || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
@@ -477,14 +494,13 @@ class ViewHoldingsRecord extends React.Component {
     return false;
   };
 
-  getEntity = () => this.props.resources.holdingsRecords.records[0];
-  getEntityTags = () => this.props.resources.holdingsRecords.records[0]?.tags?.tagList || [];
+  getEntity = () => this.getMostRecentHolding();
+  getEntityTags = () => this.getMostRecentHolding()?.tags?.tagList || [];
 
   render() {
     const {
       location,
       resources: {
-        holdingsRecords,
         instances1,
         permanentLocation,
         temporaryLocation,
@@ -503,7 +519,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const instance = instances1.records[0];
     const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance.source);
-    const holdingsRecord = holdingsRecords.records[0];
+    const holdingsRecord = this.getMostRecentHolding();
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
     const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
     const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
@@ -1106,9 +1122,11 @@ ViewHoldingsRecord.propTypes = {
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     holdingsRecords: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
     }),
     marcRecordId: PropTypes.shape({
       replace: PropTypes.func.isRequired,

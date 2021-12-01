@@ -22,6 +22,7 @@
 * Add permission for marking item as `In process`. Fixes UIIN-1654.
 * Holdings record with source MARC - do not allow user to delete mapped field values. Refs UIIN-1853.
 * Use correct metadata on item form. Fixes UIIN-1656.
+* Fix after saving and updating a holdings record, the user is returned to the instance record. Fixes UIIN-1854
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
