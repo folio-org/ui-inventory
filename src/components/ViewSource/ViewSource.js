@@ -8,18 +8,14 @@ import { FormattedMessage } from 'react-intl';
 import {
   LoadingView,
 } from '@folio/stripes/components';
+import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
 import {
   useInstance,
   useGoBack,
 } from '../../common/hooks';
 
-import {
-  isControlField,
-} from './utils';
-import MarcView from './MarcView';
-
-const MarcContainer = ({
+const ViewSource = ({
   mutator,
   instanceId,
   holdingsRecordId,
@@ -41,15 +37,7 @@ const MarcContainer = ({
 
     mutator.marcRecord.GET()
       .then((marcResponse) => {
-        const parsedMarc = marcResponse.parsedRecord.content;
-
-        setMarc({
-          leader: parsedMarc.leader,
-          fields: [
-            ...parsedMarc.fields.filter(isControlField),
-            ...parsedMarc.fields.filter(field => !isControlField(field)),
-          ],
-        });
+        setMarc(marcResponse);
       })
       .catch(error => {
         // eslint-disable-next-line no-console
@@ -90,14 +78,14 @@ const MarcContainer = ({
 };
 
 
-MarcContainer.propTypes = {
+ViewSource.propTypes = {
   mutator: PropTypes.object.isRequired,
   instanceId: PropTypes.string.isRequired,
   holdingsRecordId: PropTypes.string,
   isHoldingsRecord: PropTypes.bool,
 };
-MarcContainer.defaultProps = {
+ViewSource.defaultProps = {
   isHoldingsRecord: false,
 };
 
-export default MarcContainer;
+export default ViewSource;
