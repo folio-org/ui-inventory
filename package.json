@@ -84,17 +84,17 @@
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
-      "data-export": "5.0",
-      "order-lines": "2.0 3.0",
-      "orders": "11.0 12.0",
-      "acquisitions-units": "1.1"
+      "data-export": "5.0"
     },
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
       "remote-storage-mappings": "1.0 2.0",
       "orders.holding-summary": "1.0",
-      "pieces": "2.0"
+      "pieces": "2.0",
+      "order-lines": "2.0 3.0",
+      "orders": "11.0 12.0",
+      "acquisitions-units": "1.1"
     },
     "permissionSets": [
       {
