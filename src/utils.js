@@ -16,6 +16,8 @@ import {
   map,
   isObject,
   omit,
+  chunk,
+  flatten,
 } from 'lodash';
 import moment from 'moment';
 
@@ -27,6 +29,7 @@ import {
   emptyList,
   indentifierTypeNames,
   DATE_FORMAT,
+  LIMIT_MAX,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -668,4 +671,33 @@ export const handleKeyCommand = (handler, { disabled } = {}) => {
       handler();
     }
   };
+};
+
+const buildQueryByIds = (itemsChunk) => {
+  const query = itemsChunk
+    .map(id => `id==${id}`)
+    .join(' or ');
+
+  return query || '';
+};
+
+export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _params = {}, filterParamName = 'query') => {
+  if (!items?.length) return Promise.resolve([]);
+
+  const requests = chunk(items, 25).map(itemsChunk => {
+    const query = buildQuery(itemsChunk);
+
+    if (!query) return Promise.resolve([]);
+
+    const params = {
+      limit: LIMIT_MAX,
+      ..._params,
+      [filterParamName]: query,
+    };
+
+    return requestFn({ params });
+  });
+
+  return Promise.all(requests)
+    .then((responses) => flatten(responses));
 };

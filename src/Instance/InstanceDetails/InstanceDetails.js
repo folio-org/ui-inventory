@@ -7,6 +7,7 @@ import {
   TitleManager,
 } from '@folio/stripes/core';
 import {
+  Accordion,
   AccordionSet,
   AccordionStatus,
   Col,
@@ -30,6 +31,7 @@ import { InstanceSubjectView } from './InstanceSubjectView';
 import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
+import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
 
 import { getAccordionState } from './utils';
@@ -46,6 +48,7 @@ const accordions = {
   subjects: 'acc08',
   classifications: 'acc09',
   relationship: 'acc10',
+  acquisition: 'acc11',
 };
 
 const InstanceDetails = forwardRef(({
@@ -186,6 +189,13 @@ const InstanceDetails = forwardRef(({
               classifications={instance?.classifications}
               classificationTypes={referenceData.classificationTypes}
             />
+
+            <Accordion
+              id={accordions.acquisition}
+              label={<FormattedMessage id="ui-inventory.acquisition" />}
+            >
+              <InstanceAcquisition instanceId={instance.id} />
+            </Accordion>
 
             <InstanceRelationshipView
               id={accordions.relationship}
