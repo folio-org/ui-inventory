@@ -7,7 +7,6 @@ import {
   TitleManager,
 } from '@folio/stripes/core';
 import {
-  Accordion,
   AccordionSet,
   AccordionStatus,
   Col,
@@ -190,12 +189,10 @@ const InstanceDetails = forwardRef(({
               classificationTypes={referenceData.classificationTypes}
             />
 
-            <Accordion
-              id={accordions.acquisition}
-              label={<FormattedMessage id="ui-inventory.acquisition" />}
-            >
-              <InstanceAcquisition instanceId={instance.id} />
-            </Accordion>
+            <InstanceAcquisition
+              accordionId={accordions.acquisition}
+              instanceId={instance.id}
+            />
 
             <InstanceRelationshipView
               id={accordions.relationship}

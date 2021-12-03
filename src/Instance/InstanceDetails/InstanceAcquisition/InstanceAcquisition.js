@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { MultiColumnList, NoValue } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
+import {
+  Accordion,
+  MultiColumnList,
+  NoValue,
+} from '@folio/stripes/components';
 
 import { getDateWithTime } from '../../../utils';
 import useInstanceAcquisition from './useInstanceAcquisition';
@@ -31,23 +36,34 @@ const formatter = {
   orderType: i => (i.order?.orderType ? <FormattedMessage id={`ui-inventory.acq.orderType.${i.order.orderType}`} /> : <NoValue />),
 };
 
-const InstanceAcquisition = ({ instanceId }) => {
+const InstanceAcquisition = ({ accordionId, instanceId }) => {
+  const stripes = useStripes();
   const { isLoading, instanceAcquisition } = useInstanceAcquisition(instanceId);
 
+  if (!(stripes.hasInterface('order-lines') &&
+    stripes.hasInterface('orders') &&
+    stripes.hasInterface('acquisitions-units'))) return null;
+
   return (
-    <MultiColumnList
-      id="list-instance-acquisitions"
-      loading={isLoading}
-      contentData={instanceAcquisition}
-      visibleColumns={visibleColumns}
-      columnMapping={columnMapping}
-      formatter={formatter}
-      interactive={false}
-    />
+    <Accordion
+      id={accordionId}
+      label={<FormattedMessage id="ui-inventory.acquisition" />}
+    >
+      <MultiColumnList
+        id="list-instance-acquisitions"
+        loading={isLoading}
+        contentData={instanceAcquisition}
+        visibleColumns={visibleColumns}
+        columnMapping={columnMapping}
+        formatter={formatter}
+        interactive={false}
+      />
+    </Accordion>
   );
 };
 
 InstanceAcquisition.propTypes = {
+  accordionId: PropTypes.string.isRequired,
   instanceId: PropTypes.string.isRequired,
 };
 
