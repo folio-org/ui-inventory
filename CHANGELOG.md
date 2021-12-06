@@ -49,6 +49,7 @@
 * Call number browse result list - populate results. Refs UIIN-1884.
 * New/Edit Item Page - Accessibility Error: IDs used in ARIA and labels must be unique. Refs UIIN-1162.
 * HRID handling. Settings - Accessibility Error: Form elements must have labels. Refs UIIN-1163.
+* Create title level request from Instance record. Refs UIIN-1620.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
