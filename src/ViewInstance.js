@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import React, {
-  createRef
+  createRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
@@ -34,8 +34,14 @@ import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
-import { getDate, handleKeyCommand } from './utils';
-import { indentifierTypeNames, layers } from './constants';
+import {
+  getDate,
+  handleKeyCommand,
+} from './utils';
+import {
+  indentifierTypeNames,
+  layers,
+} from './constants';
 import { DataContext } from './contexts';
 
 import {
@@ -46,6 +52,15 @@ import {
 import { CalloutRenderer } from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
+import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
+
+const getTlrSettings = (settings) => {
+  try {
+    return JSON.parse(settings);
+  } catch (error) {
+    return {};
+  }
+};
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -101,7 +116,15 @@ class ViewInstance extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations?limit=1000',
-    }
+    },
+    configs: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries',
+      params: {
+        query: '(module==SETTINGS and configName==TLR)',
+      },
+    },
   });
 
   constructor(props) {
@@ -318,8 +341,10 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
+      resources: { configs },
     } = this.props;
     const { marcRecord, requests } = this.state;
+    const { titleLevelRequestsFeatureEnabled } = getTlrSettings(configs.records[0]?.value);
 
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
@@ -457,6 +482,11 @@ class ViewInstance extends React.Component {
               />
             </Icon>
           </Button>
+
+          <NewInstanceRequestButton
+            isTlrEnabled={titleLevelRequestsFeatureEnabled}
+            instanceId={instance.id}
+          />
         </MenuSection>
 
         {
@@ -730,6 +760,7 @@ ViewInstance.propTypes = {
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,
     locations: PropTypes.object.isRequired,
+    configs: PropTypes.object.isRequired,
   }).isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
