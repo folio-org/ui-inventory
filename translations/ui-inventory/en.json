@@ -703,6 +703,8 @@
   "acq.orderType": "Order type",
   "acq.orderType.One-Time": "One-time",
   "acq.orderType.Ongoing": "Ongoing",
+  "acq.dateOrdered": "Date ordered",
+  "acq.acqUnit": "Acquisition unit",
 
   "receivingHistory.receivedDate": "Receipt date",
   "receivingHistory.comment": "Comment",
