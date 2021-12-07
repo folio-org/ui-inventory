@@ -1,0 +1,16 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.facetSearchContainer {
+  max-height: 15.2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.facetSearch {
+  padding-top: var(--gutter-static-one-third);
+}
+
+.moreIcon {
+  font-size: var(--font-size-x-small);
+  margin-right: var(--gutter-static-one-third);
+}
