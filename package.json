@@ -91,7 +91,10 @@
       "copycat-profiles": "1.0",
       "remote-storage-mappings": "1.0 2.0",
       "orders.holding-summary": "1.0",
-      "pieces": "2.0"
+      "pieces": "2.0",
+      "order-lines": "2.0 3.0",
+      "orders": "11.0 12.0",
+      "acquisitions-units": "1.1"
     },
     "permissionSets": [
       {
@@ -507,7 +510,10 @@
           "inventory-storage.record-bulk.ids.get",
           "data-export.quick.export.post",
           "orders.holding-summary.collection.get",
-          "orders.pieces.collection.get"
+          "orders.pieces.collection.get",
+          "orders.po-lines.collection.get",
+          "orders.collection.get",
+          "acquisitions-units.units.collection.get"
         ],
         "visible": true
       },
