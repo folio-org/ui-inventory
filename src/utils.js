@@ -701,7 +701,7 @@ export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _pa
   return Promise.all(requests)
     .then((responses) => flatten(responses));
 };
-                       
+
 /**
  * Accent Fold
  *
