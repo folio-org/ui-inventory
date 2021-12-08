@@ -3,85 +3,82 @@ import {
   holdingsRecordFilterRenderer,
   itemFilterRenderer,
 } from './components';
-
+import {
+  FACETS,
+  FACETS_CQL
+} from './constants';
 import {
   buildDateRangeQuery,
 } from './utils';
 
 export const instanceFilterConfig = [
   {
-    name: 'effectiveLocation',
-    cql: 'items.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'language',
-    cql: 'languages',
-    values: [],
-    operator: '=',
-  },
-  {
-    name: 'format',
-    cql: 'instanceFormatIds',
-    values: [],
-    operator: '=',
-  },
-  {
-    name: 'resource',
-    cql: 'instanceTypeId',
+    name: FACETS.LANGUAGE,
+    cql: FACETS_CQL.LANGUAGES,
     values: [],
   },
   {
-    name: 'mode',
-    cql: 'modeOfIssuanceId',
+    name: FACETS.FORMAT,
+    cql: FACETS_CQL.INSTANCE_FORMAT,
     values: [],
   },
   {
-    name: 'natureOfContent',
-    cql: 'natureOfContentTermIds',
+    name: FACETS.RESOURCE,
+    cql: FACETS_CQL.INSTANCE_TYPE,
     values: [],
-    operator: '=',
+  },
+  {
+    name: FACETS.MODE,
+    cql: FACETS_CQL.MODE_OF_ISSUANCE,
+    values: [],
+  },
+  {
+    name: FACETS.NATURE_OF_CONTENT,
+    cql: FACETS_CQL.NATURE_OF_CONTENT,
+    values: [],
   },
   {
     name: 'location',
-    cql: 'holdings.permanentLocationId',
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'staffSuppress',
-    cql: 'staffSuppress',
+    name: FACETS_CQL.STAFF_SUPPRESS,
+    cql: FACETS_CQL.STAFF_SUPPRESS,
     values: [],
-    operator: '==',
   },
   {
-    name: 'discoverySuppress',
-    cql: 'discoverySuppress',
+    name: FACETS.INSTANCES_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS,
     values: [],
-    operator: '==',
   },
   {
-    name: 'createdDate',
-    cql: 'metadata.createdDate',
+    name: FACETS.CREATED_DATE,
+    cql: FACETS_CQL.CREATED_DATE,
     values: [],
-    parse: buildDateRangeQuery('createdDate'),
+    parse: buildDateRangeQuery(FACETS.CREATED_DATE),
   },
   {
-    name: 'updatedDate',
-    cql: 'metadata.updatedDate',
+    name: FACETS.UPDATED_DATE,
+    cql: FACETS_CQL.UPDATED_DATE,
     values: [],
-    parse: buildDateRangeQuery('updatedDate'),
+    parse: buildDateRangeQuery(FACETS.UPDATED_DATE),
   },
   {
-    name: 'source',
-    cql: 'source',
+    name: FACETS.SOURCE,
+    cql: FACETS_CQL.SOURCE,
     operator: '==',
     values: [],
   },
   {
-    name: 'tags',
-    cql: 'tags.tagList',
+    name: FACETS.INSTANCES_TAGS,
+    cql: FACETS_CQL.INSTANCES_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
@@ -119,26 +116,24 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
-    name: 'effectiveLocation',
-    cql: 'items.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'holdingsPermanentLocation',
-    cql: 'holdings.permanentLocationId',
+    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'discoverySuppress',
-    cql: 'holdings.discoverySuppress',
+    name: FACETS.HOLDINGS_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS,
     values: [],
-    operator: '==',
   },
   {
-    name: 'tags',
-    cql: 'holdings.tags.tagList',
+    name: FACETS.HOLDINGS_TAGS,
+    cql: FACETS_CQL.HOLDINGS_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
@@ -157,37 +152,35 @@ export const itemIndexes = [
 
 export const itemFilterConfig = [
   {
-    name: 'materialType',
-    cql: 'items.materialTypeId',
+    name: FACETS.MATERIAL_TYPE,
+    cql: FACETS_CQL.MATERIAL_TYPES,
     values: [],
   },
   {
-    name: 'itemStatus',
-    cql: 'items.status.name',
+    name: FACETS.ITEM_STATUS,
+    cql: FACETS_CQL.ITEMS_STATUSES,
     operator: '==',
     values: [],
   },
   {
-    name: 'effectiveLocation',
-    cql: 'items.effectiveLocationId',
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
   },
   {
-    name: 'holdingsPermanentLocation',
-    cql: 'holdings.permanentLocationId',
+    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
+    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
     values: [],
   },
   {
-    name: 'discoverySuppress',
-    cql: 'items.discoverySuppress',
+    name: FACETS.ITEMS_DISCOVERY_SUPPRESS,
+    cql: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
     values: [],
-    operator: '==',
   },
   {
-    name: 'tags',
-    cql: 'items.tags.tagList',
+    name: FACETS.ITEMS_TAGS,
+    cql: FACETS_CQL.ITEMS_TAGS,
     values: [],
-    operator: '=',
   },
 ];
 
