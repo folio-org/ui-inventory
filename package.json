@@ -819,6 +819,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
+    "@folio/quick-marc": "^4.0.1",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
     "file-saver": "^2.0.0",
@@ -848,8 +849,7 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
-    "@folio/plugin-find-instance": "^6.0.0",
-    "@folio/quick-marc": "^4.0.1"
+    "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
     "babel-eslint/@babel/parser": "7.7.5",

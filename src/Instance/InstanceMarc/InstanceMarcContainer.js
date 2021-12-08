@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import { MarcContainer } from '../../components';
+import { ViewSource } from '../../components';
 
 const InstanceMarcContainer = ({ mutator, instanceId }) => {
   return (
-    <MarcContainer
+    <ViewSource
       mutator={mutator}
       instanceId={instanceId}
     />

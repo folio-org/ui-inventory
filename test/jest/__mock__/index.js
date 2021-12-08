@@ -7,4 +7,5 @@ import './stripesCore.mock';
 import './stripesIcon.mock';
 import './stripesSmartComponents.mock';
 import './InstancePlugin.mock';
-
+import './quickMarc.mock';
+import './stripesComponents.mock';
