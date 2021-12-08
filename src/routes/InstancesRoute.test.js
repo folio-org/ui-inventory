@@ -5,7 +5,6 @@ import {
   getByText,
   getByRole,
   getAllByRole,
-  fireEvent,
   waitForElementToBeRemoved,
   waitFor,
 } from '@testing-library/react';
@@ -76,6 +75,12 @@ const InstancesRouteSetup = ({
                       resource: 'records',
                       records: instances,
                       other: { totalRecords: instances.length },
+                    },
+                    facets: {
+                      hasLoaded: true,
+                      resource: 'facets',
+                      records: [],
+                      other: { totalRecords: 0 },
                     },
                     resultCount: instances.length,
                     resultOffset: 0,
