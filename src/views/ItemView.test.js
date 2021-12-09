@@ -10,6 +10,10 @@ import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
 
 import ItemView from './ItemView';
 
+jest.mock('../Item/ViewItem/ItemAcquisition', () => ({
+  ItemAcquisition: jest.fn(() => 'ItemAcquisition'),
+}));
+
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,

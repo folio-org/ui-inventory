@@ -26,6 +26,7 @@
 * Retrieve and display Order information on Instance record. Refs UIIN-1835.
 * Add date filters. Refs UIIN-1651, UIIN-1653.
 * Integrate facets with existing query input. Refs UIIN-1870.
+* Display acquisition accordion on Item record. Refs UIIN-1858.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

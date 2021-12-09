@@ -90,11 +90,12 @@
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
       "remote-storage-mappings": "1.0 2.0",
-      "orders.holding-summary": "1.0",
-      "pieces": "2.0",
-      "order-lines": "2.0 3.0",
+      "acquisitions-units": "1.1",
       "orders": "11.0 12.0",
-      "acquisitions-units": "1.1"
+      "orders.holding-summary": "1.0",
+      "order-lines": "2.0 3.0",
+      "organizations.organizations": "1.0",
+      "pieces": "2.0"
     },
     "permissionSets": [
       {
@@ -512,7 +513,10 @@
           "orders.holding-summary.collection.get",
           "orders.pieces.collection.get",
           "orders.po-lines.collection.get",
+          "orders.po-lines.item.get",
           "orders.collection.get",
+          "orders.item.get",
+          "organizations.organizations.item.get",
           "acquisitions-units.units.collection.get"
         ],
         "visible": true
@@ -767,6 +771,7 @@
     "test": "yarn run test:unit",
     "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
+    "test:unit:watch": "jest --watch --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",

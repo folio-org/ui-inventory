@@ -705,6 +705,9 @@
   "acq.orderType.Ongoing": "Ongoing",
   "acq.dateOrdered": "Date ordered",
   "acq.acqUnit": "Acquisition unit",
+  "acq.orderSubscription": "Subscription",
+  "acq.receivedDate": "Piece receipt date",
+  "acq.vendorCode": "Organization code",
 
   "receivingHistory.receivedDate": "Receipt date",
   "receivingHistory.comment": "Comment",
