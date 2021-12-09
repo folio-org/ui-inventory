@@ -665,7 +665,6 @@ class InstanceForm extends React.Component {
                           <FormattedMessage id="ui-inventory.electronicAccess" />
                         </h3>
                       )}
-
                       id="instanceSection08"
                     >
                       <ElectronicAccessFields
