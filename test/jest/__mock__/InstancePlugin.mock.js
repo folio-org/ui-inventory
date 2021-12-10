@@ -13,6 +13,6 @@ jest.mock('../../../src/components/InstancePlugin', () => ({ onSelect }) => (
     })}
     type="button"
   >
-  +
+    +
   </button>
 ));

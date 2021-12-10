@@ -50,7 +50,6 @@ const DraggableHolding = ({
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-
       style={rowStyles}
     >
       {

@@ -7,9 +7,6 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import '../../../test/jest/__mock__';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
-
-import { FACETS } from '../../constants';
-
 import InstanceFilters from './InstanceFilters';
 
 const resources = {

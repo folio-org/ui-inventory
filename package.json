@@ -779,6 +779,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/eslint-parser": "^7.16.3",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
@@ -787,7 +788,7 @@
     "@bigtest/interactor": "^0.7.0",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^5.3.0",
+    "@folio/eslint-config-stripes": "^6.0.0",
     "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^10.0.0",
@@ -800,7 +801,6 @@
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.1.10",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "chai": "^4.2.0",
     "core-js": "^3.6.4",
@@ -857,7 +857,6 @@
     "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
-    "babel-eslint/@babel/parser": "7.7.5",
     "moment": "~2.24.0"
   }
 }
