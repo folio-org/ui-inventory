@@ -462,7 +462,6 @@ class ViewHoldingsRecord extends React.Component {
 
   render() {
     const {
-      location,
       resources: {
         instances1,
         permanentLocation,
