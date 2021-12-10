@@ -9,7 +9,6 @@ import {
   Col,
   KeyValue,
   Loading,
-  NoValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -47,22 +46,14 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.polNumber" />}
-            value={
-              orderLine
-                ? <Link to={`/orders/lines/view/${orderLine.id}`}>{orderLine.poLineNumber}</Link>
-                : <NoValue />
-            }
+            value={orderLine && <Link to={`/orders/lines/view/${orderLine.id}`}>{orderLine.poLineNumber}</Link>}
           />
         </Col>
 
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.orderStatus" />}
-            value={
-              order
-                ? <FormattedMessage id={`ui-inventory.acq.orderStatus.${order.workflowStatus}`} />
-                : <NoValue />
-            }
+            value={order && <FormattedMessage id={`ui-inventory.acq.orderStatus.${order.workflowStatus}`} />}
           />
         </Col>
 
@@ -76,20 +67,16 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.receiptStatus" />}
-            value={
-              orderLine
-                ? <FormattedMessage id={`ui-inventory.acq.receiptStatus.${orderLine.receiptStatus}`} />
-                : <NoValue />
-            }
+            value={orderLine && <FormattedMessage id={`ui-inventory.acq.receiptStatus.${orderLine.receiptStatus}`} />}
           />
         </Col>
 
         <Col xs={4}>
           <KeyValue
-            label={<FormattedMessage id="ui-inventory.acq.receivedDate" />}
+            label={<FormattedMessage id="ui-inventory.acq.receiptDate" />}
             value={
-              piece.receivedDate
-              && <Link to={`/receiving/${piece.titleId}/view`}>{getDateWithTime(piece.receivedDate)}</Link>
+              piece.receiptDate
+              && <Link to={`/receiving/${piece.titleId}/view`}>{getDateWithTime(piece.receiptDate)}</Link>
             }
           />
         </Col>
@@ -104,11 +91,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.orderType" />}
-            value={
-              order
-                ? <FormattedMessage id={`ui-inventory.acq.orderType.${order.orderType}`} />
-                : <NoValue />
-            }
+            value={order && <FormattedMessage id={`ui-inventory.acq.orderType.${order.orderType}`} />}
           />
         </Col>
 

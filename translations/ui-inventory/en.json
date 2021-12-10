@@ -706,7 +706,7 @@
   "acq.dateOrdered": "Date ordered",
   "acq.acqUnit": "Acquisition unit",
   "acq.orderSubscription": "Subscription",
-  "acq.receivedDate": "Piece receipt date",
+  "acq.receiptDate": "Piece receipt date",
   "acq.vendorCode": "Organization code",
 
   "receivingHistory.receivedDate": "Receipt date",
