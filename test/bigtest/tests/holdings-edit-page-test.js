@@ -41,7 +41,7 @@ describe('HoldingsEditPage', () => {
 
     this.server.get('/holdings-storage/holdings/:id', holdings);
     this.server.get('/locations/:id', {});
-    this.visit(`/inventory/view/${instance.id}/${holdings.id}?layer=editHoldingsRecord`);
+    this.visit(`/inventory/edit/${instance.id}/holding/${holdings.id}`);
 
     await HoldingsEditPage.whenLoaded();
   });

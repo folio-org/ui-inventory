@@ -1,3 +1,5 @@
+export { default as DuplicateHoldingRoute } from './DuplicateHoldingRoute';
+export { default as EditHoldingRoute } from './EditHoldingRoute';
 export { default as InstancesRoute } from './InstancesRoute';
 export { default as InstanceMovementRoute } from './InstanceMovementRoute';
 export { default as ItemRoute } from './ItemRoute';
@@ -11,3 +13,4 @@ export { default as InstanceEditRoute } from './InstanceEditRoute';
 export { default as ViewRequestsRoute } from './ViewRequestsRoute';
 export { default as ImportRoute } from './ImportRoute';
 export { default as HoldingsMarcRoute } from './HoldingsMarcRoute';
+export { default as ViewHoldingRoute } from './ViewHoldingRoute';

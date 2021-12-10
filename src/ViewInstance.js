@@ -241,23 +241,6 @@ class ViewInstance extends React.Component {
     this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
   };
 
-  goBack = (e) => {
-    if (e) e.preventDefault();
-
-    const {
-      goTo,
-      match: {
-        params: { id },
-      },
-      location: { pathname, search }
-    } = this.props;
-
-    // extract instance url
-    const [path] = pathname.match(new RegExp(`(.*)${id}`));
-
-    goTo(`${path}${search}`);
-  };
-
   handleViewSource = (e, instance) => {
     if (e) e.preventDefault();
     const {
@@ -671,19 +654,6 @@ class ViewInstance extends React.Component {
                 )
                 :
                 null
-            }
-
-            {
-              (holdingsrecordid && !itemid)
-                ? (
-                  <this.cViewHoldingsRecord
-                    id={id}
-                    holdingsrecordid={holdingsrecordid}
-                    onCloseViewHoldingsRecord={this.goBack}
-                    {...this.props}
-                  />
-                )
-                : null
             }
           </InstanceDetails>
 

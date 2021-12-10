@@ -28,6 +28,7 @@
 * Integrate facets with existing query input. Refs UIIN-1870.
 * Display acquisition accordion on Item record. Refs UIIN-1858.
 * Item. Several keyboard shortcuts does not act on the item. Refs UIIN-1867.
+* Holdings. Keyboard shortcuts does not act on the holdings. Refs UIIN-1866.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
