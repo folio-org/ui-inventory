@@ -53,6 +53,7 @@ import {
 } from '@folio/stripes/core';
 
 import ModalContent from '../components/ModalContent';
+import { ItemAcquisition } from '../Item/ViewItem/ItemAcquisition';
 import {
   craftLayerUrl,
   callNumberLabel,
@@ -646,6 +647,7 @@ class ItemView extends React.Component {
       acc08: !areAllFieldsEmpty(values(electronicAccess)),
       acc09: !areAllFieldsEmpty(values(circulationHistory)),
       acc10: !areAllFieldsEmpty(values(boundWithTitles)),
+      itemAcquisitionAccordion: false,
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
@@ -1340,6 +1342,12 @@ class ItemView extends React.Component {
                         {effectiveLocationDisplay}
                       </Row>
                     </Accordion>
+
+                    <ItemAcquisition
+                      itemId={item.id}
+                      accordionId="itemAcquisitionAccordion"
+                    />
+
                     <Accordion
                       id="acc08"
                       label={<FormattedMessage id="ui-inventory.electronicAccess" />}
