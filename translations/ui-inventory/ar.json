@@ -707,5 +707,13 @@
     "saveHoldingsUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للمقتنيات. يرجى إعادة المحاولة.",
     "instance.suppressedFromDiscovery": "محجوب من الاكتشاف",
     "createMARCHoldings": "إضافة تسجيلة مقتنيات مارك",
-    "exportInProgress": "التصدير قيد التقدم"
+    "exportInProgress": "التصدير قيد التقدم",
+    "acq.dateOrdered": "تاريخ الطلب",
+    "acq.acqUnit": "وحدة التزويد",
+    "showMoreOptions": "عرض المزيد من الخيارات",
+    "more": "المزيد",
+    "noMatchingOptions": "لا توجد خيارات مطابقة",
+    "acq.orderSubscription": "اشتراك",
+    "acq.receiptDate": "تاريخ استلام القطعة",
+    "acq.vendorCode": "رمز المؤسسة"
 }
