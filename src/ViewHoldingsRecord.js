@@ -361,6 +361,7 @@ class ViewHoldingsRecord extends React.Component {
             id="edit-holdings"
             onClick={this.onEditHolding}
             buttonStyle="dropdownItem"
+            data-testid="edit-holding-btn"
           >
             <Icon icon="edit">
               <FormattedMessage id="ui-inventory.editHoldings" />
@@ -373,6 +374,7 @@ class ViewHoldingsRecord extends React.Component {
             id="copy-holdings"
             onClick={this.onCopyHolding}
             buttonStyle="dropdownItem"
+            data-testid="duplicate-holding-btn"
           >
             <Icon icon="duplicate">
               <FormattedMessage id="ui-inventory.duplicateHoldings" />
