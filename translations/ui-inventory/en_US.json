@@ -707,5 +707,13 @@
     "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again.",
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
     "createMARCHoldings": "Add MARC holdings record",
-    "exportInProgress": "Export in progress"
+    "exportInProgress": "Export in progress",
+    "acq.dateOrdered": "Date ordered",
+    "acq.acqUnit": "Acquisition unit",
+    "showMoreOptions": "Show more options",
+    "more": "More",
+    "noMatchingOptions": "No matching options",
+    "acq.orderSubscription": "Subscription",
+    "acq.receiptDate": "Piece receipt date",
+    "acq.vendorCode": "Organization code"
 }
