@@ -310,7 +310,7 @@
     "freeText": "Texte libre",
     "createNewItem": "Créer un nouvel exemplaire",
     "waitingForResources": "En attente de ressources",
-    "fetchingMarcRecord": "Fetching MARC record",
+    "fetchingMarcRecord": "Récupération de la notice MARC",
     "viewMarcSource": "Voir la source MARC",
     "marcSourceRecord": "Notice bibliographique MARC",
     "item.barcode": "Code-barres",
@@ -707,5 +707,13 @@
     "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again.",
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
     "createMARCHoldings": "Add MARC holdings record",
-    "exportInProgress": "Export en cours"
+    "exportInProgress": "Export en cours",
+    "acq.dateOrdered": "Date de commande",
+    "acq.acqUnit": "Unité d'acquisition",
+    "showMoreOptions": "Afficher plus d'options",
+    "more": "Suite",
+    "noMatchingOptions": "Aucune option correspondante",
+    "acq.orderSubscription": "Subscription",
+    "acq.receiptDate": "Piece receipt date",
+    "acq.vendorCode": "Organization code"
 }
