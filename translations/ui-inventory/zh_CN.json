@@ -707,5 +707,13 @@
     "saveHoldingsUIIDS.error": "保存馆藏UUID时出错。请再试一次。",
     "instance.suppressedFromDiscovery": "在发现中隐藏",
     "createMARCHoldings": "添加MARC馆藏记录",
-    "exportInProgress": "导出中"
+    "exportInProgress": "导出中",
+    "acq.dateOrdered": "Date ordered",
+    "acq.acqUnit": "Acquisition unit",
+    "showMoreOptions": "Show more options",
+    "more": "More",
+    "noMatchingOptions": "No matching options",
+    "acq.orderSubscription": "Subscription",
+    "acq.receiptDate": "Piece receipt date",
+    "acq.vendorCode": "Organization code"
 }
