@@ -1,7 +1,4 @@
-import React, {
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   useHistory,
@@ -20,61 +17,64 @@ import {
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
-import { useItemMutation } from '../hooks';
+import {
+  useItem,
+  useItemMutation,
+} from '../hooks';
 
-const CreateItem = ({
+const EditItem = ({
   referenceData,
   instanceId,
   holdingId,
+  itemId,
 }) => {
   const history = useHistory();
   const location = useLocation();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
+  const { isLoading: isItemLoading, item } = useItem(itemId);
   const callout = useCallout();
   const stripes = useStripes();
 
-  const initialValues = useMemo(() => ({
-    status: { name: 'Available' },
-    holdingsRecordId: holding.id,
-  }), [holding.id]);
-
   const onCancel = useCallback(() => {
     history.push({
-      pathname: `/inventory/view/${instanceId}`,
+      pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
     });
-  }, [location.search, instanceId]);
+  }, [location.search, instanceId, holdingId, itemId]);
 
-  const onSuccess = useCallback(async (response) => {
-    const { hrid } = await response.json();
 
+  const onSuccess = useCallback(() => {
     onCancel();
 
     return callout.sendCallout({
       type: 'success',
       message: <FormattedMessage
         id="ui-inventory.item.successfullySaved"
-        values={{ hrid }}
+        values={{ hrid: item.hrid }}
       />,
     });
   }, [callout, instanceId, holdingId]);
 
   const { mutateItem } = useItemMutation({ onSuccess });
 
-  const onSubmit = useCallback((item) => {
-    return mutateItem(item);
+  const onSubmit = useCallback((values) => {
+    if (!values.barcode) {
+      delete item.barcode;
+    }
+
+    return mutateItem(values);
   }, [mutateItem]);
 
-  if (isInstanceLoading || isHoldingLoading) return <LoadingView />;
+  if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
 
   return (
     <ItemForm
       form={`itemform_${holding.id}`}
       id={holding.id}
       key={holding.id}
-      initialValues={initialValues}
+      initialValues={item}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}
@@ -87,10 +87,11 @@ const CreateItem = ({
   );
 };
 
-CreateItem.propTypes = {
+EditItem.propTypes = {
   instanceId: PropTypes.string.isRequired,
   holdingId: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
   referenceData: PropTypes.object.isRequired,
 };
 
-export default CreateItem;
+export default EditItem;

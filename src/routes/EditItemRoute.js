@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { CreateItem } from '../Item';
+import { EditItem } from '../Item';
 import { DataContext } from '../contexts';
 
-const CreateItemRoute = () => {
+const EditItemRoute = () => {
+  const { id, holdingId, itemId } = useParams();
   const referenceData = useContext(DataContext);
-  const { id, holdingId } = useParams();
 
   return (
-    <CreateItem
+    <EditItem
       referenceData={referenceData}
       instanceId={id}
       holdingId={holdingId}
+      itemId={itemId}
     />
   );
 };
 
-export default CreateItemRoute;
+export default EditItemRoute;
