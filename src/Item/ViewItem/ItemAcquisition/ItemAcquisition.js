@@ -75,7 +75,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.receiptDate" />}
             value={
-              piece.receivedDate
+              piece?.receivedDate
               && <Link to={`/receiving/${piece.titleId}/view`}>{getDateWithTime(piece.receivedDate)}</Link>
             }
           />
