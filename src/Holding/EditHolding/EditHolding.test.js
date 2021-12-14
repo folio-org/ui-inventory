@@ -37,7 +37,7 @@ const wrapper = ({ children }) => (
   <MemoryRouter>
     {children}
   </MemoryRouter>
-)
+);
 
 const renderEditHolding = (props = {}) => render(
   <EditHolding
@@ -45,12 +45,12 @@ const renderEditHolding = (props = {}) => render(
     {...props}
   />,
   { wrapper },
-)
+);
 
 describe('EditHolding', () => {
   beforeEach(() => {
     useInstance.mockClear();
-  })
+  });
 
   it('should render HoldingsForm', () => {
     renderEditHolding();
@@ -60,7 +60,7 @@ describe('EditHolding', () => {
 
   it('should render LoadingView if page is loading', () => {
     useInstance.mockReturnValue({ isLoading: true });
-  
+
     renderEditHolding();
 
     expect(screen.getByText('LoadingView')).toBeInTheDocument();

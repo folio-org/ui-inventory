@@ -693,7 +693,6 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
-  getSearchParams: PropTypes.func.isRequired,
   selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
   getParams: PropTypes.func.isRequired,

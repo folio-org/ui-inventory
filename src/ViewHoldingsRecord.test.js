@@ -13,7 +13,7 @@ jest.mock('./withLocation', () => jest.fn(c => c));
 const defaultProps = {
   id: 'id',
   goTo: jest.fn(),
-  holdingsrecordid: "holdingId",
+  holdingsrecordid: 'holdingId',
   referenceTables: { holdingsSources: [{ id: 'sourceId' }], locationsById: {} },
   resources: {
     holdingsRecords: { records: [{ sourceId: 'sourceId' }] },
@@ -36,7 +36,6 @@ const defaultProps = {
     marcRecordId: {
       replace: jest.fn(),
     },
-    query: {},
     permanentLocationQuery: {},
     temporaryLocationQuery: {},
     query: {},
@@ -47,7 +46,7 @@ const defaultProps = {
   location: {
     search: '/',
   },
-}
+};
 
 const queryClient = new QueryClient();
 
@@ -61,12 +60,12 @@ const renderViewHoldingsRecord = (props = {}) => renderWithIntl(
     </MemoryRouter>
   </QueryClientProvider>,
   translationsProperties
-)
+);
 
 describe('ViewHoldingsRecord actions', () => {
   beforeEach(() => {
     defaultProps.history.push.mockClear();
-  })
+  });
 
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
