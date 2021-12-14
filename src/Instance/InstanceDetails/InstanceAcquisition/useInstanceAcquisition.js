@@ -55,7 +55,7 @@ const useInstanceAcquisition = (id) => {
       const ordersMap = hydratedOrders.reduce((acc, order) => ({ ...acc, [order.id]: order }), {});
 
       return orderBy(poLines.map(line => ({ ...line, order: ordersMap[line.purchaseOrderId] })),
-        ({ order }) => order?.metadata?.createdDate, ['desc']);
+        ({ order }) => order?.dateOrdered, ['desc']);
     },
     { enabled: stripes.hasInterface('order-lines') &&
       stripes.hasInterface('orders') &&

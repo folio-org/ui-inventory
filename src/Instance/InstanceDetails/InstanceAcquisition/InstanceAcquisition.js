@@ -31,7 +31,7 @@ const formatter = {
     </>
   ),
   polReceiptStatus: i => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${i.receiptStatus}`} />,
-  dateOrdered: i => getDateWithTime(i.order?.metadata?.createdDate),
+  dateOrdered: i => getDateWithTime(i.order?.dateOrdered),
   acqUnit: i => i.order?.acqUnits?.map(u => u.name)?.join(', ') || <NoValue />,
   orderType: i => (i.order?.orderType ? <FormattedMessage id={`ui-inventory.acq.orderType.${i.order.orderType}`} /> : <NoValue />),
 };
