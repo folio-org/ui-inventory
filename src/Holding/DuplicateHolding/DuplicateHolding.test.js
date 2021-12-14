@@ -24,13 +24,13 @@ const defaultProps = {
       POST: jest.fn(() => Promise.resolve({ hrid: 'hrid' })),
     }
   }
-}
+};
 
-const wrapper = ({children}) => (
+const wrapper = ({ children }) => (
   <MemoryRouter>
     {children}
   </MemoryRouter>
-)
+);
 
 const renderDuplicateHolding = (props = {}) => render(
   <DuplicateHolding
@@ -38,12 +38,12 @@ const renderDuplicateHolding = (props = {}) => render(
     {...props}
   />,
   { wrapper },
-)
+);
 
 describe('DuplicateHolding', () => {
   beforeEach(() => {
     useInstance.mockClear();
-  })
+  });
 
   it('should render HoldingsForm', () => {
     renderDuplicateHolding();
@@ -53,7 +53,7 @@ describe('DuplicateHolding', () => {
 
   it('should render LoadingView if page is loading', () => {
     useInstance.mockReturnValue({ isLoading: true });
-  
+
     renderDuplicateHolding();
 
     expect(screen.getByText('LoadingView')).toBeInTheDocument();

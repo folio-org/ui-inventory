@@ -31,9 +31,9 @@ const defaultProps = {
       PUT: jest.fn(() => Promise.resolve({ hrid: 'hrid' })),
     }
   }
-}
+};
 
-const wrapper = ({children}) => (
+const wrapper = ({ children }) => (
   <MemoryRouter>
     {children}
   </MemoryRouter>
