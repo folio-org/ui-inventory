@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { flatten } from 'lodash';
+import { flatten, orderBy } from 'lodash';
 
 import { useOkapiKy, useNamespace, useStripes } from '@folio/stripes/core';
 
@@ -8,7 +8,7 @@ import { batchRequest } from '../../../utils';
 
 const useInstanceAcquisition = (id) => {
   const ky = useOkapiKy();
-  const namespace = useNamespace();
+  const [namespace] = useNamespace({ key: 'instance-acquisition' });
   const stripes = useStripes();
 
   const { data = [], isLoading } = useQuery(
@@ -54,7 +54,8 @@ const useInstanceAcquisition = (id) => {
       });
       const ordersMap = hydratedOrders.reduce((acc, order) => ({ ...acc, [order.id]: order }), {});
 
-      return poLines.map(line => ({ ...line, order: ordersMap[line.purchaseOrderId] }));
+      return orderBy(poLines.map(line => ({ ...line, order: ordersMap[line.purchaseOrderId] })),
+        ({ order }) => order?.dateOrdered, ['desc']);
     },
     { enabled: stripes.hasInterface('order-lines') &&
       stripes.hasInterface('orders') &&
