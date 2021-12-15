@@ -720,7 +720,6 @@ class ItemView extends React.Component {
       },
     ];
 
-
     return (
       <IntlConsumer>
         {intl => (
@@ -1343,10 +1342,14 @@ class ItemView extends React.Component {
                       </Row>
                     </Accordion>
 
-                    <ItemAcquisition
-                      itemId={item.id}
-                      accordionId="itemAcquisitionAccordion"
-                    />
+                    {
+                      item.purchaseOrderLineIdentifier && (
+                        <ItemAcquisition
+                          itemId={item.id}
+                          accordionId="itemAcquisitionAccordion"
+                        />
+                      )
+                    }
 
                     <Accordion
                       id="acc08"
