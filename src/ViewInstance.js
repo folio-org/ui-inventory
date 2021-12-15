@@ -695,7 +695,6 @@ class ViewInstance extends React.Component {
 ViewInstance.propTypes = {
   selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
-  getParams: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
@@ -724,7 +723,6 @@ ViewInstance.propTypes = {
     query: PropTypes.object.isRequired,
     movableItems: PropTypes.object.isRequired,
   }),
-  okapi: PropTypes.object,
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
