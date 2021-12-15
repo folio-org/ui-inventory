@@ -1,21 +1,32 @@
 import '../../../test/jest/__mock__';
 
 import { MemoryRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { render, screen } from '@testing-library/react';
 
 import { instance } from '../../../test/fixtures/instance';
-import { useInstance } from '../../common/hooks';
+import {
+  useInstanceQuery,
+  useHolding,
+} from '../../common/hooks';
+import {
+  useHoldingItemsQuery,
+  useHoldingMutation,
+} from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import EditHolding from './EditHolding';
 
 jest.mock('../../edit/holdings/HoldingsForm', () => jest.fn().mockReturnValue('HoldingsForm'));
-jest.mock('../../hooks/useHoldingItemsQuery', () => (
-  jest.fn().mockReturnValue({ totalRecords: 1, isLoading: false })
-));
-jest.mock('../../hooks/useCallout', () => jest.fn().mockReturnValue({ sendCallout: jest.fn() }));
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useCallout: () => jest.fn().mockReturnValue({ sendCallout: jest.fn() }),
+  useHoldingItemsQuery: jest.fn().mockReturnValue({ totalRecords: 1, isLoading: false }),
+  useHoldingMutation: jest.fn().mockReturnValue({ mutateHolding: jest.fn() }),
+}));
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
-  useInstance: jest.fn().mockReturnValue({ instance: {}, isLoading: false })
+  useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
+  useHolding: jest.fn().mockReturnValue({ holding: {}, isLoading: false }),
 }));
 
 const defaultProps = {
@@ -23,19 +34,15 @@ const defaultProps = {
   instanceId: instance.id,
   holdingId: 'holdingId',
   referenceTables: { holdingsSources: [{ id: 'sourceId' }] },
-  resources: {
-    holding: { records: [{ sourceId: 'sourceId' }] },
-  },
-  mutator: {
-    holding: {
-      PUT: jest.fn(() => Promise.resolve({ hrid: 'hrid' })),
-    }
-  }
 };
+
+const queryClient = new QueryClient();
 
 const wrapper = ({ children }) => (
   <MemoryRouter>
-    {children}
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
   </MemoryRouter>
 );
 
@@ -48,8 +55,13 @@ const renderEditHolding = (props = {}) => render(
 );
 
 describe('EditHolding', () => {
+  const mockMutate = jest.fn();
+
   beforeEach(() => {
-    useInstance.mockClear();
+    useInstanceQuery.mockClear();
+    useHolding.mockClear();
+    useHoldingItemsQuery.mockClear();
+    useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
   });
 
   it('should render HoldingsForm', () => {
@@ -59,21 +71,22 @@ describe('EditHolding', () => {
   });
 
   it('should render LoadingView if page is loading', () => {
-    useInstance.mockReturnValue({ isLoading: true });
+    useInstanceQuery.mockReturnValue({ isLoading: true });
 
     renderEditHolding();
 
     expect(screen.getByText('LoadingView')).toBeInTheDocument();
   });
 
-  it('should call PUT when the holding form is submitted', () => {
+  it('should call holding mutation when the holding form is submitted', () => {
     renderEditHolding();
 
     HoldingsForm.mock.calls[0][0].onSubmit({
+      id: 'holdingId',
       permanentLocationId: '',
       temporaryLocationId: '',
     });
 
-    expect(defaultProps.mutator.holding.PUT).toHaveBeenCalled();
+    expect(mockMutate).toHaveBeenCalled();
   });
 });

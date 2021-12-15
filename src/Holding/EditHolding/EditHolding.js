@@ -1,17 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { cloneDeep, flowRight } from 'lodash';
+import { cloneDeep } from 'lodash';
 
-import {
-  stripesConnect,
-  stripesShape,
-} from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import useCallout from '../../hooks/useCallout';
-import useHoldingItemsQuery from '../../hooks/useHoldingItemsQuery';
-import { useInstance } from '../../common/hooks';
+import {
+  useHolding,
+  useInstanceQuery,
+} from '../../common/hooks';
+import {
+  useCallout,
+  useHoldingItemsQuery,
+  useHoldingMutation,
+} from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import withLocation from '../../withLocation';
 
@@ -21,20 +24,19 @@ const EditHolding = ({
   holdingId,
   instanceId,
   location: { search, state: locationState },
-  mutator,
   referenceTables,
-  resources,
-  stripes,
 }) => {
   const callout = useCallout();
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.holdingInstance);
+  const stripes = useStripes();
+  const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
+  const { holding, isLoading: isHoldingLoading } = useHolding(holdingId);
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
 
-  const holdingRecord = resources?.holding?.records?.[0];
-  const holdingSourceName = referenceTables?.holdingsSources?.find(source => source.id === holdingRecord?.sourceId)?.name;
-  const isMARCRecord = holdingSourceName === 'MARC';
+  const isMARCRecord = useMemo(() => (
+    referenceTables?.holdingsSources?.find(source => source.id === holding?.sourceId)?.name === 'MARC'
+  ), [holding]);
 
   const onCancel = useCallback(() => {
     history.push({
@@ -43,30 +45,34 @@ const EditHolding = ({
     });
   }, [search, instanceId]);
 
-  const onSubmit = useCallback(holdingsRecord => {
-    const holding = cloneDeep(holdingsRecord);
+  const onSuccess = useCallback(() => {
+    onCancel();
 
-    if (holding.permanentLocationId === '') delete holding.permanentLocationId;
-    if (holding.temporaryLocationId === '') delete holding.temporaryLocationId;
-
-    return mutator.holding.PUT(holding)
-      .then((record) => {
-        callout.sendCallout({
-          type: 'success',
-          message: <FormattedMessage
-            id="ui-inventory.holdingsRecord.successfullySaved"
-            values={{ hrid: record.hrid }}
-          />,
-        });
-        onCancel();
-      });
+    return callout.sendCallout({
+      type: 'success',
+      message: <FormattedMessage
+        id="ui-inventory.holdingsRecord.successfullySaved"
+        values={{ hrid: holding?.hrid }}
+      />,
+    });
   }, [onCancel, callout]);
 
-  if (isInstanceLoading || isItemsLoading) return <LoadingView />;
+  const { mutateHolding } = useHoldingMutation({ onSuccess });
+
+  const onSubmit = useCallback(holdingValues => {
+    const clonedHolding = cloneDeep(holdingValues);
+
+    if (clonedHolding.permanentLocationId === '') delete clonedHolding.permanentLocationId;
+    if (clonedHolding.temporaryLocationId === '') delete clonedHolding.temporaryLocationId;
+
+    return mutateHolding(clonedHolding);
+  }, [mutateHolding]);
+
+  if (isInstanceLoading || isItemsLoading || isHoldingLoading) return <LoadingView />;
 
   return (
     <HoldingsForm
-      initialValues={holdingRecord}
+      initialValues={holding}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}
@@ -80,36 +86,13 @@ const EditHolding = ({
   );
 };
 
-EditHolding.manifest = Object.freeze({
-  holdingInstance: {
-    type: 'okapi',
-    records: 'instances',
-    throwErrors: false,
-    path: 'inventory/instances',
-    accumulate: true,
-  },
-  holding: {
-    type: 'okapi',
-    path: 'holdings-storage/holdings/!{holdingId}',
-    fetch: true,
-    throwErrors: false,
-  },
-
-});
-
 EditHolding.propTypes = {
   goTo: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   holdingId: PropTypes.string.isRequired,
   instanceId: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
-  mutator: PropTypes.object.isRequired,
   referenceTables: PropTypes.object.isRequired,
-  resources: PropTypes.object.isRequired,
-  stripes: stripesShape.isRequired,
 };
 
-export default flowRight(
-  withLocation,
-  stripesConnect,
-)(EditHolding);
+export default withLocation(EditHolding);

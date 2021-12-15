@@ -7,18 +7,18 @@ import ViewHoldingRoute from './ViewHoldingRoute';
 
 jest.mock('../ViewHoldingsRecord', () => jest.fn().mockReturnValue('ViewHoldingsRecord'));
 
-const wrapper = ({children}) => (
+const wrapper = ({ children }) => (
   <MemoryRouter>
     {children}
   </MemoryRouter>
-)
+);
 
 const renderViewHoldingRoute = (props = {}) => render(
   <ViewHoldingRoute
     {...props}
   />,
   { wrapper },
-)
+);
 
 describe('ViewHoldingRoute', () => {
   it('should render ViewHoldingsRecord component', () => {

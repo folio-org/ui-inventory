@@ -10,18 +10,18 @@ jest.mock('../Holding', () => ({
   EditHolding: jest.fn().mockReturnValue('EditHolding')
 }));
 
-const wrapper = ({children}) => (
+const wrapper = ({ children }) => (
   <MemoryRouter>
     {children}
   </MemoryRouter>
-)
+);
 
 const renderEditHoldingRoute = (props = {}) => render(
   <EditHoldingRoute
     {...props}
   />,
   { wrapper },
-)
+);
 
 describe('DuplicateHoldingRoute', () => {
   it('should render EditHolding component', () => {

@@ -10,18 +10,18 @@ jest.mock('../Holding', () => ({
   DuplicateHolding: jest.fn().mockReturnValue('DuplicateHolding')
 }));
 
-const wrapper = ({children}) => (
+const wrapper = ({ children }) => (
   <MemoryRouter>
     {children}
   </MemoryRouter>
-)
+);
 
 const renderDuplicateHoldingRoute = (props = {}) => render(
   <DuplicateHoldingRoute
     {...props}
   />,
   { wrapper },
-)
+);
 
 describe('DuplicateHoldingRoute', () => {
   it('should render DuplicateHolding component', () => {

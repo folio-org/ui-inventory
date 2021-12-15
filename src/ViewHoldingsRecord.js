@@ -223,7 +223,7 @@ class ViewHoldingsRecord extends React.Component {
     } = this.props;
 
     history.push({
-      pathname: `/inventory/edit/${id}/holding/${holdingsrecordid}`,
+      pathname: `/inventory/edit/${id}/${holdingsrecordid}`,
       search: location.search,
       state: { backPathname: location.pathname },
     });
@@ -240,7 +240,7 @@ class ViewHoldingsRecord extends React.Component {
     } = this.props;
 
     history.push({
-      pathname: `/inventory/copy/${id}/holding/${holdingsrecordid}`,
+      pathname: `/inventory/copy/${id}/${holdingsrecordid}`,
       search: location.search,
       state: { backPathname: location.pathname },
     });

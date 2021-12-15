@@ -142,11 +142,11 @@ const InventoryRouting = (props) => {
                 component={ViewHoldingRoute}
               />
               <Route
-                path={`${path}/edit/:id/holding/:holdingsrecordid`}
+                path={`${path}/edit/:id/:holdingsrecordid`}
                 component={EditHoldingRoute}
               />
               <Route
-                path={`${path}/copy/:id/holding/:holdingsrecordid`}
+                path={`${path}/copy/:id/:holdingsrecordid`}
                 component={DuplicateHoldingRoute}
               />
               <Route
