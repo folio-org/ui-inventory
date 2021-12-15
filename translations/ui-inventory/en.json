@@ -715,12 +715,6 @@
   "receivingHistory.source.receiving": "Receiving",
   "receivingHistory.source.user": "User",
 
-  "shortcut.expandCollapse": "Expand or collapse an accordion",
-  "shortcut.close": "Close a modal or pop-up",
-  "shortcut.copy": "Copy",
-  "shortcut.cut": "Cut",
-  "shortcut.paste": "Paste",
-  "shortcut.find": "Find",
   "showMoreOptions": "Show more options",
   "more": "More",
   "noMatchingOptions": "No matching options"

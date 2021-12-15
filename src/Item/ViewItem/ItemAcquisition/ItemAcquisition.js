@@ -59,8 +59,8 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
 
         <Col xs={4}>
           <KeyValue
-            label={<FormattedMessage id="ui-inventory.acq.orderSentDate" />}
-            value={getDateWithTime(order?.orderSentDate)}
+            label={<FormattedMessage id="ui-inventory.acq.dateOrdered" />}
+            value={getDateWithTime(order?.dateOrdered)}
           />
         </Col>
 
@@ -75,8 +75,8 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.receiptDate" />}
             value={
-              piece?.receiptDate
-              && <Link to={`/receiving/${piece.titleId}/view`}>{getDateWithTime(piece.receiptDate)}</Link>
+              piece?.receivedDate
+              && <Link to={`/receiving/${piece.titleId}/view`}>{getDateWithTime(piece.receivedDate)}</Link>
             }
           />
         </Col>
