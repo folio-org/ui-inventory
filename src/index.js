@@ -21,6 +21,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  DuplicateHoldingRoute,
+  EditHoldingRoute,
   InstancesRoute,
   InstanceMovementRoute,
   InstanceMarcRoute,
@@ -34,6 +36,7 @@ import {
   HoldingsMarcRoute,
   EditItemRoute,
   DuplicateItemRoute,
+  ViewHoldingRoute,
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider } from './providers';
@@ -133,6 +136,18 @@ const InventoryRouting = (props) => {
               <Route
                 path={`${path}/edit/:id/instance`}
                 component={InstanceEditRoute}
+              />
+              <Route
+                path={`${path}/view/:id/:holdingsrecordid`}
+                component={ViewHoldingRoute}
+              />
+              <Route
+                path={`${path}/edit/:id/:holdingsrecordid`}
+                component={EditHoldingRoute}
+              />
+              <Route
+                path={`${path}/copy/:id/:holdingsrecordid`}
+                component={DuplicateHoldingRoute}
               />
               <Route
                 path={`${path}/view-requests/:id`}
