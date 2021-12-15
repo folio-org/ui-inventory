@@ -106,7 +106,7 @@ class ItemView extends React.Component {
 
     this.props.history.push({
       pathname: `/inventory/edit/${id}/${holdingsrecordid}/${itemid}`,
-      search: location.search,
+      search: this.props.location.search,
     });
   };
 
@@ -152,7 +152,7 @@ class ItemView extends React.Component {
 
     this.props.history.push({
       pathname: `/inventory/copy/${id}/${holdingsrecordid}/${itemid}`,
-      search: location.search,
+      search: this.props.location.search,
     });
   }
 
@@ -1464,7 +1464,6 @@ ItemView.propTypes = {
     openLoans: PropTypes.object,
     tagSettings: PropTypes.object,
   }).isRequired,
-  okapi: PropTypes.object,
   location: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({

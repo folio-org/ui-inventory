@@ -29,7 +29,7 @@ const defaultProps = {
   itemId: 'itemId',
   holdingId: 'holdingId',
   referenceData: {},
-}
+};
 
 const queryClient = new QueryClient();
 

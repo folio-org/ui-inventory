@@ -23,7 +23,7 @@ const defaultProps = {
   instanceId: instance.id,
   holdingId: 'holdingId',
   referenceData: {},
-}
+};
 
 const queryClient = new QueryClient();
 
