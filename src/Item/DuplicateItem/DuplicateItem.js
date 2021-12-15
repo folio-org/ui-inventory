@@ -8,6 +8,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { omit } from 'lodash';
 
 import { useStripes } from '@folio/stripes/core';
 import {
@@ -20,37 +21,41 @@ import {
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
-import { useItemMutation } from '../hooks';
+import {
+  useItem,
+  useItemMutation,
+} from '../hooks';
 
-const CreateItem = ({
+const DuplicateItem = ({
   referenceData,
   instanceId,
   holdingId,
+  itemId,
 }) => {
   const history = useHistory();
   const location = useLocation();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
+  const { isLoading: isItemLoading, item } = useItem(itemId);
   const callout = useCallout();
   const stripes = useStripes();
 
-  const initialValues = useMemo(() => ({
-    status: { name: 'Available' },
-    holdingsRecordId: holding.id,
-  }), [holding.id]);
+  const initialValues = useMemo(() => {
+    const duplicatedItem = omit(item, ['id', 'hrid', 'barcode']);
 
-  const onCancel = useCallback(() => {
-    history.push({
-      pathname: `/inventory/view/${instanceId}`,
-      search: location.search,
-    });
-  }, [location.search, instanceId]);
+    duplicatedItem.status = { name: 'Available' };
+
+    return duplicatedItem;
+  }, [item]);
 
   const onSuccess = useCallback(async (response) => {
-    const { hrid } = await response.json();
+    const { id, hrid } = await response.json();
 
-    onCancel();
+    history.push({
+      pathname: `/inventory/view/${instanceId}/${holdingId}/${id}`,
+      search: location.search,
+    });
 
     return callout.sendCallout({
       type: 'success',
@@ -63,11 +68,22 @@ const CreateItem = ({
 
   const { mutateItem } = useItemMutation({ onSuccess });
 
-  const onSubmit = useCallback((item) => {
-    return mutateItem(item);
+  const onCancel = useCallback(() => {
+    history.push({
+      pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
+      search: location.search,
+    });
+  }, [location.search, instanceId, holdingId, itemId]);
+
+  const onSubmit = useCallback((values) => {
+    if (!values.barcode) {
+      delete values.barcode;
+    }
+
+    return mutateItem(values);
   }, [mutateItem]);
 
-  if (isInstanceLoading || isHoldingLoading) return <LoadingView />;
+  if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
 
   return (
     <ItemForm
@@ -83,14 +99,16 @@ const CreateItem = ({
       referenceTables={referenceData}
       intl={stripes.intl}
       stripes={stripes}
+      copy
     />
   );
 };
 
-CreateItem.propTypes = {
+DuplicateItem.propTypes = {
   instanceId: PropTypes.string.isRequired,
   holdingId: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired,
   referenceData: PropTypes.object.isRequired,
 };
 
-export default CreateItem;
+export default DuplicateItem;

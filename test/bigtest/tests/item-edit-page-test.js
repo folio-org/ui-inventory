@@ -56,7 +56,7 @@ describe('ItemEditPage', () => {
     this.server.get('/holdings-storage/holdings/:id', holdings);
     this.server.get('/inventory/items/:id', item);
 
-    this.visit(`/inventory/view/${instance.id}/${holdings.id}/${item.id}?layer=editItem`);
+    this.visit(`/inventory/edit/${instance.id}/${holdings.id}/${item.id}`);
     await ItemEditPage.whenLoaded();
   });
 

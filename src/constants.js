@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
@@ -154,21 +153,6 @@ export const INSTANCES_ID_REPORT_TIMEOUT = 2000;
 export const QUICK_EXPORT_LIMIT = process.env.NODE_ENV !== 'test' ? 100 : 2;
 
 export const LIMIT_MAX = 5000;
-
-const commandsMap = {
-  expandCollapse: 'spacebar',
-  close: 'esc',
-  copy: 'mod+c',
-  cut: 'mod+x',
-  paste: 'mod+v',
-  find: 'mod+f',
-};
-
-export const commands = Object.entries(commandsMap).map(([name, shortcut]) => ({
-  name,
-  label: <FormattedMessage id={`ui-inventory.shortcut.${name}`} />,
-  shortcut,
-}));
 
 export const SORT_DIRECTION = {
   ASCENDING: 'ascending',
