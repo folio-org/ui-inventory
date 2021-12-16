@@ -248,6 +248,7 @@ class InstanceForm extends React.Component {
       pristine,
       submitting,
       history,
+      id,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
@@ -340,6 +341,7 @@ class InstanceForm extends React.Component {
               footer={this.getFooter()}
               paneTitle={this.getPaneTitle()}
               actionMenu={this.getActionMenu}
+              id={id}
             >
               <div>
                 <Headline
@@ -758,10 +760,12 @@ InstanceForm.propTypes = {
   }),
   instanceSource: PropTypes.string,
   history: PropTypes.object.isRequired,
+  id: PropTypes.string,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
   initialValues: {},
+  id: 'instance-form',
 };
 
 export default withRouter(stripesFinalForm({
