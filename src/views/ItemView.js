@@ -641,7 +641,7 @@ class ItemView extends React.Component {
       acc08: !areAllFieldsEmpty(values(electronicAccess)),
       acc09: !areAllFieldsEmpty(values(circulationHistory)),
       acc10: !areAllFieldsEmpty(values(boundWithTitles)),
-      itemAcquisitionAccordion: false,
+      itemAcquisitionAccordion: true,
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
