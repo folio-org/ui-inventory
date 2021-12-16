@@ -113,11 +113,12 @@ class ItemRoute extends React.Component {
       path: 'service-points',
       records: 'servicepoints',
       params: (_q, _p, _r, _l, props) => {
+        // Only one service point is of interest here: the SP used for the item's last check-in
+        // (if the item has a check-in). Iff that service point ID is found, add a query param
+        // to filter down to that one service point in the records returned.
         const servicePointId = get(props.resources, 'items.records[0].lastCheckIn.servicePointId', '');
-
         const query = servicePointId && `id==${servicePointId}`;
-
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       resourceShouldRefresh: true,
     },
