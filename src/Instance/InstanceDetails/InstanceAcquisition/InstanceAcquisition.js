@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import { getDateWithTime } from '../../../utils';
+import { useControlledAccordion } from '../../../common';
 import useInstanceAcquisition from './useInstanceAcquisition';
 
 const visibleColumns = ['poLineNumber', 'orderStatus', 'polReceiptStatus', 'dateOrdered', 'acqUnit', 'orderType'];
@@ -39,6 +40,7 @@ const formatter = {
 const InstanceAcquisition = ({ accordionId, instanceId }) => {
   const stripes = useStripes();
   const { isLoading, instanceAcquisition } = useInstanceAcquisition(instanceId);
+  const controlledAccorion = useControlledAccordion(Boolean(instanceAcquisition?.length));
 
   if (!(stripes.hasInterface('order-lines') &&
     stripes.hasInterface('orders') &&
@@ -48,6 +50,7 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
     <Accordion
       id={accordionId}
       label={<FormattedMessage id="ui-inventory.acquisition" />}
+      {...controlledAccorion}
     >
       <MultiColumnList
         id="list-instance-acquisitions"
