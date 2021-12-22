@@ -30,6 +30,7 @@
 * Item. Several keyboard shortcuts does not act on the item. Refs UIIN-1867.
 * Holdings. Keyboard shortcuts does not act on the holdings. Refs UIIN-1866.
 * Fix bug preventing circ history service point & source from appearing. Fixes UIIN-1558.
+* Fix The Acquisition accordion is not unfolded automatically when there is data to be shown. Refs UIIN-1869.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
