@@ -566,7 +566,6 @@ class ViewHoldingsRecord extends React.Component {
       acc03: !areAllFieldsEmpty(Object.values(holdingsDetails)),
       acc04: !areAllFieldsEmpty([holdingsNotes]),
       acc05: !areAllFieldsEmpty([electronicAccess]),
-      // acc06: false,
     };
 
     const holdingsDetailsTables = intl => holdingsStatementTypes.map(({ type, title }) => ({
