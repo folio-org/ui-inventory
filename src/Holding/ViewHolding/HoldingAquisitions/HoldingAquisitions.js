@@ -4,9 +4,11 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import {
+  Accordion,
   MultiColumnList,
 } from '@folio/stripes/components';
 
+import { useControlledAccordion } from '../../../common/hooks';
 import {
   getDateWithTime,
 } from '../../../utils';
@@ -35,17 +37,33 @@ const formatter = {
 
 const HoldingAquisitions = ({ holding }) => {
   const { isLoading, holdingOrderLines } = useHoldingOrderLines(holding.id);
+  const controlledAccorion = useControlledAccordion(Boolean(holdingOrderLines.length));
+
+  if (isLoading) {
+    return (
+      <Accordion
+        id="acc06"
+        label={<FormattedMessage id="ui-inventory.acquisition" />}
+      />
+    );
+  }
 
   return (
-    <MultiColumnList
-      id="list-holding-order-lines"
-      loading={isLoading}
-      contentData={holdingOrderLines}
-      visibleColumns={visibleColumns}
-      columnMapping={columnMapping}
-      formatter={formatter}
-      interactive={false}
-    />
+    <Accordion
+      id="acc06"
+      label={<FormattedMessage id="ui-inventory.acquisition" />}
+      {...controlledAccorion}
+    >
+      <MultiColumnList
+        id="list-holding-order-lines"
+        loading={isLoading}
+        contentData={holdingOrderLines}
+        visibleColumns={visibleColumns}
+        columnMapping={columnMapping}
+        formatter={formatter}
+        interactive={false}
+      />
+    </Accordion>
   );
 };
 

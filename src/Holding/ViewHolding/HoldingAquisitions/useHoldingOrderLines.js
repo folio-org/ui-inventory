@@ -12,7 +12,7 @@ const useHoldingOrderLines = (id, options = {}) => {
 
   return {
     isLoading,
-    holdingOrderLines: data?.holdingSummaries,
+    holdingOrderLines: data?.holdingSummaries || [],
   };
 };
 
