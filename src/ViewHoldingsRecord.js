@@ -566,7 +566,6 @@ class ViewHoldingsRecord extends React.Component {
       acc03: !areAllFieldsEmpty(Object.values(holdingsDetails)),
       acc04: !areAllFieldsEmpty([holdingsNotes]),
       acc05: !areAllFieldsEmpty([electronicAccess]),
-      acc06: false,
     };
 
     const holdingsDetailsTables = intl => holdingsStatementTypes.map(({ type, title }) => ({
@@ -998,15 +997,10 @@ class ViewHoldingsRecord extends React.Component {
                       </Accordion>
 
                       {
-                          this.props.stripes.hasInterface('orders.holding-summary') && (
-                            <Accordion
-                              id="acc06"
-                              label={<FormattedMessage id="ui-inventory.acquisition" />}
-                            >
-                              <HoldingAquisitions holding={holdingsRecord} />
-                            </Accordion>
-                          )
-                        }
+                        this.props.stripes.hasInterface('orders.holding-summary') && (
+                          <HoldingAquisitions holding={holdingsRecord} />
+                        )
+                      }
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
                     </AccordionSet>
