@@ -15,6 +15,8 @@ import {
   useGoBack,
 } from '../../common/hooks';
 
+import styles from './ViewSource.css';
+
 const ViewSource = ({
   mutator,
   instanceId,
@@ -68,12 +70,14 @@ const ViewSource = ({
     : <FormattedMessage id="ui-inventory.marcSourceRecord" />;
 
   return (
-    <MarcView
-      paneTitle={paneTitle}
-      marcTitle={marcTitle}
-      marc={marc}
-      onClose={goBack}
-    />
+    <div className={styles.viewSource}>
+      <MarcView
+        paneTitle={paneTitle}
+        marcTitle={marcTitle}
+        marc={marc}
+        onClose={goBack}
+      />
+    </div>
   );
 };
 
