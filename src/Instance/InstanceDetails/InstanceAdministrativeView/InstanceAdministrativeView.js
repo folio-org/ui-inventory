@@ -21,6 +21,7 @@ import {
 import { WarningMessage } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
+import AdministrativeNoteList from './AdministrativeNoteList';
 
 const InstanceAdministrativeView = ({
   id,
@@ -29,6 +30,7 @@ const InstanceAdministrativeView = ({
   issuanceModes,
   statisticalCodes,
   statisticalCodeTypes,
+  administrativeNotes,
 }) => {
   const instanceStatus = useMemo(() => {
     return instanceStatuses.find(status => status.id === instance.statusId) || {};
@@ -162,7 +164,16 @@ const InstanceAdministrativeView = ({
         </Col>
       </Row>
 
-      <StatisticalCodesList statisticalCodes={formattedStatisticalCodes} />
+      <Row>
+        <Col xs={12}>
+          <StatisticalCodesList statisticalCodes={formattedStatisticalCodes} />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+        <AdministrativeNoteList administrativeNoteList={administrativeNotes} />
+        </Col>
+      </Row>
     </Accordion>
   );
 };
