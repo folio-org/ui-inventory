@@ -34,6 +34,7 @@
 * Expand acquisition accordion when displaying Order information on Instance record. Refs UIIN-1886.
 * Also support `circulation` `12.0`. Refs UIIN-1861.
 * SRS display. MARC indicators may be misaligned. Refs UIIN-1859.
+* Add new data element administrative note. Refs UIIN-1442.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
