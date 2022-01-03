@@ -24,7 +24,6 @@ const Form = ({ handleSubmit }) => (
 );
 
 Form.propTypes = {
-  form: PropTypes.object,
   handleSubmit: PropTypes.func.isRequired,
 };
 

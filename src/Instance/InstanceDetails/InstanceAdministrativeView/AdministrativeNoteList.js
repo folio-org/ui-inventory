@@ -26,7 +26,6 @@ const AdministrativeNoteList = ({
   administrativeNotes,
 }) => {
   const intl = useIntl();
-
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
   const contentData = useMemo(() => checkIfArrayIsEmpty(
     administrativeNotes.map(value => ({ value }))

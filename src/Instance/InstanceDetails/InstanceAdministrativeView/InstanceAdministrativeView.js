@@ -30,7 +30,6 @@ const InstanceAdministrativeView = ({
   issuanceModes,
   statisticalCodes,
   statisticalCodeTypes,
-  administrativeNotes,
 }) => {
   const instanceStatus = useMemo(() => {
     return instanceStatuses.find(status => status.id === instance.statusId) || {};
@@ -171,7 +170,7 @@ const InstanceAdministrativeView = ({
       </Row>
       <Row>
         <Col xs={12}>
-        <AdministrativeNoteList administrativeNoteList={administrativeNotes} />
+          <AdministrativeNoteList administrativeNotes={instance.administrativeNotes} />
         </Col>
       </Row>
     </Accordion>
