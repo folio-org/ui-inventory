@@ -72,7 +72,7 @@ import {
   itemStatusesMap,
   itemStatusMutators,
   noValue,
-  requestStatuses,
+  REQUEST_OPEN_STATUSES,
   wrappingCell,
   actionMenuDisplayPerms,
 } from '../constants';
@@ -83,7 +83,7 @@ import {
 } from '../components';
 import css from '../View.css';
 
-export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
+export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
   static contextType = CalloutContext;
@@ -190,7 +190,7 @@ class ItemView extends React.Component {
     if (canMarkRequestAsOpen(request)) {
       const newRequestRecord = cloneDeep(request);
 
-      newRequestRecord.status = requestStatuses.OPEN_NOT_YET_FILLED;
+      newRequestRecord.status = REQUEST_OPEN_STATUSES.OPEN_NOT_YET_FILLED;
       this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
       this.props.mutator.requests.PUT(newRequestRecord);
     }

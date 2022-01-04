@@ -9,14 +9,14 @@ import {
 import { stripesConnect } from '@folio/stripes/core';
 
 import {
-  requestStatuses,
+  REQUEST_OPEN_STATUSES,
 } from '../constants';
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
 
-export const requestsStatusString = map(requestStatuses, requestStatus => `"${requestStatus}"`).join(' or ');
+export const requestsStatusString = map(REQUEST_OPEN_STATUSES, requestStatus => `"${requestStatus}"`).join(' or ');
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
 class ItemRoute extends React.Component {
@@ -164,7 +164,7 @@ class ItemRoute extends React.Component {
       match: {
         params: { id },
       },
-      location: { pathname, search }
+      location: { pathname, search },
     } = this.props;
 
     // extract instance url
