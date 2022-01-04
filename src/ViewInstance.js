@@ -41,6 +41,7 @@ import {
 import {
   indentifierTypeNames,
   layers,
+  REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
 
@@ -53,6 +54,7 @@ import { CalloutRenderer } from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
 import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
+import RequestsReorderButton from './components/ViewInstance/MenuSection/RequestsReorderButton';
 
 const getTlrSettings = (settings) => {
   try {
@@ -61,6 +63,8 @@ const getTlrSettings = (settings) => {
     return {};
   }
 };
+const requestOpenStatuses = Object.values(REQUEST_OPEN_STATUSES);
+const instanceRequestsQuery = requestOpenStatuses.map(status => `status=="${status}"`).join(' OR ');
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -86,10 +90,14 @@ class ViewInstance extends React.Component {
       type: 'okapi',
       shouldRefresh: () => false,
     },
-    allInstanceRequests: {
+    instanceRequests: {
       accumulate: true,
       fetch: false,
       path: 'circulation/requests',
+      params: {
+        query: `instanceId==:{id} AND (${instanceRequestsQuery})`,
+        limit: '1',
+      },
       records: 'requests',
       throwErrors: false,
       type: 'okapi',
@@ -154,11 +162,21 @@ class ViewInstance extends React.Component {
     if (isMARCSource) {
       this.getMARCRecord();
     }
+
+    this.setTlrSettings();
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedInstance: prevInstance } = prevProps;
-    const { selectedInstance: instance } = this.props;
+    const {
+      selectedInstance: prevInstance,
+      resources: { configs: prevConfigs },
+      match: { params: prevParams },
+    } = prevProps;
+    const {
+      selectedInstance: instance,
+      resources: { configs },
+      match: { params },
+    } = this.props;
     const instanceRecordsId = instance?.id;
     const prevInstanceRecordsId = prevInstance?.id;
     const prevIsMARCSource = this.isMARCSource(prevInstance);
@@ -175,6 +193,14 @@ class ViewInstance extends React.Component {
       !parse(this.props?.location?.search)?.layer && !this.state.afterCreate) {
       // eslint-disable-next-line
       this.setState({ afterCreate: true });
+    }
+
+    if (prevConfigs.hasLoaded !== configs.hasLoaded && configs.hasLoaded) {
+      this.setTlrSettings();
+    }
+
+    if (prevParams.id !== params.id) {
+      this.getInstanceRequests();
     }
   }
 
@@ -197,6 +223,30 @@ class ViewInstance extends React.Component {
         console.error('MARC record getting ERROR: ', error);
       });
   };
+
+  setTlrSettings = () => {
+    const {
+      resources : { configs },
+    } = this.props;
+
+    if (configs.hasLoaded) {
+      const { titleLevelRequestsFeatureEnabled } = getTlrSettings(configs.records[0]?.value);
+
+      this.setState({ titleLevelRequestsFeatureEnabled }, this.getInstanceRequests);
+    }
+  }
+
+  getInstanceRequests = () => {
+    const {
+      mutator: { instanceRequests },
+    } = this.props;
+    const { titleLevelRequestsFeatureEnabled } = this.state;
+
+    if (titleLevelRequestsFeatureEnabled) {
+      instanceRequests.reset();
+      instanceRequests.GET();
+    }
+  }
 
   // Edit Instance Handlers
   onClickEditInstance = () => {
@@ -341,10 +391,14 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
-      resources: { configs },
+      resources: {
+        instanceRequests,
+      },
     } = this.props;
-    const { marcRecord, requests } = this.state;
-    const { titleLevelRequestsFeatureEnabled } = getTlrSettings(configs.records[0]?.value);
+    const {
+      marcRecord,
+      titleLevelRequestsFeatureEnabled,
+    } = this.state;
 
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
@@ -354,6 +408,7 @@ class ViewInstance extends React.Component {
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
     const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
+    const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
 
     const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
     const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
@@ -466,22 +521,31 @@ class ViewInstance extends React.Component {
               </IfPermission>
             )
           }
-
-          <Button
-            id="view-requests"
-            onClick={() => {
-              onToggle();
-              this.onClickViewRequests();
-            }}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="eye-open">
-              <FormattedMessage
-                id="ui-inventory.viewRequests"
-                values={{ count: requests?.length ?? '' }}
-              />
-            </Icon>
-          </Button>
+          {
+            titleLevelRequestsFeatureEnabled
+              ? (
+                <RequestsReorderButton
+                  hasReorderPermissions={hasReorderPermissions}
+                  requestId={instanceRequests.records[0]?.id}
+                  instanceId={instance.id}
+                  numberOfRequests={instanceRequests.other?.totalRecords}
+                />
+              )
+              : (
+                <Button
+                  id="view-requests"
+                  onClick={() => {
+                    onToggle();
+                    this.onClickViewRequests();
+                  }}
+                  buttonStyle="dropdownItem"
+                >
+                  <Icon icon="eye-open">
+                    <FormattedMessage id="ui-inventory.viewRequests" />
+                  </Icon>
+                </Button>
+              )
+          }
 
           <NewInstanceRequestButton
             isTlrEnabled={titleLevelRequestsFeatureEnabled}
@@ -752,6 +816,10 @@ ViewInstance.propTypes = {
     }),
     query: PropTypes.object.isRequired,
     movableItems: PropTypes.object.isRequired,
+    instanceRequests: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
+    }).isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
@@ -761,6 +829,12 @@ ViewInstance.propTypes = {
     allInstanceHoldings: PropTypes.object.isRequired,
     locations: PropTypes.object.isRequired,
     configs: PropTypes.object.isRequired,
+    instanceRequests: PropTypes.shape({
+      other: PropTypes.shape({
+        totalRecords: PropTypes.number.isRequired,
+      }),
+      records: PropTypes.arrayOf(PropTypes.object).isRequired,
+    }).isRequired,
   }).isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,

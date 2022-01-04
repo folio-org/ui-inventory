@@ -51,6 +51,7 @@
   "editInstance": "Edit instance",
   "moveItems": "Move holdings/items to another instance",
   "viewRequests": "View requests",
+  "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
   "instanceDetails": "Instance details",
   "addHoldings": "Add holdings",
   "itemDotStatus": "Item • {barcode} • {status}",

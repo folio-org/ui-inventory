@@ -35,6 +35,7 @@
 * Also support `circulation` `12.0`. Refs UIIN-1861.
 * SRS display. MARC indicators may be misaligned. Refs UIIN-1859.
 * Create title level request from Instance record. Refs UIIN-1620.
+* Inventory action menu link View & reorder queue. Refs UIIN-1881.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

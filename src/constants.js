@@ -39,7 +39,7 @@ export const itemStatusMutators = {
   UNKNOWN: 'markAsUnknown',
 };
 
-export const requestStatuses = {
+export const REQUEST_OPEN_STATUSES = {
   OPEN_AWAITING_PICKUP: `Open - ${AWAITING_PICKUP}`,
   OPEN_NOT_YET_FILLED: 'Open - Not yet filled',
   OPEN_IN_TRANSIT: `Open - ${IN_TRANSIT}`,
@@ -202,7 +202,7 @@ export const FACETS_CQL = {
   ITEMS_TAGS: 'itemTags',
   MATERIAL_TYPES: 'items.materialTypeId',
   ITEMS_STATUSES: 'items.status.name',
-  HOLDINGS_PERMANENT_LOCATION: 'holdings.permanentLocationId'
+  HOLDINGS_PERMANENT_LOCATION: 'holdings.permanentLocationId',
 };
 
 export const FACETS_TO_REQUEST = {
