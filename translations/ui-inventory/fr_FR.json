@@ -709,5 +709,8 @@
     "noMatchingOptions": "Aucune option correspondante",
     "acq.orderSubscription": "Subscription",
     "acq.receiptDate": "Piece receipt date",
-    "acq.vendorCode": "Organization code"
+    "acq.vendorCode": "Organization code",
+    "addAdministrativeNote": "Add administrative note",
+    "administrativeNote": "Administrative note",
+    "administrativeNotes": "Administrative notes"
 }
