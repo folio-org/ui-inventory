@@ -77,7 +77,10 @@ import {
   actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
-import { WarningMessage, AdministrativeNoteList } from '../components';
+import {
+  WarningMessage,
+  AdministrativeNoteList,
+} from '../components';
 import css from '../View.css';
 
 export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
