@@ -702,12 +702,15 @@
     "instance.suppressedFromDiscovery": "在发现中隐藏",
     "createMARCHoldings": "添加MARC馆藏记录",
     "exportInProgress": "导出中",
-    "acq.dateOrdered": "Date ordered",
-    "acq.acqUnit": "Acquisition unit",
-    "showMoreOptions": "Show more options",
-    "more": "More",
-    "noMatchingOptions": "No matching options",
-    "acq.orderSubscription": "Subscription",
-    "acq.receiptDate": "Piece receipt date",
-    "acq.vendorCode": "Organization code"
+    "acq.dateOrdered": "订购日期",
+    "acq.acqUnit": "采购单位",
+    "showMoreOptions": "显示更多选项",
+    "more": "更多",
+    "noMatchingOptions": "无匹配选项",
+    "acq.orderSubscription": "订阅",
+    "acq.receiptDate": "件接收日期",
+    "acq.vendorCode": "组织代码",
+    "addAdministrativeNote": "Add administrative note",
+    "administrativeNote": "Administrative note",
+    "administrativeNotes": "Administrative notes"
 }

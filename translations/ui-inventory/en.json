@@ -718,5 +718,8 @@
 
   "showMoreOptions": "Show more options",
   "more": "More",
-  "noMatchingOptions": "No matching options"
+  "noMatchingOptions": "No matching options",
+  "addAdministrativeNote": "Add administrative note",
+  "administrativeNote": "Administrative note",
+  "administrativeNotes": "Administrative notes"
 }

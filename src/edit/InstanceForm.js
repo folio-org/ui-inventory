@@ -36,6 +36,7 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import RepeatableField from '../components/RepeatableField';
 
 import AlternativeTitles from './alternativeTitles';
+import AdministrativeNoteFields from './administrativeNoteFields';
 import SeriesFields from './seriesFields';
 import EditionFields from './editionFields';
 import ContributorFields from './contributorFields';
@@ -483,6 +484,11 @@ class InstanceForm extends React.Component {
                             ]}
                             canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                           />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={10}>
+                          <AdministrativeNoteFields />
                         </Col>
                       </Row>
                     </Accordion>

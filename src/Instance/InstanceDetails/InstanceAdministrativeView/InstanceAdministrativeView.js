@@ -21,6 +21,7 @@ import {
 import { WarningMessage } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
+import AdministrativeNoteList from './AdministrativeNoteList';
 
 const InstanceAdministrativeView = ({
   id,
@@ -162,7 +163,16 @@ const InstanceAdministrativeView = ({
         </Col>
       </Row>
 
-      <StatisticalCodesList statisticalCodes={formattedStatisticalCodes} />
+      <Row>
+        <Col xs={12}>
+          <StatisticalCodesList statisticalCodes={formattedStatisticalCodes} />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <AdministrativeNoteList administrativeNotes={instance.administrativeNotes} />
+        </Col>
+      </Row>
     </Accordion>
   );
 };
