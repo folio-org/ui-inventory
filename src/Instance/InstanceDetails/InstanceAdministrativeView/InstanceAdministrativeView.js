@@ -18,7 +18,10 @@ import {
   getDateWithTime,
   checkIfElementIsEmpty,
 } from '../../../utils';
-import { WarningMessage, AdministrativeNoteList } from '../../../components';
+import {
+  WarningMessage,
+  AdministrativeNoteList,
+} from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
 

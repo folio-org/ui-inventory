@@ -34,7 +34,7 @@
 * Expand acquisition accordion when displaying Order information on Instance record. Refs UIIN-1886.
 * Also support `circulation` `12.0`. Refs UIIN-1861.
 * SRS display. MARC indicators may be misaligned. Refs UIIN-1859.
-* Add new data element administrative note to instances. Refs UIIN-1442.
+* Add new data element `<AdministrativeNote>` to instances. Refs UIIN-1442.
 * Add Browse call numbers option. Refs UIIN-1879.
 * Add new data element `<AdministrativeNote>` to holdings. Refs UIIN-1443.
 * Add new data element `<AdministrativeNote>` to items. Refs UIIN-1444.
