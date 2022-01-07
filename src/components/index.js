@@ -15,3 +15,4 @@ export { PaneLoading, ViewLoading } from './Loading';
 export { default as WarningMessage } from './WarningMessage';
 export { default as CalloutRenderer } from './CalloutRenderer';
 export { default as ViewSource } from './ViewSource';
+export { default as AdministrativeNoteList } from './AdministrativeNoteList';

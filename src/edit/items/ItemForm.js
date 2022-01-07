@@ -44,7 +44,7 @@ import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
-
+import AdministrativeNoteFields from '../administrativeNoteFields';
 import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 
@@ -460,6 +460,11 @@ class ItemForm extends React.Component {
                             }
                           ]}
                         />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={10}>
+                        <AdministrativeNoteFields />
                       </Col>
                     </Row>
                   </Accordion>

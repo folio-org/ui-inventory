@@ -18,10 +18,9 @@ import {
   getDateWithTime,
   checkIfElementIsEmpty,
 } from '../../../utils';
-import { WarningMessage } from '../../../components';
+import { WarningMessage, AdministrativeNoteList } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
-import AdministrativeNoteList from './AdministrativeNoteList';
 
 const InstanceAdministrativeView = ({
   id,

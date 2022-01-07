@@ -77,7 +77,7 @@ import {
   actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
-import { WarningMessage } from '../components';
+import { WarningMessage, AdministrativeNoteList } from '../components';
 import css from '../View.css';
 
 export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
@@ -991,6 +991,11 @@ class ItemView extends React.Component {
                           ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
                           containerRef={ref => { this.resultsList = ref; }}
                         />
+                      </Row>
+                      <Row>
+                        <Col xs={12}>
+                          <AdministrativeNoteList administrativeNotes={item.administrativeNotes} />
+                        </Col>
                       </Row>
                     </Accordion>
                     <Accordion
