@@ -402,6 +402,7 @@
   "instanceData": "Administrative data",
   "instanceId": "Instance UUID",
   "instanceHrid": "Instance HRID",
+  "browseCallNumbers": "Browse call numbers",
   "instanceTitleLabel": "Instance title",
   "instanceMatchKey": "Instance match key",
   "addStatisticalCode": "Add statistical code",
