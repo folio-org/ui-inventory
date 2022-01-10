@@ -43,6 +43,7 @@ import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import styles from './HoldingsForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
+import AdministrativeNoteFields from '../administrativeNoteFields';
 
 
 // eslint-disable-next-line no-unused-vars
@@ -420,6 +421,11 @@ class HoldingsForm extends React.Component {
                           canEdit={!this.isFieldBlocked('statisticalCodeIds')}
                           canDelete={!this.isFieldBlocked('statisticalCodeIds')}
                         />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={12}>
+                        <AdministrativeNoteFields />
                       </Col>
                     </Row>
                   </Accordion>

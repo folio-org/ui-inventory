@@ -11,7 +11,7 @@ import {
 
 import {
   checkIfArrayIsEmpty,
-} from '../../../utils';
+} from '../../utils';
 
 const noValue = <NoValue />;
 const visibleColumns = ['administrativeNote'];
