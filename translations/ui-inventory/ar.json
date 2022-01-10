@@ -710,7 +710,8 @@
     "acq.orderSubscription": "اشتراك",
     "acq.receiptDate": "تاريخ استلام القطعة",
     "acq.vendorCode": "رمز المؤسسة",
-    "addAdministrativeNote": "Add administrative note",
-    "administrativeNote": "Administrative note",
-    "administrativeNotes": "Administrative notes"
+    "addAdministrativeNote": "إضافة ملاحظة إدارية",
+    "administrativeNote": "ملاحظة إدارية",
+    "administrativeNotes": "ملاحظات إدارية",
+    "browseCallNumbers": "استعراض أرقام الاستدعاء"
 }
