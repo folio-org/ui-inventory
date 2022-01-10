@@ -463,7 +463,7 @@ class ItemForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col sm={10}>
+                      <Col sm={12}>
                         <AdministrativeNoteFields />
                       </Col>
                     </Row>

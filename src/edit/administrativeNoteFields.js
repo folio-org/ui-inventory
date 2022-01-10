@@ -12,6 +12,7 @@ const administrativeNoteFields = () => (
     template={[{
       component: TextArea,
       label: <FormattedMessage id="ui-inventory.administrativeNote" />,
+      rows: 1
     }]}
   />
 );
