@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
-import { TextField } from '@folio/stripes/components';
+import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../components/RepeatableField';
 
@@ -10,7 +10,7 @@ const administrativeNoteFields = () => (
     addLabel={<FormattedMessage id="ui-inventory.addAdministrativeNote" />}
     addButtonId="clickable-add-administrative-note"
     template={[{
-      component: TextField,
+      component: TextArea,
       label: <FormattedMessage id="ui-inventory.administrativeNote" />,
     }]}
   />
