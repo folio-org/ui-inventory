@@ -712,5 +712,6 @@
     "acq.vendorCode": "组织代码",
     "addAdministrativeNote": "Add administrative note",
     "administrativeNote": "Administrative note",
-    "administrativeNotes": "Administrative notes"
+    "administrativeNotes": "Administrative notes",
+    "browseCallNumbers": "Browse call numbers"
 }
