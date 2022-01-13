@@ -451,7 +451,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      this.state.callNumber ?
+      !this.state.callNumber ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
