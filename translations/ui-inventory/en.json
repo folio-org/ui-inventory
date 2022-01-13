@@ -7,6 +7,8 @@
   "instances.columns.contributors": "Contributors",
   "instances.columns.publishers": "Publishers",
   "instances.columns.relation": "Relation",
+  "instances.columns.callNumber": "Call number",
+  "instances.columns.numberOfTitles": "Number of titles",
   "instances.rows.select": "Select instance",
   "instances.showSelectedRecords": "Show selected records",
   "instances.selectedRecords": "Selected records",
