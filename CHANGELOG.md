@@ -38,6 +38,7 @@
 * Add Browse call numbers option. Refs UIIN-1879.
 * Add new data element `<AdministrativeNote>` to holdings. Refs UIIN-1443.
 * Add new data element `<AdministrativeNote>` to items. Refs UIIN-1444.
+* Browse form. Refs UIIN-1887.
 
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
