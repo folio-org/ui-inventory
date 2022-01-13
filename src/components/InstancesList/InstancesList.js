@@ -35,7 +35,6 @@ import {
   HasCommand,
 } from '@folio/stripes/components';
 
-import { URLSearchParams } from 'core-js/modules/web.url-search-params';
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
@@ -79,7 +78,7 @@ const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
 const CALL_NUMBERS_COLUMNS = ['callNumber', 'numberOfTitles'];
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
-const ALL_COLUMNS = [...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS, ...CALL_NUMBERS_COLUMNS];
+const ALL_COLUMNS = Array.from(new Set([...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS, ...CALL_NUMBERS_COLUMNS]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
@@ -142,7 +141,7 @@ class InstancesList extends React.Component {
     };
   }
 
-  isCallNumberSelected= () => {
+  isBrowseOptionSelected = () => {
     const params = new URLSearchParams(this.props.location.search);
     const qindex = params.get('qindex');
 
@@ -154,7 +153,7 @@ class InstancesList extends React.Component {
   }
 
   getVisibleColumns = () => {
-    const columns = this.isCallNumberSelected() ? CALL_NUMBERS_COLUMNS : this.state.visibleColumns;
+    const columns = this.isBrowseOptionSelected() ? CALL_NUMBERS_COLUMNS : this.state.visibleColumns;
 
     const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
@@ -770,7 +769,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={!this.isCallNumberSelected() && this.getActionMenu}
+            actionMenu={!this.isBrowseOptionSelected() && this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
             maxSortKeys={1}
