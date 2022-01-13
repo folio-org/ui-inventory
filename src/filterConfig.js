@@ -97,6 +97,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
   { label: 'ui-inventory.browseCallNumbers', value: CALL_NUMBERS_OPTION_VALUE, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseSubjects', value: 'browseSubjects', queryTemplate: '%{query.query}' },
 ];
 
 export const instanceSortMap = {
