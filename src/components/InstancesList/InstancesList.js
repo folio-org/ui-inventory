@@ -74,6 +74,7 @@ import css from './instances.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
 
 const CALL_NUMBERS_COLUMNS = ['callNumber', 'numberOfTitles'];
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -145,7 +146,7 @@ class InstancesList extends React.Component {
     const params = new URLSearchParams(this.props.location.search);
     const qindex = params.get('qindex');
 
-    return qindex === 'callNumbers';
+    return qindex === CALL_NUMBERS_OPTION_VALUE;
   }
 
   getInitialToggableColumns = () => {
