@@ -82,6 +82,8 @@ export const instanceFilterConfig = [
   },
 ];
 
+export const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
+
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
@@ -94,7 +96,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
-  { label: 'ui-inventory.browseCallNumbers', value: 'callNumbers', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseCallNumbers', value: CALL_NUMBERS_OPTION_VALUE, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceSortMap = {
