@@ -79,7 +79,7 @@ export function buildManifestObject() {
     },
     recordsBrowseCallNumber: {
       type: 'okapi',
-      records: 'item',
+      records: 'items',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
       path: 'inventory/instances',
