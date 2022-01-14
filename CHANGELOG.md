@@ -39,7 +39,7 @@
 * Add new data element `<AdministrativeNote>` to holdings. Refs UIIN-1443.
 * Add new data element `<AdministrativeNote>` to items. Refs UIIN-1444.
 * Browse form. Refs UIIN-1887.
-
+* Add Browse subjects option. Refs UIIN-1880.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

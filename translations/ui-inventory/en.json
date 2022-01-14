@@ -403,6 +403,7 @@
   "instanceId": "Instance UUID",
   "instanceHrid": "Instance HRID",
   "browseCallNumbers": "Browse call numbers",
+  "browseSubjects": "Browse subjects",
   "instanceTitleLabel": "Instance title",
   "instanceMatchKey": "Instance match key",
   "addStatisticalCode": "Add statistical code",
