@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -104,6 +104,16 @@ describe('InstancesList', () => {
 
     it('should have proper list results size', () => {
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
+    });
+
+    it('should have selected browse call number option', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'callNumbers' }
+      });
+
+      expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
+
+      expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
     describe('opening action menu', () => {
