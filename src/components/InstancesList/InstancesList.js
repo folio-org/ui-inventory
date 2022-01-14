@@ -70,12 +70,15 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
+import { CALL_NUMBERS_OPTION_VALUE } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+
+const CALL_NUMBERS_COLUMNS = ['callNumber', 'numberOfTitles'];
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
-const ALL_COLUMNS = [...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS];
+const ALL_COLUMNS = Array.from(new Set([...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS, ...CALL_NUMBERS_COLUMNS]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
@@ -109,6 +112,9 @@ class InstancesList extends React.Component {
         update: PropTypes.func.isRequired,
       }).isRequired,
     }),
+    location: PropTypes.shape({
+      search: PropTypes.string
+    }),
     stripes: PropTypes.object.isRequired,
   };
 
@@ -136,12 +142,21 @@ class InstancesList extends React.Component {
     };
   }
 
+  isBrowseOptionSelected = () => {
+    const params = new URLSearchParams(this.props.location.search);
+    const qindex = params.get('qindex');
+
+    return qindex === CALL_NUMBERS_OPTION_VALUE;
+  }
+
   getInitialToggableColumns = () => {
     return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
   }
 
   getVisibleColumns = () => {
-    const visibleColumns = new Set([...this.state.visibleColumns, ...NON_TOGGLEABLE_COLUMNS]);
+    const columns = this.isBrowseOptionSelected() ? CALL_NUMBERS_COLUMNS : this.state.visibleColumns;
+
+    const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
@@ -589,6 +604,8 @@ class InstancesList extends React.Component {
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
+      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
     };
 
     return columnMapping;
@@ -766,7 +783,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={this.getActionMenu}
+            actionMenu={!this.isBrowseOptionSelected() && this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
             title={titleBrowse}

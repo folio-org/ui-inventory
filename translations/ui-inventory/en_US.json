@@ -176,6 +176,8 @@
     "instances.columns.contributors": "Contributors",
     "instances.columns.publishers": "Publishers",
     "instances.columns.relation": "Relation",
+    "instances.columns.callNumber": "Call number",
+    "instances.columns.numberOfTitles": "Number of titles",
     "editions": "Editions",
     "addEdition": "Add edition",
     "indexTitle": "Index title",
