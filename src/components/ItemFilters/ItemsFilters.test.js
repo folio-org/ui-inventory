@@ -7,7 +7,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import '../../../test/jest/__mock__';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
-import InstanceFilters from './InstanceFilters';
+import ItemFilters from './ItemFilters';
 
 const resources = {
   facets: {
@@ -30,11 +30,11 @@ const data = {
   parentResources: resources,
 };
 
-const renderInstanceFilters = () => {
+const renderItemFilters = () => {
   return renderWithIntl(
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
-        <InstanceFilters
+        <ItemFilters
           activeFilters={{ 'language': ['eng'] }}
           data={data}
           onChange={noop}
@@ -46,16 +46,16 @@ const renderInstanceFilters = () => {
   );
 };
 
-describe('InstanceFilters', () => {
+describe('ItemFilters', () => {
   beforeEach(() => {
-    renderInstanceFilters();
+    renderItemFilters();
   });
 
   it('Contains a filter for creation date ', () => {
-    expect(document.querySelector('#createdDate')).toBeInTheDocument();
+    expect(document.querySelector('#itemsCreatedDate')).toBeInTheDocument();
   });
 
   it('Contains a filter for update date ', () => {
-    expect(document.querySelector('#updatedDate')).toBeInTheDocument();
+    expect(document.querySelector('#itemsUpdatedDate')).toBeInTheDocument();
   });
 });
