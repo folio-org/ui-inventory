@@ -583,7 +583,11 @@
   "precedingField.title": "Title",
   "precedingField.notConnected": "Not connected",
   "precedingField.connected": "Connected",
+  "browse": "Browse",
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
+  "notLoadedMessage.browseCall": "Browse for results entering a query or choosing a filter.",
+  "title.browseCall": "Browse inventory",
+  "title.subTitle.browseCall": "Enter search criteria to start browsing",
 
   "editInstanceMarc": "Edit MARC bibliographic record",
   "duplicateInstanceMarc": "Derive new MARC bibliographic record",
