@@ -174,6 +174,10 @@ export const FACETS = {
   HOLDINGS_DISCOVERY_SUPPRESS: 'holdingsDiscoverySuppress',
   CREATED_DATE: 'createdDate',
   UPDATED_DATE: 'updatedDate',
+  HOLDINGS_CREATED_DATE: 'holdingsCreatedDate',
+  HOLDINGS_UPDATED_DATE: 'holdingsUpdatedDate',
+  ITEMS_CREATED_DATE: 'itemsCreatedDate',
+  ITEMS_UPDATED_DATE: 'itemsUpdatedDate',
   SOURCE: 'source',
   INSTANCES_TAGS: 'instancesTags',
   HOLDINGS_TAGS: 'holdingsTags',
@@ -196,6 +200,10 @@ export const FACETS_CQL = {
   ITEMS_DISCOVERY_SUPPRESS: 'items.discoverySuppress',
   CREATED_DATE: 'metadata.createdDate',
   UPDATED_DATE: 'metadata.updatedDate',
+  HOLDINGS_CREATED_DATE: 'holdings.metadata.createdDate',
+  HOLDINGS_UPDATED_DATE: 'holdings.metadata.updatedDate',
+  ITEMS_CREATED_DATE: 'items.metadata.createdDate',
+  ITEMS_UPDATED_DATE: 'items.metadata.updatedDate',
   SOURCE: 'source',
   INSTANCES_TAGS: 'instanceTags',
   HOLDINGS_TAGS: 'holdingTags',
@@ -225,6 +233,10 @@ export const FACETS_TO_REQUEST = {
   [FACETS.HOLDINGS_PERMANENT_LOCATION]: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
   [FACETS.CREATED_DATE]: FACETS_CQL.CREATED_DATE,
   [FACETS.UPDATED_DATE]: FACETS_CQL.UPDATED_DATE,
+  [FACETS.HOLDINGS_CREATED_DATE]: FACETS_CQL.HOLDINGS_CREATED_DATE,
+  [FACETS.HOLDINGS_UPDATED_DATE]: FACETS_CQL.HOLDINGS_UPDATED_DATE,
+  [FACETS.ITEMS_CREATED_DATE]: FACETS_CQL.ITEMS_CREATED_DATE,
+  [FACETS.ITEMS_UPDATED_DATE]: FACETS_CQL.ITEMS_UPDATED_DATE,
 };
 
 export const FACETS_OPTIONS = {

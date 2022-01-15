@@ -6,8 +6,9 @@ import { reduce } from 'lodash';
 import {
   Accordion,
   FilterAccordionHeader,
+  AccordionSet,
 } from '@folio/stripes/components';
-import { AccordionSet } from '@folio/stripes-components';
+import { DateRangeFilter } from '@folio/stripes/smart-components';
 
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
@@ -17,11 +18,16 @@ import {
   processFacetOptions,
 } from '../../facetUtils';
 import {
+  DATE_FORMAT,
   FACETS,
   FACETS_OPTIONS,
   FACETS_CQL,
   FACETS_SETTINGS,
 } from '../../constants';
+import {
+  makeDateRangeFilterString,
+  retrieveDatesFromDateRangeFilterString,
+} from '../../utils';
 
 const HoldingsRecordFilters = (props) => {
   const {
@@ -39,6 +45,8 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_PERMANENT_LOCATION]: false,
     [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: false,
     [FACETS.HOLDINGS_TAGS]: false,
+    [FACETS.HOLDINGS_CREATED_DATE]: false,
+    [FACETS.HOLDINGS_UPDATED_DATE]: false,
   };
 
   const segmentOptions = {
@@ -157,6 +165,41 @@ const HoldingsRecordFilters = (props) => {
           onChange={onChange}
         />
       </Accordion>
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
+        id={FACETS.HOLDINGS_CREATED_DATE}
+        name={FACETS.HOLDINGS_CREATED_DATE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.HOLDINGS_CREATED_DATE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.HOLDINGS_CREATED_DATE)}
+      >
+        <DateRangeFilter
+          name={FACETS.HOLDINGS_CREATED_DATE}
+          dateFormat={DATE_FORMAT}
+          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.HOLDINGS_CREATED_DATE]?.[0])}
+          onChange={onChange}
+          makeFilterString={makeDateRangeFilterString}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
+        id={FACETS.HOLDINGS_UPDATED_DATE}
+        name={FACETS.HOLDINGS_UPDATED_DATE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.HOLDINGS_UPDATED_DATE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.HOLDINGS_UPDATED_DATE)}
+      >
+        <DateRangeFilter
+          name={FACETS.HOLDINGS_UPDATED_DATE}
+          dateFormat={DATE_FORMAT}
+          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.HOLDINGS_UPDATED_DATE]?.[0])}
+          onChange={onChange}
+          makeFilterString={makeDateRangeFilterString}
+        />
+      </Accordion>
+
       <TagsFilter
         id={FACETS.HOLDINGS_TAGS}
         name={FACETS.HOLDINGS_TAGS}
