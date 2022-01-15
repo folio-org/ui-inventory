@@ -753,7 +753,7 @@ class InstancesList extends React.Component {
 
 
     const customPaneSubTextBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
-    const searchFiledButtonLabelBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const searchFieldButtonLabelBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.browse" /> : null;
     const titleBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
     const notLoadedMessageBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
@@ -788,7 +788,7 @@ class InstancesList extends React.Component {
             objectName="inventory"
             title={titleBrowse}
             customPaneSubText={customPaneSubTextBrowse}
-            searchFiledButtonLabel={searchFiledButtonLabelBrowse}
+            searchFieldButtonLabel={searchFieldButtonLabelBrowse}
             maxSortKeys={1}
             notLoadedMessage={notLoadedMessageBrowse}
             renderNavigation={this.renderNavigation}
