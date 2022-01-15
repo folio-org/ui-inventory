@@ -771,7 +771,7 @@ class InstancesList extends React.Component {
             objectName="inventory"
             title={titleBrowse}
             customPaneSubText={customPaneSubTextBrowse}
-            searchFiledButtonLabel={searchFiledButtonLabelBrowse}
+            searchFieldButtonLabel={searchFiledButtonLabelBrowse}
             maxSortKeys={1}
             notLoadedMessage={notLoadedMessageBrowse}
             renderNavigation={this.renderNavigation}
