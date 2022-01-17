@@ -749,8 +749,8 @@ class InstancesList extends React.Component {
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      const isBrowseOption = [CALL_NUMBERS_OPTION_VALUE, BROWSE_SUBJECTS_OPTION_VALUE].includes(e.target.value);
-      if (isBrowseOption) {
+      const isBrowseOptionSelected = [CALL_NUMBERS_OPTION_VALUE, BROWSE_SUBJECTS_OPTION_VALUE].includes(e.target.value);
+      if (isBrowseOptionSelected) {
         this.setState({ browseSelected: true });
       } else {
         this.setState(
