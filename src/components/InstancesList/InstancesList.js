@@ -70,7 +70,7 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
-import { CALL_NUMBERS_OPTION_VALUE } from '../../filterConfig';
+import { CALL_NUMBERS_OPTION_VALUE, BROWSE_SUBJECTS_OPTION_VALUE } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -466,7 +466,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      !this.state.callNumber ?
+      !this.state.browseSelected ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
@@ -686,6 +686,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
+      browseSelected
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -748,14 +749,21 @@ class InstancesList extends React.Component {
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      if (e.target.value === 'callNumbers') { this.setState({ callNumber: true }); } else this.setState({ callNumber: false });
+      const isBrowseOption = [CALL_NUMBERS_OPTION_VALUE, BROWSE_SUBJECTS_OPTION_VALUE].includes(e.target.value);
+      if (isBrowseOption) {
+        this.setState({ browseSelected: true });
+      } else {
+        this.setState(
+          { browseSelected: false }
+        );
+      }
     };
 
 
-    const customPaneSubTextBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
-    const searchFieldButtonLabelBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const customPaneSubTextBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const searchFieldButtonLabelBrowse = browseSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const titleBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseSelected ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
