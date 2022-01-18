@@ -138,7 +138,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      callNumber: false,
+      browseSelected: false,
     };
   }
 
