@@ -708,6 +708,7 @@ class InstancesList extends React.Component {
       ),
       'title': ({
         title,
+        instance,
         discoverySuppress,
         isBoundWith,
         staffSuppress,
@@ -718,7 +719,7 @@ class InstancesList extends React.Component {
           iconKey="instance"
           iconAlignment="baseline"
         >
-          {title}
+          {title || instance?.title}
           {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -742,6 +743,8 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'callNumber': r => r?.fullCallNumber,
+      'numberOfTitles': r => r?.totalRecords,
     };
 
     const visibleColumns = this.getVisibleColumns();
@@ -750,7 +753,6 @@ class InstancesList extends React.Component {
     const onChangeIndex = (e) => {
       if (e.target.value === 'callNumbers') { this.setState({ callNumber: true }); } else this.setState({ callNumber: false });
     };
-
 
     const customPaneSubTextBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFiledButtonLabelBrowse = this.state.callNumber ? <FormattedMessage id="ui-inventory.browse" /> : null;
@@ -812,6 +814,7 @@ class InstancesList extends React.Component {
               select: '30px',
               title: '40%',
             }}
+            finishedResourceName="recordsBrowseCallNumber"
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
             resultsFormatter={resultsFormatter}

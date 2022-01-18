@@ -23,8 +23,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
-  } else if (queryIndex.match(/callNumber/)) {
-    queryTemplate = `callNumber${queryValue}`;
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
@@ -32,8 +30,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
     query.sort = 'title';
-  } else if (queryIndex.match(/callNumber/)) {
-    query.sort = '';
   }
 
   resourceData.query = { ...query, qindex: '' };
@@ -66,9 +62,10 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records: 'instances',
+      records:  'instances',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
+      throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
       GET: {
@@ -82,13 +79,12 @@ export function buildManifestObject() {
       records: 'items',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
-      path: 'inventory/instances',
-      resultDensity: 'sparse',
-      GET: {
-        path: 'browse/call-numbers/instances',
-        params: { query: buildQuery, expandAll: true },
-        staticFallback: { params: {} },
-      },
+      throwErrors: false,
+      path: (queryParams) => {
+        const queryValue = get(queryParams, 'query', '');
+        if (queryParams.qindex === 'callNumbers') return `browse/call-numbers/instances?expandAll=true&query=callNumber${queryValue}&`;
+        return undefined;
+      }
     },
     recordsToExportIDs: {
       type: 'okapi',

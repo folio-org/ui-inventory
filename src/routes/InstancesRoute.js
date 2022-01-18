@@ -33,6 +33,15 @@ class InstancesRoute extends React.Component {
 
   static manifest = Object.freeze(buildManifestObject());
 
+  // componentDidMount() {
+  //   const params = new URLSearchParams(document.location.search);
+  //   const qindex = params.get('qindex');
+
+  //   if (qindex === 'callNumbers') {
+  //     this.setState({ callNumber: true });
+  //   }
+  // }
+
   render() {
     const {
       showSingleResult,
@@ -48,11 +57,25 @@ class InstancesRoute extends React.Component {
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
 
+
+    // const onChangeIndex = (e) => {
+    //   if (e.target.value === 'callNumbers') { this.setState({ callNumber: true }); } else this.setState({ callNumber: false });
+    // };
+
+    const params = new URLSearchParams(document.location.search);
+    const qindex = params.get('qindex');
+
+    const resourceBrowse = qindex === 'callNumbers' ? {
+      ...resources,
+      records: resources.recordsBrowseCallNumber,
+      recordsBrowseCallNumber: {},
+    } : resources;
+
     return (
       <DataContext.Consumer>
         {data => (
           <InstancesView
-            parentResources={resources}
+            parentResources={resourceBrowse}
             parentMutator={mutator}
             data={{ ...data, query }}
             browseOnly={browseOnly}
