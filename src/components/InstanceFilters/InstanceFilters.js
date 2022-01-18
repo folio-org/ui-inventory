@@ -72,8 +72,6 @@ const InstanceFilters = props => {
     [FACETS_OPTIONS.NATURE_OF_CONTENT_OPTIONS]: [],
     [FACETS_OPTIONS.SUPPRESSED_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_DISCOVERY_SUPPRESS_OPTIONS]: [],
-    [FACETS_OPTIONS.CREATED_DATE_OPTIONS]: [],
-    [FACETS_OPTIONS.UPDATED_DATE_OPTIONS]: [],
     [FACETS_OPTIONS.SOURCE_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_TAGS_OPTIONS]: [],
   };
@@ -94,10 +92,13 @@ const InstanceFilters = props => {
   };
 
   const getNewRecords = (records) => {
+    console.log('get new records...');
     return _.reduce(FACETS_SETTINGS, (accum, name, recordName) => {
       if (records[recordName]) {
         const recordValues = records[recordName].values;
         const commonProps = [recordValues, accum, name];
+
+        console.log(recordValues);
 
         switch (recordName) {
           case FACETS_CQL.EFFECTIVE_LOCATION:
@@ -123,12 +124,6 @@ const InstanceFilters = props => {
             break;
           case FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS], recordValues);
-            break;
-          case FACETS_CQL.CREATED_DATE:
-            accum[name] = getSourceOptions(activeFilters[FACETS.CREATED_DATE], recordValues);
-            break;
-          case FACETS_CQL.UPDATED_DATE:
-            accum[name] = getSourceOptions(activeFilters[FACETS.UPDATED_DATE], recordValues);
             break;
           case FACETS_CQL.SOURCE:
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);

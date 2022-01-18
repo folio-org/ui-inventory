@@ -186,11 +186,12 @@ const useFacets = (
 
     const isUrlChanged = prevUrl.current[facetToOpen] !== location.search;
 
+    console.log('facetToOpen', facetToOpen);
     if (
       isFacetOpened &&
       isUrlChanged &&
-      facetToOpen !== FACETS.CREATED_DATE &&
-      facetToOpen !== FACETS.UPDATED_DATE
+      !facetToOpen.match(/createdDate/i) &&
+      !facetToOpen.match(/updatedDate/i)
     ) {
       handleFetchFacets({ facetToOpen });
     } else {

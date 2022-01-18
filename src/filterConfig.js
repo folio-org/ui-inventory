@@ -61,13 +61,13 @@ export const instanceFilterConfig = [
     name: FACETS.CREATED_DATE,
     cql: FACETS_CQL.CREATED_DATE,
     values: [],
-    parse: buildDateRangeQuery(FACETS.CREATED_DATE),
+    parse: buildDateRangeQuery(FACETS_CQL.CREATED_DATE),
   },
   {
     name: FACETS.UPDATED_DATE,
     cql: FACETS_CQL.UPDATED_DATE,
     values: [],
-    parse: buildDateRangeQuery(FACETS.UPDATED_DATE),
+    parse: buildDateRangeQuery(FACETS_CQL.UPDATED_DATE),
   },
   {
     name: FACETS.SOURCE,
@@ -83,6 +83,7 @@ export const instanceFilterConfig = [
 ];
 
 export const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
+export const BROWSE_SUBJECTS_OPTION_VALUE = 'browseSubjects';
 
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
@@ -97,7 +98,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
   { label: 'ui-inventory.browseCallNumbers', value: CALL_NUMBERS_OPTION_VALUE, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseSubjects', value: 'browseSubjects', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseSubjects', value: BROWSE_SUBJECTS_OPTION_VALUE, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceSortMap = {
@@ -140,6 +141,18 @@ export const holdingFilterConfig = [
     cql: FACETS_CQL.HOLDINGS_TAGS,
     values: [],
   },
+  {
+    name: FACETS.HOLDINGS_CREATED_DATE,
+    cql: FACETS_CQL.HOLDINGS_CREATED_DATE,
+    values: [],
+    parse: buildDateRangeQuery(FACETS_CQL.HOLDINGS_CREATED_DATE),
+  },
+  {
+    name: FACETS.HOLDINGS_UPDATED_DATE,
+    cql: FACETS_CQL.HOLDINGS_UPDATED_DATE,
+    values: [],
+    parse: buildDateRangeQuery(FACETS_CQL.HOLDINGS_UPDATED_DATE),
+  },
 ];
 
 export const itemIndexes = [
@@ -181,6 +194,18 @@ export const itemFilterConfig = [
     name: FACETS.ITEMS_DISCOVERY_SUPPRESS,
     cql: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
     values: [],
+  },
+  {
+    name: FACETS.ITEMS_CREATED_DATE,
+    cql: FACETS_CQL.ITEMS_CREATED_DATE,
+    values: [],
+    parse: buildDateRangeQuery(FACETS_CQL.ITEMS_CREATED_DATE),
+  },
+  {
+    name: FACETS.ITEMS_UPDATED_DATE,
+    cql: FACETS_CQL.ITEMS_UPDATED_DATE,
+    values: [],
+    parse: buildDateRangeQuery(FACETS_CQL.ITEMS_UPDATED_DATE),
   },
   {
     name: FACETS.ITEMS_TAGS,
