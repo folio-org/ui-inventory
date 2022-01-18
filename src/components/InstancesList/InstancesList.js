@@ -822,7 +822,6 @@ class InstancesList extends React.Component {
               select: '30px',
               title: '40%',
             }}
-            finishedResourceName="recordsBrowseCallNumber"
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
             resultsFormatter={resultsFormatter}
