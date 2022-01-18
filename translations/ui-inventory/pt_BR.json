@@ -713,5 +713,12 @@
     "addAdministrativeNote": "Adicionar nota administrativa",
     "administrativeNote": "Nota administrativa",
     "administrativeNotes": "Notas administrativas",
-    "browseCallNumbers": "Browse call numbers"
+    "browseCallNumbers": "Browse call numbers",
+    "browseSubjects": "Browse subjects",
+    "browse": "Browse",
+    "notLoadedMessage.browseCall": "Browse for results entering a query or choosing a filter.",
+    "title.browseCall": "Browse inventory",
+    "title.subTitle.browseCall": "Enter search criteria to start browsing",
+    "instances.columns.callNumber": "Call number",
+    "instances.columns.numberOfTitles": "Number of titles"
 }
