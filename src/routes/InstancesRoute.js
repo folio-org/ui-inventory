@@ -9,6 +9,7 @@ import withFacets from '../withFacets';
 import { InstancesView } from '../views';
 import {
   getFilterConfig,
+  CALL_NUMBERS_OPTION_VALUE
 } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
@@ -51,7 +52,7 @@ class InstancesRoute extends React.Component {
     const params = new URLSearchParams(document.location.search);
     const qindex = params.get('qindex');
 
-    const resourceBrowse = qindex === 'callNumbers' ? {
+    const resourceBrowse = qindex === CALL_NUMBERS_OPTION_VALUE ? {
       ...resources,
       records: resources.recordsBrowseCallNumber,
       recordsBrowseCallNumber: {},
