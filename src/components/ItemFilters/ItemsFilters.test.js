@@ -23,6 +23,7 @@ const data = {
   resourceTypes: [],
   instanceFormats: [],
   modesOfIssuance: [],
+  statisticalCodes: [],
   tagsRecords: [],
   natureOfContentTerms: [],
   query: [],
@@ -57,5 +58,9 @@ describe('ItemFilters', () => {
 
   it('Contains a filter for update date ', () => {
     expect(document.querySelector('#itemsUpdatedDate')).toBeInTheDocument();
+  });
+
+  it('Contains a filter for statistical code', () => {
+    expect(document.querySelector('#statisticalCodes')).toBeInTheDocument();
   });
 });

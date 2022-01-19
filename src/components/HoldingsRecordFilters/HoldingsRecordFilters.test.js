@@ -23,6 +23,7 @@ const data = {
   resourceTypes: [],
   instanceFormats: [],
   modesOfIssuance: [],
+  statisticalCodes: [],
   tagsRecords: [],
   natureOfContentTerms: [],
   query: [],
@@ -51,11 +52,15 @@ describe('HoldingsRecordFilters', () => {
     renderHoldingsRecordFilters();
   });
 
-  it('Contains a filter for creation date ', () => {
+  it('Contains a filter for creation date', () => {
     expect(document.querySelector('#holdingsCreatedDate')).toBeInTheDocument();
   });
 
-  it('Contains a filter for update date ', () => {
+  it('Contains a filter for update date', () => {
     expect(document.querySelector('#holdingsUpdatedDate')).toBeInTheDocument();
+  });
+
+  it('Contains a filter for statistical code', () => {
+    expect(document.querySelector('#statisticalCodes')).toBeInTheDocument();
   });
 });

@@ -9,6 +9,7 @@ import { getCurrentFilters } from '../../utils';
 const holdingsRecordFilterRenderer = data => onChange => {
   const {
     locations,
+    statisticalCodes,
     query,
     tags,
     onFetchFacets,
@@ -20,6 +21,7 @@ const holdingsRecordFilterRenderer = data => onChange => {
       activeFilters={getCurrentFilters(get(query, 'filters', ''))}
       data={{
         locations,
+        statisticalCodes,
         tagsRecords: tags,
         query,
         onFetchFacets,
