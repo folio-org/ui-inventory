@@ -690,15 +690,6 @@ class InstancesList extends React.Component {
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
-    const params = new URLSearchParams(this.props.location.search);
-    const queryValue = params.get('query');
-    const getFullMatchRecord = (item, fullCallNumber) => {
-      const rg = /<=|>=/ig;
-      const queryValueString = queryValue.replaceAll(rg, '');
-      if (fullCallNumber === queryValueString) {
-        return <strong>{item}</strong>;
-      } else return item;
-    };
 
     const resultsFormatter = {
       'select': ({
@@ -730,7 +721,7 @@ class InstancesList extends React.Component {
           iconKey="instance"
           iconAlignment="baseline"
         >
-          {title || getFullMatchRecord(instance?.title, fullCallNumber)}
+          {title || instance?.title}
           {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -754,8 +745,8 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.fullCallNumber),
-      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.fullCallNumber)
+      'callNumber': r => r?.fullCallNumber,
+      'numberOfTitles': r => r?.totalRecords,
     };
 
     const visibleColumns = this.getVisibleColumns();
