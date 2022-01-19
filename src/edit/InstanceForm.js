@@ -30,10 +30,13 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  ConflictDetectionBanner,
 } from '@folio/stripes/components';
+
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../components/RepeatableField';
+import OptimisticLockingBanner from '../components/OptimisticLockingBanner';
 
 import AlternativeTitles from './alternativeTitles';
 import AdministrativeNoteFields from './administrativeNoteFields';
@@ -59,6 +62,9 @@ import {
   psTitleRelationshipId,
   validateOptionalField,
 } from '../utils';
+import {
+  ERROR_TYPES
+} from '../constants';
 import {
   validateTitles,
   validateSubInstances,
@@ -169,6 +175,7 @@ class InstanceForm extends React.Component {
 
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
+    this.conflictDetectionBannerRef = React.createRef();
   }
 
   getPaneTitle() {
@@ -240,6 +247,8 @@ class InstanceForm extends React.Component {
     return blockedFields.includes(fieldName);
   };
 
+  focusConflictDetectionBanner = () => this.conflictDetectionBannerRef.current.focus();
+
   render() {
     const {
       onCancel,
@@ -249,6 +258,7 @@ class InstanceForm extends React.Component {
       pristine,
       submitting,
       history,
+      httpError,
       id,
     } = this.props;
 
@@ -344,6 +354,13 @@ class InstanceForm extends React.Component {
               actionMenu={this.getActionMenu}
               id={id}
             >
+              {httpError?.errorType === ERROR_TYPES.OPTIMISTIC_LOCKING &&
+                <OptimisticLockingBanner
+                  latestVersionLink={`/inventory/view/${initialValues.id}`}
+                  conflictDetectionBannerRef={this.conflictDetectionBannerRef}
+                  focusConflictDetectionBanner={this.focusConflictDetectionBanner}
+                />
+              }
               <div>
                 <Headline
                   size="large"
@@ -767,6 +784,7 @@ InstanceForm.propTypes = {
   instanceSource: PropTypes.string,
   history: PropTypes.object.isRequired,
   id: PropTypes.string,
+  httpError: PropTypes.object,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
