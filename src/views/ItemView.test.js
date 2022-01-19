@@ -87,7 +87,7 @@ const referenceTables = {
 const ItemViewSetup = () => (
   <Router>
     <StripesContext.Provider value={stripesStub}>
-      <ModuleHierarchyProvider value={['@folio/inventory']} module="inventory">
+      <ModuleHierarchyProvider module="@folio/inventory">
         <ItemView
           onCloseViewItem={noop}
           resources={resources}

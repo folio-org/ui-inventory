@@ -12,7 +12,6 @@ import {
 } from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
-  FACETS,
   FACETS_TO_REQUEST,
   CQL_FIND_ALL
 } from './constants';
@@ -130,7 +129,6 @@ function withFacets(WrappedComponent) {
       } else {
         const facets = this.getFacets(accordions, accordionsData);
 
-        console.log('return facets', facets);
         if (facets) {
           params.facet = facets;
         } else {
