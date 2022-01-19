@@ -713,5 +713,12 @@
     "addAdministrativeNote": "إضافة ملاحظة إدارية",
     "administrativeNote": "ملاحظة إدارية",
     "administrativeNotes": "ملاحظات إدارية",
-    "browseCallNumbers": "استعراض أرقام الاستدعاء"
+    "browseCallNumbers": "استعراض أرقام الاستدعاء",
+    "browseSubjects": "استعرض الموضوعات",
+    "browse": "استعراض",
+    "notLoadedMessage.browseCall": "استعرض بحثا عن النتائج عن طريق إدخال استعلام أو اختيار أحد المنقحات.",
+    "title.browseCall": "استعراض المخزون",
+    "title.subTitle.browseCall": "أدخل معايير البحث لبدء الاستعراض",
+    "instances.columns.callNumber": "رقم الاستدعاء",
+    "instances.columns.numberOfTitles": "عدد العناوين"
 }
