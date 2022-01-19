@@ -807,7 +807,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={!this.isBrowseOptionSelected() && this.getActionMenu}
+            actionMenu={this.isBrowseOptionSelected() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
             title={titleBrowse}

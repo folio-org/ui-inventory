@@ -87,9 +87,6 @@ export const browseModeOptions = {
   SUBJECTS: 'browsesubjects',
 };
 
-export const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
-export const BROWSE_SUBJECTS_OPTION_VALUE = 'browseSubjects';
-
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
