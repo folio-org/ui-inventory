@@ -138,7 +138,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      callNumber: false,
+      browseSelected: false,
     };
   }
 
@@ -709,6 +709,7 @@ class InstancesList extends React.Component {
       ),
       'title': ({
         title,
+        instance,
         discoverySuppress,
         isBoundWith,
         staffSuppress,
@@ -719,7 +720,7 @@ class InstancesList extends React.Component {
           iconKey="instance"
           iconAlignment="baseline"
         >
-          {title}
+          {title || instance?.title}
           {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -743,6 +744,8 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'callNumber': r => r?.fullCallNumber,
+      'numberOfTitles': r => r?.totalRecords,
     };
 
     const visibleColumns = this.getVisibleColumns();
@@ -758,7 +761,6 @@ class InstancesList extends React.Component {
         );
       }
     };
-
 
     const customPaneSubTextBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFieldButtonLabelBrowse = browseSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;

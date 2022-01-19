@@ -8,6 +8,7 @@ import {
 } from '../utils';
 import {
   getFilterConfig,
+  CALL_NUMBERS_OPTION_VALUE
 } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -62,9 +63,10 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records: 'instances',
+      records:  'instances',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
+      throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
       GET: {
@@ -72,6 +74,18 @@ export function buildManifestObject() {
         params: { query: buildQuery },
         staticFallback: { params: {} },
       },
+    },
+    recordsBrowseCallNumber: {
+      type: 'okapi',
+      records: 'items',
+      resultOffset: '%{resultOffset}',
+      perRequest: 100,
+      throwErrors: false,
+      path: (queryParams) => {
+        const queryValue = get(queryParams, 'query', '');
+        if (queryParams.qindex === CALL_NUMBERS_OPTION_VALUE) return `browse/call-numbers/instances?expandAll=true&query=callNumber${queryValue}&`;
+        return undefined;
+      }
     },
     recordsToExportIDs: {
       type: 'okapi',
