@@ -13,6 +13,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
+import { items as callNumbers } from '../../../test/fixtures/callNumbers';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
@@ -46,6 +47,14 @@ const resources = {
     resource: 'records',
     records: instancesFixture,
     other: { totalRecords: instancesFixture.length },
+  },
+  recordsBrowseCallNumber : {
+    hasLoaded: true,
+    resource: 'records',
+    records: callNumbers,
+    other: {
+      totalRecords: callNumbers.length
+    },
   },
   facets: {
     hasLoaded: true,
@@ -112,6 +121,16 @@ describe('InstancesList', () => {
       });
 
       expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
+
+      expect(screen.getByText('Browse inventory')).toBeVisible();
+    });
+
+    it('should have selected subject browse option', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'browseSubjects' }
+      });
+
+      expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
 
       expect(screen.getByText('Browse inventory')).toBeVisible();
     });
