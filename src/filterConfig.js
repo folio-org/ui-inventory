@@ -83,8 +83,8 @@ export const instanceFilterConfig = [
 ];
 
 export const browseModeOptions = {
-  CALL_NUMBERS: 'callnumbers',
-  SUBJECTS: 'browsesubjects',
+  CALL_NUMBERS: 'callNumbers',
+  SUBJECTS: 'browseSubjects',
 };
 
 export const instanceIndexes = [
