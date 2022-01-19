@@ -30,7 +30,6 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
-  ConflictDetectionBanner,
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -175,7 +174,6 @@ class InstanceForm extends React.Component {
 
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-    this.conflictDetectionBannerRef = React.createRef();
   }
 
   getPaneTitle() {
@@ -246,8 +244,6 @@ class InstanceForm extends React.Component {
 
     return blockedFields.includes(fieldName);
   };
-
-  focusConflictDetectionBanner = () => this.conflictDetectionBannerRef.current.focus();
 
   render() {
     const {
