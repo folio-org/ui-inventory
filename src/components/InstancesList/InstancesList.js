@@ -70,15 +70,24 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
-import { CALL_NUMBERS_OPTION_VALUE, BROWSE_SUBJECTS_OPTION_VALUE } from '../../filterConfig';
+import { browseModeOptions } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const CALL_NUMBERS_COLUMNS = ['callNumber', 'numberOfTitles'];
+const columnSets = {
+  SUBJECTS: ['subject', 'numberOfTitles'],
+  CALL_NUMBERS: ['callNumber', 'numberOfTitles']
+};
+
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
-const ALL_COLUMNS = Array.from(new Set([...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS, ...CALL_NUMBERS_COLUMNS]));
+const ALL_COLUMNS = Array.from(new Set([
+  ...NON_TOGGLEABLE_COLUMNS,
+  ...TOGGLEABLE_COLUMNS,
+  ...columnSets.CALL_NUMBERS,
+  ...columnSets.SUBJECTS
+]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
@@ -138,7 +147,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      callNumber: false,
+      browseSelected: false,
     };
   }
 
@@ -146,7 +155,7 @@ class InstancesList extends React.Component {
     const params = new URLSearchParams(this.props.location.search);
     const qindex = params.get('qindex');
 
-    return qindex === CALL_NUMBERS_OPTION_VALUE;
+    return Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === qindex)[0];
   }
 
   getInitialToggableColumns = () => {
@@ -154,8 +163,10 @@ class InstancesList extends React.Component {
   }
 
   getVisibleColumns = () => {
-    const columns = this.isBrowseOptionSelected() ? CALL_NUMBERS_COLUMNS : this.state.visibleColumns;
-
+    let columns = columnSets[this.isBrowseOptionSelected()];
+    if (!columns) {
+      columns = this.state.visibleColumns;
+    }
     const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
@@ -709,6 +720,7 @@ class InstancesList extends React.Component {
       ),
       'title': ({
         title,
+        instance,
         discoverySuppress,
         isBoundWith,
         staffSuppress,
@@ -719,7 +731,7 @@ class InstancesList extends React.Component {
           iconKey="instance"
           iconAlignment="baseline"
         >
-          {title}
+          {title || instance?.title}
           {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -743,13 +755,15 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'callNumber': r => r?.fullCallNumber,
+      'numberOfTitles': r => r?.totalRecords,
     };
 
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      const isBrowseOptionSelected = [CALL_NUMBERS_OPTION_VALUE, BROWSE_SUBJECTS_OPTION_VALUE].includes(e.target.value);
+      const isBrowseOptionSelected = Object.values(browseModeOptions).includes(e.target.value);
       if (isBrowseOptionSelected) {
         this.setState({ browseSelected: true });
       } else {
@@ -759,7 +773,6 @@ class InstancesList extends React.Component {
       }
     };
 
-
     const customPaneSubTextBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFieldButtonLabelBrowse = browseSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;
     const titleBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
@@ -767,7 +780,10 @@ class InstancesList extends React.Component {
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
-      const label = prefix + intl.formatMessage({ id: index.label });
+      let label = index.label;
+      if (index.label.includes('ui-inventory')) {
+        label = prefix + intl.formatMessage({ id: index.label });
+      }
 
       return { ...index, label };
     });
@@ -791,7 +807,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={!this.isBrowseOptionSelected() && this.getActionMenu}
+            actionMenu={this.isBrowseOptionSelected() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
             title={titleBrowse}

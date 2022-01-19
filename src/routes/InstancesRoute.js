@@ -9,6 +9,7 @@ import withFacets from '../withFacets';
 import { InstancesView } from '../views';
 import {
   getFilterConfig,
+  browseModeOptions,
 } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
@@ -48,11 +49,20 @@ class InstancesRoute extends React.Component {
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
 
+    const params = new URLSearchParams(document.location.search);
+    const qindex = params.get('qindex');
+
+    const resourceBrowse = qindex === browseModeOptions.CALL_NUMBERS ? {
+      ...resources,
+      records: resources.recordsBrowseCallNumber,
+      recordsBrowseCallNumber: {},
+    } : resources;
+
     return (
       <DataContext.Consumer>
         {data => (
           <InstancesView
-            parentResources={resources}
+            parentResources={resourceBrowse}
             parentMutator={mutator}
             data={{ ...data, query }}
             browseOnly={browseOnly}

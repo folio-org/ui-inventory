@@ -87,8 +87,10 @@ export const instanceFilterConfig = [
   },
 ];
 
-export const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
-export const BROWSE_SUBJECTS_OPTION_VALUE = 'browseSubjects';
+export const browseModeOptions = {
+  CALL_NUMBERS: 'callNumbers',
+  SUBJECTS: 'browseSubjects',
+};
 
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
@@ -102,8 +104,8 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
-  { label: 'ui-inventory.browseCallNumbers', value: CALL_NUMBERS_OPTION_VALUE, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseSubjects', value: BROWSE_SUBJECTS_OPTION_VALUE, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceSortMap = {
