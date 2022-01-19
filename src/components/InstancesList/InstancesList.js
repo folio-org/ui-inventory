@@ -713,7 +713,6 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
-        fullCallNumber,
       }) => (
         <AppIcon
           size="small"
