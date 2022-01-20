@@ -62,9 +62,6 @@ import {
   validateOptionalField,
 } from '../utils';
 import {
-  ERROR_TYPES
-} from '../constants';
-import {
   validateTitles,
   validateSubInstances,
 } from '../validation';
@@ -350,13 +347,12 @@ class InstanceForm extends React.Component {
               actionMenu={this.getActionMenu}
               id={id}
             >
-              {httpError?.errorType === ERROR_TYPES.OPTIMISTIC_LOCKING &&
-                <OptimisticLockingBanner
-                  latestVersionLink={`/inventory/view/${initialValues.id}`}
-                  conflictDetectionBannerRef={this.conflictDetectionBannerRef}
-                  focusConflictDetectionBanner={this.focusConflictDetectionBanner}
-                />
-              }
+              <OptimisticLockingBanner
+                httpError={httpError}
+                latestVersionLink={`/inventory/view/${initialValues.id}`}
+                conflictDetectionBannerRef={this.conflictDetectionBannerRef}
+                focusConflictDetectionBanner={this.focusConflictDetectionBanner}
+              />
               <div>
                 <Headline
                   size="large"

@@ -26,9 +26,6 @@ import {
   unmarshalInstance,
   parseHttpError,
 } from '../../utils';
-import {
-  ERROR_TYPES,
-} from '../../constants';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
 

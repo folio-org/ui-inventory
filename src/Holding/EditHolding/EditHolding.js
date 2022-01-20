@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { cloneDeep } from 'lodash';
@@ -17,17 +17,20 @@ import {
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import withLocation from '../../withLocation';
+import { parseHttpError } from '../../utils';
 
 const EditHolding = ({
   goTo,
   history,
   holdingId,
   instanceId,
-  location: { search, state: locationState },
+  location,
   referenceTables,
 }) => {
   const callout = useCallout();
+  const { search, state: locationState } = location;
   const stripes = useStripes();
+  const [httpError, setHttpError] = useState();
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
   const { holding, isLoading: isHoldingLoading } = useHolding(holdingId);
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
@@ -57,21 +60,29 @@ const EditHolding = ({
     });
   }, [onCancel, callout]);
 
+  const onError = async error => {
+    const parsedError = await parseHttpError(error.response);
+
+    setHttpError(parsedError);
+  };
+
   const { mutateHolding } = useHoldingMutation({ onSuccess });
 
-  const onSubmit = useCallback(holdingValues => {
+  const onSubmit = useCallback(async (holdingValues) => {
     const clonedHolding = cloneDeep(holdingValues);
 
     if (clonedHolding.permanentLocationId === '') delete clonedHolding.permanentLocationId;
     if (clonedHolding.temporaryLocationId === '') delete clonedHolding.temporaryLocationId;
 
-    return mutateHolding(clonedHolding);
+    return mutateHolding(clonedHolding).catch(onError);
   }, [mutateHolding]);
 
   if (isInstanceLoading || isItemsLoading || isHoldingLoading) return <LoadingView />;
 
   return (
     <HoldingsForm
+      httpError={httpError}
+      location={location}
       initialValues={holding}
       onSubmit={onSubmit}
       onCancel={onCancel}

@@ -40,6 +40,7 @@ import {
 import { effectiveCallNumber } from '@folio/stripes/util';
 
 import RepeatableField from '../../components/RepeatableField';
+import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
@@ -181,6 +182,7 @@ class ItemForm extends React.Component {
       initialValues,
       instance,
       holdingsRecord,
+      httpError,
 
       referenceTables: {
         locationsById,
@@ -335,6 +337,12 @@ class ItemForm extends React.Component {
                 </span>
               }
             >
+              <OptimisticLockingBanner
+                httpError={httpError}
+                latestVersionLink={`/inventory/view/${instance?.id}/${holdingsRecord?.id}/${item?.id}`}
+                conflictDetectionBannerRef={this.conflictDetectionBannerRef}
+                focusConflictDetectionBanner={this.focusConflictDetectionBanner}
+              />
               <Row>
                 <Col
                   sm={5}
@@ -889,6 +897,7 @@ ItemForm.propTypes = {
     change: PropTypes.func.isRequired,
   }).isRequired,
   history: PropTypes.object.isRequired,
+  httpError: PropTypes.object,
 };
 
 ItemForm.defaultProps = {
