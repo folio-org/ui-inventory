@@ -47,6 +47,7 @@
 * Add ability to filter instance, holding and item records by statistical code. Refs UIIN-792, UIIN-793, UIIN-794.
 * Set results list columns for "Browse subjects" functionality. Refs UIIN-1892.
 * Call number browse result list - populate results. Refs UIIN-1884.
+* New/Edit Item Page - Accessibility Error: IDs used in ARIA and labels must be unique. Refs UIIN-1162.
 * HRID handling. Settings - Accessibility Error: Form elements must have labels. Refs UIIN-1163.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
