@@ -72,7 +72,7 @@ const InstanceEdit = ({
   const onSubmit = useCallback((updatedInstance) => {
     return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
       .then(() => onSuccess(updatedInstance))
-      .catch(err => onError(err));
+      .catch(onError);
   }, [identifierTypesByName, onError]);
 
   if (isInstanceLoading) return <LoadingView />;
