@@ -45,6 +45,7 @@
 * Add ability to filter item records by created date. Refs UIIN-789.
 * Add ability to filter item records by updated date. Refs UIIN-786.
 * Call number browse result list - populate results. Refs UIIN-1884.
+* HRID handling. Settings - Accessibility Error: Form elements must have labels. Refs UIIN-1163.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
