@@ -21,6 +21,7 @@ const resources = {
 const data = {
   locations: [],
   resourceTypes: [],
+  statisticalCodes: [],
   instanceFormats: [],
   modesOfIssuance: [],
   tagsRecords: [],
@@ -57,5 +58,9 @@ describe('InstanceFilters', () => {
 
   it('Contains a filter for update date ', () => {
     expect(document.querySelector('#updatedDate')).toBeInTheDocument();
+  });
+
+  it('Contains a filter for statistical code', () => {
+    expect(document.querySelector('#statisticalCodes')).toBeInTheDocument();
   });
 });

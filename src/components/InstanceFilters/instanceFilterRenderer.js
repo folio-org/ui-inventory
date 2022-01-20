@@ -17,6 +17,7 @@ const instanceFilterRenderer = data => onChange => {
     tags,
     onFetchFacets,
     parentResources,
+    statisticalCodes,
   } = data;
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
@@ -30,6 +31,7 @@ const instanceFilterRenderer = data => onChange => {
         modesOfIssuance,
         tagsRecords: tags,
         natureOfContentTerms,
+        statisticalCodes,
         query,
         onFetchFacets,
         parentResources,

@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import _ from 'lodash';
 
-import { FACETS } from '../../constants';
-
 const useFacets = (
   segmentAccordions,
   segmentOptions,
@@ -186,7 +184,6 @@ const useFacets = (
 
     const isUrlChanged = prevUrl.current[facetToOpen] !== location.search;
 
-    console.log('facetToOpen', facetToOpen);
     if (
       isFacetOpened &&
       isUrlChanged &&

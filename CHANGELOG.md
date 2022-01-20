@@ -44,6 +44,8 @@
 * Add ability to filter holding records by updated date. Refs UIIN-786.
 * Add ability to filter item records by created date. Refs UIIN-789.
 * Add ability to filter item records by updated date. Refs UIIN-786.
+* Add ability to filter instance, holding and item records by statistical code. Refs UIIN-792, UIIN-793, UIIN-794.
+* Set results list columns for "Browse subjects" functionality. Refs UIIN-1892.
 * Call number browse result list - populate results. Refs UIIN-1884.
 * HRID handling. Settings - Accessibility Error: Form elements must have labels. Refs UIIN-1163.
 
