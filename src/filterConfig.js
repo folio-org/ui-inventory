@@ -76,14 +76,21 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
+    name: FACETS.STATISTICAL_CODES,
+    cql: FACETS_CQL.STATISTICAL_CODES,
+    values: [],
+  },
+  {
     name: FACETS.INSTANCES_TAGS,
     cql: FACETS_CQL.INSTANCES_TAGS,
     values: [],
   },
 ];
 
-export const CALL_NUMBERS_OPTION_VALUE = 'callNumbers';
-export const BROWSE_SUBJECTS_OPTION_VALUE = 'browseSubjects';
+export const browseModeOptions = {
+  CALL_NUMBERS: 'callNumbers',
+  SUBJECTS: 'browseSubjects',
+};
 
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
@@ -97,8 +104,8 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
-  { label: 'ui-inventory.browseCallNumbers', value: CALL_NUMBERS_OPTION_VALUE, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseSubjects', value: BROWSE_SUBJECTS_OPTION_VALUE, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceSortMap = {
@@ -139,6 +146,11 @@ export const holdingFilterConfig = [
   {
     name: FACETS.HOLDINGS_TAGS,
     cql: FACETS_CQL.HOLDINGS_TAGS,
+    values: [],
+  },
+  {
+    name: FACETS.STATISTICAL_CODES,
+    cql: FACETS_CQL.STATISTICAL_CODES,
     values: [],
   },
   {
@@ -193,6 +205,11 @@ export const itemFilterConfig = [
   {
     name: FACETS.ITEMS_DISCOVERY_SUPPRESS,
     cql: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
+    values: [],
+  },
+  {
+    name: FACETS.STATISTICAL_CODES,
+    cql: FACETS_CQL.STATISTICAL_CODES,
     values: [],
   },
   {
