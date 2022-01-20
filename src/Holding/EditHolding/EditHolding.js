@@ -68,7 +68,7 @@ const EditHolding = ({
 
   const { mutateHolding } = useHoldingMutation({ onSuccess });
 
-  const onSubmit = useCallback(async (holdingValues) => {
+  const onSubmit = useCallback(holdingValues => {
     const clonedHolding = cloneDeep(holdingValues);
 
     if (clonedHolding.permanentLocationId === '') delete clonedHolding.permanentLocationId;
