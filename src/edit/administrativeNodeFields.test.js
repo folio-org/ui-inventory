@@ -2,10 +2,12 @@ import PropTypes from 'prop-types';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import stripesFinalForm from '@folio/stripes/final-form';
+
 import '../../test/jest/__mock__';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
-import stripesFinalForm from '@folio/stripes/final-form';
+
 
 import AdministrativeNoteFields from './administrativeNoteFields';
 import translationsProperties from '../../test/jest/helpers/translationsProperties';
