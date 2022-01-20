@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
+
 import { ConflictDetectionBanner } from '@folio/stripes/components';
 
 import { ERROR_TYPES } from '../../constants';
