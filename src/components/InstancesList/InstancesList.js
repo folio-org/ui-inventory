@@ -77,7 +77,7 @@ const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['callNumber', 'numberOfTitles']
+  CALL_NUMBERS: ['title', 'callNumber', 'numberOfTitles']
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -167,7 +167,7 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+    const visibleColumns = this.state.browseSelected ? new Set([...columns]) : new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
@@ -701,6 +701,11 @@ class InstancesList extends React.Component {
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+    const getFullMatchRecord = (item, isAnchor) => {
+      if (isAnchor) {
+        return <strong>{item}</strong>;
+      } else return item;
+    };
 
     const resultsFormatter = {
       'select': ({
@@ -724,6 +729,7 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
+        isAnchor,
       }) => (
         <AppIcon
           size="small"
@@ -731,7 +737,7 @@ class InstancesList extends React.Component {
           iconKey="instance"
           iconAlignment="baseline"
         >
-          {title || instance?.title}
+          {title || getFullMatchRecord(instance?.title, isAnchor)}
           {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -755,8 +761,9 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'callNumber': r => r?.fullCallNumber,
-      'numberOfTitles': r => r?.totalRecords,
+      'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.isAnchor),
+      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();

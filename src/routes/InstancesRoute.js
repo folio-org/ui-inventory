@@ -52,17 +52,24 @@ class InstancesRoute extends React.Component {
     const params = new URLSearchParams(document.location.search);
     const qindex = params.get('qindex');
 
-    const resourceBrowse = qindex === browseModeOptions.CALL_NUMBERS ? {
-      ...resources,
-      records: resources.recordsBrowseCallNumber,
-      recordsBrowseCallNumber: {},
-    } : resources;
+    const resourceBrowse = () => {
+      if (qindex === browseModeOptions.CALL_NUMBERS) {
+        return { ...resources,
+          records: resources.recordsBrowseCallNumber,
+          recordsBrowseCallNumber: {} };
+      } else if (qindex === browseModeOptions.SUBJECTS) {
+        return { ...resources,
+          records: resources.recordsSubject,
+          recordsSubject: {} };
+      } else return resources;
+    };
+
 
     return (
       <DataContext.Consumer>
         {data => (
           <InstancesView
-            parentResources={resourceBrowse}
+            parentResources={resourceBrowse()}
             parentMutator={mutator}
             data={{ ...data, query }}
             browseOnly={browseOnly}
