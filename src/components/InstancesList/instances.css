@@ -21,3 +21,8 @@
   font-weight: var(--text-weight-bold);
   color: var(--error);
 }
+
+.missingMatchError {
+  font-weight: var(--text-weight-bold);
+  color: var(--error);
+}

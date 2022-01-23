@@ -52,6 +52,7 @@
 * Create title level request from Instance record. Refs UIIN-1620.
 * Inventory action menu link View & reorder queue. Refs UIIN-1881.
 * Also support `circulation` `13.0`. Refs UIIN-1871.
+* Placeholder for the missing match. Refs UIIN-1889.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

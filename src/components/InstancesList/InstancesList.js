@@ -702,6 +702,25 @@ class InstancesList extends React.Component {
 
     const itemToView = getItem(`${namespace}.position`);
 
+    const missedMatchItem = () => {
+      const query = new URLSearchParams(this.props.location.search).get('query');
+      return (
+        <>
+          <span className={css.warnIcon}>
+            <Icon
+              size="medium"
+              icon="exclamation-circle"
+              status="warn"
+            />
+          </span>
+          <span className={css.missingMatchError}>
+            {query}
+          </span>
+          <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
+        </>
+      );
+    };
+
     const resultsFormatter = {
       'select': ({
         id,
@@ -724,7 +743,7 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
-      }) => (
+      }) => instance && (
         <AppIcon
           size="small"
           app="inventory"
@@ -755,8 +774,13 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'callNumber': r => r?.fullCallNumber,
-      'numberOfTitles': r => r?.totalRecords,
+      'callNumber': r => {
+        if (r?.instance) {
+          return r?.fullCallNumber;
+        }
+        return missedMatchItem();
+      },
+      'numberOfTitles': r => r?.instance && r?.totalRecords,
     };
 
     const visibleColumns = this.getVisibleColumns();
