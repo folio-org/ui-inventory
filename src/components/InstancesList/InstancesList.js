@@ -35,6 +35,7 @@ import {
   HasCommand,
 } from '@folio/stripes/components';
 
+import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
@@ -147,7 +148,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      browseSelected: false,
+      browseSelected: false
     };
   }
 
@@ -675,6 +676,18 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  componentDidMount() {
+    if (this.isBrowseOptionSelected()) {
+      this.setState({
+        browseSelected: true,
+      });
+    } else {
+      this.setState({
+        browseSelected: false,
+      });
+    }
+  }
+
   render() {
     const {
       showSingleResult,
@@ -765,11 +778,13 @@ class InstancesList extends React.Component {
     const onChangeIndex = (e) => {
       const isBrowseOptionSelected = Object.values(browseModeOptions).includes(e.target.value);
       if (isBrowseOptionSelected) {
-        this.setState({ browseSelected: true });
+        this.setState({
+          browseSelected: true,
+        });
       } else {
-        this.setState(
-          { browseSelected: false }
-        );
+        this.setState({
+          browseSelected: false,
+        });
       }
     };
 
@@ -857,7 +872,9 @@ class InstancesList extends React.Component {
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType="prev-next"
+            pagingType={pagingTypes.PREV_NEXT}
+            hideCount={browseSelected}
+            paginationEnabled={browseSelected}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -865,6 +882,16 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
+            onNeedMore={({ direction, records, source }) => {
+              let anchor;
+              if (direction === 'prev') {
+                anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+                source.fetchByQuery(`callNumber < "${anchor}"`);
+              } else {
+                anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
+                source.fetchByQuery(`callNumber > "${anchor}"`);
+              }
+            }}
           />
         </div>
         <ErrorModal
