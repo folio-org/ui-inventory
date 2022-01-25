@@ -7,6 +7,7 @@ import {
   AccordionSet,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
+import { DateRangeFilter } from '@folio/stripes/smart-components';
 
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
@@ -17,17 +18,23 @@ import {
   processItemsStatuses
 } from '../../facetUtils';
 import {
+  DATE_FORMAT,
   FACETS,
   FACETS_OPTIONS,
   FACETS_SETTINGS,
   FACETS_CQL,
 } from '../../constants';
+import {
+  makeDateRangeFilterString,
+  retrieveDatesFromDateRangeFilterString,
+} from '../../utils';
 
 const ItemFilters = (props) => {
   const {
     activeFilters,
     data: {
       itemStatuses,
+      statisticalCodes,
       locations,
       materialTypes,
       tagsRecords,
@@ -45,6 +52,7 @@ const ItemFilters = (props) => {
     [FACETS.MATERIAL_TYPE]: false,
     [FACETS.ITEMS_DISCOVERY_SUPPRESS]: false,
     [FACETS.ITEMS_TAGS]: false,
+    [FACETS.STATISTICAL_CODES]: false,
   };
 
   const segmentOptions = {
@@ -54,6 +62,7 @@ const ItemFilters = (props) => {
     [FACETS_OPTIONS.MATERIAL_TYPES_OPTIONS]: [],
     [FACETS_OPTIONS.ITEMS_DISCOVERY_SUPPRESS_OPTIONS]: [],
     [FACETS_OPTIONS.ITEMS_TAGS_OPTIONS]: [],
+    [FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]: [],
   };
 
   const selectedFacetFilters = {
@@ -63,6 +72,7 @@ const ItemFilters = (props) => {
     [FACETS.MATERIAL_TYPE]: activeFilters[FACETS.MATERIAL_TYPE],
     [FACETS.ITEMS_DISCOVERY_SUPPRESS]: activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS],
     [FACETS.ITEMS_TAGS]: activeFilters[FACETS.ITEMS_TAGS],
+    [FACETS.STATISTICAL_CODES]: activeFilters[FACETS.STATISTICAL_CODES],
   };
 
   const getNewRecords = (records) => {
@@ -83,6 +93,9 @@ const ItemFilters = (props) => {
             break;
           case FACETS_CQL.MATERIAL_TYPES:
             processFacetOptions(activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
+            break;
+          case FACETS_CQL.STATISTICAL_CODES:
+            processFacetOptions(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS], recordValues);
@@ -211,6 +224,61 @@ const ItemFilters = (props) => {
           selectedValues={activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS]}
           onChange={onChange}
           isPending={getIsPending(FACETS.ITEMS_DISCOVERY_SUPPRESS)}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id="ui-inventory.statisticalCode" />}
+        id={FACETS.STATISTICAL_CODES}
+        name={FACETS.STATISTICAL_CODES}
+        separator={false}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.STATISTICAL_CODES]?.length > 0}
+        onClearFilter={() => onClear(FACETS.STATISTICAL_CODES)}
+      >
+        <CheckboxFacet
+          name={FACETS.STATISTICAL_CODES}
+          dataOptions={facetsOptions[FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]}
+          selectedValues={activeFilters[FACETS.STATISTICAL_CODES]}
+          onChange={onChange}
+          onSearch={handleFilterSearch}
+          isFilterable
+          isPending={getIsPending(FACETS.STATISTICAL_CODES)}
+          onFetch={handleFetchFacets}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
+        id={FACETS.ITEMS_CREATED_DATE}
+        name={FACETS.ITEMS_CREATED_DATE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.ITEMS_CREATED_DATE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.ITEMS_CREATED_DATE)}
+      >
+        <DateRangeFilter
+          name={FACETS.ITEMS_CREATED_DATE}
+          dateFormat={DATE_FORMAT}
+          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.ITEMS_CREATED_DATE]?.[0])}
+          onChange={onChange}
+          makeFilterString={makeDateRangeFilterString}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
+        id={FACETS.ITEMS_UPDATED_DATE}
+        name={FACETS.ITEMS_UPDATED_DATE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.ITEMS_UPDATED_DATE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.ITEMS_UPDATED_DATE)}
+      >
+        <DateRangeFilter
+          name={FACETS.ITEMS_UPDATED_DATE}
+          dateFormat={DATE_FORMAT}
+          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.ITEMS_UPDATED_DATE]?.[0])}
+          onChange={onChange}
+          makeFilterString={makeDateRangeFilterString}
         />
       </Accordion>
       <TagsFilter

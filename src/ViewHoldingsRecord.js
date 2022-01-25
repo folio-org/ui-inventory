@@ -60,7 +60,10 @@ import {
   noValue,
   holdingsStatementTypes,
 } from './constants';
-import { WarningMessage } from './components';
+import {
+  WarningMessage,
+  AdministrativeNoteList,
+} from './components';
 import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 
@@ -566,7 +569,6 @@ class ViewHoldingsRecord extends React.Component {
       acc03: !areAllFieldsEmpty(Object.values(holdingsDetails)),
       acc04: !areAllFieldsEmpty([holdingsNotes]),
       acc05: !areAllFieldsEmpty([electronicAccess]),
-      acc06: false,
     };
 
     const holdingsDetailsTables = intl => holdingsStatementTypes.map(({ type, title }) => ({
@@ -787,25 +789,32 @@ class ViewHoldingsRecord extends React.Component {
                           </Col>
                         </Row>
                         <Row>
-                          <MultiColumnList
-                            id="list-statistical-codes"
-                            contentData={statisticalCodeIdsContent}
-                            visibleColumns={['Statistical code type', 'Statistical code']}
-                            columnMapping={{
-                              'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                              'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
-                            }}
-                            columnWidths={{ 'Statistical code type': '16%' }}
-                            formatter={{
-                              'Statistical code type':
-                                  x => this.refLookup(referenceTables.statisticalCodeTypes,
-                                    this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
-                              'Statistical code':
-                                  x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
-                            }}
-                            ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
-                            containerRef={ref => { this.resultsList = ref; }}
-                          />
+                          <Col xs={12}>
+                            <MultiColumnList
+                              id="list-statistical-codes"
+                              contentData={statisticalCodeIdsContent}
+                              visibleColumns={['Statistical code type', 'Statistical code']}
+                              columnMapping={{
+                                'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                                'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                              }}
+                              columnWidths={{ 'Statistical code type': '16%' }}
+                              formatter={{
+                                'Statistical code type':
+                                    x => this.refLookup(referenceTables.statisticalCodeTypes,
+                                      this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
+                                'Statistical code':
+                                    x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
+                              }}
+                              ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                              containerRef={ref => { this.resultsList = ref; }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={12}>
+                            <AdministrativeNoteList administrativeNotes={holdingsRecord.administrativeNotes} />
+                          </Col>
                         </Row>
                       </Accordion>
 
@@ -999,15 +1008,10 @@ class ViewHoldingsRecord extends React.Component {
                       </Accordion>
 
                       {
-                          this.props.stripes.hasInterface('orders.holding-summary') && (
-                            <Accordion
-                              id="acc06"
-                              label={<FormattedMessage id="ui-inventory.acquisition" />}
-                            >
-                              <HoldingAquisitions holding={holdingsRecord} />
-                            </Accordion>
-                          )
-                        }
+                        this.props.stripes.hasInterface('orders.holding-summary') && (
+                          <HoldingAquisitions holding={holdingsRecord} />
+                        )
+                      }
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
                     </AccordionSet>

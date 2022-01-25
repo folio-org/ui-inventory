@@ -7,6 +7,8 @@
   "instances.columns.contributors": "Contributors",
   "instances.columns.publishers": "Publishers",
   "instances.columns.relation": "Relation",
+  "instances.columns.callNumber": "Call number",
+  "instances.columns.numberOfTitles": "Number of titles",
   "instances.rows.select": "Select instance",
   "instances.showSelectedRecords": "Show selected records",
   "instances.selectedRecords": "Selected records",
@@ -51,6 +53,7 @@
   "editInstance": "Edit instance",
   "moveItems": "Move holdings/items to another instance",
   "viewRequests": "View requests",
+  "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
   "instanceDetails": "Instance details",
   "addHoldings": "Add holdings",
   "itemDotStatus": "Item • {barcode} • {status}",
@@ -402,6 +405,8 @@
   "instanceData": "Administrative data",
   "instanceId": "Instance UUID",
   "instanceHrid": "Instance HRID",
+  "browseCallNumbers": "Browse call numbers",
+  "browseSubjects": "Browse subjects",
   "instanceTitleLabel": "Instance title",
   "instanceMatchKey": "Instance match key",
   "addStatisticalCode": "Add statistical code",
@@ -579,7 +584,11 @@
   "precedingField.title": "Title",
   "precedingField.notConnected": "Not connected",
   "precedingField.connected": "Connected",
+  "browse": "Browse",
   "confirmDirtyNavigate": "Form has unsaved changes. Are you sure you want to leave?",
+  "notLoadedMessage.browseCall": "Browse for results entering a query or choosing a filter.",
+  "title.browseCall": "Browse inventory",
+  "title.subTitle.browseCall": "Enter search criteria to start browsing",
 
   "editInstanceMarc": "Edit MARC bibliographic record",
   "duplicateInstanceMarc": "Derive new MARC bibliographic record",
@@ -717,5 +726,8 @@
 
   "showMoreOptions": "Show more options",
   "more": "More",
-  "noMatchingOptions": "No matching options"
+  "noMatchingOptions": "No matching options",
+  "addAdministrativeNote": "Add administrative note",
+  "administrativeNote": "Administrative note",
+  "administrativeNotes": "Administrative notes"
 }

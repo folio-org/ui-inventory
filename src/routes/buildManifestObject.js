@@ -8,6 +8,7 @@ import {
 } from '../utils';
 import {
   getFilterConfig,
+  browseModeOptions
 } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -62,9 +63,10 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records: 'instances',
+      records:  'instances',
       resultOffset: '%{resultOffset}',
       perRequest: 100,
+      throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
       GET: {
@@ -72,6 +74,30 @@ export function buildManifestObject() {
         params: { query: buildQuery },
         staticFallback: { params: {} },
       },
+    },
+    recordsBrowseCallNumber: {
+      type: 'okapi',
+      records: 'items',
+      resultOffset: '%{resultOffset}',
+      perRequest: 100,
+      throwErrors: false,
+      path: (queryParams) => {
+        const queryValue = get(queryParams, 'query', '');
+        if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) return `browse/call-numbers/instances?expandAll=true&query=callNumber>=${queryValue} or callNumber<${queryValue}&precedingRecordsCount=5&`;
+        return undefined;
+      }
+    },
+    recordsSubject: {
+      type: 'okapi',
+      records: 'items',
+      resultOffset: '%{resultOffset}',
+      perRequest: 100,
+      throwErrors: false,
+      path: (queryParams) => {
+        const queryValue = get(queryParams, 'query', '');
+        if (queryParams.qindex === browseModeOptions.SUBJECTS) return `browse/subjects/instances?expandAll=true&query=subject>=${queryValue} or subject<${queryValue}&precedingRecordsCount=5&`;
+        return undefined;
+      }
     },
     recordsToExportIDs: {
       type: 'okapi',

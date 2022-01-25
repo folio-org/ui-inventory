@@ -11,6 +11,7 @@ const itemFilterRenderer = data => onChange => {
   const {
     query,
     materialTypes,
+    statisticalCodes,
     locations,
     tags,
     onFetchFacets,
@@ -24,6 +25,7 @@ const itemFilterRenderer = data => onChange => {
       data={{
         materialTypes,
         itemStatuses,
+        statisticalCodes,
         locations,
         tagsRecords: tags,
         query,

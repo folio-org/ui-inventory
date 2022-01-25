@@ -2,8 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import _ from 'lodash';
 
-import { FACETS } from '../../constants';
-
 const useFacets = (
   segmentAccordions,
   segmentOptions,
@@ -189,8 +187,8 @@ const useFacets = (
     if (
       isFacetOpened &&
       isUrlChanged &&
-      facetToOpen !== FACETS.CREATED_DATE &&
-      facetToOpen !== FACETS.UPDATED_DATE
+      !facetToOpen.match(/createdDate/i) &&
+      !facetToOpen.match(/updatedDate/i)
     ) {
       handleFetchFacets({ facetToOpen });
     } else {

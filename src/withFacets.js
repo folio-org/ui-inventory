@@ -12,7 +12,6 @@ import {
 } from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
-  FACETS,
   FACETS_TO_REQUEST,
   CQL_FIND_ALL
 } from './constants';
@@ -68,11 +67,12 @@ function withFacets(WrappedComponent) {
 
     getFacets = (accordions, accordionsData) => {
       let index = 0;
+
       return reduce(accordions, (accum, isFacetOpened, facetName) => {
         if (
           isFacetOpened &&
-          facetName !== FACETS.UPDATED_DATE &&
-          facetName !== FACETS.CREATED_DATE
+          !facetName.match(/createdDate/i) &&
+          !facetName.match(/updatedDate/i)
         ) {
           const facetNameToRequest = FACETS_TO_REQUEST[facetName];
           const defaultFiltersNumber = `:${DEFAULT_FILTERS_NUMBER}`;
@@ -128,6 +128,7 @@ function withFacets(WrappedComponent) {
         params.facet = facetNameToRequest;
       } else {
         const facets = this.getFacets(accordions, accordionsData);
+
         if (facets) {
           params.facet = facets;
         } else {

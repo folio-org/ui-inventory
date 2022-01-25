@@ -36,6 +36,7 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import RepeatableField from '../components/RepeatableField';
 
 import AlternativeTitles from './alternativeTitles';
+import AdministrativeNoteFields from './administrativeNoteFields';
 import SeriesFields from './seriesFields';
 import EditionFields from './editionFields';
 import ContributorFields from './contributorFields';
@@ -248,10 +249,11 @@ class InstanceForm extends React.Component {
       pristine,
       submitting,
       history,
+      id,
     } = this.props;
 
-    const refLookup = (referenceTable, id) => {
-      const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+    const refLookup = (referenceTable, recordId) => {
+      const ref = (referenceTable && recordId) ? referenceTable.find(record => record.id === recordId) : {};
       return ref || {};
     };
 
@@ -340,6 +342,7 @@ class InstanceForm extends React.Component {
               footer={this.getFooter()}
               paneTitle={this.getPaneTitle()}
               actionMenu={this.getActionMenu}
+              id={id}
             >
               <div>
                 <Headline
@@ -481,6 +484,11 @@ class InstanceForm extends React.Component {
                             ]}
                             canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                           />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col sm={12}>
+                          <AdministrativeNoteFields />
                         </Col>
                       </Row>
                     </Accordion>
@@ -758,10 +766,12 @@ InstanceForm.propTypes = {
   }),
   instanceSource: PropTypes.string,
   history: PropTypes.object.isRequired,
+  id: PropTypes.string,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
   initialValues: {},
+  id: 'instance-form',
 };
 
 export default withRouter(stripesFinalForm({

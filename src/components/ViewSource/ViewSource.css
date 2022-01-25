@@ -1,0 +1,7 @@
+.viewSource {
+  & table[class*="marc"] {
+    & tr td:not(:last-child) {
+      white-space: pre;
+    }
+  }
+}

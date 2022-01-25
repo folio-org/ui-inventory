@@ -30,6 +30,29 @@
 * Item. Several keyboard shortcuts does not act on the item. Refs UIIN-1867.
 * Holdings. Keyboard shortcuts does not act on the holdings. Refs UIIN-1866.
 * Fix bug preventing circ history service point & source from appearing. Fixes UIIN-1558.
+* Fix The Acquisition accordion is not unfolded automatically when there is data to be shown. Refs UIIN-1869.
+* Expand acquisition accordion when displaying Order information on Instance record. Refs UIIN-1886.
+* Also support `circulation` `12.0`. Refs UIIN-1861.
+* SRS display. MARC indicators may be misaligned. Refs UIIN-1859.
+* Add new data element `<AdministrativeNote>` to instances. Refs UIIN-1442.
+* Add Browse call numbers option. Refs UIIN-1879.
+* Add new data element `<AdministrativeNote>` to holdings. Refs UIIN-1443.
+* Add new data element `<AdministrativeNote>` to items. Refs UIIN-1444.
+* Browse form. Refs UIIN-1887.
+* Add Browse subjects option. Refs UIIN-1880.
+* Add ability to filter holding records by created date. Refs UIIN-791.
+* Add ability to filter holding records by updated date. Refs UIIN-786.
+* Add ability to filter item records by created date. Refs UIIN-789.
+* Add ability to filter item records by updated date. Refs UIIN-786.
+* Add ability to filter instance, holding and item records by statistical code. Refs UIIN-792, UIIN-793, UIIN-794.
+* Set results list columns for "Browse subjects" functionality. Refs UIIN-1892.
+* Call number browse result list - populate results. Refs UIIN-1884.
+* Subject browse result list - populate results. Refs UIIN-1893.
+* New/Edit Item Page - Accessibility Error: IDs used in ARIA and labels must be unique. Refs UIIN-1162.
+* HRID handling. Settings - Accessibility Error: Form elements must have labels. Refs UIIN-1163.
+* Create title level request from Instance record. Refs UIIN-1620.
+* Inventory action menu link View & reorder queue. Refs UIIN-1881.
+* Also support `circulation` `13.0`. Refs UIIN-1871.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

@@ -39,7 +39,7 @@ export const itemStatusMutators = {
   UNKNOWN: 'markAsUnknown',
 };
 
-export const requestStatuses = {
+export const REQUEST_OPEN_STATUSES = {
   OPEN_AWAITING_PICKUP: `Open - ${AWAITING_PICKUP}`,
   OPEN_NOT_YET_FILLED: 'Open - Not yet filled',
   OPEN_IN_TRANSIT: `Open - ${IN_TRANSIT}`,
@@ -170,10 +170,15 @@ export const FACETS = {
   NATURE_OF_CONTENT: 'natureOfContent',
   STAFF_SUPPRESS: 'staffSuppress',
   INSTANCES_DISCOVERY_SUPPRESS: 'instancesDiscoverySuppress',
+  STATISTICAL_CODES: 'statisticalCodes',
   ITEMS_DISCOVERY_SUPPRESS: 'itemsDiscoverySuppress',
   HOLDINGS_DISCOVERY_SUPPRESS: 'holdingsDiscoverySuppress',
   CREATED_DATE: 'createdDate',
   UPDATED_DATE: 'updatedDate',
+  HOLDINGS_CREATED_DATE: 'holdingsCreatedDate',
+  HOLDINGS_UPDATED_DATE: 'holdingsUpdatedDate',
+  ITEMS_CREATED_DATE: 'itemsCreatedDate',
+  ITEMS_UPDATED_DATE: 'itemsUpdatedDate',
   SOURCE: 'source',
   INSTANCES_TAGS: 'instancesTags',
   HOLDINGS_TAGS: 'holdingsTags',
@@ -191,18 +196,23 @@ export const FACETS_CQL = {
   MODE_OF_ISSUANCE: 'modeOfIssuanceId',
   NATURE_OF_CONTENT: 'natureOfContentTermIds',
   STAFF_SUPPRESS: 'staffSuppress',
+  STATISTICAL_CODES: 'statisticalCodes',
   INSTANCES_DISCOVERY_SUPPRESS: 'discoverySuppress',
   HOLDINGS_DISCOVERY_SUPPRESS: 'holdings.discoverySuppress',
   ITEMS_DISCOVERY_SUPPRESS: 'items.discoverySuppress',
   CREATED_DATE: 'metadata.createdDate',
   UPDATED_DATE: 'metadata.updatedDate',
+  HOLDINGS_CREATED_DATE: 'holdings.metadata.createdDate',
+  HOLDINGS_UPDATED_DATE: 'holdings.metadata.updatedDate',
+  ITEMS_CREATED_DATE: 'items.metadata.createdDate',
+  ITEMS_UPDATED_DATE: 'items.metadata.updatedDate',
   SOURCE: 'source',
   INSTANCES_TAGS: 'instanceTags',
   HOLDINGS_TAGS: 'holdingTags',
   ITEMS_TAGS: 'itemTags',
   MATERIAL_TYPES: 'items.materialTypeId',
   ITEMS_STATUSES: 'items.status.name',
-  HOLDINGS_PERMANENT_LOCATION: 'holdings.permanentLocationId'
+  HOLDINGS_PERMANENT_LOCATION: 'holdings.permanentLocationId',
 };
 
 export const FACETS_TO_REQUEST = {
@@ -225,6 +235,11 @@ export const FACETS_TO_REQUEST = {
   [FACETS.HOLDINGS_PERMANENT_LOCATION]: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
   [FACETS.CREATED_DATE]: FACETS_CQL.CREATED_DATE,
   [FACETS.UPDATED_DATE]: FACETS_CQL.UPDATED_DATE,
+  [FACETS.HOLDINGS_CREATED_DATE]: FACETS_CQL.HOLDINGS_CREATED_DATE,
+  [FACETS.HOLDINGS_UPDATED_DATE]: FACETS_CQL.HOLDINGS_UPDATED_DATE,
+  [FACETS.ITEMS_CREATED_DATE]: FACETS_CQL.ITEMS_CREATED_DATE,
+  [FACETS.ITEMS_UPDATED_DATE]: FACETS_CQL.ITEMS_UPDATED_DATE,
+  [FACETS.STATISTICAL_CODES]: FACETS_CQL.STATISTICAL_CODES,
 };
 
 export const FACETS_OPTIONS = {
@@ -245,6 +260,7 @@ export const FACETS_OPTIONS = {
   MATERIAL_TYPES_OPTIONS: 'materialTypesOptions',
   ITEMS_STATUSES_OPTIONS: 'itemStatusesOptions',
   HOLDINGS_PERMANENT_LOCATION_OPTIONS: 'holdingsPermanentLocationOptions',
+  STATISTICAL_CODES_OPTIONS: 'statisticalCodesOptions',
 };
 
 export const FACETS_SETTINGS = {
@@ -265,4 +281,5 @@ export const FACETS_SETTINGS = {
   [FACETS_CQL.MATERIAL_TYPES]: FACETS_OPTIONS.MATERIAL_TYPES_OPTIONS,
   [FACETS_CQL.ITEMS_STATUSES]: FACETS_OPTIONS.ITEMS_STATUSES_OPTIONS,
   [FACETS_CQL.HOLDINGS_PERMANENT_LOCATION]: FACETS_OPTIONS.HOLDINGS_PERMANENT_LOCATION_OPTIONS,
+  [FACETS_CQL.STATISTICAL_CODES]: FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS,
 };

@@ -42,7 +42,7 @@ const accordions = {
   identifiers: 'acc03',
   contributors: 'acc04',
   descriptiveData: 'acc05',
-  notes: 'acc06',
+  notes: 'instance-details-notes',
   electronicAccess: 'acc07',
   subjects: 'acc08',
   classifications: 'acc09',

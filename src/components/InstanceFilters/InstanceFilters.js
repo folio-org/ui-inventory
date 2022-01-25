@@ -39,6 +39,7 @@ const InstanceFilters = props => {
       resourceTypes,
       instanceFormats,
       modesOfIssuance,
+      statisticalCodes,
       natureOfContentTerms,
       tagsRecords,
     },
@@ -61,6 +62,7 @@ const InstanceFilters = props => {
     [FACETS.UPDATED_DATE]: false,
     [FACETS.SOURCE]: false,
     [FACETS.INSTANCES_TAGS]: false,
+    [FACETS.STATISTICAL_CODES]: false,
   };
 
   const segmentOptions = {
@@ -72,10 +74,9 @@ const InstanceFilters = props => {
     [FACETS_OPTIONS.NATURE_OF_CONTENT_OPTIONS]: [],
     [FACETS_OPTIONS.SUPPRESSED_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_DISCOVERY_SUPPRESS_OPTIONS]: [],
-    [FACETS_OPTIONS.CREATED_DATE_OPTIONS]: [],
-    [FACETS_OPTIONS.UPDATED_DATE_OPTIONS]: [],
     [FACETS_OPTIONS.SOURCE_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_TAGS_OPTIONS]: [],
+    [FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]: [],
   };
 
   const selectedFacetFilters = {
@@ -91,6 +92,7 @@ const InstanceFilters = props => {
     [FACETS.UPDATED_DATE]: activeFilters[FACETS.UPDATED_DATE],
     [FACETS.SOURCE]: activeFilters[FACETS.SOURCE],
     [FACETS.INSTANCES_TAGS]: activeFilters[FACETS.INSTANCES_TAGS],
+    [FACETS.STATISTICAL_CODES]: activeFilters[FACETS.STATISTICAL_CODES],
   };
 
   const getNewRecords = (records) => {
@@ -124,14 +126,11 @@ const InstanceFilters = props => {
           case FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS], recordValues);
             break;
-          case FACETS_CQL.CREATED_DATE:
-            accum[name] = getSourceOptions(activeFilters[FACETS.CREATED_DATE], recordValues);
-            break;
-          case FACETS_CQL.UPDATED_DATE:
-            accum[name] = getSourceOptions(activeFilters[FACETS.UPDATED_DATE], recordValues);
-            break;
           case FACETS_CQL.SOURCE:
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);
+            break;
+          case FACETS_CQL.STATISTICAL_CODES:
+            processFacetOptions(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.INSTANCES_TAGS:
             processFacetOptions(activeFilters[FACETS.INSTANCES_TAGS], tagsRecords, ...commonProps, 'label');
@@ -314,6 +313,27 @@ const InstanceFilters = props => {
           selectedValues={activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS]}
           isPending={getIsPending(FACETS.INSTANCES_DISCOVERY_SUPPRESS)}
           onChange={onChange}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id="ui-inventory.statisticalCodes" />}
+        id={FACETS.STATISTICAL_CODES}
+        name={FACETS.STATISTICAL_CODES}
+        separator={false}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.STATISTICAL_CODES]?.length > 0}
+        onClearFilter={() => onClear(FACETS.STATISTICAL_CODES)}
+      >
+        <CheckboxFacet
+          name={FACETS.STATISTICAL_CODES}
+          dataOptions={facetsOptions[FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]}
+          selectedValues={activeFilters[FACETS.STATISTICAL_CODES]}
+          onChange={onChange}
+          onSearch={handleFilterSearch}
+          isFilterable
+          isPending={getIsPending(FACETS.STATISTICAL_CODES)}
+          onFetch={handleFetchFacets}
         />
       </Accordion>
       <Accordion
