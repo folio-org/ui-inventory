@@ -687,6 +687,7 @@ class ViewHoldingsRecord extends React.Component {
                 scope={document.body}
               >
                 <Pane
+                  id="ui-inventory.holdingsRecordView"
                   defaultWidth={this.props.paneWidth}
                   appIcon={<AppIcon app="inventory" iconKey="holdings" />}
                   paneTitle={intl.formatMessage({
