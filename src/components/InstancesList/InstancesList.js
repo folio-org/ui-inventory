@@ -611,11 +611,11 @@ class InstancesList extends React.Component {
 
     const columnMapping = {
       select: '',
+      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
     };
 
@@ -730,33 +730,37 @@ class InstancesList extends React.Component {
         isBoundWith,
         staffSuppress,
         isAnchor,
-      }) => (
-        <AppIcon
-          size="small"
-          app="inventory"
-          iconKey="instance"
-          iconAlignment="baseline"
-        >
-          {title || getFullMatchRecord(instance?.title, isAnchor)}
-          {(isBoundWith) &&
+      }) => {
+        if (browseSelected) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+          return (
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              {title}
+              {(isBoundWith) &&
+              <AppIcon
+                size="small"
+                app="@folio/inventory"
+                iconKey="bound-with"
+                iconClassName={css.boundWithIcon}
+              />
           }
-          {(discoverySuppress || staffSuppress) &&
-          <span className={css.warnIcon}>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
+              {(discoverySuppress || staffSuppress) &&
+              <span className={css.warnIcon}>
+                <Icon
+                  size="medium"
+                  icon="exclamation-circle"
+                  status="warn"
+                />
+              </span>
           }
-        </AppIcon>
-      ),
+            </AppIcon>
+          );
+        }
+      },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
