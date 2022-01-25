@@ -872,6 +872,7 @@ UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221,
 * Aplly expand/collapse all accordions toggle to Holdings detail. UIIN-245
 * apply expand/collapse all accordions toggle to Item detail. UIIN-246
 * Use /inventory/instance endpoint, rather than storage, for instances. UIIN-263
+* Selecting row from browse result list. UIIN-1888
 
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
