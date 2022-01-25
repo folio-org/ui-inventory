@@ -37,6 +37,7 @@ const EditHolding = ({
     searchParams: { limit: 1 },
   });
 
+
   const isMARCRecord = useMemo(() => (
     referenceTables?.holdingsSources?.find(source => source.id === holding?.sourceId)?.name === 'MARC'
   ), [holding]);
@@ -62,7 +63,6 @@ const EditHolding = ({
 
   const onError = async error => {
     const parsedError = await parseHttpError(error.response);
-
     setHttpError(parsedError);
   };
 
