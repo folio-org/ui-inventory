@@ -95,22 +95,19 @@ export function buildManifestObject() {
 
         if (prevNextReg.test(query)) {
           return `browse/call-numbers/instances?${new URLSearchParams({
+            expandAll: true,
             highlightMatch: false,
             query,
-            sort: '',
-            limit: 20,
-            precedingRecordsCount: 20,
+            precedingRecordsCount: 25,
+            limit: 25
           })}&`;
         }
 
         if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
           return `browse/call-numbers/instances?${new URLSearchParams({
-            highlightMatch: true,
             expandAll: true,
-            query: `callNumber>${query} or callNumber<=${query}`,
-            sort: '',
-            limit: 20,
-            precedingRecordsCount: 20
+            query: `callNumber>=${query} or callNumber<${query}`,
+            limit: 25
           })}&`;
         }
 
