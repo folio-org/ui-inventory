@@ -24,12 +24,14 @@ const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
             component: Select,
             placeholder,
             dataOptions: noteTypeOptions,
+            required: true,
           },
           {
             name: 'note',
             label: <FormattedMessage id="ui-inventory.note" />,
             component: TextArea,
             rows: 1,
+            required: true,
           },
           {
             name: 'staffOnly',
