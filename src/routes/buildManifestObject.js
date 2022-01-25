@@ -113,6 +113,20 @@ export function buildManifestObject() {
             precedingRecordsCount: 20
           })}&`;
         }
+
+        return undefined;
+      }
+    },
+    recordsSubject: {
+      type: 'okapi',
+      records: 'items',
+      resultOffset: '%{resultOffset}',
+      perRequest: 100,
+      throwErrors: false,
+      path: (queryParams) => {
+        const queryValue = get(queryParams, 'query', '');
+        if (queryParams.qindex === browseModeOptions.SUBJECTS) return `browse/subjects/instances?expandAll=true&query=subject>=${queryValue} or subject<${queryValue}&precedingRecordsCount=5&`;
+        return undefined;
       }
     },
     recordsToExportIDs: {
