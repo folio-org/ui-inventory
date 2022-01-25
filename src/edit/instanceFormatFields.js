@@ -23,6 +23,7 @@ const renderInstanceFormatField = ({ field, fieldIndex, canEdit }, instanceForma
         <Field
           label={label}
           name={field}
+          title={field}
           component={Select}
           placeholder={placeholder}
           dataOptions={instanceFormatOptions}

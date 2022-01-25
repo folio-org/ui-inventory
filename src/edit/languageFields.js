@@ -13,13 +13,14 @@ import RepeatableField from '../components/RepeatableField';
 
 const renderLanguageField = ({ field, fieldIndex, canEdit, langOptions }) => {
   const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.language" /> : null;
-
+  console.log(field);
   return (
     <FormattedMessage id="ui-inventory.selectLanguage">
       {([placeholder]) => (
         <Field
           label={label}
           name={field}
+          title={field}
           component={Select}
           placeholder={placeholder}
           dataOptions={langOptions}
