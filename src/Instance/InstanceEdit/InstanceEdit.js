@@ -24,6 +24,7 @@ import InstanceForm from '../../edit/InstanceForm';
 import {
   marshalInstance,
   unmarshalInstance,
+  parseHttpError,
 } from '../../utils';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
@@ -63,11 +64,16 @@ const InstanceEdit = ({
     goBack();
   }, [callout, goBack]);
 
+  const onError = async error => {
+    const parsedError = await parseHttpError(error);
+    setHttpError(parsedError);
+  };
+
   const onSubmit = useCallback((updatedInstance) => {
     return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
       .then(() => onSuccess(updatedInstance))
-      .catch(err => setHttpError(err));
-  }, [identifierTypesByName, setHttpError]);
+      .catch(onError);
+  }, [identifierTypesByName, onError]);
 
   if (isInstanceLoading) return <LoadingView />;
 
@@ -77,13 +83,14 @@ const InstanceEdit = ({
     <>
       <InstanceForm
         onSubmit={onSubmit}
+        httpError={httpError}
         initialValues={initialValues}
         instanceSource={instance?.source}
         referenceTables={referenceData}
         stripes={stripes}
         onCancel={goBack}
       />
-      {httpError &&
+      {httpError && !httpError?.errorType &&
         <ErrorModal
           open
           label={<FormattedMessage id="ui-inventory.instance.saveError" />}
