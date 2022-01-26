@@ -70,17 +70,20 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
-import { browseModeOptions } from '../../filterConfig';
+import {
+  browseModeOptions,
+  getFilterConfig,
+} from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['callNumber', 'numberOfTitles']
+  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
 };
 
-const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
+const TOGGLEABLE_COLUMNS = ['relation', 'contributors', 'publishers'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
 const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
@@ -125,6 +128,7 @@ class InstancesList extends React.Component {
       search: PropTypes.string
     }),
     stripes: PropTypes.object.isRequired,
+    fetchFacets: PropTypes.func,
   };
 
   static contextType = CalloutContext;
@@ -147,7 +151,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      browseSelected: false,
+      browseSelected: '',
     };
   }
 
@@ -167,7 +171,7 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el)) ? new Set([...columns]) : new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
@@ -184,7 +188,6 @@ class InstancesList extends React.Component {
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
-
     goTo(path, { ...params, filters: filtersStr });
   };
 
@@ -477,7 +480,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      !this.state.browseSelected ?
+      !this.state.browseSelected.includes(Object.values(browseModeOptions)) ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
@@ -611,11 +614,11 @@ class InstancesList extends React.Component {
 
     const columnMapping = {
       select: '',
+      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
     };
 
@@ -692,6 +695,7 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      fetchFacets,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -703,6 +707,7 @@ class InstancesList extends React.Component {
     const itemToView = getItem(`${namespace}.position`);
 
     const resultsFormatter = {
+      'callNumber': r => r?.fullCallNumber,
       'select': ({
         id,
         ...rowData
@@ -755,7 +760,6 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'callNumber': r => r?.fullCallNumber,
       'numberOfTitles': r => r?.totalRecords,
     };
 
@@ -763,20 +767,22 @@ class InstancesList extends React.Component {
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      const isBrowseOptionSelected = Object.values(browseModeOptions).includes(e.target.value);
-      if (isBrowseOptionSelected) {
-        this.setState({ browseSelected: true });
-      } else {
-        this.setState(
-          { browseSelected: false }
-        );
-      }
+      this.setState({ browseSelected: e.target.value });
     };
 
-    const customPaneSubTextBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
-    const searchFieldButtonLabelBrowse = browseSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseSelected ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const browseFilter = () => {
+      const { renderer } = getFilterConfig();
+      if (browseSelected === browseModeOptions.SUBJECTS) {
+        return renderer;
+      } else return renderFilters;
+    };
+
+    const browseSelectedString = Object.values(browseModeOptions).some(el => browseSelected.includes(el));
+
+    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -854,7 +860,7 @@ class InstancesList extends React.Component {
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
             onSelectRow={onSelectRow}
-            renderFilters={renderFilters}
+            renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType="prev-next"
