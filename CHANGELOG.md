@@ -53,6 +53,7 @@
 * Create title level request from Instance record. Refs UIIN-1620.
 * Inventory action menu link View & reorder queue. Refs UIIN-1881.
 * Also support `circulation` `13.0`. Refs UIIN-1871.
+* New/Edit Holdings Page - Accessibility Error: IDs of active elements must be unique. Refs UIIN-1159.
 * Filters/facets on Subject browse form. Refs UIIN-1904.
 * Create/Edit Item record > No indication that field(s) is required by screenreader and not using the FOLIO standard indication for required field. Refs UIIN-1649.
 
