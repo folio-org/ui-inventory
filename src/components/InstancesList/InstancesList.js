@@ -71,14 +71,17 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
-import { browseModeOptions } from '../../filterConfig';
+import {
+  browseModeOptions,
+  getFilterConfig,
+} from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['title', 'callNumber', 'numberOfTitles']
+  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -148,7 +151,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      browseSelected: false
+      browseSelected: '',
     };
   }
 
@@ -168,8 +171,14 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = this.state.browseSelected ? new Set([...columns]) : new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
-    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el)) ?
+      new Set([...columns])
+      :
+      new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+
+    if (Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el))) {
+      return Array.from(visibleColumns);
+    } return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -185,7 +194,6 @@ class InstancesList extends React.Component {
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
-
     goTo(path, { ...params, filters: filtersStr });
   };
 
@@ -478,7 +486,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      !this.state.browseSelected ?
+      !this.state.browseSelected.includes(Object.values(browseModeOptions)) ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
@@ -611,8 +619,8 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
-      select: '',
       callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
+      select: '',
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
@@ -756,7 +764,7 @@ class InstancesList extends React.Component {
         staffSuppress,
         isAnchor,
       }) => {
-        if (browseSelected) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+        if (browseSelected === browseModeOptions.CALL_NUMBERS) { return getFullMatchRecord(instance?.title, isAnchor); } else {
           return (
             <AppIcon
               size="small"
@@ -790,31 +798,31 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
       'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.isAnchor),
       'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
-      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      const isBrowseOptionSelected = Object.values(browseModeOptions).includes(e.target.value);
-      if (isBrowseOptionSelected) {
-        this.setState({
-          browseSelected: true,
-        });
-      } else {
-        this.setState({
-          browseSelected: false,
-        });
-      }
+      this.setState({ browseSelected: e.target.value });
     };
 
-    const customPaneSubTextBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
-    const searchFieldButtonLabelBrowse = browseSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseSelected ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const browseFilter = () => {
+      const { renderer } = getFilterConfig();
+      if (browseSelected === browseModeOptions.SUBJECTS) {
+        return renderer;
+      } return renderFilters;
+    };
+
+    const browseSelectedString = Object.values(browseModeOptions).some(el => browseSelected.includes(el));
+
+    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -892,7 +900,7 @@ class InstancesList extends React.Component {
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
             onSelectRow={onSelectRow}
-            renderFilters={renderFilters}
+            renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
