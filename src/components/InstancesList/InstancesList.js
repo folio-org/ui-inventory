@@ -714,10 +714,22 @@ class InstancesList extends React.Component {
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+
     const getFullMatchRecord = (item, isAnchor) => {
       if (isAnchor) {
         return <strong>{item}</strong>;
       } else return item;
+    };
+
+    const handleOnNeedMore = ({ direction, records, source }) => {
+      let anchor;
+      if (direction === 'prev') {
+        anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+        source.fetchByQuery(`callNumber < "${anchor}"`);
+      } else {
+        anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
+        source.fetchByQuery(`callNumber > "${anchor}"`);
+      }
     };
 
     const resultsFormatter = {
@@ -884,8 +896,8 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
-            hideCount={browseSelected}
-            paginationEnabled={browseSelected}
+            hidePageIndices={browseSelected}
+            paginationBoundaries={!browseSelected}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -893,16 +905,7 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
-            onNeedMore={({ direction, records, source }) => {
-              let anchor;
-              if (direction === 'prev') {
-                anchor = records.find(i => i.fullCallNumber)?.shelfKey;
-                source.fetchByQuery(`callNumber < "${anchor}"`);
-              } else {
-                anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
-                source.fetchByQuery(`callNumber > "${anchor}"`);
-              }
-            }}
+            resultsOnNeedMore={handleOnNeedMore}
           />
         </div>
         <ErrorModal
