@@ -83,7 +83,7 @@ const columnSets = {
   CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
 };
 
-const TOGGLEABLE_COLUMNS = ['relation', 'contributors', 'publishers'];
+const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
 const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
