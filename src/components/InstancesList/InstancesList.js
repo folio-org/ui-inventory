@@ -128,7 +128,6 @@ class InstancesList extends React.Component {
       search: PropTypes.string
     }),
     stripes: PropTypes.object.isRequired,
-    fetchFacets: PropTypes.func,
   };
 
   static contextType = CalloutContext;
@@ -171,8 +170,14 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el)) ? new Set([...columns]) : new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
-    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el)) ?
+      new Set([...columns])
+      :
+      new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+
+    if (Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el))) {
+      return Array.from(visibleColumns);
+    } else return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -613,8 +618,8 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
-      select: '',
       callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
+      select: '',
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
@@ -695,7 +700,6 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
-      fetchFacets,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -735,7 +739,7 @@ class InstancesList extends React.Component {
         staffSuppress,
         isAnchor,
       }) => {
-        if (browseSelected) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+        if (browseSelected === browseModeOptions.CALL_NUMBERS) { return getFullMatchRecord(instance?.title, isAnchor); } else {
           return (
             <AppIcon
               size="small"
@@ -769,9 +773,9 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
       'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.isAnchor),
       'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
-      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
