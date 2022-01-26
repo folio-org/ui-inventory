@@ -77,7 +77,7 @@ const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['callNumber', 'numberOfTitles']
+  CALL_NUMBERS: ['title', 'callNumber', 'numberOfTitles']
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -167,7 +167,7 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+    const visibleColumns = this.state.browseSelected ? new Set([...columns]) : new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
@@ -611,11 +611,11 @@ class InstancesList extends React.Component {
 
     const columnMapping = {
       select: '',
+      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
     };
 
@@ -708,6 +708,11 @@ class InstancesList extends React.Component {
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+    const getFullMatchRecord = (item, isAnchor) => {
+      if (isAnchor) {
+        return <strong>{item}</strong>;
+      } else return item;
+    };
 
     const resultsFormatter = {
       'select': ({
@@ -731,39 +736,45 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
-      }) => (
-        <AppIcon
-          size="small"
-          app="inventory"
-          iconKey="instance"
-          iconAlignment="baseline"
-        >
-          {title || instance?.title}
-          {(isBoundWith) &&
+        isAnchor,
+      }) => {
+        if (browseSelected) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+          return (
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              {title}
+              {(isBoundWith) &&
+              <AppIcon
+                size="small"
+                app="@folio/inventory"
+                iconKey="bound-with"
+                iconClassName={css.boundWithIcon}
+              />
           }
-          {(discoverySuppress || staffSuppress) &&
-          <span className={css.warnIcon}>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
+              {(discoverySuppress || staffSuppress) &&
+              <span className={css.warnIcon}>
+                <Icon
+                  size="medium"
+                  icon="exclamation-circle"
+                  status="warn"
+                />
+              </span>
           }
-        </AppIcon>
-      ),
+            </AppIcon>
+          );
+        }
+      },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'callNumber': r => r?.fullCallNumber,
-      'numberOfTitles': r => r?.totalRecords,
+      'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.isAnchor),
+      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
