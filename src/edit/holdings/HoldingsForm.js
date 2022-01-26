@@ -464,6 +464,7 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           marginBottom0
                           disabled={this.isFieldBlocked('permanentLocationId')}
+                          required
                         />
                       </Col>
                       <Col sm={4}>
@@ -686,7 +687,7 @@ class HoldingsForm extends React.Component {
                       <Col sm={10}>
                         <RepeatableField
                           name="receivingHistory.entries"
-                          addButtonId="clickable-add-statistical-code"
+                          addButtonId="clickable-add-receiving-history"
                           addLabel={<FormattedMessage id="ui-inventory.addReceivingHistory" />}
                           template={[
                             {

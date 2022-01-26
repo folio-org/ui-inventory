@@ -53,6 +53,10 @@
 * Create title level request from Instance record. Refs UIIN-1620.
 * Inventory action menu link View & reorder queue. Refs UIIN-1881.
 * Also support `circulation` `13.0`. Refs UIIN-1871.
+* Create/Edit Holdings record > No indication that fields are required. Refs UIIN-1648.
+* New/Edit Holdings Page - Accessibility Error: IDs of active elements must be unique. Refs UIIN-1159.
+* Filters/facets on Subject browse form. Refs UIIN-1904.
+* New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
