@@ -672,7 +672,7 @@ class ItemForm extends React.Component {
                       <Col sm={3}>
                         <Field
                           name="itemDamagedStatusDate"
-                          id="input_missing_pieces_date"
+                          id="input_damaged_status_date"
                           dateFormat="YYYY-MM-DD"
                           backendDateStandard="YYYY-MM-DD"
                           component={Datepicker}

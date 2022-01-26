@@ -705,9 +705,13 @@ class InstancesList extends React.Component {
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+    const getFullMatchRecord = (item, isAnchor) => {
+      if (isAnchor) {
+        return <strong>{item}</strong>;
+      } else return item;
+    };
 
     const resultsFormatter = {
-      'callNumber': r => r?.fullCallNumber,
       'select': ({
         id,
         ...rowData
@@ -729,38 +733,45 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
-      }) => (
-        <AppIcon
-          size="small"
-          app="inventory"
-          iconKey="instance"
-          iconAlignment="baseline"
-        >
-          {title || instance?.title}
-          {(isBoundWith) &&
+        isAnchor,
+      }) => {
+        if (browseSelected) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+          return (
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              {title}
+              {(isBoundWith) &&
+              <AppIcon
+                size="small"
+                app="@folio/inventory"
+                iconKey="bound-with"
+                iconClassName={css.boundWithIcon}
+              />
           }
-          {(discoverySuppress || staffSuppress) &&
-          <span className={css.warnIcon}>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
+              {(discoverySuppress || staffSuppress) &&
+              <span className={css.warnIcon}>
+                <Icon
+                  size="medium"
+                  icon="exclamation-circle"
+                  status="warn"
+                />
+              </span>
           }
-        </AppIcon>
-      ),
+            </AppIcon>
+          );
+        }
+      },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'numberOfTitles': r => r?.totalRecords,
+      'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.isAnchor),
+      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
