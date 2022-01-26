@@ -451,6 +451,7 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           marginBottom0
                           disabled={this.isFieldBlocked('permanentLocationId')}
+                          required
                         />
                       </Col>
                       <Col sm={4}>
