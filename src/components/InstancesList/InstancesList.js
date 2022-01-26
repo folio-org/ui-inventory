@@ -789,7 +789,7 @@ class InstancesList extends React.Component {
       const { renderer } = getFilterConfig();
       if (browseSelected === browseModeOptions.SUBJECTS) {
         return renderer;
-      } else return renderFilters;
+      } return renderFilters;
     };
 
     const browseSelectedString = Object.values(browseModeOptions).some(el => browseSelected.includes(el));
