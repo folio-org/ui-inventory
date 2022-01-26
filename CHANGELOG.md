@@ -54,6 +54,7 @@
 * Inventory action menu link View & reorder queue. Refs UIIN-1881.
 * Also support `circulation` `13.0`. Refs UIIN-1871.
 * Filters/facets on Subject browse form. Refs UIIN-1904.
+* Create/Edit Item record > No indication that field(s) is required by screenreader and not using the FOLIO standard indication for required field. Refs UIIN-1649.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
