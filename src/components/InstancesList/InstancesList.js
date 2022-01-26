@@ -177,7 +177,7 @@ class InstancesList extends React.Component {
 
     if (Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el))) {
       return Array.from(visibleColumns);
-    } else return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    } return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
