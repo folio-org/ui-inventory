@@ -135,7 +135,7 @@ describe('InstancesList', () => {
       expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
-    it('should render call number browse results with missmached record', () => {
+    it('should render call number browse results with mismatched record', () => {
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'callNumbers' }
       });
