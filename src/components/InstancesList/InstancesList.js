@@ -704,10 +704,18 @@ class InstancesList extends React.Component {
   }
 
   onSelectRow = (_, row) => {
+    if (!row.instance && !row.totalRecords) return;
+
     this.setState({ optionSelected: '' });
+    if (row.instance) {
+      this.props.updateLocation({
+        qindex: 'callNumber',
+        query: row.shelfKey
+      });
+    }
     this.props.updateLocation({
-      qindex: 'callNumber',
-      query: row.shelfKey
+      qindex: 'subject',
+      query: row.subject
     });
   }
 
@@ -842,7 +850,7 @@ class InstancesList extends React.Component {
         }
         return missedMatchItem();
       },
-      'numberOfTitles': r => r?.instance && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'numberOfTitles': r => (r?.instance || r?.subject) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
