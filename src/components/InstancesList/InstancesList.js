@@ -129,6 +129,7 @@ class InstancesList extends React.Component {
       search: PropTypes.string
     }),
     stripes: PropTypes.object.isRequired,
+    fetchFacets: PropTypes.func,
   };
 
   static contextType = CalloutContext;
@@ -644,7 +645,8 @@ class InstancesList extends React.Component {
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
+      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' }),
+      subject: intl.formatMessage({ id: 'ui-inventory.subject' })
     };
 
     return columnMapping;
@@ -735,6 +737,7 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      fetchFacets,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -873,10 +876,16 @@ class InstancesList extends React.Component {
     };
 
     const browseFilter = () => {
-      const { renderer } = getFilterConfig();
+      const { renderer } = getFilterConfig('browse');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
-      } return renderFilters;
+      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets,
+          parentResources,
+        });
+      } else return renderFilters;
     };
 
     const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
@@ -941,6 +950,9 @@ class InstancesList extends React.Component {
             visibleColumns={visibleColumns}
             columnMapping={columnMapping}
             columnWidths={{
+              callNumber: '15%',
+              subject: '50%',
+              numberOfTitles: '15%',
               select: '30px',
               title: '40%',
             }}
