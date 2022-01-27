@@ -66,32 +66,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
-const getPath = ({ queryParams, entity, param }) => {
-  const prevNextReg = new RegExp(`^(${param} [<|>])`, 'i');
-  const query = get(queryParams, 'query', '');
-  const recordsCount = 10;
-
-  if (prevNextReg.test(query)) {
-    return `browse/${entity}/instances?${new URLSearchParams({
-      expandAll: true,
-      highlightMatch: false,
-      query,
-      precedingRecordsCount: recordsCount,
-      limit: recordsCount
-    })}&`;
-  }
-
-  if (Object.values(browseModeOptions).includes(queryParams.qindex)) {
-    return `browse/${entity}/instances?${new URLSearchParams({
-      expandAll: true,
-      query: `${param}>=${query} or ${param}<${query}`,
-      limit: recordsCount
-    })}&`;
-  }
-
-  return undefined;
-};
-
 export function buildManifestObject() {
   return {
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -114,7 +88,13 @@ export function buildManifestObject() {
         } return 'instances';
       },
       resultOffset: '%{resultOffset}',
-      perRequest: 100,
+      perRequest: (queryParams) => {
+        const prevNextReg = /^((callNumber|subject) [<|>])/ig;
+        const query = get(queryParams, 'query', '');
+        if (Object.values(browseModeOptions).includes(queryParams.qindex) || prevNextReg.test(query)) {
+          return 25;
+        } return 100;
+      },
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',

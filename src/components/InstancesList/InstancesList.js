@@ -645,7 +645,8 @@ class InstancesList extends React.Component {
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
+      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' }),
+      subject: intl.formatMessage({ id: 'ui-inventory.subject' })
     };
 
     return columnMapping;
