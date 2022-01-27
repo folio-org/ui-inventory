@@ -30,6 +30,7 @@ import {
   indentifierTypeNames,
   DATE_FORMAT,
   LIMIT_MAX,
+  ERROR_TYPES,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -713,3 +714,22 @@ export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _pa
 */
 export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
+/**
+ * Parses http error to json and attaches an error type.
+ *
+ * @param httpError object
+ * @returns object
+ */
+export const parseHttpError = async httpError => {
+  try {
+    const jsonError = await httpError.json();
+
+    if (jsonError.message.match(/optimistic locking/i)) {
+      jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
+    }
+
+    return jsonError;
+  } catch (err) {
+    return httpError;
+  }
+};

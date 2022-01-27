@@ -35,6 +35,7 @@ import {
   HasCommand,
 } from '@folio/stripes/components';
 
+import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
@@ -150,15 +151,20 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      browseSelected: '',
+      optionSelected: '',
     };
   }
 
-  isBrowseOptionSelected = () => {
+  getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
-    const qindex = params.get('qindex');
+    return params.get('qindex');
+  }
 
-    return Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === qindex)[0];
+  isBrowseOptionSelected = () => {
+    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    const isBrowseSelectedBasedOnState = Object.values(browseModeOptions).includes(this.state.optionSelected);
+
+    return isBrowseSelectedBasedOnUrl || isBrowseSelectedBasedOnState;
   }
 
   getInitialToggableColumns = () => {
@@ -170,14 +176,16 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el)) ?
+    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el)) ?
       new Set([...columns])
       :
       new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
 
-    if (Object.values(browseModeOptions).some(el => this.state.browseSelected.includes(el))) {
+    if (Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el))) {
       return Array.from(visibleColumns);
-    } return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    }
+
+    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -485,7 +493,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      !this.state.browseSelected.includes(Object.values(browseModeOptions)) ?
+      !this.state.optionSelected.includes(Object.values(browseModeOptions)) ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
@@ -683,6 +691,18 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  componentDidMount() {
+    if (this.isBrowseOptionSelected()) {
+      this.setState({
+        optionSelected: this.getQIndexFromParams(),
+      });
+    } else {
+      this.setState({
+        optionSelected: '',
+      });
+    }
+  }
+
   render() {
     const {
       showSingleResult,
@@ -705,14 +725,28 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
-      browseSelected
+      optionSelected
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+
     const getFullMatchRecord = (item, isAnchor) => {
       if (isAnchor) {
         return <strong>{item}</strong>;
-      } else return item;
+      }
+
+      return item;
+    };
+
+    const handleOnNeedMore = ({ direction, records, source }) => {
+      let anchor;
+      if (direction === 'prev') {
+        anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+        source.fetchByQuery(`callNumber < "${anchor}"`);
+      } else {
+        anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
+        source.fetchByQuery(`callNumber > "${anchor}"`);
+      }
     };
 
     const resultsFormatter = {
@@ -739,7 +773,7 @@ class InstancesList extends React.Component {
         staffSuppress,
         isAnchor,
       }) => {
-        if (browseSelected === browseModeOptions.CALL_NUMBERS) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+        if (optionSelected === browseModeOptions.CALL_NUMBERS) { return getFullMatchRecord(instance?.title, isAnchor); } else {
           return (
             <AppIcon
               size="small"
@@ -782,17 +816,17 @@ class InstancesList extends React.Component {
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      this.setState({ browseSelected: e.target.value });
+      this.setState({ optionSelected: e.target.value });
     };
 
     const browseFilter = () => {
       const { renderer } = getFilterConfig();
-      if (browseSelected === browseModeOptions.SUBJECTS) {
+      if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
       } return renderFilters;
     };
 
-    const browseSelectedString = Object.values(browseModeOptions).some(el => browseSelected.includes(el));
+    const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
 
     const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
@@ -878,7 +912,9 @@ class InstancesList extends React.Component {
             renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType="prev-next"
+            pagingType={pagingTypes.PREV_NEXT}
+            hidePageIndices={this.isBrowseOptionSelected()}
+            paginationBoundaries={!this.isBrowseOptionSelected()}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -886,6 +922,7 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
+            resultsOnNeedMore={handleOnNeedMore}
           />
         </div>
         <ErrorModal

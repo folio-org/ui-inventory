@@ -55,13 +55,13 @@ const renderEditHolding = (props = {}) => render(
 );
 
 describe('EditHolding', () => {
-  const mockMutate = jest.fn();
+  const mutateHolding = jest.fn(() => Promise.resolve({ data: {} }));
 
   beforeEach(() => {
     useInstanceQuery.mockClear();
     useHolding.mockClear();
     useHoldingItemsQuery.mockClear();
-    useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
+    useHoldingMutation.mockClear().mockReturnValue({ mutateHolding });
   });
 
   it('should render HoldingsForm', () => {
@@ -87,6 +87,21 @@ describe('EditHolding', () => {
       temporaryLocationId: '',
     });
 
-    expect(mockMutate).toHaveBeenCalled();
+    expect(mutateHolding).toHaveBeenCalled();
+  });
+
+  it('should handle optimistic locking exception', () => {
+    const error = new Error({ response: 'optimistic locking' });
+    mutateHolding.mockClear().mockImplementation(() => Promise.reject(error));
+
+    renderEditHolding();
+
+    HoldingsForm.mock.calls[0][0].onSubmit({
+      id: 'holdingId',
+      permanentLocationId: '',
+      temporaryLocationId: '',
+    });
+
+    expect(mutateHolding).toHaveBeenCalled();
   });
 });
