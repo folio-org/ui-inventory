@@ -157,7 +157,7 @@ class InstancesList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.isBrowseOptionSelected()) {
+    if (this.getSelectedBrowseOption()) {
       this.setState({
         optionSelected: this.getQIndexFromParams(),
       });
@@ -173,9 +173,10 @@ class InstancesList extends React.Component {
     return params.get('qindex');
   }
 
-  isBrowseOptionSelected = () => {
+  getSelectedBrowseOption = () => {
     const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
-    const isBrowseSelectedBasedOnState = Object.values(browseModeOptions).includes(this.state.optionSelected);
+    console.log(browseModeOptions);
+    const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
 
     return isBrowseSelectedBasedOnUrl || isBrowseSelectedBasedOnState;
   }
@@ -185,7 +186,7 @@ class InstancesList extends React.Component {
   }
 
   getVisibleColumns = () => {
-    let columns = columnSets[this.isBrowseOptionSelected()];
+    let columns = columnSets[this.getSelectedBrowseOption()];
     if (!columns) {
       columns = this.state.visibleColumns;
     }
@@ -890,7 +891,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={this.isBrowseOptionSelected() ? noop : this.getActionMenu}
+            actionMenu={this.getSelectedBrowseOption() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
             title={titleBrowse}
@@ -944,8 +945,8 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
-            hidePageIndices={this.isBrowseOptionSelected()}
-            paginationBoundaries={!this.isBrowseOptionSelected()}
+            hidePageIndices={this.getSelectedBrowseOption()}
+            paginationBoundaries={!this.getSelectedBrowseOption()}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
