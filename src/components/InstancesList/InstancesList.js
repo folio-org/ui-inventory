@@ -107,7 +107,6 @@ class InstancesList extends React.Component {
     showSingleResult: PropTypes.bool,
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
-    onSelectRow: PropTypes.func,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
@@ -123,6 +122,7 @@ class InstancesList extends React.Component {
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
+        replace: PropTypes.func.isRequired,
       }).isRequired,
     }),
     location: PropTypes.shape({
@@ -153,6 +153,18 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
     };
+  }
+
+  componentDidMount() {
+    if (this.isBrowseOptionSelected()) {
+      this.setState({
+        optionSelected: this.getQIndexFromParams(),
+      });
+    } else {
+      this.setState({
+        optionSelected: '',
+      });
+    }
   }
 
   getQIndexFromParams = () => {
@@ -691,23 +703,18 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
-  componentDidMount() {
-    if (this.isBrowseOptionSelected()) {
-      this.setState({
-        optionSelected: this.getQIndexFromParams(),
-      });
-    } else {
-      this.setState({
-        optionSelected: '',
-      });
-    }
+  onSelectRow = (_, row) => {
+    this.setState({ optionSelected: '' });
+    this.props.updateLocation({
+      qindex: 'callNumber',
+      query: row.shelfKey
+    });
   }
 
   render() {
     const {
       showSingleResult,
       browseOnly,
-      onSelectRow,
       disableRecordCreation,
       intl,
       data,
@@ -934,7 +941,7 @@ class InstancesList extends React.Component {
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
-            onSelectRow={onSelectRow}
+            onSelectRow={browseSelectedString && this.onSelectRow}
             renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}

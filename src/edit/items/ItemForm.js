@@ -485,11 +485,12 @@ class ItemForm extends React.Component {
                         <FormattedMessage id="ui-inventory.selectMaterialType">
                           {([placeholder]) => (
                             <Field
-                              label={<FormattedMessage id="ui-inventory.materialTypeRequired" />}
+                              label={<FormattedMessage id="ui-inventory.materialType" />}
                               placeholder={placeholder}
                               name="materialType.id"
                               id="additem_materialType"
                               component={Select}
+                              required
                               fullWidth
                               dataOptions={materialTypeOptions}
                             />
@@ -705,12 +706,14 @@ class ItemForm extends React.Component {
                               label: <FormattedMessage id="ui-inventory.noteType" />,
                               component: Select,
                               dataOptions: [{ label: 'Select type', value: '' }, ...itemNoteTypeOptions],
+                              required: true
                             },
                             {
                               name: 'note',
                               label: <FormattedMessage id="ui-inventory.note" />,
                               component: TextArea,
                               rows: 1,
+                              required: true
                             },
                             {
                               name: 'staffOnly',
@@ -738,11 +741,12 @@ class ItemForm extends React.Component {
                         <FormattedMessage id="ui-inventory.selectLoanType">
                           {([placeholder]) => (
                             <Field
-                              label={<FormattedMessage id="ui-inventory.loanTypePermanentRequired" />}
+                              label={<FormattedMessage id="ui-inventory.loanTypePermanent" />}
                               placeholder={placeholder}
                               name="permanentLoanType.id"
                               id="additem_loanTypePerm"
                               component={Select}
+                              required
                               fullWidth
                               dataOptions={loanTypeOptions}
                             />
@@ -798,12 +802,14 @@ class ItemForm extends React.Component {
                                 { label: 'Check in note', value: 'Check in' },
                                 { label: 'Check out note', value: 'Check out' }
                               ],
+                              required: true
                             },
                             {
                               name: 'note',
                               label: <FormattedMessage id="ui-inventory.note" />,
                               component: TextArea,
                               rows: 1,
+                              required: true
                             },
                             {
                               name: 'staffOnly',
