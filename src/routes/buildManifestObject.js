@@ -12,13 +12,13 @@ import {
 } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
+const regExp = /^((callNumber|subject) [<|>])/i;
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
-  const prevNextReg = /^((callNumber|subject) [<|>])/ig;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex.match(/isbn|issn/)) {
@@ -28,13 +28,13 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   }
 
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    if (prevNextReg.test(queryValue)) {
+    if (regExp.test(queryValue)) {
       queryTemplate = `${queryValue}`;
     } else queryTemplate = `callNumber>=${queryValue} or callNumber<=${queryValue}`;
   }
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
-    if (prevNextReg.test(queryValue)) {
+    if (regExp.test(queryValue)) {
       queryTemplate = queryValue;
     } else queryTemplate = `subject>=${queryValue} or subject<=${queryValue}`;
   }
@@ -66,6 +66,16 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
+const getConditionalValue = (queryParams, browseValue, noBrowseValue) => {
+  const query = get(queryParams, 'query', '');
+
+  if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
+    return browseValue;
+  }
+
+  return noBrowseValue;
+};
+
 export function buildManifestObject() {
   return {
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -80,21 +90,9 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records:  (queryParams) => {
-        const prevNextReg = /^((callNumber|subject) [<|>])/ig;
-        const query = get(queryParams, 'query', '');
-        if (Object.values(browseModeOptions).includes(queryParams.qindex) || prevNextReg.test(query)) {
-          return 'items';
-        } return 'instances';
-      },
+      records:  (queryParams) => getConditionalValue(queryParams, 'items', 'instances'),
       resultOffset: '%{resultOffset}',
-      perRequest: (queryParams) => {
-        const prevNextReg = /^((callNumber|subject) [<|>])/ig;
-        const query = get(queryParams, 'query', '');
-        if (Object.values(browseModeOptions).includes(queryParams.qindex) || prevNextReg.test(query)) {
-          return 25;
-        } return 100;
-      },
+      perRequest: (queryParams) => getConditionalValue(queryParams, 10, 100),
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
@@ -106,15 +104,15 @@ export function buildManifestObject() {
             return 'browse/call-numbers/instances';
           } else return 'search/instances';
         },
-        params: { query: buildQuery,
+        params: {
           precedingRecordsCount: '5',
+          query: buildQuery,
           highlightMatch: (queryParams) => {
-            const prevNextReg = /^((callNumber|subject) [<|>])/ig;
             const queryValue = get(queryParams, 'query', '');
-            if (prevNextReg.test(queryValue)) {
-              return false;
-            } return true;
-          } },
+
+            return !regExp.test(queryValue);
+          },
+        },
         staticFallback: { params: {} },
       },
     },
