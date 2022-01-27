@@ -70,7 +70,16 @@ export function buildManifestObject() {
       path: 'inventory/instances',
       resultDensity: 'sparse',
       GET: {
-        path: 'search/instances',
+        path: (queryParams) => {
+          const prevNextReg = /^(callNumber [<|>])/ig;
+          const query = get(queryParams, 'query', '');
+
+          if (queryParams.qindex === browseModeOptions.CALL_NUMBERS || prevNextReg.test(query)) {
+            return undefined;
+          }
+
+          return 'search/instances';
+        },
         params: { query: buildQuery },
         staticFallback: { params: {} },
       },
@@ -79,11 +88,29 @@ export function buildManifestObject() {
       type: 'okapi',
       records: 'items',
       resultOffset: '%{resultOffset}',
-      perRequest: 100,
       throwErrors: false,
       path: (queryParams) => {
-        const queryValue = get(queryParams, 'query', '');
-        if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) return `browse/call-numbers/instances?expandAll=true&query=callNumber>=${queryValue} or callNumber<${queryValue}&precedingRecordsCount=5&`;
+        const prevNextReg = /^(callNumber [<|>])/ig;
+        const query = get(queryParams, 'query', '');
+
+        if (prevNextReg.test(query)) {
+          return `browse/call-numbers/instances?${new URLSearchParams({
+            expandAll: true,
+            highlightMatch: false,
+            query,
+            precedingRecordsCount: 25,
+            limit: 25
+          })}&`;
+        }
+
+        if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
+          return `browse/call-numbers/instances?${new URLSearchParams({
+            expandAll: true,
+            query: `callNumber>=${query} or callNumber<${query}`,
+            limit: 25
+          })}&`;
+        }
+
         return undefined;
       }
     },

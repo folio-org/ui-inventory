@@ -20,6 +20,7 @@ const renderLanguageField = ({ field, fieldIndex, canEdit, langOptions }) => {
         <Field
           label={label}
           name={field}
+          title={field}
           component={Select}
           placeholder={placeholder}
           dataOptions={langOptions}

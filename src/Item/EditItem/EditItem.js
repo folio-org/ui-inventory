@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useHistory,
@@ -17,6 +17,7 @@ import {
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
+import { parseHttpError } from '../../utils';
 import {
   useItem,
   useItemMutation,
@@ -30,7 +31,7 @@ const EditItem = ({
 }) => {
   const history = useHistory();
   const location = useLocation();
-
+  const [httpError, setHttpError] = useState();
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
   const { isLoading: isItemLoading, item } = useItem(itemId);
@@ -57,6 +58,13 @@ const EditItem = ({
     });
   }, [callout, instanceId, holdingId]);
 
+  const onError = async error => {
+    const parsedError = await parseHttpError(error.response);
+
+    setHttpError(parsedError);
+  };
+
+
   const { mutateItem } = useItemMutation({ onSuccess });
 
   const onSubmit = useCallback((values) => {
@@ -64,13 +72,14 @@ const EditItem = ({
       delete item.barcode;
     }
 
-    return mutateItem(values);
+    return mutateItem(values).catch(onError);
   }, [mutateItem]);
 
   if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
 
   return (
     <ItemForm
+      httpError={httpError}
       form={`itemform_${holding.id}`}
       id={holding.id}
       key={holding.id}
