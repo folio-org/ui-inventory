@@ -20,7 +20,7 @@ const getQueryTemplateValue = (queryValue, param) => {
     : `${param}>=${queryValue} or ${param}<${queryValue}`;
 };
 
-const getConditionalValue = (queryParams, browseValue, noBrowseValue) => {
+const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
 
   if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
@@ -92,9 +92,9 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records:  (queryParams) => getConditionalValue(queryParams, 'items', 'instances'),
+      records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
       resultOffset: '%{resultOffset}',
-      perRequest: (queryParams) => getConditionalValue(queryParams, 10, 100),
+      perRequest: (queryParams) => getParamValue(queryParams, 10, 100),
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
