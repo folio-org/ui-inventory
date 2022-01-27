@@ -135,22 +135,6 @@ describe('InstancesList', () => {
       expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
-    it('should render call number browse results with mismatched record', async () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'callNumbers' }
-      });
-
-      fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), {
-        target: { value: 'PR' }
-      });
-
-      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
-
-      await waitFor(() => {
-        expect(screen.getByText('would be here')).toBeVisible();
-      });
-    });
-
     describe('opening action menu', () => {
       beforeEach(() => {
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
