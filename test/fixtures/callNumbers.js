@@ -506,5 +506,9 @@ export const items = [
         }
       ]
     }
+  },
+  {
+    'shelfKey': 'PR',
+    'totalRecords': 0,
   }
 ];

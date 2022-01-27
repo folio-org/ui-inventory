@@ -135,6 +135,24 @@ describe('InstancesList', () => {
       expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
+    it('should render call number browse results with missmached record', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'callNumbers' }
+      });
+
+      fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), {
+        target: { value: 'PR' }
+      });
+
+      expect(screen.getByRole('searchbox', { name: 'Search' }).value).toBe('PR');
+
+      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+      setTimeout(() => {
+        expect(screen.getByText('would be here')).toBeVisible();
+      });
+    });
+
     describe('opening action menu', () => {
       beforeEach(() => {
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));

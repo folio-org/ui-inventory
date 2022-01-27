@@ -828,7 +828,6 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      'numberOfTitles': r => r?.instance && r?.totalRecords,
       'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
       'callNumber': r => {
         if (r?.instance) {
@@ -836,7 +835,7 @@ class InstancesList extends React.Component {
         }
         return missedMatchItem();
       },
-      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'numberOfTitles': r => r?.instance && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
