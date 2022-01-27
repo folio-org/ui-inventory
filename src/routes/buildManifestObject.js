@@ -28,13 +28,15 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   }
 
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    // eslint-disable-next-line no-unused-expressions
-    prevNextReg.test(queryValue) ? queryTemplate = `${queryValue}` : queryTemplate = `callNumber>=${queryValue} or callNumber<=${queryValue}`;
+    if (prevNextReg.test(queryValue)) {
+      queryTemplate = `${queryValue}`;
+    } else queryTemplate = `callNumber>=${queryValue} or callNumber<=${queryValue}`;
   }
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
-    // eslint-disable-next-line no-unused-expressions
-    prevNextReg.test(queryValue) ? queryTemplate = queryValue : queryTemplate = `subject>=${queryValue} or subject<=${queryValue}`;
+    if (prevNextReg.test(queryValue)) {
+      queryTemplate = queryValue;
+    } else queryTemplate = `subject>=${queryValue} or subject<=${queryValue}`;
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {

@@ -7,10 +7,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import withFacets from '../withFacets';
 import { InstancesView } from '../views';
-import {
-  getFilterConfig,
-  browseModeOptions,
-} from '../filterConfig';
+import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
 

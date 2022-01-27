@@ -850,7 +850,7 @@ class InstancesList extends React.Component {
           onFetchFacets: fetchFacets,
           parentResources,
         });
-      } return renderFilters;
+      } else return renderFilters;
     };
 
     const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));

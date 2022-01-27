@@ -47,11 +47,8 @@ const InstanceFiltersBrowse = props => {
         const recordValues = records[recordName].values;
         const commonProps = [recordValues, accum, name];
 
-        switch (recordName) {
-          case FACETS_CQL.EFFECTIVE_LOCATION:
-            processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
-            break;
-          default:
+        if (recordName === FACETS_CQL.EFFECTIVE_LOCATION) {
+          processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
         }
       }
       return accum;
