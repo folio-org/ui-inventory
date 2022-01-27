@@ -49,27 +49,11 @@ class InstancesRoute extends React.Component {
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
 
-    const params = new URLSearchParams(document.location.search);
-    const qindex = params.get('qindex');
-
-    const resourceBrowse = () => {
-      if (qindex === browseModeOptions.CALL_NUMBERS) {
-        return { ...resources,
-          records: resources.recordsBrowseCallNumber,
-          recordsBrowseCallNumber: {} };
-      } else if (qindex === browseModeOptions.SUBJECTS) {
-        return { ...resources,
-          records: resources.recordsSubject,
-          recordsSubject: {} };
-      } else return resources;
-    };
-
-
     return (
       <DataContext.Consumer>
         {data => (
           <InstancesView
-            parentResources={resourceBrowse()}
+            parentResources={resources}
             parentMutator={mutator}
             data={{ ...data, query }}
             browseOnly={browseOnly}
@@ -84,6 +68,7 @@ class InstancesRoute extends React.Component {
             })}
             segment={segment}
             searchableIndexes={indexes}
+            fetchFacets={fetchFacets}
           />
         )}
       </DataContext.Consumer>

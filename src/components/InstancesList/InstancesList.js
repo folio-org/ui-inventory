@@ -129,6 +129,7 @@ class InstancesList extends React.Component {
       search: PropTypes.string
     }),
     stripes: PropTypes.object.isRequired,
+    fetchFacets: PropTypes.func,
   };
 
   static contextType = CalloutContext;
@@ -720,6 +721,7 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      fetchFacets,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -739,13 +741,25 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
+      if (!Object.values(browseModeOptions).includes(optionSelected)) return;
+
+      const isSubject = optionSelected === browseModeOptions.SUBJECTS;
+      const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
+      const param = isSubject ? 'subject' : 'callNumber';
       let anchor;
+
       if (direction === 'prev') {
-        anchor = records.find(i => i.fullCallNumber)?.shelfKey;
-        source.fetchByQuery(`callNumber < "${anchor}"`);
+        anchor = isCallNumber
+          ? records.find(i => i.fullCallNumber)?.shelfKey
+          : records[0].subject;
+
+        source.fetchByQuery(`${param} < "${anchor}"`);
       } else {
-        anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
-        source.fetchByQuery(`callNumber > "${anchor}"`);
+        anchor = isCallNumber
+          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+          : records[records.length - 1].subject;
+
+        source.fetchByQuery(`${param} > "${anchor}"`);
       }
     };
 
@@ -820,9 +834,15 @@ class InstancesList extends React.Component {
     };
 
     const browseFilter = () => {
-      const { renderer } = getFilterConfig();
+      const { renderer } = getFilterConfig('browse');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
+      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets,
+          parentResources,
+        });
       } return renderFilters;
     };
 
