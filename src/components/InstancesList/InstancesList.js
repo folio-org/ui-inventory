@@ -706,10 +706,18 @@ class InstancesList extends React.Component {
   }
 
   onSelectRow = (_, row) => {
+    if (!row.instance && !row.totalRecords) return;
+
     this.setState({ optionSelected: '' });
+    if (row.instance) {
+      this.props.updateLocation({
+        qindex: 'callNumber',
+        query: row.shelfKey
+      });
+    }
     this.props.updateLocation({
-      qindex: 'callNumber',
-      query: row.shelfKey
+      qindex: 'subject',
+      query: row.subject
     });
   }
 
@@ -739,6 +747,25 @@ class InstancesList extends React.Component {
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+
+    const missedMatchItem = () => {
+      const query = new URLSearchParams(this.props.location.search).get('query');
+      return (
+        <>
+          <span className={css.warnIcon}>
+            <Icon
+              size="medium"
+              icon="exclamation-circle"
+              status="warn"
+            />
+          </span>
+          <span className={css.missingMatchError}>
+            {query}
+          </span>
+          <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
+        </>
+      );
+    };
 
     const getFullMatchRecord = (item, isAnchor) => {
       if (isAnchor) {
@@ -795,7 +822,9 @@ class InstancesList extends React.Component {
         staffSuppress,
         isAnchor,
       }) => {
-        if (optionSelected === browseModeOptions.CALL_NUMBERS) { return getFullMatchRecord(instance?.title, isAnchor); } else {
+        if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+          return getFullMatchRecord(instance?.title, isAnchor);
+        } else {
           return (
             <AppIcon
               size="small"
@@ -830,8 +859,13 @@ class InstancesList extends React.Component {
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
       'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
-      'callNumber': r => getFullMatchRecord(r?.fullCallNumber, r.isAnchor),
-      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'callNumber': r => {
+        if (r?.instance) {
+          return getFullMatchRecord(r?.fullCallNumber);
+        }
+        return missedMatchItem();
+      },
+      'numberOfTitles': r => (r?.instance || r?.subject) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
