@@ -916,6 +916,9 @@ class InstancesList extends React.Component {
             visibleColumns={visibleColumns}
             columnMapping={columnMapping}
             columnWidths={{
+              callNumber: '15%',
+              subject: '50%',
+              numberOfTitles: '15%',
               select: '30px',
               title: '40%',
             }}

@@ -14,6 +14,22 @@ import {
 const INITIAL_RESULT_COUNT = 100;
 const regExp = /^((callNumber|subject) [<|>])/i;
 
+const getQueryTemplateValue = (queryValue, param) => {
+  return regExp.test(queryValue)
+    ? queryValue
+    : `${param}>=${queryValue} or ${param}<${queryValue}`;
+};
+
+const getConditionalValue = (queryParams, browseValue, noBrowseValue) => {
+  const query = get(queryParams, 'query', '');
+
+  if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
+    return browseValue;
+  }
+
+  return noBrowseValue;
+};
+
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
@@ -28,15 +44,11 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   }
 
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    if (regExp.test(queryValue)) {
-      queryTemplate = `${queryValue}`;
-    } else queryTemplate = `callNumber>=${queryValue} or callNumber<=${queryValue}`;
+    queryTemplate = getQueryTemplateValue(queryValue, 'callNumber');
   }
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
-    if (regExp.test(queryValue)) {
-      queryTemplate = queryValue;
-    } else queryTemplate = `subject>=${queryValue} or subject<=${queryValue}`;
+    queryTemplate = getQueryTemplateValue(queryValue, 'subject');
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
@@ -65,16 +77,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryIndex !== 'querySearch',
   )(queryParams, pathComponents, resourceData, logger, props);
 }
-
-const getConditionalValue = (queryParams, browseValue, noBrowseValue) => {
-  const query = get(queryParams, 'query', '');
-
-  if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
-    return browseValue;
-  }
-
-  return noBrowseValue;
-};
 
 export function buildManifestObject() {
   return {
@@ -105,7 +107,7 @@ export function buildManifestObject() {
           } else return 'search/instances';
         },
         params: {
-          precedingRecordsCount: '5',
+          expandAll: true,
           query: buildQuery,
           highlightMatch: (queryParams) => {
             const queryValue = get(queryParams, 'query', '');
