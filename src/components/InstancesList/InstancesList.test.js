@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -135,7 +135,7 @@ describe('InstancesList', () => {
       expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
-    it('should render call number browse results with mismatched record', () => {
+    it('should render call number browse results with mismatched record', async () => {
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'callNumbers' }
       });
@@ -144,11 +144,9 @@ describe('InstancesList', () => {
         target: { value: 'PR' }
       });
 
-      expect(screen.getByRole('searchbox', { name: 'Search' }).value).toBe('PR');
-
       fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
 
-      setTimeout(() => {
+      await waitFor(() => {
         expect(screen.getByText('would be here')).toBeVisible();
       });
     });
