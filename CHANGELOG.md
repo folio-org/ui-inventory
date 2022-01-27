@@ -58,6 +58,7 @@
 * Filters/facets on Subject browse form. Refs UIIN-1904.
 * New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154.
 * Create/Edit Item record > No indication that field(s) is required by screenreader and not using the FOLIO standard indication for required fields. Refs UIIN-1649.
+* Filters/facets on Call number browse form. Refs UIIN-1882.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
