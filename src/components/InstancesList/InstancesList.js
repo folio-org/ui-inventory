@@ -175,7 +175,6 @@ class InstancesList extends React.Component {
 
   getSelectedBrowseOption = () => {
     const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
-    console.log(browseModeOptions);
     const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
 
     return isBrowseSelectedBasedOnUrl || isBrowseSelectedBasedOnState;
