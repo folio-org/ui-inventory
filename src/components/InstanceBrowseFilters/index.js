@@ -1,2 +1,2 @@
-export { default } from './InstanceFilterBrowse';
+export { default } from './instanceFilterBrowse';
 export { default as instanceFilterBrowseRenderer } from './instanceFilterBrowseRenderer';

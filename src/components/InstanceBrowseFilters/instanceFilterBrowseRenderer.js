@@ -1,7 +1,7 @@
 import React from 'react';
 import { get } from 'lodash';
 
-import InstanceFiltersBrowse from './InstanceFilterBrowse';
+import InstanceFiltersBrowse from './instanceFilterBrowse';
 import { getCurrentFilters } from '../../utils';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
