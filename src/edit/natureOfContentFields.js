@@ -22,6 +22,7 @@ const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfCont
         <Field
           label={label}
           name={field}
+          title={field}
           component={Select}
           placeholder={placeholder}
           dataOptions={natureOfContentTermOptions}

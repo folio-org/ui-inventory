@@ -35,6 +35,7 @@ import {
   HasCommand,
 } from '@folio/stripes/components';
 
+import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
@@ -70,14 +71,17 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
-import { browseModeOptions } from '../../filterConfig';
+import {
+  browseModeOptions,
+  getFilterConfig,
+} from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['callNumber', 'numberOfTitles']
+  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -147,15 +151,20 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      browseSelected: false,
+      optionSelected: '',
     };
   }
 
-  isBrowseOptionSelected = () => {
+  getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
-    const qindex = params.get('qindex');
+    return params.get('qindex');
+  }
 
-    return Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === qindex)[0];
+  isBrowseOptionSelected = () => {
+    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    const isBrowseSelectedBasedOnState = Object.values(browseModeOptions).includes(this.state.optionSelected);
+
+    return isBrowseSelectedBasedOnUrl || isBrowseSelectedBasedOnState;
   }
 
   getInitialToggableColumns = () => {
@@ -167,7 +176,15 @@ class InstancesList extends React.Component {
     if (!columns) {
       columns = this.state.visibleColumns;
     }
-    const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el)) ?
+      new Set([...columns])
+      :
+      new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+
+    if (Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el))) {
+      return Array.from(visibleColumns);
+    }
+
     return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
@@ -184,7 +201,6 @@ class InstancesList extends React.Component {
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
-
     goTo(path, { ...params, filters: filtersStr });
   };
 
@@ -477,7 +493,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      !this.state.browseSelected ?
+      !this.state.optionSelected.includes(Object.values(browseModeOptions)) ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
@@ -610,12 +626,12 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
+      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       select: '',
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' })
     };
 
@@ -675,6 +691,18 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  componentDidMount() {
+    if (this.isBrowseOptionSelected()) {
+      this.setState({
+        optionSelected: this.getQIndexFromParams(),
+      });
+    } else {
+      this.setState({
+        optionSelected: '',
+      });
+    }
+  }
+
   render() {
     const {
       showSingleResult,
@@ -697,7 +725,7 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
-      browseSelected
+      optionSelected
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -719,6 +747,25 @@ class InstancesList extends React.Component {
           <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
         </>
       );
+    };
+
+    const getFullMatchRecord = (item, isAnchor) => {
+      if (isAnchor) {
+        return <strong>{item}</strong>;
+      }
+
+      return item;
+    };
+
+    const handleOnNeedMore = ({ direction, records, source }) => {
+      let anchor;
+      if (direction === 'prev') {
+        anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+        source.fetchByQuery(`callNumber < "${anchor}"`);
+      } else {
+        anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
+        source.fetchByQuery(`callNumber > "${anchor}"`);
+      }
     };
 
     const resultsFormatter = {
@@ -743,64 +790,75 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
-      }) => instance && (
-        <AppIcon
-          size="small"
-          app="inventory"
-          iconKey="instance"
-          iconAlignment="baseline"
-        >
-          {title || instance?.title}
-          {(isBoundWith) &&
+        isAnchor,
+      }) => {
+        if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+          return getFullMatchRecord(instance?.title, isAnchor);
+        } else {
+          return (
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              {title}
+              {(isBoundWith) &&
+              <AppIcon
+                size="small"
+                app="@folio/inventory"
+                iconKey="bound-with"
+                iconClassName={css.boundWithIcon}
+              />
           }
-          {(discoverySuppress || staffSuppress) &&
-          <span className={css.warnIcon}>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
+              {(discoverySuppress || staffSuppress) &&
+              <span className={css.warnIcon}>
+                <Icon
+                  size="medium"
+                  icon="exclamation-circle"
+                  status="warn"
+                />
+              </span>
           }
-        </AppIcon>
-      ),
+            </AppIcon>
+          );
+        }
+      },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'numberOfTitles': r => r?.instance && r?.totalRecords,
+      'subject': r => getFullMatchRecord(r?.subject, r.isAnchor),
       'callNumber': r => {
         if (r?.instance) {
-          return r?.fullCallNumber;
+          return getFullMatchRecord(r?.fullCallNumber);
         }
         return missedMatchItem();
       },
-      'numberOfTitles': r => r?.instance && r?.totalRecords,
+      'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e) => {
-      const isBrowseOptionSelected = Object.values(browseModeOptions).includes(e.target.value);
-      if (isBrowseOptionSelected) {
-        this.setState({ browseSelected: true });
-      } else {
-        this.setState(
-          { browseSelected: false }
-        );
-      }
+      this.setState({ optionSelected: e.target.value });
     };
 
-    const customPaneSubTextBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
-    const searchFieldButtonLabelBrowse = browseSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseSelected ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseSelected ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const browseFilter = () => {
+      const { renderer } = getFilterConfig();
+      if (optionSelected === browseModeOptions.SUBJECTS) {
+        return renderer;
+      } return renderFilters;
+    };
+
+    const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
+
+    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -878,10 +936,12 @@ class InstancesList extends React.Component {
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
             onSelectRow={onSelectRow}
-            renderFilters={renderFilters}
+            renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType="prev-next"
+            pagingType={pagingTypes.PREV_NEXT}
+            hidePageIndices={this.isBrowseOptionSelected()}
+            paginationBoundaries={!this.isBrowseOptionSelected()}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -889,6 +949,7 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
+            resultsOnNeedMore={handleOnNeedMore}
           />
         </div>
         <ErrorModal

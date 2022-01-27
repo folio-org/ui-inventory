@@ -34,6 +34,7 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../../components/RepeatableField';
+import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
@@ -91,6 +92,9 @@ class HoldingsForm extends React.Component {
     initialValues: PropTypes.object,
     instance: PropTypes.object,
     isMARCRecord: PropTypes.bool,
+    location: PropTypes.shape({
+      state: PropTypes.string.isRequired,
+    }).isRequired,
     referenceTables: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       holdingsBlockedFields: PropTypes.shape({
@@ -107,6 +111,7 @@ class HoldingsForm extends React.Component {
       change: PropTypes.func,
     }),
     goTo: PropTypes.func.isRequired,
+    httpError: PropTypes.object,
   };
 
   static defaultProps = {
@@ -187,9 +192,11 @@ class HoldingsForm extends React.Component {
       referenceTables,
       copy,
       handleSubmit,
+      location: { state: locationState },
       pristine,
       submitting,
       goTo,
+      httpError,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
@@ -309,6 +316,12 @@ class HoldingsForm extends React.Component {
                   : null
               }
             >
+              <OptimisticLockingBanner
+                httpError={httpError}
+                latestVersionLink={locationState?.backPathname}
+                conflictDetectionBannerRef={this.conflictDetectionBannerRef}
+                focusConflictDetectionBanner={this.focusConflictDetectionBanner}
+              />
               <AccordionStatus ref={this.accordionStatusRef}>
                 <Row end="xs">
                   <Col xs>
@@ -451,6 +464,7 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           marginBottom0
                           disabled={this.isFieldBlocked('permanentLocationId')}
+                          required
                         />
                       </Col>
                       <Col sm={4}>
@@ -673,7 +687,7 @@ class HoldingsForm extends React.Component {
                       <Col sm={10}>
                         <RepeatableField
                           name="receivingHistory.entries"
-                          addButtonId="clickable-add-statistical-code"
+                          addButtonId="clickable-add-receiving-history"
                           addLabel={<FormattedMessage id="ui-inventory.addReceivingHistory" />}
                           template={[
                             {

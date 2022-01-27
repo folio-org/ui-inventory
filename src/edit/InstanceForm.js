@@ -31,9 +31,11 @@ import {
   collapseAllSections,
   expandAllSections,
 } from '@folio/stripes/components';
+
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../components/RepeatableField';
+import OptimisticLockingBanner from '../components/OptimisticLockingBanner';
 
 import AlternativeTitles from './alternativeTitles';
 import AdministrativeNoteFields from './administrativeNoteFields';
@@ -249,6 +251,7 @@ class InstanceForm extends React.Component {
       pristine,
       submitting,
       history,
+      httpError,
       id,
     } = this.props;
 
@@ -344,6 +347,12 @@ class InstanceForm extends React.Component {
               actionMenu={this.getActionMenu}
               id={id}
             >
+              <OptimisticLockingBanner
+                httpError={httpError}
+                latestVersionLink={`/inventory/view/${initialValues.id}`}
+                conflictDetectionBannerRef={this.conflictDetectionBannerRef}
+                focusConflictDetectionBanner={this.focusConflictDetectionBanner}
+              />
               <div>
                 <Headline
                   size="large"
@@ -767,6 +776,7 @@ InstanceForm.propTypes = {
   instanceSource: PropTypes.string,
   history: PropTypes.object.isRequired,
   id: PropTypes.string,
+  httpError: PropTypes.object,
 };
 InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
