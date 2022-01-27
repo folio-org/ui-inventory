@@ -61,6 +61,7 @@
 * Selecting row from call number browse result list. UIIN-1888
 * Filters/facets on Call number browse form. Refs UIIN-1882.
 * Selecting row from subject browse result list. UIIN-1895
+* Placeholder for the missing match. Refs UIIN-1889.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
