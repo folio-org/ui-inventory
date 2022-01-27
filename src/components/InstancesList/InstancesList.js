@@ -505,7 +505,7 @@ class InstancesList extends React.Component {
     };
 
     return (
-      !this.state.optionSelected.includes(Object.values(browseModeOptions)) ?
+      !Object.values(browseModeOptions).includes(this.state.optionSelected) ?
         <>
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
             <IfPermission perm="ui-inventory.instance.create">
@@ -773,13 +773,25 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
+      if (!Object.values(browseModeOptions).includes(optionSelected)) return;
+
+      const isSubject = optionSelected === browseModeOptions.SUBJECTS;
+      const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
+      const param = isSubject ? 'subject' : 'callNumber';
       let anchor;
+
       if (direction === 'prev') {
-        anchor = records.find(i => i.fullCallNumber)?.shelfKey;
-        source.fetchByQuery(`callNumber < "${anchor}"`);
+        anchor = isCallNumber
+          ? records.find(i => i.fullCallNumber)?.shelfKey
+          : records[0].subject;
+
+        source.fetchByQuery(`${param} < "${anchor}"`);
       } else {
-        anchor = records.reverse().find(i => i.fullCallNumber)?.shelfKey;
-        source.fetchByQuery(`callNumber > "${anchor}"`);
+        anchor = isCallNumber
+          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+          : records[records.length - 1].subject;
+
+        source.fetchByQuery(`${param} > "${anchor}"`);
       }
     };
 
