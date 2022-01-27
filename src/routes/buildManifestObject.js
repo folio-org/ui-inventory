@@ -12,6 +12,23 @@ import {
 } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
+const regExp = /^((callNumber|subject) [<|>])/i;
+
+const getQueryTemplateValue = (queryValue, param) => {
+  return regExp.test(queryValue)
+    ? queryValue
+    : `${param}>=${queryValue} or ${param}<${queryValue}`;
+};
+
+const getParamValue = (queryParams, browseValue, noBrowseValue) => {
+  const query = get(queryParams, 'query', '');
+
+  if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
+    return browseValue;
+  }
+
+  return noBrowseValue;
+};
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
@@ -26,11 +43,23 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
+  if (queryIndex === browseModeOptions.CALL_NUMBERS) {
+    queryTemplate = getQueryTemplateValue(queryValue, 'callNumber');
+  }
+
+  if (queryIndex === browseModeOptions.SUBJECTS) {
+    queryTemplate = getQueryTemplateValue(queryValue, 'subject');
+  }
+
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
     query.sort = 'title';
+  }
+
+  if (Object.values(browseModeOptions).includes(queryIndex)) {
+    query.sort = '';
   }
 
   resourceData.query = { ...query, qindex: '' };
@@ -49,32 +78,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
-const getPath = ({ queryParams, entity, param }) => {
-  const prevNextReg = new RegExp(`^(${param} [<|>])`, 'i');
-  const query = get(queryParams, 'query', '');
-  const recordsCount = 10;
-
-  if (prevNextReg.test(query)) {
-    return `browse/${entity}/instances?${new URLSearchParams({
-      expandAll: true,
-      highlightMatch: false,
-      query,
-      precedingRecordsCount: recordsCount,
-      limit: recordsCount
-    })}&`;
-  }
-
-  if (Object.values(browseModeOptions).includes(queryParams.qindex)) {
-    return `browse/${entity}/instances?${new URLSearchParams({
-      expandAll: true,
-      query: `${param}>=${query} or ${param}<${query}`,
-      limit: recordsCount
-    })}&`;
-  }
-
-  return undefined;
-};
-
 export function buildManifestObject() {
   return {
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -89,40 +92,31 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records:  'instances',
+      records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
       resultOffset: '%{resultOffset}',
-      perRequest: 100,
+      perRequest: (queryParams) => getParamValue(queryParams, 10, 100),
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
       GET: {
         path: (queryParams) => {
-          const prevNextReg = /^((callNumber|subject) [<|>])/ig;
-          const query = get(queryParams, 'query', '');
-
-          if (Object.values(browseModeOptions).includes(queryParams.qindex) || prevNextReg.test(query)) {
-            return undefined;
-          }
-
-          return 'search/instances';
+          if (queryParams.qindex === browseModeOptions.SUBJECTS) {
+            return 'browse/subjects/instances';
+          } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
+            return 'browse/call-numbers/instances';
+          } else return 'search/instances';
         },
-        params: { query: buildQuery },
+        params: {
+          expandAll: true,
+          query: buildQuery,
+          highlightMatch: (queryParams) => {
+            const queryValue = get(queryParams, 'query', '');
+
+            return !regExp.test(queryValue);
+          },
+        },
         staticFallback: { params: {} },
       },
-    },
-    recordsBrowseCallNumber: {
-      type: 'okapi',
-      records: 'items',
-      resultOffset: '%{resultOffset}',
-      throwErrors: false,
-      path: (queryParams) => getPath({ queryParams, entity: 'call-numbers', param: 'callNumber' })
-    },
-    recordsSubject: {
-      type: 'okapi',
-      records: 'items',
-      resultOffset: '%{resultOffset}',
-      throwErrors: false,
-      path: (queryParams) => getPath({ queryParams, entity: 'subjects', param: 'subject' }),
     },
     recordsToExportIDs: {
       type: 'okapi',

@@ -7,10 +7,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import withFacets from '../withFacets';
 import { InstancesView } from '../views';
-import {
-  getFilterConfig,
-  browseModeOptions,
-} from '../filterConfig';
+import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
 
@@ -49,27 +46,11 @@ class InstancesRoute extends React.Component {
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
 
-    const params = new URLSearchParams(document.location.search);
-    const qindex = params.get('qindex');
-
-    const resourceBrowse = () => {
-      if (qindex === browseModeOptions.CALL_NUMBERS) {
-        return { ...resources,
-          records: resources.recordsBrowseCallNumber,
-          recordsBrowseCallNumber: {} };
-      } else if (qindex === browseModeOptions.SUBJECTS) {
-        return { ...resources,
-          records: resources.recordsSubject,
-          recordsSubject: {} };
-      } else return resources;
-    };
-
-
     return (
       <DataContext.Consumer>
         {data => (
           <InstancesView
-            parentResources={resourceBrowse()}
+            parentResources={resources}
             parentMutator={mutator}
             data={{ ...data, query }}
             browseOnly={browseOnly}
@@ -84,6 +65,7 @@ class InstancesRoute extends React.Component {
             })}
             segment={segment}
             searchableIndexes={indexes}
+            fetchFacets={fetchFacets}
           />
         )}
       </DataContext.Consumer>

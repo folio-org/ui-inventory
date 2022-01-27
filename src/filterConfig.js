@@ -2,6 +2,7 @@ import {
   instanceFilterRenderer,
   holdingsRecordFilterRenderer,
   itemFilterRenderer,
+  instanceFilterBrowseRenderer,
 } from './components';
 import {
   FACETS,
@@ -92,6 +93,14 @@ export const browseModeOptions = {
   SUBJECTS: 'browseSubjects',
 };
 
+export const instanceFilterBrowseConfig = [
+  {
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
+    values: [],
+  },
+];
+
 export const instanceIndexes = [
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
@@ -108,6 +117,12 @@ export const instanceIndexes = [
   { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
+
+export const instanceBrowseSortMap = {
+  callNumber: 'callNumber',
+  title: 'title',
+  numberOfTitles: 'numberOfTitles',
+};
 
 export const instanceSortMap = {
   Title: 'title',
@@ -256,6 +271,12 @@ const config = {
     indexes: itemIndexes,
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
+  },
+  browse: {
+    filters: instanceFilterBrowseConfig,
+    indexes: instanceIndexes,
+    sortMap: instanceSortMap,
+    renderer: instanceFilterBrowseRenderer,
   }
 };
 
