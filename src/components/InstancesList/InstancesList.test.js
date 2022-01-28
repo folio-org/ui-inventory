@@ -93,6 +93,7 @@ const renderInstancesList = ({ segment }) => {
             segment={segment}
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
+            fetchFacets={noop}
           />
         </ModuleHierarchyProvider>
       </StripesContext.Provider>
