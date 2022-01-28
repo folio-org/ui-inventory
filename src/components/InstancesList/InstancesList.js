@@ -153,6 +153,7 @@ class InstancesList extends React.Component {
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
       optionSelected: '',
+      searchAndSortKey: 0,
     };
   }
 
@@ -706,20 +707,44 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  // handler used for clicking a row in browse mode
   onSelectRow = (_, row) => {
-    if (!row.instance && !row.totalRecords) return;
+    const {
+      parentMutator,
+      parentResources,
+      updateLocation,
+    } = this.props;
 
-    this.setState({ optionSelected: '' });
-    if (row.instance) {
-      this.props.updateLocation({
-        qindex: 'callNumber',
-        query: row.shelfKey
-      });
+    switch (get(parentResources.query, 'qindex')) {
+      case browseModeOptions.CALL_NUMBERS:
+        parentMutator.query.update({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        updateLocation({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        break;
+      case browseModeOptions.SUBJECTS:
+        parentMutator.query.update({
+          qindex: 'subject',
+          query: row.subject
+        });
+        updateLocation({
+          qindex: 'subject',
+          query: row.subject
+        });
+        break;
+      default:
     }
-    this.props.updateLocation({
-      qindex: 'subject',
-      query: row.subject
-    });
+
+    // the searchAndSortKey state field can be updated to reset SearchAndSort
+    // to use the app-level selectedIndex
+    this.setState((curState) => ({
+      optionSelected: '',
+      searchAndSortKey: curState.searchAndSortKey + 1
+    }));
   }
 
   render() {
@@ -744,7 +769,8 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
-      optionSelected
+      optionSelected,
+      searchAndSortKey
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -761,7 +787,9 @@ class InstancesList extends React.Component {
             />
           </span>
           <span className={css.missingMatchError}>
+            &nbsp;
             {query}
+            &nbsp;
           </span>
           <strong>
             <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
@@ -933,6 +961,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
+            key={searchAndSortKey}
             actionMenu={this.getSelectedBrowseOption() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
@@ -982,7 +1011,7 @@ class InstancesList extends React.Component {
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
-            onSelectRow={browseSelectedString && this.onSelectRow}
+            onSelectRow={browseQueryExecuted ? this.onSelectRow : undefined}
             renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
