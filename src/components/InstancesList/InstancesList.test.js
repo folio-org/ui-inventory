@@ -122,8 +122,6 @@ describe('InstancesList', () => {
       });
 
       expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
-
-      expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
     it('should have selected subject browse option', () => {
@@ -132,8 +130,6 @@ describe('InstancesList', () => {
       });
 
       expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
-
-      expect(screen.getByText('Browse inventory')).toBeVisible();
     });
 
     describe('opening action menu', () => {

@@ -174,10 +174,13 @@ class InstancesList extends React.Component {
   }
 
   getSelectedBrowseOption = () => {
-    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
     const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
+    return isBrowseSelectedBasedOnState;
+  }
 
-    return isBrowseSelectedBasedOnUrl || isBrowseSelectedBasedOnState;
+  getExecutedBrowseQuery = () => {
+    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    return isBrowseSelectedBasedOnUrl;
   }
 
   getInitialToggableColumns = () => {
@@ -185,20 +188,18 @@ class InstancesList extends React.Component {
   }
 
   getVisibleColumns = () => {
-    let columns = columnSets[this.getSelectedBrowseOption()];
-    if (!columns) {
+    // display particular columnset based on the quindex value in the URL, since the search has been
+    // performed.
+    const executedBrowseQuery = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    let columns = columnSets[executedBrowseQuery];
+    if (!executedBrowseQuery) {
       columns = this.state.visibleColumns;
-    }
-    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el)) ?
-      new Set([...columns])
-      :
-      new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
-
-    if (Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el))) {
+      const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+      return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    } else {
+      const visibleColumns = new Set([...columns]);
       return Array.from(visibleColumns);
     }
-
-    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -824,7 +825,7 @@ class InstancesList extends React.Component {
         staffSuppress,
         isAnchor,
       }) => {
-        if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+        if (this.getExecutedBrowseQuery()) {
           return getFullMatchRecord(instance?.title, isAnchor);
         } else {
           return (
@@ -862,7 +863,7 @@ class InstancesList extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
       'subject': r => {
         if (r?.totalRecords) {
-          return getFullMatchRecord(r?.subject, r.isAnchor)
+          return getFullMatchRecord(r?.subject, r.isAnchor);
         }
         return missedMatchItem();
       },
@@ -875,6 +876,7 @@ class InstancesList extends React.Component {
       'numberOfTitles': r => (r?.instance || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
+    const browseQueryExecuted = Boolean(this.getExecutedBrowseQuery());
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
@@ -897,10 +899,10 @@ class InstancesList extends React.Component {
 
     const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
 
-    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const customPaneSubTextBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const titleBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -985,8 +987,8 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
-            hidePageIndices={this.getSelectedBrowseOption()}
-            paginationBoundaries={!this.getSelectedBrowseOption()}
+            hidePageIndices={browseQueryExecuted}
+            paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
