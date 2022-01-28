@@ -58,7 +58,10 @@
 * Filters/facets on Subject browse form. Refs UIIN-1904.
 * New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154.
 * Create/Edit Item record > No indication that field(s) is required by screenreader and not using the FOLIO standard indication for required fields. Refs UIIN-1649.
+* Selecting row from call number browse result list. UIIN-1888
 * Filters/facets on Call number browse form. Refs UIIN-1882.
+* Selecting row from subject browse result list. UIIN-1895
+* Placeholder for the missing match. Refs UIIN-1889.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
@@ -879,7 +882,6 @@ UIIN-187, UIIN-190, UIIN-197, UIIN-205, UIIN-207, UIIN-214, UIIN-221,
 * Aplly expand/collapse all accordions toggle to Holdings detail. UIIN-245
 * apply expand/collapse all accordions toggle to Item detail. UIIN-246
 * Use /inventory/instance endpoint, rather than storage, for instances. UIIN-263
-* Selecting row from browse result list. UIIN-1888
 
 
 ## [1.0.0](https://github.com/folio-org/ui-instances/tree/v1.0.0) (2017-09-08)
