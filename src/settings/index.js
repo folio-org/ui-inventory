@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  createRef,
+} from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -212,6 +214,14 @@ class InventorySettings extends React.Component {
         ]
       });
     }
+
+    this.paneTitleRef = createRef();
+  }
+
+  componentDidMount() {
+    if (this.paneTitleRef.current) {
+      this.paneTitleRef.current.focus();
+    }
   }
 
   addPerm = permission => {
@@ -226,6 +236,7 @@ class InventorySettings extends React.Component {
         {...this.props}
         sections={this.sections}
         paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
+        paneTitleRef={this.paneTitleRef}
         data-test-inventory-settings
       />
     );
