@@ -889,7 +889,7 @@ class InstancesList extends React.Component {
       } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
         return renderer({
           ...data,
-          onFetchFacets: fetchFacets,
+          onFetchFacets: fetchFacets(data),
           parentResources,
         });
       } else return renderFilters;
