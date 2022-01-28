@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
-
+import { createMemoryHistory } from 'history';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
@@ -40,6 +40,18 @@ const query = {
   sort: 'title',
 };
 
+const browseCNlocation = {
+  search: {
+    qindex: 'callNumbers'
+  }
+};
+
+const browseSubjectlocation = {
+  search: {
+    qindex: 'browseSubjects'
+  }
+};
+
 const resources = {
   query,
   records: {
@@ -66,6 +78,8 @@ const resources = {
   resultOffset: 0,
 };
 
+const history = createMemoryHistory();
+
 const renderInstancesList = ({ segment }) => {
   const {
     indexes,
@@ -74,7 +88,7 @@ const renderInstancesList = ({ segment }) => {
   } = getFilterConfig(segment);
 
   return renderWithIntl(
-    <Router>
+    <Router history={history}>
       <StripesContext.Provider value={stripesStub}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
@@ -160,6 +174,17 @@ describe('InstancesList', () => {
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
+    });
+  });
+
+  describe('rendering browse results', () => {
+    beforeEach(() => {
+      history.push('/inventory/browse/instances?qindex=callNumbers');
+      renderInstancesList({ segment: 'instances' });
+    });
+
+    it('should display Browse header', () => {
+      expect(screen.getByText('Browse inventory')).toBeVisible();
     });
   });
 });
