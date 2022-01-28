@@ -739,7 +739,7 @@ class InstancesList extends React.Component {
       default:
     }
 
-    // the searchAndSortKey state field can be updated to reset SearchAndSortQuery
+    // the searchAndSortKey state field can be updated to reset SearchAndSort
     // to use the app-level selectedIndex
     this.setState((curState) => ({
       optionSelected: '',
