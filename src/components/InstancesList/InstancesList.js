@@ -769,7 +769,8 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
-      optionSelected
+      optionSelected,
+      searchAndSortKey
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -958,6 +959,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
+            key={searchAndSortKey}
             actionMenu={this.getSelectedBrowseOption() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
