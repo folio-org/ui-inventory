@@ -787,6 +787,7 @@ class InstancesList extends React.Component {
             />
           </span>
           <span className={css.missingMatchError}>
+            &nbsp;
             {query}
           </span>
           <strong>
