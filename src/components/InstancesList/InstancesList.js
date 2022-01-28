@@ -153,6 +153,7 @@ class InstancesList extends React.Component {
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
       optionSelected: '',
+      searchAndSortKey: 0,
     };
   }
 
@@ -705,13 +706,110 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  // handler used for clicking a row in browse mode
   onSelectRow = (_, row) => {
-    this.setState({ optionSelected: '' });
-    this.props.updateLocation({
-      qindex: 'callNumber',
-      query: row.shelfKey
-    });
+    const {
+      parentMutator,
+      parentResources,
+      updateLocation,
+    } = this.props;
+
+    switch (get(parentResources.query, 'qindex')) {
+      case browseModeOptions.CALL_NUMBERS:
+        parentMutator.query.update({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        updateLocation({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        break;
+      case browseModeOptions.SUBJECTS:
+        parentMutator.query.update({
+          qindex: 'subject',
+          query: row.subject
+        });
+        updateLocation({
+          qindex: 'subject',
+          query: row.subject
+        });
+        break;
+      default:
+    }
+
+    // the searchAndSortKey state field can be updated to reset SearchAndSortQuery
+    // to use the app-level selectedIndex
+    this.setState((curState) => ({
+      optionSelected: '',
+      searchAndSortKey: curState.searchAndSortKey + 1
+    }));
   }
+
+  handleOnNeedMore = ({ direction, records, source }) => {
+    const { optionSelected } = this.state;
+    if (!Object.values(browseModeOptions).includes(optionSelected)) return;
+
+    const isSubject = optionSelected === browseModeOptions.SUBJECTS;
+    const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
+    const param = isSubject ? 'subject' : 'callNumber';
+    let anchor;
+
+    if (direction === 'prev') {
+      anchor = isCallNumber
+        ? records.find(i => i.fullCallNumber)?.shelfKey
+        : records[0].subject;
+
+      source.fetchByQuery(`${param} < "${anchor}"`);
+    } else {
+      anchor = isCallNumber
+        ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+        : records[records.length - 1].subject;
+
+      source.fetchByQuery(`${param} > "${anchor}"`);
+    }
+  };
+
+  onChangeIndex = (e) => {
+    const { parentMutator } = this.props;
+    this.setState({ optionSelected: e.target.value });
+
+    // reset search results if switching to browse mode...
+    if (Object.values(browseModeOptions).includes(e.target.value)) {
+      parentMutator.query.replace({
+        query: '',
+        qindex: e.target.value
+      });
+    } else {
+      parentMutator.query.replace({
+        qindex: e.target.value
+      });
+    }
+  };
+
+  getFilters = () => {
+    const {
+      data,
+      fetchFacets,
+      parentResources,
+      renderFilters
+    } = this.props;
+
+    const {
+      optionSelected
+    } = this.state;
+
+    const { renderer } = getFilterConfig('browse');
+    if (optionSelected === browseModeOptions.SUBJECTS) {
+      return renderer;
+    } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+      return renderer({
+        ...data,
+        onFetchFacets: fetchFacets,
+        parentResources,
+      });
+    } else return renderFilters;
+  };
 
   render() {
     const {
@@ -722,20 +820,19 @@ class InstancesList extends React.Component {
       data,
       parentResources,
       parentMutator,
-      renderFilters,
       searchableIndexes,
       match: {
         path,
       },
       namespace,
       stripes,
-      fetchFacets,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
-      optionSelected
+      optionSelected,
+      searchAndSortKey
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -746,29 +843,6 @@ class InstancesList extends React.Component {
       }
 
       return item;
-    };
-
-    const handleOnNeedMore = ({ direction, records, source }) => {
-      if (!Object.values(browseModeOptions).includes(optionSelected)) return;
-
-      const isSubject = optionSelected === browseModeOptions.SUBJECTS;
-      const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
-      const param = isSubject ? 'subject' : 'callNumber';
-      let anchor;
-
-      if (direction === 'prev') {
-        anchor = isCallNumber
-          ? records.find(i => i.fullCallNumber)?.shelfKey
-          : records[0].subject;
-
-        source.fetchByQuery(`${param} < "${anchor}"`);
-      } else {
-        anchor = isCallNumber
-          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
-          : records[records.length - 1].subject;
-
-        source.fetchByQuery(`${param} > "${anchor}"`);
-      }
     };
 
     const resultsFormatter = {
@@ -834,32 +908,13 @@ class InstancesList extends React.Component {
       'numberOfTitles': r => getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
+    const browseOptionSelected = Boolean(this.getSelectedBrowseOption());
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
-
-    const onChangeIndex = (e) => {
-      this.setState({ optionSelected: e.target.value });
-    };
-
-    const browseFilter = () => {
-      const { renderer } = getFilterConfig('browse');
-      if (optionSelected === browseModeOptions.SUBJECTS) {
-        return renderer;
-      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
-        return renderer({
-          ...data,
-          onFetchFacets: fetchFacets,
-          parentResources,
-        });
-      } else return renderFilters;
-    };
-
-    const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
-
-    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
-    const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const customPaneSubTextBrowse = browseOptionSelected ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const searchFieldButtonLabelBrowse = browseOptionSelected ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const titleBrowse = browseOptionSelected ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseOptionSelected ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -890,7 +945,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={this.getSelectedBrowseOption() ? noop : this.getActionMenu}
+            actionMenu={browseOptionSelected ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
             title={titleBrowse}
@@ -906,7 +961,7 @@ class InstancesList extends React.Component {
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
-            onChangeIndex={onChangeIndex}
+            onChangeIndex={this.onChangeIndex}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -939,13 +994,13 @@ class InstancesList extends React.Component {
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
-            onSelectRow={browseSelectedString && this.onSelectRow}
-            renderFilters={browseFilter()}
+            onSelectRow={browseOptionSelected ? this.onSelectRow : undefined}
+            renderFilters={this.getFilters()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
-            hidePageIndices={this.getSelectedBrowseOption()}
-            paginationBoundaries={!this.getSelectedBrowseOption()}
+            hidePageIndices={browseOptionSelected}
+            paginationBoundaries={!browseOptionSelected}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -953,7 +1008,8 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
-            resultsOnNeedMore={handleOnNeedMore}
+            resultsOnNeedMore={this.handleOnNeedMore}
+            key={searchAndSortKey}
           />
         </div>
         <ErrorModal
