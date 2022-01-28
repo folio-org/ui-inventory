@@ -789,6 +789,7 @@ class InstancesList extends React.Component {
           <span className={css.missingMatchError}>
             &nbsp;
             {query}
+            &nbsp;
           </span>
           <strong>
             <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
