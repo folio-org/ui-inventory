@@ -274,10 +274,15 @@ class InstancesList extends React.Component {
     this.openCreateInstance();
   }
 
-  refocusOnInputSearch = () => {
+  refocusOnInputSearch = (segment) => {
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
+    if (segment !== 'instances') {
+      this.setState({
+        optionSelected: ''
+      });
+    }
     document.getElementById('input-inventory-search').focus();
   }
 
@@ -663,7 +668,10 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
-    this.setState({ selectedRows: {} });
+    this.setState({
+      selectedRows: {},
+      optionSelected: ''
+    });
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -927,10 +935,10 @@ class InstancesList extends React.Component {
 
     const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
 
-    const customPaneSubTextBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
