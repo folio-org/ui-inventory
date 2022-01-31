@@ -176,15 +176,4 @@ describe('InstancesList', () => {
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
     });
   });
-
-  describe('rendering browse results', () => {
-    beforeEach(() => {
-      history.push('/inventory/browse/instances?qindex=callNumbers');
-      renderInstancesList({ segment: 'instances' });
-    });
-
-    it('should display Browse header', () => {
-      expect(screen.getByText('Browse inventory')).toBeVisible();
-    });
-  });
 });

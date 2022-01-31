@@ -62,6 +62,8 @@
 * Filters/facets on Call number browse form. Refs UIIN-1882.
 * Selecting row from subject browse result list. UIIN-1895
 * Placeholder for the missing match. Refs UIIN-1889.
+* Browse form - Reset all button. Refs UIIN-1913.
+* Browse form - navigate to other Inventory tabs. Refs UIIN-1914.
 * Settings > Inventory > change focus. Refs UIIN-1908
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
