@@ -54,6 +54,7 @@ import {
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   QUICK_EXPORT_LIMIT,
+  segments,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -278,7 +279,7 @@ class InstancesList extends React.Component {
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
-    if (segment !== 'instances') {
+    if (segment !== segments.instances) {
       this.setState({
         optionSelected: ''
       });
