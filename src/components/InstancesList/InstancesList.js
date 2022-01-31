@@ -153,6 +153,7 @@ class InstancesList extends React.Component {
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
       optionSelected: '',
+      searchAndSortKey: 0,
     };
   }
 
@@ -174,10 +175,13 @@ class InstancesList extends React.Component {
   }
 
   getSelectedBrowseOption = () => {
-    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
     const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
+    return isBrowseSelectedBasedOnState;
+  }
 
-    return isBrowseSelectedBasedOnUrl || isBrowseSelectedBasedOnState;
+  getExecutedBrowseQuery = () => {
+    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    return isBrowseSelectedBasedOnUrl;
   }
 
   getInitialToggableColumns = () => {
@@ -185,20 +189,18 @@ class InstancesList extends React.Component {
   }
 
   getVisibleColumns = () => {
-    let columns = columnSets[this.getSelectedBrowseOption()];
-    if (!columns) {
+    // display particular columnset based on the quindex value in the URL, since the search has been
+    // performed.
+    const executedBrowseQuery = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    let columns = columnSets[executedBrowseQuery];
+    if (!executedBrowseQuery) {
       columns = this.state.visibleColumns;
-    }
-    const visibleColumns = Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el)) ?
-      new Set([...columns])
-      :
-      new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
-
-    if (Object.values(browseModeOptions).some(el => this.state.optionSelected.includes(el))) {
+      const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+      return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    } else {
+      const visibleColumns = new Set([...columns]);
       return Array.from(visibleColumns);
     }
-
-    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -705,20 +707,44 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  // handler used for clicking a row in browse mode
   onSelectRow = (_, row) => {
-    if (!row.instance && !row.totalRecords) return;
+    const {
+      parentMutator,
+      parentResources,
+      updateLocation,
+    } = this.props;
 
-    this.setState({ optionSelected: '' });
-    if (row.instance) {
-      this.props.updateLocation({
-        qindex: 'callNumber',
-        query: row.shelfKey
-      });
+    switch (get(parentResources.query, 'qindex')) {
+      case browseModeOptions.CALL_NUMBERS:
+        parentMutator.query.update({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        updateLocation({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        break;
+      case browseModeOptions.SUBJECTS:
+        parentMutator.query.update({
+          qindex: 'subject',
+          query: row.subject
+        });
+        updateLocation({
+          qindex: 'subject',
+          query: row.subject
+        });
+        break;
+      default:
     }
-    this.props.updateLocation({
-      qindex: 'subject',
-      query: row.subject
-    });
+
+    // the searchAndSortKey state field can be updated to reset SearchAndSort
+    // to use the app-level selectedIndex
+    this.setState((curState) => ({
+      optionSelected: '',
+      searchAndSortKey: curState.searchAndSortKey + 1
+    }));
   }
 
   render() {
@@ -743,7 +769,8 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
-      optionSelected
+      optionSelected,
+      searchAndSortKey
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -760,7 +787,9 @@ class InstancesList extends React.Component {
             />
           </span>
           <span className={css.missingMatchError}>
+            &nbsp;
             {query}
+            &nbsp;
           </span>
           <strong>
             <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
@@ -824,7 +853,7 @@ class InstancesList extends React.Component {
         staffSuppress,
         isAnchor,
       }) => {
-        if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+        if (this.getExecutedBrowseQuery()) {
           return getFullMatchRecord(instance?.title, isAnchor);
         } else {
           return (
@@ -862,7 +891,7 @@ class InstancesList extends React.Component {
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
       'subject': r => {
         if (r?.totalRecords) {
-          return getFullMatchRecord(r?.subject, r.isAnchor)
+          return getFullMatchRecord(r?.subject, r.isAnchor);
         }
         return missedMatchItem();
       },
@@ -875,6 +904,7 @@ class InstancesList extends React.Component {
       'numberOfTitles': r => (r?.instance || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
+    const browseQueryExecuted = Boolean(this.getExecutedBrowseQuery());
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
@@ -897,10 +927,10 @@ class InstancesList extends React.Component {
 
     const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
 
-    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const customPaneSubTextBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
-    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
-    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const titleBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseQueryExecuted ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -931,6 +961,7 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
+            key={searchAndSortKey}
             actionMenu={this.getSelectedBrowseOption() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
@@ -980,13 +1011,13 @@ class InstancesList extends React.Component {
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
-            onSelectRow={browseSelectedString && this.onSelectRow}
+            onSelectRow={browseQueryExecuted ? this.onSelectRow : undefined}
             renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
-            hidePageIndices={this.getSelectedBrowseOption()}
-            paginationBoundaries={!this.getSelectedBrowseOption()}
+            hidePageIndices={browseQueryExecuted}
+            paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
