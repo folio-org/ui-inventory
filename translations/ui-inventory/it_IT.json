@@ -674,7 +674,7 @@
     "acq.receiptStatus.Ongoing": "Ongoing",
     "acq.receiptStatus.Partially Received": "Partially received",
     "acq.receiptStatus.Pending": "Pending",
-    "acq.receiptStatus.Receipt Not Required": "Receipt not required",
+    "acq.receiptStatus.Receipt Not Required": "Ricevuta non richiesta",
     "acq.orderSentDate": "Order sent date",
     "acq.orderType": "Order type",
     "acq.orderType.One-Time": "One-time",
@@ -720,5 +720,7 @@
     "title.browseCall": "Browse inventory",
     "title.subTitle.browseCall": "Enter search criteria to start browsing",
     "instances.columns.callNumber": "Call number",
-    "instances.columns.numberOfTitles": "Number of titles"
+    "instances.columns.numberOfTitles": "Number of titles",
+    "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
+    "browseCallNumbers.missedMatch": "would be here"
 }
