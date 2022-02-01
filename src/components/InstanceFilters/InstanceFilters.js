@@ -15,7 +15,8 @@ import CheckboxFacet from '../CheckboxFacet';
 import {
   getSourceOptions,
   getSuppressedOptions,
-  processFacetOptions
+  processFacetOptions,
+  processStatisticalCodes,
 } from '../../facetUtils';
 import {
   DATE_FORMAT,
@@ -130,7 +131,7 @@ const InstanceFilters = props => {
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);
             break;
           case FACETS_CQL.STATISTICAL_CODES:
-            processFacetOptions(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
+            processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.INSTANCES_TAGS:
             processFacetOptions(activeFilters[FACETS.INSTANCES_TAGS], tagsRecords, ...commonProps, 'label');
@@ -316,7 +317,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.statisticalCodes" />}
+        label={<FormattedMessage id="ui-inventory.statisticalCode" />}
         id={FACETS.STATISTICAL_CODES}
         name={FACETS.STATISTICAL_CODES}
         separator={false}
