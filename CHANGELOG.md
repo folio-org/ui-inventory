@@ -67,6 +67,8 @@
 * Browse form - navigate to other Inventory tabs. Refs UIIN-1914.
 * Display a conflict detection banner. Refs UIIN-1872.
 * Add ability to filter holding records by source. Refs UIIN-1810.
+* Call number browse form - filter by location. Refs UIIN-1915.
+
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
