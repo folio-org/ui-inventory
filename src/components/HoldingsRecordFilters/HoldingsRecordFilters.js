@@ -17,7 +17,6 @@ import {
   getSuppressedOptions,
   processFacetOptions,
   processStatisticalCodes,
-  getSourceOptions,
 } from '../../facetUtils';
 import {
   DATE_FORMAT,
