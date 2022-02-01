@@ -1,46 +1,39 @@
 import React, { createRef } from 'react';
-import { get, cloneDeep } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Field,
-} from 'react-final-form';
+import { Field } from 'react-final-form';
 import { OnChange } from 'react-final-form-listeners';
 import { withRouter } from 'react-router';
 
 import {
-  Paneset,
-  Pane,
-  PaneFooter,
-  Row,
-  Col,
   Accordion,
-  Button,
-  KeyValue,
-  TextField,
-  Select,
-  Checkbox,
-  Datepicker,
-  ExpandAllButton,
-  TextArea,
   AccordionSet,
   AccordionStatus,
+  Button,
+  Checkbox,
   checkScope,
-  HasCommand,
+  Col,
   collapseAllSections,
+  Datepicker,
+  ExpandAllButton,
   expandAllSections,
+  HasCommand,
+  KeyValue,
+  Pane,
+  PaneFooter,
+  Paneset,
+  Row,
+  Select,
+  TextArea,
+  TextField,
 } from '@folio/stripes/components';
-import {
-  AppIcon,
-} from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import {
-  ViewMetaData,
-} from '@folio/stripes/smart-components';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
 import RepeatableField from '../../components/RepeatableField';
-import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
@@ -82,9 +75,11 @@ function validate(values) {
 function checkUniqueBarcode(okapi, barcode) {
   return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
     {
-      headers: { 'X-Okapi-Tenant': okapi.tenant,
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json' }
+        'Content-Type': 'application/json'
+      }
     });
 }
 
@@ -182,7 +177,6 @@ class ItemForm extends React.Component {
       initialValues,
       instance,
       holdingsRecord,
-      httpError,
 
       referenceTables: {
         locationsById,
@@ -337,12 +331,6 @@ class ItemForm extends React.Component {
                 </span>
               }
             >
-              <OptimisticLockingBanner
-                httpError={httpError}
-                latestVersionLink={`/inventory/view/${instance?.id}/${holdingsRecord?.id}/${item?.id}`}
-                conflictDetectionBannerRef={this.conflictDetectionBannerRef}
-                focusConflictDetectionBanner={this.focusConflictDetectionBanner}
-              />
               <Row>
                 <Col
                   sm={5}
@@ -354,7 +342,7 @@ class ItemForm extends React.Component {
               </Row>
               <AccordionStatus ref={this.accordionStatusRef}>
                 <Row>
-                  { initialValues.id &&
+                  {initialValues.id &&
                     <>
                       <Col xs={4}>
                         <KeyValue
@@ -384,7 +372,7 @@ class ItemForm extends React.Component {
                         sm={5}
                       >
                         {(item?.metadata && item?.metadata?.createdDate) &&
-                        <this.cViewMetaData metadata={item.metadata} />
+                          <this.cViewMetaData metadata={item.metadata} />
                         }
                         {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                       </Col>
@@ -486,13 +474,19 @@ class ItemForm extends React.Component {
                           {([placeholder]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.materialType" />}
-                              placeholder={placeholder}
                               name="materialType.id"
                               id="additem_materialType"
                               component={Select}
                               required
                               fullWidth
-                              dataOptions={materialTypeOptions}
+                              dataOptions={
+                                [{
+                                  label: placeholder,
+                                  value: '',
+                                  selected: !initialValues.materialType
+                                },
+                                ...materialTypeOptions
+                                ]}
                             />
                           )}
                         </FormattedMessage>
@@ -514,12 +508,11 @@ class ItemForm extends React.Component {
                           {([placeholder]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                              placeholder={placeholder}
                               name="itemLevelCallNumberTypeId"
                               id="additem_callnumbertype"
                               component={Select}
                               fullWidth
-                              dataOptions={callNumberTypeOptions}
+                              dataOptions={[{ label: placeholder, value: '' }, ...callNumberTypeOptions]}
                             />
                           )}
                         </FormattedMessage>
@@ -666,9 +659,8 @@ class ItemForm extends React.Component {
                               name="itemDamagedStatusId"
                               id="input_item_damaged_status_id"
                               component={Select}
-                              placeholder={placeholder}
                               label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                              dataOptions={itemDamagedStatusOptions}
+                              dataOptions={[{ label: placeholder, value: '' }, ...itemDamagedStatusOptions]}
                             />
                           )}
                         </FormattedMessage>
@@ -730,7 +722,7 @@ class ItemForm extends React.Component {
                           ]}
                         />
                       </Col>
-                    </Row>
+                    </Row>.
                   </Accordion>
                   <Accordion
                     id="acc06"
@@ -742,13 +734,19 @@ class ItemForm extends React.Component {
                           {([placeholder]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.loanTypePermanent" />}
-                              placeholder={placeholder}
                               name="permanentLoanType.id"
                               id="additem_loanTypePerm"
                               component={Select}
                               required
                               fullWidth
-                              dataOptions={loanTypeOptions}
+                              dataOptions={
+                                [{
+                                  label: placeholder,
+                                  value: '',
+                                  selected: !initialValues.loanType
+                                },
+                                ...loanTypeOptions
+                                ]}
                             />
                           )}
                         </FormattedMessage>
@@ -764,11 +762,14 @@ class ItemForm extends React.Component {
                               id="additem_loanTypeTemp"
                               component={Select}
                               fullWidth
-                              dataOptions={[{
-                                label: placeholder,
-                                value: '',
-                                selected: !initialValues.loanType,
-                              }, ...loanTypeOptions]}
+                              dataOptions={
+                                [{
+                                  label: placeholder,
+                                  value: '',
+                                  selected: !initialValues.loanType
+                                },
+                                ...loanTypeOptions
+                                ]}
                             />
                           )}
                         </FormattedMessage>
@@ -790,7 +791,7 @@ class ItemForm extends React.Component {
                       <Col sm={10}>
                         <RepeatableField
                           name="circulationNotes"
-                          addButtonId="clickable-add-note"
+                          addButtonId="clickable-add-checkin-checkout-note"
                           addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
                           template={[
                             {
@@ -903,7 +904,6 @@ ItemForm.propTypes = {
     change: PropTypes.func.isRequired,
   }).isRequired,
   history: PropTypes.object.isRequired,
-  httpError: PropTypes.object,
 };
 
 ItemForm.defaultProps = {
