@@ -9,6 +9,7 @@ import {
 } from './utils';
 import {
   getFilterConfig,
+  browseModeOptions
 } from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
@@ -118,8 +119,14 @@ function withFacets(WrappedComponent) {
       const cqlQuery = buildQuery(query, {}, { ...data, query }, { log: () => null }) || '';
       const facetName = facetToOpen || onMoreClickedFacet || focusedFacet;
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
+      const paramsUrl = new URLSearchParams(window.location.search);
+      const queryIndex = paramsUrl.get('qindex');
 
-      if (cqlQuery) params.query = cqlQuery;
+      if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
+        params.query = 'callNumber=""';
+      } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
+        params.query = cqlQuery;
+      }
 
       if (facetToOpen) {
         const defaultFiltersNumber = `:${DEFAULT_FILTERS_NUMBER}`;
