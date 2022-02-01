@@ -1,5 +1,5 @@
 import keyBy from 'lodash/keyBy';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -13,8 +13,9 @@ const DataProvider = ({
   resources,
 }) => {
   const { manifest } = DataProvider;
+  const dataRef = useRef();
 
-  const isLoading = useCallback(() => {
+  const isLoading = useMemo(() => {
     for (const key in manifest) {
       if (manifest[key].type === 'okapi' && !(resources?.[key]?.hasLoaded)) {
         return true;
@@ -22,9 +23,13 @@ const DataProvider = ({
     }
 
     return false;
-  }, [resources, manifest]);
+  }, [manifest, resources]);
 
-  const data = useMemo(() => {
+  useEffect(() => {
+    if (isLoading || dataRef.current) {
+      return;
+    }
+
     const loadedData = {};
 
     Object.keys(manifest).forEach(key => {
@@ -36,6 +41,8 @@ const DataProvider = ({
       identifierTypes,
       holdingsSources,
       instanceRelationshipTypes,
+      statisticalCodeTypes,
+      statisticalCodes,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
@@ -43,16 +50,23 @@ const DataProvider = ({
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
     loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
+    const statisticalCodeTypesById = keyBy(statisticalCodeTypes, 'id');
 
-    return loadedData;
-  }, [resources, manifest]);
+    // attach full statisticalCodeType object to each statisticalCode
+    loadedData.statisticalCodes = statisticalCodes.map(sc => {
+      sc.statisticalCodeType = statisticalCodeTypesById[sc.statisticalCodeTypeId];
+      return sc;
+    });
 
-  if (isLoading()) {
+    dataRef.current = loadedData;
+  }, [resources, manifest, isLoading, dataRef]);
+
+  if (isLoading) {
     return null;
   }
 
   return (
-    <DataContext.Provider value={data}>
+    <DataContext.Provider value={dataRef.current}>
       {children}
     </DataContext.Provider>
   );

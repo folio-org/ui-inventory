@@ -15,7 +15,8 @@ import { useFacets } from '../../common/hooks';
 import {
   getSuppressedOptions,
   processFacetOptions,
-  processItemsStatuses
+  processItemsStatuses,
+  processStatisticalCodes,
 } from '../../facetUtils';
 import {
   DATE_FORMAT,
@@ -95,7 +96,7 @@ const ItemFilters = (props) => {
             processFacetOptions(activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
             break;
           case FACETS_CQL.STATISTICAL_CODES:
-            processFacetOptions(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
+            processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS], recordValues);

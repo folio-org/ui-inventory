@@ -12,7 +12,25 @@ const getFacetDataMap = (facetData, key = 'id') => {
   return facetDataMap;
 };
 
-const getSelectedFacetOptionsWithoutCount = (selectedFiltersId, entries, facetDataMap) => {
+
+const parseOption = (entry, totals) => {
+  const {
+    name = '',
+    id,
+    label = '',
+  } = entry;
+
+  const option = {
+    label: name || label,
+    value: id,
+    count: totals,
+  };
+
+  return option;
+};
+
+
+const getSelectedFacetOptionsWithoutCount = (selectedFiltersId, entries, facetDataMap, parse = parseOption) => {
   const selectedFiltersWithoutCount = [];
 
   if (selectedFiltersId) {
@@ -23,17 +41,7 @@ const getSelectedFacetOptionsWithoutCount = (selectedFiltersId, entries, facetDa
         const facet = facetDataMap.get(selectedFilterId);
 
         if (facet) {
-          const {
-            name = '',
-            id,
-            label = '',
-          } = facetDataMap.get(selectedFilterId);
-
-          const option = {
-            label: name || label,
-            value: id,
-            count: 0,
-          };
+          const option = parse(facetDataMap.get(selectedFilterId), 0);
           selectedFiltersWithoutCount.push(option);
         }
       }
@@ -43,7 +51,7 @@ const getSelectedFacetOptionsWithoutCount = (selectedFiltersId, entries, facetDa
   return selectedFiltersWithoutCount;
 };
 
-export const getFacetOptions = (selectedFiltersId, entries, facetData, key) => {
+export const getFacetOptions = (selectedFiltersId, entries, facetData, key, parse = parseOption) => {
   const facetDataMap = getFacetDataMap(facetData, key);
 
   const restFilters = entries.reduce((accum, entry) => {
@@ -52,17 +60,7 @@ export const getFacetOptions = (selectedFiltersId, entries, facetData, key) => {
     const facet = facetDataMap.get(entry.id);
 
     if (facet) {
-      const {
-        name = '',
-        id,
-        label = '',
-      } = facetDataMap.get(entry.id);
-
-      const option = {
-        label: name || label,
-        value: id,
-        count: entry.totalRecords,
-      };
+      const option = parse(facetDataMap.get(entry.id), entry.totalRecords);
       accum.push(option);
     }
     return accum;
@@ -70,7 +68,7 @@ export const getFacetOptions = (selectedFiltersId, entries, facetData, key) => {
 
   return [
     ...restFilters,
-    ...getSelectedFacetOptionsWithoutCount(selectedFiltersId, entries, facetDataMap),
+    ...getSelectedFacetOptionsWithoutCount(selectedFiltersId, entries, facetDataMap, parse),
   ];
 };
 
@@ -208,9 +206,42 @@ export const getItemStatusesOptions = (selectedFiltersId, entries, facetData, in
   ];
 };
 
-export const processFacetOptions = (selectedFiltersId, facetData, recordValues, accum, name, key) => {
+const parseStatisticalCodeOption = (entry, count) => {
+  const {
+    name = '',
+    id: value,
+    code,
+    statisticalCodeType,
+  } = entry;
+  const label = `${statisticalCodeType?.name}:    ${code} - ${name}`;
+  const option = {
+    label,
+    value,
+    count,
+  };
+
+  return option;
+};
+
+export const processStatisticalCodes = (selectedFiltersId, recordValues, facetData, allFilters, name) => {
   if (facetData) {
-    accum[name] = getFacetOptions(selectedFiltersId, recordValues, facetData, key);
+    allFilters[name] = getFacetOptions(selectedFiltersId, facetData, recordValues, 'id', parseStatisticalCodeOption);
+  }
+};
+
+/**
+ * Turns facet data into an array of label/value/count representation used by UI
+ *
+ * @param {String} selectedFiltersId selected filters id (is this being used?)
+ * @param {Array} recordValues all dictionary records for given filter
+ * @param {Array} facetData ids of records returned from facets
+ * @param {Object} allFilters object which holds currently active filters
+ * @param {String} name name of the options key defined in https://github.com/folio-org/ui-inventory/blob/8c20a728d41dcf764c7d894a31c19d8d3215316a/src/constants.js#L245
+ * @param {String} key - primiary key in dictionary (usually id)
+ */
+export const processFacetOptions = (selectedFiltersId, recordValues, facetData, allFilters, name, key) => {
+  if (facetData) {
+    allFilters[name] = getFacetOptions(selectedFiltersId, facetData, recordValues, key);
   }
 };
 
