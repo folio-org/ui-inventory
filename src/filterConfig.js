@@ -181,6 +181,11 @@ export const holdingFilterConfig = [
     values: [],
     parse: buildDateRangeQuery(FACETS_CQL.HOLDINGS_UPDATED_DATE),
   },
+  {
+    name: FACETS.HOLDINGS_SOURCE,
+    cql: FACETS_CQL.HOLDINGS_SOURCE,
+    values: [],
+  },
 ];
 
 export const itemIndexes = [
