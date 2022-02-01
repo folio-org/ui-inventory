@@ -36,7 +36,8 @@ const HoldingsRecordFilters = (props) => {
     data: {
       locations,
       tagsRecords,
-      statisticalCodes
+      statisticalCodes,
+      holdingsSources,
     },
     onChange,
     onClear,
@@ -50,6 +51,7 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_CREATED_DATE]: false,
     [FACETS.HOLDINGS_UPDATED_DATE]: false,
     [FACETS.STATISTICAL_CODES]: false,
+    [FACETS.HOLDINGS_SOURCE]: false,
   };
 
   const segmentOptions = {
@@ -58,6 +60,7 @@ const HoldingsRecordFilters = (props) => {
     [FACETS_OPTIONS.HOLDINGS_DISCOVERY_SUPPRESS_OPTIONS]: [],
     [FACETS_OPTIONS.HOLDINGS_TAGS_OPTIONS]: [],
     [FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]: [],
+    [FACETS_OPTIONS.HOLDINGS_SOURCE_OPTIONS]: [],
   };
 
   const selectedFacetFilters = {
@@ -66,6 +69,7 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS],
     [FACETS.HOLDINGS_TAGS]: activeFilters[FACETS.HOLDINGS_TAGS],
     [FACETS.STATISTICAL_CODES]: activeFilters[FACETS.STATISTICAL_CODES],
+    [FACETS.HOLDINGS_SOURCE]: activeFilters[FACETS.HOLDINGS_SOURCE],
   };
 
   const getNewRecords = (records) => {
@@ -86,6 +90,9 @@ const HoldingsRecordFilters = (props) => {
             break;
           case FACETS_CQL.STATISTICAL_CODES:
             processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
+            break;
+          case FACETS_CQL.HOLDINGS_SOURCE:
+            processFacetOptions(activeFilters[FACETS.HOLDINGS_SOURCE], holdingsSources, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_TAGS:
             processFacetOptions(activeFilters[FACETS.HOLDINGS_TAGS], tagsRecords, ...commonProps, 'label');
@@ -228,7 +235,24 @@ const HoldingsRecordFilters = (props) => {
           makeFilterString={makeDateRangeFilterString}
         />
       </Accordion>
-
+      <Accordion
+        label={<FormattedMessage id={`ui-inventory.${FACETS.SOURCE}`} />}
+        id={FACETS.HOLDINGS_SOURCE}
+        name={FACETS.HOLDINGS_SOURCE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.HOLDINGS_SOURCE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.HOLDINGS_SOURCE)}
+      >
+        <CheckboxFacet
+          data-test-filter-instance-source
+          name={FACETS.HOLDINGS_SOURCE}
+          dataOptions={facetsOptions[FACETS_OPTIONS.HOLDINGS_SOURCE_OPTIONS]}
+          selectedValues={activeFilters[FACETS.HOLDINGS_SOURCE]}
+          isPending={getIsPending(FACETS.HOLDINGS_SOURCE)}
+          onChange={onChange}
+        />
+      </Accordion>
       <TagsFilter
         id={FACETS.HOLDINGS_TAGS}
         name={FACETS.HOLDINGS_TAGS}

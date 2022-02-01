@@ -63,4 +63,8 @@ describe('HoldingsRecordFilters', () => {
   it('Contains a filter for statistical code', () => {
     expect(document.querySelector('#statisticalCodes')).toBeInTheDocument();
   });
+
+  it('Contains a filter for source', () => {
+    expect(document.querySelector('#holdingsSource')).toBeInTheDocument();
+  });
 });
