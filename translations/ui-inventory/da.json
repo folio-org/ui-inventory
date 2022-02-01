@@ -720,5 +720,7 @@
     "title.browseCall": "Browse inventory",
     "title.subTitle.browseCall": "Enter search criteria to start browsing",
     "instances.columns.callNumber": "Call number",
-    "instances.columns.numberOfTitles": "Number of titles"
+    "instances.columns.numberOfTitles": "Number of titles",
+    "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
+    "browseCallNumbers.missedMatch": "would be here"
 }
