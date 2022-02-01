@@ -92,7 +92,6 @@ const HoldingsRecordFilters = (props) => {
             processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_SOURCE:
-            // console.log('process source', activeFilters[FACETS.HOLDINGS_SOURCE], recordValues);
             processFacetOptions(activeFilters[FACETS.HOLDINGS_SOURCE], holdingsSources, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_TAGS:
