@@ -23,7 +23,7 @@ const DataProvider = ({
     }
 
     return false;
-  }, [manifest, resources]);
+  }, [resources, manifest]);
 
   useEffect(() => {
     if (isLoading || dataRef.current) {
