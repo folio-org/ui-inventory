@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -38,18 +38,6 @@ const data = {
 const query = {
   query: '',
   sort: 'title',
-};
-
-const browseCNlocation = {
-  search: {
-    qindex: 'callNumbers'
-  }
-};
-
-const browseSubjectlocation = {
-  search: {
-    qindex: 'browseSubjects'
-  }
 };
 
 const resources = {
