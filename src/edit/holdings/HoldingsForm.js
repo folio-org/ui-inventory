@@ -285,7 +285,7 @@ class HoldingsForm extends React.Component {
     return (
       <form
         data-test-holdings-page-type={holdingsPageType}
-        className={styles.holingsForm}
+        className={styles.holdingsForm}
       >
         <HasCommand
           commands={shortcuts}
