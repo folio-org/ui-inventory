@@ -3,9 +3,10 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '../../test/jest/__mock__';
+
+import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
-import stripesFinalForm from '@folio/stripes/final-form';
 
 import AdministrativeNoteFields from './administrativeNoteFields';
 import translationsProperties from '../../test/jest/helpers/translationsProperties';
@@ -42,7 +43,7 @@ afterEach(() => jest.clearAllMocks());
 describe('administrativeNoteFields', () => {
   test('renders', () => {
     renderAdministrativeNoteFields();
-    expect(screen.getByRole('textbox', { name: /administrative note/i })).toHaveValue('note1');
+    expect(screen.getByRole('textbox')).toHaveValue('note1');
   });
 
   test('adds new note', async () => {

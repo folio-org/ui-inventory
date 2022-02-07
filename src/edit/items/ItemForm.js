@@ -491,6 +491,7 @@ class ItemForm extends React.Component {
                               id="additem_materialType"
                               component={Select}
                               required
+                              aria-required="true"
                               fullWidth
                               dataOptions={materialTypeOptions}
                             />
@@ -747,6 +748,7 @@ class ItemForm extends React.Component {
                               id="additem_loanTypePerm"
                               component={Select}
                               required
+                              aria-required="true"
                               fullWidth
                               dataOptions={loanTypeOptions}
                             />
