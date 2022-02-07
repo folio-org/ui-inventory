@@ -68,6 +68,8 @@
 * Add ability to filter holding records by source. Refs UIIN-1810.
 * Call number browse form - filter by location. Refs UIIN-1915.
 * Settings > Inventory > change focus. Refs UIIN-1908.
+* Fix Call number indexes for holding records. Refs UIIN-1918.
+* Fix Call number indexes for item records. Refs UIIN-1919.
 * New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
