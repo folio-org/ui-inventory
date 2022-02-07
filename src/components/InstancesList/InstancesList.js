@@ -560,14 +560,14 @@ class InstancesList extends React.Component {
               })
           }
             {this.getActionItem({
-              id: 'dropdown-clickable-get-items-uiids',
+              id: 'dropdown-clickable-get-instances-uiids',
               icon: 'save',
               messageId: 'ui-inventory.saveInstancesUIIDS',
               onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
               isDisabled: isInstancesListEmpty,
             })}
             {segment === 'holdings' && this.getActionItem({
-              id: 'dropdown-clickable-get-items-uiids',
+              id: 'dropdown-clickable-get-holdings-uiids',
               icon: 'save',
               messageId: 'ui-inventory.saveHoldingsUIIDS',
               onClickHandler: buildOnClickHandler(this.generateHoldingsIdReport),

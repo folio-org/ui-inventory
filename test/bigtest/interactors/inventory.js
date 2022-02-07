@@ -23,10 +23,10 @@ import {
   clickNewInstanceBtn = clickable('#clickable-newinventory');
   clickItemsInTransitReportBtn = clickable('#dropdown-clickable-get-report');
   itemsInTransitReportBtnIsVisible = isVisible('#dropdown-clickable-get-report');
-  clickSaveInstancesUIIDsBtn = clickable('#dropdown-clickable-get-items-uiids');
-  saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-items-uiids');
-  isSaveInstancesUIIDsBtnDisabled = property('#dropdown-clickable-get-items-uiids', 'disabled');
-  isSaveInstancesUIIDsIconPresent = isPresent('#dropdown-clickable-get-items-uiids [class*=icon-save]');
+  clickSaveInstancesUIIDsBtn = clickable('#dropdown-clickable-get-instances-uiids');
+  saveInstancesUIIDsBtnIsVisible = isVisible('#dropdown-clickable-get-instances-uiids');
+  isSaveInstancesUIIDsBtnDisabled = property('#dropdown-clickable-get-instances-uiids', 'disabled');
+  isSaveInstancesUIIDsIconPresent = isPresent('#dropdown-clickable-get-instances-uiids [class*=icon-save]');
   saveInstancesCQLQueryBtn = new Interactor('#dropdown-clickable-get-cql-query');
   isSaveInstancesCQLQueryDisabled = property('#dropdown-clickable-get-cql-query', 'disabled');
   isSaveInstancesCQLQueryIconPresent = isPresent('#dropdown-clickable-get-cql-query [class*=icon-search]');
