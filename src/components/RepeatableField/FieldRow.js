@@ -101,9 +101,10 @@ class FieldRow extends React.Component {
     const labelProps = {};
     if (fieldIndex === 0) {
       labelProps.label = label;
-    } else {
-      labelProps['aria-label'] = `${label} ${fieldIndex}`;
     }
+
+    labelProps['aria-label'] = `${label} ${fieldIndex}`;
+
     return (
       <Field
         name={name ? `${fields.name}[${fieldIndex}].${name}` : `${fields.name}[${fieldIndex}]`}
