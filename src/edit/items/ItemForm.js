@@ -486,14 +486,20 @@ class ItemForm extends React.Component {
                           {([placeholder]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.materialType" />}
-                              placeholder={placeholder}
                               name="materialType.id"
                               id="additem_materialType"
                               component={Select}
                               required
                               aria-required="true"
                               fullWidth
-                              dataOptions={materialTypeOptions}
+                              dataOptions={
+                                [{
+                                  label: placeholder,
+                                  value: '',
+                                  selected: !initialValues.materialType
+                                },
+                                ...materialTypeOptions
+                                ]}
                             />
                           )}
                         </FormattedMessage>
@@ -515,12 +521,11 @@ class ItemForm extends React.Component {
                           {([placeholder]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                              placeholder={placeholder}
                               name="itemLevelCallNumberTypeId"
                               id="additem_callnumbertype"
                               component={Select}
                               fullWidth
-                              dataOptions={callNumberTypeOptions}
+                              dataOptions={[{ label: placeholder, value: '' }, ...callNumberTypeOptions]}
                             />
                           )}
                         </FormattedMessage>
@@ -667,9 +672,8 @@ class ItemForm extends React.Component {
                               name="itemDamagedStatusId"
                               id="input_item_damaged_status_id"
                               component={Select}
-                              placeholder={placeholder}
                               label={<FormattedMessage id="ui-inventory.itemDamagedStatus" />}
-                              dataOptions={itemDamagedStatusOptions}
+                              dataOptions={[{ label: placeholder, value: '' }, ...itemDamagedStatusOptions]}
                             />
                           )}
                         </FormattedMessage>
@@ -743,14 +747,20 @@ class ItemForm extends React.Component {
                           {([placeholder]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.loanTypePermanent" />}
-                              placeholder={placeholder}
                               name="permanentLoanType.id"
                               id="additem_loanTypePerm"
                               component={Select}
                               required
                               aria-required="true"
                               fullWidth
-                              dataOptions={loanTypeOptions}
+                              dataOptions={
+                              [{
+                                label: placeholder,
+                                value: '',
+                                selected: !initialValues.loanType
+                              },
+                              ...loanTypeOptions
+                              ]}
                             />
                           )}
                         </FormattedMessage>
@@ -792,7 +802,7 @@ class ItemForm extends React.Component {
                       <Col sm={10}>
                         <RepeatableField
                           name="circulationNotes"
-                          addButtonId="clickable-add-note"
+                          addButtonId="clickable-add-checkin-checkout-note"
                           addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
                           template={[
                             {
