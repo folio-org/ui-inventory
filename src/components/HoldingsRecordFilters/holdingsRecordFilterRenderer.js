@@ -10,6 +10,7 @@ const holdingsRecordFilterRenderer = data => onChange => {
   const {
     locations,
     statisticalCodes,
+    holdingsSources,
     query,
     tags,
     onFetchFacets,
@@ -22,6 +23,7 @@ const holdingsRecordFilterRenderer = data => onChange => {
       data={{
         locations,
         statisticalCodes,
+        holdingsSources,
         tagsRecords: tags,
         query,
         onFetchFacets,

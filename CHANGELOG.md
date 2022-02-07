@@ -56,14 +56,22 @@
 * Create/Edit Holdings record > No indication that fields are required. Refs UIIN-1648.
 * New/Edit Holdings Page - Accessibility Error: IDs of active elements must be unique. Refs UIIN-1159.
 * Filters/facets on Subject browse form. Refs UIIN-1904.
-* New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154.
 * Create/Edit Item record > No indication that field(s) is required by screenreader and not using the FOLIO standard indication for required fields. Refs UIIN-1649.
 * Selecting row from call number browse result list. UIIN-1888
 * Filters/facets on Call number browse form. Refs UIIN-1882.
 * Selecting row from subject browse result list. UIIN-1895
 * Placeholder for the missing match. Refs UIIN-1889.
+* New/Edit Instance Page - Accessibility Error: IDs of active elements must be unique. Refs UIIN-1155.
 * Browse form - Reset all button. Refs UIIN-1913.
 * Browse form - navigate to other Inventory tabs. Refs UIIN-1914.
+* Display a conflict detection banner. Refs UIIN-1872.
+* Add ability to filter holding records by source. Refs UIIN-1810.
+* Call number browse form - filter by location. Refs UIIN-1915.
+* Settings > Inventory > change focus. Refs UIIN-1908.
+* Fix Call number indexes for holding records. Refs UIIN-1918.
+* Fix Call number indexes for item records. Refs UIIN-1919.
+* New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154.
+* Create/Edit Item Record - Required fields are not read by screenreader as required. Refs UIIN-1153.
 * New/Edit Item Page - Accessibility Error: Some elements has insufficient color contrast of 3.3 and several elements with same id. Refs UIIN-1161.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)

@@ -18,7 +18,7 @@ const PublicationRangeFields = props => {
       name="publicationRange"
       label={<FormattedMessage id="ui-inventory.publicationRange" />}
       addLabel={<FormattedMessage id="ui-inventory.addPublicationRange" />}
-      addButtonId="clickable-add-publicationfrequency"
+      addButtonId="clickable-add-publicationrange"
       template={[{
         label: <FormattedMessage id="ui-inventory.publicationRange" />,
         component: TextArea,

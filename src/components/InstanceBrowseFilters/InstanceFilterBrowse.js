@@ -70,9 +70,6 @@ const InstanceFiltersBrowse = props => {
     props.data
   );
 
-  // eslint-disable-next-line no-return-assign
-  facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS].map(el => el.count = null);
-
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
       <Accordion
