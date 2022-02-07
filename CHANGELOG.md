@@ -71,7 +71,7 @@
 * Settings > Inventory > change focus. Refs UIIN-1908.
 * Fix Call number indexes for holding records. Refs UIIN-1918.
 * Fix Call number indexes for item records. Refs UIIN-1919.
-
+* Accessibility Error: Form elements must have labels. Inventory landing page. Refs UIIN-1144
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

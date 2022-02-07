@@ -33,6 +33,7 @@ function CheckboxFacetList({
       {showSearch && (
         <div className={css.facetSearch}>
           <TextField
+            label={`${fieldName}-field`}
             type="search"
             onChange={(e) => onSearch(e.target.value)}
             onFocus={handleTextFieldFocus}
