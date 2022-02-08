@@ -906,7 +906,7 @@ class InstancesList extends React.Component {
       },
       'callNumber': r => {
         if (r?.instance) {
-          return getFullMatchRecord(r?.fullCallNumber);
+          return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
         return missedMatchItem();
       },
