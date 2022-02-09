@@ -58,6 +58,7 @@ const TitlesViews = ({
     <KeyValue label={label}>
       <MultiColumnList
         id={id}
+        columnIdPrefix={id}
         contentData={titles}
         visibleColumns={visibleColumns}
         columnMapping={columnMapping}

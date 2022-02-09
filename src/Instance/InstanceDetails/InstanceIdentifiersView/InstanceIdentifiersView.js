@@ -67,6 +67,7 @@ const InstanceIdentifiersView = ({
     >
       <MultiColumnList
         id="list-identifiers"
+        columnIdPrefix="identifiers"
         contentData={contentData}
         rowMetadata={rowMetadata}
         visibleColumns={visibleColumns}
