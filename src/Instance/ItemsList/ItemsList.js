@@ -139,6 +139,7 @@ const ItemsList = ({
     column: 'barcode',
   });
   const [records, setRecords] = useState([]);
+  const [paginatedItems, setPaginatedItems] = useState([]);
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -155,13 +156,6 @@ const ItemsList = ({
     getDraggingItems,
   }), [draggable, isItemsDragSelected, getDraggingItems]);
 
-  const [paginatedItems, setPaginatedItems] = useState([]);
-
-  useEffect(() => {
-    setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
-  }, [items, itemsSorting]);
-
-
   const onNeedMoreData = (amount, index) => {
     const data = new Array(index);
     // slice original records array to extract 'pageAmount' of records
@@ -171,6 +165,10 @@ const ItemsList = ({
 
     setPaginatedItems(data);
   };
+
+  useEffect(() => {
+    setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
+  }, [items, itemsSorting]);
 
   useEffect(() => {
     if (records?.length) {
