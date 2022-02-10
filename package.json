@@ -824,7 +824,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
-    "@folio/quick-marc": "^4.0.1",
+    "@folio/quick-marc": "^5.0.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
     "file-saver": "^2.0.0",
