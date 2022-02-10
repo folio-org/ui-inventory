@@ -75,6 +75,7 @@
 * New/Edit Item Page - Accessibility Error: Some elements has insufficient color contrast of 3.3 and several elements with same id. Refs UIIN-1161.
 * Accessibility Error: Form elements must have labels. Inventory landing page. Refs UIIN-1144.
 * Matching call number should be in bold. Refs UIIN-1922.
+* Add pagination so holding items. Fixes UIIN-1831.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

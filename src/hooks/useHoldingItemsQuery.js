@@ -7,11 +7,11 @@ import { LIMIT_MAX } from '../constants';
 
 const useHoldingItemsQuery = (
   holdingsRecordId,
-  options = { searchParams: {} },
+  options = { searchParams: {}, key: 'items' },
 ) => {
   const ky = useOkapiKy();
   const [namespace] = useNamespace();
-  const queryKey = [namespace, 'items', holdingsRecordId];
+  const queryKey = [namespace, options.key, holdingsRecordId];
   const defaultSearchParams = {
     limit: LIMIT_MAX,
     query: `holdingsRecordId==${holdingsRecordId}`,

@@ -122,11 +122,11 @@ const visibleColumns = [
 ];
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
+const pageAmount = 200;
 
 const ItemsList = ({
   holding,
   items,
-
   draggable,
   isItemsDragSelected,
   selectItemsForDrag,
@@ -155,9 +155,28 @@ const ItemsList = ({
     getDraggingItems,
   }), [draggable, isItemsDragSelected, getDraggingItems]);
 
+  const [paginatedItems, setPaginatedItems] = useState([]);
+
   useEffect(() => {
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
   }, [items, itemsSorting]);
+
+
+  const onNeedMoreData = (amount, index) => {
+    const data = new Array(index);
+    // slice original records array to extract 'pageAmount' of records
+    const recordSlice = records.slice(index, index + amount);
+    // push it at the end of the sparse array
+    data.push(...recordSlice);
+
+    setPaginatedItems(data);
+  };
+
+  useEffect(() => {
+    if (records?.length) {
+      setPaginatedItems(records.slice(0, pageAmount));
+    }
+  }, [records]);
 
   // NOTE: in order to sort on a particular column, it must be registered
   // as a sorter in '../utils'. If it's not, there won't be any errors;
@@ -181,17 +200,21 @@ const ItemsList = ({
 
     <MultiColumnList
       id={`list-items-${holding.id}`}
-      contentData={records}
+      contentData={paginatedItems}
       rowMetadata={rowMetadata}
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
       columnMapping={columnMapping}
       ariaLabel={ariaLabel}
       interactive={false}
+      onNeedMoreData={onNeedMoreData}
+      pagingType="prev-next"
+      totalCount={items.length}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
       rowFormatter={ItemsListRow}
+      pageAmount={pageAmount}
       rowProps={rowProps}
     />
   );
