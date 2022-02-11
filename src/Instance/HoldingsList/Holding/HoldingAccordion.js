@@ -25,10 +25,16 @@ const HoldingAccordion = ({
   onAddItem,
   withMoveDropdown,
 }) => {
+  const searchParams = {
+    limit: 0,
+  };
+
   const { locationsById } = useContext(DataContext);
   const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
   const [open, setOpen] = useState(false);
   const [openFirstTime, setOpenFirstTime] = useState(false);
+  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount' });
+
   const handleAccordionToggle = () => {
     if (!open && !openFirstTime) {
       setOpenFirstTime(true);
@@ -36,11 +42,6 @@ const HoldingAccordion = ({
 
     setOpen(!open);
   };
-
-  const searchParams = {
-    limit: 1,
-  };
-  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams });
 
   const holdingButtonsGroup = <HoldingButtonsGroup
     holding={holding}
