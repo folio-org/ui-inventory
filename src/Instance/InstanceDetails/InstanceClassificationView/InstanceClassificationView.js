@@ -68,6 +68,7 @@ const InstanceClassificationView = ({
     >
       <MultiColumnList
         id="list-classifications"
+        columnIdPrefix="classifications"
         contentData={contentData}
         rowMetadata={rowMetadata}
         visibleColumns={visibleColumns}

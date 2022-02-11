@@ -79,6 +79,7 @@ const InstanceContributorsView = ({
     >
       <MultiColumnList
         id="list-contributors"
+        columnIdPrefix="contributors"
         contentData={contentData}
         visibleColumns={visibleColumns}
         columnMapping={columnMapping}

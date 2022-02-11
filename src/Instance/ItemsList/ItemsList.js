@@ -198,6 +198,7 @@ const ItemsList = ({
 
     <MultiColumnList
       id={`list-items-${holding.id}`}
+      columnIdPrefix={`list-items-${holding.id}`}
       contentData={paginatedItems}
       rowMetadata={rowMetadata}
       formatter={formatter}

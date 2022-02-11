@@ -55,6 +55,7 @@ const AlternativeTitlesList = ({
   return (
     <MultiColumnList
       id="list-alternative-titles"
+      columnIdPrefix="alternative-titles"
       rowMetadata={rowMetadata}
       contentData={contentData}
       visibleColumns={visibleColumns}
