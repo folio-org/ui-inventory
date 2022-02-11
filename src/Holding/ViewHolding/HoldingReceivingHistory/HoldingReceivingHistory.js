@@ -10,6 +10,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { useControlledAccordion } from '../../../common/hooks';
 import useReceivingHistory from './useReceivingHistory';
 import { SORT_DIRECTION } from '../../../constants';
 
@@ -44,6 +45,7 @@ const HoldingReceivingHistory = ({ holding }) => {
   const [sortedColumn, setSortedColumn] = useState('');
   const [sortDirection, setSortDirection] = useState(ASCENDING);
   const { receivingHistory, isLoading } = useReceivingHistory(holding);
+  const controlledAccorion = useControlledAccordion(Boolean(receivingHistory.length));
 
   const data = useMemo(() => (
     orderBy(receivingHistory, sorters[sortedColumn], sortDirection === ASCENDING ? 'asc' : 'desc')
@@ -73,7 +75,7 @@ const HoldingReceivingHistory = ({ holding }) => {
     <Accordion
       id="acc07"
       label={<FormattedMessage id="ui-inventory.receivingHistory" />}
-      closedByDefault={!receivingHistory.length}
+      {...controlledAccorion}
     >
       <MultiColumnList
         id="receiving-history-list"

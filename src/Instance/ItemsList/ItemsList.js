@@ -122,11 +122,11 @@ const visibleColumns = [
 ];
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
+const pageAmount = 200;
 
 const ItemsList = ({
   holding,
   items,
-
   draggable,
   isItemsDragSelected,
   selectItemsForDrag,
@@ -139,6 +139,7 @@ const ItemsList = ({
     column: 'barcode',
   });
   const [records, setRecords] = useState([]);
+  const [paginatedItems, setPaginatedItems] = useState([]);
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -155,9 +156,25 @@ const ItemsList = ({
     getDraggingItems,
   }), [draggable, isItemsDragSelected, getDraggingItems]);
 
+  const onNeedMoreData = (amount, index) => {
+    const data = new Array(index);
+    // slice original records array to extract 'pageAmount' of records
+    const recordSlice = records.slice(index, index + amount);
+    // push it at the end of the sparse array
+    data.push(...recordSlice);
+
+    setPaginatedItems(data);
+  };
+
   useEffect(() => {
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
   }, [items, itemsSorting]);
+
+  useEffect(() => {
+    if (records?.length) {
+      setPaginatedItems(records.slice(0, pageAmount));
+    }
+  }, [records]);
 
   // NOTE: in order to sort on a particular column, it must be registered
   // as a sorter in '../utils'. If it's not, there won't be any errors;
@@ -181,17 +198,22 @@ const ItemsList = ({
 
     <MultiColumnList
       id={`list-items-${holding.id}`}
-      contentData={records}
+      columnIdPrefix={`list-items-${holding.id}`}
+      contentData={paginatedItems}
       rowMetadata={rowMetadata}
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
       columnMapping={columnMapping}
       ariaLabel={ariaLabel}
       interactive={false}
+      onNeedMoreData={onNeedMoreData}
+      pagingType="prev-next"
+      totalCount={items.length}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
       rowFormatter={ItemsListRow}
+      pageAmount={pageAmount}
       rowProps={rowProps}
     />
   );

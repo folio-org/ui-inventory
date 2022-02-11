@@ -80,7 +80,7 @@
       "holdings-sources": "1.0",
       "users": "15.0",
       "location-units": "2.0",
-      "circulation": "9.0 10.0 11.0",
+      "circulation": "9.0 10.0 11.0 12.0 13.0",
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
@@ -90,7 +90,11 @@
       "copycat-imports": "1.0",
       "copycat-profiles": "1.0",
       "remote-storage-mappings": "1.0 2.0",
+      "acquisitions-units": "1.1",
+      "orders": "11.0 12.0",
       "orders.holding-summary": "1.0",
+      "order-lines": "2.0 3.0",
+      "organizations.organizations": "1.0",
       "pieces": "2.0"
     },
     "permissionSets": [
@@ -507,7 +511,13 @@
           "inventory-storage.record-bulk.ids.get",
           "data-export.quick.export.post",
           "orders.holding-summary.collection.get",
-          "orders.pieces.collection.get"
+          "orders.pieces.collection.get",
+          "orders.po-lines.collection.get",
+          "orders.po-lines.item.get",
+          "orders.collection.get",
+          "orders.item.get",
+          "organizations.organizations.item.get",
+          "acquisitions-units.units.collection.get"
         ],
         "visible": true
       },
@@ -761,6 +771,7 @@
     "test": "yarn run test:unit",
     "test:jest": "jest",
     "test:unit": "jest --silent --ci --coverage",
+    "test:unit:watch": "jest --watch --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
@@ -768,6 +779,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/eslint-parser": "^7.16.3",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
@@ -776,7 +788,7 @@
     "@bigtest/interactor": "^0.7.0",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^5.3.0",
+    "@folio/eslint-config-stripes": "^6.0.0",
     "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^10.0.0",
@@ -789,7 +801,6 @@
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
     "@testing-library/user-event": "^12.1.10",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "chai": "^4.2.0",
     "core-js": "^3.6.4",
@@ -813,11 +824,13 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.0.0",
+    "@folio/quick-marc": "^4.0.1",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
+    "history": "^5.0.0",
     "ky": "^0.23.0",
     "lodash": "^4.17.4",
     "moment": "~2.24.0",
@@ -842,11 +855,9 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
-    "@folio/plugin-find-instance": "^6.0.0",
-    "@folio/quick-marc": "^4.0.1"
+    "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
-    "babel-eslint/@babel/parser": "7.7.5",
     "moment": "~2.24.0"
   }
 }

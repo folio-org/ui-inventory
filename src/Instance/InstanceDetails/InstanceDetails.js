@@ -30,6 +30,7 @@ import { InstanceSubjectView } from './InstanceSubjectView';
 import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
+import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
 
 import { getAccordionState } from './utils';
@@ -41,11 +42,12 @@ const accordions = {
   identifiers: 'acc03',
   contributors: 'acc04',
   descriptiveData: 'acc05',
-  notes: 'acc06',
+  notes: 'instance-details-notes',
   electronicAccess: 'acc07',
   subjects: 'acc08',
   classifications: 'acc09',
   relationship: 'acc10',
+  acquisition: 'acc11',
 };
 
 const InstanceDetails = forwardRef(({
@@ -185,6 +187,11 @@ const InstanceDetails = forwardRef(({
               id={accordions.classifications}
               classifications={instance?.classifications}
               classificationTypes={referenceData.classificationTypes}
+            />
+
+            <InstanceAcquisition
+              accordionId={accordions.acquisition}
+              instanceId={instance.id}
             />
 
             <InstanceRelationshipView

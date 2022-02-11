@@ -14,7 +14,6 @@ const HoldingsList = ({
     key={`items_${holding.id}`}
     instance={instance}
     holding={holding}
-
     draggable={draggable}
     droppable={droppable}
     holdings={holdings}

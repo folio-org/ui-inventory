@@ -1,24 +1,20 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 import { CreateItem } from '../Item';
 import { DataContext } from '../contexts';
 
-const CreateItemRoute = ({ match }) => {
+const CreateItemRoute = () => {
   const referenceData = useContext(DataContext);
+  const { id, holdingId } = useParams();
 
   return (
     <CreateItem
       referenceData={referenceData}
-      instanceId={match.params.id}
-      holdingId={match.params.holdingId}
+      instanceId={id}
+      holdingId={holdingId}
     />
   );
 };
 
-CreateItemRoute.propTypes = {
-  match: PropTypes.object.isRequired,
-};
-
-export default withRouter(CreateItemRoute);
+export default CreateItemRoute;

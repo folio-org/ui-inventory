@@ -16,7 +16,6 @@ import translations from '../../../test/jest/helpers/translationsProperties';
 import { instance } from '../../../test/fixtures';
 import InstanceEdit from './InstanceEdit';
 
-
 const queryClient = new QueryClient();
 const referenceData = {
   locationsById: {},

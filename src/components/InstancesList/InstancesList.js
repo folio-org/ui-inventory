@@ -35,6 +35,7 @@ import {
   HasCommand,
 } from '@folio/stripes/components';
 
+import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
@@ -53,6 +54,7 @@ import {
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   QUICK_EXPORT_LIMIT,
+  segments,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -70,12 +72,27 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
+import {
+  browseModeOptions,
+  getFilterConfig,
+} from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+
+const columnSets = {
+  SUBJECTS: ['subject', 'numberOfTitles'],
+  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
+};
+
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
-const ALL_COLUMNS = [...NON_TOGGLEABLE_COLUMNS, ...TOGGLEABLE_COLUMNS];
+const ALL_COLUMNS = Array.from(new Set([
+  ...NON_TOGGLEABLE_COLUMNS,
+  ...TOGGLEABLE_COLUMNS,
+  ...columnSets.CALL_NUMBERS,
+  ...columnSets.SUBJECTS
+]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
@@ -91,7 +108,6 @@ class InstancesList extends React.Component {
     showSingleResult: PropTypes.bool,
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
-    onSelectRow: PropTypes.func,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
@@ -107,9 +123,14 @@ class InstancesList extends React.Component {
     mutator: PropTypes.shape({
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
+        replace: PropTypes.func.isRequired,
       }).isRequired,
     }),
+    location: PropTypes.shape({
+      search: PropTypes.string
+    }),
     stripes: PropTypes.object.isRequired,
+    fetchFacets: PropTypes.func,
   };
 
   static contextType = CalloutContext;
@@ -132,7 +153,36 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
+      optionSelected: '',
+      searchAndSortKey: 0,
     };
+  }
+
+  componentDidMount() {
+    if (this.getSelectedBrowseOption()) {
+      this.setState({
+        optionSelected: this.getQIndexFromParams(),
+      });
+    } else {
+      this.setState({
+        optionSelected: '',
+      });
+    }
+  }
+
+  getQIndexFromParams = () => {
+    const params = new URLSearchParams(this.props.location.search);
+    return params.get('qindex');
+  }
+
+  getSelectedBrowseOption = () => {
+    const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
+    return isBrowseSelectedBasedOnState;
+  }
+
+  getExecutedBrowseQuery = () => {
+    const isBrowseSelectedBasedOnUrl = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    return isBrowseSelectedBasedOnUrl;
   }
 
   getInitialToggableColumns = () => {
@@ -140,8 +190,18 @@ class InstancesList extends React.Component {
   }
 
   getVisibleColumns = () => {
-    const visibleColumns = new Set([...this.state.visibleColumns, ...NON_TOGGLEABLE_COLUMNS]);
-    return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    // display particular columnset based on the quindex value in the URL, since the search has been
+    // performed.
+    const executedBrowseQuery = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.getQIndexFromParams())[0];
+    let columns = columnSets[executedBrowseQuery];
+    if (!executedBrowseQuery) {
+      columns = this.state.visibleColumns;
+      const visibleColumns = new Set([...columns, ...NON_TOGGLEABLE_COLUMNS]);
+      return ALL_COLUMNS.filter(key => visibleColumns.has(key));
+    } else {
+      const visibleColumns = new Set([...columns]);
+      return Array.from(visibleColumns);
+    }
   }
 
   onFilterChangeHandler = ({ name, values }) => {
@@ -157,7 +217,6 @@ class InstancesList extends React.Component {
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
-
     goTo(path, { ...params, filters: filtersStr });
   };
 
@@ -216,10 +275,15 @@ class InstancesList extends React.Component {
     this.openCreateInstance();
   }
 
-  refocusOnInputSearch = () => {
+  refocusOnInputSearch = (segment) => {
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
+    if (segment !== segments.instances) {
+      this.setState({
+        optionSelected: ''
+      });
+    }
     document.getElementById('input-inventory-search').focus();
   }
 
@@ -450,37 +514,38 @@ class InstancesList extends React.Component {
     };
 
     return (
-      <>
-        <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
-          <IfPermission perm="ui-inventory.instance.create">
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-newinventory"
-              onClick={buildOnClickHandler(this.openCreateInstance)}
-            >
-              <Icon
-                icon="plus-sign"
-                size="medium"
-                iconClassName={css.actionIcon}
-              />
-              <FormattedMessage id="stripes-smart-components.new" />
-            </Button>
-          </IfPermission>
-          <Pluggable
-            id="clickable-create-inventory-records"
-            onClose={this.toggleNewFastAddModal}
-            open={this.state.showNewFastAddModal} // control the open modal via state var
-            renderTrigger={() => (
-              this.getActionItem({
-                id: 'new-fast-add-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.newFastAddRecord',
-                onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-              })
-            )}
-            type="create-inventory-records"
-          />
-          {
+      !Object.values(browseModeOptions).includes(this.state.optionSelected) ?
+        <>
+          <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
+            <IfPermission perm="ui-inventory.instance.create">
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-newinventory"
+                onClick={buildOnClickHandler(this.openCreateInstance)}
+              >
+                <Icon
+                  icon="plus-sign"
+                  size="medium"
+                  iconClassName={css.actionIcon}
+                />
+                <FormattedMessage id="stripes-smart-components.new" />
+              </Button>
+            </IfPermission>
+            <Pluggable
+              id="clickable-create-inventory-records"
+              onClose={this.toggleNewFastAddModal}
+              open={this.state.showNewFastAddModal} // control the open modal via state var
+              renderTrigger={() => (
+                this.getActionItem({
+                  id: 'new-fast-add-record',
+                  icon: 'lightning',
+                  messageId: 'ui-inventory.newFastAddRecord',
+                  onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+                })
+              )}
+              type="create-inventory-records"
+            />
+            {
             inTransitItemsExportInProgress ?
               this.getActionItem({
                 id: 'dropdown-clickable-get-report',
@@ -494,45 +559,45 @@ class InstancesList extends React.Component {
                 onClickHandler: buildOnClickHandler(this.startInTransitReportGeneration),
               })
           }
-          {this.getActionItem({
-            id: 'dropdown-clickable-get-items-uiids',
-            icon: 'save',
-            messageId: 'ui-inventory.saveInstancesUIIDS',
-            onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
-            isDisabled: isInstancesListEmpty,
-          })}
-          {segment === 'holdings' && this.getActionItem({
-            id: 'dropdown-clickable-get-items-uiids',
-            icon: 'save',
-            messageId: 'ui-inventory.saveHoldingsUIIDS',
-            onClickHandler: buildOnClickHandler(this.generateHoldingsIdReport),
-            isDisabled: isInstancesListEmpty,
-          })}
-          {this.getActionItem({
-            id: 'dropdown-clickable-get-cql-query',
-            icon: 'search',
-            messageId: 'ui-inventory.saveInstancesCQLQuery',
-            onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
-            isDisabled: isInstancesListEmpty,
-          })}
-          {this.getActionItem({
-            id: 'dropdown-clickable-export-marc',
-            icon: 'download',
-            messageId: 'ui-inventory.exportInstancesInMARC',
-            onClickHandler: buildOnClickHandler(this.triggerQuickExport),
-            isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
-          })}
-          <IfInterface name="copycat-imports">
-            <IfPermission perm="copycat.profiles.collection.get">
-              {this.getActionItem({
-                id: 'dropdown-clickable-import-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.copycat.import',
-                onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-              })}
-            </IfPermission>
-          </IfInterface>
-          {isQuickExportLimitExceeded && (
+            {this.getActionItem({
+              id: 'dropdown-clickable-get-instances-uiids',
+              icon: 'save',
+              messageId: 'ui-inventory.saveInstancesUIIDS',
+              onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
+              isDisabled: isInstancesListEmpty,
+            })}
+            {segment === 'holdings' && this.getActionItem({
+              id: 'dropdown-clickable-get-holdings-uiids',
+              icon: 'save',
+              messageId: 'ui-inventory.saveHoldingsUIIDS',
+              onClickHandler: buildOnClickHandler(this.generateHoldingsIdReport),
+              isDisabled: isInstancesListEmpty,
+            })}
+            {this.getActionItem({
+              id: 'dropdown-clickable-get-cql-query',
+              icon: 'search',
+              messageId: 'ui-inventory.saveInstancesCQLQuery',
+              onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
+              isDisabled: isInstancesListEmpty,
+            })}
+            {this.getActionItem({
+              id: 'dropdown-clickable-export-marc',
+              icon: 'download',
+              messageId: 'ui-inventory.exportInstancesInMARC',
+              onClickHandler: buildOnClickHandler(this.triggerQuickExport),
+              isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
+            })}
+            <IfInterface name="copycat-imports">
+              <IfPermission perm="copycat.profiles.collection.get">
+                {this.getActionItem({
+                  id: 'dropdown-clickable-import-record',
+                  icon: 'lightning',
+                  messageId: 'ui-inventory.copycat.import',
+                  onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+                })}
+              </IfPermission>
+            </IfInterface>
+            {isQuickExportLimitExceeded && (
             <span
               className={css.feedbackError}
               data-test-quick-marc-export-limit-exceeded
@@ -542,37 +607,39 @@ class InstancesList extends React.Component {
                 values={{ count: QUICK_EXPORT_LIMIT }}
               />
             </span>
-          )}
-          {this.getActionItem({
-            id: 'dropdown-clickable-export-json',
-            icon: 'download',
-            messageId: 'ui-inventory.exportInstancesInJSON',
-            onClickHandler: buildOnClickHandler(noop),
-            isDisabled: true,
-          })}
-          {this.getActionItem({
-            id: 'dropdown-clickable-show-selected-records',
-            icon: 'eye-open',
-            messageId: 'ui-inventory.instances.showSelectedRecords',
-            onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
-            isDisabled: !selectedRowsCount,
-          })}
-        </MenuSection>
-        <MenuSection label={intl.formatMessage({ id: 'ui-inventory.showColumns' })} id="columns-menu-section">
-          {TOGGLEABLE_COLUMNS.map(key => (
-            <Checkbox
-              key={key}
-              name={key}
-              data-testid={key}
-              label={columnMapping[key]}
-              id={`inventory-search-column-checkbox-${key}`}
-              checked={visibleColumns.includes(key)}
-              value={key}
-              onChange={this.handleToggleColumn}
-            />
-          ))}
-        </MenuSection>
-      </>
+            )}
+            {this.getActionItem({
+              id: 'dropdown-clickable-export-json',
+              icon: 'download',
+              messageId: 'ui-inventory.exportInstancesInJSON',
+              onClickHandler: buildOnClickHandler(noop),
+              isDisabled: true,
+            })}
+            {this.getActionItem({
+              id: 'dropdown-clickable-show-selected-records',
+              icon: 'eye-open',
+              messageId: 'ui-inventory.instances.showSelectedRecords',
+              onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
+              isDisabled: !selectedRowsCount,
+            })}
+          </MenuSection>
+          <MenuSection label={intl.formatMessage({ id: 'ui-inventory.showColumns' })} id="columns-menu-section">
+            {TOGGLEABLE_COLUMNS.map(key => (
+              <Checkbox
+                key={key}
+                name={key}
+                data-testid={key}
+                label={columnMapping[key]}
+                id={`inventory-search-column-checkbox-${key}`}
+                checked={visibleColumns.includes(key)}
+                value={key}
+                onChange={this.handleToggleColumn}
+              />
+            ))}
+          </MenuSection>
+        </>
+        :
+        null
     );
   };
 
@@ -580,11 +647,14 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
+      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       select: '',
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' }),
+      subject: intl.formatMessage({ id: 'ui-inventory.subject' })
     };
 
     return columnMapping;
@@ -599,7 +669,10 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
-    this.setState({ selectedRows: {} });
+    this.setState({
+      selectedRows: {},
+      optionSelected: ''
+    });
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -643,11 +716,50 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  // handler used for clicking a row in browse mode
+  onSelectRow = (_, row) => {
+    const {
+      parentMutator,
+      parentResources,
+      updateLocation,
+    } = this.props;
+
+    switch (get(parentResources.query, 'qindex')) {
+      case browseModeOptions.CALL_NUMBERS:
+        parentMutator.query.update({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        updateLocation({
+          qindex: 'callNumber',
+          query: row.shelfKey
+        });
+        break;
+      case browseModeOptions.SUBJECTS:
+        parentMutator.query.update({
+          qindex: 'subject',
+          query: row.subject
+        });
+        updateLocation({
+          qindex: 'subject',
+          query: row.subject
+        });
+        break;
+      default:
+    }
+
+    // the searchAndSortKey state field can be updated to reset SearchAndSort
+    // to use the app-level selectedIndex
+    this.setState((curState) => ({
+      optionSelected: '',
+      searchAndSortKey: curState.searchAndSortKey + 1
+    }));
+  }
+
   render() {
     const {
       showSingleResult,
       browseOnly,
-      onSelectRow,
       disableRecordCreation,
       intl,
       data,
@@ -660,14 +772,71 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      fetchFacets,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
       selectedRows,
+      optionSelected,
+      searchAndSortKey
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
+
+    const missedMatchItem = () => {
+      const query = new URLSearchParams(this.props.location.search).get('query');
+      return (
+        <>
+          <span className={css.warnIcon}>
+            <Icon
+              size="medium"
+              icon="exclamation-circle"
+              status="warn"
+            />
+          </span>
+          <span className={css.missingMatchError}>
+            &nbsp;
+            {query}
+            &nbsp;
+          </span>
+          <strong>
+            <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
+          </strong>
+        </>
+      );
+    };
+
+    const getFullMatchRecord = (item, isAnchor) => {
+      if (isAnchor) {
+        return <strong>{item}</strong>;
+      }
+
+      return item;
+    };
+
+    const handleOnNeedMore = ({ direction, records, source }) => {
+      if (!Object.values(browseModeOptions).includes(optionSelected)) return;
+
+      const isSubject = optionSelected === browseModeOptions.SUBJECTS;
+      const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
+      const param = isSubject ? 'subject' : 'callNumber';
+      let anchor;
+
+      if (direction === 'prev') {
+        anchor = isCallNumber
+          ? records.find(i => i.fullCallNumber)?.shelfKey
+          : records[0].subject;
+
+        source.fetchByQuery(`${param} < "${anchor}"`);
+      } else {
+        anchor = isCallNumber
+          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+          : records[records.length - 1].subject;
+
+        source.fetchByQuery(`${param} > "${anchor}"`);
+      }
+    };
 
     const resultsFormatter = {
       'select': ({
@@ -687,48 +856,97 @@ class InstancesList extends React.Component {
       ),
       'title': ({
         title,
+        instance,
         discoverySuppress,
         isBoundWith,
         staffSuppress,
-      }) => (
-        <AppIcon
-          size="small"
-          app="inventory"
-          iconKey="instance"
-          iconAlignment="baseline"
-        >
-          {title}
-          {(isBoundWith) &&
+        isAnchor,
+      }) => {
+        if (this.getExecutedBrowseQuery()) {
+          return getFullMatchRecord(instance?.title, isAnchor);
+        } else {
+          return (
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              {title}
+              {(isBoundWith) &&
+              <AppIcon
+                size="small"
+                app="@folio/inventory"
+                iconKey="bound-with"
+                iconClassName={css.boundWithIcon}
+              />
           }
-          {(discoverySuppress || staffSuppress) &&
-          <span className={css.warnIcon}>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
+              {(discoverySuppress || staffSuppress) &&
+              <span className={css.warnIcon}>
+                <Icon
+                  size="medium"
+                  icon="exclamation-circle"
+                  status="warn"
+                />
+              </span>
           }
-        </AppIcon>
-      ),
+            </AppIcon>
+          );
+        }
+      },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      'subject': r => {
+        if (r?.totalRecords) {
+          return getFullMatchRecord(r?.subject, r.isAnchor);
+        }
+        return missedMatchItem();
+      },
+      'callNumber': r => {
+        if (r?.instance) {
+          return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
+        }
+        return missedMatchItem();
+      },
+      'numberOfTitles': r => (r?.instance || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
+    const browseQueryExecuted = Boolean(this.getExecutedBrowseQuery());
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
+    const onChangeIndex = (e) => {
+      this.setState({ optionSelected: e.target.value });
+    };
+
+    const browseFilter = () => {
+      const { renderer } = getFilterConfig('browse');
+      if (optionSelected === browseModeOptions.SUBJECTS) {
+        return renderer;
+      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets(data),
+          parentResources,
+        });
+      } else return renderFilters;
+    };
+
+    const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
+
+    const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
+    const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
+    const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
+    const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
-      const label = prefix + intl.formatMessage({ id: index.label });
+      let label = index.label;
+      if (index.label.includes('ui-inventory')) {
+        label = prefix + intl.formatMessage({ id: index.label });
+      }
 
       return { ...index, label };
     });
@@ -752,10 +970,15 @@ class InstancesList extends React.Component {
       >
         <div data-test-inventory-instances>
           <SearchAndSort
-            actionMenu={this.getActionMenu}
+            key={searchAndSortKey}
+            actionMenu={this.getSelectedBrowseOption() ? noop : this.getActionMenu}
             packageInfo={packageInfo}
             objectName="inventory"
+            title={titleBrowse}
+            customPaneSubText={customPaneSubTextBrowse}
+            searchFieldButtonLabel={searchFieldButtonLabelBrowse}
             maxSortKeys={1}
+            notLoadedMessage={notLoadedMessageBrowse}
             renderNavigation={this.renderNavigation}
             searchableIndexes={formattedSearchableIndexes}
             selectedIndex={get(data.query, 'qindex')}
@@ -764,6 +987,7 @@ class InstancesList extends React.Component {
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
+            onChangeIndex={onChangeIndex}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -773,6 +997,9 @@ class InstancesList extends React.Component {
             visibleColumns={visibleColumns}
             columnMapping={columnMapping}
             columnWidths={{
+              callNumber: '15%',
+              subject: '50%',
+              numberOfTitles: '15%',
               select: '30px',
               title: '40%',
             }}
@@ -793,11 +1020,13 @@ class InstancesList extends React.Component {
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
             showSingleResult={showSingleResult}
             browseOnly={browseOnly}
-            onSelectRow={onSelectRow}
-            renderFilters={renderFilters}
+            onSelectRow={browseQueryExecuted ? this.onSelectRow : undefined}
+            renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType="prev-next"
+            pagingType={pagingTypes.PREV_NEXT}
+            hidePageIndices={browseQueryExecuted}
+            paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -805,6 +1034,7 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
+            resultsOnNeedMore={handleOnNeedMore}
           />
         </div>
         <ErrorModal

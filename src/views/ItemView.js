@@ -1,7 +1,6 @@
 import {
   get,
   cloneDeep,
-  omit,
   map,
   isEmpty,
   values,
@@ -10,7 +9,6 @@ import { parameterize } from 'inflected';
 
 import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
@@ -27,7 +25,6 @@ import {
   AccordionStatus,
   ExpandAllButton,
   KeyValue,
-  Layer,
   MultiColumnList,
   Button,
   Icon,
@@ -53,6 +50,7 @@ import {
 } from '@folio/stripes/core';
 
 import ModalContent from '../components/ModalContent';
+import { ItemAcquisition } from '../Item/ViewItem/ItemAcquisition';
 import {
   craftLayerUrl,
   callNumberLabel,
@@ -69,21 +67,23 @@ import {
   checkIfArrayIsEmpty,
   handleKeyCommand,
 } from '../utils';
-import ItemForm from '../edit/items/ItemForm';
 import withLocation from '../withLocation';
 import {
   itemStatusesMap,
   itemStatusMutators,
   noValue,
-  requestStatuses,
+  REQUEST_OPEN_STATUSES,
   wrappingCell,
   actionMenuDisplayPerms,
 } from '../constants';
 import ItemStatus from './ItemStatus';
-import { WarningMessage } from '../components';
+import {
+  WarningMessage,
+  AdministrativeNoteList,
+} from '../components';
 import css from '../View.css';
 
-export const requestStatusFiltersString = map(requestStatuses, requestStatus => `requestStatus.${requestStatus}`).join(',');
+export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
   static contextType = CalloutContext;
@@ -104,7 +104,13 @@ class ItemView extends React.Component {
 
   onClickEditItem = e => {
     if (e) e.preventDefault();
-    this.props.updateLocation({ layer: 'editItem' });
+
+    const { id, holdingsrecordid, itemid } = this.props.match.params;
+
+    this.props.history.push({
+      pathname: `/inventory/edit/${id}/${holdingsrecordid}/${itemid}`,
+      search: this.props.location.search,
+    });
   };
 
   onClickCloseEditItem = e => {
@@ -144,17 +150,13 @@ class ItemView extends React.Component {
     this.props.mutator.items.DELETE(item);
   };
 
-  onCopy(item) {
-    this.setState((state) => {
-      const newState = cloneDeep(state);
+  onCopy() {
+    const { itemid, id, holdingsrecordid } = this.props.match.params;
 
-      newState.copiedItem = omit(item, ['id', 'hrid', 'barcode']);
-      newState.copiedItem.status = { name: 'Available' };
-
-      return newState;
+    this.props.history.push({
+      pathname: `/inventory/copy/${id}/${holdingsrecordid}/${itemid}`,
+      search: this.props.location.search,
     });
-
-    this.props.updateLocation({ layer: 'copyItem' });
   }
 
   markItemAsMissing = () => {
@@ -188,7 +190,7 @@ class ItemView extends React.Component {
     if (canMarkRequestAsOpen(request)) {
       const newRequestRecord = cloneDeep(request);
 
-      newRequestRecord.status = requestStatuses.OPEN_NOT_YET_FILLED;
+      newRequestRecord.status = REQUEST_OPEN_STATUSES.OPEN_NOT_YET_FILLED;
       this.props.mutator.requestOnItem.replace({ id: newRequestRecord.id });
       this.props.mutator.requests.PUT(newRequestRecord);
     }
@@ -393,7 +395,6 @@ class ItemView extends React.Component {
 
   render() {
     const {
-      location,
       resources: {
         items,
         holdingsRecords,
@@ -405,7 +406,6 @@ class ItemView extends React.Component {
         tagSettings,
       },
       referenceTables,
-      okapi,
       goTo,
       stripes,
     } = this.props;
@@ -416,7 +416,6 @@ class ItemView extends React.Component {
       itemMissingModal,
       itemWithdrawnModal,
       selectedItemStatus,
-      copiedItem,
       confirmDeleteItemModal,
     } = this.state;
 
@@ -442,7 +441,6 @@ class ItemView extends React.Component {
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const requestCount = requests.other?.totalRecords ?? 0;
-    const query = location.search ? queryString.parse(location.search) : {};
 
     const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
@@ -646,6 +644,7 @@ class ItemView extends React.Component {
       acc08: !areAllFieldsEmpty(values(electronicAccess)),
       acc09: !areAllFieldsEmpty(values(circulationHistory)),
       acc10: !areAllFieldsEmpty(values(boundWithTitles)),
+      itemAcquisitionAccordion: true,
     };
 
     const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
@@ -716,8 +715,13 @@ class ItemView extends React.Component {
         name: 'search',
         handler: handleKeyCommand(() => goTo('/inventory')),
       },
+      {
+        name: 'duplicateRecord',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-inventory.item.create')) this.onCopy();
+        }),
+      },
     ];
-
 
     return (
       <IntlConsumer>
@@ -990,6 +994,11 @@ class ItemView extends React.Component {
                           ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
                           containerRef={ref => { this.resultsList = ref; }}
                         />
+                      </Row>
+                      <Row>
+                        <Col xs={12}>
+                          <AdministrativeNoteList administrativeNotes={item.administrativeNotes} />
+                        </Col>
                       </Row>
                     </Accordion>
                     <Accordion
@@ -1340,6 +1349,16 @@ class ItemView extends React.Component {
                         {effectiveLocationDisplay}
                       </Row>
                     </Accordion>
+
+                    {
+                      item.purchaseOrderLineIdentifier && (
+                        <ItemAcquisition
+                          itemId={item.id}
+                          accordionId="itemAcquisitionAccordion"
+                        />
+                      )
+                    }
+
                     <Accordion
                       id="acc08"
                       label={<FormattedMessage id="ui-inventory.electronicAccess" />}
@@ -1424,39 +1443,6 @@ class ItemView extends React.Component {
                   </AccordionSet>
                 </AccordionStatus>
               </Pane>
-              <Layer
-                isOpen={query.layer ? query.layer === 'editItem' : false}
-                contentLabel={intl.formatMessage({ id: 'ui-inventory.editItemDialog' })}
-              >
-                <ItemForm
-                  form={`itemform_${item.id}`}
-                  onSubmit={record => this.saveItem(record)}
-                  initialValues={item}
-                  onCancel={this.onClickCloseEditItem}
-                  okapi={okapi}
-                  instance={instance}
-                  holdingsRecord={holdingsRecord}
-                  referenceTables={referenceTables}
-                  stripes={this.props.stripes}
-                />
-              </Layer>
-              <Layer
-                isOpen={query.layer === 'copyItem'}
-                contentLabel={intl.formatMessage({ id: 'ui-inventory.copyItemDialog' })}
-              >
-                <ItemForm
-                  form={`itemform_${holdingsRecord.id}`}
-                  onSubmit={(record) => { this.copyItem(record); }}
-                  initialValues={copiedItem}
-                  onCancel={this.onClickCloseEditItem}
-                  okapi={okapi}
-                  instance={instance}
-                  copy
-                  holdingsRecord={holdingsRecord}
-                  referenceTables={referenceTables}
-                  stripes={this.props.stripes}
-                />
-              </Layer>
             </Paneset>
           </HasCommand>
         )}
@@ -1486,7 +1472,6 @@ ItemView.propTypes = {
     openLoans: PropTypes.object,
     tagSettings: PropTypes.object,
   }).isRequired,
-  okapi: PropTypes.object,
   location: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
@@ -1528,6 +1513,8 @@ ItemView.propTypes = {
   onCloseViewItem: PropTypes.func.isRequired,
   updateLocation: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default withLocation(ItemView);

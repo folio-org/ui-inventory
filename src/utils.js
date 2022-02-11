@@ -16,6 +16,8 @@ import {
   map,
   isObject,
   omit,
+  chunk,
+  flatten,
 } from 'lodash';
 import moment from 'moment';
 
@@ -27,6 +29,8 @@ import {
   emptyList,
   indentifierTypeNames,
   DATE_FORMAT,
+  LIMIT_MAX,
+  ERROR_TYPES,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -192,7 +196,7 @@ export const buildDateRangeQuery = name => values => {
 
   if (!startDateString || !endDateString) return '';
 
-  return `metadata.${name}>="${startDateString}" and metadata.${name}<="${endDateString}"`;
+  return `${name}>="${startDateString}" and ${name}<="${endDateString}"`;
 };
 
 // Function which takes a filter name and returns
@@ -668,4 +672,64 @@ export const handleKeyCommand = (handler, { disabled } = {}) => {
       handler();
     }
   };
+};
+
+const buildQueryByIds = (itemsChunk) => {
+  const query = itemsChunk
+    .map(id => `id==${id}`)
+    .join(' or ');
+
+  return query || '';
+};
+
+export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _params = {}, filterParamName = 'query') => {
+  if (!items?.length) return Promise.resolve([]);
+
+  const requests = chunk(items, 25).map(itemsChunk => {
+    const query = buildQuery(itemsChunk);
+
+    if (!query) return Promise.resolve([]);
+
+    const params = {
+      limit: LIMIT_MAX,
+      ..._params,
+      [filterParamName]: query,
+    };
+
+    return requestFn({ params });
+  });
+
+  return Promise.all(requests)
+    .then((responses) => flatten(responses));
+};
+
+/**
+ * Accent Fold
+ *
+ * For example:
+ * LÒpez => Lopez
+ *
+ * Link:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+*/
+export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+/**
+ * Parses http error to json and attaches an error type.
+ *
+ * @param httpError object
+ * @returns object
+ */
+export const parseHttpError = async httpError => {
+  try {
+    const jsonError = await httpError.json();
+
+    if (jsonError.message.match(/optimistic locking/i)) {
+      jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
+    }
+
+    return jsonError;
+  } catch (err) {
+    return httpError;
+  }
 };

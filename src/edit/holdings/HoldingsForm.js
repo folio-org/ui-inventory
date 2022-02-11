@@ -34,6 +34,7 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import RepeatableField from '../../components/RepeatableField';
+import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import HoldingsStatementFields from './holdingsStatementFields';
 import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
@@ -43,6 +44,7 @@ import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import styles from './HoldingsForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
+import AdministrativeNoteFields from '../administrativeNoteFields';
 
 
 // eslint-disable-next-line no-unused-vars
@@ -90,6 +92,9 @@ class HoldingsForm extends React.Component {
     initialValues: PropTypes.object,
     instance: PropTypes.object,
     isMARCRecord: PropTypes.bool,
+    location: PropTypes.shape({
+      state: PropTypes.string.isRequired,
+    }).isRequired,
     referenceTables: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       holdingsBlockedFields: PropTypes.shape({
@@ -106,6 +111,7 @@ class HoldingsForm extends React.Component {
       change: PropTypes.func,
     }),
     goTo: PropTypes.func.isRequired,
+    httpError: PropTypes.object,
   };
 
   static defaultProps = {
@@ -186,9 +192,11 @@ class HoldingsForm extends React.Component {
       referenceTables,
       copy,
       handleSubmit,
+      location: { state: locationState },
       pristine,
       submitting,
       goTo,
+      httpError,
     } = this.props;
 
     const refLookup = (referenceTable, id) => {
@@ -277,7 +285,7 @@ class HoldingsForm extends React.Component {
     return (
       <form
         data-test-holdings-page-type={holdingsPageType}
-        className={styles.holingsForm}
+        className={styles.holdingsForm}
       >
         <HasCommand
           commands={shortcuts}
@@ -308,6 +316,12 @@ class HoldingsForm extends React.Component {
                   : null
               }
             >
+              <OptimisticLockingBanner
+                httpError={httpError}
+                latestVersionLink={locationState?.backPathname}
+                conflictDetectionBannerRef={this.conflictDetectionBannerRef}
+                focusConflictDetectionBanner={this.focusConflictDetectionBanner}
+              />
               <AccordionStatus ref={this.accordionStatusRef}>
                 <Row end="xs">
                   <Col xs>
@@ -381,6 +395,7 @@ class HoldingsForm extends React.Component {
                           }]}
                           canAdd={!this.isFieldBlocked('formerIds')}
                           canEdit={!this.isFieldBlocked('formerIds')}
+                          canDelete={!this.isFieldBlocked('formerIds')}
                         />
                       </Col>
                     </Row>
@@ -417,7 +432,13 @@ class HoldingsForm extends React.Component {
                           ]}
                           canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                           canEdit={!this.isFieldBlocked('statisticalCodeIds')}
+                          canDelete={!this.isFieldBlocked('statisticalCodeIds')}
                         />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={12}>
+                        <AdministrativeNoteFields />
                       </Col>
                     </Row>
                   </Accordion>
@@ -443,6 +464,7 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           marginBottom0
                           disabled={this.isFieldBlocked('permanentLocationId')}
+                          required
                         />
                       </Col>
                       <Col sm={4}>
@@ -576,16 +598,19 @@ class HoldingsForm extends React.Component {
                         <HoldingsStatementFields
                           canAdd={!this.isFieldBlocked('holdingsStatements')}
                           canEdit={!this.isFieldBlocked('holdingsStatements')}
+                          canDelete={!this.isFieldBlocked('holdingsStatements')}
                         />
                         <br />
                         <HoldingsStatementForSupplementsFields
                           canAdd={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                           canEdit={!this.isFieldBlocked('holdingsStatementsForSupplements')}
+                          canDelete={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                         />
                         <br />
                         <HoldingsStatementForIndexesFields
                           canAdd={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                           canEdit={!this.isFieldBlocked('holdingsStatementsForIndexes')}
+                          canDelete={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                         />
                         <br />
                       </Col>
@@ -662,7 +687,7 @@ class HoldingsForm extends React.Component {
                       <Col sm={10}>
                         <RepeatableField
                           name="receivingHistory.entries"
-                          addButtonId="clickable-add-statistical-code"
+                          addButtonId="clickable-add-receiving-history"
                           addLabel={<FormattedMessage id="ui-inventory.addReceivingHistory" />}
                           template={[
                             {
@@ -686,6 +711,7 @@ class HoldingsForm extends React.Component {
                           ]}
                           canAdd={!this.isFieldBlocked('receivingHistory.entries')}
                           canEdit={!this.isFieldBlocked('receivingHistory.entries')}
+                          canDelete={!this.isFieldBlocked('receivingHistory.entries')}
                         />
                       </Col>
                     </Row>

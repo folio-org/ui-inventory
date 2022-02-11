@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
-
-import { screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { screen, fireEvent } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -13,6 +13,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
+import { items as callNumbers } from '../../../test/fixtures/callNumbers';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
@@ -47,6 +48,14 @@ const resources = {
     records: instancesFixture,
     other: { totalRecords: instancesFixture.length },
   },
+  recordsBrowseCallNumber : {
+    hasLoaded: true,
+    resource: 'records',
+    records: callNumbers,
+    other: {
+      totalRecords: callNumbers.length
+    },
+  },
   facets: {
     hasLoaded: true,
     resource: 'facets',
@@ -57,6 +66,8 @@ const resources = {
   resultOffset: 0,
 };
 
+const history = createMemoryHistory();
+
 const renderInstancesList = ({ segment }) => {
   const {
     indexes,
@@ -65,7 +76,7 @@ const renderInstancesList = ({ segment }) => {
   } = getFilterConfig(segment);
 
   return renderWithIntl(
-    <Router>
+    <Router history={history}>
       <StripesContext.Provider value={stripesStub}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
@@ -84,6 +95,7 @@ const renderInstancesList = ({ segment }) => {
             segment={segment}
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
+            fetchFacets={noop}
           />
         </ModuleHierarchyProvider>
       </StripesContext.Provider>
@@ -104,6 +116,22 @@ describe('InstancesList', () => {
 
     it('should have proper list results size', () => {
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
+    });
+
+    it('should have selected browse call number option', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'callNumbers' }
+      });
+
+      expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
+    });
+
+    it('should have selected subject browse option', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'browseSubjects' }
+      });
+
+      expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
     });
 
     describe('opening action menu', () => {

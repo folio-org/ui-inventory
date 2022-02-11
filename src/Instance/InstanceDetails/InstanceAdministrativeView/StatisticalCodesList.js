@@ -41,6 +41,7 @@ const StatisticalCodesList = ({
   return (
     <MultiColumnList
       id="list-statistical-codes"
+      columnIdPrefix="statistical-codes"
       contentData={contentData}
       visibleColumns={visibleColumns}
       columnMapping={columnMapping}

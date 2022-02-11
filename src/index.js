@@ -21,6 +21,8 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  DuplicateHoldingRoute,
+  EditHoldingRoute,
   InstancesRoute,
   InstanceMovementRoute,
   InstanceMarcRoute,
@@ -32,10 +34,12 @@ import {
   ViewRequestsRoute,
   ImportRoute,
   HoldingsMarcRoute,
+  EditItemRoute,
+  DuplicateItemRoute,
+  ViewHoldingRoute,
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider } from './providers';
-import { commands } from './constants';
 
 const InventoryRouting = (props) => {
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
@@ -98,6 +102,10 @@ const InventoryRouting = (props) => {
                 component={CreateHoldingRoute}
               />
               <Route
+                path={`${path}/edit/:id/:holdingId/:itemId`}
+                component={EditItemRoute}
+              />
+              <Route
                 path={`${path}/create/:id/:holdingId/item`}
                 component={CreateItemRoute}
               />
@@ -108,6 +116,10 @@ const InventoryRouting = (props) => {
               <Route
                 path={`${path}/view/:id/:holdingsrecordid/:itemid`}
                 component={ItemRoute}
+              />
+              <Route
+                path={`${path}/copy/:id/:holdingsrecordid/:itemid`}
+                component={DuplicateItemRoute}
               />
               <Route
                 path={`${path}/quick-marc`}
@@ -124,6 +136,18 @@ const InventoryRouting = (props) => {
               <Route
                 path={`${path}/edit/:id/instance`}
                 component={InstanceEditRoute}
+              />
+              <Route
+                path={`${path}/view/:id/:holdingsrecordid`}
+                component={ViewHoldingRoute}
+              />
+              <Route
+                path={`${path}/edit/:id/:holdingsrecordid`}
+                component={EditHoldingRoute}
+              />
+              <Route
+                path={`${path}/copy/:id/:holdingsrecordid`}
+                component={DuplicateHoldingRoute}
               />
               <Route
                 path={`${path}/view-requests/:id`}
@@ -146,7 +170,7 @@ const InventoryRouting = (props) => {
         </CommandList>
         {isShortcutsModalOpen && (
           <KeyboardShortcutsModal
-            allCommands={[...defaultKeyboardShortcuts, ...commands]}
+            allCommands={defaultKeyboardShortcuts}
             onClose={toggleModal}
           />
         )}

@@ -20,6 +20,63 @@
 * Change search operator for "Identifier (all)" index to '='. Fixes UIIN-1855.
 * Fix successful toast appears after clicking on `In transit items report (CSV)`. Refs UIIN-1838.
 * Add permission for marking item as `In process`. Fixes UIIN-1654.
+* Holdings record with source MARC - do not allow user to delete mapped field values. Refs UIIN-1853.
+* Use correct metadata on item form. Fixes UIIN-1656.
+* Fix after saving and updating a holdings record, the user is returned to the instance record. Fixes UIIN-1854
+* Retrieve and display Order information on Instance record. Refs UIIN-1835.
+* Add date filters. Refs UIIN-1651, UIIN-1653.
+* Integrate facets with existing query input. Refs UIIN-1870.
+* Display acquisition accordion on Item record. Refs UIIN-1858.
+* Item. Several keyboard shortcuts does not act on the item. Refs UIIN-1867.
+* Holdings. Keyboard shortcuts does not act on the holdings. Refs UIIN-1866.
+* Fix bug preventing circ history service point & source from appearing. Fixes UIIN-1558.
+* Fix The Acquisition accordion is not unfolded automatically when there is data to be shown. Refs UIIN-1869.
+* Expand acquisition accordion when displaying Order information on Instance record. Refs UIIN-1886.
+* Also support `circulation` `12.0`. Refs UIIN-1861.
+* SRS display. MARC indicators may be misaligned. Refs UIIN-1859.
+* Add new data element `<AdministrativeNote>` to instances. Refs UIIN-1442.
+* Add Browse call numbers option. Refs UIIN-1879.
+* Add new data element `<AdministrativeNote>` to holdings. Refs UIIN-1443.
+* Add new data element `<AdministrativeNote>` to items. Refs UIIN-1444.
+* Browse form. Refs UIIN-1887.
+* Add Browse subjects option. Refs UIIN-1880.
+* Add ability to filter holding records by created date. Refs UIIN-791.
+* Add ability to filter holding records by updated date. Refs UIIN-786.
+* Add ability to filter item records by created date. Refs UIIN-789.
+* Add ability to filter item records by updated date. Refs UIIN-786.
+* Add ability to filter instance, holding and item records by statistical code. Refs UIIN-792, UIIN-793, UIIN-794.
+* Set results list columns for "Browse subjects" functionality. Refs UIIN-1892.
+* Call number browse result list - populate results. Refs UIIN-1884.
+* Subject browse result list - populate results. Refs UIIN-1893.
+* New/Edit Item Page - Accessibility Error: IDs used in ARIA and labels must be unique. Refs UIIN-1162.
+* HRID handling. Settings - Accessibility Error: Form elements must have labels. Refs UIIN-1163.
+* Create title level request from Instance record. Refs UIIN-1620.
+* Inventory action menu link View & reorder queue. Refs UIIN-1881.
+* Also support `circulation` `13.0`. Refs UIIN-1871.
+* Create/Edit Holdings record > No indication that fields are required. Refs UIIN-1648.
+* New/Edit Holdings Page - Accessibility Error: IDs of active elements must be unique. Refs UIIN-1159.
+* Filters/facets on Subject browse form. Refs UIIN-1904.
+* Create/Edit Item record > No indication that field(s) is required by screenreader and not using the FOLIO standard indication for required fields. Refs UIIN-1649.
+* Selecting row from call number browse result list. UIIN-1888
+* Filters/facets on Call number browse form. Refs UIIN-1882.
+* Selecting row from subject browse result list. UIIN-1895
+* Placeholder for the missing match. Refs UIIN-1889.
+* New/Edit Instance Page - Accessibility Error: IDs of active elements must be unique. Refs UIIN-1155.
+* Browse form - Reset all button. Refs UIIN-1913.
+* Browse form - navigate to other Inventory tabs. Refs UIIN-1914.
+* Display a conflict detection banner. Refs UIIN-1872.
+* Add ability to filter holding records by source. Refs UIIN-1810.
+* Call number browse form - filter by location. Refs UIIN-1915.
+* Settings > Inventory > change focus. Refs UIIN-1908.
+* Fix Call number indexes for holding records. Refs UIIN-1918.
+* Fix Call number indexes for item records. Refs UIIN-1919.
+* New/Edit Instance Page - Accessibility Error: Certain ARIA roles must be contained by particular parents. Refs UIIN-1154.
+* Create/Edit Item Record - Required fields are not read by screenreader as required. Refs UIIN-1153.
+* New/Edit Item Page - Accessibility Error: Some elements has insufficient color contrast of 3.3 and several elements with same id. Refs UIIN-1161.
+* Accessibility Error: Form elements must have labels. Inventory landing page. Refs UIIN-1144.
+* Matching call number should be in bold. Refs UIIN-1922.
+* Add pagination to holding items. Fixes UIIN-1831.
+* Accessibility Error: IDs of the elements must be unique. Refs UIIN-1145.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

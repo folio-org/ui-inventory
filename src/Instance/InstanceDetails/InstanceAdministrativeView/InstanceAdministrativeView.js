@@ -18,7 +18,10 @@ import {
   getDateWithTime,
   checkIfElementIsEmpty,
 } from '../../../utils';
-import { WarningMessage } from '../../../components';
+import {
+  WarningMessage,
+  AdministrativeNoteList,
+} from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
 
@@ -162,7 +165,16 @@ const InstanceAdministrativeView = ({
         </Col>
       </Row>
 
-      <StatisticalCodesList statisticalCodes={formattedStatisticalCodes} />
+      <Row>
+        <Col xs={12}>
+          <StatisticalCodesList statisticalCodes={formattedStatisticalCodes} />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <AdministrativeNoteList administrativeNotes={instance.administrativeNotes} />
+        </Col>
+      </Row>
     </Accordion>
   );
 };

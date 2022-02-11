@@ -1,58 +1,44 @@
 import React, {
-  useState,
   useCallback,
-  useEffect,
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  stripesConnect,
-  stripesShape,
-} from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import {
   LoadingView,
 } from '@folio/stripes/components';
 
+import {
+  useInstanceQuery,
+  useHolding,
+} from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
+import { useItemMutation } from '../hooks';
 
 const CreateItem = ({
-  history,
-  location,
-  stripes,
   referenceData,
-  mutator,
   instanceId,
   holdingId,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [instance, setInstance] = useState({});
-  const [holding, setHolding] = useState({});
+  const history = useHistory();
+  const location = useLocation();
+
+  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
+  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
   const callout = useCallout();
+  const stripes = useStripes();
 
   const initialValues = useMemo(() => ({
     status: { name: 'Available' },
     holdingsRecordId: holding.id,
   }), [holding.id]);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    const instancePromise = mutator.itemInstance.GET();
-    const holdingPromise = mutator.itemHolding.GET();
-
-    Promise.all([instancePromise, holdingPromise])
-      .then(([instanceData, holdingData]) => {
-        setInstance(instanceData);
-        setHolding(holdingData);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [holdingId, instanceId]);
 
   const onCancel = useCallback(() => {
     history.push({
@@ -61,21 +47,27 @@ const CreateItem = ({
     });
   }, [location.search, instanceId]);
 
-  const onSubmit = useCallback((item) => {
-    return mutator.item.POST(item)
-      .then((itemRecord) => {
-        callout.sendCallout({
-          type: 'success',
-          message: <FormattedMessage
-            id="ui-inventory.item.successfullySaved"
-            values={{ hrid: itemRecord.hrid }}
-          />,
-        });
-        onCancel();
-      });
-  }, [onCancel, callout]);
+  const onSuccess = useCallback(async (response) => {
+    const { hrid } = await response.json();
 
-  if (isLoading) return <LoadingView />;
+    onCancel();
+
+    return callout.sendCallout({
+      type: 'success',
+      message: <FormattedMessage
+        id="ui-inventory.item.successfullySaved"
+        values={{ hrid }}
+      />,
+    });
+  }, [callout, instanceId, holdingId]);
+
+  const { mutateItem } = useItemMutation({ onSuccess });
+
+  const onSubmit = useCallback((item) => {
+    return mutateItem(item);
+  }, [mutateItem]);
+
+  if (isInstanceLoading || isHoldingLoading) return <LoadingView />;
 
   return (
     <ItemForm
@@ -95,33 +87,10 @@ const CreateItem = ({
   );
 };
 
-CreateItem.manifest = Object.freeze({
-  itemInstance: {
-    type: 'okapi',
-    path: 'inventory/instances/!{instanceId}',
-    accumulate: true,
-  },
-  itemHolding: {
-    type: 'okapi',
-    path: 'holdings-storage/holdings/!{holdingId}',
-    accumulate: true,
-  },
-  item: {
-    type: 'okapi',
-    path: 'inventory/items',
-    fetch: false,
-  },
-});
-
 CreateItem.propTypes = {
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-
   instanceId: PropTypes.string.isRequired,
   holdingId: PropTypes.string.isRequired,
-  mutator: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
-  stripes: stripesShape.isRequired,
 };
 
-export default withRouter(stripesConnect(CreateItem));
+export default CreateItem;

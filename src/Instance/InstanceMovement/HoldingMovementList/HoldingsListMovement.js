@@ -20,7 +20,6 @@ const getDropStyle = (holdingsLength) => {
 const HoldingsListMovement = ({
   instance,
   holdings,
-
   draggable,
   droppable,
 }) => {
@@ -46,7 +45,6 @@ const HoldingsListMovement = ({
               key={`items_${holding.id}`}
               instance={instance}
               holding={holding}
-
               isDraggable
               draggable={draggable}
               droppable={droppable}

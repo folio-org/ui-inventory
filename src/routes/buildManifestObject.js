@@ -8,9 +8,27 @@ import {
 } from '../utils';
 import {
   getFilterConfig,
+  browseModeOptions
 } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
+const regExp = /^((callNumber|subject) [<|>])/i;
+
+const getQueryTemplateValue = (queryValue, param) => {
+  return regExp.test(queryValue)
+    ? queryValue
+    : `${param}>=${queryValue} or ${param}<${queryValue}`;
+};
+
+const getParamValue = (queryParams, browseValue, noBrowseValue) => {
+  const query = get(queryParams, 'query', '');
+
+  if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
+    return browseValue;
+  }
+
+  return noBrowseValue;
+};
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
@@ -25,11 +43,23 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
+  if (queryIndex === browseModeOptions.CALL_NUMBERS) {
+    queryTemplate = getQueryTemplateValue(queryValue, 'callNumber');
+  }
+
+  if (queryIndex === browseModeOptions.SUBJECTS) {
+    queryTemplate = getQueryTemplateValue(queryValue, 'subject');
+  }
+
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
     query.sort = 'title';
+  }
+
+  if (Object.values(browseModeOptions).includes(queryIndex)) {
+    query.sort = '';
   }
 
   resourceData.query = { ...query, qindex: '' };
@@ -62,14 +92,29 @@ export function buildManifestObject() {
     resultOffset: { initialValue: 0 },
     records: {
       type: 'okapi',
-      records: 'instances',
+      records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
       resultOffset: '%{resultOffset}',
-      perRequest: 100,
+      perRequest: (queryParams) => getParamValue(queryParams, 10, 100),
+      throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
       GET: {
-        path: 'search/instances',
-        params: { query: buildQuery },
+        path: (queryParams) => {
+          if (queryParams.qindex === browseModeOptions.SUBJECTS) {
+            return 'browse/subjects/instances';
+          } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
+            return 'browse/call-numbers/instances';
+          } else return 'search/instances';
+        },
+        params: {
+          expandAll: true,
+          query: buildQuery,
+          highlightMatch: (queryParams) => {
+            const queryValue = get(queryParams, 'query', '');
+
+            return !regExp.test(queryValue);
+          },
+        },
         staticFallback: { params: {} },
       },
     },

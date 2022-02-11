@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": "@folio/eslint-config-stripes",
   "plugins": [
     "filenames",
@@ -16,7 +16,8 @@
     {
       "files": [ "src/**"],
       "rules": {
-        "react-hooks/exhaustive-deps": "off"
+        "react-hooks/exhaustive-deps": "off",
+        "react/forbid-prop-types": [ 1, { "forbid": [ "array" ] } ]
       }
     }
   ],

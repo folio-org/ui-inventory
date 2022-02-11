@@ -5,9 +5,9 @@ import {
   getByText,
   getByRole,
   getAllByRole,
-  fireEvent,
   waitForElementToBeRemoved,
   waitFor,
+  fireEvent,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { noop } from 'lodash';
@@ -27,6 +27,7 @@ import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
 import OverlayContainer from '../../test/helpers/OverlayContainer';
 import translationsProperties from '../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../test/fixtures/instances';
+import { items as callNumbers } from '../../test/fixtures/callNumbers';
 import { QUICK_EXPORT_LIMIT } from '../constants';
 import { DataContext } from '../contexts';
 import InstancesRoute from './InstancesRoute';
@@ -48,7 +49,7 @@ const InstancesRouteSetup = ({
   <Router>
     <StripesContext.Provider value={stripesStub}>
       <CalloutContext.Provider value={{ sendCallout }}>
-        <ModuleHierarchyProvider value={['@folio/inventory']}>
+        <ModuleHierarchyProvider module="@folio/inventory">
           <DataContext.Provider value={{
             contributorTypes: [],
             instanceTypes: [],
@@ -76,6 +77,20 @@ const InstancesRouteSetup = ({
                       resource: 'records',
                       records: instances,
                       other: { totalRecords: instances.length },
+                    },
+                    recordsBrowseCallNumber : {
+                      hasLoaded: true,
+                      resource: 'records',
+                      records: callNumbers,
+                      other: {
+                        totalRecords: callNumbers.length
+                      },
+                    },
+                    facets: {
+                      hasLoaded: true,
+                      resource: 'facets',
+                      records: [],
+                      other: { totalRecords: 0 },
                     },
                     resultCount: instances.length,
                     resultOffset: 0,
@@ -308,7 +323,6 @@ describe('InstancesRoute', () => {
         });
       });
       */
-
       describe('making previously selected items no longer displayed', () => {
         beforeEach(() => {
           renderWithIntl(
@@ -352,5 +366,24 @@ describe('InstancesRoute', () => {
         });
       });
     });
+
+    describe('should reset instances selection upon click on on reset all button', () => {
+      it('should have selected browse call number option', () => {
+        fireEvent.change(screen.getByRole('combobox'), {
+          target: { value: 'callNumbers' }
+        });
+
+        expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
+
+        const input = screen.getByLabelText('Search');
+
+        fireEvent.change(input, { target: { value: '>PR23' } });
+
+        expect(input).toHaveValue('>PR23');
+
+        userEvent.click(document.querySelector('[data-test-search-and-sort-submit]'));
+      });
+    });
   });
 });
+

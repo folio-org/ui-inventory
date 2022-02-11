@@ -198,7 +198,7 @@ class HRIDHandlingSettings extends Component {
                   <Col className={css.inputLabel}>
                     <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
                       {([inputLabel]) => (
-                        <div>
+                        <div id={`start-with-field-${index}`}>
                           {inputLabel}
                           <span className={css.asterisk}>*</span>
                         </div>
@@ -212,6 +212,7 @@ class HRIDHandlingSettings extends Component {
                     >
                       <Field
                         name={`${record.type}.startNumber`}
+                        ariaLabelledBy={`start-with-field-${index}`}
                         required
                         component={TextField}
                         className={`${css.margin0} startWithField startWithField--${record.type}`}
@@ -222,7 +223,7 @@ class HRIDHandlingSettings extends Component {
                 </Row>
                 <Row className={css.inputRow}>
                   <Col className={css.inputLabel}>
-                    <div>
+                    <div id={`assign-prefix-field-${index}`}>
                       <FormattedMessage id="ui-inventory.hridHandling.label.assignPrefix" />
                     </div>
                   </Col>
@@ -233,6 +234,7 @@ class HRIDHandlingSettings extends Component {
                     >
                       <Field
                         name={`${record.type}.prefix`}
+                        ariaLabelledBy={`assign-prefix-field-${index}`}
                         component={TextField}
                         className={`${css.margin0} assignPrefixField assignPrefixField--${record.type}`}
                         validate={composeValidators(validateAlphaNumericField, validateAssignPrefixMaxLength)}

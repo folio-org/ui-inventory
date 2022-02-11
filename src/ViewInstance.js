@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import React, {
-  createRef
+  createRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
@@ -34,8 +34,15 @@ import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
-import { getDate, handleKeyCommand } from './utils';
-import { indentifierTypeNames, layers } from './constants';
+import {
+  getDate,
+  handleKeyCommand,
+} from './utils';
+import {
+  indentifierTypeNames,
+  layers,
+  REQUEST_OPEN_STATUSES,
+} from './constants';
 import { DataContext } from './contexts';
 
 import {
@@ -46,6 +53,18 @@ import {
 import { CalloutRenderer } from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
+import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
+import RequestsReorderButton from './components/ViewInstance/MenuSection/RequestsReorderButton';
+
+const getTlrSettings = (settings) => {
+  try {
+    return JSON.parse(settings);
+  } catch (error) {
+    return {};
+  }
+};
+const requestOpenStatuses = Object.values(REQUEST_OPEN_STATUSES);
+const instanceRequestsQuery = requestOpenStatuses.map(status => `status=="${status}"`).join(' OR ');
 
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
@@ -71,10 +90,14 @@ class ViewInstance extends React.Component {
       type: 'okapi',
       shouldRefresh: () => false,
     },
-    allInstanceRequests: {
+    instanceRequests: {
       accumulate: true,
       fetch: false,
       path: 'circulation/requests',
+      params: {
+        query: `instanceId==:{id} AND (${instanceRequestsQuery})`,
+        limit: '1',
+      },
       records: 'requests',
       throwErrors: false,
       type: 'okapi',
@@ -101,7 +124,15 @@ class ViewInstance extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations?limit=1000',
-    }
+    },
+    configs: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries',
+      params: {
+        query: '(module==SETTINGS and configName==TLR)',
+      },
+    },
   });
 
   constructor(props) {
@@ -131,11 +162,21 @@ class ViewInstance extends React.Component {
     if (isMARCSource) {
       this.getMARCRecord();
     }
+
+    this.setTlrSettings();
   }
 
   componentDidUpdate(prevProps) {
-    const { selectedInstance: prevInstance } = prevProps;
-    const { selectedInstance: instance } = this.props;
+    const {
+      selectedInstance: prevInstance,
+      resources: { configs: prevConfigs },
+      match: { params: prevParams },
+    } = prevProps;
+    const {
+      selectedInstance: instance,
+      resources: { configs },
+      match: { params },
+    } = this.props;
     const instanceRecordsId = instance?.id;
     const prevInstanceRecordsId = prevInstance?.id;
     const prevIsMARCSource = this.isMARCSource(prevInstance);
@@ -152,6 +193,14 @@ class ViewInstance extends React.Component {
       !parse(this.props?.location?.search)?.layer && !this.state.afterCreate) {
       // eslint-disable-next-line
       this.setState({ afterCreate: true });
+    }
+
+    if (prevConfigs.hasLoaded !== configs.hasLoaded && configs.hasLoaded) {
+      this.setTlrSettings();
+    }
+
+    if (prevParams.id !== params.id) {
+      this.getInstanceRequests();
     }
   }
 
@@ -174,6 +223,30 @@ class ViewInstance extends React.Component {
         console.error('MARC record getting ERROR: ', error);
       });
   };
+
+  setTlrSettings = () => {
+    const {
+      resources : { configs },
+    } = this.props;
+
+    if (configs.hasLoaded) {
+      const { titleLevelRequestsFeatureEnabled } = getTlrSettings(configs.records[0]?.value);
+
+      this.setState({ titleLevelRequestsFeatureEnabled }, this.getInstanceRequests);
+    }
+  }
+
+  getInstanceRequests = () => {
+    const {
+      mutator: { instanceRequests },
+    } = this.props;
+    const { titleLevelRequestsFeatureEnabled } = this.state;
+
+    if (titleLevelRequestsFeatureEnabled) {
+      instanceRequests.reset();
+      instanceRequests.GET();
+    }
+  }
 
   // Edit Instance Handlers
   onClickEditInstance = () => {
@@ -239,23 +312,6 @@ class ViewInstance extends React.Component {
 
   toggleItemsMovement = () => {
     this.setState((prevState) => ({ isItemsMovement: !prevState.isItemsMovement }));
-  };
-
-  goBack = (e) => {
-    if (e) e.preventDefault();
-
-    const {
-      goTo,
-      match: {
-        params: { id },
-      },
-      location: { pathname, search }
-    } = this.props;
-
-    // extract instance url
-    const [path] = pathname.match(new RegExp(`(.*)${id}`));
-
-    goTo(`${path}${search}`);
   };
 
   handleViewSource = (e, instance) => {
@@ -335,8 +391,14 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
+      resources: {
+        instanceRequests,
+      },
     } = this.props;
-    const { marcRecord, requests } = this.state;
+    const {
+      marcRecord,
+      titleLevelRequestsFeatureEnabled,
+    } = this.state;
 
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
@@ -346,6 +408,7 @@ class ViewInstance extends React.Component {
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
     const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
+    const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
 
     const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
     const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
@@ -458,22 +521,36 @@ class ViewInstance extends React.Component {
               </IfPermission>
             )
           }
+          {
+            titleLevelRequestsFeatureEnabled
+              ? (
+                <RequestsReorderButton
+                  hasReorderPermissions={hasReorderPermissions}
+                  requestId={instanceRequests.records[0]?.id}
+                  instanceId={instance.id}
+                  numberOfRequests={instanceRequests.other?.totalRecords}
+                />
+              )
+              : (
+                <Button
+                  id="view-requests"
+                  onClick={() => {
+                    onToggle();
+                    this.onClickViewRequests();
+                  }}
+                  buttonStyle="dropdownItem"
+                >
+                  <Icon icon="eye-open">
+                    <FormattedMessage id="ui-inventory.viewRequests" />
+                  </Icon>
+                </Button>
+              )
+          }
 
-          <Button
-            id="view-requests"
-            onClick={() => {
-              onToggle();
-              this.onClickViewRequests();
-            }}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="eye-open">
-              <FormattedMessage
-                id="ui-inventory.viewRequests"
-                values={{ count: requests?.length ?? '' }}
-              />
-            </Icon>
-          </Button>
+          <NewInstanceRequestButton
+            isTlrEnabled={titleLevelRequestsFeatureEnabled}
+            instanceId={instance.id}
+          />
         </MenuSection>
 
         {
@@ -672,19 +749,6 @@ class ViewInstance extends React.Component {
                 :
                 null
             }
-
-            {
-              (holdingsrecordid && !itemid)
-                ? (
-                  <this.cViewHoldingsRecord
-                    id={id}
-                    holdingsrecordid={holdingsrecordid}
-                    onCloseViewHoldingsRecord={this.goBack}
-                    {...this.props}
-                  />
-                )
-                : null
-            }
           </InstanceDetails>
 
           <Callout ref={this.calloutRef} />
@@ -723,10 +787,8 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
-  getSearchParams: PropTypes.func.isRequired,
   selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
-  getParams: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     search: PropTypes.string,
@@ -754,8 +816,11 @@ ViewInstance.propTypes = {
     }),
     query: PropTypes.object.isRequired,
     movableItems: PropTypes.object.isRequired,
+    instanceRequests: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
+    }).isRequired,
   }),
-  okapi: PropTypes.object,
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
   paneWidth: PropTypes.string.isRequired,
@@ -763,6 +828,13 @@ ViewInstance.propTypes = {
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,
     locations: PropTypes.object.isRequired,
+    configs: PropTypes.object.isRequired,
+    instanceRequests: PropTypes.shape({
+      other: PropTypes.shape({
+        totalRecords: PropTypes.number.isRequired,
+      }),
+      records: PropTypes.arrayOf(PropTypes.object).isRequired,
+    }).isRequired,
   }).isRequired,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,

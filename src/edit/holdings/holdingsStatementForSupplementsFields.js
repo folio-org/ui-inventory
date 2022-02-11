@@ -6,7 +6,7 @@ import { TextArea } from '@folio/stripes/components';
 
 import RepeatableField from '../../components/RepeatableField';
 
-const HoldingsStatementForSupplementsFields = ({ canAdd, canEdit }) => (
+const HoldingsStatementForSupplementsFields = ({ canAdd, canEdit, canDelete }) => (
   <RepeatableField
     name="holdingsStatementsForSupplements"
     addLabel={<FormattedMessage id="ui-inventory.addHoldingsStatementForSupplements" />}
@@ -33,17 +33,20 @@ const HoldingsStatementForSupplementsFields = ({ canAdd, canEdit }) => (
     ]}
     canAdd={canAdd}
     canEdit={canEdit}
+    canDelete={canDelete}
   />
 );
 
 HoldingsStatementForSupplementsFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
+  canDelete: PropTypes.bool,
 };
 
 HoldingsStatementForSupplementsFields.defaultProps = {
   canAdd: true,
   canEdit: true,
+  canDelete: true,
 };
 
 export default HoldingsStatementForSupplementsFields;

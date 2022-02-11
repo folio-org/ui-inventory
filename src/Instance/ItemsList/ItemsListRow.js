@@ -29,7 +29,6 @@ const Row = ({
   snapshot,
   selected,
   draggingItemsCount,
-
   rowData,
   rowClass,
   cells,
@@ -49,11 +48,9 @@ const Row = ({
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-
       className={rowClass}
       role="row"
       tabIndex="-1"
-
       style={rowStyles}
     >
       {
@@ -102,7 +99,6 @@ const ItemsListRow = ({
           snapshot={snapshot}
           selected={isItemsDragSelected([rowData])}
           draggingItemsCount={draggingItemsCount}
-
           cells={cells}
           rowClass={rowClass}
           rowData={rowData}
