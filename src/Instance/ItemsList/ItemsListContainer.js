@@ -22,9 +22,12 @@ const ItemsListContainer = ({
     activeDropZone,
     isItemsDroppable,
   } = useContext(DnDContext);
-  const { isLoading, items } = useHoldingItemsQuery(holding.id);
+  const searchParams = {
+    limit: 50000,
+  };
+  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams });
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loading size="large" />;
   }
 
