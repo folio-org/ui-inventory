@@ -53,7 +53,7 @@ const ItemFilters = (props) => {
     [FACETS.MATERIAL_TYPE]: false,
     [FACETS.ITEMS_DISCOVERY_SUPPRESS]: false,
     [FACETS.ITEMS_TAGS]: false,
-    [FACETS.STATISTICAL_CODES]: false,
+    [FACETS.ITEMS_STATISTICAL_CODE_IDS]: false,
   };
 
   const segmentOptions = {
@@ -73,7 +73,7 @@ const ItemFilters = (props) => {
     [FACETS.MATERIAL_TYPE]: activeFilters[FACETS.MATERIAL_TYPE],
     [FACETS.ITEMS_DISCOVERY_SUPPRESS]: activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS],
     [FACETS.ITEMS_TAGS]: activeFilters[FACETS.ITEMS_TAGS],
-    [FACETS.STATISTICAL_CODES]: activeFilters[FACETS.STATISTICAL_CODES],
+    [FACETS.ITEMS_STATISTICAL_CODE_IDS]: activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS],
   };
 
   const getNewRecords = (records) => {
@@ -95,8 +95,9 @@ const ItemFilters = (props) => {
           case FACETS_CQL.MATERIAL_TYPES:
             processFacetOptions(activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
             break;
-          case FACETS_CQL.STATISTICAL_CODES:
-            processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
+          case FACETS_CQL.ITEMS_STATISTICAL_CODE_IDS:
+            console.log('process statistical codes', activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS]);
+            processStatisticalCodes(activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS], recordValues);
@@ -229,22 +230,22 @@ const ItemFilters = (props) => {
       </Accordion>
       <Accordion
         label={<FormattedMessage id="ui-inventory.statisticalCode" />}
-        id={FACETS.STATISTICAL_CODES}
-        name={FACETS.STATISTICAL_CODES}
+        id={FACETS.ITEMS_STATISTICAL_CODE_IDS}
+        name={FACETS.ITEMS_STATISTICAL_CODE_IDS}
         separator={false}
         closedByDefault
         header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.STATISTICAL_CODES]?.length > 0}
-        onClearFilter={() => onClear(FACETS.STATISTICAL_CODES)}
+        displayClearButton={activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS]?.length > 0}
+        onClearFilter={() => onClear(FACETS.ITEMS_STATISTICAL_CODE_IDS)}
       >
         <CheckboxFacet
-          name={FACETS.STATISTICAL_CODES}
+          name={FACETS.ITEMS_STATISTICAL_CODE_IDS}
           dataOptions={facetsOptions[FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]}
-          selectedValues={activeFilters[FACETS.STATISTICAL_CODES]}
+          selectedValues={activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS]}
           onChange={onChange}
           onSearch={handleFilterSearch}
           isFilterable
-          isPending={getIsPending(FACETS.STATISTICAL_CODES)}
+          isPending={getIsPending(FACETS.ITEMS_STATISTICAL_CODE_IDS)}
           onFetch={handleFetchFacets}
         />
       </Accordion>

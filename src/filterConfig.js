@@ -77,8 +77,8 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
-    name: FACETS.STATISTICAL_CODES,
-    cql: FACETS_CQL.STATISTICAL_CODES,
+    name: FACETS.STATISTICAL_CODE_IDS,
+    cql: FACETS_CQL.STATISTICAL_CODE_IDS,
     values: [],
   },
   {
@@ -168,8 +168,8 @@ export const holdingFilterConfig = [
     values: [],
   },
   {
-    name: FACETS.STATISTICAL_CODES,
-    cql: FACETS_CQL.STATISTICAL_CODES,
+    name: FACETS.HOLDINGS_STATISTICAL_CODE_IDS,
+    cql: FACETS_CQL.HOLDINGS_STATISTICAL_CODE_IDS,
     values: [],
   },
   {
@@ -235,8 +235,8 @@ export const itemFilterConfig = [
     values: [],
   },
   {
-    name: FACETS.STATISTICAL_CODES,
-    cql: FACETS_CQL.STATISTICAL_CODES,
+    name: FACETS.ITEMS_STATISTICAL_CODE_IDS,
+    cql: FACETS_CQL.ITEMS_STATISTICAL_CODE_IDS,
     values: [],
   },
   {

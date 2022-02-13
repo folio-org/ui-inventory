@@ -63,7 +63,7 @@ const InstanceFilters = props => {
     [FACETS.UPDATED_DATE]: false,
     [FACETS.SOURCE]: false,
     [FACETS.INSTANCES_TAGS]: false,
-    [FACETS.STATISTICAL_CODES]: false,
+    [FACETS.STATISTICAL_CODE_IDS]: false,
   };
 
   const segmentOptions = {
@@ -93,7 +93,7 @@ const InstanceFilters = props => {
     [FACETS.UPDATED_DATE]: activeFilters[FACETS.UPDATED_DATE],
     [FACETS.SOURCE]: activeFilters[FACETS.SOURCE],
     [FACETS.INSTANCES_TAGS]: activeFilters[FACETS.INSTANCES_TAGS],
-    [FACETS.STATISTICAL_CODES]: activeFilters[FACETS.STATISTICAL_CODES],
+    [FACETS.STATISTICAL_CODE_IDS]: activeFilters[FACETS.STATISTICAL_CODE_IDS],
   };
 
   const getNewRecords = (records) => {
@@ -130,8 +130,8 @@ const InstanceFilters = props => {
           case FACETS_CQL.SOURCE:
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);
             break;
-          case FACETS_CQL.STATISTICAL_CODES:
-            processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODES], statisticalCodes, ...commonProps);
+          case FACETS_CQL.STATISTICAL_CODE_IDS:
+            processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.INSTANCES_TAGS:
             processFacetOptions(activeFilters[FACETS.INSTANCES_TAGS], tagsRecords, ...commonProps, 'label');
@@ -318,22 +318,22 @@ const InstanceFilters = props => {
       </Accordion>
       <Accordion
         label={<FormattedMessage id="ui-inventory.statisticalCode" />}
-        id={FACETS.STATISTICAL_CODES}
-        name={FACETS.STATISTICAL_CODES}
+        id={FACETS.STATISTICAL_CODE_IDS}
+        name={FACETS.STATISTICAL_CODE_IDS}
         separator={false}
         closedByDefault
         header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.STATISTICAL_CODES]?.length > 0}
-        onClearFilter={() => onClear(FACETS.STATISTICAL_CODES)}
+        displayClearButton={activeFilters[FACETS.STATISTICAL_CODE_IDS]?.length > 0}
+        onClearFilter={() => onClear(FACETS.STATISTICAL_CODE_IDS)}
       >
         <CheckboxFacet
-          name={FACETS.STATISTICAL_CODES}
+          name={FACETS.STATISTICAL_CODE_IDS}
           dataOptions={facetsOptions[FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]}
-          selectedValues={activeFilters[FACETS.STATISTICAL_CODES]}
+          selectedValues={activeFilters[FACETS.STATISTICAL_CODE_IDS]}
           onChange={onChange}
           onSearch={handleFilterSearch}
           isFilterable
-          isPending={getIsPending(FACETS.STATISTICAL_CODES)}
+          isPending={getIsPending(FACETS.STATISTICAL_CODE_IDS)}
           onFetch={handleFetchFacets}
         />
       </Accordion>
