@@ -746,7 +746,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-items-in-process",
+        "permissionName": "ui-inventory.items.mark-in-process",
         "displayName": "Inventory: Mark items in process",
         "subPermissions": [
           "inventory.items.item.mark-in-process.post"
