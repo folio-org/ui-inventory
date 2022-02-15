@@ -137,7 +137,7 @@ export const holdingIndexes = [
   { label: 'ui-inventory.callNumberEyeReadable',
     value: 'holdingsFullCallNumbers',
     queryTemplate: 'holdingsFullCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.callNumber',
+  { label: 'ui-inventory.callNumberNormalized',
     value: 'callNumberNormalized',
     queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
