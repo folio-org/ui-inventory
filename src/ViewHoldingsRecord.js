@@ -8,7 +8,6 @@ import {
   flowRight,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { Link } from 'react-router-dom';
 
 import {
@@ -492,7 +491,7 @@ class ViewHoldingsRecord extends React.Component {
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-inventory.confirmHoldingsRecordDeleteModal.message"
         values={{
           hrid: holdingsRecord.hrid,
@@ -506,7 +505,7 @@ class ViewHoldingsRecord extends React.Component {
       : 'ui-inventory.itemOnHoldingsRecordDeleteModal.message';
 
     const noHoldingsRecordDeleteModalMessage = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id={noHoldingsRecordDeleteModalMessageId}
         values={{
           hrid: holdingsRecord.hrid,
