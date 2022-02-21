@@ -78,6 +78,7 @@
 * Add pagination to holding items. Fixes UIIN-1831.
 * Accessibility Error: IDs of the elements must be unique. Refs UIIN-1145.
 * Fix typo in permissions name. Fixes UIIN-1916.
+* Fix movement of holdings records between instance records. Refs UIIN-1929.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)
