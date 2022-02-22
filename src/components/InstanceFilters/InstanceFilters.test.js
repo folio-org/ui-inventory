@@ -61,6 +61,6 @@ describe('InstanceFilters', () => {
   });
 
   it('Contains a filter for statistical code', () => {
-    expect(document.querySelector('#statisticalCodes')).toBeInTheDocument();
+    expect(document.querySelector('#statisticalCodeIds')).toBeInTheDocument();
   });
 });

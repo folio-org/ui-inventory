@@ -77,6 +77,7 @@ const InstanceMovementContainer = ({
             ...data,
             parsedRecordId,
             fields: changeHridForMarcHoldings(fields, instanceTo.hrid),
+            relatedRecordVersion: ++holdingsById[marcHoldingsId]._version,
           });
         });
     });
