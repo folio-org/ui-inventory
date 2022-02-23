@@ -79,6 +79,7 @@
 * Accessibility Error: IDs of the elements must be unique. Refs UIIN-1145.
 * Fix typo in permissions name. Fixes UIIN-1916.
 * Fix movement of holdings records between instance records. Refs UIIN-1929.
+* Update facet and search option names for holdings and items. Refs UIIN-1935.
 * Refactor from `SafeHTMLMessage` to `FormattedMessage`. Refs UIIN-1525.
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
