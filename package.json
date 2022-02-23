@@ -823,7 +823,6 @@
     "sinon": "^7.0.0"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^3.0.0",
     "@folio/quick-marc": "^5.0.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
