@@ -136,6 +136,7 @@ export const instanceSortMap = {
 };
 
 export const holdingIndexes = [
+  // See note for instanceIndexes about 'all' vs. 'allFields'
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
@@ -198,6 +199,7 @@ export const holdingFilterConfig = [
 ];
 
 export const itemIndexes = [
+  // See note for instanceIndexes about 'all' vs. 'allFields'
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
