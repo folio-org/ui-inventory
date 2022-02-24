@@ -102,6 +102,10 @@ export const instanceFilterBrowseConfig = [
 ];
 
 export const instanceIndexes = [
+  // NOTE: the 'all' value was first used for a 'keyword all' query, but then
+  // a *real* 'all' query option was added ('allInstances any'). That was given the value `allFields`
+  // instead. It might make sense to rename the keyword option to something like `keywordAll`
+  // but, without tracing the use of the value, I don't know what effects that would have in the code.
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
@@ -111,6 +115,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.callNumber', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
@@ -141,6 +146,7 @@ export const holdingIndexes = [
     value: 'callNumberNormalized',
     queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
+  { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -203,6 +209,7 @@ export const itemIndexes = [
     value: 'itemNormalizedCallNumbers',
     queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
+  { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 
 ];
