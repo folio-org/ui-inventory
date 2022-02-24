@@ -12,7 +12,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
 import {
@@ -544,7 +543,7 @@ class ItemView extends React.Component {
     };
 
     const confirmDeleteItemModalMessage = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-inventory.confirmItemDeleteModal.message"
         values={{
           hrid: item.hrid,
@@ -838,7 +837,7 @@ class ItemView extends React.Component {
                   open={cannotDeleteItemModal}
                   footer={cannotDeleteItemFooter}
                 >
-                  <SafeHTMLMessage
+                  <FormattedMessage
                     id={cannotDeleteItemModalMessageId}
                     values={{
                       hrid: item.hrid,

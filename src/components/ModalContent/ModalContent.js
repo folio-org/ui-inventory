@@ -8,7 +8,6 @@ import {
   Layout,
 } from '@folio/stripes/components';
 import { stripesConnect } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const ModalContent = ({
   stripes,
@@ -28,7 +27,7 @@ const ModalContent = ({
 
   return (
     <>
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-inventory.confirmModal.message"
         values={{
           title: item.title,
@@ -37,7 +36,7 @@ const ModalContent = ({
           status,
         }}
       />
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-inventory.confirmModal.requestMessage"
         values={{
           countIndex,
