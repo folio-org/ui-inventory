@@ -195,6 +195,7 @@
   "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
   "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
   "search.all": "Keyword (title, contributor, identifier)",
+  "search.allFields": "All",
   "title": "Title (all)",
   "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
