@@ -346,6 +346,7 @@
     "itemsOnHoldingsRecordDeleteModal.message": "Holdings record HRID <strong>{hrid}</strong> with location <strong>{location}</strong> has <strong>{itemCount}</strong> associated item records. To be able to continue deletion of this holdings record, all associated item records must be deleted.",
     "condition": "Condition",
     "search.all": "Keyword (title, contributor, identifier)",
+    "search.allFields": "All",
     "subject": "Subject",
     "isbn": "ISBN",
     "issn": "ISSN",
