@@ -722,5 +722,6 @@
     "instances.columns.callNumber": "Call number",
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
-    "browseCallNumbers.missedMatch": "יהיה כאן."
+    "browseCallNumbers.missedMatch": "יהיה כאן.",
+    "search.allFields": "All"
 }
