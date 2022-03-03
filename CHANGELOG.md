@@ -1,7 +1,15 @@
 # Change history for ui-inventory
 
+## [8.0.7](https://github.com/folio-org/ui-inventory/tree/v8.0.7) (2022-03-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.6...v8.0.7)
+
+* Add pagination to holding items to improve performance. Fixes UIIN-1831.
+
 ## [8.0.6](https://github.com/folio-org/ui-inventory/tree/v8.0.6) (2021-11-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.5...v8.0.6)
+
+* Add permission for marking item as In process. Fixes UIIN-1654.
+* Fix successful toast appears after clicking on In transit items report (CSV). Refs UIIN-1838.
 
 ## [8.0.5](https://github.com/folio-org/ui-inventory/tree/v8.0.5) (2021-11-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.4...v8.0.5)
