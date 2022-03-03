@@ -722,5 +722,6 @@
     "instances.columns.callNumber": "رقم الاستدعاء",
     "instances.columns.numberOfTitles": "عدد العناوين",
     "viewAndReorderRequestsQueue": "عرض الطلبات وإعادة ترتيب ({number})",
-    "browseCallNumbers.missedMatch": "سيكون هنا"
+    "browseCallNumbers.missedMatch": "سيكون هنا",
+    "search.allFields": "الكل"
 }
