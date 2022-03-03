@@ -82,6 +82,7 @@
 * Update facet and search option names for holdings and items. Refs UIIN-1935.
 * Refactor from `SafeHTMLMessage` to `FormattedMessage`. Refs UIIN-1525.
 * Add 'all fields' search index. Refs UIIN-1645.
+* Add browse permissions. Refs UIIN-1940
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

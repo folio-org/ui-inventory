@@ -135,6 +135,28 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.call-number-browse.view",
+        "displayName": "Call number browse: View permissions ",
+        "description": "Enable call number browse feature",
+        "subPermissions": [
+          "ui-inventory.all-permissions.TEMPORARY",
+          "browse.call-numbers.instances.collection.get",
+          "browse.authorities.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.subjects.view",
+        "displayName": "Subject browse: View permissions",
+        "description": "Enable subject browse feature",
+        "subPermissions": [
+          "ui-inventory.all-permissions.TEMPORARY",
+          "browse.subjects.instances.collection.get",
+          "browse.authorities.collection.get"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "settings.inventory.enabled",
         "displayName": "Settings (Inventory): Module is enabled.",
         "subPermissions": [
