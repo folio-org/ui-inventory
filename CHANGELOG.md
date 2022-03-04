@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.0.0] IN PROGRESS
+## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
