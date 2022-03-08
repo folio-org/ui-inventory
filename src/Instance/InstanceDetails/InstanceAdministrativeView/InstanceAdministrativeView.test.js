@@ -1,4 +1,6 @@
 import React from 'react';
+import { Router } from 'react-router';
+import { createMemoryHistory } from 'history';
 import { screen } from '@testing-library/react';
 
 import '../../../../test/jest/__mock__';
@@ -18,10 +20,14 @@ const InstanceAdministrativeViewSetup = ({
 );
 
 describe('InstanceAdministrativeView', () => {
+  const history = createMemoryHistory();
+
   describe('rendering warnings', () => {
     beforeEach(() => {
       renderWithIntl(
-        <InstanceAdministrativeViewSetup />,
+        <Router history={history}>
+          <InstanceAdministrativeViewSetup />,
+        </Router>,
         translationsProperties
       );
     });
