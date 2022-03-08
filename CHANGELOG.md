@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
 ## [9.1.0] IN PROGRESS
+* The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
