@@ -35,7 +35,7 @@ const InstanceEdit = ({
   stripes,
   mutator,
 }) => {
-  const { identifierTypesById, identifierTypesByName } = referenceData;
+  const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
