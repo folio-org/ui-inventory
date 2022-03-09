@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
 ## [9.1.0] IN PROGRESS
+* The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 

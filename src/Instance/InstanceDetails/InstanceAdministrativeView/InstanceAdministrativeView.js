@@ -1,13 +1,16 @@
 import React, {
   useMemo,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import {
   Accordion,
   Row,
   Col,
   KeyValue,
+  Highlighter
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -24,6 +27,7 @@ import {
 } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
+import { QUERY_INDEXES } from '../../../constants';
 
 const InstanceAdministrativeView = ({
   id,
@@ -33,6 +37,8 @@ const InstanceAdministrativeView = ({
   statisticalCodes,
   statisticalCodeTypes,
 }) => {
+  const { search } = useLocation();
+
   const instanceStatus = useMemo(() => {
     return instanceStatuses.find(status => status.id === instance.statusId) || {};
   }, [instance, instanceStatuses]);
@@ -59,6 +65,11 @@ const InstanceAdministrativeView = ({
 
     return (instance.statisticalCodeIds || []).map(codeId => statisticalCodesMap[codeId]);
   }, [instance, statisticalCodeTypes, statisticalCodes]);
+
+  const queryHRID = queryString.parse(search)?.query;
+  const isQueryByHRID = queryString.parse(search)?.qindex === QUERY_INDEXES.INSTANCE_HRID;
+
+  const highlightableInstanceHRID = isQueryByHRID ? <Highlighter searchWords={[queryHRID]} text={String(instance.hrid)} /> : instance.hrid;
 
   return (
     <Accordion
@@ -95,7 +106,7 @@ const InstanceAdministrativeView = ({
             {
               Boolean(instance.hrid) && (
                 <>
-                  {instance.hrid}
+                  {highlightableInstanceHRID}
                   <ClipCopy text={instance.hrid} />
                 </>
               )
