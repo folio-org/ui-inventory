@@ -19,7 +19,7 @@ const columnMapping = {
   poLineNumber: <FormattedMessage id="ui-inventory.acq.polNumber" />,
   orderStatus: <FormattedMessage id="ui-inventory.acq.orderStatus" />,
   polReceiptStatus: <FormattedMessage id="ui-inventory.acq.receiptStatus" />,
-  dateOrdered: <FormattedMessage id="ui-inventory.acq.dateOrdered" />,
+  dateOrdered: <FormattedMessage id="ui-inventory.acq.dateOpened" />,
   acqUnit: <FormattedMessage id="ui-inventory.acq.acqUnit" />,
   orderType: <FormattedMessage id="ui-inventory.acq.orderType" />,
 };

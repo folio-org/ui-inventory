@@ -714,7 +714,7 @@
   "acq.orderType": "Order type",
   "acq.orderType.One-Time": "One-time",
   "acq.orderType.Ongoing": "Ongoing",
-  "acq.dateOrdered": "Date ordered",
+  "acq.dateOpened": "Date opened",
   "acq.acqUnit": "Acquisition unit",
   "acq.orderSubscription": "Subscription",
   "acq.receiptDate": "Piece receipt date",
