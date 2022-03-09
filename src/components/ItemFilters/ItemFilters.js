@@ -96,7 +96,6 @@ const ItemFilters = (props) => {
             processFacetOptions(activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_STATISTICAL_CODE_IDS:
-            console.log('process statistical codes', activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS]);
             processStatisticalCodes(activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS:
