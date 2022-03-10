@@ -5,6 +5,8 @@
 
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 
+* updated "Date ordered" label to "Date opened". Refs UIIN-1946.
+
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
 
