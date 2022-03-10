@@ -18,18 +18,16 @@ import useInstancesQuery from './useInstancesQuery';
 const useLoadSubInstances = (instanceIds = [], subId) => {
   const instanstcesById = keyBy(instanceIds, subId);
   const [subInstances, setSubInstances] = useState([]);
-  const results = useInstancesQuery(instanceIds.map(inst => inst[subId]));
-  const allLoaded = results.reduce((acc, { isSuccess }) => (isSuccess && acc), true);
+  const { isSuccess, data: results } = useInstancesQuery(instanceIds.map(inst => inst[subId]));
+
   const instances = flow(
-    items => filter(items, ({ data }) => data),
+    items => filter(items, instance => instance),
     items => map(items, ({
-      data: {
-        id,
-        title,
-        hrid,
-        publication,
-        identifiers,
-      },
+      id,
+      title,
+      hrid,
+      publication,
+      identifiers,
     }) => ({
       ...instanstcesById[id],
       title,
@@ -38,8 +36,9 @@ const useLoadSubInstances = (instanceIds = [], subId) => {
       identifiers,
     })),
     items => sortBy(items, 'title')
-  )(results);
-  const shouldUpdateSubInstances = allLoaded && !isEqual(subInstances, instances);
+  )(results?.instances);
+
+  const shouldUpdateSubInstances = isSuccess && !isEqual(subInstances, instances);
 
   useEffect(() => {
     if (shouldUpdateSubInstances) {

@@ -37,7 +37,8 @@ describe('useInstancesQuery', () => {
 
   it('fetches instances', async () => {
     const { result, waitFor } = renderHook(() => useInstancesQuery([instance.id]), { wrapper });
-    await waitFor(() => result.current[0].isSuccess);
-    expect(result.current[0].data.id).toEqual(instance.id);
+
+    await waitFor(() => result.isSuccess);
+    expect(result.current.data.id).toEqual(instance.id);
   });
 });
