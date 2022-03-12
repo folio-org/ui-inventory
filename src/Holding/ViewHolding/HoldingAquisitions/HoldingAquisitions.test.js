@@ -17,10 +17,11 @@ jest.mock('./useHoldingOrderLines', () => jest.fn());
 
 const renderHoldingAquisitions = ({
   holding = {},
+  withSummary = true,
 } = {}) => (
   renderWithIntl(
     <Router>
-      <HoldingAquisitions holding={holding} />
+      <HoldingAquisitions holding={holding} withSummary={withSummary} />
     </Router>
   )
 );
@@ -30,9 +31,23 @@ describe('HoldingAquisitions', () => {
     useHoldingOrderLines.mockClear().mockReturnValue({ holdingOrderLines: holdingSummaries });
   });
 
+  it('should display acq holding fields', () => {
+    renderHoldingAquisitions({ holding: { id: 'holdingUid' }, withSummary: false });
+
+    expect(screen.getByText('ui-inventory.acquisitionMethod')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.acquisitionFormat')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.receiptStatus')).toBeInTheDocument();
+  });
+
   it('should display fetched order lines in table', () => {
-    renderHoldingAquisitions({ id: 'holdingUid' });
+    renderHoldingAquisitions({ holding: { id: 'holdingUid' }, withSummary: true });
 
     expect(screen.getByText(holdingOrderLine.poLineNumber)).toBeInTheDocument();
+  });
+
+  it('should not display order lines table when summary is disabled', () => {
+    renderHoldingAquisitions({ holding: { id: 'holdingUid' }, withSummary: false });
+
+    expect(screen.queryByText(holdingOrderLine.poLineNumber)).toBeNull();
   });
 });

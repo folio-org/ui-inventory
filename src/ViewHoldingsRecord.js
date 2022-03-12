@@ -1006,11 +1006,10 @@ class ViewHoldingsRecord extends React.Component {
                         />
                       </Accordion>
 
-                      {
-                        this.props.stripes.hasInterface('orders.holding-summary') && (
-                          <HoldingAquisitions holding={holdingsRecord} />
-                        )
-                      }
+                      <HoldingAquisitions
+                        holding={holdingsRecord}
+                        withSummary={this.props.stripes.hasInterface('orders.holding-summary')}
+                      />
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
                     </AccordionSet>

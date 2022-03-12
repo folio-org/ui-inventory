@@ -4,6 +4,7 @@
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
+* Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
 
 * updated "Date ordered" label to "Date opened". Refs UIIN-1946.
 

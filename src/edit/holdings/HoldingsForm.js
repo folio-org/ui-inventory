@@ -680,6 +680,37 @@ class HoldingsForm extends React.Component {
                     />
                   </Accordion>
                   <Accordion
+                    id="accordion05"
+                    label={<FormattedMessage id="ui-inventory.acquisition" />}
+                  >
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
+                          name="acquisitionMethod"
+                          id="edit_acquisitionmethod"
+                          component={TextField}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+                          name="acquisitionFormat"
+                          id="edit_acquisitionformat"
+                          component={TextField}
+                        />
+                      </Col>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.receiptStatus" />}
+                          name="receiptStatus"
+                          id="edit_receiptstatus"
+                          component={TextField}
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
                     id="accordion07"
                     label={<FormattedMessage id="ui-inventory.receivingHistory" />}
                   >
