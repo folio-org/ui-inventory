@@ -1,5 +1,13 @@
 # Change history for ui-inventory
 
+## [9.0.1](https://github.com/folio-org/ui-inventory/tree/v9.0.1) (2022-03-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.0.1)
+
+* The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
+* Fetch parent and child sub instances in one query. Fixes UIIN-1902.
+* Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
+* updated "Date ordered" label to "Date opened". Refs UIIN-1946.
+
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
 
@@ -83,6 +91,7 @@
 * Update facet and search option names for holdings and items. Refs UIIN-1935.
 * Refactor from `SafeHTMLMessage` to `FormattedMessage`. Refs UIIN-1525.
 * Add 'all fields' search index. Refs UIIN-1645.
+* Add browse permissions. Refs UIIN-1940
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

@@ -1,15 +1,15 @@
-import { useQueries } from 'react-query';
+import { useQuery } from 'react-query';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useNamespace } from '@folio/stripes/core';
 
 // Fetches and returns multiple instances for given instance ids
 const useInstancesQuery = (ids = []) => {
   const ky = useOkapiKy();
+  const query = ids.map(id => `id==${id}`).join(' OR ');
+  const [queryKey] = useNamespace({ key: 'sub-instance' });
+  const queryFn = () => ky.get('inventory/instances', { searchParams: { query } }).json();
 
-  return useQueries(ids.map(id => ({
-    queryKey: ['ui-inventory', 'instances', id],
-    queryFn: () => ky.get(`inventory/instances/${id}`).json(),
-  })));
+  return useQuery([queryKey, query], queryFn, { enabled: query.length > 0 });
 };
 
 export default useInstancesQuery;

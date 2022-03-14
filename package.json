@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -131,6 +131,28 @@
           "ui-inventory.item.delete",
           "ui-inventory.holdings.delete",
           "ui-inventory.instance.view-staff-suppressed-records"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.call-number-browse.view",
+        "displayName": "Call number browse: View permissions ",
+        "description": "Enable call number browse feature",
+        "subPermissions": [
+          "ui-inventory.all-permissions.TEMPORARY",
+          "browse.call-numbers.instances.collection.get",
+          "browse.authorities.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.subjects.view",
+        "displayName": "Subject browse: View permissions",
+        "description": "Enable subject browse feature",
+        "subPermissions": [
+          "ui-inventory.all-permissions.TEMPORARY",
+          "browse.subjects.instances.collection.get",
+          "browse.authorities.collection.get"
         ],
         "visible": true
       },
