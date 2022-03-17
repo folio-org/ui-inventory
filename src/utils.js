@@ -721,7 +721,7 @@ export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u
  * @returns object
  */
 export const parseHttpError = async httpError => {
-  const contentType = httpError.headers.get('content-type');
+  const contentType = httpError?.headers?.get('content-type');
   let jsonError = {};
 
   try {
