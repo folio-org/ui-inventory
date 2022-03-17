@@ -721,19 +721,18 @@ export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u
  * @returns object
  */
 export const parseHttpError = async httpError => {
-  try {
-    let jsonError = {};
+  const contentType = httpError.headers.get('content-type');
+  let jsonError = {};
 
-    // 409 represents a conflict status
-    // which indicates an optimistic locking error.
-    // Optimistic locking error is currently returned as a plain text
-    // https://issues.folio.org/browse/UIIN-1872?focusedCommentId=125438&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-125438
-    if (httpError.status === 409) {
+  try {
+    if (contentType === 'text/plain') {
       jsonError.message = await httpError.text();
     } else {
       jsonError = await httpError.json();
     }
 
+    // Optimistic locking error is currently returned as a plain text
+    // https://issues.folio.org/browse/UIIN-1872?focusedCommentId=125438&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-125438
     if (jsonError.message.match(/optimistic locking/i)) {
       jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
     }
