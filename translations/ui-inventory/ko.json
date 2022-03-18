@@ -702,7 +702,6 @@
     "instance.suppressedFromDiscovery": "검색에서 제외",
     "createMARCHoldings": "Add MARC holdings record",
     "exportInProgress": "Export in progress",
-    "acq.dateOrdered": "Date ordered",
     "acq.acqUnit": "Acquisition unit",
     "showMoreOptions": "Show more options",
     "more": "More",
@@ -723,5 +722,6 @@
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
     "browseCallNumbers.missedMatch": "would be here",
-    "search.allFields": "All"
+    "search.allFields": "All",
+    "acq.dateOpened": "Date opened"
 }

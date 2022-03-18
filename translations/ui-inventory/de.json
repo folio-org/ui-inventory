@@ -702,7 +702,6 @@
     "instance.suppressedFromDiscovery": "Nachweis unterdrückt",
     "createMARCHoldings": "MARC-Bestandsdatensatz hinzufügen",
     "exportInProgress": "Export in Bearbeitung",
-    "acq.dateOrdered": "Bestelldatum",
     "acq.acqUnit": "Erwerbungsteam",
     "showMoreOptions": "Weitere Optionen anzeigen",
     "more": "Mehr",
@@ -723,5 +722,6 @@
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
     "browseCallNumbers.missedMatch": "would be here",
-    "search.allFields": "All"
+    "search.allFields": "All",
+    "acq.dateOpened": "Date opened"
 }

@@ -579,7 +579,7 @@
     "confirm": "تأكيد",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> المادة ذات (الباركود:{barcode}) سيتم الإشارة إليها كـ <strong> {status}</strong>.",
     "confirmModal.requestMessage": "{countIndex, plural, =-1 {قد يكون هناك طلبات مفتوحة لهذه المادة.} =0 {} one {يوجد {openRequestValue} لهذه المادة.} other {يوجد {openRequestValue} لهذه المادة.}}",
-    "saveInstancesUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للأوعية. قد يستغرق تنزيل الملف بضع دقائق.",
+    "saveInstancesUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريدة العمومية للأوعية. قد يستغرق تنزيل الملف بضع دقائق.",
     "instances.rows.select": "اختر وعاء",
     "showTags": "عرض الوسوم",
     "filter.tags": "الوسوم",
@@ -697,12 +697,11 @@
     "quickMARC.label": "quickMARC",
     "edit": "تحرير",
     "saveHoldingsUIIDS": "حفظ المعرفات الفريدة العمومية للمقتنيات",
-    "saveHoldingsUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريد العمومية للمقتنيات. قد يستغرق تنزيل الملف بضع دقائق.",
+    "saveHoldingsUIIDS.info": "تم استلام طلب لحفظ المعرفات الفريدة العمومية للمقتنيات. قد يستغرق تنزيل الملف بضع دقائق.",
     "saveHoldingsUIIDS.error": "حدث خطأ أثناء حفظ المعرفات الفريدة العمومية للمقتنيات. يرجى إعادة المحاولة.",
     "instance.suppressedFromDiscovery": "محجوب من الاكتشاف",
     "createMARCHoldings": "إضافة تسجيلة مقتنيات مارك",
     "exportInProgress": "التصدير قيد التقدم",
-    "acq.dateOrdered": "تاريخ الطلب",
     "acq.acqUnit": "وحدة التزويد",
     "showMoreOptions": "عرض المزيد من الخيارات",
     "more": "المزيد",
@@ -723,5 +722,6 @@
     "instances.columns.numberOfTitles": "عدد العناوين",
     "viewAndReorderRequestsQueue": "عرض الطلبات وإعادة ترتيب ({number})",
     "browseCallNumbers.missedMatch": "سيكون هنا",
-    "search.allFields": "الكل"
+    "search.allFields": "الكل",
+    "acq.dateOpened": "تاريخ الفتح"
 }

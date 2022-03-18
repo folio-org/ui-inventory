@@ -702,7 +702,6 @@
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
     "createMARCHoldings": "Add MARC holdings record",
     "exportInProgress": "Export en cours",
-    "acq.dateOrdered": "Date de commande",
     "acq.acqUnit": "Unité d'acquisition",
     "showMoreOptions": "Afficher plus d'options",
     "more": "Suite",
@@ -723,5 +722,6 @@
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
     "browseCallNumbers.missedMatch": "would be here",
-    "search.allFields": "Tout"
+    "search.allFields": "Tout",
+    "acq.dateOpened": "Date d'ouverture"
 }
