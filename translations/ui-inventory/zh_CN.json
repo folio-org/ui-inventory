@@ -702,7 +702,6 @@
     "instance.suppressedFromDiscovery": "在发现中隐藏",
     "createMARCHoldings": "添加MARC馆藏记录",
     "exportInProgress": "导出中",
-    "acq.dateOrdered": "订购日期",
     "acq.acqUnit": "采购单位",
     "showMoreOptions": "显示更多选项",
     "more": "更多",
@@ -723,5 +722,6 @@
     "instances.columns.numberOfTitles": "标题数量",
     "viewAndReorderRequestsQueue": "查看请求并重新排序 ({number})",
     "browseCallNumbers.missedMatch": "会在这里",
-    "search.allFields": "All"
+    "search.allFields": "All",
+    "acq.dateOpened": "Date opened"
 }
