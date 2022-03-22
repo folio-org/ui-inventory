@@ -112,7 +112,7 @@
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
           "search.index.inventory.reindex.post",
-          "search.instances.facets.collection.get",
+          "search.instances.facets.collection.get"
         ]
       },
       {
