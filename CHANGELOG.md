@@ -8,6 +8,7 @@
 
 * updated "Date ordered" label to "Date opened". Refs UIIN-1946.
 * search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
+* New Permission: View MARC holdings record . Refs UIIN-1973.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
