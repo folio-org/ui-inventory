@@ -107,11 +107,12 @@
           "search.index.records.collection.post",
           "search.instances.collection.get",
           "search.instances.ids.collection.get",
+          "search.holdings.ids.collection.get",
           "search.config.languages.item.post",
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
           "search.index.inventory.reindex.post",
-          "search.instances.facets.collection.get"
+          "search.instances.facets.collection.get",
         ]
       },
       {
