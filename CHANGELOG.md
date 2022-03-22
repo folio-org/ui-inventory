@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.0.2](https://github.com/folio-org/ui-inventory/tree/v9.0.2) (2022-03-22)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.1...v9.0.2)
+
+* search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
+* Handle message errors as plain text instead of json. Fixes UIIN-1958.
+
 ## [9.0.1](https://github.com/folio-org/ui-inventory/tree/v9.0.1) (2022-03-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.0.1)
 
