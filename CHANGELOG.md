@@ -2,13 +2,12 @@
 
 ## [9.1.0] IN PROGRESS
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
-
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 * Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
-
 * updated "Date ordered" label to "Date opened". Refs UIIN-1946.
 * search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
 * New Permission: View MARC holdings record . Refs UIIN-1973.
+* Reset reference data resources on unmount. Fixes UIIN-1966.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
