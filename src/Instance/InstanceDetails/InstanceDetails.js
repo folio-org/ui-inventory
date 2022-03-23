@@ -213,10 +213,7 @@ InstanceDetails.propTypes = {
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
   paneTitle: PropTypes.object,
-  paneSubtitle: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-  ])),
+  paneSubtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
 };
