@@ -409,6 +409,8 @@ class ViewInstance extends React.Component {
     const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
     const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
     const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
+    const canViewMARC = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
+    const canEditMARC = stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
 
     const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
     const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
@@ -556,38 +558,42 @@ class ViewInstance extends React.Component {
         {
           (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
             <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
-              <IfPermission perm="records-editor.records.item.put">
-                <Button
-                  id="edit-instance-marc"
-                  buttonStyle="dropdownItem"
-                  disabled={!marcRecord}
-                  onClick={() => {
-                    onToggle();
-                    this.editInstanceMarc();
-                  }}
-                >
-                  <Icon icon="edit">
-                    <FormattedMessage id="ui-inventory.editInstanceMarc" />
-                  </Icon>
-                </Button>
-              </IfPermission>
+              {canEditMARC && (
+              <>
+                <IfPermission perm="records-editor.records.item.put">
+                  <Button
+                    id="edit-instance-marc"
+                    buttonStyle="dropdownItem"
+                    disabled={!marcRecord}
+                    onClick={() => {
+                      onToggle();
+                      this.editInstanceMarc();
+                    }}
+                  >
+                    <Icon icon="edit">
+                      <FormattedMessage id="ui-inventory.editInstanceMarc" />
+                    </Icon>
+                  </Button>
+                </IfPermission>
 
-              <IfPermission perm="records-editor.records.item.post">
-                <Button
-                  id="duplicate-instance-marc"
-                  buttonStyle="dropdownItem"
-                  disabled={!marcRecord}
-                  onClick={() => {
-                    onToggle();
-                    this.duplicateInstanceMarc();
-                  }}
-                >
-                  <Icon icon="duplicate">
-                    <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
-                  </Icon>
-                </Button>
-              </IfPermission>
-
+                <IfPermission perm="records-editor.records.item.post">
+                  <Button
+                    id="duplicate-instance-marc"
+                    buttonStyle="dropdownItem"
+                    disabled={!marcRecord}
+                    onClick={() => {
+                      onToggle();
+                      this.duplicateInstanceMarc();
+                    }}
+                  >
+                    <Icon icon="duplicate">
+                      <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
+                    </Icon>
+                  </Button>
+                </IfPermission>
+              </>
+              )}
+              {canViewMARC && (
               <IfPermission perm="ui-quick-marc.quick-marc-holdings-editor.create">
                 <Button
                   id="create-holdings-marc"
@@ -603,6 +609,7 @@ class ViewInstance extends React.Component {
                   </Icon>
                 </Button>
               </IfPermission>
+              )}
             </MenuSection>
           )
         }
