@@ -43,9 +43,9 @@ const RequestsReorderButton = ({
 
 RequestsReorderButton.propTypes = {
   hasReorderPermissions: PropTypes.bool.isRequired,
-  requestId: PropTypes.string.isRequired,
+  requestId: PropTypes.string,
   instanceId: PropTypes.string.isRequired,
-  numberOfRequests: PropTypes.number.isRequired,
+  numberOfRequests: PropTypes.number,
 };
 
 export default RequestsReorderButton;
