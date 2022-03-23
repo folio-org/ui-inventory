@@ -345,6 +345,8 @@ class ViewHoldingsRecord extends React.Component {
     const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
     const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
     const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
+    const canViewMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
+    const canEditMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
 
     const instance = instances1.records[0];
     const isSourceMARC = this.isMARCSource();
@@ -385,32 +387,36 @@ class ViewHoldingsRecord extends React.Component {
         }
         {isSourceMARC && (
           <>
-            <Button
-              id="clickable-view-source"
-              buttonStyle="dropdownItem"
-              disabled={!marcRecord}
-              onClick={(e) => {
-                onToggle();
-                this.handleViewSource(e, instance);
-              }}
-            >
-              <Icon icon="document">
-                <FormattedMessage id="ui-inventory.viewSource" />
-              </Icon>
-            </Button>
-            <Button
-              id="clickable-edit-marc-holdings"
-              buttonStyle="dropdownItem"
-              disabled={!marcRecord}
-              onClick={(e) => {
-                onToggle();
-                this.handleEditInQuickMarc(e);
-              }}
-            >
-              <Icon icon="edit">
-                <FormattedMessage id="ui-inventory.editMARCHoldings" />
-              </Icon>
-            </Button>
+            {canViewMARC && (
+              <Button
+                id="clickable-view-source"
+                buttonStyle="dropdownItem"
+                disabled={!marcRecord}
+                onClick={(e) => {
+                  onToggle();
+                  this.handleViewSource(e, instance);
+                }}
+              >
+                <Icon icon="document">
+                  <FormattedMessage id="ui-inventory.viewSource" />
+                </Icon>
+              </Button>
+            )}
+            {canEditMARC && (
+              <Button
+                id="clickable-edit-marc-holdings"
+                buttonStyle="dropdownItem"
+                disabled={!marcRecord}
+                onClick={(e) => {
+                  onToggle();
+                  this.handleEditInQuickMarc(e);
+                }}
+              >
+                <Icon icon="edit">
+                  <FormattedMessage id="ui-inventory.editMARCHoldings" />
+                </Icon>
+              </Button>
+            )}
           </>
         )}
         {
