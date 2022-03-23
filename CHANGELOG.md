@@ -8,6 +8,7 @@
 * search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
 * New Permission: View MARC holdings record . Refs UIIN-1973.
 * Reset reference data resources on unmount. Fixes UIIN-1966.
+* Fix issues with re-entering ui-inventory when the instance details pane is opened. Fixes UIIN-1934.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
