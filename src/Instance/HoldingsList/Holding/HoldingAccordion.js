@@ -101,7 +101,7 @@ HoldingAccordion.propTypes = {
   onAddItem: PropTypes.func.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   withMoveDropdown: PropTypes.bool,
-  children: PropTypes.func,
+  children: PropTypes.object,
 };
 
 export default HoldingAccordion;
