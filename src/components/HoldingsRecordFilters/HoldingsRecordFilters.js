@@ -14,6 +14,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import { useFacets } from '../../common/hooks';
 import {
+  getSourceOptions,
   getSuppressedOptions,
   processFacetOptions,
   processStatisticalCodes,
@@ -35,7 +36,6 @@ const HoldingsRecordFilters = (props) => {
     activeFilters,
     data: {
       locations,
-      tagsRecords,
       statisticalCodes,
       holdingsSources,
     },
@@ -95,7 +95,7 @@ const HoldingsRecordFilters = (props) => {
             processFacetOptions(activeFilters[FACETS.HOLDINGS_SOURCE], holdingsSources, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_TAGS:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_TAGS], tagsRecords, ...commonProps, 'label');
+            accum[name] = getSourceOptions(activeFilters[FACETS.HOLDINGS_TAGS], recordValues);
             break;
           default:
         }

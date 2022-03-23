@@ -42,7 +42,6 @@ const InstanceFilters = props => {
       modesOfIssuance,
       statisticalCodes,
       natureOfContentTerms,
-      tagsRecords,
     },
     onChange,
     onClear,
@@ -134,7 +133,7 @@ const InstanceFilters = props => {
             processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.INSTANCES_TAGS:
-            processFacetOptions(activeFilters[FACETS.INSTANCES_TAGS], tagsRecords, ...commonProps, 'label');
+            accum[name] = getSourceOptions(activeFilters[FACETS.INSTANCES_TAGS], recordValues);
             break;
           default:
         }
