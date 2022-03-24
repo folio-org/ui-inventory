@@ -23,20 +23,17 @@ const Holding = ({
   return (
     <div>
       {isDraggable &&
-        <FormattedMessage id="ui-inventory.moveItems.selectItem">
-          {
-            ([ariaLabel]) => (
-              <span data-test-select-holding>
-                <Checkbox
-                  id={`select-holding-${holding.id}`}
-                  aria-label={ariaLabel}
-                  checked={isHoldingDragSelected(holding)}
-                  onChange={() => selectHoldingsForDrag(holding)}
-                />
-              </span>
-            )
-          }
-        </FormattedMessage>
+        <>
+          <FormattedMessage id="ui-inventory.moveItems.selectHolding" />
+          {' '}
+          <span data-test-select-holding>
+            <Checkbox
+              id={`select-holding-${holding.id}`}
+              checked={isHoldingDragSelected(holding)}
+              onChange={() => selectHoldingsForDrag(holding)}
+            />
+          </span>
+        </>
       }
       <DropZone
         isItemsDroppable={isItemsDroppable}
