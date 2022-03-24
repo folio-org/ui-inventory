@@ -411,7 +411,7 @@ class ViewInstance extends React.Component {
     const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
 
-    const showQuickMarcMenuSection = (isSourceMARC && canCreateMARCHoldings) || (isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord));
+    const showQuickMarcMenuSection = isSourceMARC && (canCreateMARCHoldings || canEditMARCRecord || canDeriveMARCRecord);
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
       return null;
