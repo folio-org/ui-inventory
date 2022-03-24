@@ -636,16 +636,6 @@ class ViewInstance extends React.Component {
     );
   };
 
-  // Pane subtitle (second line) for instance details pane
-  createSubtitle = (record) => {
-    return this.props.intl.formatMessage({
-      id: 'ui-inventory.instanceRecordSubtitle',
-    }, {
-      hrid: record?.hrid,
-      updatedDate: getDate(record?.metadata?.updatedDate),
-    });
-  }
-
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
@@ -655,6 +645,7 @@ class ViewInstance extends React.Component {
       paneWidth,
       tagsEnabled,
       updateLocation,
+      intl,
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
@@ -690,12 +681,13 @@ class ViewInstance extends React.Component {
       },
     ];
 
+
     if (!instance) {
       return (
         <Pane
           id="pane-instancedetails"
           defaultWidth={paneWidth}
-          paneTitle={<FormattedMessage id="ui-inventory.edit" />}
+          paneTitle={intl.formatMessage({ id: 'ui-inventory.edit' })}
           appIcon={<AppIcon app="inventory" iconKey="instance" />}
           dismissible
           onClose={onClose}
@@ -728,7 +720,15 @@ class ViewInstance extends React.Component {
                 }}
               />
             }
-            paneSubtitle={this.createSubtitle(instance)}
+            paneSubtitle={
+              <FormattedMessage
+                id="ui-inventory.instanceRecordSubtitle"
+                values={{
+                  hrid: instance?.hrid,
+                  updatedDate: getDate(instance?.metadata?.updatedDate),
+                }}
+              />
+            }
             onClose={onClose}
             actionMenu={this.createActionMenuGetter(instance)}
             instance={instance}
@@ -807,7 +807,6 @@ ViewInstance.propTypes = {
   }),
   mutator: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
-    allInstanceRequests: PropTypes.object.isRequired,
     holdings: PropTypes.shape({
       POST: PropTypes.func.isRequired,
     }),

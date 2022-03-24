@@ -94,7 +94,7 @@ export function buildManifestObject() {
       type: 'okapi',
       records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
       resultOffset: '%{resultOffset}',
-      perRequest: (queryParams) => getParamValue(queryParams, 10, 100),
+      perRequest: 100,
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
