@@ -411,8 +411,7 @@ class ViewInstance extends React.Component {
     const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
 
-    const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
-    const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
+    const showQuickMarcMenuSection = (isSourceMARC && canCreateMARCHoldings) || (isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord));
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
       return null;
@@ -504,7 +503,7 @@ class ViewInstance extends React.Component {
           </IfInterface>
 
           {
-            (canEditDeriveMARCRecord || canViewMARCSource) && (
+            canViewMARCSource && (
               <IfPermission perm="ui-inventory.instance.view">
                 <Button
                   id="clickable-view-source"
@@ -555,37 +554,37 @@ class ViewInstance extends React.Component {
         </MenuSection>
 
         {
-          (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
+          showQuickMarcMenuSection && (
             <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
               {canEditMARCRecord && (
-              <Button
-                id="edit-instance-marc"
-                buttonStyle="dropdownItem"
-                disabled={!marcRecord}
-                onClick={() => {
-                  onToggle();
-                  this.editInstanceMarc();
-                }}
-              >
-                <Icon icon="edit">
-                  <FormattedMessage id="ui-inventory.editInstanceMarc" />
-                </Icon>
-              </Button>
+                <Button
+                  id="edit-instance-marc"
+                  buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
+                  onClick={() => {
+                    onToggle();
+                    this.editInstanceMarc();
+                  }}
+                >
+                  <Icon icon="edit">
+                    <FormattedMessage id="ui-inventory.editInstanceMarc" />
+                  </Icon>
+                </Button>
               )}
               {canDeriveMARCRecord && (
-              <Button
-                id="duplicate-instance-marc"
-                buttonStyle="dropdownItem"
-                disabled={!marcRecord}
-                onClick={() => {
-                  onToggle();
-                  this.duplicateInstanceMarc();
-                }}
-              >
-                <Icon icon="duplicate">
-                  <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
-                </Icon>
-              </Button>
+                <Button
+                  id="duplicate-instance-marc"
+                  buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
+                  onClick={() => {
+                    onToggle();
+                    this.duplicateInstanceMarc();
+                  }}
+                >
+                  <Icon icon="duplicate">
+                    <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
+                  </Icon>
+                </Button>
               )}
               <IfPermission perm="ui-quick-marc.quick-marc-holdings-editor.create">
                 <Button
