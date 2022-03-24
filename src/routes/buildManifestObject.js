@@ -17,7 +17,7 @@ const regExp = /^((callNumber|subject) [<|>])/i;
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
     ? queryValue
-    : `${param}>=${queryValue} or ${param}<${queryValue}`;
+    : `${param}>="${queryValue}" or ${param}<"${queryValue}"`;
 };
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
