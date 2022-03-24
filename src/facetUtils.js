@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 const getFacetDataMap = (facetData, key = 'id') => {
   const facetDataMap = new Map();
 
-  facetData.forEach(data => {
+  facetData?.forEach(data => {
     const id = data[key];
     facetDataMap.set(id, data);
   });
