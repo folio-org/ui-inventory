@@ -25,7 +25,9 @@
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 * Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
 * updated "Date ordered" label to "Date opened". Refs UIIN-1946.
+* Browse form has hardcoded limit of the returned records. Refs UIIN-1957.
 * search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
+
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
