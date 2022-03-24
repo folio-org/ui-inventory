@@ -24,8 +24,6 @@ const Holding = ({
     <div>
       {isDraggable &&
         <>
-          <FormattedMessage id="ui-inventory.moveItems.selectHolding" />
-          {' '}
           <span data-test-select-holding>
             <Checkbox
               id={`select-holding-${holding.id}`}
@@ -33,6 +31,8 @@ const Holding = ({
               onChange={() => selectHoldingsForDrag(holding)}
             />
           </span>
+          {' '}
+          <FormattedMessage id="ui-inventory.moveItems.selectHolding" />
         </>
       }
       <DropZone
