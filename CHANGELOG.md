@@ -1,6 +1,11 @@
 # Change history for ui-inventory
 
 ## [9.1.0] IN PROGRESS
+* Use permission search.facets.collection.get rather than
+  search.instances.facets.collection.get. This was renamed some time
+  after interface search 0.7 was bumped. Breaking change that is
+  unfortunately not reflected in search interface. Fixes UIIN-1941.
+
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 * Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
