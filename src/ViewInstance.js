@@ -406,12 +406,12 @@ class ViewInstance extends React.Component {
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
-    const canEditMARCRecord = stripes.hasPerm('records-editor.records.item.put');
-    const canDeriveMARCRecord = stripes.hasPerm('records-editor.records.item.post');
+    const canEditMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
+    const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
     const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
+    const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
 
-    const canCreateMARCHoldingsForInstanceWithSourceMARC = isSourceMARC && canCreateMARCHoldings;
-    const canEditDeriveMARCRecord = isSourceMARC && (canEditMARCRecord || canDeriveMARCRecord);
+    const showQuickMarcMenuSection = isSourceMARC && (canCreateMARCHoldings || canEditMARCRecord || canDeriveMARCRecord);
 
     if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
       return null;
@@ -503,7 +503,7 @@ class ViewInstance extends React.Component {
           </IfInterface>
 
           {
-            canEditDeriveMARCRecord && (
+            canViewMARCSource && (
               <IfPermission perm="ui-inventory.instance.view">
                 <Button
                   id="clickable-view-source"
@@ -554,9 +554,9 @@ class ViewInstance extends React.Component {
         </MenuSection>
 
         {
-          (canCreateMARCHoldingsForInstanceWithSourceMARC || canEditDeriveMARCRecord) && (
+          showQuickMarcMenuSection && (
             <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
-              <IfPermission perm="records-editor.records.item.put">
+              {canEditMARCRecord && (
                 <Button
                   id="edit-instance-marc"
                   buttonStyle="dropdownItem"
@@ -570,9 +570,8 @@ class ViewInstance extends React.Component {
                     <FormattedMessage id="ui-inventory.editInstanceMarc" />
                   </Icon>
                 </Button>
-              </IfPermission>
-
-              <IfPermission perm="records-editor.records.item.post">
+              )}
+              {canDeriveMARCRecord && (
                 <Button
                   id="duplicate-instance-marc"
                   buttonStyle="dropdownItem"
@@ -586,8 +585,7 @@ class ViewInstance extends React.Component {
                     <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
                   </Icon>
                 </Button>
-              </IfPermission>
-
+              )}
               <IfPermission perm="ui-quick-marc.quick-marc-holdings-editor.create">
                 <Button
                   id="create-holdings-marc"
