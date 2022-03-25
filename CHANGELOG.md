@@ -10,6 +10,7 @@
 * Reset reference data resources on unmount. Fixes UIIN-1966.
 * Do not cross-check tag facets with tag list. Refs UIIN-1974.
 * Fix issues with re-entering ui-inventory when the instance details pane is opened. Fixes UIIN-1934.
+* Improve `<RepeatableField>` layout. Fixes UIIN-1962.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
