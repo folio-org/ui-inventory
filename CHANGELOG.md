@@ -20,7 +20,7 @@
 * Improve `<RepeatableField>` layout. Fixes UIIN-1962.
 * New Permission: View source (instance). Refs UIIN-1975.
 * Do not change identifiers array for the preceding/succeeding titles. Fixes UIIN-1931.
-
+* Fix missing label on holdings/item move view. Fixes UIIN-1927.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
