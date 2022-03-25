@@ -1,5 +1,17 @@
 # Change history for ui-inventory
 
+## [9.0.3](https://github.com/folio-org/ui-inventory/tree/v9.0.3) (2022-03-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.2...v9.0.3)
+
+* Fix issues with re-entering ui-inventory when the instance details pane is opened. Fixes UIIN-1934.
+* Do not cross-check tag facets with tag list. Refs UIIN-1974.
+* Reset reference data resources on unmount. Fixes UIIN-1966.
+* Call number and subject values are not surrounded by quotes when sending the request. Refs UIIN-1959.
+* *BREAKING* Use permission `search.facets.collection.get` rather than search.instances.facets.collection.get. This was renamed some time after interface search 0.7 was bumped. Breaking change that is unfortunately not reflected in search interface. Fixes UIIN-1941.
+* Improve `<RepeatableField>` layout. Fixes UIIN-1962.
+* Fix missing label on holdings/item move view. Fixes UIIN-1927.
+* Do not change identifiers array for the preceding/succeeding titles. Fixes UIIN-1931.
+
 ## [9.0.2](https://github.com/folio-org/ui-inventory/tree/v9.0.2) (2022-03-22)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.1...v9.0.2)
 
