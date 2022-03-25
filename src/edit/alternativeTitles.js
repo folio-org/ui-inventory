@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   TextArea,
@@ -20,6 +20,7 @@ const AlternativeTitles = props => {
     label: it.name,
     value: it.id,
   }));
+  const intl = useIntl();
 
   return (
     <FormattedMessage id="ui-inventory.selectAlternativeTitleType">
@@ -32,7 +33,7 @@ const AlternativeTitles = props => {
           template={[
             {
               name: 'alternativeTitleTypeId',
-              label: <FormattedMessage id="ui-inventory.type" />,
+              label: intl.formatMessage({ id: 'ui-inventory.type' }),
               component: Select,
               placeholder,
               dataOptions: alternativeTitleTypeOptions,
@@ -41,7 +42,7 @@ const AlternativeTitles = props => {
             },
             {
               name: 'alternativeTitle',
-              label: <FormattedMessage id="ui-inventory.alternativeTitle" />,
+              label: intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
               component: TextArea,
               required: true,
               rows: 1,

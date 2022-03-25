@@ -1,6 +1,11 @@
 # Change history for ui-inventory
 
 ## [9.1.0] IN PROGRESS
+* Use permission search.facets.collection.get rather than
+  search.instances.facets.collection.get. This was renamed some time
+  after interface search 0.7 was bumped. Breaking change that is
+  unfortunately not reflected in search interface. Fixes UIIN-1941.
+
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 * Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
@@ -12,8 +17,10 @@
 * Reset reference data resources on unmount. Fixes UIIN-1966.
 * Do not cross-check tag facets with tag list. Refs UIIN-1974.
 * Fix issues with re-entering ui-inventory when the instance details pane is opened. Fixes UIIN-1934.
+* Improve `<RepeatableField>` layout. Fixes UIIN-1962.
 * New Permission: View source (instance). Refs UIIN-1975.
 * Fix missing label on holdings/item move view. Fixes UIIN-1927.
+
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
