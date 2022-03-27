@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
-  Layout,
   Icon,
   Row,
   Col,
@@ -101,10 +100,9 @@ class FieldRow extends React.Component {
     const labelProps = {};
     if (fieldIndex === 0) {
       labelProps.label = label;
+    } else {
+      labelProps['aria-label'] = `${label} ${fieldIndex}`;
     }
-
-    labelProps['aria-label'] = `${label} ${fieldIndex}`;
-
     return (
       <Field
         name={name ? `${fields.name}[${fieldIndex}].${name}` : `${fields.name}[${fieldIndex}]`}
@@ -182,7 +180,7 @@ class FieldRow extends React.Component {
               style={{ width: '100%' }}
               ref={(ref) => { this.refIfLastRow(ref, fieldIndex); }}
             >
-              <Row>
+              <Row bottom="xs">
                 <Col xs={10}>
                   <Row>
                     {template.map((t, i) => {
@@ -197,24 +195,21 @@ class FieldRow extends React.Component {
                   </Row>
                 </Col>
                 <Col xs={2}>
-                  <Layout className={fieldIndex === 0 ? 'marginTopLabelSpacer' : ''}>
-                    <FormattedMessage
-                      id="stripes-components.removeFields"
-                      values={{ item: label, num: fieldIndex + 1 }}
-                    >
-                      {([ariaLabel]) => (
-                        <Button
-                          buttonStyle="link"
-                          style={{ padding: 0, marginBottom: '12px' }}
-                          onClick={() => { this.handleRemove(fieldIndex, f); }}
-                          aria-label={ariaLabel}
-                          disabled={!canDelete}
-                        >
-                          <Icon icon="trash" />
-                        </Button>
-                      )}
-                    </FormattedMessage>
-                  </Layout>
+                  <FormattedMessage
+                    id="stripes-components.removeFields"
+                    values={{ item: label, num: fieldIndex + 1 }}
+                  >
+                    {([ariaLabel]) => (
+                      <Button
+                        buttonStyle="link"
+                        onClick={() => { this.handleRemove(fieldIndex, f); }}
+                        aria-label={ariaLabel}
+                        disabled={!canDelete}
+                      >
+                        <Icon icon="trash" />
+                      </Button>
+                    )}
+                  </FormattedMessage>
                 </Col>
               </Row>
               {fieldIndex === fields.length - 1 &&
