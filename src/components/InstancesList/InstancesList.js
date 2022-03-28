@@ -1029,7 +1029,7 @@ class InstancesList extends React.Component {
             paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['contributors', 'publishers']}
+            sortableColumns={['title', 'contributors', 'publishers']}
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
