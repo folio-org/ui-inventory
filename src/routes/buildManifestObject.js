@@ -17,7 +17,7 @@ const regExp = /^((callNumber|subject) [<|>])/i;
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
     ? queryValue
-    : `${param}>=${queryValue} or ${param}<${queryValue}`;
+    : `${param}>="${queryValue}" or ${param}<"${queryValue}"`;
 };
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
@@ -94,7 +94,7 @@ export function buildManifestObject() {
       type: 'okapi',
       records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
       resultOffset: '%{resultOffset}',
-      perRequest: (queryParams) => getParamValue(queryParams, 10, 100),
+      perRequest: 100,
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
@@ -114,6 +114,7 @@ export function buildManifestObject() {
 
             return !regExp.test(queryValue);
           },
+          precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
         },
         staticFallback: { params: {} },
       },
