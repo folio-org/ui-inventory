@@ -114,6 +114,7 @@ export function buildManifestObject() {
 
             return !regExp.test(queryValue);
           },
+          precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
         },
         staticFallback: { params: {} },
       },
