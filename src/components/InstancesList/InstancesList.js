@@ -831,7 +831,7 @@ class InstancesList extends React.Component {
         source.fetchByQuery(`${param} < "${anchor}"`);
       } else {
         anchor = isCallNumber
-          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+          ? [...records].reverse().find(i => i.fullCallNumber)?.shelfKey
           : records[records.length - 1].subject;
 
         source.fetchByQuery(`${param} > "${anchor}"`);
@@ -1029,7 +1029,7 @@ class InstancesList extends React.Component {
             paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['title', 'contributors', 'publishers']}
+            sortableColumns={['contributors', 'publishers']}
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
