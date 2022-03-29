@@ -1,5 +1,13 @@
 # Change history for ui-inventory
 
+## [9.0.4](https://github.com/folio-org/ui-inventory/tree/v9.0.4) (2022-03-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.3...v9.0.4)
+
+* Previous and next navigation of a large list of search results (100+) has stopped working. Fixes UIIN-1951.
+* Incorrect rendering of returned records. Refs UIIN-1960.
+* Browse form flickers. Fixes UIIN-1961.
+* Browse form has hardcoded limit of the returned records. Refs UIIN-1957.
+
 ## [9.0.3](https://github.com/folio-org/ui-inventory/tree/v9.0.3) (2022-03-25)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.2...v9.0.3)
 
