@@ -816,8 +816,6 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
-      if (!Object.values(browseModeOptions).includes(optionSelected)) return;
-
       const isSubject = optionSelected === browseModeOptions.SUBJECTS;
       const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
       const param = isSubject ? 'subject' : 'callNumber';
@@ -916,6 +914,7 @@ class InstancesList extends React.Component {
     const browseQueryExecuted = Boolean(this.getExecutedBrowseQuery());
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
+    const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
       this.setState({ optionSelected: e.target.value });
@@ -1034,7 +1033,7 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
-            resultsOnNeedMore={handleOnNeedMore}
+            resultsOnNeedMore={isHandleOnNeedMore}
           />
         </div>
         <ErrorModal
