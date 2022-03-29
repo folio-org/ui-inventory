@@ -829,7 +829,7 @@ class InstancesList extends React.Component {
         source.fetchByQuery(`${param} < "${anchor}"`);
       } else {
         anchor = isCallNumber
-          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+          ? [...records].reverse().find(i => i.fullCallNumber)?.shelfKey
           : records[records.length - 1].subject;
 
         source.fetchByQuery(`${param} > "${anchor}"`);
@@ -903,12 +903,12 @@ class InstancesList extends React.Component {
         return missedMatchItem();
       },
       'callNumber': r => {
-        if (r?.instance) {
+        if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
         return missedMatchItem();
       },
-      'numberOfTitles': r => (r?.instance || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'numberOfTitles': r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
     const browseQueryExecuted = Boolean(this.getExecutedBrowseQuery());
