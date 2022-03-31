@@ -159,7 +159,7 @@ class InstancesList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.getSelectedBrowseOption()) {
+    if (this.getSelectedBrowseOption() || this.getExecutedBrowseQuery()) {
       this.setState({
         optionSelected: this.getQIndexFromParams(),
       });
