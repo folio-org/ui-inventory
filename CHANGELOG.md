@@ -24,6 +24,7 @@
 * Fix missing label on holdings/item move view. Fixes UIIN-1927.
 * Browse form flickers. Fixes UIIN-1961.
 * Facets in Browse subjects and call numbers appear after reload page. Fixes UIIN-1965.
+* Optimistic locking: display error message to inform user about OL. Refs UIIN-1987.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)

@@ -21,6 +21,7 @@ const QuickMarcRoute = ({ match, history, location }) => {
         type="quick-marc"
         basePath={match.path}
         onClose={onClose}
+        externalRecordPath="/inventory/view"
       >
         <span data-test-inventory-quick-marc-no-plugin>
           <FormattedMessage id="ui-inventory.quickMarcNotAvailable" />
