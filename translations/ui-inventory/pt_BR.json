@@ -723,5 +723,6 @@
     "viewAndReorderRequestsQueue": "Ver solicitações e reordenar ( {number} )",
     "browseCallNumbers.missedMatch": "estaria aqui",
     "search.allFields": "Todos",
-    "acq.dateOpened": "Data de abertura"
+    "acq.dateOpened": "Data de abertura",
+    "moveItems.selectHolding": "Selecionar/desselecionar a holding para movimentação"
 }

@@ -723,5 +723,6 @@
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
     "browseCallNumbers.missedMatch": "would be here",
     "search.allFields": "All",
-    "acq.dateOpened": "Date opened"
+    "acq.dateOpened": "Date opened",
+    "moveItems.selectHolding": "Select/unselect holding for movement"
 }
