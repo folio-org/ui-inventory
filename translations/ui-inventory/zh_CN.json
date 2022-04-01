@@ -722,6 +722,7 @@
     "instances.columns.numberOfTitles": "标题数量",
     "viewAndReorderRequestsQueue": "查看请求并重新排序 ({number})",
     "browseCallNumbers.missedMatch": "会在这里",
-    "search.allFields": "All",
-    "acq.dateOpened": "Date opened"
+    "search.allFields": "全部",
+    "acq.dateOpened": "开放日期",
+    "moveItems.selectHolding": "选择/取消选择移动馆藏"
 }

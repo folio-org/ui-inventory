@@ -723,5 +723,6 @@
     "viewAndReorderRequestsQueue": "عرض الطلبات وإعادة ترتيب ({number})",
     "browseCallNumbers.missedMatch": "سيكون هنا",
     "search.allFields": "الكل",
-    "acq.dateOpened": "تاريخ الفتح"
+    "acq.dateOpened": "تاريخ الفتح",
+    "moveItems.selectHolding": "تحديد/إلغاء تحديد مقتنيات للنقل"
 }
