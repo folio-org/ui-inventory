@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.0.5](https://github.com/folio-org/ui-inventory/tree/v9.0.5) (2022-04-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.4...v9.0.5)
+
+* Facets in Browse subjects and call numbers appear after reload page. Fixes UIIN-1965.
+
 ## [9.0.4](https://github.com/folio-org/ui-inventory/tree/v9.0.4) (2022-03-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.3...v9.0.4)
 
