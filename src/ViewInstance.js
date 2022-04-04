@@ -287,6 +287,8 @@ class ViewInstance extends React.Component {
 
     const searchParams = new URLSearchParams(location.search);
 
+    searchParams.delete('relatedRecordVersion');
+
     if (page !== quickMarcPages.createHoldings) {
       searchParams.append('relatedRecordVersion', instance._version);
     }
