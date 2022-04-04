@@ -6,12 +6,13 @@ import '../../../../test/jest/__mock__';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { line, order, resultData, acqUnit } from './fixtures';
+import { line, order, resultData, acqUnit, title } from './fixtures';
 import useInstanceAcquisition from './useInstanceAcquisition';
 
 const queryClient = new QueryClient();
 
 const kyResponseMap = {
+  'orders/titles': { titles: [title] },
   'orders/order-lines': { poLines: [line] },
   'orders/composite-orders': { purchaseOrders: [order] },
   'acquisitions-units/units': { acquisitionsUnits: [acqUnit] },
