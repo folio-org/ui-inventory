@@ -107,7 +107,6 @@ export function buildManifestObject() {
           } else return 'search/instances';
         },
         params: {
-          expandAll: true,
           query: buildQuery,
           highlightMatch: (queryParams) => {
             const queryValue = get(queryParams, 'query', '');
