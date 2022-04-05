@@ -56,6 +56,12 @@ import ImportRecordModal from './components/ImportRecordModal';
 import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
 import RequestsReorderButton from './components/ViewInstance/MenuSection/RequestsReorderButton';
 
+const quickMarcPages = {
+  editInstance: 'edit-bib',
+  duplicateInstance: 'duplicate-bib',
+  createHoldings: 'create-holdings',
+};
+
 const getTlrSettings = (settings) => {
   try {
     return JSON.parse(settings);
@@ -280,7 +286,12 @@ class ViewInstance extends React.Component {
     const instance = ci.instance();
 
     const searchParams = new URLSearchParams(location.search);
-    searchParams.append('relatedRecordVersion', instance._version);
+
+    searchParams.delete('relatedRecordVersion');
+
+    if (page !== quickMarcPages.createHoldings) {
+      searchParams.append('relatedRecordVersion', instance._version);
+    }
 
     history.push({
       pathname: `/inventory/quick-marc/${page}/${instance.id}`,
@@ -289,15 +300,15 @@ class ViewInstance extends React.Component {
   };
 
   editInstanceMarc = () => {
-    this.redirectToQuickMarcPage('edit-bib');
+    this.redirectToQuickMarcPage(quickMarcPages.editInstance);
   };
 
   duplicateInstanceMarc = () => {
-    this.redirectToQuickMarcPage('duplicate-bib');
+    this.redirectToQuickMarcPage(quickMarcPages.duplicateInstance);
   };
 
   createHoldingsMarc = () => {
-    this.redirectToQuickMarcPage('create-holdings');
+    this.redirectToQuickMarcPage(quickMarcPages.createHoldings);
   };
 
   selectInstance = (selectedInstance) => {
