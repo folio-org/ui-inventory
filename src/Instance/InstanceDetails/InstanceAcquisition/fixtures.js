@@ -12,6 +12,11 @@ export const acqUnit = {
   name: 'unit',
 };
 
+export const title = {
+  id: 'titleId',
+  poLineId: line.id,
+};
+
 export const resultData = [{
   ...line,
   order: {
