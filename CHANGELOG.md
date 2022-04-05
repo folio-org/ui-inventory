@@ -5,6 +5,7 @@
   search.instances.facets.collection.get. This was renamed some time
   after interface search 0.7 was bumped. Breaking change that is
   unfortunately not reflected in search interface. Fixes UIIN-1941.
+* Fix Edit a MARC holdings record generates a 500 error. Fixes UIIN-1997.
 
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
