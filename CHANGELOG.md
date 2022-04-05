@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [9.0.6] IN PROGRESS
+
+* Fix Edit a MARC holdings record generates a 500 error. Fixes UIIN-1997.
+
 ## [9.0.5](https://github.com/folio-org/ui-inventory/tree/v9.0.5) (2022-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.4...v9.0.5)
 
