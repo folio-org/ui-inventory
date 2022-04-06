@@ -5,6 +5,7 @@
   search.instances.facets.collection.get. This was renamed some time
   after interface search 0.7 was bumped. Breaking change that is
   unfortunately not reflected in search interface. Fixes UIIN-1941.
+* Fix Edit a MARC holdings record generates a 500 error. Fixes UIIN-1997.
 
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
@@ -25,6 +26,7 @@
 * Browse form flickers. Fixes UIIN-1961.
 * Facets in Browse subjects and call numbers appear after reload page. Fixes UIIN-1965.
 * Optimistic locking: display error message to inform user about OL. Refs UIIN-1987.
+* Instances linked to package order lines are not displaying Order information. Fixes UIIN-1995.
 * Remove expandAll parameter from browse requests. Refs UIIN-1990.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
