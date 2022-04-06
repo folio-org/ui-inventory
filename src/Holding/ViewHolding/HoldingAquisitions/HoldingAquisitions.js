@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 
 import {
   Accordion,
+  Col,
+  KeyValue,
   MultiColumnList,
+  Row,
 } from '@folio/stripes/components';
 
 import { useControlledAccordion } from '../../../common/hooks';
@@ -35,9 +38,16 @@ const formatter = {
   orderType: i => <FormattedMessage id={`ui-inventory.acq.orderType.${i.orderType}`} />,
 };
 
-const HoldingAquisitions = ({ holding }) => {
-  const { isLoading, holdingOrderLines } = useHoldingOrderLines(holding.id);
-  const controlledAccorion = useControlledAccordion(Boolean(holdingOrderLines.length));
+const HoldingAquisitions = ({ holding, withSummary }) => {
+  const { isLoading, holdingOrderLines } = useHoldingOrderLines(holding.id, { enabled: withSummary });
+  const controlledAccorion = useControlledAccordion(
+    Boolean(
+      holdingOrderLines.length
+      || holding.acquisitionMethod
+      || holding.acquisitionFormat
+      || holding.receiptStatus
+    )
+  );
 
   if (isLoading) {
     return (
@@ -54,21 +64,49 @@ const HoldingAquisitions = ({ holding }) => {
       label={<FormattedMessage id="ui-inventory.acquisition" />}
       {...controlledAccorion}
     >
-      <MultiColumnList
-        id="list-holding-order-lines"
-        loading={isLoading}
-        contentData={holdingOrderLines}
-        visibleColumns={visibleColumns}
-        columnMapping={columnMapping}
-        formatter={formatter}
-        interactive={false}
-      />
+      <Row>
+        <Col sm={2}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.acquisitionMethod" />}
+            value={holding.acquisitionMethod}
+          />
+        </Col>
+
+        <Col sm={2}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.acquisitionFormat" />}
+            value={holding.acquisitionFormat}
+          />
+        </Col>
+
+        <Col sm={2}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.receiptStatus" />}
+            value={holding.receiptStatus}
+          />
+        </Col>
+      </Row>
+
+      {
+        withSummary && (
+          <MultiColumnList
+            id="list-holding-order-lines"
+            loading={isLoading}
+            contentData={holdingOrderLines}
+            visibleColumns={visibleColumns}
+            columnMapping={columnMapping}
+            formatter={formatter}
+            interactive={false}
+          />
+        )
+      }
     </Accordion>
   );
 };
 
 HoldingAquisitions.propTypes = {
   holding: PropTypes.object.isRequired,
+  withSummary: PropTypes.bool,
 };
 
 export default HoldingAquisitions;

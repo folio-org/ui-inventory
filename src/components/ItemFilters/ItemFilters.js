@@ -13,6 +13,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import { useFacets } from '../../common/hooks';
 import {
+  getSourceOptions,
   getSuppressedOptions,
   processFacetOptions,
   processItemsStatuses,
@@ -38,7 +39,6 @@ const ItemFilters = (props) => {
       statisticalCodes,
       locations,
       materialTypes,
-      tagsRecords,
     },
     onChange,
     onClear,
@@ -96,14 +96,13 @@ const ItemFilters = (props) => {
             processFacetOptions(activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_STATISTICAL_CODE_IDS:
-            console.log('process statistical codes', activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS]);
             processStatisticalCodes(activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS], recordValues);
             break;
           case FACETS_CQL.ITEMS_TAGS:
-            processFacetOptions(activeFilters[FACETS.ITEMS_TAGS], tagsRecords, ...commonProps, 'label');
+            accum[name] = getSourceOptions(activeFilters[FACETS.ITEMS_TAGS], recordValues);
             break;
           default:
         }

@@ -300,3 +300,8 @@ export const FACETS_SETTINGS = {
 export const ERROR_TYPES = {
   OPTIMISTIC_LOCKING: 'optimisticLocking',
 };
+
+export const QUERY_INDEXES = {
+  INSTANCE_HRID: 'hrid',
+  BARCODE: 'items.barcode',
+};

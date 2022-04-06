@@ -1,6 +1,36 @@
 # Change history for ui-inventory
 
-## [9.0.0] IN PROGRESS
+## [9.1.0] IN PROGRESS
+* Use permission search.facets.collection.get rather than
+  search.instances.facets.collection.get. This was renamed some time
+  after interface search 0.7 was bumped. Breaking change that is
+  unfortunately not reflected in search interface. Fixes UIIN-1941.
+* Fix Edit a MARC holdings record generates a 500 error. Fixes UIIN-1997.
+
+* The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
+* Fetch parent and child sub instances in one query. Fixes UIIN-1902.
+* Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
+* updated "Date ordered" label to "Date opened". Refs UIIN-1946.
+* Call number and subject values are not surrounded by quotes when sending the request. Refs UIIN-1959.
+* Browse form has hardcoded limit of the returned records. Refs UIIN-1957.
+* search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
+* New Permission: View MARC holdings record . Refs UIIN-1973.
+* Reset reference data resources on unmount. Fixes UIIN-1966.
+* Do not cross-check tag facets with tag list. Refs UIIN-1974.
+* Fix issues with re-entering ui-inventory when the instance details pane is opened. Fixes UIIN-1934.
+* Incorrect rendering of returned records. Refs UIIN-1960.
+* Improve `<RepeatableField>` layout. Fixes UIIN-1962.
+* New Permission: View source (instance). Refs UIIN-1975.
+* Do not change identifiers array for the preceding/succeeding titles. Fixes UIIN-1931.
+* Fix missing label on holdings/item move view. Fixes UIIN-1927.
+* Browse form flickers. Fixes UIIN-1961.
+* Facets in Browse subjects and call numbers appear after reload page. Fixes UIIN-1965.
+* Optimistic locking: display error message to inform user about OL. Refs UIIN-1987.
+* Instances linked to package order lines are not displaying Order information. Fixes UIIN-1995.
+* Remove expandAll parameter from browse requests. Refs UIIN-1990.
+
+## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
 
 * Change Holdings record source to FOLIO when Duplicate Holdings record. Refs UIIN-1647.
 * Save Holdings UUIDs in the Inventory search result. Refs UIIN-1662.
@@ -82,6 +112,7 @@
 * Update facet and search option names for holdings and items. Refs UIIN-1935.
 * Refactor from `SafeHTMLMessage` to `FormattedMessage`. Refs UIIN-1525.
 * Add 'all fields' search index. Refs UIIN-1645.
+* Add browse permissions. Refs UIIN-1940
 
 ## [8.0.0](https://github.com/folio-org/ui-inventory/tree/v8.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.4...v8.0.0)

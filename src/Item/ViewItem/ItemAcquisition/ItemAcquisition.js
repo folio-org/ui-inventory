@@ -59,7 +59,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
 
         <Col xs={4}>
           <KeyValue
-            label={<FormattedMessage id="ui-inventory.acq.dateOrdered" />}
+            label={<FormattedMessage id="ui-inventory.acq.dateOpened" />}
             value={getDateWithTime(order?.dateOrdered)}
           />
         </Col>
