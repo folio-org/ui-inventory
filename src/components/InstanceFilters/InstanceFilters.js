@@ -183,7 +183,6 @@ const InstanceFilters = props => {
         label={<FormattedMessage id={`ui-inventory.instances.${FACETS.LANGUAGE}`} />}
         id={FACETS.LANGUAGE}
         name={FACETS.LANGUAGE}
-        separator={false}
         closedByDefault
         header={FilterAccordionHeader}
         displayClearButton={activeFilters[FACETS.LANGUAGE]?.length > 0}
@@ -319,7 +318,6 @@ const InstanceFilters = props => {
         label={<FormattedMessage id="ui-inventory.statisticalCode" />}
         id={FACETS.STATISTICAL_CODE_IDS}
         name={FACETS.STATISTICAL_CODE_IDS}
-        separator={false}
         closedByDefault
         header={FilterAccordionHeader}
         displayClearButton={activeFilters[FACETS.STATISTICAL_CODE_IDS]?.length > 0}
