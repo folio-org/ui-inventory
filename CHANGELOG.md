@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.0.7](https://github.com/folio-org/ui-inventory/tree/v9.0.7) (2022-04-08)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.6...v9.0.7)
+
+* Instances linked to package order lines are not displaying Order information. Fixes UIIN-1995.
+* Remove expandAll parameter from browse requests. Refs UIIN-1990.
+
 ## [9.0.6](https://github.com/folio-org/ui-inventory/tree/v9.0.6) (2022-04-07)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.5...v9.0.6)
 
