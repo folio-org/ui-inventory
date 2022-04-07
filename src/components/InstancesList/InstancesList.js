@@ -70,6 +70,7 @@ import {
   getItem,
   setItem,
 } from '../../storage';
+import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
 import {
@@ -284,6 +285,7 @@ class InstancesList extends React.Component {
         optionSelected: ''
       });
     }
+    facetsStore.getState().resetFacetSettings();
     document.getElementById('input-inventory-search').focus();
   }
 
@@ -673,6 +675,8 @@ class InstancesList extends React.Component {
       selectedRows: {},
       optionSelected: ''
     });
+
+    facetsStore.getState().resetFacetSettings();
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
