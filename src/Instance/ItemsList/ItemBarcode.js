@@ -22,10 +22,12 @@ import {
   IconButton,
 } from '@folio/stripes/components';
 import css from '../../View.css';
+import { QUERY_INDEXES } from '../../constants';
 
 const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
+  const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
 
   const callout = useContext(CalloutContext);
   const onCopyToClipbaord = useCallback(() => {
@@ -39,7 +41,7 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
     });
   }, [item.barcode, callout]);
 
-  const highlightableBarcode = <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} />;
+  const highlightableBarcode = isQueryByBarcode ? <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} /> : item.barcode;
 
   return (
     <>

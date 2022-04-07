@@ -702,7 +702,6 @@
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
     "createMARCHoldings": "Add MARC holdings record",
     "exportInProgress": "Export in progress",
-    "acq.dateOrdered": "Date ordered",
     "acq.acqUnit": "Acquisition unit",
     "showMoreOptions": "Show more options",
     "more": "More",
@@ -722,5 +721,8 @@
     "instances.columns.callNumber": "Call number",
     "instances.columns.numberOfTitles": "Número de títulos",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
-    "browseCallNumbers.missedMatch": "would be here"
+    "browseCallNumbers.missedMatch": "would be here",
+    "search.allFields": "All",
+    "acq.dateOpened": "Date opened",
+    "moveItems.selectHolding": "Select/unselect holding for movement"
 }

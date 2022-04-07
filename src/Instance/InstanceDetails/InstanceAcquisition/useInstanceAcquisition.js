@@ -14,14 +14,25 @@ const useInstanceAcquisition = (id) => {
   const { data = [], isLoading } = useQuery(
     [namespace, 'instance-acquisition', id],
     async () => {
-      const { poLines = [] } = await ky.get('orders/order-lines', {
+      const { titles = [] } = await ky.get('orders/titles', {
         searchParams: {
           limit: LIMIT_MAX,
           query: `instanceId==${id}`,
         },
       }).json();
 
-      const orderIds = [...new Set(poLines.map(({ purchaseOrderId }) => purchaseOrderId))];
+      const poLineIds = [...new Set(titles.map(({ poLineId }) => poLineId))];
+
+      const orderLines = await batchRequest(
+        async ({ params: searchParams }) => {
+          const { poLines = [] } = await ky.get('orders/order-lines', { searchParams }).json();
+
+          return poLines;
+        },
+        poLineIds,
+      );
+
+      const orderIds = [...new Set(orderLines.map(({ purchaseOrderId }) => purchaseOrderId))];
 
       const orders = await batchRequest(
         async ({ params: searchParams }) => {
@@ -54,7 +65,7 @@ const useInstanceAcquisition = (id) => {
       });
       const ordersMap = hydratedOrders.reduce((acc, order) => ({ ...acc, [order.id]: order }), {});
 
-      return orderBy(poLines.map(line => ({ ...line, order: ordersMap[line.purchaseOrderId] })),
+      return orderBy(orderLines.map(line => ({ ...line, order: ordersMap[line.purchaseOrderId] })),
         ({ order }) => order?.dateOrdered, ['desc']);
     },
     { enabled: stripes.hasInterface('order-lines') &&

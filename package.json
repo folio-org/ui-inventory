@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -49,7 +49,7 @@
     ],
     "okapiInterfaces": {
       "inventory": "10.10 11.0",
-      "search": "0.5",
+      "search": "0.7",
       "source-storage-records": "3.0",
       "instance-storage": "7.0 8.0",
       "holdings-storage": "3.0 4.4 5.0",
@@ -95,7 +95,8 @@
       "orders.holding-summary": "1.0",
       "order-lines": "2.0 3.0",
       "organizations.organizations": "1.0",
-      "pieces": "2.0"
+      "pieces": "2.0",
+      "titles": "1.2"
     },
     "permissionSets": [
       {
@@ -107,11 +108,12 @@
           "search.index.records.collection.post",
           "search.instances.collection.get",
           "search.instances.ids.collection.get",
+          "search.holdings.ids.collection.get",
           "search.config.languages.item.post",
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
           "search.index.inventory.reindex.post",
-          "search.instances.facets.collection.get"
+          "search.facets.collection.get"
         ]
       },
       {
@@ -131,6 +133,28 @@
           "ui-inventory.item.delete",
           "ui-inventory.holdings.delete",
           "ui-inventory.instance.view-staff-suppressed-records"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.call-number-browse.view",
+        "displayName": "Call number browse: View permissions ",
+        "description": "Enable call number browse feature",
+        "subPermissions": [
+          "ui-inventory.all-permissions.TEMPORARY",
+          "browse.call-numbers.instances.collection.get",
+          "browse.authorities.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.subjects.view",
+        "displayName": "Subject browse: View permissions",
+        "description": "Enable subject browse feature",
+        "subPermissions": [
+          "ui-inventory.all-permissions.TEMPORARY",
+          "browse.subjects.instances.collection.get",
+          "browse.authorities.collection.get"
         ],
         "visible": true
       },

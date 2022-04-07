@@ -458,6 +458,17 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     </div>);
 };
 
+export const updateOrAddIdentifier = (identifiers, identifierTypeId, value) => {
+  const index = identifiers.findIndex(identifier => identifier.identifierTypeId === identifierTypeId);
+  const indentifier = { identifierTypeId, value };
+
+  if (index > -1) {
+    identifiers[index] = indentifier;
+  } else {
+    identifiers.push(indentifier);
+  }
+};
+
 /**
  * Marshal ISBN and ISSN attatched to the given title into
  * identifiers required by the backend.
@@ -467,24 +478,18 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
  *
  */
 export const marshalIdentifiers = (title, identifierTypesByName) => {
-  const identifiers = [];
+  const identifiers = [...(title?.identifiers ?? [])];
   const {
     isbn,
     issn,
   } = title;
 
   if (isbn) {
-    identifiers.push({
-      identifierTypeId: identifierTypesByName.ISBN.id,
-      value: isbn,
-    });
+    updateOrAddIdentifier(identifiers, identifierTypesByName.ISBN.id, isbn);
   }
 
   if (issn) {
-    identifiers.push({
-      identifierTypeId: identifierTypesByName.ISSN.id,
-      value: issn,
-    });
+    updateOrAddIdentifier(identifiers, identifierTypesByName.ISSN.id, issn);
   }
 
   return identifiers;
@@ -721,9 +726,18 @@ export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u
  * @returns object
  */
 export const parseHttpError = async httpError => {
-  try {
-    const jsonError = await httpError.json();
+  const contentType = httpError?.headers?.get('content-type');
+  let jsonError = {};
 
+  try {
+    if (contentType === 'text/plain') {
+      jsonError.message = await httpError.text();
+    } else {
+      jsonError = await httpError.json();
+    }
+
+    // Optimistic locking error is currently returned as a plain text
+    // https://issues.folio.org/browse/UIIN-1872?focusedCommentId=125438&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-125438
     if (jsonError.message.match(/optimistic locking/i)) {
       jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
     }

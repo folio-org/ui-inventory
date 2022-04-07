@@ -159,7 +159,7 @@ class InstancesList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.getSelectedBrowseOption()) {
+    if (this.getSelectedBrowseOption() || this.getExecutedBrowseQuery()) {
       this.setState({
         optionSelected: this.getQIndexFromParams(),
       });
@@ -816,8 +816,6 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
-      if (!Object.values(browseModeOptions).includes(optionSelected)) return;
-
       const isSubject = optionSelected === browseModeOptions.SUBJECTS;
       const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
       const param = isSubject ? 'subject' : 'callNumber';
@@ -831,7 +829,7 @@ class InstancesList extends React.Component {
         source.fetchByQuery(`${param} < "${anchor}"`);
       } else {
         anchor = isCallNumber
-          ? records.reverse().find(i => i.fullCallNumber)?.shelfKey
+          ? [...records].reverse().find(i => i.fullCallNumber)?.shelfKey
           : records[records.length - 1].subject;
 
         source.fetchByQuery(`${param} > "${anchor}"`);
@@ -905,17 +903,18 @@ class InstancesList extends React.Component {
         return missedMatchItem();
       },
       'callNumber': r => {
-        if (r?.instance) {
+        if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
         return missedMatchItem();
       },
-      'numberOfTitles': r => (r?.instance || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+      'numberOfTitles': r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
     const browseQueryExecuted = Boolean(this.getExecutedBrowseQuery());
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
+    const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
       this.setState({ optionSelected: e.target.value });
@@ -1034,7 +1033,7 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
-            resultsOnNeedMore={handleOnNeedMore}
+            resultsOnNeedMore={isHandleOnNeedMore}
           />
         </div>
         <ErrorModal
