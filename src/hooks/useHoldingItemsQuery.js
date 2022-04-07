@@ -9,7 +9,7 @@ const useHoldingItemsQuery = (
   holdingsRecordId,
   options = { searchParams: {}, key: 'items' },
 ) => {
-  const ky = useOkapiKy();
+  const ky = useOkapiKy().extend({ timeout: false });
   const [namespace] = useNamespace();
   const queryKey = [namespace, options.key, holdingsRecordId];
   const defaultSearchParams = {
