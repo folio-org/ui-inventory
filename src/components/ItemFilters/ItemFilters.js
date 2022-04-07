@@ -135,6 +135,7 @@ const ItemFilters = (props) => {
         header={FilterAccordionHeader}
         displayClearButton={!_.isEmpty(activeFilters[FACETS.ITEM_STATUS])}
         onClearFilter={() => onClear(FACETS.ITEM_STATUS)}
+        separator={false}
       >
         <CheckboxFacet
           name={FACETS.ITEM_STATUS}
@@ -151,7 +152,6 @@ const ItemFilters = (props) => {
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}
         name={FACETS.EFFECTIVE_LOCATION}
-        separator
         header={FilterAccordionHeader}
         displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
         onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
@@ -191,7 +191,6 @@ const ItemFilters = (props) => {
         label={<FormattedMessage id={`ui-inventory.${FACETS.MATERIAL_TYPE}`} />}
         id={FACETS.MATERIAL_TYPE}
         name={FACETS.MATERIAL_TYPE}
-        separator
         closedByDefault
         header={FilterAccordionHeader}
         displayClearButton={!_.isEmpty(activeFilters[FACETS.MATERIAL_TYPE])}
@@ -231,7 +230,6 @@ const ItemFilters = (props) => {
         label={<FormattedMessage id="ui-inventory.statisticalCode" />}
         id={FACETS.ITEMS_STATISTICAL_CODE_IDS}
         name={FACETS.ITEMS_STATISTICAL_CODE_IDS}
-        separator={false}
         closedByDefault
         header={FilterAccordionHeader}
         displayClearButton={activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS]?.length > 0}
