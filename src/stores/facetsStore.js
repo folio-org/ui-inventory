@@ -1,6 +1,6 @@
 import create from 'zustand';
 
-// Facet store contains a global state related
+// Facets store contains a global state related
 // to facets.
 // Currently in only holds facetSettings which
 // represents a state for each facet (searchValue and isOnMoreClicked)
