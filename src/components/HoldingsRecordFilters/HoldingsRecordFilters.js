@@ -184,7 +184,6 @@ const HoldingsRecordFilters = (props) => {
         label={<FormattedMessage id="ui-inventory.statisticalCode" />}
         id={FACETS.HOLDINGS_STATISTICAL_CODE_IDS}
         name={FACETS.HOLDINGS_STATISTICAL_CODE_IDS}
-        separator={false}
         closedByDefault
         header={FilterAccordionHeader}
         displayClearButton={activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS]?.length > 0}
