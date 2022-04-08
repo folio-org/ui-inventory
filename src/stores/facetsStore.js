@@ -2,8 +2,9 @@ import create from 'zustand';
 
 // Facets store contains a global state related
 // to facets.
-// Currently in only holds facetSettings which
-// represents a state for each facet (searchValue and isOnMoreClicked)
+// Currently it only holds facetSettings which
+// represents a state (searchValue and isOnMoreClicked)
+// for each facet.
 const facetsStore = create((set) => ({
   facetSettings: {},
   setFacetSettings: (name, value) => {
