@@ -30,6 +30,7 @@ describe('useHoldingItemsQuery', () => {
   beforeEach(() => {
     useOkapiKy.mockClear().mockReturnValue({
       get: mockGet,
+      extend: jest.fn().mockReturnValue({ get: mockGet }),
     });
   });
 
