@@ -72,7 +72,7 @@ export const LocationSelectionWithCheck = ({ input, ...rest }) => {
     <>
       <LocationSelection
         placeholder={formatMessage({ id: 'ui-inventory.selectLocation' })}
-        value={selectedValue}
+        value={value}
         onSelect={handleSelect}
         {...restInput}
         {...rest}

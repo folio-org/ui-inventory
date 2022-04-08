@@ -28,6 +28,7 @@
 * Optimistic locking: display error message to inform user about OL. Refs UIIN-1987.
 * Instances linked to package order lines are not displaying Order information. Fixes UIIN-1995.
 * Remove expandAll parameter from browse requests. Refs UIIN-1990.
+* Display correct location values in edit form after change. Fixes UIIN-1988.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
