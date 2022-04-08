@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import _ from 'lodash';
 
+import { useFacetSettings } from '../../stores/facetsStore';
+
 const useFacets = (
   segmentAccordions,
   segmentOptions,
@@ -21,7 +23,7 @@ const useFacets = (
   const [accordions, setAccordions] = useState(segmentAccordions);
   const [accordionsData, setAccordionsData] = useState({});
   const [facetsOptions, setFacetsOptions] = useState(segmentOptions);
-  const [facetSettings, setFacetSettings] = useState({});
+  const [facetSettings, setFacetSettings] = useFacetSettings();
   const [facetNameToOpen, setFacetNameToOpen] = useState('');
   const [showLoadingForAllFacets, setShowLoadingForAllFacets] = useState(false);
 
@@ -43,14 +45,7 @@ const useFacets = (
       name,
       value,
     } = filter;
-
-    setFacetSettings(prevFacetSettings => ({
-      ...prevFacetSettings,
-      [name]: {
-        ...prevFacetSettings[name],
-        value,
-      },
-    }));
+    setFacetSettings(name, { value });
   }, []);
 
   const processFilterChange = (selectedFilters, facetName) => {
@@ -86,13 +81,7 @@ const useFacets = (
   const processOnMoreClicking = useCallback((onMoreClickedFacet) => {
     onFetchFacets({ onMoreClickedFacet });
 
-    setFacetSettings(prevFacetSettings => ({
-      ...prevFacetSettings,
-      [onMoreClickedFacet]: {
-        ...prevFacetSettings[onMoreClickedFacet],
-        isOnMoreClicked: true,
-      },
-    }));
+    setFacetSettings(onMoreClickedFacet, { isOnMoreClicked: true });
   }, [onFetchFacets]);
 
   const processAllFacets = useCallback(() => {

@@ -6,6 +6,7 @@
   after interface search 0.7 was bumped. Breaking change that is
   unfortunately not reflected in search interface. Fixes UIIN-1941.
 * Fix Edit a MARC holdings record generates a 500 error. Fixes UIIN-1997.
+* Reset search fields for each facet when "Reset all" button is clicked. Fixes UIIN-1977.
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 * Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.

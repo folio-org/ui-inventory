@@ -10,6 +10,8 @@ import {
   Icon,
 } from '@folio/stripes-components';
 
+import { useSearchValue } from '../../stores/facetsStore';
+
 import css from './CheckboxFacetList.css';
 
 function CheckboxFacetList({
@@ -27,6 +29,7 @@ function CheckboxFacetList({
   const handleTextFieldFocus = () => {
     onFetch({ focusedFacet: fieldName });
   };
+  const searchValue = useSearchValue(fieldName);
 
   return (
     <div className={css.facetSearchContainer}>
@@ -37,6 +40,7 @@ function CheckboxFacetList({
             type="search"
             onChange={(e) => onSearch(e.target.value)}
             onFocus={handleTextFieldFocus}
+            value={searchValue}
           />
         </div>
       )}
