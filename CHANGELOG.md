@@ -6,6 +6,7 @@
   after interface search 0.7 was bumped. Breaking change that is
   unfortunately not reflected in search interface. Fixes UIIN-1941.
 * Fix Edit a MARC holdings record generates a 500 error. Fixes UIIN-1997.
+* Reset search fields for each facet when "Reset all" button is clicked. Fixes UIIN-1977.
 * The highlight of search results is not specific to the given search but now highlight all kinds of data in the record. Refs UIIN-1454.
 * Fetch parent and child sub instances in one query. Fixes UIIN-1902.
 * Missing Field - Receipt status under the Edit Holdings View. Fixes UIIN-1943.
@@ -27,6 +28,7 @@
 * Optimistic locking: display error message to inform user about OL. Refs UIIN-1987.
 * Instances linked to package order lines are not displaying Order information. Fixes UIIN-1995.
 * Remove expandAll parameter from browse requests. Refs UIIN-1990.
+* Display correct location values in edit form after change. Fixes UIIN-1988.
 * Correctly place (or omit) seprators between filters. Refs UIIN-1933.
 * Eliminate timeout for counting holdings-records' items. Refs UIIN-2006.
 
