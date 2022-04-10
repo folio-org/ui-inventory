@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.0.8](https://github.com/folio-org/ui-inventory/tree/v9.0.8) (2022-04-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.7...v9.0.8)
+
+* Correctly place (or omit) seprators between filters. Refs UIIN-1933.
+* Reset search fields for each facet when "Reset all" button is clicked. Fixes UIIN-1977.
+
 ## [9.0.7](https://github.com/folio-org/ui-inventory/tree/v9.0.7) (2022-04-08)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.6...v9.0.7)
 
