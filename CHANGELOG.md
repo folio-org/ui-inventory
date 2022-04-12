@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.0.10](https://github.com/folio-org/ui-inventory/tree/v9.0.10) (2022-04-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.9...v9.0.10)
+
+* Display correct location values in edit form after change. Fixes UIIN-1988.
+* Eliminate timeout for counting holdings-records' items. Refs UIIN-2006.
+
 ## [9.0.9](https://github.com/folio-org/ui-inventory/tree/v9.0.9) (2022-04-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.8...v9.0.9)
 
