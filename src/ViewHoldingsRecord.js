@@ -443,6 +443,7 @@ class ViewHoldingsRecord extends React.Component {
   };
 
   isAwaitingResource = () => {
+    const { referenceTables } = this.props;
     const {
       holdingsRecords,
       instances1,
@@ -465,6 +466,8 @@ class ViewHoldingsRecord extends React.Component {
       || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))) {
       return true;
     }
+
+    if (isEmpty(referenceTables)) return true;
 
     return false;
   };
