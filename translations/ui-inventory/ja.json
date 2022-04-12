@@ -668,9 +668,9 @@
     "acq.orderStatus.Open": "Open",
     "acq.orderStatus.Pending": "Pending",
     "acq.receiptStatus": "POL receipt status",
-    "acq.receiptStatus.Awaiting Receipt": "Awaiting receipt",
-    "acq.receiptStatus.Cancelled": "Cancelled",
-    "acq.receiptStatus.Fully Received": "Fully received",
+    "acq.receiptStatus.Awaiting Receipt": "受入待ち",
+    "acq.receiptStatus.Cancelled": "キャンセル済",
+    "acq.receiptStatus.Fully Received": "すべて受入完了",
     "acq.receiptStatus.Ongoing": "Ongoing",
     "acq.receiptStatus.Partially Received": "Partially received",
     "acq.receiptStatus.Pending": "保留中",
@@ -702,7 +702,7 @@
     "instance.suppressedFromDiscovery": "Suppressed from discovery",
     "createMARCHoldings": "Add MARC holdings record",
     "exportInProgress": "Export in progress",
-    "acq.acqUnit": "調達ユニット",
+    "acq.acqUnit": "収集ユニット",
     "showMoreOptions": "Show more options",
     "more": "More",
     "noMatchingOptions": "一致する選択肢はありません",
@@ -724,5 +724,5 @@
     "browseCallNumbers.missedMatch": "would be here",
     "search.allFields": "All",
     "acq.dateOpened": "Date opened",
-    "moveItems.selectHolding": "Select/unselect holding for movement"
+    "moveItems.selectHolding": "Select holdings"
 }
