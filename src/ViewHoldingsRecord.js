@@ -73,8 +73,6 @@ class ViewHoldingsRecord extends React.Component {
 
   static manifest = Object.freeze({
     query: {},
-    permanentLocationQuery: {},
-    temporaryLocationQuery: {},
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
@@ -94,14 +92,6 @@ class ViewHoldingsRecord extends React.Component {
     instances1: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
-    },
-    permanentLocation: {
-      type: 'okapi',
-      path: 'locations/%{permanentLocationQuery.id}',
-    },
-    temporaryLocation: {
-      type: 'okapi',
-      path: 'locations/%{temporaryLocationQuery.id}',
     },
     tagSettings: {
       type: 'okapi',
@@ -129,25 +119,6 @@ class ViewHoldingsRecord extends React.Component {
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-  }
-
-  static getDerivedStateFromProps(nextProps) {
-    const { resources } = nextProps;
-    const holdingsRecords = (resources.holdingsRecords || {}).records || [];
-    const permanentLocationQuery = resources.permanentLocationQuery;
-    const temporaryLocationQuery = resources.temporaryLocationQuery;
-    const holding = holdingsRecords[0];
-
-    if (holding && holding.permanentLocationId && permanentLocationQuery
-      && (!permanentLocationQuery.id || permanentLocationQuery.id !== holding.permanentLocationId)) {
-      nextProps.mutator.permanentLocationQuery.update({ id: holding.permanentLocationId });
-    }
-    if (holding && holding.temporaryLocationId && temporaryLocationQuery
-      && (!temporaryLocationQuery.id || temporaryLocationQuery.id !== holding.temporaryLocationId)) {
-      nextProps.mutator.temporaryLocationQuery.update({ id: holding.temporaryLocationId });
-    }
-
-    return null;
   }
 
   componentDidMount() {
@@ -446,8 +417,6 @@ class ViewHoldingsRecord extends React.Component {
     const {
       holdingsRecords,
       instances1,
-      permanentLocation,
-      temporaryLocation,
     } = this.props.resources;
 
     if (this.state.isLoadingUpdatedHoldingsRecord) {
@@ -458,11 +427,7 @@ class ViewHoldingsRecord extends React.Component {
       return true;
     }
 
-    const holdingsRecord = this.getMostRecentHolding();
-
-    if (!instances1 || !instances1.hasLoaded
-      || (holdingsRecord.permanentLocationId && (!permanentLocation || !permanentLocation.hasLoaded))
-      || (holdingsRecord.temporaryLocationId && (!temporaryLocation || !temporaryLocation.hasLoaded))) {
+    if (!instances1 || !instances1.hasLoaded) {
       return true;
     }
 
@@ -476,8 +441,6 @@ class ViewHoldingsRecord extends React.Component {
     const {
       resources: {
         instances1,
-        permanentLocation,
-        temporaryLocation,
         items,
         tagSettings,
       },
@@ -492,8 +455,8 @@ class ViewHoldingsRecord extends React.Component {
     const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance.source);
     const holdingsRecord = this.getMostRecentHolding();
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
-    const holdingsPermanentLocation = holdingsRecord.permanentLocationId ? permanentLocation.records[0] : null;
-    const holdingsTemporaryLocation = holdingsRecord.temporaryLocationId ? temporaryLocation.records[0] : null;
+    const holdingsPermanentLocation = get(referenceTables?.locationsById[holdingsRecord?.permanentLocationId], ['name'], '-');
+    const holdingsTemporaryLocation = get(referenceTables?.locationsById[holdingsRecord?.temporaryLocationId], ['name'], '-');
     const itemCount = get(items, 'records.length', 0);
     const holdingsSourceName = holdingsSource?.name || instanceSource.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
@@ -503,7 +466,7 @@ class ViewHoldingsRecord extends React.Component {
         id="ui-inventory.confirmHoldingsRecordDeleteModal.message"
         values={{
           hrid: holdingsRecord.hrid,
-          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null)
+          location: holdingsPermanentLocation
         }}
       />
     );
@@ -517,7 +480,7 @@ class ViewHoldingsRecord extends React.Component {
         id={noHoldingsRecordDeleteModalMessageId}
         values={{
           hrid: holdingsRecord.hrid,
-          location: (holdingsPermanentLocation ? holdingsPermanentLocation.name : null),
+          location: holdingsPermanentLocation,
           itemCount,
         }}
       />
@@ -545,8 +508,8 @@ class ViewHoldingsRecord extends React.Component {
       : emptyList;
 
     const locationAccordion = {
-      permanent: get(holdingsPermanentLocation, ['name'], '-'),
-      temporary: get(holdingsTemporaryLocation, ['name'], '-'),
+      permanent: holdingsPermanentLocation,
+      temporary: holdingsTemporaryLocation,
       shelvingOrder: get(holdingsRecord, ['shelvingOrder'], '-'),
       shelvingTitle: get(holdingsRecord, ['shelvingTitle'], '-'),
       copyNumber: get(holdingsRecord, ['copyNumber'], '-'),
@@ -1050,10 +1013,6 @@ ViewHoldingsRecord.propTypes = {
     tagSettings: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    permanentLocation: PropTypes.object,
-    temporaryLocation: PropTypes.object,
-    permanentLocationQuery: PropTypes.object,
-    temporaryLocationQuery: PropTypes.object,
   }).isRequired,
   location: PropTypes.object,
   history: PropTypes.object.isRequired,
@@ -1077,8 +1036,6 @@ ViewHoldingsRecord.propTypes = {
       DELETE: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
-    permanentLocationQuery: PropTypes.object.isRequired,
-    temporaryLocationQuery: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
 };
