@@ -31,6 +31,7 @@
 * Display correct location values in edit form after change. Fixes UIIN-1988.
 * Correctly place (or omit) seprators between filters. Refs UIIN-1933.
 * Eliminate timeout for counting holdings-records' items. Refs UIIN-2006.
+* Update locations in `<ViewHoldingsRecord>` after edit. Fixes UIIN-1980.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
