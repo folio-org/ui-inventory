@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 9.0.11 IN PROGRESS
+
+* Update locations in `<ViewHoldingsRecord>` after edit. Fixes UIIN-1980.
+
 ## [9.0.10](https://github.com/folio-org/ui-inventory/tree/v9.0.10) (2022-04-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.9...v9.0.10)
 
@@ -68,7 +72,6 @@
 * updated "Date ordered" label to "Date opened". Refs UIIN-1946.
 * Browse form has hardcoded limit of the returned records. Refs UIIN-1957.
 * search.holdings.ids.collection.get permission missing from package.json. Refs UIIN-1972.
-
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
