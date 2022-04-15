@@ -467,9 +467,7 @@ class ViewHoldingsRecord extends React.Component {
       return true;
     }
 
-    if (isEmpty(referenceTables)) return true;
-
-    return false;
+    return isEmpty(referenceTables);
   };
 
   getEntity = () => this.getMostRecentHolding();
