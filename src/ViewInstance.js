@@ -129,7 +129,7 @@ class ViewInstance extends React.Component {
     locations: {
       type: 'okapi',
       records: 'locations',
-      path: 'locations?limit=1000',
+      path: 'locations?limit=5000',
     },
     configs: {
       type: 'okapi',

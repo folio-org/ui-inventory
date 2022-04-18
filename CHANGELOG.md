@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 9.0.12 IN PROGRESS
+
+* Retrieve up to 5000 locations when viewing Instances. Refs UIIN-2016.
+
 ## [9.0.11](https://github.com/folio-org/ui-inventory/tree/v9.0.11) (2022-04-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.10...v9.0.11)
 
