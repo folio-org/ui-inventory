@@ -32,6 +32,7 @@
 * Correctly place (or omit) seprators between filters. Refs UIIN-1933.
 * Eliminate timeout for counting holdings-records' items. Refs UIIN-2006.
 * Update locations in `<ViewHoldingsRecord>` after edit. Fixes UIIN-1980.
+* Retrieve up to 5000 locations when viewing Instances. Refs UIIN-2016.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
