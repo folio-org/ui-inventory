@@ -9,6 +9,10 @@ import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
 jest.mock('./withLocation', () => jest.fn(c => c));
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingView: () => 'LoadingView',
+}));
 
 const defaultProps = {
   id: 'id',
@@ -65,6 +69,12 @@ const renderViewHoldingsRecord = (props = {}) => renderWithIntl(
 describe('ViewHoldingsRecord actions', () => {
   beforeEach(() => {
     defaultProps.history.push.mockClear();
+  });
+
+  it('should render Loading when awaiting resource', () => {
+    const { getByText } = renderViewHoldingsRecord({ referenceTables: {} })
+
+    expect(getByText('LoadingView')).toBeDefined();
   });
 
   it('should close view holding page', async () => {

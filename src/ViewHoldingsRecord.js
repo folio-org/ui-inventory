@@ -408,6 +408,7 @@ class ViewHoldingsRecord extends React.Component {
   };
 
   isAwaitingResource = () => {
+    const { referenceTables } = this.props;
     const {
       holdingsRecords,
       instances1,
@@ -425,7 +426,7 @@ class ViewHoldingsRecord extends React.Component {
       return true;
     }
 
-    return false;
+    return isEmpty(referenceTables);
   };
 
   getEntity = () => this.getMostRecentHolding();
