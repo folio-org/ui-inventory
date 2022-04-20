@@ -31,6 +31,8 @@
 * Display correct location values in edit form after change. Fixes UIIN-1988.
 * Correctly place (or omit) seprators between filters. Refs UIIN-1933.
 * Eliminate timeout for counting holdings-records' items. Refs UIIN-2006.
+* After using the Chrome "go back" button, following the link "Holdings Created" from Data import to
+Inventory causes an error. Refs UIIN-2012.
 * Update locations in `<ViewHoldingsRecord>` after edit. Fixes UIIN-1980.
 * Retrieve up to 5000 locations when viewing Instances. Refs UIIN-2016.
 
