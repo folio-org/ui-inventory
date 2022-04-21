@@ -184,4 +184,4 @@ InventoryRouting.propTypes = {
   showSettings: PropTypes.bool,
 };
 
-export default hot(module)(InventoryRouting);
+export default InventoryRouting;
