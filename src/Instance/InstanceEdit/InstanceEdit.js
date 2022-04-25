@@ -42,14 +42,16 @@ const InstanceEdit = ({
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
+  const relatedInstances = useLoadSubInstances(instance?.relatedInstances, 'relatedInstanceId');
 
   useEffect(() => {
     setInitialValues({
       ...unmarshalInstance(instance, identifierTypesById),
       parentInstances,
       childInstances,
+      relatedInstances,
     });
-  }, [instance, identifierTypesById, parentInstances, childInstances]);
+  }, [instance, identifierTypesById, parentInstances, childInstances, relatedInstances]);
 
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
@@ -115,7 +117,7 @@ InstanceEdit.manifest = Object.freeze({
 InstanceEdit.propTypes = {
   instanceId: PropTypes.string.isRequired,
   mutator: PropTypes.object.isRequired,
-  referenceData: PropTypes.object.isRequired,
+  referenceData: PropTypes.object,
   stripes: stripesShape.isRequired,
 };
 

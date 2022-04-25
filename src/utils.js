@@ -747,3 +747,8 @@ export const parseHttpError = async httpError => {
     return httpError;
   }
 };
+
+
+export const convertInstanceFormatIdsToNames = (instanceFormatIds, instanceFormatsById) => {
+  return instanceFormatIds?.map(id => instanceFormatsById?.[id]?.name).filter(name => name).join(', ');
+};
