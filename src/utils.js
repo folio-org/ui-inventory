@@ -599,6 +599,34 @@ export const marshalRelationship = (instance, relationshipName, relationshipIdKe
 };
 
 /**
+ * Marshal related instances
+ * to the format required by the server.
+ *
+ * @param instance instance object
+ *
+ */
+export const marshalRelatedInstances = (instance) => {
+  instance.relatedInstances = (instance?.relatedInstances ?? []).map((inst) => {
+    const {
+      id,
+      relatedInstanceTypeId,
+    } = inst;
+
+    const relationshipRecord = {
+      instanceId: instance.id,
+      relatedInstanceId: inst.relatedInstanceId,
+      relatedInstanceTypeId,
+    };
+
+    if (!inst.relatedInstanceId && id) {
+      relationshipRecord.id = id;
+    }
+
+    return relationshipRecord;
+  });
+};
+
+/**
  * Marshal given instance to the format required by the server.
  *
  * @param instance instance object
@@ -613,6 +641,8 @@ export const marshalInstance = (instance, identifierTypesByName) => {
 
   marshalRelationship(marshaledInstance, 'parentInstances', 'superInstanceId');
   marshalRelationship(marshaledInstance, 'childInstances', 'subInstanceId');
+
+  marshalRelatedInstances(marshaledInstance);
 
   return marshaledInstance;
 };
