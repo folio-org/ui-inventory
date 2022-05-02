@@ -84,7 +84,8 @@
       "configuration": "2.0",
       "tags": "1.0",
       "inventory-record-bulk": "1.0",
-      "data-export": "5.0"
+      "data-export": "5.0",
+      "related-instance-types": "1.0"
     },
     "optionalOkapiInterfaces": {
       "copycat-imports": "1.0",
@@ -541,7 +542,9 @@
           "orders.collection.get",
           "orders.item.get",
           "organizations.organizations.item.get",
-          "acquisitions-units.units.collection.get"
+          "acquisitions-units.units.collection.get",
+          "inventory-storage.related-instance-types.collection.get",
+          "inventory-storage.related-instance-types.item.get"
         ],
         "visible": true
       },

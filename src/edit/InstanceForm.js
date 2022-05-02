@@ -64,10 +64,12 @@ import {
 import {
   validateTitles,
   validateSubInstances,
+  validateRelatedInstances,
 } from '../validation';
 
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
+import RelatedInstanceFields from '../Instance/InstanceEdit/RelatedInstanceFields';
 
 import styles from './InstanceForm.css';
 
@@ -151,6 +153,8 @@ function validate(values) {
 
   validateSubInstances(values, 'parentInstances', errors, requiredTextMessage);
   validateSubInstances(values, 'childInstances', errors, requiredTextMessage);
+
+  validateRelatedInstances(values, errors, requiredTextMessage);
 
   return errors;
 }
@@ -276,13 +280,10 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance.map(
-      it => ({
-        label: it.name,
-        value: it.id,
-        selected: it.id === initialValues.modeOfIssuanceId,
-      }),
-    ) : [];
+    const relatedInstanceTypesOptions = referenceTables?.relatedInstanceTypes?.map(it => ({
+      label: it.name,
+      value: it.id,
+    })) ?? [];
 
     const statisticalCodeOptions = referenceTables.statisticalCodes
       .map(
@@ -302,6 +303,14 @@ class InstanceForm extends React.Component {
       label: it.name,
       value: it.id,
     }));
+
+    const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.modeOfIssuanceId,
+      }),
+    ) : [];
 
     const shortcuts = [
       {
@@ -741,6 +750,21 @@ class InstanceForm extends React.Component {
                         canDelete={!this.isFieldBlocked('publicInstances')}
                       />
 
+                    </Accordion>
+                    <Accordion
+                      label={(
+                        <h3>
+                          <FormattedMessage id="ui-inventory.relatedInstances" />
+                        </h3>
+                      )}
+                      id="instanceSection12"
+                    >
+                      <RelatedInstanceFields
+                        relatedInstanceTypes={relatedInstanceTypesOptions}
+                        canAdd={!this.isFieldBlocked('relatedInstances')}
+                        canEdit={!this.isFieldBlocked('relatedInstances')}
+                        canDelete={!this.isFieldBlocked('relatedInstances')}
+                      />
                     </Accordion>
                   </AccordionSet>
                 </AccordionStatus>

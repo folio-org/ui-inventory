@@ -30,4 +30,22 @@ export const validateSubInstances = (instance, type, errors, message) => {
   }
 };
 
+
+export const validateRelatedInstances = (instance, errors, message) => {
+  const errorList = [];
+
+  instance.relatedInstances = (instance?.relatedInstances ?? []).forEach((inst, index) => {
+    const { relatedInstanceTypeId } = inst;
+
+    if (!relatedInstanceTypeId) {
+      errorList[index] = { relatedInstanceTypeId: message };
+    }
+  });
+
+  if (errorList.length) {
+    errors.relatedInstances = errorList;
+  }
+};
+
+
 export default {};

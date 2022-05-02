@@ -3,6 +3,8 @@ export { instanceRelationshipTypes } from './instanceRelationshipTypes';
 export { instances } from './instances';
 export { instance } from './instance';
 export { subInstances } from './subInstances';
+export { relatedInstances } from './relatedInstances';
 export { relationshipTypes } from './relationshipTypes';
+export { relatedInstanceTypes } from './relatedInstanceTypes';
 export { childInstances } from './childInstances';
 export { items } from './callNumbers';

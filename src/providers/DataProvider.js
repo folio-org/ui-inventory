@@ -43,6 +43,7 @@ const DataProvider = ({
       instanceRelationshipTypes,
       statisticalCodeTypes,
       statisticalCodes,
+      instanceFormats,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
@@ -50,6 +51,8 @@ const DataProvider = ({
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
     loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
+    loadedData.instanceFormatsById = keyBy(instanceFormats, 'id');
+
     const statisticalCodeTypesById = keyBy(statisticalCodeTypes, 'id');
 
     // attach full statisticalCodeType object to each statisticalCode
@@ -257,6 +260,15 @@ DataProvider.manifest = {
       limit: '1000',
     },
     records: 'holdingsRecordsSources',
+    resourceShouldRefresh: true,
+  },
+  relatedInstanceTypes: {
+    type: 'okapi',
+    path: 'related-instance-types',
+    params: {
+      limit: '1000',
+    },
+    records: 'relatedInstanceTypes',
     resourceShouldRefresh: true,
   }
 };
