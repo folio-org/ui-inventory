@@ -680,6 +680,7 @@ class ViewHoldingsRecord extends React.Component {
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">
+
                     <Col sm={6}>
                       <FormattedMessage id="ui-inventory.instance" />
                       <Link to={`/inventory/view/${instance.id}`}>
