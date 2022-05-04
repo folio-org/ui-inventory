@@ -142,6 +142,7 @@ class InstancesList extends React.Component {
 
   constructor(props) {
     super(props);
+    
     this.state = {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
