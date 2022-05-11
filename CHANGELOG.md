@@ -38,6 +38,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Remove `react-hot-loader`. Refs UIIN-1981.
 * Search results with a single hit should automatically open the detail view. Fixes UIIN-2019.
 * Add Holdings UUID search option. Refs UIIN-911.
+* Add Item UUID search option. Refs UIIN-912.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
