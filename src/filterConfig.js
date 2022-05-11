@@ -116,6 +116,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
+  { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"'},
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.callNumber', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
