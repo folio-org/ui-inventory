@@ -4,7 +4,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -184,4 +183,4 @@ InventoryRouting.propTypes = {
   showSettings: PropTypes.bool,
 };
 
-export default hot(module)(InventoryRouting);
+export default InventoryRouting;
