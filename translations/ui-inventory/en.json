@@ -197,6 +197,7 @@
   "search.all": "Keyword (title, contributor, identifier)",
   "search.allFields": "All",
   "search.holdings.uuid": "Holdings UUID",
+  "search.item.uuid": "Item UUID",
   "title": "Title (all)",
   "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
