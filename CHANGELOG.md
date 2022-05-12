@@ -36,6 +36,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Update locations in `<ViewHoldingsRecord>` after edit. Fixes UIIN-1980.
 * Retrieve up to 5000 locations when viewing Instances. Refs UIIN-2016.
 * Remove `react-hot-loader`. Refs UIIN-1981.
+* Search results with a single hit should automatically open the detail view. Fixes UIIN-2019.
 * Fix inventory app white screen when no tags exist. Fixes UIIN-2030.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)

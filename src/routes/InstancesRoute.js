@@ -24,7 +24,7 @@ class InstancesRoute extends React.Component {
   };
 
   static defaultProps = {
-    showSingleResult: false,
+    showSingleResult: true,
     browseOnly: false,
     disableRecordCreation: false,
   };
