@@ -16,8 +16,13 @@ const DataProvider = ({
   const dataRef = useRef();
 
   const isLoading = useMemo(() => {
+    // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
-      if (manifest[key].type === 'okapi' && !(resources?.[key]?.hasLoaded)) {
+      const isRecourceLoading = !(resources?.[key]?.hasLoaded)
+        && resources?.[key]?.isPending
+        && !(resources?.[key]?.failed);
+
+      if (manifest[key].type === 'okapi' && isRecourceLoading) {
         return true;
       }
     }
