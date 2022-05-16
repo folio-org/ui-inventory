@@ -18,11 +18,13 @@ const DataProvider = ({
   const isLoading = useMemo(() => {
     // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
-      const isRecourceLoading = !(resources?.[key]?.hasLoaded)
-        && resources?.[key]?.isPending
-        && !(resources?.[key]?.failed);
+      const resource = resources?.[key] ?? {};
+      // if the resource is in pending mode (which means it is currently trying to finalize the request)
+      // or if the resource hasn't started at all yet (all flags are still set to false)
+      // then return true indicating that the resource is still pending
+      const isResourceLoading = resource.isPending || (!resource.hasLoaded && !resource.failed && !resource.isPending);
 
-      if (manifest[key].type === 'okapi' && isRecourceLoading) {
+      if (manifest[key].type === 'okapi' && isResourceLoading) {
         return true;
       }
     }
