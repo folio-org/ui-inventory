@@ -44,7 +44,7 @@ export const MoveToDropdown = ({
   const movetoHoldings = filteredHoldings.map(item => {
     return {
       ...item,
-      labelLocation: item.permanentLocationId ? locationsById[item.permanentLocationId].name : '',
+      labelLocation: item.permanentLocationId ? locationsById[item.permanentLocationId]?.name : '',
       callNumber: callNumberLabel(item),
     };
   });
