@@ -90,6 +90,7 @@ export const instanceFilterConfig = [
 
 export const browseModeOptions = {
   CALL_NUMBERS: 'callNumbers',
+  CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
 
@@ -120,6 +121,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.callNumber', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
   { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browseContributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 

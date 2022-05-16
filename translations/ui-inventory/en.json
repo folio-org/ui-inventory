@@ -406,6 +406,7 @@
   "instanceId": "Instance UUID",
   "instanceHrid": "Instance HRID",
   "browseCallNumbers": "Browse call numbers",
+  "browseContributors": "Browse contributors",
   "browseSubjects": "Browse subjects",
   "browseCallNumbers.missedMatch": "would be here",
   "callNumber": "Call number",
