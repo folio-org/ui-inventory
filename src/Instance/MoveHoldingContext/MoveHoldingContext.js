@@ -177,7 +177,7 @@ const MoveHoldingContext = ({
     () => {
       const targetHolding = holdingsById[dragToId];
       const callNumber = callNumberLabel(targetHolding);
-      const labelLocation = targetHolding?.permanentLocationId ? locationsById[targetHolding.permanentLocationId].name : '';
+      const labelLocation = targetHolding?.permanentLocationId ? locationsById[targetHolding.permanentLocationId]?.name : '';
 
       const count = movingItems.length;
 
