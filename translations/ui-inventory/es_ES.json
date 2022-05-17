@@ -724,5 +724,8 @@
     "browseCallNumbers.missedMatch": "debería estar aquí",
     "search.allFields": "Todos",
     "acq.dateOpened": "Fecha de apertura",
-    "moveItems.selectHolding": "Seleccionar fondos"
+    "moveItems.selectHolding": "Seleccionar fondos",
+    "browseContributors": "Browse contributors",
+    "newOrder": "New order",
+    "permission.instance.createOrder": "Inventory: create order from instance"
 }

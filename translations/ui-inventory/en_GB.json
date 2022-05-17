@@ -724,5 +724,8 @@
     "browseCallNumbers.missedMatch": "<strong>would be here</strong>",
     "search.allFields": "All",
     "acq.dateOpened": "Date opened",
-    "moveItems.selectHolding": "Select/unselect holding for movement"
+    "moveItems.selectHolding": "Select/unselect holding for movement",
+    "browseContributors": "Browse contributors",
+    "newOrder": "New order",
+    "permission.instance.createOrder": "Inventory: create order from instance"
 }

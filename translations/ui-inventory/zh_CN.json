@@ -724,5 +724,8 @@
     "browseCallNumbers.missedMatch": "会在这里",
     "search.allFields": "全部",
     "acq.dateOpened": "开放日期",
-    "moveItems.selectHolding": "选择馆藏"
+    "moveItems.selectHolding": "选择馆藏",
+    "browseContributors": "Browse contributors",
+    "newOrder": "New order",
+    "permission.instance.createOrder": "Inventory: create order from instance"
 }

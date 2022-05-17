@@ -724,5 +724,8 @@
     "browseCallNumbers.missedMatch": "سيكون هنا",
     "search.allFields": "الكل",
     "acq.dateOpened": "تاريخ الفتح",
-    "moveItems.selectHolding": "حدد المقتنيات"
+    "moveItems.selectHolding": "حدد المقتنيات",
+    "browseContributors": "استعرض المساهمين",
+    "newOrder": "New order",
+    "permission.instance.createOrder": "Inventory: create order from instance"
 }
