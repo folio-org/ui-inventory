@@ -921,10 +921,10 @@ class InstancesList extends React.Component {
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
-      this.setState({ optionSelected: e.target.value });
-      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
-        this.setState({ isSingleResult: false });
-      } else this.setState({ isSingleResult: true });
+      const { value } = e.target;
+      this.setState({ optionSelected: value });
+      const isSingle = value !== browseModeOptions.CALL_NUMBERS || value !== browseModeOptions.SUBJECTS;
+      this.setState({ isSingleResult: isSingle });
     };
 
     const browseFilter = () => {
