@@ -156,6 +156,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
+      isSingleResult: this.props.showSingleResult,
     };
   }
 
@@ -727,7 +728,6 @@ class InstancesList extends React.Component {
       parentResources,
       updateLocation,
     } = this.props;
-
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
@@ -762,7 +762,6 @@ class InstancesList extends React.Component {
 
   render() {
     const {
-      showSingleResult,
       browseOnly,
       disableRecordCreation,
       intl,
@@ -783,7 +782,8 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened,
       selectedRows,
       optionSelected,
-      searchAndSortKey
+      searchAndSortKey,
+      isSingleResult
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -922,6 +922,9 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       this.setState({ optionSelected: e.target.value });
+      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
+        this.setState({ isSingleResult: false });
+      } else this.setState({ isSingleResult: true });
     };
 
     const browseFilter = () => {
@@ -1021,7 +1024,7 @@ class InstancesList extends React.Component {
             }}
             basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-            showSingleResult={showSingleResult}
+            showSingleResult={isSingleResult}
             browseOnly={browseOnly}
             onSelectRow={browseQueryExecuted ? this.onSelectRow : undefined}
             renderFilters={browseFilter()}
