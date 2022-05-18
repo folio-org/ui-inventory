@@ -532,6 +532,25 @@ class ViewInstance extends React.Component {
               </IfPermission>
             )
           }
+
+          {
+            <IfInterface name="orders">
+              <IfPermission perm="ui-inventory.instance.createOrder">
+                <Button
+                  id="clickable-create-order"
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                  }}
+                >
+                  <Icon icon="plus-sign">
+                    <FormattedMessage id="ui-inventory.newOrder" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+            </IfInterface>
+          }
+
           {
             titleLevelRequestsFeatureEnabled
               ? (
