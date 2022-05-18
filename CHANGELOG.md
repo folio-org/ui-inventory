@@ -39,6 +39,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Search results with a single hit should automatically open the detail view. Fixes UIIN-2019.
 * Fix inventory app white screen when no tags exist. Fixes UIIN-2030.
 * Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
+* Browse contributors list. Refs UIIN-2024.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)

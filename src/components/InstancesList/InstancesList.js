@@ -83,7 +83,8 @@ const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
+  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles'],
+  CONTRIBUTORS: ['contributorє', 'type', 'relatorTerm', 'numberOfTitles'],
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -92,7 +93,8 @@ const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
   ...TOGGLEABLE_COLUMNS,
   ...columnSets.CALL_NUMBERS,
-  ...columnSets.SUBJECTS
+  ...columnSets.SUBJECTS,
+  ...columnSets.CONTRIBUTORS,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
@@ -929,6 +931,12 @@ class InstancesList extends React.Component {
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
       } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets(data),
+          parentResources,
+        });
+      } else if (optionSelected === browseModeOptions.CONTRIBUTORS) {
         return renderer({
           ...data,
           onFetchFacets: fetchFacets(data),
