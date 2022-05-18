@@ -37,6 +37,11 @@ Inventory causes an error. Refs UIIN-2012.
 * Retrieve up to 5000 locations when viewing Instances. Refs UIIN-2016.
 * Remove `react-hot-loader`. Refs UIIN-1981.
 * Search results with a single hit should automatically open the detail view. Fixes UIIN-2019.
+* Fix inventory app white screen when no tags exist. Fixes UIIN-2030.
+* Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
+* Fix inventory app crashes when viewing Holdings and locations don't exist. Fixes UIIN-2046.
+* Creating an order from instance record. Add action to the Main Pane Header. Refs UIIN-547.
+* Cannot read properties of undefined (reading 'shelfKey'). Refs UIIN-2038.
 * Add Holdings UUID search option. Refs UIIN-911.
 * Add Item UUID search option. Refs UIIN-912.
 
