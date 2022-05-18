@@ -72,7 +72,7 @@ describe('ViewHoldingsRecord actions', () => {
   });
 
   it('should render Loading when awaiting resource', () => {
-    const { getByText } = renderViewHoldingsRecord({ referenceTables: {} })
+    const { getByText } = renderViewHoldingsRecord({ referenceTables: {} });
 
     expect(getByText('LoadingView')).toBeDefined();
   });
