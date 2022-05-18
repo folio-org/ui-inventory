@@ -84,7 +84,7 @@ const RESULT_COUNT_INCREMENT = 30;
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
   CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles'],
-  CONTRIBUTORS: ['contributorє', 'type', 'relatorTerm', 'numberOfTitles'],
+  CONTRIBUTORS: ['contributor', 'type', 'relatorTerm', 'numberOfTitles'],
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
