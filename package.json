@@ -566,6 +566,34 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.instance.createOrder",
+        "displayName": "Inventory: create order from instance",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "acquisitions-units.memberships.collection.get",
+          "acquisitions-units.units.collection.get",
+          "finance.exchange-rate.item.get",
+          "finance.expense-classes.collection.get",
+          "finance.funds.collection.get",
+          "finance.funds.expense-classes.collection.get",
+          "isbn-utils.convert-to-13.get",
+          "isbn-utils.validator.get",
+          "orders.acquisition-methods.collection.get",
+          "orders.configuration.prefixes.collection.get",
+          "orders.configuration.reasons-for-closure.collection.get",
+          "orders.configuration.suffixes.collection.get",
+          "orders.item.get",
+          "orders.item.post",
+          "orders.order-templates.collection.get",
+          "orders.order-templates.item.get",
+          "orders.po-lines.item.post",
+          "orders.po-number.item.get",
+          "orders.po-number.item.post",
+          "organizations.organizations.collection.get"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.item.create",
         "displayName": "Inventory: View, create items",
         "subPermissions": [

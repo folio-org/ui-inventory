@@ -30,7 +30,7 @@ const HoldingAccordion = ({
   };
 
   const { locationsById } = useContext(DataContext);
-  const labelLocation = holding.permanentLocationId ? locationsById[holding.permanentLocationId].name : '';
+  const labelLocation = locationsById[holding.permanentLocationId]?.name ?? '';
   const [open, setOpen] = useState(false);
   const [openFirstTime, setOpenFirstTime] = useState(false);
   const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount' });
