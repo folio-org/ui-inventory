@@ -41,6 +41,7 @@ import {
 import {
   indentifierTypeNames,
   layers,
+  ORDERS_API,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -54,6 +55,7 @@ import { CalloutRenderer } from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
 import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
+import NewOrderModal from './components/NewOrderModal';
 import RequestsReorderButton from './components/ViewInstance/MenuSection/RequestsReorderButton';
 
 const quickMarcPages = {
@@ -139,6 +141,13 @@ class ViewInstance extends React.Component {
         query: '(module==SETTINGS and configName==TLR)',
       },
     },
+    orders: {
+      type: 'okapi',
+      records: 'purchaseOrders',
+      accumulate: true,
+      fetch: false,
+      path: ORDERS_API,
+    },
   });
 
   constructor(props) {
@@ -153,6 +162,7 @@ class ViewInstance extends React.Component {
       isItemsMovement: false,
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
+      isNewOrderModalOpen: false,
       afterCreate: false,
     };
     this.instanceId = null;
@@ -370,6 +380,10 @@ class ViewInstance extends React.Component {
     this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
   };
 
+  toggleNewOrderModal = () => {
+    this.setState(prevState => ({ isNewOrderModalOpen: !prevState.isNewOrderModalOpen }));
+  };
+
   // Get all identifiers for all records
   getIdentifiers = (data) => {
     const { identifierTypesById } = data;
@@ -540,6 +554,7 @@ class ViewInstance extends React.Component {
                 buttonStyle="dropdownItem"
                 onClick={() => {
                   onToggle();
+                  this.toggleNewOrderModal();
                 }}
               >
                 <Icon icon="plus-sign">
@@ -806,6 +821,17 @@ class ViewInstance extends React.Component {
               />
             </IfPermission>
           </IfInterface>
+
+          <IfInterface name="orders">
+            <IfPermission perm="ui-inventory.instance.createOrder">
+              <NewOrderModal
+                open={this.state.isNewOrderModalOpen}
+                onCancel={this.toggleNewOrderModal}
+                ordersMutator={this.props.mutator.orders}
+              />
+            </IfPermission>
+          </IfInterface>
+
         </HasCommand>
       </>
     );
@@ -845,6 +871,7 @@ ViewInstance.propTypes = {
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
     }).isRequired,
+    orders: PropTypes.object.isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
