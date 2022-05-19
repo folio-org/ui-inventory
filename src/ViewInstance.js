@@ -51,11 +51,13 @@ import {
   MoveItemsContext,
   InstanceDetails,
 } from './Instance';
-import { CalloutRenderer } from './components';
+import {
+  CalloutRenderer,
+  NewOrderModal,
+} from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
 import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
-import NewOrderModal from './components/NewOrderModal';
 import RequestsReorderButton from './components/ViewInstance/MenuSection/RequestsReorderButton';
 
 const quickMarcPages = {
@@ -822,15 +824,11 @@ class ViewInstance extends React.Component {
             </IfPermission>
           </IfInterface>
 
-          <IfInterface name="orders">
-            <IfPermission perm="ui-inventory.instance.createOrder">
-              <NewOrderModal
-                open={this.state.isNewOrderModalOpen}
-                onCancel={this.toggleNewOrderModal}
-                ordersMutator={this.props.mutator.orders}
-              />
-            </IfPermission>
-          </IfInterface>
+          <NewOrderModal
+            open={this.state.isNewOrderModalOpen}
+            onCancel={this.toggleNewOrderModal}
+            ordersMutator={this.props.mutator.orders}
+          />
 
         </HasCommand>
       </>

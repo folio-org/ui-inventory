@@ -44,8 +44,16 @@ const NewOrderModal = ({
     </ModalFooter>
   ));
 
-  const message = useMemo(() => (
-    <>
+  return (
+    <Modal
+      aria-label={modalLabel}
+      id="create-order-from-instance-modal"
+      footer={footer}
+      label={modalLabel}
+      onClose={onCancel}
+      open={open}
+      size="small"
+    >
       <FormattedMessage
         id="ui-inventory.newOrder.modal.message"
         tagName="p"
@@ -62,20 +70,6 @@ const NewOrderModal = ({
           {/* TODO: connect with ui-plugin-find-order when it'll be implemented in Nolana */}
         </Col>
       </Row>
-    </>
-  ));
-
-  return (
-    <Modal
-      aria-label={modalLabel}
-      id="create-order-from-instance-modal"
-      footer={footer}
-      label={modalLabel}
-      onClose={onCancel}
-      open={open}
-      size="small"
-    >
-      {message}
     </Modal>
   );
 };
