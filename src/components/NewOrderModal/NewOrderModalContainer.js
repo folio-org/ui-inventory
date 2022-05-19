@@ -9,25 +9,30 @@ import {
   useParams,
 } from 'react-router-dom';
 
+import { useOkapiKy } from '@folio/stripes-core';
+
+import { ORDERS_API } from '../../constants';
 import NewOrderModal from './NewOrderModal';
 
 const NewOrderModalContainer = ({
   onCancel,
   open,
-  ordersMutator,
 }) => {
   const history = useHistory();
+  const ky = useOkapiKy();
   const { id } = useParams();
   const [orderId, setOrderId] = useState();
 
   const validatePONumber = useCallback(async (poNumber) => {
     if (!poNumber) return null;
 
-    const response = await ordersMutator.GET({ params: {
-      query: `poNumber==${poNumber}`,
-      limit: 1,
-    } });
-    const order = response?.[0];
+    const { purchaseOrders = [] } = await ky.get(ORDERS_API, {
+      searchParams: {
+        query: `poNumber==${poNumber}`,
+        limit: 1,
+      },
+    }).json();
+    const order = purchaseOrders?.[0];
 
     setOrderId(order?.id);
 
@@ -36,7 +41,7 @@ const NewOrderModalContainer = ({
         ? <FormattedMessage id="ui-inventory.newOrder.modal.PONumber.doesNotExist" />
         : null
     );
-  }, [ordersMutator]);
+  }, [ky]);
 
   const onSubmit = useCallback(() => {
     const route = orderId ? `/orders/view/${orderId}/po-line/create` : '/orders/create';
@@ -57,7 +62,6 @@ const NewOrderModalContainer = ({
 NewOrderModalContainer.propTypes = {
   onCancel: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  ordersMutator: PropTypes.object.isRequired,
 };
 
 export default NewOrderModalContainer;

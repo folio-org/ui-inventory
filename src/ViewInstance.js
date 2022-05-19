@@ -41,7 +41,6 @@ import {
 import {
   indentifierTypeNames,
   layers,
-  ORDERS_API,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -142,13 +141,6 @@ class ViewInstance extends React.Component {
       params: {
         query: '(module==SETTINGS and configName==TLR)',
       },
-    },
-    orders: {
-      type: 'okapi',
-      records: 'purchaseOrders',
-      accumulate: true,
-      fetch: false,
-      path: ORDERS_API,
     },
   });
 
@@ -869,7 +861,6 @@ ViewInstance.propTypes = {
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
     }).isRequired,
-    orders: PropTypes.object.isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,

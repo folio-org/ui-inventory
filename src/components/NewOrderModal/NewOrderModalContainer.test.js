@@ -6,6 +6,8 @@ import {
 import { act, render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
+import useOkapiKy from '@folio/stripes-core/src/useOkapiKy';
+
 import '../../../test/jest/__mock__';
 
 import { translationsProperties } from '../../../test/jest/helpers';
@@ -16,15 +18,13 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn()
 }));
+jest.mock('@folio/stripes-core/src/useOkapiKy', () => jest.fn());
 
 const ORDER_ID = 'orderId';
 
 const defaultProps = {
   onCancel: jest.fn(),
   open: true,
-  ordersMutator: {
-    GET: jest.fn(() => Promise.resolve([{ id: ORDER_ID }])),
-  },
 };
 
 const wrapper = ({ children }) => (
@@ -47,11 +47,21 @@ describe('NewOrderModalContainer', () => {
   const historyMock = {
     push: jest.fn(),
   };
+  const kyMock = {
+    get: jest.fn(() => ({
+      json: () => Promise.resolve({
+        purchaseOrders: [{ id: 'orderId' }],
+      })
+    }))
+  };
 
   beforeEach(() => {
     useHistory
       .mockClear()
       .mockReturnValue(historyMock);
+    useOkapiKy
+      .mockClear()
+      .mockReturnValue(kyMock);
   });
 
   it('should render \'New order\' modal', () => {
