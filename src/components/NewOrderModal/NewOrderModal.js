@@ -42,7 +42,7 @@ const NewOrderModal = ({
         <FormattedMessage id="ui-inventory.cancel" />
       </Button>
     </ModalFooter>
-  ));
+  ), [handleSubmit, onCancel]);
 
   return (
     <Modal
