@@ -725,6 +725,7 @@
     "search.allFields": "All",
     "search.holdings.uuid": "Holdings UUID",
     "search.item.uuid": "Item UUID",
+    "search.oclc": "OCLC number, normalized",
     "acq.dateOpened": "Date opened",
     "moveItems.selectHolding": "Select holdings"
 }

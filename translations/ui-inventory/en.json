@@ -198,6 +198,7 @@
   "search.allFields": "All",
   "search.holdings.uuid": "Holdings UUID",
   "search.item.uuid": "Item UUID",
+  "search.oclc": "OCLC number, normalized",
   "title": "Title (all)",
   "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
