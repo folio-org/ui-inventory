@@ -5,6 +5,7 @@
 
 * After using the Chrome "go back" button, following the link "Holdings Created" from Data import to
   Inventory causes an error. Refs UIIN-2123.
+* Provide `CalloutContext.Provider` in the test harness to avoid `callout.sendCallout` NPEs.
 
 ## [9.0.13](https://github.com/folio-org/ui-inventory/tree/v9.0.13) (2022-07-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.12...v9.0.13)
