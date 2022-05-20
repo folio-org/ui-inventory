@@ -102,18 +102,28 @@ const InstanceMovementContainer = ({
         );
         const type = hasErrors ? 'error' : 'success';
 
-        callout.sendCallout({ type, message });
+        if (callout) {
+          callout.sendCallout({ type, message });
+        } else {
+          // eslint-disable-next-line no-console
+          console[type === 'error' ? 'error' : 'log'](message);
+        }
       })
       .catch(() => {
-        callout.sendCallout({
-          type: 'error',
-          message: (
-            <FormattedMessage
-              id="ui-inventory.moveItems.instance.holdings.error.server"
-              values={{ holdings: holdings.join(', ') }}
-            />
-          ),
-        });
+        if (callout) {
+          callout.sendCallout({
+            type: 'error',
+            message: (
+              <FormattedMessage
+                id="ui-inventory.moveItems.instance.holdings.error.server"
+                values={{ holdings: holdings.join(', ') }}
+              />
+            ),
+          });
+        } else {
+          // eslint-disable-next-line no-console
+          console.error('kaboom', holdings.join(', '));
+        }
       });
   };
 
