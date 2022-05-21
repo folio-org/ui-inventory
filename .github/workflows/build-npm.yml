@@ -150,9 +150,10 @@ jobs:
 
       - name: Set up NPM environment for publishing
         if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODEJS_VERSION }}
+          registry-url: ${{ env.FOLIO_NPM_REGISTRY }}
           check-latest: true
           always-auth: true
 
