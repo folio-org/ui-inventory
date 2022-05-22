@@ -593,7 +593,13 @@
   "notLoadedMessage.browseCall": "Browse for results entering a query or choosing a filter.",
   "title.browseCall": "Browse inventory",
   "title.subTitle.browseCall": "Enter search criteria to start browsing",
+  
   "newOrder": "New order",
+  "newOrder.modal.create": "Create",
+  "newOrder.modal.label": "Create order",
+  "newOrder.modal.message": "Selecting an existing order before clicking \"Create\", will add a new order line to the selected order for this title. Leaving the order number field blank and clicking \"Create\" will allow you to create a new purchase order and purchase order line for this title.",
+  "newOrder.modal.PONumber": "PO number",
+  "newOrder.modal.PONumber.doesNotExist": "PO number does not exist",
 
   "editInstanceMarc": "Edit MARC bibliographic record",
   "duplicateInstanceMarc": "Derive new MARC bibliographic record",

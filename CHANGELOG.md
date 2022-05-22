@@ -44,6 +44,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Cannot read properties of undefined (reading 'shelfKey'). Refs UIIN-2038.
 * Add OCLC search option. Refs UIIN-1208.
 * Provide `CalloutContext.Provider` in the test harness to avoid `callout.sendCallout` NPEs.
+* Select existing order when creating an order from instance record. Refs UIIN-2041.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
