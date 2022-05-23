@@ -305,3 +305,5 @@ export const QUERY_INDEXES = {
   INSTANCE_HRID: 'hrid',
   BARCODE: 'items.barcode',
 };
+
+export const ORDERS_API = 'orders/composite-orders';
