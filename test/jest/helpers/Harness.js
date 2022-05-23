@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider } from 'react-intl';
+import { CalloutContext } from '@folio/stripes/core';
 
 import translations from '../../../translations/ui-inventory/en';
 import prefixKeys from './prefixKeys';
@@ -24,14 +25,16 @@ const Harness = ({
   }
 
   return (
-    <IntlProvider
-      locale="en"
-      key="en"
-      timeZone="UTC"
-      messages={allTranslations}
-    >
-      {children}
-    </IntlProvider>
+    <CalloutContext.Provider value={{ sendCallout: () => { } }}>
+      <IntlProvider
+        locale="en"
+        key="en"
+        timeZone="UTC"
+        messages={allTranslations}
+      >
+        {children}
+      </IntlProvider>
+    </CalloutContext.Provider>
   );
 };
 
