@@ -23,6 +23,7 @@ const InstanceMovementDetails = ({
   instance,
   onClose,
   hasMarc,
+  id,
 }) => {
   const stripes = useStripes();
 
@@ -61,6 +62,7 @@ const InstanceMovementDetails = ({
       onClose={closeInstance}
       actionMenu={getActionMenu}
       data-test-instance-movement-details={instance.id}
+      id={id}
     >
       <Droppable
         droppableId={`${instance.id}`}
@@ -91,10 +93,12 @@ InstanceMovementDetails.propTypes = {
   instance: PropTypes.object,
   hasMarc: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
+  id: PropTypes.string,
 };
 
 InstanceMovementDetails.defaultProps = {
   instance: {},
+  id: 'movement-instance-details',
 };
 
 export default InstanceMovementDetails;
