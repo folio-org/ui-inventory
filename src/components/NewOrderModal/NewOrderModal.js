@@ -16,6 +16,8 @@ import {
   TextField,
 } from '@folio/stripes-components';
 
+import css from './NewOrderModal.css';
+
 const NewOrderModal = ({
   handleSubmit,
   onCancel,
@@ -62,6 +64,7 @@ const NewOrderModal = ({
       <Row>
         <Col xs={4}>
           <Field
+            className={css.poNumberField}
             component={TextField}
             label={<FormattedMessage id="ui-inventory.newOrder.modal.PONumber" />}
             name="poNumber"
