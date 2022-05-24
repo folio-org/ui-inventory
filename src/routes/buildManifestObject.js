@@ -51,10 +51,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getQueryTemplateValue(queryValue, 'subject');
   }
 
-  if (queryIndex === browseModeOptions.CONTRIBUTORS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'name');
-  }
-
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
@@ -108,8 +104,6 @@ export function buildManifestObject() {
             return 'browse/subjects/instances';
           } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
             return 'browse/call-numbers/instances';
-          } else if (queryParams.qindex === browseModeOptions.CONTRIBUTORS) {
-            return 'browse/contributors/instances';
           } else return 'search/instances';
         },
         params: {

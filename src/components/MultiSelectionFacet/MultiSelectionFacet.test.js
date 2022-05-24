@@ -1,4 +1,13 @@
-import { render } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  render,
+  screen,
+  fireEvent,
+} from '@testing-library/react';
+import user from '@testing-library/user-event';
+
+import '../../../test/jest/__mock__';
 
 import MultiSelectionFacet from './MultiSelectionFacet';
 import Harness from '../../../test/jest/helpers/Harness';
@@ -12,7 +21,7 @@ const mockOnFilterChange = jest.fn();
 const mockOnClearFilter = jest.fn();
 
 const renderMultiSelectionFacet = (props = {}) => render(
-  <Harness>
+  <Harness translations={[]}>
     <MultiSelectionFacet
       id="filter-name"
       name="filter-name"
@@ -38,9 +47,28 @@ const renderMultiSelectionFacet = (props = {}) => render(
 );
 
 describe('Given MultiSelectionFacet', () => {
-  it('should render multiselect', () => {
-    const { getByText } = renderMultiSelectionFacet();
+  afterEach(cleanup);
+  it('Contains a filter for multiselect', () => {
+    renderMultiSelectionFacet();
 
-    expect(getByText('MultiSelection')).toBeDefined();
+    expect(document.querySelector('#filter-name')).toBeInTheDocument();
+  });
+
+  it('should call onFilterChange handler when filter was changed', () => {
+    renderMultiSelectionFacet();
+
+    const excludeSeeFromOption = screen.getByText('option-2');
+
+    act(() => user.click(excludeSeeFromOption));
+
+    expect(mockOnFilterChange).toHaveBeenCalled();
+  });
+
+  it('should call onClearFilter handler if clear btn is clicked', () => {
+    renderMultiSelectionFacet();
+
+    fireEvent.click(screen.getAllByLabelText('Clear selected filters for "filter-label"')[0]);
+
+    expect(mockOnClearFilter).toHaveBeenCalled();
   });
 });
