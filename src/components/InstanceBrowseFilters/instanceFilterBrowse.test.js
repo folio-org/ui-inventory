@@ -10,6 +10,15 @@ import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
 import { InstanceFiltersBrowse } from '..';
 
+jest.mock('../MultiSelectionFacet', () => ({
+  MultiSelectionFacet: ({ name, onClearFilter }) => (
+    <div>
+      {name}
+      <button type="button" onClick={() => onClearFilter(name)}>Clear {name}</button>
+    </div>
+  ),
+}));
+
 const resources = {
   facets: {
     hasLoaded: true,
@@ -24,9 +33,10 @@ const data = {
   query: [],
   onFetchFacets: noop,
   parentResources: resources,
+  browseType: 'callNumbers',
 };
 
-const renderInstanceFilters = () => {
+const renderInstanceFilters = (props = {}) => {
   return renderWithIntl(
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
@@ -36,6 +46,7 @@ const renderInstanceFilters = () => {
           onChange={noop}
           onClear={noop}
           parentResources={resources}
+          {...props}
         />
       </ModuleHierarchyProvider>
     </Router>
@@ -48,4 +59,18 @@ describe('InstanceFilters', () => {
 
     expect(screen.getByText('ui-inventory.filters.effectiveLocation')).toBeInTheDocument();
   });
+
+  describe('When contributors browseType was selected', () => {
+    it('should display filter by nameType accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: 'contributors',
+        },
+      });
+
+      expect(getByText('nameType')).toBeInTheDocument();
+    });
+  });
 });
+

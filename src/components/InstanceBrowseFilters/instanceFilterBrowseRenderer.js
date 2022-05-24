@@ -18,6 +18,7 @@ const InstanceFilterBrowseRenderer = data => onChange => {
     onFetchFacets,
     parentResources,
     statisticalCodes,
+    browseType,
   } = data;
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
@@ -35,6 +36,7 @@ const InstanceFilterBrowseRenderer = data => onChange => {
         query,
         onFetchFacets,
         parentResources,
+        browseType,
       }}
       onChange={onChange}
       onClear={(name) => onChange({ name, values: [] })}

@@ -749,6 +749,16 @@ class InstancesList extends React.Component {
           query: row.subject
         });
         break;
+      case browseModeOptions.CONTRIBUTORS:
+        parentMutator.query.update({
+          qindex: 'nameType',
+          query: row.shelfKey
+        });
+        updateLocation({
+          qindex: 'nameType',
+          query: row.shelfKey
+        });
+        break;
       default:
     }
 
@@ -936,6 +946,14 @@ class InstancesList extends React.Component {
           ...data,
           onFetchFacets: fetchFacets(data),
           parentResources,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        });
+      } else if (optionSelected === browseModeOptions.CONTRIBUTORS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets(data),
+          parentResources,
+          browseType: browseModeOptions.CONTRIBUTORS,
         });
       } else return renderFilters;
     };
