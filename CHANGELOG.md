@@ -46,6 +46,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Provide `CalloutContext.Provider` in the test harness to avoid `callout.sendCallout` NPEs.
 * Select existing order when creating an order from instance record. Refs UIIN-2041.
 * Add id attribute to Instance movement sections to use in e2e tests. Refs UIIN-2052.
+* Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
 * Inventory >  Contributors Browse - Create a Name Type facet. Refs UIIN-2021.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
