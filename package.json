@@ -132,7 +132,8 @@
           "ui-inventory.item.markasmissing",
           "ui-inventory.item.delete",
           "ui-inventory.holdings.delete",
-          "ui-inventory.instance.view-staff-suppressed-records"
+          "ui-inventory.instance.view-staff-suppressed-records",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
@@ -541,7 +542,8 @@
           "orders.collection.get",
           "orders.item.get",
           "organizations.organizations.item.get",
-          "acquisitions-units.units.collection.get"
+          "acquisitions-units.units.collection.get",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
@@ -551,7 +553,8 @@
         "subPermissions": [
           "ui-inventory.instance.view",
           "inventory.instances.item.post",
-          "inventory-storage.instances.item.post"
+          "inventory-storage.instances.item.post",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
@@ -561,7 +564,8 @@
         "subPermissions": [
           "ui-inventory.instance.create",
           "inventory.instances.item.put",
-          "inventory-storage.instances.item.put"
+          "inventory-storage.instances.item.put",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
