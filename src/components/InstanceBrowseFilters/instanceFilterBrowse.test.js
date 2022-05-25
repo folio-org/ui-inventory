@@ -1,7 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { screen } from '@testing-library/react';
+import {
+  screen,
+  fireEvent,
+} from '@testing-library/react';
 
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
@@ -19,11 +22,23 @@ jest.mock('../MultiSelectionFacet', () => ({
   ),
 }));
 
+const mockOnChange = jest.fn();
+const mockOnClear = jest.fn();
+
 const resources = {
   facets: {
     hasLoaded: true,
     resource: 'facets',
-    records: [],
+    records: [{
+      'id': 'd3c8b511-41e7-422e-a483-18778d0596e5',
+      'label': 'important',
+      'description': 'important',
+    },
+    {
+      'id': 'b822d5a8-1750-4b5f-92bd-9fc73a05ddda',
+      'label': 'new',
+      'description': 'new',
+    }],
     other: { totalRecords: 0 }
   },
 };
@@ -43,8 +58,8 @@ const renderInstanceFilters = (props = {}) => {
         <InstanceFiltersBrowse
           activeFilters={{ 'language': ['eng'] }}
           data={data}
-          onChange={noop}
-          onClear={noop}
+          onChange={mockOnChange}
+          onClear={mockOnClear}
           parentResources={resources}
           {...props}
         />
@@ -69,7 +84,19 @@ describe('InstanceFilters', () => {
         },
       });
 
+      fireEvent.click(screen.getByText('Clear nameType'));
+
       expect(getByText('nameType')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+  });
+
+  describe('When callNumber browseType was selected', () => {
+    it('should call onClear handler if clear btn is clicked', () => {
+      renderInstanceFilters();
+      fireEvent.click(screen.getByText('effectiveLocation-field'));
+
+      expect(mockOnClear).toHaveBeenCalled();
     });
   });
 });
