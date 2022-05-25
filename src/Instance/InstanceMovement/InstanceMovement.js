@@ -27,12 +27,14 @@ const InstanceMovement = ({
           instance={instanceFrom}
           onClose={onClose}
           data-test-movement-from-instance-details
+          id="movement-from-instance-details"
         />
 
         <InstanceMovementDetailsContainer
           instance={instanceTo}
           onClose={onClose}
           data-test-movement-to-instance-details
+          id="movement-to-instance-details"
         />
       </MoveHoldingContext>
     </Paneset>
