@@ -12,6 +12,7 @@ const InstanceMovementDetailsContainer = ({
   instance,
   onClose,
   mutator,
+  id,
 }) => {
   const [marc, setMarc] = useState();
 
@@ -26,6 +27,7 @@ const InstanceMovementDetailsContainer = ({
       instance={instance}
       onClose={onClose}
       hasMarc={Boolean(marc)}
+      id={id}
     />
   );
 };
@@ -34,10 +36,12 @@ InstanceMovementDetailsContainer.propTypes = {
   instance: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   mutator: PropTypes.object.isRequired,
+  id: PropTypes.string,
 };
 
 InstanceMovementDetailsContainer.defaultProps = {
   instance: {},
+  id: 'movement-instance-details',
 };
 
 InstanceMovementDetailsContainer.manifest = Object.freeze({
