@@ -24,7 +24,7 @@ const NewOrderModalContainer = ({
   const [orderId, setOrderId] = useState();
 
   const validatePONumber = useCallback(async (poNumber) => {
-    if (!poNumber) return null;
+    if (!poNumber) return setOrderId(null);
 
     const { purchaseOrders = [] } = await ky.get(ORDERS_API, {
       searchParams: {

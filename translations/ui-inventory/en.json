@@ -593,7 +593,7 @@
   "notLoadedMessage.browseCall": "Browse for results entering a query or choosing a filter.",
   "title.browseCall": "Browse inventory",
   "title.subTitle.browseCall": "Enter search criteria to start browsing",
-  
+
   "newOrder": "New order",
   "newOrder.modal.create": "Create",
   "newOrder.modal.label": "Create order",
@@ -634,7 +634,7 @@
   "permission.instance.view": "Inventory: View instances, holdings, and items",
   "permission.instance.create": "Inventory: View, create instances",
   "permission.instance.edit": "Inventory: View, create, edit instances",
-  "permission.instance.createOrder": "Inventory: create order from instance",
+  "permission.instance.createOrder": "Inventory: Create order from instance",
   "permission.item.create": "Inventory: View, create items",
   "permission.item.edit": "Inventory: View, create, edit items",
   "permission.item.move": "Inventory: Move items",

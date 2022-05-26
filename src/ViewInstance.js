@@ -819,7 +819,6 @@ class ViewInstance extends React.Component {
           <NewOrderModal
             open={this.state.isNewOrderModalOpen}
             onCancel={this.toggleNewOrderModal}
-            ordersMutator={this.props.mutator.orders}
           />
 
         </HasCommand>
