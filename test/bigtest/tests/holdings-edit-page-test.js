@@ -63,7 +63,6 @@ describe('HoldingsEditPage', () => {
 
   describe('holdings source', () => {
     it('displays the holdings source element', () => {
-      console.log('HoldingsEditPage.holdingSource', HoldingsEditPage.holdingSource);
       expect(HoldingsEditPage.holdingSourcePresent).to.be.true;
     });
   });

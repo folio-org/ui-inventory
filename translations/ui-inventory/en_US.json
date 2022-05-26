@@ -723,6 +723,7 @@
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
     "browseCallNumbers.missedMatch": "would be here",
     "search.allFields": "All",
+    "search.oclc": "OCLC number, normalized",
     "acq.dateOpened": "Date opened",
     "moveItems.selectHolding": "Select holdings"
 }

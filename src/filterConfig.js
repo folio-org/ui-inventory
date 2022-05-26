@@ -119,6 +119,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.callNumber', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
+  { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
   { label: '-------------------------------------------', value: 'noValue', disabled: true },
   { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browseContributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },

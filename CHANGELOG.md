@@ -42,6 +42,12 @@ Inventory causes an error. Refs UIIN-2012.
 * Fix inventory app crashes when viewing Holdings and locations don't exist. Fixes UIIN-2046.
 * Creating an order from instance record. Add action to the Main Pane Header. Refs UIIN-547.
 * Cannot read properties of undefined (reading 'shelfKey'). Refs UIIN-2038.
+* Add OCLC search option. Refs UIIN-1208.
+* Provide `CalloutContext.Provider` in the test harness to avoid `callout.sendCallout` NPEs.
+* Select existing order when creating an order from instance record. Refs UIIN-2041.
+* Add id attribute to Instance movement sections to use in e2e tests. Refs UIIN-2052.
+* Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
+* Fix option View Source is not available in holdings record view. Refs UIIN-2044.
 * Browse contributors list. Refs UIIN-2024.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
