@@ -48,6 +48,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Add id attribute to Instance movement sections to use in e2e tests. Refs UIIN-2052.
 * Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
 * Fix option View Source is not available in holdings record view. Refs UIIN-2044.
+* Browse contributors list. Refs UIIN-2024.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)

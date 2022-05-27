@@ -134,6 +134,14 @@ describe('InstancesList', () => {
       expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
     });
 
+    it('should have selected contributors browse option', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'contributors' }
+      });
+
+      expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
+    });
+
     describe('opening action menu', () => {
       beforeEach(() => {
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
