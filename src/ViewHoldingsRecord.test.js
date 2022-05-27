@@ -26,6 +26,9 @@ const defaultProps = {
     temporaryLocation: { hasLoaded: true },
   },
   mutator: {
+    instances1: {
+      GET: jest.fn(() => Promise.resolve()),
+    },
     holdingsRecords: {
       GET: jest.fn(() => Promise.resolve({ hrid: 'hrid' })),
       POST: jest.fn(() => Promise.resolve()),

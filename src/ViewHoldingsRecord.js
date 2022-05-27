@@ -92,6 +92,7 @@ class ViewHoldingsRecord extends React.Component {
     instances1: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
+      accumulate: true,
     },
     tagSettings: {
       type: 'okapi',
@@ -122,13 +123,17 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidMount() {
-    this.props.mutator.holdingsRecords.GET();
+    const holdingsRecordPromise = this.props.mutator.holdingsRecords.GET();
+    const instances1Promise = this.props.mutator.instances1.GET();
 
-    if (this.props.resources.instances1?.records[0]?.source) {
-      if (this.isMARCSource() && !this.state.markRecord) {
-        this.getMARCRecord();
-      }
-    }
+    Promise.all([holdingsRecordPromise, instances1Promise])
+      .then(() => {
+        if (this.props.resources.instances1?.records[0]?.source) {
+          if (this.isMARCSource() && !this.state.marcRecord) {
+            this.getMARCRecord();
+          }
+        }
+      });
   }
 
   componentDidUpdate(prevProps) {
@@ -137,7 +142,7 @@ class ViewHoldingsRecord extends React.Component {
     const hasHoldingsRecordsLoaded = this.props.resources.holdingsRecords?.hasLoaded;
 
     if (wasHoldingsRecordsPending !== isHoldingsRecordsPending && hasHoldingsRecordsLoaded) {
-      if (this.isMARCSource() && !this.state.markRecord) {
+      if (this.isMARCSource() && !this.state.marcRecord) {
         this.getMARCRecord();
       }
     }
@@ -1022,6 +1027,9 @@ ViewHoldingsRecord.propTypes = {
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
+    instances1: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }),
     holdingsRecords: PropTypes.shape({
       GET: PropTypes.func.isRequired,
       PUT: PropTypes.func.isRequired,
