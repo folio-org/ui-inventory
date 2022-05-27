@@ -988,7 +988,7 @@ class InstancesList extends React.Component {
       const { renderer } = getFilterConfig('browse');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
-      } else if ([browseModeOptions.CALL_NUMBERS, browseModeOptions.CONTRIBUTORS].includes(optionSelected)) {
+      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
         return renderer({
           ...data,
           onFetchFacets: fetchFacets(data),
