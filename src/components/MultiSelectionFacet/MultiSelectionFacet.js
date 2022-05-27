@@ -6,6 +6,8 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes-components';
 
+import { FacetOptionFormatter } from '../FacetOptionFormatter';
+
 const propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
@@ -50,7 +52,7 @@ const MultiSelectionFacet = ({
     .map(value => ({
       label: value,
       value,
-      totalRecords: 0,
+      count: 0,
     }));
 
   // include options returned from backend
@@ -58,7 +60,7 @@ const MultiSelectionFacet = ({
   const dataOptions = [...options.map(option => ({
     label: option.label || option.id,
     value: option.label || option.id,
-    totalRecords: option.totalRecords,
+    totalRecords: option.count,
   })), ...missingValuesInOptions];
 
   const itemToString = option => {
@@ -83,6 +85,8 @@ const MultiSelectionFacet = ({
         id={`${id}-multiselect`}
         label={label}
         name={name}
+        formatter={FacetOptionFormatter}
+        valueFormatter={({ option }) => option.label}
         onChange={onChange}
         dataOptions={dataOptions}
         itemToString={itemToString}

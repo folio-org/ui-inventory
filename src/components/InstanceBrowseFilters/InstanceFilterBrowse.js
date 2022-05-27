@@ -26,6 +26,7 @@ const InstanceFiltersBrowse = props => {
     data: {
       locations,
       browseType,
+      contributorNameTypes,
     },
     onChange,
     onClear,
@@ -56,7 +57,7 @@ const InstanceFiltersBrowse = props => {
           processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
         }
         if (recordName === FACETS_CQL.NAME_TYPE) {
-          processFacetOptions(activeFilters[FACETS.NAME_TYPE], locations, ...commonProps);
+          processFacetOptions(activeFilters[FACETS.NAME_TYPE], contributorNameTypes, ...commonProps);
         }
       }
       return accum;

@@ -1,11 +1,9 @@
 import {
-  act,
   cleanup,
   render,
   screen,
   fireEvent,
 } from '@testing-library/react';
-import user from '@testing-library/user-event';
 
 import '../../../test/jest/__mock__';
 
@@ -19,6 +17,7 @@ jest.mock('@folio/stripes/components', () => ({
 
 const mockOnFilterChange = jest.fn();
 const mockOnClearFilter = jest.fn();
+const mockFacetOptionFormatter = jest.fn();
 
 const renderMultiSelectionFacet = (props = {}) => render(
   <Harness translations={[]}>
@@ -27,6 +26,8 @@ const renderMultiSelectionFacet = (props = {}) => render(
       name="filter-name"
       label="filter-label"
       closedByDefault
+      formatter={mockFacetOptionFormatter}
+      valueFormatter
       onClearFilter={mockOnClearFilter}
       onFilterChange={mockOnFilterChange}
       displayClearButton
@@ -52,16 +53,6 @@ describe('Given MultiSelectionFacet', () => {
     renderMultiSelectionFacet();
 
     expect(document.querySelector('#filter-name')).toBeInTheDocument();
-  });
-
-  it('should call onFilterChange handler when filter was changed', () => {
-    renderMultiSelectionFacet();
-
-    const excludeSeeFromOption = screen.getByText('option-2');
-
-    act(() => user.click(excludeSeeFromOption));
-
-    expect(mockOnFilterChange).toHaveBeenCalled();
   });
 
   it('should call onClearFilter handler if clear btn is clicked', () => {
