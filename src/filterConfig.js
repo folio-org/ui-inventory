@@ -6,7 +6,8 @@ import {
 } from './components';
 import {
   FACETS,
-  FACETS_CQL
+  FACETS_CQL,
+  browseModeOptions,
 } from './constants';
 import {
   buildDateRangeQuery,
@@ -87,12 +88,6 @@ export const instanceFilterConfig = [
     values: [],
   },
 ];
-
-export const browseModeOptions = {
-  CALL_NUMBERS: 'callNumbers',
-  CONTRIBUTORS: 'contributors',
-  SUBJECTS: 'browseSubjects',
-};
 
 export const instanceFilterBrowseConfig = [
   {

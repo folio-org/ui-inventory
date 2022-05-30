@@ -7,16 +7,14 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   getQueryTemplate,
 } from './utils';
-import {
-  getFilterConfig,
-  browseModeOptions
-} from './filterConfig';
+import { getFilterConfig } from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
   FACETS,
   FACETS_TO_REQUEST,
   FACETS_ENDPOINTS,
-  CQL_FIND_ALL
+  CQL_FIND_ALL,
+  browseModeOptions,
 } from './constants';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {

@@ -17,6 +17,7 @@ import {
   FACETS_OPTIONS,
   FACETS_SETTINGS,
   FACETS_CQL,
+  browseModeOptions,
 } from '../../constants';
 import { useFacets } from '../../common/hooks';
 
@@ -82,7 +83,7 @@ const InstanceFiltersBrowse = props => {
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
       {
-      browseType === 'callNumbers' && (
+      browseType === browseModeOptions.CALL_NUMBERS && (
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}
@@ -105,7 +106,7 @@ const InstanceFiltersBrowse = props => {
       </Accordion>
       )}
       {
-      browseType === 'contributors' && (
+      browseType === browseModeOptions.CONTRIBUTORS && (
       <MultiSelectionFacet
         id={FACETS.NAME_TYPE}
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.NAME_TYPE}`} />}

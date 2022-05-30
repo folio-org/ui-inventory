@@ -55,6 +55,7 @@ import {
   INSTANCES_ID_REPORT_TIMEOUT,
   QUICK_EXPORT_LIMIT,
   segments,
+  browseModeOptions,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -73,10 +74,7 @@ import {
 import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
-import {
-  browseModeOptions,
-  getFilterConfig,
-} from '../../filterConfig';
+import { getFilterConfig } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;

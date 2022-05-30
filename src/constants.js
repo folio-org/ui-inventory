@@ -76,6 +76,12 @@ export const segments = {
   items: 'items',
 };
 
+export const browseModeOptions = {
+  CALL_NUMBERS: 'callNumbers',
+  CONTRIBUTORS: 'contributors',
+  SUBJECTS: 'browseSubjects',
+};
+
 export const CQL_FIND_ALL = 'cql.allRecords=1';
 
 // this constant is used for reading the given dash character as "no value set" by a screenreader
