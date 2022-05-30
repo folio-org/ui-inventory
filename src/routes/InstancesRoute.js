@@ -21,6 +21,9 @@ class InstancesRoute extends React.Component {
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
     fetchFacets: PropTypes.func,
+    location: PropTypes.shape({
+      search: PropTypes.string
+    }),
   };
 
   static defaultProps = {
@@ -41,34 +44,39 @@ class InstancesRoute extends React.Component {
       mutator,
       getParams,
       fetchFacets,
+      location,
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
 
+    const qindex = new URLSearchParams(location.search).get('qindex');
+
     return (
-      <DataContext.Consumer>
-        {data => (
-          <InstancesView
-            parentResources={resources}
-            parentMutator={mutator}
-            data={{ ...data, query }}
-            browseOnly={browseOnly}
-            showSingleResult={showSingleResult}
-            onSelectRow={onSelectRow}
-            disableRecordCreation={disableRecordCreation}
-            renderFilters={renderer({
-              ...data,
-              query,
-              onFetchFacets: fetchFacets(data),
-              parentResources: resources,
-            })}
-            segment={segment}
-            searchableIndexes={indexes}
-            fetchFacets={fetchFacets}
-          />
-        )}
-      </DataContext.Consumer>
+      <div key={qindex}>
+        <DataContext.Consumer>
+          {data => (
+            <InstancesView
+              parentResources={resources}
+              parentMutator={mutator}
+              data={{ ...data, query }}
+              browseOnly={browseOnly}
+              showSingleResult={showSingleResult}
+              onSelectRow={onSelectRow}
+              disableRecordCreation={disableRecordCreation}
+              renderFilters={renderer({
+                ...data,
+                query,
+                onFetchFacets: fetchFacets(data),
+                parentResources: resources,
+              })}
+              segment={segment}
+              searchableIndexes={indexes}
+              fetchFacets={fetchFacets}
+            />
+          )}
+        </DataContext.Consumer>
+      </div>
     );
   }
 }
