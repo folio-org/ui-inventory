@@ -763,16 +763,6 @@ class InstancesList extends React.Component {
           query: row.name,
         });
         break;
-      case browseModeOptions.CONTRIBUTORS:
-        parentMutator.query.update({
-          qindex: 'nameType',
-          query: row.shelfKey
-        });
-        updateLocation({
-          qindex: 'nameType',
-          query: row.shelfKey
-        });
-        break;
       default:
     }
 

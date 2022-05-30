@@ -75,9 +75,7 @@ const MultiSelectionFacet = ({
       id={id}
       closedByDefault={closedByDefault}
       header={FilterAccordionHeader}
-      headerProps={{
-        label,
-      }}
+      headerProps={{ label }}
       onClearFilter={() => onClearFilter(name)}
       displayClearButton={displayClearButton}
     >

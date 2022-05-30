@@ -49,6 +49,7 @@ const renderMultiSelectionFacet = (props = {}) => render(
 
 describe('Given MultiSelectionFacet', () => {
   afterEach(cleanup);
+
   it('Contains a filter for multiselect', () => {
     renderMultiSelectionFacet();
 
