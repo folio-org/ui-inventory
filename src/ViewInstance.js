@@ -50,7 +50,10 @@ import {
   MoveItemsContext,
   InstanceDetails,
 } from './Instance';
-import { CalloutRenderer } from './components';
+import {
+  CalloutRenderer,
+  NewOrderModal,
+} from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
 import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
@@ -153,6 +156,7 @@ class ViewInstance extends React.Component {
       isItemsMovement: false,
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
+      isNewOrderModalOpen: false,
       afterCreate: false,
     };
     this.instanceId = null;
@@ -370,6 +374,10 @@ class ViewInstance extends React.Component {
     this.setState(prevState => ({ findInstancePluginOpened: !prevState.findInstancePluginOpened }));
   };
 
+  toggleNewOrderModal = () => {
+    this.setState(prevState => ({ isNewOrderModalOpen: !prevState.isNewOrderModalOpen }));
+  };
+
   // Get all identifiers for all records
   getIdentifiers = (data) => {
     const { identifierTypesById } = data;
@@ -533,23 +541,22 @@ class ViewInstance extends React.Component {
             )
           }
 
-          {
-            <IfInterface name="orders">
-              <IfPermission perm="ui-inventory.instance.createOrder">
-                <Button
-                  id="clickable-create-order"
-                  buttonStyle="dropdownItem"
-                  onClick={() => {
-                    onToggle();
-                  }}
-                >
-                  <Icon icon="plus-sign">
-                    <FormattedMessage id="ui-inventory.newOrder" />
-                  </Icon>
-                </Button>
-              </IfPermission>
-            </IfInterface>
-          }
+          <IfInterface name="orders">
+            <IfPermission perm="ui-inventory.instance.createOrder">
+              <Button
+                id="clickable-create-order"
+                buttonStyle="dropdownItem"
+                onClick={() => {
+                  onToggle();
+                  this.toggleNewOrderModal();
+                }}
+              >
+                <Icon icon="plus-sign">
+                  <FormattedMessage id="ui-inventory.newOrder" />
+                </Icon>
+              </Button>
+            </IfPermission>
+          </IfInterface>
 
           {
             titleLevelRequestsFeatureEnabled
@@ -808,6 +815,12 @@ class ViewInstance extends React.Component {
               />
             </IfPermission>
           </IfInterface>
+
+          <NewOrderModal
+            open={this.state.isNewOrderModalOpen}
+            onCancel={this.toggleNewOrderModal}
+          />
+
         </HasCommand>
       </>
     );
