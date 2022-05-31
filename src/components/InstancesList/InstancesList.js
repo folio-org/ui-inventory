@@ -734,6 +734,7 @@ class InstancesList extends React.Component {
       parentResources,
       updateLocation,
     } = this.props;
+
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
@@ -756,6 +757,9 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
+        if (row.isAnchor && !row.contributorNameTypeId) {
+          break;
+        }
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
