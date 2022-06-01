@@ -158,7 +158,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
-      isSingleResult: this.props.showSingleResult,
+      isSingleResult: this.props.showSingleResult
     };
   }
 
@@ -1019,6 +1019,10 @@ class InstancesList extends React.Component {
       },
     ];
 
+    const other = parentResources.records.other;
+    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
+    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
+
     return (
       <HasCommand
         commands={shortcuts}
@@ -1083,7 +1087,6 @@ class InstancesList extends React.Component {
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
             hidePageIndices={browseQueryExecuted}
-            paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -1092,6 +1095,8 @@ class InstancesList extends React.Component {
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
             resultsOnNeedMore={isHandleOnNeedMore}
+            pagingCanGoNext={pagingCanGoNext}
+            pagingCanGoPrevious={pagingCanGoPrevious}
           />
         </div>
         <ErrorModal
