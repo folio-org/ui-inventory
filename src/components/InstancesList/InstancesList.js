@@ -1019,8 +1019,9 @@ class InstancesList extends React.Component {
       },
     ];
 
-    const pagingCanGoNext = browseQueryExecuted ? !!parentResources.records.other?.next : null;
-    const pagingCanGoPrevious = browseQueryExecuted ? !!parentResources.records.other?.prev : null;
+    const other = parentResources.records.other;
+    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
+    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
     return (
       <HasCommand
