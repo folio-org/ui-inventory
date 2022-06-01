@@ -48,7 +48,6 @@ const InstanceMovementContainer = ({
 
     history.push({
       pathname: `/inventory/view/${instanceId}`,
-      search: history.location.search,
     });
   }, [history, instanceFrom, instanceTo]);
 
