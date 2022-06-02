@@ -55,6 +55,7 @@ import {
   INSTANCES_ID_REPORT_TIMEOUT,
   QUICK_EXPORT_LIMIT,
   segments,
+  browseModeOptions,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -73,10 +74,7 @@ import {
 import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
-import {
-  browseModeOptions,
-  getFilterConfig,
-} from '../../filterConfig';
+import { getFilterConfig } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -158,7 +156,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
-      isSingleResult: this.props.showSingleResult,
+      isSingleResult: this.props.showSingleResult
     };
   }
 
@@ -758,7 +756,7 @@ class InstancesList extends React.Component {
         break;
       case browseModeOptions.CONTRIBUTORS:
         if (row.isAnchor && !row.contributorNameTypeId) {
-          break;
+          return;
         }
         parentMutator.query.update({
           qindex: 'contributor',
@@ -982,11 +980,19 @@ class InstancesList extends React.Component {
       const { renderer } = getFilterConfig('browse');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
-      } else if ([browseModeOptions.CALL_NUMBERS, browseModeOptions.CONTRIBUTORS].includes(optionSelected)) {
+      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
         return renderer({
           ...data,
           onFetchFacets: fetchFacets(data),
           parentResources,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        });
+      } else if (optionSelected === browseModeOptions.CONTRIBUTORS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets(data),
+          parentResources,
+          browseType: browseModeOptions.CONTRIBUTORS,
         });
       } else return renderFilters;
     };
@@ -1018,6 +1024,10 @@ class InstancesList extends React.Component {
         }),
       },
     ];
+
+    const other = parentResources.records.other;
+    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
+    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
     return (
       <HasCommand
@@ -1083,7 +1093,6 @@ class InstancesList extends React.Component {
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
             hidePageIndices={browseQueryExecuted}
-            paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -1092,6 +1101,8 @@ class InstancesList extends React.Component {
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
             resultsOnNeedMore={isHandleOnNeedMore}
+            pagingCanGoNext={pagingCanGoNext}
+            pagingCanGoPrevious={pagingCanGoPrevious}
           />
         </div>
         <ErrorModal

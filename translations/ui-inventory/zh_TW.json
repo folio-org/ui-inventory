@@ -736,5 +736,7 @@
     "newOrder.modal.PONumber.doesNotExist": "PO number does not exist",
     "instances.columns.contributor": "Contributor",
     "instances.columns.contributorType": "Type",
-    "instances.columns.relatorTerm": "Relator term"
+    "instances.columns.relatorTerm": "Relator term",
+    "search.holdings.uuid": "Holdings UUID",
+    "search.item.uuid": "Item UUID"
 }
