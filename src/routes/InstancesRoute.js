@@ -53,30 +53,28 @@ class InstancesRoute extends React.Component {
     const qindex = new URLSearchParams(location.search).get('qindex');
 
     return (
-      <div key={qindex}>
-        <DataContext.Consumer>
-          {data => (
-            <InstancesView
-              parentResources={resources}
-              parentMutator={mutator}
-              data={{ ...data, query }}
-              browseOnly={browseOnly}
-              showSingleResult={showSingleResult}
-              onSelectRow={onSelectRow}
-              disableRecordCreation={disableRecordCreation}
-              renderFilters={renderer({
-                ...data,
-                query,
-                onFetchFacets: fetchFacets(data),
-                parentResources: resources,
-              })}
-              segment={segment}
-              searchableIndexes={indexes}
-              fetchFacets={fetchFacets}
-            />
-          )}
-        </DataContext.Consumer>
-      </div>
+      <DataContext.Consumer>
+        {data => (
+          <InstancesView
+            parentResources={resources}
+            parentMutator={mutator}
+            data={{ ...data, query }}
+            browseOnly={browseOnly}
+            showSingleResult={showSingleResult}
+            onSelectRow={onSelectRow}
+            disableRecordCreation={disableRecordCreation}
+            renderFilters={renderer({
+              ...data,
+              query,
+              onFetchFacets: fetchFacets(data),
+              parentResources: resources,
+            })}
+            segment={segment}
+            searchableIndexes={indexes}
+            fetchFacets={fetchFacets}
+          />
+        )}
+      </DataContext.Consumer>
     );
   }
 }
