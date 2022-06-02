@@ -6,7 +6,8 @@ import {
 } from './components';
 import {
   FACETS,
-  FACETS_CQL
+  FACETS_CQL,
+  browseModeOptions,
 } from './constants';
 import {
   buildDateRangeQuery,
@@ -88,16 +89,15 @@ export const instanceFilterConfig = [
   },
 ];
 
-export const browseModeOptions = {
-  CALL_NUMBERS: 'callNumbers',
-  CONTRIBUTORS: 'contributors',
-  SUBJECTS: 'browseSubjects',
-};
-
 export const instanceFilterBrowseConfig = [
   {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
+    values: [],
+  },
+  {
+    name: FACETS.NAME_TYPE,
+    cql: FACETS_CQL.NAME_TYPE,
     values: [],
   },
 ];
@@ -151,7 +151,7 @@ export const holdingIndexes = [
     queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
-  { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"'},
+  { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -216,7 +216,7 @@ export const itemIndexes = [
     queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
-  { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"'},
+  { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 
 ];
