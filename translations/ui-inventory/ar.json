@@ -736,5 +736,7 @@
     "newOrder.modal.PONumber.doesNotExist": "رقم أمر الشراء غير موجود",
     "instances.columns.contributor": "المساهم",
     "instances.columns.contributorType": "النوع",
-    "instances.columns.relatorTerm": "Relator term"
+    "instances.columns.relatorTerm": "Relator term",
+    "search.holdings.uuid": "المعرّف الفريد العمومي للمقتنيات",
+    "search.item.uuid": "المعرّف الفريد العمومي للمادة"
 }

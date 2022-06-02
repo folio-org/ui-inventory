@@ -199,6 +199,8 @@
   "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
   "search.all": "Keyword (title, contributor, identifier)",
   "search.allFields": "All",
+  "search.holdings.uuid": "Holdings UUID",
+  "search.item.uuid": "Item UUID",
   "search.oclc": "OCLC number, normalized",
   "title": "Title (all)",
   "indexTitle": "Index title",
