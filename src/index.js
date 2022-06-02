@@ -78,23 +78,23 @@ const InventoryRouting = (props) => {
               isWithinScope={checkScope}
               scope={document.body}
             >
-                <AppContextMenu>
-                  {(handleToggle) => (
-                    <NavList>
-                      <NavListSection>
-                        <NavListItem
-                          id="keyboard-shortcuts-item"
-                          onClick={() => {
-                            handleToggle();
-                            toggleModal();
-                          }}
-                        >
-                          <FormattedMessage id="ui-inventory.appMenu.keyboardShortcuts" />
-                        </NavListItem>
-                      </NavListSection>
-                    </NavList>
-                  )}
-                </AppContextMenu>
+              <AppContextMenu>
+                {(handleToggle) => (
+                  <NavList>
+                    <NavListSection>
+                      <NavListItem
+                        id="keyboard-shortcuts-item"
+                        onClick={() => {
+                          handleToggle();
+                          toggleModal();
+                        }}
+                      >
+                        <FormattedMessage id="ui-inventory.appMenu.keyboardShortcuts" />
+                      </NavListItem>
+                    </NavListSection>
+                  </NavList>
+                )}
+              </AppContextMenu>
               <Switch>
                 <Route
                   path={`${path}/create/:id/holding`}
@@ -111,7 +111,7 @@ const InventoryRouting = (props) => {
                 <Route
                   path={`${path}/move/:idFrom/:idTo/instance`}
                   component={InstanceMovementRoute}
-                  />
+                />
                 <Route
                   path={`${path}/view/:id/:holdingsrecordid/:itemid`}
                   component={ItemRoute}
@@ -119,7 +119,7 @@ const InventoryRouting = (props) => {
                 <Route
                   path={`${path}/copy/:id/:holdingsrecordid/:itemid`}
                   component={DuplicateItemRoute}
-                  />
+                />
                 <Route
                   path={`${path}/quick-marc`}
                   component={QuickMarcRoute}
@@ -135,15 +135,15 @@ const InventoryRouting = (props) => {
                 <Route
                   path={`${path}/edit/:id/instance`}
                   component={InstanceEditRoute}
-                  />
+                />
                 <Route
                   path={`${path}/view/:id/:holdingsrecordid`}
                   component={ViewHoldingRoute}
-                  />
+                />
                 <Route
                   path={`${path}/edit/:id/:holdingsrecordid`}
                   component={EditHoldingRoute}
-                  />
+                />
                 <Route
                   path={`${path}/copy/:id/:holdingsrecordid`}
                   component={DuplicateHoldingRoute}

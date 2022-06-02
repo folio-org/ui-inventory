@@ -169,6 +169,11 @@ export const holdingFilterConfig = [
     values: [],
   },
   {
+    name: FACETS.HOLDINGS_TYPE,
+    cql: FACETS_CQL.HOLDINGS_TYPE,
+    values: [],
+  },
+  {
     name: FACETS.HOLDINGS_DISCOVERY_SUPPRESS,
     cql: FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS,
     values: [],
