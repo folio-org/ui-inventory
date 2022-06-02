@@ -427,6 +427,7 @@ class ViewHoldingsRecord extends React.Component {
       holdingsRecords,
       instances1,
     } = this.props.resources;
+    const { instance } = this.state;
 
     if (this.state.isLoadingUpdatedHoldingsRecord) {
       return false;
@@ -437,6 +438,10 @@ class ViewHoldingsRecord extends React.Component {
     }
 
     if (!instances1 || !instances1.hasLoaded) {
+      return true;
+    }
+
+    if (!instance) {
       return true;
     }
 
