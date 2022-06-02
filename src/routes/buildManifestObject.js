@@ -1,15 +1,15 @@
 import { get } from 'lodash';
 
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { CQL_FIND_ALL } from '../constants';
+import {
+  CQL_FIND_ALL,
+  browseModeOptions,
+} from '../constants';
 import {
   getQueryTemplate,
   getIsbnIssnTemplate,
 } from '../utils';
-import {
-  getFilterConfig,
-  browseModeOptions
-} from '../filterConfig';
+import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
 const regExp = /^((callNumber|subject) [<|>])/i;
@@ -49,6 +49,10 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
     queryTemplate = getQueryTemplateValue(queryValue, 'subject');
+  }
+
+  if (queryIndex === browseModeOptions.CONTRIBUTORS) {
+    queryTemplate = getQueryTemplateValue(queryValue, 'name');
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
@@ -98,12 +102,15 @@ export function buildManifestObject() {
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
+      resourceShouldRefresh: true,
       GET: {
         path: (queryParams) => {
           if (queryParams.qindex === browseModeOptions.SUBJECTS) {
             return 'browse/subjects/instances';
           } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
             return 'browse/call-numbers/instances';
+          } else if (queryParams.qindex === browseModeOptions.CONTRIBUTORS) {
+            return 'browse/contributors/instances';
           } else return 'search/instances';
         },
         params: {

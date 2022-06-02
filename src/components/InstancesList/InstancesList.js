@@ -55,6 +55,7 @@ import {
   INSTANCES_ID_REPORT_TIMEOUT,
   QUICK_EXPORT_LIMIT,
   segments,
+  browseModeOptions,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -73,17 +74,15 @@ import {
 import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
-import {
-  browseModeOptions,
-  getFilterConfig,
-} from '../../filterConfig';
+import { getFilterConfig } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
-  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles']
+  CALL_NUMBERS: ['callNumber', 'title', 'numberOfTitles'],
+  CONTRIBUTORS: ['contributor', 'contributorType', 'relatorTerm', 'numberOfTitles'],
 };
 
 const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
@@ -92,7 +91,8 @@ const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
   ...TOGGLEABLE_COLUMNS,
   ...columnSets.CALL_NUMBERS,
-  ...columnSets.SUBJECTS
+  ...columnSets.SUBJECTS,
+  ...columnSets.CONTRIBUTORS,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
@@ -156,7 +156,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
-      isSingleResult: this.props.showSingleResult,
+      isSingleResult: this.props.showSingleResult
     };
   }
 
@@ -164,6 +164,7 @@ class InstancesList extends React.Component {
     if (this.getSelectedBrowseOption() || this.getExecutedBrowseQuery()) {
       this.setState({
         optionSelected: this.getQIndexFromParams(),
+        isSingleResult: false,
       });
     } else {
       this.setState({
@@ -657,7 +658,10 @@ class InstancesList extends React.Component {
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
       numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' }),
-      subject: intl.formatMessage({ id: 'ui-inventory.subject' })
+      subject: intl.formatMessage({ id: 'ui-inventory.subject' }),
+      contributor: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributor' }),
+      contributorType: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributorType' }),
+      relatorTerm: intl.formatMessage({ id: 'ui-inventory.instances.columns.relatorTerm' }),
     };
 
     return columnMapping;
@@ -728,25 +732,39 @@ class InstancesList extends React.Component {
       parentResources,
       updateLocation,
     } = this.props;
+
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
           qindex: 'callNumber',
-          query: row.shelfKey
+          query: row.shelfKey,
         });
         updateLocation({
           qindex: 'callNumber',
-          query: row.shelfKey
+          query: row.shelfKey,
         });
         break;
       case browseModeOptions.SUBJECTS:
         parentMutator.query.update({
           qindex: 'subject',
-          query: row.subject
+          query: row.subject,
         });
         updateLocation({
           qindex: 'subject',
-          query: row.subject
+          query: row.subject,
+        });
+        break;
+      case browseModeOptions.CONTRIBUTORS:
+        if (row.isAnchor && !row.contributorNameTypeId) {
+          break;
+        }
+        parentMutator.query.update({
+          qindex: 'contributor',
+          query: row.name,
+        });
+        updateLocation({
+          qindex: 'contributor',
+          query: row.name,
         });
         break;
       default:
@@ -820,21 +838,36 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
+      const paramByBrowseMode = {
+        [browseModeOptions.SUBJECTS]: 'subject',
+        [browseModeOptions.CALL_NUMBERS]: 'callNumber',
+        [browseModeOptions.CONTRIBUTORS]: 'contributor',
+      };
+
       const isSubject = optionSelected === browseModeOptions.SUBJECTS;
       const isCallNumber = optionSelected === browseModeOptions.CALL_NUMBERS;
-      const param = isSubject ? 'subject' : 'callNumber';
+      const isContributors = optionSelected === browseModeOptions.CONTRIBUTORS;
+      const param = paramByBrowseMode[optionSelected];
       let anchor;
 
       if (direction === 'prev') {
-        anchor = isCallNumber
-          ? records.find(i => i.fullCallNumber)?.shelfKey
-          : records[0].subject;
+        if (isCallNumber) {
+          anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+        } else if (isSubject) {
+          anchor = records[0].subject;
+        } else if (isContributors) {
+          anchor = records[0].name;
+        }
 
         source.fetchByQuery(`${param} < "${anchor}"`);
       } else {
-        anchor = isCallNumber
-          ? [...records].reverse().find(i => i.fullCallNumber)?.shelfKey
-          : records[records.length - 1].subject;
+        if (isCallNumber) {
+          anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
+        } else if (isSubject) {
+          anchor = records[records.length - 1].subject;
+        } else if (isContributors) {
+          anchor = records[records.length - 1].name;
+        }
 
         source.fetchByQuery(`${param} > "${anchor}"`);
       }
@@ -912,6 +945,22 @@ class InstancesList extends React.Component {
         }
         return missedMatchItem();
       },
+      'contributor': r => {
+        if (r?.totalRecords) {
+          return getFullMatchRecord(r?.name, r.isAnchor);
+        }
+        return missedMatchItem();
+      },
+      'contributorType': r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
+      'relatorTerm': r => {
+        if (!r.contributorTypeId) {
+          return '';
+        }
+
+        return r.contributorTypeId.reduce((acc, contributorTypeId) => {
+          return [...acc, data.contributorTypes.find(type => type.id === contributorTypeId)?.name || ''];
+        }, []).filter(name => !!name).join(', ');
+      },
       'numberOfTitles': r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
     };
 
@@ -921,10 +970,10 @@ class InstancesList extends React.Component {
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
-      const { value } = e.target;
-      this.setState({ optionSelected: value });
-      const isSingle = value !== browseModeOptions.CALL_NUMBERS || value !== browseModeOptions.SUBJECTS;
-      this.setState({ isSingleResult: isSingle });
+      this.setState({ optionSelected: e.target.value });
+      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
+        this.setState({ isSingleResult: false });
+      } else this.setState({ isSingleResult: true });
     };
 
     const browseFilter = () => {
@@ -936,6 +985,14 @@ class InstancesList extends React.Component {
           ...data,
           onFetchFacets: fetchFacets(data),
           parentResources,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        });
+      } else if (optionSelected === browseModeOptions.CONTRIBUTORS) {
+        return renderer({
+          ...data,
+          onFetchFacets: fetchFacets(data),
+          parentResources,
+          browseType: browseModeOptions.CONTRIBUTORS,
         });
       } else return renderFilters;
     };
@@ -967,6 +1024,10 @@ class InstancesList extends React.Component {
         }),
       },
     ];
+
+    const other = parentResources.records.other;
+    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
+    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
     return (
       <HasCommand
@@ -1032,7 +1093,6 @@ class InstancesList extends React.Component {
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
             hidePageIndices={browseQueryExecuted}
-            paginationBoundaries={!browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
@@ -1041,6 +1101,8 @@ class InstancesList extends React.Component {
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
             resultsOnNeedMore={isHandleOnNeedMore}
+            pagingCanGoNext={pagingCanGoNext}
+            pagingCanGoPrevious={pagingCanGoPrevious}
           />
         </div>
         <ErrorModal

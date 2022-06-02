@@ -132,7 +132,8 @@
           "ui-inventory.item.markasmissing",
           "ui-inventory.item.delete",
           "ui-inventory.holdings.delete",
-          "ui-inventory.instance.view-staff-suppressed-records"
+          "ui-inventory.instance.view-staff-suppressed-records",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
@@ -540,8 +541,10 @@
           "orders.po-lines.item.get",
           "orders.collection.get",
           "orders.item.get",
+          "orders.titles.collection.get",
           "organizations.organizations.item.get",
-          "acquisitions-units.units.collection.get"
+          "acquisitions-units.units.collection.get",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
@@ -551,7 +554,8 @@
         "subPermissions": [
           "ui-inventory.instance.view",
           "inventory.instances.item.post",
-          "inventory-storage.instances.item.post"
+          "inventory-storage.instances.item.post",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
@@ -561,17 +565,19 @@
         "subPermissions": [
           "ui-inventory.instance.create",
           "inventory.instances.item.put",
-          "inventory-storage.instances.item.put"
+          "inventory-storage.instances.item.put",
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
       {
         "permissionName": "ui-inventory.instance.createOrder",
-        "displayName": "Inventory: create order from instance",
+        "displayName": "Inventory: Create order from instance",
         "subPermissions": [
           "ui-inventory.instance.view",
           "acquisitions-units.memberships.collection.get",
           "acquisitions-units.units.collection.get",
+          "data-export.config.collection.get",
           "finance.exchange-rate.item.get",
           "finance.expense-classes.collection.get",
           "finance.funds.collection.get",
@@ -584,8 +590,10 @@
           "orders.configuration.suffixes.collection.get",
           "orders.item.get",
           "orders.item.post",
+          "orders.item.put",
           "orders.order-templates.collection.get",
           "orders.order-templates.item.get",
+          "orders.po-lines.item.delete",
           "orders.po-lines.item.post",
           "orders.po-number.item.get",
           "orders.po-number.item.post",
