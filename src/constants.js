@@ -182,6 +182,7 @@ export const FACETS = {
   ITEMS_CREATED_DATE: 'itemsCreatedDate',
   ITEMS_UPDATED_DATE: 'itemsUpdatedDate',
   SOURCE: 'source',
+  STATUS: 'instanceStatus',
   INSTANCES_TAGS: 'instancesTags',
   HOLDINGS_TAGS: 'holdingsTags',
   ITEMS_TAGS: 'itemsTags',
@@ -212,6 +213,7 @@ export const FACETS_CQL = {
   ITEMS_CREATED_DATE: 'items.metadata.createdDate',
   ITEMS_UPDATED_DATE: 'items.metadata.updatedDate',
   SOURCE: 'source',
+  STATUS: 'statusId',
   INSTANCES_TAGS: 'instanceTags',
   HOLDINGS_TAGS: 'holdingsTags',
   ITEMS_TAGS: 'itemTags',
@@ -233,6 +235,7 @@ export const FACETS_TO_REQUEST = {
   [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS,
   [FACETS.ITEMS_DISCOVERY_SUPPRESS]: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
   [FACETS.SOURCE]: FACETS_CQL.SOURCE,
+  [FACETS.STATUS]: FACETS_CQL.STATUS,
   [FACETS.INSTANCES_TAGS]: FACETS_CQL.INSTANCES_TAGS,
   [FACETS.ITEMS_TAGS]: FACETS_CQL.ITEMS_TAGS,
   [FACETS.HOLDINGS_TAGS]: FACETS_CQL.HOLDINGS_TAGS,
@@ -270,7 +273,8 @@ export const FACETS_OPTIONS = {
   ITEMS_STATUSES_OPTIONS: 'itemStatusesOptions',
   HOLDINGS_PERMANENT_LOCATION_OPTIONS: 'holdingsPermanentLocationOptions',
   STATISTICAL_CODES_OPTIONS: 'statisticalCodesOptions',
-  HOLDINGS_SOURCE_OPTIONS: 'holdingsSourceOptions'
+  HOLDINGS_SOURCE_OPTIONS: 'holdingsSourceOptions',
+  STATUSES_OPTIONS: 'instanceStatusesOptions',
 };
 
 export const FACETS_SETTINGS = {
