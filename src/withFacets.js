@@ -7,14 +7,14 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   getQueryTemplate,
 } from './utils';
-import {
-  getFilterConfig,
-  browseModeOptions
-} from './filterConfig';
+import { getFilterConfig } from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
+  FACETS,
   FACETS_TO_REQUEST,
-  CQL_FIND_ALL
+  FACETS_ENDPOINTS,
+  CQL_FIND_ALL,
+  browseModeOptions,
 } from './constants';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
@@ -122,6 +122,10 @@ function withFacets(WrappedComponent) {
       const paramsUrl = new URLSearchParams(window.location.search);
       const queryIndex = paramsUrl.get('qindex');
 
+      if (facetName === FACETS.NAME_TYPE) {
+        params.query = 'contributorNameTypeId=*';
+      }
+
       if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
         params.query = 'callNumber=""';
       } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
@@ -145,7 +149,8 @@ function withFacets(WrappedComponent) {
 
       try {
         reset();
-        await GET({ params });
+        const requestPath = FACETS_ENDPOINTS[facetName] || 'search/instances/facets';
+        await GET({ path: requestPath, params });
       } catch (error) {
         throw new Error(error);
       }

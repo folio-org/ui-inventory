@@ -504,6 +504,7 @@
   "filters.holdings": "Holdings",
   "filters.items": "Item",
   "filters.effectiveLocation": "Effective location (item)",
+  "filters.nameType": "Name type",
   "yes": "Yes",
   "no": "No",
   "folio": "FOLIO",

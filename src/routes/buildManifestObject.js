@@ -1,15 +1,15 @@
 import { get } from 'lodash';
 
 import { makeQueryFunction } from '@folio/stripes/smart-components';
-import { CQL_FIND_ALL } from '../constants';
+import {
+  CQL_FIND_ALL,
+  browseModeOptions,
+} from '../constants';
 import {
   getQueryTemplate,
   getIsbnIssnTemplate,
 } from '../utils';
-import {
-  getFilterConfig,
-  browseModeOptions
-} from '../filterConfig';
+import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
 const regExp = /^((callNumber|subject) [<|>])/i;
