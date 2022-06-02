@@ -149,7 +149,8 @@ function withFacets(WrappedComponent) {
 
       try {
         reset();
-        await GET({ path: FACETS_ENDPOINTS[facetName], params });
+        const requestPath = FACETS_ENDPOINTS[facetName] || 'search/instances/facets';
+        await GET({ path: requestPath, params });
       } catch (error) {
         throw new Error(error);
       }
