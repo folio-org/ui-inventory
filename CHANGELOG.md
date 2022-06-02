@@ -53,6 +53,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Browse contributors list. Refs UIIN-2024.
 * Browse form - first and last record navigation. Refs UIIN-1912.
 * Inventory >  Contributors Browse - Create a Name Type facet. Refs UIIN-2021.
+* Add filter/facet for Holdings > holdings type. Refs UIIN-1347.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
