@@ -21,9 +21,6 @@ class InstancesRoute extends React.Component {
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
     fetchFacets: PropTypes.func,
-    location: PropTypes.shape({
-      search: PropTypes.string
-    }),
   };
 
   static defaultProps = {
@@ -44,13 +41,10 @@ class InstancesRoute extends React.Component {
       mutator,
       getParams,
       fetchFacets,
-      location,
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
     const { query } = resources;
-
-    const qindex = new URLSearchParams(location.search).get('qindex');
 
     return (
       <DataContext.Consumer>
