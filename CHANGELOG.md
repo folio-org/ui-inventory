@@ -51,6 +51,8 @@ Inventory causes an error. Refs UIIN-2012.
 * Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
 * Fix option View Source is not available in holdings record view. Refs UIIN-2044.
 * Browse contributors list. Refs UIIN-2024.
+* Normalize ISBNs for ISBN searching. Search option: Keyword (Instance, Holdings, Item). Refs UIIN-998.
+* Normalize ISBNs for ISBN searching. Search option: Identifier (all) in the Instance segment. Refs UIIN-999.
 * Browse form - first and last record navigation. Refs UIIN-1912.
 * Inventory >  Contributors Browse - Create a Name Type facet. Refs UIIN-2021.
 * Add filter/facet for Holdings > holdings type. Refs UIIN-1347.
