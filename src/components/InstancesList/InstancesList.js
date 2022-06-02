@@ -756,7 +756,7 @@ class InstancesList extends React.Component {
         break;
       case browseModeOptions.CONTRIBUTORS:
         if (row.isAnchor && !row.contributorNameTypeId) {
-          break;
+          return;
         }
         parentMutator.query.update({
           qindex: 'contributor',
