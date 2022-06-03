@@ -102,7 +102,6 @@ export function buildManifestObject() {
       throwErrors: false,
       path: 'inventory/instances',
       resultDensity: 'sparse',
-      resourceShouldRefresh: true,
       GET: {
         path: (queryParams) => {
           if (queryParams.qindex === browseModeOptions.SUBJECTS) {
