@@ -738,5 +738,6 @@
     "instances.columns.contributorType": "Tipo",
     "instances.columns.relatorTerm": "Termo Relator",
     "search.holdings.uuid": "UUID das holdings",
-    "search.item.uuid": "UUID do exemplar"
+    "search.item.uuid": "UUID do exemplar",
+    "filters.nameType": "Name type"
 }
