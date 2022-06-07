@@ -738,5 +738,6 @@
     "instances.columns.contributorType": "类型",
     "instances.columns.relatorTerm": "关系词术语",
     "search.holdings.uuid": "Holdings UUID",
-    "search.item.uuid": "Item UUID"
+    "search.item.uuid": "Item UUID",
+    "filters.nameType": "Name type"
 }
