@@ -10,6 +10,7 @@ import { InstancesView } from '../views';
 import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
+import { browseModeMap } from '../constants';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
@@ -44,13 +45,15 @@ class InstancesRoute extends React.Component {
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
-    const { query } = resources;
+    const { query, records: instanceRecords, browseModeRecords } = resources;
+    const records = browseModeMap[query.qindex] ? browseModeRecords : instanceRecords;
+    const parentResources = { ...resources, records };
 
     return (
       <DataContext.Consumer>
         {data => (
           <InstancesView
-            parentResources={resources}
+            parentResources={parentResources}
             parentMutator={mutator}
             data={{ ...data, query }}
             browseOnly={browseOnly}
@@ -61,7 +64,7 @@ class InstancesRoute extends React.Component {
               ...data,
               query,
               onFetchFacets: fetchFacets(data),
-              parentResources: resources,
+              parentResources,
             })}
             segment={segment}
             searchableIndexes={indexes}
