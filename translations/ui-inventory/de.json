@@ -724,5 +724,20 @@
     "browseCallNumbers.missedMatch": "wäre hier",
     "search.allFields": "Alle",
     "acq.dateOpened": "Date opened",
-    "moveItems.selectHolding": "Select holdings"
+    "moveItems.selectHolding": "Select holdings",
+    "browseContributors": "Browse contributors",
+    "newOrder": "New order",
+    "permission.instance.createOrder": "Inventory: Create order from instance",
+    "search.oclc": "OCLC number, normalized",
+    "newOrder.modal.create": "Create",
+    "newOrder.modal.label": "Create order",
+    "newOrder.modal.message": "Selecting an existing order before clicking \"Create\", will add a new order line to the selected order for this title. Leaving the order number field blank and clicking \"Create\" will allow you to create a new purchase order and purchase order line for this title.",
+    "newOrder.modal.PONumber": "PO number",
+    "newOrder.modal.PONumber.doesNotExist": "PO number does not exist",
+    "instances.columns.contributor": "Contributor",
+    "instances.columns.contributorType": "Type",
+    "instances.columns.relatorTerm": "Relator term",
+    "search.holdings.uuid": "Holdings UUID",
+    "search.item.uuid": "Item UUID",
+    "filters.nameType": "Name type"
 }

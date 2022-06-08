@@ -92,6 +92,7 @@ class ViewHoldingsRecord extends React.Component {
     instances1: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
+      accumulate: true,
     },
     tagSettings: {
       type: 'okapi',
@@ -114,6 +115,7 @@ class ViewHoldingsRecord extends React.Component {
     super(props);
     this.state = {
       marcRecord: null,
+      instance: null,
       confirmHoldingsRecordDeleteModal: false,
       noHoldingsRecordDeleteModal: false,
     };
@@ -122,13 +124,19 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidMount() {
-    this.props.mutator.holdingsRecords.GET();
+    const holdingsRecordPromise = this.props.mutator.holdingsRecords.GET();
+    const instances1Promise = this.props.mutator.instances1.GET();
 
-    if (this.props.resources.instances1?.records[0]?.source) {
-      if (this.isMARCSource() && !this.state.markRecord) {
-        this.getMARCRecord();
-      }
-    }
+    Promise.all([holdingsRecordPromise, instances1Promise])
+      .then(([, instances1Response]) => {
+        this.setInstance(instances1Response);
+
+        if (this.state.instance?.source) {
+          if (this.isMARCSource() && !this.state.marcRecord) {
+            this.getMARCRecord();
+          }
+        }
+      });
   }
 
   componentDidUpdate(prevProps) {
@@ -137,11 +145,15 @@ class ViewHoldingsRecord extends React.Component {
     const hasHoldingsRecordsLoaded = this.props.resources.holdingsRecords?.hasLoaded;
 
     if (wasHoldingsRecordsPending !== isHoldingsRecordsPending && hasHoldingsRecordsLoaded) {
-      if (this.isMARCSource() && !this.state.markRecord) {
+      if (this.isMARCSource() && !this.state.marcRecord) {
         this.getMARCRecord();
       }
     }
   }
+
+  setInstance = (instance) => {
+    this.setState({ instance });
+  };
 
   getMostRecentHolding = () => {
     return last(this.props.resources.holdingsRecords.records);
@@ -292,10 +304,8 @@ class ViewHoldingsRecord extends React.Component {
     const {
       location,
       goTo,
-      resources: {
-        instances1,
-      },
     } = this.props;
+    const { instance } = this.state;
 
     const holdingsRecord = this.getMostRecentHolding();
 
@@ -304,16 +314,15 @@ class ViewHoldingsRecord extends React.Component {
     searchParams.delete('relatedRecordVersion');
     searchParams.append('relatedRecordVersion', holdingsRecord._version);
 
-    goTo(`/inventory/quick-marc/edit-holdings/${instances1.records[0].id}/${holdingsRecord.id}?${searchParams.toString()}`);
+    goTo(`/inventory/quick-marc/edit-holdings/${instance?.id}/${holdingsRecord.id}?${searchParams.toString()}`);
   }
 
   getPaneHeaderActionMenu = ({ onToggle }) => {
+    const { stripes } = this.props;
     const {
-      resources,
-      stripes,
-    } = this.props;
-    const { marcRecord } = this.state;
-    const { instances1 } = resources;
+      instance,
+      marcRecord,
+    } = this.state;
 
     const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
     const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
@@ -321,7 +330,6 @@ class ViewHoldingsRecord extends React.Component {
     const canViewMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
     const canEditMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
 
-    const instance = instances1.records[0];
     const isSourceMARC = this.isMARCSource();
 
     if (!canCreate && !canEdit && !canDelete) {
@@ -419,6 +427,7 @@ class ViewHoldingsRecord extends React.Component {
       holdingsRecords,
       instances1,
     } = this.props.resources;
+    const { instance } = this.state;
 
     if (this.state.isLoadingUpdatedHoldingsRecord) {
       return false;
@@ -432,6 +441,10 @@ class ViewHoldingsRecord extends React.Component {
       return true;
     }
 
+    if (!instance) {
+      return true;
+    }
+
     return isEmpty(referenceTables);
   };
 
@@ -441,7 +454,6 @@ class ViewHoldingsRecord extends React.Component {
   render() {
     const {
       resources: {
-        instances1,
         items,
         tagSettings,
       },
@@ -449,11 +461,11 @@ class ViewHoldingsRecord extends React.Component {
       goTo,
       stripes,
     } = this.props;
+    const { instance } = this.state;
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
-    const instance = instances1.records[0];
-    const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance.source);
+    const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance?.source);
     const holdingsRecord = this.getMostRecentHolding();
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
     const holdingsPermanentLocation = get(referenceTables?.locationsById[holdingsRecord?.permanentLocationId], ['name'], '-');
@@ -682,15 +694,15 @@ class ViewHoldingsRecord extends React.Component {
                   <Row center="xs">
                     <Col sm={6}>
                       <FormattedMessage id="ui-inventory.instance" />
-                      <Link to={`/inventory/view/${instance.id}`}>
-                        {instance.title}
+                      <Link to={`/inventory/view/${instance?.id}`}>
+                        {instance?.title}
                       </Link>
-                      {(instance.publication && instance.publication.length > 0) &&
+                      {(instance?.publication && instance?.publication.length > 0) &&
                       <span>
                         <em>. </em>
                         <em>
-                          {instance.publication[0].publisher}
-                          {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
+                          {instance?.publication[0].publisher}
+                          {instance?.publication[0].dateOfPublication ? `, ${instance?.publication[0].dateOfPublication}` : ''}
                         </em>
                       </span>
                         }
@@ -1022,6 +1034,9 @@ ViewHoldingsRecord.propTypes = {
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
+    instances1: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }),
     holdingsRecords: PropTypes.shape({
       GET: PropTypes.func.isRequired,
       PUT: PropTypes.func.isRequired,

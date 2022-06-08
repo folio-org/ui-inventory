@@ -6,7 +6,8 @@ import {
 } from './components';
 import {
   FACETS,
-  FACETS_CQL
+  FACETS_CQL,
+  browseModeOptions,
 } from './constants';
 import {
   buildDateRangeQuery,
@@ -94,16 +95,15 @@ export const instanceFilterConfig = [
   },
 ];
 
-export const browseModeOptions = {
-  CALL_NUMBERS: 'callNumbers',
-  CONTRIBUTORS: 'contributors',
-  SUBJECTS: 'browseSubjects',
-};
-
 export const instanceFilterBrowseConfig = [
   {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
+    values: [],
+  },
+  {
+    name: FACETS.NAME_TYPE,
+    cql: FACETS_CQL.NAME_TYPE,
     values: [],
   },
 ];
@@ -113,12 +113,13 @@ export const instanceIndexes = [
   // a *real* 'all' query option was added ('allInstances any'). That was given the value `allFields`
   // instead. It might make sense to rename the keyword option to something like `keywordAll`
   // but, without tracing the use of the value, I don't know what effects that would have in the code.
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors="%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"' },
+  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"  or isbn="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
+  { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
@@ -145,7 +146,7 @@ export const instanceSortMap = {
 
 export const holdingIndexes = [
   // See note for instanceIndexes about 'all' vs. 'allFields'
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
@@ -156,6 +157,7 @@ export const holdingIndexes = [
     queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
+  { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
@@ -170,6 +172,11 @@ export const holdingFilterConfig = [
   {
     name: FACETS.HOLDINGS_PERMANENT_LOCATION,
     cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
+    values: [],
+  },
+  {
+    name: FACETS.HOLDINGS_TYPE,
+    cql: FACETS_CQL.HOLDINGS_TYPE,
     values: [],
   },
   {
@@ -208,7 +215,7 @@ export const holdingFilterConfig = [
 
 export const itemIndexes = [
   // See note for instanceIndexes about 'all' vs. 'allFields'
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
@@ -220,6 +227,7 @@ export const itemIndexes = [
     queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
+  { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 
 ];

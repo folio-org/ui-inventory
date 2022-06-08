@@ -3,7 +3,7 @@ import '../test/jest/__mock__';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import user from '@testing-library/user-event';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -26,6 +26,9 @@ const defaultProps = {
     temporaryLocation: { hasLoaded: true },
   },
   mutator: {
+    instances1: {
+      GET: jest.fn(() => Promise.resolve({ id: 'instanceId' })),
+    },
     holdingsRecords: {
       GET: jest.fn(() => Promise.resolve({ hrid: 'hrid' })),
       POST: jest.fn(() => Promise.resolve()),
@@ -80,11 +83,13 @@ describe('ViewHoldingsRecord actions', () => {
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
 
-    const closeBtn = screen.getAllByRole('button')[0];
+    await waitFor(() => {
+      const closeBtn = screen.getAllByRole('button')[0];
 
-    user.click(closeBtn);
+      user.click(closeBtn);
 
-    expect(defaultProps.history.push).toHaveBeenCalled();
+      expect(defaultProps.history.push).toHaveBeenCalled();
+    });
   });
 
   it('should translate to edit holding form page', async () => {
