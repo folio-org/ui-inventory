@@ -192,7 +192,7 @@ const useFacets = (
       const isNoFilterSelected = _.every(accordionsData, value => !value?.isSelected);
       if (!query && prevQuery.current && isNoFilterSelected) return;
 
-      handleFetchFacets();
+      handleFetchFacets({ facetToOpen: facetNameToOpen });
     }
   }, [accordionsData]);
 

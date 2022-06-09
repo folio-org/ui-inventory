@@ -958,7 +958,13 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       this.setState({ optionSelected: e.target.value });
-      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
+      const isSegmentBrowse = ['contributors', 'callNumbers'].includes(e.target.value);
+      parentMutator.query.update({
+        qindex: e.target.value,
+        ...(isSegmentBrowse && { segment: 'browse' }),
+      });
+
+      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS || e.target.value === browseModeOptions.CONTRIBUTORS) {
         this.setState({ isSingleResult: false });
       } else this.setState({ isSingleResult: true });
     };

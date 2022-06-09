@@ -124,11 +124,9 @@ function withFacets(WrappedComponent) {
 
       if (facetName === FACETS.NAME_TYPE) {
         params.query = 'contributorNameTypeId=*';
-      }
-
-      if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
+      } else if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
         params.query = 'callNumber=""';
-      } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
+      } else if (cqlQuery && queryIndex && queryIndex !== browseModeOptions.CALL_NUMBERS) {
         params.query = cqlQuery;
       }
 
