@@ -82,6 +82,12 @@ export const browseModeOptions = {
   SUBJECTS: 'browseSubjects',
 };
 
+export const browseModeMap = {
+  callNumbers: 'callNumbers',
+  contributors: 'contributors',
+  browseSubjects: 'browseSubjects',
+};
+
 export const CQL_FIND_ALL = 'cql.allRecords=1';
 
 // this constant is used for reading the given dash character as "no value set" by a screenreader

@@ -730,16 +730,11 @@ class InstancesList extends React.Component {
     const {
       parentMutator,
       parentResources,
-      updateLocation,
     } = this.props;
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
-          qindex: 'callNumber',
-          query: row.shelfKey,
-        });
-        updateLocation({
           qindex: 'callNumber',
           query: row.shelfKey,
         });
@@ -749,20 +744,12 @@ class InstancesList extends React.Component {
           qindex: 'subject',
           query: row.subject,
         });
-        updateLocation({
-          qindex: 'subject',
-          query: row.subject,
-        });
         break;
       case browseModeOptions.CONTRIBUTORS:
         if (row.isAnchor && !row.contributorNameTypeId) {
           return;
         }
         parentMutator.query.update({
-          qindex: 'contributor',
-          query: row.name,
-        });
-        updateLocation({
           qindex: 'contributor',
           query: row.name,
         });
