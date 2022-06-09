@@ -420,6 +420,7 @@
   "instanceMatchKey": "Instance match key",
   "addStatisticalCode": "Add statistical code",
   "instanceStatus": "Instance status term",
+  "instanceStatusShort": "Instance status",
   "selectInstanceStatus": "Select instance status",
   "defaultInstanceStatus": "Default instance status",
   "modeOfIssuance": "Mode of issuance",

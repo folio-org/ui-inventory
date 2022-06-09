@@ -72,6 +72,12 @@ export const instanceFilterConfig = [
     parse: buildDateRangeQuery(FACETS_CQL.UPDATED_DATE),
   },
   {
+    name: FACETS.STATUS,
+    cql: FACETS_CQL.STATUS,
+    operator: '==',
+    values: [],
+  },
+  {
     name: FACETS.SOURCE,
     cql: FACETS_CQL.SOURCE,
     operator: '==',
