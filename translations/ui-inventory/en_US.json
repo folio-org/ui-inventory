@@ -168,6 +168,7 @@
     "previouslyHeld": "Previously held",
     "addElectronicAccess": "Add electronic access",
     "instanceStatus": "Instance status term",
+    "instanceStatusShort": "Instance status",
     "selectInstanceStatus": "Select instance status",
     "selectModeOfIssuance": "Select mode of issuance",
     "instanceStatusUpdatedDate": "Status updated date",
