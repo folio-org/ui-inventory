@@ -56,6 +56,7 @@ import {
   QUICK_EXPORT_LIMIT,
   segments,
   browseModeOptions,
+  undefinedAsString,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -78,6 +79,7 @@ import { getFilterConfig } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
+const BROWSE_SEGMENT = 'browse';
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
@@ -150,13 +152,15 @@ class InstancesList extends React.Component {
       holdingsIdExportInProgress: false,
       instancesQuickExportInProgress: false,
       showErrorModal: false,
+      resourcesWithoutUndefBrowseRow: {},
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
-      isSingleResult: this.props.showSingleResult
+      isSingleResult: this.props.showSingleResult,
+      isBrowseSegment: this.props.segment === BROWSE_SEGMENT,
     };
   }
 
@@ -170,6 +174,38 @@ class InstancesList extends React.Component {
       this.setState({
         optionSelected: '',
       });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const currParentResources = this.props.parentResources;
+
+    if (currParentResources !== prevProps.parentResources) {
+      if (currParentResources.records.hasLoaded && get(currParentResources, ['query', 'query']) === '') {
+        const filteredRecords = get(currParentResources, ['records', 'records'])
+          .filter(record => {
+            const isContainingUndefStringValue = Object.values(record)
+              .some(value => typeof value === 'string' && value.toLowerCase() === undefinedAsString);
+
+            return !(isContainingUndefStringValue && record.isAnchor);
+          });
+
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ resourcesWithoutUndefBrowseRow: {
+          ...currParentResources,
+          records: {
+            ...currParentResources.records,
+            records: filteredRecords,
+          },
+        } });
+      } else {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ resourcesWithoutUndefBrowseRow: {} });
+      }
+    }
+
+    if (!this.state.isBrowseSegment && prevState.isBrowseSegment) {
+      this.props.updateLocation({ segment: segments.instances });
     }
   }
 
@@ -291,9 +327,13 @@ class InstancesList extends React.Component {
     document.getElementById('input-inventory-search').focus();
   }
 
-  renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
-  );
+  renderNavigation = () => {
+    const segment = this.props.segment === BROWSE_SEGMENT
+      ? segments.instances
+      : this.props.segment;
+
+    return <FilterNavigation segment={segment} onChange={this.refocusOnInputSearch} />;
+  };
 
   generateInTransitItemReport = async () => {
     const {
@@ -676,9 +716,12 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
+    const { segment } = this.props;
+
     this.setState({
       selectedRows: {},
-      optionSelected: ''
+      optionSelected: '',
+      ...(segment === BROWSE_SEGMENT && { isBrowseSegment: false }),
     });
 
     facetsStore.getState().resetFacetSettings();
@@ -785,6 +828,7 @@ class InstancesList extends React.Component {
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
+      resourcesWithoutUndefBrowseRow,
       selectedRows,
       optionSelected,
       searchAndSortKey,
@@ -957,16 +1001,26 @@ class InstancesList extends React.Component {
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
+      const { segment } = this.props;
+
       this.setState({ optionSelected: e.target.value });
-      const isSegmentBrowse = ['contributors', 'callNumbers'].includes(e.target.value);
+
+      const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
+
       parentMutator.query.update({
         qindex: e.target.value,
-        ...(isSegmentBrowse && { segment: 'browse' }),
+        ...(isBrowseOption && { segment: BROWSE_SEGMENT }),
+        ...((!isBrowseOption && segment === BROWSE_SEGMENT) && { segment: segments.instances }),
       });
 
-      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS || e.target.value === browseModeOptions.CONTRIBUTORS) {
-        this.setState({ isSingleResult: false });
-      } else this.setState({ isSingleResult: true });
+      if (isBrowseOption) {
+        this.setState({
+          isSingleResult: false,
+          isBrowseSegment: true,
+        });
+      } else {
+        this.setState({ isSingleResult: true });
+      }
     };
 
     const browseFilter = () => {
@@ -1022,6 +1076,10 @@ class InstancesList extends React.Component {
     const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
     const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
+    const parentResourcesToPass = Object.values(resourcesWithoutUndefBrowseRow).length
+      ? resourcesWithoutUndefBrowseRow
+      : parentResources;
+
     return (
       <HasCommand
         commands={shortcuts}
@@ -1070,7 +1128,7 @@ class InstancesList extends React.Component {
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
             disableRecordCreation={disableRecordCreation || false}
-            parentResources={parentResources}
+            parentResources={parentResourcesToPass}
             parentMutator={parentMutator}
             detailProps={{
               referenceTables: data,

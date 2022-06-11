@@ -126,7 +126,7 @@ function withFacets(WrappedComponent) {
         params.query = 'contributorNameTypeId=*';
       } else if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
         params.query = 'callNumber=""';
-      } else if (cqlQuery && queryIndex && queryIndex !== browseModeOptions.CALL_NUMBERS) {
+      } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
         params.query = cqlQuery;
       }
 

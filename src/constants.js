@@ -88,6 +88,8 @@ export const browseModeMap = {
   browseSubjects: 'browseSubjects',
 };
 
+export const undefinedAsString = 'undefined';
+
 export const CQL_FIND_ALL = 'cql.allRecords=1';
 
 // this constant is used for reading the given dash character as "no value set" by a screenreader

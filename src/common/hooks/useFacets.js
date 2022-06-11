@@ -209,7 +209,7 @@ const useFacets = (
     if (isSomeFacetOpened) {
       if (isValidQuery) {
         prevQuery.current = query;
-        handleFetchFacets();
+        handleFetchFacets({ facetToOpen: facetNameToOpen });
       }
     } else if (isValidQuery) {
       prevQuery.current = query;
