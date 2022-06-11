@@ -155,10 +155,6 @@ describe('InstancesList', () => {
     });
 
     describe('opening action menu', () => {
-      // beforeEach(() => {
-      //   userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      // });
-
       it('should disable toggable columns', () => {
         renderInstancesList();
 
@@ -168,10 +164,6 @@ describe('InstancesList', () => {
       });
 
       describe('hiding contributors column', () => {
-        // beforeEach(() => {
-        //   userEvent.click(screen.getByTestId('contributors'));
-        // });
-
         it('should hide contributors column', () => {
           renderInstancesList();
 
@@ -211,8 +203,6 @@ describe('InstancesList', () => {
     describe('selecting an instance option after a browse option', () => {
       it('should handle query update with instances segment', () => {
         renderInstancesList({ segment: 'browse' });
-
-        // screen.logTestingPlaygroundURL();
 
         fireEvent.change(screen.getByRole('combobox'), {
           target: { value: 'hrid' },

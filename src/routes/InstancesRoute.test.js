@@ -71,7 +71,6 @@ const InstancesRouteSetup = ({
                     query: {
                       query: '',
                       sort: 'title',
-                      // update: jest.fn(),
                     },
                     records: {
                       hasLoaded: true,
