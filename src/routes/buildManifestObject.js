@@ -4,7 +4,7 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   CQL_FIND_ALL,
   browseModeOptions,
-  browseModeMap
+  browseModeMap,
 } from '../constants';
 import {
   getQueryTemplate,
@@ -44,16 +44,23 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
+  let templateQueryValue = queryValue;
+
+  if (browseModeMap[queryIndex] && !query.query && query.filters) {
+    query.query = 'undefined';
+    templateQueryValue = 'undefined';
+  }
+
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'callNumber');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'callNumber');
   }
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'subject');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'subject');
   }
 
   if (queryIndex === browseModeOptions.CONTRIBUTORS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'name');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'name');
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {

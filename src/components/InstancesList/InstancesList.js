@@ -56,6 +56,7 @@ import {
   QUICK_EXPORT_LIMIT,
   segments,
   browseModeOptions,
+  browseModeMap,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -74,7 +75,6 @@ import {
 import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
-import { getFilterConfig } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -752,6 +752,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
+          filters: ''
         });
         break;
       default:
@@ -764,6 +765,21 @@ class InstancesList extends React.Component {
       searchAndSortKey: curState.searchAndSortKey + 1
     }));
   }
+
+  onChangeIndex = (e) => {
+    const {
+      match: { path },
+      goTo,
+      getParams,
+    } = this.props;
+    const params = getParams();
+    const qindex = e.target.value;
+    const isSingleResult = !browseModeMap[qindex];
+
+    this.setState({ optionSelected:qindex, isSingleResult });
+
+    goTo(path, { ...params, qindex });
+  };
 
   render() {
     const {
@@ -955,35 +971,6 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
-
-    const onChangeIndex = (e) => {
-      this.setState({ optionSelected: e.target.value });
-      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
-        this.setState({ isSingleResult: false });
-      } else this.setState({ isSingleResult: true });
-    };
-
-    const browseFilter = () => {
-      const { renderer } = getFilterConfig('browse');
-      if (optionSelected === browseModeOptions.SUBJECTS) {
-        return renderer;
-      } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
-        return renderer({
-          ...data,
-          onFetchFacets: fetchFacets(data),
-          parentResources,
-          browseType: browseModeOptions.CALL_NUMBERS,
-        });
-      } else if (optionSelected === browseModeOptions.CONTRIBUTORS) {
-        return renderer({
-          ...data,
-          onFetchFacets: fetchFacets(data),
-          parentResources,
-          browseType: browseModeOptions.CONTRIBUTORS,
-        });
-      } else return renderFilters;
-    };
-
     const browseSelectedString = Object.values(browseModeOptions).some(el => optionSelected.includes(el));
 
     const customPaneSubTextBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" /> : null;
@@ -1041,7 +1028,7 @@ class InstancesList extends React.Component {
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
-            onChangeIndex={onChangeIndex}
+            onChangeIndex={this.onChangeIndex}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -1075,7 +1062,7 @@ class InstancesList extends React.Component {
             showSingleResult={isSingleResult}
             browseOnly={browseOnly}
             onSelectRow={browseQueryExecuted ? this.onSelectRow : undefined}
-            renderFilters={browseFilter()}
+            renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}

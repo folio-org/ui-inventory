@@ -2,6 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 
 import InstanceFilters from './InstanceFilters';
+import InstanceBrowseFilters from '../InstanceBrowseFilters';
 import { getCurrentFilters } from '../../utils';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
@@ -19,11 +20,14 @@ const instanceFilterRenderer = data => onChange => {
     onFetchFacets,
     parentResources,
     statisticalCodes,
+    browseType,
+    contributorNameTypes,
   } = data;
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
+  const FilterComponent = browseType ? InstanceBrowseFilters : InstanceFilters;
 
   return (
-    <InstanceFilters
+    <FilterComponent
       activeFilters={activeFilters}
       data={{
         locations,
@@ -37,6 +41,8 @@ const instanceFilterRenderer = data => onChange => {
         query,
         onFetchFacets,
         parentResources,
+        browseType,
+        contributorNameTypes,
       }}
       onChange={onChange}
       onClear={(name) => onChange({ name, values: [] })}

@@ -2,7 +2,6 @@ import {
   instanceFilterRenderer,
   holdingsRecordFilterRenderer,
   itemFilterRenderer,
-  instanceFilterBrowseRenderer,
 } from './components';
 import {
   FACETS,
@@ -93,9 +92,6 @@ export const instanceFilterConfig = [
     cql: FACETS_CQL.INSTANCES_TAGS,
     values: [],
   },
-];
-
-export const instanceFilterBrowseConfig = [
   {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
@@ -308,12 +304,6 @@ const config = {
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
   },
-  browse: {
-    filters: instanceFilterBrowseConfig,
-    indexes: instanceIndexes,
-    sortMap: instanceSortMap,
-    renderer: instanceFilterBrowseRenderer,
-  }
 };
 
 export const getFilterConfig = (segment = 'instances') => config[segment];

@@ -17,9 +17,9 @@ const propTypes = {
   onFilterChange: PropTypes.func.isRequired,
   closedByDefault: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     label: PropTypes.string,
-    totalRecords: PropTypes.number.isRequired,
+    totalRecords: PropTypes.number,
   })),
   selectedValues: PropTypes.arrayOf(PropTypes.string),
 };
@@ -45,8 +45,8 @@ const MultiSelectionFacet = ({
 
   const missingValuesInOptions = selectedValues
     .filter(selectedValue => !options.find(option => {
-      return option.label
-        ? option.label === selectedValue
+      return option.value
+        ? option.value === selectedValue
         : option.id === selectedValue;
     }))
     .map(value => ({
@@ -59,7 +59,7 @@ const MultiSelectionFacet = ({
   // if some selected options are missing from response we're adding them here with 0 results
   const dataOptions = [...options.map(option => ({
     label: option.label || option.id,
-    value: option.label || option.id,
+    value: option.value || option.id,
     totalRecords: option.count,
   })), ...missingValuesInOptions];
 

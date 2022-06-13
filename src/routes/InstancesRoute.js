@@ -65,6 +65,7 @@ class InstancesRoute extends React.Component {
               query,
               onFetchFacets: fetchFacets(data),
               parentResources,
+              browseType: browseModeMap[query.qindex]
             })}
             segment={segment}
             searchableIndexes={indexes}
