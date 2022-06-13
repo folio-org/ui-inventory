@@ -776,7 +776,7 @@ class InstancesList extends React.Component {
     const qindex = e.target.value;
     const isSingleResult = !browseModeMap[qindex];
 
-    this.setState({ optionSelected:qindex, isSingleResult });
+    this.setState({ optionSelected: qindex, isSingleResult });
 
     goTo(path, { ...params, qindex });
   };
