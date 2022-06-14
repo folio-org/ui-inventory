@@ -2,7 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 
 import InstanceFilters from './InstanceFilters';
-import InstanceFiltersBrowse from './InstanceBrowseFilters';
+import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 import { getCurrentFilters } from '../../utils';
 import { browseModeMap } from '../../constants';
 

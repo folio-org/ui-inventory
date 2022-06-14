@@ -11,7 +11,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
-import InstanceFiltersBrowse from './InstanceFilterBrowse';
+import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
 jest.mock('../../MultiSelectionFacet', () => ({
   MultiSelectionFacet: ({ name, onClearFilter }) => (
