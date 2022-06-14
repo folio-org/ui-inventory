@@ -79,7 +79,6 @@ import { getFilterConfig } from '../../filterConfig';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
-const BROWSE_SEGMENT = 'browse';
 
 const columnSets = {
   SUBJECTS: ['subject', 'numberOfTitles'],
@@ -160,7 +159,6 @@ class InstancesList extends React.Component {
       optionSelected: '',
       searchAndSortKey: 0,
       isSingleResult: this.props.showSingleResult,
-      isBrowseSegment: this.props.segment === BROWSE_SEGMENT,
     };
   }
 
@@ -177,7 +175,7 @@ class InstancesList extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const currParentResources = this.props.parentResources;
 
     if (currParentResources !== prevProps.parentResources) {
@@ -202,10 +200,6 @@ class InstancesList extends React.Component {
         // eslint-disable-next-line react/no-did-update-set-state
         this.setState({ resourcesWithoutUndefBrowseRow: {} });
       }
-    }
-
-    if (!this.state.isBrowseSegment && prevState.isBrowseSegment) {
-      this.props.updateLocation({ segment: segments.instances });
     }
   }
 
@@ -327,13 +321,9 @@ class InstancesList extends React.Component {
     document.getElementById('input-inventory-search').focus();
   }
 
-  renderNavigation = () => {
-    const segment = this.props.segment === BROWSE_SEGMENT
-      ? segments.instances
-      : this.props.segment;
-
-    return <FilterNavigation segment={segment} onChange={this.refocusOnInputSearch} />;
-  };
+  renderNavigation = () => (
+    <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+  );
 
   generateInTransitItemReport = async () => {
     const {
@@ -716,12 +706,9 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
-    const { segment } = this.props;
-
     this.setState({
       selectedRows: {},
       optionSelected: '',
-      ...(segment === BROWSE_SEGMENT && { isBrowseSegment: false }),
     });
 
     facetsStore.getState().resetFacetSettings();
@@ -1001,30 +988,21 @@ class InstancesList extends React.Component {
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
-      const { segment } = this.props;
-
       this.setState({ optionSelected: e.target.value });
 
       const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
 
-      parentMutator.query.update({
-        qindex: e.target.value,
-        ...(isBrowseOption && { segment: BROWSE_SEGMENT }),
-        ...((!isBrowseOption && segment === BROWSE_SEGMENT) && { segment: segments.instances }),
-      });
+      parentMutator.query.update({ qindex: e.target.value });
 
       if (isBrowseOption) {
-        this.setState({
-          isSingleResult: false,
-          isBrowseSegment: true,
-        });
+        this.setState({ isSingleResult: false });
       } else {
         this.setState({ isSingleResult: true });
       }
     };
 
     const browseFilter = () => {
-      const { renderer } = getFilterConfig('browse');
+      const { renderer } = getFilterConfig('instances');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
       } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {

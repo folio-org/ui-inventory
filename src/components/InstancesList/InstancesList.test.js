@@ -70,14 +70,12 @@ const resources = {
 
 const history = createMemoryHistory();
 
-const defaultTestSegment = 'instances';
-
-const renderInstancesList = (props = {}) => {
+const renderInstancesList = ({ segment }) => {
   const {
     indexes,
     indexesES,
     renderer,
-  } = getFilterConfig(props.segment || defaultTestSegment);
+  } = getFilterConfig(segment);
 
   return renderWithIntl(
     <Router history={history}>
@@ -99,11 +97,10 @@ const renderInstancesList = (props = {}) => {
               query,
               parentResources: resources,
             })}
-            segment={defaultTestSegment}
+            segment={segment}
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
             fetchFacets={noop}
-            {...props}
           />
         </ModuleHierarchyProvider>
       </StripesContext.Provider>
@@ -114,19 +111,19 @@ const renderInstancesList = (props = {}) => {
 
 describe('InstancesList', () => {
   describe('rendering InstancesList with instances segment', () => {
+    beforeEach(() => {
+      renderInstancesList({ segment: 'instances' });
+    });
+
     afterEach(() => {
       jest.clearAllMocks();
     });
 
     it('should have proper list results size', () => {
-      renderInstancesList();
-
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
     });
 
     it('should have selected browse call number option', () => {
-      renderInstancesList();
-
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'callNumbers' }
       });
@@ -135,8 +132,6 @@ describe('InstancesList', () => {
     });
 
     it('should have selected subject browse option', () => {
-      renderInstancesList();
-
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'browseSubjects' }
       });
@@ -145,8 +140,6 @@ describe('InstancesList', () => {
     });
 
     it('should have selected contributors browse option', () => {
-      renderInstancesList();
-
       fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'contributors' }
       });
@@ -155,21 +148,20 @@ describe('InstancesList', () => {
     });
 
     describe('opening action menu', () => {
-      it('should disable toggable columns', () => {
-        renderInstancesList();
-
+      beforeEach(() => {
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      });
 
+      it('should disable toggable columns', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
       });
 
       describe('hiding contributors column', () => {
-        it('should hide contributors column', () => {
-          renderInstancesList();
-
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        beforeEach(() => {
           userEvent.click(screen.getByTestId('contributors'));
+        });
 
+        it('should hide contributors column', () => {
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
         });
       });
@@ -178,39 +170,19 @@ describe('InstancesList', () => {
     describe('changing search index', () => {
       describe('selecting a browse option', () => {
         it('should handle query update with browse segment', () => {
-          renderInstancesList();
-
           fireEvent.change(screen.getByRole('combobox'), {
             target: { value: 'contributors' },
           });
 
-          expect(updateMock).toHaveBeenCalledWith({
-            qindex: 'contributors',
-            segment: 'browse',
+          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors' });
+        });
+
+        it('should display Instances segment navigation button as primary', () => {
+          fireEvent.change(screen.getByRole('combobox'), {
+            target: { value: 'contributors' },
           });
-        });
-      });
-    });
-  });
 
-  describe('rendering InstancesList with browse segment', () => {
-    it('should display Instances segment navigation button as primary', () => {
-      renderInstancesList({ segment: 'browse' });
-
-      expect(screen.getByRole('button', { name: 'Instance' })).toHaveClass('primary');
-    });
-
-    describe('selecting an instance option after a browse option', () => {
-      it('should handle query update with instances segment', () => {
-        renderInstancesList({ segment: 'browse' });
-
-        fireEvent.change(screen.getByRole('combobox'), {
-          target: { value: 'hrid' },
-        });
-
-        expect(updateMock).toHaveBeenCalledWith({
-          qindex: 'hrid',
-          segment: 'instances',
+          expect(screen.getByRole('button', { name: 'Instance' })).toHaveClass('primary');
         });
       });
     });
