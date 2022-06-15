@@ -13,7 +13,7 @@ import {
 import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
-const regExp = /^((callNumber|subject) [<|>])/i;
+const regExp = /^((callNumber|subject|name) [<|>])/i;
 
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
