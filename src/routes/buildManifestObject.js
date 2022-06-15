@@ -111,7 +111,7 @@ const buildRecordsManifest = (options = {}) => {
         highlightMatch: (queryParams) => {
           const queryValue = get(queryParams, 'query', '');
 
-          return !regExp.test(queryValue);
+          return !!queryValue && !regExp.test(queryValue);
         },
         precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
       },

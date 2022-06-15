@@ -151,7 +151,6 @@ class InstancesList extends React.Component {
       holdingsIdExportInProgress: false,
       instancesQuickExportInProgress: false,
       showErrorModal: false,
-      resourcesWithoutUndefBrowseRow: {},
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
@@ -172,34 +171,6 @@ class InstancesList extends React.Component {
       this.setState({
         optionSelected: '',
       });
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const currParentResources = this.props.parentResources;
-
-    if (currParentResources !== prevProps.parentResources) {
-      if (currParentResources.records.hasLoaded && get(currParentResources, ['query', 'query']) === '') {
-        const filteredRecords = get(currParentResources, ['records', 'records'])
-          .filter(record => {
-            const isContainingUndefStringValue = Object.values(record)
-              .some(value => typeof value === 'string' && value.toLowerCase() === undefinedAsString);
-
-            return !(isContainingUndefStringValue && record.isAnchor);
-          });
-
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({ resourcesWithoutUndefBrowseRow: {
-          ...currParentResources,
-          records: {
-            ...currParentResources.records,
-            records: filteredRecords,
-          },
-        } });
-      } else {
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({ resourcesWithoutUndefBrowseRow: {} });
-      }
     }
   }
 
@@ -815,7 +786,6 @@ class InstancesList extends React.Component {
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
-      resourcesWithoutUndefBrowseRow,
       selectedRows,
       optionSelected,
       searchAndSortKey,
@@ -1054,10 +1024,6 @@ class InstancesList extends React.Component {
     const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
     const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
-    const parentResourcesToPass = Object.values(resourcesWithoutUndefBrowseRow).length
-      ? resourcesWithoutUndefBrowseRow
-      : parentResources;
-
     return (
       <HasCommand
         commands={shortcuts}
@@ -1106,7 +1072,7 @@ class InstancesList extends React.Component {
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
             disableRecordCreation={disableRecordCreation || false}
-            parentResources={parentResourcesToPass}
+            parentResources={parentResources}
             parentMutator={parentMutator}
             detailProps={{
               referenceTables: data,
