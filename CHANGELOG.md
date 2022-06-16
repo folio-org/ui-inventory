@@ -58,6 +58,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Add filter/facet for Holdings > holdings type. Refs UIIN-1347.
 * Fix when click view Holdings the Something went wrong error page appears. Refs UIIN-2063.
 * Add filter/facet for instance status. Refs UIIN-1207.
+* Adjust query parameters on the subject browse form. Refs UIIN-2075.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)

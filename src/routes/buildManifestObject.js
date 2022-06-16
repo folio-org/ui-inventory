@@ -21,6 +21,8 @@ const getQueryTemplateValue = (queryValue, param) => {
     : `${param}>="${queryValue}" or ${param}<"${queryValue}"`;
 };
 
+const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
+
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
 
@@ -54,6 +56,10 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   if (queryIndex === browseModeOptions.CONTRIBUTORS) {
     queryTemplate = getQueryTemplateValue(queryValue, 'name');
+  }
+
+  if (queryIndex === 'subject') {
+    queryTemplate = getQueryTemplateSubjects(queryValue);
   }
 
   if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
