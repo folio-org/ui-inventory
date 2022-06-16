@@ -156,7 +156,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
-      isSingleResult: this.props.showSingleResult
+      isSingleResult: this.props.showSingleResult,
     };
   }
 
@@ -678,7 +678,7 @@ class InstancesList extends React.Component {
   handleResetAll = () => {
     this.setState({
       selectedRows: {},
-      optionSelected: ''
+      optionSelected: '',
     });
 
     facetsStore.getState().resetFacetSettings();
@@ -958,13 +958,20 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       this.setState({ optionSelected: e.target.value });
-      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
+
+      const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
+
+      parentMutator.query.update({ qindex: e.target.value });
+
+      if (isBrowseOption) {
         this.setState({ isSingleResult: false });
-      } else this.setState({ isSingleResult: true });
+      } else {
+        this.setState({ isSingleResult: true });
+      }
     };
 
     const browseFilter = () => {
-      const { renderer } = getFilterConfig('browse');
+      const { renderer } = getFilterConfig('instances');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
       } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
