@@ -961,7 +961,7 @@ class InstancesList extends React.Component {
 
       const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
 
-      parentMutator.query.update({ qindex: e.target.value });
+      parentMutator.query.update({ qindex: e.target.value, filters: '' });
 
       if (isBrowseOption) {
         this.setState({ isSingleResult: false });

@@ -59,6 +59,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Fix when click view Holdings the Something went wrong error page appears. Refs UIIN-2063.
 * Add filter/facet for instance status. Refs UIIN-1207.
 * Fix Name Type facet sends requests to incorrect endpoint. Refs UIIN-2062.
+* Applied filters don't reset when user select "Browse contributors" search option. Refs UIIN-2068
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
