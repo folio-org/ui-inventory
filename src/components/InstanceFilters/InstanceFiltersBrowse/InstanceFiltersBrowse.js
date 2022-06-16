@@ -9,17 +9,17 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 
-import CheckboxFacet from '../CheckboxFacet';
-import { MultiSelectionFacet } from '../MultiSelectionFacet';
-import { processFacetOptions } from '../../facetUtils';
+import CheckboxFacet from '../../CheckboxFacet';
+import { MultiSelectionFacet } from '../../MultiSelectionFacet';
+import { processFacetOptions } from '../../../facetUtils';
 import {
   FACETS,
   FACETS_OPTIONS,
   FACETS_SETTINGS,
   FACETS_CQL,
   browseModeOptions,
-} from '../../constants';
-import { useFacets } from '../../common/hooks';
+} from '../../../constants';
+import { useFacets } from '../../../common/hooks';
 
 const InstanceFiltersBrowse = props => {
   const {

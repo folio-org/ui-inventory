@@ -4,7 +4,8 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   CQL_FIND_ALL,
   browseModeOptions,
-  browseModeMap
+  browseModeMap,
+  undefinedAsString,
 } from '../constants';
 import {
   getQueryTemplate,
@@ -46,16 +47,25 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
+  let templateQueryValue = queryValue;
+
+  if (Object.values(browseModeOptions).includes(queryIndex)
+  && !query.query
+  && query.filters) {
+    query.query = undefinedAsString;
+    templateQueryValue = undefinedAsString;
+  }
+
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'callNumber');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'callNumber');
   }
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'subject');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'subject');
   }
 
   if (queryIndex === browseModeOptions.CONTRIBUTORS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'name');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'name');
   }
 
   if (queryIndex === 'subject') {
@@ -107,7 +117,7 @@ const buildRecordsManifest = (options = {}) => {
         highlightMatch: (queryParams) => {
           const queryValue = get(queryParams, 'query', '');
 
-          return !regExp.test(queryValue);
+          return !!queryValue && !regExp.test(queryValue);
         },
         precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
       },
