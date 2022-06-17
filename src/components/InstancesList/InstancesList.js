@@ -830,7 +830,7 @@ class InstancesList extends React.Component {
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
         [browseModeOptions.CALL_NUMBERS]: 'callNumber',
-        [browseModeOptions.CONTRIBUTORS]: 'contributor',
+        [browseModeOptions.CONTRIBUTORS]: 'name',
       };
 
       const isSubject = optionSelected === browseModeOptions.SUBJECTS;
