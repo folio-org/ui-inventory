@@ -737,12 +737,14 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'callNumber',
           query: row.shelfKey,
+          filters: '',
         });
         break;
       case browseModeOptions.SUBJECTS:
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
+          filters: '',
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
@@ -752,6 +754,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
+          filters: '',
         });
         break;
       default:
@@ -760,8 +763,7 @@ class InstancesList extends React.Component {
     // the searchAndSortKey state field can be updated to reset SearchAndSort
     // to use the app-level selectedIndex
     this.setState((curState) => ({
-      optionSelected: '',
-      searchAndSortKey: curState.searchAndSortKey + 1
+      searchAndSortKey: curState.searchAndSortKey + 1,
     }));
   }
 
@@ -828,7 +830,7 @@ class InstancesList extends React.Component {
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
         [browseModeOptions.CALL_NUMBERS]: 'callNumber',
-        [browseModeOptions.CONTRIBUTORS]: 'contributor',
+        [browseModeOptions.CONTRIBUTORS]: 'name',
       };
 
       const isSubject = optionSelected === browseModeOptions.SUBJECTS;
