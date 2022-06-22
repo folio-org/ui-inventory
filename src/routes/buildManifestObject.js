@@ -6,6 +6,7 @@ import {
   browseModeOptions,
   browseModeMap,
   undefinedAsString,
+  queryIndexes
 } from '../constants';
 import {
   getQueryTemplate,
@@ -68,11 +69,11 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getQueryTemplateValue(templateQueryValue, 'name');
   }
 
-  if (queryIndex === 'subject') {
+  if (queryIndex === queryIndexes.SUBJECT) {
     queryTemplate = getQueryTemplateSubjects(queryValue);
   }
 
-  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
+  if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
