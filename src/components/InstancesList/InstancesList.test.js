@@ -174,7 +174,7 @@ describe('InstancesList', () => {
             target: { value: 'contributors' },
           });
 
-          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors' });
+          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '' });
         });
 
         it('should display Instances segment navigation button as primary', () => {
