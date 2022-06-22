@@ -13,18 +13,25 @@ import PrimaryToggleButton from './PrimaryToggleButton';
 jest.unmock('@folio/stripes/components');
 
 const mockOnChange = jest.fn();
+const mockUpdate = jest.fn();
 
 const props = {
-  fields:{
-    forEach: jest.fn(),
-    update: jest.fn(),
-    value: {
-      contributorNameTypeId: '',
-      contributorTypeText: '',
-      name: '',
-      primary: true,
+  fields: {
+    forEach(cb) {
+      Object.keys(this.value).forEach(cb);
     },
-    name: 'contributors',
+    update: mockUpdate,
+    value: {
+      contributorNameTypeId: {
+        primary: false,
+      },
+      contributorTypeText: {
+        primary: false,
+      },
+      name: {
+        primary: true,
+      },
+    },
   },
   label:'Primary',
   input: {
@@ -57,12 +64,16 @@ describe('Given PrimaryToggleButton component', () => {
   });
 
   describe('when user click on PrimaryToggleButton', () => {
-    it('then `onChange` function should be called', () => {
+    it('then fields `change` function should be called', () => {
       renderPrimaryToggleButton(props);
 
       userEvent.click(screen.getByTestId('primaryToggleButton'));
 
       expect(mockOnChange).toHaveBeenCalledTimes(1);
+
+      expect(mockUpdate).toHaveBeenNthCalledWith(1, 0, { primary: false });
+      expect(mockUpdate).toHaveBeenNthCalledWith(2, 1, { primary: false });
+      expect(mockUpdate).toHaveBeenNthCalledWith(3, 2, { primary: false });
     });
   });
 });
