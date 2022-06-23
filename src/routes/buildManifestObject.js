@@ -24,6 +24,7 @@ const getQueryTemplateValue = (queryValue, param) => {
 };
 
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
+const getQueryTemplateCallNumber = (queryValue) => `callNumber==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
@@ -73,6 +74,9 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getQueryTemplateSubjects(queryValue);
   }
 
+  if (queryIndex === queryIndexes.CALL_NUMBER) {
+    queryTemplate = getQueryTemplateCallNumber(queryValue);
+  }
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
