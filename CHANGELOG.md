@@ -62,6 +62,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Browse Contributors: Hitting Next/Previous has odd behavior. Refs UIIN-2058
 * Fix filters list doesn't update when user back to "Browse contributors" pane. Refs UIIN-2069.
 * Applied filters don't reset when user select "Browse contributors" search option. Refs UIIN-2068
+* Browse contributors. Placeholder match does not look right in the contributor column. Refs UIIN-2079
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)

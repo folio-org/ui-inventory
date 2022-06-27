@@ -26,3 +26,13 @@
   font-weight: var(--text-weight-bold);
   color: var(--error);
 }
+
+.missedMatchItemWrapper {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.fitContent {
+  min-width: fit-content;
+}
