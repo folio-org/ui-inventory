@@ -39,6 +39,7 @@ const InstanceFilters = props => {
       locations,
       resourceTypes,
       instanceFormats,
+      instanceStatuses,
       modesOfIssuance,
       statisticalCodes,
       natureOfContentTerms,
@@ -61,6 +62,7 @@ const InstanceFilters = props => {
     [FACETS.CREATED_DATE]: false,
     [FACETS.UPDATED_DATE]: false,
     [FACETS.SOURCE]: false,
+    [FACETS.STATUS]: false,
     [FACETS.INSTANCES_TAGS]: false,
     [FACETS.STATISTICAL_CODE_IDS]: false,
   };
@@ -75,6 +77,7 @@ const InstanceFilters = props => {
     [FACETS_OPTIONS.SUPPRESSED_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_DISCOVERY_SUPPRESS_OPTIONS]: [],
     [FACETS_OPTIONS.SOURCE_OPTIONS]: [],
+    [FACETS_OPTIONS.STATUSES_OPTIONS]: [],
     [FACETS_OPTIONS.INSTANCES_TAGS_OPTIONS]: [],
     [FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]: [],
   };
@@ -91,6 +94,7 @@ const InstanceFilters = props => {
     [FACETS.CREATED_DATE]: activeFilters[FACETS.CREATED_DATE],
     [FACETS.UPDATED_DATE]: activeFilters[FACETS.UPDATED_DATE],
     [FACETS.SOURCE]: activeFilters[FACETS.SOURCE],
+    [FACETS.STATUS]: activeFilters[FACETS.STATUS],
     [FACETS.INSTANCES_TAGS]: activeFilters[FACETS.INSTANCES_TAGS],
     [FACETS.STATISTICAL_CODE_IDS]: activeFilters[FACETS.STATISTICAL_CODE_IDS],
   };
@@ -128,6 +132,9 @@ const InstanceFilters = props => {
             break;
           case FACETS_CQL.SOURCE:
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);
+            break;
+          case FACETS_CQL.STATUS:
+            processFacetOptions(activeFilters[FACETS.STATUS], instanceStatuses, ...commonProps);
             break;
           case FACETS_CQL.STATISTICAL_CODE_IDS:
             processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
@@ -366,6 +373,24 @@ const InstanceFilters = props => {
           selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.UPDATED_DATE]?.[0])}
           onChange={onChange}
           makeFilterString={makeDateRangeFilterString}
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id="ui-inventory.instanceStatusShort" />}
+        id={FACETS.STATUS}
+        name={FACETS.STATUS}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.STATUS]?.length > 0}
+        onClearFilter={() => onClear(FACETS.STATUS)}
+      >
+        <CheckboxFacet
+          data-test-filter-instance-source
+          name={FACETS.STATUS}
+          dataOptions={facetsOptions[FACETS_OPTIONS.STATUSES_OPTIONS]}
+          selectedValues={activeFilters[FACETS.STATUS]}
+          isPending={getIsPending(FACETS.STATUS)}
+          onChange={onChange}
         />
       </Accordion>
       <Accordion

@@ -8,12 +8,12 @@ import {
 
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
-import '../../../test/jest/__mock__';
-import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
+import '../../../../test/jest/__mock__';
+import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
-import { InstanceFiltersBrowse } from '..';
+import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
-jest.mock('../MultiSelectionFacet', () => ({
+jest.mock('../../MultiSelectionFacet', () => ({
   MultiSelectionFacet: ({ name, onClearFilter }) => (
     <div>
       {name}

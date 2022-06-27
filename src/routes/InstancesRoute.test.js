@@ -98,6 +98,9 @@ const InstancesRouteSetup = ({
                   mutator={{
                     quickExport: { POST: quickExportPOST },
                     resultCount: { replace: noop },
+                    query: {
+                      update: jest.fn(),
+                    },
                   }}
                 />
               </Layer>

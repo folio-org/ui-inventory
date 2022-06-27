@@ -738,5 +738,7 @@
     "instances.columns.contributorType": "Type",
     "instances.columns.relatorTerm": "Relator term",
     "search.holdings.uuid": "Holdings UUID",
-    "search.item.uuid": "Item UUID"
+    "search.item.uuid": "Item UUID",
+    "filters.nameType": "Name type",
+    "instanceStatusShort": "Instance status"
 }

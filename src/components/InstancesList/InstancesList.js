@@ -156,7 +156,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
-      isSingleResult: this.props.showSingleResult
+      isSingleResult: this.props.showSingleResult,
     };
   }
 
@@ -678,7 +678,7 @@ class InstancesList extends React.Component {
   handleResetAll = () => {
     this.setState({
       selectedRows: {},
-      optionSelected: ''
+      optionSelected: '',
     });
 
     facetsStore.getState().resetFacetSettings();
@@ -730,7 +730,6 @@ class InstancesList extends React.Component {
     const {
       parentMutator,
       parentResources,
-      updateLocation,
     } = this.props;
 
     switch (get(parentResources.query, 'qindex')) {
@@ -738,20 +737,14 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'callNumber',
           query: row.shelfKey,
-        });
-        updateLocation({
-          qindex: 'callNumber',
-          query: row.shelfKey,
+          filters: '',
         });
         break;
       case browseModeOptions.SUBJECTS:
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
-        });
-        updateLocation({
-          qindex: 'subject',
-          query: row.subject,
+          filters: '',
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
@@ -761,10 +754,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
-        });
-        updateLocation({
-          qindex: 'contributor',
-          query: row.name,
+          filters: '',
         });
         break;
       default:
@@ -773,8 +763,7 @@ class InstancesList extends React.Component {
     // the searchAndSortKey state field can be updated to reset SearchAndSort
     // to use the app-level selectedIndex
     this.setState((curState) => ({
-      optionSelected: '',
-      searchAndSortKey: curState.searchAndSortKey + 1
+      searchAndSortKey: curState.searchAndSortKey + 1,
     }));
   }
 
@@ -841,7 +830,7 @@ class InstancesList extends React.Component {
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
         [browseModeOptions.CALL_NUMBERS]: 'callNumber',
-        [browseModeOptions.CONTRIBUTORS]: 'contributor',
+        [browseModeOptions.CONTRIBUTORS]: 'name',
       };
 
       const isSubject = optionSelected === browseModeOptions.SUBJECTS;
@@ -971,13 +960,20 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       this.setState({ optionSelected: e.target.value });
-      if (e.target.value === browseModeOptions.CALL_NUMBERS || e.target.value === browseModeOptions.SUBJECTS) {
+
+      const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
+
+      parentMutator.query.update({ qindex: e.target.value, filters: '' });
+
+      if (isBrowseOption) {
         this.setState({ isSingleResult: false });
-      } else this.setState({ isSingleResult: true });
+      } else {
+        this.setState({ isSingleResult: true });
+      }
     };
 
     const browseFilter = () => {
-      const { renderer } = getFilterConfig('browse');
+      const { renderer } = getFilterConfig('instances');
       if (optionSelected === browseModeOptions.SUBJECTS) {
         return renderer;
       } else if (optionSelected === browseModeOptions.CALL_NUMBERS) {
@@ -1096,6 +1092,7 @@ class InstancesList extends React.Component {
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}

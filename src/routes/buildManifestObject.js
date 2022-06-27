@@ -4,6 +4,9 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   CQL_FIND_ALL,
   browseModeOptions,
+  browseModeMap,
+  undefinedAsString,
+  queryIndexes
 } from '../constants';
 import {
   getQueryTemplate,
@@ -12,13 +15,16 @@ import {
 import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
-const regExp = /^((callNumber|subject) [<|>])/i;
+const regExp = /^((callNumber|subject|name) [<|>])/i;
 
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
     ? queryValue
     : `${param}>="${queryValue}" or ${param}<"${queryValue}"`;
 };
+
+const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
+const getQueryTemplateCallNumber = (queryValue) => `callNumber==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
@@ -43,19 +49,36 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
+  let templateQueryValue = queryValue;
+
+  if (Object.values(browseModeOptions).includes(queryIndex)
+  && !query.query
+  && query.filters) {
+    query.query = undefinedAsString;
+    templateQueryValue = undefinedAsString;
+  }
+
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'callNumber');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'callNumber');
   }
 
   if (queryIndex === browseModeOptions.SUBJECTS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'subject');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'subject');
   }
 
   if (queryIndex === browseModeOptions.CONTRIBUTORS) {
-    queryTemplate = getQueryTemplateValue(queryValue, 'name');
+    queryTemplate = getQueryTemplateValue(templateQueryValue, 'name');
   }
 
-  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
+  if (queryIndex === queryIndexes.SUBJECT) {
+    queryTemplate = getQueryTemplateSubjects(queryValue);
+  }
+
+  if (queryIndex === queryIndexes.CALL_NUMBER) {
+    queryTemplate = getQueryTemplateCallNumber(queryValue);
+  }
+
+  if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
@@ -82,6 +105,32 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
+const buildRecordsManifest = (options = {}) => {
+  const { path } = options;
+
+  return {
+    type: 'okapi',
+    records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
+    resultOffset: '%{resultOffset}',
+    perRequest: 100,
+    throwErrors: false,
+    path: 'inventory/instances',
+    resultDensity: 'sparse',
+    GET: {
+      path,
+      params: {
+        query: buildQuery,
+        highlightMatch: (queryParams) => {
+          const queryValue = get(queryParams, 'query', '');
+
+          return !!queryValue && !regExp.test(queryValue);
+        },
+        precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
+      },
+    },
+  };
+};
+
 export function buildManifestObject() {
   return {
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -94,37 +143,21 @@ export function buildManifestObject() {
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
-    records: {
-      type: 'okapi',
-      records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
-      resultOffset: '%{resultOffset}',
-      perRequest: 100,
-      throwErrors: false,
-      path: 'inventory/instances',
-      resultDensity: 'sparse',
-      resourceShouldRefresh: true,
-      GET: {
-        path: (queryParams) => {
-          if (queryParams.qindex === browseModeOptions.SUBJECTS) {
-            return 'browse/subjects/instances';
-          } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
-            return 'browse/call-numbers/instances';
-          } else if (queryParams.qindex === browseModeOptions.CONTRIBUTORS) {
-            return 'browse/contributors/instances';
-          } else return 'search/instances';
-        },
-        params: {
-          query: buildQuery,
-          highlightMatch: (queryParams) => {
-            const queryValue = get(queryParams, 'query', '');
-
-            return !regExp.test(queryValue);
-          },
-          precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
-        },
-        staticFallback: { params: {} },
+    records: buildRecordsManifest({
+      path: (queryParams) => (!browseModeMap[queryParams.qindex] ? 'search/instances' : null),
+    }),
+    browseModeRecords: buildRecordsManifest({
+      path: (queryParams) => {
+        if (queryParams.qindex === browseModeOptions.SUBJECTS) {
+          return 'browse/subjects/instances';
+        } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
+          return 'browse/call-numbers/instances';
+        } else if (queryParams.qindex === browseModeOptions.CONTRIBUTORS) {
+          return 'browse/contributors/instances';
+        }
+        return null;
       },
-    },
+    }),
     recordsToExportIDs: {
       type: 'okapi',
       records: 'ids',
