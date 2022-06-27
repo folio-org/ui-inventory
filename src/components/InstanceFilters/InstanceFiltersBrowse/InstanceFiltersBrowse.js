@@ -9,21 +9,25 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 
-import CheckboxFacet from '../CheckboxFacet';
-import { processFacetOptions } from '../../facetUtils';
+import CheckboxFacet from '../../CheckboxFacet';
+import { MultiSelectionFacet } from '../../MultiSelectionFacet';
+import { processFacetOptions } from '../../../facetUtils';
 import {
   FACETS,
   FACETS_OPTIONS,
   FACETS_SETTINGS,
   FACETS_CQL,
-} from '../../constants';
-import { useFacets } from '../../common/hooks';
+  browseModeOptions,
+} from '../../../constants';
+import { useFacets } from '../../../common/hooks';
 
 const InstanceFiltersBrowse = props => {
   const {
     activeFilters,
     data: {
       locations,
+      browseType,
+      contributorNameTypes,
     },
     onChange,
     onClear,
@@ -31,14 +35,17 @@ const InstanceFiltersBrowse = props => {
 
   const segmentAccordions = {
     [FACETS.EFFECTIVE_LOCATION]: false,
+    [FACETS.NAME_TYPE]: false,
   };
 
   const segmentOptions = {
     [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
+    [FACETS_OPTIONS.NAME_TYPE_OPTIONS]: [],
   };
 
   const selectedFacetFilters = {
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
+    [FACETS.NAME_TYPE]: activeFilters[FACETS.NAME_TYPE],
   };
 
   const getNewRecords = (records) => {
@@ -49,6 +56,9 @@ const InstanceFiltersBrowse = props => {
 
         if (recordName === FACETS_CQL.EFFECTIVE_LOCATION) {
           processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
+        }
+        if (recordName === FACETS_CQL.NAME_TYPE) {
+          processFacetOptions(activeFilters[FACETS.NAME_TYPE], contributorNameTypes, ...commonProps);
         }
       }
       return accum;
@@ -72,6 +82,8 @@ const InstanceFiltersBrowse = props => {
 
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
+      {
+      browseType === browseModeOptions.CALL_NUMBERS && (
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}
@@ -92,6 +104,22 @@ const InstanceFiltersBrowse = props => {
           onFetch={handleFetchFacets}
         />
       </Accordion>
+      )}
+      {
+      browseType === browseModeOptions.CONTRIBUTORS && (
+      <MultiSelectionFacet
+        id={FACETS.NAME_TYPE}
+        label={<FormattedMessage id={`ui-inventory.filters.${FACETS.NAME_TYPE}`} />}
+        name={FACETS.NAME_TYPE}
+        closedByDefault
+        options={facetsOptions[FACETS_OPTIONS.NAME_TYPE_OPTIONS]}
+        selectedValues={activeFilters[FACETS.NAME_TYPE]}
+        onFilterChange={onChange}
+        onClearFilter={() => onClear(FACETS.NAME_TYPE)}
+        displayClearButton={!!activeFilters[FACETS.NAME_TYPE]?.length}
+        isPending={getIsPending(FACETS.NAME_TYPE)}
+      />
+      )}
     </AccordionSet>
   );
 };

@@ -17,6 +17,8 @@ import { items as callNumbers } from '../../../test/fixtures/callNumbers';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
+const updateMock = jest.fn();
+
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
@@ -81,7 +83,10 @@ const renderInstancesList = ({ segment }) => {
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
             parentResources={resources}
-            parentMutator={{ resultCount: { replace: noop } }}
+            parentMutator={{
+              resultCount: { replace: noop },
+              query: { update: updateMock },
+            }}
             data={{
               ...data,
               query
@@ -134,6 +139,14 @@ describe('InstancesList', () => {
       expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
     });
 
+    it('should have selected contributors browse option', () => {
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'contributors' }
+      });
+
+      expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
+    });
+
     describe('opening action menu', () => {
       beforeEach(() => {
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -150,6 +163,26 @@ describe('InstancesList', () => {
 
         it('should hide contributors column', () => {
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('changing search index', () => {
+      describe('selecting a browse option', () => {
+        it('should handle query update with browse segment', () => {
+          fireEvent.change(screen.getByRole('combobox'), {
+            target: { value: 'contributors' },
+          });
+
+          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '' });
+        });
+
+        it('should display Instances segment navigation button as primary', () => {
+          fireEvent.change(screen.getByRole('combobox'), {
+            target: { value: 'contributors' },
+          });
+
+          expect(screen.getByRole('button', { name: 'Instance' })).toHaveClass('primary');
         });
       });
     });

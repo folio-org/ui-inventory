@@ -724,5 +724,21 @@
     "browseCallNumbers.missedMatch": "estaria aqui",
     "search.allFields": "Todos",
     "acq.dateOpened": "Data de abertura",
-    "moveItems.selectHolding": "Selecionar/desselecionar a holding para movimentação"
+    "moveItems.selectHolding": "Selecionar/desselecionar a holding para movimentação",
+    "browseContributors": "Percorrer colaboradores",
+    "newOrder": "Novo pedido",
+    "permission.instance.createOrder": "Inventário: criar pedido a partir da instância",
+    "search.oclc": "Número OCLC, normalizado",
+    "newOrder.modal.create": "Criar",
+    "newOrder.modal.label": "Criar pedido",
+    "newOrder.modal.message": "Ao selecionar um pedido existente antes de clicar em \"Criar\", será adicionada uma nova linha de pedido ao pedido selecionado para este título. Deixando o campo do número do pedido em branco e clicando em \"Criar\", será possível criar um novo pedido e uma nova linha de pedido para este título.",
+    "newOrder.modal.PONumber": "Número do pedido de compra",
+    "newOrder.modal.PONumber.doesNotExist": "O número do pedido de compra não existe",
+    "instances.columns.contributor": "Contribuidor",
+    "instances.columns.contributorType": "Tipo",
+    "instances.columns.relatorTerm": "Termo Relator",
+    "search.holdings.uuid": "UUID das holdings",
+    "search.item.uuid": "UUID do exemplar",
+    "filters.nameType": "Tipo de nome",
+    "instanceStatusShort": "Estado da instância"
 }

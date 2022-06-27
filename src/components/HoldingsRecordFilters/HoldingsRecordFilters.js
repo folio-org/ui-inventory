@@ -38,6 +38,7 @@ const HoldingsRecordFilters = (props) => {
       locations,
       statisticalCodes,
       holdingsSources,
+      holdingsTypes,
     },
     onChange,
     onClear,
@@ -52,6 +53,7 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_UPDATED_DATE]: false,
     [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: false,
     [FACETS.HOLDINGS_SOURCE]: false,
+    [FACETS.HOLDINGS_TYPE]: false,
   };
 
   const segmentOptions = {
@@ -61,6 +63,7 @@ const HoldingsRecordFilters = (props) => {
     [FACETS_OPTIONS.HOLDINGS_TAGS_OPTIONS]: [],
     [FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]: [],
     [FACETS_OPTIONS.HOLDINGS_SOURCE_OPTIONS]: [],
+    [FACETS_OPTIONS.HOLDINGS_TYPE_OPTIONS]: [],
   };
 
   const selectedFacetFilters = {
@@ -70,6 +73,7 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_TAGS]: activeFilters[FACETS.HOLDINGS_TAGS],
     [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS],
     [FACETS.HOLDINGS_SOURCE]: activeFilters[FACETS.HOLDINGS_SOURCE],
+    [FACETS.HOLDINGS_TYPE]: activeFilters[FACETS.HOLDINGS_TYPE],
   };
 
   const getNewRecords = (records) => {
@@ -96,6 +100,9 @@ const HoldingsRecordFilters = (props) => {
             break;
           case FACETS_CQL.HOLDINGS_TAGS:
             accum[name] = getSourceOptions(activeFilters[FACETS.HOLDINGS_TAGS], recordValues);
+            break;
+          case FACETS_CQL.HOLDINGS_TYPE:
+            processFacetOptions(activeFilters[FACETS.HOLDINGS_TYPE], holdingsTypes, ...commonProps);
             break;
           default:
         }
@@ -158,6 +165,26 @@ const HoldingsRecordFilters = (props) => {
           onFetch={handleFetchFacets}
           onSearch={handleFilterSearch}
           isPending={getIsPending(FACETS.HOLDINGS_PERMANENT_LOCATION)}
+          isFilterable
+        />
+      </Accordion>
+      <Accordion
+        label={<FormattedMessage id="ui-inventory.holdingsType" />}
+        id={FACETS.HOLDINGS_TYPE}
+        name={FACETS.HOLDINGS_TYPE}
+        closedByDefault
+        header={FilterAccordionHeader}
+        displayClearButton={activeFilters[FACETS.HOLDINGS_TYPE]?.length > 0}
+        onClearFilter={() => onClear(FACETS.HOLDINGS_TYPE)}
+      >
+        <CheckboxFacet
+          name={FACETS.HOLDINGS_TYPE}
+          dataOptions={facetsOptions[FACETS_OPTIONS.HOLDINGS_TYPE_OPTIONS]}
+          selectedValues={activeFilters[FACETS.HOLDINGS_TYPE]}
+          onChange={onChange}
+          onFetch={handleFetchFacets}
+          onSearch={handleFilterSearch}
+          isPending={getIsPending(FACETS.HOLDINGS_TYPE)}
           isFilterable
         />
       </Accordion>

@@ -724,5 +724,21 @@
     "browseCallNumbers.missedMatch": "سيكون هنا",
     "search.allFields": "الكل",
     "acq.dateOpened": "تاريخ الفتح",
-    "moveItems.selectHolding": "حدد المقتنيات"
+    "moveItems.selectHolding": "حدد المقتنيات",
+    "browseContributors": "استعرض المساهمين",
+    "newOrder": "طلبية جديدة",
+    "permission.instance.createOrder": "المخزون: أنشئ طلبية من وعاء",
+    "search.oclc": "رقم مركز المكتبة الرقمية على الإنترنت، مطبّع",
+    "newOrder.modal.create": "إنشاء",
+    "newOrder.modal.label": "إنشاء طلبية",
+    "newOrder.modal.message": "سيؤدي تحديد طلبية حالية قبل النقر على \"إنشاء\" إلى إضافة سطر طلبية جديد إلى الطلبية المحددة لهذا العنوان. بينما سيسمح لك ترك حقل رقم الطلبية فارغًا والنقر على \"إنشاء\" بإنشاء أمر شراء جديد وسطر أمر شراء لهذا العنوان.",
+    "newOrder.modal.PONumber": "رقم أمر الشراء",
+    "newOrder.modal.PONumber.doesNotExist": "رقم أمر الشراء غير موجود",
+    "instances.columns.contributor": "المساهم",
+    "instances.columns.contributorType": "النوع",
+    "instances.columns.relatorTerm": "Relator term",
+    "search.holdings.uuid": "المعرّف الفريد العمومي للمقتنيات",
+    "search.item.uuid": "المعرّف الفريد العمومي للمادة",
+    "filters.nameType": "نوع الاسم",
+    "instanceStatusShort": "حالة الوعاء"
 }

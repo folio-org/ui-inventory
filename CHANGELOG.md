@@ -42,11 +42,29 @@ Inventory causes an error. Refs UIIN-2012.
 * Fix inventory app crashes when viewing Holdings and locations don't exist. Fixes UIIN-2046.
 * Creating an order from instance record. Add action to the Main Pane Header. Refs UIIN-547.
 * Cannot read properties of undefined (reading 'shelfKey'). Refs UIIN-2038.
+* Add Holdings UUID search option. Refs UIIN-911.
+* Add Item UUID search option. Refs UIIN-912.
 * Add OCLC search option. Refs UIIN-1208.
 * Provide `CalloutContext.Provider` in the test harness to avoid `callout.sendCallout` NPEs.
 * Select existing order when creating an order from instance record. Refs UIIN-2041.
 * Add id attribute to Instance movement sections to use in e2e tests. Refs UIIN-2052.
 * Inventory > Update Instance search options dropdown with Browse contributors. Refs UIIN-2023.
+* Fix option View Source is not available in holdings record view. Refs UIIN-2044.
+* Browse contributors list. Refs UIIN-2024.
+* Normalize ISBNs for ISBN searching. Search option: Keyword (Instance, Holdings, Item). Refs UIIN-998.
+* Normalize ISBNs for ISBN searching. Search option: Identifier (all) in the Instance segment. Refs UIIN-999.
+* Browse form - first and last record navigation. Refs UIIN-1912.
+* Inventory >  Contributors Browse - Create a Name Type facet. Refs UIIN-2021.
+* Add filter/facet for Holdings > holdings type. Refs UIIN-1347.
+* Fix when click view Holdings the Something went wrong error page appears. Refs UIIN-2063.
+* Add filter/facet for instance status. Refs UIIN-1207.
+* Fix Name Type facet sends requests to incorrect endpoint. Refs UIIN-2062.
+* Browse Contributors: Hitting Next/Previous has odd behavior. Refs UIIN-2058
+* Fix filters list doesn't update when user back to "Browse contributors" pane. Refs UIIN-2069.
+* Applied filters don't reset when user select "Browse contributors" search option. Refs UIIN-2068.
+* Create Jest/RTL test for PrimaryToggleButton. Refs UIIN-1666.
+* Adjust query parameters on the subject browse form. Refs UIIN-2075.
+* * Improve query when search by call number. Refs UIIN-2078.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
