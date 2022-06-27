@@ -137,6 +137,11 @@ export const holdingsStatementTypes = [
   },
 ];
 
+export const queryIndexes = {
+  SUBJECT: 'subject',
+  QUERY_SEARCH: 'querySearch'
+};
+
 export const indentifierTypeNames = {
   ISBN: 'ISBN',
   ISSN: 'ISSN',
