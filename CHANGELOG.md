@@ -65,6 +65,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Create Jest/RTL test for PrimaryToggleButton. Refs UIIN-1666.
 * Adjust query parameters on the subject browse form. Refs UIIN-2075.
 * * Improve query when search by call number. Refs UIIN-2078.
+* Rename and reorder search options for clarity, consistency. Fixes UIIN-2060, UIIN-2061.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
