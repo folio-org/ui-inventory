@@ -77,6 +77,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   if (queryIndex === queryIndexes.CALL_NUMBER) {
     queryTemplate = getQueryTemplateCallNumber(queryValue);
   }
+
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
