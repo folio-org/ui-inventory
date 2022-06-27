@@ -35,6 +35,7 @@ const PrimaryToggleButton = ({
     <>
       { label && <Label>{label}</Label>}
       <Button
+        data-testid="primaryToggleButton"
         data-test-primary-toggle-button
         buttonStyle={isPrimary ? 'primary' : 'default'}
         onClick={handleClick}
