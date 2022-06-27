@@ -6,6 +6,7 @@ import {
   browseModeOptions,
   browseModeMap,
   undefinedAsString,
+  queryIndexes
 } from '../constants';
 import {
   getQueryTemplate,
@@ -21,6 +22,9 @@ const getQueryTemplateValue = (queryValue, param) => {
     ? queryValue
     : `${param}>="${queryValue}" or ${param}<"${queryValue}"`;
 };
+
+const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
+const getQueryTemplateCallNumber = (queryValue) => `callNumber==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
@@ -66,7 +70,15 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getQueryTemplateValue(templateQueryValue, 'name');
   }
 
-  if (queryIndex === 'querySearch' && queryValue.match('sortby')) {
+  if (queryIndex === queryIndexes.SUBJECT) {
+    queryTemplate = getQueryTemplateSubjects(queryValue);
+  }
+
+  if (queryIndex === queryIndexes.CALL_NUMBER) {
+    queryTemplate = getQueryTemplateCallNumber(queryValue);
+  }
+
+  if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
