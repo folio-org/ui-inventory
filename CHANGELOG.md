@@ -1,5 +1,7 @@
 # Change history for ui-inventory
 
+## 9.2.0 IN PROGRESS
+
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
 
