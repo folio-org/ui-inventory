@@ -1,6 +1,8 @@
 # Change history for ui-inventory
 
-## [9.1.0] IN PROGRESS
+## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
+
 * Use permission search.facets.collection.get rather than
   search.instances.facets.collection.get. This was renamed some time
   after interface search 0.7 was bumped. Breaking change that is
@@ -64,7 +66,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Applied filters don't reset when user select "Browse contributors" search option. Refs UIIN-2068.
 * Create Jest/RTL test for PrimaryToggleButton. Refs UIIN-1666.
 * Adjust query parameters on the subject browse form. Refs UIIN-2075.
-* * Improve query when search by call number. Refs UIIN-2078.
+* Improve query when search by call number. Refs UIIN-2078.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
