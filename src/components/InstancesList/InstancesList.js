@@ -798,7 +798,7 @@ class InstancesList extends React.Component {
     const missedMatchItem = () => {
       const query = new URLSearchParams(this.props.location.search).get('query');
       return (
-        <>
+        <div className={css.missedMatchItemWrapper}>
           <span className={css.warnIcon}>
             <Icon
               size="medium"
@@ -806,15 +806,15 @@ class InstancesList extends React.Component {
               status="warn"
             />
           </span>
-          <span className={css.missingMatchError}>
+          <span className={`${css.missingMatchError} ${css.fitContent}`}>
             &nbsp;
             {query}
             &nbsp;
           </span>
-          <strong>
+          <strong className={css.fitContent}>
             <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
           </strong>
-        </>
+        </div>
       );
     };
 
@@ -1092,6 +1092,7 @@ class InstancesList extends React.Component {
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}

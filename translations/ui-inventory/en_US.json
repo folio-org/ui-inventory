@@ -437,6 +437,7 @@
     "reports.inTransitItem.volume": "Volume",
     "reports.inTransitItem.yearCaption": "Year",
     "effectiveCallNumber": "Effective call number string",
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order",
     "updatedDateAndTime": "Updated date and time",
     "updatedSource": "Updated source",
     "createdDateAndTime": "Created date and time",
