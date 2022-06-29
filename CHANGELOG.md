@@ -64,7 +64,8 @@ Inventory causes an error. Refs UIIN-2012.
 * Applied filters don't reset when user select "Browse contributors" search option. Refs UIIN-2068.
 * Create Jest/RTL test for PrimaryToggleButton. Refs UIIN-1666.
 * Adjust query parameters on the subject browse form. Refs UIIN-2075.
-* * Improve query when search by call number. Refs UIIN-2078.
+* Improve query when search by call number. Refs UIIN-2078.
+* Fix Cannot add tags to Instance when unlinked preceding/succeeding titles present. Refs UIIN-2084.
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)
