@@ -740,5 +740,6 @@
     "search.holdings.uuid": "UUID holdingů",
     "search.item.uuid": "UUID jednotky",
     "filters.nameType": "Typ jména",
-    "instanceStatusShort": "Stav instance"
+    "instanceStatusShort": "Stav instance",
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
 }

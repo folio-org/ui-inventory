@@ -740,5 +740,6 @@
     "search.holdings.uuid": "UUID das holdings",
     "search.item.uuid": "UUID do exemplar",
     "filters.nameType": "Tipo de nome",
-    "instanceStatusShort": "Estado da instância"
+    "instanceStatusShort": "Estado da instância",
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
 }
