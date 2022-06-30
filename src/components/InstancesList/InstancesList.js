@@ -721,8 +721,12 @@ class InstancesList extends React.Component {
       : null;
   }
 
-  formatCellStyles(defaultCellStyle) {
-    return `${defaultCellStyle} ${css.cellAlign}`;
+  formatCellStyles(defaultCellStyle, rowData) {
+    if (rowData.isAnchor) {
+      return `${defaultCellStyle} ${css.cellAlign} ${css.overFlowVisible}`;
+    } else {
+      return `${defaultCellStyle} ${css.cellAlign}`;
+    }
   }
 
   // handler used for clicking a row in browse mode
