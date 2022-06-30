@@ -740,5 +740,6 @@
     "search.holdings.uuid": "المعرّف الفريد العمومي للمقتنيات",
     "search.item.uuid": "المعرّف الفريد العمومي للمادة",
     "filters.nameType": "نوع الاسم",
-    "instanceStatusShort": "حالة الوعاء"
+    "instanceStatusShort": "حالة الوعاء",
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
 }
