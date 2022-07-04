@@ -737,9 +737,9 @@
     "instances.columns.contributor": "贡献者",
     "instances.columns.contributorType": "类型",
     "instances.columns.relatorTerm": "关系词术语",
-    "search.holdings.uuid": "Holdings UUID",
-    "search.item.uuid": "Item UUID",
-    "filters.nameType": "Name type",
-    "instanceStatusShort": "Instance status",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
+    "search.holdings.uuid": "馆藏UUID",
+    "search.item.uuid": "单件UUID",
+    "filters.nameType": "名称类型",
+    "instanceStatusShort": "实例状态",
+    "effectiveCallNumberShelving": "有效索书号（单件），排架顺序"
 }
