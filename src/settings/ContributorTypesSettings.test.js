@@ -5,7 +5,7 @@ import '../../test/jest/__mock__';
 
 import {
   renderWithIntl,
-  stripesStub, 
+  stripesStub,
   translationsProperties
 } from '../../test/jest/helpers';
 

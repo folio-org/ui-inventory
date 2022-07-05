@@ -315,7 +315,7 @@ class ItemForm extends React.Component {
                   {instance.title}
                   {(instance.publication && instance.publication.length > 0) &&
                     <>
-                      {', '}
+                      &apos;, &apos;
                       {instance.publication[0].publisher}
                       {instance.publication[0].dateOfPublication
                         ? `, ${instance.publication[0].dateOfPublication}`
