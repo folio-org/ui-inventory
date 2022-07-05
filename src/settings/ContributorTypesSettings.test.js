@@ -11,9 +11,16 @@ import {
 
 import ContributorTypesSettings from './ContributorTypesSettings';
 
+const defaultProps = {
+  stripes: {
+    ...stripesStub,
+    connect: component => component,
+  },
+};
+
 const ContributorTypesSettingsSetup = () => (
   <MemoryRouter>
-    <ContributorTypesSettings stripes={stripesStub} />
+    <ContributorTypesSettings {...defaultProps} />
   </MemoryRouter>
 );
 
@@ -24,7 +31,7 @@ const renderContributorTypesSettings = () => renderWithIntl(
 
 describe('ContributorTypesSettings', () => {
   it('should render properly', () => {
-    renderContributorTypesSettings();
+    const { getByText } = renderContributorTypesSettings();
     expect(getByText('ControlledVocab')).toBeInTheDocument();
   });
 });
