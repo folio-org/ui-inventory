@@ -741,5 +741,5 @@
     "search.item.uuid": "UUID jednotky",
     "filters.nameType": "Typ jména",
     "instanceStatusShort": "Stav instance",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
+    "effectiveCallNumberShelving": "Efektivní volací číslo (položka), pořadí regálů"
 }
