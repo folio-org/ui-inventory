@@ -741,5 +741,5 @@
     "search.item.uuid": "Item UUID",
     "filters.nameType": "Name type",
     "instanceStatusShort": "Instance status",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
+    "effectiveCallNumberShelving": "有效的索書號(館藏), 架上訂單"
 }
