@@ -56,6 +56,7 @@ import {
   QUICK_EXPORT_LIMIT,
   segments,
   browseModeOptions,
+  FACETS,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -754,7 +755,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
-          filters: '',
+          filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
         });
         break;
       default:

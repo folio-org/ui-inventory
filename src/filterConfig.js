@@ -102,6 +102,11 @@ export const instanceFilterConfig = [
     cql: FACETS_CQL.NAME_TYPE,
     values: [],
   },
+  {
+    name: FACETS.SEARCH_CONTRIBUTORS,
+    cql: FACETS_CQL.SEARCH_CONTRIBUTORS,
+    values: [],
+  },
 ];
 
 export const instanceIndexes = [
