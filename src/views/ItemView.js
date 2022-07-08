@@ -430,7 +430,7 @@ class ItemView extends React.Component {
         {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
       </Link> :
       '-';
-    let servicePointName = get(servicePoints, 'records[0].name', '-');
+
     const instance = instances1.records[0];
     const item = items.records[0] || {};
     const holdingsRecord = holdingsRecords.records[0];
@@ -626,7 +626,7 @@ class ItemView extends React.Component {
 
     const checkInDate = getDateWithTime(get(item, ['lastCheckIn', 'dateTime']));
 
-    servicePointName = checkInDate === '-' ? '-' : servicePointName;
+    const servicePointName = checkInDate === '-' ? '-' : get(servicePoints, 'records[0].name', '-');
 
     const circulationHistory = {
       checkInDate,
