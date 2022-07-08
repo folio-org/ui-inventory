@@ -3,9 +3,6 @@
 .actionIcon {
   margin-right: 10px;
 }
-.warnIcon {
-  margin-left: var(--gutter-static-one-third);
-}
 
 .boundWithIcon {
   background-color: transparent !important;
@@ -23,14 +20,18 @@
 }
 
 .missingMatchError {
+  margin-left: var(--gutter-static-one-third);
+  margin-right: var(--gutter-static-one-third);
   font-weight: var(--text-weight-bold);
   color: var(--error);
 }
 
 .missedMatchItemWrapper {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-left: var(--gutter-static-one-third);
 }
 
 .fitContent {

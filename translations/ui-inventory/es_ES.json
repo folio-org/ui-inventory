@@ -536,7 +536,7 @@
     "moveItems": "Mover fondos/items a otra instancia",
     "folio": "FOLIO",
     "marc": "MARC",
-    "effectiveLocationShort": "Effective location",
+    "effectiveLocationShort": "Localización efectiva",
     "moveItems.move.holdings.count": "Mover: {count, number} {count, plural, one {holding} other {holdings}}",
     "moveItems.instance.dropZone": "Borrar fondo",
     "moveItems.modal.confirmLabel": "Continuar",
@@ -628,7 +628,7 @@
     "permission.items.mark-unavailable": "Inventario: Marcar ítems no disponibles",
     "permission.items.mark-long-missing": "Inventario: Marcar ítems que faltan desde hace mucho tiempo",
     "permission.items.mark-in-process-non-requestable": "Inventory: Mark items in process (non-requestable)",
-    "externalIdentifierType": "External identifier type",
+    "externalIdentifierType": "Tipo de identificador externo",
     "enabled": "Habilitado",
     "copycat.enterIdentifier": "Enter {identifierName} identifier",
     "copycat.enterIdentifierForUpdate": "Enter the {identifierName} identifier to be used to overlay the current data",
@@ -741,5 +741,5 @@
     "search.item.uuid": "Item UUID",
     "filters.nameType": "Tipo de autor",
     "instanceStatusShort": "Estado de la instancia",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
+    "effectiveCallNumberShelving": "Signatura efectiva (item), orden de estantería"
 }

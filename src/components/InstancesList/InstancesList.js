@@ -56,6 +56,7 @@ import {
   QUICK_EXPORT_LIMIT,
   segments,
   browseModeOptions,
+  FACETS,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -754,7 +755,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
-          filters: '',
+          filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
         });
         break;
       default:
@@ -807,9 +808,7 @@ class InstancesList extends React.Component {
             />
           </span>
           <span className={`${css.missingMatchError} ${css.fitContent}`}>
-            &nbsp;
             {query}
-            &nbsp;
           </span>
           <strong className={css.fitContent}>
             <FormattedMessage id="ui-inventory.browseCallNumbers.missedMatch" />
@@ -1062,6 +1061,7 @@ class InstancesList extends React.Component {
             columnWidths={{
               callNumber: '15%',
               subject: '50%',
+              contributor: '50%',
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',
