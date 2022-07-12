@@ -214,6 +214,7 @@ class InstancesList extends React.Component {
       match: { path },
       goTo,
       getParams,
+      parentMutator,
     } = this.props;
     const curFilters = getCurrentFilters(get(query, 'filters', ''));
     const mergedFilters = values.length
@@ -221,6 +222,7 @@ class InstancesList extends React.Component {
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
+    parentMutator.manifestFetchPropToSearch.update({ fetch: true });
     goTo(path, { ...params, filters: filtersStr });
   };
 
@@ -677,6 +679,11 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
+    const {
+      parentMutator,
+    } = this.props;
+
+    parentMutator.manifestFetchPropToSearch.update({ fetch: true });
     this.setState({
       selectedRows: {},
       optionSelected: '',
@@ -766,6 +773,14 @@ class InstancesList extends React.Component {
     this.setState((curState) => ({
       searchAndSortKey: curState.searchAndSortKey + 1,
     }));
+  }
+
+  handleSubmitSearch = () => {
+    const {
+      parentMutator,
+    } = this.props;
+
+    parentMutator.manifestFetchPropToSearch.update({ fetch: true });
   }
 
   render() {
@@ -963,8 +978,10 @@ class InstancesList extends React.Component {
       const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
 
       parentMutator.query.update({ qindex: e.target.value, filters: '' });
+      parentMutator.manifestFetchPropToSearch.update({ fetch: false });
 
       if (isBrowseOption) {
+        parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
       } else {
         this.setState({ isSingleResult: true });
@@ -1100,6 +1117,7 @@ class InstancesList extends React.Component {
             resultsOnNeedMore={isHandleOnNeedMore}
             pagingCanGoNext={pagingCanGoNext}
             pagingCanGoPrevious={pagingCanGoPrevious}
+            onSubmitSearch={this.handleSubmitSearch}
           />
         </div>
         <ErrorModal

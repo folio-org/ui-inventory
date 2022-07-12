@@ -101,6 +101,8 @@ const InstancesRouteSetup = ({
                     query: {
                       update: jest.fn(),
                     },
+                    manifestFetchPropToSearch: { update: jest.fn() },
+                    browseModeRecords: { reset: jest.fn() },
                   }}
                 />
               </Layer>

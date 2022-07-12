@@ -116,6 +116,8 @@ const buildRecordsManifest = (options = {}) => {
     throwErrors: false,
     path: 'inventory/instances',
     resultDensity: 'sparse',
+    accumulate: 'true',
+    fetch: props => props.resources.manifestFetchPropToSearch.fetch,
     GET: {
       path,
       params: {
@@ -143,6 +145,7 @@ export function buildManifestObject() {
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
+    manifestFetchPropToSearch: { initialValue: { fetch: true } },
     records: buildRecordsManifest({
       path: (queryParams) => (!browseModeMap[queryParams.qindex] ? 'search/instances' : null),
     }),
