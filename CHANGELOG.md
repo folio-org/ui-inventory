@@ -4,6 +4,7 @@
 
 * Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
 * Browse contributors | Instance search query does not include contributor Name type. Fixes UIIN-2096.
+* Fix Query is copied to search field when navigating back and forth. Fix UIIN-2114.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
