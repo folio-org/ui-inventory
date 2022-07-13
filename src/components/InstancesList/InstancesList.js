@@ -793,6 +793,7 @@ class InstancesList extends React.Component {
       searchAndSortKey,
       isSingleResult
     } = this.state;
+    const { sendCallout } = this.context;
 
     const itemToView = getItem(`${namespace}.position`);
 
@@ -1024,6 +1025,19 @@ class InstancesList extends React.Component {
     const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
     const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
+    const validateDataQuery = (query) => {
+      const endsWithAsterisk = new RegExp('\\*$');
+      const isValidSearch = !endsWithAsterisk.test(query);
+      const isContributors = optionSelected === browseModeOptions.CONTRIBUTORS;
+
+      if (isContributors && !isValidSearch) {
+        sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.browseContributors.results.error" />,
+        });
+      }
+    };
+
     return (
       <HasCommand
         commands={shortcuts}
@@ -1070,6 +1084,7 @@ class InstancesList extends React.Component {
             customPaneSub={this.renderPaneSub()}
             resultsFormatter={resultsFormatter}
             onCreate={this.onCreate}
+            validateSearchOnSubmit={validateDataQuery}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
             disableRecordCreation={disableRecordCreation || false}
