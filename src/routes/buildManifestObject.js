@@ -105,6 +105,53 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
+const memoizeGetFetch = (fn) => {
+  let prevLocationKey = '';
+  let prevResultOffset = '';
+  let prevResult = false;
+
+  return props => {
+    const {
+      location,
+      resources: {
+        resultOffset,
+      },
+    } = props;
+
+    if (
+      prevLocationKey === location.key &&
+      prevResultOffset === resultOffset
+    ) {
+      return prevResult;
+    } else {
+      const result = fn(props);
+      prevLocationKey = location.key;
+      prevResultOffset = resultOffset;
+      prevResult = result;
+      return result;
+    }
+  };
+};
+
+const getFetchProp = () => {
+  let prevQindex = '';
+
+  return memoizeGetFetch(props => {
+    const {
+      location,
+    } = props;
+    const qindex = new URLSearchParams(location.search).get('qindex');
+    let isFetch = true;
+
+    if (prevQindex !== qindex) {
+      isFetch = false;
+    }
+
+    prevQindex = qindex;
+    return isFetch;
+  });
+};
+
 const buildRecordsManifest = (options = {}) => {
   const { path } = options;
 
@@ -117,7 +164,7 @@ const buildRecordsManifest = (options = {}) => {
     path: 'inventory/instances',
     resultDensity: 'sparse',
     accumulate: 'true',
-    fetch: props => props.resources.manifestFetchPropToSearch.fetch,
+    fetch: getFetchProp(),
     GET: {
       path,
       params: {
@@ -145,7 +192,6 @@ export function buildManifestObject() {
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
-    manifestFetchPropToSearch: { initialValue: { fetch: true } },
     records: buildRecordsManifest({
       path: (queryParams) => (!browseModeMap[queryParams.qindex] ? 'search/instances' : null),
     }),

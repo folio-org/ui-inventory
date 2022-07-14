@@ -18,7 +18,6 @@ import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
 const updateMock = jest.fn();
-const updateManifestFetchPropToSearchMock = jest.fn();
 const resetBrowseModeRecordsMock = jest.fn();
 
 const stripesStub = {
@@ -88,7 +87,6 @@ const renderInstancesList = ({ segment }) => {
             parentMutator={{
               resultCount: { replace: noop },
               query: { update: updateMock },
-              manifestFetchPropToSearch: { update: updateManifestFetchPropToSearchMock },
               browseModeRecords: {
                 reset: resetBrowseModeRecordsMock,
               },
@@ -123,26 +121,6 @@ describe('InstancesList', () => {
 
     afterEach(() => {
       jest.clearAllMocks();
-    });
-
-    describe('submit search', () => {
-      it('should update manifestFetchPropToSearch', () => {
-        const searchBox = document.getElementById('input-inventory-search');
-        fireEvent.change(searchBox, {
-          target: { value: 'a' }
-        });
-        document.querySelector('[data-test-search-and-sort-submit]').click();
-        expect(updateManifestFetchPropToSearchMock).toHaveBeenCalledWith({ fetch: true });
-      });
-    });
-
-    describe('reset all', () => {
-      it('should update manifestFetchPropToSearch', () => {
-        const searchBox = document.getElementById('input-inventory-search');
-        fireEvent.change(searchBox, { target: { value: 'a' } });
-        document.getElementById('clickable-reset-all').click();
-        expect(updateManifestFetchPropToSearchMock).toHaveBeenCalledWith({ fetch: true });
-      });
     });
 
     it('should have proper list results size', () => {
@@ -194,11 +172,6 @@ describe('InstancesList', () => {
     });
 
     describe('changing search index', () => {
-      it('should update manifestFetchPropToSearch', () => {
-        fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
-        expect(updateManifestFetchPropToSearchMock).toHaveBeenCalledWith({ fetch: false });
-      });
-
       describe('selecting a browse option', () => {
         it('should handle query update with browse segment', () => {
           fireEvent.change(screen.getByRole('combobox'), {
