@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import _ from 'lodash';
+import moment from 'moment';
 
 import {
   Accordion,
@@ -9,6 +10,7 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 import { DateRangeFilter } from '@folio/stripes/smart-components';
+import { useStripes } from '@folio/stripes/core';
 
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
@@ -49,6 +51,7 @@ const InstanceFilters = props => {
   } = props;
 
   const intl = useIntl();
+  const { timezone } = useStripes();
 
   const segmentAccordions = {
     [FACETS.EFFECTIVE_LOCATION]: false,
@@ -163,6 +166,12 @@ const InstanceFilters = props => {
     getNewRecords,
     props.data
   );
+
+  const onDateRangeChange = (filterData) => {
+    moment.tz.setDefault(timezone);
+    onChange(filterData);
+    moment.tz.setDefault();
+  };
 
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
@@ -354,7 +363,7 @@ const InstanceFilters = props => {
           name={FACETS.CREATED_DATE}
           dateFormat={DATE_FORMAT}
           selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.CREATED_DATE]?.[0])}
-          onChange={onChange}
+          onChange={onDateRangeChange}
           makeFilterString={makeDateRangeFilterString}
         />
       </Accordion>
@@ -371,7 +380,7 @@ const InstanceFilters = props => {
           name={FACETS.UPDATED_DATE}
           dateFormat={DATE_FORMAT}
           selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.UPDATED_DATE]?.[0])}
-          onChange={onChange}
+          onChange={onDateRangeChange}
           makeFilterString={makeDateRangeFilterString}
         />
       </Accordion>

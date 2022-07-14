@@ -29,6 +29,7 @@ import {
   emptyList,
   indentifierTypeNames,
   DATE_FORMAT,
+  DATE_TIME_RANGE_FILTER_FORMAT,
   LIMIT_MAX,
   ERROR_TYPES,
 } from './constants';
@@ -176,7 +177,7 @@ export const retrieveDatesFromDateRangeFilterString = filterValue => {
         ? startDate.format(DATE_FORMAT)
         : '',
       endDate: endDate.isValid()
-        ? endDate.subtract(1, 'days').format(DATE_FORMAT)
+        ? endDate.format(DATE_FORMAT)
         : '',
     };
   }
@@ -186,9 +187,7 @@ export const retrieveDatesFromDateRangeFilterString = filterValue => {
 
 
 export const makeDateRangeFilterString = (startDate, endDate) => {
-  const endDateCorrected = moment.utc(endDate).add(1, 'days').format(DATE_FORMAT);
-
-  return `${startDate}:${endDateCorrected}`;
+  return `${startDate}:${endDate}`;
 };
 
 export const buildDateRangeQuery = name => values => {
@@ -196,7 +195,10 @@ export const buildDateRangeQuery = name => values => {
 
   if (!startDateString || !endDateString) return '';
 
-  return `${name}>="${startDateString}" and ${name}<="${endDateString}"`;
+  const start = encodeURIComponent(moment(startDateString).startOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT));
+  const end = encodeURIComponent(moment(endDateString).endOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT));
+
+  return `${name}>="${start}" and ${name}<="${end}"`;
 };
 
 // Function which takes a filter name and returns
