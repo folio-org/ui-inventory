@@ -141,8 +141,14 @@ const getFetchProp = () => {
       location,
     } = props;
     const qindex = new URLSearchParams(location.search).get('qindex');
+    let isFetch = true;
 
-    return prevQindex === qindex;
+    if (prevQindex !== qindex) {
+      isFetch = false;
+    }
+
+    prevQindex = qindex;
+    return isFetch;
   });
 };
 
