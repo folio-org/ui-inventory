@@ -2,6 +2,9 @@
 
 ## 9.2.0 IN PROGRESS
 
+* Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
+* Browse contributors | Instance search query does not include contributor Name type. Fixes UIIN-2096.
+* Fix reference to `instanceSource` name. Fixes UIIN-2101.
 * Fix Cannot add tags to Instance when unlinked preceding/succeeding titles present. Fixes UIIN-2084.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
@@ -72,7 +75,9 @@ Inventory causes an error. Refs UIIN-2012.
 * Adjust query parameters on the subject browse form. Refs UIIN-2075.
 * Improve query when search by call number. Refs UIIN-2078.
 * Rename and reorder search options for clarity, consistency. Fixes UIIN-2060, UIIN-2061.
-* Browse contributors. Placeholder match does not look right in the contributor column. Refs UIIN-2079
+* Browse contributors. Placeholder match does not look right in the contributor column. Refs UIIN-2079.
+* Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
+* Item Circulation history: Items that has not been checked in, have the first Service point in the list of service points assigned in the UI. Refs UIIN-2109
 
 ## [9.0.0](https://github.com/folio-org/ui-inventory/tree/v9.0.0) (2022-03-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v8.0.0...v9.0.0)

@@ -211,6 +211,7 @@ export const FACETS = {
   HOLDINGS_PERMANENT_LOCATION: 'holdingsPermanentLocation',
   HOLDINGS_SOURCE: 'holdingsSource',
   NAME_TYPE: 'nameType',
+  SEARCH_CONTRIBUTORS: 'searchContributors',
   HOLDINGS_TYPE: 'holdingsType',
 };
 
@@ -244,6 +245,7 @@ export const FACETS_CQL = {
   HOLDINGS_PERMANENT_LOCATION: 'holdings.permanentLocationId',
   HOLDINGS_SOURCE: 'holdings.sourceId',
   NAME_TYPE: 'contributorNameTypeId',
+  SEARCH_CONTRIBUTORS: 'contributors.contributorNameTypeId',
   HOLDINGS_TYPE: 'holdings.holdingsTypeId',
 };
 
