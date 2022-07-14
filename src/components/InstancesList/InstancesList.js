@@ -1049,6 +1049,7 @@ class InstancesList extends React.Component {
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
+            isCountHidden={browseSelectedString}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
