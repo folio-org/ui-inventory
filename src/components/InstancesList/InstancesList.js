@@ -1066,6 +1066,8 @@ class InstancesList extends React.Component {
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',
+              contributorType: '15%',
+              relatorTerm: '15%',
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
