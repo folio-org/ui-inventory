@@ -7,6 +7,7 @@
 * Fix reference to `instanceSource` name. Fixes UIIN-2101.
 * Fix Cannot add tags to Instance when unlinked preceding/succeeding titles present. Fixes UIIN-2084.
 * Browse call numbers "records found" count is non-sensical. Refs UIIN-2093.
+* Fix Query is copied to search field when navigating back and forth. Fix UIIN-2114.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
