@@ -1035,7 +1035,11 @@ class InstancesList extends React.Component {
           type: 'error',
           message: <FormattedMessage id="ui-inventory.browseContributors.results.error" />,
         });
+
+        return false;
       }
+
+      return true;
     };
 
     return (
