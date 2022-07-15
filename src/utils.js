@@ -550,6 +550,7 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
 
   instance[titleAttr] = (instance?.[titleAttr] ?? []).map((inst) => {
     const {
+      id,
       title,
       hrid,
     } = inst;
@@ -560,6 +561,7 @@ export const marshalTitles = (instance, identifierTypesByName, type) => {
       { [titleIdKey]: inst[titleIdKey] } :
       // unconnected title
       {
+        id,
         title,
         hrid,
         identifiers,
