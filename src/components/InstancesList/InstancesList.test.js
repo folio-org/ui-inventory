@@ -18,6 +18,7 @@ import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
 const updateMock = jest.fn();
+const resetBrowseModeRecordsMock = jest.fn();
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -86,6 +87,9 @@ const renderInstancesList = ({ segment }) => {
             parentMutator={{
               resultCount: { replace: noop },
               query: { update: updateMock },
+              browseModeRecords: {
+                reset: resetBrowseModeRecordsMock,
+              },
             }}
             data={{
               ...data,
@@ -175,6 +179,11 @@ describe('InstancesList', () => {
           });
 
           expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '' });
+        });
+
+        it('should reset browse records', () => {
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+          expect(resetBrowseModeRecordsMock).toHaveBeenCalled();
         });
 
         it('should display Instances segment navigation button as primary', () => {

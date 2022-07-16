@@ -963,6 +963,7 @@ class InstancesList extends React.Component {
       parentMutator.query.update({ qindex: e.target.value, filters: '' });
 
       if (isBrowseOption) {
+        parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
       } else {
         this.setState({ isSingleResult: true });

@@ -105,6 +105,53 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
+const memoizeGetFetch = (fn) => {
+  let prevLocationKey = '';
+  let prevResultOffset = '';
+  let prevResult = false;
+
+  return props => {
+    const {
+      location,
+      resources: {
+        resultOffset,
+      },
+    } = props;
+
+    if (
+      prevLocationKey === location.key &&
+      prevResultOffset === resultOffset
+    ) {
+      return prevResult;
+    } else {
+      const result = fn(props);
+      prevLocationKey = location.key;
+      prevResultOffset = resultOffset;
+      prevResult = result;
+      return result;
+    }
+  };
+};
+
+const getFetchProp = () => {
+  let prevQindex = '';
+
+  return memoizeGetFetch(props => {
+    const {
+      location,
+    } = props;
+    const qindex = new URLSearchParams(location.search).get('qindex');
+    let isFetch = true;
+
+    if (prevQindex !== qindex) {
+      isFetch = false;
+    }
+
+    prevQindex = qindex;
+    return isFetch;
+  });
+};
+
 const buildRecordsManifest = (options = {}) => {
   const { path } = options;
 
@@ -116,6 +163,8 @@ const buildRecordsManifest = (options = {}) => {
     throwErrors: false,
     path: 'inventory/instances',
     resultDensity: 'sparse',
+    accumulate: 'true',
+    fetch: getFetchProp(),
     GET: {
       path,
       params: {
