@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [9.1.2] (IN PROGRESS)
+
+* The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
+
 ## [9.1.1](https://github.com/folio-org/ui-inventory/tree/v9.1.1) (2022-07-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.1.1)
 
