@@ -964,6 +964,7 @@ class InstancesList extends React.Component {
       parentMutator.query.update({ qindex: e.target.value, filters: '' });
 
       if (isBrowseOption) {
+        parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
       } else {
         this.setState({ isSingleResult: true });
@@ -997,6 +998,7 @@ class InstancesList extends React.Component {
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
     const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
     const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
+    const regExp = /((callNumber|subject|name) [<|>])|"*/ig;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -1050,6 +1052,7 @@ class InstancesList extends React.Component {
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
+            regExpForQuery={regExp}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -1065,6 +1068,8 @@ class InstancesList extends React.Component {
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',
+              contributorType: '15%',
+              relatorTerm: '15%',
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
