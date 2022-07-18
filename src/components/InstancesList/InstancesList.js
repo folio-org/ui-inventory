@@ -795,8 +795,7 @@ class InstancesList extends React.Component {
 
     const itemToView = getItem(`${namespace}.position`);
 
-    const missedMatchItem = () => {
-      const query = new URLSearchParams(this.props.location.search).get('query');
+    const missedMatchItem = (query) => {
       return (
         <div className={css.missedMatchItemWrapper}>
           <span className={css.warnIcon}>
@@ -926,19 +925,19 @@ class InstancesList extends React.Component {
         if (r?.totalRecords) {
           return getFullMatchRecord(r?.subject, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.subject);
       },
       'callNumber': r => {
         if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.shelfKey);
       },
       'contributor': r => {
         if (r?.totalRecords) {
           return getFullMatchRecord(r?.name, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.name);
       },
       'contributorType': r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
       'relatorTerm': r => {
