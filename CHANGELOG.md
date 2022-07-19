@@ -9,6 +9,8 @@
 * Browse call numbers "records found" count is non-sensical. Refs UIIN-2093.
 * Fix Query is copied to search field when navigating back and forth. Fix UIIN-2114.
 * Browse contributors may show results floating amid blank rows. Fixes UIIN-2094.
+* The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
+* Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
