@@ -1,4 +1,7 @@
-import { get } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
@@ -13,9 +16,11 @@ import {
   getIsbnIssnTemplate,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
+import facetsStore from '../stores/facetsStore';
 
 const INITIAL_RESULT_COUNT = 100;
 const regExp = /^((callNumber|subject|name) [<|>])/i;
+const DEFAULT_SORT = 'title';
 
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
@@ -82,7 +87,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
-    query.sort = 'title';
+    query.sort = DEFAULT_SORT;
   }
 
   if (Object.values(browseModeOptions).includes(queryIndex)) {
@@ -134,20 +139,36 @@ const memoizeGetFetch = (fn) => {
 };
 
 const getFetchProp = () => {
-  let prevQindex = '';
+  let prevQindex = null;
+  let prevQuery = null;
 
   return memoizeGetFetch(props => {
     const {
       location,
     } = props;
-    const qindex = new URLSearchParams(location.search).get('qindex');
+    const params = new URLSearchParams(location.search);
+    const qindex = params.get('qindex');
+    const query = params.get('query');
+    const filters = params.get('filters');
+    const sort = params.get('sort');
+    const hasReset = (
+      !qindex &&
+      !query &&
+      !filters &&
+      (sort === DEFAULT_SORT || !sort) &&
+      isEmpty(facetsStore.getState().facetSettings)
+    );
     let isFetch = true;
 
     if (prevQindex !== qindex) {
-      isFetch = false;
+      isFetch = (
+        hasReset ||
+        prevQuery !== query
+      );
     }
 
     prevQindex = qindex;
+    prevQuery = query;
     return isFetch;
   });
 };
