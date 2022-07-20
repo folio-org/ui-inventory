@@ -4,6 +4,13 @@
 
 * Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
 * Browse contributors | Instance search query does not include contributor Name type. Fixes UIIN-2096.
+* Fix reference to `instanceSource` name. Fixes UIIN-2101.
+* Fix Cannot add tags to Instance when unlinked preceding/succeeding titles present. Fixes UIIN-2084.
+* Browse call numbers "records found" count is non-sensical. Refs UIIN-2093.
+* Fix Query is copied to search field when navigating back and forth. Fix UIIN-2114.
+* Browse contributors may show results floating amid blank rows. Fixes UIIN-2094.
+* The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
+* Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
 * Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
