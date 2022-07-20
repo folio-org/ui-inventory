@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.0.13](https://github.com/folio-org/ui-inventory/tree/v9.0.13) (2022-07-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.12...v9.0.13)
+
+* After using the Chrome "go back" button, following the link "Holdings Created" from Data import to
+Inventory causes an error. Refs UIIN-2123.
+
 ## [9.0.12](https://github.com/folio-org/ui-inventory/tree/v9.0.12) (2022-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.11...v9.0.12)
 
