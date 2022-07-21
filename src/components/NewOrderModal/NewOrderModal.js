@@ -14,7 +14,7 @@ import {
   ModalFooter,
   Row,
   TextField,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import css from './NewOrderModal.css';
 

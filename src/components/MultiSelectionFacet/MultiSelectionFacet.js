@@ -4,7 +4,7 @@ import {
   MultiSelection,
   Accordion,
   FilterAccordionHeader,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import { FacetOptionFormatter } from '../FacetOptionFormatter';
 
