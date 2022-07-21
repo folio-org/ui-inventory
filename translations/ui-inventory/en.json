@@ -414,6 +414,7 @@
   "instanceHrid": "Instance HRID",
   "browseCallNumbers": "Browse call numbers",
   "browseContributors": "Browse contributors",
+  "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
   "browseSubjects": "Browse subjects",
   "browseCallNumbers.missedMatch": "would be here",
   "callNumber": "Call number",
