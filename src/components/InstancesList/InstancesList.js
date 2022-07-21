@@ -1027,8 +1027,8 @@ class InstancesList extends React.Component {
     const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
 
     const validateDataQuery = (query) => {
-      const endsWithAsterisk = /\*/;
-      const isValidSearch = !endsWithAsterisk.test(query);
+      const containsAsterisk = /\*/;
+      const isValidSearch = !containsAsterisk.test(query);
       const isContributors = optionSelected === browseModeOptions.CONTRIBUTORS;
 
       if (isContributors && !isValidSearch) {
