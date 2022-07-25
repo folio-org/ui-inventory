@@ -781,6 +781,7 @@ class InstancesList extends React.Component {
       match: {
         path,
       },
+      goTo,
       namespace,
       stripes,
       fetchFacets,
@@ -967,6 +968,7 @@ class InstancesList extends React.Component {
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
+        goTo(path);
       } else {
         this.setState({ isSingleResult: true });
       }
