@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.1.2] (IN PROGRESS)
+## [9.1.2](https://github.com/folio-org/ui-inventory/tree/v9.1.2) (2022-07-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.1...v9.1.2)
 
 * The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
 * Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
