@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.1.3] (IN PROGRESS)
+## [9.1.3](https://github.com/folio-org/ui-inventory/tree/v9.1.3) (2022-07-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.2...v9.1.3)
 
 * Browse contributors. Placeholder match does not look right in the contributor column. Refs UIIN-2079.
 
