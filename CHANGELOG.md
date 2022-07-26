@@ -12,6 +12,7 @@
 * The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
 * Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
 * Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
+* Escape quotes in browse string. Fix UIIN-2120.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
