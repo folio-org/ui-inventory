@@ -782,6 +782,7 @@ class InstancesList extends React.Component {
         path,
       },
       goTo,
+      getParams,
       namespace,
       stripes,
       fetchFacets,
@@ -960,6 +961,7 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
+      const params = getParams();
       const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
 
       this.setState({ optionSelected: qindex });
@@ -969,7 +971,7 @@ class InstancesList extends React.Component {
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
-        goTo(path, { qindex });
+        goTo(path, { ...params, qindex });
       } else {
         this.setState({ isSingleResult: true });
       }
