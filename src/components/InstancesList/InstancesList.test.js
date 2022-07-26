@@ -30,6 +30,7 @@ const stripesStub = {
 };
 const data = {
   contributorTypes: [],
+  contributorNameTypes: [],
   instanceTypes: [],
   locations: [],
   instanceFormats: [],
@@ -153,10 +154,14 @@ describe('InstancesList', () => {
 
     describe('opening action menu', () => {
       beforeEach(() => {
+        fireEvent.change(screen.getByRole('combobox'), {
+          target: { value: 'all' }
+        });
+
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
       });
 
-      it('should disable toggable columns', () => {
+      it('should disable toggleable columns', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
       });
 
@@ -200,6 +205,10 @@ describe('InstancesList', () => {
   describe('rendering InstancesList with holdings segment', () => {
     it('should show Save Holdings UUIDs button', () => {
       renderInstancesList({ segment: 'holdings' });
+
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'all' }
+      });
 
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
