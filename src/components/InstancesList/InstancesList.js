@@ -780,6 +780,8 @@ class InstancesList extends React.Component {
       match: {
         path,
       },
+      goTo,
+      getParams,
       namespace,
       stripes,
       fetchFacets,
@@ -956,15 +958,18 @@ class InstancesList extends React.Component {
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
-      this.setState({ optionSelected: e.target.value });
+      const qindex = e.target.value;
+      const params = getParams();
+      const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
 
-      const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
+      this.setState({ optionSelected: qindex });
 
-      parentMutator.query.update({ qindex: e.target.value, filters: '' });
+      parentMutator.query.update({ qindex, filters: '' });
 
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
+        goTo(path, { ...params, qindex });
       } else {
         this.setState({ isSingleResult: true });
       }
