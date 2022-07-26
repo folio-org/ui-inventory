@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.1.4] (IN PROGRESS)
+## [9.1.4](https://github.com/folio-org/ui-inventory/tree/v9.1.4) (2022-07-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.3...v9.1.4)
 
 * Fix Cannot add tags to Instance when unlinked preceding/succeeding titles present. Fixes UIIN-2084.
 
