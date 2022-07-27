@@ -742,5 +742,6 @@
     "search.item.uuid": "Item UUID",
     "filters.nameType": "Name type",
     "instanceStatusShort": "Instance status",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order",
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search."
 }
