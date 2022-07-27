@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 export const ForItems = ({ count = 1 }) => (
   <FormattedMessage
-    id="ui-inventory.remote.warning.common"
+    id="ui-inventory.remote.warning.common.items"
     values={{ something: <FormattedMessage id="ui-inventory.remote.items" values={{ count }} /> }}
   />
 );
