@@ -22,16 +22,6 @@ export const useItems = () => {
       const { message } = error;
       callout.sendCallout({ type: 'error', message });
     },
-    onSuccess: (_, variables) => {
-      const message = (
-        <FormattedMessage
-          id="ui-inventory.moveItems.instance.items.success"
-          values={{ count: variables?.itemIds?.length ?? 0 }}
-        />
-      );
-
-      callout.sendCallout({ type: 'success', message });
-    },
   });
 
   const moveItems = (fromHoldingsId, toHoldingsId, itemIds) => {
@@ -39,9 +29,18 @@ export const useItems = () => {
       if (checkFromRemoteToNonRemote({ fromHoldingsId, toHoldingsId })) {
         callout.sendCallout({
           timeout: 0,
-          type: 'warning',
-          message: <RemoteStorage.Warning.ForItems count={itemIds.length} />,
+          type: 'success',
+          message: (<RemoteStorage.Warning.ForItems count={itemIds.length} />),
         });
+      } else {
+        const message = (
+          <FormattedMessage
+            id="ui-inventory.moveItems.instance.items.success"
+            values={{ count: itemIds?.length ?? 0 }}
+          />
+        );
+
+        callout.sendCallout({ type: 'success', message });
       }
     };
 
