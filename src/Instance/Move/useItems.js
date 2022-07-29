@@ -22,7 +22,6 @@ export const useItems = () => {
       const { message } = error;
       callout.sendCallout({ type: 'error', message });
     },
-    onSuccess: () => {}
   });
 
   const moveItems = (fromHoldingsId, toHoldingsId, itemIds) => {
