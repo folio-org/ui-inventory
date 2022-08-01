@@ -20,7 +20,7 @@ const regExp = /^((callNumber|subject|name) [<|>])/i;
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
     ? queryValue
-    : `${param}>="${queryValue}" or ${param}<"${queryValue}"`;
+    : `${param}>="${queryValue.replace(/"/g, '')}" or ${param}<"${queryValue.replace(/"/g, '')}"`;
 };
 
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;

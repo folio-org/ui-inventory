@@ -845,7 +845,7 @@ class InstancesList extends React.Component {
           anchor = records[0].name;
         }
 
-        source.fetchByQuery(`${param} < "${anchor}"`);
+        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
           anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
@@ -855,7 +855,7 @@ class InstancesList extends React.Component {
           anchor = records[records.length - 1].name;
         }
 
-        source.fetchByQuery(`${param} > "${anchor}"`);
+        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`);
       }
     };
 
