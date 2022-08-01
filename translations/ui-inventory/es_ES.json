@@ -741,5 +741,6 @@
     "search.item.uuid": "Item UUID",
     "filters.nameType": "Tipo de autor",
     "instanceStatusShort": "Estado de la instancia",
-    "effectiveCallNumberShelving": "Signatura efectiva (item), orden de estantería"
+    "effectiveCallNumberShelving": "Signatura efectiva (item), orden de estantería",
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search."
 }

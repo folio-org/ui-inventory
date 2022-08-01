@@ -741,5 +741,6 @@
     "search.item.uuid": "UUID do exemplar",
     "filters.nameType": "Tipo de nome",
     "instanceStatusShort": "Estado da instância",
-    "effectiveCallNumberShelving": "Número de chamada efetivo (item), ordem da estante"
+    "effectiveCallNumberShelving": "Número de chamada efetivo (item), ordem da estante",
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search."
 }
