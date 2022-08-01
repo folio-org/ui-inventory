@@ -222,7 +222,7 @@
     "receiptStatus": "Inventarisierungsstatus",
     "acquisitionMethod": "Erwerbungsmethode",
     "acquisitionFormat": "Bestellungsformat",
-    "electronicBookplate": "Electronic bookplate",
+    "electronicBookplate": "Elektronisches Exlibris",
     "add": "Hinzufügen",
     "addFormerHoldingsId": "Frühere Bestands-ID hinzufügen",
     "addHoldingsStatement": "Bestandsangabe hinzufügen",
@@ -543,10 +543,10 @@
     "moveItems.modal.title": "Verschieben bestätigen",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {Exemplar wurde} other {Exemplare wurde}} erfolgreich transferiert.",
     "moveItems.instance.holdings.success": "{count, number} {count, plural, one {holding has} other {holdings have}} been successfully moved.",
-    "moveItems.instance.items.error": "Die folgenden Exemplarsätze konnten nicht verschoben werden {items}. Bitte Felder des Instanzdatensatzes prüfen oder den Systemadministrator benachrichtigen.",
-    "moveItems.instance.items.error.server": "Es gab ein Problem bei der Aktualisierung der folgenden Exemplarsätze {items}. Bitte erneut versuchen oder den Systemadministrator benachrichtigen.",
-    "moveItems.instance.holdings.error": "Die folgenden Bestandsdatensätze konnten nicht verschoben werden {holdings}.  Bitte Felder des Instanzdatensatzes prüfen oder den Systemadministrator benachrichtigen.",
-    "moveItems.instance.holdings.error.server": "Es gab ein Problem bei der Aktualisierung der folgenden Bestandsdatensätze {holdings}. Bitte erneut versuchen oder den Systemadministrator benachrichtigen.",
+    "moveItems.instance.items.error": "Die folgenden Exemplarsätze konnten nicht verschoben werden {items}. Bitte Felder des Instanzdatensatzes prüfen oder die Systemadministration benachrichtigen.",
+    "moveItems.instance.items.error.server": "Es gab ein Problem bei der Aktualisierung der folgenden Exemplarsätze {items}. Bitte erneut versuchen oder die Systemadministration benachrichtigen.",
+    "moveItems.instance.holdings.error": "Die folgenden Bestandsdatensätze konnten nicht verschoben werden {holdings}.  Bitte Felder des Instanzdatensatzes prüfen oder die Systemadministration benachrichtigen.",
+    "moveItems.instance.holdings.error.server": "Es gab ein Problem bei der Aktualisierung der folgenden Bestandsdatensätze {holdings}. Bitte erneut versuchen oder die Systemadministration benachrichtigen.",
     "newFastAddRecord": "Neue Kurzaufnahme",
     "holdingsStatementPublicNote": "Bestandsangabe öffentliche Anmerkung",
     "holdingsStatementStaffNote": "Bestandsangabe interne Anmerkung",
@@ -741,5 +741,6 @@
     "search.item.uuid": "Item UUID",
     "filters.nameType": "Name type",
     "instanceStatusShort": "Instance status",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order"
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order",
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search."
 }
