@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { CalloutContext } from '@folio/stripes/core';
-
+import { noop } from 'lodash';
 import { useMoveItemsMutation } from '../../common';
 import * as RemoteStorage from '../../RemoteStorageService';
 
@@ -22,6 +22,7 @@ export const useItems = () => {
       const { message } = error;
       callout.sendCallout({ type: 'error', message });
     },
+    onSuccess: noop
   });
 
   const moveItems = (fromHoldingsId, toHoldingsId, itemIds) => {
