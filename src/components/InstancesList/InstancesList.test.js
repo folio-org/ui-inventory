@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, cleanup } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -72,7 +72,10 @@ const resources = {
 
 const history = createMemoryHistory();
 
-const renderInstancesList = ({ segment }) => {
+const renderInstancesList = ({
+  segment,
+  ...rest
+}) => {
   const {
     indexes,
     indexesES,
@@ -84,10 +87,11 @@ const renderInstancesList = ({ segment }) => {
       <StripesContext.Provider value={stripesStub}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
+            {...rest}
             parentResources={resources}
             parentMutator={{
               resultCount: { replace: noop },
-              query: { update: updateMock },
+              query: { update: updateMock, replace: noop },
               browseModeRecords: {
                 reset: resetBrowseModeRecordsMock,
               },
@@ -197,6 +201,26 @@ describe('InstancesList', () => {
           });
 
           expect(screen.getByRole('button', { name: 'Instance' })).toHaveClass('primary');
+        });
+
+        it('should pass correct params to URL', () => {
+          cleanup();
+          const searchWithoutFilters = '?qindex=contributors&query=fakeQuery&sort=fakeSort';
+          const paramsMock = {
+            query: 'fakeQuery',
+            qindex: 'fakeQindex',
+            filters: 'fakeFilters',
+            sort: 'fakeSort',
+          };
+          renderInstancesList({
+            segment: 'instances',
+            getParams: () => paramsMock,
+          });
+          fireEvent.change(screen.getByRole('combobox'), {
+            target: { value: 'contributors' },
+          });
+
+          expect(history.location.search).toBe(searchWithoutFilters);
         });
       });
     });

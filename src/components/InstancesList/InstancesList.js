@@ -971,7 +971,7 @@ class InstancesList extends React.Component {
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
-        goTo(path, { ...params, qindex });
+        goTo(path, { ...omit(params, 'filters'), qindex });
       } else {
         this.setState({ isSingleResult: true });
       }
@@ -1121,6 +1121,7 @@ class InstancesList extends React.Component {
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
