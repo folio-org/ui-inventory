@@ -14,6 +14,7 @@
 * Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
 * The "Instance" record still displayed at the third pane when user selects "Browse contributors" option. Fixes UIIN-2124.
 * Escape quotes in browse string. Fix UIIN-2120.
+* The browse query changed when user returns from search to browse contributors pane. Fix UIIN-2069.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
