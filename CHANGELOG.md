@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.1.5](https://github.com/folio-org/ui-inventory/tree/v9.1.5) (2022-08-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.4...v9.1.5)
+
+* Browse contributors: # of results on the list is not the same as what the Contributors search returns. Refs UIIN-2134.
+* Escape quotes in browse string. Fix UIIN-2120.
+
 ## [9.1.4](https://github.com/folio-org/ui-inventory/tree/v9.1.4) (2022-07-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.3...v9.1.4)
 
