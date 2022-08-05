@@ -742,5 +742,6 @@
     "filters.nameType": "Tipo de autor",
     "instanceStatusShort": "Estado de la instancia",
     "effectiveCallNumberShelving": "Signatura efectiva (item), orden de estantería",
-    "browseContributors.results.error": "Error returning results. Please retry or revise your search."
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
+    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
 }
