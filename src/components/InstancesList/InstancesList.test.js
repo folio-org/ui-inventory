@@ -183,7 +183,7 @@ describe('InstancesList', () => {
             target: { value: 'contributors' },
           });
 
-          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '' });
+          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '', fromBrowse: false });
         });
 
         it('should reset browse records', () => {
