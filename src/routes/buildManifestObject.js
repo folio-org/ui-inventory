@@ -141,6 +141,7 @@ const memoizeGetFetch = (fn) => {
 const getFetchProp = () => {
   let prevQindex = null;
   let prevQuery = null;
+  let prevUserQuery = null;
 
   return memoizeGetFetch(props => {
     const {
@@ -149,6 +150,7 @@ const getFetchProp = () => {
     const params = new URLSearchParams(location.search);
     const qindex = params.get('qindex');
     const query = params.get('query');
+    const userQuery = params.get('userQuery');
     const filters = params.get('filters');
     const sort = params.get('sort');
     const hasReset = (
@@ -156,19 +158,25 @@ const getFetchProp = () => {
       !query &&
       !filters &&
       (sort === DEFAULT_SORT || !sort) &&
-      isEmpty(facetsStore.getState().facetSettings)
+      isEmpty(facetsStore.getState().facetSettings) &&
+      !userQuery
     );
     let isFetch = true;
 
     if (prevQindex !== qindex) {
+      const isCurSearchNormal = !browseModeMap[qindex];
+      const isPrevSearchBrowse = !!browseModeMap[prevQindex];
+      const hasChangedQueryToUserQuery = isCurSearchNormal && isPrevSearchBrowse && query === prevUserQuery && !userQuery;
+
       isFetch = (
         hasReset ||
-        prevQuery !== query
+        !(hasChangedQueryToUserQuery || prevQuery === query)
       );
     }
 
     prevQindex = qindex;
     prevQuery = query;
+    prevUserQuery = userQuery;
     return isFetch;
   });
 };
@@ -207,6 +215,7 @@ export function buildManifestObject() {
     query: {
       initialValue: {
         query: '',
+        userQuery: '',
         filters: '',
         sort: '',
       },

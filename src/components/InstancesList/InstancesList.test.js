@@ -20,6 +20,14 @@ import InstancesList from './InstancesList';
 const updateMock = jest.fn();
 const resetBrowseModeRecordsMock = jest.fn();
 
+const paramsMock = {
+  query: 'fakeQuery',
+  userQuery: 'fakeUserQuery',
+  qindex: 'fakeQindex',
+  filters: 'fakeFilters',
+  sort: 'fakeSort',
+};
+
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
@@ -205,13 +213,7 @@ describe('InstancesList', () => {
 
         it('should pass correct params to URL', () => {
           cleanup();
-          const searchWithoutFilters = '?qindex=contributors&query=fakeQuery&sort=fakeSort';
-          const paramsMock = {
-            query: 'fakeQuery',
-            qindex: 'fakeQindex',
-            filters: 'fakeFilters',
-            sort: 'fakeSort',
-          };
+          const searchWithoutFilters = '?qindex=contributors&query=fakeQuery&sort=fakeSort&userQuery=fakeUserQuery';
           renderInstancesList({
             segment: 'instances',
             getParams: () => paramsMock,
@@ -221,6 +223,29 @@ describe('InstancesList', () => {
           });
 
           expect(history.location.search).toBe(searchWithoutFilters);
+        });
+      });
+      describe('selecting a normal (not browse) option', () => {
+        describe('after navigating from the browse search to the normal search with the `query` that was not entered by the user', () => {
+          it('should change the `query` to the user entered value (userQuery) and reset `userQuery`', () => {
+            const qindexFromBrowseOptions = 'contributors';
+
+            cleanup();
+            renderInstancesList({
+              segment: 'instances',
+              getParams: () => ({ ...paramsMock, qindex: qindexFromBrowseOptions }),
+            });
+            fireEvent.change(screen.getByRole('combobox'), {
+              target: { value: 'title' },
+            });
+
+            expect(updateMock).toHaveBeenCalledWith({
+              qindex: 'title',
+              filters: '',
+              query: paramsMock.userQuery,
+              userQuery: '',
+            });
+          });
         });
       });
     });

@@ -57,6 +57,7 @@ import {
   segments,
   browseModeOptions,
   FACETS,
+  browseModeMap,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -738,6 +739,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'callNumber',
           query: row.shelfKey,
+          userQuery: '',
           filters: '',
         });
         break;
@@ -745,6 +747,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
+          userQuery: '',
           filters: '',
         });
         break;
@@ -755,6 +758,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
+          userQuery: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
         });
         break;
@@ -828,6 +832,15 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
+      const {
+        query: {
+          query,
+          userQuery,
+        },
+      } = parentResources;
+      const extraParams = {
+        userQuery: userQuery || query,
+      };
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
         [browseModeOptions.CALL_NUMBERS]: 'callNumber',
@@ -849,7 +862,7 @@ class InstancesList extends React.Component {
           anchor = records[0].name;
         }
 
-        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`);
+        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`, extraParams);
       } else {
         if (isCallNumber) {
           anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
@@ -859,7 +872,7 @@ class InstancesList extends React.Component {
           anchor = records[records.length - 1].name;
         }
 
-        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`);
+        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`, extraParams);
       }
     };
 
@@ -962,11 +975,21 @@ class InstancesList extends React.Component {
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
       const params = getParams();
+      const {
+        userQuery,
+        qindex: prevQindex,
+      } = params;
       const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
+      const isCurSearchNormal = !browseModeMap[qindex];
+      const isPrevSearchBrowse = !!browseModeMap[prevQindex];
 
       this.setState({ optionSelected: qindex });
 
-      parentMutator.query.update({ qindex, filters: '' });
+      parentMutator.query.update({
+        qindex,
+        filters: '',
+        ...(isCurSearchNormal && isPrevSearchBrowse && userQuery && { query: userQuery, userQuery: '' }),
+      });
 
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
@@ -1004,7 +1027,6 @@ class InstancesList extends React.Component {
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
     const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
     const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
-    const regExp = /((callNumber|subject|name) [<|>])|"*/ig;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -1075,7 +1097,6 @@ class InstancesList extends React.Component {
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
-            regExpForQuery={regExp}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
