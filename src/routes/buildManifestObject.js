@@ -151,7 +151,7 @@ const getFetchProp = () => {
     const query = params.get('query');
     const filters = params.get('filters');
     const sort = params.get('sort');
-    const fromBrowse = params.get('fromBrowse');
+    const selectedBrowseResult = params.get('selectedBrowseResult');
     const hasReset = (
       !qindex &&
       !query &&
@@ -165,7 +165,7 @@ const getFetchProp = () => {
       isFetch = (
         hasReset ||
         prevQuery !== query ||
-        fromBrowse === 'true'
+        selectedBrowseResult === 'true'
       );
     }
 
@@ -211,7 +211,7 @@ export function buildManifestObject() {
         query: '',
         filters: '',
         sort: '',
-        fromBrowse: false,
+        selectedBrowseResult: false,
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },

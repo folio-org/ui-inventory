@@ -739,7 +739,7 @@ class InstancesList extends React.Component {
           qindex: 'callNumber',
           query: row.shelfKey,
           filters: '',
-          fromBrowse: true,
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.SUBJECTS:
@@ -747,7 +747,7 @@ class InstancesList extends React.Component {
           qindex: 'subject',
           query: row.subject,
           filters: '',
-          fromBrowse: true,
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
@@ -758,7 +758,7 @@ class InstancesList extends React.Component {
           qindex: 'contributor',
           query: row.name,
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
-          fromBrowse: true,
+          selectedBrowseResult: true,
         });
         break;
       default:
@@ -964,12 +964,12 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
-      const params = omit(getParams(), ['fromBrowse']);
+      const params = omit(getParams(), ['selectedBrowseResult']);
       const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
 
       this.setState({ optionSelected: qindex });
 
-      parentMutator.query.update({ qindex, filters: '', fromBrowse: false });
+      parentMutator.query.update({ qindex, filters: '', selectedBrowseResult: false });
 
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
