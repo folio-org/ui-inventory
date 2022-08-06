@@ -737,7 +737,7 @@ class InstancesList extends React.Component {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
           qindex: 'callNumber',
-          query: row.shelfKey,
+          query: row.fullCallNumber,
           filters: '',
         });
         break;
@@ -799,7 +799,8 @@ class InstancesList extends React.Component {
 
     const itemToView = getItem(`${namespace}.position`);
 
-    const missedMatchItem = (query) => {
+    const missedMatchItem = (item) => {
+      const query = item && new URLSearchParams(this.props.location.search).get('query');
       return (
         <div className={css.missedMatchItemWrapper}>
           <span className={css.warnIcon}>
@@ -842,7 +843,7 @@ class InstancesList extends React.Component {
 
       if (direction === 'prev') {
         if (isCallNumber) {
-          anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+          anchor = records.find(i => i.fullCallNumber)?.fullCallNumber;
         } else if (isSubject) {
           anchor = records[0].subject;
         } else if (isContributors) {
@@ -852,7 +853,7 @@ class InstancesList extends React.Component {
         source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
-          anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
+          anchor = [...records].reverse().find(i => i.fullCallNumber)?.fullCallNumber;
         } else if (isSubject) {
           anchor = records[records.length - 1].subject;
         } else if (isContributors) {
@@ -933,7 +934,7 @@ class InstancesList extends React.Component {
         if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
-        return missedMatchItem(r.shelfKey);
+        return missedMatchItem();
       },
       'contributor': r => {
         if (r?.totalRecords) {
