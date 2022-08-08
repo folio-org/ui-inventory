@@ -453,7 +453,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsPermanentLocation = get(referenceTables?.locationsById[holdingsRecord?.permanentLocationId], ['name'], '-');
     const holdingsTemporaryLocation = get(referenceTables?.locationsById[holdingsRecord?.temporaryLocationId], ['name'], '-');
     const itemCount = get(items, 'records.length', 0);
-    const holdingsSourceName = holdingsSource?.name || instanceSource.name;
+    const holdingsSourceName = holdingsSource?.name || instanceSource?.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (
