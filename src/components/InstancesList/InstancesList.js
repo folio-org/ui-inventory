@@ -741,6 +741,7 @@ class InstancesList extends React.Component {
           query: row.shelfKey,
           userQuery: '',
           filters: '',
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.SUBJECTS:
@@ -749,6 +750,7 @@ class InstancesList extends React.Component {
           query: row.subject,
           userQuery: '',
           filters: '',
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
@@ -760,6 +762,7 @@ class InstancesList extends React.Component {
           query: row.name,
           userQuery: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
+          selectedBrowseResult: true,
         });
         break;
       default:
@@ -974,7 +977,7 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
-      const params = getParams();
+      const params = omit(getParams(), ['selectedBrowseResult']);
       const {
         userQuery,
         qindex: prevQindex,
@@ -988,6 +991,7 @@ class InstancesList extends React.Component {
       parentMutator.query.update({
         qindex,
         filters: '',
+        selectedBrowseResult: false,
         ...(isCurSearchNormal && isPrevSearchBrowse && userQuery && { query: userQuery, userQuery: '' }),
       });
 

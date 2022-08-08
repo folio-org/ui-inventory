@@ -742,5 +742,6 @@
     "filters.nameType": "Name type",
     "instanceStatusShort": "Instance status",
     "effectiveCallNumberShelving": "有效的索書號(館藏), 架上訂單",
-    "browseContributors.results.error": "Error returning results. Please retry or revise your search."
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
+    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
 }
