@@ -22,7 +22,8 @@ const resetBrowseModeRecordsMock = jest.fn();
 
 const paramsMock = {
   query: 'fakeQuery',
-  userQuery: 'fakeUserQuery',
+  browsePoint: 'fakeBrowsePoint',
+  selectedBrowseResult: 'fakeSelectedBrowseResult',
   qindex: 'fakeQindex',
   filters: 'fakeFilters',
   sort: 'fakeSort',
@@ -195,7 +196,12 @@ describe('InstancesList', () => {
             target: { value: 'contributors' },
           });
 
-          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '', selectedBrowseResult: false });
+          expect(updateMock).toHaveBeenCalledWith({
+            qindex: 'contributors',
+            filters: '',
+            selectedBrowseResult: false,
+            browsePoint: '',
+          });
         });
 
         it('should reset browse records', () => {
@@ -213,7 +219,6 @@ describe('InstancesList', () => {
 
         it('should pass correct params to URL', () => {
           cleanup();
-          const searchWithoutFilters = '?qindex=contributors&query=fakeQuery&sort=fakeSort&userQuery=fakeUserQuery';
           renderInstancesList({
             segment: 'instances',
             getParams: () => paramsMock,
@@ -222,30 +227,7 @@ describe('InstancesList', () => {
             target: { value: 'contributors' },
           });
 
-          expect(history.location.search).toBe(searchWithoutFilters);
-        });
-      });
-      describe('selecting a normal (not browse) option', () => {
-        describe('after navigating from the browse search to the normal search with the `query` that was not entered by the user', () => {
-          it('should change the `query` to the user entered value (userQuery) and reset `userQuery`', () => {
-            const qindexFromBrowseOptions = 'contributors';
-
-            cleanup();
-            renderInstancesList({
-              segment: 'instances',
-              getParams: () => ({ ...paramsMock, qindex: qindexFromBrowseOptions }),
-            });
-            fireEvent.change(screen.getByRole('combobox'), {
-              target: { value: 'title' },
-            });
-
-            expect(updateMock).toHaveBeenCalledWith({
-              qindex: 'title',
-              filters: '',
-              query: paramsMock.userQuery,
-              userQuery: '',
-            });
-          });
+          expect(history.location.search).toBe('?qindex=contributors&query=fakeQuery&sort=fakeSort');
         });
       });
     });

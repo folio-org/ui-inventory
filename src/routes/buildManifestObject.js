@@ -46,6 +46,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
+  const browsePoint = queryParams?.browsePoint;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex.match(/isbn|issn/)) {
@@ -54,7 +55,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
-  let templateQueryValue = queryValue;
+  let templateQueryValue = browsePoint || queryValue;
 
   if (Object.values(browseModeOptions).includes(queryIndex)
   && !query.query
@@ -141,7 +142,6 @@ const memoizeGetFetch = (fn) => {
 const getFetchProp = () => {
   let prevQindex = null;
   let prevQuery = null;
-  let prevUserQuery = null;
 
   return memoizeGetFetch(props => {
     const {
@@ -150,7 +150,7 @@ const getFetchProp = () => {
     const params = new URLSearchParams(location.search);
     const qindex = params.get('qindex');
     const query = params.get('query');
-    const userQuery = params.get('userQuery');
+    const browsePoint = params.get('browsePoint');
     const filters = params.get('filters');
     const sort = params.get('sort');
     const selectedBrowseResult = params.get('selectedBrowseResult');
@@ -160,25 +160,20 @@ const getFetchProp = () => {
       !filters &&
       (sort === DEFAULT_SORT || !sort) &&
       isEmpty(facetsStore.getState().facetSettings) &&
-      !userQuery
+      !browsePoint
     );
     let isFetch = true;
 
     if (prevQindex !== qindex) {
-      const isCurSearchNormal = !browseModeMap[qindex];
-      const isPrevSearchBrowse = !!browseModeMap[prevQindex];
-      const hasChangedQueryToUserQuery = isCurSearchNormal && isPrevSearchBrowse && query === prevUserQuery && !userQuery;
-
       isFetch = (
         hasReset ||
-        !(hasChangedQueryToUserQuery || prevQuery === query) ||
+        prevQuery !== query ||
         selectedBrowseResult === 'true'
       );
     }
 
     prevQindex = qindex;
     prevQuery = query;
-    prevUserQuery = userQuery;
     return isFetch;
   });
 };
@@ -217,7 +212,7 @@ export function buildManifestObject() {
     query: {
       initialValue: {
         query: '',
-        userQuery: '',
+        browsePoint: '',
         filters: '',
         sort: '',
         selectedBrowseResult: false,

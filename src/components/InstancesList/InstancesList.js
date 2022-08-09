@@ -57,7 +57,6 @@ import {
   segments,
   browseModeOptions,
   FACETS,
-  browseModeMap,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -174,6 +173,11 @@ class InstancesList extends React.Component {
       });
     }
   }
+
+  extraParamsToReset = {
+    browsePoint: '',
+    selectedBrowseResult: false,
+  };
 
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
@@ -739,7 +743,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'callNumber',
           query: row.shelfKey,
-          userQuery: '',
+          browsePoint: '',
           filters: '',
           selectedBrowseResult: true,
         });
@@ -748,7 +752,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
-          userQuery: '',
+          browsePoint: '',
           filters: '',
           selectedBrowseResult: true,
         });
@@ -760,7 +764,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
-          userQuery: '',
+          browsePoint: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
           selectedBrowseResult: true,
         });
@@ -835,15 +839,6 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
-      const {
-        query: {
-          query,
-          userQuery,
-        },
-      } = parentResources;
-      const extraParams = {
-        userQuery: userQuery || query,
-      };
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
         [browseModeOptions.CALL_NUMBERS]: 'callNumber',
@@ -865,7 +860,7 @@ class InstancesList extends React.Component {
           anchor = records[0].name;
         }
 
-        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`, extraParams);
+        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
           anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
@@ -875,7 +870,7 @@ class InstancesList extends React.Component {
           anchor = records[records.length - 1].name;
         }
 
-        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`, extraParams);
+        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`);
       }
     };
 
@@ -977,28 +972,21 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
-      const params = omit(getParams(), ['selectedBrowseResult']);
-      const {
-        userQuery,
-        qindex: prevQindex,
-      } = params;
+      const params = omit(getParams(), ['filters', ...Object.keys(this.extraParamsToReset)]);
       const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
-      const isCurSearchNormal = !browseModeMap[qindex];
-      const isPrevSearchBrowse = !!browseModeMap[prevQindex];
 
       this.setState({ optionSelected: qindex });
 
       parentMutator.query.update({
         qindex,
         filters: '',
-        selectedBrowseResult: false,
-        ...(isCurSearchNormal && isPrevSearchBrowse && userQuery && { query: userQuery, userQuery: '' }),
+        ...this.extraParamsToReset,
       });
 
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
-        goTo(path, { ...omit(params, 'filters'), qindex });
+        goTo(path, { ...params, qindex });
       } else {
         this.setState({ isSingleResult: true });
       }
@@ -1142,6 +1130,7 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
+            extraParamsToReset={this.extraParamsToReset}
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
