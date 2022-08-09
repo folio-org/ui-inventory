@@ -7,7 +7,7 @@ const useInstancesQuery = (ids = []) => {
   const ky = useOkapiKy();
   const query = ids.map(id => `id==${id}`).join(' OR ');
   const [queryKey] = useNamespace({ key: 'sub-instance' });
-  const queryFn = () => ky.get('inventory/instances', { searchParams: { query } }).json();
+  const queryFn = () => ky.get('inventory/instances', { searchParams: { query, limit: 1000 } }).json();
 
   return useQuery([queryKey, query], queryFn, { enabled: query.length > 0 });
 };
