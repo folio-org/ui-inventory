@@ -145,7 +145,6 @@ class InstancesList extends React.Component {
     super(props);
 
     this.state = {
-      isMissedMatchItemShown: true,
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
       instancesIdExportInProgress: false,
