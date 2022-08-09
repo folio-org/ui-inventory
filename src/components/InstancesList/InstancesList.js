@@ -796,7 +796,7 @@ class InstancesList extends React.Component {
       selectedRows,
       optionSelected,
       searchAndSortKey,
-      isSingleResult,
+      isSingleResult
     } = this.state;
     const { sendCallout } = this.context;
 
