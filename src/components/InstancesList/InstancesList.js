@@ -145,6 +145,7 @@ class InstancesList extends React.Component {
     super(props);
 
     this.state = {
+      isMissedMatchItemShown: true,
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
       instancesIdExportInProgress: false,
@@ -793,14 +794,13 @@ class InstancesList extends React.Component {
       selectedRows,
       optionSelected,
       searchAndSortKey,
-      isSingleResult
+      isSingleResult,
     } = this.state;
     const { sendCallout } = this.context;
 
     const itemToView = getItem(`${namespace}.position`);
 
-    const missedMatchItem = (item) => {
-      const query = item && new URLSearchParams(this.props.location.search).get('query');
+    const missedMatchItem = (query) => {
       return (
         <div className={css.missedMatchItemWrapper}>
           <span className={css.warnIcon}>
@@ -934,7 +934,7 @@ class InstancesList extends React.Component {
         if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.shelfKey);
       },
       'contributor': r => {
         if (r?.totalRecords) {
