@@ -16,6 +16,7 @@
 * Escape quotes in browse string. Fix UIIN-2120.
 * Browse contributors: # of results on the list is not the same as what the Contributors search returns. Refs UIIN-2134.
 * Browse | The request doesn't send when user clicks on highlighted in bold contributor name. Fixes UIIN-2140.
+* Incorrect format of the missing match in the call number browse. Refs UIIN-2141.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
