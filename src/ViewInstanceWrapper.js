@@ -20,11 +20,11 @@ const ViewInstanceWrapper = (props) => {
   const childInstances = useLoadSubInstances(selectedInstance?.childInstances, 'subInstanceId');
 
   if (selectedInstance) {
-    if (parentInstances?.length) {
+    if (selectedInstance?.parentInstances?.length && parentInstances?.length) {
       selectedInstance = { ...selectedInstance, parentInstances };
     }
 
-    if (childInstances?.length) {
+    if (selectedInstance?.childInstances?.length && childInstances?.length) {
       selectedInstance = { ...selectedInstance, childInstances };
     }
   }
