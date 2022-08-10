@@ -46,6 +46,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
+  const browsePoint = queryParams?.browsePoint;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex.match(/isbn|issn/)) {
@@ -54,7 +55,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
-  let templateQueryValue = queryValue;
+  let templateQueryValue = browsePoint || queryValue;
 
   if (Object.values(browseModeOptions).includes(queryIndex)
   && !query.query
@@ -149,6 +150,7 @@ const getFetchProp = () => {
     const params = new URLSearchParams(location.search);
     const qindex = params.get('qindex');
     const query = params.get('query');
+    const browsePoint = params.get('browsePoint');
     const filters = params.get('filters');
     const sort = params.get('sort');
     const selectedBrowseResult = params.get('selectedBrowseResult');
@@ -157,7 +159,8 @@ const getFetchProp = () => {
       !query &&
       !filters &&
       (sort === DEFAULT_SORT || !sort) &&
-      isEmpty(facetsStore.getState().facetSettings)
+      isEmpty(facetsStore.getState().facetSettings) &&
+      !browsePoint
     );
     let isFetch = true;
 
@@ -209,6 +212,7 @@ export function buildManifestObject() {
     query: {
       initialValue: {
         query: '',
+        browsePoint: '',
         filters: '',
         sort: '',
         selectedBrowseResult: false,
