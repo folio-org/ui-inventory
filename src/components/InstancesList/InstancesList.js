@@ -174,6 +174,11 @@ class InstancesList extends React.Component {
     }
   }
 
+  extraParamsToReset = {
+    browsePoint: '',
+    selectedBrowseResult: false,
+  };
+
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('qindex');
@@ -738,6 +743,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'callNumber',
           query: row.fullCallNumber,
+          browsePoint: '',
           filters: '',
           selectedBrowseResult: true,
         });
@@ -746,6 +752,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
+          browsePoint: '',
           filters: '',
           selectedBrowseResult: true,
         });
@@ -757,6 +764,7 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
+          browsePoint: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
           selectedBrowseResult: true,
         });
@@ -852,7 +860,7 @@ class InstancesList extends React.Component {
           anchor = records[0].name;
         }
 
-        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`);
+        source.fetchByBrowsePoint(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
           anchor = [...records].reverse().find(i => i.fullCallNumber)?.fullCallNumber;
@@ -862,7 +870,7 @@ class InstancesList extends React.Component {
           anchor = records[records.length - 1].name;
         }
 
-        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`);
+        source.fetchByBrowsePoint(`${param} > "${anchor.replace(/"/g, '')}"`);
       }
     };
 
@@ -964,12 +972,16 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
-      const params = omit(getParams(), ['selectedBrowseResult']);
+      const params = omit(getParams(), ['filters', ...Object.keys(this.extraParamsToReset)]);
       const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
 
       this.setState({ optionSelected: qindex });
 
-      parentMutator.query.update({ qindex, filters: '', selectedBrowseResult: false });
+      parentMutator.query.update({
+        qindex,
+        filters: '',
+        ...this.extraParamsToReset,
+      });
 
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
@@ -1007,7 +1019,6 @@ class InstancesList extends React.Component {
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
     const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
     const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
-    const regExp = /((callNumber|subject|name) [<|>])|"*/ig;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -1078,7 +1089,6 @@ class InstancesList extends React.Component {
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
-            regExpForQuery={regExp}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -1120,10 +1130,12 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
+            extraParamsToReset={this.extraParamsToReset}
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
