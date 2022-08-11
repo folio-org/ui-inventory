@@ -936,7 +936,7 @@ class InstancesList extends React.Component {
         if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
-        return missedMatchItem(r.shelfKey);
+        return missedMatchItem(r.fullCallNumber);
       },
       'contributor': r => {
         if (r?.totalRecords) {
