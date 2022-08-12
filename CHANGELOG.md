@@ -1,5 +1,12 @@
 # Change history for ui-inventory
 
+## [9.1.6](https://github.com/folio-org/ui-inventory/tree/v9.1.6) (2022-08-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.5...v9.1.6)
+
+* Fix reference to `instanceSource` name. Fixes UIIN-2101.
+* Do not load child/parent relations when navigating between two instances. Fixes UIIN-2129.
+* Increase limit for fetching child/parents relations. Fixes UIIN-2150.
+
 ## [9.1.5](https://github.com/folio-org/ui-inventory/tree/v9.1.5) (2022-08-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.4...v9.1.5)
 
