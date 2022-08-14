@@ -158,6 +158,7 @@ class InstancesList extends React.Component {
       optionSelected: '',
       searchAndSortKey: 0,
       isSingleResult: this.props.showSingleResult,
+      isNavigationDisabled: false,
     };
   }
 
@@ -839,6 +840,9 @@ class InstancesList extends React.Component {
     };
 
     const handleOnNeedMore = ({ direction, records, source }) => {
+      this.setState({
+        isNavigationDisabled: true,
+      });
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
         [browseModeOptions.CALL_NUMBERS]: 'callNumber',
@@ -850,6 +854,8 @@ class InstancesList extends React.Component {
       const isContributors = optionSelected === browseModeOptions.CONTRIBUTORS;
       const param = paramByBrowseMode[optionSelected];
       let anchor;
+
+      console.log('parentResources', parentResources);
 
       if (direction === 'prev') {
         if (isCallNumber) {
@@ -872,6 +878,10 @@ class InstancesList extends React.Component {
 
         source.fetchByBrowsePoint(`${param} > "${anchor.replace(/"/g, '')}"`);
       }
+
+      this.setState({
+        isNavigationDisabled: false,
+      });
     };
 
     const resultsFormatter = {
@@ -1042,8 +1052,8 @@ class InstancesList extends React.Component {
     ];
 
     const other = parentResources.records.other;
-    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
-    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
+    const pagingCanGoNext = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.next : null);
+    const pagingCanGoPrevious = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.prev : null);
 
     const validateDataQuery = (query) => {
       const containsAsterisk = /\*/;
