@@ -1041,8 +1041,8 @@ class InstancesList extends React.Component {
     ];
 
     const other = parentResources.records.other;
-    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
-    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
+    const pagingCanGoNext = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.next : null);
+    const pagingCanGoPrevious = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.prev : null);
 
     return (
       <HasCommand
