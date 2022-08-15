@@ -21,6 +21,7 @@
 * The browse query changed when user returns from search to browse contributors pane. UIIN-2125.
 * Do not load child/parent relations when navigating between two instances. Fixes UIIN-2129.
 * Remove shelving order in search option. Fixes UIIN-2151.
+* Clearing filters after clicking "Previous"/"Next" buttons in Inventory tab on Browse form. UIIN-2131.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
