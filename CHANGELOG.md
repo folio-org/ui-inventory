@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.1.8](https://github.com/folio-org/ui-inventory/tree/v9.1.8) (2022-08-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.7...v9.1.8)
+
+* Clearing filters after clicking "Previous"/"Next" buttons in Inventory tab on Browse form. UIIN-2131.
+* Item Circulation history: Items that has not been checked in, have the first Service point in the list of service points assigned in the UI. Refs UIIN-2109
+
 ## [9.1.7](https://github.com/folio-org/ui-inventory/tree/v9.1.7) (2022-08-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.6...v9.1.7)
 
