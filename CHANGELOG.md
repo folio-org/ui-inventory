@@ -1,5 +1,15 @@
 # Change history for ui-inventory
 
+## [9.1.7](https://github.com/folio-org/ui-inventory/tree/v9.1.7) (2022-08-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.6...v9.1.7)
+
+* Browse contributors may show results floating amid blank rows. Fixes UIIN-2094.
+* The "Instance" record still displayed at the third pane when user selects "Browse contributors" option. Fixes UIIN-2124.
+* Browse contributors | Instance search query does not include contributor Name type. Fixes UIIN-2096.
+* Browse | The request doesn't send when user clicks on highlighted in bold contributor name. Fixes UIIN-2140.
+* Incorrect format of the missing match in the call number browse. Refs UIIN-2141.
+* The browse query changed when user returns from search to browse contributors pane. UIIN-2125.
+
 ## [9.1.6](https://github.com/folio-org/ui-inventory/tree/v9.1.6) (2022-08-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.5...v9.1.6)
 
