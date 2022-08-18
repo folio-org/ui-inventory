@@ -741,7 +741,7 @@
     "search.item.uuid": "المعرّف الفريد العمومي للمادة",
     "filters.nameType": "نوع الاسم",
     "instanceStatusShort": "حالة الوعاء",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order",
+    "effectiveCallNumberShelving": "رقم الاستدعاء النشط (مادة)",
     "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
     "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
 }
