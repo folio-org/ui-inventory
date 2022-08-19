@@ -174,6 +174,11 @@ class InstancesList extends React.Component {
     }
   }
 
+  extraParamsToReset = {
+    browsePoint: '',
+    selectedBrowseResult: false,
+  };
+
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('qindex');
@@ -737,15 +742,19 @@ class InstancesList extends React.Component {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
           qindex: 'callNumber',
-          query: row.shelfKey,
+          query: row.fullCallNumber,
+          browsePoint: '',
           filters: '',
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.SUBJECTS:
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
+          browsePoint: '',
           filters: '',
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
@@ -755,7 +764,9 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
+          browsePoint: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
+          selectedBrowseResult: true,
         });
         break;
       default:
@@ -842,24 +853,24 @@ class InstancesList extends React.Component {
 
       if (direction === 'prev') {
         if (isCallNumber) {
-          anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+          anchor = records.find(i => i.fullCallNumber)?.fullCallNumber;
         } else if (isSubject) {
           anchor = records[0].subject;
         } else if (isContributors) {
           anchor = records[0].name;
         }
 
-        source.fetchByQuery(`${param} < "${anchor.replace(/"/g, '')}"`);
+        source.fetchByBrowsePoint(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
-          anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
+          anchor = [...records].reverse().find(i => i.fullCallNumber)?.fullCallNumber;
         } else if (isSubject) {
           anchor = records[records.length - 1].subject;
         } else if (isContributors) {
           anchor = records[records.length - 1].name;
         }
 
-        source.fetchByQuery(`${param} > "${anchor.replace(/"/g, '')}"`);
+        source.fetchByBrowsePoint(`${param} > "${anchor.replace(/"/g, '')}"`);
       }
     };
 
@@ -933,7 +944,7 @@ class InstancesList extends React.Component {
         if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
-        return missedMatchItem(r.shelfKey);
+        return missedMatchItem(r.fullCallNumber);
       },
       'contributor': r => {
         if (r?.totalRecords) {
@@ -961,12 +972,16 @@ class InstancesList extends React.Component {
 
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
-      const params = getParams();
+      const params = omit(getParams(), ['filters', ...Object.keys(this.extraParamsToReset)]);
       const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
 
       this.setState({ optionSelected: qindex });
 
-      parentMutator.query.update({ qindex, filters: '' });
+      parentMutator.query.update({
+        qindex,
+        filters: '',
+        ...this.extraParamsToReset,
+      });
 
       if (isBrowseOption) {
         parentMutator.browseModeRecords.reset();
@@ -1004,7 +1019,6 @@ class InstancesList extends React.Component {
     const searchFieldButtonLabelBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.browse" /> : null;
     const titleBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.title.browseCall" /> : null;
     const notLoadedMessageBrowse = browseSelectedString ? <FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" /> : null;
-    const regExp = /((callNumber|subject|name) [<|>])|"*/ig;
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
       const { prefix = '' } = index;
@@ -1028,8 +1042,8 @@ class InstancesList extends React.Component {
     ];
 
     const other = parentResources.records.other;
-    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
-    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
+    const pagingCanGoNext = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.next : null);
+    const pagingCanGoPrevious = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.prev : null);
 
     const validateDataQuery = (query) => {
       const containsAsterisk = /\*/;
@@ -1075,7 +1089,6 @@ class InstancesList extends React.Component {
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
-            regExpForQuery={regExp}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -1117,10 +1130,12 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={MCLPagingTypes.PREV_NEXT}
+            extraParamsToReset={this.extraParamsToReset}
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
             sortableColumns={['title', 'contributors', 'publishers']}
+            syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
