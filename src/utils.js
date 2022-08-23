@@ -198,9 +198,6 @@ export const buildDateRangeQuery = name => values => {
   const start = moment(startDateString).startOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
   const end = moment(endDateString).endOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
 
-  //const start = '2022-07-04T00:00:00+00:00';
-  //const end = '2022-07-04T06:00:00';
-
   return `${name}>="${start}" and ${name}<="${end}"`;
 };
 
