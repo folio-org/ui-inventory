@@ -6,9 +6,10 @@ import {
 import { act, render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
-import useOkapiKy from '@folio/stripes-core/src/useOkapiKy';
-
 import '../../../test/jest/__mock__';
+
+// eslint-disable-next-line import/order
+import { useOkapiKy } from '@folio/stripes/core';
 
 import { translationsProperties } from '../../../test/jest/helpers';
 import Harness from '../../../test/jest/helpers/Harness';
@@ -18,7 +19,6 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn()
 }));
-jest.mock('@folio/stripes-core/src/useOkapiKy', () => jest.fn());
 
 const ORDER_ID = 'orderId';
 
