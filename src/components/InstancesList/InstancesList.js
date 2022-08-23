@@ -33,9 +33,9 @@ import {
   MenuSection,
   checkScope,
   HasCommand,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
 
-import { pagingTypes } from '@folio/stripes-components/lib/MultiColumnList';
 import FilterNavigation from '../FilterNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
@@ -1129,7 +1129,7 @@ class InstancesList extends React.Component {
             renderFilters={browseFilter()}
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
-            pagingType={pagingTypes.PREV_NEXT}
+            pagingType={MCLPagingTypes.PREV_NEXT}
             extraParamsToReset={this.extraParamsToReset}
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}

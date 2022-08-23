@@ -9,7 +9,7 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import { useOkapiKy } from '@folio/stripes-core';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import { ORDERS_API } from '../../constants';
 import NewOrderModal from './NewOrderModal';

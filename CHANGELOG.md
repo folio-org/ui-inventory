@@ -12,6 +12,7 @@
 * The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
 * Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
 * Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
+* Fix import paths for stripes. Refs UIIN-2111.
 * The "Instance" record still displayed at the third pane when user selects "Browse contributors" option. Fixes UIIN-2124.
 * Escape quotes in browse string. Fix UIIN-2120.
 * Browse contributors: # of results on the list is not the same as what the Contributors search returns. Refs UIIN-2134.

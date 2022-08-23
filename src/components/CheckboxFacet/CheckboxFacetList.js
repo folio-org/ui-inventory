@@ -8,7 +8,7 @@ import {
   TextField,
   Button,
   Icon,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import { useSearchValue } from '../../stores/facetsStore';
 
