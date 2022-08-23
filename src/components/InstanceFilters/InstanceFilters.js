@@ -8,10 +8,10 @@ import {
   AccordionSet,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import { DateRangeFilter } from '@folio/stripes/smart-components';
 
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
+import DateRangeFilter from '../DateRangeFilter';
 import {
   getSourceOptions,
   getSuppressedOptions,
@@ -31,6 +31,7 @@ import {
   makeDateRangeFilterString,
   retrieveDatesFromDateRangeFilterString,
 } from '../../utils';
+
 
 const InstanceFilters = props => {
   const {
