@@ -48,7 +48,7 @@ import AdministrativeNoteFields from '../administrativeNoteFields';
 
 
 // eslint-disable-next-line no-unused-vars
-function validate(values, props) {
+function validate(values) {
   const errors = {};
 
   if (!values.permanentLocationId) {

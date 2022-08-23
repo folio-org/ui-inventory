@@ -741,5 +741,7 @@
     "search.item.uuid": "单件UUID",
     "filters.nameType": "名称类型",
     "instanceStatusShort": "实例状态",
-    "effectiveCallNumberShelving": "有效索书号（单件），排架顺序"
+    "effectiveCallNumberShelving": "有效索书号（单件），排架顺序",
+    "browseContributors.results.error": "返回结果时出错。请重试或修改搜索。",
+    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
 }

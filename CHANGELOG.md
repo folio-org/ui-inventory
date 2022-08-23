@@ -7,6 +7,21 @@
 * Fix reference to `instanceSource` name. Fixes UIIN-2101.
 * Fix Cannot add tags to Instance when unlinked preceding/succeeding titles present. Fixes UIIN-2084.
 * Browse call numbers "records found" count is non-sensical. Refs UIIN-2093.
+* Fix Query is copied to search field when navigating back and forth. Fix UIIN-2114.
+* Browse contributors may show results floating amid blank rows. Fixes UIIN-2094.
+* The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
+* Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
+* Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
+* The "Instance" record still displayed at the third pane when user selects "Browse contributors" option. Fixes UIIN-2124.
+* Escape quotes in browse string. Fix UIIN-2120.
+* Browse contributors: # of results on the list is not the same as what the Contributors search returns. Refs UIIN-2134.
+* Browse | The request doesn't send when user clicks on highlighted in bold contributor name. Fixes UIIN-2140.
+* Incorrect format of the missing match in the call number browse. Refs UIIN-2141.
+* Increase limit for fetching child/parents relations. Fixes UIIN-2150.
+* The browse query changed when user returns from search to browse contributors pane. UIIN-2125.
+* Do not load child/parent relations when navigating between two instances. Fixes UIIN-2129.
+* Remove shelving order in search option. Fixes UIIN-2151.
+* Clearing filters after clicking "Previous"/"Next" buttons in Inventory tab on Browse form. UIIN-2131.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)

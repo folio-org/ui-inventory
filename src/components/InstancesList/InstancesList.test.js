@@ -3,7 +3,7 @@ import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, cleanup } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -18,6 +18,16 @@ import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
 const updateMock = jest.fn();
+const resetBrowseModeRecordsMock = jest.fn();
+
+const paramsMock = {
+  query: 'fakeQuery',
+  browsePoint: 'fakeBrowsePoint',
+  selectedBrowseResult: 'fakeSelectedBrowseResult',
+  qindex: 'fakeQindex',
+  filters: 'fakeFilters',
+  sort: 'fakeSort',
+};
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -29,6 +39,7 @@ const stripesStub = {
 };
 const data = {
   contributorTypes: [],
+  contributorNameTypes: [],
   instanceTypes: [],
   locations: [],
   instanceFormats: [],
@@ -70,7 +81,10 @@ const resources = {
 
 const history = createMemoryHistory();
 
-const renderInstancesList = ({ segment }) => {
+const renderInstancesList = ({
+  segment,
+  ...rest
+}) => {
   const {
     indexes,
     indexesES,
@@ -82,10 +96,14 @@ const renderInstancesList = ({ segment }) => {
       <StripesContext.Provider value={stripesStub}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
+            {...rest}
             parentResources={resources}
             parentMutator={{
               resultCount: { replace: noop },
-              query: { update: updateMock },
+              query: { update: updateMock, replace: noop },
+              browseModeRecords: {
+                reset: resetBrowseModeRecordsMock,
+              },
             }}
             data={{
               ...data,
@@ -149,10 +167,14 @@ describe('InstancesList', () => {
 
     describe('opening action menu', () => {
       beforeEach(() => {
+        fireEvent.change(screen.getByRole('combobox'), {
+          target: { value: 'all' }
+        });
+
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
       });
 
-      it('should disable toggable columns', () => {
+      it('should disable toggleable columns', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
       });
 
@@ -174,7 +196,17 @@ describe('InstancesList', () => {
             target: { value: 'contributors' },
           });
 
-          expect(updateMock).toHaveBeenCalledWith({ qindex: 'contributors', filters: '' });
+          expect(updateMock).toHaveBeenCalledWith({
+            qindex: 'contributors',
+            filters: '',
+            selectedBrowseResult: false,
+            browsePoint: '',
+          });
+        });
+
+        it('should reset browse records', () => {
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+          expect(resetBrowseModeRecordsMock).toHaveBeenCalled();
         });
 
         it('should display Instances segment navigation button as primary', () => {
@@ -184,6 +216,19 @@ describe('InstancesList', () => {
 
           expect(screen.getByRole('button', { name: 'Instance' })).toHaveClass('primary');
         });
+
+        it('should pass correct params to URL', () => {
+          cleanup();
+          renderInstancesList({
+            segment: 'instances',
+            getParams: () => paramsMock,
+          });
+          fireEvent.change(screen.getByRole('combobox'), {
+            target: { value: 'contributors' },
+          });
+
+          expect(history.location.search).toBe('?qindex=contributors&query=fakeQuery&sort=fakeSort');
+        });
       });
     });
   });
@@ -191,6 +236,10 @@ describe('InstancesList', () => {
   describe('rendering InstancesList with holdings segment', () => {
     it('should show Save Holdings UUIDs button', () => {
       renderInstancesList({ segment: 'holdings' });
+
+      fireEvent.change(screen.getByRole('combobox'), {
+        target: { value: 'all' }
+      });
 
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
 

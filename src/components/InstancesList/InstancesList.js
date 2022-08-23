@@ -174,6 +174,11 @@ class InstancesList extends React.Component {
     }
   }
 
+  extraParamsToReset = {
+    browsePoint: '',
+    selectedBrowseResult: false,
+  };
+
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('qindex');
@@ -737,15 +742,19 @@ class InstancesList extends React.Component {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
           qindex: 'callNumber',
-          query: row.shelfKey,
+          query: row.fullCallNumber,
+          browsePoint: '',
           filters: '',
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.SUBJECTS:
         parentMutator.query.update({
           qindex: 'subject',
           query: row.subject,
+          browsePoint: '',
           filters: '',
+          selectedBrowseResult: true,
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
@@ -755,7 +764,9 @@ class InstancesList extends React.Component {
         parentMutator.query.update({
           qindex: 'contributor',
           query: row.name,
+          browsePoint: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
+          selectedBrowseResult: true,
         });
         break;
       default:
@@ -781,6 +792,8 @@ class InstancesList extends React.Component {
       match: {
         path,
       },
+      goTo,
+      getParams,
       namespace,
       stripes,
       fetchFacets,
@@ -793,11 +806,11 @@ class InstancesList extends React.Component {
       searchAndSortKey,
       isSingleResult
     } = this.state;
+    const { sendCallout } = this.context;
 
     const itemToView = getItem(`${namespace}.position`);
 
-    const missedMatchItem = () => {
-      const query = new URLSearchParams(this.props.location.search).get('query');
+    const missedMatchItem = (query) => {
       return (
         <div className={css.missedMatchItemWrapper}>
           <span className={css.warnIcon}>
@@ -840,24 +853,24 @@ class InstancesList extends React.Component {
 
       if (direction === 'prev') {
         if (isCallNumber) {
-          anchor = records.find(i => i.fullCallNumber)?.shelfKey;
+          anchor = records.find(i => i.fullCallNumber)?.fullCallNumber;
         } else if (isSubject) {
           anchor = records[0].subject;
         } else if (isContributors) {
           anchor = records[0].name;
         }
 
-        source.fetchByQuery(`${param} < "${anchor}"`);
+        source.fetchByBrowsePoint(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
-          anchor = [...records].reverse().find(i => i.fullCallNumber)?.shelfKey;
+          anchor = [...records].reverse().find(i => i.fullCallNumber)?.fullCallNumber;
         } else if (isSubject) {
           anchor = records[records.length - 1].subject;
         } else if (isContributors) {
           anchor = records[records.length - 1].name;
         }
 
-        source.fetchByQuery(`${param} > "${anchor}"`);
+        source.fetchByBrowsePoint(`${param} > "${anchor.replace(/"/g, '')}"`);
       }
     };
 
@@ -925,19 +938,19 @@ class InstancesList extends React.Component {
         if (r?.totalRecords) {
           return getFullMatchRecord(r?.subject, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.subject);
       },
       'callNumber': r => {
         if (r?.instance || r?.totalRecords) {
           return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.fullCallNumber);
       },
       'contributor': r => {
         if (r?.totalRecords) {
           return getFullMatchRecord(r?.name, r.isAnchor);
         }
-        return missedMatchItem();
+        return missedMatchItem(r.name);
       },
       'contributorType': r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
       'relatorTerm': r => {
@@ -958,14 +971,22 @@ class InstancesList extends React.Component {
     const isHandleOnNeedMore = Object.values(browseModeOptions).includes(optionSelected) ? handleOnNeedMore : null;
 
     const onChangeIndex = (e) => {
-      this.setState({ optionSelected: e.target.value });
+      const qindex = e.target.value;
+      const params = omit(getParams(), ['filters', ...Object.keys(this.extraParamsToReset)]);
+      const isBrowseOption = Object.values(browseModeOptions).includes(qindex);
 
-      const isBrowseOption = Object.values(browseModeOptions).includes(e.target.value);
+      this.setState({ optionSelected: qindex });
 
-      parentMutator.query.update({ qindex: e.target.value, filters: '' });
+      parentMutator.query.update({
+        qindex,
+        filters: '',
+        ...this.extraParamsToReset,
+      });
 
       if (isBrowseOption) {
+        parentMutator.browseModeRecords.reset();
         this.setState({ isSingleResult: false });
+        goTo(path, { ...params, qindex });
       } else {
         this.setState({ isSingleResult: true });
       }
@@ -1021,8 +1042,25 @@ class InstancesList extends React.Component {
     ];
 
     const other = parentResources.records.other;
-    const pagingCanGoNext = browseQueryExecuted ? !!other?.next : null;
-    const pagingCanGoPrevious = browseQueryExecuted ? !!other?.prev : null;
+    const pagingCanGoNext = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.next : null);
+    const pagingCanGoPrevious = !parentResources.records.isPending && (browseQueryExecuted ? !!other?.prev : null);
+
+    const validateDataQuery = (query) => {
+      const containsAsterisk = /\*/;
+      const isValidSearch = !containsAsterisk.test(query);
+      const isContributors = optionSelected === browseModeOptions.CONTRIBUTORS;
+
+      if (isContributors && !isValidSearch) {
+        sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.browseContributors.results.error" />,
+        });
+
+        return false;
+      }
+
+      return true;
+    };
 
     return (
       <HasCommand
@@ -1066,11 +1104,14 @@ class InstancesList extends React.Component {
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',
+              contributorType: '15%',
+              relatorTerm: '15%',
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
             resultsFormatter={resultsFormatter}
             onCreate={this.onCreate}
+            validateSearchOnSubmit={validateDataQuery}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
             disableRecordCreation={disableRecordCreation || false}
@@ -1089,6 +1130,7 @@ class InstancesList extends React.Component {
             onFilterChange={this.onFilterChangeHandler}
             pageAmount={100}
             pagingType={pagingTypes.PREV_NEXT}
+            extraParamsToReset={this.extraParamsToReset}
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
