@@ -7,8 +7,8 @@ import {
   AccordionSet,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import { DateRangeFilter } from '@folio/stripes/smart-components';
 
+import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import { useFacets } from '../../common/hooks';

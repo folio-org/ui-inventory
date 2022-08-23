@@ -163,6 +163,7 @@ export const actionMenuDisplayPerms = [
 ];
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
+export const DATE_TIME_RANGE_FILTER_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
 
 export const layers = {
   CREATE: 'create',
