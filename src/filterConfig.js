@@ -115,7 +115,7 @@ export const instanceIndexes = [
   // instead. It might make sense to rename the keyword option to something like `keywordAll`
   // but, without tracing the use of the value, I don't know what effects that would have in the code.
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors ==/string "%{query.query}"' },
+  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors.name ==/string "%{query.query}"' },
   { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
   { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"  or isbn="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
