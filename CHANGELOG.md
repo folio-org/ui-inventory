@@ -12,6 +12,7 @@
 * The table columns size changes when user return to the "Browse inventory" pane. Fixes UIIN-2106.
 * Non-exact match placeholder message displayed when user switching between browse contributors result list pages. Fixes UIIN-2087.
 * Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
+* Fix import paths for stripes. Refs UIIN-2111.
 * The "Instance" record still displayed at the third pane when user selects "Browse contributors" option. Fixes UIIN-2124.
 * Escape quotes in browse string. Fix UIIN-2120.
 * Browse contributors: # of results on the list is not the same as what the Contributors search returns. Refs UIIN-2134.
@@ -22,7 +23,8 @@
 * Do not load child/parent relations when navigating between two instances. Fixes UIIN-2129.
 * Remove shelving order in search option. Fixes UIIN-2151.
 * Clearing filters after clicking "Previous"/"Next" buttons in Inventory tab on Browse form. UIIN-2131.
-* Request with operator "==/string" doesn't return the exact match results when search for contributor name. UIIN-2157
+* Also support `instance-storage` `9.0`, `holdings-storage` `6.0`, `item-storage 10.0`. Refs UIIN-2162.
+* Request with operator "==/string" doesn't return the exact match results when search for contributor name. UIIN-2157.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
