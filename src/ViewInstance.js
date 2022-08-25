@@ -585,7 +585,7 @@ class ViewInstance extends React.Component {
           }
 
           <NewInstanceRequestButton
-            isTlrEnabled={titleLevelRequestsFeatureEnabled}
+            isTlrEnabled={!!titleLevelRequestsFeatureEnabled}
             instanceId={instance.id}
           />
         </MenuSection>
