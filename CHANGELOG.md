@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.1.10] (IN PROGRESS)
+## [9.1.10](https://github.com/folio-org/ui-inventory/tree/v9.1.10) (2022-08-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.9...v9.1.10)
 
 * Browse contributors with special characters shows incomplete error message. Refs UIIN-2092.
 * Request with operator "==/string" doesn't return the exact match results when search for contributor name. UIIN-2157.
