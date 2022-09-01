@@ -49,7 +49,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const browsePoint = queryParams?.browsePoint;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
-
   if (queryIndex.match(/isbn|issn/)) {
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
