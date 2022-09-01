@@ -19,7 +19,7 @@ import { getFilterConfig } from '../filterConfig';
 import facetsStore from '../stores/facetsStore';
 
 const INITIAL_RESULT_COUNT = 100;
-const regExp = /^((callNumber|subject|name) [<|>])/i;
+const regExp = /^((callNumber|subject|name|itemEffectiveShelvingOrder) [<|>])/i;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateValue = (queryValue, param) => {
@@ -29,7 +29,7 @@ const getQueryTemplateValue = (queryValue, param) => {
 };
 
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
-const getQueryTemplateCallNumber = (queryValue) => `callNumber==/string "${queryValue}"`;
+const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
@@ -49,6 +49,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const browsePoint = queryParams?.browsePoint;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
+
   if (queryIndex.match(/isbn|issn/)) {
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
@@ -64,6 +65,9 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     templateQueryValue = undefinedAsString;
   }
 
+  // console.log('queryIndex', queryIndex)
+  // console.log('browseModeOptions', browseModeOptions)
+  // console.log('queryIndexes', queryIndexes)
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
     queryTemplate = getQueryTemplateValue(templateQueryValue, 'callNumber');
   }

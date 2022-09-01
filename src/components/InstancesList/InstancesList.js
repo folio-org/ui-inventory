@@ -742,7 +742,7 @@ class InstancesList extends React.Component {
       case browseModeOptions.CALL_NUMBERS:
         parentMutator.query.update({
           qindex: 'callNumber',
-          query: row.fullCallNumber,
+          query: row.shelfKey,
           browsePoint: '',
           filters: '',
           selectedBrowseResult: true,
@@ -841,7 +841,7 @@ class InstancesList extends React.Component {
     const handleOnNeedMore = ({ direction, records, source }) => {
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
-        [browseModeOptions.CALL_NUMBERS]: 'callNumber',
+        [browseModeOptions.CALL_NUMBERS]: 'itemEffectiveShelvingOrder',
         [browseModeOptions.CONTRIBUTORS]: 'name',
       };
 
@@ -860,6 +860,8 @@ class InstancesList extends React.Component {
           anchor = records[0].name;
         }
 
+        console.log('param', param)
+        console.log('anchor', anchor)
         source.fetchByBrowsePoint(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
