@@ -860,8 +860,6 @@ class InstancesList extends React.Component {
           anchor = records[0].name;
         }
 
-        console.log('param', param)
-        console.log('anchor', anchor)
         source.fetchByBrowsePoint(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {

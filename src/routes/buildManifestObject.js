@@ -65,9 +65,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     templateQueryValue = undefinedAsString;
   }
 
-  // console.log('queryIndex', queryIndex)
-  // console.log('browseModeOptions', browseModeOptions)
-  // console.log('queryIndexes', queryIndexes)
   if (queryIndex === browseModeOptions.CALL_NUMBERS) {
     queryTemplate = getQueryTemplateValue(templateQueryValue, 'callNumber');
   }
