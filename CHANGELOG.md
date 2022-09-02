@@ -28,6 +28,7 @@
 * Also support `item-storage` `10.0`. Refs UIIN-2162.
 * Also support `inventory` `12.0`. Refs UIIN-2170.
 * Request with operator "==/string" doesn't return the exact match results when search for contributor name. UIIN-2157.
+* Fix clicking on the row by returning shelving order. UIIN-2171.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
