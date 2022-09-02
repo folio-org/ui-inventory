@@ -745,7 +745,7 @@ class InstancesList extends React.Component {
         optionSelected = 'callNumber';
         parentMutator.query.update({
           qindex: optionSelected,
-          query: row.fullCallNumber,
+          query: row.shelfKey,
           browsePoint: '',
           filters: '',
           selectedBrowseResult: true,
@@ -848,7 +848,7 @@ class InstancesList extends React.Component {
     const handleOnNeedMore = ({ direction, records, source }) => {
       const paramByBrowseMode = {
         [browseModeOptions.SUBJECTS]: 'subject',
-        [browseModeOptions.CALL_NUMBERS]: 'callNumber',
+        [browseModeOptions.CALL_NUMBERS]: 'itemEffectiveShelvingOrder',
         [browseModeOptions.CONTRIBUTORS]: 'name',
       };
 

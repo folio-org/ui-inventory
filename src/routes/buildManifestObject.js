@@ -19,7 +19,7 @@ import { getFilterConfig } from '../filterConfig';
 import facetsStore from '../stores/facetsStore';
 
 const INITIAL_RESULT_COUNT = 100;
-const regExp = /^((callNumber|subject|name) [<|>])/i;
+const regExp = /^((callNumber|subject|name|itemEffectiveShelvingOrder) [<|>])/i;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateValue = (queryValue, param) => {
@@ -29,7 +29,7 @@ const getQueryTemplateValue = (queryValue, param) => {
 };
 
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
-const getQueryTemplateCallNumber = (queryValue) => `callNumber==/string "${queryValue}"`;
+const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
   const query = get(queryParams, 'query', '');
