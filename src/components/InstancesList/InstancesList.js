@@ -738,10 +738,13 @@ class InstancesList extends React.Component {
       parentResources,
     } = this.props;
 
+    let optionSelected = '';
+
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
+        optionSelected = 'callNumber';
         parentMutator.query.update({
-          qindex: 'callNumber',
+          qindex: optionSelected,
           query: row.shelfKey,
           browsePoint: '',
           filters: '',
@@ -749,8 +752,9 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.SUBJECTS:
+        optionSelected = 'subject';
         parentMutator.query.update({
-          qindex: 'subject',
+          qindex: optionSelected,
           query: row.subject,
           browsePoint: '',
           filters: '',
@@ -761,8 +765,10 @@ class InstancesList extends React.Component {
         if (row.isAnchor && !row.contributorNameTypeId) {
           return;
         }
+
+        optionSelected = 'contributor';
         parentMutator.query.update({
-          qindex: 'contributor',
+          qindex: optionSelected,
           query: row.name,
           browsePoint: '',
           filters: `${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`,
@@ -775,6 +781,7 @@ class InstancesList extends React.Component {
     // the searchAndSortKey state field can be updated to reset SearchAndSort
     // to use the app-level selectedIndex
     this.setState((curState) => ({
+      optionSelected,
       searchAndSortKey: curState.searchAndSortKey + 1,
     }));
   }
