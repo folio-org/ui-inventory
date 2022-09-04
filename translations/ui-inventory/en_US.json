@@ -437,7 +437,6 @@
     "reports.inTransitItem.volume": "Volume",
     "reports.inTransitItem.yearCaption": "Year",
     "effectiveCallNumber": "Effective call number string",
-    "effectiveCallNumberShelving": "Effective call number (item), shelving order",
     "updatedDateAndTime": "Updated date and time",
     "updatedSource": "Updated source",
     "createdDateAndTime": "Created date and time",
@@ -741,5 +740,8 @@
     "search.holdings.uuid": "Holdings UUID",
     "search.item.uuid": "Item UUID",
     "filters.nameType": "Name type",
-    "instanceStatusShort": "Instance status"
+    "instanceStatusShort": "Instance status",
+    "effectiveCallNumberShelving": "Effective call number (item), shelving order",
+    "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
+    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
 }
