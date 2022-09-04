@@ -870,7 +870,7 @@ class InstancesList extends React.Component {
         source.fetchByBrowsePoint(`${param} < "${anchor.replace(/"/g, '')}"`);
       } else {
         if (isCallNumber) {
-          anchor = [...records].reverse().find(i => i.fullCallNumber)?.fullCallNumber;
+          anchor = [...records].reverse().find(i => i.shelfKey)?.shelfKey;
         } else if (isSubject) {
           anchor = records[records.length - 1].subject;
         } else if (isContributors) {
