@@ -860,7 +860,7 @@ class InstancesList extends React.Component {
 
       if (direction === 'prev') {
         if (isCallNumber) {
-          anchor = records.find(i => i.fullCallNumber)?.fullCallNumber;
+          anchor = records.find(i => i.shelfKey)?.shelfKey;
         } else if (isSubject) {
           anchor = records[0].subject;
         } else if (isContributors) {
