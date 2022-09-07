@@ -5,7 +5,6 @@ import { omit } from 'lodash';
 import { withTags } from '@folio/stripes/smart-components';
 
 import ViewInstance from './ViewInstance';
-import useLoadSubInstances from './hooks/useLoadSubInstances';
 
 const ViewInstanceWrapper = (props) => {
   const {
@@ -13,21 +12,7 @@ const ViewInstanceWrapper = (props) => {
     resources,
   } = props;
   const instance = resources.instance?.records?.[0];
-  let selectedInstance = instance?.id === id ? instance : null;
-
-  // only load after instance is present
-  const parentInstances = useLoadSubInstances(selectedInstance?.parentInstances, 'superInstanceId');
-  const childInstances = useLoadSubInstances(selectedInstance?.childInstances, 'subInstanceId');
-
-  if (selectedInstance) {
-    if (selectedInstance?.parentInstances?.length && parentInstances?.length) {
-      selectedInstance = { ...selectedInstance, parentInstances };
-    }
-
-    if (selectedInstance?.childInstances?.length && childInstances?.length) {
-      selectedInstance = { ...selectedInstance, childInstances };
-    }
-  }
+  const selectedInstance = instance?.id === id ? instance : null;
 
   return (
     <ViewInstance

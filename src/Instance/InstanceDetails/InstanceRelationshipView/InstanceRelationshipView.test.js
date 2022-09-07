@@ -45,6 +45,7 @@ const InstanceRelationshipViewSetup = () => (
         <InstanceRelationshipView
           id="accordion-id"
           childInstances={childInstances}
+          parentInstances={[]}
         />
       </DataContext.Provider>
     </StripesContext.Provider>
@@ -53,10 +54,7 @@ const InstanceRelationshipViewSetup = () => (
 
 describe('InstanceRelationshipView', () => {
   beforeEach(() => {
-    sandbox.stub(reactQuery, 'useQueries').returns(
-      instances.map(instance => ({ data: instance, isLoading: false, isSuccess: true }))
-    );
-
+    sandbox.stub(reactQuery, 'useQuery').returns({ data: { instances }, isSuccess: true });
     renderWithIntl(
       <InstanceRelationshipViewSetup />,
       translationsProperties
@@ -69,6 +67,6 @@ describe('InstanceRelationshipView', () => {
   });
 
   it('should render child instances', () => {
-    expect(document.querySelectorAll('[role="gridcell"]').length).toEqual(6);
+    expect(document.querySelectorAll('.mclRowFormatterContainer').length).toEqual(3);
   });
 });
