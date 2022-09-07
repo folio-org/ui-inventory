@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [9.1.11](IN PROGRESS)
+## [9.1.11](https://github.com/folio-org/ui-inventory/tree/v9.1.11) (2022-09-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.10...v9.1.11)
 
 * Fix clicking on the row by returning shelving order. UIIN-2171.
 * Browse contributors | Second pane header doesn't update when user execute search by clicking contributor name. Fixes UIIN-2172.
