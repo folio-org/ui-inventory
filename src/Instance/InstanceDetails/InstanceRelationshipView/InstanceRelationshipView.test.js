@@ -54,7 +54,10 @@ const InstanceRelationshipViewSetup = () => (
 
 describe('InstanceRelationshipView', () => {
   beforeEach(() => {
-    sandbox.stub(reactQuery, 'useQuery').returns({ data: { instances }, isSuccess: true });
+    sandbox.stub(reactQuery, 'useQueries').returns(
+      instances.map(instance => ({ data: { instances: [instance] }, isSuccess: true }))
+    );
+
     renderWithIntl(
       <InstanceRelationshipViewSetup />,
       translationsProperties

@@ -12,8 +12,6 @@ import { useOkapiKy } from '@folio/stripes/core';
 import { instances } from '../../test/fixtures';
 import useInstancesQuery from './useInstancesQuery';
 
-
-const instance = instances[0];
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
@@ -26,7 +24,7 @@ describe('useInstancesQuery', () => {
   beforeEach(() => {
     mock = useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
-        json: () => instance,
+        json: () => ({ instances }),
       }),
     });
   });
@@ -36,9 +34,9 @@ describe('useInstancesQuery', () => {
   });
 
   it('fetches instances', async () => {
-    const { result, waitFor } = renderHook(() => useInstancesQuery([instance.id]), { wrapper });
+    const { result, waitFor } = renderHook(() => useInstancesQuery(instances.map(({ id }) => id)), { wrapper });
 
     await waitFor(() => result.isSuccess);
-    expect(result.current.data.id).toEqual(instance.id);
+    expect(result.current.data.instances[0].id).toEqual(instances[0].id);
   });
 });
