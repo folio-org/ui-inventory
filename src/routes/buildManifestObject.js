@@ -28,7 +28,7 @@ const getQueryTemplateValue = (queryValue, param) => {
     : `${param}>="${queryValue.replace(/"/g, '')}" or ${param}<"${queryValue.replace(/"/g, '')}"`;
 };
 
-const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue}"`;
+const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '')}"`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {
