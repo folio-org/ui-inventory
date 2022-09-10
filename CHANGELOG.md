@@ -32,6 +32,7 @@
 * Browse contributors | Second pane header doesn't update when user execute search by clicking contributor name. Fixes UIIN-2172.
 * Add personal data disclosure form. Refs UIIN-1370.
 * Escape quotes in search string. Fix UIIN-2143.
+* Introduce in-memory pagination when loading parent/child instances. Fixes UIIN-2155.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
