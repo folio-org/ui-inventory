@@ -30,6 +30,7 @@
 * Request with operator "==/string" doesn't return the exact match results when search for contributor name. UIIN-2157.
 * Fix clicking on the row by returning shelving order. UIIN-2171.
 * Browse contributors | Second pane header doesn't update when user execute search by clicking contributor name. Fixes UIIN-2172.
+* Add personal data disclosure form. Refs UIIN-1370.
 * Escape quotes in search string. Fix UIIN-2143.
 * Introduce in-memory pagination when loading parent/child instances. Fixes UIIN-2155.
 
