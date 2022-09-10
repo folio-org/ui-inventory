@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -17,10 +17,12 @@ import {
 import { indentifierTypeNames } from '../../../constants';
 import useReferenceData from '../../../hooks/useReferenceData';
 import useCallout from '../../../hooks/useCallout';
+import useLoadSubInstances from '../../../hooks/useLoadSubInstances';
 
 import css from './SubInstanceList.css';
 
 const noValue = <NoValue />;
+const pageAmount = 80;
 
 const SubInstanceList = ({
   titles,
@@ -36,6 +38,29 @@ const SubInstanceList = ({
     identifierTypesById,
   } = useReferenceData();
   const callout = useCallout();
+  const [slicedItems, setSlicedItems] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [data, setData] = useState([]);
+  const paginatedTitles = useLoadSubInstances(slicedItems, titleKey);
+
+  useEffect(() => {
+    const sparseData = new Array(currentIndex);
+    sparseData.push(...paginatedTitles);
+    setData(sparseData);
+  }, [currentIndex, paginatedTitles]);
+
+  useEffect(() => {
+    if (titles?.length) {
+      setSlicedItems(titles.slice(0, pageAmount));
+    }
+  }, [titles]);
+
+  const onNeedMoreData = (amount, index) => {
+    setCurrentIndex(index);
+    const recordSlice = titles.slice(index, index + amount);
+    setSlicedItems(recordSlice);
+  };
+
   const onCopyToClipbaord = useCallback(hrid => {
     callout.sendCallout({
       type: 'success',
@@ -96,13 +121,17 @@ const SubInstanceList = ({
   return (
     <MultiColumnList
       id={id}
-      contentData={titles}
+      contentData={data}
       visibleColumns={visibleColumns}
       columnMapping={columnMapping}
       columnWidths={columnWidths}
       formatter={formatter}
+      onNeedMoreData={onNeedMoreData}
+      pagingType="prev-next"
+      totalCount={titles.length}
       getCellClass={formatCellStyles(css.cellAlign)}
       ariaLabel={label}
+      pageAmount={pageAmount}
       interactive={false}
     />
   );
