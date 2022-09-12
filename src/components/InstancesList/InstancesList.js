@@ -733,6 +733,8 @@ class InstancesList extends React.Component {
 
   // handler used for clicking a row in browse mode
   onSelectRow = (_, row) => {
+    if (row.isAnchor) return;
+
     const {
       parentMutator,
       parentResources,
