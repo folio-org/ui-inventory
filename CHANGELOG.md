@@ -34,6 +34,7 @@
 * Escape quotes in search string. Fix UIIN-2143.
 * Introduce in-memory pagination when loading parent/child instances. Fixes UIIN-2155.
 * The placeholder for missing match is clickable on the Browse list. Fixes UIIN-2126.
+* Reset `qindex` inside `buildQuery` in order for `queryTemplate` to be used correctly. Fixes UIIN-2189.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
