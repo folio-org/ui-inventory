@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.1.12](https://github.com/folio-org/ui-inventory/tree/v9.1.12) (2022-09-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.11...v9.1.12)
+
+* Introduce in-memory pagination when loading parent/child instances. Fixes UIIN-2155.
+* Use full dateTime format for createAt and updateAt filters. Fixes UIIN-2118.
+
 ## [9.1.11](https://github.com/folio-org/ui-inventory/tree/v9.1.11) (2022-09-07)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.10...v9.1.11)
 
