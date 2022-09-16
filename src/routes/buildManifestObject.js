@@ -28,6 +28,7 @@ const getQueryTemplateValue = (queryValue, param) => {
     : `${param}>="${queryValue.replace(/"/g, '')}" or ${param}<"${queryValue.replace(/"/g, '')}"`;
 };
 
+const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '')}"`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
@@ -82,6 +83,11 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   if (queryIndex === queryIndexes.CALL_NUMBER) {
     queryTemplate = getQueryTemplateCallNumber(queryValue);
+  }
+
+  if (queryIndex === queryIndexes.CONTRIBUTOR && queryParams?.selectedBrowseResult === 'true') {
+    queryTemplate = getQueryTemplateContributor(queryValue);
+    query.selectedBrowseResult = false; // reset this parameter so the next search uses `==` instead of `==/string`
   }
 
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {

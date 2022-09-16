@@ -140,7 +140,8 @@ export const holdingsStatementTypes = [
 export const queryIndexes = {
   SUBJECT: 'subject',
   QUERY_SEARCH: 'querySearch',
-  CALL_NUMBER: 'callNumber'
+  CALL_NUMBER: 'callNumber',
+  CONTRIBUTOR: 'contributor',
 };
 
 export const indentifierTypeNames = {
