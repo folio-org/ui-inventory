@@ -3,7 +3,12 @@ import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { screen, fireEvent, cleanup } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -145,17 +150,23 @@ describe('InstancesList', () => {
 
     it('should have selected browse call number option', async () => {
       await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'callNumbers');
-      expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
+      waitFor(() => {
+        expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
+      });
     });
 
     it('should have selected subject browse option', async () => {
       await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'browseSubjects');
-      expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
+      waitFor(() => {
+        expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
+      });
     });
 
     it('should have selected contributors browse option', async () => {
       await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'contributors');
-      expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
+      waitFor(() => {
+        expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
+      });
     });
 
     describe('opening action menu', () => {
