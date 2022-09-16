@@ -60,6 +60,7 @@ const resources = {
     resource: 'records',
     records: instancesFixture,
     other: { totalRecords: instancesFixture.length },
+    isPending: false,
   },
   recordsBrowseCallNumber : {
     hasLoaded: true,
@@ -68,6 +69,7 @@ const resources = {
     other: {
       totalRecords: callNumbers.length
     },
+    isPending: false,
   },
   facets: {
     hasLoaded: true,
@@ -141,27 +143,18 @@ describe('InstancesList', () => {
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
     });
 
-    it('should have selected browse call number option', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'callNumbers' }
-      });
-
+    it('should have selected browse call number option', async () => {
+      await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'callNumbers');
       expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
     });
 
-    it('should have selected subject browse option', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'browseSubjects' }
-      });
-
+    it('should have selected subject browse option', async () => {
+      await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'browseSubjects');
       expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
     });
 
-    it('should have selected contributors browse option', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'contributors' }
-      });
-
+    it('should have selected contributors browse option', async () => {
+      await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'contributors');
       expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
     });
 
