@@ -3,7 +3,12 @@ import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { screen, fireEvent, cleanup } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -60,6 +65,7 @@ const resources = {
     resource: 'records',
     records: instancesFixture,
     other: { totalRecords: instancesFixture.length },
+    isPending: false,
   },
   recordsBrowseCallNumber : {
     hasLoaded: true,
@@ -68,6 +74,7 @@ const resources = {
     other: {
       totalRecords: callNumbers.length
     },
+    isPending: false,
   },
   facets: {
     hasLoaded: true,
@@ -141,28 +148,25 @@ describe('InstancesList', () => {
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
     });
 
-    it('should have selected browse call number option', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'callNumbers' }
+    it('should have selected browse call number option', async () => {
+      await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'callNumbers');
+      waitFor(() => {
+        expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
       });
-
-      expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
     });
 
-    it('should have selected subject browse option', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'browseSubjects' }
+    it('should have selected subject browse option', async () => {
+      await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'browseSubjects');
+      waitFor(() => {
+        expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
       });
-
-      expect((screen.getByRole('option', { name: 'Browse subjects' })).selected).toBeTruthy();
     });
 
-    it('should have selected contributors browse option', () => {
-      fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'contributors' }
+    it('should have selected contributors browse option', async () => {
+      await userEvent.selectOptions(screen.getByLabelText('Search field index'), 'contributors');
+      waitFor(() => {
+        expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
       });
-
-      expect((screen.getByRole('option', { name: 'Browse contributors' })).selected).toBeTruthy();
     });
 
     describe('opening action menu', () => {
