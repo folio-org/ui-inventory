@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [9.1.13](IN PROGRESS)
+
+* No results return when you conduct a Contributor search. Fixes UIIN-2191.
+
 ## [9.1.12](https://github.com/folio-org/ui-inventory/tree/v9.1.12) (2022-09-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.11...v9.1.12)
 
