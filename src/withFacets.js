@@ -22,6 +22,11 @@ function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryTemplate = getQueryTemplate(queryIndex, indexes);
 
+  // reset qindex otherwise makeQueryFunction does not use queryTemplate
+  // https://github.com/folio-org/stripes-smart-components/blob/e918a620ad2ac2c5b06ce121cd0e061a03bcfdf6/lib/SearchAndSort/makeQueryFunction.js#L46
+  // https://issues.folio.org/browse/UIIN-2189
+  resourceData.query = { ...resourceData.query, qindex: '' };
+
   const cql = makeQueryFunction(
     CQL_FIND_ALL,
     queryTemplate,
