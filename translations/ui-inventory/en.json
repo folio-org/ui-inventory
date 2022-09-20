@@ -112,7 +112,7 @@
   "updateItem": "Update item",
   "instanceTitle": "Instance: {title}.",
   "boundWith": "and {boundWithCount, plural, one {one more title} other {other titles}}",
-  "boundWithTitles": "Bound-with titles",
+  "boundWithTitles": "Bound-with and analytics",
   "holdingsLabelShort": "Holdings:",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
   "holdingsPaneTitle": "Holdings • {location} • {callNumber}",
