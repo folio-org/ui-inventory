@@ -87,7 +87,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   if (queryIndex === queryIndexes.CONTRIBUTOR && queryParams?.selectedBrowseResult === 'true') {
     queryTemplate = getQueryTemplateContributor(queryValue);
-    query.selectedBrowseResult = false; // reset this parameter so the next search uses `==` instead of `==/string`
+    query.selectedBrowseResult = false; // reset this parameter so the next search uses `=` instead of `==/string`
   }
 
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
