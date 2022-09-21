@@ -178,7 +178,7 @@ class InstancesList extends React.Component {
     const qindex = this.getQIndexFromParams();
 
     // keep the 'optionSelected' updated with the URL 'qindex'
-    if (qindex && this.state.optionSelected !== qindex) {
+    if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
       this.setState({ optionSelected: qindex });
     }
   }
