@@ -29,7 +29,7 @@ const getQueryTemplateValue = (queryValue, param) => {
 };
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
-const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '')}"`;
+const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '\\"')}"`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 const getParamValue = (queryParams, browseValue, noBrowseValue) => {

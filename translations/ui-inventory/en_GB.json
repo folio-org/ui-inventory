@@ -721,7 +721,7 @@
     "instances.columns.callNumber": "Call number",
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
-    "browseCallNumbers.missedMatch": "<strong>would be here</strong>",
+    "browseCallNumbers.missedMatch": "would be here",
     "search.allFields": "All",
     "acq.dateOpened": "Date opened",
     "moveItems.selectHolding": "Select/unselect holding for movement",
