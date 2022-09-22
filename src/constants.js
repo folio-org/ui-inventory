@@ -4,6 +4,19 @@ const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
 
+export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
+export const INVENTORY_ROUTE = '/inventory';
+
+export const searchModeSegments = {
+  search: 'search',
+  browse: 'browse',
+}
+
+export const searchModeRoutesMap = {
+  [searchModeSegments.browse]: BROWSE_INVENTORY_ROUTE,
+  [searchModeSegments.search]: INVENTORY_ROUTE,
+};
+
 export const itemStatusesMap = {
   AGED_TO_LOST: 'Aged to lost',
   AVAILABLE: 'Available',

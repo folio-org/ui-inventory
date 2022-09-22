@@ -19,3 +19,5 @@ export { default as ViewSource } from './ViewSource';
 export { default as AdministrativeNoteList } from './AdministrativeNoteList';
 export { default as MultiSelectionFacet } from './MultiSelectionFacet';
 export { default as FacetOptionFormatter } from './FacetOptionFormatter';
+export { default as SearchModeNavigation } from './SearchModeNavigation';
+export { default as BrowseResultsPane } from './BrowseResultsPane';
