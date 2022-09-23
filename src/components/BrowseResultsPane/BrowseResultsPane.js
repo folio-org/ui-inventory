@@ -37,7 +37,11 @@ const BrowseResultsPane = ({
           />
         </PaneMenu>
       )
-  ), [isFiltersOpened, toggleFiltersPane]);
+  ), [
+    filters,
+    isFiltersOpened,
+    toggleFiltersPane,
+  ]);
 
   return (
     <Pane
@@ -54,12 +58,12 @@ const BrowseResultsPane = ({
       <>TODO: Browse List</>
     </Pane>
   );
-}
+};
 
 BrowseResultsPane.propTypes = {
   filters: PropTypes.object.isRequired,
   isFiltersOpened: PropTypes.bool.isRequired,
   toggleFiltersPane: PropTypes.func.isRequired,
-}
+};
 
 export default BrowseResultsPane;

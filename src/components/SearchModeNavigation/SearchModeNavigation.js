@@ -20,7 +20,7 @@ const SearchModeNavigation = () => {
   ), [path]);
 
   return (
-    <ButtonGroup fullWidth >
+    <ButtonGroup fullWidth>
       {
         Object.keys(searchModeSegments).map(segment => (
           <Button
@@ -34,7 +34,7 @@ const SearchModeNavigation = () => {
         ))
       }
     </ButtonGroup>
-  )
+  );
 };
 
 export default SearchModeNavigation;

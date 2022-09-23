@@ -10,7 +10,7 @@ export const INVENTORY_ROUTE = '/inventory';
 export const searchModeSegments = {
   search: 'search',
   browse: 'browse',
-}
+};
 
 export const searchModeRoutesMap = {
   [searchModeSegments.browse]: BROWSE_INVENTORY_ROUTE,
