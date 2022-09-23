@@ -834,6 +834,9 @@
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-inventory ./translations/ui-inventory/compiled"
   },
+  "stripesDeps": [
+    "@folio/stripes-acq-components"
+  ],
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/eslint-parser": "^7.16.3",
@@ -881,7 +884,7 @@
   },
   "dependencies": {
     "@folio/quick-marc": "^5.0.0",
-    "@folio/stripes-acq-components": "~3.2.0",
+    "@folio/stripes-acq-components": "^3.2.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
     "file-saver": "^2.0.0",

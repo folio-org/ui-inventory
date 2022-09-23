@@ -309,7 +309,8 @@ class InstancesList extends React.Component {
 
   renderNavigation = () => (
     <>
-      <SearchModeNavigation />
+      {/* TODO: uncomment this when Browse functionality is replaced */}
+      {/* <SearchModeNavigation /> */}
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
   );
