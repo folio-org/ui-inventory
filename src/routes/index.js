@@ -14,3 +14,4 @@ export { default as ViewRequestsRoute } from './ViewRequestsRoute';
 export { default as ImportRoute } from './ImportRoute';
 export { default as HoldingsMarcRoute } from './HoldingsMarcRoute';
 export { default as ViewHoldingRoute } from './ViewHoldingRoute';
+export { default as BrowseRoute } from './BrowseRoute';

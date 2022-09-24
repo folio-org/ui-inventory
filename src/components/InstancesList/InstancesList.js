@@ -37,6 +37,7 @@ import {
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
+import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
 import ViewInstanceWrapper from '../../ViewInstanceWrapper';
@@ -307,7 +308,11 @@ class InstancesList extends React.Component {
   }
 
   renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+    <>
+      {/* TODO: uncomment this when Browse functionality is replaced */}
+      {/* <SearchModeNavigation /> */}
+      <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+    </>
   );
 
   generateInTransitItemReport = async () => {

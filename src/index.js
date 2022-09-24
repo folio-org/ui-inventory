@@ -36,6 +36,7 @@ import {
   EditItemRoute,
   DuplicateItemRoute,
   ViewHoldingRoute,
+  BrowseRoute,
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider } from './providers';
@@ -159,6 +160,10 @@ const InventoryRouting = (props) => {
               <Route
                 path={`${path}/import`}
                 component={ImportRoute}
+              />
+              <Route
+                path={`${path}/browse`}
+                component={BrowseRoute}
               />
               <Route
                 path={path}
