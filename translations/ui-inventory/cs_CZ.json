@@ -743,5 +743,6 @@
     "instanceStatusShort": "Stav titulu",
     "effectiveCallNumberShelving": "Efektivní signatura (jednotka), pořadí regálů",
     "browseContributors.results.error": "Chyba při vracení výsledků. Zkuste prosím znovu nebo upravte vyhledávání.",
-    "remote.warning.common.items": "Jednotka byla úspěšně přesunuta do FOLIO. Chcete-li dokončit odstranění této jednotky ze vzdáleného úložiště, spusťte hlášení o výjimce nebo to sdělte přímo umístění vzdáleného úložiště."
+    "remote.warning.common.items": "Jednotka byla úspěšně přesunuta do FOLIO. Chcete-li dokončit odstranění této jednotky ze vzdáleného úložiště, spusťte hlášení o výjimce nebo to sdělte přímo umístění vzdáleného úložiště.",
+    "search": "Search"
 }
