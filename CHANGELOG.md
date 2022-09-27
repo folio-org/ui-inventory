@@ -36,6 +36,7 @@
 * The placeholder for missing match is clickable on the Browse list. Fixes UIIN-2126.
 * Reset `qindex` inside `buildQuery` in order for `queryTemplate` to be used correctly. Fixes UIIN-2189.
 * No results return when you conduct a Contributor search. Fixes UIIN-2191.
+* Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
