@@ -202,7 +202,7 @@ const buildRecordsManifest = (options = {}) => {
       params: {
         query: buildQuery,
         highlightMatch: (queryParams) => {
-          // do not include highlightMatch if not in browse mode
+          // do not include the highlightMatch for regular search queries.
           if (!browseModeMap[queryParams.qindex]) {
             return undefined;
           }
