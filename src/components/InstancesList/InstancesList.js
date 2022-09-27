@@ -38,6 +38,7 @@ import {
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
+import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
 import ViewInstanceWrapper from '../../ViewInstanceWrapper';
@@ -175,6 +176,15 @@ class InstancesList extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const qindex = this.getQIndexFromParams();
+
+    // keep the 'optionSelected' updated with the URL 'qindex'
+    if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
+      this.setState({ optionSelected: qindex });
+    }
+  }
+
   extraParamsToReset = {
     browsePoint: '',
     selectedBrowseResult: false,
@@ -299,7 +309,11 @@ class InstancesList extends React.Component {
   }
 
   renderNavigation = () => (
-    <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+    <>
+      {/* TODO: uncomment this when Browse functionality is replaced */}
+      {/* <SearchModeNavigation /> */}
+      <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+    </>
   );
 
   generateInTransitItemReport = async () => {

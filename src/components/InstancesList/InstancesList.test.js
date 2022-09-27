@@ -88,7 +88,7 @@ const resources = {
   resultOffset: 0,
 };
 
-const history = createMemoryHistory();
+let history;
 
 const renderInstancesList = ({
   segment,
@@ -140,6 +140,7 @@ const renderInstancesList = ({
 describe('InstancesList', () => {
   describe('rendering InstancesList with instances segment', () => {
     beforeEach(() => {
+      history = createMemoryHistory();
       renderInstancesList({ segment: 'instances' });
     });
 

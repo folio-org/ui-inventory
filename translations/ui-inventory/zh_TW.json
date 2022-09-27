@@ -554,8 +554,8 @@
     "holdingsStatementForIndexesStaffNote": "索引的馆藏说明员工附注",
     "holdingsStatementForSupplementsPublicNote": "補編的館藏說明的公開附註",
     "holdingsStatementForSupplementsStaffNote": "补编的馆藏说明员工附注",
-    "permission.item.move": "典藏：移动单件",
-    "permission.holdings.move": "典藏：移动馆藏",
+    "permission.item.move": "典藏：移動單件",
+    "permission.holdings.move": "典藏：移動館藏",
     "item.status.agedToLost": "超期太久视为遗失",
     "moveItems.moveButton": "移至",
     "moveItems.modal.message.holdings": "{count, number} {count, plural, one {馆藏} other {馆藏}}将移至{targetName}",
@@ -570,10 +570,10 @@
     "selectHoldingsSource": "選擇館藏來源",
     "holdingsSourceLabel": "來源",
     "uniqueName": "名稱不能重複",
-    "viewRequests": "查看请求",
+    "viewRequests": "查看請求",
     "instanceRecordRequestsTitle": "对单件的请求- {instanceResourceTitle} ， {instancePublicationDate}",
     "instanceRecordRequestsSubtitle": "找到{count}单件",
-    "item.requestQueue": "请求队列",
+    "item.requestQueue": "預約順序",
     "item.status.inTransitTo": "正在运送到{servicePoint}",
     "instanceMatchKey": "实例匹配键",
     "confirm": "确认",
@@ -743,5 +743,6 @@
     "instanceStatusShort": "Instance status",
     "effectiveCallNumberShelving": "有效的索書號(館藏), 架上訂單",
     "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
-    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
+    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
+    "search": "Search"
 }

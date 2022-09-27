@@ -721,7 +721,7 @@
     "instances.columns.callNumber": "Call number",
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
-    "browseCallNumbers.missedMatch": "<strong>would be here</strong>",
+    "browseCallNumbers.missedMatch": "would be here",
     "search.allFields": "All",
     "acq.dateOpened": "Date opened",
     "moveItems.selectHolding": "Select/unselect holding for movement",
@@ -743,5 +743,6 @@
     "instanceStatusShort": "Instance status",
     "effectiveCallNumberShelving": "Effective call number (item), shelving order",
     "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
-    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location."
+    "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
+    "search": "Search"
 }

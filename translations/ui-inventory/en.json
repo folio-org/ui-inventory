@@ -198,6 +198,7 @@
   "callNumberNormalized": "Call number, normalized",
   "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
   "itemEffectiveCallNumberNormalized": "Effective call number (item), normalized",
+  "search": "Search",
   "search.all": "Keyword (title, contributor, identifier)",
   "search.allFields": "All",
   "search.holdings.uuid": "Holdings UUID",
