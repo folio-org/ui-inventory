@@ -36,6 +36,7 @@
 * The placeholder for missing match is clickable on the Browse list. Fixes UIIN-2126.
 * Reset `qindex` inside `buildQuery` in order for `queryTemplate` to be used correctly. Fixes UIIN-2189.
 * No results return when you conduct a Contributor search. Fixes UIIN-2191.
+* Browse contributors | Second pane header doesn't update when user return to "Browse inventory" pane via the web-browser "Back" button. Fixes UIIN-2181.
 * Define new route for Inventory "Browse" page. Refs UIIN-2193.
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 
