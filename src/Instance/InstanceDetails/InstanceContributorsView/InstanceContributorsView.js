@@ -78,7 +78,9 @@ const InstanceContributorsView = ({
   }, [contributors, contributorTypes, contributorNameTypes]);
 
   const getName = (item) => {
-    if (segment === segments.instances && source === 'MARC' && 'item.authorityId') {
+    const _segment = segment ?? segments.instances;
+
+    if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
       return (
         <>
           <Tooltip
@@ -87,7 +89,7 @@ const InstanceContributorsView = ({
           >
             {({ ref, ariaIds }) => (
               <Link
-                to={`marc-authorities/authorities/${item.authorityId}?segment=search`}
+                to={`/marc-authorities/authorities/${item.authorityId}?segment=search`}
                 target="_blank"
                 ref={ref}
                 aria-labelledby={ariaIds.text}
@@ -143,7 +145,7 @@ InstanceContributorsView.propTypes = {
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
   contributorNameTypes: PropTypes.arrayOf(PropTypes.object),
   source: PropTypes.string.isRequired,
-  segment: PropTypes.string.isRequired,
+  segment: PropTypes.string,
 };
 
 InstanceContributorsView.defaultProps = {

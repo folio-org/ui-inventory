@@ -53,7 +53,7 @@ describe('InstanceContributorsView', () => {
           authorityId: 'fakeId',
         }],
         source: 'MARC',
-        segment: 'instances',
+        segment: null,
       });
 
       expect(getByTestId('authority-app-link')).toBeVisible();
