@@ -4,6 +4,10 @@
   margin-right: 10px;
 }
 
+.authorityIcon {
+  margin-right: 5px;
+}
+
 .boundWithIcon {
   background-color: transparent !important;
   margin-left: var(--gutter-static-one-third);
