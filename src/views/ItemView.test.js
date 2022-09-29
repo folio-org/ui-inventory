@@ -116,5 +116,11 @@ describe('ItemView', () => {
     it('should list 2 bound-with items in the table', () => {
       expect(document.querySelectorAll('#item-list-bound-with-titles .mclRowContainer > [role=row]').length).toEqual(2);
     });
+
+    it('should link to the instance view from the HRID', () => {
+      const id = resources.items.records[0].boundWithTitles[0].briefInstance.id;
+      expect(document.querySelector('#item-list-bound-with-titles a.instanceHrid'))
+        .toHaveAttribute('href', '/inventory/view/' + id);
+    });
   });
 });

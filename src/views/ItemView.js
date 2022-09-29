@@ -678,7 +678,16 @@ class ItemView extends React.Component {
     };
 
     const boundWithTitleFormatter = {
-      'Instance HRID': x => x.briefInstance?.hrid,
+      'Instance HRID': x => {
+        return (
+          <Link
+            to={`/inventory/view/${x.briefInstance?.id}`}
+            className="instanceHrid"
+          >
+            <span>{x.briefInstance?.hrid}</span>
+          </Link>
+        );
+      },
       'Instance title': x => x.briefInstance?.title,
       'Holdings HRID': x => x.briefHoldingsRecord?.hrid,
     };
