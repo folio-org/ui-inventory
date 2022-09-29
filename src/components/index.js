@@ -1,6 +1,6 @@
 export { default as FilterNavigation } from './FilterNavigation';
 export { default as RepeatableField } from './RepeatableField';
-export { default as InstanceFilters, instanceFilterRenderer } from './InstanceFilters';
+export { default as InstanceFilters, InstanceFiltersBrowse, instanceFilterRenderer } from './InstanceFilters';
 export { default as HoldingsRecordFilters, holdingsRecordFilterRenderer } from './HoldingsRecordFilters';
 export { default as ItemFilters, itemFilterRenderer } from './ItemFilters';
 export { default as InstancesList } from './InstancesList';
@@ -21,3 +21,6 @@ export { default as MultiSelectionFacet } from './MultiSelectionFacet';
 export { default as FacetOptionFormatter } from './FacetOptionFormatter';
 export { default as SearchModeNavigation } from './SearchModeNavigation';
 export { default as BrowseResultsPane } from './BrowseResultsPane';
+export { default as BrowseResultsList } from './BrowseResultsList';
+export { default as BrowseInventoryFilters } from './BrowseInventoryFilters';
+export { default as MissedMatchItem } from './MissedMatchItem';
