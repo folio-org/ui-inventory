@@ -10,6 +10,16 @@ import {
 
 import BrowseRoute from './BrowseRoute';
 
+jest.mock('../../components', () => ({
+  BrowseInventoryFilters: jest.fn(() => <>BrowseInventoryFilters</>),
+  BrowseResultsPane: jest.fn(() => <>BrowseResultsPane</>),
+  SearchModeNavigation: jest.fn(() => <>SearchModeNavigation</>),
+}));
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useInventoryBrowse: jest.fn(() => ({}))
+}));
+
 const renderBrowseRoute = (props = {}) => renderWithIntl(
   <MemoryRouter>
     <BrowseRoute
@@ -23,6 +33,8 @@ describe('BrowseRoute', () => {
   it('should render page for inventory browsing', () => {
     renderBrowseRoute();
 
-    expect(screen.getByText('Browse inventory')).toBeInTheDocument();
+    expect(screen.getByText(/BrowseInventoryFilters/)).toBeInTheDocument();
+    expect(screen.getByText(/BrowseResultsPane/)).toBeInTheDocument();
+    expect(screen.getByText(/SearchModeNavigation/)).toBeInTheDocument();
   });
 });
