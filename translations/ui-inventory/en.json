@@ -112,7 +112,7 @@
   "updateItem": "Update item",
   "instanceTitle": "Instance: {title}.",
   "boundWith": "and {boundWithCount, plural, one {one more title} other {other titles}}",
-  "boundWithTitles": "Bound-with titles",
+  "boundWithTitles": "Bound-with and analytics",
   "holdingsLabelShort": "Holdings:",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
   "holdingsPaneTitle": "Holdings • {location} • {callNumber}",
@@ -753,5 +753,6 @@
   "noMatchingOptions": "No matching options",
   "addAdministrativeNote": "Add administrative note",
   "administrativeNote": "Administrative note",
-  "administrativeNotes": "Administrative notes"
+  "administrativeNotes": "Administrative notes",
+  "linkedToMarcAuthority": "Linked to MARC authority"
 }
