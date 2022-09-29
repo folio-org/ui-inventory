@@ -4,6 +4,7 @@
 artifacts
 node_modules
 .idea
+.vscode
 yarn.lock
 package-lock.json
 ModuleDescriptor.json
@@ -14,3 +15,4 @@ junit.xml
 # stripes
 .stripesclirc
 stripes.config.js.local
+
