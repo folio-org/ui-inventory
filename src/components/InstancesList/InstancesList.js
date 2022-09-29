@@ -747,8 +747,6 @@ class InstancesList extends React.Component {
 
   // handler used for clicking a row in browse mode
   onSelectRow = (_, row) => {
-    if (row.isAnchor) return;
-
     const {
       parentMutator,
       parentResources,
@@ -758,6 +756,8 @@ class InstancesList extends React.Component {
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
+        if (row.isAnchor && !row.instance) return;
+
         optionSelected = 'callNumber';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -768,6 +768,8 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.SUBJECTS:
+        if (row.isAnchor && !row.totalRecords) return;
+
         optionSelected = 'subject';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -778,9 +780,7 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
-        if (row.isAnchor && !row.contributorNameTypeId) {
-          return;
-        }
+        if (row.isAnchor && !row.contributorNameTypeId) return;
 
         optionSelected = 'contributor';
         parentMutator.query.update({
