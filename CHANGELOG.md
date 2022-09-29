@@ -42,6 +42,7 @@
 * Link from bound-with table HRID column to instances. Fixes UIIN-2195.
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
+* Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
