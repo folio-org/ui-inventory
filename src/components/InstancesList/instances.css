@@ -23,6 +23,7 @@
   color: var(--error);
 }
 
+/* ↓↓↓ TODO: remove when Browse refactor is completed ↓↓↓ */
 .missingMatchError {
   margin-left: var(--gutter-static-one-third);
   margin-right: var(--gutter-static-one-third);
@@ -41,3 +42,5 @@
 .fitContent {
   min-width: fit-content;
 }
+
+/* ↑↑↑ */
