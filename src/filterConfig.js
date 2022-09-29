@@ -135,9 +135,9 @@ export const instanceIndexes = [
 ];
 
 export const browseInstanceIndexes = [
-  { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}` },
-  { label: 'ui-inventory.browseContributors', value: `${browseModeOptions.CONTRIBUTORS}` },
-  { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}` },
+  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}` },
+  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}` },
+  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}` },
 ];
 
 export const instanceBrowseSortMap = {
