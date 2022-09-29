@@ -31,14 +31,12 @@ const BrowseInventoryFilters = ({
   };
 
   return (
-    <>
-      <InstanceFiltersBrowse
-        activeFilters={activeFilters}
-        data={filtersData}
-        onChange={({ name, values }) => applyFilters(name, values)}
-        onClear={(name) => applyFilters(name, [])}
-      />
-    </>
+    <InstanceFiltersBrowse
+      activeFilters={activeFilters}
+      data={filtersData}
+      onChange={({ name, values }) => applyFilters(name, values)}
+      onClear={(name) => applyFilters(name, [])}
+    />
   );
 };
 
