@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -61,12 +61,10 @@ const BrowseInventory = () => {
   const searchableIndexesPlaceholder = intl.formatMessage({ id: 'ui-inventory.browse.searchableIndexesPlaceholder' });
   const isResetButtonDisabled = !location.search && !searchQuery;
 
-  const formattedSearchableIndexes = useMemo(() => (
-    browseInstanceIndexes.map(({ label, ...rest }) => ({
-      label: intl.formatMessage({ id: label }),
-      ...rest,
-    }))
-  ), []);
+  const formattedSearchableIndexes = browseInstanceIndexes.map(({ label, ...rest }) => ({
+    label: intl.formatMessage({ id: label }),
+    ...rest,
+  }));
 
   const onApplySearch = useCallback(() => {
     const isSearchQUeryValid = validateDataQuery(searchQuery);
