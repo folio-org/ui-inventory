@@ -38,6 +38,7 @@
 * No results return when you conduct a Contributor search. Fixes UIIN-2191.
 * Browse contributors | Second pane header doesn't update when user return to "Browse inventory" pane via the web-browser "Back" button. Fixes UIIN-2181.
 * Define new route for Inventory "Browse" page. Refs UIIN-2193.
+* Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
