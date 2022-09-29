@@ -15,16 +15,41 @@ import {
 } from '@folio/stripes-smart-components';
 import {
   getFiltersCount,
+  NoResultsMessage,
 } from '@folio/stripes-acq-components';
 
+import BrowseResultsList from '../BrowseResultsList';
+
 const BrowseResultsPane = ({
+  browseData,
   filters = {},
+  isFetching,
+  isLoading,
   isFiltersOpened,
+  pagination,
   toggleFiltersPane,
+  totalRecords,
 }) => {
   const [namespace] = useNamespace();
 
-  const paneSub = <FormattedMessage id="ui-inventory.title.subTitle.browseCall" />;
+  const paneSub = getFiltersCount(filters) === 0
+    ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" />
+    : null;
+
+  const isEmptyMessage = useMemo(() => (
+    <NoResultsMessage
+      filters={filters}
+      isFiltersOpened={isFiltersOpened}
+      isLoading={isLoading}
+      notLoadedMessage={<FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" />}
+      toggleFilters={toggleFiltersPane}
+    />
+  ), [
+    filters,
+    isFiltersOpened,
+    isLoading,
+    toggleFiltersPane,
+  ]);
 
   const firstMenu = useMemo(() => (
     isFiltersOpened
@@ -55,15 +80,29 @@ const BrowseResultsPane = ({
       firstMenu={firstMenu}
       noOverflow
     >
-      <>TODO: Browse List</>
+      <BrowseResultsList
+        browseData={browseData}
+        isEmptyMessage={isEmptyMessage}
+        isLoading={isFetching}
+        pagination={pagination}
+        totalRecords={totalRecords}
+      />
     </Pane>
   );
 };
 
 BrowseResultsPane.propTypes = {
+  browseData: PropTypes.arrayOf(PropTypes.object).isRequired,
   filters: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool,
   isFiltersOpened: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
+  pagination: PropTypes.shape({
+    hasPrevPage: PropTypes.bool,
+    hasNextPage: PropTypes.bool,
+  }).isRequired,
   toggleFiltersPane: PropTypes.func.isRequired,
+  totalRecords: PropTypes.number.isRequired,
 };
 
 export default BrowseResultsPane;

@@ -8,10 +8,19 @@ import {
 } from '../../../test/jest/helpers';
 import BrowseResultsPane from './BrowseResultsPane';
 
+jest.mock('../BrowseResultsList', () => 'BrowseResultsList');
+
 const defaultProps = {
+  browseData: [],
   filters: {},
   isFiltersOpened: true,
   toggleFiltersPane: jest.fn(),
+  pagination : {
+    hasNextPage: false,
+    hasPrevPage: false,
+    onNeedMoreData: jest.fn(),
+  },
+  totalRecords: 0,
 };
 
 const renderBrowseResultsPane = (props = {}) => renderWithIntl(
