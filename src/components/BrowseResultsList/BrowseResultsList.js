@@ -79,8 +79,11 @@ const BrowseResultsList = ({
 
   const onRowClick = useCallback((_, row) => {
     if (
-      row.isAnchor ||
-      (row.isAnchor && browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId)
+      row.isAnchor && (
+        (browseOption === browseModeOptions.CALL_NUMBERS && !row.instance) ||
+        (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
+        (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
+      )
     ) return;
 
     history.push({

@@ -153,8 +153,8 @@ export function getCurrentFilters(filtersStr) {
 export function parseFiltersToStr(filters) {
   const newFilters = [];
 
-  forOwn(filters, (values = [], name) => {
-    const filter = values.map(value => `${name}.${value}`);
+  forOwn(filters, (values, name) => {
+    const filter = values?.map(value => `${name}.${value}`);
     newFilters.push(filter);
   });
 

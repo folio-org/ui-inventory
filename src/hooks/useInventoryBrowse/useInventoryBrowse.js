@@ -15,7 +15,6 @@ import {
   BROWSE_RESULTS_COUNT,
   CQL_FIND_ALL,
   FACETS_TO_REQUEST,
-  // PAGE_DIRECTIONS,
   undefinedAsString,
 } from '../../constants';
 import usePrevious from '../usePrevious';
@@ -33,12 +32,6 @@ const INITIAL_SEARCH_PARAMS_MAP = {
   [browseModeOptions.CALL_NUMBERS]: 'callNumber',
   [browseModeOptions.CONTRIBUTORS]: 'name',
 };
-
-// const BROWSE_SEARCH_PARAMS_MAP = {
-//   [browseModeOptions.SUBJECTS]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.SUBJECTS],
-//   [browseModeOptions.CALL_NUMBERS]: 'itemEffectiveShelvingOrder',
-//   [browseModeOptions.CONTRIBUTORS]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.CONTRIBUTORS],
-// };
 
 const PRECEDING_RECORDS_COUNT = 5;
 
