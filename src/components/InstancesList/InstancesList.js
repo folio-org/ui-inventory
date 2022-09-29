@@ -979,7 +979,7 @@ class InstancesList extends React.Component {
       },
       'contributor': r => {
         if (r?.totalRecords) {
-          const fullMuchRecord = getFullMatchRecord(r.name, r.isAnchor);
+          const fullMatchRecord = getFullMatchRecord(r.name, r.isAnchor);
           const isBrowseContributors = this.getQIndexFromParams() === browseModeOptions.CONTRIBUTORS;
 
           if (isBrowseContributors && r.authorityId) {
@@ -1016,12 +1016,12 @@ class InstancesList extends React.Component {
                     );
                   }}
                 </Tooltip>
-                {fullMuchRecord}
+                {fullMatchRecord}
               </>
             );
           }
 
-          return fullMuchRecord;
+          return fullMatchRecord;
         }
         return missedMatchItem(r.name);
       },
