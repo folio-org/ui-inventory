@@ -117,10 +117,17 @@ describe('ItemView', () => {
       expect(document.querySelectorAll('#item-list-bound-with-titles .mclRowContainer > [role=row]').length).toEqual(2);
     });
 
-    it('should link to the instance view from the HRID', () => {
+    it('should link to the instance view from the instance HRID', () => {
       const id = resources.items.records[0].boundWithTitles[0].briefInstance.id;
       expect(document.querySelector('#item-list-bound-with-titles a.instanceHrid'))
         .toHaveAttribute('href', '/inventory/view/' + id);
+    });
+
+    it('should link to the holdings view from the holdings HRID', () => {
+      const instanceId = resources.items.records[0].boundWithTitles[0].briefInstance.id;
+      const holdingsRecordId = resources.items.records[0].boundWithTitles[0].briefHoldingsRecord.id;
+      expect(document.querySelector('#item-list-bound-with-titles a.holdingsRecordHrid'))
+        .toHaveAttribute('href', '/inventory/view/' + instanceId + '/' + holdingsRecordId);
     });
   });
 });
