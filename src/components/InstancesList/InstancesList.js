@@ -15,6 +15,7 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
+import queryString from 'query-string';
 
 import {
   Pluggable,
@@ -34,6 +35,7 @@ import {
   checkScope,
   HasCommand,
   MCLPagingTypes,
+  Tooltip,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -196,7 +198,9 @@ class InstancesList extends React.Component {
 
   getSelectedBrowseOption = () => {
     const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
-    return isBrowseSelectedBasedOnState;
+    const isBrowseSelectedBasedOnSearch = queryString.parse(this.props.location.search).selectedBrowseResult;
+
+    return isBrowseSelectedBasedOnState || isBrowseSelectedBasedOnSearch;
   }
 
   getExecutedBrowseQuery = () => {
@@ -747,6 +751,11 @@ class InstancesList extends React.Component {
 
   // handler used for clicking a row in browse mode
   onSelectRow = (_, row) => {
+  onSelectRow = ({ target }, row) => {
+    const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
+      target.getAttribute('class')?.includes('authorityIcon');
+    if (isAuthorityAppLink) return;
+
     const {
       parentMutator,
       parentResources,
@@ -801,6 +810,10 @@ class InstancesList extends React.Component {
       searchAndSortKey: curState.searchAndSortKey + 1,
     }));
   }
+
+  openInNewTab = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   render() {
     const {
@@ -971,7 +984,49 @@ class InstancesList extends React.Component {
       },
       'contributor': r => {
         if (r?.totalRecords) {
-          return getFullMatchRecord(r?.name, r.isAnchor);
+          const fullMatchRecord = getFullMatchRecord(r.name, r.isAnchor);
+          const isBrowseContributors = this.getQIndexFromParams() === browseModeOptions.CONTRIBUTORS;
+
+          if (isBrowseContributors && r.authorityId) {
+            return (
+              <>
+                <Tooltip
+                  id="marc-authority-tooltip"
+                  text={intl.formatMessage({ id: 'ui-inventory.linkedToMarcAuthority' })}
+                >
+                  {({ ref, ariaIds }) => {
+                    const url = `marc-authorities/authorities/${r.authorityId}?segment=search`;
+
+                    return (
+                      <span
+                        role="link" // fake link to avoid Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>
+                        tabIndex="0"
+                        ref={ref}
+                        aria-labelledby={ariaIds.text}
+                        data-link="authority-app"
+                        data-testid="authority-app-link"
+                        onClick={() => this.openInNewTab(url)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            this.openInNewTab(url);
+                          }
+                        }}
+                      >
+                        <AppIcon
+                          size="small"
+                          app="marc-authorities"
+                          iconClassName={css.authorityIcon}
+                        />
+                      </span>
+                    );
+                  }}
+                </Tooltip>
+                {fullMatchRecord}
+              </>
+            );
+          }
+
+          return fullMatchRecord;
         }
         return missedMatchItem(r.name);
       },

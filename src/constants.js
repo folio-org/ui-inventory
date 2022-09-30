@@ -395,4 +395,11 @@ export const QUERY_INDEXES = {
   BARCODE: 'items.barcode',
 };
 
+export const PAGE_DIRECTIONS = {
+  prev: 'prev',
+  next: 'next',
+};
+
+export const BROWSE_RESULTS_COUNT = 100;
+
 export const ORDERS_API = 'orders/composite-orders';
