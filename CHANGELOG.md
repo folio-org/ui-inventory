@@ -39,6 +39,7 @@
 * Browse contributors | Second pane header doesn't update when user return to "Browse inventory" pane via the web-browser "Back" button. Fixes UIIN-2181.
 * Define new route for Inventory "Browse" page. Refs UIIN-2193.
 * Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
+* Do not include `highlightMatch` parameter in search queries. Fixes UIIN-2008.
 * Relabel 'Bound-with titles' accordion on item view. Fixes UIIN-2196.
 * Link from bound-with table HRID column to instances. Fixes UIIN-2195.
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
