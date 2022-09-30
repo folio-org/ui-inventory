@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { noop } from 'lodash';
+import { noop, cloneDeep } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import {
@@ -24,6 +24,8 @@ import InstancesList from './InstancesList';
 
 const updateMock = jest.fn();
 const resetBrowseModeRecordsMock = jest.fn();
+const mockWindowOpen = jest.fn();
+window.open = mockWindowOpen;
 
 const paramsMock = {
   query: 'fakeQuery',
@@ -91,7 +93,7 @@ let history;
 const renderInstancesList = ({
   segment,
   ...rest
-}) => {
+}, rerender) => {
   const {
     indexes,
     indexesES,
@@ -103,7 +105,6 @@ const renderInstancesList = ({
       <StripesContext.Provider value={stripesStub}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
-            {...rest}
             parentResources={resources}
             parentMutator={{
               resultCount: { replace: noop },
@@ -126,11 +127,13 @@ const renderInstancesList = ({
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
             fetchFacets={noop}
+            {...rest}
           />
         </ModuleHierarchyProvider>
       </StripesContext.Provider>
     </Router>,
-    translationsProperties
+    translationsProperties,
+    rerender,
   );
 };
 
@@ -233,6 +236,60 @@ describe('InstancesList', () => {
           });
 
           expect(history.location.search).toBe('?qindex=contributors&query=fakeQuery&sort=fakeSort');
+        });
+
+        describe('when Instance record is linked to an authority record', () => {
+          describe('by clicking on the icon of an authority app', () => {
+            const record = {
+              contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a',
+              isAnchor: false,
+              name: 'McOrmond, Steven Craig (Test) 1971-',
+              totalRecords: 1,
+            };
+            const authorityId = 'bb30e977-f934-4a2f-8fb8-858bac51b7ab';
+            const linkedRecord = {
+              ...record,
+              authorityId,
+            };
+            const records = [linkedRecord];
+            const props = {
+              segment: 'instances',
+              parentResources: {
+                ...resources,
+                records: {
+                  ...resources.records,
+                  records,
+                },
+                browseModeRecords: {
+                  records,
+                },
+              },
+            };
+
+            beforeEach(() => {
+              cleanup();
+
+              const { rerender, getByRole, getByTestId } = renderInstancesList(props);
+              const newProps = cloneDeep(props);
+              newProps.parentResources.query.qindex = 'contributors';
+
+              fireEvent.change(getByRole('combobox'), { target: { value: 'contributors' } });
+              renderInstancesList(newProps, rerender);
+              fireEvent.click(getByTestId('authority-app-link'));
+            });
+
+            it('should open the authority record in a new tab', () => {
+              expect(mockWindowOpen).toHaveBeenCalledWith(
+                `marc-authorities/authorities/${authorityId}?segment=search`,
+                '_blank',
+                'noopener,noreferrer'
+              );
+            });
+
+            it('should not handle row click', () => {
+              expect(updateMock).toHaveBeenCalledTimes(1); // 1 - changing search index
+            });
+          });
         });
       });
     });

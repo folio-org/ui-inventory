@@ -154,7 +154,7 @@ export function parseFiltersToStr(filters) {
   const newFilters = [];
 
   forOwn(filters, (values, name) => {
-    const filter = values.map(value => `${name}.${value}`);
+    const filter = values?.map(value => `${name}.${value}`);
     newFilters.push(filter);
   });
 

@@ -6,16 +6,26 @@ import {
   useIntl,
   FormattedMessage,
 } from 'react-intl';
+import {
+  Link,
+} from 'react-router-dom';
 
+import { AppIcon } from '@folio/stripes/core';
 import {
   Accordion,
   MultiColumnList,
   NoValue,
+  Tooltip,
 } from '@folio/stripes/components';
 
 import {
+  segments,
+} from '../../../constants';
+import {
   checkIfArrayIsEmpty,
 } from '../../../utils';
+
+import css from './InstanceContributorsView.css';
 
 const noValue = <NoValue />;
 
@@ -33,19 +43,14 @@ const columnWidths = {
   type: '12%',
   freeText: '13%',
 };
-const formatter = {
-  nameType: item => item.nameType || noValue,
-  name: item => item.name || noValue,
-  type: item => item.type || noValue,
-  freeText: item => item.contributorTypeText || noValue,
-  primary: item => (item.primary ? <FormattedMessage id="ui-inventory.primary" /> : noValue),
-};
 
 const InstanceContributorsView = ({
   id,
   contributors,
   contributorTypes,
   contributorNameTypes,
+  source,
+  segment,
 }) => {
   const intl = useIntl();
 
@@ -72,6 +77,48 @@ const InstanceContributorsView = ({
     );
   }, [contributors, contributorTypes, contributorNameTypes]);
 
+  const getName = (item) => {
+    const _segment = segment ?? segments.instances;
+
+    if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+      return (
+        <>
+          <Tooltip
+            id="marc-authority-tooltip"
+            text={intl.formatMessage({ id: 'ui-inventory.linkedToMarcAuthority' })}
+          >
+            {({ ref, ariaIds }) => (
+              <Link
+                to={`/marc-authorities/authorities/${item.authorityId}?segment=search`}
+                target="_blank"
+                ref={ref}
+                aria-labelledby={ariaIds.text}
+                data-testid="authority-app-link"
+              >
+                <AppIcon
+                  size="small"
+                  app="marc-authorities"
+                  iconClassName={css.authorityIcon}
+                />
+              </Link>
+            )}
+          </Tooltip>
+          {item.name || noValue}
+        </>
+      );
+    }
+
+    return item.name || noValue;
+  };
+
+  const formatter = {
+    nameType: item => item.nameType || noValue,
+    name: item => getName(item),
+    type: item => item.type || noValue,
+    freeText: item => item.contributorTypeText || noValue,
+    primary: item => (item.primary ? <FormattedMessage id="ui-inventory.primary" /> : noValue),
+  };
+
   return (
     <Accordion
       id={id}
@@ -97,6 +144,8 @@ InstanceContributorsView.propTypes = {
   contributors: PropTypes.arrayOf(PropTypes.object),
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
   contributorNameTypes: PropTypes.arrayOf(PropTypes.object),
+  source: PropTypes.string.isRequired,
+  segment: PropTypes.string,
 };
 
 InstanceContributorsView.defaultProps = {

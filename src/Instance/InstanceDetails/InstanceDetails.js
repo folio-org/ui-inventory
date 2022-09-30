@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useContext, forwardRef } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -61,6 +62,8 @@ const InstanceDetails = forwardRef(({
   ...rest
 }, ref) => {
   const intl = useIntl();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const referenceData = useContext(DataContext);
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
@@ -156,6 +159,8 @@ const InstanceDetails = forwardRef(({
               contributors={instance.contributors}
               contributorTypes={referenceData.contributorTypes}
               contributorNameTypes={referenceData.contributorNameTypes}
+              source={instance.source}
+              segment={searchParams.get('segment')}
             />
 
             <InstanceDescriptiveView

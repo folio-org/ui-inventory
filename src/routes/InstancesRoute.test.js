@@ -32,6 +32,8 @@ import { QUICK_EXPORT_LIMIT } from '../constants';
 import { DataContext } from '../contexts';
 import InstancesRoute from './InstancesRoute';
 
+jest.mock('../components/BrowseInventoryFilters', () => 'BrowseInventoryFilters');
+
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
