@@ -109,6 +109,16 @@ class ViewHoldingsRecord extends React.Component {
         path: 'source-storage/records/%{marcRecordId}',
       },
     },
+    boundWithItems: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory/items-by-holdings-id',
+      params: {
+        query: '(holdingsRecordId==:{holdingsrecordid})',
+        limit: '5000',
+      },
+      resourceShouldRefresh: true,
+    },
   });
 
   constructor(props) {
@@ -456,6 +466,7 @@ class ViewHoldingsRecord extends React.Component {
       resources: {
         items,
         tagSettings,
+        boundWithItems,
       },
       referenceTables,
       goTo,
@@ -996,6 +1007,30 @@ class ViewHoldingsRecord extends React.Component {
                       />
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
+
+                      <Accordion
+                        id="acc08"
+                        label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
+                      >
+                        <MultiColumnList
+                          id="holdings-list-bound-with-items"
+                          contentData={checkIfArrayIsEmpty(boundWithItems.records)}
+                          visibleColumns={['hrid']}
+                          columnMapping={{
+                            'hrid': intl.formatMessage({ id: 'ui-inventory.itemHrid' }),
+                          }}
+                          formatter={{
+                            'hrid': x => get(x, ['hrid']) || noValue,
+                            // 'hrid': x => (get(x, ['hrid'])
+                            //   ? (
+                            //     <Link to={`/inventory/view/someinstanceid/${get(x, ['holdingsRecordId'])}/${get(x, ['id'])}`}>
+                            //       {get(x, ['hrid'])}
+                            //     </Link>)
+                            //   : noValue),
+                          }}
+                        />
+
+                      </Accordion>
                     </AccordionSet>
                   </AccordionStatus>
                 </Pane>
@@ -1024,6 +1059,9 @@ ViewHoldingsRecord.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
     tagSettings: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
+    }),
+    boundWithItems: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
