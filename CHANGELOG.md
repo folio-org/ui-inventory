@@ -38,7 +38,6 @@
 * No results return when you conduct a Contributor search. Fixes UIIN-2191.
 * Browse contributors | Second pane header doesn't update when user return to "Browse inventory" pane via the web-browser "Back" button. Fixes UIIN-2181.
 * Define new route for Inventory "Browse" page. Refs UIIN-2193.
-* Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
 * Do not include `highlightMatch` parameter in search queries. Fixes UIIN-2008.
 * Relabel 'Bound-with titles' accordion on item view. Fixes UIIN-2196.
 * Link from bound-with table HRID column to instances. Fixes UIIN-2195.
@@ -46,6 +45,8 @@
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
 * Ignore .vscode in .gitignore.
+* Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
+* Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)

@@ -4,6 +4,7 @@ const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
 const CHECKED_OUT = 'Checked out';
+const AGED_TO_LOST = 'Aged to lost';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
@@ -19,7 +20,7 @@ export const searchModeRoutesMap = {
 };
 
 export const itemStatusesMap = {
-  AGED_TO_LOST: 'Aged to lost',
+  AGED_TO_LOST,
   AVAILABLE: 'Available',
   AWAITING_PICKUP,
   AWAITING_DELIVERY,
@@ -64,7 +65,8 @@ export const REQUEST_OPEN_STATUSES = {
 // until it becomes available again.
 export const NOT_REMOVABLE_ITEM_STATUSES = [
   CHECKED_OUT,
-  AWAITING_PICKUP
+  AWAITING_PICKUP,
+  AGED_TO_LOST,
 ];
 
 export const itemStatuses = [
