@@ -744,5 +744,10 @@
     "effectiveCallNumberShelving": "رقم الاستدعاء الفعلي (مادة)، ترتيب الأرفف",
     "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
     "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
-    "search": "Search"
+    "search": "Search",
+    "linkedToMarcAuthority": "Linked to MARC authority",
+    "browse.callNumbers": "Call numbers",
+    "browse.contributors": "Contributors",
+    "browse.searchableIndexesPlaceholder": "Select a browse option",
+    "browse.subjects": "Subjects"
 }
