@@ -44,6 +44,7 @@
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
+* Display "Inactive" by inactive locations on holdings view. Fixes UIIN-1968.
 * Ignore .vscode in .gitignore.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
