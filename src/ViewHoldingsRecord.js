@@ -828,8 +828,8 @@ class ViewHoldingsRecord extends React.Component {
                           >
                             <KeyValue
                               label={<FormattedMessage id="ui-inventory.permanent" />}
-                              value={checkIfElementIsEmpty(locationAccordion.permanent.name)}
-                              subValue={(!locationAccordion.permanent.isActive) &&
+                              value={checkIfElementIsEmpty(locationAccordion.permanent?.name)}
+                              subValue={(!locationAccordion.permanent?.isActive) &&
                                 <FormattedMessage id="ui-inventory.inactive" />
                               }
                             />
