@@ -46,6 +46,8 @@
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
 * Display "Inactive" by inactive locations on holdings view. Fixes UIIN-1968.
 * Ignore .vscode in .gitignore.
+* Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
+* Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)

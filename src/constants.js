@@ -3,6 +3,8 @@ import React from 'react';
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
+const CHECKED_OUT = 'Checked out';
+const AGED_TO_LOST = 'Aged to lost';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
@@ -18,11 +20,11 @@ export const searchModeRoutesMap = {
 };
 
 export const itemStatusesMap = {
-  AGED_TO_LOST: 'Aged to lost',
+  AGED_TO_LOST,
   AVAILABLE: 'Available',
   AWAITING_PICKUP,
   AWAITING_DELIVERY,
-  CHECKED_OUT: 'Checked out',
+  CHECKED_OUT,
   CLAIMED_RETURNED: 'Claimed returned',
   DECLARED_LOST: 'Declared lost',
   IN_PROCESS: 'In process',
@@ -58,6 +60,14 @@ export const REQUEST_OPEN_STATUSES = {
   OPEN_IN_TRANSIT: `Open - ${IN_TRANSIT}`,
   OPEN_AWAITING_DELIVERY: `Open - ${AWAITING_DELIVERY}`,
 };
+
+// when item has one of these statutes it can't be deleted
+// until it becomes available again.
+export const NOT_REMOVABLE_ITEM_STATUSES = [
+  CHECKED_OUT,
+  AWAITING_PICKUP,
+  AGED_TO_LOST,
+];
 
 export const itemStatuses = [
   { label: 'ui-inventory.item.status.agedToLost', value: 'Aged to lost' },
