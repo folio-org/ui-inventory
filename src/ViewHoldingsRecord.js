@@ -468,8 +468,10 @@ class ViewHoldingsRecord extends React.Component {
     const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance?.source);
     const holdingsRecord = this.getMostRecentHolding();
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
-    const holdingsPermanentLocation = get(referenceTables?.locationsById[holdingsRecord?.permanentLocationId], ['name'], '-');
-    const holdingsTemporaryLocation = get(referenceTables?.locationsById[holdingsRecord?.temporaryLocationId], ['name'], '-');
+    const holdingsPermanentLocation = referenceTables?.locationsById[holdingsRecord?.permanentLocationId];
+    const holdingsPermanentLocationName = get(holdingsPermanentLocation, ['name'], '-');
+    const holdingsTemporaryLocation = referenceTables?.locationsById[holdingsRecord?.temporaryLocationId];
+    const holdingsEffectiveLocation = referenceTables?.locationsById[holdingsRecord?.effectiveLocationId];
     const itemCount = get(items, 'records.length', 0);
     const holdingsSourceName = holdingsSource?.name || instanceSource?.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
@@ -479,7 +481,7 @@ class ViewHoldingsRecord extends React.Component {
         id="ui-inventory.confirmHoldingsRecordDeleteModal.message"
         values={{
           hrid: holdingsRecord.hrid,
-          location: holdingsPermanentLocation
+          location: holdingsPermanentLocationName
         }}
       />
     );
@@ -493,7 +495,7 @@ class ViewHoldingsRecord extends React.Component {
         id={noHoldingsRecordDeleteModalMessageId}
         values={{
           hrid: holdingsRecord.hrid,
-          location: holdingsPermanentLocation,
+          location: holdingsPermanentLocationName,
           itemCount,
         }}
       />
@@ -678,7 +680,13 @@ class ViewHoldingsRecord extends React.Component {
                   paneTitle={intl.formatMessage({
                     id: 'ui-inventory.holdingsPaneTitle',
                   }, {
-                    location: referenceTables?.locationsById[holdingsRecord?.effectiveLocationId]?.name,
+                    location:
+                      holdingsEffectiveLocation?.isActive ?
+                        holdingsEffectiveLocation?.name :
+                        intl.formatMessage(
+                          { id: 'ui-inventory.inactive.paneTitle' },
+                          { location: holdingsEffectiveLocation?.name }
+                        ),
                     callNumber: holdingsRecord?.callNumber,
                   })}
                   paneSub={intl.formatMessage({
@@ -820,13 +828,20 @@ class ViewHoldingsRecord extends React.Component {
                           >
                             <KeyValue
                               label={<FormattedMessage id="ui-inventory.permanent" />}
-                              value={checkIfElementIsEmpty(locationAccordion.permanent)}
+                              value={checkIfElementIsEmpty(locationAccordion.permanent.name)}
+                              subValue={(!locationAccordion.permanent.isActive) &&
+                                <FormattedMessage id="ui-inventory.inactive" />
+                              }
                             />
                           </Col>
                           <Col sm={4}>
                             <KeyValue
                               label={<FormattedMessage id="ui-inventory.temporary" />}
-                              value={checkIfElementIsEmpty(locationAccordion.temporary)}
+                              value={checkIfElementIsEmpty(locationAccordion.temporary?.name)}
+                              subValue={(locationAccordion.temporary &&
+                                !locationAccordion.temporary?.isActive) &&
+                                <FormattedMessage id="ui-inventory.inactive" />
+                              }
                             />
                           </Col>
                         </Row>
