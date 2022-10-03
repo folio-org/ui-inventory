@@ -104,6 +104,7 @@ class InstancesList extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
+    segment: segments.instances,
   };
 
   static propTypes = {
