@@ -1020,13 +1020,15 @@ class ViewHoldingsRecord extends React.Component {
                             'hrid': intl.formatMessage({ id: 'ui-inventory.itemHrid' }),
                           }}
                           formatter={{
-                            'hrid': x => get(x, ['hrid']) || noValue,
-                            // 'hrid': x => (get(x, ['hrid'])
-                            //   ? (
-                            //     <Link to={`/inventory/view/someinstanceid/${get(x, ['holdingsRecordId'])}/${get(x, ['id'])}`}>
-                            //       {get(x, ['hrid'])}
-                            //     </Link>)
-                            //   : noValue),
+                            'hrid': x => (get(x, ['hrid'])
+                              ? (
+                                <Link
+                                  to={`/inventory/?qindex=hrid&segment=items&query=${get(x, ['hrid'])}`}
+                                  className="itemHrid"
+                                >
+                                  {get(x, ['hrid'])}
+                                </Link>)
+                              : noValue),
                           }}
                         />
 
