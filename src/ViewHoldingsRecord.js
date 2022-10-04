@@ -1014,7 +1014,7 @@ class ViewHoldingsRecord extends React.Component {
                       >
                         <MultiColumnList
                           id="holdings-list-bound-with-items"
-                          contentData={checkIfArrayIsEmpty(boundWithItems.records)}
+                          contentData={checkIfArrayIsEmpty(boundWithItems?.records)}
                           visibleColumns={['hrid']}
                           columnMapping={{
                             'hrid': intl.formatMessage({ id: 'ui-inventory.itemHrid' }),
