@@ -751,10 +751,10 @@ class InstancesList extends React.Component {
   }
 
   // handler used for clicking a row in browse mode
-  onSelectRow = (_, row) => {
   onSelectRow = ({ target }, row) => {
     const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
       target.getAttribute('class')?.includes('authorityIcon');
+
     if (isAuthorityAppLink) return;
 
     const {
