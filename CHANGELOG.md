@@ -48,6 +48,7 @@
 * Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
 * Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
+* Add HRID and UUID to keyword search for instance, holdings, item. Refs UIIN-2198.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
