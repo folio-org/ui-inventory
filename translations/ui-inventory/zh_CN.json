@@ -744,5 +744,10 @@
     "effectiveCallNumberShelving": "有效索书号（单件）",
     "browseContributors.results.error": "返回结果时出错。请重试或修改搜索。",
     "remote.warning.common.items": "单件已在FOLIO中成功移动。要完成从远程存储中删除该单件，请运行一个例外报告或直接将其传达给你的远程存储位置。",
-    "search": "Search"
+    "search": "Search",
+    "linkedToMarcAuthority": "Linked to MARC authority",
+    "browse.callNumbers": "Call numbers",
+    "browse.contributors": "Contributors",
+    "browse.searchableIndexesPlaceholder": "Select a browse option",
+    "browse.subjects": "Subjects"
 }

@@ -744,5 +744,10 @@
     "effectiveCallNumberShelving": "Número de chamada efetivo (item), ordem da estante",
     "browseContributors.results.error": "Erro ao retornar resultados. Por favor, tente novamente ou revise sua busca.",
     "remote.warning.common.items": "O item foi movido com sucesso no FOLIO. Para completar a remoção deste item do armazenamento remoto, execute um relatório de exceção ou comunique isto diretamente ao seu local de armazenamento remoto.",
-    "search": "Search"
+    "search": "Search",
+    "linkedToMarcAuthority": "Linked to MARC authority",
+    "browse.callNumbers": "Call numbers",
+    "browse.contributors": "Contributors",
+    "browse.searchableIndexesPlaceholder": "Select a browse option",
+    "browse.subjects": "Subjects"
 }

@@ -72,6 +72,7 @@ import {
   itemStatusMutators,
   noValue,
   REQUEST_OPEN_STATUSES,
+  NOT_REMOVABLE_ITEM_STATUSES,
   wrappingCell,
   actionMenuDisplayPerms,
 } from '../constants';
@@ -217,14 +218,11 @@ class ItemView extends React.Component {
 
   canDeleteItem = (item, request) => {
     const itemStatus = get(item, 'status.name');
-    const {
-      CHECKED_OUT,
-      ON_ORDER,
-    } = itemStatusesMap;
+    const { ON_ORDER } = itemStatusesMap;
     let messageId;
 
-    if (itemStatus === CHECKED_OUT) {
-      messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
+    if (NOT_REMOVABLE_ITEM_STATUSES.includes(itemStatus)) {
+      messageId = 'ui-inventory.noItemDeleteModal.statusMessage';
     } else if (itemStatus === ON_ORDER) {
       messageId = 'ui-inventory.noItemDeleteModal.orderMessage';
     } else if (request) {
