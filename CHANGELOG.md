@@ -50,6 +50,7 @@
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
 * Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
 * Add ability to search by administrative notes in instances, holdings and items. Refs UIIN-2053.
+* Add ability to search by circulation notes in items. Refs UIIN-945.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
