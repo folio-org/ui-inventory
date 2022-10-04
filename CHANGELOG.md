@@ -45,6 +45,8 @@
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
 * Ignore .vscode in .gitignore.
+* Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
+* Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
