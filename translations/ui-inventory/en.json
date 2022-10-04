@@ -204,6 +204,9 @@
   "search.holdings.uuid": "Holdings UUID",
   "search.item.uuid": "Item UUID",
   "search.oclc": "OCLC number, normalized",
+  "search.instanceNotes": "Instance notes (all)",
+  "search.holdingsNotes": "Holdings notes (all)",
+  "search.itemNotes": "Item notes (all)",
   "title": "Title (all)",
   "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
@@ -313,6 +316,7 @@
   "subjects": "Subjects",
   "subject": "Subject",
   "querySearch": "Query search",
+
   "addSubject": "Add subject",
   "url": "URL",
   "authentication": "Authentication",
