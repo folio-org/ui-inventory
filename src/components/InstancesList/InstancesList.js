@@ -755,7 +755,7 @@ class InstancesList extends React.Component {
     const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
       target.getAttribute('class')?.includes('authorityIcon');
 
-    if (row.isAnchor || isAuthorityAppLink) return;
+    if (isAuthorityAppLink) return;
 
     const {
       parentMutator,
@@ -766,6 +766,8 @@ class InstancesList extends React.Component {
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
+        if (row.isAnchor && !row.instance) return;
+
         optionSelected = 'callNumber';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -776,6 +778,8 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.SUBJECTS:
+        if (row.isAnchor && !row.totalRecords) return;
+
         optionSelected = 'subject';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -786,9 +790,7 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
-        if (row.isAnchor && !row.contributorNameTypeId) {
-          return;
-        }
+        if (row.isAnchor && !row.contributorNameTypeId) return;
 
         optionSelected = 'contributor';
         parentMutator.query.update({
