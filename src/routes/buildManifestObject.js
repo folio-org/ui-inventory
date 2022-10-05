@@ -25,7 +25,7 @@ const DEFAULT_SORT = 'title';
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
     ? queryValue
-    : `${param}>="${queryValue.replace(/"/g, '')}" or ${param}<"${queryValue.replace(/"/g, '')}"`;
+    : `${param}>="${queryValue.replace(/"/g, '\\"')}" or ${param}<"${queryValue.replace(/"/g, '\\"')}"`;
 };
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
