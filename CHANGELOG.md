@@ -48,6 +48,7 @@
 * Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
 * Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
+* Remove ability to sort by `publishers`. Fixes UIIN-2200.
 * Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
 * Reorder the action menu on instance view. Fixes UIIN-2097.
 
