@@ -86,6 +86,7 @@ const useInventoryBrowse = ({
 
   const updatePage = useCallback((_askAmount, _index, _firstIndex, direction) => {
     // TODO: implement prev-next pagination
+    // eslint-disable-next-line no-console
     console.log('direction', direction);
   }, []);
 
