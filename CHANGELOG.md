@@ -50,6 +50,7 @@
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
 * Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
 * Add ability to search by administrative notes in instances, holdings and items. Refs UIIN-2053.
+* Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
 * Reorder the action menu on instance view. Fixes UIIN-2097.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
