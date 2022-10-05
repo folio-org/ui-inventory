@@ -1213,7 +1213,7 @@ class InstancesList extends React.Component {
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['title', 'contributors', 'publishers']}
+            sortableColumns={['title', 'contributors']}
             syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
