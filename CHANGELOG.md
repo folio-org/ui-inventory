@@ -51,6 +51,7 @@
 * Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
 * Add ability to search by administrative notes in instances, holdings and items. Refs UIIN-2053.
 * Add ability to search by circulation notes in items. Refs UIIN-945.
+* Remove ability to sort by `publishers`. Fixes UIIN-2200.
 * Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
 * Reorder the action menu on instance view. Fixes UIIN-2097.
 
