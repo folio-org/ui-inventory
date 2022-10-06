@@ -50,6 +50,7 @@
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
 * Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
 * Add ability to search by administrative notes in instances, holdings and items. Refs UIIN-2053.
+* Add ability to search by circulation notes in items. Refs UIIN-945.
 * Add HRID and UUID to keyword search for instance, holdings, item. Refs UIIN-2198.
 * Remove ability to sort by `publishers`. Fixes UIIN-2200.
 * Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
