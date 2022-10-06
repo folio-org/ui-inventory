@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/core';
 import {
   ExpandFilterPaneButton,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 import {
   getFiltersCount,
   NoResultsMessage,

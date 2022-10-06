@@ -39,7 +39,7 @@ import {
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
-import SearchModeNavigation from '../SearchModeNavigation';
+// import SearchModeNavigation from '../SearchModeNavigation'; // TODO: uncomment this when Browse functionality is replaced
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
 import ViewInstanceWrapper from '../../ViewInstanceWrapper';
@@ -181,8 +181,12 @@ class InstancesList extends React.Component {
   componentDidUpdate() {
     const qindex = this.getQIndexFromParams();
 
-    // keep the 'optionSelected' updated with the URL 'qindex'
+    // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
+    // doesn't like this because setState causes a re-render and can
+    // lead to a rendering loop. But the check on state.optionSelected
+    // prevents a loop, so I guess this is OK.
     if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ optionSelected: qindex });
     }
   }

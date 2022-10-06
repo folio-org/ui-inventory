@@ -483,7 +483,7 @@ class ItemForm extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <FormattedMessage id="ui-inventory.selectMaterialType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.materialType" />}
                               name="materialType.id"
@@ -494,7 +494,7 @@ class ItemForm extends React.Component {
                               fullWidth
                               dataOptions={
                                 [{
-                                  label: placeholder,
+                                  label,
                                   value: '',
                                   selected: !initialValues.materialType
                                 },
@@ -518,14 +518,14 @@ class ItemForm extends React.Component {
                     <Row>
                       <Col sm={2}>
                         <FormattedMessage id="ui-inventory.selectCallNumberType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.callNumberType" />}
                               name="itemLevelCallNumberTypeId"
                               id="additem_callnumbertype"
                               component={Select}
                               fullWidth
-                              dataOptions={[{ label: placeholder, value: '' }, ...callNumberTypeOptions]}
+                              dataOptions={[{ label, value: '' }, ...callNumberTypeOptions]}
                             />
                           )}
                         </FormattedMessage>
