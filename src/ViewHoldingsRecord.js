@@ -842,6 +842,7 @@ class ViewHoldingsRecord extends React.Component {
                                 !locationAccordion.temporary?.isActive) &&
                                 <FormattedMessage id="ui-inventory.inactive" />
                               }
+                              data-test-id="temporary-location"
                             />
                           </Col>
                         </Row>
