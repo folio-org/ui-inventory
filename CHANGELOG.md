@@ -48,6 +48,7 @@
 * Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
 * Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
+* Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
 * Add HRID and UUID to keyword search for instance, holdings, item. Refs UIIN-2198.
 * Remove ability to sort by `publishers`. Fixes UIIN-2200.
 * Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
