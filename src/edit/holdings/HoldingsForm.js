@@ -368,16 +368,15 @@ class HoldingsForm extends React.Component {
                       </Col>
                       <Col sm={4}>
                         <FormattedMessage id="ui-inventory.selectHoldingsSource">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
-                              placeholder={copy ? placeholder : instance.source}
                               name="sourceId"
                               id="additem_holdingsSource"
                               disabled
                               component={Select}
                               fullWidth
-                              dataOptions={holdingsSourceOptions}
+                              dataOptions={[{ label: copy ? label : instance.source, value: '' }, ...holdingsSourceOptions]}
                             />
                           )}
                         </FormattedMessage>
@@ -402,15 +401,14 @@ class HoldingsForm extends React.Component {
                     <Row>
                       <Col sm={4}>
                         <FormattedMessage id="ui-inventory.selectHoldingsType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.holdingsType" />}
-                              placeholder={placeholder}
                               name="holdingsTypeId"
                               id="additem_holdingstype"
                               component={Select}
                               fullWidth
-                              dataOptions={holdingsTypeOptions}
+                              dataOptions={[{ label, value: '' }, ...holdingsTypeOptions]}
                               disabled={this.isFieldBlocked('holdingsTypeId')}
                             />
                           )}
@@ -528,15 +526,14 @@ class HoldingsForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <FormattedMessage id="ui-inventory.selectCallNumberType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                              placeholder={placeholder}
                               name="callNumberTypeId"
                               id="additem_callnumbertype"
                               component={Select}
                               fullWidth
-                              dataOptions={callNumberTypeOptions}
+                              dataOptions={[{ label, value: '' }, ...callNumberTypeOptions]}
                               disabled={this.isFieldBlocked('callNumberTypeId')}
                             />
                           )}
@@ -619,15 +616,14 @@ class HoldingsForm extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <FormattedMessage id="ui-inventory.selectIllPolicy">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.illPolicy" />}
-                              placeholder={placeholder}
                               name="illPolicyId"
                               id="additem_illpolicy"
                               component={Select}
                               fullWidth
-                              dataOptions={illPolicyOptions}
+                              dataOptions={[{ label, value: '' }, ...illPolicyOptions]}
                               disabled={this.isFieldBlocked('illPolicyId')}
                             />
                           )}
