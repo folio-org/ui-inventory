@@ -50,9 +50,12 @@
 * The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
 * Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
 * Add ability to search by administrative notes in instances, holdings and items. Refs UIIN-2053.
+* Add HRID and UUID to keyword search for instance, holdings, item. Refs UIIN-2198.
 * Remove ability to sort by `publishers`. Fixes UIIN-2200.
 * Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
 * Reorder the action menu on instance view. Fixes UIIN-2097.
+* Add ability to choose blank state for all select fields on holdings form. Fixes UIIN-2121.
+* Escape quotes in browse string. Fixes UIIN-2201.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)

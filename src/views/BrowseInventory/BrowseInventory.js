@@ -7,7 +7,7 @@ import {
 } from '@folio/stripes/core';
 import {
   PersistedPaneset,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 import {
   FiltersPane,
   ResetButton,

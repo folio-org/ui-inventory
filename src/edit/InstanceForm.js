@@ -447,14 +447,13 @@ class InstanceForm extends React.Component {
                       </Row>
                       <Col sm={10}>
                         <FormattedMessage id="ui-inventory.selectInstanceStatus">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.instanceStatus" />}
                               name="statusId"
                               type="text"
                               component={Select}
-                              placeholder={placeholder}
-                              dataOptions={instanceStatusOptions}
+                              dataOptions={[{ label, value: '' }, ...instanceStatusOptions]}
                               disabled={this.isFieldBlocked('statusId')}
                             />
                           )}
@@ -462,14 +461,13 @@ class InstanceForm extends React.Component {
                       </Col>
                       <Col sm={10}>
                         <FormattedMessage id="ui-inventory.selectModeOfIssuance">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
                               name="modeOfIssuanceId"
                               type="text"
                               component={Select}
-                              placeholder={placeholder}
-                              dataOptions={modeOfIssuanceOptions}
+                              dataOptions={[{ label, value: '' }, ...modeOfIssuanceOptions]}
                               disabled={this.isFieldBlocked('modeOfIssuanceId')}
                             />
                           )}
@@ -618,7 +616,7 @@ class InstanceForm extends React.Component {
                       />
                       <Col sm={10}>
                         <FormattedMessage id="ui-inventory.selectResourceType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.resourceType" />}
                               name="instanceTypeId"
@@ -626,8 +624,7 @@ class InstanceForm extends React.Component {
                               type="text"
                               required
                               component={Select}
-                              placeholder={placeholder}
-                              dataOptions={instanceTypeOptions}
+                              dataOptions={[{ label, value: '' }, ...instanceTypeOptions]}
                               disabled={this.isFieldBlocked('instanceTypeId')}
                             />
                           )}
