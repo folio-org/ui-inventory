@@ -59,7 +59,7 @@ class ImportRecord extends React.Component {
         _path: `/inventory/view/${json.internalIdentifier}`,
         layer: undefined,
         xid: undefined,
-      });
+      }, { replace: true });
     } else {
       // No internalIdentifier returned => mod-copycat gave up polling
       const message = <FormattedMessage
@@ -71,7 +71,7 @@ class ImportRecord extends React.Component {
         _path: `/inventory/view${id ? `/${id}` : ''}`,
         layer: undefined,
         xid: undefined,
-      });
+      }, { replace: true });
     }
   }
 
@@ -82,7 +82,7 @@ class ImportRecord extends React.Component {
       _path: `/inventory${id ? `/view/${id}` : ''}`,
       layer: undefined,
       xid: undefined,
-    });
+    }, { replace: true });
 
     if (!(err instanceof ky.HTTPError)) {
       const message = <FormattedMessage id="ui-inventory.copycat.callout.simpleError" values={{ err: err.toString() }} />;
