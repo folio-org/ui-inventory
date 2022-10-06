@@ -24,6 +24,7 @@ const defaultProps = {
     instances1: { records: [{ id: 'instanceId' }], hasLoaded: true },
     permanentLocation: { hasLoaded: true },
     temporaryLocation: { hasLoaded: true },
+    boundWithItems: { records: [{ hrid: 'BW-ITEM-1' }], hasLoaded: true },
   },
   mutator: {
     instances1: {
@@ -110,5 +111,17 @@ describe('ViewHoldingsRecord actions', () => {
     user.click(duplicatHoldingBtn);
 
     expect(defaultProps.history.push).toHaveBeenCalled();
+  });
+
+  it('should link from the HRID to the a search for the item', async () => {
+    renderViewHoldingsRecord();
+
+    const id = defaultProps.resources.boundWithItems.records[0].hrid;
+
+    await waitFor(() => {
+      const link = document.querySelector('#holdings-list-bound-with-items a.itemHrid');
+      expect(link)
+        .toHaveAttribute('href', '/inventory/?qindex=hrid&segment=items&query=' + id);
+    });
   });
 });
