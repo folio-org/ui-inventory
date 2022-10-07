@@ -39,7 +39,7 @@ import {
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
-import SearchModeNavigation from '../SearchModeNavigation';
+// import SearchModeNavigation from '../SearchModeNavigation'; // TODO: uncomment this when Browse functionality is replaced
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
 import ViewInstanceWrapper from '../../ViewInstanceWrapper';
@@ -181,8 +181,12 @@ class InstancesList extends React.Component {
   componentDidUpdate() {
     const qindex = this.getQIndexFromParams();
 
-    // keep the 'optionSelected' updated with the URL 'qindex'
+    // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
+    // doesn't like this because setState causes a re-render and can
+    // lead to a rendering loop. But the check on state.optionSelected
+    // prevents a loop, so I guess this is OK.
     if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ optionSelected: qindex });
     }
   }
@@ -755,7 +759,7 @@ class InstancesList extends React.Component {
     const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
       target.getAttribute('class')?.includes('authorityIcon');
 
-    if (row.isAnchor || isAuthorityAppLink) return;
+    if (isAuthorityAppLink) return;
 
     const {
       parentMutator,
@@ -766,6 +770,8 @@ class InstancesList extends React.Component {
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
+        if (row.isAnchor && !row.instance) return;
+
         optionSelected = 'callNumber';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -776,6 +782,8 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.SUBJECTS:
+        if (row.isAnchor && !row.totalRecords) return;
+
         optionSelected = 'subject';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -786,9 +794,7 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
-        if (row.isAnchor && !row.contributorNameTypeId) {
-          return;
-        }
+        if (row.isAnchor && !row.contributorNameTypeId) return;
 
         optionSelected = 'contributor';
         parentMutator.query.update({
@@ -1211,7 +1217,7 @@ class InstancesList extends React.Component {
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['title', 'contributors', 'publishers']}
+            sortableColumns={['title', 'contributors']}
             syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}

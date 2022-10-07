@@ -453,20 +453,26 @@ class ViewInstance extends React.Component {
               </Icon>
             </Button>
           </IfPermission>
-          <IfPermission perm="ui-inventory.instance.create">
-            <Button
-              id="copy-instance"
-              onClick={() => {
-                onToggle();
-                onCopy(instance);
-              }}
-              buttonStyle="dropdownItem"
-            >
-              <Icon icon="duplicate">
-                <FormattedMessage id="ui-inventory.duplicateInstance" />
-              </Icon>
-            </Button>
-          </IfPermission>
+
+          {
+            canViewMARCSource && (
+              <IfPermission perm="ui-inventory.instance.view">
+                <Button
+                  id="clickable-view-source"
+                  buttonStyle="dropdownItem"
+                  disabled={!marcRecord}
+                  onClick={(e) => {
+                    onToggle();
+                    this.handleViewSource(e, instance);
+                  }}
+                >
+                  <Icon icon="document">
+                    <FormattedMessage id="ui-inventory.viewSource" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+            )
+          }
 
           {
             canMoveItems && (
@@ -521,25 +527,20 @@ class ViewInstance extends React.Component {
             </IfPermission>
           </IfInterface>
 
-          {
-            canViewMARCSource && (
-              <IfPermission perm="ui-inventory.instance.view">
-                <Button
-                  id="clickable-view-source"
-                  buttonStyle="dropdownItem"
-                  disabled={!marcRecord}
-                  onClick={(e) => {
-                    onToggle();
-                    this.handleViewSource(e, instance);
-                  }}
-                >
-                  <Icon icon="document">
-                    <FormattedMessage id="ui-inventory.viewSource" />
-                  </Icon>
-                </Button>
-              </IfPermission>
-            )
-          }
+          <IfPermission perm="ui-inventory.instance.create">
+            <Button
+              id="copy-instance"
+              onClick={() => {
+                onToggle();
+                onCopy(instance);
+              }}
+              buttonStyle="dropdownItem"
+            >
+              <Icon icon="duplicate">
+                <FormattedMessage id="ui-inventory.duplicateInstance" />
+              </Icon>
+            </Button>
+          </IfPermission>
 
           <IfInterface name="orders">
             <IfPermission perm="ui-inventory.instance.createOrder">

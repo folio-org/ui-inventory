@@ -86,7 +86,6 @@ const useInventoryBrowse = ({
 
   const updatePage = useCallback((_askAmount, _index, _firstIndex, direction) => {
     // TODO: implement prev-next pagination
-    console.log('direction', direction);
   }, []);
 
   const {
