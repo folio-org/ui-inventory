@@ -39,8 +39,8 @@ const getInitialPageQuery = (query, qindex) => {
   return regExp.test(query)
     ? query
     : [
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${query.replace(/"/g, '')}"`,
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${query.replace(/"/g, '')}"`
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${query.replace(/"/g, '\\"')}"`,
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${query.replace(/"/g, '\\"')}"`
     ].join(' or ');
 };
 
