@@ -23,7 +23,7 @@ const ElectronicAccessFields = props => {
 
   return (
     <FormattedMessage id="ui-inventory.selectType">
-      {([placeholder]) => (
+      {([label]) => (
         <RepeatableField
           name="electronicAccess"
           label={<FormattedMessage id="ui-inventory.electronicAccess" />}
@@ -34,8 +34,7 @@ const ElectronicAccessFields = props => {
               name: 'relationshipId',
               label: <FormattedMessage id="ui-inventory.urlRelationship" />,
               component: Select,
-              placeholder,
-              dataOptions: relationshipOptions,
+              dataOptions: [{ label, value: '' }, ...relationshipOptions],
             },
             {
               name: 'uri',

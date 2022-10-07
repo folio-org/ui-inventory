@@ -12,7 +12,7 @@ import RepeatableField from '../../components/RepeatableField';
 
 const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
   <FormattedMessage id="ui-inventory.selectType">
-    {([placeholder]) => (
+    {([label]) => (
       <RepeatableField
         name="notes"
         addButtonId="clickable-add-note"
@@ -22,8 +22,7 @@ const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
             name: 'holdingsNoteTypeId',
             label: <FormattedMessage id="ui-inventory.noteType" />,
             component: Select,
-            placeholder,
-            dataOptions: noteTypeOptions,
+            dataOptions: [{ label, value: '' }, ...noteTypeOptions],
             required: true,
           },
           {
