@@ -77,7 +77,11 @@ const BrowseResultsList = ({
   const browseOption = queryString.parse(search).qindex;
   const listId = `browse-results-list-${browseOption}`;
 
-  const onRowClick = useCallback((_, row) => {
+  const onRowClick = useCallback(({ target }, row) => {
+    const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
+      target.getAttribute('class')?.includes('authorityIcon');
+
+    if (isAuthorityAppLink) return;
     if (
       row.isAnchor && (
         (browseOption === browseModeOptions.CALL_NUMBERS && !row.instance) ||
@@ -101,7 +105,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter(data)}
+      formatter={getBrowseResultsFormatter(data, browseOption)}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       columnWidths={COLUMNS_WIDTHS}
