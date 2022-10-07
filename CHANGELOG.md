@@ -2,6 +2,7 @@
 
 ## 9.2.0 IN PROGRESS
 
+* Supports interface 'users' 16.0.  Fixes UIIN-2210.
 * Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
 * Browse contributors | Instance search query does not include contributor Name type. Fixes UIIN-2096.
 * Fix reference to `instanceSource` name. Fixes UIIN-2101.
