@@ -144,6 +144,8 @@
   "effectiveCallNumberShelving": "Effective call number (item), shelving order",
   "permanent": "Permanent",
   "temporary": "Temporary",
+  "inactive": "Inactive",
+  "inactive.paneTitle": "<em>Inactive</em> {location}",
   "selectPermanenLocation": "Select permanent location",
   "statisticalCodes": "Statistical codes",
   "statisticalCode": "Statistical code",

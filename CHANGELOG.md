@@ -44,7 +44,6 @@
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
-* Display bound-with items in holdings view, and link from HRID to item view. Refs UIIN-2018.
 * Ignore .vscode in .gitignore.
 * Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
 * Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
@@ -58,6 +57,8 @@
 * Add ability to choose blank state for all select fields on holdings form. Fixes UIIN-2121.
 * Escape quotes in browse string. Fixes UIIN-2201.
 * Single record import: when using the Back button in the browser, a duplicate import is no longer created. Fixes UIIN-2197.
+* Display bound-with items in holdings view, and link from HRID to item view. Refs UIIN-2018.
+* Display "Inactive" by inactive locations on holdings view. Fixes UIIN-1968.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
