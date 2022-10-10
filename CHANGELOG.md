@@ -60,6 +60,7 @@
 * Single record import: when using the Back button in the browser, a duplicate import is no longer created. Fixes UIIN-2197.
 * Display bound-with items in holdings view, and link from HRID to item view. Refs UIIN-2018.
 * Display "Inactive" by inactive locations on holdings view. Fixes UIIN-1968.
+* SRI: fetch up to 1000 SRI sources, sorted by name. Fixes UIIN-2206.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
