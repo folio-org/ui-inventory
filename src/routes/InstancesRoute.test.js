@@ -33,6 +33,7 @@ import { DataContext } from '../contexts';
 import InstancesRoute from './InstancesRoute';
 
 jest.mock('../components/BrowseInventoryFilters', () => 'BrowseInventoryFilters');
+jest.mock('@folio/stripes-acq-components');
 
 const stripesStub = {
   connect: Component => <Component />,
