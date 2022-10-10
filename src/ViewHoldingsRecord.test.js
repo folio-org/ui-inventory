@@ -27,7 +27,7 @@ const defaultProps = {
   resources: {
     holdingsRecords: {
       records: [
-        { sourceId: 'sourceId', temporaryLocationId: 'inactiveLocation', }
+        { sourceId: 'sourceId', temporaryLocationId: 'inactiveLocation' }
       ],
     },
     instances1: { records: [{ id: 'instanceId' }], hasLoaded: true },
