@@ -15,7 +15,6 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
-import queryString from 'query-string';
 
 import {
   Pluggable,
