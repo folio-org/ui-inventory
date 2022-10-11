@@ -41,15 +41,19 @@ const applySearch = jest.fn();
 const changeSearch = jest.fn();
 const resetFilters = jest.fn();
 const changeSearchIndex = jest.fn();
-const filtersUtils = [
-  {},
-  'searchQuery',
+const getFiltersUtils = ({
+  filters = {},
+  searchQuery = 'searchQuery',
+  searchIndex = browseModeOptions.CONTRIBUTORS,
+} = {}) => [
+  filters,
+  searchQuery,
   applyFilters,
   applySearch,
   changeSearch,
   resetFilters,
   changeSearchIndex,
-  browseModeOptions.CALL_NUMBERS,
+  searchIndex,
 ];
 
 describe('BrowseInventory', () => {
@@ -59,7 +63,7 @@ describe('BrowseInventory', () => {
     changeSearch.mockClear();
     resetFilters.mockClear();
     changeSearchIndex.mockClear();
-    useLocationFilters.mockClear().mockReturnValue(filtersUtils);
+    useLocationFilters.mockClear().mockReturnValue(getFiltersUtils());
   });
 
   it('should render browse filters and results panes', () => {
@@ -85,5 +89,17 @@ describe('BrowseInventory', () => {
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).toHaveBeenCalled();
+  });
+
+  it('should not call "changeSearch" when search query is not valid', async () => {
+    useLocationFilters.mockClear().mockReturnValue(getFiltersUtils({
+      searchQuery: 'with asterisks ***',
+    }));
+
+    const { container } = renderBrowseInventory();
+
+    await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
+
+    expect(applySearch).not.toHaveBeenCalled();
   });
 });
