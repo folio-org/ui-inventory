@@ -749,5 +749,15 @@
     "browse.callNumbers": "Call numbers",
     "browse.contributors": "Contributors",
     "browse.searchableIndexesPlaceholder": "Select a browse option",
-    "browse.subjects": "Subjects"
+    "browse.subjects": "Subjects",
+    "noItemDeleteModal.awaitingPickupMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is checked out and can not be deleted until checked in again, and item status is 'Available'",
+    "noItemDeleteModal.statusMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> has the item status <strong>{status}</strong> and cannot be deleted until the item status is set to 'Available'.",
+    "search.instanceNotes": "Instance notes (all)",
+    "search.holdingsNotes": "Holdings notes (all)",
+    "search.itemNotes": "Item notes (all)",
+    "search.instanceAdministrativeNotes": "Instance administrative notes (all)",
+    "search.holdingsAdministrativeNotes": "Holdings administrative notes (all)",
+    "search.itemAdministrativeNotes": "Item administrative notes (all)",
+    "inactive": "Inactive",
+    "inactive.paneTitle": "<em>Inactive</em> {location}"
 }
