@@ -67,9 +67,9 @@ const BrowseInventory = () => {
   }));
 
   const onApplySearch = useCallback(() => {
-    const isSearchQUeryValid = validateDataQuery(searchQuery);
+    const isSearchQueryValid = validateDataQuery(searchQuery);
 
-    if (isSearchQUeryValid) applySearch();
+    if (isSearchQueryValid) applySearch();
   }, [searchQuery]);
 
   const onChangeSearchIndex = useCallback((e) => {
