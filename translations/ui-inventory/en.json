@@ -212,6 +212,7 @@
   "search.instanceAdministrativeNotes": "Instance administrative notes",
   "search.holdingsAdministrativeNotes": "Holdings administrative notes",
   "search.itemAdministrativeNotes": "Item administrative notes",
+  "search.itemCirculationNotes": "Circulation notes",
   "title": "Title (all)",
   "indexTitle": "Index title",
   "selectResourceType": "Select resource type",
