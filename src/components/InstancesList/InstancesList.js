@@ -15,7 +15,6 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
-import queryString from 'query-string';
 
 import {
   Pluggable,
@@ -203,9 +202,7 @@ class InstancesList extends React.Component {
 
   getSelectedBrowseOption = () => {
     const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
-    const isBrowseSelectedBasedOnSearch = queryString.parse(this.props.location.search).selectedBrowseResult;
-
-    return isBrowseSelectedBasedOnState || isBrowseSelectedBasedOnSearch;
+    return isBrowseSelectedBasedOnState;
   }
 
   getExecutedBrowseQuery = () => {
