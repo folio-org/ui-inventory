@@ -28,6 +28,7 @@ import {
 import { DataContext } from '../../contexts';
 import {
   COLUMNS_MAPPING,
+  COLUMNS_WIDTHS,
   VISIBLE_COLUMNS_MAP,
 } from './constants';
 import getBrowseResultsFormatter from './getBrowseResultsFormatter';
@@ -109,6 +110,7 @@ const BrowseResultsList = ({
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       columnMapping={COLUMNS_MAPPING}
+      columnWidths={COLUMNS_WIDTHS[browseOption]}
       loading={isLoading}
       autosize
       virtualize={false}
