@@ -51,10 +51,7 @@ const BrowseInventory = () => {
     isLoading,
     pagination,
     totalRecords,
-  } = useInventoryBrowse({
-    filters,
-    searchIndex,
-  });
+  } = useInventoryBrowse({ filters });
 
   const { validateDataQuery } = useBrowseValidation(searchIndex);
 
@@ -70,7 +67,7 @@ const BrowseInventory = () => {
     const isSearchQueryValid = validateDataQuery(searchQuery);
 
     if (isSearchQueryValid) applySearch();
-  }, [searchQuery]);
+  }, [searchQuery, filters]);
 
   const onChangeSearchIndex = useCallback((e) => {
     resetFilters();

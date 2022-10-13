@@ -11,7 +11,7 @@ import { parseFiltersToStr } from '../../utils';
 import { InstanceFiltersBrowse } from '../InstanceFilters';
 
 const BrowseInventoryFilters = ({
-  activeFilters = {},
+  activeFilters,
   applyFilters,
   fetchFacets,
   resources,
@@ -19,6 +19,7 @@ const BrowseInventoryFilters = ({
 }) => {
   const data = useContext(DataContext);
 
+  const filters = omit(activeFilters || {}, ['qindex', 'query']);
   const filtersData = {
     ...data,
     browseType: searchIndex,
@@ -26,13 +27,13 @@ const BrowseInventoryFilters = ({
     parentResources: resources,
     query: {
       query: activeFilters.query,
-      filters: parseFiltersToStr(omit(activeFilters, ['qindex', 'query'])),
+      filters: parseFiltersToStr(filters),
     }
   };
 
   return (
     <InstanceFiltersBrowse
-      activeFilters={activeFilters}
+      activeFilters={filters}
       data={filtersData}
       onChange={({ name, values }) => applyFilters(name, values)}
       onClear={(name) => applyFilters(name, [])}

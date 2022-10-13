@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import {
+  memo,
   useCallback,
   useContext,
 } from 'react';
@@ -55,7 +56,7 @@ const getSearchParams = (row, qindex) => {
 };
 
 const BrowseResultsList = ({
-  browseData,
+  browseData = [],
   isEmptyMessage,
   isLoading,
   pagination: {
@@ -77,7 +78,11 @@ const BrowseResultsList = ({
   const browseOption = queryString.parse(search).qindex;
   const listId = `browse-results-list-${browseOption}`;
 
-  const onRowClick = useCallback((_, row) => {
+  const onRowClick = useCallback(({ target }, row) => {
+    const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
+      target.getAttribute('class')?.includes('authorityIcon');
+
+    if (isAuthorityAppLink) return;
     if (
       row.isAnchor && (
         (browseOption === browseModeOptions.CALL_NUMBERS && !row.instance) ||
@@ -101,11 +106,11 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter(data)}
+      formatter={getBrowseResultsFormatter(data, browseOption)}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
-      columnWidths={COLUMNS_WIDTHS}
       columnMapping={COLUMNS_MAPPING}
+      columnWidths={COLUMNS_WIDTHS[browseOption]}
       loading={isLoading}
       autosize
       virtualize={false}
@@ -119,8 +124,8 @@ const BrowseResultsList = ({
       onMarkReset={deleteItemToView}
       itemToView={itemToView}
       hidePageIndices
-      pagingCanGoNext={hasNextPage}
-      pagingCanGoPrevious={hasPrevPage}
+      pagingCanGoNext={hasNextPage && !isLoading}
+      pagingCanGoPrevious={hasPrevPage && !isLoading}
     />
   );
 };
@@ -134,7 +139,7 @@ BrowseResultsList.propTypes = {
     hasNextPage: PropTypes.bool,
     onNeedMoreData: PropTypes.func.isRequired,
   }).isRequired,
-  totalRecords: PropTypes.number.isRequired,
+  totalRecords: PropTypes.number,
 };
 
-export default BrowseResultsList;
+export default memo(BrowseResultsList);

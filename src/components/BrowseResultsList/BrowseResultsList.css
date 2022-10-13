@@ -1,3 +1,7 @@
 .cellAlign {
   align-items: flex-start;
 }
+
+.authorityIcon {
+  margin-right: 5px;
+}
