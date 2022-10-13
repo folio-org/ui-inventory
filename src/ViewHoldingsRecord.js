@@ -65,6 +65,7 @@ import {
 } from './components';
 import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
+import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
 
 import css from './View.css';
 
@@ -1024,23 +1025,8 @@ class ViewHoldingsRecord extends React.Component {
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
 
-                      <Accordion
-                        id="acc08"
-                        label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
-                      >
-                        <MultiColumnList
-                          id="holdings-list-bound-with-items"
-                          contentData={checkIfArrayIsEmpty(boundWithItems?.records)}
-                          visibleColumns={['hrid']}
-                          columnMapping={{
-                            'hrid': intl.formatMessage({ id: 'ui-inventory.itemHrid' }),
-                          }}
-                          formatter={{
-                            'hrid': x => get(x, ['hrid']) || noValue,
-                          }}
-                        />
+                      <HoldingBoundWith boundWithItems={boundWithItems} />
 
-                      </Accordion>
                     </AccordionSet>
                   </AccordionStatus>
                 </Pane>

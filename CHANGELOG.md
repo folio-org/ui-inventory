@@ -59,6 +59,7 @@
 * Escape quotes in browse string. Fixes UIIN-2201.
 * Single record import: when using the Back button in the browser, a duplicate import is no longer created. Fixes UIIN-2197.
 * Display bound-with items in holdings view. Refs UIIN-2018.
+* Link from bound-with items in holdings view to the item view. Refs UIIN-2212.
 * Display "Inactive" by inactive locations on holdings view. Fixes UIIN-1968.
 * SRI: fetch up to 1000 SRI sources, sorted by name. Fixes UIIN-2206.
 
