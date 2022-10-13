@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { useOkapiKy } from '@folio/stripes-core';
+import { useOkapiKy } from '@folio/stripes/core';
 
 const useBoundWithHoldings = (boundWithItems) => {
   const ky = useOkapiKy();
