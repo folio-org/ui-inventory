@@ -15,7 +15,7 @@ import useBoundWithHoldings from './useBoundWithHoldings';
 
 const HoldingBoundWith = ({ boundWithItems }) => {
   const { isLoading, boundWithHoldings } = useBoundWithHoldings(boundWithItems);
-  const data = boundWithItems.records.map(boundWithItem => ({
+  const data = boundWithItems.records?.map(boundWithItem => ({
     item: boundWithItem,
     holdingsRecord: boundWithHoldings.find(
       boundWithHolding => (boundWithHolding.id === boundWithItem.holdingsRecordId)
