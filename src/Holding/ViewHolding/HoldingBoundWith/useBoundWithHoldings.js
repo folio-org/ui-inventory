@@ -8,7 +8,7 @@ const useBoundWithHoldings = (boundWithItems) => {
   const queryKey = ['ui-inventory', 'bound-with-holdings', boundWithItems];
   const holdingRecordIds = boundWithItems.records?.map(x => x.holdingsRecordId);
   const query = `id=${holdingRecordIds.join(' or ')}`;
-  const queryFn = () => ky.get(`holdings-storage/holdings?query=id=${query}`).json();
+  const queryFn = () => ky.get(`holdings-storage/holdings?query=${query}`).json();
 
   const { data, isLoading } = useQuery({ queryKey, queryFn });
 
