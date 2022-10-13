@@ -11,7 +11,7 @@ import useInventoryBrowse from './useInventoryBrowse';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn(() => ({ search: '' })),
-}))
+}));
 
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
@@ -60,7 +60,7 @@ describe('useInventoryBrowse', () => {
     const { result, waitFor } = renderHook(() => useInventoryBrowse({ filters }), { wrapper });
 
     await waitFor(() => !result.current.isFetching);
-    await act(async() => result.current.pagination.onNeedMoreData(null, null, null, 'next'));
+    await act(async () => result.current.pagination.onNeedMoreData(null, null, null, 'next'));
 
     expect(mockGet).toHaveBeenLastCalledWith(
       expect.any(String),

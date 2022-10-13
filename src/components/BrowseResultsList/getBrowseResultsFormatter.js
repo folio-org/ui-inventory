@@ -20,20 +20,20 @@ const openInNewTab = (url) => window.open(url, '_blank', 'noopener,noreferrer');
 
 const getBrowseResultsFormatter = (data, browseOption) => {
   return {
-    'title': r => getFullMatchRecord(r.instance?.title, r.isAnchor),
-    'subject': r => {
+    title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
+    subject: r => {
       if (r?.totalRecords) {
         return getFullMatchRecord(r?.subject, r.isAnchor);
       }
       return <MissedMatchItem query={r.subject} />;
     },
-    'callNumber': r => {
+    callNumber: r => {
       if (r?.instance || r?.totalRecords) {
         return getFullMatchRecord(r?.fullCallNumber, r.isAnchor);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
-    'contributor': r => {
+    contributor: r => {
       if (r?.totalRecords) {
         const fullMatchRecord = getFullMatchRecord(r.name, r.isAnchor);
         const isBrowseContributors = browseOption === browseModeOptions.CONTRIBUTORS;
@@ -81,8 +81,8 @@ const getBrowseResultsFormatter = (data, browseOption) => {
       }
       return <MissedMatchItem query={r.name} />;
     },
-    'contributorType': r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
-    'relatorTerm': r => {
+    contributorType: r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
+    relatorTerm: r => {
       if (!r.contributorTypeId) {
         return '';
       }
@@ -91,7 +91,7 @@ const getBrowseResultsFormatter = (data, browseOption) => {
         return [...acc, data.contributorTypes.find(type => type.id === contributorTypeId)?.name || ''];
       }, []).filter(name => !!name).join(', ');
     },
-    'numberOfTitles': r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
   };
 };
 
