@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import {
+  memo,
   useCallback,
   useContext,
 } from 'react';
@@ -27,7 +28,6 @@ import {
 import { DataContext } from '../../contexts';
 import {
   COLUMNS_MAPPING,
-  COLUMNS_WIDTHS,
   VISIBLE_COLUMNS_MAP,
 } from './constants';
 import getBrowseResultsFormatter from './getBrowseResultsFormatter';
@@ -55,7 +55,7 @@ const getSearchParams = (row, qindex) => {
 };
 
 const BrowseResultsList = ({
-  browseData,
+  browseData = [],
   isEmptyMessage,
   isLoading,
   pagination: {
@@ -108,7 +108,6 @@ const BrowseResultsList = ({
       formatter={getBrowseResultsFormatter(data, browseOption)}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
-      columnWidths={COLUMNS_WIDTHS}
       columnMapping={COLUMNS_MAPPING}
       loading={isLoading}
       autosize
@@ -123,8 +122,8 @@ const BrowseResultsList = ({
       onMarkReset={deleteItemToView}
       itemToView={itemToView}
       hidePageIndices
-      pagingCanGoNext={hasNextPage}
-      pagingCanGoPrevious={hasPrevPage}
+      pagingCanGoNext={hasNextPage && !isLoading}
+      pagingCanGoPrevious={hasPrevPage && !isLoading}
     />
   );
 };
@@ -138,7 +137,7 @@ BrowseResultsList.propTypes = {
     hasNextPage: PropTypes.bool,
     onNeedMoreData: PropTypes.func.isRequired,
   }).isRequired,
-  totalRecords: PropTypes.number.isRequired,
+  totalRecords: PropTypes.number,
 };
 
-export default BrowseResultsList;
+export default memo(BrowseResultsList);
