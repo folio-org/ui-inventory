@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { get, keyBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -15,11 +15,10 @@ import useBoundWithHoldings from './useBoundWithHoldings';
 
 const HoldingBoundWith = ({ boundWithItems }) => {
   const { isLoading, boundWithHoldings } = useBoundWithHoldings(boundWithItems);
+  const boundWithHoldingsMapById = keyBy(boundWithHoldings, 'id');
   const data = boundWithItems.records?.map(boundWithItem => ({
     item: boundWithItem,
-    holdingsRecord: boundWithHoldings.find(
-      boundWithHolding => (boundWithHolding.id === boundWithItem.holdingsRecordId)
-    ),
+    holdingsRecord: boundWithHoldingsMapById[boundWithItem.holdingsRecordId],
   }));
 
   if (isLoading) {
