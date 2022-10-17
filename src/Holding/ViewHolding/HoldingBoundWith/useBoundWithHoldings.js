@@ -1,16 +1,19 @@
 import { useQuery } from 'react-query';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useNamespace } from '@folio/stripes/core';
 
 const useBoundWithHoldings = (boundWithItems) => {
   const ky = useOkapiKy();
+  const [namespace] = useNamespace({ key: 'boundWithHoldings' });
 
-  const queryKey = ['ui-inventory', 'bound-with-holdings', boundWithItems];
   const holdingRecordIds = boundWithItems.records?.map(x => x.holdingsRecordId);
-  const query = `id=${holdingRecordIds.join(' or ')}`;
-  const queryFn = () => ky.get(`holdings-storage/holdings?query=${query}`).json();
+  const queryIds = `id=${holdingRecordIds.join(' or ')}`;
 
-  const { data, isLoading } = useQuery({ queryKey, queryFn });
+  const { data, isLoading } = useQuery(
+    [namespace, queryIds],
+    () => ky.get(`holdings-storage/holdings?query=id=${queryIds}`).json(),
+    { enabled: Boolean(queryIds) }
+  );
 
   return {
     isLoading,
