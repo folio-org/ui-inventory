@@ -610,14 +610,29 @@ class ItemView extends React.Component {
     };
 
     const holdingLocation = {
-      permanentLocation: get(permanentHoldingsLocation, 'name', '-'),
-      temporaryLocation: get(temporaryHoldingsLocation, 'name', '-'),
+      permanentLocation: {
+        name: get(permanentHoldingsLocation, 'name', '-'),
+        isActive: permanentHoldingsLocation?.isActive,
+      },
+      temporaryLocation: {
+        name: get(temporaryHoldingsLocation, 'name', '-'),
+        isActive: temporaryHoldingsLocation?.isActive,
+      },
     };
 
     const itemLocation = {
-      permanentLocation: get(item, ['permanentLocation', 'name'], '-'),
-      temporaryLocation: get(item, ['temporaryLocation', 'name'], '-'),
-      effectiveLocation: get(item, ['effectiveLocation', 'name'], '-'),
+      permanentLocation: {
+        name: get(item, ['permanentLocation', 'name'], '-'),
+        isActive: locationsById[item.permanentLocation?.id]?.isActive,
+      },
+      temporaryLocation: {
+        name: get(item, ['temporaryLocation', 'name'], '-'),
+        isActive: locationsById[item.temporaryLocation?.id]?.isActive,
+      },
+      effectiveLocation: {
+        name: get(item, ['effectiveLocation', 'name'], '-'),
+        isActive: locationsById[item.effectiveLocation.id].isActive,
+      },
     };
 
     const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
@@ -694,7 +709,10 @@ class ItemView extends React.Component {
       <Col xs={2}>
         <KeyValue
           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
-          value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
+          value={checkIfElementIsEmpty(itemLocation.effectiveLocation.name)}
+          subValue={!itemLocation.effectiveLocation.isActive &&
+            <FormattedMessage id="ui-inventory.inactive" />
+          }
         />
       </Col>
     );
@@ -889,7 +907,15 @@ class ItemView extends React.Component {
                     <div>
                       <FormattedMessage id="ui-inventory.holdingsLabelShort" />
                       <Link to={`/inventory/view/${instance.id}/${holdingsRecord.id}`}>
-                        { ` ${holdingLocation.permanentLocation} > ${callNumberLabel(holdingsRecord)}` }
+                        {(!holdingLocation.permanentLocation.isActive) &&
+                          <span>
+                            {' '}
+                            <em><FormattedMessage id="ui-inventory.inactive" /></em>
+                          </span>
+                        }
+                        {
+                          ` ${holdingLocation.permanentLocation.name} > ${callNumberLabel(holdingsRecord)}`
+                        }
                       </Link>
                     </div>
                   </Col>
@@ -1317,13 +1343,19 @@ class ItemView extends React.Component {
                         >
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                            value={checkIfElementIsEmpty(holdingLocation.permanentLocation)}
+                            value={checkIfElementIsEmpty(holdingLocation.permanentLocation.name)}
+                            subValue={!holdingLocation.permanentLocation.isActive &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
                           />
                         </Col>
                         <Col sm={4}>
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                            value={checkIfElementIsEmpty(holdingLocation.temporaryLocation)}
+                            value={checkIfElementIsEmpty(holdingLocation.temporaryLocation.name)}
+                            subValue={holdingLocation.temporaryLocation.isActive === false &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
                           />
                         </Col>
                       </Row>
@@ -1345,13 +1377,19 @@ class ItemView extends React.Component {
                         >
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                            value={checkIfElementIsEmpty(itemLocation.permanentLocation)}
+                            value={checkIfElementIsEmpty(itemLocation.permanentLocation.name)}
+                            subValue={itemLocation.permanentLocation.isActive === false &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
                           />
                         </Col>
                         <Col sm={4}>
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                            value={checkIfElementIsEmpty(itemLocation.temporaryLocation)}
+                            value={checkIfElementIsEmpty(itemLocation.temporaryLocation.name)}
+                            subValue={itemLocation.temporaryLocation.isActive === false &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
                           />
                         </Col>
                       </Row>
