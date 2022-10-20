@@ -673,12 +673,37 @@ class InstancesList extends React.Component {
     );
   };
 
+  getIsAllRowsSelected = () => {
+    const { parentResources } = this.props;
+
+    return parentResources.records.records.length === Object.keys(this.state.selectedRows).length;
+  };
+
+  togleAllRows = () => {
+    const { parentResources } = this.props;
+
+    const togledRows = parentResources.records.records.reduce((acc, row) => (
+      {
+        ...acc,
+        [row.id]: row,
+      }
+    ), {});
+
+    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : togledRows });
+  };
+
   getColumnMapping = () => {
     const { intl } = this.props;
 
     const columnMapping = {
       callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
-      select: '',
+      select: (
+        <Checkbox
+          checked={this.getIsAllRowsSelected()}
+          aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
+          onChange={() => this.togleAllRows()}
+        />
+      ),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
