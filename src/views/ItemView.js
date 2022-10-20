@@ -713,6 +713,7 @@ class ItemView extends React.Component {
           subValue={!itemLocation.effectiveLocation.isActive &&
             <FormattedMessage id="ui-inventory.inactive" />
           }
+          data-testid="item-effective-location"
         />
       </Col>
     );
@@ -1347,6 +1348,7 @@ class ItemView extends React.Component {
                             subValue={!holdingLocation.permanentLocation.isActive &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
+                            data-testid="holding-permanent-location"
                           />
                         </Col>
                         <Col sm={4}>
@@ -1356,6 +1358,7 @@ class ItemView extends React.Component {
                             subValue={holdingLocation.temporaryLocation.isActive === false &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
+                            data-testid="holding-temporary-location"
                           />
                         </Col>
                       </Row>
@@ -1381,6 +1384,7 @@ class ItemView extends React.Component {
                             subValue={itemLocation.permanentLocation.isActive === false &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
+                            data-testid="item-permanent-location"
                           />
                         </Col>
                         <Col sm={4}>
@@ -1390,6 +1394,7 @@ class ItemView extends React.Component {
                             subValue={itemLocation.temporaryLocation.isActive === false &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
+                            data-testid="item-temporary-location"
                           />
                         </Col>
                       </Row>
