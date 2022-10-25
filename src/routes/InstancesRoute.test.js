@@ -178,9 +178,9 @@ describe('InstancesRoute', () => {
       beforeEach(() => {
         selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
 
-        userEvent.click(selectRowCheckboxes[0]);
         userEvent.click(selectRowCheckboxes[1]);
         userEvent.click(selectRowCheckboxes[2]);
+        userEvent.click(selectRowCheckboxes[3]);
 
         userEvent.click(screen.getByRole('button', { name: 'Actions' }));
       });
@@ -200,11 +200,11 @@ describe('InstancesRoute', () => {
       beforeEach(() => {
         selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
 
-        userEvent.click(selectRowCheckboxes[0]);
+        userEvent.click(selectRowCheckboxes[1]);
       });
 
       it('should display checked select row checkbox', () => {
-        expect(selectRowCheckboxes[0]).toBeChecked();
+        expect(selectRowCheckboxes[1]).toBeChecked();
       });
 
       it('should display selected rows count message in the sub header', () => {
@@ -213,7 +213,7 @@ describe('InstancesRoute', () => {
 
       describe('selecting one more row and clicking on show selected records action button', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[1]);
+          userEvent.click(selectRowCheckboxes[2]);
           userEvent.click(screen.getByRole('button', { name: 'Actions' }));
           userEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
         });
@@ -263,8 +263,8 @@ describe('InstancesRoute', () => {
 
             await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
 
-            expect(selectRowCheckboxes[0]).toBeChecked();
             expect(selectRowCheckboxes[1]).toBeChecked();
+            expect(selectRowCheckboxes[2]).toBeChecked();
           });
 
           it('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
@@ -272,15 +272,15 @@ describe('InstancesRoute', () => {
 
             await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
 
-            expect(selectRowCheckboxes[0]).not.toBeChecked();
             expect(selectRowCheckboxes[1]).not.toBeChecked();
+            expect(selectRowCheckboxes[2]).not.toBeChecked();
           });
         });
       });
 
       describe('selecting more than one row', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[1]);
+          userEvent.click(selectRowCheckboxes[2]);
         });
 
         it('should display selected rows count message (plural form) in the sub header', () => {
@@ -364,7 +364,7 @@ describe('InstancesRoute', () => {
           });
 
           it('should preserve the selected state for the previously selected row', () => {
-            expect(selectRowCheckboxes[0]).toBeChecked();
+            expect(selectRowCheckboxes[1]).toBeChecked();
           });
 
           it('should display selected rows count message in the sub header', () => {

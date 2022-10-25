@@ -675,21 +675,22 @@ class InstancesList extends React.Component {
 
   getIsAllRowsSelected = () => {
     const { parentResources } = this.props;
+    const { selectedRows } = this.state;
 
-    return parentResources.records.records.length === Object.keys(this.state.selectedRows).length;
+    return parentResources.records.records.length === Object.keys(selectedRows).length;
   };
 
-  togleAllRows = () => {
+  toggleAllRows = () => {
     const { parentResources } = this.props;
 
-    const togledRows = parentResources.records.records.reduce((acc, row) => (
+    const toggledRows = parentResources.records.records.reduce((acc, row) => (
       {
         ...acc,
         [row.id]: row,
       }
     ), {});
 
-    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : togledRows });
+    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : toggledRows });
   };
 
   getColumnMapping = () => {
@@ -697,11 +698,11 @@ class InstancesList extends React.Component {
 
     const columnMapping = {
       callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
-      select: (
+      select: !this.state.isSelectedRecordsModalOpened && (
         <Checkbox
           checked={this.getIsAllRowsSelected()}
           aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
-          onChange={() => this.togleAllRows()}
+          onChange={() => this.toggleAllRows()}
         />
       ),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
@@ -1201,6 +1202,7 @@ class InstancesList extends React.Component {
               source: 'FOLIO',
             }}
             visibleColumns={visibleColumns}
+            nonInteractiveHeaders={['select']}
             columnMapping={columnMapping}
             columnWidths={{
               callNumber: '15%',
