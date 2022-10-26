@@ -755,9 +755,10 @@
     "search.instanceNotes": "Instance notes (all)",
     "search.holdingsNotes": "Holdings notes (all)",
     "search.itemNotes": "Item notes (all)",
-    "search.instanceAdministrativeNotes": "Instance administrative notes (all)",
-    "search.holdingsAdministrativeNotes": "Holdings administrative notes (all)",
-    "search.itemAdministrativeNotes": "Item administrative notes (all)",
+    "search.instanceAdministrativeNotes": "Instance administrative notes",
+    "search.holdingsAdministrativeNotes": "Holdings administrative notes",
+    "search.itemAdministrativeNotes": "Item administrative notes",
     "inactive": "Inactive",
-    "inactive.paneTitle": "<em>Inactive</em> {location}"
+    "inactive.paneTitle": "<em>Inactive</em> {location}",
+    "search.itemCirculationNotes": "Circulation notes"
 }
