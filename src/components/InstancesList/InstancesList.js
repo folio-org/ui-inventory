@@ -673,12 +673,38 @@ class InstancesList extends React.Component {
     );
   };
 
+  getIsAllRowsSelected = () => {
+    const { parentResources } = this.props;
+    const { selectedRows } = this.state;
+
+    return parentResources.records.records.length === Object.keys(selectedRows).length;
+  };
+
+  toggleAllRows = () => {
+    const { parentResources } = this.props;
+
+    const toggledRows = parentResources.records.records.reduce((acc, row) => (
+      {
+        ...acc,
+        [row.id]: row,
+      }
+    ), {});
+
+    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : toggledRows });
+  };
+
   getColumnMapping = () => {
     const { intl } = this.props;
 
     const columnMapping = {
       callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
-      select: '',
+      select: !this.state.isSelectedRecordsModalOpened && (
+        <Checkbox
+          checked={this.getIsAllRowsSelected()}
+          aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
+          onChange={() => this.toggleAllRows()}
+        />
+      ),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
@@ -1176,6 +1202,7 @@ class InstancesList extends React.Component {
               source: 'FOLIO',
             }}
             visibleColumns={visibleColumns}
+            nonInteractiveHeaders={['select']}
             columnMapping={columnMapping}
             columnWidths={{
               callNumber: '15%',
