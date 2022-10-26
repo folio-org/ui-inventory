@@ -732,8 +732,8 @@
     "newOrder.modal.create": "Vytvořit",
     "newOrder.modal.label": "Vytvořit objednávku",
     "newOrder.modal.message": "Výběrem existující objednávky před kliknutím na „Vytvořit“ se do vybrané objednávky pro tento název přidá nový řádek objednávky. Ponecháte-li pole s číslem objednávky prázdné a kliknete na „Vytvořit“, umožní vám vytvořit novou nákupní objednávku a řádek nákupní objednávky pro tento název.",
-    "newOrder.modal.PONumber": "Číslo PO",
-    "newOrder.modal.PONumber.doesNotExist": "Číslo PO neexistuje",
+    "newOrder.modal.PONumber": "Číslo NO",
+    "newOrder.modal.PONumber.doesNotExist": "Číslo NO neexistuje",
     "instances.columns.contributor": "Přispěvatel",
     "instances.columns.contributorType": "Typ",
     "instances.columns.relatorTerm": "Vztahový termín",
@@ -755,9 +755,10 @@
     "search.instanceNotes": "Poznámky k instancím (všechny)",
     "search.holdingsNotes": "Poznámky holdingů (všechny)",
     "search.itemNotes": "Poznámky k jednotkám (všechny)",
-    "search.instanceAdministrativeNotes": "Administrativní poznámky k instanci (všechny)",
-    "search.holdingsAdministrativeNotes": "Administrativní poznámky k holdingům (všechny)",
-    "search.itemAdministrativeNotes": "Administrativní poznámky k jednotkám (všechny)",
-    "inactive": "Inactive",
-    "inactive.paneTitle": "<em>Inactive</em> {location}"
+    "search.instanceAdministrativeNotes": "Administrativní poznámky k instanci",
+    "search.holdingsAdministrativeNotes": "Administrativní poznámky k holdingům",
+    "search.itemAdministrativeNotes": "Administrativní poznámky k jednotce",
+    "inactive": "Neaktivní",
+    "inactive.paneTitle": "<em>Neaktivní</em> {location}",
+    "search.itemCirculationNotes": "Výpůjčkové poznámky"
 }
