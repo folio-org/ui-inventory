@@ -752,12 +752,13 @@
     "browse.subjects": "Subjects",
     "noItemDeleteModal.awaitingPickupMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> is checked out and can not be deleted until checked in again, and item status is 'Available'",
     "noItemDeleteModal.statusMessage": "Item HRID <strong>{hrid}</strong> with barcode <strong>{barcode}</strong> has the item status <strong>{status}</strong> and cannot be deleted until the item status is set to 'Available'.",
-    "search.instanceNotes": "Instance notes (all)",
+    "search.instanceNotes": "Notas Instancia (Todas)",
     "search.holdingsNotes": "Holdings notes (all)",
     "search.itemNotes": "Item notes (all)",
-    "search.instanceAdministrativeNotes": "Instance administrative notes (all)",
-    "search.holdingsAdministrativeNotes": "Holdings administrative notes (all)",
-    "search.itemAdministrativeNotes": "Item administrative notes (all)",
+    "search.instanceAdministrativeNotes": "Instance administrative notes",
+    "search.holdingsAdministrativeNotes": "Holdings administrative notes",
+    "search.itemAdministrativeNotes": "Item administrative notes",
     "inactive": "Inactive",
-    "inactive.paneTitle": "<em>Inactive</em> {location}"
+    "inactive.paneTitle": "<em>Inactive</em> {location}",
+    "search.itemCirculationNotes": "Notas de circulación"
 }
