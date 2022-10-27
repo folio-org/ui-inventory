@@ -123,7 +123,7 @@ class ItemView extends React.Component {
       delete item.barcode;
     }
 
-    return this.props.mutator.items.PUT(item).then(() => {
+    return this.props.mutator.itemsResource.PUT(item).then(() => {
       this.context.sendCallout({
         type: 'success',
         message: <FormattedMessage
@@ -140,14 +140,14 @@ class ItemView extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
-    this.props.mutator.items.POST(item).then((data) => {
+    this.props.mutator.itemsResource.POST(item).then((data) => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   };
 
   deleteItem = item => {
     this.props.onCloseViewItem();
-    this.props.mutator.items.DELETE(item);
+    this.props.mutator.itemsResource.DELETE(item);
   };
 
   onCopy() {
@@ -245,7 +245,7 @@ class ItemView extends React.Component {
       stripes,
     } = this.props;
 
-    const firstItem = get(resources, 'items.records[0]');
+    const firstItem = get(resources, 'itemsResource.records[0]');
     const request = get(resources, 'requests.records[0]');
     const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
     const canCreate = stripes.hasPerm('ui-inventory.item.create');
@@ -387,13 +387,13 @@ class ItemView extends React.Component {
     );
   };
 
-  getEntity = () => this.props.resources.items.records[0];
-  getEntityTags = () => this.props.resources.items.records[0]?.tags?.tagList || [];
+  getEntity = () => this.props.resources.itemsResource.records[0];
+  getEntityTags = () => this.props.resources.itemsResource.records[0]?.tags?.tagList || [];
 
   render() {
     const {
       resources: {
-        items,
+        itemsResource,
         holdingsRecords,
         instances1,
         requests,
@@ -430,7 +430,7 @@ class ItemView extends React.Component {
       '-';
 
     const instance = instances1.records[0];
-    const item = items.records[0] || {};
+    const item = itemsResource.records[0] || {};
     const holdingsRecord = holdingsRecords.records[0];
     const { locationsById } = referenceTables;
     const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
@@ -1516,7 +1516,7 @@ ItemView.propTypes = {
       other: PropTypes.object,
     }),
     loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
-    items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    itemsResource: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     callNumberTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     borrower: PropTypes.object,
@@ -1528,7 +1528,7 @@ ItemView.propTypes = {
   location: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
-    items: PropTypes.shape({
+    itemsResource: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,

@@ -33,7 +33,7 @@ const resources = {
       }
     ],
   },
-  items: {
+  itemsResource: {
     records: [
       {
         id: 'item1',
@@ -134,7 +134,7 @@ describe('ItemView', () => {
     });
 
     it('should link to the instance view from the HRID', () => {
-      const id = resources.items.records[0].boundWithTitles[0].briefInstance.id;
+      const id = resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
       expect(document.querySelector('#item-list-bound-with-titles a.instanceHrid'))
         .toHaveAttribute('href', '/inventory/view/' + id);
     });

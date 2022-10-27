@@ -66,6 +66,7 @@
 * Add pagination for results list in `Browse` page. Refs UIIN-2202.
 * Adjust title index to narrow the returned results. Fixes UIIN-2209.
 * Quick instances export - add a select all option to Inventory search results
+* Fix displaying item via item route. Fixes UIIN-2226.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
