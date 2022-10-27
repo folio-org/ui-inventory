@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 9.2.0 IN PROGRESS
+## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
 
 * Supports interface 'users' 16.0.  Fixes UIIN-2210.
 * Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
