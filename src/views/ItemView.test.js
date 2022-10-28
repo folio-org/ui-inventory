@@ -139,6 +139,13 @@ describe('ItemView', () => {
         .toHaveAttribute('href', '/inventory/view/' + id);
     });
 
+    it('should link to the holdings view from the holdings HRID', () => {
+      const instanceId = resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
+      const holdingsRecordId = resources.itemsResource.records[0].boundWithTitles[0].briefHoldingsRecord.id;
+      expect(document.querySelector('#item-list-bound-with-titles a.holdingsRecordHrid'))
+        .toHaveAttribute('href', '/inventory/view/' + instanceId + '/' + holdingsRecordId);
+    });
+
     it('should display "inactive" by an inactive holding permanent location', async () => {
       await waitFor(() => {
         const location = document.querySelector('*[data-testid=holding-permanent-location]').innerHTML;
