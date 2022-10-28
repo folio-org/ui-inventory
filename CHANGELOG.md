@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
 ## 9.3.0 IN PROGRESS
+* Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
@@ -44,7 +45,7 @@
 * Define new route for Inventory "Browse" page. Refs UIIN-2193.
 * Do not include `highlightMatch` parameter in search queries. Fixes UIIN-2008.
 * Relabel 'Bound-with titles' accordion on item view. Fixes UIIN-2196.
-* Link from bound-with table's instance HRID and holdings record HRID columns to the respective records. Fixes UIIN-2195.
+* Link from bound-with table HRID column to instances. Fixes UIIN-2195.
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
