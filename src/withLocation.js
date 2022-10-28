@@ -24,7 +24,10 @@ function withLocation(WrappedComponent) {
       }).isRequired,
     };
 
-    updateLocation = (newParams) => {
+    // The optional `options` object can include the following keys:
+    //  `replace`: if true, use history.replace instead of history.push
+    //
+    updateLocation = (newParams, options = {}) => {
       let { location: { pathname } } = this.props;
       const { history } = this.props;
 
@@ -37,7 +40,7 @@ function withLocation(WrappedComponent) {
       const cleanParams = omitBy(params, isNil);
       const url = `${pathname}?${stringify(cleanParams)}`;
 
-      history.push(url);
+      history[options.replace ? 'replace' : 'push'](url);
     }
 
     goTo = (path, params) => {

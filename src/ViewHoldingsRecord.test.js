@@ -18,12 +18,22 @@ const defaultProps = {
   id: 'id',
   goTo: jest.fn(),
   holdingsrecordid: 'holdingId',
-  referenceTables: { holdingsSources: [{ id: 'sourceId' }], locationsById: {} },
+  referenceTables: {
+    holdingsSources: [{ id: 'sourceId' }],
+    locationsById: {
+      inactiveLocation: { name: 'Location 1', isActive: false },
+    },
+  },
   resources: {
-    holdingsRecords: { records: [{ sourceId: 'sourceId' }] },
+    holdingsRecords: {
+      records: [
+        { sourceId: 'sourceId', temporaryLocationId: 'inactiveLocation' }
+      ],
+    },
     instances1: { records: [{ id: 'instanceId' }], hasLoaded: true },
     permanentLocation: { hasLoaded: true },
     temporaryLocation: { hasLoaded: true },
+    boundWithItems: { records: [{ hrid: 'BW-ITEM-1' }], hasLoaded: true },
   },
   mutator: {
     instances1: {
@@ -110,5 +120,14 @@ describe('ViewHoldingsRecord actions', () => {
     user.click(duplicatHoldingBtn);
 
     expect(defaultProps.history.push).toHaveBeenCalled();
+  });
+
+  it('should display "inactive" by an inactive temporary location', async () => {
+    renderViewHoldingsRecord();
+
+    await waitFor(() => {
+      const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
+      expect(tempLocation).toContain('Inactive');
+    });
   });
 });

@@ -91,7 +91,7 @@ ImportRecordModal.propTypes = {
 ImportRecordModal.manifest = Object.freeze({
   copycatProfiles: {
     type: 'okapi',
-    path: 'copycat/profiles?query=enabled=true',
+    path: 'copycat/profiles?query=enabled=true sortby name&limit=1000',
   },
 });
 

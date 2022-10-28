@@ -266,7 +266,8 @@ class ItemForm extends React.Component {
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
-    const effectiveLocation = get(initialValues, ['effectiveLocation', 'name'], '-');
+    const effectiveLocation = locationsById[initialValues.effectiveLocation.id];
+    const effectiveLocationName = get(initialValues, ['effectiveLocation', 'name'], '-');
 
     const shortcuts = [
       {
@@ -359,7 +360,10 @@ class ItemForm extends React.Component {
                       <Col xs={4}>
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
-                          value={effectiveLocation}
+                          value={effectiveLocationName}
+                          subValue={!effectiveLocation.isActive &&
+                            <FormattedMessage id="ui-inventory.inactive" />
+                          }
                         />
                       </Col>
                       <Col xs={8}>
@@ -483,7 +487,7 @@ class ItemForm extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <FormattedMessage id="ui-inventory.selectMaterialType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.materialType" />}
                               name="materialType.id"
@@ -494,7 +498,7 @@ class ItemForm extends React.Component {
                               fullWidth
                               dataOptions={
                                 [{
-                                  label: placeholder,
+                                  label,
                                   value: '',
                                   selected: !initialValues.materialType
                                 },
@@ -518,14 +522,14 @@ class ItemForm extends React.Component {
                     <Row>
                       <Col sm={2}>
                         <FormattedMessage id="ui-inventory.selectCallNumberType">
-                          {([placeholder]) => (
+                          {([label]) => (
                             <Field
                               label={<FormattedMessage id="ui-inventory.callNumberType" />}
                               name="itemLevelCallNumberTypeId"
                               id="additem_callnumbertype"
                               component={Select}
                               fullWidth
-                              dataOptions={[{ label: placeholder, value: '' }, ...callNumberTypeOptions]}
+                              dataOptions={[{ label, value: '' }, ...callNumberTypeOptions]}
                             />
                           )}
                         </FormattedMessage>

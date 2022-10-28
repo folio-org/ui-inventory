@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/core';
 import {
   ExpandFilterPaneButton,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 import {
   getFiltersCount,
   NoResultsMessage,
@@ -102,7 +102,7 @@ BrowseResultsPane.propTypes = {
     hasNextPage: PropTypes.bool,
   }).isRequired,
   toggleFiltersPane: PropTypes.func.isRequired,
-  totalRecords: PropTypes.number.isRequired,
+  totalRecords: PropTypes.number,
 };
 
-export default BrowseResultsPane;
+export default memo(BrowseResultsPane);

@@ -15,7 +15,6 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
-import queryString from 'query-string';
 
 import {
   Pluggable,
@@ -39,7 +38,7 @@ import {
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
-import SearchModeNavigation from '../SearchModeNavigation';
+// import SearchModeNavigation from '../SearchModeNavigation'; // TODO: uncomment this when Browse functionality is replaced
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
 import ViewInstanceWrapper from '../../ViewInstanceWrapper';
@@ -56,7 +55,6 @@ import {
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
-  QUICK_EXPORT_LIMIT,
   segments,
   browseModeOptions,
   FACETS,
@@ -104,6 +102,7 @@ class InstancesList extends React.Component {
   static defaultProps = {
     browseOnly: false,
     showSingleResult: true,
+    segment: segments.instances,
   };
 
   static propTypes = {
@@ -180,8 +179,12 @@ class InstancesList extends React.Component {
   componentDidUpdate() {
     const qindex = this.getQIndexFromParams();
 
-    // keep the 'optionSelected' updated with the URL 'qindex'
+    // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
+    // doesn't like this because setState causes a re-render and can
+    // lead to a rendering loop. But the check on state.optionSelected
+    // prevents a loop, so I guess this is OK.
     if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ optionSelected: qindex });
     }
   }
@@ -198,9 +201,7 @@ class InstancesList extends React.Component {
 
   getSelectedBrowseOption = () => {
     const isBrowseSelectedBasedOnState = Object.keys(browseModeOptions).filter(k => browseModeOptions[k] === this.state.optionSelected)[0];
-    const isBrowseSelectedBasedOnSearch = queryString.parse(this.props.location.search).selectedBrowseResult;
-
-    return isBrowseSelectedBasedOnState || isBrowseSelectedBasedOnSearch;
+    return isBrowseSelectedBasedOnState;
   }
 
   getExecutedBrowseQuery = () => {
@@ -409,7 +410,7 @@ class InstancesList extends React.Component {
     this.setState({ instancesQuickExportInProgress: true });
 
     try {
-      const instanceIds = Object.keys(this.state.selectedRows).slice(0, QUICK_EXPORT_LIMIT);
+      const instanceIds = Object.keys(this.state.selectedRows);
 
       await this.props.parentMutator.quickExport.POST({
         uuids: instanceIds,
@@ -529,7 +530,6 @@ class InstancesList extends React.Component {
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
-    const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
@@ -613,7 +613,7 @@ class InstancesList extends React.Component {
               icon: 'download',
               messageId: 'ui-inventory.exportInstancesInMARC',
               onClickHandler: buildOnClickHandler(this.triggerQuickExport),
-              isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
+              isDisabled: !selectedRowsCount,
             })}
             <IfInterface name="copycat-imports">
               <IfPermission perm="copycat.profiles.collection.get">
@@ -625,17 +625,6 @@ class InstancesList extends React.Component {
                 })}
               </IfPermission>
             </IfInterface>
-            {isQuickExportLimitExceeded && (
-            <span
-              className={css.feedbackError}
-              data-test-quick-marc-export-limit-exceeded
-            >
-              <FormattedMessage
-                id="ui-inventory.exportInstancesInMARCLimitExceeded"
-                values={{ count: QUICK_EXPORT_LIMIT }}
-              />
-            </span>
-            )}
             {this.getActionItem({
               id: 'dropdown-clickable-export-json',
               icon: 'download',
@@ -671,12 +660,39 @@ class InstancesList extends React.Component {
     );
   };
 
+  getIsAllRowsSelected = () => {
+    const { parentResources } = this.props;
+    const { selectedRows } = this.state;
+
+    return parentResources.records.records.every(({ id }) => Object.keys(selectedRows).includes(id));
+  };
+
+  toggleAllRows = () => {
+    const { parentResources } = this.props;
+    const { selectedRows } = this.state;
+
+    const toggledRows = parentResources.records.records.reduce((acc, row) => (
+      {
+        ...acc,
+        [row.id]: row,
+      }
+    ), {});
+
+    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : { ...selectedRows, ...toggledRows } });
+  };
+
   getColumnMapping = () => {
     const { intl } = this.props;
 
     const columnMapping = {
       callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
-      select: '',
+      select: !this.state.isSelectedRecordsModalOpened && (
+        <Checkbox
+          checked={this.getIsAllRowsSelected()}
+          aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
+          onChange={() => this.toggleAllRows()}
+        />
+      ),
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
@@ -754,7 +770,7 @@ class InstancesList extends React.Component {
     const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
       target.getAttribute('class')?.includes('authorityIcon');
 
-    if (row.isAnchor || isAuthorityAppLink) return;
+    if (isAuthorityAppLink) return;
 
     const {
       parentMutator,
@@ -765,6 +781,8 @@ class InstancesList extends React.Component {
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
+        if (row.isAnchor && !row.instance) return;
+
         optionSelected = 'callNumber';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -775,6 +793,8 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.SUBJECTS:
+        if (row.isAnchor && !row.totalRecords) return;
+
         optionSelected = 'subject';
         parentMutator.query.update({
           qindex: optionSelected,
@@ -785,9 +805,7 @@ class InstancesList extends React.Component {
         });
         break;
       case browseModeOptions.CONTRIBUTORS:
-        if (row.isAnchor && !row.contributorNameTypeId) {
-          return;
-        }
+        if (row.isAnchor && !row.contributorNameTypeId) return;
 
         optionSelected = 'contributor';
         parentMutator.query.update({
@@ -1172,6 +1190,7 @@ class InstancesList extends React.Component {
               source: 'FOLIO',
             }}
             visibleColumns={visibleColumns}
+            nonInteractiveHeaders={['select']}
             columnMapping={columnMapping}
             columnWidths={{
               callNumber: '15%',
@@ -1210,7 +1229,7 @@ class InstancesList extends React.Component {
             hidePageIndices={browseQueryExecuted}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['title', 'contributors', 'publishers']}
+            sortableColumns={['title', 'contributors']}
             syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}

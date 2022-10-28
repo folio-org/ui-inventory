@@ -33,6 +33,7 @@ import { DataContext } from '../contexts';
 import InstancesRoute from './InstancesRoute';
 
 jest.mock('../components/BrowseInventoryFilters', () => 'BrowseInventoryFilters');
+jest.mock('@folio/stripes-acq-components');
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -171,39 +172,17 @@ describe('InstancesRoute', () => {
       });
     });
 
-    describe('selecting rows so the quick export limit is exceed', () => {
-      let selectRowCheckboxes;
-
-      beforeEach(() => {
-        selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
-
-        userEvent.click(selectRowCheckboxes[0]);
-        userEvent.click(selectRowCheckboxes[1]);
-        userEvent.click(selectRowCheckboxes[2]);
-
-        userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      });
-
-      it('should display quick export limit warning', () => {
-        expect(screen.queryByText(`Selected record limit of ${QUICK_EXPORT_LIMIT} exceeded`)).toBeInTheDocument();
-      });
-
-      it('should disable export instances (MARC) action button', () => {
-        expect(screen.getByRole('button', { name: 'Export instances (MARC)' })).toBeDisabled();
-      });
-    });
-
     describe('selecting row', () => {
       let selectRowCheckboxes;
 
       beforeEach(() => {
         selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
 
-        userEvent.click(selectRowCheckboxes[0]);
+        userEvent.click(selectRowCheckboxes[1]);
       });
 
       it('should display checked select row checkbox', () => {
-        expect(selectRowCheckboxes[0]).toBeChecked();
+        expect(selectRowCheckboxes[1]).toBeChecked();
       });
 
       it('should display selected rows count message in the sub header', () => {
@@ -212,7 +191,7 @@ describe('InstancesRoute', () => {
 
       describe('selecting one more row and clicking on show selected records action button', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[1]);
+          userEvent.click(selectRowCheckboxes[2]);
           userEvent.click(screen.getByRole('button', { name: 'Actions' }));
           userEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
         });
@@ -262,8 +241,8 @@ describe('InstancesRoute', () => {
 
             await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
 
-            expect(selectRowCheckboxes[0]).toBeChecked();
             expect(selectRowCheckboxes[1]).toBeChecked();
+            expect(selectRowCheckboxes[2]).toBeChecked();
           });
 
           it('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
@@ -271,15 +250,15 @@ describe('InstancesRoute', () => {
 
             await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
 
-            expect(selectRowCheckboxes[0]).not.toBeChecked();
             expect(selectRowCheckboxes[1]).not.toBeChecked();
+            expect(selectRowCheckboxes[2]).not.toBeChecked();
           });
         });
       });
 
       describe('selecting more than one row', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[1]);
+          userEvent.click(selectRowCheckboxes[2]);
         });
 
         it('should display selected rows count message (plural form) in the sub header', () => {
@@ -363,7 +342,7 @@ describe('InstancesRoute', () => {
           });
 
           it('should preserve the selected state for the previously selected row', () => {
-            expect(selectRowCheckboxes[0]).toBeChecked();
+            expect(selectRowCheckboxes[1]).toBeChecked();
           });
 
           it('should display selected rows count message in the sub header', () => {

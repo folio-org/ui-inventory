@@ -114,13 +114,15 @@ export const instanceIndexes = [
   // a *real* 'all' query option was added ('allInstances any'). That was given the value `allFields`
   // instead. It might make sense to rename the keyword option to something like `keywordAll`
   // but, without tracing the use of the value, I don't know what effects that would have in the code.
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or hrid=="%{query.query}" or id=="%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors.name="%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}"  or isbn="%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title == "%{query.query}"' },
+  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}" or isbn="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
+  { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes', queryTemplate: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"' },
+  { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes', queryTemplate: 'administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects="%{query.query}"' },
   { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
@@ -154,7 +156,7 @@ export const instanceSortMap = {
 
 export const holdingIndexes = [
   // See note for instanceIndexes about 'all' vs. 'allFields'
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or holdings.hrid=="%{query.query}" or holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
   { label: 'ui-inventory.callNumberEyeReadable',
@@ -163,6 +165,8 @@ export const holdingIndexes = [
   { label: 'ui-inventory.callNumberNormalized',
     value: 'callNumberNormalized',
     queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
+  { label: 'ui-inventory.search.holdingsNotes', value: 'holdingsNotes', queryTemplate: 'holdings.notes.note all "%{query.query}" or holdings.administrativeNotes all "%{query.query}"' },
+  { label: 'ui-inventory.search.holdingsAdministrativeNotes', value: 'holdingsAdministrativeNotes', queryTemplate: 'holdings.administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
@@ -223,7 +227,7 @@ export const holdingFilterConfig = [
 
 export const itemIndexes = [
   // See note for instanceIndexes about 'all' vs. 'allFields'
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}"' },
+  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or item.hrid=="%{query.query}" or item.id=="%{query.query}"' },
   { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
@@ -233,6 +237,9 @@ export const itemIndexes = [
   { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
     value: 'itemNormalizedCallNumbers',
     queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
+  { label: 'ui-inventory.search.itemNotes', value: 'holdingsNotes', queryTemplate: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"' },
+  { label: 'ui-inventory.search.itemAdministrativeNotes', value: 'itemAdministrativeNotes', queryTemplate: 'item.administrativeNotes all "%{query.query}"' },
+  { label: 'ui-inventory.search.itemCirculationNotes', value: 'itemCirculationNotes', queryTemplate: 'item.circulationNotes.note all "%{query.query}"' },
   { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },

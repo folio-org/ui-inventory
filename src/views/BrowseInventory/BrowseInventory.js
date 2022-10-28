@@ -7,7 +7,7 @@ import {
 } from '@folio/stripes/core';
 import {
   PersistedPaneset,
-} from '@folio/stripes-smart-components';
+} from '@folio/stripes/smart-components';
 import {
   FiltersPane,
   ResetButton,
@@ -51,10 +51,7 @@ const BrowseInventory = () => {
     isLoading,
     pagination,
     totalRecords,
-  } = useInventoryBrowse({
-    filters,
-    searchIndex,
-  });
+  } = useInventoryBrowse({ filters });
 
   const { validateDataQuery } = useBrowseValidation(searchIndex);
 
@@ -67,10 +64,10 @@ const BrowseInventory = () => {
   }));
 
   const onApplySearch = useCallback(() => {
-    const isSearchQUeryValid = validateDataQuery(searchQuery);
+    const isSearchQueryValid = validateDataQuery(searchQuery);
 
-    if (isSearchQUeryValid) applySearch();
-  }, [searchQuery]);
+    if (isSearchQueryValid) applySearch();
+  }, [searchQuery, filters]);
 
   const onChangeSearchIndex = useCallback((e) => {
     resetFilters();

@@ -1,5 +1,4 @@
 import React from 'react';
-import { sortBy } from 'lodash';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
 import TargetProfileDetail from './TargetProfileDetail';
@@ -14,7 +13,7 @@ class TargetProfiles extends React.Component {
       path: 'copycat/profiles',
       resourceShouldRefresh: true,
       GET: {
-        path: 'copycat/profiles?query=cql.allRecords=1 sortby name&limit=1000',
+        path: 'copycat/profiles?query=cql.allRecords=1&limit=1000',
       },
     },
   });
@@ -36,7 +35,7 @@ class TargetProfiles extends React.Component {
   };
 
   render() {
-    const entryList = sortBy((this.props.resources.entries || {}).records || [], ['name'])
+    const entryList = ((this.props.resources.entries || {}).records || [])
       .map(entry => ({ ...entry, displayName: `${entry.enabled ? '✓' : '✕'} ${entry.name}` }));
 
     return (

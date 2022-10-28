@@ -72,6 +72,7 @@ import {
   itemStatusMutators,
   noValue,
   REQUEST_OPEN_STATUSES,
+  NOT_REMOVABLE_ITEM_STATUSES,
   wrappingCell,
   actionMenuDisplayPerms,
 } from '../constants';
@@ -122,7 +123,7 @@ class ItemView extends React.Component {
       delete item.barcode;
     }
 
-    return this.props.mutator.items.PUT(item).then(() => {
+    return this.props.mutator.itemsResource.PUT(item).then(() => {
       this.context.sendCallout({
         type: 'success',
         message: <FormattedMessage
@@ -139,14 +140,14 @@ class ItemView extends React.Component {
     const holdingsRecord = holdingsRecords.records[0];
     const instance = instances1.records[0];
 
-    this.props.mutator.items.POST(item).then((data) => {
+    this.props.mutator.itemsResource.POST(item).then((data) => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
     });
   };
 
   deleteItem = item => {
     this.props.onCloseViewItem();
-    this.props.mutator.items.DELETE(item);
+    this.props.mutator.itemsResource.DELETE(item);
   };
 
   onCopy() {
@@ -217,14 +218,11 @@ class ItemView extends React.Component {
 
   canDeleteItem = (item, request) => {
     const itemStatus = get(item, 'status.name');
-    const {
-      CHECKED_OUT,
-      ON_ORDER,
-    } = itemStatusesMap;
+    const { ON_ORDER } = itemStatusesMap;
     let messageId;
 
-    if (itemStatus === CHECKED_OUT) {
-      messageId = 'ui-inventory.noItemDeleteModal.checkoutMessage';
+    if (NOT_REMOVABLE_ITEM_STATUSES.includes(itemStatus)) {
+      messageId = 'ui-inventory.noItemDeleteModal.statusMessage';
     } else if (itemStatus === ON_ORDER) {
       messageId = 'ui-inventory.noItemDeleteModal.orderMessage';
     } else if (request) {
@@ -247,7 +245,7 @@ class ItemView extends React.Component {
       stripes,
     } = this.props;
 
-    const firstItem = get(resources, 'items.records[0]');
+    const firstItem = get(resources, 'itemsResource.records[0]');
     const request = get(resources, 'requests.records[0]');
     const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
     const canCreate = stripes.hasPerm('ui-inventory.item.create');
@@ -389,13 +387,13 @@ class ItemView extends React.Component {
     );
   };
 
-  getEntity = () => this.props.resources.items.records[0];
-  getEntityTags = () => this.props.resources.items.records[0]?.tags?.tagList || [];
+  getEntity = () => this.props.resources.itemsResource.records[0];
+  getEntityTags = () => this.props.resources.itemsResource.records[0]?.tags?.tagList || [];
 
   render() {
     const {
       resources: {
-        items,
+        itemsResource,
         holdingsRecords,
         instances1,
         requests,
@@ -432,7 +430,7 @@ class ItemView extends React.Component {
       '-';
 
     const instance = instances1.records[0];
-    const item = items.records[0] || {};
+    const item = itemsResource.records[0] || {};
     const holdingsRecord = holdingsRecords.records[0];
     const { locationsById } = referenceTables;
     const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
@@ -612,14 +610,29 @@ class ItemView extends React.Component {
     };
 
     const holdingLocation = {
-      permanentLocation: get(permanentHoldingsLocation, 'name', '-'),
-      temporaryLocation: get(temporaryHoldingsLocation, 'name', '-'),
+      permanentLocation: {
+        name: get(permanentHoldingsLocation, 'name', '-'),
+        isActive: permanentHoldingsLocation?.isActive,
+      },
+      temporaryLocation: {
+        name: get(temporaryHoldingsLocation, 'name', '-'),
+        isActive: temporaryHoldingsLocation?.isActive,
+      },
     };
 
     const itemLocation = {
-      permanentLocation: get(item, ['permanentLocation', 'name'], '-'),
-      temporaryLocation: get(item, ['temporaryLocation', 'name'], '-'),
-      effectiveLocation: get(item, ['effectiveLocation', 'name'], '-'),
+      permanentLocation: {
+        name: get(item, ['permanentLocation', 'name'], '-'),
+        isActive: locationsById[item.permanentLocation?.id]?.isActive,
+      },
+      temporaryLocation: {
+        name: get(item, ['temporaryLocation', 'name'], '-'),
+        isActive: locationsById[item.temporaryLocation?.id]?.isActive,
+      },
+      effectiveLocation: {
+        name: get(item, ['effectiveLocation', 'name'], '-'),
+        isActive: locationsById[item.effectiveLocation.id].isActive,
+      },
     };
 
     const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
@@ -705,7 +718,11 @@ class ItemView extends React.Component {
       <Col xs={2}>
         <KeyValue
           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
-          value={checkIfElementIsEmpty(itemLocation.effectiveLocation)}
+          value={checkIfElementIsEmpty(itemLocation.effectiveLocation.name)}
+          subValue={!itemLocation.effectiveLocation.isActive &&
+            <FormattedMessage id="ui-inventory.inactive" />
+          }
+          data-testid="item-effective-location"
         />
       </Col>
     );
@@ -900,7 +917,15 @@ class ItemView extends React.Component {
                     <div>
                       <FormattedMessage id="ui-inventory.holdingsLabelShort" />
                       <Link to={`/inventory/view/${instance.id}/${holdingsRecord.id}`}>
-                        { ` ${holdingLocation.permanentLocation} > ${callNumberLabel(holdingsRecord)}` }
+                        {(!holdingLocation.permanentLocation.isActive) &&
+                          <span>
+                            {' '}
+                            <em><FormattedMessage id="ui-inventory.inactive" /></em>
+                          </span>
+                        }
+                        {
+                          ` ${holdingLocation.permanentLocation.name} > ${callNumberLabel(holdingsRecord)}`
+                        }
                       </Link>
                     </div>
                   </Col>
@@ -1328,13 +1353,21 @@ class ItemView extends React.Component {
                         >
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                            value={checkIfElementIsEmpty(holdingLocation.permanentLocation)}
+                            value={checkIfElementIsEmpty(holdingLocation.permanentLocation.name)}
+                            subValue={!holdingLocation.permanentLocation.isActive &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
+                            data-testid="holding-permanent-location"
                           />
                         </Col>
                         <Col sm={4}>
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                            value={checkIfElementIsEmpty(holdingLocation.temporaryLocation)}
+                            value={checkIfElementIsEmpty(holdingLocation.temporaryLocation.name)}
+                            subValue={holdingLocation.temporaryLocation.isActive === false &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
+                            data-testid="holding-temporary-location"
                           />
                         </Col>
                       </Row>
@@ -1356,13 +1389,21 @@ class ItemView extends React.Component {
                         >
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.permanentLocation" />}
-                            value={checkIfElementIsEmpty(itemLocation.permanentLocation)}
+                            value={checkIfElementIsEmpty(itemLocation.permanentLocation.name)}
+                            subValue={itemLocation.permanentLocation.isActive === false &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
+                            data-testid="item-permanent-location"
                           />
                         </Col>
                         <Col sm={4}>
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
-                            value={checkIfElementIsEmpty(itemLocation.temporaryLocation)}
+                            value={checkIfElementIsEmpty(itemLocation.temporaryLocation.name)}
+                            subValue={itemLocation.temporaryLocation.isActive === false &&
+                              <FormattedMessage id="ui-inventory.inactive" />
+                            }
+                            data-testid="item-temporary-location"
                           />
                         </Col>
                       </Row>
@@ -1484,7 +1525,7 @@ ItemView.propTypes = {
       other: PropTypes.object,
     }),
     loans: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
-    items: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    itemsResource: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     holdingsRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     callNumberTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     borrower: PropTypes.object,
@@ -1496,7 +1537,7 @@ ItemView.propTypes = {
   location: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
-    items: PropTypes.shape({
+    itemsResource: PropTypes.shape({
       PUT: PropTypes.func.isRequired,
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,

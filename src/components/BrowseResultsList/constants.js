@@ -21,12 +21,16 @@ export const COLUMNS_MAPPING = {
 };
 
 export const COLUMNS_WIDTHS = {
-  callNumber: '15%',
-  subject: '50%',
-  contributor: '50%',
-  numberOfTitles: '15%',
-  select: '30px',
-  title: '40%',
-  contributorType: '15%',
-  relatorTerm: '15%',
+  [browseModeOptions.CALL_NUMBERS]: {
+    callNumber: '15%',
+    title: '40%',
+  },
+  [browseModeOptions.CONTRIBUTORS]: {
+    contributor: '50%',
+    contributorType: '15%',
+    relatorTerm: '15%',
+  },
+  [browseModeOptions.SUBJECTS]: {
+    subject: '50%',
+  },
 };

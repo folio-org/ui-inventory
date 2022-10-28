@@ -25,7 +25,7 @@ const DEFAULT_SORT = 'title';
 const getQueryTemplateValue = (queryValue, param) => {
   return regExp.test(queryValue)
     ? queryValue
-    : `${param}>="${queryValue.replace(/"/g, '')}" or ${param}<"${queryValue.replace(/"/g, '')}"`;
+    : `${param}>="${queryValue.replace(/"/g, '\\"')}" or ${param}<"${queryValue.replace(/"/g, '\\"')}"`;
 };
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
@@ -202,8 +202,12 @@ const buildRecordsManifest = (options = {}) => {
       params: {
         query: buildQuery,
         highlightMatch: (queryParams) => {
-          const queryValue = get(queryParams, 'query', '');
+          // do not include the highlightMatch for regular search queries.
+          if (!browseModeMap[queryParams.qindex]) {
+            return undefined;
+          }
 
+          const queryValue = get(queryParams, 'query', '');
           return !!queryValue && !regExp.test(queryValue);
         },
         precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),

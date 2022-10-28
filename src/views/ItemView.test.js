@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
+import { waitFor } from '@testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -28,15 +29,28 @@ const resources = {
     records: [
       {
         permanentLocationId: 1,
+        temporaryLocationId: 'inactiveLocation',
       }
     ],
   },
-  items: {
+  itemsResource: {
     records: [
       {
         id: 'item1',
         status: {
           name: 'Available',
+        },
+        permanentLocation: {
+          id: 'inactiveLocation',
+          name: 'Location 1',
+        },
+        temporaryLocation: {
+          id: 'inactiveLocation',
+          name: 'Location 1',
+        },
+        effectiveLocation: {
+          id: 'inactiveLocation',
+          name: 'Location 1',
         },
         isBoundWith: true,
         boundWithTitles: [
@@ -81,7 +95,9 @@ const resources = {
 
 const referenceTables = {
   itemNoteTypes: [],
-  locationsById: [],
+  locationsById: {
+    inactiveLocation: { name: 'Location 1', isActive: false },
+  },
 };
 
 const ItemViewSetup = () => (
@@ -118,16 +134,44 @@ describe('ItemView', () => {
     });
 
     it('should link to the instance view from the instance HRID', () => {
-      const id = resources.items.records[0].boundWithTitles[0].briefInstance.id;
+      const id = resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
       expect(document.querySelector('#item-list-bound-with-titles a.instanceHrid'))
         .toHaveAttribute('href', '/inventory/view/' + id);
     });
 
-    it('should link to the holdings view from the holdings HRID', () => {
-      const instanceId = resources.items.records[0].boundWithTitles[0].briefInstance.id;
-      const holdingsRecordId = resources.items.records[0].boundWithTitles[0].briefHoldingsRecord.id;
-      expect(document.querySelector('#item-list-bound-with-titles a.holdingsRecordHrid'))
-        .toHaveAttribute('href', '/inventory/view/' + instanceId + '/' + holdingsRecordId);
+    it('should display "inactive" by an inactive holding permanent location', async () => {
+      await waitFor(() => {
+        const location = document.querySelector('*[data-testid=holding-permanent-location]').innerHTML;
+        expect(location).toContain('ui-inventory.inactive');
+      });
+    });
+
+    it('should display "inactive" by an inactive holding temporary location', async () => {
+      await waitFor(() => {
+        const location = document.querySelector('*[data-testid=holding-temporary-location]').innerHTML;
+        expect(location).toContain('ui-inventory.inactive');
+      });
+    });
+
+    it('should display "inactive" by an inactive item permanent location', async () => {
+      await waitFor(() => {
+        const location = document.querySelector('*[data-testid=item-permanent-location]').innerHTML;
+        expect(location).toContain('ui-inventory.inactive');
+      });
+    });
+
+    it('should display "inactive" by an inactive item temporary location', async () => {
+      await waitFor(() => {
+        const location = document.querySelector('*[data-testid=item-temporary-location]').innerHTML;
+        expect(location).toContain('ui-inventory.inactive');
+      });
+    });
+
+    it('should display "inactive" by an inactive item effective location', async () => {
+      await waitFor(() => {
+        const location = document.querySelector('*[data-testid=item-effective-location]').innerHTML;
+        expect(location).toContain('ui-inventory.inactive');
+      });
     });
   });
 });

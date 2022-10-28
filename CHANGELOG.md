@@ -1,7 +1,11 @@
 # Change history for ui-inventory
 
-## 9.2.0 IN PROGRESS
+## 9.3.0 IN PROGRESS
 
+## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
+
+* Supports interface 'users' 16.0.  Fixes UIIN-2210.
 * Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
 * Browse contributors | Instance search query does not include contributor Name type. Fixes UIIN-2096.
 * Fix reference to `instanceSource` name. Fixes UIIN-2101.
@@ -38,12 +42,34 @@
 * No results return when you conduct a Contributor search. Fixes UIIN-2191.
 * Browse contributors | Second pane header doesn't update when user return to "Browse inventory" pane via the web-browser "Back" button. Fixes UIIN-2181.
 * Define new route for Inventory "Browse" page. Refs UIIN-2193.
+* Do not include `highlightMatch` parameter in search queries. Fixes UIIN-2008.
 * Relabel 'Bound-with titles' accordion on item view. Fixes UIIN-2196.
 * Link from bound-with table's instance HRID and holdings record HRID columns to the respective records. Fixes UIIN-2195.
 * Browse contributors | Show an indicator that contributor value is controlled/linked to an authority record. Refs UIIN-2179.
 * View Instance record | Contributors accordion | Show authorized indicator for each contributor. Refs UIIN-2180.
 * Move Inventory `Browse` logic into separate page: filters and result. Refs UIIN-2194.
 * Ignore .vscode in .gitignore.
+* Block item deletion for items with status "Awaiting pickup". Fixes UIIN-2086.
+* Block item deletion for items with status "Aged to lost". Fixes UIIN-2136.
+* The exact match result is NOT clickable on the browse result list (Contributors/Call numbers/ Subjects). Refs UIIN-2199.
+* Add ability to search by notes in instances, holdings and items. Refs UIIN-942, UIIN-943, UIIN-944.
+* Add ability to search by administrative notes in instances, holdings and items. Refs UIIN-2053.
+* Add HRID and UUID to keyword search for instance, holdings, item. Refs UIIN-2198.
+* Remove ability to sort by `publishers`. Fixes UIIN-2200.
+* Fix `effectiveCallNumber` translation. Fixes UIIN-2165.
+* Reorder the action menu on instance view. Fixes UIIN-2097.
+* Add ability to choose blank state for all select fields on holdings form. Fixes UIIN-2121.
+* Escape quotes in browse string. Fixes UIIN-2201.
+* Single record import: when using the Back button in the browser, a duplicate import is no longer created. Fixes UIIN-2197.
+* Display bound-with items in holdings view. Refs UIIN-2018.
+* Link from bound-with items in holdings view to the item view. Refs UIIN-2212.
+* Display "Inactive" by inactive locations on holdings and item views. Fixes UIIN-1968 and UIIN-1969.
+* SRI: fetch up to 1000 SRI sources, sorted by name. Fixes UIIN-2206.
+* Add ability to search by circulation notes in items. Refs UIIN-945.
+* Add pagination for results list in `Browse` page. Refs UIIN-2202.
+* Adjust title index to narrow the returned results. Fixes UIIN-2209.
+* Quick instances export - add a select all option to Inventory search results
+* Fix displaying item via item route. Fixes UIIN-2226.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
