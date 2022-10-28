@@ -55,7 +55,6 @@ import {
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
-  QUICK_EXPORT_LIMIT,
   segments,
   browseModeOptions,
   FACETS,
@@ -411,7 +410,7 @@ class InstancesList extends React.Component {
     this.setState({ instancesQuickExportInProgress: true });
 
     try {
-      const instanceIds = Object.keys(this.state.selectedRows).slice(0, QUICK_EXPORT_LIMIT);
+      const instanceIds = Object.keys(this.state.selectedRows);
 
       await this.props.parentMutator.quickExport.POST({
         uuids: instanceIds,
@@ -531,7 +530,6 @@ class InstancesList extends React.Component {
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
-    const isQuickExportLimitExceeded = selectedRowsCount > QUICK_EXPORT_LIMIT;
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
@@ -615,7 +613,7 @@ class InstancesList extends React.Component {
               icon: 'download',
               messageId: 'ui-inventory.exportInstancesInMARC',
               onClickHandler: buildOnClickHandler(this.triggerQuickExport),
-              isDisabled: !selectedRowsCount || isQuickExportLimitExceeded,
+              isDisabled: !selectedRowsCount,
             })}
             <IfInterface name="copycat-imports">
               <IfPermission perm="copycat.profiles.collection.get">
@@ -627,17 +625,6 @@ class InstancesList extends React.Component {
                 })}
               </IfPermission>
             </IfInterface>
-            {isQuickExportLimitExceeded && (
-            <span
-              className={css.feedbackError}
-              data-test-quick-marc-export-limit-exceeded
-            >
-              <FormattedMessage
-                id="ui-inventory.exportInstancesInMARCLimitExceeded"
-                values={{ count: QUICK_EXPORT_LIMIT }}
-              />
-            </span>
-            )}
             {this.getActionItem({
               id: 'dropdown-clickable-export-json',
               icon: 'download',
@@ -677,11 +664,12 @@ class InstancesList extends React.Component {
     const { parentResources } = this.props;
     const { selectedRows } = this.state;
 
-    return parentResources.records.records.length === Object.keys(selectedRows).length;
+    return parentResources.records.records.every(({ id }) => Object.keys(selectedRows).includes(id));
   };
 
   toggleAllRows = () => {
     const { parentResources } = this.props;
+    const { selectedRows } = this.state;
 
     const toggledRows = parentResources.records.records.reduce((acc, row) => (
       {
@@ -690,7 +678,7 @@ class InstancesList extends React.Component {
       }
     ), {});
 
-    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : toggledRows });
+    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : { ...selectedRows, ...toggledRows } });
   };
 
   getColumnMapping = () => {

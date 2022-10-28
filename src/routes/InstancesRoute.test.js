@@ -172,28 +172,6 @@ describe('InstancesRoute', () => {
       });
     });
 
-    describe('selecting rows so the quick export limit is exceed', () => {
-      let selectRowCheckboxes;
-
-      beforeEach(() => {
-        selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
-
-        userEvent.click(selectRowCheckboxes[1]);
-        userEvent.click(selectRowCheckboxes[2]);
-        userEvent.click(selectRowCheckboxes[3]);
-
-        userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      });
-
-      it('should display quick export limit warning', () => {
-        expect(screen.queryByText(`Selected record limit of ${QUICK_EXPORT_LIMIT} exceeded`)).toBeInTheDocument();
-      });
-
-      it('should disable export instances (MARC) action button', () => {
-        expect(screen.getByRole('button', { name: 'Export instances (MARC)' })).toBeDisabled();
-      });
-    });
-
     describe('selecting row', () => {
       let selectRowCheckboxes;
 
