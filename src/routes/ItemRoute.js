@@ -22,7 +22,7 @@ const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and stat
 class ItemRoute extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    items: {
+    itemsResource: {
       type: 'okapi',
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
@@ -176,13 +176,13 @@ class ItemRoute extends React.Component {
   isLoading = () => {
     const {
       resources: {
-        items,
+        itemsResource,
         holdingsRecords,
         instances1,
       },
     } = this.props;
 
-    if (!items?.hasLoaded ||
+    if (!itemsResource?.hasLoaded ||
       !instances1?.hasLoaded ||
       !holdingsRecords?.hasLoaded) {
       return true;
