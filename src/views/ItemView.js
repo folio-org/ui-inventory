@@ -702,7 +702,16 @@ class ItemView extends React.Component {
         );
       },
       'Instance title': x => x.briefInstance?.title,
-      'Holdings HRID': x => x.briefHoldingsRecord?.hrid,
+      'Holdings HRID': x => {
+        return (
+          <Link
+            to={`/inventory/view/${x.briefInstance?.id}/${x.briefHoldingsRecord?.id}`}
+            className="holdingsRecordHrid"
+          >
+            <span>{x.briefHoldingsRecord?.hrid}</span>
+          </Link>
+        );
+      },
     };
 
     const effectiveLocationDisplay = (
