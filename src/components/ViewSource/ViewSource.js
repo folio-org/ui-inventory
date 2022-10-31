@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   LoadingView,
 } from '@folio/stripes/components';
-import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
+// import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
 import {
   useInstance,
@@ -71,12 +71,12 @@ const ViewSource = ({
 
   return (
     <div className={styles.viewSource}>
-      <MarcView
+      {/* <MarcView
         paneTitle={paneTitle}
         marcTitle={marcTitle}
         marc={marc}
         onClose={goBack}
-      />
+      /> */}
     </div>
   );
 };

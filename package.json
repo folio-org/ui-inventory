@@ -6,8 +6,15 @@
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
+    "sideEffects": [
+    "*.css"
+  ],
   "license": "Apache-2.0",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "translations"
+  ],
   "stripes": {
     "actsAs": [
       "app",
@@ -17,6 +24,9 @@
     "route": "/inventory",
     "home": "/inventory?filters=&sort=title",
     "queryResource": "query",
+    "stripesDeps": [
+      "@folio/stripes-acq-components"
+    ],
     "icons": [
       {
         "name": "app",
@@ -823,6 +833,8 @@
     ]
   },
   "scripts": {
+    "prepublish": "yarn transpile",
+    "transpile": "stripes transpile",
     "start": "stripes serve",
     "lint": "eslint .",
     "test": "yarn run test:unit",
@@ -834,9 +846,6 @@
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-inventory ./translations/ui-inventory/compiled"
   },
-  "stripesDeps": [
-    "@folio/stripes-acq-components"
-  ],
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/eslint-parser": "^7.16.3",
@@ -883,7 +892,6 @@
     "sinon": "^7.0.0"
   },
   "dependencies": {
-    "@folio/quick-marc": "^5.0.0",
     "@folio/stripes-acq-components": "^3.2.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/react-hooks": "^5.1.0",
@@ -915,7 +923,8 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
-    "@folio/plugin-find-instance": "^6.0.0"
+    "@folio/plugin-find-instance": "^6.0.0",
+    "@folio/quick-marc": "^5.0.0"
   },
   "resolutions": {
     "moment": "~2.24.0"
