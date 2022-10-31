@@ -266,7 +266,7 @@ class ItemForm extends React.Component {
 
     const labelLocation = get(holdingLocation, ['name'], '');
     const labelCallNumber = holdingsRecord.callNumber || '';
-    const effectiveLocation = locationsById[initialValues.effectiveLocation.id];
+    const effectiveLocation = locationsById[initialValues?.effectiveLocation?.id];
     const effectiveLocationName = get(initialValues, ['effectiveLocation', 'name'], '-');
 
     const shortcuts = [
@@ -361,7 +361,7 @@ class ItemForm extends React.Component {
                         <KeyValue
                           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
                           value={effectiveLocationName}
-                          subValue={!effectiveLocation.isActive &&
+                          subValue={!effectiveLocation?.isActive &&
                             <FormattedMessage id="ui-inventory.inactive" />
                           }
                         />
