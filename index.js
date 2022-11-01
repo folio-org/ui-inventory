@@ -1,1 +1,3 @@
-import './src';
+import InventoryModule from './src/index';
+
+export default InventoryModule;
