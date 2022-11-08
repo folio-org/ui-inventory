@@ -3,6 +3,7 @@
 ## 9.3.0 IN PROGRESS
 * Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
 * Fix error on creating new item.  Fixes UIIN-2227.
+* Missing holdings' source is populated in the UI with instance's. UIIN-2229.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
