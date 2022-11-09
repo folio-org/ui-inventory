@@ -918,6 +918,9 @@
     "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
-    "moment": "~2.24.0"
+    "moment": "~2.24.0",
+    "@folio/stripes-core": "folio-org/stripes-core#STRIPES-820",
+    "@folio/stripes-webpack": "folio-org/stripes-webpack#STRIPES-820",
+    "@folio/stripes": "folio-org/stripes#STRIPES-820"
   }
 }
