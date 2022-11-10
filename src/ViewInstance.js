@@ -406,6 +406,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
+      openedFromBrowse,
       resources: {
         instanceRequests,
       },
@@ -418,9 +419,9 @@ class ViewInstance extends React.Component {
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
-    const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+    const canMoveItems = stripes.hasPerm('ui-inventory.item.move') && !openedFromBrowse;
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
+    const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move') && !openedFromBrowse;
     const canEditMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
     const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
     const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
@@ -860,6 +861,7 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
+  openedFromBrowse: PropTypes.bool,
   paneWidth: PropTypes.string.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
