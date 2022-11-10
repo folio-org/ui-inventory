@@ -745,10 +745,6 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
-  openInNewTab = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
   render() {
     const {
       disableRecordCreation,

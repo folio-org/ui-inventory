@@ -419,9 +419,9 @@ class ViewInstance extends React.Component {
     const isSourceMARC = get(instance, ['source'], '') === 'MARC';
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
-    const canMoveItems = stripes.hasPerm('ui-inventory.item.move') && !openedFromBrowse;
+    const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move') && !openedFromBrowse;
+    const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
     const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
     const hasReorderPermissions = stripes.hasPerm('ui-requests.create') || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
@@ -471,41 +471,41 @@ class ViewInstance extends React.Component {
             )
           }
 
-          {
-            canMoveItems && (
-              <Button
-                id="move-instance-items"
-                buttonStyle="dropdownItem"
-                onClick={() => {
-                  onToggle();
-                  this.toggleItemsMovement();
-                }}
-              >
-                <Icon icon="transfer">
-                  <FormattedMessage
-                    id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-                  />
-                </Icon>
-              </Button>
-            )
-          }
+          {!openedFromBrowse && (
+            <>
+              {canMoveItems && (
+                <Button
+                  id="move-instance-items"
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.toggleItemsMovement();
+                  }}
+                >
+                  <Icon icon="transfer">
+                    <FormattedMessage
+                      id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                    />
+                  </Icon>
+                </Button>
+              )}
 
-          {
-            (canMoveItems || canMoveHoldings) && (
-              <Button
-                id="move-instance"
-                buttonStyle="dropdownItem"
-                onClick={() => {
-                  onToggle();
-                  this.toggleFindInstancePlugin();
-                }}
-              >
-                <Icon icon="arrow-right">
-                  <FormattedMessage id="ui-inventory.moveItems" />
-                </Icon>
-              </Button>
-            )
-          }
+              {(canMoveItems || canMoveHoldings) && (
+                <Button
+                  id="move-instance"
+                  buttonStyle="dropdownItem"
+                  onClick={() => {
+                    onToggle();
+                    this.toggleFindInstancePlugin();
+                  }}
+                >
+                  <Icon icon="arrow-right">
+                    <FormattedMessage id="ui-inventory.moveItems" />
+                  </Icon>
+                </Button>
+              )}
+            </>
+          )}
 
           <IfInterface name="copycat-imports">
             <IfPermission perm="copycat.profiles.collection.get">
