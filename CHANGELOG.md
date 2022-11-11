@@ -1,11 +1,15 @@
 # Change history for ui-inventory
 
+## [9.2.2](https://github.com/folio-org/ui-inventory/tree/v9.2.2) (2022-11-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.1...v9.2.2)
+
+* Missing holdings' source is populated in the UI with instance's. UIIN-2229.
+
 ## [9.2.1](https://github.com/folio-org/ui-inventory/tree/v9.2.1) (2022-11-07)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.0...v9.2.1)
 
 * Fix error on creating new item. Fixes UIIN-2227.
 * Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
-* Missing holdings' source is populated in the UI with instance's. UIIN-2229.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
