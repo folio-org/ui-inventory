@@ -4,6 +4,7 @@ import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import {
+  act,
   fireEvent,
   screen,
 } from '@testing-library/react';
@@ -146,6 +147,21 @@ describe('InstancesList', () => {
         it('should hide contributors column', () => {
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
         });
+      });
+    });
+
+    describe('filters pane', () => {
+      it('should have selected effective call number option', async () => {
+        await act(async () => userEvent.selectOptions(screen.getByLabelText('Search field index'), 'callNumber'));
+
+        expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
+      });
+
+      it('should have query in search input', () => {
+        userEvent.type(screen.getByRole('searchbox', { name: 'Search' }), 'search query');
+        userEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+
+        expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
       });
     });
   });
