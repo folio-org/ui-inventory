@@ -9,7 +9,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { isEmpty } from 'lodash';
+import { isEmpty, keyBy } from 'lodash';
 
 import {
   Checkbox,
@@ -25,10 +25,12 @@ import ItemsListRow from './ItemsListRow';
 import {
   sortItems,
 } from './utils';
+import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
 
 const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 const getFormatter = (
   holding,
+  holdingsMapById,
   selectItemsForDrag,
   ifItemsSelected,
 ) => ({
@@ -60,8 +62,8 @@ const getFormatter = (
       <>
         <ItemBarcode
           item={item}
-          holdingId={holding.id}
-          instanceId={holding.instanceId}
+          holdingId={item.holdingsRecordId}
+          instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
         />
         {item.discoverySuppress &&
         <span>
@@ -132,6 +134,9 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
 }) => {
+  const { boundWithHoldings: holdings } = useBoundWithHoldings(items);
+  const holdingsMapById = keyBy(holdings, 'id');
+
   const intl = useIntl();
 
   const [itemsSorting, setItemsSorting] = useState({
@@ -147,8 +152,8 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(holding, selectItemsForDrag, isItemsDragSelected),
-    [holding, selectItemsForDrag, isItemsDragSelected],
+    () => getFormatter(holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
+    [holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,
