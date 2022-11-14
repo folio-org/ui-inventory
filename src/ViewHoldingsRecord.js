@@ -477,7 +477,6 @@ class ViewHoldingsRecord extends React.Component {
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
-    const instanceSource = referenceTables?.holdingsSources?.find(source => source.name === instance?.source);
     const holdingsRecord = this.getMostRecentHolding();
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
     const holdingsPermanentLocation = referenceTables?.locationsById[holdingsRecord?.permanentLocationId];
@@ -485,7 +484,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsTemporaryLocation = referenceTables?.locationsById[holdingsRecord?.temporaryLocationId];
     const holdingsEffectiveLocation = referenceTables?.locationsById[holdingsRecord?.effectiveLocationId];
     const itemCount = get(items, 'records.length', 0);
-    const holdingsSourceName = holdingsSource?.name || instanceSource?.name;
+    const holdingsSourceName = holdingsSource?.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const confirmHoldingsRecordDeleteModalMessage = (

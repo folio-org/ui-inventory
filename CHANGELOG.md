@@ -1,6 +1,12 @@
 # Change history for ui-inventory
 
-## 9.2.0 IN PROGRESS
+## 9.3.0 IN PROGRESS
+* Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
+* Fix error on creating new item.  Fixes UIIN-2227.
+* Missing holdings' source is populated in the UI with instance's. UIIN-2229.
+
+## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
 
 * Supports interface 'users' 16.0.  Fixes UIIN-2210.
 * Create Jest/RTL test for HoldingButtonsGroup.js. Refs UIEH-1746.
@@ -66,6 +72,7 @@
 * Add pagination for results list in `Browse` page. Refs UIIN-2202.
 * Adjust title index to narrow the returned results. Fixes UIIN-2209.
 * Quick instances export - add a select all option to Inventory search results
+* Fix displaying item via item route. Fixes UIIN-2226.
 
 ## [9.1.0](https://github.com/folio-org/ui-inventory/tree/v9.1.0) (2022-06-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.0.0...v9.1.0)
