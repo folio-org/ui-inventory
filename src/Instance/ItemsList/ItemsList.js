@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useState,
   useEffect,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -26,8 +27,12 @@ import {
   sortItems,
 } from './utils';
 
+import { DataContext } from '../../contexts';
+
 const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 const getFormatter = (
+  intl,
+  locationsById,
   holding,
   selectItemsForDrag,
   ifItemsSelected,
@@ -79,7 +84,15 @@ const getFormatter = (
   'copyNumber': ({ copyNumber }) => copyNumber || noValue,
   'materialType': x => x.materialType?.name || noValue,
   'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || noValue,
-  'effectiveLocation': x => x.effectiveLocation?.name || noValue,
+  'effectiveLocation': x => {
+    const effectiveLocation = locationsById[x.effectiveLocation?.id];
+    return effectiveLocation?.isActive ?
+      effectiveLocation?.name || noValue :
+      intl.formatMessage(
+        { id: 'ui-inventory.inactive.gridCell' },
+        { location: effectiveLocation?.name }
+      );
+  },
   'enumeration': x => x.enumeration || noValue,
   'chronology': x => x.chronology || noValue,
   'volume': x => x.volume || noValue,
@@ -140,6 +153,7 @@ const ItemsList = ({
   });
   const [records, setRecords] = useState([]);
   const [paginatedItems, setPaginatedItems] = useState([]);
+  const { locationsById } = useContext(DataContext);
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -147,7 +161,7 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(holding, selectItemsForDrag, isItemsDragSelected),
+    () => getFormatter(intl, locationsById, holding, selectItemsForDrag, isItemsDragSelected),
     [holding, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
