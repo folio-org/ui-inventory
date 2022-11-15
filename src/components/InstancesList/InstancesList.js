@@ -788,7 +788,7 @@ class InstancesList extends React.Component {
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
-        if (row.isAnchor && !row.instance) return;
+        if (!row.shelfKey) return;
 
         optionSelected = 'callNumber';
         parentMutator.query.update({
