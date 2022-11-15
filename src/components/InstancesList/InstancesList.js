@@ -678,7 +678,14 @@ class InstancesList extends React.Component {
       }
     ), {});
 
-    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : { ...selectedRows, ...toggledRows } });
+    const filterSelectedRows = rows => {
+      Object.keys(toggledRows).forEach(id => {
+        if (rows[id]) delete rows[id];
+      });
+      return rows;
+    };
+
+    this.setState(({ selectedRows: this.getIsAllRowsSelected() ? filterSelectedRows(selectedRows) : { ...selectedRows, ...toggledRows } }));
   };
 
   getColumnMapping = () => {
