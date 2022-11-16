@@ -4,6 +4,9 @@
 * Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
 * Fix error on creating new item.  Fixes UIIN-2227.
 * Missing holdings' source is populated in the UI with instance's. UIIN-2229.
+* Unchecking the "Select all" checkbox on the 2nd page resets all  selection for quick export to MARC. UIIN-2232.
+* Selecting a row with multiple Call number entries is failed UIIN-2240.
+* `Inventory: Create order from instance` also grants delete POL permission. Refs UIIN-2241.
 * Not actual "relatedRecordVersion" value sends when user saves "MARC Bib" record. UIIN-2244.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
