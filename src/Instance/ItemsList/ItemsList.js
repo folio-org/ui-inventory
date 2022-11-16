@@ -10,7 +10,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { isEmpty } from 'lodash';
+import { isEmpty, keyBy } from 'lodash';
 
 import {
   Checkbox,
@@ -26,6 +26,7 @@ import ItemsListRow from './ItemsListRow';
 import {
   sortItems,
 } from './utils';
+import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
 
 import { DataContext } from '../../contexts';
 
@@ -34,6 +35,7 @@ const getFormatter = (
   intl,
   locationsById,
   holding,
+  holdingsMapById,
   selectItemsForDrag,
   ifItemsSelected,
 ) => ({
@@ -65,8 +67,8 @@ const getFormatter = (
       <>
         <ItemBarcode
           item={item}
-          holdingId={holding.id}
-          instanceId={holding.instanceId}
+          holdingId={item.holdingsRecordId}
+          instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
         />
         {item.discoverySuppress &&
         <span>
@@ -145,6 +147,9 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
 }) => {
+  const { boundWithHoldings: holdings } = useBoundWithHoldings(items);
+  const holdingsMapById = keyBy(holdings, 'id');
+
   const intl = useIntl();
 
   const [itemsSorting, setItemsSorting] = useState({
@@ -161,8 +166,8 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(intl, locationsById, holding, selectItemsForDrag, isItemsDragSelected),
-    [holding, selectItemsForDrag, isItemsDragSelected],
+    () => getFormatter(intl, locationsById, holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
+    [holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,

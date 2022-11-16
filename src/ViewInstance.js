@@ -293,10 +293,6 @@ class ViewInstance extends React.Component {
 
     searchParams.delete('relatedRecordVersion');
 
-    if (page !== quickMarcPages.createHoldings) {
-      searchParams.append('relatedRecordVersion', instance._version);
-    }
-
     history.push({
       pathname: `/inventory/quick-marc/${page}/${instance.id}`,
       search: searchParams.toString(),

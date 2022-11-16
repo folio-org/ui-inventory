@@ -678,7 +678,14 @@ class InstancesList extends React.Component {
       }
     ), {});
 
-    this.setState({ selectedRows: this.getIsAllRowsSelected() ? {} : { ...selectedRows, ...toggledRows } });
+    const filterSelectedRows = rows => {
+      Object.keys(toggledRows).forEach(id => {
+        if (rows[id]) delete rows[id];
+      });
+      return rows;
+    };
+
+    this.setState(({ selectedRows: this.getIsAllRowsSelected() ? filterSelectedRows(selectedRows) : { ...selectedRows, ...toggledRows } }));
   };
 
   getColumnMapping = () => {
@@ -781,7 +788,7 @@ class InstancesList extends React.Component {
 
     switch (get(parentResources.query, 'qindex')) {
       case browseModeOptions.CALL_NUMBERS:
-        if (row.isAnchor && !row.instance) return;
+        if (!row.shelfKey) return;
 
         optionSelected = 'callNumber';
         parentMutator.query.update({
