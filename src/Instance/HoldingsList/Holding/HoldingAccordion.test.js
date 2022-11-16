@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -21,8 +21,18 @@ const HoldingAccordionSetup = () => (
   <Router>
     <DataContext.Provider value={{ locationsById: {} }}>
       <HoldingAccordion
-        holding={{ id: '123' }}
+        holding={{
+          id: '123',
+          permanentLocation: { id: 'inactiveLocation' },
+        }}
         holdings={[]}
+        locationsById={[
+          {
+            id: 'inactiveLocation',
+            name: 'Location 1',
+            isActive: false,
+          },
+        ]}
         onViewHolding={noop}
         onAddItem={noop}
         withMoveDropdown={false}
@@ -47,6 +57,13 @@ describe('HoldingAccordion', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('should display "inactive" if applicable in the accordion header', async () => {
+    await waitFor(() => {
+      const accordionSection = document.querySelector('*[data-test-accordion-section=true]').innerHTML;
+      expect(accordionSection).toContain('Inactive');
+    });
   });
 
   it('should render items counter', () => {
