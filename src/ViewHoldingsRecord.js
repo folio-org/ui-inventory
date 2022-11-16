@@ -1024,7 +1024,7 @@ class ViewHoldingsRecord extends React.Component {
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
 
-                      <HoldingBoundWith boundWithItems={boundWithItems} />
+                      <HoldingBoundWith boundWithItems={boundWithItems.records} />
 
                     </AccordionSet>
                   </AccordionStatus>

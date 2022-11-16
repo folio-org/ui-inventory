@@ -15,7 +15,7 @@ import useBoundWithHoldings from './useBoundWithHoldings';
 jest.mock('./useBoundWithHoldings', () => jest.fn());
 
 const renderHoldingBoundWith = ({
-  boundWithItems = {},
+  boundWithItems = [],
 } = {}) => (
   renderWithIntl(
     <Router>
@@ -30,7 +30,7 @@ describe('HoldingBoundWith', () => {
   });
 
   it('should display bound-with fields', () => {
-    renderHoldingBoundWith({ records: [{ hrid: 'BW-ITEM-1' }], hasLoaded: true });
+    renderHoldingBoundWith([{ hrid: 'BW-ITEM-1' }]);
 
     expect(screen.getByText('ui-inventory.itemHrid')).toBeInTheDocument();
   });

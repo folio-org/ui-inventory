@@ -16,7 +16,7 @@ import useBoundWithHoldings from './useBoundWithHoldings';
 const HoldingBoundWith = ({ boundWithItems }) => {
   const { isLoading, boundWithHoldings } = useBoundWithHoldings(boundWithItems);
   const boundWithHoldingsMapById = keyBy(boundWithHoldings, 'id');
-  const data = boundWithItems.records?.map(boundWithItem => ({
+  const data = boundWithItems?.map(boundWithItem => ({
     item: boundWithItem,
     holdingsRecord: boundWithHoldingsMapById[boundWithItem.holdingsRecordId],
   }));
@@ -68,9 +68,7 @@ const HoldingBoundWith = ({ boundWithItems }) => {
 };
 
 HoldingBoundWith.propTypes = {
-  boundWithItems: PropTypes.shape({
-    records: PropTypes.arrayOf(PropTypes.object),
-  }),
+  boundWithItems: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default HoldingBoundWith;

@@ -8,6 +8,7 @@
 * Selecting a row with multiple Call number entries is failed UIIN-2240.
 * `Inventory: Create order from instance` also grants delete POL permission. Refs UIIN-2241.
 * Not actual "relatedRecordVersion" value sends when user saves "MARC Bib" record. UIIN-2244.
+* Display bound-with items along with directly linked items at all associated holdings. Refs UIIN-2164.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
