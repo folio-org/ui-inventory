@@ -7,7 +7,10 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import withFacets from '../withFacets';
 import { InstancesView } from '../views';
-import { getFilterConfig } from '../filterConfig';
+import {
+  getFilterConfig,
+  instanceIndexes,
+} from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
 
@@ -40,7 +43,7 @@ class InstancesRoute extends React.Component {
       fetchFacets,
     } = this.props;
     const { segment } = getParams(this.props);
-    const { indexes, renderer } = getFilterConfig(segment);
+    const { renderer } = getFilterConfig(segment);
     const { query, records } = resources;
     const parentResources = { ...resources, records };
 
@@ -61,7 +64,7 @@ class InstancesRoute extends React.Component {
               parentResources,
             })}
             segment={segment}
-            searchableIndexes={indexes}
+            searchableIndexes={instanceIndexes}
             fetchFacets={fetchFacets}
           />
         )}

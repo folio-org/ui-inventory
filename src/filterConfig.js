@@ -132,9 +132,9 @@ export const instanceIndexes = [
 ];
 
 export const browseInstanceIndexes = [
-  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}` },
-  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}` },
-  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}` },
+  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceBrowseSortMap = {
@@ -302,7 +302,7 @@ export const itemSortMap = {
 const config = {
   instances: {
     filters: instanceFilterConfig,
-    indexes: instanceIndexes,
+    indexes: [...instanceIndexes, ...browseInstanceIndexes],
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
