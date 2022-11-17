@@ -37,7 +37,7 @@ const HoldingAccordionSetup = () => (
         onAddItem={noop}
         withMoveDropdown={false}
       >
-        {() => null}
+        <></>
       </HoldingAccordion>
     </DataContext.Provider>
   </Router>

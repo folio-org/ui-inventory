@@ -55,6 +55,15 @@ const HoldingAccordion = ({
     isOpen={open}
   />;
 
+  const location = labelLocation?.isActive ?
+    labelLocationName :
+    <FormattedMessage
+      id="ui-inventory.inactive.paneTitle"
+      values={{
+        location: labelLocationName,
+      }}
+    />;
+
   return (
     <Accordion
       id={holding.id}
@@ -65,14 +74,7 @@ const HoldingAccordion = ({
           <FormattedMessage
             id="ui-inventory.holdingsHeader"
             values={{
-              location: labelLocation?.isActive ?
-                labelLocationName :
-                <FormattedMessage
-                  id="ui-inventory.inactive.paneTitle"
-                  values={{
-                    location: labelLocationName,
-                  }}
-                />,
+              location,
               callNumber: callNumberLabel(holding),
               copyNumber: holding.copyNumber,
             }}
