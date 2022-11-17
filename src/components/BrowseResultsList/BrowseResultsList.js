@@ -87,8 +87,10 @@ const BrowseResultsList = ({
   const listId = `browse-results-list-${browseOption}`;
 
   const isRowPreventsClick = useCallback((row) => {
-    return row.isAnchor && (
-      (browseOption === browseModeOptions.CALL_NUMBERS && !row.instance) ||
+    const isMissedMatchItemRow = !!row.isAnchor && row.totalRecords === 0;
+
+    return isMissedMatchItemRow || (
+      (browseOption === browseModeOptions.CALL_NUMBERS && !row.shelfKey) ||
       (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
       (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
     );
