@@ -7,17 +7,18 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import withFacets from '../withFacets';
 import { InstancesView } from '../views';
-import { getFilterConfig } from '../filterConfig';
+import {
+  getFilterConfig,
+  instanceIndexes,
+} from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
-import { browseModeMap } from '../constants';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
     showSingleResult: PropTypes.bool,
-    browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
@@ -26,7 +27,6 @@ class InstancesRoute extends React.Component {
 
   static defaultProps = {
     showSingleResult: true,
-    browseOnly: false,
     disableRecordCreation: false,
   };
 
@@ -35,7 +35,6 @@ class InstancesRoute extends React.Component {
   render() {
     const {
       showSingleResult,
-      browseOnly,
       onSelectRow,
       disableRecordCreation,
       resources,
@@ -44,9 +43,8 @@ class InstancesRoute extends React.Component {
       fetchFacets,
     } = this.props;
     const { segment } = getParams(this.props);
-    const { indexes, renderer } = getFilterConfig(segment);
-    const { query, records: instanceRecords, browseModeRecords } = resources;
-    const records = browseModeMap[query.qindex] ? browseModeRecords : instanceRecords;
+    const { renderer } = getFilterConfig(segment);
+    const { query, records } = resources;
     const parentResources = { ...resources, records };
 
     return (
@@ -56,7 +54,6 @@ class InstancesRoute extends React.Component {
             parentResources={parentResources}
             parentMutator={mutator}
             data={{ ...data, query }}
-            browseOnly={browseOnly}
             showSingleResult={showSingleResult}
             onSelectRow={onSelectRow}
             disableRecordCreation={disableRecordCreation}
@@ -67,7 +64,7 @@ class InstancesRoute extends React.Component {
               parentResources,
             })}
             segment={segment}
-            searchableIndexes={indexes}
+            searchableIndexes={instanceIndexes}
             fetchFacets={fetchFacets}
           />
         )}

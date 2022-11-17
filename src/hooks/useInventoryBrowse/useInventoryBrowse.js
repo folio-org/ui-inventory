@@ -48,6 +48,7 @@ const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
 
 const useInventoryBrowse = ({
   filters = {},
+  options = {},
 }) => {
   const ky = useOkapiKy();
   const { search } = useLocation();
@@ -110,6 +111,7 @@ const useInventoryBrowse = ({
       enabled: Boolean(pageConfig && qindex && hasFilters),
       keepPreviousData: qindex === prevSearchIndex || hasFilters,
       staleTime: FIVE_MINUTES,
+      ...options,
     },
   );
 

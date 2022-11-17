@@ -129,17 +129,12 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: '-------------------------------------------', value: 'noValue', disabled: true },
-  // TODO: remove after 'browse' refactoring
-  { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseContributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const browseInstanceIndexes = [
-  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}` },
-  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}` },
-  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}` },
+  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceBrowseSortMap = {
@@ -307,7 +302,7 @@ export const itemSortMap = {
 const config = {
   instances: {
     filters: instanceFilterConfig,
-    indexes: instanceIndexes,
+    indexes: [...instanceIndexes, ...browseInstanceIndexes],
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
