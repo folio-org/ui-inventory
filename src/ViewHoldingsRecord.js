@@ -459,9 +459,6 @@ class ViewHoldingsRecord extends React.Component {
     return isEmpty(referenceTables);
   };
 
-  getEntity = () => this.getMostRecentHolding();
-  getEntityTags = () => this.getMostRecentHolding()?.tags?.tagList || [];
-
   render() {
     const {
       resources: {
@@ -962,8 +959,6 @@ class ViewHoldingsRecord extends React.Component {
                       {tagsEnabled && (
                       <TagsAccordion
                         link={`holdings-storage/holdings/${holdingsRecord.id}`}
-                        getEntity={this.getEntity}
-                        getEntityTags={this.getEntityTags}
                         entityTagsPath="tags"
                       />
                       )}
