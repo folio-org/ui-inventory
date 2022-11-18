@@ -13,6 +13,7 @@ import {
   ResetButton,
   SingleSearchForm,
   useFiltersToogle,
+  useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
 
@@ -33,6 +34,7 @@ const BrowseInventory = () => {
   const intl = useIntl();
   const [namespace] = useNamespace();
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
+  const { deleteItemToView } = useItemToView('browse');
 
   const [
     filters,
@@ -51,7 +53,10 @@ const BrowseInventory = () => {
     isLoading,
     pagination,
     totalRecords,
-  } = useInventoryBrowse({ filters });
+  } = useInventoryBrowse({
+    filters,
+    options: { onSettled: deleteItemToView }
+  });
 
   const { validateDataQuery } = useBrowseValidation(searchIndex);
 

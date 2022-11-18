@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useRouteMatch } from 'react-router-dom';
@@ -12,7 +13,7 @@ import {
   searchModeSegments,
 } from '../../constants';
 
-const SearchModeNavigation = () => {
+const SearchModeNavigation = ({ search }) => {
   const { path } = useRouteMatch();
 
   const checkIsButtonActive = useCallback((segment) => (
@@ -25,7 +26,10 @@ const SearchModeNavigation = () => {
         Object.keys(searchModeSegments).map(segment => (
           <Button
             key={`${segment}`}
-            to={searchModeRoutesMap[segment]}
+            to={{
+              pathname: searchModeRoutesMap[segment],
+              search,
+            }}
             buttonStyle={checkIsButtonActive(segment)}
             id={`mode-navigation-${segment}`}
           >
@@ -35,6 +39,10 @@ const SearchModeNavigation = () => {
       }
     </ButtonGroup>
   );
+};
+
+SearchModeNavigation.propTypes = {
+  search: PropTypes.string,
 };
 
 export default SearchModeNavigation;
