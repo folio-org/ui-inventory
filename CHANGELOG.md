@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.2.3](https://github.com/folio-org/ui-inventory/tree/v9.2.3) (2022-11-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.2...v9.2.3)
+
+* Selecting a row with multiple Call number entries is failed UIIN-2240.
+
 ## [9.2.2](https://github.com/folio-org/ui-inventory/tree/v9.2.2) (2022-11-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.1...v9.2.2)
 
