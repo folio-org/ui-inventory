@@ -110,10 +110,10 @@ class ViewHoldingsRecord extends React.Component {
         path: 'source-storage/records/%{marcRecordId}',
       },
     },
-    boundWithItems: {
+    boundWithParts: {
       type: 'okapi',
-      records: 'items',
-      path: 'inventory/items-by-holdings-id',
+      records: 'boundWithParts',
+      path: 'inventory-storage/bound-with-parts',
       params: {
         query: '(holdingsRecordId==:{holdingsrecordid})',
         limit: '5000',
@@ -464,7 +464,7 @@ class ViewHoldingsRecord extends React.Component {
       resources: {
         items,
         tagSettings,
-        boundWithItems,
+        boundWithParts,
       },
       referenceTables,
       goTo,
@@ -1019,7 +1019,7 @@ class ViewHoldingsRecord extends React.Component {
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
 
-                      <HoldingBoundWith boundWithItems={boundWithItems.records} />
+                      <HoldingBoundWith boundWithParts={boundWithParts.records} />
 
                     </AccordionSet>
                   </AccordionStatus>
@@ -1051,7 +1051,7 @@ ViewHoldingsRecord.propTypes = {
     tagSettings: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    boundWithItems: PropTypes.shape({
+    boundWithParts: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
