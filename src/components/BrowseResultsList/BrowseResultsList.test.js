@@ -1,21 +1,25 @@
 import '../../../test/jest/__mock__';
 
 import userEvent from '@testing-library/user-event';
-import { act, screen } from '@testing-library/react';
-import { useHistory } from 'react-router-dom';
+import { act, cleanup, screen } from '@testing-library/react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { instance } from '../../../test/fixtures/instance';
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import { DataContext } from '../../contexts';
 import BrowseResultsList from './BrowseResultsList';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn(() => ({ push: jest.fn() })),
-  useLocation: jest.fn(() => ({ search: 'qindex="callNumbers"&query="A"' })),
+  useLocation: jest.fn(() => ({ search: 'qindex=callNumbers&query=A' })),
 }));
+
+const mockWindowOpen = jest.fn();
+window.open = mockWindowOpen;
 
 const defaultProps = {
   browseData: [
@@ -48,11 +52,19 @@ const defaultProps = {
   totalRecords: 1,
 };
 
+const mockContext = {
+  contributorNameTypes: [{
+    id: '2b94c631-fca9-4892-a730-03ee529ffe2a',
+  }],
+};
+
 const renderBrowseResultsList = (props = {}) => renderWithIntl(
-  <BrowseResultsList
-    {...defaultProps}
-    {...props}
-  />,
+  <DataContext.Provider value={mockContext}>
+    <BrowseResultsList
+      {...defaultProps}
+      {...props}
+    />
+  </DataContext.Provider>,
   translationsProperties,
 );
 
@@ -78,5 +90,40 @@ describe('BrowseResultsList', () => {
     await act(async () => userEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber)));
 
     expect(mockHistory.push).toHaveBeenCalled();
+  });
+
+  describe('when Instance record is linked to an authority record', () => {
+    describe('by clicking on the icon of an authority app', () => {
+      const record = {
+        contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a',
+        isAnchor: false,
+        name: 'McOrmond, Steven Craig (Test) 1971-',
+        totalRecords: 1,
+      };
+      const authorityId = 'bb30e977-f934-4a2f-8fb8-858bac51b7ab';
+      const linkedRecord = {
+        ...record,
+        authorityId,
+      };
+
+      beforeEach(() => {
+        cleanup();
+        useLocation.mockClear().mockReturnValue(({ search: 'qindex=contributors&query=A' }));
+
+        renderBrowseResultsList({
+          browseData: [linkedRecord],
+        });
+
+        userEvent.click(screen.getByTestId('authority-app-link'));
+      });
+
+      it('should open the authority record in a new tab', () => {
+        expect(mockWindowOpen).toHaveBeenCalledWith(
+          `/marc-authorities/authorities/${authorityId}?segment=search`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+      });
+    });
   });
 });
