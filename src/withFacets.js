@@ -7,7 +7,10 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   getQueryTemplate,
 } from './utils';
-import { getFilterConfig } from './filterConfig';
+import {
+  browseConfig,
+  getFilterConfig,
+} from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
   FACETS,
@@ -15,11 +18,12 @@ import {
   FACETS_ENDPOINTS,
   CQL_FIND_ALL,
   browseModeOptions,
+  browseModeMap,
 } from './constants';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
-  const { indexes, filters } = getFilterConfig(queryParams.segment);
   const queryIndex = queryParams?.qindex ?? 'all';
+  const { indexes, filters } = browseModeMap[queryIndex] ? browseConfig : getFilterConfig(queryParams.segment);
   const queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   // reset qindex otherwise makeQueryFunction does not use queryTemplate
@@ -59,6 +63,7 @@ function withFacets(WrappedComponent) {
     );
 
     static propTypes = {
+      activeFilters: PropTypes.object,
       resources: PropTypes.shape({
         query: PropTypes.object,
         facets: PropTypes.object,
@@ -117,7 +122,9 @@ function withFacets(WrappedComponent) {
         reset,
         GET,
       } = mutator.facets;
-      const { query } = resources;
+
+      // Browse page does not use query resource: query params are stored in "activeFilters" of "useLocationFilters" hook
+      const query = resources.query || this.props.activeFilters;
 
       // temporary query value
       const params = { query: 'id = *' };
@@ -125,7 +132,7 @@ function withFacets(WrappedComponent) {
       const facetName = facetToOpen || onMoreClickedFacet || focusedFacet;
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
-      const queryIndex = paramsUrl.get('qindex');
+      const queryIndex = paramsUrl.get('qindex') || query?.qindex;
 
       if (facetName === FACETS.NAME_TYPE) {
         params.query = 'contributorNameTypeId=*';
