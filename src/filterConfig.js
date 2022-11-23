@@ -131,6 +131,19 @@ export const instanceIndexes = [
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
 ];
 
+export const browseFiltersConfig = [
+  {
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
+    values: [],
+  },
+  {
+    name: FACETS.NAME_TYPE,
+    cql: FACETS_CQL.NAME_TYPE,
+    values: [],
+  },
+];
+
 export const browseInstanceIndexes = [
   { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
@@ -302,7 +315,7 @@ export const itemSortMap = {
 const config = {
   instances: {
     filters: instanceFilterConfig,
-    indexes: [...instanceIndexes, ...browseInstanceIndexes],
+    indexes: [...instanceIndexes],
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
@@ -318,6 +331,12 @@ const config = {
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
   },
+};
+
+export const browseConfig = {
+  filters: browseFiltersConfig,
+  indexes: browseInstanceIndexes,
+  sortMap: instanceBrowseSortMap,
 };
 
 export const getFilterConfig = (segment = 'instances') => config[segment];
