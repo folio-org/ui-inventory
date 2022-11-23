@@ -110,10 +110,10 @@ class ViewHoldingsRecord extends React.Component {
         path: 'source-storage/records/%{marcRecordId}',
       },
     },
-    boundWithItems: {
+    boundWithParts: {
       type: 'okapi',
-      records: 'items',
-      path: 'inventory/items-by-holdings-id',
+      records: 'boundWithParts',
+      path: 'inventory-storage/bound-with-parts',
       params: {
         query: '(holdingsRecordId==:{holdingsrecordid})',
         limit: '5000',
@@ -459,15 +459,12 @@ class ViewHoldingsRecord extends React.Component {
     return isEmpty(referenceTables);
   };
 
-  getEntity = () => this.getMostRecentHolding();
-  getEntityTags = () => this.getMostRecentHolding()?.tags?.tagList || [];
-
   render() {
     const {
       resources: {
         items,
         tagSettings,
-        boundWithItems,
+        boundWithParts,
       },
       referenceTables,
       goTo,
@@ -962,8 +959,6 @@ class ViewHoldingsRecord extends React.Component {
                       {tagsEnabled && (
                       <TagsAccordion
                         link={`holdings-storage/holdings/${holdingsRecord.id}`}
-                        getEntity={this.getEntity}
-                        getEntityTags={this.getEntityTags}
                         entityTagsPath="tags"
                       />
                       )}
@@ -1024,7 +1019,7 @@ class ViewHoldingsRecord extends React.Component {
 
                       <HoldingReceivingHistory holding={holdingsRecord} />
 
-                      <HoldingBoundWith boundWithItems={boundWithItems.records} />
+                      <HoldingBoundWith boundWithParts={boundWithParts.records} />
 
                     </AccordionSet>
                   </AccordionStatus>
@@ -1056,7 +1051,7 @@ ViewHoldingsRecord.propTypes = {
     tagSettings: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    boundWithItems: PropTypes.shape({
+    boundWithParts: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   }).isRequired,
