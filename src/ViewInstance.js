@@ -406,6 +406,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
+      openedFromBrowse,
       resources: {
         instanceRequests,
       },
@@ -471,38 +472,44 @@ class ViewInstance extends React.Component {
           }
 
           {
-            canMoveItems && (
-              <Button
-                id="move-instance-items"
-                buttonStyle="dropdownItem"
-                onClick={() => {
-                  onToggle();
-                  this.toggleItemsMovement();
-                }}
-              >
-                <Icon icon="transfer">
-                  <FormattedMessage
-                    id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-                  />
-                </Icon>
-              </Button>
-            )
-          }
+            !openedFromBrowse && (
+              <>
+                {
+                  canMoveItems && (
+                    <Button
+                      id="move-instance-items"
+                      buttonStyle="dropdownItem"
+                      onClick={() => {
+                        onToggle();
+                        this.toggleItemsMovement();
+                      }}
+                    >
+                      <Icon icon="transfer">
+                        <FormattedMessage
+                          id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                        />
+                      </Icon>
+                    </Button>
+                  )
+                }
 
-          {
-            (canMoveItems || canMoveHoldings) && (
-              <Button
-                id="move-instance"
-                buttonStyle="dropdownItem"
-                onClick={() => {
-                  onToggle();
-                  this.toggleFindInstancePlugin();
-                }}
-              >
-                <Icon icon="arrow-right">
-                  <FormattedMessage id="ui-inventory.moveItems" />
-                </Icon>
-              </Button>
+                {
+                  (canMoveItems || canMoveHoldings) && (
+                    <Button
+                      id="move-instance"
+                      buttonStyle="dropdownItem"
+                      onClick={() => {
+                        onToggle();
+                        this.toggleFindInstancePlugin();
+                      }}
+                    >
+                      <Icon icon="arrow-right">
+                        <FormattedMessage id="ui-inventory.moveItems" />
+                      </Icon>
+                    </Button>
+                  )
+                }
+              </>
             )
           }
 
@@ -860,6 +867,7 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
+  openedFromBrowse: PropTypes.bool,
   paneWidth: PropTypes.string.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,

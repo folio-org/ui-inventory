@@ -7,7 +7,6 @@ import {
   getAllByRole,
   waitForElementToBeRemoved,
   waitFor,
-  fireEvent,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { noop } from 'lodash';
@@ -349,24 +348,6 @@ describe('InstancesRoute', () => {
             expect(screen.getByText('1 record selected')).toBeInTheDocument();
           });
         });
-      });
-    });
-
-    describe('should reset instances selection upon click on on reset all button', () => {
-      it('should have selected browse call number option', () => {
-        fireEvent.change(screen.getByRole('combobox'), {
-          target: { value: 'callNumbers' }
-        });
-
-        expect((screen.getByRole('option', { name: 'Browse call numbers' })).selected).toBeTruthy();
-
-        const input = screen.getByLabelText('Search');
-
-        fireEvent.change(input, { target: { value: '>PR23' } });
-
-        expect(input).toHaveValue('>PR23');
-
-        userEvent.click(document.querySelector('[data-test-search-and-sort-submit]'));
       });
     });
   });
