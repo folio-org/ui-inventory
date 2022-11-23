@@ -33,7 +33,7 @@ const defaultProps = {
     instances1: { records: [{ id: 'instanceId' }], hasLoaded: true },
     permanentLocation: { hasLoaded: true },
     temporaryLocation: { hasLoaded: true },
-    boundWithItems: { records: [{ hrid: 'BW-ITEM-1' }], hasLoaded: true },
+    boundWithParts: { records: [{ itemId: '9e8dc8ce-68f3-4e75-8479-d548ce521157' }], hasLoaded: true },
   },
   mutator: {
     instances1: {

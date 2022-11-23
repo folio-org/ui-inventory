@@ -7,7 +7,10 @@ import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   getQueryTemplate,
 } from './utils';
-import { getFilterConfig } from './filterConfig';
+import {
+  browseConfig,
+  getFilterConfig,
+} from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
   FACETS,
@@ -15,11 +18,12 @@ import {
   FACETS_ENDPOINTS,
   CQL_FIND_ALL,
   browseModeOptions,
+  browseModeMap,
 } from './constants';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
-  const { indexes, filters } = getFilterConfig(queryParams.segment);
   const queryIndex = queryParams?.qindex ?? 'all';
+  const { indexes, filters } = browseModeMap[queryIndex] ? browseConfig : getFilterConfig(queryParams.segment);
   const queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   // reset qindex otherwise makeQueryFunction does not use queryTemplate
