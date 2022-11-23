@@ -11,9 +11,11 @@ import {
 import { IntlConsumer } from '@folio/stripes/core';
 import { noValue } from '../../../constants';
 import { checkIfArrayIsEmpty } from '../../../utils';
+import useBoundWithItems from './useBoundWithItems';
 import useBoundWithHoldings from './useBoundWithHoldings';
 
-const HoldingBoundWith = ({ boundWithItems }) => {
+const HoldingBoundWith = ({ boundWithParts }) => {
+  const { boundWithItems } = useBoundWithItems(boundWithParts);
   const { isLoading, boundWithHoldings } = useBoundWithHoldings(boundWithItems);
   const boundWithHoldingsMapById = keyBy(boundWithHoldings, 'id');
   const data = boundWithItems?.map(boundWithItem => ({
@@ -68,7 +70,7 @@ const HoldingBoundWith = ({ boundWithItems }) => {
 };
 
 HoldingBoundWith.propTypes = {
-  boundWithItems: PropTypes.arrayOf(PropTypes.object),
+  boundWithParts: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default HoldingBoundWith;
