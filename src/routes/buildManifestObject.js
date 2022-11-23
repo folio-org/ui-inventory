@@ -6,9 +6,6 @@ import {
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   CQL_FIND_ALL,
-  browseModeOptions,
-  browseModeMap,
-  undefinedAsString,
   queryIndexes
 } from '../constants';
 import {
@@ -19,62 +16,23 @@ import { getFilterConfig } from '../filterConfig';
 import facetsStore from '../stores/facetsStore';
 
 const INITIAL_RESULT_COUNT = 100;
-const regExp = /^((callNumber|subject|name|itemEffectiveShelvingOrder) [<|>])/i;
 const DEFAULT_SORT = 'title';
-
-const getQueryTemplateValue = (queryValue, param) => {
-  return regExp.test(queryValue)
-    ? queryValue
-    : `${param}>="${queryValue.replace(/"/g, '\\"')}" or ${param}<"${queryValue.replace(/"/g, '\\"')}"`;
-};
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '\\"')}"`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
-
-const getParamValue = (queryParams, browseValue, noBrowseValue) => {
-  const query = get(queryParams, 'query', '');
-
-  if (Object.values(browseModeOptions).includes(queryParams.qindex) || regExp.test(query)) {
-    return browseValue;
-  }
-
-  return noBrowseValue;
-};
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
-  const browsePoint = queryParams?.browsePoint;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex.match(/isbn|issn/)) {
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
-  }
-
-  let templateQueryValue = browsePoint || queryValue;
-
-  if (Object.values(browseModeOptions).includes(queryIndex)
-  && !query.query
-  && query.filters) {
-    query.query = undefinedAsString;
-    templateQueryValue = undefinedAsString;
-  }
-
-  if (queryIndex === browseModeOptions.CALL_NUMBERS) {
-    queryTemplate = getQueryTemplateValue(templateQueryValue, 'callNumber');
-  }
-
-  if (queryIndex === browseModeOptions.SUBJECTS) {
-    queryTemplate = getQueryTemplateValue(templateQueryValue, 'subject');
-  }
-
-  if (queryIndex === browseModeOptions.CONTRIBUTORS) {
-    queryTemplate = getQueryTemplateValue(templateQueryValue, 'name');
   }
 
   if (queryIndex === queryIndexes.SUBJECT) {
@@ -95,10 +53,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
     query.sort = DEFAULT_SORT;
-  }
-
-  if (Object.values(browseModeOptions).includes(queryIndex)) {
-    query.sort = '';
   }
 
   resourceData.query = { ...query, qindex: '' };
@@ -156,7 +110,6 @@ const getFetchProp = () => {
     const params = new URLSearchParams(location.search);
     const qindex = params.get('qindex');
     const query = params.get('query');
-    const browsePoint = params.get('browsePoint');
     const filters = params.get('filters');
     const sort = params.get('sort');
     const selectedBrowseResult = params.get('selectedBrowseResult');
@@ -165,8 +118,7 @@ const getFetchProp = () => {
       !query &&
       !filters &&
       (sort === DEFAULT_SORT || !sort) &&
-      isEmpty(facetsStore.getState().facetSettings) &&
-      !browsePoint
+      isEmpty(facetsStore.getState().facetSettings)
     );
     let isFetch = true;
 
@@ -189,7 +141,7 @@ const buildRecordsManifest = (options = {}) => {
 
   return {
     type: 'okapi',
-    records:  (queryParams) => getParamValue(queryParams, 'items', 'instances'),
+    records: 'instances',
     resultOffset: '%{resultOffset}',
     perRequest: 100,
     throwErrors: false,
@@ -201,16 +153,6 @@ const buildRecordsManifest = (options = {}) => {
       path,
       params: {
         query: buildQuery,
-        highlightMatch: (queryParams) => {
-          // do not include the highlightMatch for regular search queries.
-          if (!browseModeMap[queryParams.qindex]) {
-            return undefined;
-          }
-
-          const queryValue = get(queryParams, 'query', '');
-          return !!queryValue && !regExp.test(queryValue);
-        },
-        precedingRecordsCount: (queryParams) => getParamValue(queryParams, 5),
       },
     },
   };
@@ -222,7 +164,6 @@ export function buildManifestObject() {
     query: {
       initialValue: {
         query: '',
-        browsePoint: '',
         filters: '',
         sort: '',
         selectedBrowseResult: false,
@@ -231,19 +172,7 @@ export function buildManifestObject() {
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     records: buildRecordsManifest({
-      path: (queryParams) => (!browseModeMap[queryParams.qindex] ? 'search/instances' : null),
-    }),
-    browseModeRecords: buildRecordsManifest({
-      path: (queryParams) => {
-        if (queryParams.qindex === browseModeOptions.SUBJECTS) {
-          return 'browse/subjects/instances';
-        } else if (queryParams.qindex === browseModeOptions.CALL_NUMBERS) {
-          return 'browse/call-numbers/instances';
-        } else if (queryParams.qindex === browseModeOptions.CONTRIBUTORS) {
-          return 'browse/contributors/instances';
-        }
-        return null;
-      },
+      path: 'search/instances',
     }),
     recordsToExportIDs: {
       type: 'okapi',

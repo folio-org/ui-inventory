@@ -9,8 +9,8 @@ import '../../../../test/jest/__mock__';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { boundWithHoldingsRecords } from './fixtures';
-import useBoundWithHoldings from './useBoundWithHoldings';
+import { boundWithItems } from './fixtures';
+import useBoundWithItems from './useBoundWithItems';
 
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
@@ -19,22 +19,22 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-describe('useBoundWithHoldings', () => {
+describe('useBoundWithItems', () => {
   beforeEach(() => {
     useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
-        json: () => Promise.resolve({ holdingsRecords: boundWithHoldingsRecords }),
+        json: () => Promise.resolve({ items: boundWithItems }),
       }),
     });
   });
 
-  it('should fetch bound-with holdings', async () => {
-    const boundWithItems = [{ hrid: 'BW-ITEM-1', holdingsRecordId: '9e8dc8ce-68f3-4e75-8479-d548ce521157' }];
+  it('should fetch bound-with items', async () => {
+    const boundWithParts = [{ itemId: 'f4b8c3d1-f461-4551-aa7b-5f45e64f236c' }];
 
-    const { result, waitFor } = renderHook(() => useBoundWithHoldings(boundWithItems), { wrapper });
+    const { result, waitFor } = renderHook(() => useBoundWithItems(boundWithParts), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
 
-    expect(result.current.boundWithHoldings).toEqual(boundWithHoldingsRecords);
+    expect(result.current.boundWithItems).toEqual(boundWithItems);
   });
 });
