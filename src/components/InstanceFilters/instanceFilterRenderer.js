@@ -2,9 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 
 import InstanceFilters from './InstanceFilters';
-import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 import { getCurrentFilters } from '../../utils';
-import { browseModeMap } from '../../constants';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -21,12 +19,9 @@ const instanceFilterRenderer = data => onChange => {
     onFetchFacets,
     parentResources,
     statisticalCodes,
-    browseType,
-    contributorNameTypes,
   } = data;
 
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
-  const isBrowseOption = !!browseModeMap[query.qindex];
 
   const dataProp = {
     locations,
@@ -39,17 +34,11 @@ const instanceFilterRenderer = data => onChange => {
     query,
     onFetchFacets,
     parentResources,
-    ...(isBrowseOption && {
-      browseType,
-      contributorNameTypes,
-    }),
-    ...(!isBrowseOption && { instanceStatuses }),
+    instanceStatuses,
   };
 
-  const Filters = browseModeMap[query.qindex] ? InstanceFiltersBrowse : InstanceFilters;
-
   return (
-    <Filters
+    <InstanceFilters
       activeFilters={activeFilters}
       data={dataProp}
       onChange={onChange}
