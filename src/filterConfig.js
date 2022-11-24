@@ -129,17 +129,25 @@ export const instanceIndexes = [
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: '-------------------------------------------', value: 'noValue', disabled: true },
-  // TODO: remove after 'browse' refactoring
-  { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseContributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
+];
+
+export const browseFiltersConfig = [
+  {
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
+    values: [],
+  },
+  {
+    name: FACETS.NAME_TYPE,
+    cql: FACETS_CQL.NAME_TYPE,
+    values: [],
+  },
 ];
 
 export const browseInstanceIndexes = [
-  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}` },
-  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}` },
-  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}` },
+  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceBrowseSortMap = {
@@ -307,7 +315,7 @@ export const itemSortMap = {
 const config = {
   instances: {
     filters: instanceFilterConfig,
-    indexes: instanceIndexes,
+    indexes: [...instanceIndexes],
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
@@ -323,6 +331,12 @@ const config = {
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
   },
+};
+
+export const browseConfig = {
+  filters: browseFiltersConfig,
+  indexes: browseInstanceIndexes,
+  sortMap: instanceBrowseSortMap,
 };
 
 export const getFilterConfig = (segment = 'instances') => config[segment];

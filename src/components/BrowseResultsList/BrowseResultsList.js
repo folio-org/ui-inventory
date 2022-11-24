@@ -55,6 +55,14 @@ const getSearchParams = (row, qindex) => {
   return optionsMap[qindex];
 };
 
+const getItemToViewIndex = (selector) => {
+  const match = selector.match(/^\[aria-rowindex="(\d+)"\]$/);
+
+  return match
+    ? Number(match[1]) - 2
+    : null;
+};
+
 const BrowseResultsList = ({
   browseData = [],
   isEmptyMessage,
@@ -78,18 +86,29 @@ const BrowseResultsList = ({
   const browseOption = queryString.parse(search).qindex;
   const listId = `browse-results-list-${browseOption}`;
 
+  const isRowPreventsClick = useCallback((row) => {
+    const isMissedMatchItemRow = !!row.isAnchor && row.totalRecords === 0;
+
+    return isMissedMatchItemRow || (
+      (browseOption === browseModeOptions.CALL_NUMBERS && !row.shelfKey) ||
+      (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
+      (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
+    );
+  }, [browseOption]);
+
+  const isSelected = useCallback(({ item, rowIndex }) => {
+    if (isRowPreventsClick(item)) return false;
+
+    const itemIndex = itemToView?.selector && getItemToViewIndex(itemToView.selector);
+
+    return itemIndex === rowIndex;
+  }, [isRowPreventsClick, itemToView]);
+
   const onRowClick = useCallback(({ target }, row) => {
     const isAuthorityAppLink = target.dataset?.link === 'authority-app' ||
       target.getAttribute('class')?.includes('authorityIcon');
 
-    if (isAuthorityAppLink) return;
-    if (
-      row.isAnchor && (
-        (browseOption === browseModeOptions.CALL_NUMBERS && !row.instance) ||
-        (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
-        (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
-      )
-    ) return;
+    if (isAuthorityAppLink || isRowPreventsClick(row)) return;
 
     history.push({
       pathname: INVENTORY_ROUTE,
@@ -97,8 +116,11 @@ const BrowseResultsList = ({
         selectedBrowseResult: true,
         ...getSearchParams(row, browseOption),
       }),
+      state: {
+        browseSearch: search,
+      }
     });
-  }, [browseOption, history]);
+  }, [browseOption, history, isRowPreventsClick, search]);
 
   return (
     <MultiColumnList
@@ -109,6 +131,7 @@ const BrowseResultsList = ({
       formatter={getBrowseResultsFormatter(data, browseOption)}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
+      isSelected={isSelected}
       columnMapping={COLUMNS_MAPPING}
       columnWidths={COLUMNS_WIDTHS[browseOption]}
       loading={isLoading}
