@@ -1,5 +1,12 @@
 # Change history for ui-inventory
 
+## [9.2.4](https://github.com/folio-org/ui-inventory/tree/v9.2.4) (2022-11-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.3...v9.2.4)
+
+* Optimistic locking error appears when user adds more than 1 tag to "Holdings" record. Fixes UIIN-2242.
+* `Inventory: Create order from instance` also grants delete POL permission. Refs UIIN-2241.
+* Revert work under UIIN-2211 planned for Orchid. Refs UIIN-2234.
+
 ## [9.2.3](https://github.com/folio-org/ui-inventory/tree/v9.2.3) (2022-11-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.2...v9.2.3)
 
