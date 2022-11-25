@@ -1,7 +1,6 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { stubArray } from 'lodash';
 import { act } from 'react-dom/test-utils';
 import { screen } from '@testing-library/react';
 
@@ -20,6 +19,8 @@ jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
 
 const queryClient = new QueryClient();
 
+
+
 const locations = [
   {
     id: 'fcd64ce1-6995-48f0-840e-89ffa2288372',
@@ -37,7 +38,7 @@ const ItemsListSetup = () => (
           holding={holdingsRecordsFixture[0]}
           isItemsDragSelected={(_) => false}
           selectItemsForDrag={(_) => {}}
-          getDraggingItems={stubArray}
+          getDraggingItems={jest.fn()}
           draggable={false}
         />
       </DataContext.Provider>
