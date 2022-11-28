@@ -19,20 +19,25 @@ jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
 
 const queryClient = new QueryClient();
 
-
-
-const locations = [
-  {
-    id: 'fcd64ce1-6995-48f0-840e-89ffa2288372',
-    name: 'Annex',
-    isActive: false,
-  },
-];
+const locations = {
+  'fcd64ce1-6995-48f0-840e-89ffa2288371':
+    {
+      id: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+      name: 'Main Library',
+      isActive: true,
+    },
+  'fcd64ce1-6995-48f0-840e-89ffa2288372' :
+    {
+      id: 'fcd64ce1-6995-48f0-840e-89ffa2288372',
+      name: 'Annex',
+      isActive: false,
+    },
+};
 
 const ItemsListSetup = () => (
   <QueryClientProvider client={queryClient}>
     <Router>
-      <DataContext.Provider value={{ locationsById: { locations } }}>
+      <DataContext.Provider value={{ locationsById: locations }}>
         <ItemsList
           items={itemsFixture}
           holding={holdingsRecordsFixture[0]}
