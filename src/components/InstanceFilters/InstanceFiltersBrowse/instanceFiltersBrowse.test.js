@@ -10,6 +10,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/Modu
 
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
+import translations from '../../../../test/jest/helpers/translationsProperties';
 
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
@@ -64,15 +65,17 @@ const renderInstanceFilters = (props = {}) => {
           {...props}
         />
       </ModuleHierarchyProvider>
-    </Router>
+    </Router>,
+    translations
   );
 };
 
 describe('InstanceFilters', () => {
   it('Contains a filter for creation date ', () => {
-    renderInstanceFilters();
+    const { debug } = renderInstanceFilters();
 
-    expect(screen.getByText('ui-inventory.filters.effectiveLocation')).toBeInTheDocument();
+    debug();
+    expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
   });
 
   describe('When contributors browseType was selected', () => {

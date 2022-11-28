@@ -9,3 +9,4 @@ import './stripesSmartComponents.mock';
 import './InstancePlugin.mock';
 import './quickMarc.mock';
 import './stripesComponents.mock';
+import './reactBeautifulDnd.mock';
