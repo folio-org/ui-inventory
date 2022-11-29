@@ -424,6 +424,7 @@
   "editHoldings": "Edit",
   "instanceData": "Administrative data",
   "instanceId": "Instance UUID",
+  "authorityId": "Authority UUID",
   "instanceHrid": "Instance HRID",
   "browseCallNumbers": "Browse call numbers",
   "browseContributors": "Browse contributors",
