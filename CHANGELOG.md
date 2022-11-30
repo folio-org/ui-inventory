@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.2.5](https://github.com/folio-org/ui-inventory/tree/v9.2.5) (2022-11-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.4...v9.2.5)
+
+* Fix holdings view bound-with table also displaying directly linked items. Fixes UIIN-2260.
+
 ## [9.2.4](https://github.com/folio-org/ui-inventory/tree/v9.2.4) (2022-11-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.3...v9.2.4)
 
