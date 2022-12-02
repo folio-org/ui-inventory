@@ -892,7 +892,7 @@
     "history": "^4.10.0",
     "ky": "^0.23.0",
     "lodash": "^4.17.4",
-    "moment": "~2.24.0",
+    "moment": "~2.29.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "react-beautiful-dnd": "^13.0.0",
@@ -917,6 +917,6 @@
     "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
-    "moment": "~2.24.0"
+    "moment": "~2.29.4"
   }
 }
