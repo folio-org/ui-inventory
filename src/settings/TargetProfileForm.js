@@ -19,9 +19,10 @@ import {
   RepeatableField,
   Row,
   Select,
+  Selection,
   TextField,
 } from '@folio/stripes/components';
-
+// import JobProfileFields from '../edit/jobProfileFields';
 
 function massageInitialValues(values) {
   const massaged = {
@@ -55,153 +56,225 @@ function makeOptions(resource) {
 }
 
 
-const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => (
-  <Form
-    mutators={{ ...arrayMutators }}
-    initialValues={massageInitialValues(initialValues)}
-    onSubmit={(...args) => massageAndSubmit(onSubmit, ...args)}
-  >
-    {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
-      <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
-        <Paneset isRoot>
-          <Pane
-            defaultWidth="100%"
-            paneTitle={initialValues?.id
-              ? initialValues?.name
-              : <FormattedMessage id="stripes-components.addNew" />
+const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => {
+  const jobProfileOptions = resources.jobProfiles.records.map(it => ({
+    label: `${it.name} (${it.id})`,
+    value: it.id,
+  }));
+
+  return (
+    <Form
+      mutators={{ ...arrayMutators }}
+      initialValues={massageInitialValues(initialValues)}
+      onSubmit={(...args) => massageAndSubmit(onSubmit, ...args)}
+    >
+      {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+        <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
+          <Paneset isRoot>
+            <Pane
+              defaultWidth="100%"
+              paneTitle={initialValues?.id
+                ? initialValues?.name
+                : <FormattedMessage id="stripes-components.addNew" />
             }
-            firstMenu={
-              <PaneMenu>
-                <FormattedMessage id="stripes-components.cancel">
-                  {ariaLabel => (
-                    <IconButton
-                      icon="times"
-                      id="close-targetprofile-form-button"
-                      onClick={onCancel}
-                      aria-label={ariaLabel}
-                    />
-                  )}
-                </FormattedMessage>
-              </PaneMenu>
+              firstMenu={
+                <PaneMenu>
+                  <FormattedMessage id="stripes-components.cancel">
+                    {ariaLabel => (
+                      <IconButton
+                        icon="times"
+                        id="close-targetprofile-form-button"
+                        onClick={onCancel}
+                        aria-label={ariaLabel}
+                      />
+                    )}
+                  </FormattedMessage>
+                </PaneMenu>
             }
-            footer={
-              <PaneFooter
-                renderEnd={
-                  <Button
-                    buttonStyle="primary mega"
-                    disabled={pristine || submitting}
-                    marginBottom0
-                    onClick={handleSubmit}
-                    type="submit"
-                  >
-                    <FormattedMessage id="stripes-components.saveAndClose" />
-                  </Button>
+              footer={
+                <PaneFooter
+                  renderEnd={
+                    <Button
+                      buttonStyle="primary mega"
+                      disabled={pristine || submitting}
+                      marginBottom0
+                      onClick={handleSubmit}
+                      type="submit"
+                    >
+                      <FormattedMessage id="stripes-components.saveAndClose" />
+                    </Button>
                 }
-                renderStart={
-                  <Button buttonStyle="default mega" marginBottom0 onClick={onCancel}>
-                    <FormattedMessage id="stripes-components.cancel" />
-                  </Button>
+                  renderStart={
+                    <Button buttonStyle="default mega" marginBottom0 onClick={onCancel}>
+                      <FormattedMessage id="stripes-components.cancel" />
+                    </Button>
                 }
-              />
+                />
             }
-          >
-            <Row>
-              <Col xs={12}>
-                <Field
-                  label={<FormattedMessage id="ui-inventory.name" />}
-                  name="name"
-                  required
-                  id="input-targetprofile-name"
-                  component={TextField}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.url" />}
-                  name="url"
-                  id="input-targetprofile-url"
-                  component={TextField}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.authentication" />}
-                  name="authentication"
-                  id="input-targetprofile-authentication"
-                  component={TextField}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
-                  name="externalIdQueryMap"
-                  id="input-targetprofile-externalIdQueryMap"
-                  component={TextField}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
-                  name="internalIdEmbedPath"
-                  id="input-targetprofile-internalIdEmbedPath"
-                  component={TextField}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
-                  name="createJobProfileId"
-                  id="input-targetprofile-createJobProfileId"
-                  component={TextField}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
-                  name="updateJobProfileId"
-                  id="input-targetprofile-updateJobProfileId"
-                  component={TextField}
-                />
-                <FieldArray
-                  legend={<FormattedMessage id="ui-inventory.targetOptions" />}
-                  name="targetOptions"
-                  id="input-targetprofile-targetOptions"
-                  component={RepeatableField}
-                  addLabel={<FormattedMessage id="ui-inventory.button.addTargetOption" />}
-                  onAdd={fields => fields.push('')}
-                  renderField={field => (
-                    <Row>
-                      <Col xs={3}>
-                        <Field
-                          component={TextField}
-                          label="Key"
-                          name={`${field}.key`}
-                        />
-                      </Col>
-                      <Col xs={9}>
-                        <Field
-                          component={TextField}
-                          label="Value"
-                          name={`${field}.value`}
-                        />
-                      </Col>
-                    </Row>
-                  )}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
-                  name="externalIdentifierType"
-                  id="input-targetprofile-externalIdentifierType"
-                  component={Select}
-                  dataOptions={makeOptions(resources.identifierTypes)}
-                />
-                <Field
-                  label={<FormattedMessage id="ui-inventory.enabled" />}
-                  name="enabled"
-                  id="input-targetprofile-enabled"
-                  component={Checkbox}
-                  type="checkbox"
-                />
-              </Col>
-            </Row>
-          </Pane>
-        </Paneset>
-        <Prompt
-          when={!pristine && !(submitting || submitSucceeded)}
-          message={intl.formatMessage({ id: 'ui-inventory.confirmDirtyNavigate' })}
-        />
-      </form>
-    )}
-  </Form>
-);
+            >
+              <Row>
+                <Col xs={12}>
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.name" />}
+                    name="name"
+                    required
+                    id="input-targetprofile-name"
+                    component={TextField}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.url" />}
+                    name="url"
+                    id="input-targetprofile-url"
+                    component={TextField}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.authentication" />}
+                    name="authentication"
+                    id="input-targetprofile-authentication"
+                    component={TextField}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
+                    name="externalIdQueryMap"
+                    id="input-targetprofile-externalIdQueryMap"
+                    component={TextField}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
+                    name="internalIdEmbedPath"
+                    id="input-targetprofile-internalIdEmbedPath"
+                    component={TextField}
+                  />
+
+                  {/* <JobProfileFields
+                    jobProfiles={resources.jobProfiles.records}
+                    canAdd
+                    canDelete
+                  /> */}
+
+                  {/* <Field
+                    label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
+                    name="createJobProfileId"
+                    id="input-targetprofile-createJobProfileId"
+                    component={TextField}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
+                    name="updateJobProfileId"
+                    id="input-targetprofile-updateJobProfileId"
+                    component={TextField}
+                  /> */}
+                  <FieldArray
+                    legend={<FormattedMessage id="ui-inventory.createJobProfileIds" />}
+                    name="createJobProfileIds"
+                    id="input-targetprofile-createJobProfileIds"
+                    component={RepeatableField}
+                    addLabel={<FormattedMessage id="ui-inventory.button.addCreateJobProfileId" />}
+                    onAdd={fields => fields.push('')}
+                    renderField={field => (
+                      <Row>
+                        <Col xs={11}>
+                          <Field
+                            component={Selection}
+                            dataOptions={jobProfileOptions}
+                            label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
+                            placeholder={intl.formatMessage({ id: 'ui-inventory.select.createJobProfileId' })}
+                            name={`${field}.key`}
+                          />
+                        </Col>
+                        <Col xs={1}>
+                          <Field
+                            component={Checkbox}
+                            label={<FormattedMessage id="ui-inventory.defaultJobProfile" />}
+                            name={`${field}.value`}
+                            vertical
+                          />
+                        </Col>
+                      </Row>
+                    )}
+                  />
+                  <FieldArray
+                    legend={<FormattedMessage id="ui-inventory.updateJobProfileIds" />}
+                    name="updateJobProfileIds"
+                    id="input-targetprofile-updateJobProfileIds"
+                    component={RepeatableField}
+                    addLabel={<FormattedMessage id="ui-inventory.button.addUpdateJobProfileId" />}
+                    onAdd={fields => fields.push('')}
+                    renderField={field => (
+                      <Row>
+                        <Col xs={11}>
+                          <Field
+                            component={Selection}
+                            dataOptions={jobProfileOptions}
+                            label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
+                            placeholder={intl.formatMessage({ id: 'ui-inventory.select.updateJobProfileId' })}
+                            name={`${field}.key`}
+                          />
+                        </Col>
+                        <Col xs={1}>
+                          <Field
+                            component={Checkbox}
+                            label={<FormattedMessage id="ui-inventory.defaultJobProfile" />}
+                            name={`${field}.value`}
+                            vertical
+                          />
+                        </Col>
+                      </Row>
+                    )}
+                  />
+                  <FieldArray
+                    legend={<FormattedMessage id="ui-inventory.targetOptions" />}
+                    name="targetOptions"
+                    id="input-targetprofile-targetOptions"
+                    component={RepeatableField}
+                    addLabel={<FormattedMessage id="ui-inventory.button.addTargetOption" />}
+                    onAdd={fields => fields.push('')}
+                    renderField={field => (
+                      <Row>
+                        <Col xs={3}>
+                          <Field
+                            component={TextField}
+                            label="Key"
+                            name={`${field}.key`}
+                          />
+                        </Col>
+                        <Col xs={9}>
+                          <Field
+                            component={TextField}
+                            label="Value"
+                            name={`${field}.value`}
+                          />
+                        </Col>
+                      </Row>
+                    )}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
+                    name="externalIdentifierType"
+                    id="input-targetprofile-externalIdentifierType"
+                    component={Select}
+                    dataOptions={makeOptions(resources.identifierTypes)}
+                  />
+                  <Field
+                    label={<FormattedMessage id="ui-inventory.enabled" />}
+                    name="enabled"
+                    id="input-targetprofile-enabled"
+                    component={Checkbox}
+                    type="checkbox"
+                  />
+                </Col>
+              </Row>
+            </Pane>
+          </Paneset>
+          <Prompt
+            when={!pristine && !(submitting || submitSucceeded)}
+            message={intl.formatMessage({ id: 'ui-inventory.confirmDirtyNavigate' })}
+          />
+        </form>
+      )}
+    </Form>
+  );
+};
 
 TargetProfileForm.propTypes = {
   initialValues: PropTypes.object,
@@ -213,6 +286,9 @@ TargetProfileForm.propTypes = {
   resources: PropTypes.shape({
     identifierTypes: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
+    }).isRequired,
+    jobProfiles: PropTypes.shape({
+      records: PropTypes.arrayOf(PropTypes.object),
     }).isRequired
   }),
 };
@@ -223,6 +299,11 @@ TargetProfileForm.manifest = Object.freeze({
     records: 'identifierTypes',
     path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
   },
+  jobProfiles: {
+    type: 'okapi',
+    records: 'jobProfiles',
+    path: 'data-import-profiles/jobProfiles?limit=5000&query=cql.allRecords=1 sortBy name',
+  }
 });
 
 export default stripesConnect(injectIntl(TargetProfileForm));
