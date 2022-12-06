@@ -11,7 +11,7 @@ const useBoundWithHoldings = (boundWithItems) => {
 
   const { data, isLoading } = useQuery(
     [namespace, queryIds],
-    () => ky.get(`holdings-storage/holdings?query=id=${queryIds}`).json(),
+    () => ky.get(`holdings-storage/holdings?query=id=(${queryIds})`).json(),
     { enabled: Boolean(queryIds) }
   );
 

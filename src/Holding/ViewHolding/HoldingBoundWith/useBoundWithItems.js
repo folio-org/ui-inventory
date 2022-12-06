@@ -11,7 +11,7 @@ const useBoundWithItems = (boundWithParts) => {
 
   const { data, isLoading } = useQuery(
     [namespace, queryIds],
-    () => ky.get(`item-storage/items?query=id=${queryIds}`).json(),
+    () => ky.get(`item-storage/items?query=id=(${queryIds})`).json(),
     { enabled: Boolean(queryIds) }
   );
 
