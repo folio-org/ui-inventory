@@ -11,18 +11,19 @@ import {
   Button,
   Checkbox,
   Col,
+  Headline,
   IconButton,
   Pane,
   PaneFooter,
   PaneMenu,
   Paneset,
+  RadioButton,
   RepeatableField,
   Row,
   Select,
   Selection,
   TextField,
 } from '@folio/stripes/components';
-// import JobProfileFields from '../edit/jobProfileFields';
 
 function massageInitialValues(values) {
   const massaged = {
@@ -55,11 +56,46 @@ function makeOptions(resource) {
   return (resource.records || []).map(p => ({ value: p.id, label: p.name }));
 }
 
+const headLabelsForImportCreate = (
+  <Row>
+    <Col xs={11}>
+      <Headline>
+        <FormattedMessage id="ui-inventory.importCreateJobProfileId" />
+      </Headline>
+    </Col>
+    <Col xs={1}>
+      <Headline>
+        <FormattedMessage id="ui-inventory.defaultJobProfile" />
+      </Headline>
+    </Col>
+  </Row>
+);
+
+const headLabelsForOverlayUpdate = (
+  <Row>
+    <Col xs={11}>
+      <Headline>
+        <FormattedMessage id="ui-inventory.overlayUpdateJobProfileId" />
+      </Headline>
+    </Col>
+    <Col xs={1}>
+      <Headline>
+        <FormattedMessage id="ui-inventory.defaultJobProfile" />
+      </Headline>
+    </Col>
+  </Row>
+);
+
 
 const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => {
-  const jobProfileOptions = resources.jobProfiles.records.map(it => ({
-    label: `${it.name} (${it.id})`,
-    value: it.id,
+  const {
+    identifierTypes,
+    jobProfiles,
+  } = resources;
+
+  const jobProfileOptions = jobProfiles.records.map(record => ({
+    label: `${record.name} (${record.id})`,
+    value: record.id,
   }));
 
   return (
@@ -145,30 +181,12 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     id="input-targetprofile-internalIdEmbedPath"
                     component={TextField}
                   />
-
-                  {/* <JobProfileFields
-                    jobProfiles={resources.jobProfiles.records}
-                    canAdd
-                    canDelete
-                  /> */}
-
-                  {/* <Field
-                    label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
-                    name="createJobProfileId"
-                    id="input-targetprofile-createJobProfileId"
-                    component={TextField}
-                  />
-                  <Field
-                    label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
-                    name="updateJobProfileId"
-                    id="input-targetprofile-updateJobProfileId"
-                    component={TextField}
-                  /> */}
                   <FieldArray
                     legend={<FormattedMessage id="ui-inventory.createJobProfileIds" />}
-                    name="createJobProfileIds"
+                    name="createJobProfileId"
                     id="input-targetprofile-createJobProfileIds"
                     component={RepeatableField}
+                    headLabels={headLabelsForImportCreate}
                     addLabel={<FormattedMessage id="ui-inventory.button.addCreateJobProfileId" />}
                     onAdd={fields => fields.push('')}
                     renderField={field => (
@@ -177,17 +195,15 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                           <Field
                             component={Selection}
                             dataOptions={jobProfileOptions}
-                            label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
                             placeholder={intl.formatMessage({ id: 'ui-inventory.select.createJobProfileId' })}
-                            name={`${field}.key`}
+                            name={`${field}.id`}
                           />
                         </Col>
                         <Col xs={1}>
                           <Field
-                            component={Checkbox}
-                            label={<FormattedMessage id="ui-inventory.defaultJobProfile" />}
-                            name={`${field}.value`}
-                            vertical
+                            component={RadioButton}
+                            name="importCreate"
+                            centered
                           />
                         </Col>
                       </Row>
@@ -197,6 +213,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     legend={<FormattedMessage id="ui-inventory.updateJobProfileIds" />}
                     name="updateJobProfileIds"
                     id="input-targetprofile-updateJobProfileIds"
+                    headLabels={headLabelsForOverlayUpdate}
                     component={RepeatableField}
                     addLabel={<FormattedMessage id="ui-inventory.button.addUpdateJobProfileId" />}
                     onAdd={fields => fields.push('')}
@@ -206,17 +223,15 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                           <Field
                             component={Selection}
                             dataOptions={jobProfileOptions}
-                            label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
                             placeholder={intl.formatMessage({ id: 'ui-inventory.select.updateJobProfileId' })}
                             name={`${field}.key`}
                           />
                         </Col>
                         <Col xs={1}>
                           <Field
-                            component={Checkbox}
-                            label={<FormattedMessage id="ui-inventory.defaultJobProfile" />}
-                            name={`${field}.value`}
-                            vertical
+                            component={RadioButton}
+                            name="overlayUpdate"
+                            centered
                           />
                         </Col>
                       </Row>
@@ -253,7 +268,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     name="externalIdentifierType"
                     id="input-targetprofile-externalIdentifierType"
                     component={Select}
-                    dataOptions={makeOptions(resources.identifierTypes)}
+                    dataOptions={makeOptions(identifierTypes)}
                   />
                   <Field
                     label={<FormattedMessage id="ui-inventory.enabled" />}
@@ -297,12 +312,12 @@ TargetProfileForm.manifest = Object.freeze({
   identifierTypes: {
     type: 'okapi',
     records: 'identifierTypes',
-    path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
+    path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortBy name',
   },
   jobProfiles: {
     type: 'okapi',
     records: 'jobProfiles',
-    path: 'data-import-profiles/jobProfiles?limit=5000&query=cql.allRecords=1 sortBy name',
+    path: 'data-import-profiles/jobProfiles?limit=5000&query=dataType==("MARC") sortBy name',
   }
 });
 
