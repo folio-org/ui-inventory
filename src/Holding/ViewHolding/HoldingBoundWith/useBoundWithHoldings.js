@@ -7,7 +7,7 @@ const useBoundWithHoldings = (boundWithItems) => {
   const [namespace] = useNamespace({ key: 'boundWithHoldings' });
 
   const holdingRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
-  const queryIds = `(${holdingRecordIds.join(' or ')})`;
+  const queryIds = holdingRecordIds.join(' or ');
 
   const { data, isLoading } = useQuery(
     [namespace, queryIds],
