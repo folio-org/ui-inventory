@@ -37,4 +37,11 @@ describe('useBoundWithHoldings', () => {
 
     expect(result.current.boundWithHoldings).toEqual(boundWithHoldingsRecords);
   });
+
+  it('should not fetch bound-with holdings', async () => {
+    const { result } = renderHook(() => useBoundWithHoldings([]), { wrapper });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.boundWithHoldings).toEqual([]);
+  });
 });

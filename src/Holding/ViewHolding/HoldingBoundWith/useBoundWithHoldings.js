@@ -7,11 +7,11 @@ const useBoundWithHoldings = (boundWithItems) => {
   const [namespace] = useNamespace({ key: 'boundWithHoldings' });
 
   const holdingRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
-  const queryIds = `(${holdingRecordIds.join(' or ')})`;
+  const queryIds = holdingRecordIds.join(' or ');
 
   const { data, isLoading } = useQuery(
     [namespace, queryIds],
-    () => ky.get(`holdings-storage/holdings?query=id=${queryIds}`).json(),
+    () => ky.get(`holdings-storage/holdings?query=id=(${queryIds})`).json(),
     { enabled: Boolean(queryIds) }
   );
 
