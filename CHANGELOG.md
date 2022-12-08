@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.2.6](https://github.com/folio-org/ui-inventory/tree/v9.2.6) (2022-12-08)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.5...v9.2.6)
+
+* Revert back to `all` operator for title (All) index. Fixes UIIN-2274.
+
 ## [9.2.5](https://github.com/folio-org/ui-inventory/tree/v9.2.5) (2022-11-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.4...v9.2.5)
 
