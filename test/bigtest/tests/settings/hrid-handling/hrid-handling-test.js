@@ -37,6 +37,10 @@ describe('Setting of HRID Handling', () => {
     expect(HRIDHandlingInteractor.isPresent).to.be.true;
   });
 
+  it('has metadata info', () => {
+    expect(HRIDHandlingInteractor.metadataInfo.isPresent).to.be.true;
+  });
+
   it('has "remove leading zeroes" checkbox', () => {
     expect(HRIDHandlingInteractor.removeZeroesCheckbox.isPresent).to.be.true;
   });

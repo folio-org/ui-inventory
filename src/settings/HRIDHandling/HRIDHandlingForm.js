@@ -12,7 +12,13 @@ import {
   PaneFooter,
   PaneCloseLink,
 } from '@folio/stripes/components';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesFinalForm from '@folio/stripes/final-form';
+
+import {
+  SYSTEM_USER_ID,
+  SYSTEM_USER_NAME,
+} from '../../constants';
 
 import css from './HRIDHandling.css';
 
@@ -23,6 +29,7 @@ const HRID_DESCRIPTIONS_ID = [
 ];
 
 const HRIDHandlingForm = ({
+  initialValues,
   handleSubmit,
   pristine,
   submitting,
@@ -113,6 +120,15 @@ const HRIDHandlingForm = ({
             </Headline>
           </Col>
         </Row>
+        <Row>
+          <Col xs={12}>
+            <ViewMetaData
+              metadata={initialValues.metadata}
+              systemId={SYSTEM_USER_ID}
+              systemUser={SYSTEM_USER_NAME}
+            />
+          </Col>
+        </Row>
         {description}
         {render(form)}
       </Pane>
@@ -121,6 +137,7 @@ const HRIDHandlingForm = ({
 };
 
 HRIDHandlingForm.propTypes = {
+  initialValues: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
