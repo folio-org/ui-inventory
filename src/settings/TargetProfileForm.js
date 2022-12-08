@@ -63,7 +63,7 @@ const headLabelsForImportCreate = (
         <FormattedMessage id="ui-inventory.importCreateJobProfileId" />
       </Headline>
     </Col>
-    <Col xs={1}>
+    <Col xs={1} style={{textAlign: 'center'}}>
       <Headline>
         <FormattedMessage id="ui-inventory.defaultJobProfile" />
       </Headline>
@@ -78,7 +78,7 @@ const headLabelsForOverlayUpdate = (
         <FormattedMessage id="ui-inventory.overlayUpdateJobProfileId" />
       </Headline>
     </Col>
-    <Col xs={1}>
+    <Col xs={1} style={{textAlign: 'center'}}>
       <Headline>
         <FormattedMessage id="ui-inventory.defaultJobProfile" />
       </Headline>
