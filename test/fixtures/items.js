@@ -102,7 +102,8 @@ export const items = [
       id: 'fcd64ce1-6995-48f0-840e-89ffa2288371',
       name: 'Main Library',
     },
-  }, {
+  },
+  {
     id: '6abd8dfe-0234-4256-b2e6-539499999cac',
     status: {
       name: 'Paged',
