@@ -14,7 +14,9 @@
 * Fix holdings view bound-with table also displaying directly linked items. Fixes UIIN-2260.
 * Display "Inactive" by inactive locations on instance view. Fixes UIIN-1970.
 * Create a new instance search option. Fixes UIIN-2264.
+* Add create/update widget to HRID Settings page. UIIN-2139.
 * Do not fetch bound with data if the boundWithParts data is not present. Fixes UIIN-2272.
+* Revert back to `all` operator for title (All) index. Fixes UIIN-2274.
 * ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
