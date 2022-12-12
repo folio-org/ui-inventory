@@ -63,7 +63,7 @@ const headLabelsForImportCreate = (
         <FormattedMessage id="ui-inventory.importCreateJobProfileId" />
       </Headline>
     </Col>
-    <Col xs={1} style={{textAlign: 'center'}}>
+    <Col xs={1} style={{ textAlign: 'center' }}>
       <Headline>
         <FormattedMessage id="ui-inventory.defaultJobProfile" />
       </Headline>
@@ -78,7 +78,7 @@ const headLabelsForOverlayUpdate = (
         <FormattedMessage id="ui-inventory.overlayUpdateJobProfileId" />
       </Headline>
     </Col>
-    <Col xs={1} style={{textAlign: 'center'}}>
+    <Col xs={1} style={{ textAlign: 'center' }}>
       <Headline>
         <FormattedMessage id="ui-inventory.defaultJobProfile" />
       </Headline>
@@ -104,7 +104,12 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
       initialValues={massageInitialValues(initialValues)}
       onSubmit={(...args) => massageAndSubmit(onSubmit, ...args)}
     >
-      {({ handleSubmit, pristine, submitting, submitSucceeded }) => (
+      {({
+        handleSubmit,
+        pristine,
+        submitting,
+        submitSucceeded,
+      }) => (
         <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
           <Paneset isRoot>
             <Pane
