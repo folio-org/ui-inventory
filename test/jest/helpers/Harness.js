@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { noop } from 'lodash';
 import { IntlProvider } from 'react-intl';
 import { CalloutContext } from '@folio/stripes/core';
 
@@ -24,12 +25,21 @@ const Harness = ({
     mockOffsetSize(width, height);
   }
 
+  const defaultRichTextElements = ['b', 'i', 'em', 'strong', 'span', 'div', 'p', 'ul', 'ol', 'li', 'code'].reduce((res, Tag) => {
+    res[Tag] = chunks => <Tag>{chunks}</Tag>;
+
+    return res;
+  }, {});
+
   return (
     <CalloutContext.Provider value={{ sendCallout: () => { } }}>
       <IntlProvider
         locale="en"
         key="en"
         timeZone="UTC"
+        onWarn={noop}
+        onError={noop}
+        defaultRichTextElements={defaultRichTextElements}
         messages={allTranslations}
       >
         {children}

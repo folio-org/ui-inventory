@@ -30,7 +30,8 @@ const HoldingAccordion = ({
   };
 
   const { locationsById } = useContext(DataContext);
-  const labelLocation = locationsById[holding.permanentLocationId]?.name ?? '';
+  const labelLocation = locationsById[holding.permanentLocationId];
+  const labelLocationName = labelLocation?.name ?? '';
   const [open, setOpen] = useState(false);
   const [openFirstTime, setOpenFirstTime] = useState(false);
   const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount' });
@@ -54,6 +55,15 @@ const HoldingAccordion = ({
     isOpen={open}
   />;
 
+  const location = labelLocation?.isActive ?
+    labelLocationName :
+    <FormattedMessage
+      id="ui-inventory.inactive.paneTitle"
+      values={{
+        location: labelLocationName,
+      }}
+    />;
+
   return (
     <Accordion
       id={holding.id}
@@ -64,7 +74,7 @@ const HoldingAccordion = ({
           <FormattedMessage
             id="ui-inventory.holdingsHeader"
             values={{
-              location: labelLocation,
+              location,
               callNumber: callNumberLabel(holding),
               copyNumber: holding.copyNumber,
             }}

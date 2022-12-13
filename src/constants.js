@@ -413,3 +413,6 @@ export const PAGE_DIRECTIONS = {
 export const BROWSE_RESULTS_COUNT = 100;
 
 export const ORDERS_API = 'orders/composite-orders';
+
+export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
+export const SYSTEM_USER_NAME = 'System';

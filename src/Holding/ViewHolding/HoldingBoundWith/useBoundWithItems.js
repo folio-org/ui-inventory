@@ -7,11 +7,11 @@ const useBoundWithItems = (boundWithParts) => {
   const [namespace] = useNamespace({ key: 'boundWithItems' });
 
   const itemIds = boundWithParts?.map(x => x.itemId);
-  const queryIds = `(${itemIds.join(' or ')})`;
+  const queryIds = itemIds.join(' or ');
 
   const { data, isLoading } = useQuery(
     [namespace, queryIds],
-    () => ky.get(`item-storage/items?query=id=${queryIds}`).json(),
+    () => ky.get(`item-storage/items?query=id=(${queryIds})`).json(),
     { enabled: Boolean(queryIds) }
   );
 
