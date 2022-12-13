@@ -116,7 +116,7 @@ export const instanceIndexes = [
   // but, without tracing the use of the value, I don't know what effects that would have in the code.
   { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or hrid=="%{query.query}" or id=="%{query.query}"' },
   { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors.name="%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title == "%{query.query}"' },
+  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
   { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}" or isbn="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
@@ -127,19 +127,28 @@ export const instanceIndexes = [
   { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber', queryTemplate: 'callNumber=%{query.query}' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
+  { label: 'ui-inventory.authorityId', value: 'authorityId', queryTemplate: 'authorityId == %{query.query}' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: '-------------------------------------------', value: 'noValue', disabled: true },
-  // TODO: remove after 'browse' refactoring
-  { label: 'ui-inventory.browseCallNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseContributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.browseSubjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
+];
+
+export const browseFiltersConfig = [
+  {
+    name: FACETS.EFFECTIVE_LOCATION,
+    cql: FACETS_CQL.EFFECTIVE_LOCATION,
+    values: [],
+  },
+  {
+    name: FACETS.NAME_TYPE,
+    cql: FACETS_CQL.NAME_TYPE,
+    values: [],
+  },
 ];
 
 export const browseInstanceIndexes = [
-  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}` },
-  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}` },
-  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}` },
+  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
 export const instanceBrowseSortMap = {
@@ -307,7 +316,7 @@ export const itemSortMap = {
 const config = {
   instances: {
     filters: instanceFilterConfig,
-    indexes: instanceIndexes,
+    indexes: [...instanceIndexes],
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
@@ -323,6 +332,12 @@ const config = {
     sortMap: itemSortMap,
     renderer: itemFilterRenderer,
   },
+};
+
+export const browseConfig = {
+  filters: browseFiltersConfig,
+  indexes: browseInstanceIndexes,
+  sortMap: instanceBrowseSortMap,
 };
 
 export const getFilterConfig = (segment = 'instances') => config[segment];

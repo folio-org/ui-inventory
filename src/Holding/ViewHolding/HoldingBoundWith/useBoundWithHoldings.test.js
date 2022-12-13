@@ -29,12 +29,19 @@ describe('useBoundWithHoldings', () => {
   });
 
   it('should fetch bound-with holdings', async () => {
-    const boundWithItems = { records: [{ hrid: 'BW-ITEM-1', holdingsRecordId: '9e8dc8ce-68f3-4e75-8479-d548ce521157' }], hasLoaded: true };
+    const boundWithItems = [{ hrid: 'BW-ITEM-1', holdingsRecordId: '9e8dc8ce-68f3-4e75-8479-d548ce521157' }];
 
     const { result, waitFor } = renderHook(() => useBoundWithHoldings(boundWithItems), { wrapper });
 
     await waitFor(() => !result.current.isLoading);
 
     expect(result.current.boundWithHoldings).toEqual(boundWithHoldingsRecords);
+  });
+
+  it('should not fetch bound-with holdings', async () => {
+    const { result } = renderHook(() => useBoundWithHoldings([]), { wrapper });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.boundWithHoldings).toEqual([]);
   });
 });
