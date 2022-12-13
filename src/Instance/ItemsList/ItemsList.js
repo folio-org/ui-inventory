@@ -3,13 +3,14 @@ import React, {
   useCallback,
   useState,
   useEffect,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { isEmpty } from 'lodash';
+import { isEmpty, keyBy } from 'lodash';
 
 import {
   Checkbox,
@@ -25,10 +26,16 @@ import ItemsListRow from './ItemsListRow';
 import {
   sortItems,
 } from './utils';
+import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
+
+import { DataContext } from '../../contexts';
 
 const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 const getFormatter = (
+  intl,
+  locationsById,
   holding,
+  holdingsMapById,
   selectItemsForDrag,
   ifItemsSelected,
 ) => ({
@@ -60,8 +67,8 @@ const getFormatter = (
       <>
         <ItemBarcode
           item={item}
-          holdingId={holding.id}
-          instanceId={holding.instanceId}
+          holdingId={item.holdingsRecordId}
+          instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
         />
         {item.discoverySuppress &&
         <span>
@@ -79,7 +86,15 @@ const getFormatter = (
   'copyNumber': ({ copyNumber }) => copyNumber || noValue,
   'materialType': x => x.materialType?.name || noValue,
   'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || noValue,
-  'effectiveLocation': x => x.effectiveLocation?.name || noValue,
+  'effectiveLocation': x => {
+    const effectiveLocation = locationsById[x.effectiveLocation?.id];
+    return effectiveLocation?.isActive ?
+      effectiveLocation?.name || noValue :
+      intl.formatMessage(
+        { id: 'ui-inventory.inactive.gridCell' },
+        { location: effectiveLocation?.name }
+      );
+  },
   'enumeration': x => x.enumeration || noValue,
   'chronology': x => x.chronology || noValue,
   'volume': x => x.volume || noValue,
@@ -132,6 +147,9 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
 }) => {
+  const { boundWithHoldings: holdings } = useBoundWithHoldings(items);
+  const holdingsMapById = keyBy(holdings, 'id');
+
   const intl = useIntl();
 
   const [itemsSorting, setItemsSorting] = useState({
@@ -140,6 +158,7 @@ const ItemsList = ({
   });
   const [records, setRecords] = useState([]);
   const [paginatedItems, setPaginatedItems] = useState([]);
+  const { locationsById } = useContext(DataContext);
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -147,8 +166,8 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(holding, selectItemsForDrag, isItemsDragSelected),
-    [holding, selectItemsForDrag, isItemsDragSelected],
+    () => getFormatter(intl, locationsById, holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
+    [holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,

@@ -22,7 +22,7 @@ const useHoldingItemsQuery = (
     ...options.searchParams,
   };
 
-  const queryFn = () => ky.get('inventory/items', { searchParams }).json();
+  const queryFn = () => ky.get('inventory/items-by-holdings-id', { searchParams }).json();
   const { data, isLoading, isFetching } = useQuery({ queryKey, queryFn, ...omit(options, ['searchParams']) });
 
   return {

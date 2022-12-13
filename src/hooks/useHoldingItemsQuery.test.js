@@ -44,7 +44,7 @@ describe('useHoldingItemsQuery', () => {
 
     expect(result.current.items).toEqual(items.slice(0, limit));
     expect(mockGet).toHaveBeenCalledWith(
-      'inventory/items',
+      'inventory/items-by-holdings-id',
       {
         searchParams: {
           limit,

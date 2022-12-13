@@ -6,7 +6,6 @@ import { stripesConnect } from '@folio/stripes-core';
 
 import withFacets from '../../withFacets';
 import { DataContext } from '../../contexts';
-import { buildManifestObject } from '../../routes/buildManifestObject';
 import { parseFiltersToStr } from '../../utils';
 import { InstanceFiltersBrowse } from '../InstanceFilters';
 
@@ -40,10 +39,6 @@ const BrowseInventoryFilters = ({
     />
   );
 };
-
-BrowseInventoryFilters.manifest = Object.freeze({
-  query: buildManifestObject().query,
-});
 
 BrowseInventoryFilters.propTypes = {
   activeFilters: PropTypes.object.isRequired,

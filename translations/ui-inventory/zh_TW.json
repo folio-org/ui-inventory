@@ -760,5 +760,7 @@
     "search.itemAdministrativeNotes": "Item administrative notes",
     "inactive": "未啟用",
     "inactive.paneTitle": "<em>未啟用</em> {location}",
-    "search.itemCirculationNotes": "Circulation notes"
+    "search.itemCirculationNotes": "Circulation notes",
+    "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
+    "authorityId": "Authority UUID"
 }
