@@ -77,7 +77,7 @@
     "loans": "Loans",
     "materialTypes": "Material types",
     "materialType": "Material type",
-    "holdingsHeader": "Holdings: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Holdings: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "View holdings",
     "holdingsRecord": "Holdings record",
     "viewHoldingsRecord": "View holdings record",
@@ -760,5 +760,7 @@
     "search.itemAdministrativeNotes": "Item administrative notes",
     "inactive": "Inactive",
     "inactive.paneTitle": "<em>Inactive</em> {location}",
-    "search.itemCirculationNotes": "Circulation notes"
+    "search.itemCirculationNotes": "Circulation notes",
+    "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
+    "authorityId": "Authority UUID"
 }

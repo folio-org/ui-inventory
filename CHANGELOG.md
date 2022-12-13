@@ -11,7 +11,13 @@
 * Display bound-with items along with directly linked items at all associated holdings. Refs UIIN-2164.
 * Browse refactor: Show instance result in third pane when Number of titles = `1`. Refs UIIN-2186.
 * Optimistic locking error appears when user adds more than 1 tag to "Holdings" record. Fixes UIIN-2242.
-* Fix holdings view bound-with table also displaying directly linked items. Fixes UIIN-2260.  
+* Fix holdings view bound-with table also displaying directly linked items. Fixes UIIN-2260.
+* Display "Inactive" by inactive locations on instance view. Fixes UIIN-1970.
+* Create a new instance search option. Fixes UIIN-2264.
+* Add create/update widget to HRID Settings page. UIIN-2139.
+* Do not fetch bound with data if the boundWithParts data is not present. Fixes UIIN-2272.
+* Revert back to `all` operator for title (All) index. Fixes UIIN-2274.
+* Warn on `sessionStorage` errors instead of swallowing them.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

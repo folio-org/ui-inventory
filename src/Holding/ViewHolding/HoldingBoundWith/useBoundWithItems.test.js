@@ -37,4 +37,11 @@ describe('useBoundWithItems', () => {
 
     expect(result.current.boundWithItems).toEqual(boundWithItems);
   });
+
+  it('should not fetch bound-with items', async () => {
+    const { result } = renderHook(() => useBoundWithItems([]), { wrapper });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.boundWithItems).toEqual([]);
+  });
 });
