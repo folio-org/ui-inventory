@@ -760,5 +760,7 @@
     "search.itemAdministrativeNotes": "Exemplarverwaltungsnotiz",
     "inactive": "Inaktiv",
     "inactive.paneTitle": "<em>Inaktiv</em> {location}",
-    "search.itemCirculationNotes": "Ausleihanmerkungen"
+    "search.itemCirculationNotes": "Ausleihanmerkungen",
+    "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
+    "authorityId": "Authority UUID"
 }
