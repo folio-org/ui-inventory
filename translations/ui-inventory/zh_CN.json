@@ -760,5 +760,7 @@
     "search.itemAdministrativeNotes": "单件管理附注",
     "inactive": "未激活",
     "inactive.paneTitle": "<em>未激活</em> {location}",
-    "search.itemCirculationNotes": "流通附注"
+    "search.itemCirculationNotes": "流通附注",
+    "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
+    "authorityId": "Authority UUID"
 }
