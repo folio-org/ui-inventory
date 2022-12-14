@@ -542,7 +542,8 @@
           "orders.titles.collection.get",
           "organizations.organizations.item.get",
           "acquisitions-units.units.collection.get",
-          "browse.contributors.instances.collection.get"
+          "browse.contributors.instances.collection.get",
+          "inventory-storage.bound-with-parts.collection.get"
         ],
         "visible": true
       },
