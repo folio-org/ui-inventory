@@ -3,8 +3,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 import '../test/jest/__mock__';
 
-import { screen } from '@testing-library/react';
-
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstanceWrapper from './ViewInstanceWrapper';
 
@@ -41,6 +39,5 @@ describe('ViewInstanceWrapper', () => {
   it('paneHeaderpane instancedetails', () => {
     const { getByText } = renderClassificationTypesSettings();
     expect(getByText(/Edit/i)).toBeInTheDocument();
-    screen.debug();
   });
 });
