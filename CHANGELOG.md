@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.2.7](https://github.com/folio-org/ui-inventory/tree/v9.2.7) (2022-12-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.6...v9.2.7)
+
+* Add `inventory-storage.bound-with-parts.collection.get` to `"Inventory: All permissions`. Fixes UIIN-2273.
+
 ## [9.2.6](https://github.com/folio-org/ui-inventory/tree/v9.2.6) (2022-12-08)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.5...v9.2.6)
 
