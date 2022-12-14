@@ -18,7 +18,8 @@
 * Do not fetch bound with data if the boundWithParts data is not present. Fixes UIIN-2272.
 * Revert back to `all` operator for title (All) index. Fixes UIIN-2274.
 * Warn on `sessionStorage` errors instead of swallowing them.
-* Add `inventory-storage.bound-with-parts.collection.get` to `"Inventory: All permissions`. Fixes UIIN-2273.
+* Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: All permissions`. Fixes UIIN-2273.
+* Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: View instances, holdings, and items`. Fixes UIIN-2273.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
