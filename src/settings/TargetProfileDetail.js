@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
-import { Col, Row, KeyValue } from '@folio/stripes/components';
+import {
+  Col,
+  Row,
+  KeyValue,
+  MultiColumnList,
+  TextLink,
+} from '@folio/stripes/components';
 
 
 class TargetProfileDetail extends React.Component {
@@ -28,13 +34,43 @@ class TargetProfileDetail extends React.Component {
   });
 
   render() {
-    const { initialValues } = this.props;
+    const { initialValues: initialValuesOrig } = this.props;
+    const initialValues = {
+      ...initialValuesOrig,
+      createJobProfileIds: [
+        {
+          id: 'testId',
+          name: 'create name',
+          isDefault: true,
+        }
+      ],
+      updateJobProfileIds: [{
+        id: 'testId',
+        name: 'update name',
+        isDefault: false, }],
+    };
     const t = initialValues.targetOptions;
     const targetOptions = !t ? null : (
       <ul>
         {Object.keys(t).sort().map(key => <li key={key}>{key}: {t[key]}</li>)}
       </ul>
     );
+
+    const createUpdateJobProfilesFormatter = {
+      id: ({ name, id }) => (
+        <>
+          <TextLink
+            to={`/settings/data-import/job-profiles/view/${id}`}
+            target="_blank"
+          >
+            {name}
+          </TextLink>
+          {`(${id})`}
+        </>
+      ),
+      isDefault: ({ isDefault }) => isDefault ? <FormattedMessage id="ui-inventory.defaultJobProfile" /> : null,
+    };
+    const createUpdateJobProfilesVisibleColumns = ['id', 'isDefault'];
 
     return (
       <div>
@@ -80,17 +116,27 @@ class TargetProfileDetail extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.createJobProfileId" />}
-              value={initialValues.createJobProfileId}
+            <MultiColumnList
+              contentData={initialValues.createJobProfileIds}
+              columnMapping={{
+                id: <FormattedMessage id="ui-inventory.createJobProfileIds" />,
+                isDefault: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+              }}
+              formatter={createUpdateJobProfilesFormatter}
+              visibleColumns={createUpdateJobProfilesVisibleColumns}
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.updateJobProfileId" />}
-              value={initialValues.updateJobProfileId}
+            <MultiColumnList
+              contentData={initialValues.updateJobProfileIds}
+              columnMapping={{
+                id: <FormattedMessage id="ui-inventory.updateJobProfileIds" />,
+                isDefault: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+              }}
+              formatter={createUpdateJobProfilesFormatter}
+              visibleColumns={createUpdateJobProfilesVisibleColumns}
             />
           </Col>
         </Row>
