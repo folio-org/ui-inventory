@@ -758,9 +758,9 @@ class InstancesList extends React.Component {
     const { query } = parentResources?.query ?? {};
     const { itemsByBarcode: { records } } = parentResources;
 
-    // if item was previously loaded do not open it again
-    // this is a workaround when items details view is closed
-    // and the user lands back on the instances details view
+    // if the item was previously loaded do not open it again.
+    // This is a workaround when items details view is closed
+    // and the user lands back on the instances details view.
     if (records.length && records[0].barcode === query) {
       return;
     }
