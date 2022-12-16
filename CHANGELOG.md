@@ -21,6 +21,7 @@
 * Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: All permissions`. Fixes UIIN-2273.
 * Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: View instances, holdings, and items`. Fixes UIIN-2273.
 * Open item details view when searching by item barcode. Refs UIIN-2036.
+* Use correct index when searching for `subject`. Fixes UIIN-2275.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
