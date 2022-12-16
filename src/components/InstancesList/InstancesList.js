@@ -778,7 +778,7 @@ class InstancesList extends React.Component {
     goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, params);
   }
 
-  onSelectRow = async (_, instance) => {
+  onSelectRow = (_, instance) => {
     const { parentResources } = this.props;
     const { qindex, query } = parentResources?.query ?? {};
 
