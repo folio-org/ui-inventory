@@ -1,27 +1,23 @@
 import '../../test/jest/__mock__';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Confirmation from './Confirmation';
-
-const defaultProps = {
-  count: 1,
-};
-
-const renderConfirmation = (props = {}) => (
-  <Router>
-    <Confirmation
-      {...defaultProps}
-      {...props}
-    />
-  </Router>
-);
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
+import { Heading, Message } from './Confirmation';
 
 describe('Confirmation', () => {
   it('should render remote confirmation message', () => {
-    renderConfirmation();
-    expect(document.querySelector('#ui-inventory.remote.confirmation.heading')).not.toBeInTheDocument();
+    const { getByText } = render(
+      <IntlProvider>
+        <Heading />
+      </IntlProvider>
+    );
+    expect(getByText('ui-inventory.remote.confirmation.heading')).toBeInTheDocument();
   });
   it('should render remote items message', () => {
-    renderConfirmation();
-    expect(document.querySelector('#ui-inventory.remote.items')).not.toBeInTheDocument();
+    render(
+      <IntlProvider>
+        <Message />
+      </IntlProvider>
+    );
+    expect(screen.getByText('ui-inventory.remote.confirmation.message')).toBeInTheDocument();
   });
 });
