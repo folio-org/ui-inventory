@@ -146,6 +146,7 @@ class InstancesList extends React.Component {
       optionSelected: '',
       searchAndSortKey: 0,
       isSingleResult: this.props.showSingleResult,
+      searchInProgress: false,
     };
   }
 
@@ -219,6 +220,7 @@ class InstancesList extends React.Component {
   onSubmitSearch = () => {
     this.setState({
       openedFromBrowse: false,
+      searchInProgress: true,
     });
 
     this.props.parentMutator.itemsByBarcode.reset();
@@ -756,12 +758,11 @@ class InstancesList extends React.Component {
       getParams,
     } = this.props;
     const { query } = parentResources?.query ?? {};
-    const { itemsByBarcode: { records } } = parentResources;
+    const { searchInProgress } = this.state;
 
-    // if the item was previously loaded do not open it again.
-    // This is a workaround when items details view is closed
-    // and the user lands back on the instances details view.
-    if (records.length && records[0].barcode === query) {
+    this.setState({ searchInProgress: false });
+
+    if (!searchInProgress) {
       return;
     }
 
