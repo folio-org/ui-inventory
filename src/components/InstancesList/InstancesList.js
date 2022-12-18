@@ -222,8 +222,6 @@ class InstancesList extends React.Component {
       openedFromBrowse: false,
       searchInProgress: true,
     });
-
-    this.props.parentMutator.itemsByBarcode.reset();
   }
 
   closeNewInstance = (e) => {
