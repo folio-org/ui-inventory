@@ -8,12 +8,12 @@ describe('ValidateNameAndCode', () => {
     expect(JSON.stringify(errors.code)).toMatch(/ui-inventory.fillIn/i);
     expect(JSON.stringify(errors.name)).toMatch(/ui-inventory.fillIn/i);
   });
-  it('should return empty with name & code values present', () => {
+  it('should return empty when name & code values present', () => {
     const item = {
-      code: 'codeTest',
-      name: 'codeTest'
+      code: 'testCode',
+      name: 'testName'
     };
     const errors = validateNameAndCode(item);
-    expect(errors).toBeDefined();
+    expect(errors).toMatchObject({});
   });
 });
