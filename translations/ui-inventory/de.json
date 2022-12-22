@@ -593,7 +593,7 @@
     "itemRecordWithDescription": "Exemplardatensatz ({materialType}, {status})",
     "instanceRecordWithType": "Instanzdatensatz ({instanceTypeName})",
     "item.status.inProcessNonRequestable": "In Bearbeitung (nicht bestellbar)",
-    "item.status.intellectualItem": "Intellectual item",
+    "item.status.intellectualItem": "Arbeitsdatensatz",
     "item.status.longMissing": "Lang vermisst",
     "item.status.restricted": "Beschränkt",
     "item.status.unavailable": "Nicht verfügbar",
@@ -604,7 +604,7 @@
     "communicationProblem": "Problem mit der Serverkommunikation. Bitte erneut versuchen",
     "markAs": "Markieren als {itemStatus}",
     "itemStatusModal.heading": "Ausleihstatus bestätigen: {itemStatus}",
-    "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
+    "permission.items.mark-intellectual-item": "Katalog: Exemplare als Arbeitsdatensatz markieren",
     "permission.items.mark-restricted": "Katalog: Exemplare als beschränkt markieren",
     "actions": "Aktionen",
     "showColumns": "Spalten anzeigen",
@@ -761,6 +761,6 @@
     "inactive": "Inaktiv",
     "inactive.paneTitle": "<em>Inaktiv</em> {location}",
     "search.itemCirculationNotes": "Ausleihanmerkungen",
-    "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
-    "authorityId": "Authority UUID"
+    "inactive.gridCell": "<span><em>Inaktiv</em> {location}</span>",
+    "authorityId": "Normdaten-UUID"
 }

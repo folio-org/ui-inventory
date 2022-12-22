@@ -761,6 +761,6 @@
     "inactive": "Inactive",
     "inactive.paneTitle": "<em>Inactive</em> {location}",
     "search.itemCirculationNotes": "Notas de circulación",
-    "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
-    "authorityId": "Authority UUID"
+    "inactive.gridCell": "<span><em>Inactivo</em> {location}</span>",
+    "authorityId": "UUID de autoridad"
 }

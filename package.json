@@ -130,7 +130,8 @@
           "ui-inventory.item.delete",
           "ui-inventory.holdings.delete",
           "ui-inventory.instance.view-staff-suppressed-records",
-          "browse.contributors.instances.collection.get"
+          "browse.contributors.instances.collection.get",
+          "inventory-storage.bound-with-parts.collection.get"
         ],
         "visible": true
       },
@@ -541,7 +542,8 @@
           "orders.titles.collection.get",
           "organizations.organizations.item.get",
           "acquisitions-units.units.collection.get",
-          "browse.contributors.instances.collection.get"
+          "browse.contributors.instances.collection.get",
+          "inventory-storage.bound-with-parts.collection.get"
         ],
         "visible": true
       },
