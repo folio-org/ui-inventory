@@ -8,7 +8,7 @@ describe('ValidateNameAndCode', () => {
     expect(JSON.stringify(errors.code)).toMatch(/ui-inventory.fillIn/i);
     expect(JSON.stringify(errors.name)).toMatch(/ui-inventory.fillIn/i);
   });
-  it('should return empty when name & code values present', () => {
+  it('check return value is defined', () => {
     const item = {
       code: 'testCode',
       name: 'testName'
