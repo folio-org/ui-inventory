@@ -1,6 +1,7 @@
 {
   "meta.title": "Inventory",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+  "appMenu.inventorySearch": "Inventory app search",
   "quickMARC.label": "quickMARC",
   "inventory.label": "Inventory",
   "instances.columns.title": "Title",

@@ -18,6 +18,10 @@
 * Do not fetch bound with data if the boundWithParts data is not present. Fixes UIIN-2272.
 * Revert back to `all` operator for title (All) index. Fixes UIIN-2274.
 * Warn on `sessionStorage` errors instead of swallowing them.
+* Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: All permissions`. Fixes UIIN-2273.
+* Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: View instances, holdings, and items`. Fixes UIIN-2273.
+* Use correct index when searching for `subject`. Fixes UIIN-2275.
+* Inventory | App Context menu | Add new option | Inventory app search. Fixes UIIN-2265.
 * ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
 * ISRI: Update the Settings screen to allow multiple job profiles: View. Refs UIIN-2249.
 

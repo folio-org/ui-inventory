@@ -97,8 +97,8 @@ describe('TargetProfileForm', () => {
       const addButton = getByText('Add job profile for import/create');
       fireEvent.click(addButton);
 
-      const jobProfileSelect = container.querySelector(('[name="createJobProfileId[0].id"]'));
-      const defaultRadioButton = container.querySelector(('[name="importCreate"]'));
+      const jobProfileSelect = container.querySelector(('[name="allowedCreateJobProfileIds[0]"]'));
+      const defaultRadioButton = container.querySelector(('[name="createJobProfileId"]'));
       const trashIcon = container.querySelector('[aria-label="Delete this item"]');
 
       expect(jobProfileSelect).toBeInTheDocument();
@@ -116,8 +116,8 @@ describe('TargetProfileForm', () => {
       const addButton = getByText('Add job profile for overlay/update');
       fireEvent.click(addButton);
 
-      const jobProfileSelect = container.querySelector(('[name="updateJobProfileIds[0].key"]'));
-      const defaultRadioButton = container.querySelector(('[name="overlayUpdate"]'));
+      const jobProfileSelect = container.querySelector(('[name="allowedUpdateJobProfileIds[0]"]'));
+      const defaultRadioButton = container.querySelector(('[name="updateJobProfileId"]'));
       const trashIcon = container.querySelector('[aria-label="Delete this item"]');
 
       expect(jobProfileSelect).toBeInTheDocument();

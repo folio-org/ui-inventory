@@ -188,26 +188,28 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                   />
                   <FieldArray
                     legend={<FormattedMessage id="ui-inventory.createJobProfileIds" />}
-                    name="createJobProfileId"
+                    name="allowedCreateJobProfileIds"
                     id="input-targetprofile-createJobProfileIds"
                     component={RepeatableField}
                     headLabels={headLabelsForImportCreate}
                     addLabel={<FormattedMessage id="ui-inventory.button.addCreateJobProfileId" />}
                     onAdd={fields => fields.push('')}
-                    renderField={field => (
+                    renderField={(field, index, fields) => (
                       <Row>
                         <Col xs={11}>
                           <Field
                             component={Selection}
                             dataOptions={jobProfileOptions}
                             placeholder={intl.formatMessage({ id: 'ui-inventory.select.createJobProfileId' })}
-                            name={`${field}.id`}
+                            name={field}
                           />
                         </Col>
                         <Col xs={1}>
                           <Field
                             component={RadioButton}
-                            name="importCreate"
+                            name="createJobProfileId"
+                            value={fields.value[index]}
+                            type="radio"
                             centered
                           />
                         </Col>
@@ -216,26 +218,28 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                   />
                   <FieldArray
                     legend={<FormattedMessage id="ui-inventory.updateJobProfileIds" />}
-                    name="updateJobProfileIds"
+                    name="allowedUpdateJobProfileIds"
                     id="input-targetprofile-updateJobProfileIds"
                     headLabels={headLabelsForOverlayUpdate}
                     component={RepeatableField}
                     addLabel={<FormattedMessage id="ui-inventory.button.addUpdateJobProfileId" />}
                     onAdd={fields => fields.push('')}
-                    renderField={field => (
+                    renderField={(field, index, fields) => (
                       <Row>
                         <Col xs={11}>
                           <Field
                             component={Selection}
                             dataOptions={jobProfileOptions}
                             placeholder={intl.formatMessage({ id: 'ui-inventory.select.updateJobProfileId' })}
-                            name={`${field}.key`}
+                            name={field}
                           />
                         </Col>
                         <Col xs={1}>
                           <Field
                             component={RadioButton}
-                            name="overlayUpdate"
+                            name="updateJobProfileId"
+                            value={fields.value[index]}
+                            type="radio"
                             centered
                           />
                         </Col>
