@@ -18,10 +18,6 @@ import facetsStore from '../stores/facetsStore';
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
-const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
-const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '\\"')}"`;
-const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
-
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
@@ -33,19 +29,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
-  }
-
-  if (queryIndex === queryIndexes.SUBJECT) {
-    queryTemplate = getQueryTemplateSubjects(queryValue);
-  }
-
-  if (queryIndex === queryIndexes.CALL_NUMBER) {
-    queryTemplate = getQueryTemplateCallNumber(queryValue);
-  }
-
-  if (queryIndex === queryIndexes.CONTRIBUTOR && queryParams?.selectedBrowseResult === 'true') {
-    queryTemplate = getQueryTemplateContributor(queryValue);
-    query.selectedBrowseResult = false; // reset this parameter so the next search uses `=` instead of `==/string`
   }
 
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
