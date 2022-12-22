@@ -12,10 +12,25 @@ import {
 
 import TargetProfileDetail from './TargetProfileDetail';
 
-const resources = buildResources({
+const identifierTypeResources = buildResources({
   resourceName: 'identifierType',
   records: [{ name: 'identifierTypeTestName' }],
 });
+const jobProfilesResources = buildResources({
+  resourceName: 'jobProfiles',
+  records: [{
+    id: 'createJobProfileTestId',
+    name: 'create name',
+  }, {
+    id: 'updateJobProfileTestId',
+    name: 'update name',
+  }],
+});
+const resources = {
+  ...identifierTypeResources,
+  ...jobProfilesResources,
+};
+
 const defaultInitialValues = {
   authentication: 'testAuth',
   displayName: 'testName',
@@ -25,16 +40,10 @@ const defaultInitialValues = {
   name: 'testName',
   targetOptions: { key: 'testTargetOptionsKey '},
   url: 'testURL',
-  createJobProfileIds: [{
-    id: 'testId',
-    name: 'create name',
-    isDefault: true,
-  }],
-  updateJobProfileIds: [{
-    id: 'testId',
-    name: 'update name',
-    isDefault: false,
-  }],
+  allowedCreateJobProfileIds: ['createJobProfileTestId'],
+  allowedUpdateJobProfileIds: ['updateJobProfileTestId'],
+  createJobProfileId: 'createJobProfileTestId',
+  updateJobProfileId: 'updateJobProfileTestId',
 };
 
 const renderTargetProfileDetail = (initialValues = defaultInitialValues) => renderWithIntl(
@@ -98,15 +107,15 @@ describe('TargetProfileDetail', () => {
   it('names of job profiles should be displayed in a correct format', () => {
     const { queryByText } = renderTargetProfileDetail();
 
-    expect(queryByText('create name(testId)')).toBeDefined();
-    expect(queryByText('update name(testId)')).toBeDefined();
+    expect(queryByText('create name(createJobProfileTestId)')).toBeDefined();
+    expect(queryByText('update name(updateJobProfileTestId)')).toBeDefined();
   });
 
   it('names of job profiles should be displayed as a hotlink', () => {
     const { getByText } = renderTargetProfileDetail();
 
-    expect(getByText('create name').href).toContain('/settings/data-import/job-profiles/view/testId');
-    expect(getByText('update name').href).toContain('/settings/data-import/job-profiles/view/testId');
+    expect(getByText('create name').href).toContain('/settings/data-import/job-profiles/view/createJobProfileTestId');
+    expect(getByText('update name').href).toContain('/settings/data-import/job-profiles/view/updateJobProfileTestId');
   });
 
   it('should display correct Target options', () => {

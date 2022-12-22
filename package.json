@@ -84,8 +84,8 @@
       "data-export": "5.0"
     },
     "optionalOkapiInterfaces": {
-      "copycat-imports": "2.0",
-      "copycat-profiles": "2.0",
+      "copycat-imports": "1.1",
+      "copycat-profiles": "1.2",
       "remote-storage-mappings": "1.0 2.0",
       "acquisitions-units": "1.1",
       "orders": "11.0 12.0",
