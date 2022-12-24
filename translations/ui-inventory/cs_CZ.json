@@ -641,8 +641,6 @@
     "remote.warning.titles": "To zahrnuje {count, plural, =0 {<strong>ne</strong> názvy} one {<strong>#</strong> název} other {<strong>#</strong> názvy}}.",
     "remote.holdings": "holdingy",
     "remote.items": "{count, plural, one {tato jednotka} few {těchto jednotek} many {těchto jednotek} other {tyto jednotky}}",
-    "createJobProfileId": "ID profilu úlohy pro vytvoření",
-    "updateJobProfileId": "ID profilu úlohy pro aktualizaci",
     "button.addTargetOption": "Přidat možnost cíle",
     "warning.instance.suppressedFromDiscovery": "Upozornění: Titul je označen jako potlačený z vyhledávání",
     "warning.holdingsRecord.suppressedFromDiscovery": "Upozornění: Holdingy jsou označeny jako potlačené z objevování",
@@ -762,5 +760,15 @@
     "inactive.paneTitle": "<em>Neaktivní</em> {location}",
     "search.itemCirculationNotes": "Výpůjčkové poznámky",
     "inactive.gridCell": "<span><em>Neaktivní</em> {location}</span>",
-    "authorityId": "UUID autority"
+    "authorityId": "UUID autority",
+    "appMenu.inventorySearch": "Vyhledat katalog",
+    "createJobProfileIds": "Job profiles for import/create",
+    "updateJobProfileIds": "Job profiles for overlay/update",
+    "importCreateJobProfileId": "Job profile for import/create",
+    "overlayUpdateJobProfileId": "Job profile for overlay/update",
+    "button.addCreateJobProfileId": "Add job profile for import/create",
+    "button.addUpdateJobProfileId": "Add job profile for overlay/update",
+    "select.createJobProfileId": "Select job profile for import/create",
+    "select.updateJobProfileId": "Select job profile for overlay/update",
+    "defaultJobProfile": "Default"
 }

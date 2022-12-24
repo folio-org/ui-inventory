@@ -641,8 +641,6 @@
     "remote.warning.titles": "这包括{count, plural, =0 { <strong> 无 </strong>标题} one { <strong> # </strong>标题} other { <strong> # </strong>标题}} 。",
     "remote.holdings": "馆藏",
     "remote.items": "{count, plural, other {空}}",
-    "createJobProfileId": "用于创建的任务配置文件ID",
-    "updateJobProfileId": "用于更新的任务配置文件ID",
     "button.addTargetOption": "添加目标选项",
     "warning.instance.suppressedFromDiscovery": "警告：实例被标记为在发现中隐藏",
     "warning.holdingsRecord.suppressedFromDiscovery": "警告：馆藏被标记为在发现中隐藏",
@@ -762,5 +760,15 @@
     "inactive.paneTitle": "<em>未激活</em> {location}",
     "search.itemCirculationNotes": "流通附注",
     "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
-    "authorityId": "Authority UUID"
+    "authorityId": "Authority UUID",
+    "appMenu.inventorySearch": "Inventory app search",
+    "createJobProfileIds": "Job profiles for import/create",
+    "updateJobProfileIds": "Job profiles for overlay/update",
+    "importCreateJobProfileId": "Job profile for import/create",
+    "overlayUpdateJobProfileId": "Job profile for overlay/update",
+    "button.addCreateJobProfileId": "Add job profile for import/create",
+    "button.addUpdateJobProfileId": "Add job profile for overlay/update",
+    "select.createJobProfileId": "Select job profile for import/create",
+    "select.updateJobProfileId": "Select job profile for overlay/update",
+    "defaultJobProfile": "Default"
 }

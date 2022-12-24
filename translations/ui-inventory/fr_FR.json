@@ -641,8 +641,6 @@
     "remote.warning.titles": "Ceci inclut {count, plural, =0 { <strong> aucun(s) </strong> titre } one { <strong> # </strong> } other { <strong> # </strong> titres}} .",
     "remote.holdings": "les collections",
     "remote.items": "{count, plural, one {cet exemplaire} other {<strong>#</strong> exemplaires}}",
-    "createJobProfileId": "ID du profil de tâche pour création",
-    "updateJobProfileId": "ID du profil de tâche pour mise à jour",
     "button.addTargetOption": "Ajouter une option cible",
     "warning.instance.suppressedFromDiscovery": "Avertissement: l'instance est marquée comme supprimée de la recherche/découverte",
     "warning.holdingsRecord.suppressedFromDiscovery": "Avertissement: les collections sont marquées comme supprimées de la recherche/découverte",
@@ -762,5 +760,15 @@
     "inactive.paneTitle": "<em>Inactive</em> {location}",
     "search.itemCirculationNotes": "Circulation notes",
     "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
-    "authorityId": "Authority UUID"
+    "authorityId": "Authority UUID",
+    "appMenu.inventorySearch": "Inventory app search",
+    "createJobProfileIds": "Job profiles for import/create",
+    "updateJobProfileIds": "Job profiles for overlay/update",
+    "importCreateJobProfileId": "Job profile for import/create",
+    "overlayUpdateJobProfileId": "Job profile for overlay/update",
+    "button.addCreateJobProfileId": "Add job profile for import/create",
+    "button.addUpdateJobProfileId": "Add job profile for overlay/update",
+    "select.createJobProfileId": "Select job profile for import/create",
+    "select.updateJobProfileId": "Select job profile for overlay/update",
+    "defaultJobProfile": "Default"
 }

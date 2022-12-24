@@ -641,8 +641,6 @@
     "remote.warning.titles": "Obejmuje to {count, plural, =0 {<strong>brak</strong> tytułów} one {<strong>#</strong> tytuł} other {<strong>#</strong> tytuły}}.",
     "remote.holdings": "zasoby",
     "remote.items": "{count, plural, one {egzemplarz} few {egzemplarzy} many {egzemplarzy} other {egzemplarze}}",
-    "createJobProfileId": "Identyfikator profilu zadania do tworzenia",
-    "updateJobProfileId": "Identyfikator profilu zadania do aktualizacji",
     "button.addTargetOption": "Dodaj opcję docelową",
     "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
     "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
@@ -762,5 +760,15 @@
     "inactive.paneTitle": "<em>Inactive</em> {location}",
     "search.itemCirculationNotes": "Circulation notes",
     "inactive.gridCell": "<span><em>Inactive</em> {location}</span>",
-    "authorityId": "Authority UUID"
+    "authorityId": "Authority UUID",
+    "appMenu.inventorySearch": "Inventory app search",
+    "createJobProfileIds": "Job profiles for import/create",
+    "updateJobProfileIds": "Job profiles for overlay/update",
+    "importCreateJobProfileId": "Job profile for import/create",
+    "overlayUpdateJobProfileId": "Job profile for overlay/update",
+    "button.addCreateJobProfileId": "Add job profile for import/create",
+    "button.addUpdateJobProfileId": "Add job profile for overlay/update",
+    "select.createJobProfileId": "Select job profile for import/create",
+    "select.updateJobProfileId": "Select job profile for overlay/update",
+    "defaultJobProfile": "Default"
 }
