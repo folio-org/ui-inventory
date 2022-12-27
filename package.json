@@ -140,7 +140,7 @@
         "displayName": "Call number browse: View permissions ",
         "description": "Enable call number browse feature",
         "subPermissions": [
-          "ui-inventory.all-permissions.TEMPORARY",
+          "ui-inventory.instance.view",
           "browse.call-numbers.instances.collection.get",
           "browse.authorities.collection.get"
         ],
@@ -151,7 +151,7 @@
         "displayName": "Subject browse: View permissions",
         "description": "Enable subject browse feature",
         "subPermissions": [
-          "ui-inventory.all-permissions.TEMPORARY",
+          "ui-inventory.instance.view",
           "browse.subjects.instances.collection.get",
           "browse.authorities.collection.get"
         ],
