@@ -10,6 +10,13 @@ import {
   TextLink,
 } from '@folio/stripes/components';
 
+import { LIMIT_MAX } from '../constants';
+
+const JOB_PROFILES_COLUMNS_NAME = {
+  ID: 'id',
+  IS_DEFAULT: 'isDefault',
+};
+
 class TargetProfileDetail extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object.isRequired,
@@ -41,7 +48,7 @@ class TargetProfileDetail extends React.Component {
     jobProfiles: {
       type: 'okapi',
       records: 'jobProfiles',
-      path: 'data-import-profiles/jobProfiles?limit=5000&query=dataType==("MARC") sortBy name',
+      path: `data-import-profiles/jobProfiles?limit=${LIMIT_MAX}&query=dataType==("MARC") sortBy name`,
     },
   });
 
@@ -63,7 +70,7 @@ class TargetProfileDetail extends React.Component {
   }
 
   getJobProfilesFormatter = defaultProfileId => ({
-    id: ({ name, id }) => (
+    [JOB_PROFILES_COLUMNS_NAME.ID]: ({ name, id }) => (
       <>
         <TextLink
           to={`/settings/data-import/job-profiles/view/${id}`}
@@ -74,7 +81,7 @@ class TargetProfileDetail extends React.Component {
         <span>{`(${id})`}</span>
       </>
     ),
-    isDefault: ({ id }) => defaultProfileId === id
+    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: ({ id }) => defaultProfileId === id
       ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
       : null,
   });
@@ -97,7 +104,7 @@ class TargetProfileDetail extends React.Component {
       </ul>
     );
 
-    const jobProfilesVisibleColumns = ['id', 'isDefault'];
+    const jobProfilesVisibleColumns = [JOB_PROFILES_COLUMNS_NAME.ID, JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT];
     const createJobProfilesContent = this.getJobProfilesContent(allowedCreateJobProfileIds, createJobProfileId);
     const updateJobProfilesContent = this.getJobProfilesContent(allowedUpdateJobProfileIds, updateJobProfileId)
     const createJobProfilesFormatter = this.getJobProfilesFormatter(createJobProfileId);
@@ -151,8 +158,8 @@ class TargetProfileDetail extends React.Component {
               <MultiColumnList
                 contentData={createJobProfilesContent}
                 columnMapping={{
-                  id: <FormattedMessage id="ui-inventory.importCreateJobProfileId" />,
-                  isDefault: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+                  [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.importCreateJobProfileId" />,
+                  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
                 }}
                 formatter={createJobProfilesFormatter}
                 visibleColumns={jobProfilesVisibleColumns}
@@ -166,8 +173,8 @@ class TargetProfileDetail extends React.Component {
               <MultiColumnList
                 contentData={updateJobProfilesContent}
                 columnMapping={{
-                  id: <FormattedMessage id="ui-inventory.overlayUpdateJobProfileId" />,
-                  isDefault: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+                  [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.overlayUpdateJobProfileId" />,
+                  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
                 }}
                 formatter={updateJobProfilesFormatter}
                 visibleColumns={jobProfilesVisibleColumns}
