@@ -1,7 +1,8 @@
 import queryString from 'query-string';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
+import { noop } from 'lodash';
 
 import {
   useNamespace,
@@ -48,16 +49,17 @@ const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
 
 const useInventoryBrowse = ({
   filters = {},
+  pageParams = {},
   options = {},
 }) => {
   const ky = useOkapiKy();
-  const { search } = useLocation();
+  const { search, state } = useLocation();
   const [namespace] = useNamespace();
-  const [pageConfig, setPageConfig] = useState();
+  const { pageConfig = [], setPageConfig = noop } = pageParams;
 
   useEffect(() => {
-    setPageConfig(INIT_PAGE_CONFIG);
-  }, [filters]);
+    setPageConfig(state || INIT_PAGE_CONFIG);
+  }, []);
 
   const normalizedFilters = {
     ...Object.entries(filters).reduce((acc, [key, value]) => ({
@@ -131,6 +133,7 @@ const useInventoryBrowse = ({
       hasPrevPage: !!data.prev,
       hasNextPage: !!data.next,
       onNeedMoreData: updatePage,
+      pageConfig,
     },
     totalRecords: data.totalRecords,
   };
