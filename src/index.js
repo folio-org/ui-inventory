@@ -90,7 +90,7 @@ const InventoryRouting = (props) => {
                         handleToggle();
                         history.replace({
                           pathname: '/inventory',
-                          search: 'segment=instances&sort=title'
+                          search: 'reset=true'
                         });
                       }}
                     >
