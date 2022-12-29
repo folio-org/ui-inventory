@@ -28,4 +28,13 @@ describe('validateSubInstances', () => {
     validateSubInstances(instance, type, errors, message);
     expect(errors).toEqual({ type: [{ instanceRelationshipTypeId: 'This field is required' }] });
   });
+
+  it('need to return an empty array of errors if instanceRelationshipTypeId is present', () => {
+    const instance = { type: [{ instanceRelationshipTypeId: 'instanceRelationshipTypeId' }] };
+    const type = 'type';
+    const errors = {};
+    const message = 'This field is required';
+    validateSubInstances(instance, type, errors, message);
+    expect(errors).toEqual({});
+  });
 });
