@@ -58,7 +58,7 @@ const useInventoryBrowse = ({
   const { pageConfig = [], setPageConfig = noop } = pageParams;
 
   useEffect(() => {
-    setPageConfig(state || INIT_PAGE_CONFIG);
+    setPageConfig(state?.pageConfig || INIT_PAGE_CONFIG);
   }, []);
 
   const normalizedFilters = {

@@ -323,7 +323,7 @@ class InstancesList extends React.Component {
     <>
       <SearchModeNavigation
         search={this.state.browsePageSearch}
-        state={this.state.browsePageConfig}
+        state={{ pageConfig: this.state.browsePageConfig }}
       />
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
