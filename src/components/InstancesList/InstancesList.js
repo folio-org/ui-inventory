@@ -158,11 +158,11 @@ class InstancesList extends React.Component {
       const hasReset = new URLSearchParams(location.search).get('reset');
 
       if (hasReset) {
-        history.replace({ search: '' });
-
         // imperative way is used because it's no option in SearchAndSort reset/focus filters from outside
         document.getElementById('clickable-reset-all')?.click();
         document.getElementById('input-inventory-search')?.focus();
+
+        history.replace({ search: 'segment=instances' });
       }
     });
 
