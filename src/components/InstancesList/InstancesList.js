@@ -54,6 +54,7 @@ import {
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
+  QUERY_INDEXES,
   segments,
 } from '../../constants';
 import {
@@ -148,6 +149,7 @@ class InstancesList extends React.Component {
       optionSelected: '',
       searchAndSortKey: 0,
       isSingleResult: this.props.showSingleResult,
+      searchInProgress: false,
     };
   }
 
@@ -239,6 +241,7 @@ class InstancesList extends React.Component {
   onSubmitSearch = () => {
     this.setState({
       openedFromBrowse: false,
+      searchInProgress: true,
     });
   }
 
@@ -766,6 +769,47 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  findAndOpenItem = async (instance) => {
+    const {
+      parentResources,
+      parentMutator: { itemsByBarcode },
+      goTo,
+      getParams,
+    } = this.props;
+    const { query } = parentResources?.query ?? {};
+    const { searchInProgress } = this.state;
+
+    this.setState({ searchInProgress: false });
+
+    if (!searchInProgress) {
+      return;
+    }
+
+    itemsByBarcode.reset();
+    const result = await itemsByBarcode.GET({ params: { query: `barcode==${query}` } });
+
+    if (result?.length > 1 || !result?.[0]?.holdingsRecordId) {
+      return;
+    }
+
+    const { id, holdingsRecordId } = result[0];
+    const params = getParams();
+
+    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, params);
+  }
+
+  onSelectRow = (_, instance) => {
+    const { parentResources } = this.props;
+    const { qindex, query } = parentResources?.query ?? {};
+
+    if (qindex !== QUERY_INDEXES.BARCODE || !query) {
+      return instance;
+    }
+
+    this.findAndOpenItem(instance);
+    return null;
+  }
+
   render() {
     const {
       disableRecordCreation,
@@ -908,6 +952,7 @@ class InstancesList extends React.Component {
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
+            onSelectRow={this.onSelectRow}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
