@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Route,
-  Switch,
+  Switch, useHistory,
 } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -42,6 +42,7 @@ import Settings from './settings';
 import { DataProvider, HoldingsProvider } from './providers';
 
 const InventoryRouting = (props) => {
+  const history = useHistory();
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
 
@@ -83,6 +84,18 @@ const InventoryRouting = (props) => {
               {(handleToggle) => (
                 <NavList>
                   <NavListSection>
+                    <NavListItem
+                      id="keyboard-shortcuts-item-0"
+                      onClick={() => {
+                        handleToggle();
+                        history.replace({
+                          pathname: '/inventory',
+                          search: 'reset=true'
+                        });
+                      }}
+                    >
+                      <FormattedMessage id="ui-inventory.appMenu.inventorySearch" />
+                    </NavListItem>
                     <NavListItem
                       id="keyboard-shortcuts-item"
                       onClick={() => {

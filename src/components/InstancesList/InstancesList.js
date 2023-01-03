@@ -121,6 +121,9 @@ class InstancesList extends React.Component {
       state: PropTypes.object,
     }),
     stripes: PropTypes.object.isRequired,
+    history: {
+      listen: PropTypes.func
+    }
   };
 
   static contextType = CalloutContext;
@@ -151,6 +154,20 @@ class InstancesList extends React.Component {
   }
 
   componentDidMount() {
+    const { history } = this.props;
+
+    this.unlisten = history.listen((location) => {
+      const hasReset = new URLSearchParams(location.search).get('reset');
+
+      if (hasReset) {
+        history.replace({ search: '' });
+
+        // imperative way is used because it's no option in SearchAndSort reset/focus filters from outside
+        document.getElementById('clickable-reset-all')?.click();
+        document.getElementById('input-inventory-search')?.focus();
+      }
+    });
+
     this.setState({
       browsePageSearch: this.getBrowsePageSearch(),
       openedFromBrowse: !!this.getBrowsePageSearch(),
@@ -169,6 +186,10 @@ class InstancesList extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ optionSelected: qindex });
     }
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
   }
 
   extraParamsToReset = {

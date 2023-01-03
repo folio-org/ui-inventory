@@ -22,6 +22,9 @@
 * Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: View instances, holdings, and items`. Fixes UIIN-2273.
 * Open item details view when searching by item barcode. Refs UIIN-2036.
 * Use correct index when searching for `subject`. Fixes UIIN-2275.
+* Inventory | App Context menu | Add new option | Inventory app search. Fixes UIIN-2265.
+* ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
+* ISRI: Update the Settings screen to allow multiple job profiles: View. Refs UIIN-2249.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
