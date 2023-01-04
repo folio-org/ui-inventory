@@ -25,6 +25,7 @@
 * Inventory | App Context menu | Add new option | Inventory app search. Fixes UIIN-2265.
 * ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
 * ISRI: Update the Settings screen to allow multiple job profiles: View. Refs UIIN-2249.
+* Users with browse permissions can delete inventory records. Refs UIIN-2283.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
