@@ -1,59 +1,95 @@
-import '../test/jest/__mock__';
-import { MemoryRouter } from 'react-router';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import React from 'react';
+import { cleanup, render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 import withLocation from './withLocation';
 
-const mockGoto = jest.fn();
-const mockUpdateLocation = jest.fn();
-const mockGetParams = jest.fn();
-const mockGetSearchParams = jest.fn();
-const defaultProps = {
-  location: {
-    search: '?filters=test1&query=test2&sort=test3&qindex=test',
-    pathname: '/testPathName',
-  },
-  history: {
-    push: jest.fn()
-  },
-  updateLocation: mockUpdateLocation,
-  goTo: mockGoto,
-  getParams: mockGetParams,
-  getSearchParams: mockGetSearchParams
+const mockPush = jest.fn();
+const mockReplace = jest.fn();
+const location = {
+  pathname: '/testPathName',
+  search: '?filters=test1&query=test2&sort=test3&qindex=test'
 };
+const history = createMemoryHistory();
+history.location = location;
+history.push = mockPush;
+history.replace = mockReplace;
 const newParams = {
   _path: '/newTestPath'
 };
-const options = {};
+const options = { replace: true };
 const path = '/gotoTestPath';
 const params = 'testParams';
+let result;
+const TestComponent = (props) => {
+  const { updateLocation, goTo, getParams, getSearchParams } = props;
+  return (
+    <div>
+      <div>
+        <button type="button" onClick={() => updateLocation(newParams, options)}>updateLocation</button>
+      </div>
+      <div>
+        <button type="button" onClick={() => updateLocation(newParams)}>updateLocation_with_newParams</button>
+      </div>
+      <div>
+        <button type="button" onClick={() => goTo(path, params)}>goTo</button>
+      </div>
+      <div>
+        <button type="button" onClick={() => goTo(path)}>goTo_with_path</button>
+      </div>
+      <div>
+        <button type="button" onClick={() => { result = getParams(); }}>getParams</button>
+      </div>
+      <div>
+        <button type="button" onClick={() => { result = getSearchParams(); }}>getSearchParams</button>
+      </div>
+    </div>
+  );
+};
+
+const WrappedComponent = withLocation(TestComponent);
+
 describe('withLocation', () => {
-  beforeEach(() => {
-    const WrappedComponent = (props = defaultProps) => {
-      return (
-        <div>
-          WrappedComponent
-          <button type="button" data-testid="updateLocation" onClick={() => props.updateLocation(newParams, options)}>updateLocation</button>
-          <button type="button" data-testid="goTo" onClick={() => props.goTo(path, params)}>goTo</button>
-          <button type="button" data-testid="getSearchParams" onClick={() => props.getSearchParams()}>getSearchParams</button>
-        </div>
-      );
-    };
-    const Location = withLocation(WrappedComponent, { ...defaultProps });
-    render(<MemoryRouter><Location /></MemoryRouter>);
-  });
   afterEach(() => {
     cleanup();
   });
-  it('updateLocation should be called', async () => {
-    const button = screen.getByTestId('updateLocation');
-    expect(fireEvent.click(button)).toBe(true);
+  it('updateLocation with newParams and options, history.replace should be called', async () => {
+    const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
+    userEvent.click(getByText('updateLocation'));
+    await waitFor(() => {
+      expect(mockReplace).toBeCalledWith('/newTestPath?filters=test1&qindex=test&query=test2&sort=test3');
+    });
   });
-  it('goTo should be called', () => {
-    const button = screen.getByTestId('goTo');
-    expect(fireEvent.click(button)).toBe(true);
+  it('updateLocation with only newParams, history.push should be called', async () => {
+    const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
+    userEvent.click(getByText('updateLocation_with_newParams'));
+    await waitFor(() => {
+      expect(mockPush).toBeCalledWith('/testPathName?filters=test1&qindex=test&query=test2&sort=test3');
+    });
   });
-  it('getSearchParams should be called', () => {
-    const button = screen.getByTestId('getSearchParams');
-    expect(fireEvent.click(button)).toBe(true);
+  it('goTo funtion to be called', async () => {
+    const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
+    userEvent.click(getByText('goTo'));
+    await waitFor(() => {
+      expect(mockPush).toBeCalledWith('/gotoTestPath?0=t&1=e&2=s&3=t&4=P&5=a&6=r&7=a&8=m&9=s');
+    });
+  });
+  it('goTo funtion with only path to be called', async () => {
+    const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
+    userEvent.click(getByText('goTo_with_path'));
+    await waitFor(() => {
+      expect(mockPush).toBeCalledWith('/gotoTestPath');
+    });
+  });
+  it('getParams funtion to be called', () => {
+    const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
+    userEvent.click(getByText('getParams'));
+    expect(result).toMatchObject({ 'filters': 'test1', 'qindex': 'test', 'query': 'test2', 'sort': 'test3' });
+  });
+  it('getSearchParams funtion to be called', () => {
+    const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
+    userEvent.click(getByText('getSearchParams'));
+    expect(result).toBe('filters=test1&qindex=test&query=test2&sort=test3');
   });
 });
