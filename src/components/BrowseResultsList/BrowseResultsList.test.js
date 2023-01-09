@@ -1,25 +1,34 @@
 import '../../../test/jest/__mock__';
 
 import userEvent from '@testing-library/user-event';
+import flow from 'lodash/flow';
+import queryString from 'query-string';
 import { act, cleanup, screen } from '@testing-library/react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 
 import { instance } from '../../../test/fixtures/instance';
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
+import {
+  browseModeOptions,
+  BROWSE_INVENTORY_ROUTE,
+  INVENTORY_ROUTE,
+} from '../../constants';
 import { DataContext } from '../../contexts';
 import BrowseResultsList from './BrowseResultsList';
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(() => ({ push: jest.fn() })),
-  useLocation: jest.fn(() => ({ search: 'qindex=callNumbers&query=A' })),
-}));
+import { getSearchParams } from './utils';
 
 const mockWindowOpen = jest.fn();
 window.open = mockWindowOpen;
+let history = createMemoryHistory({
+  initialEntries: [{
+    pathname: BROWSE_INVENTORY_ROUTE,
+    search: 'qindex=callNumbers&query=A',
+  }],
+});
 
 const defaultProps = {
   browseData: [
@@ -48,6 +57,7 @@ const defaultProps = {
     hasNextPage: false,
     hasPrevPage: false,
     onNeedMoreData: jest.fn(),
+    pageConfig: [0, null, null],
   },
   totalRecords: 1,
 };
@@ -59,25 +69,18 @@ const mockContext = {
 };
 
 const renderBrowseResultsList = (props = {}) => renderWithIntl(
-  <DataContext.Provider value={mockContext}>
-    <BrowseResultsList
-      {...defaultProps}
-      {...props}
-    />
-  </DataContext.Provider>,
+  <Router history={history}>
+    <DataContext.Provider value={mockContext}>
+      <BrowseResultsList
+        {...defaultProps}
+        {...props}
+      />
+    </DataContext.Provider>
+  </Router>,
   translationsProperties,
 );
 
-const mockHistory = {
-  push: jest.fn(),
-};
-
 describe('BrowseResultsList', () => {
-  beforeEach(() => {
-    mockHistory.push.mockClear();
-    useHistory.mockClear().mockReturnValue(mockHistory);
-  });
-
   it('should render browse data', () => {
     renderBrowseResultsList();
 
@@ -89,7 +92,16 @@ describe('BrowseResultsList', () => {
 
     await act(async () => userEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber)));
 
-    expect(mockHistory.push).toHaveBeenCalled();
+    const { pathname, search } = history.location;
+
+    expect(pathname).toEqual(INVENTORY_ROUTE);
+    expect(search).toEqual(
+      flow(
+        getSearchParams,
+        queryString.stringify,
+        expect.stringContaining
+      )(defaultProps.browseData[2], browseModeOptions.CALL_NUMBERS)
+    );
   });
 
   describe('when Instance record is linked to an authority record', () => {
@@ -108,7 +120,12 @@ describe('BrowseResultsList', () => {
 
       beforeEach(() => {
         cleanup();
-        useLocation.mockClear().mockReturnValue(({ search: 'qindex=contributors&query=A' }));
+        history = createMemoryHistory({
+          initialEntries: [{
+            pathname: BROWSE_INVENTORY_ROUTE,
+            search: 'qindex=contributors&query=A',
+          }],
+        });
 
         renderBrowseResultsList({
           browseData: [linkedRecord],

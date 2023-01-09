@@ -168,9 +168,12 @@ class InstancesList extends React.Component {
       }
     });
 
+    const { browseSearch, pageConfig } = this.getBrowsePageState();
+
     this.setState({
-      browsePageSearch: this.getBrowsePageSearch(),
-      openedFromBrowse: !!this.getBrowsePageSearch(),
+      browsePageSearch: browseSearch,
+      browsePageConfig: pageConfig,
+      openedFromBrowse: !!browseSearch,
       optionSelected: '',
     });
   }
@@ -201,8 +204,11 @@ class InstancesList extends React.Component {
     return params.get('qindex');
   }
 
-  getBrowsePageSearch = () => {
-    return this.props.location.state?.browseSearch;
+  getBrowsePageState = () => {
+    return {
+      browseSearch: this.props.location.state?.browseSearch,
+      pageConfig: this.props.location.state?.pageConfig,
+    };
   }
 
   getInitialToggableColumns = () => {
@@ -315,7 +321,10 @@ class InstancesList extends React.Component {
 
   renderNavigation = () => (
     <>
-      <SearchModeNavigation search={this.state.browsePageSearch} />
+      <SearchModeNavigation
+        search={this.state.browsePageSearch}
+        state={{ pageConfig: this.state.browsePageConfig }}
+      />
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
   );
