@@ -136,6 +136,7 @@ class ViewHoldingsRecord extends React.Component {
 
   componentDidMount() {
     const holdingsRecordPromise = this.props.mutator.holdingsRecords.GET();
+    this.props.mutator.instances1.reset();
     const instances1Promise = this.props.mutator.instances1.GET();
 
     Promise.all([holdingsRecordPromise, instances1Promise])
@@ -1064,6 +1065,7 @@ ViewHoldingsRecord.propTypes = {
   mutator: PropTypes.shape({
     instances1: PropTypes.shape({
       GET: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
     }),
     holdingsRecords: PropTypes.shape({
       GET: PropTypes.func.isRequired,
