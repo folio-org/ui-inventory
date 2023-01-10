@@ -28,6 +28,7 @@
 * Users with browse permissions can delete inventory records. Refs UIIN-2283.
 * Include browse permissions into Inventory permissions. Refs UIIN-2280.
 * Browse Lists | Hyperlink one column to improve accessibility. Refs UIIN-2266.
+* Rename `instances1` resource on `ItemsRoute` to avoid colliding with holding records. Refs UIIN-2289.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

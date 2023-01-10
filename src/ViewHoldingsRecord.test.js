@@ -38,6 +38,7 @@ const defaultProps = {
   mutator: {
     instances1: {
       GET: jest.fn(() => Promise.resolve({ id: 'instanceId' })),
+      reset: jest.fn(() => Promise.resolve()),
     },
     holdingsRecords: {
       GET: jest.fn(() => Promise.resolve({ hrid: 'hrid' })),
