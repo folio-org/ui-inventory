@@ -8,7 +8,6 @@ import {
   size,
   isEmpty,
   noop,
-  template,
 } from 'lodash';
 import {
   injectIntl,
