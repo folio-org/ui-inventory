@@ -8,6 +8,7 @@ import {
   size,
   isEmpty,
   noop,
+  template,
 } from 'lodash';
 import {
   injectIntl,
@@ -51,10 +52,10 @@ import {
   omitFromArray,
   isTestEnv,
   handleKeyCommand,
+  buildSingleItemQuery
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
-  QUERY_INDEXES,
   segments,
 } from '../../constants';
 import {
@@ -781,37 +782,44 @@ class InstancesList extends React.Component {
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
-      parentMutator: { itemsByBarcode },
+      parentMutator: { itemsByQuery },
       goTo,
       getParams,
     } = this.props;
-    const { query } = parentResources?.query ?? {};
+    const { query, qindex } = parentResources?.query ?? {};
     const { searchInProgress } = this.state;
-
-    this.setState({ searchInProgress: false });
 
     if (!searchInProgress) {
       return;
     }
 
-    itemsByBarcode.reset();
-    const result = await itemsByBarcode.GET({ params: { query: `barcode==${query}` } });
+    const itemQuery = buildSingleItemQuery(qindex, query);
 
-    if (result?.length > 1 || !result?.[0]?.holdingsRecordId) {
+    if (!itemQuery) {
+      this.setState({ searchInProgress: false });
+    }
+
+    itemsByQuery.reset();
+    const items = await itemsByQuery.GET({ params: { query: itemQuery } });
+
+    this.setState({ searchInProgress: false });
+
+    // if no results have been found or more than one item has been found
+    // do not open item view
+    if (items?.length > 1 || !items?.[0]?.holdingsRecordId) {
       return;
     }
 
-    const { id, holdingsRecordId } = result[0];
-    const params = getParams();
-
-    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, params);
+    const { id, holdingsRecordId } = items[0];
+    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, getParams());
   }
 
   onSelectRow = (_, instance) => {
     const { parentResources } = this.props;
-    const { qindex, query } = parentResources?.query ?? {};
+    const { query } = parentResources?.query ?? {};
 
-    if (qindex !== QUERY_INDEXES.BARCODE || !query) {
+    if (!query) {
+      this.setState({ searchInProgress: false });
       return instance;
     }
 
