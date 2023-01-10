@@ -135,6 +135,7 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidMount() {
+    this.props.mutator.holdingsRecords.reset();
     const holdingsRecordPromise = this.props.mutator.holdingsRecords.GET();
     this.props.mutator.instances1.reset();
     const instances1Promise = this.props.mutator.instances1.GET();
