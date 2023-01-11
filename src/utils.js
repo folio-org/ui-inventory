@@ -684,7 +684,7 @@ export const handleKeyCommand = (handler, { disabled } = {}) => {
   };
 };
 
-const buildQueryByIds = (itemsChunk) => {
+export const buildQueryByIds = (itemsChunk) => {
   const query = itemsChunk
     .map(id => `id==${id}`)
     .join(' or ');
@@ -750,28 +750,6 @@ export const parseHttpError = async httpError => {
     return jsonError;
   } catch (err) {
     return httpError;
-  }
-};
-
-export const fetchJobProfiles = async (arrayIds, okapi) => {
-  const { url } = okapi;
-  const path = '/data-import-profiles/jobProfiles?query=';
-  const sort = 'sortBy name';
-  const query = buildQueryByIds(arrayIds);
-
-  const fullPath = `${url}${path}${query} ${sort}`;
-  try {
-    const response = await fetch(fullPath, { headers: { ...createOkapiHeaders(okapi) } });
-
-    if (!response.ok) {
-      throw new Error('Cannot fetch job profiles');
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error(error); // eslint-disable-line no-console
-
-    return {};
   }
 };
 

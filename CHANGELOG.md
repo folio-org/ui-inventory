@@ -26,6 +26,10 @@
 * ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
 * ISRI: Update the Settings screen to allow multiple job profiles: View. Refs UIIN-2249.
 * Users with browse permissions can delete inventory records. Refs UIIN-2283.
+* ISRI: Update the Inventory modal for ISRI single source Imports. Refs UIIN-2252.
+* ISRI: Update the Inventory modal for ISRI single source Overlays. Refs UIIN-2253.
+* ISRI: Update the Inventory modal for ISRI single multi-source Imports. Refs UIIN-2254.
+* ISRI: Update the Inventory modal for ISRI single multi-source Overlays. Refs UIIN-2255.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
