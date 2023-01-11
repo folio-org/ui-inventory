@@ -22,6 +22,7 @@ import {
 import moment from 'moment';
 
 import { FormattedUTCDate } from '@folio/stripes/components';
+import { createOkapiHeaders } from '@folio/stripes-data-transfer-components';
 
 import {
   itemStatusesMap,
@@ -749,5 +750,47 @@ export const parseHttpError = async httpError => {
     return jsonError;
   } catch (err) {
     return httpError;
+  }
+};
+
+export const fetchJobProfiles = async (arrayIds, okapi) => {
+  const { url } = okapi;
+  const path = '/data-import-profiles/jobProfiles?query=';
+  const sort = 'sortBy name';
+  const query = buildQueryByIds(arrayIds);
+
+  const fullPath = `${url}${path}${query} ${sort}`;
+  try {
+    const response = await fetch(fullPath, { headers: { ...createOkapiHeaders(okapi) } });
+
+    if (!response.ok) {
+      throw new Error('Cannot fetch job profiles');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error); // eslint-disable-line no-console
+
+    return {};
+  }
+};
+
+export const fetchProfileSnapshot = async (profileId, profileType, jobProfileId, okapi) => {
+  const { url } = okapi;
+
+  try {
+    const path = `${url}/data-import-profiles/profileSnapshots/${profileId}?profileType=${profileType}&jobProfileId=${jobProfileId}`;
+    const response = await fetch(path,
+      { headers: { ...createOkapiHeaders(okapi) } });
+
+    if (!response.ok) {
+      throw new Error('Cannot fetch job profiles');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(error); // eslint-disable-line no-console
+
+    return {};
   }
 };
