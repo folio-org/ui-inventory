@@ -30,6 +30,7 @@
 * Browse Lists | Hyperlink one column to improve accessibility. Refs UIIN-2266.
 * Rename `instances1` resource on `ItemsRoute` to avoid colliding with holding records. Refs UIIN-2289.
 * Z39.50 Settings toasts have a typo. Refs UIIN-2256
+* Accessibility check: ISRI Z39.50 integration profile: View. Fixes UIIN-2251.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
