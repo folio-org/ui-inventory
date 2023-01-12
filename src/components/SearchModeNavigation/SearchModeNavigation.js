@@ -13,7 +13,7 @@ import {
   searchModeSegments,
 } from '../../constants';
 
-const SearchModeNavigation = ({ search }) => {
+const SearchModeNavigation = ({ search, state }) => {
   const { path } = useRouteMatch();
 
   const checkIsButtonActive = useCallback((segment) => (
@@ -29,6 +29,7 @@ const SearchModeNavigation = ({ search }) => {
             to={{
               pathname: searchModeRoutesMap[segment],
               search,
+              state,
             }}
             buttonStyle={checkIsButtonActive(segment)}
             id={`mode-navigation-${segment}`}
@@ -43,6 +44,7 @@ const SearchModeNavigation = ({ search }) => {
 
 SearchModeNavigation.propTypes = {
   search: PropTypes.string,
+  state: PropTypes.any,
 };
 
 export default SearchModeNavigation;

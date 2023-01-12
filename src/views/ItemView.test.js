@@ -80,7 +80,7 @@ const resources = {
       },
     ],
   },
-  instances1: {
+  instanceRecords: {
     records: [
       {
         id: 1,

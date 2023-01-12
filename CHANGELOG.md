@@ -26,6 +26,10 @@
 * ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
 * ISRI: Update the Settings screen to allow multiple job profiles: View. Refs UIIN-2249.
 * Users with browse permissions can delete inventory records. Refs UIIN-2283.
+* Include browse permissions into Inventory permissions. Refs UIIN-2280.
+* Browse Lists | Hyperlink one column to improve accessibility. Refs UIIN-2266.
+* Rename `instances1` resource on `ItemsRoute` to avoid colliding with holding records. Refs UIIN-2289.
+* Z39.50 Settings toasts have a typo. Refs UIIN-2256
 * ISRI: Update the Inventory modal for ISRI single source Imports. Refs UIIN-2252.
 * ISRI: Update the Inventory modal for ISRI single source Overlays. Refs UIIN-2253.
 * ISRI: Update the Inventory modal for ISRI single multi-source Imports. Refs UIIN-2254.
