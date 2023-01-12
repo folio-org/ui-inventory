@@ -77,6 +77,15 @@ const DraggableHolding = ({
   return ReactDOM.createPortal(child, document.getElementById('ModuleContainer'));
 };
 
+DraggableHolding.propTypes = {
+  draggingHoldingsCount: PropTypes.number,
+  provided: PropTypes.object.isRequired,
+  snapshot: PropTypes.object.isRequired,
+  holding: PropTypes.object,
+  onViewHolding: PropTypes.func,
+  onAddItem: PropTypes.func,
+};
+
 const HoldingContainer = ({
   location,
   history,
@@ -133,6 +142,8 @@ const HoldingContainer = ({
 HoldingContainer.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  provided: PropTypes.object.isRequired,
+  snapshot: PropTypes.object.isRequired,
 
   instance: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,

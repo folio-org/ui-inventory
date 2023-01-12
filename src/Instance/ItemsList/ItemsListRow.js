@@ -71,6 +71,16 @@ const Row = ({
   return ReactDOM.createPortal(child, document.getElementById('ModuleContainer'));
 };
 
+Row.propTypes = {
+  cells: PropTypes.arrayOf(PropTypes.node).isRequired,
+  draggingItemsCount: PropTypes.number,
+  provided: PropTypes.object,
+  rowClass: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rowData: PropTypes.object,
+  selected: PropTypes.bool,
+  snapshot: PropTypes.object,
+};
+
 const ItemsListRow = ({
   rowClass,
   cells,
