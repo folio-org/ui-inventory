@@ -31,7 +31,7 @@ const mutator = {
   },
 };
 
-const oneCopycatProfile = {
+const singleCopycatProfile = {
   copycatProfiles: {
     records: [{
       profiles: [{
@@ -45,7 +45,7 @@ const oneCopycatProfile = {
   },
 };
 
-const twoCopycatProfiles = {
+const multipleCopycatProfiles = {
   copycatProfiles: {
     records: [{
       profiles: [{
@@ -78,7 +78,7 @@ const ImportRecordModalSetup = ({ resources, id }) => (
   </MemoryRouter>
 );
 
-const renderImportRecordModal = (resources = oneCopycatProfile, id) => renderWithIntl(
+const renderImportRecordModal = (resources = singleCopycatProfile, id) => renderWithIntl(
   <ImportRecordModalSetup resources={resources} id={id} />,
   translationsProperties
 );
@@ -96,9 +96,9 @@ describe('ImportRecordModal', () => {
     expect(modalTitle).toBeInTheDocument();
   });
 
-  describe('when there are two copycat profiles', () => {
+  describe('when there are multiple copycat profiles', () => {
     it('field for external identifier type should be rendered', () => {
-      renderImportRecordModal(twoCopycatProfiles);
+      renderImportRecordModal(multipleCopycatProfiles);
 
       const externalIdentifierTypeField = screen.getByLabelText('External target');
 
@@ -107,7 +107,7 @@ describe('ImportRecordModal', () => {
 
     describe('when select another external identifier type', () => {
       it('external identifier type value should be changed', () => {
-        renderImportRecordModal(twoCopycatProfiles);
+        renderImportRecordModal(multipleCopycatProfiles);
 
         const externalIdentifierTypeField = screen.getByLabelText('External target');
         fireEvent.change(externalIdentifierTypeField, { target: { value: 'testId2' } });
@@ -118,7 +118,7 @@ describe('ImportRecordModal', () => {
 
     describe('when click submit button', () => {
       it('function for submit should be called', () => {
-        renderImportRecordModal(twoCopycatProfiles);
+        renderImportRecordModal(multipleCopycatProfiles);
 
         const externalIdentifierTypeField = screen.getByLabelText('Enter testName1 identifier');
         fireEvent.change(externalIdentifierTypeField, { target: { value: 'test' } });
