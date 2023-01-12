@@ -110,7 +110,7 @@ const ImportRecordModal = ({
               )}
               {currentProfile && (
                 <>
-                  <Field name="selectedJobProfileId" initialValue={jobProfiles[0].value}>
+                  <Field name="selectedJobProfileId" initialValue={jobProfiles[0]?.value}>
                     {fieldProps => (
                       <Select
                         {...fieldProps.input}
