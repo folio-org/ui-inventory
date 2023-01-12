@@ -121,9 +121,10 @@ class InstancesList extends React.Component {
       state: PropTypes.object,
     }),
     stripes: PropTypes.object.isRequired,
-    history: {
-      listen: PropTypes.func
-    }
+    history: PropTypes.shape({
+      listen: PropTypes.func,
+      replace: PropTypes.func,
+    }),
   };
 
   static contextType = CalloutContext;

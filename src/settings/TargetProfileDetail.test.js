@@ -38,7 +38,7 @@ const defaultInitialValues = {
   externalIdQueryMap: 'extIdTest',
   internalIdEmbedPath: 'intIdTest',
   name: 'testName',
-  targetOptions: { key: 'testTargetOptionsKey '},
+  targetOptions: { key: 'testTargetOptionsKey' },
   url: 'testURL',
   allowedCreateJobProfileIds: ['createJobProfileTestId'],
   allowedUpdateJobProfileIds: ['updateJobProfileTestId'],

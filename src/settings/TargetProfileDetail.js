@@ -83,9 +83,11 @@ class TargetProfileDetail extends React.Component {
         <span>{`(${id})`}</span>
       </>
     ),
-    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: ({ id }) => (defaultProfileId === id
-      ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
-      : null),
+    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: ({ id }) => {
+      return defaultProfileId === id
+        ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
+        : null;
+    },
   });
 
   render() {
