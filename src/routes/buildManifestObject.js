@@ -199,7 +199,7 @@ export function buildManifestObject() {
       accumulate: true,
       fetch: false,
     },
-    itemsByBarcode: {
+    itemsByQuery: {
       type: 'okapi',
       records: 'items',
       path: 'inventory/items',
