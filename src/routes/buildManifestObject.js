@@ -18,7 +18,7 @@ import facetsStore from '../stores/facetsStore';
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
-const getQueryTemplateContributor = (queryValue) => `contributors.name ==/string "${queryValue}"`;
+const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
 const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '\\"')}"`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
