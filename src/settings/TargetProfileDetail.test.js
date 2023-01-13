@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { buildResources } from '@folio/stripes-data-transfer-components/test/helpers';
-
 import '../../test/jest/__mock__';
 
 import {
@@ -12,20 +10,26 @@ import {
 
 import TargetProfileDetail from './TargetProfileDetail';
 
-const identifierTypeResources = buildResources({
-  resourceName: 'identifierType',
-  records: [{ name: 'identifierTypeTestName' }],
-});
-const jobProfilesResources = buildResources({
-  resourceName: 'jobProfiles',
-  records: [{
-    id: 'createJobProfileTestId',
-    name: 'create name',
-  }, {
-    id: 'updateJobProfileTestId',
-    name: 'update name',
-  }],
-});
+const identifierTypeResources = {
+  identifierType: {
+    records: [{ name: 'identifierTypeTestName' }],
+    other: { totalRecords: 1 },
+    hasLoaded: true,
+  },
+};
+const jobProfilesResources = {
+  jobProfiles: {
+    records: [{
+      id: 'createJobProfileTestId',
+      name: 'create name',
+    }, {
+      id: 'updateJobProfileTestId',
+      name: 'update name',
+    }],
+    other: { totalRecords: 2 },
+    hasLoaded: true,
+  },
+};
 const resources = {
   ...identifierTypeResources,
   ...jobProfilesResources,

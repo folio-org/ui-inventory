@@ -212,6 +212,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                             name="createJobProfileId"
                             value={fields.value[index]}
                             type="radio"
+                            aria-label={intl.formatMessage({ id: 'ui-inventory.ariaLabel.createJobProfile' }, { profileIndex: index })}
                             centered
                           />
                         </Col>
@@ -242,6 +243,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                             name="updateJobProfileId"
                             value={fields.value[index]}
                             type="radio"
+                            aria-label={intl.formatMessage({ id: 'ui-inventory.ariaLabel.updateJobProfile' }, { profileIndex: index })}
                             centered
                           />
                         </Col>

@@ -355,6 +355,7 @@ class ViewInstance extends React.Component {
       _path: `/inventory/import/${this.props.match.params.id}`,
       xidtype: args.externalIdentifierType,
       xid: args.externalIdentifier,
+      jobprofileid: args.selectedJobProfileId,
     });
   }
 
