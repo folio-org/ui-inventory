@@ -5,6 +5,7 @@ import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 
 import {
@@ -60,7 +61,7 @@ const headLabelsForImportCreate = (
   <Row>
     <Col xs={11}>
       <Headline>
-        <FormattedMessage id="ui-inventory.importCreateJobProfileId" />
+        <FormattedMessage id="ui-inventory.createJobProfileIds" />
       </Headline>
     </Col>
     <Col xs={1} style={{ textAlign: 'center' }}>
@@ -75,7 +76,7 @@ const headLabelsForOverlayUpdate = (
   <Row>
     <Col xs={11}>
       <Headline>
-        <FormattedMessage id="ui-inventory.overlayUpdateJobProfileId" />
+        <FormattedMessage id="ui-inventory.updateJobProfileIds" />
       </Headline>
     </Col>
     <Col xs={1} style={{ textAlign: 'center' }}>
@@ -109,6 +110,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
         pristine,
         submitting,
         submitSucceeded,
+        values,
       }) => (
         <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
           <Paneset isRoot>
@@ -187,11 +189,11 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     component={TextField}
                   />
                   <FieldArray
-                    legend={<FormattedMessage id="ui-inventory.createJobProfileIds" />}
+                    legend={isEmpty(values.allowedCreateJobProfileIds) ? <FormattedMessage id="ui-inventory.createJobProfileIds" /> : ''}
                     name="allowedCreateJobProfileIds"
                     id="input-targetprofile-createJobProfileIds"
                     component={RepeatableField}
-                    headLabels={headLabelsForImportCreate}
+                    headLabels={!isEmpty(values.allowedCreateJobProfileIds) ? headLabelsForImportCreate : ''}
                     addLabel={<FormattedMessage id="ui-inventory.button.addCreateJobProfileId" />}
                     onAdd={fields => fields.push('')}
                     renderField={(field, index, fields) => (
@@ -217,10 +219,10 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     )}
                   />
                   <FieldArray
-                    legend={<FormattedMessage id="ui-inventory.updateJobProfileIds" />}
+                    legend={isEmpty(values.allowedUpdateJobProfileIds) ? <FormattedMessage id="ui-inventory.updateJobProfileIds" /> : ''}
                     name="allowedUpdateJobProfileIds"
                     id="input-targetprofile-updateJobProfileIds"
-                    headLabels={headLabelsForOverlayUpdate}
+                    headLabels={!isEmpty(values.allowedUpdateJobProfileIds) ? headLabelsForOverlayUpdate : ''}
                     component={RepeatableField}
                     addLabel={<FormattedMessage id="ui-inventory.button.addUpdateJobProfileId" />}
                     onAdd={fields => fields.push('')}
