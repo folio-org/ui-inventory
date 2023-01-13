@@ -199,5 +199,12 @@ export function buildManifestObject() {
       accumulate: true,
       fetch: false,
     },
+    itemsByQuery: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory/items',
+      accumulate: true,
+      fetch: false,
+    },
   };
 }

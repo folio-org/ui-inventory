@@ -127,7 +127,7 @@ const InstanceFiltersBrowse = props => {
 export default InstanceFiltersBrowse;
 
 InstanceFiltersBrowse.propTypes = {
-  activeFilters: PropTypes.objectOf(PropTypes.array),
+  activeFilters: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   data: PropTypes.object,

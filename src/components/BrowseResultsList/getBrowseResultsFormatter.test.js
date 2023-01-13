@@ -1,56 +1,126 @@
 import '../../../test/jest/__mock__';
 
+import userEvent from '@testing-library/user-event';
+import { act, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
+
+import { MultiColumnList } from '@folio/stripes-components';
+
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import { browseModeOptions } from '../../constants';
-import MissedMatchItem from '../MissedMatchItem';
+import {
+  browseModeOptions,
+  BROWSE_INVENTORY_ROUTE,
+  INVENTORY_ROUTE,
+} from '../../constants';
+import {
+  COLUMNS_MAPPING,
+  VISIBLE_COLUMNS_MAP,
+} from './constants';
 import getBrowseResultsFormatter from './getBrowseResultsFormatter';
-import userEvent from '@testing-library/user-event';
 
 window.open = jest.fn();
+let history;
 
 const data = {
   contributorNameTypes: [{ id: 'contributorNameTypeId', name: 'nameType' }],
   contributorTypes: [{ id: 'contributorTypeId', name: 'type' }],
 };
+const missedMatchText = 'would be here';
+
+const renderComponent = ({
+  contentData,
+  formatter,
+  visibleColumns,
+  ...props
+}) => {
+  return renderWithIntl(
+    <Router history={history}>
+      <MultiColumnList
+        contentData={contentData}
+        columnMapping={COLUMNS_MAPPING}
+        formatter={formatter}
+        visibleColumns={visibleColumns}
+        {...props}
+      />
+    </Router>,
+    translationsProperties,
+  );
+};
 
 describe('getBrowseResultsFormatter', () => {
+  beforeEach(() => {
+    history = createMemoryHistory({
+      initialEntries: [{ pathname: BROWSE_INVENTORY_ROUTE }],
+    });
+  });
+
   describe('Call numbers', () => {
-    const {
-      callNumber,
-      title,
-      numberOfTitles,
-    } = getBrowseResultsFormatter(data, browseModeOptions.CALL_NUMBERS);
-
-    const row = {
-      fullCallNumber: 'A 1958 A 8050',
-      shelfKey: '41958 A 48050',
+    const formatter = getBrowseResultsFormatter({
+      data,
+      browseOption: browseModeOptions.CALL_NUMBERS,
+    });
+    const missedMatchRecord = {
       isAnchor: true,
-      totalRecords: 1,
-      instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title' },
+      fullCallNumber: 'bla bla',
+      totalRecords: 0,
     };
+    const contentData = [
+      {
+        fullCallNumber: 'A 1958 A 8050',
+        shelfKey: '41958 A 48050',
+        isAnchor: true,
+        totalRecords: 1,
+        instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title' },
+      },
+      {
+        fullCallNumber: 'AAA',
+        shelfKey: '123456',
+        totalRecords: 2,
+        instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title 2' },
+      },
+    ];
+    const [anchorRecord, nonAnchorRecord] = contentData;
 
-    it('should render "callNumber" cell as missed match item', () => {
-      expect(callNumber({ fullCallNumber: 'qwerty' })).toEqual(<MissedMatchItem query="qwerty" />);
+    const renderCallNumberList = (params = {}) => renderComponent({
+      visibleColumns: VISIBLE_COLUMNS_MAP[browseModeOptions.CALL_NUMBERS],
+      contentData,
+      formatter,
+      ...params,
     });
 
-    it('should render "callNumber" cell as anchor item', () => {
-      expect(callNumber(row)).toEqual(<strong>{row.fullCallNumber}</strong>);
+    it('should render call number\'s rows', () => {
+      renderCallNumberList();
+
+      // Anchor row
+      expect(screen.getByText(anchorRecord.fullCallNumber).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText(anchorRecord.instance.title).tagName.toLowerCase()).toBe('strong');
+      // Default row
+      expect(screen.getByText(nonAnchorRecord.fullCallNumber).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(nonAnchorRecord.instance.title).tagName.toLowerCase()).not.toBe('strong');
     });
 
-    it('should render "callNumber" cell as default item', () => {
-      expect(callNumber({ ...row, isAnchor: undefined })).toEqual(row.fullCallNumber);
+    it('should render \'Missed match item\' row', () => {
+      renderCallNumberList({ contentData: [missedMatchRecord] });
+
+      expect(screen.getByText(missedMatchRecord.fullCallNumber)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchText)).toBeInTheDocument();
     });
 
-    it('should render "title" cell', () => {
-      expect(title(row)).toEqual(<strong>{row.instance.title}</strong>);
-    });
+    it('should navigate to instance "Search" page when target column was clicked', async () => {
+      renderCallNumberList();
 
-    it('should render "numberOfTitles" cell', () => {
-      expect(numberOfTitles(row)).toEqual(<strong>{row.totalRecords}</strong>);
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+
+      await act(async () => userEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
+
+      expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
   });
 
@@ -59,76 +129,133 @@ describe('getBrowseResultsFormatter', () => {
       window.open.mockClear();
     });
 
-    const {
-      contributor,
-      contributorType,
-      relatorTerm,
-    } = getBrowseResultsFormatter(data, browseModeOptions.CONTRIBUTORS);
-
-    const row = {
-      name: 'Abe, Etsuo, 1949',
-      contributorTypeId: ['contributorTypeId'],
-      contributorNameTypeId: 'contributorNameTypeId',
-      totalRecords: 1,
+    const formatter = getBrowseResultsFormatter({
+      data,
+      browseOption: browseModeOptions.CONTRIBUTORS,
+    });
+    const missedMatchRecord = {
+      isAnchor: true,
+      name: 'bla bla',
+      totalRecords: 0,
     };
+    const contentData = [
+      {
+        isAnchor: true,
+        name: 'Abe, Etsuo, 1949',
+        contributorTypeId: ['contributorTypeId'],
+        contributorNameTypeId: 'contributorNameTypeId',
+        totalRecords: 2,
+      },
+      {
+        authorityId: 'authorityId',
+        name: 'Antoniou, Grigoris',
+        contributorTypeId: ['contributorTypeId'],
+        contributorNameTypeId: 'contributorNameTypeId',
+        totalRecords: 1,
+      }
+    ];
+    const [anchorRecord, nonAnchorRecord] = contentData;
 
-    it('should render "contributor" cell with connected authority record', () => {
-      const FormattedCell = contributor({ ...row, authorityId: 'authorityId' });
-
-      const { getByText } = renderWithIntl(FormattedCell, translationsProperties);
-
-      expect(getByText('Linked to MARC authority')).toBeInTheDocument();
-      expect(getByText(row.name)).toBeInTheDocument();
+    const renderContributorsList = (params = {}) => renderComponent({
+      contentData,
+      formatter,
+      visibleColumns: VISIBLE_COLUMNS_MAP[browseModeOptions.CONTRIBUTORS],
+      ...params,
     });
 
-    it('should open the record in MARC authority app in new tab when "authority" icon was clicked', () => {
-      const FormattedCell = contributor({ ...row, authorityId: 'authorityId' });
+    it('should render contributor\'s rows', () => {
+      renderContributorsList();
 
-      const { getByTestId } = renderWithIntl(FormattedCell, translationsProperties);
+      // Anchor row
+      expect(screen.getByText(anchorRecord.name).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
+      // Default row
+      expect(screen.getByText(nonAnchorRecord.name).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
+    });
 
-      userEvent.click(getByTestId('authority-app-link'));
+    it('should render \'Missed match item\' rows', () => {
+      renderContributorsList({ contentData: [missedMatchRecord] });
+
+      expect(screen.getByText(missedMatchRecord.name)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchText)).toBeInTheDocument();
+    });
+
+    it('should navigate to instance "Search" page when target column was clicked', async () => {
+      renderContributorsList();
+
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+
+      await act(async () => userEvent.click(screen.getByText(anchorRecord.name)));
+
+      expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+    });
+
+    it('should open the record in MARC authority app in new tab when "authority" icon was clicked', async () => {
+      renderContributorsList();
+
+      await act(async () => userEvent.click(screen.getByTestId('authority-app-link')));
 
       expect(window.open).toHaveBeenCalledWith(expect.stringContaining('/marc-authorities/authorities'), '_blank', 'noopener,noreferrer');
-    });
-
-    it('should open the record in MARC authority app in new tab when "authority" enter key was pressed', () => {
-      const FormattedCell = contributor({ ...row, authorityId: 'authorityId' });
-
-      const { getByTestId } = renderWithIntl(FormattedCell, translationsProperties);
-
-      userEvent.type(getByTestId('authority-app-link'), '{enter}');
-
-      expect(window.open).toHaveBeenCalledWith(expect.stringContaining('/marc-authorities/authorities'), '_blank', 'noopener,noreferrer');
-    });
-
-    it('should render "contributor" cell as missed match item', () => {
-      expect(contributor({ name: 'qwerty' })).toEqual(<MissedMatchItem query="qwerty" />);
-    });
-
-    it('should render "contributorType" cell', () => {
-      expect(contributorType(row)).toEqual(data.contributorNameTypes[0].name);
-    });
-
-    it('should render "relatorTerm" cell', () => {
-      expect(relatorTerm(row)).toEqual(data.contributorTypes[0].name);
     });
   });
 
   describe('Subjects', () => {
-    const { subject } = getBrowseResultsFormatter(data, browseModeOptions.SUBJECTS);
-
-    const row = {
+    const formatter = getBrowseResultsFormatter({
+      data,
+      browseOption: browseModeOptions.SUBJECTS,
+    });
+    const missedMatchRecord = {
       isAnchor: true,
-      subject: 'Africa Politics and government 20th century',
-      totalRecords: 1,
+      subject: 'bla bla',
+      totalRecords: 0,
     };
+    const contentData = [
+      {
+        isAnchor: true,
+        subject: 'Africa Politics and government 20th century',
+        totalRecords: 1,
+      },
+      {
+        subject: 'Corporate governance',
+        totalRecords: 2,
+      }
+    ];
+    const [anchorRecord, nonAnchorRecord] = contentData;
 
-    it('should render "subject" cell as missed match item', () => {
-      expect(subject({ subject: 'qwerty' })).toEqual(<MissedMatchItem query="qwerty" />);
+    const renderSubjectsList = (params = {}) => renderComponent({
+      contentData,
+      formatter,
+      visibleColumns: VISIBLE_COLUMNS_MAP[browseModeOptions.SUBJECTS],
+      ...params,
     });
 
-    it('should render "subject" cell as anchor item', () => {
-      expect(subject(row)).toEqual(<strong>{row.subject}</strong>);
+    it('should render subject\'s rows', () => {
+      renderSubjectsList();
+
+      // Anchor row
+      expect(screen.getByText(anchorRecord.subject).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
+      // Default row
+      expect(screen.getByText(nonAnchorRecord.subject).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
+    });
+
+    it('should render \'Missed match item\' rows', () => {
+      renderSubjectsList({ contentData: [missedMatchRecord] });
+
+      expect(screen.getByText(missedMatchRecord.subject)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchText)).toBeInTheDocument();
+    });
+
+    it('should navigate to instance "Search" page when target column was clicked', async () => {
+      renderSubjectsList();
+
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+
+      await act(async () => userEvent.click(screen.getByText(anchorRecord.subject)));
+
+      expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
   });
 });
