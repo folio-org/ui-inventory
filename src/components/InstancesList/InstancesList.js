@@ -791,7 +791,7 @@ class InstancesList extends React.Component {
     const { searchInProgress } = this.state;
 
     if (!searchInProgress) {
-      return;
+      return instance;
     }
 
     const itemQuery = buildSingleItemQuery(qindex, query);
@@ -808,11 +808,13 @@ class InstancesList extends React.Component {
     // if no results have been found or more than one item has been found
     // do not open item view
     if (items?.length > 1 || !items?.[0]?.holdingsRecordId) {
-      return;
+      return instance;
     }
 
     const { id, holdingsRecordId } = items[0];
     goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, getParams());
+
+    return null;
   }
 
   onSelectRow = (_, instance) => {
@@ -824,8 +826,7 @@ class InstancesList extends React.Component {
       return instance;
     }
 
-    this.findAndOpenItem(instance);
-    return null;
+    return this.findAndOpenItem(instance);
   }
 
   render() {
