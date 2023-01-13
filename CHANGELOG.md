@@ -36,6 +36,8 @@
 * ISRI: Update the Inventory modal for ISRI single source Overlays. Refs UIIN-2253.
 * ISRI: Update the Inventory modal for ISRI single multi-source Imports. Refs UIIN-2254.
 * ISRI: Update the Inventory modal for ISRI single multi-source Overlays. Refs UIIN-2255.
+* Clean up the rest of the old "Browse" related code from "Search" route. Refs UIIN-2285.
+* Wrong operator used in request when user selects a record in browse results. UIIN-2294
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
