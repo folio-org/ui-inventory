@@ -30,6 +30,14 @@
 * Browse Lists | Hyperlink one column to improve accessibility. Refs UIIN-2266.
 * Rename `instances1` resource on `ItemsRoute` to avoid colliding with holding records. Refs UIIN-2289.
 * Z39.50 Settings toasts have a typo. Refs UIIN-2256
+* Accessibility check: ISRI Z39.50 integration profile: Create/Edit. Fixes UIIN-2250.
+* Accessibility check: ISRI Z39.50 integration profile: View. Fixes UIIN-2251.
+* ISRI: Update the Inventory modal for ISRI single source Imports. Refs UIIN-2252.
+* ISRI: Update the Inventory modal for ISRI single source Overlays. Refs UIIN-2253.
+* ISRI: Update the Inventory modal for ISRI single multi-source Imports. Refs UIIN-2254.
+* ISRI: Update the Inventory modal for ISRI single multi-source Overlays. Refs UIIN-2255.
+* Clean up the rest of the old "Browse" related code from "Search" route. Refs UIIN-2285.
+* Wrong operator used in request when user selects a record in browse results. UIIN-2294
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

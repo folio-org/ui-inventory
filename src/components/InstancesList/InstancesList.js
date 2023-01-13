@@ -755,6 +755,7 @@ class InstancesList extends React.Component {
       _path: '/inventory/import',
       xidtype: args.externalIdentifierType,
       xid: args.externalIdentifier,
+      jobprofileid: args.selectedJobProfileId,
     });
   }
 

@@ -169,6 +169,7 @@ class TargetProfileDetail extends React.Component {
                   }}
                   formatter={createJobProfilesFormatter}
                   visibleColumns={jobProfilesVisibleColumns}
+                  columnIdPrefix="create-job-profiles"
                 />
               )
             }
@@ -187,6 +188,7 @@ class TargetProfileDetail extends React.Component {
                   }}
                   formatter={updateJobProfilesFormatter}
                   visibleColumns={jobProfilesVisibleColumns}
+                  columnIdPrefix="update-job-profiles"
                 />
               )
             }

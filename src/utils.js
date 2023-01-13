@@ -684,7 +684,7 @@ export const handleKeyCommand = (handler, { disabled } = {}) => {
   };
 };
 
-const buildQueryByIds = (itemsChunk) => {
+export const buildQueryByIds = (itemsChunk) => {
   const query = itemsChunk
     .map(id => `id==${id}`)
     .join(' or ');
