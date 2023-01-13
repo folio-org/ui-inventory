@@ -83,9 +83,11 @@ class TargetProfileDetail extends React.Component {
         <span>{`(${id})`}</span>
       </>
     ),
-    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: ({ id }) => defaultProfileId === id
-      ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
-      : null,
+    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: ({ id }) => {
+      return defaultProfileId === id
+        ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
+        : null;
+    },
   });
 
   render() {
@@ -108,7 +110,7 @@ class TargetProfileDetail extends React.Component {
 
     const jobProfilesVisibleColumns = [JOB_PROFILES_COLUMNS_NAME.ID, JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT];
     const createJobProfilesContent = this.getJobProfilesContent(allowedCreateJobProfileIds, createJobProfileId);
-    const updateJobProfilesContent = this.getJobProfilesContent(allowedUpdateJobProfileIds, updateJobProfileId)
+    const updateJobProfilesContent = this.getJobProfilesContent(allowedUpdateJobProfileIds, updateJobProfileId);
     const createJobProfilesFormatter = this.getJobProfilesFormatter(createJobProfileId);
     const updateJobProfilesFormatter = this.getJobProfilesFormatter(updateJobProfileId);
 
@@ -167,6 +169,7 @@ class TargetProfileDetail extends React.Component {
                   }}
                   formatter={createJobProfilesFormatter}
                   visibleColumns={jobProfilesVisibleColumns}
+                  columnIdPrefix="create-job-profiles"
                 />
               )
             }
@@ -185,6 +188,7 @@ class TargetProfileDetail extends React.Component {
                   }}
                   formatter={updateJobProfilesFormatter}
                   visibleColumns={jobProfilesVisibleColumns}
+                  columnIdPrefix="update-job-profiles"
                 />
               )
             }

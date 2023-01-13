@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { fireEvent } from "@testing-library/react";
+import { fireEvent } from '@testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -9,7 +9,7 @@ import {
   translationsProperties,
 } from '../../test/jest/helpers';
 
-import TargetProfileForm from "./TargetProfileForm";
+import TargetProfileForm from './TargetProfileForm';
 
 const onSubmitMock = jest.fn();
 const defaultInitialValues = { targetOptions: { key: 'testKey' } };
@@ -32,7 +32,7 @@ const defaultProps = {
   },
 };
 
-const TargetProfileFormSetup = ({initialValues }) => (
+const TargetProfileFormSetup = ({ initialValues }) => (
   <MemoryRouter>
     <TargetProfileForm
       initialValues={initialValues}
@@ -65,7 +65,7 @@ describe('TargetProfileForm', () => {
       const initialValue = {
         id: 'testId',
         name: 'testName',
-      }
+      };
       const { getByText } = renderTargetProfileForm(initialValue);
 
       expect(getByText('testName')).toBeInTheDocument();
@@ -78,8 +78,8 @@ describe('TargetProfileForm', () => {
         container,
         getByText,
       } = renderTargetProfileForm();
-      const nameInput = container.querySelector('#input-targetprofile-name')
-      fireEvent.change(nameInput, {target: { value: 'test name' }});
+      const nameInput = container.querySelector('#input-targetprofile-name');
+      fireEvent.change(nameInput, { target: { value: 'test name' } });
 
       const submit = getByText('Save & close');
       fireEvent.click(submit);

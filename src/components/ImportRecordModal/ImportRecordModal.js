@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
+import { isEmpty } from 'lodash';
+
 import { stripesConnect } from '@folio/stripes/core';
 import { Loading, Modal, Select, TextField, ModalFooter, Button } from '@folio/stripes/components';
+
+import { buildQueryByIds } from '../../utils';
 
 const ImportRecordModal = ({
   isOpen,
@@ -11,14 +15,59 @@ const ImportRecordModal = ({
   handleSubmit: onSubmit,
   handleCancel,
   id,
+  mutator,
   resources,
 }) => {
-  const containerContainer = resources?.copycatProfiles.records;
-  const container = containerContainer && containerContainer.length ? containerContainer[0] : undefined;
+  const intl = useIntl();
+  const copycatProfiles = resources?.copycatProfiles.records;
+  const container = copycatProfiles && copycatProfiles.length ? copycatProfiles[0] : undefined;
   const profiles = container?.profiles;
-  const currentProfile = profiles ? profiles[0] : undefined;
+
+  const [jobProfiles, setJobProfiles] = useState([]);
+  const [currentProfile, setCurrentProfile] = useState(profiles ? profiles[0] : {});
+
   const options = !profiles ? [] : profiles.map(p => ({ value: p.id, label: p.name }));
   const profileById = Object.fromEntries(options.map(o => [o.value, o.label]));
+
+  const getJobProfilesOptions = (arr = []) => {
+    const sortedOptions = [...arr];
+    const defaultProfileId = id ? currentProfile.updateJobProfileId : currentProfile.createJobProfileId;
+    const defaultProfile = sortedOptions.find(profile => profile.value === defaultProfileId);
+    defaultProfile.label = intl.formatMessage({ id: 'ui-inventory.copycat.defaultJobProfile' }, { jobProfile: defaultProfile.label });
+    const indexOfDefault = sortedOptions.findIndex(option => option.value === defaultProfileId);
+
+    sortedOptions.splice(indexOfDefault, 1);
+    sortedOptions.unshift(defaultProfile);
+
+    return sortedOptions;
+  };
+
+  useEffect(() => {
+    setCurrentProfile(profiles ? profiles[0] : {});
+  }, [profiles]);
+
+  useEffect(() => {
+    const allowedJobProfileIds = id ? currentProfile?.allowedUpdateJobProfileIds : currentProfile?.allowedCreateJobProfileIds;
+
+    if (!isEmpty(allowedJobProfileIds)) {
+      mutator.jobProfiles.GET({
+        params: {
+          query: buildQueryByIds(allowedJobProfileIds),
+          sort: 'sortBy name',
+        }
+      }).then(response => {
+        const optionsForSelect = response.jobProfiles?.map(profile => ({
+          value: profile.id,
+          label: profile.name,
+        }));
+
+        if (!isEmpty(optionsForSelect)) {
+          const sortedOptions = getJobProfilesOptions(optionsForSelect);
+          setJobProfiles(sortedOptions);
+        }
+      });
+    }
+  }, [id, currentProfile?.allowedCreateJobProfileIds, currentProfile?.allowedUpdateJobProfileIds]);
 
   return (
     <Modal
@@ -44,20 +93,44 @@ const ImportRecordModal = ({
                 </Field>
               ) : (
                 <Field name="externalIdentifierType" initialValue={currentProfile.id}>
-                  {props2 => <Select {...props2.input} dataOptions={options} />}
+                  {props2 => (
+                    <Select
+                      {...props2.input}
+                      label={<FormattedMessage id="ui-inventory.copycat.externalTarget" />}
+                      dataOptions={options}
+                      onChange={(e) => {
+                        const identifierTypeId = e.target.value;
+
+                        props2.input.onChange(identifierTypeId);
+                        setCurrentProfile(profiles.find(profile => profile.id === identifierTypeId));
+                      }}
+                    />
+                  )}
                 </Field>
               )}
               {currentProfile && (
-                <Field
-                  name="externalIdentifier"
-                  component={TextField}
-                  label={
-                    <FormattedMessage
-                      id={`ui-inventory.copycat.enterIdentifier${id ? 'ForUpdate' : ''}`}
-                      values={{ identifierName: profileById[values.externalIdentifierType] }}
-                    />}
-                  autoFocus
-                />
+                <>
+                  <Field name="selectedJobProfileId" initialValue={jobProfiles[0]?.value}>
+                    {fieldProps => (
+                      <Select
+                        {...fieldProps.input}
+                        label={<FormattedMessage id="ui-inventory.copycat.jobProfileToBeUsed" />}
+                        dataOptions={jobProfiles}
+                        onChange={(e => fieldProps.input.onChange(e.target.value))}
+                      />
+                    )}
+                  </Field>
+                  <Field
+                    name="externalIdentifier"
+                    component={TextField}
+                    label={
+                      <FormattedMessage
+                        id={`ui-inventory.copycat.enterIdentifier${id ? 'ForUpdate' : ''}`}
+                        values={{ identifierName: profileById[values.externalIdentifierType] }}
+                      />}
+                    autoFocus
+                  />
+                </>
               )}
               <ModalFooter>
                 <Button buttonStyle="primary" disabled={!values.externalIdentifier} onClick={() => handleSubmit()}>
@@ -86,12 +159,18 @@ ImportRecordModal.propTypes = {
       records: PropTypes.arrayOf(PropTypes.object),
     }).isRequired
   }),
+  mutator: PropTypes.object.isRequired,
 };
 
 ImportRecordModal.manifest = Object.freeze({
   copycatProfiles: {
     type: 'okapi',
     path: 'copycat/profiles?query=enabled=true sortby name&limit=1000',
+  },
+  jobProfiles: {
+    type: 'okapi',
+    path: 'data-import-profiles/jobProfiles',
+    accumulate: true,
   },
 });
 
