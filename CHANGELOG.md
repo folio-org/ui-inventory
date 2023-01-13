@@ -30,6 +30,7 @@
 * Browse Lists | Hyperlink one column to improve accessibility. Refs UIIN-2266.
 * Rename `instances1` resource on `ItemsRoute` to avoid colliding with holding records. Refs UIIN-2289.
 * Z39.50 Settings toasts have a typo. Refs UIIN-2256
+* Accessibility check: ISRI Z39.50 integration profile: Create/Edit. Fixes UIIN-2250.
 * Accessibility check: ISRI Z39.50 integration profile: View. Fixes UIIN-2251.
 * ISRI: Update the Inventory modal for ISRI single source Imports. Refs UIIN-2252.
 * ISRI: Update the Inventory modal for ISRI single source Overlays. Refs UIIN-2253.
