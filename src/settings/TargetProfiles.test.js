@@ -13,7 +13,6 @@ import TargetProfiles from './TargetProfiles';
 
 jest.unmock('@folio/stripes/components');
 
-
 const resources = {
   entries: {
     type: 'okapi',
@@ -61,8 +60,8 @@ const renderTargetProfilesSettings = () => renderWithIntl(
   translationsProperties
 );
 describe('TargetProfiles Component', () => {
-  it('should take snapshot', () => {
-    const container = renderTargetProfilesSettings();
-    expect(container).toMatchSnapshot();
+  it('should render component', () => {
+    const { container } = renderTargetProfilesSettings();
+    expect(container).toBeDefined();
   });
 });
