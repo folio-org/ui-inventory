@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Form, Field } from 'react-final-form';
@@ -52,8 +56,7 @@ const ImportRecordModal = ({
     if (!isEmpty(allowedJobProfileIds)) {
       mutator.jobProfiles.GET({
         params: {
-          query: buildQueryByIds(allowedJobProfileIds),
-          sort: 'sortBy name',
+          query: `${buildQueryByIds(allowedJobProfileIds)} sortBy name`,
         }
       }).then(response => {
         const optionsForSelect = response.jobProfiles?.map(profile => ({
@@ -69,11 +72,29 @@ const ImportRecordModal = ({
     }
   }, [id, currentProfile?.allowedCreateJobProfileIds, currentProfile?.allowedUpdateJobProfileIds]);
 
+  const modalTitle = id
+    ? <FormattedMessage id="ui-inventory.copycat.reimport" />
+    : <FormattedMessage id="ui-inventory.singleRecordImport" />;
+
+  const onIdentifierTypeChange = useCallback(
+    fieldProps => e => {
+      const identifierTypeId = e.target.value;
+
+      fieldProps.input.onChange(identifierTypeId);
+      setCurrentProfile(profiles.find(profile => profile.id === identifierTypeId));
+    },
+    [profiles],
+  );
+  const onJobProfileChange = useCallback(
+    fieldProps => e => { fieldProps.input.onChange(e.target.value); },
+    [],
+  );
+
   return (
     <Modal
       id="import-record-modal"
       open={isOpen}
-      label={<FormattedMessage id="ui-inventory.singleRecordImport" />}
+      label={modalTitle}
       dismissible
       size="small"
       onClose={handleCancel}
@@ -98,12 +119,7 @@ const ImportRecordModal = ({
                       {...props2.input}
                       label={<FormattedMessage id="ui-inventory.copycat.externalTarget" />}
                       dataOptions={options}
-                      onChange={(e) => {
-                        const identifierTypeId = e.target.value;
-
-                        props2.input.onChange(identifierTypeId);
-                        setCurrentProfile(profiles.find(profile => profile.id === identifierTypeId));
-                      }}
+                      onChange={onIdentifierTypeChange(props2)}
                     />
                   )}
                 </Field>
@@ -116,7 +132,7 @@ const ImportRecordModal = ({
                         {...fieldProps.input}
                         label={<FormattedMessage id="ui-inventory.copycat.jobProfileToBeUsed" />}
                         dataOptions={jobProfiles}
-                        onChange={(e => fieldProps.input.onChange(e.target.value))}
+                        onChange={onJobProfileChange(fieldProps)}
                       />
                     )}
                   </Field>
