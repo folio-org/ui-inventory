@@ -31,7 +31,7 @@ export default {
         }
       });
     }
-    return formatted.map((p, i) => <div keys={i}>{p}</div>);
+    return formatted.map((p, i) => <div key={i}>{p}</div>);
   },
 
   relationsFormatter: (r, instanceRelationshipTypes) => {

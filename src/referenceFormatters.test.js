@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import * as Formatter from './referenceFormatters';
 
 describe('ContributorsFormatter', () => {
@@ -10,17 +10,67 @@ describe('ContributorsFormatter', () => {
 });
 
 describe('electronicAccessFormatter', () => {
-  it('Render the correct values in the list of <div> elements', () => {
-    const r = { electronicAccess: [{
-      relationshipId: 1,
-      uri: 'https://TestingURL.com',
-      linkText: 'linkText',
-      materialsSpecification: 'materialsSpecification',
-      publicNote: 'publicNote',
-    }] };
-    const electronicAccessRelationships = [{ id: 1, name: 'name' }];
-    const { container } = render(Formatter.default.electronicAccessFormatter(r, electronicAccessRelationships));
-    expect(container.querySelector('div[keys="0"]').textContent).toBe('; https://TestingURL.com; linkText; materialsSpecification; publicNote');
+  afterEach(cleanup);
+  it('format the electronic access correctly', () => {
+    const r = {
+      electronicAccess: [
+        {
+          relationshipId: 1,
+          uri: 'http://example.com',
+          linkText: 'link text',
+          materialsSpecification: 'specification',
+          publicNote: 'note'
+        },
+        {
+          relationshipId: 2,
+          uri: 'http://example2.com',
+          linkText: 'link text 2',
+          materialsSpecification: 'specification 2',
+          publicNote: 'note 2'
+        }
+      ]
+    };
+    const electronicAccessRelationships = [
+      { id: 1, name: 'Relationship 1' },
+      { id: 2, name: 'Relationship 2' }
+    ];
+    const { getByText } = render(Formatter.default.electronicAccessFormatter(r, electronicAccessRelationships));
+    expect(getByText('; http://example.com; link text; specification; note')).toBeTruthy();
+    expect(getByText('; http://example2.com; link text 2; specification 2; note 2')).toBeTruthy();
+  });
+
+  it('return empty if no electronicAccess', () => {
+    const r = {
+      electronicAccess: []
+    };
+    const electronicAccessRelationships = [
+      { id: 1, name: 'Relationship 1' },
+      { id: 2, name: 'Relationship 2' }
+    ];
+    const { queryByText } = render(Formatter.default.electronicAccessFormatter(r, electronicAccessRelationships));
+    expect(queryByText('Relationship 1; http://example.com; link text; specification; note')).toBeFalsy();
+    expect(queryByText('Relationship 2; http://example2.com; link text 2; specification 2; note 2')).toBeFalsy();
+  });
+
+  it('return empty if no relationshipId match', () => {
+    const r = {
+      electronicAccess: [
+        {
+          relationshipId: 3,
+          uri: 'http://example.com',
+          linkText: 'link text',
+          materialsSpecification: 'specification',
+          publicNote: 'note'
+        }
+      ]
+    };
+    const electronicAccessRelationships = [
+      { id: 1, name: 'Relationship 1' },
+      { id: 2, name: 'Relationship 2' }
+    ];
+    const { queryByText } = render(Formatter.default.electronicAccessFormatter(r, electronicAccessRelationships));
+    expect(queryByText('Relationship 1; http://example.com; link text; specification; note')).toBeFalsy();
+    expect(queryByText('Relationship 2; http://example.com; link text; specification; note')).toBeFalsy();
   });
 });
 
