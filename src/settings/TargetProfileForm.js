@@ -14,6 +14,7 @@ import {
   Col,
   Headline,
   IconButton,
+  InfoPopover,
   Pane,
   PaneFooter,
   PaneMenu,
@@ -57,11 +58,27 @@ function makeOptions(resource) {
   return (resource.records || []).map(p => ({ value: p.id, label: p.name }));
 }
 
+const infoPopover = <InfoPopover
+  content={<FormattedMessage id="ui-inventory.jobProfiles.info" />}
+  iconSize="medium"
+/>;
+const createJobProfileLabel = (
+  <>
+    <FormattedMessage id="ui-inventory.createJobProfileIds" />
+    {infoPopover}
+  </>
+);
+const updateJobProfileLabel = (
+  <>
+    <FormattedMessage id="ui-inventory.updateJobProfileIds" />
+    {infoPopover}
+  </>
+);
 const headLabelsForImportCreate = (
   <Row>
     <Col xs={11}>
       <Headline>
-        <FormattedMessage id="ui-inventory.createJobProfileIds" />
+        {createJobProfileLabel}
       </Headline>
     </Col>
     <Col xs={1} style={{ textAlign: 'center' }}>
@@ -76,7 +93,7 @@ const headLabelsForOverlayUpdate = (
   <Row>
     <Col xs={11}>
       <Headline>
-        <FormattedMessage id="ui-inventory.updateJobProfileIds" />
+        {updateJobProfileLabel}
       </Headline>
     </Col>
     <Col xs={1} style={{ textAlign: 'center' }}>
@@ -86,7 +103,6 @@ const headLabelsForOverlayUpdate = (
     </Col>
   </Row>
 );
-
 
 const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => {
   const {
@@ -189,7 +205,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     component={TextField}
                   />
                   <FieldArray
-                    legend={isEmpty(values.allowedCreateJobProfileIds) ? <FormattedMessage id="ui-inventory.createJobProfileIds" /> : ''}
+                    legend={isEmpty(values.allowedCreateJobProfileIds) ? createJobProfileLabel : ''}
                     name="allowedCreateJobProfileIds"
                     id="input-targetprofile-createJobProfileIds"
                     component={RepeatableField}
@@ -220,7 +236,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     )}
                   />
                   <FieldArray
-                    legend={isEmpty(values.allowedUpdateJobProfileIds) ? <FormattedMessage id="ui-inventory.updateJobProfileIds" /> : ''}
+                    legend={isEmpty(values.allowedUpdateJobProfileIds) ? updateJobProfileLabel : ''}
                     name="allowedUpdateJobProfileIds"
                     id="input-targetprofile-updateJobProfileIds"
                     headLabels={!isEmpty(values.allowedUpdateJobProfileIds) ? headLabelsForOverlayUpdate : ''}
