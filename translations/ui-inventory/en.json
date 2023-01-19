@@ -331,8 +331,6 @@
   "internalIdEmbedPath": "Internal ID embed path",
   "createJobProfileIds": "Job profiles for import/create",
   "updateJobProfileIds": "Job profiles for overlay/update",
-  "importCreateJobProfileId": "Job profile for import/create",
-  "overlayUpdateJobProfileId": "Job profile for overlay/update",
   "button.addCreateJobProfileId": "Add job profile for import/create",
   "button.addUpdateJobProfileId": "Add job profile for overlay/update",
   "select.createJobProfileId": "Select job profile for import/create",
