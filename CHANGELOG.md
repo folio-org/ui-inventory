@@ -41,6 +41,7 @@
 * Open instance details pane in cases when single item is not found after search. Fixes UIIN-2301.
 * Do not render item list before holding records are loaded. Fixes UIIN-2289.
 * ISRI: Update the Settings create/edit screen to remove duplicated labels. Refs UIIN-2297.
+* ISRI: Add job profile-related info icons to Z39.50 create/edit screen. Refs UIIN-2306.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

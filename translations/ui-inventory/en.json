@@ -331,6 +331,7 @@
   "internalIdEmbedPath": "Internal ID embed path",
   "createJobProfileIds": "Job profiles for import/create",
   "updateJobProfileIds": "Job profiles for overlay/update",
+  "jobProfiles.info": "Review the listed job profiles carefully before assigning for Inventory single record imports. Only MARC Bibliographic job profiles can be assigned, not MARC Holdings or MARC Authority job profiles.",
   "button.addCreateJobProfileId": "Add job profile for import/create",
   "button.addUpdateJobProfileId": "Add job profile for overlay/update",
   "select.createJobProfileId": "Select job profile for import/create",
