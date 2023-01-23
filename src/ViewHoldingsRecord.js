@@ -762,7 +762,7 @@ class ViewHoldingsRecord extends React.Component {
                           itemCount === 0 && effectiveLocationDisplay
                         }
                       </Col>
-                      <Col xs={9}>
+                      <Col xs={8}>
                         <Row center="xs" middle="xs">
                           <Col>
                             <MessageBanner show={Boolean(holdingsRecord.discoverySuppress)} type="warning">
@@ -771,7 +771,7 @@ class ViewHoldingsRecord extends React.Component {
                           </Col>
                         </Row>
                       </Col>
-                      <Col data-test-expand-all xs={1}>
+                      <Col data-test-expand-all xs={2}>
                         <Row end="xs">
                           <Col>
                             <ExpandAllButton />
