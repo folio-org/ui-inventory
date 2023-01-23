@@ -738,22 +738,29 @@ class ViewHoldingsRecord extends React.Component {
                     </Col>
                   </Row>
                   <hr />
-                  <Row>
-                    <Col sm={12}>
-                      <AppIcon
-                        app="inventory"
-                        iconKey="holdings"
-                        size="small"
-                      />
-                      {' '}
-                      <FormattedMessage id="ui-inventory.holdings" />
-                    </Col>
-                  </Row>
-                  <br />
+                  {
+                    itemCount === 0 &&
+                    <>
+                      <Row>
+                        <Col sm={12}>
+                          <AppIcon
+                            app="inventory"
+                            iconKey="holdings"
+                            size="small"
+                          />
+                          {' '}
+                          <FormattedMessage id="ui-inventory.holdings" />
+                        </Col>
+                      </Row>
+                      <br />
+                    </>
+                  }
                   <AccordionStatus ref={this.accordionStatusRef}>
                     <Row className={css.rowMarginBottom}>
                       <Col xs={2}>
-                        {effectiveLocationDisplay}
+                        {
+                          itemCount === 0 && effectiveLocationDisplay
+                        }
                       </Col>
                       <Col xs={9}>
                         <Row center="xs" middle="xs">
@@ -882,11 +889,14 @@ class ViewHoldingsRecord extends React.Component {
                             />
                           </Col>
                         </Row>
-                        <Row>
-                          <Col sm={4}>
-                            {effectiveLocationDisplay}
-                          </Col>
-                        </Row>
+                        {
+                          itemCount === 0 &&
+                          <Row>
+                            <Col sm={4}>
+                              {effectiveLocationDisplay}
+                            </Col>
+                          </Row>
+                        }
                         <Row>
                           <Col sm={2}>
                             <KeyValue
