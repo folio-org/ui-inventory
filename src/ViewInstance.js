@@ -525,7 +525,7 @@ class ViewInstance extends React.Component {
                 buttonStyle="dropdownItem"
               >
                 <Icon icon="lightning">
-                  <FormattedMessage id="ui-inventory.copycat.reimport" />
+                  <FormattedMessage id="ui-inventory.copycat.overlaySourceBib" />
                 </Icon>
               </Button>
             </IfPermission>
