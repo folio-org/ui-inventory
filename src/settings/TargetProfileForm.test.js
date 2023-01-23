@@ -1,6 +1,9 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { fireEvent } from '@testing-library/react';
+import {
+  fireEvent,
+  waitFor,
+} from '@testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -105,6 +108,21 @@ describe('TargetProfileForm', () => {
       expect(defaultRadioButton).toBeInTheDocument();
       expect(trashIcon).toBeInTheDocument();
     });
+
+    it('should render info popover next to the label', async () => {
+      const {
+        getAllByRole,
+        getByText,
+      } = renderTargetProfileForm();
+
+      const infoButton = getAllByRole('button', { name: /info/i });
+
+      fireEvent.click(infoButton[0]);
+
+      await waitFor(() => expect(getByText('Review the listed job profiles carefully before assigning for ' +
+        'Inventory single record imports. Only MARC Bibliographic job profiles can be assigned, not MARC Holdings or ' +
+        'MARC Authority job profiles.')).toBeInTheDocument());
+    });
   });
 
   describe('when click "Add job profile for overlay/update"', () => {
@@ -123,6 +141,21 @@ describe('TargetProfileForm', () => {
       expect(jobProfileSelect).toBeInTheDocument();
       expect(defaultRadioButton).toBeInTheDocument();
       expect(trashIcon).toBeInTheDocument();
+    });
+
+    it('should render info popover next to the label', async () => {
+      const {
+        getAllByRole,
+        getByText,
+      } = renderTargetProfileForm();
+
+      const infoButton = getAllByRole('button', { name: /info/i });
+
+      fireEvent.click(infoButton[1]);
+
+      await waitFor(() => expect(getByText('Review the listed job profiles carefully before assigning for ' +
+        'Inventory single record imports. Only MARC Bibliographic job profiles can be assigned, not MARC Holdings or ' +
+        'MARC Authority job profiles.')).toBeInTheDocument());
     });
   });
 
