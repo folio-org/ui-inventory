@@ -140,6 +140,7 @@
   "permanentLocation": "Permanent",
   "temporaryLocation": "Temporary",
   "effectiveLocation": "Effective location for item",
+  "effectiveLocationHoldings": "Effective location for holdings",
   "effectiveLocationShort": "Effective location",
   "effectiveCallNumber": "Effective call number",
   "effectiveCallNumberShelving": "Effective call number (item), shelving order",
