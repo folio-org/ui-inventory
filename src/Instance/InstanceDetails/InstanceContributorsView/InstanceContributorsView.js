@@ -89,7 +89,7 @@ const InstanceContributorsView = ({
           >
             {({ ref, ariaIds }) => (
               <Link
-                to={`/marc-authorities/authorities/${item.authorityId}?segment=search`}
+                to={`/marc-authorities/authorities/${item.authorityId}?authRefType=Authorized&segment=search`}
                 target="_blank"
                 ref={ref}
                 aria-labelledby={ariaIds.text}

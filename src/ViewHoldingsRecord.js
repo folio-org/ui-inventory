@@ -535,6 +535,7 @@ class ViewHoldingsRecord extends React.Component {
     const locationAccordion = {
       permanent: holdingsPermanentLocation,
       temporary: holdingsTemporaryLocation,
+      effective: holdingsEffectiveLocation,
       shelvingOrder: get(holdingsRecord, ['shelvingOrder'], '-'),
       shelvingTitle: get(holdingsRecord, ['shelvingTitle'], '-'),
       copyNumber: get(holdingsRecord, ['copyNumber'], '-'),
@@ -543,6 +544,16 @@ class ViewHoldingsRecord extends React.Component {
       callNumber: get(holdingsRecord, ['callNumber'], '-'),
       callNumberSuffix: get(holdingsRecord, ['callNumberSuffix'], '-'),
     };
+
+    const effectiveLocationDisplay = (
+      <KeyValue
+        label={<FormattedMessage id="ui-inventory.effectiveLocationHoldings" />}
+        value={checkIfElementIsEmpty(locationAccordion.effective?.name)}
+        subValue={(!locationAccordion.effective?.isActive) &&
+          <FormattedMessage id="ui-inventory.inactive" />
+        }
+      />
+    );
 
     const holdingsDetails = {
       numberOfItems: get(holdingsRecord, ['numberOfItems'], '-'),
@@ -727,9 +738,31 @@ class ViewHoldingsRecord extends React.Component {
                     </Col>
                   </Row>
                   <hr />
+                  {
+                    itemCount === 0 &&
+                    <>
+                      <Row>
+                        <Col sm={12}>
+                          <AppIcon
+                            app="inventory"
+                            iconKey="holdings"
+                            size="small"
+                          />
+                          {' '}
+                          <FormattedMessage id="ui-inventory.holdings" />
+                        </Col>
+                      </Row>
+                      <br />
+                    </>
+                  }
                   <AccordionStatus ref={this.accordionStatusRef}>
                     <Row className={css.rowMarginBottom}>
-                      <Col xs={11}>
+                      <Col xs={2}>
+                        {
+                          itemCount === 0 && effectiveLocationDisplay
+                        }
+                      </Col>
+                      <Col xs={8}>
                         <Row center="xs" middle="xs">
                           <Col>
                             <MessageBanner show={Boolean(holdingsRecord.discoverySuppress)} type="warning">
@@ -738,7 +771,7 @@ class ViewHoldingsRecord extends React.Component {
                           </Col>
                         </Row>
                       </Col>
-                      <Col data-test-expand-all xs={1}>
+                      <Col data-test-expand-all xs={2}>
                         <Row end="xs">
                           <Col>
                             <ExpandAllButton />
@@ -856,6 +889,14 @@ class ViewHoldingsRecord extends React.Component {
                             />
                           </Col>
                         </Row>
+                        {
+                          itemCount === 0 &&
+                          <Row>
+                            <Col sm={4}>
+                              {effectiveLocationDisplay}
+                            </Col>
+                          </Row>
+                        }
                         <Row>
                           <Col sm={2}>
                             <KeyValue

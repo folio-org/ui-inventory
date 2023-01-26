@@ -94,7 +94,7 @@ const getBrowseResultsFormatter = ({
                 text={<FormattedMessage id="ui-inventory.linkedToMarcAuthority" />}
               >
                 {({ ref, ariaIds }) => {
-                  const url = `/marc-authorities/authorities/${r.authorityId}?segment=search`;
+                  const url = `/marc-authorities/authorities/${r.authorityId}?authRefType=Authorized&segment=search`;
 
                   return (
                     <span

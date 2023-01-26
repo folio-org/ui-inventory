@@ -42,6 +42,8 @@
 * Do not render item list before holding records are loaded. Fixes UIIN-2289.
 * ISRI: Update the Settings create/edit screen to remove duplicated labels. Refs UIIN-2297.
 * ISRI: Add job profile-related info icons to Z39.50 create/edit screen. Refs UIIN-2306.
+* Display the effective location on the holdings view. Refs UIIN-1520.
+* Reference MARC Authority record is opened when user clicks on the "MARC Authority" icon next to the controlled field. Refs UIIN-2302.
 * Cannot save new Z39.50 Settings profile due to missing required fields. Fixes UIIN-2298.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)

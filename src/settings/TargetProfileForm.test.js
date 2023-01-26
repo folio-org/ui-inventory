@@ -110,7 +110,10 @@ describe('TargetProfileForm', () => {
     });
 
     it('should render info popover next to the label', async () => {
-      const { getAllByRole, getByText } = renderTargetProfileForm();
+      const {
+        getAllByRole,
+        getByText,
+      } = renderTargetProfileForm();
 
       const infoButton = getAllByRole('button', { name: /info/i });
 
@@ -141,7 +144,10 @@ describe('TargetProfileForm', () => {
     });
 
     it('should render info popover next to the label', async () => {
-      const { getAllByRole, getByText } = renderTargetProfileForm();
+      const {
+        getAllByRole,
+        getByText,
+      } = renderTargetProfileForm();
 
       const infoButton = getAllByRole('button', { name: /info/i });
 
