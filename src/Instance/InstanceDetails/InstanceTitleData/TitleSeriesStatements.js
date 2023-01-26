@@ -30,7 +30,7 @@ const TitleSeriesStatements = ({
 
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
   const contentData = useMemo(() => {
-    return checkIfArrayIsEmpty(seriesStatements.map(statement => ({ statement })));
+    return checkIfArrayIsEmpty(seriesStatements.map(statement => ({ statement: statement.value })));
   }, [seriesStatements]);
 
   return (

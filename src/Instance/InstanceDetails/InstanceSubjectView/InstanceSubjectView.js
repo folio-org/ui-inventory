@@ -32,7 +32,7 @@ const InstanceSubjectView = ({
 
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
   const contentData = useMemo(() => checkIfArrayIsEmpty(
-    subjects.map(subject => ({ value: subject }))
+    subjects.map(subject => ({ value: subject.value }))
   ), [subjects]);
 
   return (
