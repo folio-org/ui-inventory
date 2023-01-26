@@ -37,6 +37,7 @@ import {
 } from '../../utils';
 import { hridSettingsSections } from '../../constants';
 
+import commonCSS from '../settings.css';
 import css from './HRIDHandling.css';
 
 const START_WITH_MAX_LENGTH = 11;
@@ -200,7 +201,7 @@ class HRIDHandlingSettings extends Component {
                       {([inputLabel]) => (
                         <div id={`start-with-field-${index}`}>
                           {inputLabel}
-                          <span className={css.asterisk}>*</span>
+                          <span className={commonCSS.asterisk}>*</span>
                         </div>
                       )}
                     </FormattedMessage>
