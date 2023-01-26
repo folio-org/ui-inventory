@@ -355,6 +355,7 @@ class ViewInstance extends React.Component {
       _path: `/inventory/import/${this.props.match.params.id}`,
       xidtype: args.externalIdentifierType,
       xid: args.externalIdentifier,
+      jobprofileid: args.selectedJobProfileId,
     });
   }
 
@@ -524,7 +525,7 @@ class ViewInstance extends React.Component {
                 buttonStyle="dropdownItem"
               >
                 <Icon icon="lightning">
-                  <FormattedMessage id="ui-inventory.copycat.reimport" />
+                  <FormattedMessage id="ui-inventory.copycat.overlaySourceBib" />
                 </Icon>
               </Button>
             </IfPermission>

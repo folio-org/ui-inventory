@@ -104,9 +104,10 @@ class ItemRoute extends React.Component {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
     },
-    instances1: {
+    instanceRecords: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
+      resourceShouldRefresh: true,
     },
     servicePoints: {
       type: 'okapi',
@@ -178,12 +179,12 @@ class ItemRoute extends React.Component {
       resources: {
         itemsResource,
         holdingsRecords,
-        instances1,
+        instanceRecords,
       },
     } = this.props;
 
     if (!itemsResource?.hasLoaded ||
-      !instances1?.hasLoaded ||
+      !instanceRecords?.hasLoaded ||
       !holdingsRecords?.hasLoaded) {
       return true;
     }

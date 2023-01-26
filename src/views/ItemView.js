@@ -136,9 +136,9 @@ class ItemView extends React.Component {
   };
 
   copyItem = item => {
-    const { resources: { holdingsRecords, instances1 } } = this.props;
+    const { resources: { holdingsRecords, instanceRecords } } = this.props;
     const holdingsRecord = holdingsRecords.records[0];
-    const instance = instances1.records[0];
+    const instance = instanceRecords.records[0];
 
     this.props.mutator.itemsResource.POST(item).then((data) => {
       this.props.goTo(`/inventory/view/${instance.id}/${holdingsRecord.id}/${data.id}`);
@@ -395,7 +395,7 @@ class ItemView extends React.Component {
       resources: {
         itemsResource,
         holdingsRecords,
-        instances1,
+        instanceRecords,
         requests,
         staffMembers,
         servicePoints,
@@ -429,7 +429,7 @@ class ItemView extends React.Component {
       </Link> :
       '-';
 
-    const instance = instances1.records[0];
+    const instance = instanceRecords.records[0];
     const item = itemsResource.records[0] || {};
     const holdingsRecord = holdingsRecords.records[0];
     const { locationsById } = referenceTables;
@@ -1518,7 +1518,7 @@ ItemView.propTypes = {
     hasPerm: PropTypes.func.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    instances1: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+    instanceRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     loanTypes: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     requests: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),

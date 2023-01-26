@@ -26,10 +26,11 @@ class ImportRecord extends React.Component {
   componentDidMount() {
     const xidtype = this.props.getParams().xidtype;
     const xid = this.props.getParams().xid;
-    this.loadExternalRecord(xidtype, xid);
+    const jobprofileid = this.props.getParams().jobprofileid;
+    this.loadExternalRecord(xidtype, xid, jobprofileid);
   }
 
-  loadExternalRecord = (xidtype, xid) => {
+  loadExternalRecord = (xidtype, xid, jobprofileid) => {
     this.props.okapiKy('copycat/imports', {
       timeout: 30000,
       method: 'POST',
@@ -37,6 +38,7 @@ class ImportRecord extends React.Component {
         externalIdentifier: xid,
         internalIdentifier: this.props.id,
         profileId: xidtype,
+        selectedJobProfileId: jobprofileid,
       },
     })
       .then(res => this.success(xid, res))

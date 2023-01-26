@@ -147,11 +147,9 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
 }) => {
-  const { boundWithHoldings: holdings } = useBoundWithHoldings(items);
+  const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items);
   const holdingsMapById = keyBy(holdings, 'id');
-
   const intl = useIntl();
-
   const [itemsSorting, setItemsSorting] = useState({
     isDesc: false,
     column: 'barcode',
@@ -211,10 +209,9 @@ const ItemsList = ({
     setItemsSorting(newItemsSorting);
   }, [itemsSorting]);
 
-  if (!draggable && isEmpty(items)) return null;
+  if ((!draggable && isEmpty(items)) || isLoading) return null;
 
   return (
-
     <MultiColumnList
       id={`list-items-${holding.id}`}
       columnIdPrefix={`list-items-${holding.id}`}

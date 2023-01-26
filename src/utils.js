@@ -32,6 +32,7 @@ import {
   DATE_TIME_RANGE_FILTER_FORMAT,
   LIMIT_MAX,
   ERROR_TYPES,
+  SINGLE_ITEM_QUERY_TEMPLATES,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -683,7 +684,7 @@ export const handleKeyCommand = (handler, { disabled } = {}) => {
   };
 };
 
-const buildQueryByIds = (itemsChunk) => {
+export const buildQueryByIds = (itemsChunk) => {
   const query = itemsChunk
     .map(id => `id==${id}`)
     .join(' or ');
@@ -750,4 +751,21 @@ export const parseHttpError = async httpError => {
   } catch (err) {
     return httpError;
   }
+};
+
+/**
+ * Creates an item query from a template for a given qindex and query.
+ *
+ * @param qindex string
+ * @param query string
+ * @returns strins
+ */
+export const buildSingleItemQuery = (qindex, query) => {
+  const queryTemplate = SINGLE_ITEM_QUERY_TEMPLATES[qindex];
+
+  if (!queryTemplate) {
+    return null;
+  }
+
+  return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query });
 };

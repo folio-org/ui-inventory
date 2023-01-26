@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -27,6 +27,7 @@ import {
   useBrowseValidation,
   useInventoryBrowse,
 } from '../../hooks';
+import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
 
 const BrowseInventory = () => {
   const history = useHistory();
@@ -35,6 +36,7 @@ const BrowseInventory = () => {
   const [namespace] = useNamespace();
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
+  const [pageConfig, setPageConfig] = useState(INIT_PAGE_CONFIG);
 
   const [
     filters,
@@ -45,7 +47,9 @@ const BrowseInventory = () => {
     resetFilters,
     changeSearchIndex,
     searchIndex,
-  ] = useLocationFilters(location, history, () => {});
+  ] = useLocationFilters(location, history, () => {
+    setPageConfig(INIT_PAGE_CONFIG);
+  });
 
   const {
     data,
@@ -55,7 +59,8 @@ const BrowseInventory = () => {
     totalRecords,
   } = useInventoryBrowse({
     filters,
-    options: { onSettled: deleteItemToView }
+    pageParams: { pageConfig, setPageConfig },
+    options: { onSettled: deleteItemToView },
   });
 
   const { validateDataQuery } = useBrowseValidation(searchIndex);

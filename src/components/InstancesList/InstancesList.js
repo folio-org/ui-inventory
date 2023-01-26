@@ -51,6 +51,7 @@ import {
   omitFromArray,
   isTestEnv,
   handleKeyCommand,
+  buildSingleItemQuery
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -120,6 +121,10 @@ class InstancesList extends React.Component {
       state: PropTypes.object,
     }),
     stripes: PropTypes.object.isRequired,
+    history: PropTypes.shape({
+      listen: PropTypes.func,
+      replace: PropTypes.func,
+    }),
   };
 
   static contextType = CalloutContext;
@@ -145,13 +150,31 @@ class InstancesList extends React.Component {
       optionSelected: '',
       searchAndSortKey: 0,
       isSingleResult: this.props.showSingleResult,
+      searchInProgress: false,
     };
   }
 
   componentDidMount() {
+    const { history } = this.props;
+
+    this.unlisten = history.listen((location) => {
+      const hasReset = new URLSearchParams(location.search).get('reset');
+
+      if (hasReset) {
+        // imperative way is used because it's no option in SearchAndSort reset/focus filters from outside
+        document.getElementById('clickable-reset-all')?.click();
+        document.getElementById('input-inventory-search')?.focus();
+
+        history.replace({ search: 'segment=instances' });
+      }
+    });
+
+    const { browseSearch, pageConfig } = this.getBrowsePageState();
+
     this.setState({
-      browsePageSearch: this.getBrowsePageSearch(),
-      openedFromBrowse: !!this.getBrowsePageSearch(),
+      browsePageSearch: browseSearch,
+      browsePageConfig: pageConfig,
+      openedFromBrowse: !!browseSearch,
       optionSelected: '',
     });
   }
@@ -169,6 +192,10 @@ class InstancesList extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.unlisten();
+  }
+
   extraParamsToReset = {
     selectedBrowseResult: false,
   };
@@ -178,8 +205,11 @@ class InstancesList extends React.Component {
     return params.get('qindex');
   }
 
-  getBrowsePageSearch = () => {
-    return this.props.location.state?.browseSearch;
+  getBrowsePageState = () => {
+    return {
+      browseSearch: this.props.location.state?.browseSearch,
+      pageConfig: this.props.location.state?.pageConfig,
+    };
   }
 
   getInitialToggableColumns = () => {
@@ -218,6 +248,7 @@ class InstancesList extends React.Component {
   onSubmitSearch = () => {
     this.setState({
       openedFromBrowse: false,
+      searchInProgress: true,
     });
   }
 
@@ -291,7 +322,10 @@ class InstancesList extends React.Component {
 
   renderNavigation = () => (
     <>
-      <SearchModeNavigation search={this.state.browsePageSearch} />
+      <SearchModeNavigation
+        search={this.state.browsePageSearch}
+        state={{ pageConfig: this.state.browsePageConfig }}
+      />
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
   );
@@ -721,6 +755,7 @@ class InstancesList extends React.Component {
       _path: '/inventory/import',
       xidtype: args.externalIdentifierType,
       xid: args.externalIdentifier,
+      jobprofileid: args.selectedJobProfileId,
     });
   }
 
@@ -743,6 +778,55 @@ class InstancesList extends React.Component {
 
   formatCellStyles(defaultCellStyle) {
     return `${defaultCellStyle} ${css.cellAlign}`;
+  }
+
+  findAndOpenItem = async (instance) => {
+    const {
+      parentResources,
+      parentMutator: { itemsByQuery },
+      goTo,
+      getParams,
+    } = this.props;
+    const { query, qindex } = parentResources?.query ?? {};
+    const { searchInProgress } = this.state;
+
+    if (!searchInProgress) {
+      return instance;
+    }
+
+    const itemQuery = buildSingleItemQuery(qindex, query);
+
+    if (!itemQuery) {
+      this.setState({ searchInProgress: false });
+    }
+
+    itemsByQuery.reset();
+    const items = await itemsByQuery.GET({ params: { query: itemQuery } });
+
+    this.setState({ searchInProgress: false });
+
+    // if no results have been found or more than one item has been found
+    // do not open item view
+    if (items?.length > 1 || !items?.[0]?.holdingsRecordId) {
+      return instance;
+    }
+
+    const { id, holdingsRecordId } = items[0];
+    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, getParams());
+
+    return null;
+  }
+
+  onSelectRow = (_, instance) => {
+    const { parentResources } = this.props;
+    const { query } = parentResources?.query ?? {};
+
+    if (!query) {
+      this.setState({ searchInProgress: false });
+      return instance;
+    }
+
+    return this.findAndOpenItem(instance);
   }
 
   render() {
@@ -887,6 +971,7 @@ class InstancesList extends React.Component {
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
+            onSelectRow={this.onSelectRow}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
