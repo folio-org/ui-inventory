@@ -130,7 +130,7 @@ const ImportRecordModal = ({
                     {fieldProps => (
                       <Select
                         {...fieldProps.input}
-                        label={<FormattedMessage id="ui-inventory.copycat.jobProfileToBeUsed" />}
+                        label={<FormattedMessage id={`ui-inventory.copycat.${id ? 'overlayJobProfileToBeUsed' : 'jobProfileToBeUsed'}`} />}
                         dataOptions={jobProfiles}
                         onChange={onJobProfileChange(fieldProps)}
                       />
@@ -141,7 +141,7 @@ const ImportRecordModal = ({
                     component={TextField}
                     label={
                       <FormattedMessage
-                        id={`ui-inventory.copycat.enterIdentifier${id ? 'ForUpdate' : ''}`}
+                        id="ui-inventory.copycat.enterIdentifier"
                         values={{ identifierName: profileById[values.externalIdentifierType] }}
                       />}
                     autoFocus
