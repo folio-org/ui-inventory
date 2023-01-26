@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## 10.0.0 IN PROGRESS
+* Bump quick-marc to 6.0.0. Refs UIIN-2310.
+
 ## 9.3.0 IN PROGRESS
 * Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
 * Fix error on creating new item.  Fixes UIIN-2227.
