@@ -45,6 +45,7 @@
       }
     ],
     "okapiInterfaces": {
+      "browse": "0.6 1.0",
       "inventory": "10.10 11.0 12.0",
       "search": "0.7",
       "source-storage-records": "3.0",

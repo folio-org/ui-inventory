@@ -44,6 +44,7 @@
 * ISRI: Add job profile-related info icons to Z39.50 create/edit screen. Refs UIIN-2306.
 * Display the effective location on the holdings view. Refs UIIN-1520.
 * Reference MARC Authority record is opened when user clicks on the "MARC Authority" icon next to the controlled field. Refs UIIN-2302.
+* Align the module with API breaking change (browse). Refs UIIN-2296.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
