@@ -136,7 +136,7 @@ describe('BrowseResultsList', () => {
 
       it('should open the authority record in a new tab', () => {
         expect(mockWindowOpen).toHaveBeenCalledWith(
-          `/marc-authorities/authorities/${authorityId}?segment=search`,
+          `/marc-authorities/authorities/${authorityId}?authRefType=Authorized&segment=search`,
           '_blank',
           'noopener,noreferrer'
         );
