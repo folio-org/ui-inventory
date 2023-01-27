@@ -22,8 +22,11 @@ const defaultProps = {
   resources: {
     jobProfiles: {
       records: [{
-        name: 'test name',
-        id: 'test id',
+        name: 'Job profile for create',
+        id: 'job profile id for create',
+      }, {
+        name: 'Job profile for update',
+        id: 'job profile id for update',
       }]
     },
     identifierTypes: {
@@ -80,9 +83,23 @@ describe('TargetProfileForm', () => {
       const {
         container,
         getByText,
+        getAllByText,
+        getByLabelText,
       } = renderTargetProfileForm();
       const nameInput = container.querySelector('#input-targetprofile-name');
       fireEvent.change(nameInput, { target: { value: 'test name' } });
+
+      const addJobCreateButton = getByText('Add job profile for import/create');
+      fireEvent.click(addJobCreateButton);
+      fireEvent.click(getByLabelText('Select job profile for import/create'));
+      fireEvent.click(getAllByText('Job profile for create (job profile id for create)')[0]);
+      fireEvent.click(getByLabelText('Set 0 job profile for create as default'));
+
+      const addJobUpdateButton = getByText('Add job profile for overlay/update');
+      fireEvent.click(addJobUpdateButton);
+      fireEvent.click(getByLabelText('Select job profile for overlay/update'));
+      fireEvent.click(getAllByText('Job profile for update (job profile id for update)')[1]);
+      fireEvent.click(getByLabelText('Set 0 job profile for update as default'));
 
       const submit = getByText('Save & close');
       fireEvent.click(submit);
@@ -175,6 +192,23 @@ describe('TargetProfileForm', () => {
       expect(targetKeyInput).toBeInTheDocument();
       expect(targetValueInput).toBeInTheDocument();
       expect(trashIcon).toBeInTheDocument();
+    });
+  });
+
+  describe('when "Job profiles for import/update" is empty', () => {
+    it('should show validation error', () => {
+      const {
+        container,
+        getByText,
+        getAllByText,
+      } = renderTargetProfileForm();
+      const nameInput = container.querySelector('#input-targetprofile-name');
+      fireEvent.change(nameInput, { target: { value: 'test name' } });
+
+      const submit = getByText('Save & close');
+      fireEvent.click(submit);
+
+      expect(getAllByText('Please select to continue').length).toBe(2);
     });
   });
 });
