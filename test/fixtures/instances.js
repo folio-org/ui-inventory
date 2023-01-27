@@ -43,7 +43,12 @@ export const instances = [
       'contributorTypeText': null,
       'primary': false
     }],
-    'subjects': ['Information society--Political aspects', 'Social media--Political aspects', 'Political participation--Technological innovations', 'Youth--Political activity'],
+    'subjects': [
+      { 'value': 'Information society--Political aspects', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120002' },
+      { 'value': 'Social media--Political aspects', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120003' },
+      { 'value': 'Political participation--Technological innovations', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120004' },
+      { 'value': 'Youth--Political activity', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120005' }
+    ],
     'classifications': [{
       'classificationNumber': 'HM851 .A112 2015',
       'classificationTypeId': 'ce176ace-a53e-4b4d-aa89-725ed7b2edac'
@@ -100,7 +105,9 @@ export const instances = [
     'indexTitle': 'Semantic web primer',
     'alternativeTitles': [],
     'editions': [],
-    'series': ['Cooperative information systems'],
+    'series': [
+      { 'value': 'Cooperative information systems', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120002' }
+    ],
     'identifiers': [{
       'identifierTypeId': '8261054f-be78-422d-bd51-4ed9f33c3422',
       'value': '0262012103'
@@ -124,7 +131,9 @@ export const instances = [
       'contributorTypeText': '',
       'primary': null
     }],
-    'subjects': ['Semantic Web'],
+    'subjects': [
+      { 'value': 'Semantic Web', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120002' }
+    ],
     'classifications': [{
       'classificationNumber': '025.04',
       'classificationTypeId': '42471af9-7d25-4f3a-bf78-60d29dcf463b'

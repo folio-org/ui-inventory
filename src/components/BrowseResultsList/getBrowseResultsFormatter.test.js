@@ -207,17 +207,17 @@ describe('getBrowseResultsFormatter', () => {
     });
     const missedMatchRecord = {
       isAnchor: true,
-      subject: 'bla bla',
+      value: 'bla bla',
       totalRecords: 0,
     };
     const contentData = [
       {
         isAnchor: true,
-        subject: 'Africa Politics and government 20th century',
+        value: 'Africa Politics and government 20th century',
         totalRecords: 1,
       },
       {
-        subject: 'Corporate governance',
+        value: 'Corporate governance',
         totalRecords: 2,
       }
     ];
@@ -234,17 +234,17 @@ describe('getBrowseResultsFormatter', () => {
       renderSubjectsList();
 
       // Anchor row
-      expect(screen.getByText(anchorRecord.subject).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText(anchorRecord.value).tagName.toLowerCase()).toBe('strong');
       expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
       // Default row
-      expect(screen.getByText(nonAnchorRecord.subject).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(nonAnchorRecord.value).tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' rows', () => {
       renderSubjectsList({ contentData: [missedMatchRecord] });
 
-      expect(screen.getByText(missedMatchRecord.subject)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchRecord.value)).toBeInTheDocument();
       expect(screen.getByText(missedMatchText)).toBeInTheDocument();
     });
 
@@ -253,7 +253,7 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.subject)));
+      await act(async () => userEvent.click(screen.getByText(anchorRecord.value)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
