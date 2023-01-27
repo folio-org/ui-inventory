@@ -71,9 +71,9 @@ const getBrowseResultsFormatter = ({
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
       if (r?.totalRecords) {
-        return getTargetRecord(r?.subject, r, browseOption, browseSearch, pageConfig);
+        return getTargetRecord(r?.value, r, browseOption, browseSearch, pageConfig);
       }
-      return <MissedMatchItem query={r.subject} />;
+      return <MissedMatchItem query={r?.value} />;
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {
@@ -139,7 +139,7 @@ const getBrowseResultsFormatter = ({
         return [...acc, data.contributorTypes.find(type => type.id === contributorTypeId)?.name || ''];
       }, []).filter(name => !!name).join(', ');
     },
-    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
   };
 };
 

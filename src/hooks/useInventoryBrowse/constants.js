@@ -14,7 +14,7 @@ export const PATH_MAP = {
 };
 
 export const INITIAL_SEARCH_PARAMS_MAP = {
-  [browseModeOptions.SUBJECTS]: 'subject',
+  [browseModeOptions.SUBJECTS]: 'value',
   [browseModeOptions.CALL_NUMBERS]: 'callNumber',
   [browseModeOptions.CONTRIBUTORS]: 'name',
 };
