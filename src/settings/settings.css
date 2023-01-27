@@ -1,5 +1,11 @@
+@import '@folio/stripes-components/lib/variables.css';
+
 .asterisk {
    color: #900;
    font-weight: bold;
    padding: 0 0.1rem;
+}
+
+.hasError {
+  color: var(--error);
 }

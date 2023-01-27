@@ -148,14 +148,18 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
       const isUpdateJobProfilesEmpty = isEmpty(values.allowedUpdateJobProfileIds);
 
       return {
-        ...(isCreateJobProfilesEmpty) && { allowedCreateJobProfileIds: validationMessage },
-        ...(isUpdateJobProfilesEmpty) && { allowedUpdateJobProfileIds: validationMessage },
+        ...(isCreateJobProfilesEmpty) && { allowedCreateJobProfileIds: [validationMessage] },
+        ...(isUpdateJobProfilesEmpty) && { allowedUpdateJobProfileIds: [validationMessage] },
         ...(!values.createJobProfileId) && { createJobProfileId: '*' },
         ...(!values.updateJobProfileId) && { updateJobProfileId: '*' },
       };
     },
     [],
   );
+  const renderValidationError = () => {
+    return <div className={css.hasError}>{intl.formatMessage({ id: 'ui-inventory.selectToContinue' })}</div>;
+  };
+
   return (
     <Form
       mutators={{ ...arrayMutators }}
@@ -170,6 +174,8 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
         submitting,
         submitSucceeded,
         values,
+        touched,
+        errors,
       }) => (
         <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
           <Paneset isRoot>
@@ -280,6 +286,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                       </Row>
                     )}
                   />
+                  {touched.allowedCreateJobProfileIds && errors.allowedCreateJobProfileIds && renderValidationError()}
                   <FieldArray
                     legend={isEmpty(values.allowedUpdateJobProfileIds) ? updateJobProfileLabel : ''}
                     name="allowedUpdateJobProfileIds"
@@ -313,6 +320,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                       </Row>
                     )}
                   />
+                  {touched.allowedUpdateJobProfileIds && errors.allowedUpdateJobProfileIds && renderValidationError()}
                   <FieldArray
                     legend={<FormattedMessage id="ui-inventory.targetOptions" />}
                     name="targetOptions"
