@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { EntryManager } from '@folio/stripes/smart-components';
 import TargetProfileDetail from './TargetProfileDetail';
 import TargetProfileForm from './TargetProfileForm';
@@ -46,7 +47,7 @@ class TargetProfiles extends React.Component {
         entryList={entryList}
         detailComponent={TargetProfileDetail}
         paneTitle={this.props.label}
-        entryLabel={this.props.label}
+        entryLabel={<FormattedMessage id="ui-inventory.targetProfile" />}
         entryFormComponent={TargetProfileForm}
         nameKey="displayName"
         permissions={{

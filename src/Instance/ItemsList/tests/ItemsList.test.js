@@ -14,8 +14,13 @@ import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 import ItemsList from '../ItemsList';
 import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
+import '../../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
 
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
+jest.mock('../../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings', () => jest.fn(() => ({
+  boundWithHoldings: [],
+  isLoading: false,
+})));
 
 const queryClient = new QueryClient();
 
