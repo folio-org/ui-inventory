@@ -47,6 +47,7 @@
 * Align the module with API breaking change (browse). Refs UIIN-2296.
 * Bump quick-marc to 6.0.0. Refs UIIN-2310.
 * Align subjects query building with API changes. Refs UIIN-2314.
+* Hide Export to json option in Action menu. Refs UIIN-2304.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
