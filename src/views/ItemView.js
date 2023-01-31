@@ -34,6 +34,8 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  InfoPopover,
+  Layout,
 } from '@folio/stripes/components';
 
 import {
@@ -957,10 +959,17 @@ class ItemView extends React.Component {
                   <Row>
                     {effectiveLocationDisplay}
                     <Col xs={2}>
-                      <KeyValue
-                        label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
-                        value={effectiveCallNumber(item)}
-                      />
+                      <Layout className="display-flex flex-align-items-start">
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
+                          value={effectiveCallNumber(item)}
+                        />
+                        <InfoPopover
+                          iconSize="medium"
+                          content={<FormattedMessage id="ui-inventory.info.effectiveCallNumber" />}
+                          buttonProps={{ 'data-testid': 'info-icon-effective-call-number' }}
+                        />
+                      </Layout>
                     </Col>
                     <Col xs={7}>
                       <Row middle="xs">
@@ -1068,10 +1077,17 @@ class ItemView extends React.Component {
                       </Row>
                       <Row>
                         <Col sm={3}>
-                          <KeyValue
-                            label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
-                            value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
-                          />
+                          <Layout className="display-flex flex-align-items-start">
+                            <KeyValue
+                              label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                              value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                            />
+                            <InfoPopover
+                              iconSize="medium"
+                              content={<FormattedMessage id="ui-inventory.info.shelvingOrder" />}
+                              buttonProps={{ 'data-testid': 'info-icon-shelving-order' }}
+                            />
+                          </Layout>
                         </Col>
                       </Row>
                       <Row>
