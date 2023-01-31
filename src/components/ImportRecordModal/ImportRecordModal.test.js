@@ -120,7 +120,7 @@ describe('ImportRecordModal', () => {
       it('function for submit should be called', () => {
         renderImportRecordModal(multipleCopycatProfiles);
 
-        const externalIdentifierTypeField = screen.getByLabelText('Enter testName1 identifier');
+        const externalIdentifierTypeField = screen.getByLabelText('Enter the testName1 identifier');
         fireEvent.change(externalIdentifierTypeField, { target: { value: 'test' } });
 
         const confirmButton = screen.getByRole('button', { name: /Import/i });

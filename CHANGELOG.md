@@ -41,6 +41,12 @@
 * Open instance details pane in cases when single item is not found after search. Fixes UIIN-2301.
 * Do not render item list before holding records are loaded. Fixes UIIN-2289.
 * ISRI: Update the Settings create/edit screen to remove duplicated labels. Refs UIIN-2297.
+* ISRI: Add job profile-related info icons to Z39.50 create/edit screen. Refs UIIN-2306.
+* Display the effective location on the holdings view. Refs UIIN-1520.
+* Reference MARC Authority record is opened when user clicks on the "MARC Authority" icon next to the controlled field. Refs UIIN-2302.
+* Align the module with API breaking change (browse). Refs UIIN-2296.
+* Bump quick-marc to 6.0.0. Refs UIIN-2310.
+* Align subjects query building with API changes. Refs UIIN-2314.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

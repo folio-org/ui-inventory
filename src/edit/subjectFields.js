@@ -19,12 +19,14 @@ const SubjectFields = props => {
       addLabel={<FormattedMessage id="ui-inventory.addSubject" />}
       addButtonId="clickable-add-subject"
       template={[{
+        name: 'value',
         component: TextField,
         label: <FormattedMessage id="ui-inventory.subjects" />,
         disabled: !canEdit,
       }]}
       canAdd={canAdd}
       canDelete={canDelete}
+      newItemTemplate={{ value: '' }}
     />
   );
 };
