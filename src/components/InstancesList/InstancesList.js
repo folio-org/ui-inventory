@@ -635,13 +635,6 @@ class InstancesList extends React.Component {
             </IfPermission>
           </IfInterface>
           {this.getActionItem({
-            id: 'dropdown-clickable-export-json',
-            icon: 'download',
-            messageId: 'ui-inventory.exportInstancesInJSON',
-            onClickHandler: buildOnClickHandler(noop),
-            isDisabled: true,
-          })}
-          {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
             messageId: 'ui-inventory.instances.showSelectedRecords',
