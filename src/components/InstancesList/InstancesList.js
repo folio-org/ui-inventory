@@ -889,7 +889,6 @@ class InstancesList extends React.Component {
             iconKey="instance"
             iconAlignment="baseline"
           >
-            {/* {title} */}
             <TextLink
               to={this.getRowURL(id)}
             >
