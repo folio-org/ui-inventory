@@ -34,6 +34,8 @@ import {
   checkScope,
   HasCommand,
   MCLPagingTypes,
+  TextLink,
+  DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -660,6 +662,15 @@ class InstancesList extends React.Component {
     );
   };
 
+  getRowURL = (id) => {
+    const {
+      match: { path },
+      location: { search },
+    } = this.props;
+
+    return `${path}/view/${id}${search}`;
+  };
+
   getIsAllRowsSelected = () => {
     const { parentResources } = this.props;
     const { selectedRows } = this.state;
@@ -869,6 +880,7 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
+        id,
       }) => {
         return (
           <AppIcon
@@ -877,7 +889,12 @@ class InstancesList extends React.Component {
             iconKey="instance"
             iconAlignment="baseline"
           >
-            {title}
+            {/* {title} */}
+            <TextLink
+              to={this.getRowURL(id)}
+            >
+              {title}
+            </TextLink>
             {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -986,7 +1003,9 @@ class InstancesList extends React.Component {
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
+            resultsRowClickHandlers={false}
             resultsFormatter={resultsFormatter}
+            resultsRowFormatter={DefaultMCLRowFormatter}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
