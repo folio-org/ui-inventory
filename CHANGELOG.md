@@ -50,6 +50,7 @@
 * Cannot save new Z39.50 Settings profile due to missing required fields. Fixes UIIN-2298.
 * Hide Export to json option in Action menu. Refs UIIN-2304.
 * Bump `@folio/stripes-acq-components` version to `4.0.0`. Refs UIIN-2319.
+* Create info popovers on call number fields in item record. Fixes UIIN-2307.
 * Hyperlink one column in the results list to improve accessibility. Fixes UIIN-2176.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
