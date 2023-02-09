@@ -54,6 +54,7 @@
 * Hyperlink one column in the results list to improve accessibility. Fixes UIIN-2176.
 * Bump stripes to `8.0.0` for Orchid/2023-R1. Refs UIIN-2303.
 * Improve the layout of the actions menu on the the item record. Fixes UIIN-2263.
+* Block item deletion for items with status `Claimed returned`. Fixes UIIN-2136.
 * Remove extra whitespace when parsing statistical code options. Fixes UIIN-2320.
 * Wire `<ErrorModal>` in cases of http errors during item and holding mutations. Fixes UIIN-2320.
 
