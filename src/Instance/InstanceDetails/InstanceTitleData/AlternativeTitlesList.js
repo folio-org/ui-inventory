@@ -26,6 +26,20 @@ const columnWidths = {
   title: '75%',
 };
 
+const getTitleItem = (item, segment, source) => {
+  const _segment = segment ?? segments.instances;
+
+  if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+    return (
+      <MarcAuthorityLink authorityId={item.authorityId}>
+        {item.alternativeTitle}
+      </MarcAuthorityLink>
+    );
+  }
+
+  return item.alternativeTitle || noValue;
+};
+
 const AlternativeTitlesList = ({
   titles,
   titleTypes,
@@ -52,19 +66,7 @@ const AlternativeTitlesList = ({
 
   const formatter = {
     type: item => item.type || noValue,
-    title: item => {
-      const _segment = segment ?? segments.instances;
-
-      if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
-        return (
-          <MarcAuthorityLink authorityId={item.authorityId}>
-            {item.alternativeTitle}
-          </MarcAuthorityLink>
-        );
-      }
-
-      return item.alternativeTitle || noValue;
-    },
+    title: item => getTitleItem(item, segment, source),
   };
 
   return (

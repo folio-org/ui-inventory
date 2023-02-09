@@ -20,6 +20,20 @@ const getColumnMapping = intl => ({
   subject: intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }),
 });
 
+const getSubjectItem = (item, segment, source) => {
+  const _segment = segment ?? segments.instances;
+
+  if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+    return (
+      <MarcAuthorityLink authorityId={item.authorityId}>
+        {item.value}
+      </MarcAuthorityLink>
+    );
+  }
+
+  return item.value || noValue;
+};
+
 const InstanceSubjectView = ({
   id,
   subjects,
@@ -31,19 +45,7 @@ const InstanceSubjectView = ({
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
 
   const formatter = {
-    subject: item => {
-      const _segment = segment ?? segments.instances;
-
-      if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
-        return (
-          <MarcAuthorityLink authorityId={item.authorityId}>
-            {item.value}
-          </MarcAuthorityLink>
-        );
-      }
-
-      return item.value || noValue;
-    },
+    subject: item => getSubjectItem(item, segment, source),
   };
 
   return (

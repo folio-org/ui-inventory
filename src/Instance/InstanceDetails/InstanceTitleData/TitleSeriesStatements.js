@@ -19,6 +19,20 @@ const getColumnMapping = intl => ({
   statement: intl.formatMessage({ id: 'ui-inventory.seriesStatement' }),
 });
 
+const getStatementItem = (item, segment, source) => {
+  const _segment = segment ?? segments.instances;
+
+  if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+    return (
+      <MarcAuthorityLink authorityId={item.authorityId}>
+        {item.value}
+      </MarcAuthorityLink>
+    );
+  }
+
+  return item.value || noValue;
+};
+
 const TitleSeriesStatements = ({
   seriesStatements,
   segment,
@@ -29,19 +43,7 @@ const TitleSeriesStatements = ({
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
 
   const formatter = {
-    statement: item => {
-      const _segment = segment ?? segments.instances;
-
-      if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
-        return (
-          <MarcAuthorityLink authorityId={item.authorityId}>
-            {item.value}
-          </MarcAuthorityLink>
-        );
-      }
-
-      return item.value || noValue;
-    },
+    statement: item => getStatementItem(item, segment, source),
   };
 
   return (
