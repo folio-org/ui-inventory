@@ -21,6 +21,7 @@ import { parseHttpError } from '../../utils';
 import {
   useItem,
   useItemMutation,
+  useBoundWithsMutation,
 } from '../hooks';
 
 const EditItem = ({
@@ -67,10 +68,26 @@ const EditItem = ({
 
   const { mutateItem } = useItemMutation({ onSuccess });
 
+  const { mutateBoundWiths } = useBoundWithsMutation();
+
+  const updateBoundWiths = (values) => {
+    const boundWiths = {
+      'itemId': values.id,
+      'boundWithContents': values.boundWithTitles.map(title => {
+        return {
+          'holdingsRecordId': title.briefHoldingsRecord.id,
+        };
+      }),
+    };
+    mutateBoundWiths(boundWiths).catch(onError);
+  };
+
   const onSubmit = useCallback((values) => {
     if (!values.barcode) {
       delete item.barcode;
     }
+
+    updateBoundWiths(values);
 
     return mutateItem(values).catch(onError);
   }, [mutateItem]);
