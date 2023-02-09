@@ -10,13 +10,8 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { MarcAuthorityLink} from '../MarcAuthorityLink';
-import {
-  checkIfArrayIsEmpty,
-} from '../../../utils';
-import {
-  segments,
-} from '../../../constants';
+import { MarcAuthorityLink } from '../MarcAuthorityLink';
+import { segments } from '../../../constants';
 
 const noValue = <NoValue />;
 
