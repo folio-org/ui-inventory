@@ -95,6 +95,7 @@ describe('EditItem', () => {
       id: 'itemId',
       permanentLocationId: '',
       temporaryLocationId: '',
+      boundWithTitles: [],
     });
 
     expect(mutateItem).toHaveBeenCalled();
