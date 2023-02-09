@@ -290,9 +290,7 @@
   "addCirculationNote": "Add check in / check out note",
   "removeNotes": "Remove notes {num}",
   "remove": "Remove",
-  "markAsMissing": "Mark as missing",
-  "markAsWithdrawn": "Mark as withdrawn",
-  "markAs": "Mark as {itemStatus}",
+  "markAsHeader": "Mark as",
   "missingModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be marked as <strong>missing</strong>.",
   "missingModal.heading": "Confirm item status: Missing",
   "missingModal.confirm": "Confirm",
@@ -785,5 +783,7 @@
   "addAdministrativeNote": "Add administrative note",
   "administrativeNote": "Administrative note",
   "administrativeNotes": "Administrative notes",
-  "linkedToMarcAuthority": "Linked to MARC authority"
+  "linkedToMarcAuthority": "Linked to MARC authority",
+  "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
+  "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing."
 }

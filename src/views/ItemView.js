@@ -34,6 +34,9 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  InfoPopover,
+  Layout,
+  MenuSection,
 } from '@folio/stripes/components';
 
 import {
@@ -260,129 +263,134 @@ class ItemView extends React.Component {
 
     return (
       <>
-        { canEdit && (
-        <Button
-          href={this.craftLayerUrl('editItem')}
-          onClick={() => {
-            onToggle();
-            this.onClickEditItem();
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-edit-item-action
-        >
-          <Icon icon="edit">
-            <FormattedMessage id="ui-inventory.editItem" />
-          </Icon>
-        </Button>
-        )}
-        { canCreate && (
-        <Button
-          id="clickable-copy-item"
-          onClick={() => {
-            onToggle();
-            this.onCopy(firstItem);
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-duplicate-item-action
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-inventory.copyItem" />
-          </Icon>
-        </Button>
-        )}
-        { canDelete && (
-        <Button
-          id="clickable-delete-item"
-          onClick={() => {
-            onToggle();
-            this.canDeleteItem(firstItem, request);
-          }}
-          buttonStyle="dropdownItem"
-          data-test-inventory-delete-item-action
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-inventory.deleteItem" />
-          </Icon>
-        </Button>
-        )}
-        { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
-        <Button
-          id="clickable-missing-item"
-          onClick={() => {
-            onToggle();
-            this.setState({ itemMissingModal: true });
-          }}
-          buttonStyle="dropdownItem"
-          data-test-mark-as-missing-item
-        >
-          <Icon icon="flag">
-            <FormattedMessage id="ui-inventory.markAsMissing" />
-          </Icon>
-        </Button>
-        )}
-        <IfPermission perm="ui-inventory.items.mark-items-withdrawn">
-          { canMarkItemAsWithdrawn(firstItem) && (
+        <MenuSection id="items-list-actions">
+          { canEdit && (
           <Button
-            id="clickable-withdrawn-item"
+            href={this.craftLayerUrl('editItem')}
             onClick={() => {
               onToggle();
-              this.setState({ itemWithdrawnModal: true });
+              this.onClickEditItem();
             }}
             buttonStyle="dropdownItem"
-            data-test-mark-as-withdrawn-item
+            data-test-inventory-edit-item-action
           >
-            <Icon icon="flag">
-              <FormattedMessage id="ui-inventory.markAsWithdrawn" />
+            <Icon icon="edit">
+              <FormattedMessage id="ui-inventory.editItem" />
             </Icon>
           </Button>
           )}
-        </IfPermission>
-        { canMarkItemWithStatus(firstItem) && (
-          Object.keys(itemStatusMutators)
-            .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
-            .map(status => {
-              const itemStatus = itemStatusesMap[status].toLowerCase();
-              const parameterizedStatus = parameterize(itemStatus);
-
-              const actionMenuItem = (
-                <Button
-                  key={status}
-                  id={`clickable-${parameterizedStatus}`}
-                  buttonStyle="dropdownItem"
-                  onClick={() => {
-                    onToggle();
-                    this.setState({ selectedItemStatus: status });
-                  }}
-                >
-                  <Icon icon="flag">
-                    <FormattedMessage
-                      id="ui-inventory.markAs"
-                      values={{ itemStatus }}
-                    />
-                  </Icon>
-                </Button>
-              );
-              return (
-                <IfPermission
-                  perm={`ui-inventory.items.mark-${parameterizedStatus}`}
-                  key={parameterizedStatus}
-                >
-                  {actionMenuItem}
-                </IfPermission>
-              );
-            })
-        )}
-        { canCreateNewRequest(firstItem, stripes) && (
-        <Button
-          to={newRequestLink}
-          buttonStyle="dropdownItem"
-          data-test-inventory-create-request-action
+          { canCreate && (
+          <Button
+            id="clickable-copy-item"
+            onClick={() => {
+              onToggle();
+              this.onCopy(firstItem);
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-duplicate-item-action
+          >
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-inventory.copyItem" />
+            </Icon>
+          </Button>
+          )}
+          { canDelete && (
+          <Button
+            id="clickable-delete-item"
+            onClick={() => {
+              onToggle();
+              this.canDeleteItem(firstItem, request);
+            }}
+            buttonStyle="dropdownItem"
+            data-test-inventory-delete-item-action
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-inventory.deleteItem" />
+            </Icon>
+          </Button>
+          )}
+          { canCreateNewRequest(firstItem, stripes) && (
+          <Button
+            to={newRequestLink}
+            buttonStyle="dropdownItem"
+            data-test-inventory-create-request-action
+          >
+            <Icon icon="plus-sign">
+              <FormattedMessage id="ui-inventory.newRequest" />
+            </Icon>
+          </Button>
+          )}
+        </MenuSection>
+        <MenuSection
+          id="items-list-mark-as"
+          label={<FormattedMessage id="ui-inventory.markAsHeader" />}
+          labelTag="h3"
         >
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-inventory.newRequest" />
-          </Icon>
-        </Button>
-        )}
+          { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
+          <Button
+            id="clickable-missing-item"
+            onClick={() => {
+              onToggle();
+              this.setState({ itemMissingModal: true });
+            }}
+            buttonStyle="dropdownItem"
+            data-test-mark-as-missing-item
+          >
+            <Icon icon="flag">
+              <FormattedMessage id="ui-inventory.item.status.missing" />
+            </Icon>
+          </Button>
+          )}
+          <IfPermission perm="ui-inventory.items.mark-items-withdrawn">
+            { canMarkItemAsWithdrawn(firstItem) && (
+            <Button
+              id="clickable-withdrawn-item"
+              onClick={() => {
+                onToggle();
+                this.setState({ itemWithdrawnModal: true });
+              }}
+              buttonStyle="dropdownItem"
+              data-test-mark-as-withdrawn-item
+            >
+              <Icon icon="flag">
+                <FormattedMessage id="ui-inventory.item.status.withdrawn" />
+              </Icon>
+            </Button>
+            )}
+          </IfPermission>
+          { canMarkItemWithStatus(firstItem) && (
+            Object.keys(itemStatusMutators)
+              .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
+              .map(status => {
+                const itemStatus = itemStatusesMap[status];
+                const parameterizedStatus = parameterize(itemStatus);
+
+                const actionMenuItem = (
+                  <Button
+                    key={status}
+                    id={`clickable-${parameterizedStatus}`}
+                    buttonStyle="dropdownItem"
+                    onClick={() => {
+                      onToggle();
+                      this.setState({ selectedItemStatus: status });
+                    }}
+                  >
+                    <Icon icon="flag">
+                      { itemStatus }
+                    </Icon>
+                  </Button>
+                );
+                return (
+                  <IfPermission
+                    perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+                    key={parameterizedStatus}
+                  >
+                    {actionMenuItem}
+                  </IfPermission>
+                );
+              })
+          )}
+        </MenuSection>
       </>
     );
   };
@@ -957,10 +965,17 @@ class ItemView extends React.Component {
                   <Row>
                     {effectiveLocationDisplay}
                     <Col xs={2}>
-                      <KeyValue
-                        label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
-                        value={effectiveCallNumber(item)}
-                      />
+                      <Layout className="display-flex flex-align-items-start">
+                        <KeyValue
+                          label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
+                          value={effectiveCallNumber(item)}
+                        />
+                        <InfoPopover
+                          iconSize="medium"
+                          content={<FormattedMessage id="ui-inventory.info.effectiveCallNumber" />}
+                          buttonProps={{ 'data-testid': 'info-icon-effective-call-number' }}
+                        />
+                      </Layout>
                     </Col>
                     <Col xs={7}>
                       <Row middle="xs">
@@ -1068,10 +1083,17 @@ class ItemView extends React.Component {
                       </Row>
                       <Row>
                         <Col sm={3}>
-                          <KeyValue
-                            label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
-                            value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
-                          />
+                          <Layout className="display-flex flex-align-items-start">
+                            <KeyValue
+                              label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                              value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
+                            />
+                            <InfoPopover
+                              iconSize="medium"
+                              content={<FormattedMessage id="ui-inventory.info.shelvingOrder" />}
+                              buttonProps={{ 'data-testid': 'info-icon-shelving-order' }}
+                            />
+                          </Layout>
                         </Col>
                       </Row>
                       <Row>

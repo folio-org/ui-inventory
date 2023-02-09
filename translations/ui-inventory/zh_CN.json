@@ -321,7 +321,6 @@
     "classificationIdentifierType": "分类标识符类型",
     "addCirculationNote": "添加归还/借出附注",
     "item.loanAndAvailability": "借阅和可用性",
-    "markAsMissing": "标记为遗失",
     "missingModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将标记为<strong>遗失</strong> 。",
     "missingModal.heading": "确认单件状态：遗失",
     "missingModal.confirm": "确认",
@@ -482,7 +481,6 @@
     "createdDate": "创建日期",
     "item.status.statusUpdatedLabel": "状态已更新{statusDate}",
     "isbnNormalized": "ISBN，标准化",
-    "markAsWithdrawn": "标记为已剔除",
     "withdrawnModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将标记为<strong>已剔除</strong>。",
     "withdrawnModal.heading": "确认单件状态：已剔除",
     "withdrawnModal.confirm": "确认",
@@ -602,7 +600,6 @@
     "instances.selectedRecords": "已选记录",
     "saveAndClose": "保存并关闭",
     "communicationProblem": "服务器通信问题。请再试",
-    "markAs": "标记为{itemStatus}",
     "itemStatusModal.heading": "确认单件状态： {itemStatus}",
     "permission.items.mark-intellectual-item": "典藏：标记单件为虚拟单件",
     "permission.items.mark-restricted": "典藏：标记受限单件",
@@ -776,5 +773,8 @@
     "jobProfiles.info": "在分配典藏单条记录导入之前，请仔细查看列出的任务配置文件。只能分配MARC书目任务配置文件，不能分配MARC馆藏或MARC规范任务配置文件。",
     "copycat.overlaySourceBib": "覆盖源书目记录",
     "copycat.overlayJobProfileToBeUsed": "选择要用于覆盖当前数据的配置文件",
-    "effectiveLocationHoldings": "有效馆藏位置"
+    "effectiveLocationHoldings": "有效馆藏位置",
+    "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
+    "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
+    "markAsHeader": "Mark as"
 }

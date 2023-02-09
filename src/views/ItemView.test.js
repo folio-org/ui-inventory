@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { waitFor } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -180,5 +180,10 @@ describe('ItemView', () => {
         expect(location).toContain('ui-inventory.inactive');
       });
     });
+
+    it('should display the information icons', () => {
+      expect(screen.getAllByTestId('info-icon-effective-call-number')[0]).toBeDefined();
+      expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
+    })
   });
 });
