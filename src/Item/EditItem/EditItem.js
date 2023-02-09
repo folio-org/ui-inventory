@@ -79,7 +79,7 @@ const EditItem = ({
         };
       }),
     };
-    mutateBoundWiths(boundWiths).catch(onError);
+    return mutateBoundWiths(boundWiths);
   };
 
   const onSubmit = useCallback((values) => {
@@ -87,9 +87,9 @@ const EditItem = ({
       delete item.barcode;
     }
 
-    updateBoundWiths(values);
-
-    return mutateItem(values).catch(onError);
+    return updateBoundWiths(values)
+      .then(() => mutateItem(values))
+      .catch(onError);
   }, [mutateItem]);
 
   if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
