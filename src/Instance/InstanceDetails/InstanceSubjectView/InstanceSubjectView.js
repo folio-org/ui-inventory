@@ -10,30 +10,46 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { MarcAuthorityLink} from '../MarcAuthorityLink';
 import {
   checkIfArrayIsEmpty,
 } from '../../../utils';
+import {
+  segments,
+} from '../../../constants';
 
 const noValue = <NoValue />;
 
 const visibleColumns = ['subject'];
 const getColumnMapping = intl => ({
-  subject: intl.formatMessage({ id: 'ui-inventory.subjectHeadings' })
+  subject: intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }),
 });
-const formatter = {
-  subject: item => item?.value || noValue,
-};
 
 const InstanceSubjectView = ({
   id,
   subjects,
+  segment,
+  source,
 }) => {
   const intl = useIntl();
 
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
-  const contentData = useMemo(() => checkIfArrayIsEmpty(
-    subjects.map(subject => ({ value: subject.value }))
-  ), [subjects]);
+
+  const formatter = {
+    subject: item => {
+      const _segment = segment ?? segments.instances;
+
+      if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+        return (
+          <MarcAuthorityLink authorityId={item.authorityId}>
+            {item.value}
+          </MarcAuthorityLink>
+        );
+      }
+
+      return item.value || noValue;
+    },
+  };
 
   return (
     <Accordion
@@ -42,7 +58,7 @@ const InstanceSubjectView = ({
     >
       <MultiColumnList
         id="list-subject"
-        contentData={contentData}
+        contentData={subjects}
         visibleColumns={visibleColumns}
         columnMapping={columnMapping}
         formatter={formatter}
@@ -56,6 +72,8 @@ const InstanceSubjectView = ({
 InstanceSubjectView.propTypes = {
   id: PropTypes.string.isRequired,
   subjects: PropTypes.arrayOf(PropTypes.string),
+  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  source: PropTypes.string.isRequired,
 };
 
 InstanceSubjectView.defaultProps = {

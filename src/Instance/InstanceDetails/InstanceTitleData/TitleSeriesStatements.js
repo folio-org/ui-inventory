@@ -9,9 +9,8 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import {
-  checkIfArrayIsEmpty,
-} from '../../../utils';
+import { MarcAuthorityLink } from '../MarcAuthorityLink';
+import { segments } from '../../../constants';
 
 const noValue = <NoValue />;
 
@@ -19,24 +18,36 @@ const visibleColumns = ['statement'];
 const getColumnMapping = intl => ({
   statement: intl.formatMessage({ id: 'ui-inventory.seriesStatement' }),
 });
-const formatter = {
-  statement: item => item.statement || noValue,
-};
 
 const TitleSeriesStatements = ({
   seriesStatements,
+  segment,
+  source,
 }) => {
   const intl = useIntl();
 
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
-  const contentData = useMemo(() => {
-    return checkIfArrayIsEmpty(seriesStatements.map(statement => ({ statement: statement.value })));
-  }, [seriesStatements]);
+
+  const formatter = {
+    statement: item => {
+      const _segment = segment ?? segments.instances;
+
+      if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+        return (
+          <MarcAuthorityLink authorityId={item.authorityId}>
+            {item.value}
+          </MarcAuthorityLink>
+        );
+      }
+
+      return item.value || noValue;
+    },
+  };
 
   return (
     <MultiColumnList
       id="list-series-statement"
-      contentData={contentData}
+      contentData={seriesStatements}
       visibleColumns={visibleColumns}
       columnMapping={columnMapping}
       formatter={formatter}
@@ -48,6 +59,8 @@ const TitleSeriesStatements = ({
 
 TitleSeriesStatements.propTypes = {
   seriesStatements: PropTypes.arrayOf(PropTypes.string),
+  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  source: PropTypes.string.isRequired,
 };
 
 TitleSeriesStatements.defaultProps = {

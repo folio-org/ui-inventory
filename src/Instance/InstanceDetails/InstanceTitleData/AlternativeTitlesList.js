@@ -9,9 +9,9 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import {
-  checkIfArrayIsEmpty,
-} from '../../../utils';
+import { MarcAuthorityLink } from '../MarcAuthorityLink';
+import { checkIfArrayIsEmpty } from '../../../utils';
+import { segments } from '../../../constants';
 
 const noValue = <NoValue />;
 
@@ -21,10 +21,6 @@ const getColumnMapping = intl => ({
   type: intl.formatMessage({ id: 'ui-inventory.alternativeTitleType' }),
   title: intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
 });
-const formatter = {
-  type: item => item.type || noValue,
-  title: item => item.alternativeTitle || noValue,
-};
 const columnWidths = {
   type: '25%',
   title: '75%',
@@ -33,6 +29,8 @@ const columnWidths = {
 const AlternativeTitlesList = ({
   titles,
   titleTypes,
+  source,
+  segment,
 }) => {
   const intl = useIntl();
 
@@ -51,6 +49,23 @@ const AlternativeTitlesList = ({
       }))
     );
   }, [titles, titleTypes]);
+
+  const formatter = {
+    type: item => item.type || noValue,
+    title: item => {
+      const _segment = segment ?? segments.instances;
+
+      if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
+        return (
+          <MarcAuthorityLink authorityId={item.authorityId}>
+            {item.alternativeTitle}
+          </MarcAuthorityLink>
+        );
+      }
+
+      return item.alternativeTitle || noValue;
+    },
+  };
 
   return (
     <MultiColumnList
@@ -71,6 +86,8 @@ const AlternativeTitlesList = ({
 AlternativeTitlesList.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.object),
   titleTypes: PropTypes.arrayOf(PropTypes.object),
+  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  source: PropTypes.string.isRequired,
 };
 
 AlternativeTitlesList.defaultProps = {
