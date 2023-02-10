@@ -104,4 +104,19 @@ describe('EditItem', () => {
 
     await waitFor(() => expect(mutateItem).toHaveBeenCalled());
   });
+
+  it('should work even with undefined boundWithTitles', async () => {
+    const error = new Error({ response: 'optimistic locking with no bound-with titles' });
+    mutateItem.mockClear().mockImplementation(() => Promise.reject(error));
+
+    renderEditItem();
+    ItemForm.mock.calls[0][0].onSubmit({
+      id: 'itemId',
+      permanentLocationId: '',
+      temporaryLocationId: '',
+      // no boundWithTitles
+    });
+
+    await waitFor(() => expect(mutateItem).toHaveBeenCalled());
+  });
 });
