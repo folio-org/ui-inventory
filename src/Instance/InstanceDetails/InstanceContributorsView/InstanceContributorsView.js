@@ -13,8 +13,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { MarcAuthorityLink } from '../MarcAuthorityLink';
-import { segments } from '../../../constants';
+import { ControllableDetail } from '../ControllableDetail';
 import { checkIfArrayIsEmpty } from '../../../utils';
 
 const noValue = <NoValue />;
@@ -67,23 +66,16 @@ const InstanceContributorsView = ({
     );
   }, [contributors, contributorTypes, contributorNameTypes]);
 
-  const getName = (item) => {
-    const _segment = segment ?? segments.instances;
-
-    if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
-      return (
-        <MarcAuthorityLink authorityId={item.authorityId}>
-          {item.name}
-        </MarcAuthorityLink>
-      );
-    }
-
-    return item.name || noValue;
-  };
-
   const formatter = {
     nameType: item => item.nameType || noValue,
-    name: item => getName(item),
+    name: item => (
+      <ControllableDetail
+        authorityId={item.authorityId}
+        value={item.name}
+        segment={segment}
+        source={source}
+      />
+    ),
     type: item => item.type || noValue,
     freeText: item => item.contributorTypeText || noValue,
     primary: item => (item.primary ? <FormattedMessage id="ui-inventory.primary" /> : noValue),

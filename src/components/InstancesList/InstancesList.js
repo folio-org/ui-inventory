@@ -993,7 +993,7 @@ class InstancesList extends React.Component {
             columnWidths={{
               callNumber: '15%',
               subject: '50%',
-              contributor: '50%',
+              contributor: '200px',
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',

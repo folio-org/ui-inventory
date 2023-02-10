@@ -9,7 +9,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { MarcAuthorityLink } from '../MarcAuthorityLink';
+import { ControllableDetail } from '../ControllableDetail';
 import { checkIfArrayIsEmpty } from '../../../utils';
 import { segments } from '../../../constants';
 
@@ -24,20 +24,6 @@ const getColumnMapping = intl => ({
 const columnWidths = {
   type: '25%',
   title: '75%',
-};
-
-const getTitleItem = (item, segment, source) => {
-  const _segment = segment ?? segments.instances;
-
-  if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
-    return (
-      <MarcAuthorityLink authorityId={item.authorityId}>
-        {item.alternativeTitle}
-      </MarcAuthorityLink>
-    );
-  }
-
-  return item.alternativeTitle || noValue;
 };
 
 const AlternativeTitlesList = ({
@@ -66,7 +52,14 @@ const AlternativeTitlesList = ({
 
   const formatter = {
     type: item => item.type || noValue,
-    title: item => getTitleItem(item, segment, source),
+    title: item => (
+      <ControllableDetail
+        authorityId={item.authorityId}
+        value={item.alternativeTitle}
+        segment={segment}
+        source={source}
+      />
+    ),
   };
 
   return (

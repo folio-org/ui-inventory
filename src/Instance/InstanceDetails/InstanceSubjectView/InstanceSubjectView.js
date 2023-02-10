@@ -7,32 +7,15 @@ import { useIntl } from 'react-intl';
 import {
   Accordion,
   MultiColumnList,
-  NoValue,
 } from '@folio/stripes/components';
 
-import { MarcAuthorityLink } from '../MarcAuthorityLink';
+import { ControllableDetail } from '../ControllableDetail';
 import { segments } from '../../../constants';
-
-const noValue = <NoValue />;
 
 const visibleColumns = ['subject'];
 const getColumnMapping = intl => ({
   subject: intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }),
 });
-
-const getSubjectItem = (item, segment, source) => {
-  const _segment = segment ?? segments.instances;
-
-  if (_segment === segments.instances && source === 'MARC' && item.authorityId) {
-    return (
-      <MarcAuthorityLink authorityId={item.authorityId}>
-        {item.value}
-      </MarcAuthorityLink>
-    );
-  }
-
-  return item.value || noValue;
-};
 
 const InstanceSubjectView = ({
   id,
@@ -45,7 +28,14 @@ const InstanceSubjectView = ({
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
 
   const formatter = {
-    subject: item => getSubjectItem(item, segment, source),
+    subject: item => (
+      <ControllableDetail
+        authorityId={item.authorityId}
+        value={item.value}
+        segment={segment}
+        source={source}
+      />
+    ),
   };
 
   return (
