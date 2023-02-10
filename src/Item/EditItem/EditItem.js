@@ -71,6 +71,10 @@ const EditItem = ({
   const { mutateBoundWiths } = useBoundWithsMutation();
 
   const updateBoundWiths = (values) => {
+    if (values.boundWithTitles === undefined) {
+      values.boundWithTitles = [];
+    }
+
     const boundWiths = {
       'itemId': values.id,
       'boundWithContents': values.boundWithTitles.map(title => {
