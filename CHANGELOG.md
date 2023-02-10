@@ -56,6 +56,7 @@
 * Improve the layout of the actions menu on the the item record. Fixes UIIN-2263.
 * Block item deletion for items with status `Claimed returned`. Fixes UIIN-2136.
 * Remove extra whitespace when parsing statistical code options. Fixes UIIN-2320.
+* Delete bound-with parts. Refs UIIN-2001.
 * Wire `<ErrorModal>` in cases of http errors during item and holding mutations. Fixes UIIN-2320.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
