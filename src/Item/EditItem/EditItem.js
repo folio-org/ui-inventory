@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { useStripes } from '@folio/stripes/core';
 import {
   LoadingView,
+  ErrorModal,
 } from '@folio/stripes/components';
 
 import {
@@ -65,7 +66,6 @@ const EditItem = ({
     setHttpError(parsedError);
   };
 
-
   const { mutateItem } = useItemMutation({ onSuccess });
 
   const { mutateBoundWiths } = useBoundWithsMutation();
@@ -95,21 +95,31 @@ const EditItem = ({
   if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
 
   return (
-    <ItemForm
-      httpError={httpError}
-      form={`itemform_${holding.id}`}
-      id={holding.id}
-      key={holding.id}
-      initialValues={item}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-      okapi={stripes.okapi}
-      instance={instance}
-      holdingsRecord={holding}
-      referenceTables={referenceData}
-      intl={stripes.intl}
-      stripes={stripes}
-    />
+    <>
+      <ItemForm
+        httpError={httpError}
+        form={`itemform_${holding.id}`}
+        id={holding.id}
+        key={holding.id}
+        initialValues={item}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        okapi={stripes.okapi}
+        instance={instance}
+        holdingsRecord={holding}
+        referenceTables={referenceData}
+        intl={stripes.intl}
+        stripes={stripes}
+      />
+      {httpError && !httpError?.errorType &&
+        <ErrorModal
+          open
+          label={<FormattedMessage id="ui-inventory.instance.saveError" />}
+          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          onClose={() => setHttpError()}
+        />
+      }
+    </>
   );
 };
 
