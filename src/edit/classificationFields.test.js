@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '../../test/jest/__mock__';
@@ -56,7 +56,7 @@ describe('ClassificationFields', () => {
     expect(ClassificationDropdown).toHaveLength(1);
     const inputText = screen.getByRole('textbox');
     expect(inputText).toHaveValue('');
-    fireEvent.change(inputText, { target: { value: 'Enter text' } });
+    userEvent.type(inputText, 'Enter text');
     expect(inputText).toHaveValue('Enter text');
   });
 });
