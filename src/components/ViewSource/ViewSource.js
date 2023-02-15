@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
-import { IfPermission } from '@folio/stripes-core';
+import { IfPermission } from '@folio/stripes/core';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
 import {
   useInstance,
