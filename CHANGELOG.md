@@ -58,6 +58,7 @@
 * Remove extra whitespace when parsing statistical code options. Fixes UIIN-2320.
 * Delete bound-with parts. Refs UIIN-2001.
 * Wire `<ErrorModal>` in cases of http errors during item and holding mutations. Fixes UIIN-2320.
+* Moved the print button from QuickMarkView, into the ViewSource. Due to the folio-org/ui-quick-marc#468. Refs UIIN-2324.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
