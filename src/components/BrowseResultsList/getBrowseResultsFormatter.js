@@ -59,7 +59,47 @@ const getTargetRecord = (
   );
 };
 
+
 const openInNewTab = (url) => window.open(url, '_blank', 'noopener,noreferrer');
+
+const renderMarcAuthoritiesLink = (authorityId, content) => {
+  return (
+    <>
+      <Tooltip
+        id="marc-authority-tooltip"
+        text={<FormattedMessage id="ui-inventory.linkedToMarcAuthority" />}
+      >
+        {({ ref, ariaIds }) => {
+          const url = `/marc-authorities/authorities/${authorityId}?authRefType=Authorized&segment=search`;
+
+          return (
+            <span
+              role="link" // fake link to avoid Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>
+              tabIndex="0"
+              ref={ref}
+              aria-labelledby={ariaIds.text}
+              data-link="authority-app"
+              data-testid="authority-app-link"
+              onClick={() => openInNewTab(url)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  openInNewTab(url);
+                }
+              }}
+            >
+              <AppIcon
+                size="small"
+                app="marc-authorities"
+                iconClassName={css.authorityIcon}
+              />
+            </span>
+          );
+        }}
+      </Tooltip>
+      {content}
+    </>
+  );
+};
 
 const getBrowseResultsFormatter = ({
   data,
@@ -71,7 +111,12 @@ const getBrowseResultsFormatter = ({
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
       if (r?.totalRecords) {
-        return getTargetRecord(r?.value, r, browseOption, browseSearch, pageConfig);
+        const subject = getTargetRecord(r?.value, r, browseOption, browseSearch, pageConfig);
+        if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
+          return renderMarcAuthoritiesLink(r.authorityId, subject);
+        }
+
+        return subject;
       }
       return <MissedMatchItem query={r?.value} />;
     },
@@ -84,45 +129,9 @@ const getBrowseResultsFormatter = ({
     contributor: r => {
       if (r?.totalRecords) {
         const fullMatchRecord = getTargetRecord(r.name, r, browseOption, browseSearch, pageConfig);
-        const isBrowseContributors = browseOption === browseModeOptions.CONTRIBUTORS;
 
-        if (isBrowseContributors && r.authorityId) {
-          return (
-            <>
-              <Tooltip
-                id="marc-authority-tooltip"
-                text={<FormattedMessage id="ui-inventory.linkedToMarcAuthority" />}
-              >
-                {({ ref, ariaIds }) => {
-                  const url = `/marc-authorities/authorities/${r.authorityId}?authRefType=Authorized&segment=search`;
-
-                  return (
-                    <span
-                      role="link" // fake link to avoid Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>
-                      tabIndex="0"
-                      ref={ref}
-                      aria-labelledby={ariaIds.text}
-                      data-link="authority-app"
-                      data-testid="authority-app-link"
-                      onClick={() => openInNewTab(url)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          openInNewTab(url);
-                        }
-                      }}
-                    >
-                      <AppIcon
-                        size="small"
-                        app="marc-authorities"
-                        iconClassName={css.authorityIcon}
-                      />
-                    </span>
-                  );
-                }}
-              </Tooltip>
-              {fullMatchRecord}
-            </>
-          );
+        if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
+          return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
         }
 
         return fullMatchRecord;
