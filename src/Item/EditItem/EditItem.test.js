@@ -1,7 +1,7 @@
 import '../../../test/jest/__mock__';
 
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { instance } from '../../../test/fixtures/instance';
@@ -9,7 +9,7 @@ import {
   useInstanceQuery,
   useHolding,
 } from '../../common/hooks';
-import { useItem, useItemMutation } from '../hooks';
+import { useItem, useItemMutation, useBoundWithsMutation } from '../hooks';
 import EditItem from './EditItem';
 import ItemForm from '../../edit/items/ItemForm';
 
@@ -23,7 +23,12 @@ jest.mock('../../common/hooks', () => ({
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
   useItem: jest.fn().mockReturnValue({ item: {}, isLoading: false }),
-  useItemMutation: jest.fn().mockReturnValue({ mutateItem: jest.fn() }),
+  useItemMutation: jest.fn().mockReturnValue({
+    mutateItem: jest.fn()
+  }),
+  useBoundWithsMutation: jest.fn().mockReturnValue({
+    mutateBoundWiths: jest.fn(() => Promise.resolve({ data: {} }))
+  }),
 }));
 
 const defaultProps = {
@@ -51,7 +56,6 @@ const renderEditItem = (props = {}) => render(
   { wrapper },
 );
 
-
 describe('EditItem', () => {
   const mutateItem = jest.fn(() => Promise.resolve({ data: {} }));
 
@@ -60,6 +64,7 @@ describe('EditItem', () => {
     useHolding.mockClear();
     useItem.mockClear();
     useItemMutation.mockClear().mockReturnValue({ mutateItem });
+    useBoundWithsMutation.mockClear();
   });
 
   it('should render ItemForm', () => {
@@ -85,18 +90,33 @@ describe('EditItem', () => {
     expect(screen.getByText('LoadingView')).toBeInTheDocument();
   });
 
-  it('should handle optimistic locking exception', () => {
+  it('should handle optimistic locking exception', async () => {
     const error = new Error({ response: 'optimistic locking' });
     mutateItem.mockClear().mockImplementation(() => Promise.reject(error));
 
     renderEditItem();
-
     ItemForm.mock.calls[0][0].onSubmit({
       id: 'itemId',
       permanentLocationId: '',
       temporaryLocationId: '',
+      boundWithTitles: [],
     });
 
-    expect(mutateItem).toHaveBeenCalled();
+    await waitFor(() => expect(mutateItem).toHaveBeenCalled());
+  });
+
+  it('should work even with undefined boundWithTitles', async () => {
+    const error = new Error({ response: 'optimistic locking with no bound-with titles' });
+    mutateItem.mockClear().mockImplementation(() => Promise.reject(error));
+
+    renderEditItem();
+    ItemForm.mock.calls[0][0].onSubmit({
+      id: 'itemId',
+      permanentLocationId: '',
+      temporaryLocationId: '',
+      // no boundWithTitles
+    });
+
+    await waitFor(() => expect(mutateItem).toHaveBeenCalled());
   });
 });
