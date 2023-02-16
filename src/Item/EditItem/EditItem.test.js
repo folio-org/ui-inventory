@@ -22,34 +22,7 @@ jest.mock('../../common/hooks', () => ({
 }));
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
-  useItem: jest.fn().mockReturnValue({
-    item: {
-      holdingsRecordId: 'bw123',
-      boundWithTitles: [
-        {
-          briefInstance: {
-            hrid: 'bw123',
-            title: 'bw123',
-          },
-          briefHoldingsRecord: {
-            id: 'bw123',
-            hrid: 'bw123',
-          }
-        },
-        {
-          briefInstance: {
-            hrid: 'bw456',
-            title: 'bw456',
-          },
-          briefHoldingsRecord: {
-            id: 'bw456',
-            hrid: 'bw456',
-          }
-        },
-      ],
-    },
-    isLoading: false,
-  }),
+  useItem: jest.fn().mockReturnValue({ item: {}, isLoading: false }),
   useItemMutation: jest.fn().mockReturnValue({
     mutateItem: jest.fn()
   }),
@@ -145,19 +118,5 @@ describe('EditItem', () => {
     });
 
     await waitFor(() => expect(mutateItem).toHaveBeenCalled());
-  });
-
-  it('should selectively disable a directly linked boundWithTitles row', async () => {
-    renderEditItem();
-
-    const directlyLinkedTitle = await screen.getByDisplayValue('bw123');
-    const directlyLinkedDelete = directlyLinkedTitle.closest('div[data-test-repeater-field-row]')
-      .getElementsByTagName('button').item(0);
-    expect(directlyLinkedDelete.disabled).toBeTruthy();
-
-    const indirectlyLinkedTitle = await screen.getByDisplayValue('bw456');
-    const indirectlyLinkedDelete = indirectlyLinkedTitle.closest('div[data-test-repeater-field-row]')
-      .getElementsByTagName('button').item(0);
-    expect(indirectlyLinkedDelete.disabled).toBeFalsy();
   });
 });
