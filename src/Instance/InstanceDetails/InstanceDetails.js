@@ -146,6 +146,8 @@ const InstanceDetails = forwardRef(({
               instance={instance}
               titleTypes={referenceData.alternativeTitleTypes}
               identifierTypesById={referenceData.identifierTypesById}
+              source={instance.source}
+              segment={searchParams.get('segment')}
             />
 
             <InstanceIdentifiersView
@@ -186,6 +188,8 @@ const InstanceDetails = forwardRef(({
             <InstanceSubjectView
               id={accordions.subjects}
               subjects={instance.subjects}
+              source={instance.source}
+              segment={searchParams.get('segment')}
             />
 
             <InstanceClassificationView

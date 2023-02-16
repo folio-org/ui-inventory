@@ -22,6 +22,7 @@ import { parseHttpError } from '../../utils';
 import {
   useItem,
   useItemMutation,
+  useBoundWithsMutation,
 } from '../hooks';
 
 const EditItem = ({
@@ -67,12 +68,32 @@ const EditItem = ({
 
   const { mutateItem } = useItemMutation({ onSuccess });
 
+  const { mutateBoundWiths } = useBoundWithsMutation();
+
+  const updateBoundWiths = (values) => {
+    if (values.boundWithTitles === undefined) {
+      values.boundWithTitles = [];
+    }
+
+    const boundWiths = {
+      'itemId': values.id,
+      'boundWithContents': values.boundWithTitles.map(title => {
+        return {
+          'holdingsRecordId': title.briefHoldingsRecord.id,
+        };
+      }),
+    };
+    return mutateBoundWiths(boundWiths);
+  };
+
   const onSubmit = useCallback((values) => {
     if (!values.barcode) {
       delete item.barcode;
     }
 
-    return mutateItem(values).catch(onError);
+    return updateBoundWiths(values)
+      .then(() => mutateItem(values))
+      .catch(onError);
   }, [mutateItem]);
 
   if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
