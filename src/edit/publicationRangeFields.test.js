@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -44,7 +44,7 @@ describe('PublicationRangeFields', () => {
     userEvent.click(rangeButton);
     const myText = screen.getByRole('textbox', { name: 'Publication range' });
     expect(myText).toHaveValue('');
-    fireEvent.change(myText, { target: { value: 'Enter text for Publication Range text field' } });
+    userEvent.type(myText, 'Enter text for Publication Range text field');
     expect(myText).toHaveValue('Enter text for Publication Range text field');
   });
 });
