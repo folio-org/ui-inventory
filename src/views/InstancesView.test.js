@@ -2,7 +2,7 @@ import React from 'react';
 import { render, act } from '@testing-library/react';
 import '../../test/jest/__mock__';
 import InstancesView from './InstancesView';
-import { InstancesList } from '../components';
+import InstancesList from '../components/InstancesList';
 
 jest.mock('../components/InstancesList', () => jest.fn(() => <div>Mocked InstancesList</div>));
 

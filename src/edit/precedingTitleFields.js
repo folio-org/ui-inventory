@@ -5,7 +5,7 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { RepeatableField } from '@folio/stripes/components';
 
-import { TitleField } from '../components';
+import TitleField from '../components/TitleField';
 
 const PrecedingTitles = ({ canAdd, canEdit, canDelete, isDisabled }) => (
   <FieldArray

@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  ConnectedTitle,
-  UnconnectedTitle,
-} from '..';
+import ConnectedTitle from '../ConnectedTitle';
+import UnconnectedTitle from '../UnconnectedTitle';
 
 const TitleField = ({ field, index, fields, titleIdKey, isDisabled }) => {
   const {
