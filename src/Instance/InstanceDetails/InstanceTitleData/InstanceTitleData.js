@@ -25,6 +25,7 @@ const InstanceTitleData = ({
   instance,
   titleTypes,
   identifierTypesById,
+  segment,
 }) => {
   const precedingTitles = useMemo(() => {
     return checkIfArrayIsEmpty(instance.precedingTitles);
@@ -50,6 +51,8 @@ const InstanceTitleData = ({
       <AlternativeTitlesList
         titles={instance.alternativeTitles}
         titleTypes={titleTypes}
+        source={instance.source}
+        segment={segment}
       />
 
       <br />
@@ -65,6 +68,8 @@ const InstanceTitleData = ({
 
       <TitleSeriesStatements
         seriesStatements={instance.series}
+        source={instance.source}
+        segment={segment}
       />
 
       <br />
@@ -93,6 +98,7 @@ const InstanceTitleData = ({
 InstanceTitleData.propTypes = {
   id: PropTypes.string.isRequired,
   instance: PropTypes.object,
+  segment: PropTypes.string.isRequired,
   titleTypes: PropTypes.arrayOf(PropTypes.object),
   identifierTypesById: PropTypes.object,
 };
