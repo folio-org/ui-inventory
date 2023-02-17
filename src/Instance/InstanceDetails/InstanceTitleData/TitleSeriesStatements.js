@@ -4,39 +4,41 @@ import React, {
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
-import {
-  MultiColumnList,
-  NoValue,
-} from '@folio/stripes/components';
+import { MultiColumnList } from '@folio/stripes/components';
 
-import {
-  checkIfArrayIsEmpty,
-} from '../../../utils';
+import { ControllableDetail } from '../ControllableDetail';
+import { segments } from '../../../constants';
 
-const noValue = <NoValue />;
 
 const visibleColumns = ['statement'];
 const getColumnMapping = intl => ({
   statement: intl.formatMessage({ id: 'ui-inventory.seriesStatement' }),
 });
-const formatter = {
-  statement: item => item.statement || noValue,
-};
 
 const TitleSeriesStatements = ({
   seriesStatements,
+  segment,
+  source,
 }) => {
   const intl = useIntl();
 
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
-  const contentData = useMemo(() => {
-    return checkIfArrayIsEmpty(seriesStatements.map(statement => ({ statement: statement.value })));
-  }, [seriesStatements]);
+
+  const formatter = {
+    statement: item => (
+      <ControllableDetail
+        authorityId={item.authorityId}
+        value={item.value}
+        segment={segment}
+        source={source}
+      />
+    ),
+  };
 
   return (
     <MultiColumnList
       id="list-series-statement"
-      contentData={contentData}
+      contentData={seriesStatements}
       visibleColumns={visibleColumns}
       columnMapping={columnMapping}
       formatter={formatter}
@@ -48,6 +50,8 @@ const TitleSeriesStatements = ({
 
 TitleSeriesStatements.propTypes = {
   seriesStatements: PropTypes.arrayOf(PropTypes.string),
+  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  source: PropTypes.string.isRequired,
 };
 
 TitleSeriesStatements.defaultProps = {
