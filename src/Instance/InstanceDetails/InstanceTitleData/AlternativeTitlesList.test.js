@@ -1,8 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-// import { screen } from '@testing-library/react';
-
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
@@ -29,7 +26,7 @@ const titleTypes = [
 const props = {
   titles,
   titleTypes,
-}
+};
 
 const renderAlternativeTitlesList = () => (
   renderWithIntl(
