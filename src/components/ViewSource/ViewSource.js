@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
+  Button,
   LoadingView,
 } from '@folio/stripes/components';
 import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
+import { IfPermission } from '@folio/stripes/core';
+import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
 import {
   useInstance,
   useGoBack,
@@ -23,6 +26,10 @@ const ViewSource = ({
   holdingsRecordId,
   isHoldingsRecord,
 }) => {
+  const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
+  const openPrintPopup = () => setIsShownPrintPopup(true);
+  const closePrintPopup = () => setIsShownPrintPopup(false);
+
   const pathForGoBack = isHoldingsRecord
     ? `/inventory/view/${instanceId}/${holdingsRecordId}`
     : `/inventory/view/${instanceId}`;
@@ -76,7 +83,28 @@ const ViewSource = ({
         marcTitle={marcTitle}
         marc={marc}
         onClose={goBack}
+        lastMenu={
+          <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
+            <Button
+              marginBottom0
+              buttonStyle="primary"
+              onClick={openPrintPopup}
+            >
+              <FormattedMessage id="ui-quick-marc.print" />
+            </Button>
+          </IfPermission>
+        }
       />
+      <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
+        {isShownPrintPopup && (
+        <PrintPopup
+          marc={marc}
+          paneTitle={paneTitle}
+          marcTitle={marcTitle}
+          onAfterPrint={closePrintPopup}
+        />
+        )}
+      </IfPermission>
     </div>
   );
 };
