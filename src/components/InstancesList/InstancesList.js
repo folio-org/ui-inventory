@@ -34,6 +34,8 @@ import {
   checkScope,
   HasCommand,
   MCLPagingTypes,
+  TextLink,
+  DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -635,13 +637,6 @@ class InstancesList extends React.Component {
             </IfPermission>
           </IfInterface>
           {this.getActionItem({
-            id: 'dropdown-clickable-export-json',
-            icon: 'download',
-            messageId: 'ui-inventory.exportInstancesInJSON',
-            onClickHandler: buildOnClickHandler(noop),
-            isDisabled: true,
-          })}
-          {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
             messageId: 'ui-inventory.instances.showSelectedRecords',
@@ -665,6 +660,15 @@ class InstancesList extends React.Component {
         </MenuSection>
       </>
     );
+  };
+
+  getRowURL = (id) => {
+    const {
+      match: { path },
+      location: { search },
+    } = this.props;
+
+    return `${path}/view/${id}${search}`;
   };
 
   getIsAllRowsSelected = () => {
@@ -876,6 +880,7 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
+        id,
       }) => {
         return (
           <AppIcon
@@ -884,7 +889,11 @@ class InstancesList extends React.Component {
             iconKey="instance"
             iconAlignment="baseline"
           >
-            {title}
+            <TextLink
+              to={this.getRowURL(id)}
+            >
+              {title}
+            </TextLink>
             {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -993,7 +1002,9 @@ class InstancesList extends React.Component {
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
+            resultsRowClickHandlers={false}
             resultsFormatter={resultsFormatter}
+            resultsRowFormatter={DefaultMCLRowFormatter}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"

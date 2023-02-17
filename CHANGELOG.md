@@ -47,6 +47,18 @@
 * Align the module with API breaking change (browse). Refs UIIN-2296.
 * Bump quick-marc to 6.0.0. Refs UIIN-2310.
 * Align subjects query building with API changes. Refs UIIN-2314.
+* Cannot save new Z39.50 Settings profile due to missing required fields. Fixes UIIN-2298.
+* Hide Export to json option in Action menu. Refs UIIN-2304.
+* Bump `@folio/stripes-acq-components` version to `4.0.0`. Refs UIIN-2319.
+* Create info popovers on call number fields in item record. Fixes UIIN-2307.
+* Hyperlink one column in the results list to improve accessibility. Fixes UIIN-2176.
+* Bump stripes to `8.0.0` for Orchid/2023-R1. Refs UIIN-2303.
+* Improve the layout of the actions menu on the the item record. Fixes UIIN-2263.
+* Block item deletion for items with status `Claimed returned`. Fixes UIIN-2136.
+* Remove extra whitespace when parsing statistical code options. Fixes UIIN-2320.
+* Delete bound-with parts. Refs UIIN-2001.
+* Wire `<ErrorModal>` in cases of http errors during item and holding mutations. Fixes UIIN-2320.
+* Added `<ControllableDetail>` component to display authorized indicator for Subjects, Uniform titles and Series. Refs UIIN-2311.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
