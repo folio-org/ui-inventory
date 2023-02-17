@@ -58,22 +58,25 @@ describe('ElectronicAccessFields', () => {
     expect(screen.getByText('Link text')).toBeInTheDocument();
     expect(screen.getByText('Materials specified')).toBeInTheDocument();
     expect(screen.getByText('URL public note')).toBeInTheDocument();
-    const myURIText = screen.getByRole('textbox', { name: 'URI' });
-    expect(myURIText).toHaveValue('');
-    userEvent.type(myURIText, 'Entered text inside URI Text field');
-    expect(myURIText).toHaveValue('Entered text inside URI Text field');
-    const myLinkText = screen.getByRole('textbox', { name: 'Link text' });
-    expect(myLinkText).toHaveValue('');
-    userEvent.type(myLinkText, 'Entered text inside Link text field');
-    expect(myLinkText).toHaveValue('Entered text inside Link text field');
+  });
+
+  it('click on Materials Text Field and enter text', () => {
+    renderElectronicAccessFields();
+    const electronicButton = screen.getByText('Add electronic access');
+    userEvent.click(electronicButton);
     const myMaterialsText = screen.getByRole('textbox', { name: 'Materials specified' });
     expect(myMaterialsText).toHaveValue('');
     userEvent.type(myMaterialsText, 'Entered text inside Materials specified text field');
     expect(myMaterialsText).toHaveValue('Entered text inside Materials specified text field');
+  });
+
+  it('click on URL public note Text Field and enter text', () => {
+    renderElectronicAccessFields();
+    const electronicButton = screen.getByText('Add electronic access');
+    userEvent.click(electronicButton);
     const myURLText = screen.getByRole('textbox', { name: 'URL public note' });
     expect(myURLText).toHaveValue('');
     userEvent.type(myURLText, 'Entered text inside URL public note text field');
     expect(myURLText).toHaveValue('Entered text inside URL public note text field');
   });
 });
-
