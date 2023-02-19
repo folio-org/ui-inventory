@@ -964,7 +964,7 @@ class InstancesList extends React.Component {
         isWithinScope={checkScope}
         scope={document.body}
       >
-        <div data-test-inventory-instances>
+        <div data-test-inventory-instances className={css.inventoryInstances}>
           <SearchAndSort
             key={searchAndSortKey}
             actionMenu={this.getActionMenu}
@@ -1004,7 +1004,7 @@ class InstancesList extends React.Component {
             customPaneSub={this.renderPaneSub()}
             resultsRowClickHandlers={false}
             resultsFormatter={resultsFormatter}
-            resultsRowFormatter={DefaultMCLRowFormatter}
+            resultRowFormatter={DefaultMCLRowFormatter}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
