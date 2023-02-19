@@ -3,7 +3,7 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
@@ -26,7 +26,6 @@ const ViewSource = ({
   holdingsRecordId,
   isHoldingsRecord,
 }) => {
-  const intl = useIntl();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
@@ -98,12 +97,12 @@ const ViewSource = ({
       />
       <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
         {isShownPrintPopup && (
-        <PrintPopup
-          marc={marc}
-          paneTitle={isHoldingsRecord ? '' : paneTitle}
-          marcTitle={isHoldingsRecord ? intl.formatMessage({ id:'ui-inventory.marcHoldingsRecord.paneTitle' }, { title: instance.title }) : marcTitle}
-          onAfterPrint={closePrintPopup}
-        />
+          <PrintPopup
+            marc={marc}
+            paneTitle={instance.title}
+            marcTitle={marcTitle}
+            onAfterPrint={closePrintPopup}
+          />
         )}
       </IfPermission>
     </div>
