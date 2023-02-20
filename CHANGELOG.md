@@ -1,5 +1,6 @@
 # Change history for ui-inventory
 
+## 9.4.0 IN PROGRESS
 * Disable deletion of a bound-with title from the Edit Item view if the title is also directly linked.  Refs UIIN-2327.
 
 ## [9.3.0](https://github.com/folio-org/ui-inventory/tree/v9.3.0) (2023-02-20)
