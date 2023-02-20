@@ -71,13 +71,13 @@ const EditItem = ({
   const { mutateBoundWiths } = useBoundWithsMutation();
 
   const updateBoundWiths = (values) => {
-    if (values.boundWithTitles === undefined) {
-      values.boundWithTitles = [];
+    // Skip update is there are no bound-with parts before or after
+    if (!item.boundWithTitles?.length && !values.boundWithTitles?.length) {
+      return Promise.resolve();
     }
 
-    // Skip update is there are no bound-with parts before or after
-    if (!(item.boundWithTitles?.length > 0) && !(values.boundWithTitles.length > 0)) {
-      return Promise.resolve();
+    if (values.boundWithTitles === undefined) {
+      values.boundWithTitles = [];
     }
 
     const boundWiths = {
