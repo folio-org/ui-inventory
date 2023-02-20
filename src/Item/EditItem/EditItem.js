@@ -75,6 +75,11 @@ const EditItem = ({
       values.boundWithTitles = [];
     }
 
+    // Skip update is there are no bound-with parts before or after
+    if (!(item.boundWithTitles?.length > 0) && !(values.boundWithTitles.length > 0)) {
+      return Promise.resolve();
+    }
+
     const boundWiths = {
       'itemId': values.id,
       'boundWithContents': values.boundWithTitles.map(title => {
