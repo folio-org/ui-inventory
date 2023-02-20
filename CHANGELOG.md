@@ -61,6 +61,7 @@
 * Added `<ControllableDetail>` component to display authorized indicator for Subjects, Uniform titles and Series. Refs UIIN-2311.
 * Moved the print button from QuickMarkView, into the ViewSource. Due to the folio-org/ui-quick-marc#468. Refs UIIN-2324.
 * Change title for the print popup. Refs UIIN-2329.
+* Move @testing-library/* to dev-deps. Refs UIIN-2309.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
