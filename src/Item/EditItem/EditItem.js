@@ -71,7 +71,7 @@ const EditItem = ({
   const { mutateBoundWiths } = useBoundWithsMutation();
 
   const updateBoundWiths = (values) => {
-    // Skip update is there are no bound-with parts before or after
+    // Skip update if there are no bound-with parts before or after
     if (!item.boundWithTitles?.length && !values.boundWithTitles?.length) {
       return Promise.resolve();
     }
