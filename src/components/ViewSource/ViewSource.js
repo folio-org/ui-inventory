@@ -96,7 +96,6 @@ const ViewSource = ({
           </Button>
         }
       />
-
       {isPrintAvailable && isShownPrintPopup && (
         <PrintPopup
           marc={marc}
