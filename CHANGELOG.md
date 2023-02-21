@@ -4,6 +4,7 @@
 * Disable deletion of a bound-with title from the Edit Item view if the title is also directly linked.  Refs UIIN-2327.
 * Sort the bound-with titles on View Item and Edit Item screens. Refs UIIN-2326.
 * Add missing bound-with permissions to Item create and edit. Fixes UIIN-2328.
+* Skip Item Actions menu "Mark as" heading when no mark actions are available. Refs UIIN-2331.
 
 ## [9.3.0](https://github.com/folio-org/ui-inventory/tree/v9.3.0) (2023-02-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.0...v9.3.0)
