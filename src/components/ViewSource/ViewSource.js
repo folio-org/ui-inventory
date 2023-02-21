@@ -97,12 +97,12 @@ const ViewSource = ({
       />
       <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
         {isShownPrintPopup && (
-        <PrintPopup
-          marc={marc}
-          paneTitle={paneTitle}
-          marcTitle={marcTitle}
-          onAfterPrint={closePrintPopup}
-        />
+          <PrintPopup
+            marc={marc}
+            paneTitle={instance.title}
+            marcTitle={marcTitle}
+            onAfterPrint={closePrintPopup}
+          />
         )}
       </IfPermission>
     </div>

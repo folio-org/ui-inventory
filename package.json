@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "9.3.0",
+  "version": "9.4.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -864,8 +864,10 @@
     "@folio/stripes-testing": "^3.0.0",
     "@folio/stripes-util": "^5.2.0",
     "@formatjs/cli": "^4.2.20",
+    "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^11.0.2",
+    "@testing-library/react-hooks": "^5.1.0",
     "@testing-library/user-event": "^12.1.10",
     "babel-jest": "^26.3.0",
     "chai": "^4.2.0",
@@ -891,8 +893,6 @@
   "dependencies": {
     "@folio/quick-marc": "^6.0.0",
     "@folio/stripes-acq-components": "^4.0.0",
-    "@testing-library/dom": "^7.29.4",
-    "@testing-library/react-hooks": "^5.1.0",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
