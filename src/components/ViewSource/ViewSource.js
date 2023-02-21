@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
-import { IfPermission } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
 import {
   useInstance,
@@ -29,6 +29,8 @@ const ViewSource = ({
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
+  const stripes = useStripes();
+  const isPrintAvailable = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view') || stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
 
   const pathForGoBack = isHoldingsRecord
     ? `/inventory/view/${instanceId}/${holdingsRecordId}`
@@ -84,27 +86,25 @@ const ViewSource = ({
         marc={marc}
         onClose={goBack}
         lastMenu={
-          <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
-            <Button
-              marginBottom0
-              buttonStyle="primary"
-              onClick={openPrintPopup}
-            >
-              <FormattedMessage id="ui-quick-marc.print" />
-            </Button>
-          </IfPermission>
+          isPrintAvailable &&
+          <Button
+            marginBottom0
+            buttonStyle="primary"
+            onClick={openPrintPopup}
+          >
+            <FormattedMessage id="ui-quick-marc.print" />
+          </Button>
         }
       />
-      <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
-        {isShownPrintPopup && (
-          <PrintPopup
-            marc={marc}
-            paneTitle={instance.title}
-            marcTitle={marcTitle}
-            onAfterPrint={closePrintPopup}
-          />
-        )}
-      </IfPermission>
+
+      {isPrintAvailable && isShownPrintPopup && (
+        <PrintPopup
+          marc={marc}
+          paneTitle={instance.title}
+          marcTitle={marcTitle}
+          onAfterPrint={closePrintPopup}
+        />
+      )}
     </div>
   );
 };
