@@ -898,6 +898,10 @@ class ItemForm extends React.Component {
                       name="boundWithTitles"
                       label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
                       canAdd={false}
+                      canDelete={(fields, fieldIndex) => {
+                        return fields?.value[fieldIndex]?.briefHoldingsRecord?.id !==
+                          item?.holdingsRecordId;
+                      }}
                       template={[
                         {
                           name: 'briefInstance.hrid',
