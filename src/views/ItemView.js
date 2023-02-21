@@ -4,6 +4,7 @@ import {
   map,
   isEmpty,
   values,
+  sortBy,
 } from 'lodash';
 import { parameterize } from 'inflected';
 
@@ -655,6 +656,12 @@ class ItemView extends React.Component {
       source,
     };
 
+    item.boundWithTitles = sortBy(
+      item?.boundWithTitles,
+      [(boundWithTitle) => {
+        return boundWithTitle?.briefHoldingsRecord?.id === item?.holdingsRecordId ? 0 : 1;
+      }]
+    );
     const boundWithTitles = item?.boundWithTitles;
 
     const initialAccordionsState = {
