@@ -45,9 +45,9 @@ describe('useItem', () => {
           id: itemId,
           holdingsRecordId: 'bw456',
           boundWithTitles: [
-            { briefHoldingsRecord: {id: 'bw123'}, },
-            { briefHoldingsRecord: {id: 'bw456'}, }, // should sort to top
-            { briefHoldingsRecord: {id: 'bw789'}, },
+            { briefHoldingsRecord: { id: 'bw123' } },
+            { briefHoldingsRecord: { id: 'bw456' } }, // should sort to top
+            { briefHoldingsRecord: { id: 'bw789' } },
           ],
         }),
       }),
@@ -61,6 +61,7 @@ describe('useItem', () => {
 
     const firstSortedTitle = result.current.item.boundWithTitles[0];
     expect(firstSortedTitle.briefHoldingsRecord.id).toEqual(
-      result.current.item.holdingsRecordId);
+      result.current.item.holdingsRecordId
+    );
   });
 });
