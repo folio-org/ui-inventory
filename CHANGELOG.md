@@ -5,6 +5,7 @@
 * Sort the bound-with titles on View Item and Edit Item screens. Refs UIIN-2326.
 * Add missing bound-with permissions to Item create and edit. Fixes UIIN-2328.
 * Skip Item Actions menu "Mark as" heading when no mark actions are available. Refs UIIN-2331.
+* Added the print button for the common users. Refs UIIN-2329.
 
 ## [9.3.0](https://github.com/folio-org/ui-inventory/tree/v9.3.0) (2023-02-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.0...v9.3.0)
