@@ -204,7 +204,10 @@ class FieldRow extends React.Component {
                         buttonStyle="link"
                         onClick={() => { this.handleRemove(fieldIndex, f); }}
                         aria-label={ariaLabel}
-                        disabled={!canDelete}
+                        disabled={
+                          typeof canDelete === 'boolean' ?
+                            !canDelete :
+                            !canDelete(fields, fieldIndex)}
                       >
                         <Icon icon="trash" />
                       </Button>
@@ -240,7 +243,7 @@ FieldRow.propTypes = {
   addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
-  canDelete: PropTypes.bool,
+  canDelete: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   containerRef: PropTypes.func,
   fields: PropTypes.object,
   formatter: PropTypes.func,
