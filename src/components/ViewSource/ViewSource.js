@@ -30,7 +30,10 @@ const ViewSource = ({
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const stripes = useStripes();
-  const isPrintAvailable = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view') || stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+
+  const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
+  const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+  const isPrintAvailable = isPrintBibAvailable || isPrintHoldingsAvailable;
 
   const pathForGoBack = isHoldingsRecord
     ? `/inventory/view/${instanceId}/${holdingsRecordId}`
