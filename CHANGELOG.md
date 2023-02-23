@@ -1,6 +1,8 @@
 # Change history for ui-inventory
 
-## 9.4.0 IN PROGRESS
+## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)
+
 * Disable deletion of a bound-with title from the Edit Item view if the title is also directly linked.  Refs UIIN-2327.
 * Sort the bound-with titles on View Item and Edit Item screens. Refs UIIN-2326.
 * Add missing bound-with permissions to Item create and edit. Fixes UIIN-2328.
