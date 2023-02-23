@@ -612,7 +612,8 @@
           "ui-inventory.instance.view",
           "inventory.items.item.post",
           "inventory.instances.item.put",
-          "inventory-storage.instances.item.put"
+          "inventory-storage.instances.item.put",
+          "inventory-storage.bound-with-parts.item.post"
         ],
         "visible": true
       },
@@ -621,7 +622,8 @@
         "displayName": "Inventory: View, create, edit items",
         "subPermissions": [
           "ui-inventory.item.create",
-          "inventory.items.item.put"
+          "inventory.items.item.put",
+          "inventory-storage.bound-with-parts.item.delete"
         ],
         "visible": true
       },
