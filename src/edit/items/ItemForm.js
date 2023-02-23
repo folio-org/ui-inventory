@@ -890,6 +890,41 @@ class ItemForm extends React.Component {
                   >
                     <ElectronicAccessFields relationship={electronicAccessRelationships} />
                   </Accordion>
+                  <Accordion
+                    id="acc10"
+                    label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
+                  >
+                    <RepeatableField
+                      name="boundWithTitles"
+                      label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
+                      canAdd={false}
+                      canDelete={(fields, fieldIndex) => {
+                        return fields?.value[fieldIndex]?.briefHoldingsRecord?.id !==
+                          item?.holdingsRecordId;
+                      }}
+                      template={[
+                        {
+                          name: 'briefInstance.hrid',
+                          label: <FormattedMessage id="ui-inventory.instanceHrid" />,
+                          component: TextField,
+                          disabled: true,
+                          value: boundWithTitle => boundWithTitle.briefInstance.hrid,
+                        },
+                        {
+                          name: 'briefInstance.title',
+                          label: <FormattedMessage id="ui-inventory.instanceTitleLabel" />,
+                          component: TextField,
+                          disabled: true,
+                        },
+                        {
+                          name: 'briefHoldingsRecord.hrid',
+                          label: <FormattedMessage id="ui-inventory.holdingsHrid" />,
+                          component: TextField,
+                          disabled: true,
+                        },
+                      ]}
+                    />
+                  </Accordion>
                 </AccordionSet>
               </AccordionStatus>
             </Pane>

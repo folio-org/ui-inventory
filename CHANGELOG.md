@@ -1,6 +1,15 @@
 # Change history for ui-inventory
 
-## 9.3.0 IN PROGRESS
+## 9.4.0 IN PROGRESS
+* Disable deletion of a bound-with title from the Edit Item view if the title is also directly linked.  Refs UIIN-2327.
+* Sort the bound-with titles on View Item and Edit Item screens. Refs UIIN-2326.
+* Add missing bound-with permissions to Item create and edit. Fixes UIIN-2328.
+* Skip Item Actions menu "Mark as" heading when no mark actions are available. Refs UIIN-2331.
+* Added the print button for the common users. Refs UIIN-2329.
+
+## [9.3.0](https://github.com/folio-org/ui-inventory/tree/v9.3.0) (2023-02-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.0...v9.3.0)
+
 * Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
 * Fix error on creating new item.  Fixes UIIN-2227.
 * Missing holdings' source is populated in the UI with instance's. UIIN-2229.
@@ -52,6 +61,16 @@
 * Bump `@folio/stripes-acq-components` version to `4.0.0`. Refs UIIN-2319.
 * Create info popovers on call number fields in item record. Fixes UIIN-2307.
 * Hyperlink one column in the results list to improve accessibility. Fixes UIIN-2176.
+* Bump stripes to `8.0.0` for Orchid/2023-R1. Refs UIIN-2303.
+* Improve the layout of the actions menu on the the item record. Fixes UIIN-2263.
+* Block item deletion for items with status `Claimed returned`. Fixes UIIN-2136.
+* Remove extra whitespace when parsing statistical code options. Fixes UIIN-2320.
+* Delete bound-with parts. Refs UIIN-2001.
+* Wire `<ErrorModal>` in cases of http errors during item and holding mutations. Fixes UIIN-2320.
+* Added `<ControllableDetail>` component to display authorized indicator for Subjects, Uniform titles and Series. Refs UIIN-2311.
+* Moved the print button from QuickMarkView, into the ViewSource. Due to the folio-org/ui-quick-marc#468. Refs UIIN-2324.
+* Change title for the print popup. Refs UIIN-2329.
+* Move @testing-library/* to dev-deps. Refs UIIN-2309.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

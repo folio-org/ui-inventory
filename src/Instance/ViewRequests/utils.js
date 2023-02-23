@@ -1,6 +1,7 @@
-import { range, chunk, flatten } from 'lodash';
-
-import { requestsStatusString } from '../../routes/ItemRoute';
+import { range, chunk, flatten, map } from 'lodash';
+import {
+  REQUEST_OPEN_STATUSES,
+} from '../../constants';
 
 const LIMIT = 100;
 const CHUNKS_SIZE = 5;
@@ -29,6 +30,8 @@ const batchLoadRecords = (mutator, offsetChunks, params) => {
     return newRecordsPromise;
   }, recordsPromise);
 };
+
+export const requestsStatusString = map(REQUEST_OPEN_STATUSES, requestStatus => `"${requestStatus}"`).join(' or ');
 
 export const getRecordsInBatch = (mutator, params) => {
   return mutator.GET({
