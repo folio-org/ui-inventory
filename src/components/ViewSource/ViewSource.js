@@ -90,13 +90,13 @@ const ViewSource = ({
         onClose={goBack}
         lastMenu={
           isPrintAvailable &&
-          <Button
-            marginBottom0
-            buttonStyle="primary"
-            onClick={openPrintPopup}
-          >
-            <FormattedMessage id="ui-quick-marc.print" />
-          </Button>
+            <Button
+              marginBottom0
+              buttonStyle="primary"
+              onClick={openPrintPopup}
+            >
+              <FormattedMessage id="ui-quick-marc.print" />
+            </Button>
         }
       />
       {isPrintAvailable && isShownPrintPopup && (
