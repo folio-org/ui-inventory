@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
-import { IfPermission } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
 import {
   useInstance,
@@ -29,6 +29,11 @@ const ViewSource = ({
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
+  const stripes = useStripes();
+
+  const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
+  const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+  const isPrintAvailable = isPrintBibAvailable || isPrintHoldingsAvailable;
 
   const pathForGoBack = isHoldingsRecord
     ? `/inventory/view/${instanceId}/${holdingsRecordId}`
@@ -84,7 +89,7 @@ const ViewSource = ({
         marc={marc}
         onClose={goBack}
         lastMenu={
-          <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
+          isPrintAvailable &&
             <Button
               marginBottom0
               buttonStyle="primary"
@@ -92,19 +97,16 @@ const ViewSource = ({
             >
               <FormattedMessage id="ui-quick-marc.print" />
             </Button>
-          </IfPermission>
         }
       />
-      <IfPermission perm="ui-quick-marc.quick-marc-editor.view">
-        {isShownPrintPopup && (
-          <PrintPopup
-            marc={marc}
-            paneTitle={instance.title}
-            marcTitle={marcTitle}
-            onAfterPrint={closePrintPopup}
-          />
-        )}
-      </IfPermission>
+      {isPrintAvailable && isShownPrintPopup && (
+        <PrintPopup
+          marc={marc}
+          paneTitle={instance.title}
+          marcTitle={marcTitle}
+          onAfterPrint={closePrintPopup}
+        />
+      )}
     </div>
   );
 };
