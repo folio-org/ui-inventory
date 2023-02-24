@@ -39,7 +39,7 @@ const renderEditionFields = () => renderWithIntl(
 afterEach(() => jest.clearAllMocks());
 
 describe('EditionFields', () => {
- it('renders EditionFields', () => {
+  it('renders EditionFields', () => {
     renderEditionFields();
     expect(screen.getByText(/Editions/i)).toBeInTheDocument();
     const editButton = screen.getByText(/Add edition/i);
