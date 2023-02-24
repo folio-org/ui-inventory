@@ -4,6 +4,7 @@ import {
   map,
   isEmpty,
   values,
+  sortBy,
 } from 'lodash';
 import { parameterize } from 'inflected';
 
@@ -321,76 +322,78 @@ class ItemView extends React.Component {
           </Button>
           )}
         </MenuSection>
-        <MenuSection
-          id="items-list-mark-as"
-          label={<FormattedMessage id="ui-inventory.markAsHeader" />}
-          labelTag="h3"
-        >
-          { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
-          <Button
-            id="clickable-missing-item"
-            onClick={() => {
-              onToggle();
-              this.setState({ itemMissingModal: true });
-            }}
-            buttonStyle="dropdownItem"
-            data-test-mark-as-missing-item
+        { canMarkItemWithStatus(firstItem) && (
+          <MenuSection
+            id="items-list-mark-as"
+            label={<FormattedMessage id="ui-inventory.markAsHeader" />}
+            labelTag="h3"
           >
-            <Icon icon="flag">
-              <FormattedMessage id="ui-inventory.item.status.missing" />
-            </Icon>
-          </Button>
-          )}
-          <IfPermission perm="ui-inventory.items.mark-items-withdrawn">
-            { canMarkItemAsWithdrawn(firstItem) && (
+            { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
             <Button
-              id="clickable-withdrawn-item"
+              id="clickable-missing-item"
               onClick={() => {
                 onToggle();
-                this.setState({ itemWithdrawnModal: true });
+                this.setState({ itemMissingModal: true });
               }}
               buttonStyle="dropdownItem"
-              data-test-mark-as-withdrawn-item
+              data-test-mark-as-missing-item
             >
               <Icon icon="flag">
-                <FormattedMessage id="ui-inventory.item.status.withdrawn" />
+                <FormattedMessage id="ui-inventory.item.status.missing" />
               </Icon>
             </Button>
             )}
-          </IfPermission>
-          { canMarkItemWithStatus(firstItem) && (
-            Object.keys(itemStatusMutators)
-              .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
-              .map(status => {
-                const itemStatus = itemStatusesMap[status];
-                const parameterizedStatus = parameterize(itemStatus);
+            <IfPermission perm="ui-inventory.items.mark-items-withdrawn">
+              { canMarkItemAsWithdrawn(firstItem) && (
+              <Button
+                id="clickable-withdrawn-item"
+                onClick={() => {
+                  onToggle();
+                  this.setState({ itemWithdrawnModal: true });
+                }}
+                buttonStyle="dropdownItem"
+                data-test-mark-as-withdrawn-item
+              >
+                <Icon icon="flag">
+                  <FormattedMessage id="ui-inventory.item.status.withdrawn" />
+                </Icon>
+              </Button>
+              )}
+            </IfPermission>
+            {
+              Object.keys(itemStatusMutators)
+                .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
+                .map(status => {
+                  const itemStatus = itemStatusesMap[status];
+                  const parameterizedStatus = parameterize(itemStatus);
 
-                const actionMenuItem = (
-                  <Button
-                    key={status}
-                    id={`clickable-${parameterizedStatus}`}
-                    buttonStyle="dropdownItem"
-                    onClick={() => {
-                      onToggle();
-                      this.setState({ selectedItemStatus: status });
-                    }}
-                  >
-                    <Icon icon="flag">
-                      { itemStatus }
-                    </Icon>
-                  </Button>
-                );
-                return (
-                  <IfPermission
-                    perm={`ui-inventory.items.mark-${parameterizedStatus}`}
-                    key={parameterizedStatus}
-                  >
-                    {actionMenuItem}
-                  </IfPermission>
-                );
-              })
-          )}
-        </MenuSection>
+                  const actionMenuItem = (
+                    <Button
+                      key={status}
+                      id={`clickable-${parameterizedStatus}`}
+                      buttonStyle="dropdownItem"
+                      onClick={() => {
+                        onToggle();
+                        this.setState({ selectedItemStatus: status });
+                      }}
+                    >
+                      <Icon icon="flag">
+                        { itemStatus }
+                      </Icon>
+                    </Button>
+                  );
+                  return (
+                    <IfPermission
+                      perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+                      key={parameterizedStatus}
+                    >
+                      {actionMenuItem}
+                    </IfPermission>
+                  );
+                })
+            }
+          </MenuSection>
+        )}
       </>
     );
   };
@@ -655,6 +658,12 @@ class ItemView extends React.Component {
       source,
     };
 
+    item.boundWithTitles = sortBy(
+      item?.boundWithTitles,
+      [(boundWithTitle) => {
+        return boundWithTitle?.briefHoldingsRecord?.id === item?.holdingsRecordId ? 0 : 1;
+      }]
+    );
     const boundWithTitles = item?.boundWithTitles;
 
     const initialAccordionsState = {
