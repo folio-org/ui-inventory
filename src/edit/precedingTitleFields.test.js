@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '../../test/jest/__mock__';
@@ -13,13 +12,17 @@ import translationsProperties from '../../test/jest/helpers/translationsProperti
 
 jest.unmock('@folio/stripes/components');
 
+jest.mock('../components', () => ({
+  TitleField: jest.fn(() => 'mocked TitleField'),
+}));
+
 const onSubmit = jest.fn();
 
 const Form = ({ handleSubmit }) => (
-  <form onSubmit={ handleSubmit }>
+  <form onSubmit={handleSubmit}>
     <PrecedingTitles />
-    </form>
-  );
+  </form>
+);
 
 Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
@@ -41,16 +44,14 @@ afterEach(() => jest.clearAllMocks());
 
 describe('precedingTitleFields', () => {
   it('renders RepeatableField', () => {
-    renderPrecedingTitles();
-    expect(screen.getByText('Preceding titles')).toBeInTheDocument();
+    const { getByText } = renderPrecedingTitles();
+    expect(getByText(/Preceding titles/i)).toBeInTheDocument();
+    expect(getByText(/Add preceding title/i)).toBeInTheDocument();
   });
-  it('click on Add preceeding title button ', () => {
-    renderPrecedingTitles();
-    const preceedingButton = screen.getByText('Add preceding title');
-    userEvent.click(preceedingButton);
-    const myText = screen.getByRole('textbox', { name: 'ISBN' });
-    expect(myText).toHaveValue('');
-    userEvent.type(myText, 'Enter text for ISBN');
-    expect(myText).toHaveValue('Enter text for ISBN');
+  it('click Add preceding title button', () => {
+    const { getByText } = renderPrecedingTitles();
+    const precedingButton = getByText(/Add preceding title/i);
+    userEvent.click(precedingButton);
+    expect(getByText(/mocked TitleField/i)).toBeInTheDocument();
   });
 });
