@@ -321,7 +321,6 @@
     "classificationIdentifierType": "Tipo de identificador de clasificación",
     "addCirculationNote": "Añadir nota de devolución / préstamo",
     "item.loanAndAvailability": "Préstamo y disponibilidad",
-    "markAsMissing": "Marcar como perdido",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (El código de barras: {barcode}) será marcado como <strong>perdido</strong>.",
     "missingModal.heading": "Confirmar item como perdido",
     "missingModal.confirm": "Confirmar",
@@ -482,7 +481,6 @@
     "createdDate": "Fecha de creacion",
     "item.status.statusUpdatedLabel": "estado actualizado {statusDate}",
     "isbnNormalized": "ISBN, normalizado",
-    "markAsWithdrawn": "Marcar como retirado",
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) será marcado como <strong>retirado</strong>.",
     "withdrawnModal.heading": "Confirmar ejemplar como retirado",
     "withdrawnModal.confirm": "Confirmar",
@@ -602,7 +600,6 @@
     "instances.selectedRecords": "Selected records",
     "saveAndClose": "Save & close",
     "communicationProblem": "Server communication problem. Please try again",
-    "markAs": "Mark as {itemStatus}",
     "itemStatusModal.heading": "Confirm item status: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
     "permission.items.mark-restricted": "Inventory: Mark items restricted",
@@ -776,5 +773,8 @@
     "jobProfiles.info": "Review the listed job profiles carefully before assigning for Inventory single record imports. Only MARC Bibliographic job profiles can be assigned, not MARC Holdings or MARC Authority job profiles.",
     "copycat.overlaySourceBib": "Overlay source bibliographic record",
     "copycat.overlayJobProfileToBeUsed": "Select the profile to be used to overlay the current data",
-    "effectiveLocationHoldings": "Effective location for holdings"
+    "effectiveLocationHoldings": "Effective location for holdings",
+    "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
+    "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
+    "markAsHeader": "Mark as"
 }

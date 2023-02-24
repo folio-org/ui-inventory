@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { cloneDeep } from 'lodash';
 
 import { useStripes } from '@folio/stripes/core';
-import { LoadingView } from '@folio/stripes/components';
+import { LoadingView, ErrorModal } from '@folio/stripes/components';
 
 import {
   useHolding,
@@ -80,20 +80,30 @@ const EditHolding = ({
   if (isInstanceLoading || isItemsLoading || isHoldingLoading) return <LoadingView />;
 
   return (
-    <HoldingsForm
-      httpError={httpError}
-      location={location}
-      initialValues={holding}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-      okapi={stripes.okapi}
-      instance={instance}
-      referenceTables={referenceTables}
-      stripes={stripes}
-      itemCount={itemCount}
-      goTo={goTo}
-      isMARCRecord={isMARCRecord}
-    />
+    <>
+      <HoldingsForm
+        httpError={httpError}
+        location={location}
+        initialValues={holding}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        okapi={stripes.okapi}
+        instance={instance}
+        referenceTables={referenceTables}
+        stripes={stripes}
+        itemCount={itemCount}
+        goTo={goTo}
+        isMARCRecord={isMARCRecord}
+      />
+      {httpError && !httpError?.errorType &&
+        <ErrorModal
+          open
+          label={<FormattedMessage id="ui-inventory.instance.saveError" />}
+          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          onClose={() => setHttpError()}
+        />
+      }
+    </>
   );
 };
 
