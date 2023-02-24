@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
+  Button,
   LoadingView,
 } from '@folio/stripes/components';
 import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 
+import { useStripes } from '@folio/stripes/core';
+import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
 import {
   useInstance,
   useGoBack,
@@ -23,6 +26,15 @@ const ViewSource = ({
   holdingsRecordId,
   isHoldingsRecord,
 }) => {
+  const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
+  const openPrintPopup = () => setIsShownPrintPopup(true);
+  const closePrintPopup = () => setIsShownPrintPopup(false);
+  const stripes = useStripes();
+
+  const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
+  const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+  const isPrintAvailable = isPrintBibAvailable || isPrintHoldingsAvailable;
+
   const pathForGoBack = isHoldingsRecord
     ? `/inventory/view/${instanceId}/${holdingsRecordId}`
     : `/inventory/view/${instanceId}`;
@@ -76,7 +88,25 @@ const ViewSource = ({
         marcTitle={marcTitle}
         marc={marc}
         onClose={goBack}
+        lastMenu={
+          isPrintAvailable &&
+            <Button
+              marginBottom0
+              buttonStyle="primary"
+              onClick={openPrintPopup}
+            >
+              <FormattedMessage id="ui-quick-marc.print" />
+            </Button>
+        }
       />
+      {isPrintAvailable && isShownPrintPopup && (
+        <PrintPopup
+          marc={marc}
+          paneTitle={instance.title}
+          marcTitle={marcTitle}
+          onAfterPrint={closePrintPopup}
+        />
+      )}
     </div>
   );
 };
