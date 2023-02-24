@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -10,7 +9,7 @@ import SucceedingTitles from './succeedingTitleFields';
 import translationsProperties from '../../test/jest/helpers/translationsProperties';
 
 jest.mock('../components', () => ({
-  TitleField: jest.fn( () => 'mocked TitleField'),
+  TitleField: jest.fn(() => 'mocked TitleField'),
 }));
 
 jest.unmock('@folio/stripes/components');
@@ -43,7 +42,6 @@ describe('SucceedingTitles', () => {
     const { getByText } = renderSucceedingTitles();
     expect(getByText('Add succeeding title')).toBeInTheDocument();
     expect(getByText('Succeeding titles')).toBeInTheDocument();
-    screen.debug();
   });
   it('click Add succeeding title button', () => {
     const { getByText } = renderSucceedingTitles();
