@@ -37,4 +37,31 @@ describe('useItem', () => {
 
     expect(result.current.item.id).toBe(itemId);
   });
+
+  it('should sort the directly-linked bound-with title to the top', async () => {
+    useOkapiKy.mockClear().mockReturnValue({
+      get: () => ({
+        json: () => ({
+          id: itemId,
+          holdingsRecordId: 'bw456',
+          boundWithTitles: [
+            { briefHoldingsRecord: { id: 'bw123' } },
+            { briefHoldingsRecord: { id: 'bw456' } }, // should sort to top
+            { briefHoldingsRecord: { id: 'bw789' } },
+          ],
+        }),
+      }),
+    });
+
+    const { result, waitFor } = renderHook(() => useItem(itemId), { wrapper });
+
+    await waitFor(() => {
+      return !result.current.isLoading;
+    });
+
+    const firstSortedTitle = result.current.item.boundWithTitles[0];
+    expect(firstSortedTitle.briefHoldingsRecord.id).toEqual(
+      result.current.item.holdingsRecordId
+    );
+  });
 });

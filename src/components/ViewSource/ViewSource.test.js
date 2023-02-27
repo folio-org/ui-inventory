@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -99,11 +99,9 @@ describe('ViewSource', () => {
     });
 
     describe('when QuickMarcView is closed', () => {
-      beforeEach(() => {
-        userEvent.click(screen.getByText('QuickMarcView'));
-      });
-
       it('should call onClose with correct url', async () => {
+        await waitFor(() => expect(screen.getByText('QuickMarcView')).toBeInTheDocument());
+        act(() => userEvent.click(screen.getByText('QuickMarcView')));
         expect(mockGoBack).toBeCalledTimes(1);
       });
     });

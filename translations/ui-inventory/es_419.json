@@ -321,7 +321,6 @@
     "classificationIdentifierType": "Tipo de identificador de clasificación",
     "addCirculationNote": "Agregar nota de devolución / préstamo",
     "item.loanAndAvailability": "Préstamo y disponibilidad",
-    "markAsMissing": "Marcar como perdido",
     "missingModal.message": "<strong>{title} ({materialType})</strong> (El código de barras: {barcode}) será marcado como <strong>perdido</strong>.",
     "missingModal.heading": "Confirmar item como perdido",
     "missingModal.confirm": "Confirmar",
@@ -482,7 +481,6 @@
     "createdDate": "Fecha de creacion",
     "item.status.statusUpdatedLabel": "estado actualizado {statusDate}",
     "isbnNormalized": "ISBN, normalizado",
-    "markAsWithdrawn": "Marcar como perdido",
     "withdrawnModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) será marcado como <strong>retirado</strong>.",
     "withdrawnModal.heading": "Confirmar ejemplar como retirado",
     "withdrawnModal.confirm": "Confirmar",
@@ -602,7 +600,6 @@
     "instances.selectedRecords": "Registros seleccionados",
     "saveAndClose": "Guardar y cerrar",
     "communicationProblem": "Problema de comunicación con el servidor. Por favor, inténtalo de nuevo",
-    "markAs": "Marcar como {itemStatus}",
     "itemStatusModal.heading": "Confirmar el estado del ejemplar: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
     "permission.items.mark-restricted": "Inventario: marcar ejemplares restringidos.",
@@ -776,5 +773,8 @@
     "jobProfiles.info": "Revise cuidadosamente los perfiles de trabajo enumerados antes de asignar importaciones de registro único de inventario. Solo se pueden asignar perfiles de trabajo MARC BIBLIOGRÁFICO, no perfiles de trabajo de MARC Holdings o MARC Authoridades.",
     "copycat.overlaySourceBib": "Superponer registro bibliográfico de origen",
     "copycat.overlayJobProfileToBeUsed": "Seleccione el perfil que se utilizará para superponer los datos actuales",
-    "effectiveLocationHoldings": "Localización efectiva de las existéncias"
+    "effectiveLocationHoldings": "Localización efectiva de las existéncias",
+    "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
+    "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
+    "markAsHeader": "Mark as"
 }
