@@ -18,12 +18,32 @@ import facetsStore from '../stores/facetsStore';
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
+const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
+const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '\\"')}"`;
+const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
+
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
+
+  if (queryParams?.selectedBrowseResult) {
+    if (queryIndex === queryIndexes.SUBJECT) {
+      queryTemplate = getQueryTemplateSubjects(queryValue);
+    }
+
+    if (queryIndex === queryIndexes.CALL_NUMBER) {
+      queryTemplate = getQueryTemplateCallNumber(queryValue);
+    }
+
+    if (queryIndex === queryIndexes.CONTRIBUTOR) {
+      queryTemplate = getQueryTemplateContributor(queryValue);
+    }
+
+    query.selectedBrowseResult = null; // reset this parameter so the next search uses `=` instead of `==/string`
+  }
 
   if (queryIndex.match(/isbn|issn/)) {
     // eslint-disable-next-line camelcase
@@ -196,6 +216,13 @@ export function buildManifestObject() {
       type: 'okapi',
       records: 'items',
       path: 'inventory-reports/items-in-transit',
+      accumulate: true,
+      fetch: false,
+    },
+    itemsByQuery: {
+      type: 'okapi',
+      records: 'items',
+      path: 'inventory/items',
       accumulate: true,
       fetch: false,
     },

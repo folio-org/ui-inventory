@@ -1,6 +1,19 @@
 # Change history for ui-inventory
 
-## 9.3.0 IN PROGRESS
+## 9.5.0 IN PROGRESS
+
+## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)
+
+* Disable deletion of a bound-with title from the Edit Item view if the title is also directly linked.  Refs UIIN-2327.
+* Sort the bound-with titles on View Item and Edit Item screens. Refs UIIN-2326.
+* Add missing bound-with permissions to Item create and edit. Fixes UIIN-2328.
+* Skip Item Actions menu "Mark as" heading when no mark actions are available. Refs UIIN-2331.
+* Added the print button for the common users. Refs UIIN-2329.
+
+## [9.3.0](https://github.com/folio-org/ui-inventory/tree/v9.3.0) (2023-02-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.0...v9.3.0)
+
 * Link from item view bound-with table's holdings HRID column to the holding view. Fixes additional part of UIIN-2195.
 * Fix error on creating new item.  Fixes UIIN-2227.
 * Missing holdings' source is populated in the UI with instance's. UIIN-2229.
@@ -20,9 +33,48 @@
 * Warn on `sessionStorage` errors instead of swallowing them.
 * Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: All permissions`. Fixes UIIN-2273.
 * Add `inventory-storage.bound-with-parts.collection.get` to `Inventory: View instances, holdings, and items`. Fixes UIIN-2273.
+* Open item details view when searching by item barcode. Refs UIIN-2036.
 * Use correct index when searching for `subject`. Fixes UIIN-2275.
 * Inventory | App Context menu | Add new option | Inventory app search. Fixes UIIN-2265.
 * ISRI: Update the Settings screen to allow multiple job profiles: Create/Edit. Refs UIIN-2248.
+* ISRI: Update the Settings screen to allow multiple job profiles: View. Refs UIIN-2249.
+* Users with browse permissions can delete inventory records. Refs UIIN-2283.
+* Include browse permissions into Inventory permissions. Refs UIIN-2280.
+* Browse Lists | Hyperlink one column to improve accessibility. Refs UIIN-2266.
+* Rename `instances1` resource on `ItemsRoute` to avoid colliding with holding records. Refs UIIN-2289.
+* Z39.50 Settings toasts have a typo. Refs UIIN-2256
+* Accessibility check: ISRI Z39.50 integration profile: Create/Edit. Fixes UIIN-2250.
+* Accessibility check: ISRI Z39.50 integration profile: View. Fixes UIIN-2251.
+* ISRI: Update the Inventory modal for ISRI single source Imports. Refs UIIN-2252.
+* ISRI: Update the Inventory modal for ISRI single source Overlays. Refs UIIN-2253.
+* ISRI: Update the Inventory modal for ISRI single multi-source Imports. Refs UIIN-2254.
+* ISRI: Update the Inventory modal for ISRI single multi-source Overlays. Refs UIIN-2255.
+* Clean up the rest of the old "Browse" related code from "Search" route. Refs UIIN-2285.
+* Wrong operator used in request when user selects a record in browse results. UIIN-2294.
+* Open instance details pane in cases when single item is not found after search. Fixes UIIN-2301.
+* Do not render item list before holding records are loaded. Fixes UIIN-2289.
+* ISRI: Update the Settings create/edit screen to remove duplicated labels. Refs UIIN-2297.
+* ISRI: Add job profile-related info icons to Z39.50 create/edit screen. Refs UIIN-2306.
+* Display the effective location on the holdings view. Refs UIIN-1520.
+* Reference MARC Authority record is opened when user clicks on the "MARC Authority" icon next to the controlled field. Refs UIIN-2302.
+* Align the module with API breaking change (browse). Refs UIIN-2296.
+* Bump quick-marc to 6.0.0. Refs UIIN-2310.
+* Align subjects query building with API changes. Refs UIIN-2314.
+* Cannot save new Z39.50 Settings profile due to missing required fields. Fixes UIIN-2298.
+* Hide Export to json option in Action menu. Refs UIIN-2304.
+* Bump `@folio/stripes-acq-components` version to `4.0.0`. Refs UIIN-2319.
+* Create info popovers on call number fields in item record. Fixes UIIN-2307.
+* Hyperlink one column in the results list to improve accessibility. Fixes UIIN-2176.
+* Bump stripes to `8.0.0` for Orchid/2023-R1. Refs UIIN-2303.
+* Improve the layout of the actions menu on the the item record. Fixes UIIN-2263.
+* Block item deletion for items with status `Claimed returned`. Fixes UIIN-2136.
+* Remove extra whitespace when parsing statistical code options. Fixes UIIN-2320.
+* Delete bound-with parts. Refs UIIN-2001.
+* Wire `<ErrorModal>` in cases of http errors during item and holding mutations. Fixes UIIN-2320.
+* Added `<ControllableDetail>` component to display authorized indicator for Subjects, Uniform titles and Series. Refs UIIN-2311.
+* Moved the print button from QuickMarkView, into the ViewSource. Due to the folio-org/ui-quick-marc#468. Refs UIIN-2324.
+* Change title for the print popup. Refs UIIN-2329.
+* Move @testing-library/* to dev-deps. Refs UIIN-2309.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

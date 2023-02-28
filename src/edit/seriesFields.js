@@ -23,9 +23,11 @@ const SeriesFields = props => {
         component: TextArea,
         disabled: !canEdit,
         rows: 1,
+        name: 'value'
       }]}
       canAdd={canAdd}
       canDelete={canDelete}
+      newItemTemplate={{ value: '' }}
     />
   );
 };

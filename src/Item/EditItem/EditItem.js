@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { useStripes } from '@folio/stripes/core';
 import {
   LoadingView,
+  ErrorModal,
 } from '@folio/stripes/components';
 
 import {
@@ -21,6 +22,7 @@ import { parseHttpError } from '../../utils';
 import {
   useItem,
   useItemMutation,
+  useBoundWithsMutation,
 } from '../hooks';
 
 const EditItem = ({
@@ -64,35 +66,69 @@ const EditItem = ({
     setHttpError(parsedError);
   };
 
-
   const { mutateItem } = useItemMutation({ onSuccess });
+
+  const { mutateBoundWiths } = useBoundWithsMutation();
+
+  const updateBoundWiths = (values) => {
+    // Skip update if there are no bound-with parts before or after
+    if (!item.boundWithTitles?.length && !values.boundWithTitles?.length) {
+      return Promise.resolve();
+    }
+
+    if (values.boundWithTitles === undefined) {
+      values.boundWithTitles = [];
+    }
+
+    const boundWiths = {
+      'itemId': values.id,
+      'boundWithContents': values.boundWithTitles.map(title => {
+        return {
+          'holdingsRecordId': title.briefHoldingsRecord.id,
+        };
+      }),
+    };
+    return mutateBoundWiths(boundWiths);
+  };
 
   const onSubmit = useCallback((values) => {
     if (!values.barcode) {
       delete item.barcode;
     }
 
-    return mutateItem(values).catch(onError);
+    return updateBoundWiths(values)
+      .then(() => mutateItem(values))
+      .catch(onError);
   }, [mutateItem]);
 
   if (isInstanceLoading || isHoldingLoading || isItemLoading) return <LoadingView />;
 
   return (
-    <ItemForm
-      httpError={httpError}
-      form={`itemform_${holding.id}`}
-      id={holding.id}
-      key={holding.id}
-      initialValues={item}
-      onSubmit={onSubmit}
-      onCancel={onCancel}
-      okapi={stripes.okapi}
-      instance={instance}
-      holdingsRecord={holding}
-      referenceTables={referenceData}
-      intl={stripes.intl}
-      stripes={stripes}
-    />
+    <>
+      <ItemForm
+        httpError={httpError}
+        form={`itemform_${holding.id}`}
+        id={holding.id}
+        key={holding.id}
+        initialValues={item}
+        onSubmit={onSubmit}
+        onCancel={onCancel}
+        okapi={stripes.okapi}
+        instance={instance}
+        holdingsRecord={holding}
+        referenceTables={referenceData}
+        intl={stripes.intl}
+        stripes={stripes}
+      />
+      {httpError && !httpError?.errorType &&
+        <ErrorModal
+          open
+          label={<FormattedMessage id="ui-inventory.instance.saveError" />}
+          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          onClose={() => setHttpError()}
+        />
+      }
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
 const CHECKED_OUT = 'Checked out';
 const AGED_TO_LOST = 'Aged to lost';
+const CLAIMED_RETURNED = 'Claimed returned';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
@@ -25,7 +26,7 @@ export const itemStatusesMap = {
   AWAITING_PICKUP,
   AWAITING_DELIVERY,
   CHECKED_OUT,
-  CLAIMED_RETURNED: 'Claimed returned',
+  CLAIMED_RETURNED,
   DECLARED_LOST: 'Declared lost',
   IN_PROCESS: 'In process',
   IN_PROCESS_NON_REQUESTABLE: 'In process (non-requestable)',
@@ -67,6 +68,7 @@ export const NOT_REMOVABLE_ITEM_STATUSES = [
   CHECKED_OUT,
   AWAITING_PICKUP,
   AGED_TO_LOST,
+  CLAIMED_RETURNED,
 ];
 
 export const itemStatuses = [
@@ -416,3 +418,11 @@ export const ORDERS_API = 'orders/composite-orders';
 
 export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
+
+export const SINGLE_ITEM_QUERY_TEMPLATES = {
+  'items.barcode': 'barcode==%{query}',
+  isbn: 'isbn==%{query}',
+  issn: 'issn==%{query}',
+  hrid: 'hrid==%{query}',
+  iid: 'id==%{query}',
+};

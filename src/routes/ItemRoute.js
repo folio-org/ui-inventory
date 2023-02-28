@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import {
   flowRight,
   get,
-  map,
 } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import {
-  REQUEST_OPEN_STATUSES,
-} from '../constants';
+import { requestsStatusString } from '../Instance/ViewRequests/utils';
+
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
 
-export const requestsStatusString = map(REQUEST_OPEN_STATUSES, requestStatus => `"${requestStatus}"`).join(' or ');
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
 class ItemRoute extends React.Component {
@@ -104,9 +101,10 @@ class ItemRoute extends React.Component {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
     },
-    instances1: {
+    instanceRecords: {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
+      resourceShouldRefresh: true,
     },
     servicePoints: {
       type: 'okapi',
@@ -178,12 +176,12 @@ class ItemRoute extends React.Component {
       resources: {
         itemsResource,
         holdingsRecords,
-        instances1,
+        instanceRecords,
       },
     } = this.props;
 
     if (!itemsResource?.hasLoaded ||
-      !instances1?.hasLoaded ||
+      !instanceRecords?.hasLoaded ||
       !holdingsRecords?.hasLoaded) {
       return true;
     }
