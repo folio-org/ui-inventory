@@ -583,7 +583,7 @@
     "filter.tags": "Tags",
     "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} ausgewählt",
     "exportInstancesInMARCLimitExceeded": "Ausgewählte Datensatzgrenze von {count, number} überschritten",
-    "integrations": "Anbindungen",
+    "integrations": "Integrationen",
     "singleRecordImport": "Einzeldatensatzimport",
     "targetProfiles": "Z39.50 Zielprofile",
     "targetProfile": "Z39.50 Zielprofil",
