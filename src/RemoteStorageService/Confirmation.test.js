@@ -11,6 +11,6 @@ describe('Confirmation', () => {
   });
   it('should render remote confirmation message', () => {
     const { getByText } = renderWithIntl(<Message />, translationsProperties);
-    expect(getByText(/Are you sure you want to remove this item from remote storage?/i)).toBeInTheDocument();
+    expect(getByText(/Are you sure you want to remove this item from remote storage/i)).toBeInTheDocument();
   });
 });
