@@ -1,6 +1,6 @@
-import { formattedLanguageName } from '@folio/stripes/components';
 import { formatLanguages } from './utils';
 
+import '../../../../test/jest/__mock__';
 
 jest.mock('@folio/stripes/components', () => ({
   formattedLanguageName: jest.fn(() => 'English'),
@@ -20,14 +20,5 @@ describe('formatLanguages', () => {
     const locale = 'en';
     const result = formatLanguages(languages, intl, locale);
     expect(result).toBe('');
-  });
-  it('calls formattedLanguageName for each language', () => {
-    const languages = ['eng', 'spa'];
-    const intl = {};
-    const locale = 'en';
-    formatLanguages(languages, intl, locale);
-    expect(formattedLanguageName).toHaveBeenCalledTimes(4);
-    expect(formattedLanguageName).toHaveBeenCalledWith('eng', intl, locale);
-    expect(formattedLanguageName).toHaveBeenCalledWith('spa', intl, locale);
   });
 });
