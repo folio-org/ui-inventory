@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '../../../../test/jest/__mock__';
@@ -46,12 +45,12 @@ const instance = {
 };
 
 const props = {
-  id: "descriptive-data",
+  id: 'descriptive-data',
   instance,
   resourceTypes,
   resourceFormats,
   natureOfContentTerms,
-}
+};
 
 const renderInstanceDescriptiveView = () => (
   renderWithIntl(
@@ -64,7 +63,7 @@ const renderInstanceDescriptiveView = () => (
 describe('InstanceDescriptiveView', () => {
   it('render and click descriptiveData button', () => {
     const { getByText } = renderInstanceDescriptiveView();
-    let databutton = getByText(/ui-inventory.descriptiveData/i);
+    const databutton = getByText(/ui-inventory.descriptiveData/i);
     userEvent.click(databutton);
     expect(getByText).toBeDefined();
   });
