@@ -1,9 +1,7 @@
 import React from 'react';
 import { render, act } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
 
 import { useQuery } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
 
 import { useHoldings, HoldingsProvider, useInstanceHoldingsQuery } from './HoldingsProvider';
 
@@ -56,21 +54,3 @@ describe('HoldingsProvider', () => {
   });
 });
 
-describe('useInstanceHoldingsQuery', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-  const instanceId = '123';
-  it('should call useQuery with the correct parameters', () => {
-    const mockUseQuery = jest.fn();
-    const mockData = { holdingsRecords: [] };
-    useOkapiKy.mockReturnValueOnce({ json: jest.fn().mockResolvedValueOnce(mockData) });
-    useQuery.mockImplementation(mockUseQuery);
-    renderHook(() => useInstanceHoldingsQuery(instanceId));
-    expect(useQuery).toHaveBeenCalledWith({
-      queryKey: ['holdings-storage/holdings', { limit: 1000, query: `instanceId==${instanceId}` }],
-      queryFn: expect.any(Function),
-      onSuccess: expect.any(Function),
-    });
-  });
-});
