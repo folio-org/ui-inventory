@@ -2,6 +2,8 @@
 
 ## 9.5.0 IN PROGRESS
 
+* Add bound-with parts to an Item.  Refs UIIN-1998.
+
 ## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)
 
