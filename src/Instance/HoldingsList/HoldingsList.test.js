@@ -26,7 +26,6 @@ const renderHoldingsList = (props = {}) => render(
 describe('HoldingsList', () => {
   it('should render component', () => {
     renderHoldingsList();
-    screen.debug();
     expect(screen.getByText('HoldingContainer')).toBeInTheDocument();
   });
 });
