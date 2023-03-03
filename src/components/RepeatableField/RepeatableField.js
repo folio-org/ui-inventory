@@ -63,6 +63,8 @@ class RepeatableField extends React.Component {
       canAdd,
       canEdit,
       canDelete,
+      hideAdd,
+      component,
     } = this.props;
 
     const mappedTemplate = canEdit
@@ -75,7 +77,7 @@ class RepeatableField extends React.Component {
     return (
       <FieldArray
         name={name}
-        component={FieldRow}
+        component={component}
         onAddField={this.handleAddField}
         formatter={this.buildComponentFromTemplate}
         template={mappedTemplate}
@@ -90,6 +92,7 @@ class RepeatableField extends React.Component {
         addButtonId={addButtonId}
         canAdd={canAdd}
         canDelete={canDelete}
+        hideAdd={hideAdd}
         lastRowRef={ref => {
           this.lastRow = ref;
         }}
@@ -109,12 +112,16 @@ RepeatableField.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  hideAdd: PropTypes.bool,
+  component: PropTypes.object,
 };
 
 RepeatableField.defaultProps = {
   canAdd: true,
   canEdit: true,
   canDelete: true,
+  hideAdd: false,
+  component: FieldRow,
 };
 
 export default RepeatableField;

@@ -40,6 +40,8 @@ import {
 import { effectiveCallNumber } from '@folio/stripes/util';
 
 import RepeatableField from '../../components/RepeatableField';
+import BoundWithFieldRow from './BoundWithFieldRow';
+
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
@@ -48,6 +50,7 @@ import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
+import BoundWithModal from './BoundWithModal';
 
 
 function validate(values) {
@@ -115,6 +118,10 @@ class ItemForm extends React.Component {
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
+
+    this.state = {
+      boundWithModalOpen: false,
+    };
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -135,6 +142,27 @@ class ItemForm extends React.Component {
 
   setItemDamagedStatusDate = () => {
     this.props.form.change('itemDamagedStatusDate', new Date());
+  }
+
+  openBoundWithModal = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.setState({ boundWithModalOpen: true });
+  };
+
+  closeBoundWithModal = () => {
+    this.setState({ boundWithModalOpen: false });
+  }
+
+  addBoundWiths = (newBoundWithHoldingsHrids) => {
+    let boundWithTitles = cloneDeep(this.props.form.getFieldState('boundWithTitles').value);
+    const newBoundWithTitles = newBoundWithHoldingsHrids.map(holdingsRecordHrid => ({
+      briefHoldingsRecord: { hrid: holdingsRecordHrid },
+    }));
+    boundWithTitles = boundWithTitles.concat(newBoundWithTitles);
+    this.props.form.change('boundWithTitles', boundWithTitles);
+    this.closeBoundWithModal();
   }
 
   getFooter = () => {
@@ -902,6 +930,8 @@ class ItemForm extends React.Component {
                         return fields?.value[fieldIndex]?.briefHoldingsRecord?.id !==
                           item?.holdingsRecordId;
                       }}
+                      hideAdd
+                      component={BoundWithFieldRow}
                       template={[
                         {
                           name: 'briefInstance.hrid',
@@ -923,6 +953,19 @@ class ItemForm extends React.Component {
                           disabled: true,
                         },
                       ]}
+                    />
+                    <Button
+                      type="button"
+                      align="end"
+                      onClick={this.openBoundWithModal}
+                    >
+                      <FormattedMessage id="ui-inventory.boundWithTitles.add" />
+                    </Button>
+                    <BoundWithModal
+                      item={item}
+                      open={this.state.boundWithModalOpen}
+                      onClose={this.closeBoundWithModal}
+                      onOk={this.addBoundWiths}
                     />
                   </Accordion>
                 </AccordionSet>
@@ -952,6 +995,7 @@ ItemForm.propTypes = {
   }).isRequired,
   form: PropTypes.shape({
     change: PropTypes.func.isRequired,
+    getFieldState: PropTypes.func,
   }).isRequired,
   history: PropTypes.object.isRequired,
   httpError: PropTypes.object,
