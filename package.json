@@ -479,6 +479,14 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.numberGenerator.manage",
+        "displayName": "Settings (Inventory): Manage number generator options",
+        "subPermissions": [
+          "settings.users.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.instance.view",
         "displayName": "Inventory: View instances, holdings, and items",
         "subPermissions": [
@@ -855,6 +863,7 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.0.0",
+    "@folio/service-interaction": "^1.0.0",
     "@folio/stripes": "^8.0.0",
     "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^11.0.0",
@@ -912,6 +921,7 @@
     "zustand": "^3.7.2"
   },
   "peerDependencies": {
+    "@folio/service-interaction": "^1.0.0",
     "@folio/stripes": "^8.0.0",
     "react": "^17.0.2",
     "react-intl": "^5.8.0",
