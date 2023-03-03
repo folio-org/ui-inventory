@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '../../../../test/jest/__mock__';
@@ -9,26 +8,26 @@ import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
 import InstanceNotesView from './InstanceNotesView';
 
-const props = {
+const props1 = {
   id: 'notes',
   instance: {
     id: '1',
     title: 'Book Title',
-    notes: [ { id: '1', note: 'Note 1', instanceNoteTypeId: '1', staffOnly: true } ],
+    notes: [{ id: '1', note: 'Note 1', instanceNoteTypeId: '1', staffOnly: true }],
   },
-  noteTypes: [ { id: '1', name: 'Note Type 1' } ],
+  noteTypes: [{ id: '1', name: 'Note Type 1' }],
 };
 
 const instanceProps = {
   id: 'notes',
   instance: {},
-  noteTypes: [ { id: '1', name: 'Note Type 1' } ],
+  noteTypes: [{ id: '1', name: 'Note Type 1' }],
 };
 
 const noteProps = {
   id: 'notes',
   instance: { notes: [{ id: '1', instanceNoteTypeId: '3' }] },
-  noteTypes: [ { id: '1', name: 'Note Type 1' } ],
+  noteTypes: [{ id: '1', name: 'Note Type 1' }],
 };
 
 const renderInstanceNotesView = (props) => (
@@ -41,7 +40,7 @@ const renderInstanceNotesView = (props) => (
 
 describe('InstanceNotesView', () => {
   it('Should renders correctly and click the button', () => {
-    const { getByText, getByRole } = renderInstanceNotesView(props);
+    const { getByText, getByRole } = renderInstanceNotesView(props1);
     const instanceButton = getByRole('button', { name: 'ui-inventory.instanceNotes' });
     userEvent.click(instanceButton);
     expect(instanceButton).toHaveAttribute('aria-expanded', 'false');
