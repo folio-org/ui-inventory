@@ -53,6 +53,24 @@ const BoundWithModal = ({
       dismissible
       label={<FormattedMessage id="ui-inventory.boundWithTitles.add" />}
       onClose={onClose}
+      footer={(
+        <ModalFooter>
+          <Button
+            data-testid="bound-with-modal-save-button"
+            buttonStyle="primary"
+            type="submit"
+            onClick={addNewHrids}
+          >
+            <FormattedMessage id="ui-inventory.saveAndClose" />
+          </Button>
+          <Button
+            data-testid="bound-with-modal-cancel-button"
+            onClick={onClose}
+          >
+            <FormattedMessage id="ui-inventory.cancel" />
+          </Button>
+        </ModalFooter>
+      )}
     >
       <Row>
         <Col xs={12}>
@@ -77,7 +95,7 @@ const BoundWithModal = ({
       <Headline>
         <FormattedMessage id="ui-inventory.boundWithTitles.add" />
       </Headline>
-      <form onSubmit={addNewHrids}>
+      <form name="addNewHrids" onSubmit={addNewHrids}>
         {
           Array(FIELD_COUNT).fill(0).map((f, i) => {
             return (
@@ -95,21 +113,6 @@ const BoundWithModal = ({
             );
           })
         }
-        <ModalFooter>
-          <Button
-            data-testid="bound-with-modal-save-button"
-            buttonStyle="primary"
-            type="submit"
-          >
-            <FormattedMessage id="ui-inventory.saveAndClose" />
-          </Button>
-          <Button
-            data-testid="bound-with-modal-cancel-button"
-            onClick={onClose}
-          >
-            <FormattedMessage id="ui-inventory.cancel" />
-          </Button>
-        </ModalFooter>
       </form>
     </Modal>
   );
