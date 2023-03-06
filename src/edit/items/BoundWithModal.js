@@ -25,7 +25,8 @@ const BoundWithModal = ({
 }) => {
   const intl = useIntl();
 
-  const [hrids, setHrids] = useState(Array(FIELD_COUNT).fill(''));
+  const initHrids = () => Array(FIELD_COUNT).fill('');
+  const [hrids, setHrids] = useState(initHrids());
 
   const handleChange = (event) => {
     const index = event.target.getAttribute('data-index');
@@ -40,6 +41,9 @@ const BoundWithModal = ({
     event.stopPropagation();
     const newHrids = hrids.filter(hrid => hrid?.length > 0);
     onOk(newHrids);
+
+    // Clear values
+    setHrids(initHrids());
   };
 
   return (
