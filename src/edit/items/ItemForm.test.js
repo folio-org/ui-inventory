@@ -17,9 +17,18 @@ import { DataContext } from '../../contexts';
 
 import ItemForm from './ItemForm';
 
+import useHoldingsQueryByHrids from '../../hooks/useHoldingsQueryByHrids';
+
 jest.mock('../common', () => ({
   LocationSelectionWithCheck: () => <div>LocationSelection</div>,
 }));
+jest.mock('../../hooks/useHoldingsQueryByHrids');
+useHoldingsQueryByHrids.mockImplementation(() => {
+  return {
+    isLoading: false,
+    holdingsRecords: [],
+  };
+});
 
 const mockInitialValues = {
   permanentLocationId: 'permanentLocationId',
