@@ -9,7 +9,7 @@ import useInstancesQuery from '../../hooks/useInstancesQuery';
 
 // Fetches holdings and instances info given in the input holdings HRID
 const BoundWithFieldRow = ({ fields, ...rest }) => {
-  const data = fields.value;
+  const data = fields.value ? fields.value : [];
 
   // Load the holdings records matching the input HRIDs
   const holdingsRecordHrids = data.map(boundWithTitle => boundWithTitle.briefHoldingsRecord.hrid);

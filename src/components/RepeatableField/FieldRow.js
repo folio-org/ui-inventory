@@ -38,6 +38,7 @@ class FieldRow extends React.Component {
     const {
       fields,
       label,
+      hideAdd,
     } = this.props;
 
     if (this.action) {
@@ -69,7 +70,9 @@ class FieldRow extends React.Component {
           `${label} ${contextualSpeech} has been removed. ${fields.length} ${label} total`
         );
         this.action = null;
-        document.getElementById(this.addButtonId).focus();
+        if (!hideAdd) {
+          document.getElementById(this.addButtonId).focus();
+        }
       }
     }
   }
