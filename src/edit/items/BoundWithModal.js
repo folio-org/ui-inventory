@@ -76,7 +76,7 @@ const BoundWithModal = ({
         {
           Array(FIELD_COUNT).fill(0).map((f, i) => {
             return (
-              <Row>
+              <Row key={`new_hrid_${i}`}>
                 <Col xs={6}>
                   <TextField
                     placeholder={intl.formatMessage({ id: 'ui-inventory.boundWithTitles.enterHoldingsHrid' })}
