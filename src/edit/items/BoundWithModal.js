@@ -80,6 +80,7 @@ const BoundWithModal = ({
               <Row key={`new_hrid_${i}`}>
                 <Col xs={6}>
                   <TextField
+                    data-testid="bound-with-modal-input"
                     placeholder={intl.formatMessage({ id: 'ui-inventory.boundWithTitles.enterHoldingsHrid' })}
                     value={hrids[i]}
                     onChange={handleChange}
@@ -99,6 +100,7 @@ const BoundWithModal = ({
             <FormattedMessage id="ui-inventory.saveAndClose" />
           </Button>
           <Button
+            data-testid="bound-with-modal-cancel-button"
             onClick={onClose}
           >
             <FormattedMessage id="ui-inventory.cancel" />
