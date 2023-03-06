@@ -111,9 +111,9 @@ RepeatableField.propTypes = {
   template: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object)]),
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
-  canDelete: PropTypes.bool,
+  canDelete: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   hideAdd: PropTypes.bool,
-  component: PropTypes.object,
+  component: PropTypes.func,
 };
 
 RepeatableField.defaultProps = {

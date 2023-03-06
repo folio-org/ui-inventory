@@ -76,7 +76,7 @@ const BoundWithModal = ({
         {
           Array(FIELD_COUNT).fill(0).map((f, i) => {
             return (
-              <Row>
+              <Row key={i}>
                 <Col xs={6}>
                   <TextField
                     placeholder={intl.formatMessage({ id: 'ui-inventory.boundWithTitles.enterHoldingsHrid' })}
@@ -109,7 +109,7 @@ const BoundWithModal = ({
 
 BoundWithModal.propTypes = {
   item: PropTypes.object,
-  open: PropTypes.func,
+  open: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   onClose: PropTypes.func,
   onOk: PropTypes.func,
 };
