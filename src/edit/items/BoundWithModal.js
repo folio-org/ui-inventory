@@ -44,6 +44,7 @@ const BoundWithModal = ({
 
   return (
     <Modal
+      data-testid="bound-with-modal"
       open={open}
       dismissible
       label={<FormattedMessage id="ui-inventory.boundWithTitles.add" />}
@@ -91,6 +92,7 @@ const BoundWithModal = ({
         }
         <ModalFooter>
           <Button
+            data-testid="bound-with-modal-save-button"
             buttonStyle="primary"
             type="submit"
           >

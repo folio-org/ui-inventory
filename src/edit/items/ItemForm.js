@@ -955,6 +955,7 @@ class ItemForm extends React.Component {
                       ]}
                     />
                     <Button
+                      data-testid="bound-with-add-button"
                       type="button"
                       align="end"
                       onClick={this.openBoundWithModal}

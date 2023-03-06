@@ -4,7 +4,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import user from '@testing-library/user-event';
 import { StripesContext } from '@folio/stripes-core/src/StripesContext';
 
 import '../../../test/jest/__mock__';
@@ -123,6 +124,26 @@ describe('ItemForm', () => {
           .getElementsByTagName('button').item(0);
         expect(indirectlyLinkedDelete.disabled).toBeFalsy();
       });
+    });
+  });
+
+  describe('Bound With modal', () => {
+    it('should start out closed', async () => {
+      renderItemForm();
+
+      const saveButton = screen.queryByTestId('bound-with-modal-save-button');
+      expect(saveButton).toBeNull();
+    });
+
+    it('should open', async () => {
+      renderItemForm();
+
+      const openModalButton = await screen.findByTestId('bound-with-add-button');
+      user.click(openModalButton);
+
+      const saveButton = screen.queryByTestId('bound-with-modal-save-button');
+      expect(saveButton).not.toBeNull();
+      expect(saveButton).toBeVisible();
     });
   });
 });
