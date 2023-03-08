@@ -29,6 +29,7 @@ import {
   PRECEDING_RECORDS_COUNT,
   regExp,
 } from './constants';
+import { getItem, setItem } from '../../storage';
 
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
@@ -48,17 +49,20 @@ const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
 };
 
 const useInventoryBrowse = ({
+  pageConfigKey,
   filters = {},
   pageParams = {},
   options = {},
 }) => {
   const ky = useOkapiKy();
-  const { search, state } = useLocation();
+  const { search } = useLocation();
   const [namespace] = useNamespace();
   const { pageConfig = [], setPageConfig = noop } = pageParams;
 
   useEffect(() => {
-    setPageConfig(state?.pageConfig || INIT_PAGE_CONFIG);
+    const prevPageConfig = getItem(pageConfigKey, { fromLocalStorage: true });
+
+    setPageConfig(prevPageConfig || INIT_PAGE_CONFIG);
   }, []);
 
   const normalizedFilters = {
@@ -122,8 +126,14 @@ const useInventoryBrowse = ({
     const anchor = data[isPrev ? 'prev' : 'next'];
     const delta = isPrev ? -1 : 1;
 
-    setPageConfig(([pageNumber]) => [pageNumber + delta, direction, anchor]);
-  }, [normalizedFilters, setPageConfig]);
+    setPageConfig(([pageNumber]) => {
+      const newPageConfig = [pageNumber + delta, direction, anchor];
+
+      setItem(pageConfigKey, newPageConfig, { toLocalStorage: true });
+
+      return newPageConfig;
+    });
+  }, [normalizedFilters, setPageConfig, pageConfigKey]);
 
   return {
     data: data.items,

@@ -19,8 +19,31 @@ import translationsProperties from '../../../test/jest/helpers/translationsPrope
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
+import * as storage from '../../storage';
 
 const updateMock = jest.fn();
+const mockQueryReplace = jest.fn();
+const mockResultOffsetReplace = jest.fn();
+const mockStoredOffset = 100;
+const mockStoredParams = {
+  qindex: 'title',
+  query: 'a',
+  sort: 'title',
+};
+const resultOffset = { replace: mockResultOffsetReplace };
+const mockGetItem = (name = '') => {
+  if (name.includes('/search.params')) {
+    return mockStoredParams;
+  }
+
+  if (name.includes('/search.resultOffset')) {
+    return mockStoredOffset;
+  }
+
+  return undefined;
+};
+
+jest.mock('../../storage');
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -65,6 +88,9 @@ const resources = {
   resultOffset: 0,
 };
 
+const paramsKey = '@folio/inventory/search.params';
+const offsetKey = '@folio/inventory/search.resultOffset';
+
 let history;
 
 const renderInstancesList = ({
@@ -84,8 +110,9 @@ const renderInstancesList = ({
           <InstancesList
             parentResources={resources}
             parentMutator={{
+              resultOffset,
               resultCount: { replace: noop },
-              query: { update: updateMock, replace: noop },
+              query: { update: updateMock, replace: mockQueryReplace },
             }}
             data={{
               ...data,
@@ -120,6 +147,105 @@ describe('InstancesList', () => {
 
     afterEach(() => {
       jest.clearAllMocks();
+    });
+
+    describe('when the component is mounted', () => {
+      describe('and browse result was selected', () => {
+        it('should write URL parameters to storage and reset offset', () => {
+          const params = {
+            selectedBrowseResult: 'true',
+            filters: 'searchContributors.2b94c631-fca9-4892-a730-03ee529ffe2a',
+            qindex: 'contributor',
+            query: 'Abdill, Aasha M.,',
+          };
+
+          renderInstancesList({
+            segment: 'instances',
+            getParams: () => params,
+          });
+
+          expect(storage.setItem).toHaveBeenNthCalledWith(1, paramsKey, params, { toLocalStorage: true });
+          expect(storage.setItem).toHaveBeenNthCalledWith(2, offsetKey, 0, { toLocalStorage: true });
+        });
+      });
+
+      describe('and browse result was not selected', () => {
+        it('should update location and replace resultOffset', () => {
+          mockResultOffsetReplace.mockClear();
+          jest.spyOn(history, 'replace');
+          storage.getItem.mockImplementation(mockGetItem);
+
+          renderInstancesList({ segment: 'instances' });
+
+          expect(history.replace).toHaveBeenCalledWith('/?qindex=title&query=a&sort=title');
+          expect(mockResultOffsetReplace).toHaveBeenCalledWith(mockStoredOffset);
+
+          storage.getItem.mockRestore();
+        });
+
+        it('should not update location and resultOffset', () => {
+          jest.spyOn(history, 'replace');
+          mockResultOffsetReplace.mockClear();
+
+          renderInstancesList({ segment: 'instances' });
+
+          expect(history.replace).not.toHaveBeenCalled();
+          expect(mockResultOffsetReplace).not.toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('when the component is updated', () => {
+      describe('and previously the user returned from the "Browse" search by clicking the "Search" tab', () => {
+        it('should remove the selectedSearchMode parameter', () => {
+          mockQueryReplace.mockClear();
+
+          const newParentResources = {
+            ...resources,
+            query: { ...query, selectedSearchMode: 'true' },
+          };
+
+          const { rerender } = renderInstancesList({
+            segment: 'instances',
+            parentResources: newParentResources,
+          });
+
+          renderInstancesList({
+            segment: 'instances',
+            parentResources: {
+              ...newParentResources,
+              resultOffset: 100,
+            },
+          }, rerender);
+
+          expect(mockQueryReplace).toHaveBeenCalledWith({ selectedSearchMode: false });
+        });
+      });
+
+      describe('and location.search has been changed', () => {
+        it('should write parameters to storage', () => {
+          history.push({ search: '?qindex=title&query=book&sort=title' });
+          const paramsToStore = { qindex: 'title', query: 'book', sort: 'title' };
+          expect(storage.setItem).toHaveBeenCalledWith(paramsKey, paramsToStore, { toLocalStorage: true });
+        });
+      });
+
+      describe('and offset has been changed', () => {
+        it('should write offset to storage', () => {
+          const offset = 100;
+          const { rerender } = renderInstancesList({ segment: 'instances' });
+
+          renderInstancesList({
+            segment: 'instances',
+            parentResources: {
+              ...resources,
+              resultOffset: offset,
+            },
+          }, rerender);
+
+          expect(storage.setItem).toHaveBeenCalledWith(offsetKey, offset, { toLocalStorage: true });
+        });
+      });
     });
 
     it('should have proper list results size', () => {

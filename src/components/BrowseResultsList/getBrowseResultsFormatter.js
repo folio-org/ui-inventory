@@ -31,8 +31,6 @@ const getTargetRecord = (
   item,
   row,
   browseOption,
-  browseSearch,
-  pageConfig,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
   const searchParams = getSearchParams(row, browseOption);
@@ -46,10 +44,6 @@ const getTargetRecord = (
       selectedBrowseResult: true,
       ...searchParams,
     }),
-    state: {
-      browseSearch,
-      pageConfig,
-    },
   };
 
   return (
