@@ -23,7 +23,12 @@ export const setItem = (name, value, { toLocalStorage } = {}) => {
 };
 
 export const removeItem = (name, { fromLocalStorage } = {}) => {
-  const storage = fromLocalStorage ? localStorage : sessionStorage;
+  try {
+    const storage = fromLocalStorage ? localStorage : sessionStorage;
 
-  storage.removeItem(name);
+    storage.removeItem(name);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn(`the value ${name} could not be removed due to an error`, e);
+  }
 };
