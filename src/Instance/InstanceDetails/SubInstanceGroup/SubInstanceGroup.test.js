@@ -5,17 +5,16 @@ import { renderWithIntl, translationsProperties } from '../../../../test/jest/he
 import SubInstanceGroup from './SubInstanceGroup';
 
 jest.mock('../../../hooks/useReferenceData', () => jest.fn().mockReturnValue({
-    instanceRelationshipTypes : [
-        {
-          typeId: '169',
-          name: 'This is an instance relationship type'
-        },
-        {
-          typeId: '789',
-          name: 'This is another instance relationship type'
-        }
-      ],      
-      
+  instanceRelationshipTypes : [
+    {
+      typeId: '169',
+      name: 'This is an instance relationship type'
+    },
+    {
+      typeId: '789',
+      name: 'This is another instance relationship type'
+    }
+  ],
 }));
 
 const defaultProps = {
@@ -41,7 +40,7 @@ const defaultProps = {
   ],
   titleKey: 'name',
 };
-const renderSubInstanceGroup = (props) => renderWithIntl(<SubInstanceGroup {...props} />, translationsProperties)
+const renderSubInstanceGroup = (props) => renderWithIntl(<SubInstanceGroup {...props} />, translationsProperties);
 
 describe('SubInstanceGroup', () => {
   it('should render correctly', () => {
