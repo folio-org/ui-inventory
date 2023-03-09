@@ -994,6 +994,9 @@ class InstancesList extends React.Component {
               callNumber: '15%',
               subject: '50%',
               contributor: '50%',
+              contributors: {
+                max: '400px',
+              },
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',
