@@ -31,8 +31,6 @@ const getTargetRecord = (
   item,
   row,
   browseOption,
-  browseSearch,
-  pageConfig,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
   const searchParams = getSearchParams(row, browseOption);
@@ -46,10 +44,6 @@ const getTargetRecord = (
       selectedBrowseResult: true,
       ...searchParams,
     }),
-    state: {
-      browseSearch,
-      pageConfig,
-    },
   };
 
   return (
@@ -104,14 +98,12 @@ const renderMarcAuthoritiesLink = (authorityId, content) => {
 const getBrowseResultsFormatter = ({
   data,
   browseOption,
-  search: browseSearch,
-  pageConfig,
 }) => {
   return {
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
       if (r?.totalRecords) {
-        const subject = getTargetRecord(r?.value, r, browseOption, browseSearch, pageConfig);
+        const subject = getTargetRecord(r?.value, r, browseOption);
         if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
           return renderMarcAuthoritiesLink(r.authorityId, subject);
         }
@@ -122,13 +114,13 @@ const getBrowseResultsFormatter = ({
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, browseOption, browseSearch, pageConfig);
+        return getTargetRecord(r?.fullCallNumber, r, browseOption);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
     contributor: r => {
       if (r?.totalRecords) {
-        const fullMatchRecord = getTargetRecord(r.name, r, browseOption, browseSearch, pageConfig);
+        const fullMatchRecord = getTargetRecord(r.name, r, browseOption);
 
         if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
           return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
