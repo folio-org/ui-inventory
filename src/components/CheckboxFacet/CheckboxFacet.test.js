@@ -59,12 +59,10 @@ const defaultProps = {
   isFilterable: true
 };
 
-const renderCheckboxFacet = (props, options) => renderWithIntl(
+const renderCheckboxFacet = (props) => renderWithIntl(
   <CheckboxFacet {...props} />,
   translationsProperties,
-  options
 );
-
 
 describe('CheckboxFacet', () => {
   it('Component should render', () => {
@@ -169,9 +167,14 @@ describe('CheckboxFacet', () => {
       selectedValues: [7, 8, 6],
       isFilterable: true
     };
-    renderCheckboxFacet(defaultProps);
+    const rerenderComponent = renderCheckboxFacet(defaultProps);
     userEvent.click(screen.getByRole('button', { name: 'More' }));
-    renderCheckboxFacet(props, { rerender: true });
+    renderWithIntl(
+      <CheckboxFacet {...props} />,
+      translationsProperties,
+      rerenderComponent.rerender
+    );
+    userEvent.click(screen.getByRole('checkbox', { name: 'TestOption3 4' }));
     userEvent.click(screen.getByRole('checkbox', { name: 'TestOption7 19' }));
     expect(screen.getAllByRole('checkbox')).toHaveLength(8);
   });
