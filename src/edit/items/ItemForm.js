@@ -178,6 +178,7 @@ class ItemForm extends React.Component {
 
   render() {
     const {
+      configs,
       onCancel,
       initialValues,
       instance,
@@ -936,6 +937,7 @@ class ItemForm extends React.Component {
 }
 
 ItemForm.propTypes = {
+  configs: PropTypes.object,
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newItem: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,

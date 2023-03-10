@@ -24,6 +24,7 @@ import {
   useItemMutation,
   useBoundWithsMutation,
 } from '../hooks';
+import { useConfigurationQuery } from '../../hooks';
 
 const EditItem = ({
   referenceData,
@@ -39,6 +40,7 @@ const EditItem = ({
   const { isLoading: isItemLoading, item } = useItem(itemId);
   const callout = useCallout();
   const stripes = useStripes();
+  const { configs } = useConfigurationQuery('number_generator');
 
   const onCancel = useCallback(() => {
     history.push({
@@ -106,6 +108,7 @@ const EditItem = ({
   return (
     <>
       <ItemForm
+        configs={configs}
         httpError={httpError}
         form={`itemform_${holding.id}`}
         id={holding.id}

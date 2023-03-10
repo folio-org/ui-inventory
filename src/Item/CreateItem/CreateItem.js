@@ -21,6 +21,7 @@ import {
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { useItemMutation } from '../hooks';
+import { useConfigurationQuery } from '../../hooks';
 
 const CreateItem = ({
   referenceData,
@@ -34,6 +35,7 @@ const CreateItem = ({
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
   const callout = useCallout();
   const stripes = useStripes();
+  const { configs } = useConfigurationQuery('number_generator');
 
   const initialValues = useMemo(() => ({
     status: { name: 'Available' },
@@ -71,6 +73,7 @@ const CreateItem = ({
 
   return (
     <ItemForm
+      configs={configs}
       form={`itemform_${holding.id}`}
       id={holding.id}
       key={holding.id}
