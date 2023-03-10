@@ -2,7 +2,7 @@ import React from 'react';
 import { render, act } from '@testing-library/react';
 
 import { useQuery } from 'react-query';
-
+import '../../test/jest/__mock__';
 import { useHoldings, HoldingsProvider, useInstanceHoldingsQuery } from './HoldingsProvider';
 
 jest.mock('@folio/stripes/core', () => ({
