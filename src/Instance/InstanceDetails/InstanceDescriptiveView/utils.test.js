@@ -1,7 +1,5 @@
 import { formatLanguages } from './utils';
 
-import '../../../../test/jest/__mock__';
-
 jest.mock('@folio/stripes/components', () => ({
   formattedLanguageName: jest.fn(() => 'English'),
 }));
