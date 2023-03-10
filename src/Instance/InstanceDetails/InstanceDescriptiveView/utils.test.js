@@ -1,7 +1,7 @@
 import { formatLanguages } from './utils';
 
 jest.mock('@folio/stripes/components', () => ({
-  formattedLanguageName: jest.fn(() => 'English'),
+  formattedLanguageName: jest.fn().mockReturnValue('English'),
 }));
 
 describe('formatLanguages', () => {
