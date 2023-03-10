@@ -6,7 +6,8 @@ import css from './NumberGeneratorOptions.css';
 
 const NumberGeneratorOptionsForm = () => {
   const { values } = useFormState();
-  const disableCallNumberFields = values?.useAccessionNumberForCallNumber === 'yes';
+  const disableUseForBothFields = values?.accessionNumberGeneratorSetting === 'useTextField';
+  const disableCallNumberFields = !disableUseForBothFields && values?.useAccessionNumberForCallNumber === 'yes';
 
   return (
     <>
@@ -79,11 +80,17 @@ const NumberGeneratorOptionsForm = () => {
       <Row>
         <Col xs={12}>
           <div className={css.marginBottomGutter}>
+            {disableUseForBothFields &&
+              <MessageBanner type="warning">
+                <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumberWarning" />
+              </MessageBanner>
+            }
             <Label>
               <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumber" />
             </Label>
             <Field
               component={RadioButton}
+              disabled={disableUseForBothFields}
               id="yesUseAccessionForCallNumber"
               inline
               label={<FormattedMessage id="ui-inventory.yes" />}
@@ -93,6 +100,7 @@ const NumberGeneratorOptionsForm = () => {
             />
             <Field
               component={RadioButton}
+              disabled={disableUseForBothFields}
               id="noUseAccessionForCallNumber"
               inline
               label={<FormattedMessage id="ui-inventory.no" />}
