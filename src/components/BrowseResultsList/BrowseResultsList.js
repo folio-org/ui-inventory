@@ -47,7 +47,6 @@ const BrowseResultsList = ({
     hasNextPage,
     hasPrevPage,
     onNeedMoreData,
-    pageConfig,
   },
   totalRecords,
 }) => {
@@ -76,7 +75,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter({ data, browseOption, search, pageConfig })}
+      formatter={getBrowseResultsFormatter({ data, browseOption })}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}
