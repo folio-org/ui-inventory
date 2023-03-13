@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Loading } from '@folio/stripes/components';
 
+import { keyBy } from 'lodash';
+
 import FieldRow from '../../components/RepeatableField/FieldRow';
 import useHoldingsQueryByHrids from '../../hooks/useHoldingsQueryByHrids';
 import useInstancesQuery from '../../hooks/useInstancesQuery';
@@ -20,15 +22,15 @@ const BoundWithFieldRow = ({ fields, ...rest }) => {
   const instances = useInstancesQuery(instanceIds);
   if (isHoldingsLoading || !instances.isSuccess) return <Loading size="large" />;
 
-  // Enrich the data render in the FieldRow
-  data.map(boundWithTitle => {
+  // Enrich the data displayed in the FieldRow
+  const holdingsRecordsByHrid = keyBy(holdingsRecords, 'hrid');
+  const instancesById = keyBy(instances.data?.instances, 'id');
+  data.forEach(boundWithTitle => {
     if (!boundWithTitle.briefHoldingsRecord?.id) {
-      const holdingsRecord = holdingsRecords.find(
-        record => record.hrid === boundWithTitle.briefHoldingsRecord.hrid
-      );
+      const holdingsRecord = holdingsRecordsByHrid[boundWithTitle.briefHoldingsRecord?.hrid];
       boundWithTitle.briefHoldingsRecord.id = holdingsRecord.id;
 
-      const instance = instances.data?.instances?.find(x => x.id === holdingsRecord.instanceId);
+      const instance = instancesById[holdingsRecord.instanceId];
       boundWithTitle.briefInstance = {
         id: instance?.id,
         hrid: instance?.hrid,
