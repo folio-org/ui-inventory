@@ -21,7 +21,6 @@ import {
 } from '../../constants';
 import usePrevious from '../usePrevious';
 import {
-  FIVE_MINUTES,
   INITIAL_SEARCH_PARAMS_MAP,
   INIT_PAGE_CONFIG,
   PAGINATION_SEARCH_PARAMS_MAP,
@@ -116,7 +115,7 @@ const useInventoryBrowse = ({
     }, {
       enabled: Boolean(pageConfig && qindex && hasFilters),
       keepPreviousData: qindex === prevSearchIndex || hasFilters,
-      staleTime: FIVE_MINUTES,
+      staleTime: 0,
       ...options,
     },
   );
