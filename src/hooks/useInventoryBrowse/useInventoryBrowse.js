@@ -95,7 +95,7 @@ const useInventoryBrowse = ({
   } = useQuery(
     [namespace, filters, qindex, prevSearchIndex, pageConfig],
     async () => {
-      if (!hasFilters) return { items: [] };
+      if (!hasFilters) return {};
 
       const [pageNumber, direction, anchor] = pageConfig;
 

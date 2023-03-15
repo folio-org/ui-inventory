@@ -24,7 +24,6 @@ const BrowseResultsPane = ({
   browseData,
   filters = {},
   isFetching,
-  isLoading,
   isFiltersOpened,
   pagination,
   toggleFiltersPane,
@@ -46,14 +45,14 @@ const BrowseResultsPane = ({
     <NoResultsMessage
       filters={dehydratedFilters}
       isFiltersOpened={isFiltersOpened}
-      isLoading={isLoading}
+      isLoading={isFetching}
       notLoadedMessage={<FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" />}
       toggleFilters={toggleFiltersPane}
     />
   ), [
     dehydratedFilters,
     isFiltersOpened,
-    isLoading,
+    isFetching,
     toggleFiltersPane,
   ]);
 
@@ -102,7 +101,6 @@ BrowseResultsPane.propTypes = {
   filters: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
   isFiltersOpened: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool,
   pagination: PropTypes.shape({
     hasPrevPage: PropTypes.bool,
     hasNextPage: PropTypes.bool,
