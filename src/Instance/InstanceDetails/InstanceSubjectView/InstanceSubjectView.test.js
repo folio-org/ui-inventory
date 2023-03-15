@@ -12,7 +12,7 @@ import { renderWithIntl, translationsProperties } from '../../../../test/jest/he
 
 import InstanceSubjectView from './InstanceSubjectView';
 
-const history = new createMemoryHistory();
+const History = new createMemoryHistory();
 
 const defaultProps = {
   id: 'test-id',
@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 const renderInstanceSubjectView = (props) => renderWithIntl(
-  <Router history={history}>
+  <Router history={History}>
     <DataContext.Provider value={{ id: 'test-id' }}>
       <InstanceSubjectView {...props} />
     </DataContext.Provider>
