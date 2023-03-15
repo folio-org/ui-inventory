@@ -95,6 +95,8 @@ const useInventoryBrowse = ({
   } = useQuery(
     [namespace, filters, qindex, prevSearchIndex, pageConfig],
     async () => {
+      if (!hasFilters) return { items: [] };
+
       const [pageNumber, direction, anchor] = pageConfig;
 
       const query = buildFilterQuery(
@@ -113,7 +115,7 @@ const useInventoryBrowse = ({
         }
       }).json();
     }, {
-      enabled: Boolean(pageConfig && qindex && hasFilters),
+      enabled: Boolean(pageConfig && qindex),
       keepPreviousData: qindex === prevSearchIndex || hasFilters,
       staleTime: 0,
       ...options,

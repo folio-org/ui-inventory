@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { memo, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { omit } from 'lodash';
 
 import {
   Pane,
@@ -38,7 +39,7 @@ const BrowseResultsPane = ({
 
   const isEmptyMessage = useMemo(() => (
     <NoResultsMessage
-      filters={filters}
+      filters={omit(filters || {}, ['qindex', 'query'])}
       isFiltersOpened={isFiltersOpened}
       isLoading={isLoading}
       notLoadedMessage={<FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" />}
