@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { memo, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { omit } from 'lodash';
 
 import {
   Pane,
@@ -33,20 +32,26 @@ const BrowseResultsPane = ({
 }) => {
   const [namespace] = useNamespace();
 
-  const paneSub = getFiltersCount(filters) === 0
+  const dehydratedFilters = useMemo(() => ({
+    ...filters,
+    query: filters.query || undefined,
+    qindex: undefined,
+  }), [filters]);
+
+  const paneSub = getFiltersCount(dehydratedFilters) === 0
     ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" />
     : null;
 
   const isEmptyMessage = useMemo(() => (
     <NoResultsMessage
-      filters={omit(filters || {}, ['qindex', 'query'])}
+      filters={dehydratedFilters}
       isFiltersOpened={isFiltersOpened}
       isLoading={isLoading}
       notLoadedMessage={<FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" />}
       toggleFilters={toggleFiltersPane}
     />
   ), [
-    filters,
+    dehydratedFilters,
     isFiltersOpened,
     isLoading,
     toggleFiltersPane,
@@ -58,13 +63,13 @@ const BrowseResultsPane = ({
       : (
         <PaneMenu>
           <ExpandFilterPaneButton
-            filterCount={getFiltersCount(filters)}
+            filterCount={getFiltersCount(dehydratedFilters)}
             onClick={toggleFiltersPane}
           />
         </PaneMenu>
       )
   ), [
-    filters,
+    dehydratedFilters,
     isFiltersOpened,
     toggleFiltersPane,
   ]);
