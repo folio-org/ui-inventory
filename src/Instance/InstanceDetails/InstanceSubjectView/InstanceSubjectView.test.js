@@ -12,17 +12,16 @@ import { renderWithIntl, translationsProperties } from '../../../../test/jest/he
 
 import InstanceSubjectView from './InstanceSubjectView';
 
-const History = new createMemoryHistory();
+const history = createMemoryHistory();
 
 const defaultProps = {
-  id: 'test-id',
-  subjects: ['subject1', 'subject2'],
-  source: 'instanceSubjectSource'
+  id: 'subject-accordion',
+  subjects: ['Subject 1'],
 };
 
 const renderInstanceSubjectView = (props) => renderWithIntl(
-  <Router history={History}>
-    <DataContext.Provider value={{ id: 'test-id' }}>
+  <Router history={history}>
+    <DataContext.Provider value="Subject">
       <InstanceSubjectView {...props} />
     </DataContext.Provider>
   </Router>,
@@ -31,9 +30,11 @@ const renderInstanceSubjectView = (props) => renderWithIntl(
 
 describe('InstanceSubjectView', () => {
   it('renders InstanceSubjectView component', () => {
-    const { getByText, getByRole } = renderInstanceSubjectView(defaultProps);
-    const subjectButton = getByRole('button', { name: 'Subject' });
+    const { getByText, getByRole } = renderInstanceSubjectView({ ...defaultProps });
+    const subjectButton = getByRole('button', { name: /Subject/i });
     userEvent.click(subjectButton);
-    expect(getByText('Subject headings')).toBeInTheDocument();
+    expect(getByText(/Subject headings/i)).toBeInTheDocument();
+    expect(getByText(/No value set/i)).toBeInTheDocument();
+    expect(getByText(/End of list/i)).toBeInTheDocument();
   });
 });
