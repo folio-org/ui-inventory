@@ -6,6 +6,7 @@
 * Do not allow for item removal when an item has a loan with a status set to `Awaiting delivery`. Fixes UIIN-2187.
 * Fix max width for contributors column in Instances search. Fixes UIIN-2345.
 * Retain search query, result list and page number after switching between Search and Browse searches. Refs UIIN-2337.
+* Browse results are not updated when field with Subject/Contributor value is linked/unlinked. Fixes UIIN-2342.
 
 ## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)
