@@ -136,7 +136,7 @@ describe('useInventoryBrowse', () => {
 
   it('should not fetch browse data when filters are empty', async () => {
     const { result, waitFor } = renderHook(() => useInventoryBrowse({
-      filters: {},
+      filters: { qindex: filters.qindex },
       pageParams: {
         ...pageParams,
         pageConfig: [1, PAGE_DIRECTIONS.next, data.next],
