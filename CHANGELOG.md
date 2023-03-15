@@ -2,6 +2,9 @@
 
 ## 9.5.0 IN PROGRESS
 
+## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
+
 * Do not allow for item removal when an item has a loan with a status set to `Declared lost`. Fixes UIIN-2138.
 * Do not allow for item removal when an item has a loan with a status set to `Awaiting delivery`. Fixes UIIN-2187.
 * Fix max width for contributors column in Instances search. Fixes UIIN-2345.
