@@ -2,6 +2,8 @@
 
 ## 9.5.0 IN PROGRESS
 
+* To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
+
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
 
