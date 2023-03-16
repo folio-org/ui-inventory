@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -14,6 +14,7 @@ import {
   Col,
   Headline,
   IconButton,
+  InfoPopover,
   Pane,
   PaneFooter,
   PaneMenu,
@@ -25,6 +26,8 @@ import {
   Selection,
   TextField,
 } from '@folio/stripes/components';
+
+import css from './settings.css';
 
 function massageInitialValues(values) {
   const massaged = {
@@ -57,11 +60,41 @@ function makeOptions(resource) {
   return (resource.records || []).map(p => ({ value: p.id, label: p.name }));
 }
 
+const infoPopover = <InfoPopover
+  content={<FormattedMessage id="ui-inventory.jobProfiles.info" />}
+  iconSize="medium"
+/>;
+const createJobProfileLabel = (
+  <>
+    <FormattedMessage id="ui-inventory.createJobProfileIds">
+      {([inputLabel]) => (
+        <>
+          {inputLabel}
+          <span className={css.asterisk}>*</span>
+        </>
+      )}
+    </FormattedMessage>
+    {infoPopover}
+  </>
+);
+const updateJobProfileLabel = (
+  <>
+    <FormattedMessage id="ui-inventory.updateJobProfileIds">
+      {([inputLabel]) => (
+        <>
+          {inputLabel}
+          <span className={css.asterisk}>*</span>
+        </>
+      )}
+    </FormattedMessage>
+    {infoPopover}
+  </>
+);
 const headLabelsForImportCreate = (
   <Row>
     <Col xs={11}>
       <Headline>
-        <FormattedMessage id="ui-inventory.createJobProfileIds" />
+        {createJobProfileLabel}
       </Headline>
     </Col>
     <Col xs={1} style={{ textAlign: 'center' }}>
@@ -76,7 +109,7 @@ const headLabelsForOverlayUpdate = (
   <Row>
     <Col xs={11}>
       <Headline>
-        <FormattedMessage id="ui-inventory.updateJobProfileIds" />
+        {updateJobProfileLabel}
       </Headline>
     </Col>
     <Col xs={1} style={{ textAlign: 'center' }}>
@@ -86,7 +119,6 @@ const headLabelsForOverlayUpdate = (
     </Col>
   </Row>
 );
-
 
 const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources }) => {
   const {
@@ -99,18 +131,51 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
     value: record.id,
   }));
 
+  const onDefaultProfileRemove = useCallback(
+    (defaultProfileId, fieldName, form) => (fields, index) => {
+      fields.remove(index);
+
+      if (fields.length === 1 || (fields.value[index] === defaultProfileId)) {
+        form.change(fieldName, null);
+      }
+    }, [],
+  );
+
+  const validateForm = useCallback(
+    values => {
+      const validationMessage = intl.formatMessage({ id: 'ui-inventory.selectToContinue' });
+      const isCreateJobProfilesEmpty = isEmpty(values.allowedCreateJobProfileIds);
+      const isUpdateJobProfilesEmpty = isEmpty(values.allowedUpdateJobProfileIds);
+
+      return {
+        ...(isCreateJobProfilesEmpty) && { allowedCreateJobProfileIds: [validationMessage] },
+        ...(isUpdateJobProfilesEmpty) && { allowedUpdateJobProfileIds: [validationMessage] },
+        ...(!values.createJobProfileId) && { createJobProfileId: '*' },
+        ...(!values.updateJobProfileId) && { updateJobProfileId: '*' },
+      };
+    },
+    [],
+  );
+  const renderValidationError = () => {
+    return <div className={css.hasError}>{intl.formatMessage({ id: 'ui-inventory.selectToContinue' })}</div>;
+  };
+
   return (
     <Form
       mutators={{ ...arrayMutators }}
       initialValues={massageInitialValues(initialValues)}
       onSubmit={(...args) => massageAndSubmit(onSubmit, ...args)}
+      validate={validateForm}
     >
       {({
+        form,
         handleSubmit,
         pristine,
         submitting,
         submitSucceeded,
         values,
+        touched,
+        errors,
       }) => (
         <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
           <Paneset isRoot>
@@ -119,7 +184,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
               paneTitle={initialValues?.id
                 ? initialValues?.name
                 : <FormattedMessage id="stripes-components.addNew" />
-            }
+              }
               firstMenu={
                 <PaneMenu>
                   <FormattedMessage id="stripes-components.cancel">
@@ -133,7 +198,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     )}
                   </FormattedMessage>
                 </PaneMenu>
-            }
+              }
               footer={
                 <PaneFooter
                   renderEnd={
@@ -146,14 +211,14 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     >
                       <FormattedMessage id="stripes-components.saveAndClose" />
                     </Button>
-                }
+                  }
                   renderStart={
                     <Button buttonStyle="default mega" marginBottom0 onClick={onCancel}>
                       <FormattedMessage id="stripes-components.cancel" />
                     </Button>
-                }
+                  }
                 />
-            }
+              }
             >
               <Row>
                 <Col xs={12}>
@@ -189,13 +254,14 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                     component={TextField}
                   />
                   <FieldArray
-                    legend={isEmpty(values.allowedCreateJobProfileIds) ? <FormattedMessage id="ui-inventory.createJobProfileIds" /> : ''}
+                    legend={isEmpty(values.allowedCreateJobProfileIds) ? createJobProfileLabel : ''}
                     name="allowedCreateJobProfileIds"
                     id="input-targetprofile-createJobProfileIds"
                     component={RepeatableField}
                     headLabels={!isEmpty(values.allowedCreateJobProfileIds) ? headLabelsForImportCreate : ''}
                     addLabel={<FormattedMessage id="ui-inventory.button.addCreateJobProfileId" />}
                     onAdd={fields => fields.push('')}
+                    onRemove={onDefaultProfileRemove(values.createJobProfileId, 'createJobProfileId', form)}
                     renderField={(field, index, fields) => (
                       <Row>
                         <Col xs={11}>
@@ -204,6 +270,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                             dataOptions={jobProfileOptions}
                             placeholder={intl.formatMessage({ id: 'ui-inventory.select.createJobProfileId' })}
                             name={field}
+                            validate={value => (!value ? intl.formatMessage({ id: 'ui-inventory.selectToContinue' }) : undefined)}
                           />
                         </Col>
                         <Col xs={1}>
@@ -219,14 +286,16 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                       </Row>
                     )}
                   />
+                  {touched.allowedCreateJobProfileIds && errors.allowedCreateJobProfileIds && renderValidationError()}
                   <FieldArray
-                    legend={isEmpty(values.allowedUpdateJobProfileIds) ? <FormattedMessage id="ui-inventory.updateJobProfileIds" /> : ''}
+                    legend={isEmpty(values.allowedUpdateJobProfileIds) ? updateJobProfileLabel : ''}
                     name="allowedUpdateJobProfileIds"
                     id="input-targetprofile-updateJobProfileIds"
                     headLabels={!isEmpty(values.allowedUpdateJobProfileIds) ? headLabelsForOverlayUpdate : ''}
                     component={RepeatableField}
                     addLabel={<FormattedMessage id="ui-inventory.button.addUpdateJobProfileId" />}
                     onAdd={fields => fields.push('')}
+                    onRemove={onDefaultProfileRemove(values.updateJobProfileId, 'updateJobProfileId', form)}
                     renderField={(field, index, fields) => (
                       <Row>
                         <Col xs={11}>
@@ -234,6 +303,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                             component={Selection}
                             dataOptions={jobProfileOptions}
                             placeholder={intl.formatMessage({ id: 'ui-inventory.select.updateJobProfileId' })}
+                            validate={value => (!value ? intl.formatMessage({ id: 'ui-inventory.selectToContinue' }) : undefined)}
                             name={field}
                           />
                         </Col>
@@ -250,6 +320,7 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
                       </Row>
                     )}
                   />
+                  {touched.allowedUpdateJobProfileIds && errors.allowedUpdateJobProfileIds && renderValidationError()}
                   <FieldArray
                     legend={<FormattedMessage id="ui-inventory.targetOptions" />}
                     name="targetOptions"

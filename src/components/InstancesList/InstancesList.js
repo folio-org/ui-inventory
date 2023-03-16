@@ -34,6 +34,8 @@ import {
   checkScope,
   HasCommand,
   MCLPagingTypes,
+  TextLink,
+  DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -155,7 +157,16 @@ class InstancesList extends React.Component {
   }
 
   componentDidMount() {
-    const { history } = this.props;
+    const {
+      history,
+      namespace,
+      updateLocation,
+      getParams,
+      parentMutator,
+    } = this.props;
+    const params = getParams();
+    const prevParams = getItem(`${namespace}/search.params`, { fromLocalStorage: true });
+    const prevResultOffset = getItem(`${namespace}/search.resultOffset`, { fromLocalStorage: true });
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -169,18 +180,45 @@ class InstancesList extends React.Component {
       }
     });
 
-    const { browseSearch, pageConfig } = this.getBrowsePageState();
+    if (params.selectedBrowseResult === 'true') {
+      setItem(`${namespace}/search.params`, params, { toLocalStorage: true });
+      setItem(`${namespace}/search.resultOffset`, 0, { toLocalStorage: true });
+      parentMutator.resultOffset.replace(0);
+    } else if (prevParams) {
+      updateLocation(prevParams, { replace: true });
+      parentMutator.resultOffset.replace(prevResultOffset);
+    }
 
     this.setState({
-      browsePageSearch: browseSearch,
-      browsePageConfig: pageConfig,
-      openedFromBrowse: !!browseSearch,
+      openedFromBrowse: params.selectedBrowseResult === 'true',
       optionSelected: '',
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const {
+      parentMutator,
+      parentResources,
+      namespace,
+      location,
+      getParams,
+    } = this.props;
     const qindex = this.getQIndexFromParams();
+
+    // reset selectedSearchMode parameter after offset change
+    if (parentResources.query.selectedSearchMode &&
+      prevProps.parentResources.resultOffset !== parentResources.resultOffset
+    ) {
+      parentMutator.query.replace({ selectedSearchMode: false });
+    }
+
+    if (prevProps.location.search !== location.search) {
+      setItem(`${namespace}/search.params`, getParams(), { toLocalStorage: true });
+    }
+
+    if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
+      setItem(`${namespace}/search.resultOffset`, parentResources.resultOffset, { toLocalStorage: true });
+    }
 
     // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
     // doesn't like this because setState causes a re-render and can
@@ -198,18 +236,12 @@ class InstancesList extends React.Component {
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    selectedSearchMode: false,
   };
 
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('qindex');
-  }
-
-  getBrowsePageState = () => {
-    return {
-      browseSearch: this.props.location.state?.browseSearch,
-      pageConfig: this.props.location.state?.pageConfig,
-    };
   }
 
   getInitialToggableColumns = () => {
@@ -236,7 +268,7 @@ class InstancesList extends React.Component {
       ? { ...curFilters, [name]: values }
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
-    const params = getParams();
+    const params = omit(getParams(), 'selectedSearchMode');
 
     this.setState({
       openedFromBrowse: false,
@@ -322,10 +354,7 @@ class InstancesList extends React.Component {
 
   renderNavigation = () => (
     <>
-      <SearchModeNavigation
-        search={this.state.browsePageSearch}
-        state={{ pageConfig: this.state.browsePageConfig }}
-      />
+      <SearchModeNavigation />
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
   );
@@ -635,13 +664,6 @@ class InstancesList extends React.Component {
             </IfPermission>
           </IfInterface>
           {this.getActionItem({
-            id: 'dropdown-clickable-export-json',
-            icon: 'download',
-            messageId: 'ui-inventory.exportInstancesInJSON',
-            onClickHandler: buildOnClickHandler(noop),
-            isDisabled: true,
-          })}
-          {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
             messageId: 'ui-inventory.instances.showSelectedRecords',
@@ -665,6 +687,15 @@ class InstancesList extends React.Component {
         </MenuSection>
       </>
     );
+  };
+
+  getRowURL = (id) => {
+    const {
+      match: { path },
+      location: { search },
+    } = this.props;
+
+    return `${path}/view/${id}${search}`;
   };
 
   getIsAllRowsSelected = () => {
@@ -876,6 +907,7 @@ class InstancesList extends React.Component {
         discoverySuppress,
         isBoundWith,
         staffSuppress,
+        id,
       }) => {
         return (
           <AppIcon
@@ -884,7 +916,11 @@ class InstancesList extends React.Component {
             iconKey="instance"
             iconAlignment="baseline"
           >
-            {title}
+            <TextLink
+              to={this.getRowURL(id)}
+            >
+              {title}
+            </TextLink>
             {(isBoundWith) &&
             <AppIcon
               size="small"
@@ -955,7 +991,7 @@ class InstancesList extends React.Component {
         isWithinScope={checkScope}
         scope={document.body}
       >
-        <div data-test-inventory-instances>
+        <div data-test-inventory-instances className={css.inventoryInstances}>
           <SearchAndSort
             key={searchAndSortKey}
             actionMenu={this.getActionMenu}
@@ -985,6 +1021,9 @@ class InstancesList extends React.Component {
               callNumber: '15%',
               subject: '50%',
               contributor: '50%',
+              contributors: {
+                max: '400px',
+              },
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',
@@ -993,7 +1032,9 @@ class InstancesList extends React.Component {
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
+            resultsRowClickHandlers={false}
             resultsFormatter={resultsFormatter}
+            resultRowFormatter={DefaultMCLRowFormatter}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"

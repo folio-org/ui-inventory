@@ -213,7 +213,7 @@ const parseStatisticalCodeOption = (entry, count) => {
     code,
     statisticalCodeType,
   } = entry;
-  const label = `${statisticalCodeType?.name}:    ${code} - ${name}`;
+  const label = `${statisticalCodeType?.name}: ${code} - ${name}`;
   const option = {
     label,
     value,

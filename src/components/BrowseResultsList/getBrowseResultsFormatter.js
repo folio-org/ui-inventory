@@ -31,8 +31,6 @@ const getTargetRecord = (
   item,
   row,
   browseOption,
-  browseSearch,
-  pageConfig,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
   const searchParams = getSearchParams(row, browseOption);
@@ -46,10 +44,6 @@ const getTargetRecord = (
       selectedBrowseResult: true,
       ...searchParams,
     }),
-    state: {
-      browseSearch,
-      pageConfig,
-    },
   };
 
   return (
@@ -59,70 +53,77 @@ const getTargetRecord = (
   );
 };
 
+
 const openInNewTab = (url) => window.open(url, '_blank', 'noopener,noreferrer');
+
+const renderMarcAuthoritiesLink = (authorityId, content) => {
+  return (
+    <>
+      <Tooltip
+        id="marc-authority-tooltip"
+        text={<FormattedMessage id="ui-inventory.linkedToMarcAuthority" />}
+      >
+        {({ ref, ariaIds }) => {
+          const url = `/marc-authorities/authorities/${authorityId}?authRefType=Authorized&segment=search`;
+
+          return (
+            <span
+              role="link" // fake link to avoid Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>
+              tabIndex="0"
+              ref={ref}
+              aria-labelledby={ariaIds.text}
+              data-link="authority-app"
+              data-testid="authority-app-link"
+              onClick={() => openInNewTab(url)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  openInNewTab(url);
+                }
+              }}
+            >
+              <AppIcon
+                size="small"
+                app="marc-authorities"
+                iconClassName={css.authorityIcon}
+              />
+            </span>
+          );
+        }}
+      </Tooltip>
+      {content}
+    </>
+  );
+};
 
 const getBrowseResultsFormatter = ({
   data,
   browseOption,
-  search: browseSearch,
-  pageConfig,
 }) => {
   return {
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
       if (r?.totalRecords) {
-        return getTargetRecord(r?.subject, r, browseOption, browseSearch, pageConfig);
+        const subject = getTargetRecord(r?.value, r, browseOption);
+        if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
+          return renderMarcAuthoritiesLink(r.authorityId, subject);
+        }
+
+        return subject;
       }
-      return <MissedMatchItem query={r.subject} />;
+      return <MissedMatchItem query={r?.value} />;
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, browseOption, browseSearch, pageConfig);
+        return getTargetRecord(r?.fullCallNumber, r, browseOption);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
     contributor: r => {
       if (r?.totalRecords) {
-        const fullMatchRecord = getTargetRecord(r.name, r, browseOption, browseSearch, pageConfig);
-        const isBrowseContributors = browseOption === browseModeOptions.CONTRIBUTORS;
+        const fullMatchRecord = getTargetRecord(r.name, r, browseOption);
 
-        if (isBrowseContributors && r.authorityId) {
-          return (
-            <>
-              <Tooltip
-                id="marc-authority-tooltip"
-                text={<FormattedMessage id="ui-inventory.linkedToMarcAuthority" />}
-              >
-                {({ ref, ariaIds }) => {
-                  const url = `/marc-authorities/authorities/${r.authorityId}?segment=search`;
-
-                  return (
-                    <span
-                      role="link" // fake link to avoid Warning: validateDOMNesting(...): <a> cannot appear as a descendant of <a>
-                      tabIndex="0"
-                      ref={ref}
-                      aria-labelledby={ariaIds.text}
-                      data-link="authority-app"
-                      data-testid="authority-app-link"
-                      onClick={() => openInNewTab(url)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          openInNewTab(url);
-                        }
-                      }}
-                    >
-                      <AppIcon
-                        size="small"
-                        app="marc-authorities"
-                        iconClassName={css.authorityIcon}
-                      />
-                    </span>
-                  );
-                }}
-              </Tooltip>
-              {fullMatchRecord}
-            </>
-          );
+        if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
+          return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
         }
 
         return fullMatchRecord;
@@ -139,7 +140,7 @@ const getBrowseResultsFormatter = ({
         return [...acc, data.contributorTypes.find(type => type.id === contributorTypeId)?.name || ''];
       }, []).filter(name => !!name).join(', ');
     },
-    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.subject && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
   };
 };
 

@@ -12,6 +12,9 @@ import {
 } from '../../constants';
 import { INIT_PAGE_CONFIG } from './constants';
 import useInventoryBrowse from './useInventoryBrowse';
+import * as storage from '../../storage';
+
+jest.mock('../../storage');
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -44,12 +47,17 @@ const pageParams = {
   setPageConfig: jest.fn(),
 };
 
+const pageConfigKey = '@folio/inventory/browse.pageConfig';
+
 describe('useInventoryBrowse', () => {
   const mockGet = jest.fn(() => ({
     json: () => Promise.resolve(data),
   }));
 
   beforeEach(() => {
+    queryClient.clear();
+    storage.setItem.mockClear();
+    storage.getItem.mockClear();
     mockGet.mockClear();
     useOkapiKy.mockClear().mockReturnValue({
       get: mockGet,
@@ -79,6 +87,34 @@ describe('useInventoryBrowse', () => {
     expect(newPageConfig).toEqual([initPageConfig[0] + 1, direction, data[direction]]);
   });
 
+  it('should apply the page config from the storage', async () => {
+    const prevPageConfig = [1, null, null];
+
+    storage.getItem.mockImplementation(() => prevPageConfig);
+    const { result, waitFor } = renderHook(() => useInventoryBrowse({ pageConfigKey, filters, pageParams }), { wrapper });
+
+    await waitFor(() => !result.current.isFetching);
+
+    expect(storage.getItem).toHaveBeenCalledWith(pageConfigKey, { fromLocalStorage: true });
+    expect(pageParams.setPageConfig).toHaveBeenCalledWith(prevPageConfig);
+
+    storage.getItem.mockRestore();
+  });
+
+  it('should write the updated page config to storage', async () => {
+    const { result, waitFor } = renderHook(() => useInventoryBrowse({ pageConfigKey, filters, pageParams }), { wrapper });
+
+    const direction = PAGE_DIRECTIONS.next;
+
+    await waitFor(() => !result.current.isFetching);
+    await act(async () => result.current.pagination.onNeedMoreData(null, null, null, direction));
+
+    const initPageConfig = pageParams.pageConfig;
+    const newPageConfig = pageParams.setPageConfig.mock.calls.at(-1)[0]([initPageConfig[0]]);
+
+    expect(storage.setItem).toHaveBeenCalledWith(pageConfigKey, newPageConfig, { toLocalStorage: true });
+  });
+
   it('should fetch browse data based on current anchor and direction', async () => {
     const { result, waitFor } = renderHook(() => useInventoryBrowse({
       filters,
@@ -96,5 +132,19 @@ describe('useInventoryBrowse', () => {
         searchParams: expect.objectContaining({ query: expect.stringMatching(/^.* > .*$/) })
       })
     );
+  });
+
+  it('should not fetch browse data when filters are empty', async () => {
+    const { result, waitFor } = renderHook(() => useInventoryBrowse({
+      filters: { qindex: filters.qindex },
+      pageParams: {
+        ...pageParams,
+        pageConfig: [1, PAGE_DIRECTIONS.next, data.next],
+      },
+    }), { wrapper });
+
+    await waitFor(() => !result.current.isFetching);
+
+    expect(mockGet).not.toHaveBeenCalled();
   });
 });

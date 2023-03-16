@@ -5,6 +5,8 @@ const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
 const CHECKED_OUT = 'Checked out';
 const AGED_TO_LOST = 'Aged to lost';
+const CLAIMED_RETURNED = 'Claimed returned';
+const DECLARED_LOST = 'Declared lost';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
@@ -25,8 +27,8 @@ export const itemStatusesMap = {
   AWAITING_PICKUP,
   AWAITING_DELIVERY,
   CHECKED_OUT,
-  CLAIMED_RETURNED: 'Claimed returned',
-  DECLARED_LOST: 'Declared lost',
+  CLAIMED_RETURNED,
+  DECLARED_LOST,
   IN_PROCESS: 'In process',
   IN_PROCESS_NON_REQUESTABLE: 'In process (non-requestable)',
   IN_TRANSIT,
@@ -67,6 +69,9 @@ export const NOT_REMOVABLE_ITEM_STATUSES = [
   CHECKED_OUT,
   AWAITING_PICKUP,
   AGED_TO_LOST,
+  CLAIMED_RETURNED,
+  AWAITING_DELIVERY,
+  DECLARED_LOST,
 ];
 
 export const itemStatuses = [
