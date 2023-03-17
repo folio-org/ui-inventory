@@ -93,6 +93,8 @@ const offsetKey = '@folio/inventory/search.resultOffset';
 
 let history;
 
+const updateLocation = jest.fn();
+
 const renderInstancesList = ({
   segment,
   ...rest
@@ -128,6 +130,7 @@ const renderInstancesList = ({
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
             fetchFacets={noop}
+            updateLocation={updateLocation}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -265,8 +268,21 @@ describe('InstancesList', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
       });
 
-      it('should render the "New MARC Bib Record" button', () => {
-        expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
+      describe('"New MARC Bib Record" button', () => {
+        it('should render', () => {
+          expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
+        });
+
+        it('should redirect to the correct layer', () => {
+          jest.spyOn(history, 'replace');
+
+          const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
+
+          act(() => {
+            fireEvent.click(button);
+            expect(updateLocation).toHaveBeenCalledWith({ 'layer': 'create-bib' });
+          });
+        });
       });
 
       describe('hiding contributors column', () => {
