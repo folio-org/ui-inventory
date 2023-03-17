@@ -265,6 +265,10 @@ describe('InstancesList', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
       });
 
+      it('should render the "New MARC Bib Record" button', () => {
+        expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
+      });
+
       describe('hiding contributors column', () => {
         beforeEach(() => {
           userEvent.click(screen.getByTestId('contributors'));
