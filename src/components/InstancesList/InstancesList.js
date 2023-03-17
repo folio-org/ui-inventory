@@ -308,6 +308,11 @@ class InstancesList extends React.Component {
     this.props.updateLocation({ layer: 'create' });
   }
 
+  openCreateMARCRecord = () => {
+    // TODO: Correct behavior is to open a new layer will be aded in UIQM-361
+    this.props.updateLocation({ layer: 'create-bib' });
+  }
+
   copyInstance = (instance) => {
     const {
       precedingTitles,
@@ -611,6 +616,21 @@ class InstancesList extends React.Component {
             )}
             type="create-inventory-records"
           />
+          <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-newmarcrecord"
+              onClick={buildOnClickHandler(this.openCreateMARCRecord)}
+            >
+              <Icon
+                icon="plus-sign"
+                size="medium"
+                iconClassName={css.actionIcon}
+              />
+              <FormattedMessage id="ui-inventory.newMARCRecord" />
+            </Button>
+          </IfPermission>
+
           {
           inTransitItemsExportInProgress ?
             this.getActionItem({

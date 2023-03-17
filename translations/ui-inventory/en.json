@@ -506,6 +506,7 @@
   "copyItem": "Duplicate",
   "newRequest": "New Request",
   "fastAdd": "Fast add",
+  "newMARCRecord": "New MARC Bib Record",
   "newFastAddRecord": "New Fast Add Record",
   "location.confirm.confirmBtn": "Yes",
   "location.confirm.common.header": "Attention!",
