@@ -2,6 +2,8 @@
 
 ## 9.5.0 IN PROGRESS
 
+* Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350.
+
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
 
