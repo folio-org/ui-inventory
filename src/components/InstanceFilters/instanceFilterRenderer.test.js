@@ -33,15 +33,15 @@ describe('instanceFilterRenderer function', () => {
     expect(screen.getByText('Tags')).toBeInTheDocument();
   });
 
-  it('should display Effective Location', () => {
+  it('Effective Location', () => {
     expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
   });
 
-  it('should display effectiveLocation field', () => {
+  it('effectiveLocation field', () => {
     expect(screen.getByText('effectiveLocation-field')).toBeInTheDocument();
   });
 
-  it('should display language-field', () => {
+  it('language-field', () => {
     expect(screen.getByText('language-field')).toBeInTheDocument();
   });
 });
