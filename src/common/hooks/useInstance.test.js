@@ -16,7 +16,7 @@ describe('useInstance', () => {
   it('re-fetch instance data if id changes', async () => {
     const mockMutator = {
       GET: jest.fn().mockResolvedValueOnce([{ id: 123, name: 'Test' }])
-      .mockResolvedValueOnce([{ id: 456, name: 'Test 2' }]),
+        .mockResolvedValueOnce([{ id: 456, name: 'Test 2' }]),
     };
     const { result, rerender, waitForNextUpdate } = renderHook(({ id }) => useInstance(id, mockMutator), {
       initialProps: { id: 123 },
