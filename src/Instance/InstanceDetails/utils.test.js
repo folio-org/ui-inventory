@@ -5,6 +5,7 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 describe('getPublishingInfo', () => {
+  afterEach(() => { jest.resetAllMocks(); });
   it('returns expected string when publication object exists with dateOfPublication', () => {
     const instance = {
       publication: [
@@ -33,6 +34,7 @@ describe('getPublishingInfo', () => {
 });
 
 describe('getAccordionState', () => {
+  afterEach(() => { jest.resetAllMocks(); });
   const accordions = {
     administrative: 'Administrative',
     title: 'Title',
