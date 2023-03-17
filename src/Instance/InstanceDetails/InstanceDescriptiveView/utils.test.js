@@ -1,24 +1,37 @@
+import React from 'react';
+import { render } from '@testing-library/react';
+import { formattedLanguageName } from '@folio/stripes/components';
 import { formatLanguages } from './utils';
 
-import '../../../../test/jest/__mock__';
-
 jest.mock('@folio/stripes/components', () => ({
-  formattedLanguageName: jest.fn(() => 'English'),
+  formattedLanguageName: jest.fn(),
 }));
 
 describe('formatLanguages', () => {
-  it('formats the given languages', () => {
-    const languages = ['eng', 'spa'];
-    const intl = {};
-    const locale = 'en';
-    const result = formatLanguages(languages, intl, locale);
-    expect(result).toBe('English, English');
+  afterEach(() => {
+    jest.resetAllMocks();
   });
-  it('returns an empty string when there are no languages', () => {
-    const languages = [];
+  it('should render comma-separated list of formatted language names', () => {
+    const languages = ['en', 'es', 'fr'];
     const intl = {};
-    const locale = 'en';
-    const result = formatLanguages(languages, intl, locale);
-    expect(result).toBe('');
+    const locale = 'en-US';
+    formattedLanguageName.mockImplementation((languageCode) => {
+      switch (languageCode) {
+        case 'en':
+          return 'English';
+        case 'es':
+          return 'Spanish';
+        case 'fr':
+          return 'French';
+        default:
+          return '';
+      }
+    });
+    const { getByTestId } = render(<div data-testid="formatted-languages">{formatLanguages(languages, intl, locale)}</div>);
+    expect(formattedLanguageName).toHaveBeenCalledTimes(3);
+    expect(formattedLanguageName).toHaveBeenCalledWith('en', intl, locale);
+    expect(formattedLanguageName).toHaveBeenCalledWith('es', intl, locale);
+    expect(formattedLanguageName).toHaveBeenCalledWith('fr', intl, locale);
+    expect(getByTestId('formatted-languages')).toHaveTextContent('English, Spanish, French');
   });
 });
