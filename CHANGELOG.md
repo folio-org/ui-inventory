@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 9.2.9 IN PROGRESS
+
+* Use correct reference to item resource. Fixes UIIN-2355, UIIN-2418.
+
 ## [9.2.8](https://github.com/folio-org/ui-inventory/tree/v9.2.8) (2022-12-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.7...v9.2.8)
 
