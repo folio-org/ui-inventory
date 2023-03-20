@@ -7,6 +7,7 @@ import {
   act,
   fireEvent,
   screen,
+  waitFor,
 } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
@@ -93,8 +94,6 @@ const offsetKey = '@folio/inventory/search.resultOffset';
 
 let history;
 
-const updateLocation = jest.fn();
-
 const renderInstancesList = ({
   segment,
   ...rest
@@ -130,7 +129,6 @@ const renderInstancesList = ({
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
             fetchFacets={noop}
-            updateLocation={updateLocation}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -273,14 +271,14 @@ describe('InstancesList', () => {
           expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
         });
 
-        it('should redirect to the correct layer', () => {
-          jest.spyOn(history, 'replace');
+        it('should redirect to the correct layer', async () => {
+          jest.spyOn(history, 'push');
 
           const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
 
-          act(() => {
+          await waitFor(() => {
             fireEvent.click(button);
-            expect(updateLocation).toHaveBeenCalledWith({ 'layer': 'create-bib' });
+            expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
           });
         });
       });
