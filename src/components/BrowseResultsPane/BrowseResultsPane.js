@@ -24,7 +24,6 @@ const BrowseResultsPane = ({
   browseData,
   filters = {},
   isFetching,
-  isLoading,
   isFiltersOpened,
   pagination,
   toggleFiltersPane,
@@ -32,22 +31,28 @@ const BrowseResultsPane = ({
 }) => {
   const [namespace] = useNamespace();
 
-  const paneSub = getFiltersCount(filters) === 0
+  const dehydratedFilters = useMemo(() => ({
+    ...filters,
+    query: filters.query || undefined,
+    qindex: undefined,
+  }), [filters]);
+
+  const paneSub = getFiltersCount(dehydratedFilters) === 0
     ? <FormattedMessage id="ui-inventory.title.subTitle.browseCall" />
     : null;
 
   const isEmptyMessage = useMemo(() => (
     <NoResultsMessage
-      filters={filters}
+      filters={dehydratedFilters}
       isFiltersOpened={isFiltersOpened}
-      isLoading={isLoading}
+      isLoading={isFetching}
       notLoadedMessage={<FormattedMessage id="ui-inventory.notLoadedMessage.browseCall" />}
       toggleFilters={toggleFiltersPane}
     />
   ), [
-    filters,
+    dehydratedFilters,
     isFiltersOpened,
-    isLoading,
+    isFetching,
     toggleFiltersPane,
   ]);
 
@@ -57,13 +62,13 @@ const BrowseResultsPane = ({
       : (
         <PaneMenu>
           <ExpandFilterPaneButton
-            filterCount={getFiltersCount(filters)}
+            filterCount={getFiltersCount(dehydratedFilters)}
             onClick={toggleFiltersPane}
           />
         </PaneMenu>
       )
   ), [
-    filters,
+    dehydratedFilters,
     isFiltersOpened,
     toggleFiltersPane,
   ]);
@@ -96,7 +101,6 @@ BrowseResultsPane.propTypes = {
   filters: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
   isFiltersOpened: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool,
   pagination: PropTypes.shape({
     hasPrevPage: PropTypes.bool,
     hasNextPage: PropTypes.bool,
