@@ -21,6 +21,11 @@ const facetsStore = create((set) => ({
   resetFacetSettings: () => set({ facetSettings: {} }),
 }));
 
+// selectors
+export const getSearchTerm = (name) => {
+  return facetsStore.getState().facetSettings?.[name]?.value ?? '';
+};
+
 // hooks
 export const useFacetSettings = () => facetsStore(store => [
   store.facetSettings,

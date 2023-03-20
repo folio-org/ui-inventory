@@ -1,9 +1,10 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import CheckboxFacet from './CheckboxFacet';
+import facetsStore from '../../stores/facetsStore';
 
 const defaultProps = {
   dataOptions: [
@@ -51,7 +52,9 @@ const defaultProps = {
     }
   ],
   onFetch: jest.fn(),
-  onSearch: jest.fn(),
+  onSearch: ({ name, value }) => {
+    facetsStore.getState().setFacetSettings(name, { value });
+  },
   name: 'Test Name',
   onChange: jest.fn(),
   isPending: false,
@@ -59,12 +62,17 @@ const defaultProps = {
   isFilterable: true
 };
 
-const renderCheckboxFacet = (props) => renderWithIntl(
+const renderCheckboxFacet = (props, renderer = render) => renderWithIntl(
   <CheckboxFacet {...props} />,
   translationsProperties,
+  renderer
 );
 
 describe('CheckboxFacet', () => {
+  beforeEach(() => {
+    facetsStore.getState().resetFacetSettings();
+  });
+
   it('Component should render', () => {
     renderCheckboxFacet(defaultProps);
     expect(screen.getByRole('searchbox', { name: 'Test Name-field' })).toBeInTheDocument();
@@ -95,8 +103,11 @@ describe('CheckboxFacet', () => {
     expect(screen.getByText('Read-only')).toBeInTheDocument();
   });
   it('No matching options should be render when required search is not found', () => {
-    renderCheckboxFacet(defaultProps);
+    const { rerender } = renderCheckboxFacet(defaultProps);
     userEvent.type(screen.getByRole('searchbox', { name: 'Test Name-field' }), 'test search');
+
+    renderCheckboxFacet(defaultProps, rerender);
+
     expect(screen.getByText('No matching options')).toBeInTheDocument();
   });
   it('component should re-render ', () => {
@@ -167,15 +178,14 @@ describe('CheckboxFacet', () => {
       selectedValues: [7, 8, 6],
       isFilterable: true
     };
-    const rerenderComponent = renderCheckboxFacet(defaultProps);
+    const { rerender } = renderCheckboxFacet(defaultProps);
+
     userEvent.click(screen.getByRole('button', { name: 'More' }));
-    renderWithIntl(
-      <CheckboxFacet {...props} />,
-      translationsProperties,
-      rerenderComponent.rerender
-    );
+    renderCheckboxFacet(props, rerender);
+
     userEvent.click(screen.getByRole('checkbox', { name: 'TestOption3 4' }));
     userEvent.click(screen.getByRole('checkbox', { name: 'TestOption7 19' }));
+
     expect(screen.getAllByRole('checkbox')).toHaveLength(8);
   });
 });

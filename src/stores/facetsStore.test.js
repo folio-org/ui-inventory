@@ -1,4 +1,4 @@
-import facetsStore from './facetsStore';
+import facetsStore, { getSearchTerm } from './facetsStore';
 
 const getFacetSettings = () => facetsStore.getState().facetSettings;
 
@@ -31,6 +31,15 @@ describe('facetsStore', () => {
       resetFacetSettings();
 
       expect(getFacetSettings()).toEqual({});
+    });
+  });
+
+  describe('getSearchTerm', () => {
+    test('getting search term value', () => {
+      const { setFacetSettings } = facetsStore.getState();
+      setFacetSettings('test', { value: 2 });
+
+      expect(getSearchTerm('test')).toEqual(2);
     });
   });
 });
