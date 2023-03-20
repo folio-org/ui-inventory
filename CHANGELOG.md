@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 9.5.0 IN PROGRESS
+## [9.4.2](https://github.com/folio-org/ui-inventory/tree/v9.4.2) (2023-03-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.1...v9.4.2)
 
 * To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
 * Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
