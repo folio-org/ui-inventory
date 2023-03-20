@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { act, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { useLocationFilters } from '@folio/stripes-acq-components';
+import { useLocalStorageFilters } from '@folio/stripes-acq-components';
 
 import {
   renderWithIntl,
@@ -12,10 +12,13 @@ import {
 } from '../../../test/jest/helpers';
 import { browseModeOptions } from '../../constants';
 import BrowseInventory from './BrowseInventory';
+import { SearchModeNavigation, BrowseInventoryFilters } from '../../components';
+import * as storage from '../../storage';
 
+jest.mock('../../storage');
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
-  useLocationFilters: jest.fn(() => ([])),
+  useLocalStorageFilters: jest.fn(() => ([])),
 }));
 jest.mock('../../components', () => ({
   BrowseInventoryFilters: jest.fn(() => <>BrowseInventoryFilters</>),
@@ -63,7 +66,7 @@ describe('BrowseInventory', () => {
     changeSearch.mockClear();
     resetFilters.mockClear();
     changeSearchIndex.mockClear();
-    useLocationFilters.mockClear().mockReturnValue(getFiltersUtils());
+    useLocalStorageFilters.mockClear().mockReturnValue(getFiltersUtils());
   });
 
   it('should render browse filters and results panes', () => {
@@ -92,7 +95,7 @@ describe('BrowseInventory', () => {
   });
 
   it('should not call "changeSearch" when search query is not valid', async () => {
-    useLocationFilters.mockClear().mockReturnValue(getFiltersUtils({
+    useLocalStorageFilters.mockClear().mockReturnValue(getFiltersUtils({
       searchQuery: 'with asterisks ***',
     }));
 
@@ -101,5 +104,46 @@ describe('BrowseInventory', () => {
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).not.toHaveBeenCalled();
+  });
+
+  describe('when the user clicks on the "Search" tab', () => {
+    it('should remove pageConfig from the storage', () => {
+      renderBrowseInventory();
+
+      expect(SearchModeNavigation).toHaveBeenCalledWith({
+        search: '?selectedSearchMode=true',
+      }, {});
+    });
+  });
+
+  describe('when filters have been changed', () => {
+    it('should remove the page config from storage', () => {
+      useLocalStorageFilters.mockImplementation((storageKey, location, history, cb) => {
+        const filters = {};
+        const searchQuery = 'searchQuery';
+        const searchIndex = browseModeOptions.CONTRIBUTORS;
+
+        return [
+          filters,
+          searchQuery,
+          cb,
+          applySearch,
+          changeSearch,
+          resetFilters,
+          changeSearchIndex,
+          searchIndex,
+        ];
+      });
+
+      const storageKey = '@folio/inventory/browse.pageConfig';
+
+      renderBrowseInventory();
+
+      BrowseInventoryFilters.mock.calls.at(-1)[0].applyFilters();
+
+      expect(storage.removeItem).toHaveBeenCalledWith(storageKey);
+
+      useLocalStorageFilters.mockRestore();
+    });
   });
 });

@@ -14,7 +14,7 @@ import {
   SingleSearchForm,
   useFiltersToogle,
   useItemToView,
-  useLocationFilters,
+  useLocalStorageFilters,
 } from '@folio/stripes-acq-components';
 
 import {
@@ -23,6 +23,7 @@ import {
   SearchModeNavigation,
 } from '../../components';
 import { browseInstanceIndexes } from '../../filterConfig';
+import { removeItem } from '../../storage';
 import {
   useBrowseValidation,
   useInventoryBrowse,
@@ -37,6 +38,7 @@ const BrowseInventory = () => {
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
   const [pageConfig, setPageConfig] = useState(INIT_PAGE_CONFIG);
+  const pageConfigKey = `${namespace}/browse.pageConfig`;
 
   const [
     filters,
@@ -47,17 +49,18 @@ const BrowseInventory = () => {
     resetFilters,
     changeSearchIndex,
     searchIndex,
-  ] = useLocationFilters(location, history, () => {
+  ] = useLocalStorageFilters(`${namespace}/browse.params`, location, history, () => {
+    removeItem(pageConfigKey);
     setPageConfig(INIT_PAGE_CONFIG);
   });
 
   const {
     data,
     isFetching,
-    isLoading,
     pagination,
     totalRecords,
   } = useInventoryBrowse({
+    pageConfigKey,
     filters,
     pageParams: { pageConfig, setPageConfig },
     options: { onSettled: deleteItemToView },
@@ -94,7 +97,9 @@ const BrowseInventory = () => {
           id="browse-inventory-filters-pane"
           toggleFilters={toggleFilters}
         >
-          <SearchModeNavigation />
+          <SearchModeNavigation
+            search="?selectedSearchMode=true"
+          />
 
           <SingleSearchForm
             applySearch={onApplySearch}
@@ -127,7 +132,6 @@ const BrowseInventory = () => {
         filters={filters}
         isFetching={isFetching}
         isFiltersOpened={isFiltersOpened}
-        isLoading={isLoading}
         pagination={pagination}
         toggleFiltersPane={toggleFilters}
         totalRecords={totalRecords}

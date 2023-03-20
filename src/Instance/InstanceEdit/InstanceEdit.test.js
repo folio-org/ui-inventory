@@ -76,7 +76,7 @@ describe('InstanceEdit', () => {
     beforeEach(async () => {
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /resource title/i }), 'new title');
-        userEvent.click(screen.getByText(/save and close/i));
+        userEvent.click(screen.getByText(/Save & close/i));
       });
     });
 
