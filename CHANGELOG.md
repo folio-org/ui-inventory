@@ -2,10 +2,19 @@
 
 ## 9.5.0 IN PROGRESS
 
+* To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
+* Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
+* Use correct reference to item resource. Fixes UIIN-2355.
+
+## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
+
 * Do not allow for item removal when an item has a loan with a status set to `Declared lost`. Fixes UIIN-2138.
 * Do not allow for item removal when an item has a loan with a status set to `Awaiting delivery`. Fixes UIIN-2187.
 * Fix max width for contributors column in Instances search. Fixes UIIN-2345.
 * Retain search query, result list and page number after switching between Search and Browse searches. Refs UIIN-2337.
+* Browse results are not updated when field with Subject/Contributor value is linked/unlinked. Fixes UIIN-2342.
+* Browse results in Inventory are not cleared when browse input field is cleared. Fixes UIIN-2299.
 
 ## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)
