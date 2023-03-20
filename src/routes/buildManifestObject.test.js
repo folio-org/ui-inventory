@@ -84,7 +84,7 @@ describe('buildQuery', () => {
       };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      expect(cql).toEqual(expect.stringContaining(`subjects==/string "${defaultQueryParamsMap[qindex].query}"`));
+      expect(cql).toEqual(expect.stringContaining(`subjects.value==/string "${defaultQueryParamsMap[qindex].query}"`));
     });
   });
 });
