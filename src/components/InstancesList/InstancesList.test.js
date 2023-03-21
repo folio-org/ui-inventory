@@ -276,7 +276,7 @@ describe('InstancesList', () => {
 
           const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
 
-          await waitFor(() => {
+          waitFor(() => {
             fireEvent.click(button);
             expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
           });
