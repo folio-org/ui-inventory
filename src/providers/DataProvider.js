@@ -234,6 +234,12 @@ DataProvider.manifest = {
     },
     records: 'mtypes',
     resourceShouldRefresh: true,
+    GET: {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    }
   },
   loanTypes: {
     type: 'okapi',
