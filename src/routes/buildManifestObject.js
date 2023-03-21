@@ -19,7 +19,7 @@ const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
-const getQueryTemplateSubjects = (queryValue, andAuthorityId) => `subjects==/string "${queryValue}"${andAuthorityId}`;
+const getQueryTemplateSubjects = (queryValue, andAuthorityId) => `subjects.value==/string "${queryValue}"${andAuthorityId}`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
