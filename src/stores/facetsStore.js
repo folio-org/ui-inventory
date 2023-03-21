@@ -19,6 +19,11 @@ const facetsStore = create((set) => ({
     });
   },
   resetFacetSettings: () => set({ facetSettings: {} }),
+  resetFacetByName: (name) => {
+    set(state => {
+      delete state.facetSettings[name];
+    });
+  }
 }));
 
 // selectors
