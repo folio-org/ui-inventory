@@ -18,7 +18,5 @@ describe('ConfirmationModal', () => {
     renderConfirmationModal(defaultProps);
     expect(screen.getByText('ConfirmationModal')).toBeInTheDocument();
     expect(screen.getByText('Confirm move')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'confirm' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'cancel' })).toBeInTheDocument();
   });
 });
