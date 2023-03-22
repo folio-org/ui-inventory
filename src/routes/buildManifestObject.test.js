@@ -43,13 +43,28 @@ describe('buildQuery', () => {
       expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
     });
 
-    it('should build query for \'Subject\' search option', () => {
-      const qindex = queryIndexes.SUBJECT;
-      const queryParams = { ...defaultQueryParamsMap[qindex] };
-      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+    describe('\'Subject\' search option', () => {
+      describe('when there in no an authorityId in query params', () => {
+        it('should build query', () => {
+          const qindex = queryIndexes.SUBJECT;
+          const queryParams = { ...defaultQueryParamsMap[qindex] };
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+          const queryTemplate = getQueryTemplate(qindex);
+          expect(cql).toEqual(expect.stringContaining(queryTemplate(queryParams)));
+        });
+      });
+
+      describe('when there in an authorityId in query params', () => {
+        it('should build query with the authorityId', () => {
+          const qindex = queryIndexes.SUBJECT;
+          const queryParams = { ...defaultQueryParamsMap[qindex], authorityId: 'UUID' };
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+          const queryTemplate = getQueryTemplate(qindex);
+          expect(cql).toEqual(expect.stringContaining(queryTemplate(queryParams)));
+        });
+      });
     });
   });
 
