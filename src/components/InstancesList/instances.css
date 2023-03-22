@@ -23,8 +23,3 @@
   color: var(--error);
 }
 
-/* A version of these rules are present in TextLink.css, but overridden by MCL.css */
-.inventoryInstances div[class*="Selected"] a:visited {
-  color: var(--link-color-visited-current);
-  text-decoration-color: var(--link-color-visited-current);
-}
