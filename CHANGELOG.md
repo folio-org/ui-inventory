@@ -6,6 +6,7 @@
 * Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
 * Use correct reference to item resource. Fixes UIIN-2355.
 * Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
+* Correctly reset facet state when `X` icon next to the facet label is clicked. Fixes UIIN-2351.
 
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
