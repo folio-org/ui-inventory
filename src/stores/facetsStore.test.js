@@ -34,6 +34,16 @@ describe('facetsStore', () => {
     });
   });
 
+  describe('resetFacetByName', () => {
+    test('resetting values', () => {
+      const { setFacetSettings, resetFacetByName } = facetsStore.getState();
+      setFacetSettings('test1', { value: 1 });
+      resetFacetByName('test1');
+
+      expect(getFacetSettings()).toEqual({});
+    });
+  });
+
   describe('getSearchTerm', () => {
     test('getting search term value', () => {
       const { setFacetSettings } = facetsStore.getState();
