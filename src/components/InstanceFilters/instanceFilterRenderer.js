@@ -3,6 +3,7 @@ import { get } from 'lodash';
 
 import InstanceFilters from './InstanceFilters';
 import { getCurrentFilters } from '../../utils';
+import facetsStore from '../../stores/facetsStore';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -42,7 +43,10 @@ const instanceFilterRenderer = data => onChange => {
       activeFilters={activeFilters}
       data={dataProp}
       onChange={onChange}
-      onClear={(name) => onChange({ name, values: [] })}
+      onClear={(name) => {
+        facetsStore.getState().resetFacetByName(name);
+        onChange({ name, values: [] });
+      }}
     />
   );
 };

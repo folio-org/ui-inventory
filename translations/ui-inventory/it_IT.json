@@ -598,7 +598,6 @@
     "item.status.unknown": "Sconosciuto",
     "instances.showSelectedRecords": "Show selected records",
     "instances.selectedRecords": "Selected records",
-    "saveAndClose": "Save & close",
     "communicationProblem": "Server communication problem. Please try again",
     "itemStatusModal.heading": "Confirm item status: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",

@@ -237,6 +237,7 @@ class InstancesList extends React.Component {
   extraParamsToReset = {
     selectedBrowseResult: false,
     selectedSearchMode: false,
+    authorityId: '',
   };
 
   getQIndexFromParams = () => {
