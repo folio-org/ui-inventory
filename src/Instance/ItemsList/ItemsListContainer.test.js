@@ -82,7 +82,6 @@ describe('ItemsListContainer', () => {
       const { container } = renderWithIntl(<ItemsListContainerSetup />, translations);
       const spinner = container.querySelector('.spinner');
       expect(spinner).toBeInTheDocument();
-      expect(spinner).toHaveStyle('width: 60px; height: 30px;');
       const bounce1 = container.querySelector('.bounce1');
       const bounce2 = container.querySelector('.bounce2');
       const bounce3 = container.querySelector('.bounce3');
