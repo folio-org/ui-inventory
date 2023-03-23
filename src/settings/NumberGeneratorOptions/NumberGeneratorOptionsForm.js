@@ -66,7 +66,11 @@ const NumberGeneratorOptionsForm = () => {
               component={RadioButton}
               disabled={disableAccessionNumberAndCallNumberOffOptions}
               id="useTextFieldAccessionNumber"
-              label={<FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useTextFieldForAccessionNumber" />}
+              label={
+                <div className={disableAccessionNumberAndCallNumberOffOptions ? css.greyLabel : null}>
+                  <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useTextFieldForAccessionNumber" />
+                </div>
+              }
               name="accessionNumberGeneratorSetting"
               type="radio"
               value="useTextField"
@@ -97,10 +101,15 @@ const NumberGeneratorOptionsForm = () => {
               <FormattedMessage id="ui-inventory.callNumber" />
             </Label>
             <Field
+              className={disableAccessionNumberAndCallNumberOffOptions ? css.greyLabel : null}
               component={RadioButton}
               disabled={disableAccessionNumberAndCallNumberOffOptions}
               id="useTextFieldCallNumber"
-              label={<FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useTextFieldForCallNumber" />}
+              label={
+                <div className={disableAccessionNumberAndCallNumberOffOptions ? css.greyLabel : null}>
+                  <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useTextFieldForCallNumber" />
+                </div>
+              }
               name="callNumberGeneratorSetting"
               type="radio"
               value="useTextField"
