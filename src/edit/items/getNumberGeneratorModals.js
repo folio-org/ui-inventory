@@ -27,6 +27,9 @@ const getNumberGeneratorModals = (configs, change) => {
   const disableBarcodeField = barcodeGeneratorSetting === 'useGenerator';
   const disableCallNumberField = callNumberGeneratorSetting === 'useGenerator';
 
+  // This is to ensure that if the field somehow _did_ get set when it's not supposed to, we ignore it
+  const useJointModal = useAccessionNumberForCallNumber && accessionNumberGeneratorActive && callNumberGeneratorActive;
+
   // Don't worry about calling logic in here, do that in renderAccession... and renderCall...
   const renderJointNumberGenerator = () => (
     <NumberGeneratorModalButton
@@ -51,7 +54,7 @@ const getNumberGeneratorModals = (configs, change) => {
   );
 
   const renderAccessionNumberGenerator = () => {
-    if (useAccessionNumberForCallNumber) {
+    if (useJointModal) {
       return renderJointNumberGenerator();
     } else if (accessionNumberGeneratorActive) {
       return (
@@ -69,7 +72,7 @@ const getNumberGeneratorModals = (configs, change) => {
   };
 
   const renderCallNumberGenerator = () => {
-    if (useAccessionNumberForCallNumber) {
+    if (useJointModal) {
       return renderJointNumberGenerator();
     } else if (callNumberGeneratorActive) {
       return (
