@@ -51,6 +51,7 @@ import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
+import getNumberGeneratorModals from './getNumberGeneratorModals';
 
 
 function validate(values) {
@@ -299,92 +300,13 @@ class ItemForm extends React.Component {
     ];
 
     const {
-      accessionNumberGeneratorSetting,
-      callNumberGeneratorSetting,
-      barcodeGeneratorSetting,
-      useAccessionNumberForCallNumber
-    } = configs;
-
-    // TODO might need to neaten this code up significantly
-    const disableAccessionNumberField = accessionNumberGeneratorSetting === 'useGenerator';
-
-    // Call number field is disabled if Accession number generator is ON, used for call number and set to non-editable
-    // OR if that ISN'T true and call number is set to only use generator
-    const disableCallNumberField = (accessionNumberGeneratorSetting !== 'useTextField' &&
-                                    useAccessionNumberForCallNumber === 'yes' &&
-                                    accessionNumberGeneratorSetting === 'useGenerator') ||
-                                    ((useAccessionNumberForCallNumber !== 'yes') &&
-                                      callNumberGeneratorSetting === 'useGenerator');
-
-    const jointNumberGeneratorActive = (accessionNumberGeneratorSetting !== 'useTextField' &&
-                                        useAccessionNumberForCallNumber === 'yes');
-
-    const accessionNumberGeneratorActive = !jointNumberGeneratorActive &&
-                                            (accessionNumberGeneratorSetting === 'useGenerator' ||
-                                             accessionNumberGeneratorSetting === 'useBoth');
-
-    const callNumberGeneratorActive = !jointNumberGeneratorActive &&
-                                      (callNumberGeneratorSetting === 'useGenerator' ||
-                                       callNumberGeneratorSetting === 'useBoth');
-
-    // Don't worry about calling logic in here, do that in renderAccession... and renderCall...
-    const renderJointNumberGenerator = () => (
-      <NumberGeneratorModalButton
-        buttonLabel={
-          <span style={{ whiteSpace: 'normal' }}>
-            <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />
-          </span>
-        }
-        callback={(generated) => {
-          change('accessionNumber', generated);
-          change('itemLevelCallNumber', generated);
-        }}
-        fullWidth
-        id="inventoryAccessionNumberAndCallNumber"
-        generator="inventory_accessionNumber"
-        renderTop={() => (
-          <MessageBanner type="warning">
-            <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" />
-          </MessageBanner>
-        )}
-      />
-    );
-
-    const renderAccessionNumberGenerator = () => {
-      if (jointNumberGeneratorActive) {
-        return renderJointNumberGenerator();
-      } else if (accessionNumberGeneratorActive) {
-        return (
-          <NumberGeneratorModalButton
-            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
-            callback={(generated) => change('accessionNumber', generated)}
-            fullWidth
-            id="inventoryAccessionNumber"
-            generator="inventory_accessionNumber"
-          />
-        );
-      }
-
-      return null;
-    };
-
-    const renderCallNumberGenerator = () => {
-      if (jointNumberGeneratorActive) {
-        return renderJointNumberGenerator();
-      } else if (callNumberGeneratorActive) {
-        return (
-          <NumberGeneratorModalButton
-            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
-            callback={(generated) => change('itemLevelCallNumber', generated)}
-            fullWidth
-            id="inventoryCallNumber"
-            generator="inventory_callNumber"
-          />
-        );
-      }
-
-      return null;
-    };
+      disableAccessionNumberField,
+      disableBarcodeField,
+      disableCallNumberField,
+      renderAccessionNumberGenerator,
+      renderBarcodeGenerator,
+      renderCallNumberGenerator
+    } = getNumberGeneratorModals(configs, change);
 
     return (
       <form
@@ -511,7 +433,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={barcodeGeneratorSetting === 'useGenerator'}
+                          disabled={disableBarcodeField}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -519,18 +441,7 @@ class ItemForm extends React.Component {
                           component={TextField}
                           fullWidth
                         />
-                        {
-                          (barcodeGeneratorSetting === 'useGenerator' || barcodeGeneratorSetting === 'useBoth') &&
-                            <NumberGeneratorModalButton
-                              buttonLabel={
-                                <FormattedMessage id="ui-inventory.numberGenerator.generateItemBarcode" />
-                              }
-                              callback={(generated) => change('barcode', generated)}
-                              fullWidth
-                              id="inventorybarcode"
-                              generator="inventory_itemBarcode"
-                            />
-                        }
+                        {renderBarcodeGenerator()}
                       </Col>
                       <Col sm={2}>
                         <Field

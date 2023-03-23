@@ -3,3 +3,7 @@
 .marginBottomGutter {
   margin-bottom: var(--gutter);
 }
+
+.greyLabel {
+  color: var(--checkable-disabled-fill);
+}

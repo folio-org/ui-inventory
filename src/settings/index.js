@@ -150,13 +150,6 @@ class InventorySettings extends React.Component {
             component: MaterialTypesSettings,
             perm: this.addPerm('ui-inventory.settings.materialtypes'),
           },
-          {
-            route: 'numbergeneratoroptions',
-            label: <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions" />,
-            component: NumberGeneratorOptions,
-            interface: 'servint',
-            perm: 'ui-inventory.settings.numberGenerator.manage'
-          },
         ]
       },
       {
@@ -191,6 +184,13 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.URLrelationship" />,
             component: URLRelationshipSettings,
             perm: this.addPerm('ui-inventory.settings.electronic-access-relationships'),
+          },
+          {
+            route: 'numbergeneratoroptions',
+            label: <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions" />,
+            component: NumberGeneratorOptions,
+            interface: 'servint',
+            perm: 'ui-inventory.settings.numberGenerator.manage'
           },
         ]
       },
