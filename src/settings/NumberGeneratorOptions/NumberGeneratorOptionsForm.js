@@ -10,7 +10,7 @@ const NumberGeneratorOptionsForm = () => {
     (values?.accessionNumberGeneratorSetting ?? 'useTextField') === 'useTextField' ||
     (values?.callNumberGeneratorSetting ?? 'useTextField') === 'useTextField';
 
-  const disableAccessionNumberAndCallNumberOffOptions = !!values?.useAccessionNumberForCallNumber
+  const disableAccessionNumberAndCallNumberOffOptions = !!values?.useAccessionNumberForCallNumber;
 
   return (
     <>
@@ -133,12 +133,17 @@ const NumberGeneratorOptionsForm = () => {
               label={
                 <>
                   <div className={disableUseForBothFields ? css.greyLabel : null}>
-                    <FormattedMessage
-                      id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumber"
-                    />
+                    <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumber" />
                   </div>
                   <InfoPopover
-                    content={"TEST CONTENT"}
+                    content={
+                      <FormattedMessage
+                        id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumberInfo"
+                        values={{
+                          linebreak: <br />
+                        }}
+                      />
+                    }
                     iconSize="medium"
                   />
                 </>

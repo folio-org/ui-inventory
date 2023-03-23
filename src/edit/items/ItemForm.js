@@ -29,7 +29,6 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
-  MessageBanner,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -39,8 +38,6 @@ import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
 import { effectiveCallNumber } from '@folio/stripes/util';
-
-import { NumberGeneratorModalButton } from '@folio/service-interaction';
 
 import RepeatableField from '../../components/RepeatableField';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';

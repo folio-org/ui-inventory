@@ -172,6 +172,7 @@
   "settings.numberGeneratorOptions.useBothForAccessionNumber": "Number generator on, editable: the accession number can be filled using the generator and be edited, or filled manually.",
   "settings.numberGeneratorOptions.useAccessionNumberForCallNumber": "Use the same generated number for Accession number and Call number",
   "settings.numberGeneratorOptions.useAccessionNumberForCallNumberWarning": "<strong>Warning</strong>: The checkbox has been disabled because the Accession number and/or Call number have been set to manual completion",
+  "settings.numberGeneratorOptions.useAccessionNumberForCallNumberInfo": "When this option is selected, the user will be able to use the same generated number in the Accession number and Call number fields on inventory Item records.{linebreak}{linebreak}This option is only available when the number generator is switched on in the above Accession number and Call number settings.",
   "settings.numberGeneratorOptions.useGeneratorForCallNumber": "Number generator on, fixed: the call number can be filled using the generator only.",
   "settings.numberGeneratorOptions.useTextFieldForCallNumber": "Number generator off: the call number can be filled manually only.",
   "settings.numberGeneratorOptions.useBothForCallNumber": "Number generator on, editable: the call number can be filled using the generator and be edited, or filled manually.",

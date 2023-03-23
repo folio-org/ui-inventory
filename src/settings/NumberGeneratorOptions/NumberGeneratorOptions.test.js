@@ -2,12 +2,12 @@ import React from 'react';
 
 import { screen } from '@testing-library/react';
 
-import '../../test/jest/__mock__';
+import '../../../test/jest/__mock__';
 
 import {
   renderWithIntl,
   translationsProperties
-} from '../../test/jest/helpers';
+} from '../../../test/jest/helpers';
 
 import NumberGeneratorOptions from './NumberGeneratorOptions';
 
