@@ -49,7 +49,7 @@ describe('FastAddForm', () => {
     expect(screen.getByText('ui-inventory')).toBeInTheDocument();
     expect(screen.getByText('children')).toBeInTheDocument();
   });
-  test('Cancel button shoul be truthy', async () => {
+  test('Cancel button should be truthy', async () => {
     renderFastAddForm();
     userEvent.click(screen.getByText('Cancel'));
     expect(screen.getByRole('button', { name: /Cancel/i })).toBeTruthy();
