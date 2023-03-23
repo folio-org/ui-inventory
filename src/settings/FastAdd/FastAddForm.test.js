@@ -54,7 +54,7 @@ describe('FastAddForm', () => {
     userEvent.click(screen.getByText('Cancel'));
     expect(screen.getByRole('button', { name: /Cancel/i })).toBeTruthy();
   });
-  test('Save button shoul be truthy', async () => {
+  test('Save button should be truthy', async () => {
     renderFastAddForm();
     const submitButton = screen.getByText(/Save/i);
     userEvent.click(submitButton);
