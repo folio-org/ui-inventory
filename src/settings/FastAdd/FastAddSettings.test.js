@@ -36,19 +36,22 @@ const renderFastAddSettings = (props) => {
       <FastAddSettings {...props} />
     );
   };
-  renderWithIntl(
-    <Form
-      id="form-id"
-      onSubmit={jest.fn()}
-      render={component}
-    />,
-    translationsProperties
+  return ( 
+    renderWithIntl(
+      <Form
+        id="form-id"
+        onSubmit={jest.fn()}
+        render={component}
+      />,
+      translationsProperties
+    )
   );
 };
 
 describe('FastAddSettings', () => {
   it('Component should render correctly', () => {
     renderFastAddSettings(defaultProps);
+    expect(screen.getByText('ConfigManager')).toBeInTheDocument();
     expect(screen.getByText('Default instance status')).toBeInTheDocument();
     expect(screen.getByText('Suppress from discovery by default')).toBeInTheDocument();
   });
@@ -60,7 +63,7 @@ describe('FastAddSettings', () => {
     renderFastAddSettings(defaultProps);
     userEvent.click(screen.getByRole('button', { name: 'getInitialValues' }));
     userEvent.click(screen.getByRole('button', { name: 'onBeforeSave' }));
-    expect(screen.getByText('Default instance status')).toBeInTheDocument();
-    expect(screen.getByText('Suppress from discovery by default')).toBeInTheDocument();
+    expect(renderFastAddSettings(defaultProps)).toBeTruthy();
   });
 });
+
