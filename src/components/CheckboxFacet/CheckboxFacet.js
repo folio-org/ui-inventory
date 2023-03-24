@@ -5,6 +5,7 @@ import CheckboxFacetList from './CheckboxFacetList';
 
 import { accentFold } from '../../utils';
 import { DEFAULT_FILTERS_NUMBER } from '../../constants';
+import { getSearchTerm } from '../../stores/facetsStore';
 
 const SHOW_OPTIONS_COUNT = 5;
 const SHOW_OPTIONS_INCREMENT = 5;
@@ -34,7 +35,6 @@ export default class CheckboxFacet extends React.Component {
 
   state = {
     more: SHOW_OPTIONS_COUNT,
-    searchTerm: '',
     isMoreClicked: false,
   };
 
@@ -72,7 +72,6 @@ export default class CheckboxFacet extends React.Component {
       name,
     } = this.props;
 
-    this.setState({ searchTerm });
     onSearch({ name, value: searchTerm });
   };
 
@@ -109,9 +108,10 @@ export default class CheckboxFacet extends React.Component {
       onFetch,
     } = this.props;
 
+    const searchTerm = getSearchTerm(name);
+
     const {
       more,
-      searchTerm,
     } = this.state;
 
     let filteredOptions = dataOptions;

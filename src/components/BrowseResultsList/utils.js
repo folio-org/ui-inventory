@@ -28,6 +28,7 @@ export const getSearchParams = (row, qindex) => {
     [browseModeOptions.SUBJECTS]: {
       qindex: queryIndexes.SUBJECT,
       query: row.value,
+      authorityId: row.authorityId,
     },
   };
 
