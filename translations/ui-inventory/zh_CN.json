@@ -598,7 +598,6 @@
     "item.status.unknown": "未知",
     "instances.showSelectedRecords": "显示已选记录",
     "instances.selectedRecords": "已选记录",
-    "saveAndClose": "保存并关闭",
     "communicationProblem": "服务器通信问题。请再试",
     "itemStatusModal.heading": "确认单件状态： {itemStatus}",
     "permission.items.mark-intellectual-item": "典藏：标记单件为虚拟单件",

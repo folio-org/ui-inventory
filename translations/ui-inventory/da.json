@@ -598,7 +598,6 @@
     "item.status.unknown": "Ukendt",
     "instances.showSelectedRecords": "Vis markerede poster",
     "instances.selectedRecords": "Markerede poster",
-    "saveAndClose": "Gem & luk",
     "communicationProblem": "Problem med serverkommunikation. Prøv igen",
     "itemStatusModal.heading": "Bekræft eksemplarstatus: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
