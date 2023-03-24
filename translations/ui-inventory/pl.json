@@ -598,7 +598,6 @@
     "item.status.unknown": "Nieznany",
     "instances.showSelectedRecords": "Pokaż wybrane rekordy",
     "instances.selectedRecords": "Wybrane rekordy",
-    "saveAndClose": "Zapisz i zamknij",
     "communicationProblem": "Problem z komunikacją z serwerem. Proszę spróbuj ponownie",
     "itemStatusModal.heading": "Potwierdź status egzemplarza: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inwentarz: Oznacz egzemplarze jako przedmiot intelektualny",
