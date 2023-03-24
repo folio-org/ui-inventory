@@ -51,6 +51,9 @@ const locations = {
   },
 };
 
+const draggable = true;
+const droppable = true;
+
 const ItemsListContainerSetup = () => (
   <QueryClientProvider client={queryClient}>
     <Router>
@@ -58,8 +61,8 @@ const ItemsListContainerSetup = () => (
         <DnDContext.Provider value={referenceData}>
           <ItemsListContainer
             holding={holdingsRecordsFixture[0]}
-            draggable="true"
-            droppable="true"
+            draggable={draggable}
+            droppable={droppable}
           />
         </DnDContext.Provider>
       </DataContext.Provider>
@@ -79,15 +82,8 @@ describe('ItemsListContainer', () => {
   });
   it('isFetching should be true', async () => {
     await act(async () => {
-      const { container } = renderWithIntl(<ItemsListContainerSetup />, translations);
-      const spinner = container.querySelector('.spinner');
-      expect(spinner).toBeInTheDocument();
-      const bounce1 = container.querySelector('.bounce1');
-      const bounce2 = container.querySelector('.bounce2');
-      const bounce3 = container.querySelector('.bounce3');
-      expect(bounce1).toBeInTheDocument();
-      expect(bounce2).toBeInTheDocument();
-      expect(bounce3).toBeInTheDocument();
+      const { getByText } = renderWithIntl(<ItemsListContainerSetup />, translations);
+      expect(getByText('Loading')).toBeInTheDocument();
     });
   });
 });
