@@ -57,7 +57,6 @@ const BrowseInventory = () => {
   const {
     data,
     isFetching,
-    isLoading,
     pagination,
     totalRecords,
   } = useInventoryBrowse({
@@ -133,7 +132,6 @@ const BrowseInventory = () => {
         filters={filters}
         isFetching={isFetching}
         isFiltersOpened={isFiltersOpened}
-        isLoading={isLoading}
         pagination={pagination}
         toggleFiltersPane={toggleFilters}
         totalRecords={totalRecords}
