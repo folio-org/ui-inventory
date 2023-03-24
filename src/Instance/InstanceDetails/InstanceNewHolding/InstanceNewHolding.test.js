@@ -9,7 +9,7 @@ import InstanceNewHolding from './InstanceNewHolding';
 const props = {
   location: {},
   instance: {},
-}
+};
 
 const renderInstanceNewHolding = () => (
   renderWithIntl(
