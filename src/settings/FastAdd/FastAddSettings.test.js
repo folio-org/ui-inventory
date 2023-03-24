@@ -36,7 +36,7 @@ const renderFastAddSettings = (props) => {
       <FastAddSettings {...props} />
     );
   };
-  return ( 
+  return (
     renderWithIntl(
       <Form
         id="form-id"
