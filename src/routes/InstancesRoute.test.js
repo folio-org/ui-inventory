@@ -13,7 +13,7 @@ import { noop } from 'lodash';
 
 import '../../test/jest/__mock__';
 
-import { CalloutContext, ModuleHierarchyProvider } from '@folio/stripes/core';
+import { CalloutContext, StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import {
   Layer,

@@ -5,9 +5,11 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { fireEvent } from '@testing-library/react';
-import { StripesContext } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
+
+import { StripesContext } from '@folio/stripes/core';
+
 import {
   renderWithIntl,
   translationsProperties,

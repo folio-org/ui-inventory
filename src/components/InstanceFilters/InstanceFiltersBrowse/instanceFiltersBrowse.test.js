@@ -6,9 +6,10 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
+import '../../../../test/jest/__mock__';
+
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
-import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 
