@@ -5,9 +5,12 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { waitFor } from '@testing-library/react';
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
 
 import '../../../test/jest/__mock__';
+
+import { StripesContext } from '@folio/stripes/core';
+
+
 import {
   renderWithIntl,
   translationsProperties,

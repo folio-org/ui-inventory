@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
 ## 9.5.0 IN PROGRESS
+* Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 
 * To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
 * Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
@@ -8,6 +9,7 @@
 * Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
 * Correctly reset facet state when `X` icon next to the facet label is clicked. Fixes UIIN-2351.
 * Fix the query templates for searching by `subject`. Fixes UIIN-2364.
+* Avoid private paths in stripes-core imports. Refs UIIN-2367.
 * Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
 
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)

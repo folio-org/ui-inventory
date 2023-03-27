@@ -775,5 +775,6 @@
     "effectiveLocationHoldings": "Effektiver Standort des Bestands",
     "info.effectiveCallNumber": "Dieses Feld enthält die Signatur des Exemplars, die entweder aus dem Bestandsdatensatz geerbt wird oder die aktualisierte Signatur des Exempardatensatzes ist. Beim browsen nach Signaturen wird dieses Feld durchsucht.",
     "info.shelvingOrder": "Dieses Feld ist die normalisierte Form der Signatur, die bestimmt, wie die Signatur beim browsen sortiert wird.",
-    "markAsHeader": "Markieren als"
+    "markAsHeader": "Markieren als",
+    "newMARCRecord": "New MARC Bib Record"
 }
