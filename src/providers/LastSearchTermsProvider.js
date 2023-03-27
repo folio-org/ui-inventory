@@ -23,20 +23,18 @@ const LastSearchTermsProvider = ({ children }) => {
 
   // In this useEffect we wait for the user's logout to reset the last search terms in the session storage.
   useEffect(() => {
-    const listenerRegisteredKey = `${namespace}.logout-listener-registered`;
-    const isListenerRegistered = getItem(listenerRegisteredKey);
+    const logoutListenerKey = `${namespace}.logout-listener-registered`;
+    const isListenerListening = getItem(logoutListenerKey);
 
     const resetListenerRegister = () => {
-      setItem(listenerRegisteredKey, null);
+      setItem(logoutListenerKey, null);
     };
 
-    window.addEventListener('beforeunload', () => {
-      // The listener resets itself after a page refresh, so we need to fire it again.
-      resetListenerRegister();
-    });
+    if (!isListenerListening) {
+      // The history.listen resets itself after a page refresh, so we need to fire it again by resetting the flag.
+      window.addEventListener('beforeunload', resetListenerRegister);
 
-    if (!isListenerRegistered) {
-      const resetListener = history.listen(location => {
+      const unlisten = history.listen(location => {
         const isLogout = location.pathname === '/';
 
         if (isLogout) {
@@ -45,11 +43,12 @@ const LastSearchTermsProvider = ({ children }) => {
           setItem(`${namespace}/search.lastOffset`, null);
           setItem(`${namespace}/browse.lastOffset`, null);
           resetListenerRegister();
-          resetListener();
+          window.removeEventListener('beforeunload', resetListenerRegister);
+          unlisten();
         }
       });
 
-      setItem(listenerRegisteredKey, true);
+      setItem(logoutListenerKey, true);
     }
   }, []);
 
@@ -76,5 +75,3 @@ LastSearchTermsProvider.propTypes = {
 };
 
 export default LastSearchTermsProvider;
-
-
