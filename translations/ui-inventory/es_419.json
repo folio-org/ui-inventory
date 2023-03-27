@@ -775,5 +775,6 @@
     "effectiveLocationHoldings": "Localización efectiva de las existéncias",
     "info.effectiveCallNumber": "Este campo contiene la signatura del artículo, que se hereda del registro de existencias o es la signatura actualizada en el registro del artículo. Al consultar las signaturas, se buscará en este campo.",
     "info.shelvingOrder": "Este campo es la forma normalizada del número de llamada que determina cómo se ordena el número de llamada durante la navegación.",
-    "markAsHeader": "Marcar como"
+    "markAsHeader": "Marcar como",
+    "newMARCRecord": "Nuevo MARC Bib Record"
 }
