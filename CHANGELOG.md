@@ -8,6 +8,7 @@
 * Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
 * Correctly reset facet state when `X` icon next to the facet label is clicked. Fixes UIIN-2351.
 * Fix the query templates for searching by `subject`. Fixes UIIN-2364.
+* Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
 
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
