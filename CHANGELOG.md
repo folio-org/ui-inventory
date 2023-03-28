@@ -1,5 +1,12 @@
 # Change history for ui-inventory
 
+## [9.4.3](https://github.com/folio-org/ui-inventory/tree/v9.4.3) (2023-03-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.2...v9.4.3)
+
+* Correctly reset facet state when X icon next to the facet label is clicked. Fixes UIIN-2351.
+* Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
+* Fix the query templates for searching by subject. Fixes UIIN-2364.
+
 ## [9.4.2](https://github.com/folio-org/ui-inventory/tree/v9.4.2) (2023-03-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.1...v9.4.2)
 
