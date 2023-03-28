@@ -10,6 +10,7 @@
 * Correctly reset facet state when `X` icon next to the facet label is clicked. Fixes UIIN-2351.
 * Fix the query templates for searching by `subject`. Fixes UIIN-2364.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
+* Update success messages for ISRI. Refs UIIN-2343.
 
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
