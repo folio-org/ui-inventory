@@ -10,6 +10,7 @@
 * Correctly reset facet state when `X` icon next to the facet label is clicked. Fixes UIIN-2351.
 * Fix the query templates for searching by `subject`. Fixes UIIN-2364.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
+* Fixing tests due to changes in `react-virtualized-auto-sizer`. Fixes UIIN-2371.
 * Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
 
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
