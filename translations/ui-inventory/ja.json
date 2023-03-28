@@ -595,7 +595,7 @@
     "item.status.longMissing": "Long missing",
     "item.status.restricted": "Restricted",
     "item.status.unavailable": "利用不可",
-    "item.status.unknown": "Unknown",
+    "item.status.unknown": "不明",
     "instances.showSelectedRecords": "Show selected records",
     "instances.selectedRecords": "Selected records",
     "communicationProblem": "Server communication problem. Please try again",
