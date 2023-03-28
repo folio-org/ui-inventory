@@ -10,3 +10,4 @@ import './InstancePlugin.mock';
 import './quickMarc.mock';
 import './stripesComponents.mock';
 import './reactBeautifulDnd.mock';
+import './react-virtualized-auto-sizer';
