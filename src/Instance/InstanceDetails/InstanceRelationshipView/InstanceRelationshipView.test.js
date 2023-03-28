@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import '../../../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
+import { StripesContext } from '@folio/stripes/core';
 
 import { DataContext } from '../../../contexts';
 import {
