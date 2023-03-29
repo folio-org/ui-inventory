@@ -1,8 +1,8 @@
-import '../test/jest/__mock__';
-
 import { screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
+
+import '../test/jest/__mock__';
 
 import { instances } from '../test/fixtures/instances';
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
@@ -10,10 +10,6 @@ import { DataContext } from './contexts';
 import StripesConnectedInstance from './ConnectedInstance/StripesConnectedInstance';
 import ViewInstance from './ViewInstance';
 
-jest.mock('@folio/stripes-core', () => ({
-  ...jest.requireActual('@folio/stripes-core'),
-  TitleManager: ({ children }) => <>{children}</>
-}));
 jest.mock('./RemoteStorageService/Check', () => ({
   ...jest.requireActual('./RemoteStorageService/Check'),
   useByLocation: jest.fn(() => false),
