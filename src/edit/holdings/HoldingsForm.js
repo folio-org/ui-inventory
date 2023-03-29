@@ -153,7 +153,7 @@ class HoldingsForm extends React.Component {
         onClick={handleSubmit}
         marginBottom0
       >
-        <FormattedMessage id="stripes-core.button.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
     );
 

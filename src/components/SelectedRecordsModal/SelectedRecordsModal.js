@@ -59,7 +59,7 @@ const SelectedRecordsModal = ({
         buttonStyle="primary"
         onClick={() => onSave(selectedRecords)}
       >
-        <FormattedMessage id="ui-inventory.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
       <Button onClick={onCancel}>
         <FormattedMessage id="ui-inventory.cancel" />

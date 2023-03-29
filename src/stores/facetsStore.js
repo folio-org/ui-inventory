@@ -19,7 +19,17 @@ const facetsStore = create((set) => ({
     });
   },
   resetFacetSettings: () => set({ facetSettings: {} }),
+  resetFacetByName: (name) => {
+    set(state => {
+      delete state.facetSettings[name];
+    });
+  }
 }));
+
+// selectors
+export const getSearchTerm = (name) => {
+  return facetsStore.getState().facetSettings?.[name]?.value ?? '';
+};
 
 // hooks
 export const useFacetSettings = () => facetsStore(store => [
