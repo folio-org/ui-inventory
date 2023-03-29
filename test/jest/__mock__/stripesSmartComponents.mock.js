@@ -31,3 +31,4 @@ jest.mock('@folio/stripes/smart-components', () => ({
     });
   }
 }), { virtual: true });
+
