@@ -775,5 +775,6 @@
     "effectiveLocationHoldings": "Effective location for holdings",
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
-    "markAsHeader": "Mark as"
+    "markAsHeader": "Mark as",
+    "newMARCRecord": "New MARC Bib Record"
 }
