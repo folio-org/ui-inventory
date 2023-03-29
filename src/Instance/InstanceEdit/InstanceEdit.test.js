@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
+import { StripesContext } from '@folio/stripes/core';
 import DataContext from '../../contexts/DataContext';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
@@ -76,7 +76,7 @@ describe('InstanceEdit', () => {
     beforeEach(async () => {
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /resource title/i }), 'new title');
-        userEvent.click(screen.getByText(/save and close/i));
+        userEvent.click(screen.getByText(/Save & close/i));
       });
     });
 

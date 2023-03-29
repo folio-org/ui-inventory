@@ -16,4 +16,19 @@ jest.mock('@folio/stripes/smart-components', () => ({
       </div>;
     return component;
   },
+  useRemoteStorageMappings: () => {
+    return ({
+      'holdings-id-1': {
+        'id': 'holdings-id-1',
+        'name': 'Storage A',
+        'description': 'Storage A description'
+      },
+      'holdings-id-2': {
+        'id': 'holdings-id-2',
+        'name': 'Storage B',
+        'description': 'Storage B description'
+      }
+    });
+  }
 }), { virtual: true });
+
