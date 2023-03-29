@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
+import { StripesContext } from '@folio/stripes/core';
 import DataContext from '../../contexts/DataContext';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
