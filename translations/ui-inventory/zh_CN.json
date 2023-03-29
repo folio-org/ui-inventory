@@ -598,7 +598,6 @@
     "item.status.unknown": "未知",
     "instances.showSelectedRecords": "显示已选记录",
     "instances.selectedRecords": "已选记录",
-    "saveAndClose": "保存并关闭",
     "communicationProblem": "服务器通信问题。请再试",
     "itemStatusModal.heading": "确认单件状态： {itemStatus}",
     "permission.items.mark-intellectual-item": "典藏：标记单件为虚拟单件",
@@ -774,7 +773,8 @@
     "copycat.overlaySourceBib": "覆盖源书目记录",
     "copycat.overlayJobProfileToBeUsed": "选择要用于覆盖当前数据的配置文件",
     "effectiveLocationHoldings": "有效馆藏位置",
-    "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
-    "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
-    "markAsHeader": "Mark as"
+    "info.effectiveCallNumber": "本字段包含单件索书号，它是从馆藏记录继承的，或者是单件记录上已更新的索书号。浏览索书号时，将搜索此字段。",
+    "info.shelvingOrder": "本字段是索书号的规范化形式，它决定浏览时索书号的排序方式。",
+    "markAsHeader": "标记为",
+    "newMARCRecord": "New MARC Bib Record"
 }

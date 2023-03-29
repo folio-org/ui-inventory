@@ -1,7 +1,9 @@
 
-export const getItem = (name) => {
+export const getItem = (name, { fromLocalStorage } = {}) => {
   try {
-    return JSON.parse(sessionStorage.getItem(name));
+    const storage = fromLocalStorage ? localStorage : sessionStorage;
+
+    return JSON.parse(storage.getItem(name));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.warn(`the value ${name} could not be retrieved due to an error`, e);
@@ -9,11 +11,24 @@ export const getItem = (name) => {
   }
 };
 
-export const setItem = (name, value) => {
+export const setItem = (name, value, { toLocalStorage } = {}) => {
   try {
-    sessionStorage.setItem(name, JSON.stringify(value));
+    const storage = toLocalStorage ? localStorage : sessionStorage;
+
+    storage.setItem(name, JSON.stringify(value));
   } catch (e) {
     // eslint-disable-next-line no-console
     console.warn(`the value ${name} could not be stored due to an error`, e);
+  }
+};
+
+export const removeItem = (name, { fromLocalStorage } = {}) => {
+  try {
+    const storage = fromLocalStorage ? localStorage : sessionStorage;
+
+    storage.removeItem(name);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn(`the value ${name} could not be removed due to an error`, e);
   }
 };

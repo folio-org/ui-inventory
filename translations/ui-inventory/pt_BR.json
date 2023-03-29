@@ -598,7 +598,6 @@
     "item.status.unknown": "Desconhecido",
     "instances.showSelectedRecords": "Mostrar registros selecionados",
     "instances.selectedRecords": "Registros selecionados",
-    "saveAndClose": "Salvar e fechar",
     "communicationProblem": "Problema de comunicação do servidor. Por favor, tente novamente",
     "itemStatusModal.heading": "Confirmar o status do item: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventário: Marcar itens como item intelectual",
@@ -776,5 +775,6 @@
     "effectiveLocationHoldings": "Localização efetiva das coleções",
     "info.effectiveCallNumber": "Este campo contém o número de chamada do item, que é herdado do registro de coleção ou é o número de chamada atualizado no registro do item. Ao navegar pelos números de chamada, este campo será pesquisado.",
     "info.shelvingOrder": "Este campo é a forma normalizada do número de chamada que determina como o número de chamada é classificado durante a navegação.",
-    "markAsHeader": "Marcar como"
+    "markAsHeader": "Marcar como",
+    "newMARCRecord": "Novo registro MARC Bibliográfico"
 }
