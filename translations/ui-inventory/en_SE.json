@@ -614,7 +614,7 @@
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
     "copycat.reimport": "Re-import",
-    "copycat.callout.updated": "Updated record {xid}",
+    "copycat.callout.updated": "Record {xid} updated. Results may take a few moments to become visible in Inventory",
     "copycat.callout.created": "Created record {xid}",
     "copycat.callout.simpleError": "Something went wrong: {err}",
     "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
