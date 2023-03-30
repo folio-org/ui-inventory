@@ -6,6 +6,7 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import withLocation from '../withLocation';
 import withFacets from '../withFacets';
+import withLastSearchTerms from '../withLastSearchTerms';
 import { InstancesView } from '../views';
 import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
@@ -20,6 +21,10 @@ class InstancesRoute extends React.Component {
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
     fetchFacets: PropTypes.func,
+    getLastBrowse: PropTypes.func.isRequired,
+    getLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSearch: PropTypes.func.isRequired,
+    storeLastSearchOffset: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -38,6 +43,10 @@ class InstancesRoute extends React.Component {
       mutator,
       getParams,
       fetchFacets,
+      getLastBrowse,
+      getLastSearchOffset,
+      storeLastSearch,
+      storeLastSearchOffset,
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
@@ -63,6 +72,10 @@ class InstancesRoute extends React.Component {
             segment={segment}
             searchableIndexes={indexes}
             fetchFacets={fetchFacets}
+            getLastBrowse={getLastBrowse}
+            getLastSearchOffset={getLastSearchOffset}
+            storeLastSearch={storeLastSearch}
+            storeLastSearchOffset={storeLastSearchOffset}
           />
         )}
       </DataContext.Consumer>
@@ -74,4 +87,5 @@ export default flowRight(
   stripesConnect,
   withLocation,
   withFacets,
+  withLastSearchTerms,
 )(InstancesRoute);

@@ -28,7 +28,7 @@ import translationsProperties from '../../test/jest/helpers/translationsProperti
 import { instances as instancesFixture } from '../../test/fixtures/instances';
 import { items as callNumbers } from '../../test/fixtures/callNumbers';
 import { QUICK_EXPORT_LIMIT } from '../constants';
-import { DataContext } from '../contexts';
+import { DataContext, LastSearchTermsContext } from '../contexts';
 import InstancesRoute from './InstancesRoute';
 
 jest.mock('../components/BrowseInventoryFilters', () => 'BrowseInventoryFilters');
@@ -62,52 +62,67 @@ const InstancesRouteSetup = ({
             tagsRecords: [],
           }}
           >
-            <Paneset>
-              <Layer
-                isOpen
-                contentLabel="label"
-              >
-                <OverlayContainer />
-                <InstancesRoute
-                  resources={{
-                    query: {
-                      query: '',
-                      sort: 'title',
-                    },
-                    records: {
-                      hasLoaded: true,
-                      resource: 'records',
-                      records: instances,
-                      other: { totalRecords: instances.length },
-                    },
-                    recordsBrowseCallNumber : {
-                      hasLoaded: true,
-                      resource: 'records',
-                      records: callNumbers,
-                      other: {
-                        totalRecords: callNumbers.length
+            <LastSearchTermsContext.Provider value={{
+              getLastSearch: jest.fn(),
+              getLastBrowse: jest.fn(),
+              getLastSearchOffset: jest.fn(),
+              getLastBrowseOffset: jest.fn(),
+              storeLastSearch: jest.fn(),
+              storeLastBrowse: jest.fn(),
+              storeLastSearchOffset: jest.fn(),
+              storeLastBrowseOffset: jest.fn(),
+            }}
+            >
+              <Paneset>
+                <Layer
+                  isOpen
+                  contentLabel="label"
+                >
+                  <OverlayContainer />
+                  <InstancesRoute
+                    resources={{
+                      query: {
+                        query: '',
+                        sort: 'title',
                       },
-                    },
-                    facets: {
-                      hasLoaded: true,
-                      resource: 'facets',
-                      records: [],
-                      other: { totalRecords: 0 },
-                    },
-                    resultCount: instances.length,
-                    resultOffset: 0,
-                  }}
-                  mutator={{
-                    quickExport: { POST: quickExportPOST },
-                    resultCount: { replace: noop },
-                    query: {
-                      update: jest.fn(),
-                    },
-                    browseModeRecords: { reset: jest.fn() },
-                  }}
-                />
-              </Layer>
-            </Paneset>
+                      records: {
+                        hasLoaded: true,
+                        resource: 'records',
+                        records: instances,
+                        other: { totalRecords: instances.length },
+                      },
+                      recordsBrowseCallNumber : {
+                        hasLoaded: true,
+                        resource: 'records',
+                        records: callNumbers,
+                        other: {
+                          totalRecords: callNumbers.length
+                        },
+                      },
+                      facets: {
+                        hasLoaded: true,
+                        resource: 'facets',
+                        records: [],
+                        other: { totalRecords: 0 },
+                      },
+                      resultCount: instances.length,
+                      resultOffset: 0,
+                    }}
+                    mutator={{
+                      quickExport: { POST: quickExportPOST },
+                      resultCount: { replace: noop },
+                      resultOffset: { replace: noop },
+                      query: {
+                        update: jest.fn(),
+                        replace: jest.fn(),
+                      },
+                      browseModeRecords: { reset: jest.fn() },
+                      records: { reset: jest.fn() },
+                    }}
+                  />
+                </Layer>
+              </Paneset>
+            </LastSearchTermsContext.Provider>
           </DataContext.Provider>
         </ModuleHierarchyProvider>
       </CalloutContext.Provider>
