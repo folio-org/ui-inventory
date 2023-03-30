@@ -37,13 +37,12 @@ describe('HoldingsListContainer', () => {
       isLoading: true
     });
 
-    const { container } = render(
+    render(
       <MemoryRouter>
         <HoldingsListContainer instance={instance} />
       </MemoryRouter>
     );
-    const grid = container.querySelector('.spinner');
-    expect(grid).toBeInTheDocument();
+    expect(screen.getByText('Loading')).toBeInTheDocument();
   });
 
   it('should render the holdings list when holdings data is loaded', async () => {
