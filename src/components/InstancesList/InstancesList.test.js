@@ -7,7 +7,6 @@ import {
   act,
   fireEvent,
   screen,
-  waitFor,
   cleanup,
 } from '@testing-library/react';
 
@@ -248,23 +247,6 @@ describe('InstancesList', () => {
 
       it('should disable toggleable columns', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
-      });
-
-      describe('"New MARC Bib Record" button', () => {
-        it('should render', () => {
-          expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
-        });
-
-        it('should redirect to the correct layer', async () => {
-          jest.spyOn(history, 'push');
-
-          const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
-
-          waitFor(() => {
-            fireEvent.click(button);
-            expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
-          });
-        });
       });
 
       describe('hiding contributors column', () => {
