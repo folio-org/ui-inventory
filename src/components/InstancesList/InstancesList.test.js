@@ -12,7 +12,8 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
+import { StripesContext } from '@folio/stripes-core/src/StripesContext';
+import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
