@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [9.4.4](https://github.com/folio-org/ui-inventory/tree/v9.4.4) (2023-03-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.3...v9.4.4)
+
+* Update success messages for ISRI. Refs UIIN-2343.
+* Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
+
 ## [9.4.3](https://github.com/folio-org/ui-inventory/tree/v9.4.3) (2023-03-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.2...v9.4.3)
 
