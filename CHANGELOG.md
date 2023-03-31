@@ -2,6 +2,7 @@
 
 ## 9.5.0 IN PROGRESS
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
+* Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 
 * To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
 * Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
