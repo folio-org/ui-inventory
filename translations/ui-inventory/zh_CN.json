@@ -776,5 +776,5 @@
     "info.effectiveCallNumber": "本字段包含单件索书号，它是从馆藏记录继承的，或者是单件记录上已更新的索书号。浏览索书号时，将搜索此字段。",
     "info.shelvingOrder": "本字段是索书号的规范化形式，它决定浏览时索书号的排序方式。",
     "markAsHeader": "标记为",
-    "newMARCRecord": "New MARC Bib Record"
+    "newMARCRecord": "新建MARC书目记录"
 }
