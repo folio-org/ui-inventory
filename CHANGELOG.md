@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
+
+* Update success messages for ISRI. Refs UIIN-2343.
+
 ## [9.4.4](https://github.com/folio-org/ui-inventory/tree/v9.4.4) (2023-03-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.3...v9.4.4)
 
