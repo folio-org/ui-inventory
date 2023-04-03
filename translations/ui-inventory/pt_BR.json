@@ -614,8 +614,8 @@
     "internalIdEmbedPath": "Caminho interno de incorporação de identificação",
     "copycat.import": "Importar",
     "copycat.reimport": "Re-importar",
-    "copycat.callout.updated": "Registro atualizado {xid}",
-    "copycat.callout.created": "Registro criado {xid}",
+    "copycat.callout.updated": "Registro {xid} atualizado. Os resultados podem levar alguns instantes para se tornarem visíveis no Inventário",
+    "copycat.callout.created": "Registro {xid} criado. Os resultados podem levar alguns instantes para se tornarem visíveis no Inventário",
     "copycat.callout.simpleError": "Algo deu errado: {err}",
     "copycat.callout.complexError": "Algo deu errado: {err}: {detail}",
     "permission.single-record-import": "Inventário: Importar registros bibliográficos únicos",
@@ -775,5 +775,6 @@
     "effectiveLocationHoldings": "Localização efetiva das coleções",
     "info.effectiveCallNumber": "Este campo contém o número de chamada do item, que é herdado do registro de coleção ou é o número de chamada atualizado no registro do item. Ao navegar pelos números de chamada, este campo será pesquisado.",
     "info.shelvingOrder": "Este campo é a forma normalizada do número de chamada que determina como o número de chamada é classificado durante a navegação.",
-    "markAsHeader": "Marcar como"
+    "markAsHeader": "Marcar como",
+    "newMARCRecord": "Novo registro MARC Bibliográfico"
 }

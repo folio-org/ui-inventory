@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
 
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
-
 import '../../../test/jest/__mock__';
+
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
+
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
 import InstanceFilters from './InstanceFilters';

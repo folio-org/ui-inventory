@@ -14,7 +14,9 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-jest.mock('@folio/stripes-components', () => ({ LoadingView: jest.fn(() => <div>LoadingView component</div>) }));
+jest.mock('@folio/stripes/components', () => ({
+  LoadingView: jest.fn(() => <div>LoadingView component</div>),
+}));
 jest.mock('../../common/hooks/useInstance', () => jest.fn());
 jest.mock('../../providers', () => ({
   ...jest.requireActual('../../providers'),
