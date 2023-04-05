@@ -120,7 +120,6 @@ const getFetchProp = () => {
     const filters = params.get('filters');
     const sort = params.get('sort');
     const selectedBrowseResult = params.get('selectedBrowseResult');
-    const selectedSearchMode = params.get('selectedSearchMode');
     const hasReset = (
       !qindex &&
       !query &&
@@ -134,8 +133,7 @@ const getFetchProp = () => {
       isFetch = (
         hasReset ||
         prevQuery !== query ||
-        selectedBrowseResult === 'true' ||
-        selectedSearchMode === 'true'
+        selectedBrowseResult === 'true'
       );
     }
 
@@ -176,7 +174,6 @@ export function buildManifestObject() {
         filters: '',
         sort: '',
         selectedBrowseResult: false,
-        selectedSearchMode: false,
         authorityId: '',
       },
     },

@@ -716,7 +716,7 @@
     "viewAndReorderRequestsQueue": "查看请求并重新排序 ({number})",
     "browseCallNumbers.missedMatch": "会在这里",
     "search.allFields": "全部",
-    "acq.dateOpened": "开放日期",
+    "acq.dateOpened": "开馆日期",
     "moveItems.selectHolding": "选择馆藏",
     "browseContributors": "浏览贡献者",
     "newOrder": "新建订单",
@@ -775,5 +775,6 @@
     "effectiveLocationHoldings": "有效馆藏位置",
     "info.effectiveCallNumber": "本字段包含单件索书号，它是从馆藏记录继承的，或者是单件记录上已更新的索书号。浏览索书号时，将搜索此字段。",
     "info.shelvingOrder": "本字段是索书号的规范化形式，它决定浏览时索书号的排序方式。",
-    "markAsHeader": "标记为"
+    "markAsHeader": "标记为",
+    "newMARCRecord": "新建MARC书目记录"
 }

@@ -8,41 +8,26 @@ import {
   fireEvent,
   screen,
   waitFor,
+  cleanup,
 } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
-import * as storage from '../../storage';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
 const mockResultOffsetReplace = jest.fn();
-const mockStoredOffset = 100;
-const mockStoredParams = {
-  qindex: 'title',
-  query: 'a',
-  sort: 'title',
-};
-const resultOffset = { replace: mockResultOffsetReplace };
-const mockGetItem = (name = '') => {
-  if (name.includes('/search.params')) {
-    return mockStoredParams;
-  }
-
-  if (name.includes('/search.resultOffset')) {
-    return mockStoredOffset;
-  }
-
-  return undefined;
-};
+const mockStoreLastSearch = jest.fn();
+const mockRecordsReset = jest.fn();
+const mockGetLastSearchOffset = jest.fn();
+const mockStoreLastSearchOffset = jest.fn();
 
 jest.mock('../../storage');
 
@@ -89,9 +74,6 @@ const resources = {
   resultOffset: 0,
 };
 
-const paramsKey = '@folio/inventory/search.params';
-const offsetKey = '@folio/inventory/search.resultOffset';
-
 let history;
 
 const renderInstancesList = ({
@@ -111,9 +93,10 @@ const renderInstancesList = ({
           <InstancesList
             parentResources={resources}
             parentMutator={{
-              resultOffset,
+              resultOffset: { replace: mockResultOffsetReplace },
               resultCount: { replace: noop },
               query: { update: updateMock, replace: mockQueryReplace },
+              records: { reset: mockRecordsReset },
             }}
             data={{
               ...data,
@@ -129,6 +112,10 @@ const renderInstancesList = ({
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
             fetchFacets={noop}
+            getLastBrowse={jest.fn()}
+            getLastSearchOffset={mockGetLastSearchOffset}
+            storeLastSearch={mockStoreLastSearch}
+            storeLastSearchOffset={mockStoreLastSearchOffset}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -151,8 +138,15 @@ describe('InstancesList', () => {
     });
 
     describe('when the component is mounted', () => {
+      it('should write location.search to the session storage', () => {
+        const search = '?qindex=title&query=book&sort=title';
+        history.push({ search });
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+      });
+
       describe('and browse result was selected', () => {
-        it('should write URL parameters to storage and reset offset', () => {
+        it('should reset offset', () => {
+          mockResultOffsetReplace.mockClear();
           const params = {
             selectedBrowseResult: 'true',
             filters: 'searchContributors.2b94c631-fca9-4892-a730-03ee529ffe2a',
@@ -165,75 +159,39 @@ describe('InstancesList', () => {
             getParams: () => params,
           });
 
-          expect(storage.setItem).toHaveBeenNthCalledWith(1, paramsKey, params, { toLocalStorage: true });
-          expect(storage.setItem).toHaveBeenNthCalledWith(2, offsetKey, 0, { toLocalStorage: true });
+          expect(mockResultOffsetReplace).toHaveBeenCalledWith(0);
         });
       });
 
       describe('and browse result was not selected', () => {
-        it('should update location and replace resultOffset', () => {
-          mockResultOffsetReplace.mockClear();
-          jest.spyOn(history, 'replace');
-          storage.getItem.mockImplementation(mockGetItem);
-
-          renderInstancesList({ segment: 'instances' });
-
-          expect(history.replace).toHaveBeenCalledWith('/?qindex=title&query=a&sort=title');
-          expect(mockResultOffsetReplace).toHaveBeenCalledWith(mockStoredOffset);
-
-          storage.getItem.mockRestore();
-        });
-
-        it('should not update location and resultOffset', () => {
-          jest.spyOn(history, 'replace');
+        it('should replace resultOffset', () => {
           mockResultOffsetReplace.mockClear();
 
-          renderInstancesList({ segment: 'instances' });
+          renderInstancesList({
+            segment: 'instances',
+            getLastSearchOffset: () => 100,
+          });
 
-          expect(history.replace).not.toHaveBeenCalled();
-          expect(mockResultOffsetReplace).not.toHaveBeenCalled();
+          expect(mockResultOffsetReplace).toHaveBeenCalledWith(100);
         });
       });
     });
 
     describe('when the component is updated', () => {
-      describe('and previously the user returned from the "Browse" search by clicking the "Search" tab', () => {
-        it('should remove the selectedSearchMode parameter', () => {
-          mockQueryReplace.mockClear();
-
-          const newParentResources = {
-            ...resources,
-            query: { ...query, selectedSearchMode: 'true' },
-          };
-
-          const { rerender } = renderInstancesList({
-            segment: 'instances',
-            parentResources: newParentResources,
-          });
-
-          renderInstancesList({
-            segment: 'instances',
-            parentResources: {
-              ...newParentResources,
-              resultOffset: 100,
-            },
-          }, rerender);
-
-          expect(mockQueryReplace).toHaveBeenCalledWith({ selectedSearchMode: false });
-        });
-      });
-
       describe('and location.search has been changed', () => {
-        it('should write parameters to storage', () => {
-          history.push({ search: '?qindex=title&query=book&sort=title' });
-          const paramsToStore = { qindex: 'title', query: 'book', sort: 'title' };
-          expect(storage.setItem).toHaveBeenCalledWith(paramsKey, paramsToStore, { toLocalStorage: true });
+        it('should write location.search to the session storage', () => {
+          const search = '?qindex=title&query=book&sort=title';
+          mockStoreLastSearch.mockClear();
+          history.push({ search });
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
         });
       });
 
       describe('and offset has been changed', () => {
         it('should write offset to storage', () => {
           const offset = 100;
+          mockStoreLastSearchOffset.mockClear();
+
           const { rerender } = renderInstancesList({ segment: 'instances' });
 
           renderInstancesList({
@@ -244,9 +202,35 @@ describe('InstancesList', () => {
             },
           }, rerender);
 
-          expect(storage.setItem).toHaveBeenCalledWith(offsetKey, offset, { toLocalStorage: true });
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
         });
       });
+    });
+
+    describe('when the component is unmounted', () => {
+      it('should reset records', () => {
+        mockRecordsReset.mockClear();
+
+        const { unmount } = renderInstancesList({ segment: 'instances' });
+        unmount();
+        expect(mockRecordsReset).toHaveBeenCalled();
+      });
+    });
+
+    it('should pass the correct search by clicking on the `Browse` tab', () => {
+      cleanup();
+      const search = '?qindex=subjects&query=book';
+
+      jest.spyOn(history, 'push');
+
+      renderInstancesList({
+        segment: 'instances',
+        getLastBrowse: () => search,
+      });
+
+      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+      expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
     });
 
     it('should have proper list results size', () => {
