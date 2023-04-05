@@ -8,42 +8,122 @@ import { renderWithIntl, translationsProperties } from '../../test/jest/helpers'
 import PublicationFrequencyFields from './publicationFrequencyFields';
 
 jest.unmock('@folio/stripes/components');
-const onSubmit = jest.fn();
-const Form = ({ handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
-    <PublicationFrequencyFields />
-  </form>
-);
-
-Form.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-};
-
-const WrappedForm = stripesFinalForm({
-  navigationCheck: true,
-  enableReinitialize: false,
-})(Form);
-
-const renderPublicationFrequencyFields = () => renderWithIntl(
-  renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
-  translationsProperties,
-);
 
 afterEach(() => jest.clearAllMocks());
 describe('PublicationFrequencyFields', () => {
-  test('renders Publication frequency field', () => {
+  it('renders Publication frequency field and defult props for all buttons should be enabled', () => {
+    const onSubmit = jest.fn();
+    const Form = ({ handleSubmit }) => (
+      <form onSubmit={handleSubmit}>
+        <PublicationFrequencyFields />
+      </form>
+    );
+
+    Form.propTypes = {
+      handleSubmit: PropTypes.func.isRequired,
+    };
+
+    const WrappedForm = stripesFinalForm({
+      navigationCheck: true,
+      enableReinitialize: false,
+    })(Form);
+
+    const renderPublicationFrequencyFields = () => renderWithIntl(
+      renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
+      translationsProperties,
+    );
+    renderPublicationFrequencyFields();
+
+    expect(screen.getByText('Publication frequency')).toBeInTheDocument();
+    const addButton = screen.getByRole('button', { name: /add frequency/i });
+    expect(addButton).toBeInTheDocument();
+    userEvent.click(addButton);
+    const deleteButton = document.querySelector('[aria-label="remove fields for "]');
+    expect(addButton).toBeEnabled();
+    expect(deleteButton).toBeEnabled();
+    expect(screen.getByRole('textbox')).toBeEnabled();
+  });
+  it('disables publication frequency input when canEdit is false', () => {
+    const onSubmit = jest.fn();
+    const Form = ({ handleSubmit }) => (
+      <form onSubmit={handleSubmit}>
+        <PublicationFrequencyFields canEdit={false} />
+      </form>
+    );
+
+    Form.propTypes = {
+      handleSubmit: PropTypes.func.isRequired,
+    };
+
+    const WrappedForm = stripesFinalForm({
+      navigationCheck: true,
+      enableReinitialize: false,
+    })(Form);
+
+    const renderPublicationFrequencyFields = () => renderWithIntl(
+      renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
+      translationsProperties,
+    );
     renderPublicationFrequencyFields();
     expect(screen.getByText('Publication frequency')).toBeInTheDocument();
+    const addButton = screen.getByRole('button', { name: /add frequency/i });
+    expect(addButton).toBeInTheDocument();
+    userEvent.click(addButton);
+    expect(screen.getByRole('textbox')).toBeDisabled();
   });
+  it('disables add publication frequency button when canAdd is false', () => {
+    const onSubmit = jest.fn();
+    const Form = ({ handleSubmit }) => (
+      <form onSubmit={handleSubmit}>
+        <PublicationFrequencyFields canAdd={false} />
+      </form>
+    );
 
-  test('Click on Add range button and enter value in Publication frequency text field', async () => {
+    Form.propTypes = {
+      handleSubmit: PropTypes.func.isRequired,
+    };
+
+    const WrappedForm = stripesFinalForm({
+      navigationCheck: true,
+      enableReinitialize: false,
+    })(Form);
+
+    const renderPublicationFrequencyFields = () => renderWithIntl(
+      renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
+      translationsProperties,
+    );
     renderPublicationFrequencyFields();
-    userEvent.click(screen.getByRole('button'));
-    const rangeButton = screen.getByText('Add frequency');
-    userEvent.click(rangeButton);
-    const myText = screen.getByRole('textbox', { name: 'Publication frequency' });
-    expect(myText).toHaveValue('');
-    userEvent.type(myText, 'Enter text for Publication frequency text field');
-    expect(myText).toHaveValue('Enter text for Publication frequency text field');
+    const addButton = screen.getByRole('button', { name: /add frequency/i });
+    expect(addButton).toBeInTheDocument();
+    userEvent.click(addButton);
+    expect(addButton).toBeDisabled();
+  });
+  it('disables delete publication frequency button when canDelete is false', () => {
+    const onSubmit = jest.fn();
+    const Form = ({ handleSubmit }) => (
+      <form onSubmit={handleSubmit}>
+        <PublicationFrequencyFields canDelete={false} />
+      </form>
+    );
+
+    Form.propTypes = {
+      handleSubmit: PropTypes.func.isRequired,
+    };
+
+    const WrappedForm = stripesFinalForm({
+      navigationCheck: true,
+      enableReinitialize: false,
+    })(Form);
+
+    const renderPublicationFrequencyFields = () => renderWithIntl(
+      renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
+      translationsProperties,
+    );
+    renderPublicationFrequencyFields();
+    const addButton = screen.getByRole('button', { name: /add frequency/i });
+    expect(addButton).toBeInTheDocument();
+    userEvent.click(addButton);
+    const deleteButton = document.querySelector('[aria-label="remove fields for "]');
+    expect(deleteButton).toBeDisabled();
   });
 });
