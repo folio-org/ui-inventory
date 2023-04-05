@@ -127,6 +127,10 @@ class InstancesList extends React.Component {
       listen: PropTypes.func,
       replace: PropTypes.func,
     }),
+    getLastBrowse: PropTypes.func.isRequired,
+    getLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSearch: PropTypes.func.isRequired,
+    storeLastSearchOffset: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -159,14 +163,9 @@ class InstancesList extends React.Component {
   componentDidMount() {
     const {
       history,
-      namespace,
-      updateLocation,
       getParams,
-      parentMutator,
     } = this.props;
     const params = getParams();
-    const prevParams = getItem(`${namespace}/search.params`, { fromLocalStorage: true });
-    const prevResultOffset = getItem(`${namespace}/search.resultOffset`, { fromLocalStorage: true });
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -180,14 +179,7 @@ class InstancesList extends React.Component {
       }
     });
 
-    if (params.selectedBrowseResult === 'true') {
-      setItem(`${namespace}/search.params`, params, { toLocalStorage: true });
-      setItem(`${namespace}/search.resultOffset`, 0, { toLocalStorage: true });
-      parentMutator.resultOffset.replace(0);
-    } else if (prevParams) {
-      updateLocation(prevParams, { replace: true });
-      parentMutator.resultOffset.replace(prevResultOffset);
-    }
+    this.processLastSearchTerms();
 
     this.setState({
       openedFromBrowse: params.selectedBrowseResult === 'true',
@@ -196,29 +188,9 @@ class InstancesList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      parentMutator,
-      parentResources,
-      namespace,
-      location,
-      getParams,
-    } = this.props;
     const qindex = this.getQIndexFromParams();
 
-    // reset selectedSearchMode parameter after offset change
-    if (parentResources.query.selectedSearchMode &&
-      prevProps.parentResources.resultOffset !== parentResources.resultOffset
-    ) {
-      parentMutator.query.replace({ selectedSearchMode: false });
-    }
-
-    if (prevProps.location.search !== location.search) {
-      setItem(`${namespace}/search.params`, getParams(), { toLocalStorage: true });
-    }
-
-    if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
-      setItem(`${namespace}/search.resultOffset`, parentResources.resultOffset, { toLocalStorage: true });
-    }
+    this.storeLastSearchTerms(prevProps);
 
     // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
     // doesn't like this because setState causes a re-render and can
@@ -231,13 +203,48 @@ class InstancesList extends React.Component {
   }
 
   componentWillUnmount() {
+    const { parentMutator } = this.props;
     this.unlisten();
+    parentMutator.records.reset();
   }
 
   extraParamsToReset = {
     selectedBrowseResult: false,
-    selectedSearchMode: false,
+    authorityId: '',
   };
+
+  processLastSearchTerms = () => {
+    const {
+      getParams,
+      location,
+      parentMutator,
+      getLastSearchOffset,
+      storeLastSearch,
+    } = this.props;
+    const params = getParams();
+    const lastSearchOffset = getLastSearchOffset();
+    const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
+
+    storeLastSearch(location.search);
+    parentMutator.resultOffset.replace(offset);
+  }
+
+  storeLastSearchTerms = (prevProps) => {
+    const {
+      location,
+      parentResources,
+      storeLastSearch,
+      storeLastSearchOffset,
+    } = this.props;
+
+    if (prevProps.location.search !== location.search) {
+      storeLastSearch(location.search);
+    }
+
+    if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
+      storeLastSearchOffset(parentResources.resultOffset);
+    }
+  }
 
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
@@ -268,7 +275,7 @@ class InstancesList extends React.Component {
       ? { ...curFilters, [name]: values }
       : omit(curFilters, name);
     const filtersStr = parseFiltersToStr(mergedFilters);
-    const params = omit(getParams(), 'selectedSearchMode');
+    const params = getParams();
 
     this.setState({
       openedFromBrowse: false,
@@ -306,6 +313,11 @@ class InstancesList extends React.Component {
 
   openCreateInstance = () => {
     this.props.updateLocation({ layer: 'create' });
+  }
+
+  openCreateMARCRecord = () => {
+    // TODO: Correct behavior is to open a new layer will be aded in UIQM-361
+    this.props.updateLocation({ layer: 'create-bib' });
   }
 
   copyInstance = (instance) => {
@@ -354,7 +366,9 @@ class InstancesList extends React.Component {
 
   renderNavigation = () => (
     <>
-      <SearchModeNavigation />
+      <SearchModeNavigation
+        search={this.props.getLastBrowse()}
+      />
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
   );
@@ -611,6 +625,21 @@ class InstancesList extends React.Component {
             )}
             type="create-inventory-records"
           />
+          <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-newmarcrecord"
+              onClick={buildOnClickHandler(this.openCreateMARCRecord)}
+            >
+              <Icon
+                icon="plus-sign"
+                size="medium"
+                iconClassName={css.actionIcon}
+              />
+              <FormattedMessage id="ui-inventory.newMARCRecord" />
+            </Button>
+          </IfPermission>
+
           {
           inTransitItemsExportInProgress ?
             this.getActionItem({

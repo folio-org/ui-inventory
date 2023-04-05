@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import ItemFilters from './ItemFilters';
 import { getCurrentFilters } from '../../utils';
 import { itemStatuses } from '../../constants';
+import facetsStore from '../../stores/facetsStore';
 
 // itemFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -33,7 +34,10 @@ const itemFilterRenderer = data => onChange => {
         parentResources,
       }}
       onChange={onChange}
-      onClear={(name) => onChange({ name, values: [] })}
+      onClear={(name) => {
+        facetsStore.getState().resetFacetByName(name);
+        onChange({ name, values: [] });
+      }}
     />
   );
 };

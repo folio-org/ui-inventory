@@ -598,7 +598,6 @@
     "item.status.unknown": "Ukendt",
     "instances.showSelectedRecords": "Vis markerede poster",
     "instances.selectedRecords": "Markerede poster",
-    "saveAndClose": "Gem & luk",
     "communicationProblem": "Problem med serverkommunikation. Prøv igen",
     "itemStatusModal.heading": "Bekræft eksemplarstatus: {itemStatus}",
     "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",
@@ -615,8 +614,8 @@
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
     "copycat.reimport": "Re-import",
-    "copycat.callout.updated": "Updated record {xid}",
-    "copycat.callout.created": "Created record {xid}",
+    "copycat.callout.updated": "Record {xid} updated. Results may take a few moments to become visible in Inventory",
+    "copycat.callout.created": "Record {xid} created. Results may take a few moments to become visible in Inventory",
     "copycat.callout.simpleError": "Something went wrong: {err}",
     "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
     "permission.single-record-import": "Inventory: Import single bibliographic records",
@@ -776,5 +775,6 @@
     "effectiveLocationHoldings": "Effective location for holdings",
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
-    "markAsHeader": "Mark as"
+    "markAsHeader": "Mark as",
+    "newMARCRecord": "New MARC Bib Record"
 }

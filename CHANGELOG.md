@@ -1,11 +1,49 @@
 # Change history for ui-inventory
 
 ## 9.5.0 IN PROGRESS
+* Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
+
+## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
+
+* Update success messages for ISRI. Refs UIIN-2343.
+
+## [9.4.4](https://github.com/folio-org/ui-inventory/tree/v9.4.4) (2023-03-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.3...v9.4.4)
+
+* Update success messages for ISRI. Refs UIIN-2343.
+* Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
+
+## [9.4.3](https://github.com/folio-org/ui-inventory/tree/v9.4.3) (2023-03-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.2...v9.4.3)
+
+* Correctly reset facet state when X icon next to the facet label is clicked. Fixes UIIN-2351.
+* Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
+* Fix the query templates for searching by subject. Fixes UIIN-2364.
+
+## [9.4.2](https://github.com/folio-org/ui-inventory/tree/v9.4.2) (2023-03-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.1...v9.4.2)
+
+* To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
+* Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
+* Use correct reference to item resource. Fixes UIIN-2355.
+* Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
+* Correctly reset facet state when `X` icon next to the facet label is clicked. Fixes UIIN-2351.
+* Fix the query templates for searching by `subject`. Fixes UIIN-2364.
+* Avoid private paths in stripes-core imports. Refs UIIN-2367.
+* Fixing tests due to changes in `react-virtualized-auto-sizer`. Fixes UIIN-2371.
+* Update success messages for ISRI. Refs UIIN-2343.
+* Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
+
+## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)
 
 * Do not allow for item removal when an item has a loan with a status set to `Declared lost`. Fixes UIIN-2138.
 * Do not allow for item removal when an item has a loan with a status set to `Awaiting delivery`. Fixes UIIN-2187.
 * Fix max width for contributors column in Instances search. Fixes UIIN-2345.
 * Retain search query, result list and page number after switching between Search and Browse searches. Refs UIIN-2337.
+* Browse results are not updated when field with Subject/Contributor value is linked/unlinked. Fixes UIIN-2342.
+* Browse results in Inventory are not cleared when browse input field is cleared. Fixes UIIN-2299.
 
 ## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)

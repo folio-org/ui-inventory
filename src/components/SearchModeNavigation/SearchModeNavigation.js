@@ -23,20 +23,24 @@ const SearchModeNavigation = ({ search, state }) => {
   return (
     <ButtonGroup fullWidth>
       {
-        Object.keys(searchModeSegments).map(segment => (
-          <Button
-            key={`${segment}`}
-            to={{
-              pathname: searchModeRoutesMap[segment],
-              search,
-              state,
-            }}
-            buttonStyle={checkIsButtonActive(segment)}
-            id={`mode-navigation-${segment}`}
-          >
-            <FormattedMessage id={`ui-inventory.${segment}`} />
-          </Button>
-        ))
+        Object.keys(searchModeSegments).map(segment => {
+          const isCurrentSegment = path === searchModeSegments[segment];
+
+          return (
+            <Button
+              key={`${segment}`}
+              to={{
+                pathname: searchModeRoutesMap[segment],
+                search: isCurrentSegment ? null : search,
+                state,
+              }}
+              buttonStyle={checkIsButtonActive(segment)}
+              id={`mode-navigation-${segment}`}
+            >
+              <FormattedMessage id={`ui-inventory.${segment}`} />
+            </Button>
+          );
+        })
       }
     </ButtonGroup>
   );
