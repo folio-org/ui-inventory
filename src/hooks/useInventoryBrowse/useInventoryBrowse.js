@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import { noop } from 'lodash';
@@ -22,13 +22,11 @@ import {
 import usePrevious from '../usePrevious';
 import {
   INITIAL_SEARCH_PARAMS_MAP,
-  INIT_PAGE_CONFIG,
   PAGINATION_SEARCH_PARAMS_MAP,
   PATH_MAP,
   PRECEDING_RECORDS_COUNT,
   regExp,
 } from './constants';
-import { getItem, setItem } from '../../storage';
 
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
@@ -48,7 +46,6 @@ const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
 };
 
 const useInventoryBrowse = ({
-  pageConfigKey,
   filters = {},
   pageParams = {},
   options = {},
@@ -57,12 +54,6 @@ const useInventoryBrowse = ({
   const { search } = useLocation();
   const [namespace] = useNamespace();
   const { pageConfig = [], setPageConfig = noop } = pageParams;
-
-  useEffect(() => {
-    const prevPageConfig = getItem(pageConfigKey, { fromLocalStorage: true });
-
-    setPageConfig(prevPageConfig || INIT_PAGE_CONFIG);
-  }, []);
 
   const normalizedFilters = {
     ...Object.entries(filters).reduce((acc, [key, value]) => ({
@@ -127,14 +118,8 @@ const useInventoryBrowse = ({
     const anchor = data[isPrev ? 'prev' : 'next'];
     const delta = isPrev ? -1 : 1;
 
-    setPageConfig(([pageNumber]) => {
-      const newPageConfig = [pageNumber + delta, direction, anchor];
-
-      setItem(pageConfigKey, newPageConfig, { toLocalStorage: true });
-
-      return newPageConfig;
-    });
-  }, [normalizedFilters, setPageConfig, pageConfigKey]);
+    setPageConfig(([pageNumber]) => [pageNumber + delta, direction, anchor]);
+  }, [normalizedFilters, setPageConfig]);
 
   return {
     data: data.items,
