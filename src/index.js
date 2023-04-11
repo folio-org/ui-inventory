@@ -39,7 +39,7 @@ import {
   BrowseRoute,
 } from './routes';
 import Settings from './settings';
-import { DataProvider, HoldingsProvider } from './providers';
+import { DataProvider, HoldingsProvider, LastSearchTermsProvider } from './providers';
 
 const InventoryRouting = (props) => {
   const history = useHistory();
@@ -74,123 +74,125 @@ const InventoryRouting = (props) => {
   return (
     <DataProvider>
       <HoldingsProvider>
-        <CommandList commands={defaultKeyboardShortcuts}>
-          <HasCommand
-            commands={shortcuts}
-            isWithinScope={checkScope}
-            scope={document.body}
-          >
-            <AppContextMenu>
-              {(handleToggle) => (
-                <NavList>
-                  <NavListSection>
-                    <NavListItem
-                      id="keyboard-shortcuts-item-0"
-                      onClick={() => {
-                        handleToggle();
-                        history.replace({
-                          pathname: '/inventory',
-                          search: 'reset=true'
-                        });
-                      }}
-                    >
-                      <FormattedMessage id="ui-inventory.appMenu.inventorySearch" />
-                    </NavListItem>
-                    <NavListItem
-                      id="keyboard-shortcuts-item"
-                      onClick={() => {
-                        handleToggle();
-                        toggleModal();
-                      }}
-                    >
-                      <FormattedMessage id="ui-inventory.appMenu.keyboardShortcuts" />
-                    </NavListItem>
-                  </NavListSection>
-                </NavList>
-              )}
-            </AppContextMenu>
-            <Switch>
-              <Route
-                path={`${path}/create/:id/holding`}
-                component={CreateHoldingRoute}
-              />
-              <Route
-                path={`${path}/edit/:id/:holdingId/:itemId`}
-                component={EditItemRoute}
-              />
-              <Route
-                path={`${path}/create/:id/:holdingId/item`}
-                component={CreateItemRoute}
-              />
-              <Route
-                path={`${path}/move/:idFrom/:idTo/instance`}
-                component={InstanceMovementRoute}
-              />
-              <Route
-                path={`${path}/view/:id/:holdingsrecordid/:itemid`}
-                component={ItemRoute}
-              />
-              <Route
-                path={`${path}/copy/:id/:holdingsrecordid/:itemid`}
-                component={DuplicateItemRoute}
-              />
-              <Route
-                path={`${path}/quick-marc`}
-                component={QuickMarcRoute}
-              />
-              <Route
-                path={`${path}/viewsource/:id/:holdingsrecordid`}
-                component={HoldingsMarcRoute}
-              />
-              <Route
-                path={`${path}/viewsource/:id`}
-                component={InstanceMarcRoute}
-              />
-              <Route
-                path={`${path}/edit/:id/instance`}
-                component={InstanceEditRoute}
-              />
-              <Route
-                path={`${path}/view/:id/:holdingsrecordid`}
-                component={ViewHoldingRoute}
-              />
-              <Route
-                path={`${path}/edit/:id/:holdingsrecordid`}
-                component={EditHoldingRoute}
-              />
-              <Route
-                path={`${path}/copy/:id/:holdingsrecordid`}
-                component={DuplicateHoldingRoute}
-              />
-              <Route
-                path={`${path}/view-requests/:id`}
-                component={ViewRequestsRoute}
-              />
-              <Route
-                path={`${path}/import/:id`}
-                component={ImportRoute}
-              />
-              <Route
-                path={`${path}/import`}
-                component={ImportRoute}
-              />
-              <Route
-                path={`${path}/browse`}
-                component={BrowseRoute}
-              />
-              <Route
-                path={path}
-                component={InstancesRoute}
-              />
-            </Switch>
-          </HasCommand>
-        </CommandList>
-        {isShortcutsModalOpen && (
-          <KeyboardShortcutsModal
-            allCommands={defaultKeyboardShortcuts}
-            onClose={toggleModal}
-          />
-        )}
+        <LastSearchTermsProvider>
+          <CommandList commands={defaultKeyboardShortcuts}>
+            <HasCommand
+              commands={shortcuts}
+              isWithinScope={checkScope}
+              scope={document.body}
+            >
+              <AppContextMenu>
+                {(handleToggle) => (
+                  <NavList>
+                    <NavListSection>
+                      <NavListItem
+                        id="keyboard-shortcuts-item-0"
+                        onClick={() => {
+                          handleToggle();
+                          history.replace({
+                            pathname: '/inventory',
+                            search: 'reset=true'
+                          });
+                        }}
+                      >
+                        <FormattedMessage id="ui-inventory.appMenu.inventorySearch" />
+                      </NavListItem>
+                      <NavListItem
+                        id="keyboard-shortcuts-item"
+                        onClick={() => {
+                          handleToggle();
+                          toggleModal();
+                        }}
+                      >
+                        <FormattedMessage id="ui-inventory.appMenu.keyboardShortcuts" />
+                      </NavListItem>
+                    </NavListSection>
+                  </NavList>
+                )}
+              </AppContextMenu>
+              <Switch>
+                <Route
+                  path={`${path}/create/:id/holding`}
+                  component={CreateHoldingRoute}
+                />
+                <Route
+                  path={`${path}/edit/:id/:holdingId/:itemId`}
+                  component={EditItemRoute}
+                />
+                <Route
+                  path={`${path}/create/:id/:holdingId/item`}
+                  component={CreateItemRoute}
+                />
+                <Route
+                  path={`${path}/move/:idFrom/:idTo/instance`}
+                  component={InstanceMovementRoute}
+                />
+                <Route
+                  path={`${path}/view/:id/:holdingsrecordid/:itemid`}
+                  component={ItemRoute}
+                />
+                <Route
+                  path={`${path}/copy/:id/:holdingsrecordid/:itemid`}
+                  component={DuplicateItemRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc`}
+                  component={QuickMarcRoute}
+                />
+                <Route
+                  path={`${path}/viewsource/:id/:holdingsrecordid`}
+                  component={HoldingsMarcRoute}
+                />
+                <Route
+                  path={`${path}/viewsource/:id`}
+                  component={InstanceMarcRoute}
+                />
+                <Route
+                  path={`${path}/edit/:id/instance`}
+                  component={InstanceEditRoute}
+                />
+                <Route
+                  path={`${path}/view/:id/:holdingsrecordid`}
+                  component={ViewHoldingRoute}
+                />
+                <Route
+                  path={`${path}/edit/:id/:holdingsrecordid`}
+                  component={EditHoldingRoute}
+                />
+                <Route
+                  path={`${path}/copy/:id/:holdingsrecordid`}
+                  component={DuplicateHoldingRoute}
+                />
+                <Route
+                  path={`${path}/view-requests/:id`}
+                  component={ViewRequestsRoute}
+                />
+                <Route
+                  path={`${path}/import/:id`}
+                  component={ImportRoute}
+                />
+                <Route
+                  path={`${path}/import`}
+                  component={ImportRoute}
+                />
+                <Route
+                  path={`${path}/browse`}
+                  component={BrowseRoute}
+                />
+                <Route
+                  path={path}
+                  component={InstancesRoute}
+                />
+              </Switch>
+            </HasCommand>
+          </CommandList>
+          {isShortcutsModalOpen && (
+            <KeyboardShortcutsModal
+              allCommands={defaultKeyboardShortcuts}
+              onClose={toggleModal}
+            />
+          )}
+        </LastSearchTermsProvider>
       </HoldingsProvider>
     </DataProvider>
   );
