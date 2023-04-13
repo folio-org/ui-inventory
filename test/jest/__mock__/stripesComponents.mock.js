@@ -2,8 +2,6 @@ import React from 'react';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-  LoadingPane: () => <div>LoadingPane</div>,
   ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel }) => (
     <div>
       <span>ConfirmationModal</span>
@@ -15,4 +13,20 @@ jest.mock('@folio/stripes/components', () => ({
       </div>
     </div>
   )),
+  formattedLanguageName: jest.fn((languageCode) => {
+    switch (languageCode) {
+      case 'en':
+        return 'English';
+      case 'es':
+        return 'Spanish';
+      case 'fr':
+        return 'French';
+      default:
+        return '';
+    }
+  }),
+  Loading: () => <div>Loading</div>,
+  LoadingPane: () => <div>LoadingPane</div>,
+  LoadingView: () => <div>LoadingView</div>,
+  LoadingPane: () => <div>LoadingPane</div>,
 }), { virtual: true });

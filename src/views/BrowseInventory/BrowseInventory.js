@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ import {
   SingleSearchForm,
   useFiltersToogle,
   useItemToView,
-  useLocalStorageFilters,
+  useLocationFilters,
 } from '@folio/stripes-acq-components';
 
 import {
@@ -23,10 +23,10 @@ import {
   SearchModeNavigation,
 } from '../../components';
 import { browseInstanceIndexes } from '../../filterConfig';
-import { removeItem } from '../../storage';
 import {
   useBrowseValidation,
   useInventoryBrowse,
+  useLastSearchTerms,
 } from '../../hooks';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
 
@@ -35,10 +35,21 @@ const BrowseInventory = () => {
   const location = useLocation();
   const intl = useIntl();
   const [namespace] = useNamespace();
+  const {
+    getLastSearch,
+    getLastBrowseOffset,
+    storeLastBrowse,
+    storeLastBrowseOffset,
+  } = useLastSearchTerms();
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
-  const [pageConfig, setPageConfig] = useState(INIT_PAGE_CONFIG);
-  const pageConfigKey = `${namespace}/browse.pageConfig`;
+  const [pageConfig, setPageConfig] = useState(getLastBrowseOffset());
+  const { search } = location;
+
+  useEffect(() => {
+    storeLastBrowse(search);
+    storeLastBrowseOffset(pageConfig);
+  }, [search, pageConfig]);
 
   const [
     filters,
@@ -49,8 +60,7 @@ const BrowseInventory = () => {
     resetFilters,
     changeSearchIndex,
     searchIndex,
-  ] = useLocalStorageFilters(`${namespace}/browse.params`, location, history, () => {
-    removeItem(pageConfigKey);
+  ] = useLocationFilters(location, history, () => {
     setPageConfig(INIT_PAGE_CONFIG);
   });
 
@@ -60,7 +70,6 @@ const BrowseInventory = () => {
     pagination,
     totalRecords,
   } = useInventoryBrowse({
-    pageConfigKey,
     filters,
     pageParams: { pageConfig, setPageConfig },
     options: { onSettled: deleteItemToView },
@@ -98,7 +107,7 @@ const BrowseInventory = () => {
           toggleFilters={toggleFilters}
         >
           <SearchModeNavigation
-            search="?selectedSearchMode=true"
+            search={getLastSearch()}
           />
 
           <SingleSearchForm
