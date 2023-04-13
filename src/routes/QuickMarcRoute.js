@@ -10,7 +10,7 @@ const QuickMarcRoute = ({ match, history, location }) => {
     newSearchParams.delete('relatedRecordVersion');
 
     history.push({
-      pathname: `/inventory/view/${recordRoute}`,
+      pathname: `/inventory/view/${recordRoute ?? ''}`,
       search: newSearchParams.toString(),
     });
   }, [location.search]);
