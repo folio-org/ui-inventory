@@ -316,8 +316,8 @@ class InstancesList extends React.Component {
   }
 
   openCreateMARCRecord = () => {
-    // TODO: Correct behavior is to open a new layer will be aded in UIQM-361
-    this.props.updateLocation({ layer: 'create-bib' });
+    const searchParams = new URLSearchParams(this.props.location.search);
+    this.props.goTo(`/inventory/quick-marc/create-bib?${searchParams}`);
   }
 
   copyInstance = (instance) => {
