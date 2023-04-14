@@ -1,19 +1,8 @@
+import '../../../test/jest/__mock__';
 import { renderHook } from '@testing-library/react-hooks';
-import '../../../test/jest/__mock__/stripesConfig.mock';
-import '../../../test/jest/__mock__/stripesComponents.mock';
-import '../../../test/jest/__mock__/currencyData.mock';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { useOkapiKy } from '@folio/stripes/core';
 import { useMoveItemsMutation } from './useMoveItemsMutation';
-
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: jest.fn().mockImplementation(() => ({
-    post: jest.fn().mockReturnValue({ nonUpdatedIds: [] }),
-  }))
-    .mockImplementationOnce(() => ({
-      post: jest.fn().mockReturnValue({ nonUpdatedIds: ['testId-1'] }),
-    })),
-}));
 
 jest.mock('react-intl', () => {
   const intl = {
@@ -44,28 +33,42 @@ const onSuccess = jest.fn();
 const onError = jest.fn();
 
 describe('useMoveItemsMutation', () => {
-  it('Triggering mutate function with variables', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  it('Data and variables should pass with values', async () => {
+    const mockPost = jest.fn().mockReturnValue({ nonUpdatedIds: ['testId-1'] });
+    useOkapiKy.mockClear().mockReturnValue({
+      post: mockPost,
+    });
     const itemIds = ['itemId1'];
     const { result } = renderHook(() => useMoveItemsMutation({ onError, onSuccess }), { wrapper });
     expect(result.current.isLoading).toBe(false);
     expect(result.current.status).toBe('idle');
     expect(result.current.isIdle).toBe(true);
 
-    await result.current.mutate({ itemIds });
+    await result.current.mutateAsync({ itemIds });
 
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.status).toBe('loading');
+    expect(result.current.isSuccess).toBe(true);
+    expect(result.current.status).toBe('success');
     expect(result.current.isIdle).toBe(false);
+    expect(result.current.data).toEqual({ nonUpdatedIds: ['testId-1'] });
     expect(result.current.variables).toEqual({ itemIds: ['itemId1'] });
   });
-  it('Triggering mutateAsync function with nonUpdatedIds is empty', async () => {
+  it('Data and variables should pass with empty values', async () => {
+    const mockPost = jest.fn().mockReturnValue({ nonUpdatedIds: [] });
+    useOkapiKy.mockClear().mockReturnValue({
+      post: mockPost,
+    });
+    const itemIds = [];
     const { result } = renderHook(() => useMoveItemsMutation({ onError, onSuccess }), { wrapper });
 
-    await result.current.mutateAsync();
+    await result.current.mutateAsync({ itemIds });
 
     expect(result.current.isSuccess).toBe(true);
     expect(result.current.status).toBe('success');
     expect(result.current.isIdle).toBe(false);
     expect(result.current.data).toEqual({ nonUpdatedIds: [] });
+    expect(result.current.variables).toEqual({ itemIds: [] });
   });
 });
