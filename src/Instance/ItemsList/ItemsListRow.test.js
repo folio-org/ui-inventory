@@ -68,12 +68,14 @@ const renderItemsListRow = (props) => {
 
 
 describe('ItemsListRow', () => {
-  it('new mo should render isDragging of snapshot is true', () => {
+  it('Message should render when isDragging of snapshot is true', () => {
     renderItemsListRow(defaultProps);
     expect(screen.queryByText('ui-inventory.moveItems.move.items.count')).toBeInTheDocument();
+    expect(screen.queryByRole('row', { name: 'cell 1cell 2cell 3' })).not.toBeInTheDocument();
   });
-  it('child should render isDragging of snapshot is false', () => {
+  it('Row Data should render when isDragging of snapshot is false', () => {
     renderItemsListRow(defaultProps);
+    expect(screen.queryByText('ui-inventory.moveItems.move.items.count')).not.toBeInTheDocument();
     expect(screen.getByRole('row', { name: 'cell 1cell 2cell 3' })).toBeInTheDocument();
   });
 });
