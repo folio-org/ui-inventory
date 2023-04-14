@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event';
 import '../../../test/jest/__mock__';
 import { renderWithIntl } from '../../../test/jest/helpers';
 
-import '../../../test/jest/__mock__/stripesComponents.mock';
 import HRIDHandlingSettings from './HRIDHandlingSettings';
 
 describe('HRIDHandlingSettings component', () => {
@@ -53,13 +52,13 @@ describe('HRIDHandlingSettings component', () => {
     const checkBox = screen.getByRole('checkbox', { id: 'checkbox-3' });
     userEvent.click(checkBox);
     expect(checkBox).toBeChecked();
-    const ConfirmationButton = screen.getByRole('button', { name: /Confirmation/i });
+    const ConfirmationButton = screen.getByRole('button', { name: /confirm/i });
     expect(ConfirmationButton).toBeInTheDocument();
     userEvent.click(ConfirmationButton);
   });
 
   it('Cancellation Button', () => {
-    const CancellationButton = screen.getByRole('button', { name: /Cancellation/i });
+    const CancellationButton = screen.getByRole('button', { name: 'cancel' });
     expect(CancellationButton).toBeInTheDocument();
     userEvent.click(CancellationButton);
   });
@@ -81,7 +80,7 @@ describe('HRIDHandlingSettings component', () => {
     assignPrefixFields.forEach((field, index) => expect(field.value).toBe(testValues[index * 2 + 1]));
     const saveAndCloseButton = screen.getByRole('button', { name: /stripes-components.saveAndClose/i });
     userEvent.click(saveAndCloseButton);
-    const ConfirmationButton = screen.getByRole('button', { name: /Confirmation/i });
+    const ConfirmationButton = screen.getByRole('button', { name: /confirm/i });
     userEvent.click(ConfirmationButton);
     expect(mutator.hridSettings.PUT).toHaveBeenCalled();
   });
