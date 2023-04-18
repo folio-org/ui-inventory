@@ -28,14 +28,17 @@ const BoundWithFieldRow = ({ fields, ...rest }) => {
   data.forEach(boundWithTitle => {
     if (!boundWithTitle.briefHoldingsRecord?.id) {
       const holdingsRecord = holdingsRecordsByHrid[boundWithTitle.briefHoldingsRecord?.hrid];
-      boundWithTitle.briefHoldingsRecord.id = holdingsRecord.id;
 
-      const instance = instancesById[holdingsRecord.instanceId];
-      boundWithTitle.briefInstance = {
-        id: instance?.id,
-        hrid: instance?.hrid,
-        title: instance?.title,
-      };
+      if (holdingsRecord) {
+        boundWithTitle.briefHoldingsRecord.id = holdingsRecord.id;
+
+        const instance = instancesById[holdingsRecord.instanceId];
+        boundWithTitle.briefInstance = {
+          id: instance?.id,
+          hrid: instance?.hrid,
+          title: instance?.title,
+        };
+      }
     }
   });
 
