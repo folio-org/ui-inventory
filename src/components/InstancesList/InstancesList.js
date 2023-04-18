@@ -127,6 +127,10 @@ class InstancesList extends React.Component {
       listen: PropTypes.func,
       replace: PropTypes.func,
     }),
+    getLastBrowse: PropTypes.func.isRequired,
+    getLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSearch: PropTypes.func.isRequired,
+    storeLastSearchOffset: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -157,7 +161,11 @@ class InstancesList extends React.Component {
   }
 
   componentDidMount() {
-    const { history } = this.props;
+    const {
+      history,
+      getParams,
+    } = this.props;
+    const params = getParams();
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -171,18 +179,18 @@ class InstancesList extends React.Component {
       }
     });
 
-    const { browseSearch, pageConfig } = this.getBrowsePageState();
+    this.processLastSearchTerms();
 
     this.setState({
-      browsePageSearch: browseSearch,
-      browsePageConfig: pageConfig,
-      openedFromBrowse: !!browseSearch,
+      openedFromBrowse: params.selectedBrowseResult === 'true',
       optionSelected: '',
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const qindex = this.getQIndexFromParams();
+
+    this.storeLastSearchTerms(prevProps);
 
     // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
     // doesn't like this because setState causes a re-render and can
@@ -195,23 +203,52 @@ class InstancesList extends React.Component {
   }
 
   componentWillUnmount() {
+    const { parentMutator } = this.props;
     this.unlisten();
+    parentMutator.records.reset();
   }
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    authorityId: '',
   };
+
+  processLastSearchTerms = () => {
+    const {
+      getParams,
+      location,
+      parentMutator,
+      getLastSearchOffset,
+      storeLastSearch,
+    } = this.props;
+    const params = getParams();
+    const lastSearchOffset = getLastSearchOffset();
+    const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
+
+    storeLastSearch(location.search);
+    parentMutator.resultOffset.replace(offset);
+  }
+
+  storeLastSearchTerms = (prevProps) => {
+    const {
+      location,
+      parentResources,
+      storeLastSearch,
+      storeLastSearchOffset,
+    } = this.props;
+
+    if (prevProps.location.search !== location.search) {
+      storeLastSearch(location.search);
+    }
+
+    if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
+      storeLastSearchOffset(parentResources.resultOffset);
+    }
+  }
 
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('qindex');
-  }
-
-  getBrowsePageState = () => {
-    return {
-      browseSearch: this.props.location.state?.browseSearch,
-      pageConfig: this.props.location.state?.pageConfig,
-    };
   }
 
   getInitialToggableColumns = () => {
@@ -278,6 +315,11 @@ class InstancesList extends React.Component {
     this.props.updateLocation({ layer: 'create' });
   }
 
+  openCreateMARCRecord = () => {
+    const searchParams = new URLSearchParams(this.props.location.search);
+    this.props.goTo(`/inventory/quick-marc/create-bib?${searchParams}`);
+  }
+
   copyInstance = (instance) => {
     const {
       precedingTitles,
@@ -325,8 +367,7 @@ class InstancesList extends React.Component {
   renderNavigation = () => (
     <>
       <SearchModeNavigation
-        search={this.state.browsePageSearch}
-        state={{ pageConfig: this.state.browsePageConfig }}
+        search={this.props.getLastBrowse()}
       />
       <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
     </>
@@ -584,6 +625,21 @@ class InstancesList extends React.Component {
             )}
             type="create-inventory-records"
           />
+          <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-newmarcrecord"
+              onClick={buildOnClickHandler(this.openCreateMARCRecord)}
+            >
+              <Icon
+                icon="plus-sign"
+                size="medium"
+                iconClassName={css.actionIcon}
+              />
+              <FormattedMessage id="ui-inventory.newMARCRecord" />
+            </Button>
+          </IfPermission>
+
           {
           inTransitItemsExportInProgress ?
             this.getActionItem({
@@ -994,6 +1050,9 @@ class InstancesList extends React.Component {
               callNumber: '15%',
               subject: '50%',
               contributor: '50%',
+              contributors: {
+                max: '400px',
+              },
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',

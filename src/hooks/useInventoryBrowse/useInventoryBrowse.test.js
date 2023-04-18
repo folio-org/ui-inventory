@@ -50,6 +50,7 @@ describe('useInventoryBrowse', () => {
   }));
 
   beforeEach(() => {
+    queryClient.clear();
     mockGet.mockClear();
     useOkapiKy.mockClear().mockReturnValue({
       get: mockGet,
@@ -96,5 +97,19 @@ describe('useInventoryBrowse', () => {
         searchParams: expect.objectContaining({ query: expect.stringMatching(/^.* > .*$/) })
       })
     );
+  });
+
+  it('should not fetch browse data when filters are empty', async () => {
+    const { result, waitFor } = renderHook(() => useInventoryBrowse({
+      filters: { qindex: filters.qindex },
+      pageParams: {
+        ...pageParams,
+        pageConfig: [1, PAGE_DIRECTIONS.next, data.next],
+      },
+    }), { wrapper });
+
+    await waitFor(() => !result.current.isFetching);
+
+    expect(mockGet).not.toHaveBeenCalled();
   });
 });

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { flowRight, omit } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes-core';
+import { stripesConnect } from '@folio/stripes/core';
 
 import withFacets from '../../withFacets';
 import { DataContext } from '../../contexts';

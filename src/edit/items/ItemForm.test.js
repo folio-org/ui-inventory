@@ -6,9 +6,12 @@ import {
 } from 'react-query';
 import { screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
 
 import '../../../test/jest/__mock__';
+
+import { StripesContext } from '@folio/stripes/core';
+
+
 import {
   renderWithIntl,
   translationsProperties,

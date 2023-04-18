@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -26,6 +26,7 @@ import { browseInstanceIndexes } from '../../filterConfig';
 import {
   useBrowseValidation,
   useInventoryBrowse,
+  useLastSearchTerms,
 } from '../../hooks';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
 
@@ -34,9 +35,21 @@ const BrowseInventory = () => {
   const location = useLocation();
   const intl = useIntl();
   const [namespace] = useNamespace();
+  const {
+    getLastSearch,
+    getLastBrowseOffset,
+    storeLastBrowse,
+    storeLastBrowseOffset,
+  } = useLastSearchTerms();
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
-  const [pageConfig, setPageConfig] = useState(INIT_PAGE_CONFIG);
+  const [pageConfig, setPageConfig] = useState(getLastBrowseOffset());
+  const { search } = location;
+
+  useEffect(() => {
+    storeLastBrowse(search);
+    storeLastBrowseOffset(pageConfig);
+  }, [search, pageConfig]);
 
   const [
     filters,
@@ -54,7 +67,6 @@ const BrowseInventory = () => {
   const {
     data,
     isFetching,
-    isLoading,
     pagination,
     totalRecords,
   } = useInventoryBrowse({
@@ -94,7 +106,9 @@ const BrowseInventory = () => {
           id="browse-inventory-filters-pane"
           toggleFilters={toggleFilters}
         >
-          <SearchModeNavigation />
+          <SearchModeNavigation
+            search={getLastSearch()}
+          />
 
           <SingleSearchForm
             applySearch={onApplySearch}
@@ -127,7 +141,6 @@ const BrowseInventory = () => {
         filters={filters}
         isFetching={isFetching}
         isFiltersOpened={isFiltersOpened}
-        isLoading={isLoading}
         pagination={pagination}
         toggleFiltersPane={toggleFilters}
         totalRecords={totalRecords}

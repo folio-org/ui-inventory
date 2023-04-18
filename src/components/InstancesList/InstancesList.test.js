@@ -7,12 +7,13 @@ import {
   act,
   fireEvent,
   screen,
+  waitFor,
+  cleanup,
 } from '@testing-library/react';
 
 import '../../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -21,6 +22,14 @@ import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 
 const updateMock = jest.fn();
+const mockQueryReplace = jest.fn();
+const mockResultOffsetReplace = jest.fn();
+const mockStoreLastSearch = jest.fn();
+const mockRecordsReset = jest.fn();
+const mockGetLastSearchOffset = jest.fn();
+const mockStoreLastSearchOffset = jest.fn();
+
+jest.mock('../../storage');
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -84,8 +93,10 @@ const renderInstancesList = ({
           <InstancesList
             parentResources={resources}
             parentMutator={{
+              resultOffset: { replace: mockResultOffsetReplace },
               resultCount: { replace: noop },
-              query: { update: updateMock, replace: noop },
+              query: { update: updateMock, replace: mockQueryReplace },
+              records: { reset: mockRecordsReset },
             }}
             data={{
               ...data,
@@ -101,6 +112,10 @@ const renderInstancesList = ({
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
             fetchFacets={noop}
+            getLastBrowse={jest.fn()}
+            getLastSearchOffset={mockGetLastSearchOffset}
+            storeLastSearch={mockStoreLastSearch}
+            storeLastSearchOffset={mockStoreLastSearchOffset}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -122,6 +137,102 @@ describe('InstancesList', () => {
       jest.clearAllMocks();
     });
 
+    describe('when the component is mounted', () => {
+      it('should write location.search to the session storage', () => {
+        const search = '?qindex=title&query=book&sort=title';
+        history.push({ search });
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+      });
+
+      describe('and browse result was selected', () => {
+        it('should reset offset', () => {
+          mockResultOffsetReplace.mockClear();
+          const params = {
+            selectedBrowseResult: 'true',
+            filters: 'searchContributors.2b94c631-fca9-4892-a730-03ee529ffe2a',
+            qindex: 'contributor',
+            query: 'Abdill, Aasha M.,',
+          };
+
+          renderInstancesList({
+            segment: 'instances',
+            getParams: () => params,
+          });
+
+          expect(mockResultOffsetReplace).toHaveBeenCalledWith(0);
+        });
+      });
+
+      describe('and browse result was not selected', () => {
+        it('should replace resultOffset', () => {
+          mockResultOffsetReplace.mockClear();
+
+          renderInstancesList({
+            segment: 'instances',
+            getLastSearchOffset: () => 100,
+          });
+
+          expect(mockResultOffsetReplace).toHaveBeenCalledWith(100);
+        });
+      });
+    });
+
+    describe('when the component is updated', () => {
+      describe('and location.search has been changed', () => {
+        it('should write location.search to the session storage', () => {
+          const search = '?qindex=title&query=book&sort=title';
+          mockStoreLastSearch.mockClear();
+          history.push({ search });
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+        });
+      });
+
+      describe('and offset has been changed', () => {
+        it('should write offset to storage', () => {
+          const offset = 100;
+          mockStoreLastSearchOffset.mockClear();
+
+          const { rerender } = renderInstancesList({ segment: 'instances' });
+
+          renderInstancesList({
+            segment: 'instances',
+            parentResources: {
+              ...resources,
+              resultOffset: offset,
+            },
+          }, rerender);
+
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
+        });
+      });
+    });
+
+    describe('when the component is unmounted', () => {
+      it('should reset records', () => {
+        mockRecordsReset.mockClear();
+
+        const { unmount } = renderInstancesList({ segment: 'instances' });
+        unmount();
+        expect(mockRecordsReset).toHaveBeenCalled();
+      });
+    });
+
+    it('should pass the correct search by clicking on the `Browse` tab', () => {
+      cleanup();
+      const search = '?qindex=subjects&query=book';
+
+      jest.spyOn(history, 'push');
+
+      renderInstancesList({
+        segment: 'instances',
+        getLastBrowse: () => search,
+      });
+
+      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+      expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
+    });
+
     it('should have proper list results size', () => {
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
     });
@@ -137,6 +248,23 @@ describe('InstancesList', () => {
 
       it('should disable toggleable columns', () => {
         expect(screen.getByText(/show columns/i)).toBeInTheDocument();
+      });
+
+      describe('"New MARC Bib Record" button', () => {
+        it('should render', () => {
+          expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
+        });
+
+        it('should redirect to the correct layer', async () => {
+          jest.spyOn(history, 'push');
+
+          const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
+
+          waitFor(() => {
+            fireEvent.click(button);
+            expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
+          });
+        });
       });
 
       describe('hiding contributors column', () => {

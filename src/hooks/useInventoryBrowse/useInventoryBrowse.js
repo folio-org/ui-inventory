@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import { noop } from 'lodash';
@@ -21,9 +21,7 @@ import {
 } from '../../constants';
 import usePrevious from '../usePrevious';
 import {
-  FIVE_MINUTES,
   INITIAL_SEARCH_PARAMS_MAP,
-  INIT_PAGE_CONFIG,
   PAGINATION_SEARCH_PARAMS_MAP,
   PATH_MAP,
   PRECEDING_RECORDS_COUNT,
@@ -53,13 +51,9 @@ const useInventoryBrowse = ({
   options = {},
 }) => {
   const ky = useOkapiKy();
-  const { search, state } = useLocation();
+  const { search } = useLocation();
   const [namespace] = useNamespace();
   const { pageConfig = [], setPageConfig = noop } = pageParams;
-
-  useEffect(() => {
-    setPageConfig(state?.pageConfig || INIT_PAGE_CONFIG);
-  }, []);
 
   const normalizedFilters = {
     ...Object.entries(filters).reduce((acc, [key, value]) => ({
@@ -92,6 +86,8 @@ const useInventoryBrowse = ({
   } = useQuery(
     [namespace, filters, qindex, prevSearchIndex, pageConfig],
     async () => {
+      if (!hasFilters) return {};
+
       const [pageNumber, direction, anchor] = pageConfig;
 
       const query = buildFilterQuery(
@@ -110,9 +106,9 @@ const useInventoryBrowse = ({
         }
       }).json();
     }, {
-      enabled: Boolean(pageConfig && qindex && hasFilters),
+      enabled: Boolean(pageConfig && qindex),
       keepPreviousData: qindex === prevSearchIndex || hasFilters,
-      staleTime: FIVE_MINUTES,
+      staleTime: 0,
       ...options,
     },
   );

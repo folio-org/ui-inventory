@@ -5,9 +5,11 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { fireEvent } from '@testing-library/react';
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
 
 import '../../../test/jest/__mock__';
+
+import { StripesContext } from '@folio/stripes/core';
+
 import {
   renderWithIntl,
   translationsProperties,
@@ -133,8 +135,7 @@ describe('HoldingsForm', () => {
   describe('when page was just loaded', () => {
     it('should have disabled Save and close button', () => {
       const { getByRole } = renderHoldingsForm();
-
-      expect(getByRole('button', { name: /Save and close/i })).toBeDisabled();
+      expect(getByRole('button', { name: /Save & close/i })).toBeDisabled();
     });
   });
 
@@ -149,7 +150,7 @@ describe('HoldingsForm', () => {
         target: { value: '12345' },
       });
 
-      expect(getByRole('button', { name: /Save and close/i })).toBeEnabled();
+      expect(getByRole('button', { name: /Save & close/i })).toBeEnabled();
     });
   });
 });
