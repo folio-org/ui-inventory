@@ -4,6 +4,7 @@
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
+* Add bound-with parts to an Item.  Refs UIIN-1998.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
@@ -46,8 +47,6 @@
 * Retain search query, result list and page number after switching between Search and Browse searches. Refs UIIN-2337.
 * Browse results are not updated when field with Subject/Contributor value is linked/unlinked. Fixes UIIN-2342.
 * Browse results in Inventory are not cleared when browse input field is cleared. Fixes UIIN-2299.
-
-* Add bound-with parts to an Item.  Refs UIIN-1998.
 
 ## [9.4.0](https://github.com/folio-org/ui-inventory/tree/v9.4.0) (2023-02-23)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.3.0...v9.4.0)
