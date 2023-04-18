@@ -37,7 +37,6 @@ const BoundWithFieldRow = ({ fields, ...rest }) => {
         title: instance?.title,
       };
     }
-    return boundWithTitle;
   });
 
   return (
