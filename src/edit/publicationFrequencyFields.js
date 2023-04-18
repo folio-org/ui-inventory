@@ -1,10 +1,14 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-import { TextArea } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
+import {
+  Label,
+  RepeatableField,
+  TextArea,
+} from '@folio/stripes/components';
 
 const PublicationFrequencyFields = props => {
   const {
@@ -13,20 +17,32 @@ const PublicationFrequencyFields = props => {
     canDelete,
   } = props;
 
+  const legend = (
+    <Label tagName="legend">
+      <FormattedMessage id="ui-inventory.publicationFrequency" />
+    </Label>
+  );
+
+  const renderField = field => (
+    <Field
+      name={field}
+      component={TextArea}
+      rows={1}
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="publicationFrequency"
-      label={<FormattedMessage id="ui-inventory.publicationFrequency" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.publicationFrequency" />}
       addLabel={<FormattedMessage id="ui-inventory.addPublicationFrequency" />}
-      addButtonId="clickable-add-publicationfrequency"
-      template={[{
-        label: <FormattedMessage id="ui-inventory.publicationFrequency" />,
-        component: TextArea,
-        rows: 1,
-        disabled: !canEdit,
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };

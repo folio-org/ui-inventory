@@ -1,48 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
-import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
 import {
   languageOptions,
   Select,
+  RepeatableField,
+  Label,
 } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
-
-const renderLanguageField = ({ field, fieldIndex, canEdit, langOptions }) => {
-  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.language" /> : null;
-
-  return (
-    <FormattedMessage id="ui-inventory.selectLanguage">
-      {([placeholder]) => (
-        <Field
-          label={label}
-          name={field}
-          title={field}
-          component={Select}
-          placeholder={placeholder}
-          dataOptions={langOptions}
-          required
-          data-test-language-field-count={fieldIndex}
-          disabled={!canEdit}
-        />
-      )}
-    </FormattedMessage>
-  );
-};
-
-renderLanguageField.propTypes = {
-  field: PropTypes.object,
-  fieldIndex: PropTypes.number,
-  canEdit: PropTypes.bool,
-  langOptions: PropTypes.arrayOf(PropTypes.object),
-};
-renderLanguageField.defaultProps = {
-  canEdit: true,
-  langOptions: [],
-};
 
 const LanguageFields = props => {
   const {
@@ -55,17 +26,36 @@ const LanguageFields = props => {
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
 
+  const legend = (
+    <Label tagName="legend" required>
+      <FormattedMessage id="ui-inventory.language" />
+    </Label>
+  );
+
+  const renderField = (field, index) => (
+    <Field
+      name={field}
+      title={field}
+      component={Select}
+      placeholder={intl.formatMessage({ id: 'ui-inventory.selectLanguage' })}
+      dataOptions={langOptions}
+      data-test-language-field-count={index}
+      required
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="languages"
-      label={<FormattedMessage id="ui-inventory.languages" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.languages" />}
       addLabel={<FormattedMessage id="ui-inventory.addLanguage" />}
-      addButtonId="clickable-add-language"
-      template={[{
-        render(fieldObj) { return renderLanguageField({ ...fieldObj, canEdit, langOptions }); },
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };

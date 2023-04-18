@@ -4,6 +4,8 @@
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
+* Instance Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2390.
+* Instance Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2372.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)

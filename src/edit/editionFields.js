@@ -1,10 +1,14 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-import { TextField } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
+import {
+  Label,
+  RepeatableField,
+  TextField,
+} from '@folio/stripes/components';
 
 const EditionFields = props => {
   const {
@@ -13,19 +17,31 @@ const EditionFields = props => {
     canDelete,
   } = props;
 
+  const legend = (
+    <Label tagName="legend">
+      <FormattedMessage id="ui-inventory.edition" />
+    </Label>
+  );
+
+  const renderField = field => (
+    <Field
+      name={field}
+      component={TextField}
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="editions"
-      label={<FormattedMessage id="ui-inventory.editions" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.editions" />}
       addLabel={<FormattedMessage id="ui-inventory.addEdition" />}
-      addButtonId="clickable-add-edition"
-      template={[{
-        component: TextField,
-        label: <FormattedMessage id="ui-inventory.edition" />,
-        disabled: !canEdit,
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };

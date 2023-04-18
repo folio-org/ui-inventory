@@ -1,10 +1,14 @@
 import React from 'react';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { TextArea } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
+import {
+  Label,
+  RepeatableField,
+  TextArea,
+} from '@folio/stripes/components';
 
 const PublicationRangeFields = props => {
   const {
@@ -13,20 +17,32 @@ const PublicationRangeFields = props => {
     canDelete,
   } = props;
 
+  const legend = (
+    <Label tagName="legend">
+      <FormattedMessage id="ui-inventory.publicationRange" />
+    </Label>
+  );
+
+  const renderField = field => (
+    <Field
+      name={field}
+      component={TextArea}
+      rows={1}
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="publicationRange"
-      label={<FormattedMessage id="ui-inventory.publicationRange" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.publicationRange" />}
       addLabel={<FormattedMessage id="ui-inventory.addPublicationRange" />}
-      addButtonId="clickable-add-publicationrange"
-      template={[{
-        label: <FormattedMessage id="ui-inventory.publicationRange" />,
-        component: TextArea,
-        rows: 1,
-        disabled: !canEdit,
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };

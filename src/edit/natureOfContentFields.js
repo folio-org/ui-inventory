@@ -1,49 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
-import { Select } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
-
-const renderNatureOfContentField = ({ field, fieldIndex, canEdit }, natureOfContentTerms) => {
-  const natureOfContentTermOptions = natureOfContentTerms
-    ? natureOfContentTerms.map(it => ({
-      label: it.name,
-      value: it.id,
-    }))
-    : [];
-  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.natureOfContentTerm" /> : null;
-
-  return (
-    <FormattedMessage id="ui-inventory.selectNatureOfContentTerm">
-      {([placeholder]) => (
-        <Field
-          label={label}
-          name={field}
-          title={field}
-          component={Select}
-          placeholder={placeholder}
-          dataOptions={natureOfContentTermOptions}
-          data-test-nature-of-content-field-count={fieldIndex}
-          disabled={!canEdit}
-        />
-      )}
-    </FormattedMessage>
-  );
-};
-
-renderNatureOfContentField.propTypes = {
-  field: PropTypes.object,
-  fieldIndex: PropTypes.number,
-  canEdit: PropTypes.bool,
-};
-renderNatureOfContentField.defaultProps = {
-  canEdit: true,
-};
+import {
+  Label,
+  RepeatableField,
+  Select,
+} from '@folio/stripes/components';
 
 const NatureOfContentFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     canAdd,
     canEdit,
@@ -51,17 +23,41 @@ const NatureOfContentFields = props => {
     natureOfContentTerms,
   } = props;
 
+  const natureOfContentTermOptions = natureOfContentTerms
+    ? natureOfContentTerms.map(it => ({
+      label: it.name,
+      value: it.id,
+    }))
+    : [];
+
+  const headLabels = (
+    <Label tagName="legend">
+      <FormattedMessage id="ui-inventory.natureOfContentTerm" />
+    </Label>
+  );
+
+  const renderField = field => (
+    <Field
+      name={field}
+      title={field}
+      component={Select}
+      placeholder={formatMessage({ id: 'ui-inventory.selectNatureOfContentTerm' })}
+      dataOptions={natureOfContentTermOptions}
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="natureOfContentTermIds"
-      label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
       addLabel={<FormattedMessage id="ui-inventory.addNatureOfContentTerm" />}
-      addButtonId="clickable-add-nature-of-content"
-      template={[{
-        render(fieldObj) { return renderNatureOfContentField({ ...fieldObj, canEdit }, natureOfContentTerms); },
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={headLabels}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };

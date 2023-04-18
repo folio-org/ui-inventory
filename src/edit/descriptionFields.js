@@ -1,10 +1,14 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-import { TextField } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
+import {
+  Label,
+  TextField,
+  RepeatableField,
+} from '@folio/stripes/components';
 
 const DescriptionFields = props => {
   const {
@@ -13,19 +17,31 @@ const DescriptionFields = props => {
     canDelete,
   } = props;
 
+  const legend = (
+    <Label tagName="legend">
+      <FormattedMessage id="ui-inventory.physicalDescription" />
+    </Label>
+  );
+
+  const renderField = field => (
+    <Field
+      name={field}
+      component={TextField}
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="physicalDescriptions"
-      label={<FormattedMessage id="ui-inventory.physicalDescriptions" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.physicalDescriptions" />}
       addLabel={<FormattedMessage id="ui-inventory.addDescription" />}
-      addButtonId="clickable-add-description"
-      template={[{
-        label: <FormattedMessage id="ui-inventory.physicalDescription" />,
-        component: TextField,
-        disabled: !canEdit,
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };
