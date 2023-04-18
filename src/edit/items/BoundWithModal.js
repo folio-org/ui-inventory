@@ -61,7 +61,7 @@ const BoundWithModal = ({
             type="submit"
             onClick={addNewHrids}
           >
-            <FormattedMessage id="ui-inventory.saveAndClose" />
+            <FormattedMessage id="stripes-components.saveAndClose" />
           </Button>
           <Button
             data-testid="bound-with-modal-cancel-button"
