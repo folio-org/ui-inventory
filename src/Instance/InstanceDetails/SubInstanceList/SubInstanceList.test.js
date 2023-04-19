@@ -1,41 +1,40 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import '../../../../test/jest/__mock__';
-import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 import { renderWithIntl, translationsProperties } from '../../../../test/jest/helpers';
+import useLoadSubInstances from '../../../hooks/useLoadSubInstances';
 
 import SubInstanceList from './SubInstanceList';
 
-const mockUseCallout = jest.fn();
+const mockuseLoadSubInstancesVaues = [
+  {
+    id: '1',
+    title: 'Test Title 1',
+    hrid: 'TestHrid1',
+    publication: [{ publisher: 'Test Publisher 1', dateOfPublication: '04-17-2023' }],
+    identifiers: [
+      { identifierTypeId: 'ISBN', value: '369369' },
+    ]
+  },
+  {
+    id: '2',
+    title: 'Test Title 2',
+    hrid: 'TestHrid2',
+    publication: [{ publisher: 'Test Publisher 2', dateOfPublication: '04-17-2023' }],
+    identifiers: [
+      { identifierTypeId: 'ISSN', value: '789789' },
+    ],
+  }
+];
+
 const history = createMemoryHistory();
 const defaultProps = {
-  id: 'SubInstance TestID',
-  label: 'SubInstance LabelTest',
-  titles: [
-    {
-      id: '1',
-      title: 'SubInstanceList Title 1',
-      hrid: 'SubInstanceList-hrid-1',
-      publication: [{ publisher: 'Test Publisher 1', dateOfPublication: '2023-04-05' }],
-      identifiers: [
-        { identifierTypeId: '1', value: '1111111111' },
-        { identifierTypeId: '2', value: '2222222222' },
-      ],
-    },
-    {
-      id: '2',
-      title: 'Test Title 2',
-      hrid: 'testSubInstanceList-hrid-2',
-      publication: [{ publisher: 'Test Publisher 2', dateOfPublication: '2022-02-01' }],
-      identifiers: [
-        { identifierTypeId: '2', value: '3333333333' },
-        { identifierTypeId: '3', value: '4444444444' },
-      ],
-    }
-  ],
+  id: 'TestID',
+  label: 'LabelTest',
+  titles: [{}],
   titleKey: 'id',
 };
 
@@ -49,36 +48,45 @@ const renderSubInstanceList = (props) => renderWithIntl(
   translationsProperties
 );
 
+
 jest.mock('../../../hooks/useReferenceData', () => jest.fn().mockReturnValue({
-  identifierTypesById : 'id'
+  identifierTypesById : {
+    'ISBN': { name : 'ISBN' },
+    'ISSN': { name : 'ISSN' }
+  }
 }));
+jest.mock('../../../hooks/useLoadSubInstances', () => jest.fn());
 
-jest.mock('../../../hooks', () => ({
-  ...jest.requireActual('../../../hooks'),
-  useCallout: mockUseCallout,
-}));
-
-jest.mock('../../../hooks/useLoadSubInstances', () => jest.fn().mockReturnValue(
-  [
-    {
-      id: '1',
-      title: 'SubInstanceList Title 1',
-      hrid: 'SubInstanceList-hrid-1',
-      publication: [
-        { publisher: 'Test Publisher 1', dateOfPublication: '2023-04-05' }
-      ],
-      identifiers: [
-        { identifierTypeId: '1', value: '369369' },
-        { identifierTypeId: '2', value: '786786' },
-      ]
-    }
-  ]
-));
 
 describe('render SubInstanceList', () => {
-  it('render message by clicking on [Next] button', () => {
-    const { container } = renderSubInstanceList(defaultProps);
-    userEvent.click(screen.getByRole('button', { name: 'Next' }));
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  it('NoValue should display when no title is present', () => {
+    useLoadSubInstances.mockReturnValue([{}]);
+    const { getAllByText } = renderSubInstanceList(defaultProps);
+    expect(getAllByText(/No value set/i).length).toBe(4);
+  });
+  it('No link to be present when tittleKey is empty', () => {
+    useLoadSubInstances.mockReturnValue(mockuseLoadSubInstancesVaues);
+    const { container, getByText } = renderSubInstanceList({ ...defaultProps, titleKey: '' });
+    expect(getByText('Test Title 1')).toBeInTheDocument();
+    expect(getByText('Test Title 1')).not.toHaveAttribute('href');
+    expect(getByText('Test Title 2')).toBeInTheDocument();
+    expect(getByText('Test Title 2')).not.toHaveAttribute('href');
+    expect(container.getElementsByTagName('a').length).toBe(0);
+  });
+  it('Link to a title to be present when title and tittleKey is present', () => {
+    useLoadSubInstances.mockReturnValue(mockuseLoadSubInstancesVaues);
+    const { container, getByText } = renderSubInstanceList(defaultProps);
+    expect(getByText('Test Title 1')).toHaveAttribute('href', '/inventory/view/1');
+    expect(getByText('Test Title 2')).toHaveAttribute('href', '/inventory/view/2');
+    expect(container.getElementsByTagName('a').length).toBe(2);
+  });
+  it('Pagination message to be render on clicking next button', () => {
+    useLoadSubInstances.mockReturnValue(mockuseLoadSubInstancesVaues);
+    const { container, getByRole } = renderSubInstanceList(defaultProps);
+    userEvent.click(getByRole('button', { name: 'Next' }));
     expect(container.getElementsByClassName('sr-only').length).toBe(1);
   });
 });
