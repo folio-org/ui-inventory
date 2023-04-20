@@ -53,6 +53,7 @@ const AlternativeTitles = props => {
           component={Select}
           dataOptions={alternativeTitleTypeOptions}
           placeholder={formatMessage({ id: 'ui-inventory.selectAlternativeTitleType' })}
+          aria-label={formatMessage({ id: 'ui-inventory.type' })}
           disabled={!canEdit}
           required
         />
@@ -61,6 +62,7 @@ const AlternativeTitles = props => {
         <Field
           name={`${field}.alternativeTitle`}
           component={TextArea}
+          aria-label={formatMessage({ id: 'ui-inventory.alternativeTitle' })}
           disabled={!canEdit}
           required
           fullWidth

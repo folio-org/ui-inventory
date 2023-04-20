@@ -24,12 +24,17 @@ const PublicationFrequencyFields = props => {
   );
 
   const renderField = field => (
-    <Field
-      name={field}
-      component={TextArea}
-      rows={1}
-      disabled={!canEdit}
-    />
+    <FormattedMessage id="ui-inventory.publicationFrequency">
+      {([ariaLabel]) => (
+        <Field
+          name={field}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+          ariaLabel={ariaLabel}
+        />
+      )}
+    </FormattedMessage>
   );
 
   return (

@@ -24,12 +24,17 @@ const PublicationRangeFields = props => {
   );
 
   const renderField = field => (
-    <Field
-      name={field}
-      component={TextArea}
-      rows={1}
-      disabled={!canEdit}
-    />
+    <FormattedMessage id="ui-inventory.publicationRange">
+      {([ariaLabel]) => (
+        <Field
+          name={field}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+          aria-label={ariaLabel}
+        />
+      )}
+    </FormattedMessage>
   );
 
   return (

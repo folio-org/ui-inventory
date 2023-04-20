@@ -68,6 +68,7 @@ const ElectronicAccessFields = props => {
           component={Select}
           dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...relationshipOptions]}
           disabled={!canEdit}
+          ariaLabel={formatMessage({ id: 'ui-inventory.urlRelationship' })}
         />
       </Col>
       <Col sm={2}>
@@ -76,6 +77,7 @@ const ElectronicAccessFields = props => {
           component={TextArea}
           rows={1}
           disabled={!canEdit}
+          aria-label={formatMessage({ id: 'ui-inventory.uri' })}
         />
       </Col>
       <Col sm={2}>
@@ -84,6 +86,7 @@ const ElectronicAccessFields = props => {
           component={TextArea}
           rows={1}
           disabled={!canEdit}
+          aria-label={formatMessage({ id: 'ui-inventory.linkText' })}
         />
       </Col>
       <Col sm={2}>
@@ -92,6 +95,7 @@ const ElectronicAccessFields = props => {
           component={TextArea}
           rows={1}
           disabled={!canEdit}
+          aria-label={formatMessage({ id: 'ui-inventory.materialsSpecification' })}
         />
       </Col>
       <Col sm={4}>
@@ -100,6 +104,7 @@ const ElectronicAccessFields = props => {
           component={TextArea}
           rows={1}
           disabled={!canEdit}
+          aria-label={formatMessage({ id: 'ui-inventory.urlPublicNote' })}
         />
       </Col>
     </Row>

@@ -25,11 +25,16 @@ const SubjectFields = props => {
 
   const renderField = field => {
     return (
-      <Field
-        name={`${field}.value`}
-        component={TextField}
-        disabled={!canEdit}
-      />
+      <FormattedMessage id="ui-inventory.subjects">
+        {([ariaLabel]) => (
+          <Field
+            name={`${field}.value`}
+            component={TextField}
+            disabled={!canEdit}
+            ariaLabel={ariaLabel}
+          />
+        )}
+      </FormattedMessage>
     );
   };
 

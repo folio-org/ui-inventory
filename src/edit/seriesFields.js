@@ -36,6 +36,7 @@ const SeriesFields = props => {
     <FieldArray
       name="series"
       component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.seriesStatements" />}
       addLabel={<FormattedMessage id="ui-inventory.addSeries" />}
       onAdd={fields => fields.push({ value: '' })}
       headLabels={legend}
