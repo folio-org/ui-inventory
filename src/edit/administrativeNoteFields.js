@@ -1,6 +1,9 @@
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   RepeatableField,
@@ -8,15 +11,20 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-const administrativeNoteFields = () => {
+const AdministrativeNoteFields = () => {
+  const { formatMessage } = useIntl();
+
+  const administrativeNoteLabel = formatMessage({ id: 'ui-inventory.administrativeNote' });
+
   const legend = (
     <Label tagName="legend">
-      <FormattedMessage id="ui-inventory.administrativeNote" />
+      {administrativeNoteLabel}
     </Label>
   );
 
   const renderField = field => (
     <Field
+      aria-label={administrativeNoteLabel}
       name={field}
       component={TextArea}
       rows={1}
@@ -36,4 +44,4 @@ const administrativeNoteFields = () => {
   );
 };
 
-export default administrativeNoteFields;
+export default AdministrativeNoteFields;

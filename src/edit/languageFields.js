@@ -26,15 +26,17 @@ const LanguageFields = props => {
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
 
+  const languageLabel = intl.formatMessage({ id: 'ui-inventory.language' });
+
   const legend = (
     <Label tagName="legend" required>
-      <FormattedMessage id="ui-inventory.language" />
+      {languageLabel}
     </Label>
   );
 
   const renderField = (field, index) => (
     <Field
-      aria-label={intl.formatMessage({ id: 'ui-inventory.language' })}
+      aria-label={languageLabel}
       name={field}
       title={field}
       component={Select}

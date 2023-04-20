@@ -1,7 +1,10 @@
 import React from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -11,30 +14,30 @@ import {
 } from '@folio/stripes/components';
 
 const SeriesFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     canAdd,
     canEdit,
     canDelete,
   } = props;
 
+  const seriesStatementsLabel = formatMessage({ id: 'ui-inventory.seriesStatements' });
+
   const legend = (
     <Label tagName="legend">
-      <FormattedMessage id="ui-inventory.seriesStatements" />
+      {seriesStatementsLabel}
     </Label>
   );
 
   const renderField = field => (
-    <FormattedMessage id="ui-inventory.seriesStatement">
-      {([ariaLabel]) => (
-        <Field
-          aria-label={ariaLabel}
-          name={`${field}.value`}
-          component={TextArea}
-          rows={1}
-          disabled={!canEdit}
-        />
-      )}
-    </FormattedMessage>
+    <Field
+      aria-label={seriesStatementsLabel}
+      name={`${field}.value`}
+      component={TextArea}
+      rows={1}
+      disabled={!canEdit}
+    />
   );
 
   return (

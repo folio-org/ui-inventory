@@ -30,31 +30,37 @@ const ElectronicAccessFields = props => {
     value: it.id,
   }));
 
+  const urlRelationshipLabel = formatMessage({ id: 'ui-inventory.urlRelationship' });
+  const uriLabel = formatMessage({ id: 'ui-inventory.uri' });
+  const linkTextLabel = formatMessage({ id: 'ui-inventory.linkText' });
+  const materialsSpecificationLabel = formatMessage({ id: 'ui-inventory.materialsSpecification' });
+  const urlPublicNoteLabel = formatMessage({ id: 'ui-inventory.urlPublicNote' });
+
   const headLabels = (
     <Row>
       <Col sm={2}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.urlRelationship" />
+          {urlRelationshipLabel}
         </Label>
       </Col>
       <Col sm={2}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.uri" />
+          {uriLabel}
         </Label>
       </Col>
       <Col sm={2}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.linkText" />
+          {linkTextLabel}
         </Label>
       </Col>
       <Col sm={2}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.materialsSpecification" />
+          {materialsSpecificationLabel}
         </Label>
       </Col>
       <Col sm={4}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.urlPublicNote" />
+          {urlPublicNoteLabel}
         </Label>
       </Col>
     </Row>
@@ -64,7 +70,7 @@ const ElectronicAccessFields = props => {
     <Row>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.urlRelationship' })}
+          aria-label={urlRelationshipLabel}
           name={`${field}.relationshipId`}
           component={Select}
           dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...relationshipOptions]}
@@ -73,7 +79,7 @@ const ElectronicAccessFields = props => {
       </Col>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.uri' })}
+          aria-label={uriLabel}
           name={`${field}.uri`}
           component={TextArea}
           rows={1}
@@ -82,7 +88,7 @@ const ElectronicAccessFields = props => {
       </Col>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.linkText' })}
+          aria-label={linkTextLabel}
           name={`${field}.linkText`}
           component={TextArea}
           rows={1}
@@ -91,7 +97,7 @@ const ElectronicAccessFields = props => {
       </Col>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.materialsSpecification' })}
+          aria-label={materialsSpecificationLabel}
           name={`${field}.materialsSpecification`}
           component={TextArea}
           rows={1}
@@ -100,7 +106,7 @@ const ElectronicAccessFields = props => {
       </Col>
       <Col sm={4}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.urlPublicNote' })}
+          aria-label={urlPublicNoteLabel}
           name={`${field}.publicNote`}
           component={TextArea}
           rows={1}

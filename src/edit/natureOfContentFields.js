@@ -30,15 +30,17 @@ const NatureOfContentFields = props => {
     }))
     : [];
 
+  const natureOfContentTermLabel = formatMessage({ id: 'ui-inventory.natureOfContentTerm' });
+
   const headLabels = (
     <Label tagName="legend">
-      <FormattedMessage id="ui-inventory.natureOfContentTerm" />
+      {natureOfContentTermLabel}
     </Label>
   );
 
   const renderField = field => (
     <Field
-      aria-label={formatMessage({ id: 'ui-inventory.natureOfContentTerm' })}
+      aria-label={natureOfContentTermLabel}
       name={field}
       title={field}
       component={Select}

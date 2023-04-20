@@ -25,26 +25,31 @@ const PublicationFields = props => {
     canDelete,
   } = props;
 
+  const publisherLabel = formatMessage({ id: 'ui-inventory.publisher' });
+  const publisherRoleLabel = formatMessage({ id: 'ui-inventory.publisherRole' });
+  const placeLabel = formatMessage({ id: 'ui-inventory.place' });
+  const dateOfPublicationLabel = formatMessage({ id: 'ui-inventory.dateOfPublication' });
+
   const headLabels = (
     <Row>
       <Col sm={3}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.publisher" />
+          {publisherLabel}
         </Label>
       </Col>
       <Col sm={3}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.publisherRole" />
+          {publisherRoleLabel}
         </Label>
       </Col>
       <Col sm={3}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.place" />
+          {placeLabel}
         </Label>
       </Col>
       <Col sm={3}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.dateOfPublication" />
+          {dateOfPublicationLabel}
         </Label>
       </Col>
     </Row>
@@ -54,7 +59,7 @@ const PublicationFields = props => {
     <Row>
       <Col sm={3}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.publisher' })}
+          aria-label={publisherLabel}
           name={`${field}.publisher`}
           component={TextArea}
           rows={1}
@@ -63,7 +68,7 @@ const PublicationFields = props => {
       </Col>
       <Col sm={3}>
         <Field
-          ariaLabel={formatMessage({ id: 'ui-inventory.publisherRole' })}
+          ariaLabel={publisherRoleLabel}
           name={`${field}.role`}
           component={TextField}
           disabled={!canEdit}
@@ -71,7 +76,7 @@ const PublicationFields = props => {
       </Col>
       <Col sm={3}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.place' })}
+          aria-label={placeLabel}
           name={`${field}.place`}
           component={TextArea}
           rows={1}
@@ -80,7 +85,7 @@ const PublicationFields = props => {
       </Col>
       <Col sm={3}>
         <Field
-          ariaLabel={formatMessage({ id: 'ui-inventory.dateOfPublication' })}
+          ariaLabel={dateOfPublicationLabel}
           name={`${field}.dateOfPublication`}
           component={TextField}
           disabled={!canEdit}

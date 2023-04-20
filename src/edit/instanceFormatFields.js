@@ -30,15 +30,17 @@ const InstanceFormatFields = props => {
     }))
     : [];
 
+  const instanceFormatLabel = formatMessage({ id: 'ui-inventory.instanceFormat' });
+
   const legend = (
     <Label tagName="legend">
-      <FormattedMessage id="ui-inventory.instanceFormat" />
+      {instanceFormatLabel}
     </Label>
   );
 
   const renderField = (field, index) => (
     <Field
-      aria-label={formatMessage({ id: 'ui-inventory.instanceFormat' })}
+      aria-label={instanceFormatLabel}
       name={field}
       title={field}
       component={Select}
