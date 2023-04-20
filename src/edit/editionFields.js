@@ -24,11 +24,16 @@ const EditionFields = props => {
   );
 
   const renderField = field => (
-    <Field
-      name={field}
-      component={TextField}
-      disabled={!canEdit}
-    />
+    <FormattedMessage id="ui-inventory.edition">
+      {([ariaLabel]) => (
+        <Field
+          ariaLabel={ariaLabel}
+          name={field}
+          component={TextField}
+          disabled={!canEdit}
+        />
+      )}
+    </FormattedMessage>
   );
 
   return (

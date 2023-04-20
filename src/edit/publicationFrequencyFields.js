@@ -27,11 +27,11 @@ const PublicationFrequencyFields = props => {
     <FormattedMessage id="ui-inventory.publicationFrequency">
       {([ariaLabel]) => (
         <Field
+          aria-label={ariaLabel}
           name={field}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
-          ariaLabel={ariaLabel}
         />
       )}
     </FormattedMessage>

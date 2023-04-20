@@ -72,6 +72,7 @@ const ContributorFields = props => {
     <Row>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.name' })}
           name={`${field}.name`}
           component={TextArea}
           rows={1}
@@ -81,6 +82,7 @@ const ContributorFields = props => {
       </Col>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.nameType' })}
           name={`${field}.contributorNameTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectType' })}
@@ -91,6 +93,7 @@ const ContributorFields = props => {
       </Col>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.type' })}
           name={`${field}.contributorTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectType' })}
@@ -100,6 +103,7 @@ const ContributorFields = props => {
       </Col>
       <Col sm={4}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.typeFreeText' })}
           name={`${field}.contributorTypeText`}
           component={TextArea}
           rows={1}

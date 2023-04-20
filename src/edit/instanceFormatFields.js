@@ -38,6 +38,7 @@ const InstanceFormatFields = props => {
 
   const renderField = (field, index) => (
     <Field
+      aria-label={formatMessage({ id: 'ui-inventory.instanceFormat' })}
       name={field}
       title={field}
       component={Select}

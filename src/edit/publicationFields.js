@@ -1,5 +1,8 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
@@ -14,12 +17,13 @@ import {
 } from '@folio/stripes/components';
 
 const PublicationFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     canAdd,
     canEdit,
     canDelete,
   } = props;
-
 
   const headLabels = (
     <Row>
@@ -50,6 +54,7 @@ const PublicationFields = props => {
     <Row>
       <Col sm={3}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.publisher' })}
           name={`${field}.publisher`}
           component={TextArea}
           rows={1}
@@ -58,6 +63,7 @@ const PublicationFields = props => {
       </Col>
       <Col sm={3}>
         <Field
+          ariaLabel={formatMessage({ id: 'ui-inventory.publisherRole' })}
           name={`${field}.role`}
           component={TextField}
           disabled={!canEdit}
@@ -65,6 +71,7 @@ const PublicationFields = props => {
       </Col>
       <Col sm={3}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.place' })}
           name={`${field}.place`}
           component={TextArea}
           rows={1}
@@ -73,6 +80,7 @@ const PublicationFields = props => {
       </Col>
       <Col sm={3}>
         <Field
+          ariaLabel={formatMessage({ id: 'ui-inventory.dateOfPublication' })}
           name={`${field}.dateOfPublication`}
           component={TextField}
           disabled={!canEdit}

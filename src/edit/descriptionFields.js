@@ -24,11 +24,16 @@ const DescriptionFields = props => {
   );
 
   const renderField = field => (
-    <Field
-      name={field}
-      component={TextField}
-      disabled={!canEdit}
-    />
+    <FormattedMessage id="ui-inventory.physicalDescription">
+      {([ariaLabel]) => (
+        <Field
+          ariaLabel={ariaLabel}
+          name={field}
+          component={TextField}
+          disabled={!canEdit}
+        />
+      )}
+    </FormattedMessage>
   );
 
   return (

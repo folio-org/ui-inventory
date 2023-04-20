@@ -49,6 +49,7 @@ const IdentifierFields = props => {
     <Row>
       <Col sm={6}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.type' })}
           name={`${field}.identifierTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectIdentifierType' })}
@@ -59,6 +60,7 @@ const IdentifierFields = props => {
       </Col>
       <Col sm={6}>
         <Field
+          ariaLabel={formatMessage({ id: 'ui-inventory.identifier' })}
           name={`${field}.value`}
           component={TextField}
           disabled={!canEdit}

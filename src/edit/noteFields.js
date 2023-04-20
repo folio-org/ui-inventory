@@ -56,6 +56,7 @@ const NoteFields = props => {
     <Row>
       <Col sm={5}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.noteType' })}
           name={`${field}.instanceNoteTypeId`}
           component={Select}
           dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...instanceNoteTypeOptions]}
@@ -64,6 +65,7 @@ const NoteFields = props => {
       </Col>
       <Col sm={5}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.note' })}
           name={`${field}.note`}
           component={TextArea}
           rows={1}
@@ -72,6 +74,7 @@ const NoteFields = props => {
       </Col>
       <Col xs={3} lg={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.staffOnly' })}
           name={`${field}.staffOnly`}
           component={Checkbox}
           type="checkbox"

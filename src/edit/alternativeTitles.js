@@ -49,20 +49,20 @@ const AlternativeTitles = props => {
     <Row>
       <Col sm={6}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.type' })}
           name={`${field}.alternativeTitleTypeId`}
           component={Select}
           dataOptions={alternativeTitleTypeOptions}
           placeholder={formatMessage({ id: 'ui-inventory.selectAlternativeTitleType' })}
-          aria-label={formatMessage({ id: 'ui-inventory.type' })}
           disabled={!canEdit}
           required
         />
       </Col>
       <Col sm={6}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.alternativeTitle' })}
           name={`${field}.alternativeTitle`}
           component={TextArea}
-          aria-label={formatMessage({ id: 'ui-inventory.alternativeTitle' })}
           disabled={!canEdit}
           required
           fullWidth

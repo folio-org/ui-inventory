@@ -49,6 +49,7 @@ const ClassificationFields = props => {
     <Row>
       <Col sm={6}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.classificationIdentifierType' })}
           name={`${field}.classificationTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectClassification' })}
@@ -59,6 +60,7 @@ const ClassificationFields = props => {
       </Col>
       <Col sm={6}>
         <Field
+          ariaLabel={formatMessage({ id: 'ui-inventory.classification' })}
           name={`${field}.classificationNumber`}
           component={TextField}
           disabled={!canEdit}

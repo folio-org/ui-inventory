@@ -27,11 +27,11 @@ const PublicationRangeFields = props => {
     <FormattedMessage id="ui-inventory.publicationRange">
       {([ariaLabel]) => (
         <Field
+          aria-label={ariaLabel}
           name={field}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
-          aria-label={ariaLabel}
         />
       )}
     </FormattedMessage>

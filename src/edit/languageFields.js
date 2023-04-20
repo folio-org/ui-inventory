@@ -34,6 +34,7 @@ const LanguageFields = props => {
 
   const renderField = (field, index) => (
     <Field
+      aria-label={intl.formatMessage({ id: 'ui-inventory.language' })}
       name={field}
       title={field}
       component={Select}

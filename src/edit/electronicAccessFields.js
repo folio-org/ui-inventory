@@ -64,47 +64,47 @@ const ElectronicAccessFields = props => {
     <Row>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.urlRelationship' })}
           name={`${field}.relationshipId`}
           component={Select}
           dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...relationshipOptions]}
           disabled={!canEdit}
-          ariaLabel={formatMessage({ id: 'ui-inventory.urlRelationship' })}
         />
       </Col>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.uri' })}
           name={`${field}.uri`}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
-          aria-label={formatMessage({ id: 'ui-inventory.uri' })}
         />
       </Col>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.linkText' })}
           name={`${field}.linkText`}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
-          aria-label={formatMessage({ id: 'ui-inventory.linkText' })}
         />
       </Col>
       <Col sm={2}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.materialsSpecification' })}
           name={`${field}.materialsSpecification`}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
-          aria-label={formatMessage({ id: 'ui-inventory.materialsSpecification' })}
         />
       </Col>
       <Col sm={4}>
         <Field
+          aria-label={formatMessage({ id: 'ui-inventory.urlPublicNote' })}
           name={`${field}.publicNote`}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
-          aria-label={formatMessage({ id: 'ui-inventory.urlPublicNote' })}
         />
       </Col>
     </Row>

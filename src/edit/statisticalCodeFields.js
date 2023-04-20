@@ -29,6 +29,7 @@ const StatisticalCodeFields = ({
 
   const renderField = field => (
     <Field
+      aria-label={formatMessage({ id: 'ui-inventory.statisticalCode' })}
       name={field}
       component={Select}
       dataOptions={[

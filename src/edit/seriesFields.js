@@ -24,12 +24,17 @@ const SeriesFields = props => {
   );
 
   const renderField = field => (
-    <Field
-      name={`${field}.value`}
-      component={TextArea}
-      rows={1}
-      disabled={!canEdit}
-    />
+    <FormattedMessage id="ui-inventory.seriesStatement">
+      {([ariaLabel]) => (
+        <Field
+          aria-label={ariaLabel}
+          name={`${field}.value`}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+        />
+      )}
+    </FormattedMessage>
   );
 
   return (

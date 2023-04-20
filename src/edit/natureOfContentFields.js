@@ -38,6 +38,7 @@ const NatureOfContentFields = props => {
 
   const renderField = field => (
     <Field
+      aria-label={formatMessage({ id: 'ui-inventory.natureOfContentTerm' })}
       name={field}
       title={field}
       component={Select}
