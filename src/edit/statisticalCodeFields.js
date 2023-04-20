@@ -21,15 +21,17 @@ const StatisticalCodeFields = ({
 }) => {
   const { formatMessage } = useIntl();
 
+  const statisticalCodeLabel = formatMessage({ id: 'ui-inventory.statisticalCode' });
+
   const legend = (
     <Label tagName="legend">
-      <FormattedMessage id="ui-inventory.statisticalCode" />
+      {statisticalCodeLabel}
     </Label>
   );
 
   const renderField = field => (
     <Field
-      aria-label={formatMessage({ id: 'ui-inventory.statisticalCode' })}
+      aria-label={statisticalCodeLabel}
       name={field}
       component={Select}
       dataOptions={[

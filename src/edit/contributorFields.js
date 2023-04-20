@@ -38,31 +38,37 @@ const ContributorFields = props => {
     value: it.id,
   }));
 
+  const nameLabel = formatMessage({ id: 'ui-inventory.name' });
+  const nameTypeLabel = formatMessage({ id: 'ui-inventory.nameType' });
+  const typeLabel = formatMessage({ id: 'ui-inventory.type' });
+  const typeFreeTextLabel = formatMessage({ id: 'ui-inventory.typeFreeText' });
+  const primaryLabel = formatMessage({ id: 'ui-inventory.primary' });
+
   const headLabels = (
     <Row>
       <Col sm={2}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.name" />
+          {nameLabel}
         </Label>
       </Col>
       <Col sm={2}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.nameType" />
+          {nameTypeLabel}
         </Label>
       </Col>
       <Col sm={2}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.type" />
+          {typeLabel}
         </Label>
       </Col>
       <Col sm={4}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.typeFreeText" />
+          {typeFreeTextLabel}
         </Label>
       </Col>
       <Col sm={2}>
         <Label tagName="legend">
-          <FormattedMessage id="ui-inventory.primary" />
+          {primaryLabel}
         </Label>
       </Col>
     </Row>
@@ -72,7 +78,7 @@ const ContributorFields = props => {
     <Row>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.name' })}
+          aria-label={nameLabel}
           name={`${field}.name`}
           component={TextArea}
           rows={1}
@@ -82,7 +88,7 @@ const ContributorFields = props => {
       </Col>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.nameType' })}
+          aria-label={nameTypeLabel}
           name={`${field}.contributorNameTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectType' })}
@@ -93,7 +99,7 @@ const ContributorFields = props => {
       </Col>
       <Col sm={2}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.type' })}
+          aria-label={typeLabel}
           name={`${field}.contributorTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectType' })}
@@ -103,7 +109,7 @@ const ContributorFields = props => {
       </Col>
       <Col sm={4}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.typeFreeText' })}
+          aria-label={typeFreeTextLabel}
           name={`${field}.contributorTypeText`}
           component={TextArea}
           rows={1}

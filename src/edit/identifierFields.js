@@ -30,16 +30,19 @@ const IdentifierFields = props => {
     value: it.id,
   }));
 
+  const typeLabel = formatMessage({ id: 'ui-inventory.type' });
+  const identifierLabel = formatMessage({ id: 'ui-inventory.identifier' });
+
   const headLabels = (
     <Row>
       <Col sm={6}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.type" />
+          {typeLabel}
         </Label>
       </Col>
       <Col sm={6}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.identifier" />
+          {identifierLabel}
         </Label>
       </Col>
     </Row>
@@ -49,7 +52,7 @@ const IdentifierFields = props => {
     <Row>
       <Col sm={6}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.type' })}
+          aria-label={typeLabel}
           name={`${field}.identifierTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectIdentifierType' })}
@@ -60,7 +63,7 @@ const IdentifierFields = props => {
       </Col>
       <Col sm={6}>
         <Field
-          ariaLabel={formatMessage({ id: 'ui-inventory.identifier' })}
+          ariaLabel={identifierLabel}
           name={`${field}.value`}
           component={TextField}
           disabled={!canEdit}

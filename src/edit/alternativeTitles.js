@@ -30,16 +30,19 @@ const AlternativeTitles = props => {
     value: it.id,
   }));
 
+  const typeLabel = formatMessage({ id: 'ui-inventory.type' });
+  const alternativeTitleLabel = formatMessage({ id: 'ui-inventory.alternativeTitle' });
+
   const headLabels = (
     <Row>
       <Col sm={6}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.type" />
+          {typeLabel}
         </Label>
       </Col>
       <Col sm={6}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.alternativeTitle" />
+          {alternativeTitleLabel}
         </Label>
       </Col>
     </Row>
@@ -49,7 +52,7 @@ const AlternativeTitles = props => {
     <Row>
       <Col sm={6}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.type' })}
+          aria-label={typeLabel}
           name={`${field}.alternativeTitleTypeId`}
           component={Select}
           dataOptions={alternativeTitleTypeOptions}
@@ -60,7 +63,7 @@ const AlternativeTitles = props => {
       </Col>
       <Col sm={6}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.alternativeTitle' })}
+          aria-label={alternativeTitleLabel}
           name={`${field}.alternativeTitle`}
           component={TextArea}
           disabled={!canEdit}

@@ -1,5 +1,8 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
@@ -11,29 +14,29 @@ import {
 } from '@folio/stripes/components';
 
 const EditionFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     canAdd,
     canEdit,
     canDelete,
   } = props;
 
+  const editionLabel = formatMessage({ id: 'ui-inventory.edition' });
+
   const legend = (
     <Label tagName="legend">
-      <FormattedMessage id="ui-inventory.edition" />
+      {editionLabel}
     </Label>
   );
 
   const renderField = field => (
-    <FormattedMessage id="ui-inventory.edition">
-      {([ariaLabel]) => (
-        <Field
-          ariaLabel={ariaLabel}
-          name={field}
-          component={TextField}
-          disabled={!canEdit}
-        />
-      )}
-    </FormattedMessage>
+    <Field
+      ariaLabel={editionLabel}
+      name={field}
+      component={TextField}
+      disabled={!canEdit}
+    />
   );
 
   return (

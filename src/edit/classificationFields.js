@@ -30,16 +30,19 @@ const ClassificationFields = props => {
     value: it.id,
   }));
 
+  const classificationIdTypeLabel = formatMessage({ id: 'ui-inventory.classificationIdentifierType' });
+  const classificationLabel = formatMessage({ id: 'ui-inventory.classification' });
+
   const headLabels = (
     <Row>
       <Col sm={6}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.classificationIdentifierType" />
+          {classificationIdTypeLabel}
         </Label>
       </Col>
       <Col sm={6}>
         <Label tagName="legend" required>
-          <FormattedMessage id="ui-inventory.classification" />
+          {classificationLabel}
         </Label>
       </Col>
     </Row>
@@ -49,7 +52,7 @@ const ClassificationFields = props => {
     <Row>
       <Col sm={6}>
         <Field
-          aria-label={formatMessage({ id: 'ui-inventory.classificationIdentifierType' })}
+          aria-label={classificationIdTypeLabel}
           name={`${field}.classificationTypeId`}
           component={Select}
           placeholder={formatMessage({ id: 'ui-inventory.selectClassification' })}
@@ -60,7 +63,7 @@ const ClassificationFields = props => {
       </Col>
       <Col sm={6}>
         <Field
-          ariaLabel={formatMessage({ id: 'ui-inventory.classification' })}
+          ariaLabel={classificationLabel}
           name={`${field}.classificationNumber`}
           component={TextField}
           disabled={!canEdit}
