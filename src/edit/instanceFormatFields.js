@@ -1,50 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
-import { Select } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
-
-const renderInstanceFormatField = ({ field, fieldIndex, canEdit }, instanceFormats) => {
-  const instanceFormatOptions = instanceFormats
-    ? instanceFormats.map(it => ({
-      label: it.name,
-      value: it.id,
-    }))
-    : [];
-
-  const label = fieldIndex === 0 ? <FormattedMessage id="ui-inventory.instanceFormat" /> : null;
-
-  return (
-    <FormattedMessage id="ui-inventory.selectInstanceFormat">
-      {([placeholder]) => (
-        <Field
-          label={label}
-          name={field}
-          title={field}
-          component={Select}
-          placeholder={placeholder}
-          dataOptions={instanceFormatOptions}
-          data-test-instance-format-field-count={fieldIndex}
-          disabled={!canEdit}
-        />
-      )}
-    </FormattedMessage>
-  );
-};
-
-renderInstanceFormatField.propTypes = {
-  field: PropTypes.object,
-  fieldIndex: PropTypes.number,
-  canEdit: PropTypes.bool,
-};
-renderInstanceFormatField.defaultProps = {
-  canEdit: true,
-};
+import {
+  Label,
+  Select,
+  RepeatableField,
+} from '@folio/stripes/components';
 
 const InstanceFormatFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     instanceFormats,
     canAdd,
@@ -52,17 +23,45 @@ const InstanceFormatFields = props => {
     canDelete,
   } = props;
 
+  const instanceFormatOptions = instanceFormats
+    ? instanceFormats.map(it => ({
+      label: it.name,
+      value: it.id,
+    }))
+    : [];
+
+  const instanceFormatLabel = formatMessage({ id: 'ui-inventory.instanceFormat' });
+
+  const legend = (
+    <Label tagName="legend">
+      {instanceFormatLabel}
+    </Label>
+  );
+
+  const renderField = (field, index) => (
+    <Field
+      aria-label={instanceFormatLabel}
+      name={field}
+      title={field}
+      component={Select}
+      placeholder={formatMessage({ id: 'ui-inventory.selectInstanceFormat' })}
+      dataOptions={instanceFormatOptions}
+      data-test-instance-format-field-count={index}
+      disabled={!canEdit}
+    />
+  );
+
   return (
-    <RepeatableField
+    <FieldArray
       name="instanceFormatIds"
-      label={<FormattedMessage id="ui-inventory.instanceFormats" />}
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.instanceFormats" />}
       addLabel={<FormattedMessage id="ui-inventory.addInstanceFormat" />}
-      addButtonId="clickable-add-instanceformat"
-      template={[{
-        render(fieldObj) { return renderInstanceFormatField({ ...fieldObj, canEdit }, instanceFormats); },
-      }]}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
+      canRemove={canDelete}
     />
   );
 };
