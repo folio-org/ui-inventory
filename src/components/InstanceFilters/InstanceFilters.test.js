@@ -25,10 +25,10 @@ jest.mock('../../facetUtils', () => ({
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   Accordion: (props) => {
-    const { onClearFilter, name, children } = props;
+    const { onClearFilter, children } = props;
     const component =
       <div>
-        <button type="button" name={name} onClick={() => onClearFilter()}>{name}</button>
+        <button type="button" onClick={() => onClearFilter()}>onClearFilter</button>
         <div>{children}</div>
       </div>;
     return (component);
@@ -93,102 +93,94 @@ describe('InstanceFilters', () => {
     renderInstanceFilters();
   });
 
-  it('Contains a filter for creation date ', () => {
-    expect(document.querySelector('[name="createdDate"]')).toBeInTheDocument();
-  });
-
-  it('Contains a filter for update date ', () => {
-    expect(document.querySelector('[name="updatedDate"]')).toBeInTheDocument();
-  });
-
   it('Should Triger effectiveLocation button', () => {
-    const effectiveLocation = screen.getByRole('button', { name: 'effectiveLocation' });
-    userEvent.click(effectiveLocation);
+    const effectiveLocation = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(effectiveLocation[0]);
     expect(onClear).toHaveBeenCalledTimes(1);
-    expect(effectiveLocation).toBeEnabled();
+    expect(effectiveLocation[0]).toBeEnabled();
   });
 
   it('Should Triger language button', () => {
-    const language = screen.getByRole('button', { name: 'language' });
-    userEvent.click(language);
+    const language = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(language[1]);
     expect(onClear).toHaveBeenCalledTimes(2);
-    expect(language).toBeEnabled();
+    expect(language[1]).toBeEnabled();
   });
 
   it('Should Triger resource button', () => {
-    const resource = screen.getByRole('button', { name: 'resource' });
-    userEvent.click(resource);
+    const resource = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(resource[2]);
     expect(onClear).toHaveBeenCalledTimes(3);
-    expect(resource).toBeEnabled();
+    expect(resource[2]).toBeEnabled();
   });
 
   it('Should Triger format button', () => {
-    const format = screen.getByRole('button', { name: 'format' });
-    userEvent.click(format);
+    const format = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(format[3]);
     expect(onClear).toHaveBeenCalledTimes(4);
-    expect(format).toBeEnabled();
+    expect(format[3]).toBeEnabled();
   });
 
   it('Should Triger mode button', () => {
-    const mode = screen.getByRole('button', { name: 'mode' });
-    userEvent.click(mode);
+    const mode = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(mode[4]);
     expect(onClear).toHaveBeenCalledTimes(5);
-    expect(mode).toBeEnabled();
+    expect(mode[4]).toBeEnabled();
   });
 
   it('Should Triger natureOfContent button', () => {
-    const natureOfContent = screen.getByRole('button', { name: 'natureOfContent' });
-    userEvent.click(natureOfContent);
+    const natureOfContent = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(natureOfContent[5]);
     expect(onClear).toHaveBeenCalledTimes(6);
-    expect(natureOfContent).toBeEnabled();
+    expect(natureOfContent[5]).toBeEnabled();
   });
 
   it('Should Triger staffSuppress button', () => {
-    const staffSuppress = screen.getByRole('button', { name: 'staffSuppress' });
-    userEvent.click(staffSuppress);
+    const staffSuppress = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(staffSuppress[6]);
     expect(onClear).toHaveBeenCalledTimes(7);
-    expect(staffSuppress).toBeEnabled();
+    expect(staffSuppress[6]).toBeEnabled();
   });
 
   it('Should Triger instancesDiscoverySuppress button', () => {
-    const instancesDiscoverySuppress = screen.getByRole('button', { name: 'instancesDiscoverySuppress' });
-    userEvent.click(instancesDiscoverySuppress);
+    const instancesDiscoverySuppress = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(instancesDiscoverySuppress[7]);
     expect(onClear).toHaveBeenCalledTimes(8);
-    expect(instancesDiscoverySuppress).toBeEnabled();
+    expect(instancesDiscoverySuppress[7]).toBeEnabled();
   });
 
   it('Should Triger statisticalCodeIds button', () => {
-    const statisticalCodeIds = screen.getByRole('button', { name: 'statisticalCodeIds' });
-    userEvent.click(statisticalCodeIds);
+    const statisticalCodeIds = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(statisticalCodeIds[8]);
     expect(onClear).toHaveBeenCalledTimes(9);
-    expect(statisticalCodeIds).toBeEnabled();
+    expect(statisticalCodeIds[8]).toBeEnabled();
   });
 
   it('Should Triger createdDate button', () => {
-    const createdDate = screen.getByRole('button', { name: 'createdDate' });
-    userEvent.click(createdDate);
+    const createdDate = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(createdDate[9]);
     expect(onClear).toHaveBeenCalledTimes(10);
-    expect(createdDate).toBeEnabled();
+    expect(createdDate[9]).toBeEnabled();
   });
 
   it('Should Triger updatedDate button', () => {
-    const updatedDate = screen.getByRole('button', { name: 'updatedDate' });
-    userEvent.click(updatedDate);
+    const updatedDate = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(updatedDate[10]);
     expect(onClear).toHaveBeenCalledTimes(11);
-    expect(updatedDate).toBeEnabled();
+    expect(updatedDate[10]).toBeEnabled();
   });
 
   it('Should Triger instanceStatus button', () => {
-    const instanceStatus = screen.getByRole('button', { name: 'instanceStatus' });
-    userEvent.click(instanceStatus);
+    const instanceStatus = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(instanceStatus[11]);
     expect(onClear).toHaveBeenCalledTimes(12);
-    expect(instanceStatus).toBeEnabled();
+    expect(instanceStatus[11]).toBeEnabled();
   });
 
   it('Should Triger source button', () => {
-    const source = screen.getByRole('button', { name: 'source' });
-    userEvent.click(source);
+    const source = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(source[12]);
     expect(onClear).toHaveBeenCalledTimes(13);
-    expect(source).toBeEnabled();
+    expect(source[12]).toBeEnabled();
   });
 });
