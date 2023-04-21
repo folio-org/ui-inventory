@@ -4,7 +4,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '../../../test/jest/__mock__/currencyData.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
-import '../../../test/jest/__mock__/stripesConnect.mock';
 import '../../../test/jest/__mock__/stripesCore.mock';
 import '../../../test/jest/__mock__/stripesIcon.mock';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
