@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import { Field, useFormState } from 'react-final-form';
 
-import { Checkbox, Col, InfoPopover, Label, MessageBanner, RadioButton, Row } from '@folio/stripes/components';
+import { Button, Checkbox, Col, InfoPopover, Label, Layout, MessageBanner, RadioButton, Row } from '@folio/stripes/components';
 import css from './NumberGeneratorOptions.css';
 
 const NumberGeneratorOptionsForm = () => {
@@ -146,12 +146,26 @@ const NumberGeneratorOptionsForm = () => {
                   </div>
                   <InfoPopover
                     content={
-                      <FormattedMessage
-                        id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumberInfo"
-                        values={{
-                          linebreak: <br />
-                        }}
-                      />
+                      <Layout className="display-flex flex-direction-column flex-align-items-center flex-wrap--wrap">
+                        <Layout className="padding-bottom-gutter display-flex flex-direction-column flex-align-items-center">
+                          <FormattedMessage
+                            id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumberInfo"
+                            values={{
+                              linebreak: <br />
+                            }}
+                          />
+                        </Layout>
+                        <Layout className="display-flex flex-direction-column flex-align-items-center">
+                          <Button
+                            allowAnchorClick
+                            buttonStyle="primary"
+                            href="https://wiki.folio.org/display/FOLIOtips/Number+generator"
+                            marginBottom0
+                          >
+                            <FormattedMessage id="ui-inventory.settings.learnMore" />
+                          </Button>
+                        </Layout>
+                      </Layout>
                     }
                     iconSize="medium"
                   />
