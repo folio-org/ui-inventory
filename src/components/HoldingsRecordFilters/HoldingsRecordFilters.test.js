@@ -12,7 +12,6 @@ import userEvent from '@testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
 import HoldingsRecordFilters from './HoldingsRecordFilters';
-import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 jest.mock('../CheckboxFacet/CheckboxFacet', () => jest.fn().mockReturnValue('CheckboxFacet'));
 
@@ -78,8 +77,7 @@ const renderHoldingsRecordFilters = () => {
           parentResources={resources}
         />
       </ModuleHierarchyProvider>
-    </Router>,
-    translationsProperties
+    </Router>
   );
 };
 
