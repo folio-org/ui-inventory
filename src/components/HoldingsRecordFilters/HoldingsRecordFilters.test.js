@@ -101,7 +101,6 @@ describe('HoldingsRecordFilters', () => {
     renderHoldingsRecordFilters();
     const effectiveLocation = screen.getByRole('button', { name: 'effectiveLocation' });
     userEvent.click(effectiveLocation);
-    screen.debug(undefined, Infinity);
     expect(onClear).toHaveBeenCalledTimes(1);
     expect(effectiveLocation).toBeEnabled();
   });
