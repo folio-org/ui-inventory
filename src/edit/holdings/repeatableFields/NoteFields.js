@@ -31,17 +31,17 @@ const NoteFields = ({
 
   const headLabels = (
     <Row>
-      <Col sm={5}>
+      <Col xs={12} lg={4}>
         <Label tagName="legend" required>
           {noteTypeLabel}
         </Label>
       </Col>
-      <Col sm={5}>
+      <Col xs={12} lg={7}>
         <Label tagName="legend" required>
           {noteLabel}
         </Label>
       </Col>
-      <Col xs={3} lg={2}>
+      <Col xs={12} lg={1}>
         <Label tagName="legend">
           {staffOnlyLabel}
         </Label>
@@ -51,7 +51,7 @@ const NoteFields = ({
 
   const renderField = field => (
     <Row>
-      <Col sm={5}>
+      <Col xs={12} lg={4}>
         <Field
           aria-label={noteTypeLabel}
           name={`${field}.holdingsNoteTypeId`}
@@ -67,7 +67,7 @@ const NoteFields = ({
           required
         />
       </Col>
-      <Col sm={5}>
+      <Col xs={12} lg={7}>
         <Field
           aria-label={noteLabel}
           name={`${field}.note`}
@@ -77,7 +77,7 @@ const NoteFields = ({
           required
         />
       </Col>
-      <Col xs={3} lg={2}>
+      <Col xs={12} lg={1}>
         <Field
           aria-label={staffOnlyLabel}
           name={`${field}.staffOnly`}
