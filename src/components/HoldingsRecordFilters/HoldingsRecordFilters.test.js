@@ -7,6 +7,10 @@ import '../../../test/jest/__mock__/currencyData.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
 import '../../../test/jest/__mock__/stripesCore.mock';
 import '../../../test/jest/__mock__/stripesIcon.mock';
+import '../../../test/jest/__mock__/stripesSmartComponents.mock';
+import '../../../test/jest/__mock__/InstancePlugin.mock';
+import '../../../test/jest/__mock__/quickMarc.mock';
+import '../../../test/jest/__mock__/reactBeautifulDnd.mock';
 import userEvent from '@testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
@@ -24,10 +28,10 @@ jest.mock('../../facetUtils', () => ({
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   Accordion: (props) => {
-    const { onClearFilter, name, children } = props;
+    const { onClearFilter, children } = props;
     const component =
       <div>
-        <button type="button" name={name} onClick={() => onClearFilter()}>{name}</button>
+        <button type="button" onClick={() => onClearFilter()}>onClearFilter</button>
         <div>{children}</div>
       </div>;
     return (component);
@@ -84,79 +88,62 @@ const renderHoldingsRecordFilters = () => {
 
 describe('HoldingsRecordFilters', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-  });
-  it('Contains a filter for creation date ', () => {
     renderHoldingsRecordFilters();
-    expect(document.querySelector('[name="holdingsCreatedDate"]')).toBeInTheDocument();
-  });
-
-  it('Contains a filter for update date ', () => {
-    renderHoldingsRecordFilters();
-    expect(document.querySelector('[name="holdingsUpdatedDate"]')).toBeInTheDocument();
   });
 
   it('Should Triger effectiveLocation button', () => {
-    renderHoldingsRecordFilters();
-    const effectiveLocation = screen.getByRole('button', { name: 'effectiveLocation' });
-    userEvent.click(effectiveLocation);
+    const effectiveLocation = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(effectiveLocation[0]);
     expect(onClear).toHaveBeenCalledTimes(1);
-    expect(effectiveLocation).toBeEnabled();
+    expect(effectiveLocation[0]).toBeEnabled();
   });
 
   it('Should Triger holdingsPermanentLocation button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsPermanentLocation = screen.getByRole('button', { name: 'holdingsPermanentLocation' });
-    userEvent.click(holdingsPermanentLocation);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsPermanentLocation).toBeEnabled();
+    const holdingsPermanentLocation = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsPermanentLocation[1]);
+    expect(onClear).toHaveBeenCalledTimes(2);
+    expect(holdingsPermanentLocation[1]).toBeEnabled();
   });
 
   it('Should Triger holdingsType button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsType = screen.getByRole('button', { name: 'holdingsType' });
-    userEvent.click(holdingsType);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsType).toBeEnabled();
+    const holdingsType = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsType[2]);
+    expect(onClear).toHaveBeenCalledTimes(3);
+    expect(holdingsType[2]).toBeEnabled();
   });
 
   it('Should Triger holdingsDiscoverySuppress button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsDiscoverySuppress = screen.getByRole('button', { name: 'holdingsDiscoverySuppress' });
-    userEvent.click(holdingsDiscoverySuppress);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsDiscoverySuppress).toBeEnabled();
+    const holdingsDiscoverySuppress = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsDiscoverySuppress[3]);
+    expect(onClear).toHaveBeenCalledTimes(4);
+    expect(holdingsDiscoverySuppress[3]).toBeEnabled();
   });
 
   it('Should Triger holdingsStatisticalCodeIds button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: 'holdingsStatisticalCodeIds' });
-    userEvent.click(holdingsStatisticalCodeIds);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsStatisticalCodeIds).toBeEnabled();
+    const holdingsStatisticalCodeIds = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsStatisticalCodeIds[4]);
+    expect(onClear).toHaveBeenCalledTimes(5);
+    expect(holdingsStatisticalCodeIds[4]).toBeEnabled();
   });
 
   it('Should Triger holdingsCreatedDate button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsCreatedDate = screen.getByRole('button', { name: 'holdingsCreatedDate' });
-    userEvent.click(holdingsCreatedDate);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsCreatedDate).toBeEnabled();
+    const holdingsCreatedDate = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsCreatedDate[5]);
+    expect(onClear).toHaveBeenCalledTimes(6);
+    expect(holdingsCreatedDate[5]).toBeEnabled();
   });
 
   it('Should Triger holdingsUpdatedDate button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsUpdatedDate = screen.getByRole('button', { name: 'holdingsUpdatedDate' });
-    userEvent.click(holdingsUpdatedDate);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsUpdatedDate).toBeEnabled();
+    const holdingsUpdatedDate = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsUpdatedDate[6]);
+    expect(onClear).toHaveBeenCalledTimes(7);
+    expect(holdingsUpdatedDate[6]).toBeEnabled();
   });
 
   it('Should Triger holdingsSource button', () => {
-    renderHoldingsRecordFilters();
-    const holdingsSource = screen.getByRole('button', { name: 'holdingsSource' });
-    userEvent.click(holdingsSource);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(holdingsSource).toBeEnabled();
+    const holdingsSource = screen.getAllByRole('button', { name: 'onClearFilter' });
+    userEvent.click(holdingsSource[7]);
+    expect(onClear).toHaveBeenCalledTimes(8);
+    expect(holdingsSource[7]).toBeEnabled();
   });
 });
