@@ -268,6 +268,14 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
+    const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceTypeId,
+      }),
+    ) : [];
+
     const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses.map(
       it => ({
         label: `${it.name} (${it.source}: ${it.code})`,
@@ -664,7 +672,8 @@ class InstanceForm extends React.Component {
                         canAdd={!this.isFieldBlocked('notes')}
                         canEdit={!this.isFieldBlocked('notes')}
                         canDelete={!this.isFieldBlocked('notes')}
-                        instanceNoteTypes={referenceTables.instanceNoteTypes}
+                        noteTypeOptions={instanceNoteTypeOptions}
+                        noteTypeIdField="instanceNoteTypeId"
                       />
                     </Accordion>
                     <Accordion
