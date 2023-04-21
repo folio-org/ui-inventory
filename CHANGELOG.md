@@ -5,6 +5,7 @@
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
 * Add bound-with parts to an Item.  Refs UIIN-1998.
+* Fix for Note text box starts flickering/jumping in Instance/Holding/Items during resizing. Refs. UIIN-2387
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
