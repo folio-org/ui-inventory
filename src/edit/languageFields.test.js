@@ -43,12 +43,14 @@ describe('LanguageFields', () => {
     renderLanguageFields();
     expect(screen.getByText(/Languages/i)).toBeInTheDocument();
   });
-  it('click the Add language button', () => {
-    renderLanguageFields();
-    const addButton = screen.getByText(/Add language/i);
-    userEvent.click(addButton);
-    expect(screen.getAllByText(/Language/i)).toBeDefined();
-    const dropdownLanguage = screen.getAllByText(/Language/i);
-    expect(dropdownLanguage).toHaveLength(69);
+
+  describe('when clicking the Add language button', () => {
+    it('dropdown with language list should be rendered', () => {
+      renderLanguageFields();
+      const addButton = screen.getByText(/Add language/i);
+      userEvent.click(addButton);
+
+      expect(screen.getByRole('combobox', { name: 'Language' })).toBeInTheDocument();
+    });
   });
 });
