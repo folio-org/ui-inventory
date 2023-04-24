@@ -1,17 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen, waitFor } from '@testing-library/react';
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { screen } from '@testing-library/react';
+
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__/currencyData.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
 import '../../../test/jest/__mock__/stripesCore.mock';
 import '../../../test/jest/__mock__/stripesIcon.mock';
-
 import userEvent from '@testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
 import HoldingsRecordFilters from './HoldingsRecordFilters';
+import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 jest.mock('../CheckboxFacet/CheckboxFacet', () => jest.fn().mockReturnValue('CheckboxFacet'));
 
@@ -19,19 +20,6 @@ jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),
   getSourceOptions: jest.fn(),
   getSuppressedOptions: jest.fn(),
-}));
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  Accordion: (props) => {
-    const { onClearFilter, children } = props;
-    const component =
-      <div>
-        <button type="button" onClick={() => onClearFilter()}>onClearFilter</button>
-        <div>{children}</div>
-      </div>;
-    return (component);
-  },
 }));
 
 const resources = {
@@ -77,7 +65,8 @@ const renderHoldingsRecordFilters = () => {
           parentResources={resources}
         />
       </ModuleHierarchyProvider>
-    </Router>
+    </Router>,
+    translationsProperties
   );
 };
 
@@ -88,75 +77,77 @@ describe('HoldingsRecordFilters', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('Should Render effectiveLocation button', async () => {
-    const effectiveLocation = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(effectiveLocation[0]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(effectiveLocation[0]).toBeEnabled();
+  it('Contains a filter for creation date ', () => {
+    renderHoldingsRecordFilters();
+    expect(document.querySelector('[name="holdingsCreatedDate"]')).toBeInTheDocument();
   });
 
-  it('Should Render holdingsPermanentLocation button', async () => {
-    const holdingsPermanentLocation = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsPermanentLocation[1]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsPermanentLocation[1]).toBeEnabled();
+  it('Contains a filter for update date ', () => {
+    renderHoldingsRecordFilters();
+    expect(document.querySelector('[name="holdingsUpdatedDate"]')).toBeInTheDocument();
   });
 
-  it('Should Render holdingsType button', async () => {
-    const holdingsType = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsType[2]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsType[2]).toBeEnabled();
+  it('Should Triger effectiveLocation button', () => {
+    renderHoldingsRecordFilters();
+    const effectiveLocation = screen.getByRole('button', { name: 'ui-inventory.filters.effectiveLocation1 filter list' });
+    userEvent.click(effectiveLocation);
+    expect(onClear).toBeCalled();
+    expect(effectiveLocation).toBeEnabled();
   });
 
-  it('Should Render holdingsDiscoverySuppress button', async () => {
-    const holdingsDiscoverySuppress = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsDiscoverySuppress[3]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsDiscoverySuppress[3]).toBeEnabled();
+  it('Should Triger holdingsPermanentLocation button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsPermanentLocation = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsPermanentLocation filter list' });
+    userEvent.click(holdingsPermanentLocation);
+    expect(onClear).toBeCalled();
+    expect(holdingsPermanentLocation).toBeEnabled();
   });
 
-  it('Should Render holdingsStatisticalCodeIds button', async () => {
-    const holdingsStatisticalCodeIds = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsStatisticalCodeIds[4]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsStatisticalCodeIds[4]).toBeEnabled();
+  it('Should Triger holdingsType button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsType = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsType filter list' });
+    userEvent.click(holdingsType);
+    expect(onClear).toBeCalled();
+    expect(holdingsType).toBeEnabled();
   });
 
-  it('Should Render holdingsCreatedDate button', async () => {
-    const holdingsCreatedDate = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsCreatedDate[5]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsCreatedDate[5]).toBeEnabled();
+  it('Should Triger holdingsDiscoverySuppress button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsDiscoverySuppress = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsDiscoverySuppress filter list' });
+    userEvent.click(holdingsDiscoverySuppress);
+    expect(onClear).toBeCalled();
+    expect(holdingsDiscoverySuppress).toBeEnabled();
   });
 
-  it('Should Render holdingsUpdatedDate button', async () => {
-    const holdingsUpdatedDate = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsUpdatedDate[6]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsUpdatedDate[6]).toBeEnabled();
+  it('Should Triger holdingsStatisticalCodeIds button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsStatisticalCodeIds filter list' });
+    userEvent.click(holdingsStatisticalCodeIds);
+    expect(onClear).toBeCalled();
+    expect(holdingsStatisticalCodeIds).toBeEnabled();
   });
 
-  it('Should Render holdingsSource button', async () => {
-    const holdingsSource = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(holdingsSource[7]);
-    await waitFor(() => {
-      expect(onClear).toBeCalled();
-    });
-    expect(holdingsSource[7]).toBeEnabled();
+  it('Should Triger holdingsCreatedDate button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsCreatedDate = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsCreatedDate filter list' });
+    userEvent.click(holdingsCreatedDate);
+    expect(onClear).toBeCalled();
+    expect(holdingsCreatedDate).toBeEnabled();
+  });
+
+  it('Should Triger holdingsUpdatedDate button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsUpdatedDate = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsUpdatedDate filter list' });
+    userEvent.click(holdingsUpdatedDate);
+    expect(onClear).toBeCalled();
+    expect(holdingsUpdatedDate).toBeEnabled();
+  });
+
+  it('Should Triger holdingsSource button', () => {
+    renderHoldingsRecordFilters();
+    const holdingsSource = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsSource filter list' });
+    userEvent.click(holdingsSource);
+    expect(onClear).toBeCalled();
+    expect(holdingsSource).toBeEnabled();
   });
 });
