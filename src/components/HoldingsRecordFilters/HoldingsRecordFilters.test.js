@@ -22,10 +22,10 @@ jest.mock('../../facetUtils', () => ({
 
 const activeFilters = {
   [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
-  [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
-  [FACETS.HOLDINGS_TYPE]: ['loc3'],
-  [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: ['loc4'],
-  [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: ['loc5'],
+  [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['Permanentloc2'],
+  [FACETS.HOLDINGS_TYPE]: ['Type1loc3'],
+  [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: ['Discoveryloc4'],
+  [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: ['Statisticalloc5'],
   [FACETS.HOLDINGS_CREATED_DATE]: ['2022-01-01'],
   [FACETS.HOLDINGS_UPDATED_DATE]: ['2022-01-01'],
   [FACETS.HOLDINGS_SOURCE]: ['loc8']
@@ -83,7 +83,7 @@ const renderHoldingsRecordFilters = () => {
 };
 
 describe('HoldingsRecordFilters', () => {
-  it('Should Render effectiveLocation, Clear selectedfilters buttons', async () => {
+  it('Should Render the effectiveLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const effectiveLocation = document.querySelector('[id="accordion-toggle-button-effectiveLocation"]');
     userEvent.click(effectiveLocation);
@@ -94,7 +94,7 @@ describe('HoldingsRecordFilters', () => {
     });
   });
 
-  it('Should Render holdingsPermanentLocation, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsPermanentLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsPermanentLocation = document.querySelector('[id="accordion-toggle-button-holdingsPermanentLocation"]');
     userEvent.click(holdingsPermanentLocation);
@@ -105,7 +105,7 @@ describe('HoldingsRecordFilters', () => {
     });
   });
 
-  it('Should Render holdingsType, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsType, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsType = document.querySelector('[id="accordion-toggle-button-holdingsType"]');
     userEvent.click(holdingsType);
@@ -116,7 +116,7 @@ describe('HoldingsRecordFilters', () => {
     });
   });
 
-  it('Should Render holdingsDiscoverySuppress, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsDiscoverySuppress, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsDiscoverySuppress = document.querySelector('[id="accordion-toggle-button-holdingsDiscoverySuppress"]');
     userEvent.click(holdingsDiscoverySuppress);
@@ -127,7 +127,7 @@ describe('HoldingsRecordFilters', () => {
     });
   });
 
-  it('Should Render holdingsStatisticalCodeIds, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsStatisticalCodeIds, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsStatisticalCodeIds = document.querySelector('[id="accordion-toggle-button-holdingsStatisticalCodeIds"]');
     userEvent.click(holdingsStatisticalCodeIds);
@@ -138,7 +138,7 @@ describe('HoldingsRecordFilters', () => {
     });
   });
 
-  it('Should Render holdingsCreatedDate, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsCreatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsCreatedDate = document.querySelector('[id="accordion-toggle-button-holdingsCreatedDate"]');
     userEvent.click(holdingsCreatedDate);
@@ -149,7 +149,7 @@ describe('HoldingsRecordFilters', () => {
     });
   });
 
-  it('Should Render holdingsUpdatedDate, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsUpdatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsUpdatedDate = document.querySelector('[id="accordion-toggle-button-holdingsUpdatedDate"]');
     userEvent.click(holdingsUpdatedDate);
@@ -159,7 +159,7 @@ describe('HoldingsRecordFilters', () => {
       expect(onClear).toBeCalled();
     });
   });
-  it('Should Render holdingsSource, Clear selectedfilters buttons', async () => {
+  it('Should Render the holdingsSource, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsSource = document.querySelector('[id="accordion-toggle-button-holdingsSource"]');
     userEvent.click(holdingsSource);
