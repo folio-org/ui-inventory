@@ -3,67 +3,73 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 import {
   FormattedMessage,
-  useIntl
+  useIntl,
 } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
-  Label,
   RepeatableField,
-  TextArea,
+  Label,
+  Select,
 } from '@folio/stripes/components';
 
-const PublicationRangeFields = props => {
+const StatisticalCodeFields = ({
+  canAdd,
+  canEdit,
+  canDelete,
+  statisticalCodeOptions,
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
-
-  const publicationRangeLabel = formatMessage({ id: 'ui-inventory.publicationRange' });
+  const statisticalCodeLabel = formatMessage({ id: 'ui-inventory.statisticalCode' });
 
   const legend = (
     <Label tagName="legend">
-      {publicationRangeLabel}
+      {statisticalCodeLabel}
     </Label>
   );
 
   const renderField = field => (
     <Field
-      aria-label={publicationRangeLabel}
+      aria-label={statisticalCodeLabel}
       name={field}
-      component={TextArea}
-      rows={1}
+      component={Select}
+      dataOptions={[
+        {
+          label: formatMessage({ id: 'ui-inventory.selectCode' }),
+          value: '',
+        },
+        ...statisticalCodeOptions,
+      ]}
       disabled={!canEdit}
     />
   );
 
   return (
     <FieldArray
-      name="publicationRange"
+      name="statisticalCodeIds"
       component={RepeatableField}
-      legend={<FormattedMessage id="ui-inventory.publicationRange" />}
-      addLabel={<FormattedMessage id="ui-inventory.addPublicationRange" />}
-      onAdd={fields => fields.push('')}
+      addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
       headLabels={legend}
       renderField={renderField}
+      onAdd={fields => fields.push('')}
       canAdd={canAdd}
       canRemove={canDelete}
     />
   );
 };
 
-PublicationRangeFields.propTypes = {
+StatisticalCodeFields.propTypes = {
+  statisticalCodeOptions: PropTypes.arrayOf(PropTypes.object),
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
 };
-PublicationRangeFields.defaultProps = {
+
+StatisticalCodeFields.defaultProps = {
   canAdd: true,
   canEdit: true,
   canDelete: true,
 };
 
-export default PublicationRangeFields;
+export default StatisticalCodeFields;

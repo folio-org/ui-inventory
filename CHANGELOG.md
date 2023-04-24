@@ -5,6 +5,9 @@
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
 * Add bound-with parts to an Item.  Refs UIIN-1998.
+* Fix for Note text box starts flickering/jumping in Instance/Holding/Items during resizing. Refs. UIIN-2387.
+* Instance Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2390.
+* Instance Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2372.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
