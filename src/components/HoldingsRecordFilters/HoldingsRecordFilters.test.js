@@ -71,9 +71,6 @@ const renderHoldingsRecordFilters = () => {
 };
 
 describe('HoldingsRecordFilters', () => {
-  beforeEach(() => {
-    renderHoldingsRecordFilters();
-  });
   afterEach(() => {
     jest.clearAllMocks();
   });
