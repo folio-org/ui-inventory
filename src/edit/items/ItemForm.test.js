@@ -4,7 +4,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import user from '@testing-library/user-event';
 
 import '../../../test/jest/__mock__';
 
@@ -20,9 +21,30 @@ import { DataContext } from '../../contexts';
 
 import ItemForm from './ItemForm';
 
+import useHoldingsQueryByHrids from '../../hooks/useHoldingsQueryByHrids';
+import useInstancesQuery from '../../hooks/useInstancesQuery';
+
 jest.mock('../common', () => ({
   LocationSelectionWithCheck: () => <div>LocationSelection</div>,
 }));
+jest.mock('../../hooks/useHoldingsQueryByHrids');
+useHoldingsQueryByHrids.mockImplementation(() => {
+  return {
+    isLoading: false,
+    holdingsRecords: [
+      { hrid: 'bw789', id: 'bw789', instanceId: 'bw789' },
+    ],
+  };
+});
+jest.mock('../../hooks/useInstancesQuery');
+useInstancesQuery.mockImplementation(() => {
+  return {
+    isSuccess: true,
+    data: {
+      instances: [],
+    },
+  };
+});
 
 const mockInitialValues = {
   permanentLocationId: 'permanentLocationId',
@@ -117,6 +139,56 @@ describe('ItemForm', () => {
           .getElementsByTagName('button').item(0);
         expect(indirectlyLinkedDelete.disabled).toBeFalsy();
       });
+    });
+  });
+
+  describe('Bound With modal', () => {
+    it('should start out closed', async () => {
+      renderItemForm();
+
+      const saveButton = screen.queryByTestId('bound-with-modal-save-button');
+      expect(saveButton).toBeNull();
+    });
+
+    it('should open and close', async () => {
+      renderItemForm();
+
+      const openModalButton = await screen.findByTestId('bound-with-add-button');
+      user.click(openModalButton);
+
+      // Open the modal, test that the save button is visible
+      let saveButton = screen.queryByTestId('bound-with-modal-save-button');
+      expect(saveButton).not.toBeNull();
+      expect(saveButton).toBeVisible();
+
+      // Close the modal, look for the button again, test that it has disappeared
+      const cancelModalButton = screen.queryByTestId('bound-with-modal-cancel-button');
+      user.click(cancelModalButton);
+      await waitFor(() => {
+        saveButton = screen.queryByTestId('bound-with-modal-save-button');
+        expect(saveButton).toBeNull();
+      });
+    });
+
+    it('should trigger addBoundWiths when saved', async () => {
+      const { container } = renderItemForm();
+
+      // Initially there are two bound-with holdings
+      let rows = container.querySelectorAll('#acc10 *[data-test-repeater-field-row]');
+      expect(rows.length).toEqual(2);
+
+      const openModalButton = await screen.findByTestId('bound-with-add-button');
+      user.click(openModalButton);
+
+      const firstInput = screen.queryAllByTestId('bound-with-modal-input')[0];
+      user.type(firstInput, 'bw789');
+
+      const saveModalButton = screen.queryByTestId('bound-with-modal-save-button');
+      user.click(saveModalButton);
+
+      // There should now be three
+      rows = container.querySelectorAll('#acc10 *[data-test-repeater-field-row]');
+      expect(rows.length).toEqual(3);
     });
   });
 });

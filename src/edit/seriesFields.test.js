@@ -42,6 +42,7 @@ describe('SeriesFields', () => {
     expect(screen.getByText('Series statements')).toBeInTheDocument();
     const seriesButton = screen.getByText('Add series');
     userEvent.click(seriesButton);
+    expect(screen.getAllByText('Series statements')[1]).toBeInTheDocument();
     const myText = screen.getByRole('textbox');
     expect(myText).toHaveValue('');
     fireEvent.change(myText, { target: { value: 'Enter text inside Text field' } });
