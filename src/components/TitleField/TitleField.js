@@ -39,7 +39,7 @@ const TitleField = ({ field, index, fields, titleIdKey, isDisabled }) => {
 };
 
 TitleField.propTypes = {
-  field: PropTypes.object,
+  field: PropTypes.string,
   fields: PropTypes.object,
   index: PropTypes.number,
   titleIdKey: PropTypes.string,

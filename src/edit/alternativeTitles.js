@@ -1,15 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   TextArea,
+  RepeatableField,
   Select,
+  Label,
+  Row,
+  Col,
 } from '@folio/stripes/components';
 
-import RepeatableField from '../components/RepeatableField';
-
 const AlternativeTitles = props => {
+  const { formatMessage } = useIntl();
+
   const {
     alternativeTitleTypes,
     canAdd,
@@ -20,41 +29,67 @@ const AlternativeTitles = props => {
     label: it.name,
     value: it.id,
   }));
-  const intl = useIntl();
+
+  const typeLabel = formatMessage({ id: 'ui-inventory.type' });
+  const alternativeTitleLabel = formatMessage({ id: 'ui-inventory.alternativeTitle' });
+
+  const headLabels = (
+    <Row>
+      <Col sm={6}>
+        <Label tagName="legend" required>
+          {typeLabel}
+        </Label>
+      </Col>
+      <Col sm={6}>
+        <Label tagName="legend" required>
+          {alternativeTitleLabel}
+        </Label>
+      </Col>
+    </Row>
+  );
+
+  const renderField = field => (
+    <Row>
+      <Col sm={6}>
+        <Field
+          aria-label={typeLabel}
+          name={`${field}.alternativeTitleTypeId`}
+          component={Select}
+          dataOptions={alternativeTitleTypeOptions}
+          placeholder={formatMessage({ id: 'ui-inventory.selectAlternativeTitleType' })}
+          disabled={!canEdit}
+          required
+        />
+      </Col>
+      <Col sm={6}>
+        <Field
+          aria-label={alternativeTitleLabel}
+          name={`${field}.alternativeTitle`}
+          component={TextArea}
+          disabled={!canEdit}
+          required
+          fullWidth
+          rows={1}
+        />
+      </Col>
+    </Row>
+  );
 
   return (
-    <FormattedMessage id="ui-inventory.selectAlternativeTitleType">
-      {([placeholder]) => (
-        <RepeatableField
-          name="alternativeTitles"
-          label={<FormattedMessage id="ui-inventory.alternativeTitles" />}
-          addLabel={<FormattedMessage id="ui-inventory.addAlternativeTitles" />}
-          addButtonId="clickable-add-alternativeTitle"
-          template={[
-            {
-              name: 'alternativeTitleTypeId',
-              label: intl.formatMessage({ id: 'ui-inventory.type' }),
-              component: Select,
-              placeholder,
-              dataOptions: alternativeTitleTypeOptions,
-              required: true,
-              disabled: !canEdit
-            },
-            {
-              name: 'alternativeTitle',
-              label: intl.formatMessage({ id: 'ui-inventory.alternativeTitle' }),
-              component: TextArea,
-              required: true,
-              rows: 1,
-              disabled: !canEdit
-            }
-          ]}
-          newItemTemplate={{ alternativeTitleTypeId: '', alternativeTitle: '' }}
-          canAdd={canAdd}
-          canDelete={canDelete}
-        />
-      )}
-    </FormattedMessage>
+    <FieldArray
+      name="alternativeTitles"
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.alternativeTitles" />}
+      addLabel={<FormattedMessage id="ui-inventory.addAlternativeTitles" />}
+      onAdd={fields => fields.push({
+        alternativeTitleTypeId: '',
+        alternativeTitle: '',
+      })}
+      headLabels={headLabels}
+      renderField={renderField}
+      canAdd={canAdd}
+      canRemove={canDelete}
+    />
   );
 };
 

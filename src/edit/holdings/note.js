@@ -24,6 +24,10 @@ const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
             component: Select,
             dataOptions: [{ label, value: '' }, ...noteTypeOptions],
             required: true,
+            columnSize: {
+              xs: 12,
+              lg: 4,
+            }
           },
           {
             name: 'note',
@@ -31,6 +35,10 @@ const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
             component: TextArea,
             rows: 1,
             required: true,
+            columnSize: {
+              xs: 12,
+              lg: 7,
+            }
           },
           {
             name: 'staffOnly',
@@ -40,8 +48,8 @@ const Note = ({ noteTypeOptions, canAdd, canEdit }) => (
             inline: true,
             vertical: true,
             columnSize: {
-              xs: 3,
-              lg: 2,
+              xs: 12,
+              lg: 1,
             },
           }
         ]}

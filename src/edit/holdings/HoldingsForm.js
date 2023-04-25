@@ -656,7 +656,7 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
                   >
                     <Row>
-                      <Col sm={10}>
+                      <Col sm={11}>
                         <Note
                           canAdd={!this.isFieldBlocked('notes')}
                           canEdit={!this.isFieldBlocked('notes')}

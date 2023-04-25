@@ -34,10 +34,10 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import RepeatableField from '../components/RepeatableField';
 import OptimisticLockingBanner from '../components/OptimisticLockingBanner';
 
 import AlternativeTitles from './alternativeTitles';
+import StatisticalCodeFields from './statisticalCodeFields';
 import AdministrativeNoteFields from './administrativeNoteFields';
 import SeriesFields from './seriesFields';
 import EditionFields from './editionFields';
@@ -474,22 +474,12 @@ class InstanceForm extends React.Component {
                         </FormattedMessage>
                       </Col>
                       <Row>
-                        <Col sm={10}>
-                          <RepeatableField
-                            name="statisticalCodeIds"
-                            addButtonId="clickable-add-statistical-code"
-                            addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
-                            template={[
-                              {
-                                label: <FormattedMessage id="ui-inventory.statisticalCode" />,
-                                component: Select,
-                                dataOptions: [{
-                                  label: 'Select code', value: '',
-                                }, ...statisticalCodeOptions],
-                                disabled: this.isFieldBlocked('statisticalCodeIds'),
-                              }
-                            ]}
+                        <Col sm={12}>
+                          <StatisticalCodeFields
                             canAdd={!this.isFieldBlocked('statisticalCodeIds')}
+                            canEdit={!this.isFieldBlocked('statisticalCodeIds')}
+                            canDelete={!this.isFieldBlocked('statisticalCodeIds')}
+                            statisticalCodeOptions={statisticalCodeOptions}
                           />
                         </Col>
                       </Row>
@@ -525,12 +515,14 @@ class InstanceForm extends React.Component {
                         component="input"
                         disabled={this.isFieldBlocked('source')}
                       />
-                      <AlternativeTitles
-                        alternativeTitleTypes={referenceTables.alternativeTitleTypes}
-                        canAdd={!this.isFieldBlocked('alternativeTitles')}
-                        canEdit={!this.isFieldBlocked('alternativeTitles')}
-                        canDelete={!this.isFieldBlocked('alternativeTitles')}
-                      />
+                      <Col sm={12}>
+                        <AlternativeTitles
+                          alternativeTitleTypes={referenceTables.alternativeTitleTypes}
+                          canAdd={!this.isFieldBlocked('alternativeTitles')}
+                          canEdit={!this.isFieldBlocked('alternativeTitles')}
+                          canDelete={!this.isFieldBlocked('alternativeTitles')}
+                        />
+                      </Col>
                       <Col sm={10}>
                         <Field
                           label={<FormattedMessage id="ui-inventory.indexTitle" />}
@@ -542,11 +534,13 @@ class InstanceForm extends React.Component {
                           disabled={this.isFieldBlocked('indexTitle')}
                         />
                       </Col>
-                      <SeriesFields
-                        canAdd={!this.isFieldBlocked('series')}
-                        canEdit={!this.isFieldBlocked('series')}
-                        canDelete={!this.isFieldBlocked('series')}
-                      />
+                      <Col sm={12}>
+                        <SeriesFields
+                          canAdd={!this.isFieldBlocked('series')}
+                          canEdit={!this.isFieldBlocked('series')}
+                          canDelete={!this.isFieldBlocked('series')}
+                        />
+                      </Col>
                       <PrecedingTitleFields
                         canAdd={!this.isFieldBlocked('precedingTitles')}
                         canEdit={!this.isFieldBlocked('precedingTitles')}
