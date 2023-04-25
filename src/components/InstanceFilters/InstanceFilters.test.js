@@ -1,16 +1,14 @@
 import React from 'react';
+import '../../../test/jest/__mock__';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
-import '../../../test/jest/__mock__/currencyData.mock';
-import '../../../test/jest/__mock__/stripesConfig.mock';
-
-import '../../../test/jest/__mock__/stripesCore.mock';
-import '../../../test/jest/__mock__/stripesIcon.mock';
 import userEvent from '@testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
-
+import {
+  FACETS
+} from '../../constants';
 import InstanceFilters from './InstanceFilters';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
@@ -22,18 +20,21 @@ jest.mock('../../facetUtils', () => ({
   getSuppressedOptions: jest.fn(),
 }));
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  Accordion: (props) => {
-    const { onClearFilter, children } = props;
-    const component =
-      <div>
-        <button type="button" onClick={() => onClearFilter()}>onClearFilter</button>
-        <div>{children}</div>
-      </div>;
-    return (component);
-  },
-}));
+const activeFilters = {
+  [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
+  [FACETS.ITEM_STATUS]: ['ITEM_STATUS1'],
+  [FACETS.RESOURCE]: ['RESOURCE1'],
+  [FACETS.FORMAT]: ['Format1'],
+  [FACETS.MODE]: ['Mode1'],
+  [FACETS.NATURE_OF_CONTENT]: ['NATUREOFCONTENT1'],
+  [FACETS.STAFF_SUPPRESS]: ['STAFFSUPPRESS1'],
+  [FACETS.INSTANCES_DISCOVERY_SUPPRESS]: ['DISCOVERYSUPPRESS1'],
+  [FACETS.STATISTICAL_CODE_IDS]: ['STATISTICALCODEIDS1'],
+  [FACETS.CREATED_DATE]: ['2022-01-01'],
+  [FACETS.UPDATED_DATE]: ['2022-01-01'],
+  [FACETS.STATUS]: ['STATUS1'],
+  [FACETS.SOURCE]: ['SOURCE1']
+};
 
 const resources = {
   facets: {
@@ -76,7 +77,7 @@ const renderInstanceFilters = () => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <InstanceFilters
-          activeFilters={{ 'language': ['eng'] }}
+          activeFilters={activeFilters}
           data={data}
           onChange={onChange}
           onClear={onClear}
@@ -89,98 +90,119 @@ const renderInstanceFilters = () => {
 };
 
 describe('InstanceFilters', () => {
-  beforeEach(() => {
+  it('Should Clear selected filters for effective Location', async () => {
     renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[1]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
+  });
+  it('Should Clear selected filters for language', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[3]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger effectiveLocation button', () => {
-    const effectiveLocation = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(effectiveLocation[0]);
-    expect(onClear).toHaveBeenCalledTimes(1);
-    expect(effectiveLocation[0]).toBeEnabled();
+  it('Should Clear selected filters for resource', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[5]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger language button', () => {
-    const language = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(language[1]);
-    expect(onClear).toHaveBeenCalledTimes(2);
-    expect(language[1]).toBeEnabled();
+  it('Should Clear selected filters for format', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[7]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger resource button', () => {
-    const resource = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(resource[2]);
-    expect(onClear).toHaveBeenCalledTimes(3);
-    expect(resource[2]).toBeEnabled();
+  it('Should Clear selected filters for mode', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[9]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger format button', () => {
-    const format = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(format[3]);
-    expect(onClear).toHaveBeenCalledTimes(4);
-    expect(format[3]).toBeEnabled();
+  it('Should Clear selected filters for nature Of Content', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[11]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger mode button', () => {
-    const mode = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(mode[4]);
-    expect(onClear).toHaveBeenCalledTimes(5);
-    expect(mode[4]).toBeEnabled();
+  it('Should Clear selected filters for staffSuppress', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[13]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger natureOfContent button', () => {
-    const natureOfContent = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(natureOfContent[5]);
-    expect(onClear).toHaveBeenCalledTimes(6);
-    expect(natureOfContent[5]).toBeEnabled();
+  it('Should Clear selected filters for Suppress from discovery', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[15]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger staffSuppress button', () => {
-    const staffSuppress = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(staffSuppress[6]);
-    expect(onClear).toHaveBeenCalledTimes(7);
-    expect(staffSuppress[6]).toBeEnabled();
+  it('Should Clear selected filters for Statistical code filter list', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[17]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger instancesDiscoverySuppress button', () => {
-    const instancesDiscoverySuppress = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(instancesDiscoverySuppress[7]);
-    expect(onClear).toHaveBeenCalledTimes(8);
-    expect(instancesDiscoverySuppress[7]).toBeEnabled();
+  it('Should Clear selected filters for Date created filter list', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[19]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger statisticalCodeIds button', () => {
-    const statisticalCodeIds = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(statisticalCodeIds[8]);
-    expect(onClear).toHaveBeenCalledTimes(9);
-    expect(statisticalCodeIds[8]).toBeEnabled();
+  it('Should Clear selected filters for Date updated filter list', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[26]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger createdDate button', () => {
-    const createdDate = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(createdDate[9]);
-    expect(onClear).toHaveBeenCalledTimes(10);
-    expect(createdDate[9]).toBeEnabled();
+  it('Should Clear selected filters for Instance status filter list', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[33]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger updatedDate button', () => {
-    const updatedDate = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(updatedDate[10]);
-    expect(onClear).toHaveBeenCalledTimes(11);
-    expect(updatedDate[10]).toBeEnabled();
-  });
-
-  it('Should Triger instanceStatus button', () => {
-    const instanceStatus = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(instanceStatus[11]);
-    expect(onClear).toHaveBeenCalledTimes(12);
-    expect(instanceStatus[11]).toBeEnabled();
-  });
-
-  it('Should Triger source button', () => {
-    const source = screen.getAllByRole('button', { name: 'onClearFilter' });
-    userEvent.click(source[12]);
-    expect(onClear).toHaveBeenCalledTimes(13);
-    expect(source[12]).toBeEnabled();
+  it('Should Clear selected filters for Source filter list', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[35]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 });
