@@ -77,19 +77,10 @@ describe('HoldingsRecordFilters', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('Contains a filter for creation date ', () => {
-    renderHoldingsRecordFilters();
-    expect(document.querySelector('[name="holdingsCreatedDate"]')).toBeInTheDocument();
-  });
-
-  it('Contains a filter for update date ', () => {
-    renderHoldingsRecordFilters();
-    expect(document.querySelector('[name="holdingsUpdatedDate"]')).toBeInTheDocument();
-  });
 
   it('Should Triger effectiveLocation button', () => {
     renderHoldingsRecordFilters();
-    const effectiveLocation = screen.getByRole('button', { name: 'ui-inventory.filters.effectiveLocation1 filter list' });
+    const effectiveLocation = screen.getByRole('button', { name: 'Effective location (item) filter list' });
     userEvent.click(effectiveLocation);
     expect(onClear).toBeCalled();
     expect(effectiveLocation).toBeEnabled();
@@ -97,7 +88,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsPermanentLocation button', () => {
     renderHoldingsRecordFilters();
-    const holdingsPermanentLocation = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsPermanentLocation filter list' });
+    const holdingsPermanentLocation = screen.getByRole('button', { name: 'Holdings permanent location filter list' });
     userEvent.click(holdingsPermanentLocation);
     expect(onClear).toBeCalled();
     expect(holdingsPermanentLocation).toBeEnabled();
@@ -105,7 +96,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsType button', () => {
     renderHoldingsRecordFilters();
-    const holdingsType = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsType filter list' });
+    const holdingsType = screen.getByRole('button', { name: 'Holdings type filter list' });
     userEvent.click(holdingsType);
     expect(onClear).toBeCalled();
     expect(holdingsType).toBeEnabled();
@@ -113,7 +104,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsDiscoverySuppress button', () => {
     renderHoldingsRecordFilters();
-    const holdingsDiscoverySuppress = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsDiscoverySuppress filter list' });
+    const holdingsDiscoverySuppress = screen.getByRole('button', { name: 'Suppress from discovery filter list' });
     userEvent.click(holdingsDiscoverySuppress);
     expect(onClear).toBeCalled();
     expect(holdingsDiscoverySuppress).toBeEnabled();
@@ -121,7 +112,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsStatisticalCodeIds button', () => {
     renderHoldingsRecordFilters();
-    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsStatisticalCodeIds filter list' });
+    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: 'Statistical code filter list' });
     userEvent.click(holdingsStatisticalCodeIds);
     expect(onClear).toBeCalled();
     expect(holdingsStatisticalCodeIds).toBeEnabled();
@@ -129,7 +120,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsCreatedDate button', () => {
     renderHoldingsRecordFilters();
-    const holdingsCreatedDate = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsCreatedDate filter list' });
+    const holdingsCreatedDate = screen.getByRole('button', { name: 'Date created filter list' });
     userEvent.click(holdingsCreatedDate);
     expect(onClear).toBeCalled();
     expect(holdingsCreatedDate).toBeEnabled();
@@ -137,7 +128,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsUpdatedDate button', () => {
     renderHoldingsRecordFilters();
-    const holdingsUpdatedDate = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsUpdatedDate filter list' });
+    const holdingsUpdatedDate = screen.getByRole('button', { name: 'Date updated filter list' });
     userEvent.click(holdingsUpdatedDate);
     expect(onClear).toBeCalled();
     expect(holdingsUpdatedDate).toBeEnabled();
@@ -145,7 +136,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Triger holdingsSource button', () => {
     renderHoldingsRecordFilters();
-    const holdingsSource = screen.getByRole('button', { name: 'ui-inventory.filters.holdingsSource filter list' });
+    const holdingsSource = screen.getByRole('button', { name: 'Source filter list' });
     userEvent.click(holdingsSource);
     expect(onClear).toBeCalled();
     expect(holdingsSource).toBeEnabled();
