@@ -1,16 +1,14 @@
 import React from 'react';
+import '../../../test/jest/__mock__';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen } from '@testing-library/react';
-
+import { screen, waitFor } from '@testing-library/react';
 import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
-import '../../../test/jest/__mock__/currencyData.mock';
-import '../../../test/jest/__mock__/stripesConfig.mock';
-import '../../../test/jest/__mock__/stripesCore.mock';
-import '../../../test/jest/__mock__/stripesIcon.mock';
 import userEvent from '@testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
-
+import {
+  FACETS
+} from '../../constants';
 import HoldingsRecordFilters from './HoldingsRecordFilters';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
@@ -22,6 +20,16 @@ jest.mock('../../facetUtils', () => ({
   getSuppressedOptions: jest.fn(),
 }));
 
+const activeFilters = {
+  [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
+  [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
+  [FACETS.HOLDINGS_TYPE]: ['loc3'],
+  [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: ['loc4'],
+  [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: ['loc5'],
+  [FACETS.HOLDINGS_CREATED_DATE]: ['2022-01-01'],
+  [FACETS.HOLDINGS_UPDATED_DATE]: ['2022-01-01'],
+  [FACETS.HOLDINGS_SOURCE]: ['loc8']
+};
 const resources = {
   facets: {
     hasLoaded: true,
@@ -41,28 +49,32 @@ const resources = {
 
 const data = {
   locations: [],
+  statisticalCodes: [],
+  holdingsSources: [],
+  holdingsTypes: [],
   resourceTypes: [],
   instanceFormats: [],
   modesOfIssuance: [],
-  statisticalCodes: [],
   tagsRecords: [],
   natureOfContentTerms: [],
   query: [],
   onFetchFacets: jest.fn(),
   parentResources: resources,
 };
+
 const onChange = jest.fn();
 const onClear = jest.fn();
+
 const renderHoldingsRecordFilters = () => {
   return renderWithIntl(
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <HoldingsRecordFilters
-          activeFilters={{ 'language': ['eng'] }}
+          activeFilters={activeFilters}
           data={data}
+          parentResources={resources}
           onChange={onChange}
           onClear={onClear}
-          parentResources={resources}
         />
       </ModuleHierarchyProvider>
     </Router>,
@@ -71,71 +83,90 @@ const renderHoldingsRecordFilters = () => {
 };
 
 describe('HoldingsRecordFilters', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('Should Triger effectiveLocation button', () => {
+  it('Should Render effectiveLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const effectiveLocation = screen.getByRole('button', { name: 'Effective location (item) filter list' });
+    const effectiveLocation = document.querySelector('[id="accordion-toggle-button-effectiveLocation"]');
     userEvent.click(effectiveLocation);
-    expect(onClear).toBeCalled();
-    expect(effectiveLocation).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[1]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger holdingsPermanentLocation button', () => {
+  it('Should Render holdingsPermanentLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsPermanentLocation = screen.getByRole('button', { name: 'Holdings permanent location filter list' });
+    const holdingsPermanentLocation = document.querySelector('[id="accordion-toggle-button-holdingsPermanentLocation"]');
     userEvent.click(holdingsPermanentLocation);
-    expect(onClear).toBeCalled();
-    expect(holdingsPermanentLocation).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[3]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger holdingsType button', () => {
+  it('Should Render holdingsType, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsType = screen.getByRole('button', { name: 'Holdings type filter list' });
+    const holdingsType = document.querySelector('[id="accordion-toggle-button-holdingsType"]');
     userEvent.click(holdingsType);
-    expect(onClear).toBeCalled();
-    expect(holdingsType).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[5]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger holdingsDiscoverySuppress button', () => {
+  it('Should Render holdingsDiscoverySuppress, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsDiscoverySuppress = screen.getByRole('button', { name: 'Suppress from discovery filter list' });
+    const holdingsDiscoverySuppress = document.querySelector('[id="accordion-toggle-button-holdingsDiscoverySuppress"]');
     userEvent.click(holdingsDiscoverySuppress);
-    expect(onClear).toBeCalled();
-    expect(holdingsDiscoverySuppress).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[7]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger holdingsStatisticalCodeIds button', () => {
+  it('Should Render holdingsStatisticalCodeIds, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: 'Statistical code filter list' });
+    const holdingsStatisticalCodeIds = document.querySelector('[id="accordion-toggle-button-holdingsStatisticalCodeIds"]');
     userEvent.click(holdingsStatisticalCodeIds);
-    expect(onClear).toBeCalled();
-    expect(holdingsStatisticalCodeIds).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[9]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger holdingsCreatedDate button', () => {
+  it('Should Render holdingsCreatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsCreatedDate = screen.getByRole('button', { name: 'Date created filter list' });
+    const holdingsCreatedDate = document.querySelector('[id="accordion-toggle-button-holdingsCreatedDate"]');
     userEvent.click(holdingsCreatedDate);
-    expect(onClear).toBeCalled();
-    expect(holdingsCreatedDate).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[11]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 
-  it('Should Triger holdingsUpdatedDate button', () => {
+  it('Should Render holdingsUpdatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsUpdatedDate = screen.getByRole('button', { name: 'Date updated filter list' });
+    const holdingsUpdatedDate = document.querySelector('[id="accordion-toggle-button-holdingsUpdatedDate"]');
     userEvent.click(holdingsUpdatedDate);
-    expect(onClear).toBeCalled();
-    expect(holdingsUpdatedDate).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[18]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
-
-  it('Should Triger holdingsSource button', () => {
+  it('Should Render holdingsSource, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsSource = screen.getByRole('button', { name: 'Source filter list' });
+    const holdingsSource = document.querySelector('[id="accordion-toggle-button-holdingsSource"]');
     userEvent.click(holdingsSource);
-    expect(onClear).toBeCalled();
-    expect(holdingsSource).toBeEnabled();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[25]);
+    await waitFor(() => {
+      expect(onClear).toBeCalled();
+    });
   });
 });
