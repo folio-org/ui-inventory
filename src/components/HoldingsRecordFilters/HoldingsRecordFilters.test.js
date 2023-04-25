@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { screen } from '@testing-library/react';
 
-import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
 
 import '../../../test/jest/__mock__/currencyData.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
