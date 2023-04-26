@@ -10,6 +10,8 @@
 * Instance Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2372.
 * Holdings Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2398.
 * Holdings Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2373.
+* Holdings view source: Print button not visible with "View MARC holdings record" permission. Refs UIIN-2405.
+
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
