@@ -5,10 +5,12 @@
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
 * Add bound-with parts to an Item.  Refs UIIN-1998.
+* Fix for Note text box starts flickering/jumping in Instance/Holding/Items during resizing. Refs. UIIN-2387.
 * Instance Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2390.
 * Instance Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2372.
 * Holdings Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2398.
 * Holdings Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2373.
+* Holdings view source: Print button not visible with "View MARC holdings record" permission. Refs UIIN-2405.
 * Item Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2397.
 * Item Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2374.
 
