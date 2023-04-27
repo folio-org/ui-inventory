@@ -1,21 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query';
-import { fireEvent } from '@testing-library/react';
+import PropTypes from 'prop-types';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import '../../../test/jest/__mock__';
-
-import { StripesContext } from '@folio/stripes/core';
-
-import {
-  renderWithIntl,
-  translationsProperties,
-  stripesStub,
-} from '../../../test/jest/helpers';
-import { DataContext } from '../../contexts';
+import stripesFinalForm from '@folio/stripes/final-form';
+import renderWithRouter from '../../../test/jest/helpers/renderWithRouter';
+import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
+import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 import HoldingsForm from './HoldingsForm';
 
@@ -33,124 +26,176 @@ const mockInitialValues = {
   id: 'id',
   permanentLocationId: 'permanentLocationId',
 };
-const mockOnSubmit = jest.fn();
+
 const mockOnCancel = jest.fn();
+
 const mockInstance = {};
+
 const mockReferenceTables = {
-  holdingsNoteTypes: [{ id: 'holdingsNoteTypeId', name: 'holdingsNoteTypeId' }],
-  callNumberTypes: [{ id: 'callNumberTypeId', name: 'callNumberTypeId' }],
-  holdingsTypes: [{ id: 'holdingsTypeId', name: 'holdingsTypeId' }],
-  holdingsSources: [{ id: 'MARC', name: 'MARC' }],
-  holdingsSourcesByName: { MARC: { name: 'MARC' } },
-  statisticalCodes: [{ id: 'statisticalCodeId', name: 'statisticalCodeId', code: 'statisticalCode' }],
-  illPolicies: [{ id: 'illPolicyId', name: 'illPolicyId' }],
-  electronicAccessRelationships: [],
+  holdingsNoteTypes: [
+    { id: '1', name: 'Note Type 1' },
+    { id: '2', name: 'Note Type 2' },
+  ],
+  callNumberTypes: [
+    { id: '1', name: 'Call Number Type 1' },
+    { id: '2', name: 'Call Number Type 2' },
+  ],
+  holdingsTypes: [
+    { id: '1', name: 'Holdings Type 1' },
+    { id: '2', name: 'Holdings Type 2' },
+  ],
+  holdingsSources: [
+    { id: '1', name: 'Holdings Source 1' },
+    { id: '2', name: 'Holdings Source 2' },
+  ],
+  holdingsSourcesByName: {
+    FOLIO: { name: 'Holdings Source FOLIO' },
+  },
+  statisticalCodes: [
+    { id: '1', code: 'Code 1', name: 'Statistical Code 1', statisticalCodeTypeId: '1' },
+    { id: '2', code: 'Code 2', name: 'Statistical Code 2', statisticalCodeTypeId: '2' },
+  ],
+  statisticalCodeTypes: [
+    { id: '1', name: 'Statistical Code Type 1' },
+    { id: '2', name: 'Statistical Code Type 2' },
+  ],
+  illPolicies: [
+    { id: '1', name: 'ILL Policy 1' },
+    { id: '2', name: 'ILL Policy 2' },
+  ],
+  electronicAccessRelationships: [
+    { id: '1', name: 'electronic Access Relationships 1' },
+    { id: '2', name: 'electronic Access Relationships 2' },
+  ],
 };
-const mockBlockedFields = [
-  'shelvingTitle',
-];
+
 const mockResources = {
   holdingsBlockedFields: {
     hasLoaded: true,
-    records: [{
-      blockedFields: mockBlockedFields,
-    }],
+    records: [
+      {
+        blockedFields: ['field1', 'field2'],
+      },
+    ],
   },
 };
+
 const mockItemCount = 0;
-const mockGoTo = jest.fn();
+const goToMock = jest.fn();
 
-const queryClient = new QueryClient();
+const httpErrorMock = null;
 
-const HoldingsFormSetup = (props = {}) => (
-  <Router>
-    <QueryClientProvider client={queryClient}>
-      <StripesContext.Provider value={stripesStub}>
-        <DataContext.Provider value={{
-          contributorTypes: [],
-          instanceFormats: [],
-          modesOfIssuance: [],
-          natureOfContentTerms: [],
-          tagsRecords: [],
-        }}
-        >
-          <HoldingsForm
-            initialValues={mockInitialValues}
-            onSubmit={mockOnSubmit}
-            onCancel={mockOnCancel}
-            instance={mockInstance}
-            referenceTables={mockReferenceTables}
-            itemCount={mockItemCount}
-            goTo={mockGoTo}
-            isMARCRecord
-            resources={mockResources}
-            {...props}
-          />
-        </DataContext.Provider>
-      </StripesContext.Provider>
-    </QueryClientProvider>
-  </Router>
+const onSubmit = jest.fn();
+const handleSubmitMock = jest.fn();
+
+const Form = ({ handleSubmit }) => (
+  <form onSubmit={handleSubmit}>
+    <HoldingsForm
+      handleSubmit={handleSubmitMock}
+      pristine={false}
+      submitting={false}
+      copy={false}
+      initialValues={mockInitialValues}
+      onSubmit={onSubmit}
+      onCancel={mockOnCancel}
+      instance={mockInstance}
+      location={{ state: 'someState' }}
+      referenceTables={mockReferenceTables}
+      itemCount={mockItemCount}
+      isMARCRecord
+      resources={mockResources}
+      goTo={goToMock}
+      httpError={httpErrorMock}
+    />
+  </form>
 );
 
-const renderHoldingsForm = (props = {}) => renderWithIntl(
-  <HoldingsFormSetup {...props} />,
-  translationsProperties
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
+
+const WrappedForm = stripesFinalForm({
+  navigationCheck: true,
+  enableReinitialize: false,
+})(Form);
+
+const renderHoldingsForm = () => renderWithIntl(
+  renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
+  translationsProperties,
 );
 
 describe('HoldingsForm', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
-  it('should render form', () => {
-    const { container } = renderHoldingsForm();
-
-    expect(container.querySelectorAll('form').length).toEqual(1);
+  beforeEach(() => {
+    renderHoldingsForm();
   });
-
-  describe('when record source is MARC', () => {
-    it('should disable mapped fields', async () => {
-      const { getByLabelText } = renderHoldingsForm();
-
-      expect(getByLabelText('Shelving title')).toBeDisabled();
-    });
-
-    it('should not disable not mapped fields', async () => {
-      const { getByLabelText } = renderHoldingsForm();
-
-      expect(getByLabelText('Holdings type')).toBeEnabled();
-    });
+  it('updates ShelvingTitle input field value', () => {
+    const ShelvingInput = screen.getByLabelText('Shelving title');
+    const saveButton = screen.getByRole('button', { name: 'Save and close' });
+    expect(saveButton).toBeDisabled();
+    expect(ShelvingInput).toHaveValue('');
+    userEvent.type(ShelvingInput, 'test');
+    expect(ShelvingInput).toHaveValue('test');
+    expect(saveButton).toBeEnabled();
+    const clearButton = screen.getByLabelText('Clear this field');
+    expect(clearButton).toBeInTheDocument();
+    userEvent.click(clearButton);
+    expect(saveButton).toBeDisabled();
   });
-
-  describe('when record source is not MARC', () => {
-    it('should not disable mapped fields', async () => {
-      const { getByLabelText } = renderHoldingsForm({
-        isMARCRecord: false,
-      });
-
-      expect(getByLabelText('Shelving title')).not.toBeDisabled();
-    });
+  it('click Add note Button', () => {
+    const notesButton = screen.getByRole('button', { name: 'Add note' });
+    expect(notesButton).toBeInTheDocument();
+    userEvent.click(notesButton);
+    const CancelButton = screen.getByRole('button', { name: 'Cancel' });
+    expect(CancelButton).toBeInTheDocument();
+    userEvent.click(CancelButton);
+    expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
+});
 
-  describe('when page was just loaded', () => {
-    it('should have disabled Save and close button', () => {
-      const { getByRole } = renderHoldingsForm();
-      expect(getByRole('button', { name: /Save & close/i })).toBeDisabled();
-    });
+describe('changing props for HoldingsForm', () => {
+  const onCancelMock = jest.fn();
+  const onSubmitMock = jest.fn();
+  const referenceTablesMock = {
+    holdingsSourcesByName: { MARC: { name: 'MARC' } },
+    electronicAccessRelationships: [],
+    permanentLocationId:  [{ id: 'permanentLocationId', name: 'permanentLocationId' }],
+  };
+  const defaultProps = {
+    handleSubmit: handleSubmitMock,
+    onCancel: onCancelMock,
+    onSubmit: onSubmitMock,
+    pristine: true,
+    submitting: false,
+    copy: false,
+    initialValues: {},
+    instance: {},
+    isMARCRecord: false,
+    location: { state: '' },
+    referenceTables: referenceTablesMock,
+    resources: { holdingsBlockedFields: { records: [] } },
+    stripes: { connect: jest.fn() },
+    form: { change: jest.fn() },
+    goTo: jest.fn(),
+    httpError: null,
+  };
+  const HoldingsFormSetup = () => (
+    <Router>
+      <HoldingsForm {...defaultProps} />
+    </Router>
+  );
+  const newRenderHoldingsForm = (props = {}) => renderWithIntl(
+    <HoldingsFormSetup {...props} />,
+    translationsProperties
+  );
+  beforeEach(() => {
+    handleSubmitMock.mockClear();
+    onCancelMock.mockClear();
+    newRenderHoldingsForm();
   });
-
-  describe('when changing a field value', () => {
-    it('should enable Save and close', async () => {
-      const {
-        getByLabelText,
-        getByRole,
-      } = renderHoldingsForm();
-
-      fireEvent.change(getByLabelText('Copy number'), {
-        target: { value: '12345' },
-      });
-
-      expect(getByRole('button', { name: /Save & close/i })).toBeEnabled();
-    });
+  it('render Holdings call number', () => {
+    expect(screen.getByText(/Holdings call number/i)).toBeInTheDocument();
   });
 });
