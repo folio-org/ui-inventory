@@ -1,51 +1,47 @@
 import React from 'react';
-import { FieldArray } from 'react-final-form-arrays';
-import { Field } from 'react-final-form';
 import {
   FormattedMessage,
-  useIntl
+  useIntl,
 } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
 import {
   Label,
+  TextField,
   RepeatableField,
-  TextArea,
 } from '@folio/stripes/components';
 
-const PublicationRangeFields = props => {
+const FormerHoldingsIdFields = ({
+  canAdd,
+  canEdit,
+  canDelete,
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
-
-  const publicationRangeLabel = formatMessage({ id: 'ui-inventory.publicationRange' });
+  const formerHoldingsIdLabel = formatMessage({ id: 'ui-inventory.formerHoldingsId' });
 
   const legend = (
     <Label tagName="legend">
-      {publicationRangeLabel}
+      {formerHoldingsIdLabel}
     </Label>
   );
 
   const renderField = field => (
     <Field
-      aria-label={publicationRangeLabel}
+      ariaLabel={formerHoldingsIdLabel}
       name={field}
-      component={TextArea}
-      rows={1}
+      component={TextField}
       disabled={!canEdit}
     />
   );
 
   return (
     <FieldArray
-      name="publicationRange"
+      name="formerIds"
       component={RepeatableField}
-      legend={<FormattedMessage id="ui-inventory.publicationRange" />}
-      addLabel={<FormattedMessage id="ui-inventory.addPublicationRange" />}
+      addLabel={<FormattedMessage id="ui-inventory.addFormerHoldingsId" />}
       onAdd={fields => fields.push('')}
       headLabels={legend}
       renderField={renderField}
@@ -55,15 +51,16 @@ const PublicationRangeFields = props => {
   );
 };
 
-PublicationRangeFields.propTypes = {
+FormerHoldingsIdFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
 };
-PublicationRangeFields.defaultProps = {
+
+FormerHoldingsIdFields.defaultProps = {
   canAdd: true,
   canEdit: true,
   canDelete: true,
 };
 
-export default PublicationRangeFields;
+export default FormerHoldingsIdFields;

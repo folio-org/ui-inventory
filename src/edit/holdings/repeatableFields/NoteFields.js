@@ -8,29 +8,22 @@ import {
 import PropTypes from 'prop-types';
 
 import {
-  RepeatableField,
-  TextArea,
-  Select,
   Checkbox,
-  Row,
   Col,
   Label,
+  RepeatableField,
+  Row,
+  Select,
+  TextArea,
 } from '@folio/stripes/components';
 
-const NoteFields = props => {
+const NoteFields = ({
+  noteTypeOptions,
+  canAdd,
+  canEdit,
+  canDelete,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    instanceNoteTypes,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
-
-  const instanceNoteTypeOptions = instanceNoteTypes.map(it => ({
-    label: it.name,
-    value: it.id,
-  }));
 
   const noteTypeLabel = formatMessage({ id: 'ui-inventory.noteType' });
   const noteLabel = formatMessage({ id: 'ui-inventory.note' });
@@ -38,17 +31,17 @@ const NoteFields = props => {
 
   const headLabels = (
     <Row>
-      <Col sm={5}>
-        <Label tagName="legend">
+      <Col xs={12} lg={4}>
+        <Label tagName="legend" required>
           {noteTypeLabel}
         </Label>
       </Col>
-      <Col sm={5}>
-        <Label tagName="legend">
+      <Col xs={12} lg={7}>
+        <Label tagName="legend" required>
           {noteLabel}
         </Label>
       </Col>
-      <Col xs={3} lg={2}>
+      <Col xs={12} lg={1}>
         <Label tagName="legend">
           {staffOnlyLabel}
         </Label>
@@ -58,25 +51,33 @@ const NoteFields = props => {
 
   const renderField = field => (
     <Row>
-      <Col sm={5}>
+      <Col xs={12} lg={4}>
         <Field
           aria-label={noteTypeLabel}
-          name={`${field}.instanceNoteTypeId`}
+          name={`${field}.holdingsNoteTypeId`}
           component={Select}
-          dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...instanceNoteTypeOptions]}
+          dataOptions={[
+            {
+              label: formatMessage({ id: 'ui-inventory.selectType' }),
+              value: '',
+            },
+            ...noteTypeOptions,
+          ]}
           disabled={!canEdit}
+          required
         />
       </Col>
-      <Col sm={5}>
+      <Col xs={12} lg={7}>
         <Field
           aria-label={noteLabel}
           name={`${field}.note`}
           component={TextArea}
           rows={1}
           disabled={!canEdit}
+          required
         />
       </Col>
-      <Col xs={3} lg={2}>
+      <Col xs={12} lg={1}>
         <Field
           aria-label={staffOnlyLabel}
           name={`${field}.staffOnly`}
@@ -97,7 +98,7 @@ const NoteFields = props => {
       legend={<FormattedMessage id="ui-inventory.notes" />}
       addLabel={<FormattedMessage id="ui-inventory.addNote" />}
       onAdd={fields => fields.push({
-        instanceNoteTypeId: '',
+        holdingsNoteTypeId: '',
         note: '',
         staffOnly: false,
       })}
@@ -110,11 +111,12 @@ const NoteFields = props => {
 };
 
 NoteFields.propTypes = {
-  instanceNoteTypes: PropTypes.arrayOf(PropTypes.object),
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
 };
+
 NoteFields.defaultProps = {
   canAdd: true,
   canEdit: true,
