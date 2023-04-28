@@ -229,7 +229,7 @@
     "addHoldingsStatementForIndexes": "Adicionar declaração de coleções para índices",
     "addHoldingsStatementForSupplements": "Adicionar declaração de coleções para suplementos",
     "relatedInstances": "Instâncias relacionadas",
-    "instanceRelationshipsAnalyticsBoundWith": "Relacionamentos entre instâncias (analiticas e encadernado com)",
+    "instanceRelationshipsAnalyticsBoundWith": "Relacionamentos entre instâncias (analíticas e encadernado com)",
     "instanceStatusTypes": "Tipos de status da instância",
     "instanceStatusType": "Tipo de status da instância",
     "instanceHoldingsItem": "Instâncias, Coleções, Itens",
@@ -777,6 +777,7 @@
     "info.shelvingOrder": "Este campo é a forma normalizada do número de chamada que determina como o número de chamada é classificado durante a navegação.",
     "markAsHeader": "Marcar como",
     "newMARCRecord": "Novo registro MARC Bibliográfico",
-    "boundWithTitles.add": "Add Bound-with and analytics",
-    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID"
+    "boundWithTitles.add": "Adicione encadernados e analíticas",
+    "boundWithTitles.enterHoldingsHrid": "Digite o HRID das Coleções",
+    "selectCode": "Selecione o código"
 }
