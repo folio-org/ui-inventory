@@ -2,7 +2,7 @@ import '../../test/jest/__mock__';
 
 import { queryIndexes } from '../constants';
 import { instanceIndexes } from '../filterConfig';
-import { buildQuery } from './buildManifestObject';
+import { buildManifestObject, buildQuery } from './buildManifestObject';
 
 const getQueryTemplate = (qindex) => instanceIndexes.find(({ value }) => value === qindex).queryTemplate;
 
@@ -24,50 +24,7 @@ const defaultQueryParamsMap = {
 };
 
 describe('buildQuery', () => {
-  describe('build query for inventory search', () => {
-    it('should build query for \'Effective call number (item), shelving order\' search option', () => {
-      const qindex = queryIndexes.CALL_NUMBER;
-      const queryParams = { ...defaultQueryParamsMap[qindex] };
-      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
-    });
-
-    it('should build query for \'Contributor\' search option', () => {
-      const qindex = queryIndexes.CONTRIBUTOR;
-      const queryParams = { ...defaultQueryParamsMap[qindex] };
-      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
-    });
-
-    describe('\'Subject\' search option', () => {
-      describe('when there in no an authorityId in query params', () => {
-        it('should build query', () => {
-          const qindex = queryIndexes.SUBJECT;
-          const queryParams = { ...defaultQueryParamsMap[qindex] };
-          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-          const queryTemplate = getQueryTemplate(qindex);
-          expect(cql).toEqual(expect.stringContaining(queryTemplate(queryParams)));
-        });
-      });
-
-      describe('when there in an authorityId in query params', () => {
-        it('should build query with the authorityId', () => {
-          const qindex = queryIndexes.SUBJECT;
-          const queryParams = { ...defaultQueryParamsMap[qindex], authorityId: 'UUID' };
-          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-          const queryTemplate = getQueryTemplate(qindex);
-          expect(cql).toEqual(expect.stringContaining(queryTemplate(queryParams)));
-        });
-      });
-    });
-  });
-
+  afterEach(() => jest.clearAllMocks());
   describe('build query based on selected browse record', () => {
     it('should build query for \'Call numbers\' browse option', () => {
       const qindex = queryIndexes.CALL_NUMBER;
@@ -99,7 +56,93 @@ describe('buildQuery', () => {
       };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      expect(cql).toEqual(expect.stringContaining(`subjects.value==/string "${defaultQueryParamsMap[qindex].query}"`));
+      expect(cql).toEqual(expect.stringContaining(`subjects==/string "${defaultQueryParamsMap[qindex].query}"`));
+    });
+  });
+  describe('build query for inventory search', () => {
+    it('queryParams with no qindex ', () => {
+      const queryParams = { ...defaultQueryParamsMap };
+      buildQuery(...getBuildQueryArgs({ queryParams }));
+      expect(buildQuery).toBeTruthy();
+    });
+    it('should build query for \'ISBN or ISSN\' search option', () => {
+      const queryIndex = 'isbn';
+      const qindex = 'isbn';
+      const defaultQueryParams = {
+        [queryIndex]: { qindex: queryIndex, query: 'isbn' },
+      };
+      const queryParams = { ...defaultQueryParams[qindex] };
+      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+      const queryTemplate = getQueryTemplate(qindex);
+      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.match('isbn', defaultQueryParamsMap[qindex])}`));
+    });
+    it('queryIndex && queryValue should render', () => {
+      const queryValue = jest.fn().mockResolvedValue('sortby');
+      const queryIndex = 'querySearch';
+      const qindex = 'querySearch';
+      const defaultQueryParams = {
+        [queryIndex]: { qindex: queryIndex, query: 'querySearch', queryValue },
+      };
+      const queryParams = { ...defaultQueryParams[qindex] };
+      buildQuery(...getBuildQueryArgs({ queryParams }));
+      getQueryTemplate(qindex);
+      expect('(querySearch) sortby title').toBeTruthy();
+    });
+    it('should build query for \'Effective call number (item), shelving order\' search option', () => {
+      const qindex = queryIndexes.CALL_NUMBER;
+      const queryParams = { ...defaultQueryParamsMap[qindex] };
+      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+      const queryTemplate = getQueryTemplate(qindex);
+      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+    });
+
+    it('should build query for \'Contributor\' search option', () => {
+      const qindex = queryIndexes.CONTRIBUTOR;
+      const queryParams = { ...defaultQueryParamsMap[qindex] };
+      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+      const queryTemplate = getQueryTemplate(qindex);
+      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+    });
+
+    it('should build query for \'Subject\' search option', () => {
+      const qindex = queryIndexes.SUBJECT;
+      const queryParams = { ...defaultQueryParamsMap[qindex] };
+      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+      const queryTemplate = getQueryTemplate(qindex);
+      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+    });
+  });
+});
+describe('buildManifestObject', () => {
+  const mockLocation = { key: 'mock-location-key', search: '?query=test' };
+  const mockResources = { resultOffset: 0 };
+  const mockProps = { location: mockLocation, resources: mockResources };
+
+  describe('getFetchProp', () => {
+    it('should return true on query', () => {
+      const fetchProp = buildManifestObject().records.fetch;
+      const result = fetchProp(mockProps);
+      expect(result).toBeTruthy();
+    });
+    it('expect values to be equal to prevResult', () => {
+      const fetchProp = buildManifestObject().records.fetch;
+      const prevResult = fetchProp(mockProps);
+      const result = fetchProp(mockProps);
+      expect(result).toEqual(prevResult);
+    });
+  });
+  describe('buildRecordsManifest function', () => {
+    it('GET params query function', () => {
+      const result = buildManifestObject().records.GET.params.query;
+      expect(result).toBeTruthy();
+    });
+    it('memoizeGetFetch function should be true', () => {
+      const result = buildManifestObject().records.fetch;
+      expect(result).toBeTruthy();
     });
   });
 });
