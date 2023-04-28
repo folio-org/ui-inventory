@@ -48,8 +48,11 @@ afterEach(() => jest.clearAllMocks());
 describe('AlternativeTitles', () => {
   it('renders the form with the correct elements', () => {
     renderAlternativeTitles();
+
     expect(screen.getByText(/Alternative titles/i)).toBeInTheDocument();
+
     userEvent.click(screen.getByText(/Add alternative title/i));
+
     expect(screen.getByLabelText(/Type/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Alternative title/i)).toBeInTheDocument();
   });

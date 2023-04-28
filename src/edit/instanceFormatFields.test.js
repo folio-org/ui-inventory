@@ -12,12 +12,11 @@ jest.unmock('@folio/stripes/components');
 const onSubmit = jest.fn();
 const props = {
   fieldIndex: 0,
-  instanceFormats: [{
-    it: [{
+  instanceFormats: [
+    {
       name: 'instanceFormatIds',
       id:'ui-inventory.instanceFormats'
-    }]
-  },
+    },
   ],
   id:'ui-inventory.instanceFormats',
   canAdd: true,
@@ -58,16 +57,19 @@ describe('InstanceFormatFields', () => {
     userEvent.click(screen.getByRole('button'));
     userEvent.selectOptions(
       screen.getByRole('combobox'),
-      screen.getByRole('option', { name: 'Select format' }),
+      screen.getByRole('option', { name: 'instanceFormatIds' }),
     );
-    expect(screen.getByRole('option', { name: 'Select format' }).selected).toBe(true);
+    expect(screen.getByRole('option', { name: 'instanceFormatIds' }).selected).toBe(true);
   });
 
   it('selecting empty value option', async () => {
     renderInstanceFormatFields();
     userEvent.click(screen.getByRole('button'));
     userEvent.click(document.querySelector('[name="instanceFormatIds[0]"]'));
-    userEvent.selectOptions(document.querySelector('[class="selectControl placeholder formControl"]'), '');
+    userEvent.selectOptions(
+      screen.getByRole('combobox'),
+      screen.getByRole('option', { name: 'Select format' }),
+    );
     expect(screen.findByDisplayValue('')).toBeTruthy();
   });
   it('instanceFormats map length should passed', async () => {
