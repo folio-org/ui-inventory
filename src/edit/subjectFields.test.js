@@ -39,7 +39,6 @@ describe('SubjectFields', () => {
 
   test('Entering value in text box', async () => {
     renderSubjectFields();
-    userEvent.click(screen.getByRole('button'));
     const subject = screen.getByText('Add subject');
     userEvent.click(subject);
     const inputText = screen.getByRole('textbox', { name: 'Subjects' });
