@@ -778,5 +778,6 @@
     "markAsHeader": "Mark as",
     "newMARCRecord": "New MARC Bib Record",
     "boundWithTitles.add": "Add Bound-with and analytics",
-    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID"
+    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
+    "selectCode": "Select code"
 }

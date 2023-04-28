@@ -365,10 +365,10 @@
     "acquisition": "Erwerbung",
     "holdingsNoteType": "Anmerkungstyp des Bestands",
     "itemNoteType": "Anmerkungstyp des Exemplars",
-    "formatSource": "Format-Quelle",
+    "formatSource": "Formatquelle",
     "formatTerm": "Formatbegriff",
-    "formatCategory": "Format-Kategorie",
-    "formatCode": "Format-Code",
+    "formatCategory": "Formatkategorie",
+    "formatCode": "Formatcode",
     "addNatureOfContentTerm": "Art des Inhalts hinzufügen",
     "selectNatureOfContentTerm": "Art des Inhalts auswählen",
     "hridHandling": "HRID-Handhabung",
@@ -778,5 +778,6 @@
     "markAsHeader": "Markieren als",
     "newMARCRecord": "New MARC Bib Record",
     "boundWithTitles.add": "Add Bound-with and analytics",
-    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID"
+    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
+    "selectCode": "Select code"
 }
