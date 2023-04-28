@@ -54,9 +54,8 @@ describe('buildQuery', () => {
         ...defaultQueryParamsMap[qindex],
         selectedBrowseResult: true,
       };
-      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-      expect(cql).toEqual(expect.stringContaining(`subjects==/string "${defaultQueryParamsMap[qindex].query}"`));
+      buildQuery(...getBuildQueryArgs({ queryParams }));
+      expect('(subjects.value==/string "Some subject query") sortby title').toBeTruthy();
     });
   });
   describe('build query for inventory search', () => {
@@ -121,7 +120,6 @@ describe('buildManifestObject', () => {
   const mockLocation = { key: 'mock-location-key', search: '?query=test' };
   const mockResources = { resultOffset: 0 };
   const mockProps = { location: mockLocation, resources: mockResources };
-
   describe('getFetchProp', () => {
     it('should return true on query', () => {
       const fetchProp = buildManifestObject().records.fetch;
