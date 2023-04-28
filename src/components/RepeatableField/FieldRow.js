@@ -38,6 +38,7 @@ class FieldRow extends React.Component {
     const {
       fields,
       label,
+      hideAdd,
     } = this.props;
 
     if (this.action) {
@@ -69,7 +70,9 @@ class FieldRow extends React.Component {
           `${label} ${contextualSpeech} has been removed. ${fields.length} ${label} total`
         );
         this.action = null;
-        document.getElementById(this.addButtonId).focus();
+        if (!hideAdd) {
+          document.getElementById(this.addButtonId).focus();
+        }
       }
     }
   }
@@ -124,6 +127,7 @@ class FieldRow extends React.Component {
       addLabel,
       canAdd,
       canDelete,
+      hideAdd,
       containerRef,
       fields,
       label,
@@ -142,7 +146,7 @@ class FieldRow extends React.Component {
 
     const handleButtonClick = () => { onAddField(fields); };
 
-    if (fields.length === 0 && !addDefaultItem) {
+    if (fields.length === 0 && !addDefaultItem && !hideAdd) {
       return (
         <div ref={containerRef}>
           <SRStatus ref={(ref) => { this.srstatus = ref; }} />
@@ -216,6 +220,7 @@ class FieldRow extends React.Component {
                 </Col>
               </Row>
               {fieldIndex === fields.length - 1 &&
+                !hideAdd &&
                 <Button
                   onClick={handleButtonClick}
                   id={this.addButtonId}
@@ -244,6 +249,7 @@ FieldRow.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  hideAdd: PropTypes.bool,
   containerRef: PropTypes.func,
   fields: PropTypes.object,
   formatter: PropTypes.func,
@@ -258,6 +264,7 @@ FieldRow.defaultProps = {
   canAdd: true,
   canEdit: true,
   canDelete: true,
+  hideAdd: false,
 };
 
 export default FieldRow;
