@@ -63,11 +63,11 @@ function validate(values) {
   const errors = {};
   const selectToContinueMsg = <FormattedMessage id="ui-inventory.selectToContinue" />;
 
-  if (!(values.materialType && values.materialType.id)) {
+  if (!values.materialType?.id) {
     errors.materialType = { id: selectToContinueMsg };
   }
 
-  if (!(values.permanentLoanType && values.permanentLoanType.id)) {
+  if (!values.permanentLoanType?.id) {
     errors.permanentLoanType = { id: selectToContinueMsg };
   }
 
