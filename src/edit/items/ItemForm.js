@@ -1,5 +1,8 @@
 import React, { createRef } from 'react';
-import { get, cloneDeep } from 'lodash';
+import {
+  get,
+  cloneDeep,
+} from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -47,7 +50,6 @@ import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
-import BoundWithModal from './BoundWithModal';
 import {
   BoundWithTitlesFields,
   CirculationNotesFields,
@@ -56,7 +58,6 @@ import {
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
-
 
 function validate(values) {
   const errors = {};
@@ -123,10 +124,7 @@ class ItemForm extends React.Component {
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-
-    this.state = {
-      boundWithModalOpen: false,
-    };
+    this.addBoundWiths = this.addBoundWiths.bind(this);
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -149,25 +147,10 @@ class ItemForm extends React.Component {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
-  openBoundWithModal = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.setState({ boundWithModalOpen: true });
-  };
-
-  closeBoundWithModal = () => {
-    this.setState({ boundWithModalOpen: false });
-  }
-
-  addBoundWiths = (newBoundWithHoldingsHrids) => {
+  addBoundWiths = (newBoundWithTitles) => {
     let boundWithTitles = cloneDeep(this.props.form.getFieldState('boundWithTitles').value) || [];
-    const newBoundWithTitles = newBoundWithHoldingsHrids.map(holdingsRecordHrid => ({
-      briefHoldingsRecord: { hrid: holdingsRecordHrid },
-    }));
-    boundWithTitles = boundWithTitles.concat(newBoundWithTitles);
+    boundWithTitles = [...boundWithTitles, ...newBoundWithTitles];
     this.props.form.change('boundWithTitles', boundWithTitles);
-    this.closeBoundWithModal();
   }
 
   getFooter = () => {
@@ -837,20 +820,9 @@ class ItemForm extends React.Component {
                     id="acc10"
                     label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
                   >
-                    <BoundWithTitlesFields />
-                    <Button
-                      data-testid="bound-with-add-button"
-                      type="button"
-                      align="end"
-                      onClick={this.openBoundWithModal}
-                    >
-                      <FormattedMessage id="ui-inventory.boundWithTitles.add" />
-                    </Button>
-                    <BoundWithModal
+                    <BoundWithTitlesFields
                       item={item}
-                      open={this.state.boundWithModalOpen}
-                      onClose={this.closeBoundWithModal}
-                      onOk={this.addBoundWiths}
+                      addBoundWithTitles={this.addBoundWiths}
                     />
                   </Accordion>
                 </AccordionSet>
