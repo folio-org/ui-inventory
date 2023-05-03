@@ -26,7 +26,7 @@ const useBoundWithTitlesByHrids = holdingsHrids => {
       boundWithTitle = {
         briefHoldingsRecord: {
           hrid,
-          id: holdingsRecord.id
+          id: holdingsRecord.id,
         },
         briefInstance: {
           id: instance?.id,
