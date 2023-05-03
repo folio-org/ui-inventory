@@ -115,8 +115,8 @@ const NoteFields = props => {
 };
 
 NoteFields.propTypes = {
+  noteTypeIdField: PropTypes.string.isRequired,
   noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
-  noteTypeIdField: PropTypes.string,
   requiredFields: PropTypes.arrayOf(PropTypes.string),
   renderLegend: PropTypes.bool,
   canAdd: PropTypes.bool,
@@ -124,6 +124,8 @@ NoteFields.propTypes = {
   canDelete: PropTypes.bool,
 };
 NoteFields.defaultProps = {
+  noteTypeOptions: [],
+  requiredFields: [],
   renderLegend: true,
   canAdd: true,
   canEdit: true,
