@@ -48,7 +48,10 @@ const initialValues = {
         title: 'instanceTitle',
         hrid: 'instanceHrid'
       },
-      briefHoldingsRecord: { hrid: 'holdingHrid' },
+      briefHoldingsRecord: {
+        id: 'holdingsId',
+        hrid: 'holdingHrid',
+      },
     },
   ],
 };
@@ -79,16 +82,6 @@ describe('BoundWithTitlesFields', () => {
     const { getByText } = renderBoundWithTitlesFields();
 
     expect(getByText('Add Bound-with and analytics')).toBeInTheDocument();
-  });
-
-  describe('when data is not loaded', () => {
-    it('loading component should be rendered', () => {
-      useBoundWithTitlesByHrids.mockReturnValueOnce({ isLoading: true });
-
-      const { getByText } = renderBoundWithTitlesFields();
-
-      expect(getByText('Loading')).toBeInTheDocument();
-    });
   });
 
   describe('when there is data', () => {
@@ -150,11 +143,29 @@ describe('BoundWithTitlesFields', () => {
     });
   });
 
+  describe("when item's holdingsRecordId is equal to added briefHoldingsRecord id", () => {
+    it('trash icon for this field should be disabled', () => {
+      const { getByRole } = renderBoundWithTitlesFields({ item: { holdingsRecordId: 'holdingsId' } });
+
+      const deleteButton = getByRole('button', { name: /delete this item/i });
+
+      expect(deleteButton).toBeDisabled();
+    });
+  });
+
+  describe("when item's holdingsRecordId is not equal to added briefHoldingsRecord id", () => {
+    it('trash icon for this field should be active', () => {
+      const { getByRole } = renderBoundWithTitlesFields({ item: { holdingsRecordId: 'holdingsId1' } });
+
+      const deleteButton = getByRole('button', { name: /delete this item/i });
+
+      expect(deleteButton).not.toBeDisabled();
+    });
+  });
+
   describe('when clicking trash icon', () => {
     it('should remove repeatable field', () => {
-      const { debug, queryByLabelText, getByRole } = renderBoundWithTitlesFields();
-
-      debug();
+      const { queryByLabelText, getByRole } = renderBoundWithTitlesFields();
 
       const deleteButton = getByRole('button', { name: /delete this item/i });
 

@@ -15,10 +15,10 @@ import {
   Row,
   Col,
   Label,
-  Loading,
   TextField,
   RepeatableField,
   Button,
+  IconButton,
 } from '@folio/stripes/components';
 
 import BoundWithModal from '../BoundWithModal';
@@ -28,13 +28,12 @@ import usePrevious from '../../../hooks/usePrevious';
 const BoundWithTitlesFields = ({
   item,
   addBoundWithTitles,
-  canDelete,
 }) => {
   const { formatMessage } = useIntl();
 
   const [isBoundWithModalOpen, setBoundWithModalOpen] = useState(false);
   const [addedHoldingsHrids, setAddedHoldingsHrids] = useState([]);
-  const { isLoading, boundWithTitles: newBoundWithTitles } = useBoundWithTitlesByHrids(addedHoldingsHrids);
+  const { boundWithTitles: newBoundWithTitles } = useBoundWithTitlesByHrids(addedHoldingsHrids);
   const prevBoundWithTitles = usePrevious(newBoundWithTitles);
 
   useEffect(() => {
@@ -43,60 +42,10 @@ const BoundWithTitlesFields = ({
     }
   }, [newBoundWithTitles]);
 
-  if (isLoading) return <Loading size="large" />;
-
   const hridLabel = formatMessage({ id: 'ui-inventory.instanceHrid' });
   const titleLabel = formatMessage({ id: 'ui-inventory.instanceTitleLabel' });
   const holdingsHridLabel = formatMessage({ id: 'ui-inventory.holdingsHrid' });
-
-  const headLabels = (
-    <Row>
-      <Col sm={4}>
-        <Label tagName="legend">
-          {hridLabel}
-        </Label>
-      </Col>
-      <Col sm={4}>
-        <Label tagName="legend">
-          {titleLabel}
-        </Label>
-      </Col>
-      <Col sm={4}>
-        <Label tagName="legend">
-          {holdingsHridLabel}
-        </Label>
-      </Col>
-    </Row>
-  );
-
-  const renderField = field => (
-    <Row>
-      <Col sm={4}>
-        <Field
-          ariaLabel={hridLabel}
-          name={`${field}.briefInstance.hrid`}
-          component={TextField}
-          disabled
-        />
-      </Col>
-      <Col sm={4}>
-        <Field
-          ariaLabel={titleLabel}
-          name={`${field}.briefInstance.title`}
-          component={TextField}
-          disabled
-        />
-      </Col>
-      <Col sm={4}>
-        <Field
-          ariaLabel={holdingsHridLabel}
-          name={`${field}.briefHoldingsRecord.hrid`}
-          component={TextField}
-          disabled
-        />
-      </Col>
-    </Row>
-  );
+  const trashcanLabel = formatMessage({ id: 'stripes-components.deleteThisItem' });
 
   const addBoundWiths = newHoldingsHrids => {
     setAddedHoldingsHrids(newHoldingsHrids);
@@ -116,6 +65,69 @@ const BoundWithTitlesFields = ({
     fields.remove(index);
   };
 
+  const headLabels = (
+    <Row>
+      <Col sm>
+        <Label tagName="legend">
+          {hridLabel}
+        </Label>
+      </Col>
+      <Col sm>
+        <Label tagName="legend">
+          {titleLabel}
+        </Label>
+      </Col>
+      <Col sm>
+        <Label tagName="legend">
+          {holdingsHridLabel}
+        </Label>
+      </Col>
+      <Col sm={1}>
+        <Label tagName="legend" className="sr-only">
+          {trashcanLabel}
+        </Label>
+      </Col>
+    </Row>
+  );
+
+  const renderField = (field, index, fields) => (
+    <Row>
+      <Col sm>
+        <Field
+          ariaLabel={hridLabel}
+          name={`${field}.briefInstance.hrid`}
+          component={TextField}
+          disabled
+        />
+      </Col>
+      <Col sm>
+        <Field
+          ariaLabel={titleLabel}
+          name={`${field}.briefInstance.title`}
+          component={TextField}
+          disabled
+        />
+      </Col>
+      <Col sm>
+        <Field
+          ariaLabel={holdingsHridLabel}
+          name={`${field}.briefHoldingsRecord.hrid`}
+          component={TextField}
+          disabled
+        />
+      </Col>
+      <Col sm={1}>
+        <IconButton
+          icon="trash"
+          onClick={() => onBoundWithTitlesRemove(fields, index)}
+          size="medium"
+          disabled={fields.value[index]?.briefHoldingsRecord?.id === item?.holdingsRecordId}
+          aria-label={trashcanLabel}
+        />
+      </Col>
+    </Row>
+  );
+
   return (
     <>
       <FieldArray
@@ -125,8 +137,7 @@ const BoundWithTitlesFields = ({
         headLabels={headLabels}
         renderField={renderField}
         canAdd={false}
-        canRemove={canDelete}
-        onRemove={onBoundWithTitlesRemove}
+        onRemove={false}
       />
       <Button
         data-testid="bound-with-add-button"
@@ -149,8 +160,6 @@ const BoundWithTitlesFields = ({
 BoundWithTitlesFields.propTypes = {
   item: PropTypes.object.isRequired,
   addBoundWithTitles: PropTypes.func.isRequired,
-  canDelete: PropTypes.bool,
 };
-BoundWithTitlesFields.defaultProps = { canDelete: true };
 
 export default BoundWithTitlesFields;

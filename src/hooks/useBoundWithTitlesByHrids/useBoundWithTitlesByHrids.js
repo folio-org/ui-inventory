@@ -17,7 +17,7 @@ const useBoundWithTitlesByHrids = holdingsHrids => {
   const instancesById = keyBy(instances.data?.instances, 'id');
 
   const boundWithTitles = holdingsHrids.map(hrid => {
-    let boundWithTitle = { briefHoldingsRecord: hrid };
+    let boundWithTitle = { briefHoldingsRecord: { hrid } };
     const holdingsRecord = holdingsRecordsByHrid[hrid];
 
     if (holdingsRecord) {

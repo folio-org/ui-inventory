@@ -2,6 +2,7 @@ import React, { createRef } from 'react';
 import {
   get,
   cloneDeep,
+  uniqBy,
 } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -124,7 +125,6 @@ class ItemForm extends React.Component {
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-    this.addBoundWiths = this.addBoundWiths.bind(this);
   }
 
   handleAccordionToggle = ({ id }) => {
@@ -148,8 +148,8 @@ class ItemForm extends React.Component {
   }
 
   addBoundWiths = (newBoundWithTitles) => {
-    let boundWithTitles = cloneDeep(this.props.form.getFieldState('boundWithTitles').value) || [];
-    boundWithTitles = [...boundWithTitles, ...newBoundWithTitles];
+    let boundWithTitles = cloneDeep(this.props.form.getFieldState('boundWithTitles')?.value) || [];
+    boundWithTitles = uniqBy([...boundWithTitles, ...newBoundWithTitles], 'briefHoldingsRecord.hrid');
     this.props.form.change('boundWithTitles', boundWithTitles);
   }
 
@@ -822,7 +822,7 @@ class ItemForm extends React.Component {
                   >
                     <BoundWithTitlesFields
                       item={item}
-                      addBoundWithTitles={this.addBoundWiths}
+                      addBoundWithTitles={newBoundWiths => this.addBoundWiths(newBoundWiths)}
                     />
                   </Accordion>
                 </AccordionSet>
