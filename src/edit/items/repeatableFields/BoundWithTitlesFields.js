@@ -76,7 +76,6 @@ const BoundWithTitlesFields = ({
           ariaLabel={hridLabel}
           name={`${field}.briefInstance.hrid`}
           component={TextField}
-          value={boundWithTitle => boundWithTitle.briefInstance.hrid}
           disabled
         />
       </Col>

@@ -93,4 +93,18 @@ describe('ItemForm', () => {
 
     expect(container.querySelectorAll('form').length).toEqual(1);
   });
+
+  it('should render correct accordions', () => {
+    const { getByText, getAllByText } = renderItemForm();
+
+    expect(getByText('Administrative data')).toBeInTheDocument();
+    expect(getByText('Item data')).toBeInTheDocument();
+    expect(getByText('Enumeration data')).toBeInTheDocument();
+    expect(getByText('Condition')).toBeInTheDocument();
+    expect(getByText('Item notes')).toBeInTheDocument();
+    expect(getByText('Loan and availability')).toBeInTheDocument();
+    expect(getByText('Location')).toBeInTheDocument();
+    expect(getAllByText('Electronic access')[0]).toBeInTheDocument();
+    expect(getAllByText('Bound-with and analytics')[0]).toBeInTheDocument();
+  });
 });
