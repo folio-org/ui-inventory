@@ -4,10 +4,10 @@ import { useMoveItemsMutation } from '../../common';
 
 import { useItems } from './useItems';
 
+import '../../../test/jest/__mock__/stripesCore.mock';
+
 jest.mock('@folio/stripes/core', () => ({
-  CalloutContext: {
-    Consumer: ({ children }) => children({ sendCallout: jest.fn() }),
-  },
+  CalloutContext: jest.fn(),
 }));
 
 jest.mock('../../RemoteStorageService', () => ({
@@ -33,13 +33,13 @@ jest.mock('../../common', () => ({
 }));
 
 describe('useItems', () => {
-  let callout;
-  let checkFromRemoteToNonRemote;
+  //let callout;
+  //let checkFromRemoteToNonRemote;
   let mutate;
-  let moveItems;
+  //let moveItems;
   beforeEach(() => {
-    callout = { sendCallout: jest.fn() };
-    checkFromRemoteToNonRemote = jest.fn().mockReturnValue(false);
+    //callout = { sendCallout: jest.fn() };
+    //checkFromRemoteToNonRemote = jest.fn().mockReturnValue(false);
     mutate = jest.fn();
     useMoveItemsMutation.mockReturnValue({ mutate });
   });
