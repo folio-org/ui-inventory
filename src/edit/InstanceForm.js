@@ -86,7 +86,7 @@ function validate(values) {
   }
 
   // Language not required, but must be not null if supplied
-  if (values.languages && values.languages.length) {
+  if (!isEmpty(values.languages)) {
     const errorList = [];
     values.languages.forEach((item, i) => {
       if (!item) {
@@ -97,7 +97,7 @@ function validate(values) {
   }
 
 
-  if (values.alternativeTitles && values.alternativeTitles.length) {
+  if (!isEmpty(values.alternativeTitles)) {
     const errorList = [];
     values.alternativeTitles.forEach((item, i) => {
       const error = {};
@@ -235,7 +235,7 @@ class InstanceForm extends React.Component {
 
     const { records } = instanceBlockedFields;
 
-    if (!records || !records.length) return false;
+    if (isEmpty(records)) return false;
 
     const { blockedFields } = records[0];
 
@@ -261,6 +261,14 @@ class InstanceForm extends React.Component {
     };
 
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceTypeId,
+      }),
+    ) : [];
+
+    const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
       it => ({
         label: it.name,
         value: it.id,
@@ -370,7 +378,7 @@ class InstanceForm extends React.Component {
                       }
                       id="instanceSection01"
                     >
-                      {(initialValues.metadata && initialValues.metadata.createdDate) &&
+                      {(initialValues.metadata?.createdDate) &&
                         <this.cViewMetaData metadata={initialValues.metadata} />
                       }
                       <Row>
@@ -664,7 +672,8 @@ class InstanceForm extends React.Component {
                         canAdd={!this.isFieldBlocked('notes')}
                         canEdit={!this.isFieldBlocked('notes')}
                         canDelete={!this.isFieldBlocked('notes')}
-                        instanceNoteTypes={referenceTables.instanceNoteTypes}
+                        noteTypeOptions={instanceNoteTypeOptions}
+                        noteTypeIdField="instanceNoteTypeId"
                       />
                     </Accordion>
                     <Accordion

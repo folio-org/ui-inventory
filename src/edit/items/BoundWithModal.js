@@ -107,6 +107,7 @@ const BoundWithModal = ({
                     value={hrids[i]}
                     onChange={handleChange}
                     data-index={i}
+                    autoFocus={i === 0}
                   />
                 </Col>
               </Row>
