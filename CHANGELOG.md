@@ -11,6 +11,7 @@
 * Holdings Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2398.
 * Holdings Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2373.
 * Holdings view source: Print button not visible with "View MARC holdings record" permission. Refs UIIN-2405.
+* The 'Missing' and 'Withdrawn' options in the actions menu are absent after clicking on the 'Actions' button for item status "In process". Fixes UIIN-2338.
 * Item Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2397.
 * Item Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2374.
 
