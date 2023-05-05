@@ -1,32 +1,56 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { TextField } from '@folio/stripes/components';
-
-import RepeatableField from '../components/RepeatableField';
+import {
+  Label,
+  RepeatableField,
+  TextField,
+} from '@folio/stripes/components';
 
 const SubjectFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     canAdd,
     canEdit,
     canDelete,
   } = props;
 
+  const subjectsLabel = formatMessage({ id: 'ui-inventory.subjects' });
+
+  const legend = (
+    <Label tagName="legend">
+      {subjectsLabel}
+    </Label>
+  );
+
+  const renderField = field => {
+    return (
+      <Field
+        ariaLabel={subjectsLabel}
+        name={`${field}.value`}
+        component={TextField}
+        disabled={!canEdit}
+      />
+    );
+  };
+
   return (
-    <RepeatableField
+    <FieldArray
       name="subjects"
+      component={RepeatableField}
       addLabel={<FormattedMessage id="ui-inventory.addSubject" />}
-      addButtonId="clickable-add-subject"
-      template={[{
-        name: 'value',
-        component: TextField,
-        label: <FormattedMessage id="ui-inventory.subjects" />,
-        disabled: !canEdit,
-      }]}
+      onAdd={fields => fields.push({ value: '' })}
+      headLabels={legend}
+      renderField={renderField}
       canAdd={canAdd}
-      canDelete={canDelete}
-      newItemTemplate={{ value: '' }}
+      canRemove={canDelete}
     />
   );
 };
