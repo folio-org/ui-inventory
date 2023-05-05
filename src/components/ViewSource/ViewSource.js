@@ -32,7 +32,7 @@ const ViewSource = ({
   const stripes = useStripes();
 
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
-  const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+  const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
   const isPrintAvailable = isPrintBibAvailable || isPrintHoldingsAvailable;
 
   const pathForGoBack = isHoldingsRecord

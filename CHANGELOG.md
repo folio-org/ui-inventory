@@ -2,6 +2,37 @@
 
 ## 9.5.0 IN PROGRESS
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
+* Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
+* Avoid private paths in stripes-core imports. Refs UIIN-2367.
+* Add bound-with parts to an Item.  Refs UIIN-1998.
+* Fix for Note text box starts flickering/jumping in Instance/Holding/Items during resizing. Refs. UIIN-2387.
+* Instance Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2390.
+* Instance Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2372.
+* Holdings Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2398.
+* Holdings Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2373.
+* Holdings view source: Print button not visible with "View MARC holdings record" permission. Refs UIIN-2405.
+
+
+## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
+
+* Update success messages for ISRI. Refs UIIN-2343.
+
+## [9.4.4](https://github.com/folio-org/ui-inventory/tree/v9.4.4) (2023-03-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.3...v9.4.4)
+
+* Update success messages for ISRI. Refs UIIN-2343.
+* Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
+
+## [9.4.3](https://github.com/folio-org/ui-inventory/tree/v9.4.3) (2023-03-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.2...v9.4.3)
+
+* Correctly reset facet state when X icon next to the facet label is clicked. Fixes UIIN-2351.
+* Record count for "Subjects" doesn't match at browse and search result panes. Fixes UIIN-2347.
+* Fix the query templates for searching by subject. Fixes UIIN-2364.
+
+## [9.4.2](https://github.com/folio-org/ui-inventory/tree/v9.4.2) (2023-03-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.1...v9.4.2)
 
 * To support UX consistency, use the `stripes-components.saveAndClose` key for save and close button. Refs UIIN-2332.
 * Lift the local state from `<CheckboxFacet>` into `facetsStore` in zunstand. Fixes UIIN-2350, UIIN-2351.
@@ -12,6 +43,7 @@
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
 * Fixing tests due to changes in `react-virtualized-auto-sizer`. Fixes UIIN-2371.
 * Update success messages for ISRI. Refs UIIN-2343.
+* Retain searches and offsets in session storage, so they don't show up in other browser tabs, and clean them up after logging out. Fixes UIIN-2359.
 
 ## [9.4.1](https://github.com/folio-org/ui-inventory/tree/v9.4.1) (2023-03-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.0...v9.4.1)

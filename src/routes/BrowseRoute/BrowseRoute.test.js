@@ -17,6 +17,12 @@ jest.mock('../../components', () => ({
 }));
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: jest.fn().mockReturnValue({
+    getLastSearch: jest.fn(),
+    getLastBrowseOffset: jest.fn(),
+    storeLastBrowse: jest.fn(),
+    storeLastBrowseOffset: jest.fn(),
+  }),
   useInventoryBrowse: jest.fn(() => ({}))
 }));
 
