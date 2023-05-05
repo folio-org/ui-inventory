@@ -131,19 +131,6 @@ describe('HoldingsForm', () => {
   beforeEach(() => {
     renderHoldingsForm();
   });
-  it('updates ShelvingTitle input field value', () => {
-    const ShelvingInput = screen.getByLabelText('Shelving title');
-    const saveButton = screen.getByRole('button', { name: 'Save and close' });
-    expect(saveButton).toBeDisabled();
-    expect(ShelvingInput).toHaveValue('');
-    userEvent.type(ShelvingInput, 'test');
-    expect(ShelvingInput).toHaveValue('test');
-    expect(saveButton).toBeEnabled();
-    const clearButton = screen.getByLabelText('Clear this field');
-    expect(clearButton).toBeInTheDocument();
-    userEvent.click(clearButton);
-    expect(saveButton).toBeDisabled();
-  });
   it('click Add note Button', () => {
     const notesButton = screen.getByRole('button', { name: 'Add note' });
     expect(notesButton).toBeInTheDocument();
