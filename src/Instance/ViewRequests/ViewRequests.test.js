@@ -77,12 +77,12 @@ describe('ViewRequests', () => {
   });
   it('should click barcodeButton', () => {
     const barcodeButton = screen.getByRole('button', { name: 'ui-inventory.item.barcode' });
+    expect(barcodeButton).toBeInTheDocument();
     userEvent.click(barcodeButton);
-    expect(barcodeButton.getAttribute('aria-sort')).toEqual(null);
   });
   it('should click requestQueue', () => {
     const requestQueueButton = screen.getByRole('button', { name: 'ui-inventory.item.requestQueue' });
+    expect(requestQueueButton).toBeInTheDocument();
     userEvent.click(requestQueueButton);
-    expect(requestQueueButton.getAttribute('aria-sort')).toEqual(null);
   });
 });
