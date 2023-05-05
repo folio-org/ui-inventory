@@ -36,7 +36,7 @@ describe('InstanceNotesList', () => {
     expect(getByText('stripes-components.endOfList')).toBeInTheDocument();
   });
   it('should render the noValue component when notes is empty', () => {
-    const { getByText } = renderInstanceNotesList(noValueProps);
-    expect(getByText('test-notes')).toBeInTheDocument();
+    const { getAllByText } = renderInstanceNotesList(noValueProps);
+    expect(getAllByText('stripes-components.noValue.noValueSet')).toBeDefined();
   });
 });
