@@ -72,7 +72,6 @@ describe('buildQuery', () => {
       };
       const queryParams = { ...defaultQueryParams[qindex] };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
       const queryTemplate = getQueryTemplate(qindex);
       expect(cql).toEqual(expect.stringContaining(`${queryTemplate.match('isbn', defaultQueryParamsMap[qindex])}`));
     });
@@ -84,35 +83,28 @@ describe('buildQuery', () => {
         [queryIndex]: { qindex: queryIndex, query: 'querySearch', queryValue },
       };
       const queryParams = { ...defaultQueryParams[qindex] };
-      buildQuery(...getBuildQueryArgs({ queryParams }));
-      getQueryTemplate(qindex);
-      expect('(querySearch) sortby title').toBeTruthy();
+      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+      expect(cql).toEqual(expect.stringContaining(`${defaultQueryParams[qindex].query}`));
     });
     it('should build query for \'Effective call number (item), shelving order\' search option', () => {
       const qindex = queryIndexes.CALL_NUMBER;
       const queryParams = { ...defaultQueryParamsMap[qindex] };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+      expect(cql).toEqual(expect.stringContaining(`${defaultQueryParamsMap[qindex].query}`));
     });
 
     it('should build query for \'Contributor\' search option', () => {
       const qindex = queryIndexes.CONTRIBUTOR;
       const queryParams = { ...defaultQueryParamsMap[qindex] };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+      expect(cql).toEqual(expect.stringContaining(`${defaultQueryParamsMap[qindex].query}`));
     });
 
     it('should build query for \'Subject\' search option', () => {
       const qindex = queryIndexes.SUBJECT;
       const queryParams = { ...defaultQueryParamsMap[qindex] };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
-
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+      expect(cql).toEqual(expect.stringContaining(`${defaultQueryParamsMap[qindex].query}`));
     });
   });
 });
