@@ -4,8 +4,6 @@ import { useMoveItemsMutation } from '../../common';
 
 import { useItems } from './useItems';
 
-import '../../../test/jest/__mock__';
-
 jest.mock('@folio/stripes/core', () => ({
   CalloutContext: {
     Consumer: ({ children }) => children({ sendCallout: jest.fn() }),
