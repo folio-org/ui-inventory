@@ -2,7 +2,7 @@ import React from 'react';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
-  ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel }) => (
+  ConfirmationModal: jest.fn(({ heading, message, onConfirm, onCancel, onRemove }) => (
     <div>
       <span>ConfirmationModal</span>
       {heading}
@@ -10,6 +10,7 @@ jest.mock('@folio/stripes/components', () => ({
       <div>
         <button type="button" onClick={onConfirm}>confirm</button>
         <button type="button" onClick={onCancel}>cancel</button>
+        <button type="button" onClick={onRemove}>remove</button>
       </div>
     </div>
   )),
@@ -28,5 +29,4 @@ jest.mock('@folio/stripes/components', () => ({
   Loading: () => <div>Loading</div>,
   LoadingPane: () => <div>LoadingPane</div>,
   LoadingView: () => <div>LoadingView</div>,
-  LoadingPane: () => <div>LoadingPane</div>,
 }), { virtual: true });
