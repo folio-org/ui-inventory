@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "9.5.0",
+  "version": "9.4.5",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -836,7 +836,7 @@
     "lint": "eslint .",
     "test": "yarn run test:unit",
     "test:jest": "jest",
-    "test:unit": "jest --silent --ci --coverage",
+    "test:unit": "jest --ci --coverage",
     "test:unit:watch": "jest --watch --coverage",
     "test:e2e": "stripes test karma",
     "test:e2e:ci": "stripes test karma --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",

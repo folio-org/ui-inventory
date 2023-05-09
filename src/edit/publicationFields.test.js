@@ -33,11 +33,19 @@ const renderPublicationFields = () => renderWithIntl(
 
 afterEach(() => jest.clearAllMocks());
 describe('PublicationFields', () => {
-  test('click on Add publication button', () => {
-    renderPublicationFields();
-    expect(screen.getByText('Add publication')).toBeInTheDocument();
-    const publicationButton = screen.getByText('Add publication');
-    userEvent.click(publicationButton);
-    expect(screen.getByLabelText('Publisher')).toBeInTheDocument();
+  describe('when clicking Add publication', () => {
+    test('correct fields should appear', () => {
+      renderPublicationFields();
+
+      expect(screen.getByText('Add publication')).toBeInTheDocument();
+
+      const publicationButton = screen.getByText('Add publication');
+      userEvent.click(publicationButton);
+      
+      expect(screen.getByText('Publisher')).toBeInTheDocument();
+      expect(screen.getByText('Publisher role')).toBeInTheDocument();
+      expect(screen.getByText('Place')).toBeInTheDocument();
+      expect(screen.getByText('Publication date')).toBeInTheDocument();
+    });
   });
 });

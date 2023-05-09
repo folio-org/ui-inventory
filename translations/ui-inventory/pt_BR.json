@@ -229,7 +229,7 @@
     "addHoldingsStatementForIndexes": "Adicionar declaração de coleções para índices",
     "addHoldingsStatementForSupplements": "Adicionar declaração de coleções para suplementos",
     "relatedInstances": "Instâncias relacionadas",
-    "instanceRelationshipsAnalyticsBoundWith": "Relacionamentos entre instâncias (analiticas e encadernado com)",
+    "instanceRelationshipsAnalyticsBoundWith": "Relacionamentos entre instâncias (analíticas e encadernado com)",
     "instanceStatusTypes": "Tipos de status da instância",
     "instanceStatusType": "Tipo de status da instância",
     "instanceHoldingsItem": "Instâncias, Coleções, Itens",
@@ -335,7 +335,7 @@
     "noHoldingsRecordDeleteModal.message": "Registro de coleções HRID <strong>{hrid}</strong>, localização <strong>{location}</strong> tem dependentes e não pode ser excluído",
     "noItemDeleteModal.checkoutMessage": "O item HRID <strong>{hrid}</strong> com o código de barras <strong>{barcode}</strong> está emprestado e não pode ser excluído até que seja devolvido e o status do item estiver 'Disponível'",
     "noItemDeleteModal.requestMessage": "O item HRID <strong> {hrid} </strong> com código de barras <strong> {barcode} </strong> tem uma solicitação associada e não pode ser excluída até que a solicitação seja atendida ou que a solicitação tenha sido cancelada. Se você quiser continuar com a exclusão do registro do item, acesse o aplicativo Requisições e limpe a dependência.",
-    "noItemDeleteModal.orderMessage": "O exemplar HRID <strong>{hrid}</strong> com código de barras <strong>{barcode}</strong> está em um pedido e não pode ser <strong>excluído</strong> até que todas as dependências do aplicativo Aquisições tenham sido apagadas. Se você quiser continuar com a exclusão do registro do item, vá para o aplicativo Aquisições e limpe as dependências.",
+    "noItemDeleteModal.orderMessage": "O exemplar HRID <strong>{hrid}</strong> com código de barras <strong>{barcode}</strong> está em um pedido e não pode ser <strong>excluído</strong> até que todas as dependências do aplicativo Pedidos tenham sido apagadas. Se você quiser continuar com a exclusão do registro do item, vá para o aplicativo Pedidos e limpe as dependências.",
     "holdingRecord": "Registo de coleções {location} {callNumber}",
     "instanceRecordTitle": "Instância • {title} • {publisherAndDate}",
     "makePrimary": "Tornar primário",
@@ -614,8 +614,8 @@
     "internalIdEmbedPath": "Caminho interno de incorporação de identificação",
     "copycat.import": "Importar",
     "copycat.reimport": "Re-importar",
-    "copycat.callout.updated": "Registro atualizado {xid}",
-    "copycat.callout.created": "Registro criado {xid}",
+    "copycat.callout.updated": "Registro {xid} atualizado. Os resultados podem levar alguns instantes para se tornarem visíveis no Inventário",
+    "copycat.callout.created": "Registro {xid} criado. Os resultados podem levar alguns instantes para se tornarem visíveis no Inventário",
     "copycat.callout.simpleError": "Algo deu errado: {err}",
     "copycat.callout.complexError": "Algo deu errado: {err}: {detail}",
     "permission.single-record-import": "Inventário: Importar registros bibliográficos únicos",
@@ -776,5 +776,8 @@
     "info.effectiveCallNumber": "Este campo contém o número de chamada do item, que é herdado do registro de coleção ou é o número de chamada atualizado no registro do item. Ao navegar pelos números de chamada, este campo será pesquisado.",
     "info.shelvingOrder": "Este campo é a forma normalizada do número de chamada que determina como o número de chamada é classificado durante a navegação.",
     "markAsHeader": "Marcar como",
-    "newMARCRecord": "Novo registro MARC Bibliográfico"
+    "newMARCRecord": "Novo registro MARC Bibliográfico",
+    "boundWithTitles.add": "Adicione encadernados e analíticas",
+    "boundWithTitles.enterHoldingsHrid": "Digite o HRID das Coleções",
+    "selectCode": "Selecione o código"
 }

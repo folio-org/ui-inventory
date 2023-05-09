@@ -595,7 +595,7 @@
     "item.status.longMissing": "Long missing",
     "item.status.restricted": "Restricted",
     "item.status.unavailable": "利用不可",
-    "item.status.unknown": "Unknown",
+    "item.status.unknown": "不明",
     "instances.showSelectedRecords": "Show selected records",
     "instances.selectedRecords": "Selected records",
     "communicationProblem": "Server communication problem. Please try again",
@@ -614,8 +614,8 @@
     "internalIdEmbedPath": "Internal ID embed path",
     "copycat.import": "Import",
     "copycat.reimport": "Re-import",
-    "copycat.callout.updated": "Updated record {xid}",
-    "copycat.callout.created": "Created record {xid}",
+    "copycat.callout.updated": "Record {xid} updated. Results may take a few moments to become visible in Inventory",
+    "copycat.callout.created": "Record {xid} created. Results may take a few moments to become visible in Inventory",
     "copycat.callout.simpleError": "Something went wrong: {err}",
     "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
     "permission.single-record-import": "Inventory: Import single bibliographic records",
@@ -776,5 +776,8 @@
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
     "markAsHeader": "Mark as",
-    "newMARCRecord": "New MARC Bib Record"
+    "newMARCRecord": "New MARC Bib Record",
+    "boundWithTitles.add": "Add Bound-with and analytics",
+    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
+    "selectCode": "Select code"
 }
