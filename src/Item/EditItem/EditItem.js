@@ -80,6 +80,9 @@ const EditItem = ({
       values.boundWithTitles = [];
     }
 
+    // Filter out any bound-with holdings that could not be identified
+    values.boundWithTitles = values.boundWithTitles.filter(title => title.briefInstance);
+
     const boundWiths = {
       'itemId': values.id,
       'boundWithContents': values.boundWithTitles.map(title => {

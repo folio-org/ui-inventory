@@ -39,7 +39,6 @@ describe('PublicationRangeFields', () => {
 
   test('Click on Add range button and enter value in Publication Range text field', async () => {
     renderPublicationRangeFields();
-    userEvent.click(screen.getByRole('button'));
     const rangeButton = screen.getByText('Add range');
     userEvent.click(rangeButton);
     const myText = screen.getByRole('textbox', { name: 'Publication range' });
