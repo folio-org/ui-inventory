@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '../../../test/jest/__mock__';
+import '../../../../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
-import renderWithRouter from '../../../test/jest/helpers/renderWithRouter';
-import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
-import HoldingsStatementFields from './holdingsStatementFields';
-import translationsProperties from '../../../test/jest/helpers/translationsProperties';
+import renderWithRouter from '../../../../../test/jest/helpers/renderWithRouter';
+import renderWithIntl from '../../../../../test/jest/helpers/renderWithIntl';
+import HoldingsStatementFields from '../HoldingsStatementFields';
+import translationsProperties from '../../../../../test/jest/helpers/translationsProperties';
 
 jest.unmock('@folio/stripes/components');
 const onSubmit = jest.fn();
