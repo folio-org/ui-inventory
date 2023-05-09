@@ -38,7 +38,7 @@ describe('PublicationFrequencyFields', () => {
     const addButton = screen.getByRole('button', { name: /add frequency/i });
     expect(addButton).toBeInTheDocument();
     userEvent.click(addButton);
-    const deleteButton = document.querySelector('[aria-label="remove fields for "]');
+    const deleteButton = document.querySelector('[aria-label="Delete this item"]');
     expect(addButton).toBeEnabled();
     expect(deleteButton).toBeEnabled();
     expect(screen.getByRole('textbox')).toBeEnabled();
@@ -123,7 +123,7 @@ describe('PublicationFrequencyFields', () => {
     const addButton = screen.getByRole('button', { name: /add frequency/i });
     expect(addButton).toBeInTheDocument();
     userEvent.click(addButton);
-    const deleteButton = document.querySelector('[aria-label="remove fields for "]');
+    const deleteButton = document.querySelector('[aria-label="Delete this item"]');
     expect(deleteButton).toBeDisabled();
   });
 });

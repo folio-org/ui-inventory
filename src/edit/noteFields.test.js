@@ -16,7 +16,8 @@ jest.unmock('@folio/stripes/components');
 const onSubmit = jest.fn();
 
 const props = {
-  instanceNoteTypes: [{ name: 'instanceNoteTypesName', id: '123456789' }]
+  noteTypeIdField: 'noteTypeIdField',
+  noteTypeOptions: [{ name: 'noteTypeName', id: '123456789' }],
 };
 
 const Form = ({ handleSubmit }) => (
@@ -43,15 +44,26 @@ const renderNoteFields = () => renderWithIntl(
 afterEach(() => jest.clearAllMocks());
 
 describe('NoteFields', () => {
-  it('renders RepeatableField', () => {
+  it('should render a legend', () => {
     renderNoteFields();
+
     expect(screen.getByText('Notes')).toBeInTheDocument();
   });
-  it('click on Add note button', () => {
-    renderNoteFields();
-    const addNoteButton = screen.getByText('Add note');
-    userEvent.click(addNoteButton);
-    const RelationshipDropdown = screen.getAllByText('instanceNoteTypesName');
-    expect(RelationshipDropdown).toHaveLength(1);
+
+  describe('when clicking on Add note button', () => {
+    it('correct fields should be rendered', () => {
+      renderNoteFields();
+
+      const addNoteButton = screen.getByText('Add note');
+      userEvent.click(addNoteButton);
+
+      const relationshipDropdown = screen.getAllByRole('option');
+
+      // where 1 of options is a default option
+      expect(relationshipDropdown).toHaveLength(2);
+      expect(screen.getAllByText(/Note type/i)[0]).toBeInTheDocument();
+      expect(screen.getAllByText(/Note/i)[0]).toBeInTheDocument();
+      expect(screen.getAllByText(/Staff only/i)[0]).toBeInTheDocument();
+    });
   });
 });

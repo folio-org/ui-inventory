@@ -1,0 +1,7 @@
+.itemData {
+    background-color: color(#fcfcfc contrast(100%) blend(#fcfcfc 90%));
+    border-radius: 6px;
+    padding: 10px 30px;
+    margin-bottom: 16px;
+    font-weight: var(--text-weight-bold);
+}
