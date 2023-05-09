@@ -17,6 +17,10 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
+import {
+  validateFieldLength
+} from '../../../utils';
+
 const NoteFields = ({
   noteTypeOptions,
   canAdd,
@@ -28,6 +32,9 @@ const NoteFields = ({
   const noteTypeLabel = formatMessage({ id: 'ui-inventory.noteType' });
   const noteLabel = formatMessage({ id: 'ui-inventory.note' });
   const staffOnlyLabel = formatMessage({ id: 'ui-inventory.staffOnly' });
+
+  const START_WITH_MAX_LENGTH = 32000;
+  const validateStartWithMaxLength = value => validateFieldLength(value, START_WITH_MAX_LENGTH);
 
   const headLabels = (
     <Row>
@@ -75,6 +82,7 @@ const NoteFields = ({
           rows={1}
           disabled={!canEdit}
           required
+          validate={validateStartWithMaxLength}
         />
       </Col>
       <Col xs={12} lg={1}>
