@@ -51,7 +51,9 @@ describe('NatureOfContentField', () => {
     renderNatureOfContentField();
     const natureContentButton = screen.getByText('Add nature of content');
     userEvent.click(natureContentButton);
-    const natureContentDropdown = screen.getAllByText('Nature of content term');
-    expect(natureContentDropdown).toHaveLength(1);
+    const natureContentDropdown = screen.getAllByRole('option');
+
+    // where 1 of options is a default option
+    expect(natureContentDropdown).toHaveLength(2);
   });
 });
