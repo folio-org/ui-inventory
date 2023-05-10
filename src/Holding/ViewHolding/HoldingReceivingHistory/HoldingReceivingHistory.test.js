@@ -28,6 +28,7 @@ describe('HoldingReceivingHistory', () => {
     renderHoldingReceivingHistory({ id: 'holdingUid' });
 
     expect(screen.getByText(receivingHistory[0].enumeration)).toBeInTheDocument();
+    expect(screen.getByText(receivingHistory[0].chronology)).toBeInTheDocument();
   });
 
   it('should apply sort by a column', () => {
