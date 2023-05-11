@@ -43,8 +43,12 @@ const getNumberGeneratorModals = (configs, change) => {
         change('itemLevelCallNumber', generated);
       }}
       fullWidth
-      id="inventoryAccessionNumberAndCallNumber"
+      generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
       generator="inventory_accessionNumber"
+      id="inventoryAccessionNumberAndCallNumber"
+      modalProps={{
+        label: <FormattedMessage id="ui-inventory.numberGenerator.accessionAndCallNumberGenerator" />
+      }}
       renderTop={() => (
         <MessageBanner>
           <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" />
@@ -62,8 +66,12 @@ const getNumberGeneratorModals = (configs, change) => {
           buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
           callback={(generated) => change('accessionNumber', generated)}
           fullWidth
-          id="inventoryAccessionNumber"
+          generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
           generator="inventory_accessionNumber"
+          id="inventoryAccessionNumber"
+          modalProps={{
+            label: <FormattedMessage id="ui-inventory.numberGenerator.accessionNumberGenerator" />
+          }}
         />
       );
     }
@@ -80,8 +88,12 @@ const getNumberGeneratorModals = (configs, change) => {
           buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
           callback={(generated) => change('itemLevelCallNumber', generated)}
           fullWidth
-          id="inventoryCallNumber"
+          generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
           generator="inventory_callNumber"
+          id="inventoryCallNumber"
+          modalProps={{
+            label: <FormattedMessage id="ui-inventory.numberGenerator.callNumberGenerator" />
+          }}
         />
       );
     }
@@ -98,8 +110,12 @@ const getNumberGeneratorModals = (configs, change) => {
           }
           callback={(generated) => change('barcode', generated)}
           fullWidth
-          id="inventorybarcode"
+          generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateItemBarcode" />}
           generator="inventory_itemBarcode"
+          id="inventorybarcode"
+          modalProps={{
+            label: <FormattedMessage id="ui-inventory.numberGenerator.itemBarcodeGenerator" />
+          }}
         />
       );
     }
