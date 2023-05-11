@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import { MessageBanner } from '@folio/stripes-components';
+import { Layout, MessageBanner } from '@folio/stripes-components';
 import { NumberGeneratorModalButton } from '@folio/service-interaction';
 
 // Moving this to a separate utility method so we can declutter this work
@@ -50,9 +50,9 @@ const getNumberGeneratorModals = (configs, change) => {
         label: <FormattedMessage id="ui-inventory.numberGenerator.accessionAndCallNumberGenerator" />
       }}
       renderTop={() => (
-        <MessageBanner>
+        <Layout className="padding-bottom-gutter">
           <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" />
-        </MessageBanner>
+        </Layout>
       )}
     />
   );
