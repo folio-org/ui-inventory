@@ -21,6 +21,10 @@ import {
   validateFieldLength
 } from '../utils';
 
+import {
+  NOTE_CHARS_MAX_LENGTH
+} from '../constants';
+
 const NoteFields = props => {
   const { formatMessage } = useIntl();
 
@@ -42,8 +46,7 @@ const NoteFields = props => {
   const isNoteRequired = requiredFields.some(field => field === 'note');
   const isStaffOnlyRequired = requiredFields.some(field => field === 'staffOnly');
 
-  const START_WITH_MAX_LENGTH = 32000;
-  const validateStartWithMaxLength = value => validateFieldLength(value, START_WITH_MAX_LENGTH);
+  const validate = value => validateFieldLength(value, NOTE_CHARS_MAX_LENGTH);
 
   const headLabels = (
     <Row>
@@ -85,7 +88,7 @@ const NoteFields = props => {
           rows={1}
           disabled={!canEdit}
           required={isNoteRequired}
-          validate={validateStartWithMaxLength}
+          validate={validate}
         />
       </Col>
       <Col xs={3} lg={2}>

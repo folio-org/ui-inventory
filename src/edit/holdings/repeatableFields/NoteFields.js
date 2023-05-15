@@ -21,6 +21,10 @@ import {
   validateFieldLength
 } from '../../../utils';
 
+import {
+  NOTE_CHARS_MAX_LENGTH
+} from '../../../constants';
+
 const NoteFields = ({
   noteTypeOptions,
   canAdd,
@@ -33,8 +37,7 @@ const NoteFields = ({
   const noteLabel = formatMessage({ id: 'ui-inventory.note' });
   const staffOnlyLabel = formatMessage({ id: 'ui-inventory.staffOnly' });
 
-  const START_WITH_MAX_LENGTH = 32000;
-  const validateStartWithMaxLength = value => validateFieldLength(value, START_WITH_MAX_LENGTH);
+  const validate = value => validateFieldLength(value, NOTE_CHARS_MAX_LENGTH);
 
   const headLabels = (
     <Row>
@@ -82,7 +85,7 @@ const NoteFields = ({
           rows={1}
           disabled={!canEdit}
           required
-          validate={validateStartWithMaxLength}
+          validate={validate}
         />
       </Col>
       <Col xs={12} lg={1}>
