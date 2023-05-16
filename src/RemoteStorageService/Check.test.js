@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
 import '../../test/jest/__mock__';
 import { useHoldings } from '../providers';
 import { useByLocation, useByHoldings } from './Check';

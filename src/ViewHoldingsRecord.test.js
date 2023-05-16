@@ -2,8 +2,8 @@ import '../test/jest/__mock__';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewHoldingsRecord from './ViewHoldingsRecord';

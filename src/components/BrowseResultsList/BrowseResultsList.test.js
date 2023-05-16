@@ -1,9 +1,9 @@
 import '../../../test/jest/__mock__';
 
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import flow from 'lodash/flow';
 import queryString from 'query-string';
-import { act, cleanup, screen } from '@testing-library/react';
+import { act, cleanup, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 

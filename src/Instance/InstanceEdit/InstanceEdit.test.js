@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import { screen } from '@testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../../../test/jest/__mock__';

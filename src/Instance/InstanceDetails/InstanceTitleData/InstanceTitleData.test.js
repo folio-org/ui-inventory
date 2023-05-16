@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import InstanceTitleData from './InstanceTitleData';

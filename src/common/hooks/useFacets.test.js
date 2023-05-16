@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react-hooks';
 import { useLocation } from 'react-router-dom';
 import React from 'react';
 import { useFacetSettings } from '../../stores/facetsStore';

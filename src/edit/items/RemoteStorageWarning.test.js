@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-final-form';
-import { cleanup } from '@testing-library/react-hooks';
+import { cleanup } from '@folio/jest-config-stripes/testing-library/react-hooks';
 import '../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import { RemoteStorageWarning } from './RemoteStorageWarning';

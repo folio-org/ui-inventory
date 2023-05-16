@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../../test/jest/__mock__';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { DataContext } from '../../contexts';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
