@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, act } from '@testing-library/react';
+import { render, act } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
 import InstancesView from './InstancesView';
 import InstancesList from '../components/InstancesList';

@@ -1,6 +1,6 @@
 import '../../../test/jest/__mock__';
 
-import { render } from '@testing-library/react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 
 import FacetOptionFormatter from './FacetOptionFormatter';
 
