@@ -2,8 +2,8 @@ import '../../../test/jest/__mock__';
 
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import userEvent from '@testing-library/user-event';
-import { act, screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useLocationFilters } from '@folio/stripes-acq-components';
 

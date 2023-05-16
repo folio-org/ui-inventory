@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, act } from '@testing-library/react';
+import { render, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useQuery } from 'react-query';
 import '../../test/jest/__mock__';

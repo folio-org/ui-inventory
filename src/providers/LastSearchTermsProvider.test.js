@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
 import LastSearchTermsProvider from './LastSearchTermsProvider';
 import { LastSearchTermsContext } from '../contexts';

@@ -1,6 +1,6 @@
 import React from 'react';
-import userEvent from '@testing-library/user-event';
-import { waitFor } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../../test/jest/__mock__';
 

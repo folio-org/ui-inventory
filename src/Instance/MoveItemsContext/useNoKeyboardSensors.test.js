@@ -1,5 +1,5 @@
-import { fireEvent } from '@testing-library/dom';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/dom';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react-hooks';
 import useNoKeyboardSensors from './useNoKeyboardSensors';
 
 const mockApi = {
