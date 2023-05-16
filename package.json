@@ -880,7 +880,8 @@
     "react-query": "^3.6.0",
     "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3",
-    "sinon": "^7.0.0"
+    "sinon": "^7.0.0",
+    "zustand": "^4.1.1"
   },
   "dependencies": {
     "@folio/quick-marc": "^6.0.0",
@@ -900,8 +901,7 @@
     "react-final-form-arrays": "^3.1.0",
     "react-final-form-listeners": "^1.0.2",
     "react-router-prop-types": "^1.0.4",
-    "redux-form": "^8.3.7",
-    "zustand": "^3.7.2"
+    "redux-form": "^8.3.7"
   },
   "peerDependencies": {
     "@folio/stripes": "^8.0.0",
@@ -909,7 +909,8 @@
     "react-intl": "^5.8.0",
     "react-query": "^3.6.0",
     "react-router": "^5.0.1",
-    "react-router-dom": "^5.0.1"
+    "react-router-dom": "^5.0.1",
+    "zustand": "^4.1.1"
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
