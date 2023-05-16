@@ -21,17 +21,17 @@ describe('validateRequiredField', () => {
     expect(validateRequiredField(value)).toBe(undefined);
   });
 
-  it('should return FormattedMessage when field is undefined', () => {
+  it('should return validation error when field is undefined', () => {
     const value = undefined;
     expect(validateRequiredField(value)).toEqual(expectedResult);
   });
 
-  it('should return FormattedMessage when field none numeric', () => {
+  it('should return validation error when field none numeric', () => {
     const value = 'abc32';
     expect(validateRequiredField(value)).toEqual(expectedResult);
   });
 
-  it('should return FormattedMessage when field is set empty string', () => {
+  it('should return validation error when field is set empty string', () => {
     const value = '';
     expect(validateRequiredField(value)).toEqual(expectedResult);
   });
@@ -62,7 +62,7 @@ describe('validateFieldLength', () => {
     expect(validateFieldLength(undefined, undefined)).toBe(undefined);
   });
 
-  it('should return FormattedMessage when field length is longer then maxlength', () => {
+  it('should return validation error when field length is longer then maxlength', () => {
     const maxLength = 5;
     const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.maxLength" values={{ maxLength }} />;
 
@@ -87,7 +87,7 @@ describe('validateNumericField', () => {
     expect(validateNumericField(value)).toBe(undefined);
   });
 
-  it('should return FormattedMessage when field is not numeric', () => {
+  it('should return validation error when field is not numeric', () => {
     const value = 'ABC';
     const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.startWithField" />;
     expect(validateNumericField(value)).toEqual(expectedResult);
@@ -102,7 +102,7 @@ describe('validateAlphaNumericField', () => {
     expect(validateAlphaNumericField(alphaNumeric)).toBe(undefined);
   });
 
-  it('should return FormattedMessage when field is none alphaNumeric', () => {
+  it('should return validation error when field is none alphaNumeric', () => {
     const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.assignPrefixField" />;
     expect(validateAlphaNumericField(nonAlphaNumeric)).toEqual(expectedResult);
   });
