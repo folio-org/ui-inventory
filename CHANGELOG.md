@@ -16,6 +16,7 @@
 * Item Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2374.
 * Chronology not displayed in receiving history. Fixes UIIN-2411.
 * Also support `circulation` `14.0`. Refs UIIN-2412.
+* Instance/Holdings/Item notes, administrative notes character limit to 32K. Refs UIIN-2354.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)

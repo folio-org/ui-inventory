@@ -11,10 +11,19 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
+import {
+  validateFieldLength
+} from '../utils';
+
+import {
+  NOTE_CHARS_MAX_LENGTH
+} from '../constants';
+
 const AdministrativeNoteFields = () => {
   const { formatMessage } = useIntl();
 
   const administrativeNoteLabel = formatMessage({ id: 'ui-inventory.administrativeNote' });
+  const validate = value => validateFieldLength(value, NOTE_CHARS_MAX_LENGTH);
 
   const legend = (
     <Label tagName="legend">
@@ -29,6 +38,7 @@ const AdministrativeNoteFields = () => {
       component={TextArea}
       rows={1}
       fullWidth
+      validate={validate}
     />
   );
 

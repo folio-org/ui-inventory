@@ -416,6 +416,7 @@ export const PAGE_DIRECTIONS = {
 };
 
 export const BROWSE_RESULTS_COUNT = 100;
+export const NOTE_CHARS_MAX_LENGTH = 32000;
 
 export const ORDERS_API = 'orders/composite-orders';
 
