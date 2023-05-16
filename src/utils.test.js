@@ -1,3 +1,5 @@
+import '../test/jest/__mock__';
+
 import { FormattedMessage } from 'react-intl';
 import {
   validateRequiredField,
