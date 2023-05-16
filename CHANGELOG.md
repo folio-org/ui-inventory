@@ -12,6 +12,11 @@
 * Holdings Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2373.
 * Holdings view source: Print button not visible with "View MARC holdings record" permission. Refs UIIN-2405.
 * The 'Missing' and 'Withdrawn' options in the actions menu are absent after clicking on the 'Actions' button for item status "In process". Fixes UIIN-2338.
+* Item Create/Edit screens: Replace custom RepeatableField with component from stripes. Refs UIIN-2397.
+* Item Create/Edit screens: Repeatable field trashcan is not aligned with the data row. Fixes UIIN-2374.
+* Chronology not displayed in receiving history. Fixes UIIN-2411.
+* Also support `circulation` `14.0`. Refs UIIN-2412.
+* Instance/Holdings/Item notes, administrative notes character limit to 32K. Refs UIIN-2354.
 * Bump zustand to v4. Refs UIIN-2353.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)

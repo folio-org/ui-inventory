@@ -8,50 +8,47 @@ import {
 import PropTypes from 'prop-types';
 
 import {
+  RepeatableField,
+  TextArea,
+  Select,
   Checkbox,
+  Row,
   Col,
   Label,
-  RepeatableField,
-  Row,
-  Select,
-  TextArea,
 } from '@folio/stripes/components';
 
-import {
-  validateFieldLength
-} from '../../../utils';
-
-import {
-  NOTE_CHARS_MAX_LENGTH
-} from '../../../constants';
-
-const NoteFields = ({
-  noteTypeOptions,
-  canAdd,
-  canEdit,
-  canDelete,
-}) => {
+const CirculationNotesFields = props => {
   const { formatMessage } = useIntl();
+
+  const {
+    canAdd,
+    canEdit,
+    canDelete,
+  } = props;
+
+  const noteTypeOptions = [
+    { label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' },
+    { label: 'Check in note', value: 'Check in' },
+    { label: 'Check out note', value: 'Check out' }
+  ];
 
   const noteTypeLabel = formatMessage({ id: 'ui-inventory.noteType' });
   const noteLabel = formatMessage({ id: 'ui-inventory.note' });
   const staffOnlyLabel = formatMessage({ id: 'ui-inventory.staffOnly' });
 
-  const validate = value => validateFieldLength(value, NOTE_CHARS_MAX_LENGTH);
-
   const headLabels = (
     <Row>
-      <Col xs={12} lg={4}>
+      <Col sm={5}>
         <Label tagName="legend" required>
           {noteTypeLabel}
         </Label>
       </Col>
-      <Col xs={12} lg={7}>
+      <Col sm={5}>
         <Label tagName="legend" required>
           {noteLabel}
         </Label>
       </Col>
-      <Col xs={12} lg={1}>
+      <Col xs={3} lg={2}>
         <Label tagName="legend">
           {staffOnlyLabel}
         </Label>
@@ -61,23 +58,17 @@ const NoteFields = ({
 
   const renderField = field => (
     <Row>
-      <Col xs={12} lg={4}>
+      <Col sm={5}>
         <Field
           aria-label={noteTypeLabel}
-          name={`${field}.holdingsNoteTypeId`}
+          name={`${field}.noteType`}
           component={Select}
-          dataOptions={[
-            {
-              label: formatMessage({ id: 'ui-inventory.selectType' }),
-              value: '',
-            },
-            ...noteTypeOptions,
-          ]}
+          dataOptions={noteTypeOptions}
           disabled={!canEdit}
           required
         />
       </Col>
-      <Col xs={12} lg={7}>
+      <Col sm={5}>
         <Field
           aria-label={noteLabel}
           name={`${field}.note`}
@@ -85,10 +76,9 @@ const NoteFields = ({
           rows={1}
           disabled={!canEdit}
           required
-          validate={validate}
         />
       </Col>
-      <Col xs={12} lg={1}>
+      <Col xs={3} lg={2}>
         <Field
           aria-label={staffOnlyLabel}
           name={`${field}.staffOnly`}
@@ -104,12 +94,11 @@ const NoteFields = ({
 
   return (
     <FieldArray
-      name="notes"
+      name="circulationNotes"
       component={RepeatableField}
-      legend={<FormattedMessage id="ui-inventory.notes" />}
-      addLabel={<FormattedMessage id="ui-inventory.addNote" />}
+      addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
       onAdd={fields => fields.push({
-        holdingsNoteTypeId: '',
+        noteType: '',
         note: '',
         staffOnly: false,
       })}
@@ -121,17 +110,15 @@ const NoteFields = ({
   );
 };
 
-NoteFields.propTypes = {
+CirculationNotesFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-  noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
 };
-
-NoteFields.defaultProps = {
+CirculationNotesFields.defaultProps = {
   canAdd: true,
   canEdit: true,
   canDelete: true,
 };
 
-export default NoteFields;
+export default CirculationNotesFields;
