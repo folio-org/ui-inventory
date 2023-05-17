@@ -611,20 +611,16 @@ class InstancesList extends React.Component {
               <FormattedMessage id="stripes-smart-components.new" />
             </Button>
           </IfPermission>
-          <Pluggable
-            id="clickable-create-inventory-records"
-            onClose={this.toggleNewFastAddModal}
-            open={this.state.showNewFastAddModal} // control the open modal via state var
-            renderTrigger={() => (
+          <IfPermission perm="ui-plugin-create-inventory-records.create">
+            {
               this.getActionItem({
                 id: 'new-fast-add-record',
                 icon: 'lightning',
                 messageId: 'ui-inventory.newFastAddRecord',
                 onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
               })
-            )}
-            type="create-inventory-records"
-          />
+            }
+          </IfPermission>
           <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
             <Button
               buttonStyle="dropdownItem"
@@ -1118,6 +1114,13 @@ class InstancesList extends React.Component {
             />
           </IfPermission>
         </IfInterface>
+        <Pluggable
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
+          open={this.state.showNewFastAddModal}
+          renderTrigger={() => {}}
+          type="create-inventory-records"
+        />
       </HasCommand>
     );
   }
