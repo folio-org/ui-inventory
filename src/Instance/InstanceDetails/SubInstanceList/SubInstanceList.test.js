@@ -2,7 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import '../../../../test/jest/__mock__';
 import { Router } from 'react-router';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { renderWithIntl, translationsProperties } from '../../../../test/jest/helpers';
 import useLoadSubInstances from '../../../hooks/useLoadSubInstances';

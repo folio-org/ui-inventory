@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/no-redundant-roles */
-/* eslint-disable react/button-has-type */
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import {
   screen
