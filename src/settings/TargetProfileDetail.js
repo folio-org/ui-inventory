@@ -12,12 +12,16 @@ import {
   TextLink,
 } from '@folio/stripes/components';
 
-import { LIMIT_MAX } from '../constants';
+import {
+  DATA_IMPORT_JOB_PROFILES_ROUTE,
+  LIMIT_MAX,
+} from '../constants';
 
 const JOB_PROFILES_COLUMNS_NAME = {
   ID: 'id',
   IS_DEFAULT: 'isDefault',
 };
+const DATA_TYPE_MARC_QUERY = 'dataType==("MARC")';
 
 class TargetProfileDetail extends React.Component {
   static propTypes = {
@@ -47,27 +51,63 @@ class TargetProfileDetail extends React.Component {
       path: 'identifier-types?query=id=!{initialValues.externalIdentifierType}',
       records: 'identifierTypes',
     },
-    jobProfiles: {
+    defaultCreateJobProfile: {
+      type: 'okapi',
+      path: (_queryParams, _pathComponents, _resourceData, _logger, props) => {
+        const {
+          initialValues: { createJobProfileId } = {},
+        } = props;
+
+        return `${DATA_IMPORT_JOB_PROFILES_ROUTE}/${createJobProfileId}`;
+      },
+    },
+    defaultUpdateJobProfile: {
+      type: 'okapi',
+      path: (_queryParams, _pathComponents, _resourceData, _logger, props) => {
+        const {
+          initialValues: { updateJobProfileId } = {},
+        } = props;
+
+        return `${DATA_IMPORT_JOB_PROFILES_ROUTE}/${updateJobProfileId}`;
+      },
+    },
+    allowedCreateJobProfiles: {
       type: 'okapi',
       records: 'jobProfiles',
-      path: `data-import-profiles/jobProfiles?limit=${LIMIT_MAX}&query=dataType==("MARC") sortBy name`,
+      path: (_queryParams, _pathComponents, _resourceData, _logger, props) => {
+        const {
+          initialValues: { allowedCreateJobProfileIds = [] } = {},
+        } = props;
+        const ids = allowedCreateJobProfileIds.join(' or ');
+        const allowedIdsQuery = `id==(${ids})`;
+
+        return `${DATA_IMPORT_JOB_PROFILES_ROUTE}?limit=${LIMIT_MAX}&query=${DATA_TYPE_MARC_QUERY} and ${allowedIdsQuery} sortBy name`;
+      },
+    },
+    allowedUpdateJobProfiles: {
+      type: 'okapi',
+      records: 'jobProfiles',
+      path: (_queryParams, _pathComponents, _resourceData, _logger, props) => {
+        const {
+          initialValues: { allowedUpdateJobProfileIds = [] } = {},
+        } = props;
+        const ids = allowedUpdateJobProfileIds.join(' or ');
+        const allowedIdsQuery = `id==(${ids})`;
+
+        return `${DATA_IMPORT_JOB_PROFILES_ROUTE}?limit=${LIMIT_MAX}&query=${DATA_TYPE_MARC_QUERY} and ${allowedIdsQuery} sortBy name`;
+      },
     },
   });
 
-  getJobProfilesContent = (profileIds, defaultProfileId) => {
-    const { resources: { jobProfiles } } = this.props;
+  getJobProfilesContent = (defaultJobProfileRecord, allowedJobProfilesRecords) => {
+    const content = [
+      defaultJobProfileRecord,
+      ...allowedJobProfilesRecords.filter(jobProfile => jobProfile?.id !== defaultJobProfileRecord?.id),
+    ];
 
-    const content = [...profileIds];
-    const indexOfDefault = content.indexOf(defaultProfileId);
-
-    if (indexOfDefault > -1) {
-      content.splice(indexOfDefault, 1);
-      content.unshift(defaultProfileId);
-    }
-
-    return content.map(id => ({
-      id,
-      name: jobProfiles?.records.find(jobProfile => jobProfile.id === id)?.name,
+    return content.map(jobProfile => ({
+      id: jobProfile?.id,
+      name: jobProfile?.name,
     }));
   }
 
@@ -94,10 +134,14 @@ class TargetProfileDetail extends React.Component {
     const {
       initialValues,
       initialValues: {
-        allowedCreateJobProfileIds = [],
-        allowedUpdateJobProfileIds = [],
         createJobProfileId = '',
         updateJobProfileId = '',
+      },
+      resources: {
+        defaultCreateJobProfile: { records: [defaultCreateJobProfileRecord] },
+        defaultUpdateJobProfile: { records: [defaultUpdateJobProfileRecord] },
+        allowedCreateJobProfiles: { records: allowedCreateJobProfilesRecords },
+        allowedUpdateJobProfiles: { records: allowedUpdateJobProfilesRecords },
       },
     } = this.props;
 
@@ -109,8 +153,8 @@ class TargetProfileDetail extends React.Component {
     );
 
     const jobProfilesVisibleColumns = [JOB_PROFILES_COLUMNS_NAME.ID, JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT];
-    const createJobProfilesContent = this.getJobProfilesContent(allowedCreateJobProfileIds, createJobProfileId);
-    const updateJobProfilesContent = this.getJobProfilesContent(allowedUpdateJobProfileIds, updateJobProfileId);
+    const createJobProfilesContent = this.getJobProfilesContent(defaultCreateJobProfileRecord, allowedCreateJobProfilesRecords);
+    const updateJobProfilesContent = this.getJobProfilesContent(defaultUpdateJobProfileRecord, allowedUpdateJobProfilesRecords);
     const createJobProfilesFormatter = this.getJobProfilesFormatter(createJobProfileId);
     const updateJobProfilesFormatter = this.getJobProfilesFormatter(updateJobProfileId);
 

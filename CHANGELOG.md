@@ -19,6 +19,8 @@
 * Instance/Holdings/Item notes, administrative notes character limit to 32K. Refs UIIN-2354.
 * Import testing-library deps from `@folio/jest-config-stripes`. Refs UIIN-2427.
 * Bump zustand to v4. Refs UIIN-2353.
+* ISRI: Adjust jobProfiles GET request to fetch profiles by ids. Refs UIIN-2428.
+* Sorting of profiles is not executed in alphabetical order in the Z39.50 target profiles View. Fixes UIIN-2424.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
