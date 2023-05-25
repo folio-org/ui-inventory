@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 9.5.0 IN PROGRESS
+## 10.0.0 IN PROGRESS
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
