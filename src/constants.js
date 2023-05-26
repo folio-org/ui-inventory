@@ -209,6 +209,12 @@ export const SORT_DIRECTION = {
   DESCENDING: 'descending',
 };
 
+export const sortableSearchResultListColumns = {
+  TITLE: 'title',
+  CONTRIBUTORS: 'contributors',
+};
+
+
 export const DEFAULT_FILTERS_NUMBER = 6;
 
 export const FACETS = {
