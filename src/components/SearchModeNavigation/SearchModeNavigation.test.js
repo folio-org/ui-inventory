@@ -9,8 +9,8 @@ import {
 } from '../../../test/jest/helpers';
 import SearchModeNavigation from './SearchModeNavigation';
 
-const renderSearchModeNavigation = (props = {}) => renderWithIntl(
-  <MemoryRouter>
+const renderSearchModeNavigation = (props = {}, initialRoute = '/inventory/browse') => renderWithIntl(
+  <MemoryRouter initialEntries={[initialRoute]}>
     <SearchModeNavigation
       {...props}
     />
@@ -24,5 +24,15 @@ describe('SearchModeNavigation', () => {
 
     expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('Browse')).toBeInTheDocument();
+  });
+
+  describe('when current segment is browse', () => {
+    it('should keep browse query in url in browse button', () => {
+      renderSearchModeNavigation();
+
+      const browseButton = screen.findByRole('button', { name: 'Browse' });
+
+      expect(browseButton.href).toEqual('');
+    });
   });
 });
