@@ -34,7 +34,31 @@ class TargetProfileDetail extends React.Component {
           }).isRequired,
         ),
       }).isRequired,
-      jobProfiles: PropTypes.shape({
+      defaultCreateJobProfile: PropTypes.shape({
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+          }).isRequired,
+        ),
+      }).isRequired,
+      defaultUpdateJobProfile: PropTypes.shape({
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+          }).isRequired,
+        ),
+      }).isRequired,
+      allowedCreateJobProfiles: PropTypes.shape({
+        records: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+          }).isRequired,
+        ),
+      }).isRequired,
+      allowedUpdateJobProfiles: PropTypes.shape({
         records: PropTypes.arrayOf(
           PropTypes.shape({
             id: PropTypes.string.isRequired,
