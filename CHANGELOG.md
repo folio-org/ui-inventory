@@ -21,6 +21,8 @@
 * Bump zustand to v4. Refs UIIN-2353.
 * Fix the `records-editor/records` request by adding `_actionType`. Refs UIIN-2431.
 * Navigating away and back to item-edit or holdings-edit screen throws NPE. Fixes UIIN-2112.
+* ISRI: Adjust jobProfiles GET request to fetch profiles by ids. Refs UIIN-2428.
+* Sorting of profiles is not executed in alphabetical order in the Z39.50 target profiles View. Fixes UIIN-2424.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
