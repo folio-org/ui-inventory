@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
 
 import '../../../test/jest/__mock__';
 

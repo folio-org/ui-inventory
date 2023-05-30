@@ -2,8 +2,8 @@ import React from 'react';
 import {
   render,
   screen,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import '../../../../test/jest/__mock__';
 import Harness from '../../../../test/jest/helpers/Harness';

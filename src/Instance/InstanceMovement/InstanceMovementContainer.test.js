@@ -1,8 +1,8 @@
 import '../../../test/jest/__mock__';
 
 import React from 'react';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 
 import InstanceMovementContainer from './InstanceMovementContainer';
@@ -188,6 +188,7 @@ describe('Given InstanceMovementContainer', () => {
           content: 'instance-hrid-2',
         }],
         relatedRecordVersion: 2,
+        _actionType: 'edit',
       });
     });
 

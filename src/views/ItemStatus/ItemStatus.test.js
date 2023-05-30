@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
-import { act } from '@testing-library/react-hooks';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act } from '@folio/jest-config-stripes/testing-library/react-hooks';
 
 import '../../../test/jest/__mock__';
 

@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import React from 'react';
 import '../../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../../test/jest/helpers';
