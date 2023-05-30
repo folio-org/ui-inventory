@@ -8,9 +8,23 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 import SearchModeNavigation from './SearchModeNavigation';
+import {
+  INVENTORY_ROUTE,
+  BROWSE_INVENTORY_ROUTE,
+} from '../../constants';
 
-const renderSearchModeNavigation = (props = {}, initialRoute = '/inventory/browse') => renderWithIntl(
-  <MemoryRouter initialEntries={[initialRoute]}>
+const initialSearch = '?qindex=contributors&query=test';
+
+const renderSearchModeNavigation = (
+  props = {},
+  initialRoute = BROWSE_INVENTORY_ROUTE,
+) => renderWithIntl(
+  <MemoryRouter
+    initialEntries={[{
+      pathname: initialRoute,
+      search: initialSearch,
+    }]}
+  >
     <SearchModeNavigation
       {...props}
     />
@@ -27,12 +41,24 @@ describe('SearchModeNavigation', () => {
   });
 
   describe('when current segment is browse', () => {
-    it('should keep browse query in url in browse button', () => {
+    it('should keep browse query in url in browse button', async () => {
       renderSearchModeNavigation();
 
-      const browseButton = screen.findByRole('button', { name: 'Browse' });
+      const browseButton = await screen.findByRole('button', { name: 'Browse' });
 
-      expect(browseButton.href).toEqual('');
+      expect(browseButton.href.includes(`${BROWSE_INVENTORY_ROUTE}${initialSearch}`)).toBeTruthy();
+    });
+
+    it('should keep set search query in url in search button', async () => {
+      const search = '?query=test';
+
+      renderSearchModeNavigation({
+        search,
+      });
+
+      const browseButton = await screen.findByRole('button', { name: 'Search' });
+
+      expect(browseButton.href.includes(`${INVENTORY_ROUTE}${search}`)).toBeTruthy();
     });
   });
 });

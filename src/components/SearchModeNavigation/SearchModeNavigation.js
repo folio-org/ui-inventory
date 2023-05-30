@@ -1,10 +1,7 @@
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
-import {
-  useRouteMatch,
-  useLocation,
-} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -17,18 +14,20 @@ import {
 } from '../../constants';
 
 const SearchModeNavigation = ({ search, state }) => {
-  const { path } = useRouteMatch();
-  const { search: currentSearch } = useLocation();
+  const {
+    search: currentSearch,
+    pathname,
+  } = useLocation();
 
   const checkIsButtonActive = useCallback((segment) => (
-    path === searchModeRoutesMap[segment] ? 'primary' : 'default'
-  ), [path]);
+    pathname === searchModeRoutesMap[segment] ? 'primary' : 'default'
+  ), [pathname]);
 
   return (
     <ButtonGroup fullWidth>
       {
         Object.keys(searchModeSegments).map(segment => {
-          const isCurrentSegment = path === searchModeRoutesMap[segment];
+          const isCurrentSegment = pathname === searchModeRoutesMap[segment];
 
           return (
             <Button
