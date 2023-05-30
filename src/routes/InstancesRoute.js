@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { withFacets, getFilterConfig } from '@folio/stripes-inventory-components';
 
 import withLocation from '../withLocation';
-import withFacets from '../withFacets';
 import withLastSearchTerms from '../withLastSearchTerms';
 import { InstancesView } from '../views';
-import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
 
