@@ -439,6 +439,7 @@ class ItemForm extends React.Component {
                           id="additem_barcode"
                           validate={validateBarcode(this.props)}
                           component={TextField}
+                          autoFocus
                           fullWidth
                         />
                       </Col>
