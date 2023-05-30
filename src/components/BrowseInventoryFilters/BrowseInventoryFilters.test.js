@@ -32,8 +32,8 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn(() => ({ search: '' })),
 }));
-jest.mock('../../common/hooks', () => ({
-  ...jest.requireActual('../../common/hooks'),
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
   useFacets: jest.fn(() => ([
     { effectiveLocation: true, nameType: false },
     jest.fn(),

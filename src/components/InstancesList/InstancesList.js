@@ -37,6 +37,7 @@ import {
   TextLink,
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
+import { facetsStore } from '@folio/stripes-inventory-components';
 
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
@@ -73,7 +74,6 @@ import {
   getItem,
   setItem,
 } from '../../storage';
-import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
 

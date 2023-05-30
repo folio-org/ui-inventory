@@ -4,6 +4,7 @@ import {
 } from 'lodash';
 
 import { makeQueryFunction } from '@folio/stripes/smart-components';
+import { getFilterConfig, facetsStore } from '@folio/stripes-inventory-components';
 import {
   CQL_FIND_ALL,
   queryIndexes
@@ -12,8 +13,6 @@ import {
   getQueryTemplate,
   getIsbnIssnTemplate,
 } from '../utils';
-import { getFilterConfig } from '../filterConfig';
-import facetsStore from '../stores/facetsStore';
 
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';

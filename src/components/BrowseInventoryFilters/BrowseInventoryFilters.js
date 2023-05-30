@@ -3,11 +3,11 @@ import { useContext } from 'react';
 import { flowRight, omit } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { withFacets, InstanceFilters as InstanceFiltersBrowse } from '@folio/stripes-inventory-components';
 
-import withFacets from '../../withFacets';
 import { DataContext } from '../../contexts';
 import { parseFiltersToStr } from '../../utils';
-import { InstanceFiltersBrowse } from '../InstanceFilters';
+// import { InstanceFiltersBrowse } from '../InstanceFilters';
 
 const BrowseInventoryFilters = ({
   activeFilters,

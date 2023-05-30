@@ -1,7 +1,7 @@
 import '../../test/jest/__mock__';
 
 import { queryIndexes } from '../constants';
-import { instanceIndexes } from '../filterConfig';
+import { instanceIndexes } from '@folio/stripes-inventory-components';
 import { buildQuery } from './buildManifestObject';
 
 const getQueryTemplate = (qindex) => instanceIndexes.find(({ value }) => value === qindex).queryTemplate;

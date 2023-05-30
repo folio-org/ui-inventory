@@ -16,13 +16,14 @@ import {
   useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
+import { browseInstanceIndexes } from '@folio/stripes-inventory-components';
 
 import {
   BrowseInventoryFilters,
   BrowseResultsPane,
   SearchModeNavigation,
 } from '../../components';
-import { browseInstanceIndexes } from '../../filterConfig';
+
 import {
   useBrowseValidation,
   useInventoryBrowse,

@@ -886,6 +886,7 @@
   "dependencies": {
     "@folio/quick-marc": "^7.0.0",
     "@folio/stripes-acq-components": "^4.0.0",
+    "@folio/stripes-inventory-components": "^1.0.0",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
     "final-form-arrays": "^3.0.1",
