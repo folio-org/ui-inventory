@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 9.5.0 IN PROGRESS
+## 10.0.0 IN PROGRESS
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
@@ -19,6 +19,7 @@
 * Instance/Holdings/Item notes, administrative notes character limit to 32K. Refs UIIN-2354.
 * Import testing-library deps from `@folio/jest-config-stripes`. Refs UIIN-2427.
 * Bump zustand to v4. Refs UIIN-2353.
+* Fix the `records-editor/records` request by adding `_actionType`. Refs UIIN-2431.
 * Don't reset browse query when on Browse route and click Browse segment. Fixes UIIN-2434.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
