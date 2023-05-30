@@ -148,6 +148,7 @@ const defaultProp = {
   },
   stripes: {
     connect: jest.fn(),
+    hasInterface: jest.fn().mockReturnValue(true),
     hasPerm: jest.fn().mockReturnValue(true),
     locale: 'Testlocale',
     logger: {
@@ -209,6 +210,16 @@ describe('ViewInstance', () => {
     expect(screen.queryByText('Move holdings/items to another instance')).not.toBeInTheDocument();
   });
   describe('Action Menu', () => {
+    it('should not be displayed', () => {
+      renderViewInstance({
+        stripes: {
+          ...defaultProp.stripes,
+          hasInterface: jest.fn().mockReturnValue(false),
+          hasPerm: jest.fn().mockReturnValue(false),
+        },
+      });
+      expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
+    });
     it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
       renderViewInstance();
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));

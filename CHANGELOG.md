@@ -20,6 +20,7 @@
 * Import testing-library deps from `@folio/jest-config-stripes`. Refs UIIN-2427.
 * Bump zustand to v4. Refs UIIN-2353.
 * Fix the `records-editor/records` request by adding `_actionType`. Refs UIIN-2431.
+* Hide the `Actions` button for the view page if there are no permissions. Refs UIIN-2360.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
