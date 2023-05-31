@@ -26,6 +26,7 @@
 * Added sort options in Actions for Instance/Holdings/Item. Refs UIIN-2357.
 * Statistical code empty field error. Refs UIIN-2420.
 * Hide the `Actions` button for the view page if there are no permissions. Refs UIIN-2360.
+* Prevent double-escaping of query when Browsing. Fixes UIIN-2435.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
