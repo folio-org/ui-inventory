@@ -10,7 +10,7 @@ const EditItemRoute = () => {
 
   return (
     <EditItem
-      referenceData={referenceData}
+      referenceData={referenceData || {}}
       instanceId={id}
       holdingId={holdingId}
       itemId={itemId}
