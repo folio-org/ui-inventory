@@ -35,6 +35,7 @@ const StatisticalCodeFields = ({
       name={field}
       component={Select}
       placeholder={formatMessage({ id: 'ui-inventory.selectCode' })}
+      validate={value => (!value ? formatMessage({ id: 'ui-inventory.selectToContinue' }) : undefined)}
       dataOptions={statisticalCodeOptions}
       disabled={!canEdit}
     />
