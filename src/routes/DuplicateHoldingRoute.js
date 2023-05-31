@@ -10,7 +10,7 @@ const DuplicateHoldingRoute = () => {
 
   return (
     <DuplicateHolding
-      referenceTables={referenceTables}
+      referenceTables={referenceTables || {}}
       instanceId={instanceId}
       holdingId={holdingId}
     />
