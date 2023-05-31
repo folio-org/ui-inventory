@@ -21,7 +21,7 @@ import translationsProperties from '../../../test/jest/helpers/translationsPrope
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
-import { sortableSearchResultListColumns } from '../../constants';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
@@ -290,7 +290,7 @@ describe('InstancesList', () => {
 
         it('should render as many options as defined plus Relevance', () => {
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
-          expect(options).toHaveLength(Object.keys(sortableSearchResultListColumns).length + 1);
+          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length + 1);
         });
       });
 

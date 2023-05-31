@@ -209,7 +209,7 @@ export const SORT_DIRECTION = {
   DESCENDING: 'descending',
 };
 
-export const sortableSearchResultListColumns = {
+export const SORTABLE_SEARCH_RESULT_LIST_COLUMNS = {
   TITLE: 'title',
   CONTRIBUTORS: 'contributors',
 };

@@ -58,7 +58,7 @@ import {
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
-  sortableSearchResultListColumns,
+  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   segments,
 } from '../../constants';
 import {
@@ -206,17 +206,7 @@ class InstancesList extends React.Component {
     }
 
     if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
-      const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
-        if (key.name === this.props.segment) {
-          key.sort = sortBy;
-          return key;
-        }
-        return key;
-      });
-
-      this.setState({
-        segmentsSortBy
-      });
+      this.setSegmentSortBy(sortBy);
     }
   }
 
@@ -280,7 +270,7 @@ class InstancesList extends React.Component {
 
   getInitialSegmentsSortBy = () => {
     return Object.keys(segments).map(name => (
-      { name, sort:'title' }
+      { name, sort: SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE }
     ));
   }
 
@@ -398,7 +388,11 @@ class InstancesList extends React.Component {
       <SearchModeNavigation
         search={this.props.getLastBrowse()}
       />
-      <FilterNavigation segment={this.props.segment} segmentsSortBy={this.state.segmentsSortBy} onChange={this.refocusOnInputSearch} />
+      <FilterNavigation
+        segment={this.props.segment}
+        segmentsSortBy={this.state.segmentsSortBy}
+        onChange={this.refocusOnInputSearch}
+      />
     </>
   );
 
@@ -607,6 +601,22 @@ class InstancesList extends React.Component {
     setItem(`${namespace}.position`, null);
   }
 
+  setSegmentSortBy = (sortBy) => {
+    const { segment } = this.props;
+
+    const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
+      if (key.name === segment) {
+        key.sort = sortBy;
+        return key;
+      }
+      return key;
+    });
+
+    this.setState({
+      segmentsSortBy
+    });
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { parentResources, intl, segment } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
@@ -635,17 +645,7 @@ class InstancesList extends React.Component {
       const params = getParams();
       params.sort = event.target.value;
 
-      const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
-        if (key.name === segment) {
-          key.sort = params.sort;
-          return key;
-        }
-        return key;
-      });
-
-      this.setState({
-        segmentsSortBy
-      });
+      this.setSegmentSortBy(params.sort);
 
       const { sort, ...rest } = params;
       const queryParams = params.sort === '' ? rest : { sort, ...rest };
@@ -653,7 +653,7 @@ class InstancesList extends React.Component {
       goTo(path, { ...queryParams });
     };
 
-    const sortOptions = Object.values(sortableSearchResultListColumns).map(option => ({
+    const sortOptions = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).map(option => ({
       value: option,
       label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
     }));
