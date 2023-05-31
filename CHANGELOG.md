@@ -23,6 +23,7 @@
 * Navigating away and back to item-edit or holdings-edit screen throws NPE. Fixes UIIN-2112.
 * ISRI: Adjust jobProfiles GET request to fetch profiles by ids. Refs UIIN-2428.
 * Sorting of profiles is not executed in alphabetical order in the Z39.50 target profiles View. Fixes UIIN-2424.
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2419.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
