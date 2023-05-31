@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 9.4.7 IN PROGRESS
+
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2469.
+
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
 
