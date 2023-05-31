@@ -217,7 +217,15 @@ describe('ViewInstance', () => {
           hasInterface: jest.fn().mockReturnValue(false),
           hasPerm: jest.fn().mockReturnValue(false),
         },
+        resources: {
+          ...defaultProp.resources,
+          configs: {
+            ...defaultProp.resources.configs,
+            records: [{ value: JSON.stringify({ titleLevelRequestsFeatureEnabled: true }) }],
+          },
+        },
       });
+
       expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
     });
     it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
