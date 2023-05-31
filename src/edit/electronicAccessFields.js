@@ -145,6 +145,7 @@ ElectronicAccessFields.propTypes = {
 };
 
 ElectronicAccessFields.defaultProps = {
+  relationship: [],
   canAdd: true,
   canEdit: true,
   canDelete: true,

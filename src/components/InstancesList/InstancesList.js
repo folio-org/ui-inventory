@@ -31,6 +31,7 @@ import {
   Icon,
   Checkbox,
   MenuSection,
+  Select,
   checkScope,
   HasCommand,
   MCLPagingTypes,
@@ -58,6 +59,7 @@ import {
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
+  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   segments,
 } from '../../constants';
 import {
@@ -155,6 +157,7 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
+      segmentsSortBy: this.getInitialSegmentsSortBy(),
       isSingleResult: this.props.showSingleResult,
       searchInProgress: false,
     };
@@ -189,6 +192,7 @@ class InstancesList extends React.Component {
 
   componentDidUpdate(prevProps) {
     const qindex = this.getQIndexFromParams();
+    const sortBy = this.getSortFromParams();
 
     this.storeLastSearchTerms(prevProps);
 
@@ -199,6 +203,10 @@ class InstancesList extends React.Component {
     if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ optionSelected: qindex });
+    }
+
+    if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
+      this.setSegmentSortBy(sortBy);
     }
   }
 
@@ -251,8 +259,19 @@ class InstancesList extends React.Component {
     return params.get('qindex');
   }
 
+  getSortFromParams = () => {
+    const params = new URLSearchParams(this.props.location.search);
+    return params.get('sort');
+  }
+
   getInitialToggableColumns = () => {
     return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
+  }
+
+  getInitialSegmentsSortBy = () => {
+    return Object.keys(segments).map(name => (
+      { name, sort: SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE }
+    ));
   }
 
   getVisibleColumns = () => {
@@ -369,7 +388,11 @@ class InstancesList extends React.Component {
       <SearchModeNavigation
         search={this.props.getLastBrowse()}
       />
-      <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+      <FilterNavigation
+        segment={this.props.segment}
+        segmentsSortBy={this.state.segmentsSortBy}
+        onChange={this.refocusOnInputSearch}
+      />
     </>
   );
 
@@ -578,6 +601,22 @@ class InstancesList extends React.Component {
     setItem(`${namespace}.position`, null);
   }
 
+  setSegmentSortBy = (sortBy) => {
+    const { segment } = this.props;
+
+    const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
+      if (key.name === segment) {
+        key.sort = sortBy;
+        return key;
+      }
+      return key;
+    });
+
+    this.setState({
+      segmentsSortBy
+    });
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { parentResources, intl, segment } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
@@ -592,6 +631,43 @@ class InstancesList extends React.Component {
 
         onClickHandler(this.context.sendCallout);
       };
+    };
+
+    const setSortedColumn = (event) => {
+      const {
+        match: { path },
+        goTo,
+        getParams,
+      } = this.props;
+
+      onToggle();
+
+      const params = getParams();
+      params.sort = event.target.value;
+
+      this.setSegmentSortBy(params.sort);
+
+      const { sort, ...rest } = params;
+      const queryParams = params.sort === '' ? rest : { sort, ...rest };
+
+      goTo(path, { ...queryParams });
+    };
+
+    const sortOptions = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).map(option => ({
+      value: option,
+      label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
+    }));
+
+    const sortByOptions = [
+      {
+        value: '',
+        label: intl.formatMessage({ id: 'ui-inventory.actions.menuSection.sortBy.relevance' }),
+      },
+      ...sortOptions,
+    ];
+
+    const getSortByValue = () => {
+      return this.state.segmentsSortBy.find(x => x.name === segment).sort?.replace('-', '') || '';
     };
 
     return (
@@ -699,6 +775,17 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
             isDisabled: !selectedRowsCount,
           })}
+        </MenuSection>
+        <MenuSection
+          data-testid="menu-section-sort-by"
+          label={intl.formatMessage({ id: 'ui-inventory.actions.menuSection.sortBy' })}
+        >
+          <Select
+            data-testid="sort-by-selection"
+            dataOptions={sortByOptions}
+            value={getSortByValue()}
+            onChange={setSortedColumn}
+          />
         </MenuSection>
         <MenuSection label={intl.formatMessage({ id: 'ui-inventory.showColumns' })} id="columns-menu-section">
           {TOGGLEABLE_COLUMNS.map(key => (
