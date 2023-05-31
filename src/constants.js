@@ -10,6 +10,7 @@ const DECLARED_LOST = 'Declared lost';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
+export const DATA_IMPORT_JOB_PROFILES_ROUTE = 'data-import-profiles/jobProfiles';
 
 export const searchModeSegments = {
   search: 'search',
