@@ -28,6 +28,7 @@
 * Hide the `Actions` button for the view page if there are no permissions. Refs UIIN-2360.
 * When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2419.
 * Don't reset browse query when on Browse route and click Browse segment. Fixes UIIN-2434.
+* Prevent double-escaping of query when Browsing. Fixes UIIN-2435.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
