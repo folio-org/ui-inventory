@@ -734,6 +734,11 @@
   "copycat.callout.simpleError": "Something went wrong: {err}",
   "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
 
+  "actions.menuSection.sortBy": "Sort by",
+  "actions.menuSection.sortBy.relevance": "Relevance",
+  "actions.menuSection.sortBy.title": "Title",
+  "actions.menuSection.sortBy.contributors": "Contributors",
+
   "remote.confirmation.heading": "Removing from remote storage",
   "remote.confirmation.message": "Are you sure you want to remove {something} from remote storage?",
   "remote.warning.common": "To remove {something} from remote storage, run an exception report or communicate this directly to your remote storage location.",

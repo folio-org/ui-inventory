@@ -544,7 +544,7 @@
     "moveItems.instance.items.error": "The following items could not be moved {items}. Check the instance record fields and try again or notify your systems administrator.",
     "moveItems.instance.items.error.server": "There was a problem updating the following items {items}. Please try again or notify your systems administrator.",
     "moveItems.instance.holdings.error": "The following holdings could not be moved {holdings}. Check the instance record fields and try again or notify your systems administrator.",
-    "moveItems.instance.holdings.error.server": "Hubo un problema al actualizar las siguientes existencias {holdings}. Vuelva a intentarlo o notifique a su administrador de sistemas.",
+    "moveItems.instance.holdings.error.server": "Hubo un problema al actualizar las siguientes Holdings {holdings}. Vuelva a intentarlo o notifique a su administrador de sistemas.",
     "newFastAddRecord": "New Fast Add Record",
     "holdingsStatementPublicNote": "Holdings statement public note",
     "holdingsStatementStaffNote": "Holdings statement staff note",
@@ -563,9 +563,9 @@
     "defaultInstanceStatus": "Default instance status",
     "fastAdd": "Fast add",
     "uniqueCode": "Code must be unique",
-    "holdingsSources": "Fuentes de existencias",
-    "holdingsSource": "Fuente de existencias",
-    "selectHoldingsSource": "Seleccionar fuente de existencias",
+    "holdingsSources": "Fuentes de Holdings",
+    "holdingsSource": "Fuente de Holdings",
+    "selectHoldingsSource": "Seleccionar fuente de Holdings",
     "holdingsSourceLabel": "Fuente",
     "uniqueName": "El nombre debe ser único",
     "viewRequests": "Ver solicitudes",
@@ -779,5 +779,9 @@
     "newMARCRecord": "New MARC Bib Record",
     "boundWithTitles.add": "Add Bound-with and analytics",
     "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
-    "selectCode": "Select code"
+    "selectCode": "Select code",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors"
 }

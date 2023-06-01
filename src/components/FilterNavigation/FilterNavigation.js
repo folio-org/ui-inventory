@@ -8,29 +8,36 @@ import {
 
 import { segments } from '../../constants';
 
-const FilterNavigation = ({ segment, onChange }) => (
+const FilterNavigation = ({ segment, segmentsSortBy, onChange }) => (
   <ButtonGroup
     fullWidth
     data-test-filters-navigation
   >
     {
-      Object.keys(segments).map(name => (
-        <Button
-          key={`${name}`}
-          to={`/inventory?segment=${name}&sort=title`}
-          buttonStyle={`${segment === name ? 'primary' : 'default'}`}
-          id={`segment-navigation-${name}`}
-          onClick={onChange}
-        >
-          <FormattedMessage id={`ui-inventory.filters.${name}`} />
-        </Button>
-      ))
+      Object.keys(segments).map((name) => {
+        const sort = segmentsSortBy.find(x => x.name === name).sort || '';
+
+        return (
+          <>
+            <Button
+              key={`${name}`}
+              to={`/inventory?segment=${name}${sort !== '' ? '&sort=' : ''}${sort}`}
+              buttonStyle={`${segment === name ? 'primary' : 'default'}`}
+              id={`segment-navigation-${name}`}
+              onClick={onChange}
+            >
+              <FormattedMessage id={`ui-inventory.filters.${name}`} />
+            </Button>
+          </>
+        );
+      })
     }
   </ButtonGroup>
 );
 
 FilterNavigation.propTypes = {
   segment: PropTypes.string,
+  segmentsSortBy: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
 };
 

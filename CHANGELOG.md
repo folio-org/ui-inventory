@@ -23,6 +23,10 @@
 * Navigating away and back to item-edit or holdings-edit screen throws NPE. Fixes UIIN-2112.
 * ISRI: Adjust jobProfiles GET request to fetch profiles by ids. Refs UIIN-2428.
 * Sorting of profiles is not executed in alphabetical order in the Z39.50 target profiles View. Fixes UIIN-2424.
+* Added sort options in Actions for Instance/Holdings/Item. Refs UIIN-2357.
+* Statistical code empty field error. Refs UIIN-2420.
+* Hide the `Actions` button for the view page if there are no permissions. Refs UIIN-2360.
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2419.
 * When adding items, cursor is in the barcode field as default. Refs UIIN-2205.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
