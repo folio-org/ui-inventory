@@ -1,7 +1,7 @@
 import '../../../test/jest/__mock__';
 
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   renderWithIntl,
@@ -17,6 +17,12 @@ jest.mock('../../components', () => ({
 }));
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: jest.fn().mockReturnValue({
+    getLastSearch: jest.fn(),
+    getLastBrowseOffset: jest.fn(),
+    storeLastBrowse: jest.fn(),
+    storeLastBrowseOffset: jest.fn(),
+  }),
   useInventoryBrowse: jest.fn(() => ({}))
 }));
 

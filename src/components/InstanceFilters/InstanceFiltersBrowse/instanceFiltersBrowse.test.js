@@ -4,11 +4,12 @@ import { noop } from 'lodash';
 import {
   screen,
   fireEvent,
-} from '@testing-library/react';
-
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
+
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
+
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 

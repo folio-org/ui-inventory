@@ -1,20 +1,57 @@
-import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
 
-import { TextArea } from '@folio/stripes/components';
+import {
+  RepeatableField,
+  Label,
+  TextArea,
+} from '@folio/stripes/components';
 
-import RepeatableField from '../components/RepeatableField';
+import {
+  validateFieldLength
+} from '../utils';
 
-const administrativeNoteFields = () => (
-  <RepeatableField
-    name="administrativeNotes"
-    addLabel={<FormattedMessage id="ui-inventory.addAdministrativeNote" />}
-    addButtonId="clickable-add-administrative-note"
-    template={[{
-      component: TextArea,
-      label: <FormattedMessage id="ui-inventory.administrativeNote" />,
-      rows: 1
-    }]}
-  />
-);
+import {
+  NOTE_CHARS_MAX_LENGTH
+} from '../constants';
 
-export default administrativeNoteFields;
+const AdministrativeNoteFields = () => {
+  const { formatMessage } = useIntl();
+
+  const administrativeNoteLabel = formatMessage({ id: 'ui-inventory.administrativeNote' });
+  const validate = value => validateFieldLength(value, NOTE_CHARS_MAX_LENGTH);
+
+  const legend = (
+    <Label tagName="legend">
+      {administrativeNoteLabel}
+    </Label>
+  );
+
+  const renderField = field => (
+    <Field
+      aria-label={administrativeNoteLabel}
+      name={field}
+      component={TextArea}
+      rows={1}
+      fullWidth
+      validate={validate}
+    />
+  );
+
+  return (
+    <FieldArray
+      name="administrativeNotes"
+      component={RepeatableField}
+      addLabel={<FormattedMessage id="ui-inventory.addAdministrativeNote" />}
+      onAdd={fields => fields.push('')}
+      headLabels={legend}
+      renderField={renderField}
+    />
+  );
+};
+
+export default AdministrativeNoteFields;

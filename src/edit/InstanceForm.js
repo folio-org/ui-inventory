@@ -34,10 +34,10 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import RepeatableField from '../components/RepeatableField';
 import OptimisticLockingBanner from '../components/OptimisticLockingBanner';
 
 import AlternativeTitles from './alternativeTitles';
+import StatisticalCodeFields from './statisticalCodeFields';
 import AdministrativeNoteFields from './administrativeNoteFields';
 import SeriesFields from './seriesFields';
 import EditionFields from './editionFields';
@@ -86,7 +86,7 @@ function validate(values) {
   }
 
   // Language not required, but must be not null if supplied
-  if (values.languages && values.languages.length) {
+  if (!isEmpty(values.languages)) {
     const errorList = [];
     values.languages.forEach((item, i) => {
       if (!item) {
@@ -97,7 +97,7 @@ function validate(values) {
   }
 
 
-  if (values.alternativeTitles && values.alternativeTitles.length) {
+  if (!isEmpty(values.alternativeTitles)) {
     const errorList = [];
     values.alternativeTitles.forEach((item, i) => {
       const error = {};
@@ -213,7 +213,7 @@ class InstanceForm extends React.Component {
         disabled={(pristine || submitting) && !copy}
         onClick={handleSubmit}
       >
-        <FormattedMessage id="stripes-core.button.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
     );
 
@@ -235,7 +235,7 @@ class InstanceForm extends React.Component {
 
     const { records } = instanceBlockedFields;
 
-    if (!records || !records.length) return false;
+    if (isEmpty(records)) return false;
 
     const { blockedFields } = records[0];
 
@@ -261,6 +261,14 @@ class InstanceForm extends React.Component {
     };
 
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceTypeId,
+      }),
+    ) : [];
+
+    const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
       it => ({
         label: it.name,
         value: it.id,
@@ -370,7 +378,7 @@ class InstanceForm extends React.Component {
                       }
                       id="instanceSection01"
                     >
-                      {(initialValues.metadata && initialValues.metadata.createdDate) &&
+                      {(initialValues.metadata?.createdDate) &&
                         <this.cViewMetaData metadata={initialValues.metadata} />
                       }
                       <Row>
@@ -474,22 +482,12 @@ class InstanceForm extends React.Component {
                         </FormattedMessage>
                       </Col>
                       <Row>
-                        <Col sm={10}>
-                          <RepeatableField
-                            name="statisticalCodeIds"
-                            addButtonId="clickable-add-statistical-code"
-                            addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
-                            template={[
-                              {
-                                label: <FormattedMessage id="ui-inventory.statisticalCode" />,
-                                component: Select,
-                                dataOptions: [{
-                                  label: 'Select code', value: '',
-                                }, ...statisticalCodeOptions],
-                                disabled: this.isFieldBlocked('statisticalCodeIds'),
-                              }
-                            ]}
+                        <Col sm={12}>
+                          <StatisticalCodeFields
                             canAdd={!this.isFieldBlocked('statisticalCodeIds')}
+                            canEdit={!this.isFieldBlocked('statisticalCodeIds')}
+                            canDelete={!this.isFieldBlocked('statisticalCodeIds')}
+                            statisticalCodeOptions={statisticalCodeOptions}
                           />
                         </Col>
                       </Row>
@@ -525,12 +523,14 @@ class InstanceForm extends React.Component {
                         component="input"
                         disabled={this.isFieldBlocked('source')}
                       />
-                      <AlternativeTitles
-                        alternativeTitleTypes={referenceTables.alternativeTitleTypes}
-                        canAdd={!this.isFieldBlocked('alternativeTitles')}
-                        canEdit={!this.isFieldBlocked('alternativeTitles')}
-                        canDelete={!this.isFieldBlocked('alternativeTitles')}
-                      />
+                      <Col sm={12}>
+                        <AlternativeTitles
+                          alternativeTitleTypes={referenceTables.alternativeTitleTypes}
+                          canAdd={!this.isFieldBlocked('alternativeTitles')}
+                          canEdit={!this.isFieldBlocked('alternativeTitles')}
+                          canDelete={!this.isFieldBlocked('alternativeTitles')}
+                        />
+                      </Col>
                       <Col sm={10}>
                         <Field
                           label={<FormattedMessage id="ui-inventory.indexTitle" />}
@@ -542,11 +542,13 @@ class InstanceForm extends React.Component {
                           disabled={this.isFieldBlocked('indexTitle')}
                         />
                       </Col>
-                      <SeriesFields
-                        canAdd={!this.isFieldBlocked('series')}
-                        canEdit={!this.isFieldBlocked('series')}
-                        canDelete={!this.isFieldBlocked('series')}
-                      />
+                      <Col sm={12}>
+                        <SeriesFields
+                          canAdd={!this.isFieldBlocked('series')}
+                          canEdit={!this.isFieldBlocked('series')}
+                          canDelete={!this.isFieldBlocked('series')}
+                        />
+                      </Col>
                       <PrecedingTitleFields
                         canAdd={!this.isFieldBlocked('precedingTitles')}
                         canEdit={!this.isFieldBlocked('precedingTitles')}
@@ -670,7 +672,8 @@ class InstanceForm extends React.Component {
                         canAdd={!this.isFieldBlocked('notes')}
                         canEdit={!this.isFieldBlocked('notes')}
                         canDelete={!this.isFieldBlocked('notes')}
-                        instanceNoteTypes={referenceTables.instanceNoteTypes}
+                        noteTypeOptions={instanceNoteTypeOptions}
+                        noteTypeIdField="instanceNoteTypeId"
                       />
                     </Accordion>
                     <Accordion

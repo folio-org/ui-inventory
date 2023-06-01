@@ -19,7 +19,7 @@ const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
-const getQueryTemplateSubjects = (queryValue) => `subjects==/string "${queryValue.replace(/"/g, '\\"')}"`;
+const getQueryTemplateSubjects = (queryValue, andAuthorityId) => `subjects.value==/string "${queryValue}"${andAuthorityId}`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
@@ -27,11 +27,15 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
+  const authorityId = queryParams?.authorityId;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryParams?.selectedBrowseResult) {
     if (queryIndex === queryIndexes.SUBJECT) {
-      queryTemplate = getQueryTemplateSubjects(queryValue);
+      const queryVal = queryValue.replace(/"/g, '\\"');
+      const andAuthorityId = authorityId ? ` and authorityId==${authorityId}` : '';
+
+      queryTemplate = getQueryTemplateSubjects(queryVal, andAuthorityId);
     }
 
     if (queryIndex === queryIndexes.CALL_NUMBER) {
@@ -116,7 +120,6 @@ const getFetchProp = () => {
     const filters = params.get('filters');
     const sort = params.get('sort');
     const selectedBrowseResult = params.get('selectedBrowseResult');
-    const selectedSearchMode = params.get('selectedSearchMode');
     const hasReset = (
       !qindex &&
       !query &&
@@ -130,8 +133,7 @@ const getFetchProp = () => {
       isFetch = (
         hasReset ||
         prevQuery !== query ||
-        selectedBrowseResult === 'true' ||
-        selectedSearchMode === 'true'
+        selectedBrowseResult === 'true'
       );
     }
 
@@ -172,7 +174,7 @@ export function buildManifestObject() {
         filters: '',
         sort: '',
         selectedBrowseResult: false,
-        selectedSearchMode: false,
+        authorityId: '',
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },

@@ -598,7 +598,6 @@
     "item.status.unknown": "未知",
     "instances.showSelectedRecords": "显示已选记录",
     "instances.selectedRecords": "已选记录",
-    "saveAndClose": "保存并关闭",
     "communicationProblem": "服务器通信问题。请再试",
     "itemStatusModal.heading": "确认单件状态： {itemStatus}",
     "permission.items.mark-intellectual-item": "典藏：标记单件为智力单件",
@@ -776,5 +775,13 @@
     "effectiveLocationHoldings": "Effective location for holdings",
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
-    "markAsHeader": "Mark as"
+    "markAsHeader": "Mark as",
+    "newMARCRecord": "New MARC Bib Record",
+    "boundWithTitles.add": "Add Bound-with and analytics",
+    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
+    "selectCode": "Select code",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors"
 }

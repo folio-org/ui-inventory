@@ -10,7 +10,7 @@ const EditHoldingRoute = () => {
 
   return (
     <EditHolding
-      referenceTables={referenceTables}
+      referenceTables={referenceTables || {}}
       instanceId={instanceId}
       holdingId={holdingId}
     />
