@@ -7,7 +7,6 @@ import { withFacets, InstanceFilters as InstanceFiltersBrowse } from '@folio/str
 
 import { DataContext } from '../../contexts';
 import { parseFiltersToStr } from '../../utils';
-// import { InstanceFiltersBrowse } from '../InstanceFilters';
 
 const BrowseInventoryFilters = ({
   activeFilters,
