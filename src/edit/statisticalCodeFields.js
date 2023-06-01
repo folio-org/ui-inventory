@@ -34,13 +34,9 @@ const StatisticalCodeFields = ({
       aria-label={statisticalCodeLabel}
       name={field}
       component={Select}
-      dataOptions={[
-        {
-          label: formatMessage({ id: 'ui-inventory.selectCode' }),
-          value: '',
-        },
-        ...statisticalCodeOptions,
-      ]}
+      placeholder={formatMessage({ id: 'ui-inventory.selectCode' })}
+      validate={value => (!value ? formatMessage({ id: 'ui-inventory.selectToContinue' }) : undefined)}
+      dataOptions={statisticalCodeOptions}
       disabled={!canEdit}
     />
   );

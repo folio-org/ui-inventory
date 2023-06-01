@@ -1,4 +1,5 @@
-import create from 'zustand';
+import { create } from 'zustand';
+import { omit } from 'lodash';
 
 // Facets store contains a global state related
 // to facets.
@@ -7,23 +8,19 @@ import create from 'zustand';
 // for each facet.
 const facetsStore = create((set) => ({
   facetSettings: {},
-  setFacetSettings: (name, value) => {
-    set(state => {
-      state.facetSettings = {
-        ...state.facetSettings,
-        [name]: {
-          ...state.facetSettings[name],
-          ...value,
-        },
-      };
-    });
-  },
+  setFacetSettings: (name, value) => set(state => ({
+    facetSettings: {
+      ...state.facetSettings,
+      [name]: {
+        ...state.facetSettings[name],
+        ...value,
+      },
+    }
+  })),
   resetFacetSettings: () => set({ facetSettings: {} }),
-  resetFacetByName: (name) => {
-    set(state => {
-      delete state.facetSettings[name];
-    });
-  }
+  resetFacetByName: (name) => set(state => ({
+    facetSettings: { ...omit(state.facetSettings, name) },
+  })),
 }));
 
 // selectors
