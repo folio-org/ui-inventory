@@ -1081,13 +1081,8 @@ class InstancesList extends React.Component {
     };
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
-      const { prefix = '' } = index;
-      let label = index.label;
-      if (index.label.includes('ui-inventory')) {
-        label = prefix + intl.formatMessage({ id: index.label });
-      }
-
-      return { ...index, label };
+      const { label: id } = index;
+      return { ...index, label: intl.formatMessage({ id }) };
     });
 
     const shortcuts = [
