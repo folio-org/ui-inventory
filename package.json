@@ -45,7 +45,8 @@
       }
     ],
     "stripesDeps": [
-      "@folio/stripes-acq-components"
+      "@folio/stripes-acq-components",
+      "@folio/stripes-inventory-components"
     ],
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
