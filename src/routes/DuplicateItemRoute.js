@@ -10,7 +10,7 @@ const DuplicateItemRoute = () => {
 
   return (
     <DuplicateItem
-      referenceData={referenceData}
+      referenceData={referenceData || {}}
       instanceId={id}
       holdingId={holdingsrecordid}
       itemId={itemid}

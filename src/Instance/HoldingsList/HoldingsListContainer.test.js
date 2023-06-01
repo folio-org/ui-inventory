@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../test/jest/__mock__';
 import { MemoryRouter } from 'react-router-dom';
 import { useInstanceHoldingsQuery } from '../../providers';

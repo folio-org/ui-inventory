@@ -4,7 +4,7 @@ import '../../../../test/jest/__mock__';
 
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import { DataContext } from '../../../contexts';
 

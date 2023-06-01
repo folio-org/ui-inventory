@@ -1,5 +1,5 @@
-import userEvent from '@testing-library/user-event';
-import { act, screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '__mock__';
 

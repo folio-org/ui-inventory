@@ -614,8 +614,8 @@
     "internalIdEmbedPath": "内部ID嵌入路径",
     "copycat.import": "导入",
     "copycat.reimport": "重新导入",
-    "copycat.callout.updated": "已更新记录{xid}",
-    "copycat.callout.created": "已创建记录{xid}",
+    "copycat.callout.updated": "记录{xid}已更新。结果可能需要一些时间才能在典藏中显示",
+    "copycat.callout.created": "记录{xid}已创建。结果可能需要一些时间才能在典藏中显示",
     "copycat.callout.simpleError": "发生错误： {err}",
     "copycat.callout.complexError": "发生错误： {err} ： {detail}",
     "permission.single-record-import": "典藏：导入单个书目记录",
@@ -777,6 +777,11 @@
     "info.shelvingOrder": "本字段是索书号的规范化形式，它决定浏览时索书号的排序方式。",
     "markAsHeader": "标记为",
     "newMARCRecord": "新建MARC书目记录",
-    "boundWithTitles.add": "Add Bound-with and analytics",
-    "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID"
+    "boundWithTitles.add": "添加合订与分析",
+    "boundWithTitles.enterHoldingsHrid": "输入馆藏HRID",
+    "selectCode": "选择代码",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors"
 }
