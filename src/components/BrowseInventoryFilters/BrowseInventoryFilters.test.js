@@ -32,8 +32,8 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn(() => ({ search: '' })),
 }));
-jest.mock('../../common/hooks', () => ({
-  ...jest.requireActual('../../common/hooks'),
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
   useFacets: jest.fn(() => ([
     { effectiveLocation: true, nameType: false },
     jest.fn(),
@@ -47,7 +47,7 @@ jest.mock('../../common/hooks', () => ({
 const defaultProps = {
   activeFilters: {},
   applyFilters: jest.fn(),
-  fetchFacets: jest.fn(),
+  fetchFacets: () => jest.fn(),
   resources: {
     facets: { records: [] },
   },
@@ -83,7 +83,7 @@ describe('BrowseInventoryFilters', () => {
     expect(defaultProps.applyFilters).toHaveBeenCalled();
   });
 
-  it('should call "applyFilters" when clear button was clicked for facet acccordion', async () => {
+  it('should call "applyFilters" when clear button was clicked for facet accordion', async () => {
     const { container } = renderBrowseInventoryFilters({
       activeFilters: {
         [FACETS.EFFECTIVE_LOCATION]: [facetOptions.effectiveLocationOptions[0].value],

@@ -15,11 +15,11 @@ import {
 import '../../../test/jest/__mock__';
 
 import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
+import { getFilterConfig } from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
-import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 

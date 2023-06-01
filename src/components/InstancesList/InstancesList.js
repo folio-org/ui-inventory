@@ -38,6 +38,7 @@ import {
   TextLink,
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
+import { facetsStore } from '@folio/stripes-inventory-components';
 
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
@@ -75,7 +76,6 @@ import {
   getItem,
   setItem,
 } from '../../storage';
-import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
 
@@ -1081,13 +1081,8 @@ class InstancesList extends React.Component {
     };
 
     const formattedSearchableIndexes = searchableIndexes.map(index => {
-      const { prefix = '' } = index;
-      let label = index.label;
-      if (index.label.includes('ui-inventory')) {
-        label = prefix + intl.formatMessage({ id: index.label });
-      }
-
-      return { ...index, label };
+      const { label: id } = index;
+      return { ...index, label: intl.formatMessage({ id }) };
     });
 
     const shortcuts = [
