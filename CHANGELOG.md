@@ -29,6 +29,7 @@
 * When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2419.
 * Don't reset browse query when on Browse route and click Browse segment. Fixes UIIN-2434.
 * Prevent double-escaping of query when Browsing. Fixes UIIN-2435.
+* When adding items, cursor is in the barcode field as default. Refs UIIN-2205.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
