@@ -58,6 +58,7 @@ import {
 import ImportRecordModal from './components/ImportRecordModal';
 import NewInstanceRequestButton from './components/ViewInstance/MenuSection/NewInstanceRequestButton';
 import RequestsReorderButton from './components/ViewInstance/MenuSection/RequestsReorderButton';
+import { IdReportGenerator } from './reports';
 
 const quickMarcPages = {
   editInstance: 'edit-bib',
@@ -124,6 +125,13 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
+    quickExport: {
+      type: 'okapi',
+      fetch: false,
+      path: 'data-export/quick-export',
+      throwErrors: false,
+      clientGeneratePk: false,
+    },
     instanceRelationshipTypes: {
       type: 'okapi',
       records: 'instanceRelationshipTypes',
@@ -158,6 +166,7 @@ class ViewInstance extends React.Component {
       isCopyrightModalOpened: false,
       isNewOrderModalOpen: false,
       afterCreate: false,
+      instancesQuickExportInProgress: false,
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
@@ -347,6 +356,34 @@ class ViewInstance extends React.Component {
       return;
     }
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
+  };
+
+
+  triggerQuickExport = async () => {
+    const { instancesQuickExportInProgress } = this.state;
+    const { match } = this.props;
+
+    if (instancesQuickExportInProgress) return;
+
+    this.setState({ instancesQuickExportInProgress: true });
+
+    try {
+      const instanceIds = [match.params.id];
+
+      await this.props.mutator.quickExport.POST({
+        uuids: instanceIds,
+        type: 'uuid',
+        recordType: 'INSTANCE'
+      });
+      new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
+    } catch (error) {
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-inventory.communicationProblem" />,
+      });
+    } finally {
+      this.setState({ instancesQuickExportInProgress: false });
+    }
   };
 
   handleImportRecordModalSubmit = (args) => {
@@ -563,6 +600,18 @@ class ViewInstance extends React.Component {
                 </Icon>
               </Button>
             )}
+            <Button
+              id="quick-export-trigger"
+              onClick={() => {
+                onToggle();
+                this.triggerQuickExport();
+              }}
+              buttonStyle="dropdownItem"
+            >
+              <Icon icon="download">
+                <FormattedMessage id="ui-inventory.exportInstanceInMARC" />
+              </Icon>
+            </Button>
             {canCreateOrder && (
               <Button
                 id="clickable-create-order"
@@ -870,6 +919,9 @@ ViewInstance.propTypes = {
     }),
     marcRecord: PropTypes.shape({
       GET: PropTypes.func.isRequired,
+    }),
+    quickExport: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
     }),
     query: PropTypes.object.isRequired,
     movableItems: PropTypes.object.isRequired,
