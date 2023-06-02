@@ -476,6 +476,14 @@ class ViewInstance extends React.Component {
     const canCreateNewRequest = titleLevelRequestsFeatureEnabled && canCreateRequest;
     const identifier = this.getIdentifiers(data);
 
+    const buildOnClickHandler = onClickHandler => {
+      return () => {
+        onToggle();
+
+        onClickHandler(this.context.sendCallout);
+      };
+    };
+
     const showInventoryMenuSection = (
       canEditInstance
       || canViewSource
@@ -602,10 +610,7 @@ class ViewInstance extends React.Component {
             )}
             <Button
               id="quick-export-trigger"
-              onClick={() => {
-                onToggle();
-                this.triggerQuickExport();
-              }}
+              onClick={buildOnClickHandler(this.triggerQuickExport)}
               buttonStyle="dropdownItem"
             >
               <Icon icon="download">
