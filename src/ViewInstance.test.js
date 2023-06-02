@@ -29,11 +29,11 @@ jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
       selectedJobProfileId: 'profileId'
     };
     const container =
-    <div>
-      <div>ImportRecordModal</div>
-      <button type="button" onClick={() => handleSubmit(args)}>handleSubmit</button>
-      <button type="button" onClick={() => handleCancel()}>handleCancel</button>
-    </div>;
+      <div>
+        <div>ImportRecordModal</div>
+        <button type="button" onClick={() => handleSubmit(args)}>handleSubmit</button>
+        <button type="button" onClick={() => handleCancel()}>handleCancel</button>
+      </div>;
     return container;
   }
   return null;
@@ -104,6 +104,9 @@ const defaultProp = {
     },
     marcRecord: {
       GET: mockData,
+    },
+    quickExport:{
+      POST: jest.fn(),
     },
     query: {
       update: updateMock,
@@ -266,6 +269,12 @@ describe('ViewInstance', () => {
       renderViewInstance();
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
       userEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
+      expect(renderViewInstance()).toBeTruthy();
+    });
+    it('"Export instance (MARC)" button to be clicked', () => {
+      renderViewInstance();
+      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      userEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
       expect(renderViewInstance()).toBeTruthy();
     });
     it('"InstancePlugin" should render when user clicks "Move holdings/items to another instance" button', () => {
