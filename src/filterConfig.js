@@ -106,6 +106,11 @@ export const instanceFilterConfig = [
     cql: FACETS_CQL.SEARCH_CONTRIBUTORS,
     values: [],
   },
+  {
+    name: FACETS.AUTHORITY_ID,
+    cql: FACETS_CQL.AUTHORITY_ID,
+    values: [],
+  },
 ];
 
 export const instanceIndexes = [
@@ -122,7 +127,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
   { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes', queryTemplate: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes', queryTemplate: 'administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: ({ query, authorityId }) => `subjects.value==/string "${query}"${authorityId ? ` and authorityId=="${authorityId}"` : ''}` },
+  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects.value==/string "%{query.query}"' },
   { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber', queryTemplate: 'itemEffectiveShelvingOrder==/string "%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
