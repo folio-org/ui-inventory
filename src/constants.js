@@ -426,6 +426,6 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   'items.barcode': 'barcode==%{query}',
   isbn: 'isbn==%{query}',
   issn: 'issn==%{query}',
-  hrid: 'hrid==%{query}',
+  itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
 };

@@ -248,7 +248,7 @@ export const itemIndexes = [
   { label: 'ui-inventory.search.itemNotes', value: 'holdingsNotes', queryTemplate: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.itemAdministrativeNotes', value: 'itemAdministrativeNotes', queryTemplate: 'item.administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.itemCirculationNotes', value: 'itemCirculationNotes', queryTemplate: 'item.circulationNotes.note all "%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
+  { label: 'ui-inventory.itemHrid', value: 'itemHrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },

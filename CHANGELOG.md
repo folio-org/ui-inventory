@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [9.4.6](IN PROGRESS)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
+
+* Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
+
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
 
