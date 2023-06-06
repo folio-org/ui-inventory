@@ -97,6 +97,8 @@ const useInventoryBrowse = ({
           ...otherFilters,
         },
         pageNumber === 0 ? getInitialPageQuery : getUpdatedPageQuery(direction, anchor),
+        undefined,
+        false,
       );
 
       return ky.get(path, {

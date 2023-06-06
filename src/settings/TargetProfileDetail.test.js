@@ -17,22 +17,48 @@ const identifierTypeResources = {
     hasLoaded: true,
   },
 };
-const jobProfilesResources = {
+const defaultCreateJobProfileResources = {
+  records: [{
+    id: 'createJobProfileTestId',
+    name: 'create name',
+  }],
+  other: { totalRecords: null },
+  hasLoaded: true,
+};
+const defaultUpdateJobProfileResources = {
+  records: [{
+    id: 'updateJobProfileTestId',
+    name: 'update name',
+  }],
+  other: { totalRecords: null },
+  hasLoaded: true,
+};
+const allowedCreateJobProfilesResources = {
   jobProfiles: {
     records: [{
       id: 'createJobProfileTestId',
       name: 'create name',
-    }, {
+    }],
+    other: { totalRecords: 1 },
+    hasLoaded: true,
+  },
+};
+const allowedUpdateJobProfilesResources = {
+  jobProfiles: {
+    records: [{
       id: 'updateJobProfileTestId',
       name: 'update name',
     }],
-    other: { totalRecords: 2 },
+    other: { totalRecords: 1 },
     hasLoaded: true,
   },
 };
 const resources = {
-  ...identifierTypeResources,
-  ...jobProfilesResources,
+  identifierType: identifierTypeResources.identifierType,
+  defaultCreateJobProfile: defaultCreateJobProfileResources,
+  defaultUpdateJobProfile: defaultUpdateJobProfileResources,
+  allowedCreateJobProfiles: allowedCreateJobProfilesResources.jobProfiles,
+  allowedUpdateJobProfiles: allowedUpdateJobProfilesResources.jobProfiles,
 };
 
 const defaultInitialValues = {

@@ -94,6 +94,13 @@ describe('ItemForm', () => {
     expect(container.querySelectorAll('form').length).toEqual(1);
   });
 
+  it('should place cursor in the barcode field as default', () => {
+    const { getByLabelText } = renderItemForm();
+    const barcodeField = getByLabelText(/Barcode/i);
+
+    expect(barcodeField).toHaveFocus();
+  });
+
   it('should render correct accordions', () => {
     const { getByText, getAllByText } = renderItemForm();
 

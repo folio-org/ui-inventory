@@ -9,6 +9,7 @@ import {
   screen,
   waitFor,
   cleanup,
+  within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
@@ -20,6 +21,7 @@ import translationsProperties from '../../../test/jest/helpers/translationsPrope
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
@@ -274,6 +276,45 @@ describe('InstancesList', () => {
 
         it('should hide contributors column', () => {
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
+        });
+      });
+
+      describe('select sort by', () => {
+        it('should render menu option', () => {
+          expect(screen.getByTestId('menu-section-sort-by')).toBeInTheDocument();
+        });
+
+        it('should render select', () => {
+          expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
+        });
+
+        it('should render as many options as defined plus Relevance', () => {
+          const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
+          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length + 1);
+        });
+      });
+
+      describe('select proper sort options', () => {
+        it('should select Title as default selected sort option', () => {
+          const search = '?segment=instances&sort=title';
+          history.push({ search });
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Title' });
+          expect(option.selected).toBeTruthy();
+        });
+
+        it('should select Contributors option', () => {
+          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          userEvent.selectOptions(screen.getByTestId('sort-by-selection'), 'contributors');
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Contributors' });
+          expect(option.selected).toBeTruthy();
+        });
+
+        it('should select option value "Contributors" after column "Contributors" click', async () => {
+          await act(async () => userEvent.click(document.querySelector('#clickable-list-column-contributors')));
+
+          expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
         });
       });
     });

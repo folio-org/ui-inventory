@@ -779,5 +779,9 @@
     "newMARCRecord": "New MARC Bib Record",
     "boundWithTitles.add": "Add Bound-with and analytics",
     "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
-    "selectCode": "Select code"
+    "selectCode": "Select code",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors"
 }

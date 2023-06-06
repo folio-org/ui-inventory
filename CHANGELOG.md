@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 9.5.0 IN PROGRESS
+## 10.0.0 IN PROGRESS
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
@@ -19,6 +19,18 @@
 * Instance/Holdings/Item notes, administrative notes character limit to 32K. Refs UIIN-2354.
 * Import testing-library deps from `@folio/jest-config-stripes`. Refs UIIN-2427.
 * Bump zustand to v4. Refs UIIN-2353.
+* Fix the `records-editor/records` request by adding `_actionType`. Refs UIIN-2431.
+* Navigating away and back to item-edit or holdings-edit screen throws NPE. Fixes UIIN-2112.
+* ISRI: Adjust jobProfiles GET request to fetch profiles by ids. Refs UIIN-2428.
+* Sorting of profiles is not executed in alphabetical order in the Z39.50 target profiles View. Fixes UIIN-2424.
+* Added sort options in Actions for Instance/Holdings/Item. Refs UIIN-2357.
+* Statistical code empty field error. Refs UIIN-2420.
+* Hide the `Actions` button for the view page if there are no permissions. Refs UIIN-2360.
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2419.
+* Don't reset browse query when on Browse route and click Browse segment. Fixes UIIN-2434.
+* Prevent double-escaping of query when Browsing. Fixes UIIN-2435.
+* When adding items, cursor is in the barcode field as default. Refs UIIN-2205.
+* Quick export from instance detail view. Refs UIIN-2430.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
@@ -135,6 +147,7 @@
 * Moved the print button from QuickMarkView, into the ViewSource. Due to the folio-org/ui-quick-marc#468. Refs UIIN-2324.
 * Change title for the print popup. Refs UIIN-2329.
 * Move @testing-library/* to dev-deps. Refs UIIN-2309.
+* Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

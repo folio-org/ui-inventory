@@ -201,15 +201,15 @@ class ItemForm extends React.Component {
       httpError,
 
       referenceTables: {
-        locationsById,
-        materialTypes,
+        locationsById = [],
+        materialTypes = [],
         loanTypes = [],
-        itemNoteTypes,
-        electronicAccessRelationships,
-        callNumberTypes,
-        statisticalCodes,
-        statisticalCodeTypes,
-        itemDamagedStatuses,
+        itemNoteTypes = [],
+        electronicAccessRelationships = [],
+        callNumberTypes = [],
+        statisticalCodes = [],
+        statisticalCodeTypes = [],
+        itemDamagedStatuses = [],
       },
       handleSubmit,
       pristine,
@@ -217,7 +217,7 @@ class ItemForm extends React.Component {
       history,
     } = this.props;
 
-    const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
+    const holdingLocation = locationsById[holdingsRecord?.permanentLocationId];
     const item = initialValues;
 
     const refLookup = (referenceTable, id) => {
@@ -439,6 +439,7 @@ class ItemForm extends React.Component {
                           id="additem_barcode"
                           validate={validateBarcode(this.props)}
                           component={TextField}
+                          autoFocus
                           fullWidth
                         />
                       </Col>
