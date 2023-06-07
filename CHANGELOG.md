@@ -149,6 +149,7 @@
 * Change title for the print popup. Refs UIIN-2329.
 * Move @testing-library/* to dev-deps. Refs UIIN-2309.
 * Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
+* Reset `<BoundWithModal>` when modal is closed. Fixes UIIN-2401.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

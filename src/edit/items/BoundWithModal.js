@@ -24,7 +24,6 @@ const BoundWithModal = ({
   onOk,
 }) => {
   const intl = useIntl();
-
   const initHrids = () => Array(FIELD_COUNT).fill('');
   const [hrids, setHrids] = useState(initHrids());
 
@@ -46,13 +45,18 @@ const BoundWithModal = ({
     setHrids(initHrids());
   };
 
+  const handleClose = (event) => {
+    setHrids(initHrids());
+    onClose(event);
+  };
+
   return (
     <Modal
       data-testid="bound-with-modal"
       open={open}
       dismissible
       label={<FormattedMessage id="ui-inventory.boundWithTitles.add" />}
-      onClose={onClose}
+      onClose={handleClose}
       footer={(
         <ModalFooter>
           <Button
@@ -65,7 +69,7 @@ const BoundWithModal = ({
           </Button>
           <Button
             data-testid="bound-with-modal-cancel-button"
-            onClick={onClose}
+            onClick={handleClose}
           >
             <FormattedMessage id="ui-inventory.cancel" />
           </Button>
