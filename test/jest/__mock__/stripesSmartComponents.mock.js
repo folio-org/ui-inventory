@@ -2,8 +2,6 @@ import React from 'react';
 
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
-  LocationLookup: () => <div>LocationLookup</div>,
-  ViewMetaData: () => <div>ViewMetaData</div>,
   ControlledVocab: () => <div>ControlledVocab</div>,
   ConfigManager: (props) => {
     const { getInitialValues, onBeforeSave, children } = props;
@@ -16,6 +14,10 @@ jest.mock('@folio/stripes/smart-components', () => ({
       </div>;
     return component;
   },
+  LocationLookup: () => <div>LocationLookup</div>,
+  LocationSelection: jest.fn(({ onSelect }) => (
+    <button data-testid="LocationSelectionSelectBtn" type="button" onClick={onSelect}>Select</button>
+  )),
   useRemoteStorageMappings: () => {
     return ({
       'holdings-id-1': {
@@ -29,6 +31,6 @@ jest.mock('@folio/stripes/smart-components', () => ({
         'description': 'Storage B description'
       }
     });
-  }
+  },
+  ViewMetaData: () => <div>ViewMetaData</div>,
 }), { virtual: true });
-
