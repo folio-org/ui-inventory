@@ -250,6 +250,7 @@ export const FACETS = {
   NAME_TYPE: 'nameType',
   SEARCH_CONTRIBUTORS: 'searchContributors',
   HOLDINGS_TYPE: 'holdingsType',
+  AUTHORITY_ID: 'authorityId',
 };
 
 export const FACETS_CQL = {
@@ -284,6 +285,7 @@ export const FACETS_CQL = {
   NAME_TYPE: 'contributorNameTypeId',
   SEARCH_CONTRIBUTORS: 'contributors.contributorNameTypeId',
   HOLDINGS_TYPE: 'holdings.holdingsTypeId',
+  AUTHORITY_ID: 'authorityId',
 };
 
 export const FACETS_TO_REQUEST = {
