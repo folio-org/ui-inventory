@@ -77,6 +77,7 @@ const resources = {
             },
           },
         ],
+        materialType: { name: 'book' },
       },
     ],
   },
@@ -123,6 +124,10 @@ describe('ItemView', () => {
 
     afterEach(() => {
       jest.clearAllMocks();
+    });
+
+    it('should display item record with material type and status in lower case in parentheses', () => {
+      expect(screen.getByText('Item record (book, available)')).toBeInTheDocument();
     });
 
     it('should display a table of bound-with items', () => {

@@ -32,6 +32,7 @@
 * When adding items, cursor is in the barcode field as default. Refs UIIN-2205.
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
+* When removing the dead icons in the Item record, then the displayed text looks inconsistent. Fixes UIIN-1392.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
