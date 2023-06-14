@@ -133,6 +133,7 @@ class InstancesList extends React.Component {
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -228,12 +229,13 @@ class InstancesList extends React.Component {
       parentMutator,
       getLastSearchOffset,
       storeLastSearch,
+      segment,
     } = this.props;
     const params = getParams();
-    const lastSearchOffset = getLastSearchOffset();
+    const lastSearchOffset = getLastSearchOffset(segment);
     const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
 
-    storeLastSearch(location.search);
+    storeLastSearch(location.search, segment);
     parentMutator.resultOffset.replace(offset);
   }
 
@@ -243,14 +245,15 @@ class InstancesList extends React.Component {
       parentResources,
       storeLastSearch,
       storeLastSearchOffset,
+      segment,
     } = this.props;
 
     if (prevProps.location.search !== location.search) {
-      storeLastSearch(location.search);
+      storeLastSearch(location.search, segment);
     }
 
     if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
-      storeLastSearchOffset(parentResources.resultOffset);
+      storeLastSearchOffset(parentResources.resultOffset, segment);
     }
   }
 
@@ -371,6 +374,8 @@ class InstancesList extends React.Component {
   }
 
   refocusOnInputSearch = (segment) => {
+    const { storeLastSegment } = this.props;
+
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
@@ -379,6 +384,7 @@ class InstancesList extends React.Component {
         optionSelected: ''
       });
     }
+    storeLastSegment(segment);
     facetsStore.getState().resetFacetSettings();
     document.getElementById('input-inventory-search').focus();
   }
@@ -1072,7 +1078,6 @@ class InstancesList extends React.Component {
       this.setState({ optionSelected: qindex });
 
       parentMutator.query.update({
-        qindex,
         filters: '',
         ...this.extraParamsToReset,
       });

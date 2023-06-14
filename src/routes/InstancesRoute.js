@@ -45,8 +45,10 @@ class InstancesRoute extends React.Component {
       fetchFacets,
       getLastBrowse,
       getLastSearchOffset,
+      getLastSegment,
       storeLastSearch,
       storeLastSearchOffset,
+      storeLastSegment,
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
@@ -74,8 +76,10 @@ class InstancesRoute extends React.Component {
             fetchFacets={fetchFacets}
             getLastBrowse={getLastBrowse}
             getLastSearchOffset={getLastSearchOffset}
+            getLastSegment={getLastSegment}
             storeLastSearch={storeLastSearch}
             storeLastSearchOffset={storeLastSearchOffset}
+            storeLastSegment={storeLastSegment}
           />
         )}
       </DataContext.Consumer>
