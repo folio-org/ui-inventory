@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+import {
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 
 import {
   Button,
@@ -13,37 +16,44 @@ import {
   searchModeSegments,
 } from '../../constants';
 
-const SearchModeNavigation = ({ search, state }) => {
+const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
   const {
     search: currentSearch,
     pathname,
   } = useLocation();
+  const history = useHistory();
 
   const checkIsButtonActive = useCallback((segment) => (
     pathname === searchModeRoutesMap[segment] ? 'primary' : 'default'
   ), [pathname]);
 
+  const onClick = useCallback((segment) => {
+    const isCurrentSegment = pathname === searchModeRoutesMap[segment];
+
+    if (onSearchModeSwitch) {
+      onSearchModeSwitch();
+    }
+
+    history.push({
+      pathname: searchModeRoutesMap[segment],
+      search: isCurrentSegment ? currentSearch : search,
+      state,
+    });
+  }, [onSearchModeSwitch, history, pathname, currentSearch, search, state]);
+
   return (
     <ButtonGroup fullWidth>
       {
-        Object.keys(searchModeSegments).map(segment => {
-          const isCurrentSegment = pathname === searchModeRoutesMap[segment];
-
-          return (
-            <Button
-              key={`${segment}`}
-              to={{
-                pathname: searchModeRoutesMap[segment],
-                search: isCurrentSegment ? currentSearch : search,
-                state,
-              }}
-              buttonStyle={checkIsButtonActive(segment)}
-              id={`mode-navigation-${segment}`}
-            >
-              <FormattedMessage id={`ui-inventory.${segment}`} />
-            </Button>
-          );
-        })
+        Object.keys(searchModeSegments).map(segment => (
+          <Button
+            key={`${segment}`}
+            buttonStyle={checkIsButtonActive(segment)}
+            onClick={() => onClick(segment)}
+            id={`mode-navigation-${segment}`}
+          >
+            <FormattedMessage id={`ui-inventory.${segment}`} />
+          </Button>
+        ))
       }
     </ButtonGroup>
   );
@@ -52,6 +62,7 @@ const SearchModeNavigation = ({ search, state }) => {
 SearchModeNavigation.propTypes = {
   search: PropTypes.string,
   state: PropTypes.any,
+  onSearchModeSwitch: PropTypes.func,
 };
 
 export default SearchModeNavigation;

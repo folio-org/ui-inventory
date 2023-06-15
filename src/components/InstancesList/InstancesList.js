@@ -123,6 +123,7 @@ class InstancesList extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string,
       state: PropTypes.object,
+      pathname: PropTypes.string,
     }),
     stripes: PropTypes.object.isRequired,
     history: PropTypes.shape({
@@ -389,10 +390,22 @@ class InstancesList extends React.Component {
     document.getElementById('input-inventory-search').focus();
   }
 
+  onSearchModeSwitch = () => {
+    const {
+      namespace,
+      location: { pathname },
+    } = this.props;
+
+    const id = pathname.split('/')[3];
+
+    setItem(`${namespace}.lastOpenRecord`, id);
+  }
+
   renderNavigation = () => (
     <>
       <SearchModeNavigation
         search={this.props.getLastBrowse()}
+        onSearchModeSwitch={this.onSearchModeSwitch}
       />
       <FilterNavigation
         segment={this.props.segment}
@@ -1124,6 +1137,7 @@ class InstancesList extends React.Component {
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
+            initiallySelectedRecord={getItem(`${namespace}.lastOpenRecord`)}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
