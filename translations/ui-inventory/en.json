@@ -45,7 +45,7 @@
   "updateInstance": "Update instance",
   "itemRecord": "Item record",
   "itemRecordWithDescription": "Item record ({materialType}, {status})",
-  "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, Bound with)",
+  "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, bound with)",
   "code": "code",
   "duplicateInstance": "Duplicate instance",
   "save": "Save",
