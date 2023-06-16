@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'react-final-form';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import '../../../test/jest/__mock__';
 import { renderWithIntl, stripesStub, translationsProperties } from '../../../test/jest/helpers';
 import FastAddSettings from './FastAddSettings';

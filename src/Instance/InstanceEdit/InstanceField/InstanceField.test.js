@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import { noop, keyBy } from 'lodash';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';

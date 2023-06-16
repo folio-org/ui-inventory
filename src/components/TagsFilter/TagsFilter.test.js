@@ -4,7 +4,7 @@ import {
   cleanup,
   fireEvent,
   screen,
-} from '@testing-library/react';
+} from '@folio/jest-config-stripes/testing-library/react';
 import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';

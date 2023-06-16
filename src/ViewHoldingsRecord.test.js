@@ -1,25 +1,27 @@
 import '../test/jest/__mock__';
-
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-import user from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
+
 jest.mock('./withLocation', () => jest.fn(c => c));
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => 'LoadingView',
-}));
+
+const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
+const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
+
+const mockData = jest.fn().mockResolvedValue({ id: 'testId' });
 
 const defaultProps = {
   id: 'id',
   goTo: jest.fn(),
   holdingsrecordid: 'holdingId',
   referenceTables: {
-    holdingsSources: [{ id: 'sourceId' }],
+    holdingsSources: [{ id: 'sourceId', name: 'MARC' }],
     locationsById: {
       inactiveLocation: { name: 'Location 1', isActive: false },
     },
@@ -37,7 +39,7 @@ const defaultProps = {
   },
   mutator: {
     instances1: {
-      GET: jest.fn(() => Promise.resolve({ id: 'instanceId' })),
+      GET: jest.fn(() => Promise.resolve({ id: 'instanceId', source: 'testSource' })),
       reset: jest.fn(() => Promise.resolve()),
     },
     holdingsRecords: {
@@ -48,7 +50,7 @@ const defaultProps = {
       reset: jest.fn(() => Promise.resolve()),
     },
     marcRecord: {
-      GET: jest.fn(() => Promise.resolve({ id: 'marcRecordId' })),
+      GET: mockData,
       DELETE: jest.fn(() => Promise.resolve()),
     },
     marcRecordId: {
@@ -63,6 +65,7 @@ const defaultProps = {
   },
   location: {
     search: '/',
+    pathname: 'pathname'
   },
 };
 
@@ -82,53 +85,98 @@ const renderViewHoldingsRecord = (props = {}) => renderWithIntl(
 
 describe('ViewHoldingsRecord actions', () => {
   beforeEach(() => {
-    defaultProps.history.push.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should render Loading when awaiting resource', () => {
     const { getByText } = renderViewHoldingsRecord({ referenceTables: {} });
-
     expect(getByText('LoadingView')).toBeDefined();
   });
 
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
-
-    await waitFor(() => {
-      const closeBtn = screen.getAllByRole('button')[0];
-
-      user.click(closeBtn);
-
-      expect(defaultProps.history.push).toHaveBeenCalled();
-    });
+    userEvent.click(await screen.findByRole('button', { name: 'confirm' }));
+    expect(defaultProps.history.push).toBeCalled();
   });
 
   it('should translate to edit holding form page', async () => {
     renderViewHoldingsRecord();
-
     const editHoldingBtn = await screen.findByTestId('edit-holding-btn');
-
-    user.click(editHoldingBtn);
-
+    userEvent.click(editHoldingBtn);
     expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
   it('should translate to duplicate holding form page', async () => {
     renderViewHoldingsRecord();
-
     const duplicatHoldingBtn = await screen.findByTestId('duplicate-holding-btn');
-
-    user.click(duplicatHoldingBtn);
-
+    userEvent.click(duplicatHoldingBtn);
     expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
   it('should display "inactive" by an inactive temporary location', async () => {
     renderViewHoldingsRecord();
-
     await waitFor(() => {
       const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
       expect(tempLocation).toContain('Inactive');
+    });
+  });
+  it('handleViewSource should be called when View Source button', async () => {
+    renderViewHoldingsRecord();
+    userEvent.click(await screen.findByText('Actions'));
+    const viewSourceBtn = screen.getByRole('button', { name: 'View source' });
+    await waitFor(() => {
+      expect(viewSourceBtn).not.toHaveAttribute('disabled');
+    });
+    userEvent.click(viewSourceBtn);
+    expect(defaultProps.goTo).toBeCalled();
+  });
+  it('"handleEditInQuickMarc" function should be called when "Edit in quickMARC" button', async () => {
+    renderViewHoldingsRecord();
+    userEvent.click(await screen.findByText('Actions'));
+    const quickMarcbtn = screen.getByRole('button', { name: 'Edit in quickMARC' });
+    await waitFor(() => {
+      expect(quickMarcbtn).not.toHaveAttribute('disabled');
+    });
+    userEvent.click(quickMarcbtn);
+    expect(defaultProps.goTo).toBeCalled();
+  });
+  describe('Tests for shortcut of HasCommand', () => {
+    it('"onCopyHolding" function to be triggered on clicking "duplicateRecord" button', async () => {
+      const data = {
+        pathname: `/inventory/copy/${defaultProps.id}/${defaultProps.holdingsrecordid}`,
+        search: defaultProps.location.search,
+        state: { backPathname: defaultProps.location.pathname },
+      };
+      renderViewHoldingsRecord();
+      userEvent.click(await screen.findByRole('button', { name: 'duplicateRecord' }));
+      expect(defaultProps.history.push).toBeCalledWith(data);
+    });
+    it('"onEditHolding" function to be triggered on clicking edit button', async () => {
+      const data = {
+        pathname: `/inventory/edit/${defaultProps.id}/${defaultProps.holdingsrecordid}`,
+        search: defaultProps.location.search,
+        state: { backPathname: defaultProps.location.pathname },
+      };
+      renderViewHoldingsRecord();
+      userEvent.click(await screen.findByRole('button', { name: 'edit' }));
+      expect(defaultProps.history.push).toBeCalledWith(data);
+    });
+    it('"goTo" function to be triggered on clicking duplicateRecord button', async () => {
+      renderViewHoldingsRecord();
+      userEvent.click(await screen.findByRole('button', { name: 'search' }));
+      expect(defaultProps.goTo).toBeCalledWith('/inventory');
+    });
+    it('collapseAllSections triggered on clicking collapseAllSections button', async () => {
+      renderViewHoldingsRecord();
+      userEvent.click(await screen.findByRole('button', { name: 'collapseAllSections' }));
+      expect(spyOncollapseAllSections).toBeCalled();
+    });
+    it('expandAllSections triggered on clicking expandAllSections button', async () => {
+      renderViewHoldingsRecord();
+      userEvent.click(await screen.findByRole('button', { name: 'expandAllSections' }));
+      await waitFor(() => {
+        expect(spyOnexpandAllSections).toBeCalled();
+      });
     });
   });
 });

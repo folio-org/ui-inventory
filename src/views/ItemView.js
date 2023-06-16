@@ -252,146 +252,160 @@ class ItemView extends React.Component {
     const firstItem = get(resources, 'itemsResource.records[0]');
     const request = get(resources, 'requests.records[0]');
     const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
-    const canCreate = stripes.hasPerm('ui-inventory.item.create');
-    const canEdit = stripes.hasPerm('ui-inventory.item.edit');
-    const canMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
-    const canDelete = stripes.hasPerm('ui-inventory.item.delete');
-    const canDisplayActionMenu = actionMenuDisplayPerms.some(perm => stripes.hasPerm(perm));
+    const userHasPermToCreate = stripes.hasPerm('ui-inventory.item.create');
+    const userHasPermToEdit = stripes.hasPerm('ui-inventory.item.edit');
+    const userHasPermToMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
+    const userHasPermToMarkAsWithdrawn = stripes.hasPerm('ui-inventory.items.mark-items-withdrawn');
+    const userHasPermToDelete = stripes.hasPerm('ui-inventory.item.delete');
+    const userHasPermToObserveActionMenu = actionMenuDisplayPerms.some(perm => stripes.hasPerm(perm));
 
-    if (!canDisplayActionMenu) {
+    const userCanMarkItemAsMissing = canMarkItemAsMissing(firstItem);
+    const userCanMarkItemAsWithdrawn = canMarkItemAsWithdrawn(firstItem);
+    const userCanMarkItemWithStatus = canMarkItemWithStatus(firstItem);
+    const userCanCreateNewRequest = canCreateNewRequest(firstItem, stripes);
+
+    if (!userHasPermToObserveActionMenu) {
       return null;
     }
+
+    const editActionItem = (
+      <Button
+        href={this.craftLayerUrl('editItem')}
+        onClick={() => {
+          onToggle();
+          this.onClickEditItem();
+        }}
+        buttonStyle="dropdownItem"
+        data-test-inventory-edit-item-action
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="ui-inventory.editItem" />
+        </Icon>
+      </Button>
+    );
+    const duplicateActionItem = (
+      <Button
+        id="clickable-copy-item"
+        onClick={() => {
+          onToggle();
+          this.onCopy(firstItem);
+        }}
+        buttonStyle="dropdownItem"
+        data-test-inventory-duplicate-item-action
+      >
+        <Icon icon="duplicate">
+          <FormattedMessage id="ui-inventory.copyItem" />
+        </Icon>
+      </Button>
+    );
+    const deleteActionItem = (
+      <Button
+        id="clickable-delete-item"
+        onClick={() => {
+          onToggle();
+          this.canDeleteItem(firstItem, request);
+        }}
+        buttonStyle="dropdownItem"
+        data-test-inventory-delete-item-action
+      >
+        <Icon icon="trash">
+          <FormattedMessage id="ui-inventory.deleteItem" />
+        </Icon>
+      </Button>
+    );
+    const newRequestActionItem = (
+      <Button
+        to={newRequestLink}
+        buttonStyle="dropdownItem"
+        data-test-inventory-create-request-action
+      >
+        <Icon icon="plus-sign">
+          <FormattedMessage id="ui-inventory.newRequest" />
+        </Icon>
+      </Button>
+    );
+    const markAsMissingActionItem = (
+      <Button
+        id="clickable-missing-item"
+        onClick={() => {
+          onToggle();
+          this.setState({ itemMissingModal: true });
+        }}
+        buttonStyle="dropdownItem"
+        data-test-mark-as-missing-item
+      >
+        <Icon icon="flag">
+          <FormattedMessage id="ui-inventory.item.status.missing" />
+        </Icon>
+      </Button>
+    );
+    const markAsWithdrawnActionItem = (
+      <Button
+        id="clickable-withdrawn-item"
+        onClick={() => {
+          onToggle();
+          this.setState({ itemWithdrawnModal: true });
+        }}
+        buttonStyle="dropdownItem"
+        data-test-mark-as-withdrawn-item
+      >
+        <Icon icon="flag">
+          <FormattedMessage id="ui-inventory.item.status.withdrawn" />
+        </Icon>
+      </Button>
+    );
+    const renderItemStatusActionItems = () => Object.keys(itemStatusMutators)
+      .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
+      .map(status => {
+        const itemStatus = itemStatusesMap[status];
+        const parameterizedStatus = parameterize(itemStatus);
+
+        const actionMenuItem = (
+          <Button
+            key={status}
+            id={`clickable-${parameterizedStatus}`}
+            buttonStyle="dropdownItem"
+            onClick={() => {
+              onToggle();
+              this.setState({ selectedItemStatus: status });
+            }}
+          >
+            <Icon icon="flag">
+              { itemStatus }
+            </Icon>
+          </Button>
+        );
+        return (
+          <IfPermission
+            perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+            key={parameterizedStatus}
+          >
+            {actionMenuItem}
+          </IfPermission>
+        );
+      });
+
+    const isMarkAsMenuSectionVisible = (userCanMarkItemAsMissing && userHasPermToMarkAsMissing)
+      || (userHasPermToMarkAsWithdrawn && userCanMarkItemAsWithdrawn)
+      || userCanMarkItemWithStatus;
 
     return (
       <>
         <MenuSection id="items-list-actions">
-          { canEdit && (
-          <Button
-            href={this.craftLayerUrl('editItem')}
-            onClick={() => {
-              onToggle();
-              this.onClickEditItem();
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-edit-item-action
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editItem" />
-            </Icon>
-          </Button>
-          )}
-          { canCreate && (
-          <Button
-            id="clickable-copy-item"
-            onClick={() => {
-              onToggle();
-              this.onCopy(firstItem);
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-duplicate-item-action
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-inventory.copyItem" />
-            </Icon>
-          </Button>
-          )}
-          { canDelete && (
-          <Button
-            id="clickable-delete-item"
-            onClick={() => {
-              onToggle();
-              this.canDeleteItem(firstItem, request);
-            }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-delete-item-action
-          >
-            <Icon icon="trash">
-              <FormattedMessage id="ui-inventory.deleteItem" />
-            </Icon>
-          </Button>
-          )}
-          { canCreateNewRequest(firstItem, stripes) && (
-          <Button
-            to={newRequestLink}
-            buttonStyle="dropdownItem"
-            data-test-inventory-create-request-action
-          >
-            <Icon icon="plus-sign">
-              <FormattedMessage id="ui-inventory.newRequest" />
-            </Icon>
-          </Button>
-          )}
+          {userHasPermToEdit && editActionItem}
+          {userHasPermToCreate && duplicateActionItem}
+          {userHasPermToDelete && deleteActionItem}
+          {userCanCreateNewRequest && newRequestActionItem}
         </MenuSection>
-        { canMarkItemWithStatus(firstItem) && (
+        {isMarkAsMenuSectionVisible && (
           <MenuSection
             id="items-list-mark-as"
             label={<FormattedMessage id="ui-inventory.markAsHeader" />}
             labelTag="h3"
           >
-            { canMarkItemAsMissing(firstItem) && canMarkAsMissing && (
-            <Button
-              id="clickable-missing-item"
-              onClick={() => {
-                onToggle();
-                this.setState({ itemMissingModal: true });
-              }}
-              buttonStyle="dropdownItem"
-              data-test-mark-as-missing-item
-            >
-              <Icon icon="flag">
-                <FormattedMessage id="ui-inventory.item.status.missing" />
-              </Icon>
-            </Button>
-            )}
-            <IfPermission perm="ui-inventory.items.mark-items-withdrawn">
-              { canMarkItemAsWithdrawn(firstItem) && (
-              <Button
-                id="clickable-withdrawn-item"
-                onClick={() => {
-                  onToggle();
-                  this.setState({ itemWithdrawnModal: true });
-                }}
-                buttonStyle="dropdownItem"
-                data-test-mark-as-withdrawn-item
-              >
-                <Icon icon="flag">
-                  <FormattedMessage id="ui-inventory.item.status.withdrawn" />
-                </Icon>
-              </Button>
-              )}
-            </IfPermission>
-            {
-              Object.keys(itemStatusMutators)
-                .filter(status => itemStatusesMap[status] !== firstItem?.status?.name)
-                .map(status => {
-                  const itemStatus = itemStatusesMap[status];
-                  const parameterizedStatus = parameterize(itemStatus);
-
-                  const actionMenuItem = (
-                    <Button
-                      key={status}
-                      id={`clickable-${parameterizedStatus}`}
-                      buttonStyle="dropdownItem"
-                      onClick={() => {
-                        onToggle();
-                        this.setState({ selectedItemStatus: status });
-                      }}
-                    >
-                      <Icon icon="flag">
-                        { itemStatus }
-                      </Icon>
-                    </Button>
-                  );
-                  return (
-                    <IfPermission
-                      perm={`ui-inventory.items.mark-${parameterizedStatus}`}
-                      key={parameterizedStatus}
-                    >
-                      {actionMenuItem}
-                    </IfPermission>
-                  );
-                })
-            }
+            {userCanMarkItemAsMissing && userHasPermToMarkAsMissing && markAsMissingActionItem}
+            {userCanMarkItemAsWithdrawn && userHasPermToMarkAsWithdrawn && markAsWithdrawnActionItem}
+            {userCanMarkItemWithStatus && renderItemStatusActionItems()}
           </MenuSection>
         )}
       </>

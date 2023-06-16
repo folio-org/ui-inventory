@@ -1,7 +1,7 @@
 import React from 'react';
 
-import user from '@testing-library/user-event';
-import { screen } from '@testing-library/react';
+import user from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
@@ -28,6 +28,7 @@ describe('HoldingReceivingHistory', () => {
     renderHoldingReceivingHistory({ id: 'holdingUid' });
 
     expect(screen.getByText(receivingHistory[0].enumeration)).toBeInTheDocument();
+    expect(screen.getByText(receivingHistory[0].chronology)).toBeInTheDocument();
   });
 
   it('should apply sort by a column', () => {

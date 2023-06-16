@@ -1,6 +1,6 @@
 import React from 'react';
-import { screen, act, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen, act, render } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import '../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import CheckboxFacet from './CheckboxFacet';

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react-hooks';
 import useInstance from './useInstance';
 
 describe('useInstance', () => {

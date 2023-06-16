@@ -19,7 +19,6 @@ const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
-const getQueryTemplateSubjects = (queryValue, andAuthorityId) => `subjects.value==/string "${queryValue}"${andAuthorityId}`;
 const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
@@ -27,23 +26,17 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const query = { ...resourceData.query };
   const queryIndex = queryParams?.qindex ?? 'all';
   const queryValue = get(queryParams, 'query', '');
-  const authorityId = queryParams?.authorityId;
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryParams?.selectedBrowseResult) {
-    if (queryIndex === queryIndexes.SUBJECT) {
-      const queryVal = queryValue.replace(/"/g, '\\"');
-      const andAuthorityId = authorityId ? ` and authorityId==${authorityId}` : '';
-
-      queryTemplate = getQueryTemplateSubjects(queryVal, andAuthorityId);
-    }
-
     if (queryIndex === queryIndexes.CALL_NUMBER) {
       queryTemplate = getQueryTemplateCallNumber(queryValue);
     }
 
     if (queryIndex === queryIndexes.CONTRIBUTOR) {
-      queryTemplate = getQueryTemplateContributor(queryValue);
+      const escapedQueryValue = queryValue.replaceAll('"', '\\"');
+
+      queryTemplate = getQueryTemplateContributor(escapedQueryValue);
     }
 
     query.selectedBrowseResult = null; // reset this parameter so the next search uses `=` instead of `==/string`
@@ -174,7 +167,6 @@ export function buildManifestObject() {
         filters: '',
         sort: '',
         selectedBrowseResult: false,
-        authorityId: '',
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },

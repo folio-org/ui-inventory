@@ -7,8 +7,8 @@ import {
   getAllByRole,
   waitForElementToBeRemoved,
   waitFor,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { noop } from 'lodash';
 
 import '../../test/jest/__mock__';

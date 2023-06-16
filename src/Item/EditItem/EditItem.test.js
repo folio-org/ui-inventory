@@ -1,7 +1,7 @@
 import '../../../test/jest/__mock__';
 
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { instance } from '../../../test/fixtures/instance';
