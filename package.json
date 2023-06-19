@@ -924,6 +924,8 @@
     "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
-    "moment": "~2.29.4"
+    "moment": "~2.29.4",
+    "aria-query": "^4",
+    "react-virtualized-auto-sizer": "1.0.7"
   }
 }
