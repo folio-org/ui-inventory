@@ -34,6 +34,11 @@
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
 * Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
 
+## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
+
+* Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
+
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
 
