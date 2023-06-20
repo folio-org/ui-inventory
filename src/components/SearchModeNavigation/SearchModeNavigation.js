@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   useLocation,
   useHistory,
+  useRouteMatch,
 } from 'react-router-dom';
 
 import {
@@ -17,6 +18,7 @@ import {
 } from '../../constants';
 
 const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
+  const { path } = useRouteMatch();
   const {
     search: currentSearch,
     pathname,
@@ -24,8 +26,8 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
   const history = useHistory();
 
   const checkIsButtonActive = useCallback((segment) => (
-    pathname === searchModeRoutesMap[segment] ? 'primary' : 'default'
-  ), [pathname]);
+    path === searchModeRoutesMap[segment] ? 'primary' : 'default'
+  ), [path]);
 
   const onClick = useCallback((segment) => {
     const isCurrentSegment = pathname === searchModeRoutesMap[segment];

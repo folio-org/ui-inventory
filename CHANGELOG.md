@@ -32,6 +32,7 @@
 * When adding items, cursor is in the barcode field as default. Refs UIIN-2205.
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
+* Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
 * Inventory: Retain Search/Browse query/options/filter and facet selections UNLESS user resets/clear selections. Refs UIIN-2433.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
