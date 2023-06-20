@@ -30,8 +30,16 @@ const mockStoreLastSearch = jest.fn();
 const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
+const mockGetLastSearch = jest.fn();
 
 jest.mock('../../storage');
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: () => ({
+    getLastSearch: mockGetLastSearch,
+  }),
+}));
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -143,7 +151,7 @@ describe('InstancesList', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
         history.push({ search });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
       describe('and browse result was selected', () => {
@@ -185,7 +193,7 @@ describe('InstancesList', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
           history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
       });
 
@@ -204,7 +212,7 @@ describe('InstancesList', () => {
             },
           }, rerender);
 
-          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
       });
     });

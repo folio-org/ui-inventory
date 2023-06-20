@@ -398,7 +398,9 @@ class InstancesList extends React.Component {
 
     const id = pathname.split('/')[3];
 
-    setItem(`${namespace}.lastOpenRecord`, id);
+    if (id) {
+      setItem(`${namespace}.lastOpenRecord`, id);
+    }
   }
 
   renderNavigation = () => (

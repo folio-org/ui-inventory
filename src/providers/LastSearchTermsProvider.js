@@ -22,7 +22,7 @@ const LastSearchTermsProvider = ({ children }) => {
 
   useLogout(resetStorageAfterLogout);
 
-  const getLastSegment = () => getItem(`${namespace}.search.lastSegment`) || segments.instances;
+  const getLastSegment = () => getItem(`${namespace}/search.lastSegment`) || segments.instances;
   const getLastSearch = (segment = getLastSegment()) => getItem(`${namespace}/search.${segment}.lastSearch`) || '';
   const getLastBrowse = () => getItem(`${namespace}/browse.lastSearch`) || '';
   const getLastSearchOffset = (segment) => getItem(`${namespace}/search.${segment}.lastOffset`) || 0;
@@ -31,7 +31,7 @@ const LastSearchTermsProvider = ({ children }) => {
   const storeLastBrowse = (search) => setItem(`${namespace}/browse.lastSearch`, search);
   const storeLastSearchOffset = (resultOffset, segment) => setItem(`${namespace}/search.${segment}.lastOffset`, resultOffset);
   const storeLastBrowseOffset = (pageConfig) => setItem(`${namespace}/browse.lastOffset`, pageConfig);
-  const storeLastSegment = (segment) => setItem(`${namespace}.search.lastSegment`, segment);
+  const storeLastSegment = (segment) => setItem(`${namespace}/search.lastSegment`, segment);
 
   const lastSearchTerms = useMemo(() => ({
     getLastSearch,

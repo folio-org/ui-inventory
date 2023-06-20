@@ -31,35 +31,41 @@ describe('LastSearchTermsProvider', () => {
         {({
           getLastSearch,
           getLastBrowse,
+          getLastSegment,
           getLastSearchOffset,
           getLastBrowseOffset,
           storeLastSearch,
           storeLastBrowse,
+          storeLastSegment,
           storeLastSearchOffset,
           storeLastBrowseOffset,
         }) => (
           <div>
             <div data-testid="initialSearch">{getLastSearch()}</div>
             <div data-testid="initialBrowse">{getLastBrowse()}</div>
-            <div data-testid="initialSearchOffset">{getLastSearchOffset()}</div>
+            <div data-testid="initialSegment">{getLastSegment()}</div>
+            <div data-testid="initialSearchOffset">{getLastSearchOffset('instances')}</div>
             <div data-testid="initialBrowseOffset">{JSON.stringify(getLastBrowseOffset())}</div>
-            {storeLastSearch('fakeSearch')}
+            {storeLastSearch('fakeSearch', 'instances')}
             {storeLastBrowse('fakeBrowse')}
-            {storeLastSearchOffset('fakeSearchOffset')}
+            {storeLastSearchOffset('fakeSearchOffset', 'instances')}
             {storeLastBrowseOffset('fakeBrowseOffset')}
+            {storeLastSegment('instances')}
           </div>
         )}
       </LastSearchTermsContext.Consumer>
     );
 
-    expect(getItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.lastSearch');
-    expect(getItem).toHaveBeenNthCalledWith(2, '@folio/inventory/browse.lastSearch');
-    expect(getItem).toHaveBeenNthCalledWith(3, '@folio/inventory/search.lastOffset');
-    expect(getItem).toHaveBeenNthCalledWith(4, '@folio/inventory/browse.lastOffset');
+    expect(getItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.lastSegment');
+    expect(getItem).toHaveBeenNthCalledWith(2, '@folio/inventory/search.instances.lastSearch');
+    expect(getItem).toHaveBeenNthCalledWith(3, '@folio/inventory/browse.lastSearch');
+    expect(getItem).toHaveBeenNthCalledWith(4, '@folio/inventory/search.lastSegment');
+    expect(getItem).toHaveBeenNthCalledWith(5, '@folio/inventory/search.instances.lastOffset');
+    expect(getItem).toHaveBeenNthCalledWith(6, '@folio/inventory/browse.lastOffset');
 
-    expect(setItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.lastSearch', 'fakeSearch');
+    expect(setItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.instances.lastSearch', 'fakeSearch');
     expect(setItem).toHaveBeenNthCalledWith(2, '@folio/inventory/browse.lastSearch', 'fakeBrowse');
-    expect(setItem).toHaveBeenNthCalledWith(3, '@folio/inventory/search.lastOffset', 'fakeSearchOffset');
+    expect(setItem).toHaveBeenNthCalledWith(3, '@folio/inventory/search.instances.lastOffset', 'fakeSearchOffset');
     expect(setItem).toHaveBeenNthCalledWith(4, '@folio/inventory/browse.lastOffset', 'fakeBrowseOffset');
 
     expect(getByTestId('initialSearch')).toHaveTextContent('');
