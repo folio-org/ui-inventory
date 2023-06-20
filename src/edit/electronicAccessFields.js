@@ -1,15 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'react-final-form-arrays';
+import { Field } from 'react-final-form';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
+  RepeatableField,
   TextArea,
-  Select
+  Select,
+  Row,
+  Col,
+  Label,
 } from '@folio/stripes/components';
 
-import RepeatableField from '../components/RepeatableField';
-
 const ElectronicAccessFields = props => {
+  const { formatMessage } = useIntl();
+
   const {
     relationship,
     canAdd,
@@ -21,52 +30,110 @@ const ElectronicAccessFields = props => {
     value: it.id,
   }));
 
-  return (
-    <FormattedMessage id="ui-inventory.selectType">
-      {([label]) => (
-        <RepeatableField
-          name="electronicAccess"
-          label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-          addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
-          addButtonId="clickable-add-electronicaccess"
-          template={[
-            {
-              name: 'relationshipId',
-              label: <FormattedMessage id="ui-inventory.urlRelationship" />,
-              component: Select,
-              dataOptions: [{ label, value: '' }, ...relationshipOptions],
-            },
-            {
-              name: 'uri',
-              label: <FormattedMessage id="ui-inventory.uri" />,
-              component: TextArea,
-              rows: 1,
-            },
-            {
-              name: 'linkText',
-              label: <FormattedMessage id="ui-inventory.linkText" />,
-              component: TextArea,
-              rows: 1,
-            },
-            {
-              name: 'materialsSpecification',
-              label: <FormattedMessage id="ui-inventory.materialsSpecification" />,
-              component: TextArea,
-              rows: 1,
-            },
-            {
-              name: 'publicNote',
-              label: <FormattedMessage id="ui-inventory.urlPublicNote" />,
-              component: TextArea,
-              rows: 1,
-            },
-          ]}
-          canAdd={canAdd}
-          canDelete={canDelete}
-          canEdit={canEdit}
+  const urlRelationshipLabel = formatMessage({ id: 'ui-inventory.urlRelationship' });
+  const uriLabel = formatMessage({ id: 'ui-inventory.uri' });
+  const linkTextLabel = formatMessage({ id: 'ui-inventory.linkText' });
+  const materialsSpecificationLabel = formatMessage({ id: 'ui-inventory.materialsSpecification' });
+  const urlPublicNoteLabel = formatMessage({ id: 'ui-inventory.urlPublicNote' });
+
+  const headLabels = (
+    <Row>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {urlRelationshipLabel}
+        </Label>
+      </Col>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {uriLabel}
+        </Label>
+      </Col>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {linkTextLabel}
+        </Label>
+      </Col>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {materialsSpecificationLabel}
+        </Label>
+      </Col>
+      <Col sm={4}>
+        <Label tagName="legend">
+          {urlPublicNoteLabel}
+        </Label>
+      </Col>
+    </Row>
+  );
+
+  const renderField = field => (
+    <Row>
+      <Col sm={2}>
+        <Field
+          aria-label={urlRelationshipLabel}
+          name={`${field}.relationshipId`}
+          component={Select}
+          dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...relationshipOptions]}
+          disabled={!canEdit}
         />
-      )}
-    </FormattedMessage>
+      </Col>
+      <Col sm={2}>
+        <Field
+          aria-label={uriLabel}
+          name={`${field}.uri`}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+        />
+      </Col>
+      <Col sm={2}>
+        <Field
+          aria-label={linkTextLabel}
+          name={`${field}.linkText`}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+        />
+      </Col>
+      <Col sm={2}>
+        <Field
+          aria-label={materialsSpecificationLabel}
+          name={`${field}.materialsSpecification`}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+        />
+      </Col>
+      <Col sm={4}>
+        <Field
+          aria-label={urlPublicNoteLabel}
+          name={`${field}.publicNote`}
+          component={TextArea}
+          rows={1}
+          disabled={!canEdit}
+        />
+      </Col>
+    </Row>
+  );
+
+  return (
+    <FieldArray
+      name="electronicAccess"
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.electronicAccess" />}
+      addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
+      onAdd={fields => fields.push({
+        relationshipId: '',
+        uri: '',
+        linkText: '',
+        materialsSpecification: '',
+        publicNote: '',
+      })}
+      headLabels={headLabels}
+      renderField={renderField}
+      canAdd={canAdd}
+      canRemove={canDelete}
+    />
   );
 };
 
@@ -78,6 +145,7 @@ ElectronicAccessFields.propTypes = {
 };
 
 ElectronicAccessFields.defaultProps = {
+  relationship: [],
   canAdd: true,
   canEdit: true,
   canDelete: true,

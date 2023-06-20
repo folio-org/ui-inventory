@@ -1,12 +1,12 @@
-import '../../../test/jest/__mock__';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
 
-import userEvent from '@testing-library/user-event';
-import { act, screen } from '@testing-library/react';
+import '__mock__';
 
 import {
   renderWithIntl,
   translationsProperties,
-} from '../../../test/jest/helpers';
+} from 'helpers';
 import {
   FACETS,
 } from '../../constants';

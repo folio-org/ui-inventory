@@ -1,8 +1,9 @@
 import '../../../test/jest/__mock__';
 
-import userEvent from '@testing-library/user-event';
-import { act, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useLocationFilters } from '@folio/stripes-acq-components';
 
@@ -12,7 +13,16 @@ import {
 } from '../../../test/jest/helpers';
 import { browseModeOptions } from '../../constants';
 import BrowseInventory from './BrowseInventory';
+import { SearchModeNavigation } from '../../components';
+import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
+import { useLastSearchTerms } from '../../hooks';
 
+const mockGetLastSearch = jest.fn();
+const mockGetLastBrowseOffset = jest.fn().mockImplementation(() => INIT_PAGE_CONFIG);
+const mockStoreLastBrowse = jest.fn();
+const mockStoreLastBrowseOffset = jest.fn();
+
+jest.mock('../../storage');
 jest.mock('@folio/stripes-acq-components', () => ({
   ...jest.requireActual('@folio/stripes-acq-components'),
   useLocationFilters: jest.fn(() => ([])),
@@ -24,16 +34,25 @@ jest.mock('../../components', () => ({
 }));
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: jest.fn().mockReturnValue({
+    getLastSearch: jest.fn(),
+    getLastBrowseOffset: jest.fn(),
+    storeLastBrowse: jest.fn(),
+    storeLastBrowseOffset: jest.fn(),
+  }),
   useInventoryBrowse: jest.fn(() => ({}))
 }));
 
-const renderBrowseInventory = (props = {}) => renderWithIntl(
-  <MemoryRouter>
+let history;
+
+const renderBrowseInventory = (props = {}, rerender) => renderWithIntl(
+  <Router history={history}>
     <BrowseInventory
       {...props}
     />
-  </MemoryRouter>,
+  </Router>,
   translationsProperties,
+  rerender,
 );
 
 const applyFilters = jest.fn();
@@ -58,12 +77,69 @@ const getFiltersUtils = ({
 
 describe('BrowseInventory', () => {
   beforeEach(() => {
+    history = createMemoryHistory();
     applySearch.mockClear();
     applyFilters.mockClear();
     changeSearch.mockClear();
     resetFilters.mockClear();
     changeSearchIndex.mockClear();
+    mockGetLastSearch.mockClear();
+    mockGetLastBrowseOffset.mockClear();
+    mockStoreLastBrowse.mockClear();
+    mockStoreLastBrowseOffset.mockClear();
     useLocationFilters.mockClear().mockReturnValue(getFiltersUtils());
+    useLastSearchTerms.mockClear().mockReturnValue({
+      getLastSearch: mockGetLastSearch,
+      getLastBrowseOffset: mockGetLastBrowseOffset,
+      storeLastBrowse: mockStoreLastBrowse,
+      storeLastBrowseOffset: mockStoreLastBrowseOffset,
+    });
+  });
+
+  describe('when the component is mounted', () => {
+    it('should take the initial state for pageConfig from the session storage', () => {
+      const offset = [3, 'next', 'Aachen, Carlovingian Palace.'];
+      mockGetLastBrowseOffset.mockClear().mockImplementation(() => offset);
+
+      renderBrowseInventory();
+
+      expect(mockStoreLastBrowseOffset).toHaveBeenCalledWith(offset);
+
+      mockGetLastBrowseOffset.mockRestore();
+    });
+  });
+
+  it('should write location.search and offset to the session storage', () => {
+    const offset = [4, 'next', 'Aachen, Carlovingian Palace.'];
+    const search = '?qindex=title&query=book&sort=title';
+    const newSearch = search.replace('book', 'newBook');
+
+    history.push({ search });
+    mockGetLastBrowseOffset.mockClear().mockImplementation(() => offset);
+
+    const { rerender } = renderBrowseInventory();
+
+    expect(mockStoreLastBrowse).toHaveBeenCalledWith(search);
+    expect(mockStoreLastBrowseOffset).toHaveBeenCalledWith(offset);
+
+    history.push({ search: newSearch });
+
+    renderBrowseInventory({}, rerender);
+
+    expect(mockStoreLastBrowse).toHaveBeenNthCalledWith(2, newSearch);
+    expect(mockStoreLastBrowseOffset).toHaveBeenNthCalledWith(2, offset);
+
+    mockGetLastBrowseOffset.mockRestore();
+  });
+
+  it('should have search prop in SearchModeNavigation component', () => {
+    const search = '?qindex=title&query=book&sort=title';
+
+    mockGetLastSearch.mockClear().mockImplementation(() => search);
+    renderBrowseInventory();
+
+    expect(SearchModeNavigation).toHaveBeenCalledWith({ search }, {});
+    mockGetLastSearch.mockRestore();
   });
 
   it('should render browse filters and results panes', () => {

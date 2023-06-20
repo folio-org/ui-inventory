@@ -19,8 +19,8 @@ const getBuildQueryArgs = ({
 
 const defaultQueryParamsMap = {
   [queryIndexes.CALL_NUMBER]: { qindex: queryIndexes.CALL_NUMBER, query: 'Some call number query' },
-  [queryIndexes.CONTRIBUTOR]: { qindex: queryIndexes.CONTRIBUTOR, query: 'Some contributor query' },
-  [queryIndexes.SUBJECT]: { qindex: queryIndexes.SUBJECT, query: 'Some subject query' },
+  [queryIndexes.CONTRIBUTOR]: { qindex: queryIndexes.CONTRIBUTOR, query: 'Some "contributor" query' },
+  [queryIndexes.SUBJECT]: { qindex: queryIndexes.SUBJECT, query: 'Some "subject" query' },
 };
 
 describe('buildQuery', () => {
@@ -39,17 +39,34 @@ describe('buildQuery', () => {
       const queryParams = { ...defaultQueryParamsMap[qindex] };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+      expect(cql).toContain('(contributors.name="Some \\"contributor\\" query")');
     });
 
-    it('should build query for \'Subject\' search option', () => {
-      const qindex = queryIndexes.SUBJECT;
-      const queryParams = { ...defaultQueryParamsMap[qindex] };
-      const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+    describe('\'Subject\' search option', () => {
+      describe('when a record is not linked with an authority record', () => {
+        it('should build query without the authorityId', () => {
+          const qindex = queryIndexes.SUBJECT;
+          const queryParams = { ...defaultQueryParamsMap[qindex] };
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      const queryTemplate = getQueryTemplate(qindex);
-      expect(cql).toEqual(expect.stringContaining(`${queryTemplate.replace('%{query.query}', defaultQueryParamsMap[qindex].query)}`));
+          expect(cql).toEqual('(subjects.value==/string "Some \\"subject\\" query") sortby title');
+        });
+      });
+
+      describe('when a record is linked with an authority record', () => {
+        it('should build query with the authorityId', () => {
+          const qindex = queryIndexes.SUBJECT;
+          const queryParams = {
+            ...defaultQueryParamsMap[qindex],
+            filters: 'authorityId.37c01934-37c3-4874-a992-3912fcf526db',
+          };
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+          expect(cql).toContain(
+            '(subjects.value==/string "Some \\"subject\\" query") and authorityId=="37c01934-37c3-4874-a992-3912fcf526db")'
+          );
+        });
+      });
     });
   });
 
@@ -73,7 +90,7 @@ describe('buildQuery', () => {
       };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      expect(cql).toEqual(expect.stringContaining(`contributors.name==/string "${defaultQueryParamsMap[qindex].query}"`));
+      expect(cql).toContain('(contributors.name==/string "Some \\"contributor\\" query")');
     });
 
     it('should build query for \'Subjects\' browse option', () => {
@@ -84,7 +101,7 @@ describe('buildQuery', () => {
       };
       const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-      expect(cql).toEqual(expect.stringContaining(`subjects==/string "${defaultQueryParamsMap[qindex].query}"`));
+      expect(cql).toContain('(subjects.value==/string "Some \\"subject\\" query")');
     });
   });
 });

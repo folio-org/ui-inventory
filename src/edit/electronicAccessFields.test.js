@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import '../../test/jest/__mock__';
 
@@ -52,8 +52,10 @@ describe('ElectronicAccessFields', () => {
     renderElectronicAccessFields();
     const electronicButton = screen.getByText('Add electronic access');
     userEvent.click(electronicButton);
-    const RelationshipDropdown = screen.getAllByText('Relationship');
-    expect(RelationshipDropdown).toHaveLength(1);
+    const relationshipDropdown = screen.getAllByRole('option');
+
+    // where 1 of options is a default option
+    expect(relationshipDropdown).toHaveLength(2);
     expect(screen.getByText('URI')).toBeInTheDocument();
     expect(screen.getByText('Link text')).toBeInTheDocument();
     expect(screen.getByText('Materials specified')).toBeInTheDocument();

@@ -20,15 +20,17 @@ const columnMapping = {
   'caption': <FormattedMessage id="ui-inventory.caption" />,
   'copyNumber': <FormattedMessage id="ui-inventory.copyNumber" />,
   'enumeration': <FormattedMessage id="ui-inventory.enumeration" />,
+  'chronology': <FormattedMessage id="ui-inventory.chronology" />,
   'receivedDate': <FormattedMessage id="ui-inventory.receivingHistory.receivedDate" />,
   'comment': <FormattedMessage id="ui-inventory.receivingHistory.comment" />,
   'source': <FormattedMessage id="ui-inventory.receivingHistory.source" />,
 };
-const visibleColumns = ['caption', 'copyNumber', 'enumeration', 'receivedDate', 'comment', 'source'];
+const visibleColumns = ['caption', 'copyNumber', 'enumeration', 'chronology', 'receivedDate', 'comment', 'source'];
 const columnFormatter = {
   'caption': i => i.caption || <NoValue />,
   'copyNumber': i => i.copyNumber || <NoValue />,
   'enumeration': i => i.enumeration || <NoValue />,
+  'chronology': i => i.chronology || <NoValue />,
   'receivedDate': i => (i.receivedDate ? <FormattedDate value={i.receivedDate} /> : <NoValue />),
   'comment': i => i.comment || <NoValue />,
   'source': i => <FormattedMessage id={`ui-inventory.receivingHistory.source.${i.source || 'user'}`} />,
@@ -36,6 +38,7 @@ const columnFormatter = {
 const sorters = {
   'caption': ({ caption }) => caption,
   'copyNumber': ({ copyNumber }) => copyNumber,
+  'chronology': ({ chronology }) => chronology,
   'enumeration': ({ enumeration }) => enumeration,
   'receivedDate': ({ receivedDate }) => receivedDate,
   'source': ({ source }) => source,

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import '../../../../test/jest/__mock__';
 
@@ -8,34 +10,79 @@ import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../../test/jest/helpers/translationsProperties';
 import InstanceContributorsView from './InstanceContributorsView';
 
-const contributors = [{
-  authorityId: null,
-  contributorNameTypeId: '2b94c631-fca9-4892-a730-03ee529ffe2a',
-  contributorTypeId: null,
-  contributorTypeText: null,
-  name: 'Perich, Tristan',
-  primary: true,
-}];
+jest.mock('../ControllableDetail', () => ({
+  ControllableDetail: jest.fn().mockReturnValue('ControllableDetail'),
+}));
 
-const contributorNameTypes = [{
-  id: '2b94c631-fca9-4892-a730-03ee529ffe2a',
-  name: 'Personal name',
-  ordering: '1',
-}];
+const contributors = [
+  {
+    id: 1,
+    name: 'contributors name 1',
+    contributorTypeId: 1,
+    contributorNameTypeId: 1,
+    primary: true,
+  },
+  {
+    id: 2,
+    name: 'contributors name 2',
+    contributorTypeId: 2,
+    contributorNameTypeId: 2,
+    primary: false,
+  },
+];
+
+const contributorTypes = [
+  {
+    id: 1,
+    name: 'Author',
+  },
+  {
+    id: 2,
+    name: 'Editor',
+  },
+];
+
+const contributorNameTypes = [
+  {
+    id: 1,
+    name: 'Personal',
+  },
+  {
+    id: 2,
+    name: 'Corporate',
+  },
+];
+
+const props = {
+  id: 'instance-contributors',
+  contributors,
+  contributorTypes,
+  contributorNameTypes,
+  source: 'local',
+  segment: 'instance',
+};
+
+const noValueProps = {
+  id: 'instance-contributors',
+  contributors: [],
+  contributorTypes: [],
+  contributorNameTypes: [],
+  source: 'local',
+  segment: 'instance',
+};
 
 const history = createMemoryHistory();
 
-const renderComponent = (props = {}) => renderWithIntl(
+const renderComponent = () => renderWithIntl(
   <Router history={history}>
-    <InstanceContributorsView
-      id="fakeId"
-      contributors={contributors}
-      contributorTypes={[]}
-      contributorNameTypes={contributorNameTypes}
-      source="FOLIO"
-      segment="holdings"
-      {...props}
-    />
+    <InstanceContributorsView {...props} />
+  </Router>,
+  translationsProperties,
+);
+
+const renderNoValueComponent = () => renderWithIntl(
+  <Router history={history}>
+    <InstanceContributorsView {...noValueProps} />
   </Router>,
   translationsProperties,
 );
@@ -44,19 +91,19 @@ describe('InstanceContributorsView', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
-  describe('when Instance record with source = MARC is linked to an authority record', () => {
-    it('should display the MARC authority app icon', () => {
-      const { getByTestId } = renderComponent({
-        contributors: [{
-          ...contributors[0],
-          authorityId: 'fakeId',
-        }],
-        source: 'MARC',
-        segment: null,
-      });
-
-      expect(getByTestId('authority-app-link')).toBeVisible();
-    });
+  it('renders the component with the given props', () => {
+    const { getByRole, getByText } = renderComponent();
+    expect(getByText('Name type')).toBeInTheDocument();
+    expect(getByText('Name')).toBeInTheDocument();
+    expect(getByText('Type')).toBeInTheDocument();
+    expect(getByText('Free text')).toBeInTheDocument();
+    expect(screen.getAllByText('ControllableDetail')).toBeTruthy();
+    expect(getByText('Personal')).toBeInTheDocument();
+    const ContributorButton = getByRole('button', { name: 'Contributor' });
+    userEvent.click(ContributorButton);
+  });
+  it('InstanceContributorsView with noValue props', () => {
+    const { getAllByText } = renderNoValueComponent();
+    expect(getAllByText('No value set')).toBeTruthy();
   });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';

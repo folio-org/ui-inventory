@@ -1,5 +1,9 @@
 import React, { createRef } from 'react';
-import { get, cloneDeep } from 'lodash';
+import {
+  get,
+  cloneDeep,
+  uniqBy,
+} from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -39,7 +43,6 @@ import {
 } from '@folio/stripes/smart-components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
-import RepeatableField from '../../components/RepeatableField';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
@@ -50,16 +53,24 @@ import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import getNumberGeneratorModals from './getNumberGeneratorModals';
 
+import {
+  BoundWithTitlesFields,
+  CirculationNotesFields,
+  FormerIdentifierFields,
+  YearCaptionFields
+} from './repeatableFields';
+import StatisticalCodeFields from '../statisticalCodeFields';
+import NoteFields from '../noteFields';
 
 function validate(values) {
   const errors = {};
   const selectToContinueMsg = <FormattedMessage id="ui-inventory.selectToContinue" />;
 
-  if (!(values.materialType && values.materialType.id)) {
+  if (!values.materialType?.id) {
     errors.materialType = { id: selectToContinueMsg };
   }
 
-  if (!(values.permanentLoanType && values.permanentLoanType.id)) {
+  if (!values.permanentLoanType?.id) {
     errors.permanentLoanType = { id: selectToContinueMsg };
   }
 
@@ -138,6 +149,12 @@ class ItemForm extends React.Component {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
 
+  addBoundWiths = (newBoundWithTitles) => {
+    let boundWithTitles = cloneDeep(this.props.form.getFieldState('boundWithTitles')?.value) || [];
+    boundWithTitles = uniqBy([...boundWithTitles, ...newBoundWithTitles], 'briefHoldingsRecord.hrid');
+    this.props.form.change('boundWithTitles', boundWithTitles);
+  }
+
   getFooter = () => {
     const {
       onCancel,
@@ -165,7 +182,7 @@ class ItemForm extends React.Component {
         disabled={(pristine || submitting) && !copy}
         onClick={handleSubmit}
       >
-        <FormattedMessage id="stripes-core.button.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
     );
 
@@ -188,15 +205,15 @@ class ItemForm extends React.Component {
       httpError,
 
       referenceTables: {
-        locationsById,
-        materialTypes,
+        locationsById = [],
+        materialTypes = [],
         loanTypes = [],
-        itemNoteTypes,
-        electronicAccessRelationships,
-        callNumberTypes,
-        statisticalCodes,
-        statisticalCodeTypes,
-        itemDamagedStatuses,
+        itemNoteTypes = [],
+        electronicAccessRelationships = [],
+        callNumberTypes = [],
+        statisticalCodes = [],
+        statisticalCodeTypes = [],
+        itemDamagedStatuses = [],
       },
       handleSubmit,
       pristine,
@@ -204,7 +221,7 @@ class ItemForm extends React.Component {
       history,
     } = this.props;
 
-    const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
+    const holdingLocation = locationsById[holdingsRecord?.permanentLocationId];
     const item = initialValues;
 
     const refLookup = (referenceTable, id) => {
@@ -436,6 +453,7 @@ class ItemForm extends React.Component {
                           id="additem_barcode"
                           validate={validateBarcode(this.props)}
                           component={TextField}
+                          autoFocus
                           fullWidth
                         />
                         {renderBarcodeGenerator()}
@@ -463,31 +481,12 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={8}>
-                        <RepeatableField
-                          name="formerIds"
-                          addButtonId="clickable-add-former-id"
-                          addLabel={<FormattedMessage id="ui-inventory.addFormerId" />}
-                          template={[{
-                            component: TextField,
-                            label: <FormattedMessage id="ui-inventory.formerId" />,
-                          }]}
-                        />
+                        <FormerIdentifierFields />
                       </Col>
                     </Row>
                     <Row>
                       <Col sm={10}>
-                        <RepeatableField
-                          name="statisticalCodeIds"
-                          addButtonId="clickable-add-statistical-code"
-                          addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
-                          template={[
-                            {
-                              label: <FormattedMessage id="ui-inventory.statisticalCode" />,
-                              component: Select,
-                              dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
-                            }
-                          ]}
-                        />
+                        <StatisticalCodeFields statisticalCodeOptions={statisticalCodeOptions} />
                       </Col>
                     </Row>
                     <Row>
@@ -642,15 +641,7 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={6}>
-                        <RepeatableField
-                          name="yearCaption"
-                          addButtonId="clickable-add-year-caption"
-                          addLabel={<FormattedMessage id="ui-inventory.addYearCaption" />}
-                          template={[{
-                            component: TextField,
-                            label: <FormattedMessage id="ui-inventory.yearCaption" />
-                          }]}
-                        />
+                        <YearCaptionFields />
                       </Col>
                     </Row>
                   </Accordion>
@@ -723,38 +714,11 @@ class ItemForm extends React.Component {
                   >
                     <Row>
                       <Col sm={10}>
-                        <RepeatableField
-                          name="notes"
-                          addButtonId="clickable-add-note"
-                          addLabel={<FormattedMessage id="ui-inventory.addNote" />}
-                          template={[
-                            {
-                              name: 'itemNoteTypeId',
-                              label: <FormattedMessage id="ui-inventory.noteType" />,
-                              component: Select,
-                              dataOptions: [{ label: 'Select type', value: '' }, ...itemNoteTypeOptions],
-                              required: true
-                            },
-                            {
-                              name: 'note',
-                              label: <FormattedMessage id="ui-inventory.note" />,
-                              component: TextArea,
-                              rows: 1,
-                              required: true
-                            },
-                            {
-                              name: 'staffOnly',
-                              label: <FormattedMessage id="ui-inventory.staffOnly" />,
-                              component: Checkbox,
-                              type: 'checkbox',
-                              inline: true,
-                              vertical: true,
-                              columnSize: {
-                                xs: 3,
-                                lg: 2,
-                              }
-                            }
-                          ]}
+                        <NoteFields
+                          noteTypeOptions={itemNoteTypeOptions}
+                          noteTypeIdField="itemNoteTypeId"
+                          requiredFields={['itemNoteTypeId', 'note']}
+                          renderLegend={false}
                         />
                       </Col>
                     </Row>
@@ -822,43 +786,7 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={10}>
-                        <RepeatableField
-                          name="circulationNotes"
-                          addButtonId="clickable-add-checkin-checkout-note"
-                          addLabel={<FormattedMessage id="ui-inventory.addCirculationNote" />}
-                          template={[
-                            {
-                              name: 'noteType',
-                              label: <FormattedMessage id="ui-inventory.noteType" />,
-                              component: Select,
-                              dataOptions: [
-                                { label: 'Select type', value: '' },
-                                { label: 'Check in note', value: 'Check in' },
-                                { label: 'Check out note', value: 'Check out' }
-                              ],
-                              required: true
-                            },
-                            {
-                              name: 'note',
-                              label: <FormattedMessage id="ui-inventory.note" />,
-                              component: TextArea,
-                              rows: 1,
-                              required: true
-                            },
-                            {
-                              name: 'staffOnly',
-                              label: <FormattedMessage id="ui-inventory.staffOnly" />,
-                              component: Checkbox,
-                              type: 'checkbox',
-                              inline: true,
-                              vertical: true,
-                              columnSize: {
-                                xs: 3,
-                                lg: 2,
-                              }
-                            }
-                          ]}
-                        />
+                        <CirculationNotesFields />
                       </Col>
                     </Row>
                   </Accordion>
@@ -912,35 +840,9 @@ class ItemForm extends React.Component {
                     id="acc10"
                     label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
                   >
-                    <RepeatableField
-                      name="boundWithTitles"
-                      label={<FormattedMessage id="ui-inventory.boundWithTitles" />}
-                      canAdd={false}
-                      canDelete={(fields, fieldIndex) => {
-                        return fields?.value[fieldIndex]?.briefHoldingsRecord?.id !==
-                          item?.holdingsRecordId;
-                      }}
-                      template={[
-                        {
-                          name: 'briefInstance.hrid',
-                          label: <FormattedMessage id="ui-inventory.instanceHrid" />,
-                          component: TextField,
-                          disabled: true,
-                          value: boundWithTitle => boundWithTitle.briefInstance.hrid,
-                        },
-                        {
-                          name: 'briefInstance.title',
-                          label: <FormattedMessage id="ui-inventory.instanceTitleLabel" />,
-                          component: TextField,
-                          disabled: true,
-                        },
-                        {
-                          name: 'briefHoldingsRecord.hrid',
-                          label: <FormattedMessage id="ui-inventory.holdingsHrid" />,
-                          component: TextField,
-                          disabled: true,
-                        },
-                      ]}
+                    <BoundWithTitlesFields
+                      item={item}
+                      addBoundWithTitles={newBoundWiths => this.addBoundWiths(newBoundWiths)}
                     />
                   </Accordion>
                 </AccordionSet>
@@ -971,6 +873,7 @@ ItemForm.propTypes = {
   }).isRequired,
   form: PropTypes.shape({
     change: PropTypes.func.isRequired,
+    getFieldState: PropTypes.func,
   }).isRequired,
   history: PropTypes.object.isRequired,
   httpError: PropTypes.object,

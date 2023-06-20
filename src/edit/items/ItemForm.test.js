@@ -4,10 +4,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { waitFor } from '@testing-library/react';
-import { StripesContext } from '@folio/stripes-core/src/StripesContext';
 
 import '../../../test/jest/__mock__';
+
+import { StripesContext } from '@folio/stripes/core';
+
 import {
   renderWithIntl,
   translationsProperties,
@@ -93,27 +94,24 @@ describe('ItemForm', () => {
     expect(container.querySelectorAll('form').length).toEqual(1);
   });
 
-  describe('when displaying boundWithTitles rows', () => {
-    it('should disable delete on a directly linked holding', async () => {
-      const { container } = renderItemForm();
+  it('should place cursor in the barcode field as default', () => {
+    const { getByLabelText } = renderItemForm();
+    const barcodeField = getByLabelText(/Barcode/i);
 
-      await waitFor(() => {
-        const directlyLinkedTitle = container.querySelector("*[data-test-repeater-field-row] input[value='bw123']");
-        const directlyLinkedDelete = directlyLinkedTitle.closest('div[data-test-repeater-field-row]')
-          .getElementsByTagName('button').item(0);
-        expect(directlyLinkedDelete.disabled).toBeTruthy();
-      });
-    });
+    expect(barcodeField).toHaveFocus();
+  });
 
-    it('should enable delete on an indirectly linked holding', async () => {
-      const { container } = renderItemForm();
+  it('should render correct accordions', () => {
+    const { getByText, getAllByText } = renderItemForm();
 
-      await waitFor(() => {
-        const indirectlyLinkedTitle = container.querySelector("*[data-test-repeater-field-row] input[value='bw456']");
-        const indirectlyLinkedDelete = indirectlyLinkedTitle.closest('div[data-test-repeater-field-row]')
-          .getElementsByTagName('button').item(0);
-        expect(indirectlyLinkedDelete.disabled).toBeFalsy();
-      });
-    });
+    expect(getByText('Administrative data')).toBeInTheDocument();
+    expect(getByText('Item data')).toBeInTheDocument();
+    expect(getByText('Enumeration data')).toBeInTheDocument();
+    expect(getByText('Condition')).toBeInTheDocument();
+    expect(getByText('Item notes')).toBeInTheDocument();
+    expect(getByText('Loan and availability')).toBeInTheDocument();
+    expect(getByText('Location')).toBeInTheDocument();
+    expect(getAllByText('Electronic access')[0]).toBeInTheDocument();
+    expect(getAllByText('Bound-with and analytics')[0]).toBeInTheDocument();
   });
 });

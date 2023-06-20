@@ -7,7 +7,7 @@ import '../../../test/jest/__mock__';
 import {
   fireEvent,
   screen,
-} from '@testing-library/dom';
+} from '@folio/jest-config-stripes/testing-library/dom';
 import {
   renderWithIntl,
   translationsProperties,

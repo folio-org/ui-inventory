@@ -33,19 +33,22 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import RepeatableField from '../../components/RepeatableField';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
-import HoldingsStatementFields from './holdingsStatementFields';
-import HoldingsStatementForSupplementsFields from './holdingsStatementForSupplementsFields';
-import HoldingsStatementForIndexesFields from './holdingsStatementForIndexesFields';
-import Note from './note';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import styles from './HoldingsForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import AdministrativeNoteFields from '../administrativeNoteFields';
-
+import {
+  FormerHoldingsIdFields,
+  HoldingsStatementFields,
+  HoldingsStatementForSupplementsFields,
+  HoldingsStatementForIndexesFields,
+  NoteFields,
+  ReceivingHistoryFields,
+} from './repeatableFields';
+import StatisticalCodeFields from '../statisticalCodeFields';
 
 // eslint-disable-next-line no-unused-vars
 function validate(values) {
@@ -153,7 +156,7 @@ class HoldingsForm extends React.Component {
         onClick={handleSubmit}
         marginBottom0
       >
-        <FormattedMessage id="stripes-core.button.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
     );
 
@@ -384,14 +387,7 @@ class HoldingsForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={10}>
-                        <RepeatableField
-                          name="formerIds"
-                          addButtonId="clickable-add-formerholdingsid"
-                          addLabel={<FormattedMessage id="ui-inventory.addFormerHoldingsId" />}
-                          template={[{
-                            label: <FormattedMessage id="ui-inventory.formerHoldingsId" />,
-                            component: TextField,
-                          }]}
+                        <FormerHoldingsIdFields
                           canAdd={!this.isFieldBlocked('formerIds')}
                           canEdit={!this.isFieldBlocked('formerIds')}
                           canDelete={!this.isFieldBlocked('formerIds')}
@@ -417,17 +413,8 @@ class HoldingsForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={10}>
-                        <RepeatableField
-                          name="statisticalCodeIds"
-                          addButtonId="clickable-add-statistical-code"
-                          addLabel={<FormattedMessage id="ui-inventory.addStatisticalCode" />}
-                          template={[
-                            {
-                              label: <FormattedMessage id="ui-inventory.statisticalCode" />,
-                              component: Select,
-                              dataOptions: [{ label: 'Select code', value: '' }, ...statisticalCodeOptions],
-                            }
-                          ]}
+                        <StatisticalCodeFields
+                          statisticalCodeOptions={statisticalCodeOptions}
                           canAdd={!this.isFieldBlocked('statisticalCodeIds')}
                           canEdit={!this.isFieldBlocked('statisticalCodeIds')}
                           canDelete={!this.isFieldBlocked('statisticalCodeIds')}
@@ -435,7 +422,7 @@ class HoldingsForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col sm={12}>
+                      <Col sm={10}>
                         <AdministrativeNoteFields />
                       </Col>
                     </Row>
@@ -591,28 +578,32 @@ class HoldingsForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col sm={12}>
+                      <Col sm={10}>
                         <HoldingsStatementFields
                           canAdd={!this.isFieldBlocked('holdingsStatements')}
                           canEdit={!this.isFieldBlocked('holdingsStatements')}
                           canDelete={!this.isFieldBlocked('holdingsStatements')}
                         />
-                        <br />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={10}>
                         <HoldingsStatementForSupplementsFields
                           canAdd={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                           canEdit={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                           canDelete={!this.isFieldBlocked('holdingsStatementsForSupplements')}
                         />
-                        <br />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={10}>
                         <HoldingsStatementForIndexesFields
                           canAdd={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                           canEdit={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                           canDelete={!this.isFieldBlocked('holdingsStatementsForIndexes')}
                         />
-                        <br />
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={3}>
                         <FormattedMessage id="ui-inventory.selectIllPolicy">
@@ -656,8 +647,8 @@ class HoldingsForm extends React.Component {
                     label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
                   >
                     <Row>
-                      <Col sm={10}>
-                        <Note
+                      <Col sm={11}>
+                        <NoteFields
                           canAdd={!this.isFieldBlocked('notes')}
                           canEdit={!this.isFieldBlocked('notes')}
                           noteTypeOptions={holdingsNoteTypeOptions}
@@ -669,11 +660,15 @@ class HoldingsForm extends React.Component {
                     id="accordion06"
                     label={<FormattedMessage id="ui-inventory.electronicAccess" />}
                   >
-                    <ElectronicAccessFields
-                      canAdd={!this.isFieldBlocked('electronicAccess')}
-                      canEdit={!this.isFieldBlocked('electronicAccess')}
-                      relationship={referenceTables.electronicAccessRelationships}
-                    />
+                    <Row>
+                      <Col sm={10}>
+                        <ElectronicAccessFields
+                          canAdd={!this.isFieldBlocked('electronicAccess')}
+                          canEdit={!this.isFieldBlocked('electronicAccess')}
+                          relationship={referenceTables.electronicAccessRelationships}
+                        />
+                      </Col>
+                    </Row>
                   </Accordion>
                   <Accordion
                     id="accordion05"
@@ -712,30 +707,7 @@ class HoldingsForm extends React.Component {
                   >
                     <Row>
                       <Col sm={10}>
-                        <RepeatableField
-                          name="receivingHistory.entries"
-                          addButtonId="clickable-add-receiving-history"
-                          addLabel={<FormattedMessage id="ui-inventory.addReceivingHistory" />}
-                          template={[
-                            {
-                              name: 'publicDisplay',
-                              label: <FormattedMessage id="ui-inventory.publicDisplay" />,
-                              component: Checkbox,
-                              type: 'checkbox',
-                            },
-                            {
-                              name: 'enumeration',
-                              label: <FormattedMessage id="ui-inventory.enumeration" />,
-                              component: TextArea,
-                              rows: 1,
-                            },
-                            {
-                              name: 'chronology',
-                              label: <FormattedMessage id="ui-inventory.chronology" />,
-                              component: TextArea,
-                              rows: 1,
-                            },
-                          ]}
+                        <ReceivingHistoryFields
                           canAdd={!this.isFieldBlocked('receivingHistory.entries')}
                           canEdit={!this.isFieldBlocked('receivingHistory.entries')}
                           canDelete={!this.isFieldBlocked('receivingHistory.entries')}

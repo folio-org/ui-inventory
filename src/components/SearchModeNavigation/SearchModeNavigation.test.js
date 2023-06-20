@@ -1,5 +1,8 @@
-import { screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  MemoryRouter,
+  useRouteMatch,
+} from 'react-router-dom';
 
 import '../../../test/jest/__mock__';
 
@@ -8,9 +11,28 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 import SearchModeNavigation from './SearchModeNavigation';
+import {
+  INVENTORY_ROUTE,
+  BROWSE_INVENTORY_ROUTE,
+} from '../../constants';
 
-const renderSearchModeNavigation = (props = {}) => renderWithIntl(
-  <MemoryRouter>
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useRouteMatch: jest.fn().mockReturnValue({ path: '/inventory/browse' }),
+}));
+
+const initialSearch = '?qindex=contributors&query=test';
+
+const renderSearchModeNavigation = (
+  props = {},
+  initialRoute = BROWSE_INVENTORY_ROUTE,
+) => renderWithIntl(
+  <MemoryRouter
+    initialEntries={[{
+      pathname: initialRoute,
+      search: initialSearch,
+    }]}
+  >
     <SearchModeNavigation
       {...props}
     />
@@ -24,5 +46,57 @@ describe('SearchModeNavigation', () => {
 
     expect(screen.getByText('Search')).toBeInTheDocument();
     expect(screen.getByText('Browse')).toBeInTheDocument();
+  });
+
+  describe('when current segment is browse', () => {
+    it('should keep browse query in url in browse button', async () => {
+      renderSearchModeNavigation();
+
+      const browseButton = await screen.findByRole('button', { name: 'Browse' });
+
+      expect(browseButton.href.includes(`${BROWSE_INVENTORY_ROUTE}${initialSearch}`)).toBeTruthy();
+    });
+
+    it('should keep set search query in url in search button', async () => {
+      const search = '?query=test';
+
+      renderSearchModeNavigation({
+        search,
+      });
+
+      const browseButton = await screen.findByRole('button', { name: 'Search' });
+
+      expect(browseButton.href.includes(`${INVENTORY_ROUTE}${search}`)).toBeTruthy();
+    });
+  });
+
+  describe('when current segment is search', () => {
+    const pathname = `${INVENTORY_ROUTE}/view/UUID`;
+    const search = '?query=test';
+
+    beforeEach(() => {
+      useRouteMatch.mockReturnValue({ path: INVENTORY_ROUTE });
+      renderSearchModeNavigation({ search }, pathname);
+    });
+
+    it('should style the Search button as active', async () => {
+      const searchButton = await screen.findByRole('button', { name: 'Search' });
+      const browseButton = await screen.findByRole('button', { name: 'Browse' });
+
+      expect(searchButton.className).toContain('primary');
+      expect(browseButton.className).toContain('default');
+    });
+
+    it('should keep the current search query in the href for the Search button', async () => {
+      const searchButton = await screen.findByRole('button', { name: 'Search' });
+
+      expect(searchButton.href).toContain(`${pathname}${initialSearch}`);
+    });
+
+    it('should keep the last browse query in the href for the Browse button', async () => {
+      const browseButton = await screen.findByRole('button', { name: 'Browse' });
+
+      expect(browseButton.href).toContain(`${BROWSE_INVENTORY_ROUTE}${search}`);
+    });
   });
 });

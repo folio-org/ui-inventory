@@ -31,6 +31,7 @@ import {
   Icon,
   Checkbox,
   MenuSection,
+  Select,
   checkScope,
   HasCommand,
   MCLPagingTypes,
@@ -57,6 +58,7 @@ import {
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
+  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   segments,
 } from '../../constants';
 import {
@@ -127,6 +129,10 @@ class InstancesList extends React.Component {
       listen: PropTypes.func,
       replace: PropTypes.func,
     }),
+    getLastBrowse: PropTypes.func.isRequired,
+    getLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSearch: PropTypes.func.isRequired,
+    storeLastSearchOffset: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -151,13 +157,18 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       optionSelected: '',
       searchAndSortKey: 0,
+      segmentsSortBy: this.getInitialSegmentsSortBy(),
       isSingleResult: this.props.showSingleResult,
       searchInProgress: false,
     };
   }
 
   componentDidMount() {
-    const { history } = this.props;
+    const {
+      history,
+      getParams,
+    } = this.props;
+    const params = getParams();
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -171,18 +182,19 @@ class InstancesList extends React.Component {
       }
     });
 
-    const { browseSearch, pageConfig } = this.getBrowsePageState();
+    this.processLastSearchTerms();
 
     this.setState({
-      browsePageSearch: browseSearch,
-      browsePageConfig: pageConfig,
-      openedFromBrowse: !!browseSearch,
+      openedFromBrowse: params.selectedBrowseResult === 'true',
       optionSelected: '',
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const qindex = this.getQIndexFromParams();
+    const sortBy = this.getSortFromParams();
+
+    this.storeLastSearchTerms(prevProps);
 
     // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
     // doesn't like this because setState causes a re-render and can
@@ -192,30 +204,74 @@ class InstancesList extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ optionSelected: qindex });
     }
+
+    if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
+      this.setSegmentSortBy(sortBy);
+    }
   }
 
   componentWillUnmount() {
+    const { parentMutator } = this.props;
     this.unlisten();
+    parentMutator.records.reset();
   }
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    authorityId: '',
   };
+
+  processLastSearchTerms = () => {
+    const {
+      getParams,
+      location,
+      parentMutator,
+      getLastSearchOffset,
+      storeLastSearch,
+    } = this.props;
+    const params = getParams();
+    const lastSearchOffset = getLastSearchOffset();
+    const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
+
+    storeLastSearch(location.search);
+    parentMutator.resultOffset.replace(offset);
+  }
+
+  storeLastSearchTerms = (prevProps) => {
+    const {
+      location,
+      parentResources,
+      storeLastSearch,
+      storeLastSearchOffset,
+    } = this.props;
+
+    if (prevProps.location.search !== location.search) {
+      storeLastSearch(location.search);
+    }
+
+    if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
+      storeLastSearchOffset(parentResources.resultOffset);
+    }
+  }
 
   getQIndexFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('qindex');
   }
 
-  getBrowsePageState = () => {
-    return {
-      browseSearch: this.props.location.state?.browseSearch,
-      pageConfig: this.props.location.state?.pageConfig,
-    };
+  getSortFromParams = () => {
+    const params = new URLSearchParams(this.props.location.search);
+    return params.get('sort');
   }
 
   getInitialToggableColumns = () => {
     return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
+  }
+
+  getInitialSegmentsSortBy = () => {
+    return Object.keys(segments).map(name => (
+      { name, sort: SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE }
+    ));
   }
 
   getVisibleColumns = () => {
@@ -278,6 +334,11 @@ class InstancesList extends React.Component {
     this.props.updateLocation({ layer: 'create' });
   }
 
+  openCreateMARCRecord = () => {
+    const searchParams = new URLSearchParams(this.props.location.search);
+    this.props.goTo(`/inventory/quick-marc/create-bib?${searchParams}`);
+  }
+
   copyInstance = (instance) => {
     const {
       precedingTitles,
@@ -325,10 +386,13 @@ class InstancesList extends React.Component {
   renderNavigation = () => (
     <>
       <SearchModeNavigation
-        search={this.state.browsePageSearch}
-        state={{ pageConfig: this.state.browsePageConfig }}
+        search={this.props.getLastBrowse()}
       />
-      <FilterNavigation segment={this.props.segment} onChange={this.refocusOnInputSearch} />
+      <FilterNavigation
+        segment={this.props.segment}
+        segmentsSortBy={this.state.segmentsSortBy}
+        onChange={this.refocusOnInputSearch}
+      />
     </>
   );
 
@@ -537,6 +601,22 @@ class InstancesList extends React.Component {
     setItem(`${namespace}.position`, null);
   }
 
+  setSegmentSortBy = (sortBy) => {
+    const { segment } = this.props;
+
+    const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
+      if (key.name === segment) {
+        key.sort = sortBy;
+        return key;
+      }
+      return key;
+    });
+
+    this.setState({
+      segmentsSortBy
+    });
+  }
+
   getActionMenu = ({ onToggle }) => {
     const { parentResources, intl, segment } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
@@ -551,6 +631,43 @@ class InstancesList extends React.Component {
 
         onClickHandler(this.context.sendCallout);
       };
+    };
+
+    const setSortedColumn = (event) => {
+      const {
+        match: { path },
+        goTo,
+        getParams,
+      } = this.props;
+
+      onToggle();
+
+      const params = getParams();
+      params.sort = event.target.value;
+
+      this.setSegmentSortBy(params.sort);
+
+      const { sort, ...rest } = params;
+      const queryParams = params.sort === '' ? rest : { sort, ...rest };
+
+      goTo(path, { ...queryParams });
+    };
+
+    const sortOptions = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).map(option => ({
+      value: option,
+      label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
+    }));
+
+    const sortByOptions = [
+      {
+        value: '',
+        label: intl.formatMessage({ id: 'ui-inventory.actions.menuSection.sortBy.relevance' }),
+      },
+      ...sortOptions,
+    ];
+
+    const getSortByValue = () => {
+      return this.state.segmentsSortBy.find(x => x.name === segment).sort?.replace('-', '') || '';
     };
 
     return (
@@ -584,6 +701,21 @@ class InstancesList extends React.Component {
             )}
             type="create-inventory-records"
           />
+          <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-newmarcrecord"
+              onClick={buildOnClickHandler(this.openCreateMARCRecord)}
+            >
+              <Icon
+                icon="plus-sign"
+                size="medium"
+                iconClassName={css.actionIcon}
+              />
+              <FormattedMessage id="ui-inventory.newMARCRecord" />
+            </Button>
+          </IfPermission>
+
           {
           inTransitItemsExportInProgress ?
             this.getActionItem({
@@ -643,6 +775,17 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(() => this.setState({ isSelectedRecordsModalOpened: true })),
             isDisabled: !selectedRowsCount,
           })}
+        </MenuSection>
+        <MenuSection
+          data-testid="menu-section-sort-by"
+          label={intl.formatMessage({ id: 'ui-inventory.actions.menuSection.sortBy' })}
+        >
+          <Select
+            data-testid="sort-by-selection"
+            dataOptions={sortByOptions}
+            value={getSortByValue()}
+            onChange={setSortedColumn}
+          />
         </MenuSection>
         <MenuSection label={intl.formatMessage({ id: 'ui-inventory.showColumns' })} id="columns-menu-section">
           {TOGGLEABLE_COLUMNS.map(key => (
@@ -994,6 +1137,9 @@ class InstancesList extends React.Component {
               callNumber: '15%',
               subject: '50%',
               contributor: '50%',
+              contributors: {
+                max: '400px',
+              },
               numberOfTitles: '15%',
               select: '30px',
               title: '40%',

@@ -6,24 +6,16 @@ import { CalloutContext } from '@folio/stripes/core';
 
 import translations from '../../../translations/ui-inventory/en';
 import prefixKeys from './prefixKeys';
-import mockOffsetSize from './mockOffsetSize';
 
 const Harness = ({
   children,
   translations: translationsConfig,
-  shouldMockOffsetSize = true,
-  width = 500,
-  height = 500,
 }) => {
   const allTranslations = prefixKeys(translations);
 
   translationsConfig.forEach(tx => {
     Object.assign(allTranslations, prefixKeys(tx.translations, tx.prefix));
   });
-
-  if (shouldMockOffsetSize) {
-    mockOffsetSize(width, height);
-  }
 
   const defaultRichTextElements = ['b', 'i', 'em', 'strong', 'span', 'div', 'p', 'ul', 'ol', 'li', 'code'].reduce((res, Tag) => {
     res[Tag] = chunks => <Tag>{chunks}</Tag>;
@@ -56,15 +48,6 @@ Harness.propTypes = {
       translations: PropTypes.object,
     })
   ),
-  shouldMockOffsetSize: PropTypes.bool,
-  width: PropTypes.number,
-  height: PropTypes.number,
-};
-
-Harness.defaultProps = {
-  width: 500,
-  height: 500,
-  shouldMockOffsetSize: true,
 };
 
 export default Harness;
