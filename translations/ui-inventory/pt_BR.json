@@ -780,8 +780,9 @@
     "boundWithTitles.add": "Adicione encadernados e analíticas",
     "boundWithTitles.enterHoldingsHrid": "Digite o HRID das Coleções",
     "selectCode": "Selecione o código",
-    "actions.menuSection.sortBy": "Sort by",
-    "actions.menuSection.sortBy.relevance": "Relevance",
-    "actions.menuSection.sortBy.title": "Title",
-    "actions.menuSection.sortBy.contributors": "Contributors"
+    "actions.menuSection.sortBy": "Ordenar por",
+    "actions.menuSection.sortBy.relevance": "Relevância",
+    "actions.menuSection.sortBy.title": "Título",
+    "actions.menuSection.sortBy.contributors": "Colaboradores",
+    "exportInstanceInMARC": "Exportar instâncias (MARC)"
 }
