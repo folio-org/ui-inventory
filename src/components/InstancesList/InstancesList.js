@@ -411,7 +411,6 @@ class InstancesList extends React.Component {
       />
       <FilterNavigation
         segment={this.props.segment}
-        segmentsSortBy={this.state.segmentsSortBy}
         onChange={this.refocusOnInputSearch}
       />
     </>

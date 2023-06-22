@@ -11,7 +11,7 @@ import {
 import { segments } from '../../constants';
 import { useLastSearchTerms } from '../../hooks';
 
-const FilterNavigation = ({ segment, segmentsSortBy, onChange }) => {
+const FilterNavigation = ({ segment, onChange }) => {
   const { getLastSearch } = useLastSearchTerms();
 
   return (
@@ -21,7 +21,6 @@ const FilterNavigation = ({ segment, segmentsSortBy, onChange }) => {
     >
       {
         Object.keys(segments).map((name) => {
-          const sort = segmentsSortBy.find(x => x.name === name).sort || '';
           const searchParams = queryString.parse(getLastSearch(name));
 
           searchParams.segment = name;
@@ -46,11 +45,10 @@ const FilterNavigation = ({ segment, segmentsSortBy, onChange }) => {
       }
     </ButtonGroup>
   );
-}
+};
 
 FilterNavigation.propTypes = {
   segment: PropTypes.string,
-  segmentsSortBy: PropTypes.arrayOf(PropTypes.object),
   onChange: PropTypes.func,
 };
 
