@@ -54,6 +54,7 @@
   "edit": "Edit",
   "newInstance": "New instance",
   "editInstance": "Edit instance",
+  "editInstance.title": "Edit instance • {title}",
   "moveItems": "Move holdings/items to another instance",
   "viewRequests": "View requests",
   "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
