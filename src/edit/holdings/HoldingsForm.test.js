@@ -4,7 +4,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 

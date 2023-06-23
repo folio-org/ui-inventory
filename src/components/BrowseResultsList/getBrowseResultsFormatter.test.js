@@ -1,7 +1,7 @@
 import '../../../test/jest/__mock__';
 
-import userEvent from '@testing-library/user-event';
-import { act, screen } from '@testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 

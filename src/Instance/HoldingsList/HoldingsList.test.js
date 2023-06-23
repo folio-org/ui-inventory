@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen, render } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../test/jest/__mock__';
 import { MemoryRouter } from 'react-router-dom';
 import HoldingsList from './HoldingsList';

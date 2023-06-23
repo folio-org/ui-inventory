@@ -1,5 +1,5 @@
 import { Router } from 'react-router-dom';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
 
 import '../../../test/jest/__mock__';
 

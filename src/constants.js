@@ -10,6 +10,7 @@ const DECLARED_LOST = 'Declared lost';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
+export const DATA_IMPORT_JOB_PROFILES_ROUTE = 'data-import-profiles/jobProfiles';
 
 export const searchModeSegments = {
   search: 'search',
@@ -209,6 +210,12 @@ export const SORT_DIRECTION = {
   DESCENDING: 'descending',
 };
 
+export const SORTABLE_SEARCH_RESULT_LIST_COLUMNS = {
+  TITLE: 'title',
+  CONTRIBUTORS: 'contributors',
+};
+
+
 export const DEFAULT_FILTERS_NUMBER = 6;
 
 export const FACETS = {
@@ -243,6 +250,7 @@ export const FACETS = {
   NAME_TYPE: 'nameType',
   SEARCH_CONTRIBUTORS: 'searchContributors',
   HOLDINGS_TYPE: 'holdingsType',
+  AUTHORITY_ID: 'authorityId',
 };
 
 export const FACETS_CQL = {
@@ -277,6 +285,7 @@ export const FACETS_CQL = {
   NAME_TYPE: 'contributorNameTypeId',
   SEARCH_CONTRIBUTORS: 'contributors.contributorNameTypeId',
   HOLDINGS_TYPE: 'holdings.holdingsTypeId',
+  AUTHORITY_ID: 'authorityId',
 };
 
 export const FACETS_TO_REQUEST = {
@@ -416,6 +425,7 @@ export const PAGE_DIRECTIONS = {
 };
 
 export const BROWSE_RESULTS_COUNT = 100;
+export const NOTE_CHARS_MAX_LENGTH = 32000;
 
 export const ORDERS_API = 'orders/composite-orders';
 
@@ -426,6 +436,6 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   'items.barcode': 'barcode==%{query}',
   isbn: 'isbn==%{query}',
   issn: 'issn==%{query}',
-  hrid: 'hrid==%{query}',
+  itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
 };

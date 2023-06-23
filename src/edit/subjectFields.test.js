@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { screen } from '@testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';

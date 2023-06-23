@@ -779,5 +779,10 @@
     "newMARCRecord": "Novo registro MARC Bibliográfico",
     "boundWithTitles.add": "Adicione encadernados e analíticas",
     "boundWithTitles.enterHoldingsHrid": "Digite o HRID das Coleções",
-    "selectCode": "Selecione o código"
+    "selectCode": "Selecione o código",
+    "actions.menuSection.sortBy": "Ordenar por",
+    "actions.menuSection.sortBy.relevance": "Relevância",
+    "actions.menuSection.sortBy.title": "Título",
+    "actions.menuSection.sortBy.contributors": "Colaboradores",
+    "exportInstanceInMARC": "Exportar instâncias (MARC)"
 }

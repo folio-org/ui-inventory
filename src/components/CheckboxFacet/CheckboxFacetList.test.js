@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { useSearchValue } from '../../stores/facetsStore';
 import '../../../test/jest/__mock__';
 import CheckboxFacetList from './CheckboxFacetList';
