@@ -33,7 +33,11 @@
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
 * Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
+<<<<<<< HEAD
 * Adjust the Instance Edit screen header. Refs UIIN-2437.
+=======
+* Scrolling within Inventory facets. Refs UIIN-2377.
+>>>>>>> 4b08995338ce7966d890c3aebd7349524cc8b791
 
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
