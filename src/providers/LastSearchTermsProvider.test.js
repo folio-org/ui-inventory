@@ -79,10 +79,14 @@ describe('LastSearchTermsProvider', () => {
       useLogout.mockImplementation(cb => cb());
       customRender();
 
-      expect(setItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.lastSearch', null);
-      expect(setItem).toHaveBeenNthCalledWith(2, '@folio/inventory/browse.lastSearch', null);
-      expect(setItem).toHaveBeenNthCalledWith(3, '@folio/inventory/search.lastOffset', null);
-      expect(setItem).toHaveBeenNthCalledWith(4, '@folio/inventory/browse.lastOffset', null);
+      expect(setItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.instances.lastSearch', null);
+      expect(setItem).toHaveBeenNthCalledWith(2, '@folio/inventory/search.holdings.lastSearch', null);
+      expect(setItem).toHaveBeenNthCalledWith(3, '@folio/inventory/search.items.lastSearch', null);
+      expect(setItem).toHaveBeenNthCalledWith(4, '@folio/inventory/browse.lastSearch', null);
+      expect(setItem).toHaveBeenNthCalledWith(5, '@folio/inventory/search.instances.lastOffset', null);
+      expect(setItem).toHaveBeenNthCalledWith(6, '@folio/inventory/search.holdings.lastOffset', null);
+      expect(setItem).toHaveBeenNthCalledWith(7, '@folio/inventory/search.items.lastOffset', null);
+      expect(setItem).toHaveBeenNthCalledWith(8, '@folio/inventory/browse.lastOffset', null);
 
       useLogout.mockRestore();
     });

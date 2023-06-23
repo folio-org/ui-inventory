@@ -13,11 +13,15 @@ const LastSearchTermsProvider = ({ children }) => {
   const [namespace] = useNamespace();
 
   const resetStorageAfterLogout = () => {
-    setItem(`${namespace}/search.lastSearch`, null);
+    setItem(`${namespace}/search.${segments.instances}.lastSearch`, null);
+    setItem(`${namespace}/search.${segments.holdings}.lastSearch`, null);
+    setItem(`${namespace}/search.${segments.items}.lastSearch`, null);
     setItem(`${namespace}/browse.lastSearch`, null);
-    setItem(`${namespace}/search.lastOffset`, null);
+    setItem(`${namespace}/search.${segments.instances}.lastOffset`, null);
+    setItem(`${namespace}/search.${segments.holdings}.lastOffset`, null);
+    setItem(`${namespace}/search.${segments.items}.lastOffset`, null);
     setItem(`${namespace}/browse.lastOffset`, null);
-    setItem(`${namespace}/search.segment`, null);
+    setItem(`${namespace}/search.lastSegment`, null);
   };
 
   useLogout(resetStorageAfterLogout);

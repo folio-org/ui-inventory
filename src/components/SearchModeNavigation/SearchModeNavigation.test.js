@@ -2,7 +2,6 @@ import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/re
 import {
   MemoryRouter,
   useRouteMatch,
-  useHistory,
 } from 'react-router-dom';
 
 import '../../../test/jest/__mock__';
@@ -112,7 +111,7 @@ describe('SearchModeNavigation', () => {
 
       expect(mockPush).toHaveBeenCalledWith({
         pathname: INVENTORY_ROUTE,
-        search,
+        search: initialSearch,
       });
     });
 

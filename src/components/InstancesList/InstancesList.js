@@ -78,6 +78,7 @@ import {
 import facetsStore from '../../stores/facetsStore';
 
 import css from './instances.css';
+import registerLogoutListener from '../../hooks/useLogout/utils';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -169,6 +170,7 @@ class InstancesList extends React.Component {
     const {
       history,
       getParams,
+      namespace,
     } = this.props;
     const params = getParams();
 
@@ -190,6 +192,8 @@ class InstancesList extends React.Component {
       openedFromBrowse: params.selectedBrowseResult === 'true',
       optionSelected: '',
     });
+
+    registerLogoutListener(this.clearStorage, namespace, null, history);
   }
 
   componentDidUpdate(prevProps) {
@@ -222,6 +226,12 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
+
+  clearStorage = () => {
+    const { namespace } = this.props;
+
+    setItem(`${namespace}.lastOpenRecord`, null);
+  }
 
   processLastSearchTerms = () => {
     const {

@@ -25,6 +25,7 @@ class InstancesRoute extends React.Component {
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -45,7 +46,6 @@ class InstancesRoute extends React.Component {
       fetchFacets,
       getLastBrowse,
       getLastSearchOffset,
-      getLastSegment,
       storeLastSearch,
       storeLastSearchOffset,
       storeLastSegment,
@@ -76,7 +76,6 @@ class InstancesRoute extends React.Component {
             fetchFacets={fetchFacets}
             getLastBrowse={getLastBrowse}
             getLastSearchOffset={getLastSearchOffset}
-            getLastSegment={getLastSegment}
             storeLastSearch={storeLastSearch}
             storeLastSearchOffset={storeLastSearchOffset}
             storeLastSegment={storeLastSegment}
