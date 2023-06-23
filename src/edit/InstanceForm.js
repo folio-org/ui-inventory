@@ -196,7 +196,7 @@ class InstanceForm extends React.Component {
             id="ui-inventory.editInstance.title"
             values={{ title: initialValues.title }}
           />
-          {publishingInfo ? ` • ${publishingInfo}` : ''}
+          {publishingInfo}
         </>
       );
     };

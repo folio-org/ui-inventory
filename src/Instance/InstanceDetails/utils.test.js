@@ -24,6 +24,16 @@ describe('getPublishingInfo', () => {
     };
     expect(getPublishingInfo(instanceProps)).toEqual('Publisher');
   });
+  it('returns expected string when publication object exists without publisher', () => {
+    const instanceProps = {
+      publication: [
+        {
+          dateOfPublication: '2022',
+        },
+      ],
+    };
+    expect(getPublishingInfo(instanceProps)).toEqual('2022');
+  });
   it('returns undefined when publication object does not exist', () => {
     const instanceProps = {};
     expect(getPublishingInfo(instanceProps)).toBeUndefined();

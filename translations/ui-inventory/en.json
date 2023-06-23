@@ -244,7 +244,7 @@
   "titleData": "Title data",
   "instanceRecord": "Instance record",
   "instanceRecordWithType": "Instance record ({instanceTypeName})",
-  "instanceRecordTitle": "Instance • {title} •  {publisherAndDate}",
+  "instanceRecordTitle": "Instance • {title} {publisherAndDate}",
   "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
   "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
   "instanceRecordRequestsSubtitle": "{count} items found",
