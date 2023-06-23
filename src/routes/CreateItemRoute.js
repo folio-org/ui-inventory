@@ -10,7 +10,7 @@ const CreateItemRoute = () => {
 
   return (
     <CreateItem
-      referenceData={referenceData}
+      referenceData={referenceData || {}}
       instanceId={id}
       holdingId={holdingId}
     />

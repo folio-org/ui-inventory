@@ -779,5 +779,10 @@
     "newMARCRecord": "新建MARC书目记录",
     "boundWithTitles.add": "添加合订与分析",
     "boundWithTitles.enterHoldingsHrid": "输入馆藏HRID",
-    "selectCode": "选择代码"
+    "selectCode": "选择代码",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors",
+    "exportInstanceInMARC": "Export instance (MARC)"
 }

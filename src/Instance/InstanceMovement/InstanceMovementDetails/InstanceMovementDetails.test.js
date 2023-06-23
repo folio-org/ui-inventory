@@ -73,7 +73,7 @@ describe('InstanceMovementDetails', () => {
   });
   it('render Action Menu', () => {
     renderInstanceMovementDetails();
-    const actionMenu = screen.getByText(/Action Menu/i)
+    const actionMenu = screen.getByText(/Action Menu/i);
     expect(actionMenu).toBeInTheDocument();
   });
   it('render HoldingsListContainer', () => {

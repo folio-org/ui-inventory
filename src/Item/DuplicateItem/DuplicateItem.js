@@ -26,6 +26,10 @@ import {
   useItemMutation,
 } from '../hooks';
 
+import { itemStatusesMap } from '../../constants';
+
+const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'barcode', 'lastCheckIn'];
+
 const DuplicateItem = ({
   referenceData,
   instanceId,
@@ -42,9 +46,9 @@ const DuplicateItem = ({
   const stripes = useStripes();
 
   const initialValues = useMemo(() => {
-    const duplicatedItem = omit(item, ['id', 'hrid', 'barcode']);
+    const duplicatedItem = omit(item, OMITTED_INITIAL_FIELDS);
 
-    duplicatedItem.status = { name: 'Available' };
+    duplicatedItem.status = { name: itemStatusesMap.AVAILABLE };
 
     return duplicatedItem;
   }, [item]);

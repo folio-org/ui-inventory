@@ -715,7 +715,7 @@
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
     "browseCallNumbers.missedMatch": "would be here",
-    "search.allFields": "All",
+    "search.allFields": "全て",
     "acq.dateOpened": "Date opened",
     "moveItems.selectHolding": "Select holdings",
     "browseContributors": "Browse contributors",
@@ -779,5 +779,10 @@
     "newMARCRecord": "New MARC Bib Record",
     "boundWithTitles.add": "Add Bound-with and analytics",
     "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
-    "selectCode": "Select code"
+    "selectCode": "Select code",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors",
+    "exportInstanceInMARC": "Export instance (MARC)"
 }

@@ -573,6 +573,7 @@
   "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again.",
   "saveInstancesCQLQuery": "Save instances CQL query",
   "exportInstancesInMARC": "Export instances (MARC)",
+  "exportInstanceInMARC": "Export instance (MARC)",
   "exportInstancesInMARCLimitExceeded": "Selected record limit of {count, number} exceeded",
   "exportInstancesInJSON": "Export instances (JSON)",
   "reports.inTransitItem.barcode": "Item barcode",
@@ -733,6 +734,11 @@
   "copycat.callout.created": "Record {xid} created. Results may take a few moments to become visible in Inventory",
   "copycat.callout.simpleError": "Something went wrong: {err}",
   "copycat.callout.complexError": "Something went wrong: {err}: {detail}",
+
+  "actions.menuSection.sortBy": "Sort by",
+  "actions.menuSection.sortBy.relevance": "Relevance",
+  "actions.menuSection.sortBy.title": "Title",
+  "actions.menuSection.sortBy.contributors": "Contributors",
 
   "remote.confirmation.heading": "Removing from remote storage",
   "remote.confirmation.message": "Are you sure you want to remove {something} from remote storage?",
