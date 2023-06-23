@@ -32,7 +32,14 @@
 * When adding items, cursor is in the barcode field as default. Refs UIIN-2205.
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
+* Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
+* Scrolling within Inventory facets. Refs UIIN-2377.
 * When removing the dead icons in the Item record, then the displayed text looks inconsistent. Fixes UIIN-1392.
+
+## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
+
+* Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
 
 ## [9.4.5](https://github.com/folio-org/ui-inventory/tree/v9.4.5) (2023-04-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.4...v9.4.5)
