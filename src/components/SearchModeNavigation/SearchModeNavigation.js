@@ -19,7 +19,10 @@ import {
 
 const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
   const { path } = useRouteMatch();
-  const { search: currentSearch } = useLocation();
+  const {
+    search: currentSearch,
+    pathname,
+  } = useLocation();
   const history = useHistory();
 
   const checkIsButtonActive = useCallback((segment) => (
@@ -34,7 +37,7 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
     }
 
     history.push({
-      pathname: searchModeRoutesMap[segment],
+      pathname: isCurrentSegment ? pathname : searchModeRoutesMap[segment],
       search: isCurrentSegment ? currentSearch : search,
       state,
     });

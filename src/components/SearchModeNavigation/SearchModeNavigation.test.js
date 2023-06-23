@@ -110,7 +110,7 @@ describe('SearchModeNavigation', () => {
       fireEvent.click(searchButton);
 
       expect(mockPush).toHaveBeenCalledWith({
-        pathname: INVENTORY_ROUTE,
+        pathname,
         search: initialSearch,
       });
     });

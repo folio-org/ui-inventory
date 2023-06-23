@@ -260,7 +260,7 @@ describe('InstancesList', () => {
 
         fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
 
-        expect(setItem).toHaveBeenCalledWith('@folio/inventory.lastOpenRecord', 'test-id');
+        expect(setItem).toHaveBeenCalledWith('@folio/inventory.instances.lastOpenRecord', 'test-id');
       });
     });
 

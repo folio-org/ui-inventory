@@ -193,7 +193,7 @@ class InstancesList extends React.Component {
       optionSelected: '',
     });
 
-    registerLogoutListener(this.clearStorage, namespace, null, history);
+    registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
 
   componentDidUpdate(prevProps) {
@@ -214,6 +214,12 @@ class InstancesList extends React.Component {
     if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
       this.setSegmentSortBy(sortBy);
     }
+
+    const id = this.props.location.pathname.split('/')[3];
+
+    if (id) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, id);
+    }
   }
 
   componentWillUnmount() {
@@ -228,9 +234,13 @@ class InstancesList extends React.Component {
   };
 
   clearStorage = () => {
-    const { namespace } = this.props;
+    const {
+      namespace,
+    } = this.props;
 
-    setItem(`${namespace}.lastOpenRecord`, null);
+    Object.values(segments).forEach((segment) => {
+      setItem(`${namespace}.${segment}.lastOpenRecord`, null);
+    });
   }
 
   processLastSearchTerms = () => {
@@ -404,12 +414,13 @@ class InstancesList extends React.Component {
     const {
       namespace,
       location: { pathname },
+      segment,
     } = this.props;
 
     const id = pathname.split('/')[3];
 
     if (id) {
-      setItem(`${namespace}.lastOpenRecord`, id);
+      setItem(`${namespace}.${segment}.lastOpenRecord`, id);
     }
   }
 
@@ -1020,6 +1031,7 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      segment,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -1148,7 +1160,7 @@ class InstancesList extends React.Component {
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
-            initiallySelectedRecord={getItem(`${namespace}.lastOpenRecord`)}
+            initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
