@@ -123,6 +123,23 @@ class TargetProfileDetail extends React.Component {
     },
   });
 
+
+  shouldComponentUpdate(nextProps) {
+    console.log('================');
+    console.log(this.props.resources);
+    console.log(nextProps.resources);
+    console.log('================');
+    const isAllowedCreateJobProfilesEmpty = nextProps.resources.allowedCreateJobProfiles.hasLoaded;
+    const isAllowedUpdateJobProfilesEmpty = isEmpty(nextProps.resources.allowedUpdateJobProfiles.records);
+    const isDefaultCreateJobProfileEmpty = isEmpty(nextProps.resources.defaultCreateJobProfile.records);
+    const isDefaultUpdateJobProfileEmpty = isEmpty(nextProps.resources.defaultUpdateJobProfile.records);
+    if (
+      (!isAllowedCreateJobProfilesEmpty && nextProps.resources.allowedCreateJobProfiles.records.length === this.props.resources.allowedCreateJobProfiles.records.length) ||
+      isAllowedCreateJobProfilesEmpty
+    ) return false;
+    return true;
+  }
+
   getJobProfilesContent = (defaultJobProfileRecord, allowedJobProfilesRecords) => {
     const content = [
       defaultJobProfileRecord,
@@ -155,6 +172,7 @@ class TargetProfileDetail extends React.Component {
   });
 
   render() {
+    console.log('rendered 2');
     const {
       initialValues,
       initialValues: {
