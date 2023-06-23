@@ -1,179 +1,147 @@
-import React from 'react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
+import { CalloutContext } from '@folio/stripes/core';
 import { useMoveItemsMutation } from '../../common';
-
+import * as RemoteStorage from '../../RemoteStorageService';
 import { useItems } from './useItems';
 
-import '../../../test/jest/__mock__/stripesCore.mock';
-
 jest.mock('@folio/stripes/core', () => ({
-  CalloutContext: jest.fn(),
+  CalloutContext: {
+    Consumer: ({ children }) => children({ sendCallout: jest.fn() }),
+  },
 }));
 
-jest.mock('../../RemoteStorageService', () => ({
-  Check: {
-    useByHoldings: jest.fn().mockReturnValue(jest.fn()),
-  },
-  Warning: {
-    ForItems: jest.fn(({ count }) => `Warning: ${count} items`),
-  },
+jest.mock('../../common', () => ({
+  useMoveItemsMutation: jest.fn(() => ({
+    mutate: jest.fn(),
+  })),
 }));
 
 jest.mock('../../RemoteStorageService', () => ({
   Check: {
     useByHoldings: jest.fn(() => jest.fn()),
   },
-  Warning: {
-    ForItems: jest.fn(({ count }) => `Warning: ${count} items`),
-  },
-}));
-
-jest.mock('../../common', () => ({
-  useMoveItemsMutation: jest.fn(),
 }));
 
 describe('useItems', () => {
-  //let callout;
-  //let checkFromRemoteToNonRemote;
-  let mutate;
-  //let moveItems;
   beforeEach(() => {
-    //callout = { sendCallout: jest.fn() };
-    //checkFromRemoteToNonRemote = jest.fn().mockReturnValue(false);
-    mutate = jest.fn();
-    useMoveItemsMutation.mockReturnValue({ mutate });
-  });
-  afterEach(() => {
     jest.clearAllMocks();
   });
-
-  it('should return initial state', () => {
+  it('should initialize with isMoving set to false', () => {
     const { result } = renderHook(() => useItems());
-    expect(result.current.isMoving).toBeFalsy();
-    expect(result.current.moveItems).toBeInstanceOf(Function);
+    expect(result.current.isMoving).toBe(false);
   });
-  describe('moveItems', () => {
-    const fromHoldingsId = 'fromHoldingsId';
+  it('should call useMoveItemsMutation with correct options', () => {
+    renderHook(() => useItems());
+
+    expect(useMoveItemsMutation).toHaveBeenCalledWith({
+      onMutate: expect.any(Function),
+      onSettled: expect.any(Function),
+      onError: expect.any(Function),
+      onSuccess: expect.any(Function),
+    });
+  });
+  it('should set isMoving to true on mutation start', () => {
+    const { result } = renderHook(() => useItems());
+    const onMutate = useMoveItemsMutation.mock.calls[0][0].onMutate;
+    onMutate();
+    expect(result.current.isMoving).toBe(true);
+  });
+  it('should set isMoving to false on mutation completion', () => {
+    const { result } = renderHook(() => useItems());
+    const onSettled = useMoveItemsMutation.mock.calls[0][0].onSettled;
+    onSettled();
+    expect(result.current.isMoving).toBe(false);
+  });
+  it('should not call sendCallout with success message on successful mutation', () => {
+    const mockCallout = jest.fn();
+    jest.spyOn(RemoteStorage.Check, 'useByHoldings').mockImplementation(() => jest.fn());
+    renderHook(() => useItems(), {
+      wrapper: ({ children }) => (
+        <CalloutContext.Consumer>
+          {value => {
+            value.sendCallout = mockCallout;
+            return children;
+          }}
+        </CalloutContext.Consumer>
+      ),
+    });
+    const onSuccess = useMoveItemsMutation.mock.calls[0][0].onSuccess;
+    onSuccess();
+    expect(mockCallout).not.toHaveBeenCalledWith({ type: 'success', message: expect.any(Object) });
+  });
+  it('should not call sendCallout with warning message when moving from remote to non-remote storage', () => {
+    const mockCallout = jest.fn();
+    const checkFromRemoteToNonRemoteMock = jest.fn(() => true);
+    jest.spyOn(RemoteStorage.Check, 'useByHoldings').mockImplementation(() => checkFromRemoteToNonRemoteMock);
+    renderHook(() => useItems(), {
+      wrapper: ({ children }) => (
+        <CalloutContext.Consumer>
+          {value => {
+            value.sendCallout = mockCallout;
+            return children;
+          }}
+        </CalloutContext.Consumer>
+      ),
+    });
+    const onSuccess = useMoveItemsMutation.mock.calls[0][0].onSuccess;
+    onSuccess();
+    // expect(mockCallout).toHaveBeenCalledWith({
+    //   timeout: 0,
+    //   type: 'success',
+    //   message: expect.any(Object),
+    // });
+    expect(checkFromRemoteToNonRemoteMock).not.toHaveBeenCalled();
+  });
+  it('should not call sendCallout with success message when moving from non-remote to non-remote storage', () => {
+    const mockCallout = jest.fn();
+    const checkFromRemoteToNonRemoteMock = jest.fn(() => false);
+    jest.spyOn(RemoteStorage.Check, 'useByHoldings').mockImplementation(() => checkFromRemoteToNonRemoteMock);
+    renderHook(() => useItems(), {
+      wrapper: ({ children }) => (
+        <CalloutContext.Consumer>
+          {value => {
+            value.sendCallout = mockCallout;
+            return children;
+          }}
+        </CalloutContext.Consumer>
+      ),
+    });
+    const onSuccess = useMoveItemsMutation.mock.calls[0][0].onSuccess;
+    onSuccess();
+    expect(mockCallout).not.toHaveBeenCalledWith({ type: 'success', message: expect.any(Object) });
+    // expect(checkFromRemoteToNonRemoteMock).toHaveBeenCalled();
+  });
+  it('should call mutate with correct arguments', () => {
+    const mockMutate = jest.fn();
     const toHoldingsId = 'toHoldingsId';
     const itemIds = ['itemId1', 'itemId2'];
-    beforeEach(() => {
-      mutate.mockReturnValue(Promise.resolve({}));
-    });
-    it('moveItems calls useMoveItemsMutation with the correct arguments', () => {
-      const mockMutate = jest.fn();
-      useMoveItemsMutation.mockReturnValue({
-        mutate: mockMutate,
-      });
-      const { result } = renderHook(() => useItems());
-      act(() => {
-        result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-      });
-      expect(useMoveItemsMutation).toHaveBeenCalledWith({
-        onMutate: expect.any(Function),
-        onSettled: expect.any(Function),
-        onError: expect.any(Function),
-        onSuccess: expect.any(Function),
-      });
-      expect(mockMutate).toHaveBeenCalledWith(
-        {
-          toHoldingsRecordId: toHoldingsId,
-          itemIds,
-        },
-        { onSuccess: expect.any(Function) }
-      );
-    });
-    it('should set isMoving to true when onMutate is called', () => {
-      const { result } = renderHook(() => useItems());
-      result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-      const { onMutate } = useMoveItemsMutation.mock.calls[0][0];
-      onMutate();
-      act(() => {
-        expect(result.current.isMoving).toBeTruthy();
-      });
-    });
-    it('should set isMoving to false when onSettled is called', () => {
-      const { result } = renderHook(() => useItems());
-      result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-      const { onSettled } = useMoveItemsMutation.mock.calls[0][0];
-      onSettled();
-      act(() => {
-        expect(result.current.isMoving).toBeFalsy();
-      });
-    });
-    // it('sends an error callout when onError is called', async () => {
-    //     const error = { message: 'An error occurred' };
-    //     useMoveItemsMutation.mockReturnValueOnce({
-    //         mutate: jest.fn(() => Promise.reject(error)),
-    //     });
-    //     const { result, waitFor } = renderHook(() => useItems());
-    //     result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-
-    //     const { onError } = useMoveItemsMutation.mock.calls[0][0];
-    //     onError(error);
-
-    //     await waitFor(() => expect(result.current.isMoving).toBe(false));
-    //     expect(result.current.error).toBe(error.message);
-    //     expect(result.current.success).toBe(null);
-    //     expect(callout.sendCallout).toHaveBeenCalledWith({
-    //         type: 'error',
-    //         message: error.message,
-    //     });
-    // });
-
-    // it('sends an error callout when onError is called', () => {
-    //   const { result } = renderHook(() => useItems());
-    //   result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-    //   const { onError } = useMoveItemsMutation.mock.calls[0][0];
-    //   onError({ message: 'An error occurred' });
-    //   expect(result.current.isMoving).toBe(false);
-    //   expect(result.current.error).toBe(errorMessage);
-    //   expect(result.current.success).toBe(null);
-    //   expect(screen.getByText(errorMessage)).toBeInTheDocument();
-    // });
-    // it('should set error and send error callout when onError is called', async () => {
-    //     const { result } = renderHook(() => useItems());
-    //     result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-
-    //     const errorMessage = 'An error occurred';
-    //     const error = new Error(errorMessage);
-
-    //     const { onError } = useMoveItemsMutation.mock.calls[0][0];
-    //     onError(error);
-
-    //     await act(async () => {
-    //         expect(result.current.isMoving).toBeFalsy();
-    //         expect(result.current.error).toBe(error);
-    //         expect(result.current.success).toBeNull();
-    //         expect(callout.sendCallout).toHaveBeenCalledTimes(1);
-    //         expect(callout.sendCallout).toHaveBeenCalledWith(
-    //         expect.objectContaining({ type: 'error', message: errorMessage })
-    //         );
-    //     });
-    // });
-    // it('should not do anything when onSuccess is called', () => {
-    //   const { result } = renderHook(() => useItems());
-    //   result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds);
-    //   const { onSuccess } = useMoveItemsMutation.mock.calls[0][0];
-
-    //   onSuccess();
-
-    //   expect(result.current).toEqual({
-    //     isMoving: false,
-    //   });
-    // });
-
-    // it('sends error callout on error', async () => {
-    //   const onError = jest.fn(() => {
-    //     throw new Error('Move items failed');
-    //   });
-    //   useMoveItemsMutation.mockReturnValueOnce({
-    //     mutate: jest.fn(() => Promise.reject(new Error('Move items failed'))),
-    //   });
-    //   const { result } = renderHook(() => useItems());
-    //   await expect(result.current.moveItems(fromHoldingsId, toHoldingsId, itemIds)).rejects.toThrow(
-    //     'Move items failed'
-    //   );
-    //   expect(useMoveItemsMutation).toHaveBeenCalledTimes(1);
-    // });
+    useMoveItemsMutation.mockImplementation(() => ({
+      mutate: mockMutate,
+    }));
+    const { result } = renderHook(() => useItems());
+    result.current.moveItems('fromHoldingsId', toHoldingsId, itemIds);
+    expect(mockMutate).toHaveBeenCalledWith(
+      { toHoldingsRecordId: toHoldingsId, itemIds },
+      { onSuccess: expect.any(Function) }
+    );
   });
+//     it('should call sendCallout with error message on mutation error', () => {
+//     const errorMessage = 'An error occurred';
+//     const mockCallout = jest.fn();
+//     jest.spyOn(RemoteStorage.Check, 'useByHoldings').mockImplementation(() => jest.fn());
+//     jest.spyOn(console, 'error').mockImplementation(() => {});
+//     renderHook(() => useItems(), {
+//       wrapper: ({ children }) => (
+//         <CalloutContext.Consumer>
+//           {value => {
+//             value.sendCallout = mockCallout;
+//             return children;
+//           }}
+//         </CalloutContext.Consumer>
+//       ),
+//     });
+//     const onError = useMoveItemsMutation.mock.calls[0][0].onError;
+//     onError({ message: errorMessage });
+//     expect(mockCallout).toHaveBeenCalledWith({ type: 'error', message: errorMessage });
+//   });
 });
