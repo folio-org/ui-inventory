@@ -784,5 +784,5 @@
     "actions.menuSection.sortBy.relevance": "Relevantnost",
     "actions.menuSection.sortBy.title": "Název",
     "actions.menuSection.sortBy.contributors": "Autoři",
-    "exportInstanceInMARC": "Export instance (MARC)"
+    "exportInstanceInMARC": "Export titulu (MARC)"
 }
