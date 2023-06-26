@@ -36,6 +36,7 @@
 * Scrolling within Inventory facets. Refs UIIN-2377.
 * When removing the dead icons in the Item record, then the displayed text looks inconsistent. Fixes UIIN-1392.
 * Adjust the sentence case for some Inventory action options. Refs UIIN-2436.
+* Adjust the Instance Edit screen header. Refs UIIN-2437.
 
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
