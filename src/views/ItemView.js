@@ -977,8 +977,8 @@ class ItemView extends React.Component {
                           'ui-inventory.itemRecordWithDescription'
                       }
                       values={{
-                        materialType: item?.materialType?.name,
-                        status: item?.status?.name,
+                        materialType: item?.materialType?.name.toLowerCase(),
+                        status: item?.status?.name.toLowerCase(),
                       }}
                     />
                   </Col>
