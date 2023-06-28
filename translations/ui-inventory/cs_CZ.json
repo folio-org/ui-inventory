@@ -371,7 +371,7 @@
     "formatCode": "Kód formátu",
     "addNatureOfContentTerm": "Přidat povahu obsahu",
     "selectNatureOfContentTerm": "Vyberte povahu obsahu",
-    "hridHandling": "Zpracování HRID",
+    "hridHandling": "Přidělování HRID",
     "hridHandling.description.line1": "Po úvodní migraci dat jsou nové FOLIO HRID přiřazovány sekvenčně podle stavu počitadla v těchto nastaveních.",
     "hridHandling.description.line2": "Pokud se nezmění nebo neodstraní, bude novým identifikátorům FOLIO HRID přiřazen výchozí prefix.",
     "hridHandling.description.line3": "HRID ve stávajícím katalogu FOLIO a MARC záznamech nelze změnit",
@@ -780,8 +780,9 @@
     "boundWithTitles.add": "Přidat Vazbu a analitiku",
     "boundWithTitles.enterHoldingsHrid": "Zadejte HRID holdingů",
     "selectCode": "Vybrat kód",
-    "actions.menuSection.sortBy": "Sort by",
-    "actions.menuSection.sortBy.relevance": "Relevance",
-    "actions.menuSection.sortBy.title": "Title",
-    "actions.menuSection.sortBy.contributors": "Contributors"
+    "actions.menuSection.sortBy": "Seřadit podle",
+    "actions.menuSection.sortBy.relevance": "Relevantnost",
+    "actions.menuSection.sortBy.title": "Název",
+    "actions.menuSection.sortBy.contributors": "Autoři",
+    "exportInstanceInMARC": "Export titulu (MARC)"
 }
