@@ -7,7 +7,7 @@ import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/reac
 import '../../test/jest/__mock__';
 
 import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
-import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
+import { renderWithIntl, translationsProperties } from '../../test/jest/helpers';
 
 import ItemView from './ItemView';
 
@@ -119,15 +119,15 @@ const ItemViewSetup = () => (
 describe('ItemView', () => {
   describe('rendering ItemView', () => {
     beforeEach(() => {
-      renderWithIntl(<ItemViewSetup />);
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
     });
 
     afterEach(() => {
       jest.clearAllMocks();
     });
 
-    it('should display item record with material type and status in lower case in parentheses', () => {
-      expect(screen.getByText('Item record (book, available)')).toBeInTheDocument();
+    it('should display item record with material type, status, and bound with in lower case in parentheses', () => {
+      expect(screen.getByText('Item record (book, available, bound with)')).toBeInTheDocument();
     });
 
     it('should display a table of bound-with items', () => {
@@ -154,35 +154,35 @@ describe('ItemView', () => {
     it('should display "inactive" by an inactive holding permanent location', async () => {
       await waitFor(() => {
         const location = document.querySelector('*[data-testid=holding-permanent-location]').innerHTML;
-        expect(location).toContain('ui-inventory.inactive');
+        expect(location).toContain('Inactive');
       });
     });
 
     it('should display "inactive" by an inactive holding temporary location', async () => {
       await waitFor(() => {
         const location = document.querySelector('*[data-testid=holding-temporary-location]').innerHTML;
-        expect(location).toContain('ui-inventory.inactive');
+        expect(location).toContain('Inactive');
       });
     });
 
     it('should display "inactive" by an inactive item permanent location', async () => {
       await waitFor(() => {
         const location = document.querySelector('*[data-testid=item-permanent-location]').innerHTML;
-        expect(location).toContain('ui-inventory.inactive');
+        expect(location).toContain('Inactive');
       });
     });
 
     it('should display "inactive" by an inactive item temporary location', async () => {
       await waitFor(() => {
         const location = document.querySelector('*[data-testid=item-temporary-location]').innerHTML;
-        expect(location).toContain('ui-inventory.inactive');
+        expect(location).toContain('Inactive');
       });
     });
 
     it('should display "inactive" by an inactive item effective location', async () => {
       await waitFor(() => {
         const location = document.querySelector('*[data-testid=item-effective-location]').innerHTML;
-        expect(location).toContain('ui-inventory.inactive');
+        expect(location).toContain('Inactive');
       });
     });
 

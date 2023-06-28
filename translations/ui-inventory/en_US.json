@@ -385,7 +385,7 @@
     "hridHandling.validation.startWithField": "Please enter a numeric value",
     "hridHandling.validation.assignPrefixField": "Please enter an alphanumeric value",
     "noBarcode": "No barcode",
-    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clip board",
+    "items.successfullyCopiedMessage": "The item barcode {barcode} was successfully copied to the clipboard",
     "filters.instances": "Instance",
     "filters.holdings": "Holdings",
     "filters.items": "Item",
@@ -783,5 +783,6 @@
     "actions.menuSection.sortBy": "Sort by",
     "actions.menuSection.sortBy.relevance": "Relevance",
     "actions.menuSection.sortBy.title": "Title",
-    "actions.menuSection.sortBy.contributors": "Contributors"
+    "actions.menuSection.sortBy.contributors": "Contributors",
+    "exportInstanceInMARC": "Export instance (MARC)"
 }
