@@ -56,7 +56,6 @@ import ModalContent from '../components/ModalContent';
 import { ItemAcquisition } from '../Item/ViewItem/ItemAcquisition';
 import {
   craftLayerUrl,
-  callNumberLabel,
   canMarkItemAsMissing,
   canMarkItemAsWithdrawn,
   canMarkItemWithStatus,
@@ -84,8 +83,8 @@ import ItemStatus from './ItemStatus';
 import {
   WarningMessage,
   AdministrativeNoteList,
+  ItemViewSubheader,
 } from '../components';
-import css from '../View.css';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -758,13 +757,6 @@ class ItemView extends React.Component {
       </Col>
     );
 
-    const boundWithCount = item?.boundWithTitles?.length;
-    const linkedInstanceTitle = (
-      <Link to={`/inventory/view/${instance.id}`}>
-        {` ${instance.title}. `}
-      </Link>
-    );
-
     const shortcuts = [
       {
         name: 'edit',
@@ -917,72 +909,12 @@ class ItemView extends React.Component {
                   />
                 </Modal>
                 )}
-
-                <Row center="xs">
-                  <Col sm={6}>
-                    <FormattedMessage
-                      id="ui-inventory.instanceTitle"
-                      values={{ title: linkedInstanceTitle }}
-                    />
-                    {(instance.publication && instance.publication.length > 0) && (
-                    <span>
-                      <em>
-                        {` ${instance.publication[0].publisher}`}
-                        {instance.publication[0].dateOfPublication ? `, ${instance.publication[0].dateOfPublication}` : ''}
-                      </em>
-                    </span>
-                    )}
-                    { boundWithCount > 0 &&
-                      <>
-                        {' '}
-                        <span className={css.multiTitle}>
-                          <FormattedMessage
-                            id="ui-inventory.boundWith"
-                            values={{
-                              boundWithCount,
-                            }}
-                          />
-                        </span>
-                      </>
-                    }
-                    <div>
-                      <FormattedMessage id="ui-inventory.holdingsLabelShort" />
-                      <Link to={`/inventory/view/${instance.id}/${holdingsRecord.id}`}>
-                        {(!holdingLocation.permanentLocation.isActive) &&
-                          <span>
-                            {' '}
-                            <em><FormattedMessage id="ui-inventory.inactive" /></em>
-                          </span>
-                        }
-                        {
-                          ` ${holdingLocation.permanentLocation.name} > ${callNumberLabel(holdingsRecord)}`
-                        }
-                      </Link>
-                    </div>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm={12}>
-                    <AppIcon
-                      app="inventory"
-                      iconKey="item"
-                      size="small"
-                    />
-                    {' '}
-                    <FormattedMessage
-                      id={
-                        item?.isBoundWith ?
-                          'ui-inventory.itemRecordWithDescriptionBW' :
-                          'ui-inventory.itemRecordWithDescription'
-                      }
-                      values={{
-                        materialType: item?.materialType?.name.toLowerCase(),
-                        status: item?.status?.name.toLowerCase(),
-                      }}
-                    />
-                  </Col>
-                </Row>
+                <ItemViewSubheader
+                  item={item}
+                  instance={instance}
+                  holdingsRecord={holdingsRecord}
+                  holdingLocation={holdingLocation}
+                />
                 <br />
                 <AccordionStatus ref={this.accordionStatusRef}>
                   <Row>
