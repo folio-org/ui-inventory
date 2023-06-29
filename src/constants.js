@@ -171,6 +171,7 @@ export const queryIndexes = {
   QUERY_SEARCH: 'querySearch',
   CALL_NUMBER: 'callNumber',
   CONTRIBUTOR: 'contributor',
+  ADVANCED_SEARCH: 'advancedSearch',
 };
 
 export const indentifierTypeNames = {
