@@ -439,14 +439,3 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
 };
-
-export const ITEM_MATERIAL_TYPES = {
-  BOOK: 'book',
-  DVD: 'dvd',
-  ELECTRONIC_RESOURCE: 'electronic resource',
-  MICROFORM: 'microform',
-  SOUND_RECORDING: 'sound recording',
-  TEXT: 'text',
-  UNSPECIFIED: 'unspecified',
-  VIDEO_RECORDING: 'video recording',
-};

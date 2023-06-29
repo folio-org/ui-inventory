@@ -14,10 +14,7 @@ import { AppIcon } from '@folio/stripes/core';
 import LinkedInstanceDetails from './LinkedInstanceDetails';
 import LinkedHoldingDetails from './LinkedHoldingDetails';
 
-import {
-  ITEM_MATERIAL_TYPES,
-  itemStatusesMap,
-} from '../../constants';
+import { itemStatusesMap } from '../../constants';
 
 const ITEM_STATUS_TRANSLATIONS_ID_MAP = {
   [itemStatusesMap.AGED_TO_LOST]: 'ui-inventory.item.status.agedToLost.lowercase',
@@ -42,16 +39,6 @@ const ITEM_STATUS_TRANSLATIONS_ID_MAP = {
   [itemStatusesMap.UNKNOWN]: 'ui-inventory.item.status.unknown.lowercase',
   [itemStatusesMap.WITHDRAWN]: 'ui-inventory.item.status.withdrawn.lowercase',
 };
-const MATERIAL_TYPE_TRANSLATIONS_ID_MAP = {
-  [ITEM_MATERIAL_TYPES.BOOK]: 'ui-inventory.item.materialType.book',
-  [ITEM_MATERIAL_TYPES.DVD]: 'ui-inventory.item.materialType.dvd',
-  [ITEM_MATERIAL_TYPES.ELECTRONIC_RESOURCE]: 'ui-inventory.item.materialType.electronicResource',
-  [ITEM_MATERIAL_TYPES.MICROFORM]: 'ui-inventory.item.materialType.microform',
-  [ITEM_MATERIAL_TYPES.SOUND_RECORDING]: 'ui-inventory.item.materialType.soundRecording',
-  [ITEM_MATERIAL_TYPES.TEXT]: 'ui-inventory.item.materialType.text',
-  [ITEM_MATERIAL_TYPES.UNSPECIFIED]: 'ui-inventory.item.materialType.unspecified',
-  [ITEM_MATERIAL_TYPES.VIDEO_RECORDING]: 'ui-inventory.item.materialType.videoRecording',
-};
 
 const ItemViewSubheader = ({
   item,
@@ -64,9 +51,6 @@ const ItemViewSubheader = ({
   const itemMaterialType = item?.materialType?.name || '';
   const itemStatus = item?.status?.name || '';
 
-  const materialTypeValue = itemMaterialType in MATERIAL_TYPE_TRANSLATIONS_ID_MAP
-    ? formatMessage({ id: MATERIAL_TYPE_TRANSLATIONS_ID_MAP[itemMaterialType] })
-    : itemMaterialType;
   const itemStatusValue = itemStatus in ITEM_STATUS_TRANSLATIONS_ID_MAP
     ? formatMessage({ id: ITEM_STATUS_TRANSLATIONS_ID_MAP[itemStatus] })
     : itemStatus;
@@ -102,7 +86,7 @@ const ItemViewSubheader = ({
                 : 'ui-inventory.itemRecordWithDescription'
             }
             values={{
-              materialType: materialTypeValue,
+              materialType: itemMaterialType,
               status: itemStatusValue,
             }}
           />
