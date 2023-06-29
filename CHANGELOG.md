@@ -33,7 +33,18 @@
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
 * Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
+* Scrolling within Inventory facets. Refs UIIN-2377.
+* When removing the dead icons in the Item record, then the displayed text looks inconsistent. Fixes UIIN-1392.
+* Adjust the sentence case for some Inventory action options. Refs UIIN-2436.
+* Adjust the Instance Edit screen header. Refs UIIN-2437.
+* Inventory: Retain Search/Browse query/options/filter and facet selections UNLESS user resets/clear selections. Refs UIIN-2433.
+* Statistical Code dropdown "contains" type ahead functionality needed (Instance/Holdings/Items). Refs UIIN-2466.
 * The 'Something went wrong' message is displayed on the page after clicking Settings -> Inventory -> Integrations -> Z39.5 target profiles. Fixes UIIN-2467.
+
+## [9.4.7](https://github.com/folio-org/ui-inventory/tree/v9.4.7) (2023-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.6...v9.4.7)
+
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2469.
 
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
@@ -157,6 +168,12 @@
 * Move @testing-library/* to dev-deps. Refs UIIN-2309.
 * Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
 * Reset `<BoundWithModal>` when modal is closed. Fixes UIIN-2401.
+
+## [9.2.9](https://github.com/folio-org/ui-inventory/tree/v9.2.9) (2023-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.8...v9.2.9)
+
+* Use correct reference to item resource. Fixes UIIN-2418.
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2470.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
