@@ -9,11 +9,11 @@ const LinkedInstanceDetails = ({
   item,
   instance,
 }) => {
-  const boundWithCount = item?.boundWithTitles?.length;
-  const instancePublicationCount = instance.publication?.length;
+  const boundWithCount = item?.boundWithTitles?.length ?? 0;
+  const instancePublicationCount = instance.publication?.length ?? 0;
   const linkedInstanceTitle = (
     <Link to={`/inventory/view/${instance.id}`}>
-      {` ${instance.title} `}
+      {instance.title}
     </Link>
   );
 
