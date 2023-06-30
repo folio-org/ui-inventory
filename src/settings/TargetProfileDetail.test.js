@@ -33,6 +33,43 @@ const identifierTypeResources = {
   },
 };
 
+const allowedCreateJobProfilesMock = {
+  isLoading: false,
+  allowedJobProfiles: [{
+    id: 'testCreateId1',
+    name: 'Create job porfile 1',
+  }, {
+    id: 'testCreateId2',
+    name: 'Create job porfile 2',
+  }]
+};
+const allowedUpdateJobProfilesMock = {
+  isLoading: false,
+  allowedJobProfiles: [{
+    id: 'testUpdateId1',
+    name: 'Update job porfile 1',
+  }, {
+    id: 'testUpdateId2',
+    name: 'Update job porfile 2',
+  }]
+};
+
+const defaultCreateJobProfileMock = {
+  isLoading: false,
+  defaultJobProfile: {
+    id: 'testCreateId1',
+    name: 'Create job porfile 1',
+  }
+};
+
+const defaultUpdateJobProfileMock = {
+  isLoading: false,
+  defaultJobProfile: {
+    id: 'testUpdateId1',
+    name: 'Update job porfile 1',
+  }
+};
+
 const resources = {
   identifierType: identifierTypeResources.identifierType,
 };
@@ -68,20 +105,12 @@ const renderTargetProfileDetail = (initialValues = defaultInitialValues) => rend
 
 describe('TargetProfileDetail', () => {
   beforeEach(() => {
-    useAllowedJobProfiles.mockReturnValue({
-      isLoading: false,
-      allowedJobProfiles: [{
-        id: 'testId1',
-        name: 'Test name 1',
-      }]
-    });
-    useDefaultJobProfile.mockReturnValue({
-      isLoading: false,
-      defaultJobProfile: {
-        id: 'testId1',
-        name: 'Test name 1',
-      }
-    });
+    useAllowedJobProfiles
+      .mockReturnValueOnce(allowedCreateJobProfilesMock)
+      .mockReturnValueOnce(allowedUpdateJobProfilesMock);
+    useDefaultJobProfile
+      .mockReturnValueOnce(defaultCreateJobProfileMock)
+      .mockReturnValueOnce(defaultUpdateJobProfileMock);
   });
 
   afterEach(() => {
@@ -144,10 +173,10 @@ describe('TargetProfileDetail', () => {
   });
 
   it('names of job profiles should be displayed as a hotlink', () => {
-    const { getAllByText } = renderTargetProfileDetail();
+    const { getByText } = renderTargetProfileDetail();
 
-    expect(getAllByText('Test name 1')[0].href).toContain('/settings/data-import/job-profiles/view/testId1');
-    expect(getAllByText('Test name 1')[1].href).toContain('/settings/data-import/job-profiles/view/testId1');
+    expect(getByText('Create job porfile 1').href).toContain('/settings/data-import/job-profiles/view/testCreateId1');
+    expect(getByText('Update job porfile 1').href).toContain('/settings/data-import/job-profiles/view/testUpdateId1');
   });
 
   it('should display correct Target options', () => {
