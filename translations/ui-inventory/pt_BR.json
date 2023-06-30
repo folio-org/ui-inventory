@@ -784,5 +784,6 @@
     "actions.menuSection.sortBy.relevance": "Relevância",
     "actions.menuSection.sortBy.title": "Título",
     "actions.menuSection.sortBy.contributors": "Colaboradores",
-    "exportInstanceInMARC": "Exportar instâncias (MARC)"
+    "exportInstanceInMARC": "Exportar instâncias (MARC)",
+    "editInstance.title": "Editar instância • {title}"
 }
