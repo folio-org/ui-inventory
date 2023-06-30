@@ -5,7 +5,7 @@ import {
 } from 'react-query';
 import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
 
-import '../../../../test/jest/__mock__';
+import '../../../test/jest/__mock__';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import useAllowedJobProfiles from './useAllowedJobProfiles';

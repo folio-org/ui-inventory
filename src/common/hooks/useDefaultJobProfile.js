@@ -1,7 +1,11 @@
 import { useQuery } from 'react-query';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
-import { DATA_IMPORT_JOB_PROFILES_ROUTE } from '../../../constants';
+import {
+  useOkapiKy,
+  useNamespace,
+} from '@folio/stripes/core';
+
+import { DATA_IMPORT_JOB_PROFILES_ROUTE } from '../../constants';
 
 const useDefaultJobProfile = (jobProfileId) => {
   const ky = useOkapiKy();

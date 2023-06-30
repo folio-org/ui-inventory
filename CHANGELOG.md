@@ -33,7 +33,7 @@
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
 * Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
-* The 'Something went wrong' message is displayed on the page after clicking Settings -> Inventory -> Integrations -> Z39.5 target profiles. Fixes UIIN-2467.
+* Decrease rerenders for TargetProfileDetail component to avoid errors when view the target profile. Fixes UIIN-2467.
 
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)

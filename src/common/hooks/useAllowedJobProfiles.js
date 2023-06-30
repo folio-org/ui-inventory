@@ -1,7 +1,14 @@
 import { useQuery } from 'react-query';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
-import { DATA_IMPORT_JOB_PROFILES_ROUTE, LIMIT_MAX } from '../../../constants';
+import {
+  useOkapiKy,
+  useNamespace,
+} from '@folio/stripes/core';
+
+import {
+  DATA_IMPORT_JOB_PROFILES_ROUTE,
+  LIMIT_MAX,
+} from '../../constants';
 
 const useAllowedJobProfiles = (allowedJobProfileIds) => {
   const ky = useOkapiKy();
