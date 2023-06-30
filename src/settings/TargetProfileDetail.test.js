@@ -1,5 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import '../../test/jest/__mock__';
 
@@ -8,7 +12,18 @@ import {
   translationsProperties,
 } from '../../test/jest/helpers';
 
+import {
+  useAllowedJobProfiles,
+  useDefaultJobProfile,
+} from '../common/hooks';
+
 import TargetProfileDetail from './TargetProfileDetail';
+
+jest.mock('../common/hooks', () => ({
+  ...jest.requireActual('../common/hooks'),
+  useDefaultJobProfile: jest.fn(),
+  useAllowedJobProfiles: jest.fn(),
+}));
 
 const identifierTypeResources = {
   identifierType: {
@@ -17,48 +32,9 @@ const identifierTypeResources = {
     hasLoaded: true,
   },
 };
-const defaultCreateJobProfileResources = {
-  records: [{
-    id: 'createJobProfileTestId',
-    name: 'create name',
-  }],
-  other: { totalRecords: null },
-  hasLoaded: true,
-};
-const defaultUpdateJobProfileResources = {
-  records: [{
-    id: 'updateJobProfileTestId',
-    name: 'update name',
-  }],
-  other: { totalRecords: null },
-  hasLoaded: true,
-};
-const allowedCreateJobProfilesResources = {
-  jobProfiles: {
-    records: [{
-      id: 'createJobProfileTestId',
-      name: 'create name',
-    }],
-    other: { totalRecords: 1 },
-    hasLoaded: true,
-  },
-};
-const allowedUpdateJobProfilesResources = {
-  jobProfiles: {
-    records: [{
-      id: 'updateJobProfileTestId',
-      name: 'update name',
-    }],
-    other: { totalRecords: 1 },
-    hasLoaded: true,
-  },
-};
+
 const resources = {
   identifierType: identifierTypeResources.identifierType,
-  defaultCreateJobProfile: defaultCreateJobProfileResources,
-  defaultUpdateJobProfile: defaultUpdateJobProfileResources,
-  allowedCreateJobProfiles: allowedCreateJobProfilesResources.jobProfiles,
-  allowedUpdateJobProfiles: allowedUpdateJobProfilesResources.jobProfiles,
 };
 
 const defaultInitialValues = {
@@ -76,17 +52,43 @@ const defaultInitialValues = {
   updateJobProfileId: 'updateJobProfileTestId',
 };
 
+const queryClient = new QueryClient();
+
 const renderTargetProfileDetail = (initialValues = defaultInitialValues) => renderWithIntl(
-  <BrowserRouter>
-    <TargetProfileDetail
-      initialValues={initialValues}
-      resources={resources}
-    />
-  </BrowserRouter>,
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <TargetProfileDetail
+        initialValues={initialValues}
+        resources={resources}
+      />
+    </BrowserRouter>
+  </QueryClientProvider>,
   translationsProperties,
 );
 
 describe('TargetProfileDetail', () => {
+  beforeEach(() => {
+    useAllowedJobProfiles.mockReturnValue({
+      isLoading: false,
+      allowedJobProfiles: [{
+        id: 'testId1',
+        name: 'Test name 1',
+      }]
+    });
+    useDefaultJobProfile.mockReturnValue({
+      isLoading: false,
+      defaultJobProfile: {
+        id: 'testId1',
+        name: 'Test name 1',
+      }
+    });
+  });
+
+  afterEach(() => {
+    useAllowedJobProfiles.mockClear();
+    useDefaultJobProfile.mockClear();
+  });
+
   it('should display correct profile name', () => {
     const { getByText } = renderTargetProfileDetail();
 
@@ -142,10 +144,10 @@ describe('TargetProfileDetail', () => {
   });
 
   it('names of job profiles should be displayed as a hotlink', () => {
-    const { getByText } = renderTargetProfileDetail();
+    const { getAllByText } = renderTargetProfileDetail();
 
-    expect(getByText('create name').href).toContain('/settings/data-import/job-profiles/view/createJobProfileTestId');
-    expect(getByText('update name').href).toContain('/settings/data-import/job-profiles/view/updateJobProfileTestId');
+    expect(getAllByText('Test name 1')[0].href).toContain('/settings/data-import/job-profiles/view/testId1');
+    expect(getAllByText('Test name 1')[1].href).toContain('/settings/data-import/job-profiles/view/testId1');
   });
 
   it('should display correct Target options', () => {

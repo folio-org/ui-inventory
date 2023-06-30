@@ -37,6 +37,6 @@ describe('useAllowedJobProfiles', () => {
       return !result.current.isLoading;
     });
 
-    expect(result.current.allowedJobProfiles.jobProfiles).toBe(allowedJobProfileIds);
+    expect(result.current.allowedJobProfiles).toBe(allowedJobProfileIds);
   });
 });
