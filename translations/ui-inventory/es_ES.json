@@ -737,7 +737,7 @@
     "effectiveCallNumberShelving": "Signatura efectiva (item), orden de estantería",
     "browseContributors.results.error": "Error recuperando resultados, revise la búsqueda o vuelva a intentarlo",
     "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
-    "search": "Search",
+    "search": "Buscar",
     "linkedToMarcAuthority": "Linked to MARC authority",
     "browse.callNumbers": "Números de clasificación",
     "browse.contributors": "Colaboradores",
@@ -783,5 +783,7 @@
     "actions.menuSection.sortBy": "Sort by",
     "actions.menuSection.sortBy.relevance": "Relevance",
     "actions.menuSection.sortBy.title": "Title",
-    "actions.menuSection.sortBy.contributors": "Contributors"
+    "actions.menuSection.sortBy.contributors": "Contributors",
+    "exportInstanceInMARC": "Export instance (MARC)",
+    "editInstance.title": "Edit instance • {title}"
 }

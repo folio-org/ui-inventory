@@ -5,10 +5,10 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import {
   act,
+  cleanup,
   fireEvent,
   screen,
   waitFor,
-  cleanup,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -21,6 +21,7 @@ import translationsProperties from '../../../test/jest/helpers/translationsPrope
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
+import { setItem } from '../../storage';
 import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 
 const updateMock = jest.fn();
@@ -30,8 +31,19 @@ const mockStoreLastSearch = jest.fn();
 const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
+const mockGetLastSearch = jest.fn();
 
-jest.mock('../../storage');
+jest.mock('../../storage', () => ({
+  ...jest.requireActual('../../storage'),
+  setItem: jest.fn(),
+}));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: () => ({
+    getLastSearch: mockGetLastSearch,
+  }),
+}));
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -143,7 +155,7 @@ describe('InstancesList', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
         history.push({ search });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
       describe('and browse result was selected', () => {
@@ -185,7 +197,7 @@ describe('InstancesList', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
           history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
       });
 
@@ -204,7 +216,7 @@ describe('InstancesList', () => {
             },
           }, rerender);
 
-          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
       });
     });
@@ -219,20 +231,37 @@ describe('InstancesList', () => {
       });
     });
 
-    it('should pass the correct search by clicking on the `Browse` tab', () => {
-      cleanup();
-      const search = '?qindex=subjects&query=book';
+    describe('when clicking on the `Browse` tab', () => {
+      it('should pass the correct search by clicking on the `Browse` tab', () => {
+        cleanup();
+        const search = '?qindex=subjects&query=book';
 
-      jest.spyOn(history, 'push');
+        jest.spyOn(history, 'push');
 
-      renderInstancesList({
-        segment: 'instances',
-        getLastBrowse: () => search,
+        renderInstancesList({
+          segment: 'instances',
+          getLastBrowse: () => search,
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
       });
 
-      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+      it('should store last opened record id', () => {
+        cleanup();
+        history = createMemoryHistory({ initialEntries: [{
+          pathname: '/inventory/view/test-id',
+        }] });
 
-      expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(setItem).toHaveBeenCalledWith('@folio/inventory.instances.lastOpenRecord', 'test-id');
+      });
     });
 
     it('should have proper list results size', () => {
