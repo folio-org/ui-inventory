@@ -21,6 +21,25 @@ const JOB_PROFILES_COLUMNS_NAME = {
   IS_DEFAULT: 'isDefault',
 };
 
+const getJobProfilesFormatter = defaultProfileId => ({
+  [JOB_PROFILES_COLUMNS_NAME.ID]: jobProfile => (
+    <>
+      <TextLink
+        to={`/settings/data-import/job-profiles/view/${jobProfile.id}`}
+        target="_blank"
+      >
+        {jobProfile.name}
+      </TextLink>
+      <span>{`(${jobProfile.id})`}</span>
+    </>
+  ),
+  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: jobProfile => {
+    return defaultProfileId === jobProfile.id
+      ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
+      : null;
+  },
+});
+
 const TargetProfileDetail = props => {
   const {
     initialValues,
@@ -48,25 +67,6 @@ const TargetProfileDetail = props => {
       name: jobProfile?.name,
     }));
   };
-
-  const getJobProfilesFormatter = defaultProfileId => ({
-    [JOB_PROFILES_COLUMNS_NAME.ID]: jobProfile => (
-      <>
-        <TextLink
-          to={`/settings/data-import/job-profiles/view/${jobProfile.id}`}
-          target="_blank"
-        >
-          {jobProfile.name}
-        </TextLink>
-        <span>{`(${jobProfile.id})`}</span>
-      </>
-    ),
-    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: jobProfile => {
-      return defaultProfileId === jobProfile.id
-        ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
-        : null;
-    },
-  });
 
   const t = initialValues.targetOptions;
   const targetOptions = !t ? null : (
