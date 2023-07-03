@@ -20,10 +20,11 @@ const useAllowedJobProfiles = (allowedJobProfileIds) => {
   const allowedIdsQuery = `id==(${ids})`;
   const path = `${DATA_IMPORT_JOB_PROFILES_ROUTE}?limit=${LIMIT_MAX}&query=${DATA_TYPE_MARC_QUERY} and ${allowedIdsQuery} sortBy name`;
 
-  const { isLoading, data: allowedJobProfiles = [] } = useQuery(
-    [namespace, allowedJobProfileIds],
-    () => ky.get(path).json(),
-  );
+  const { isLoading, data: allowedJobProfiles = {} } = useQuery({
+    queryKey: [namespace, allowedJobProfileIds],
+    queryFn: () => ky.get(path).json(),
+    enabled: !!allowedJobProfileIds,
+  });
 
   return ({
     isLoading,

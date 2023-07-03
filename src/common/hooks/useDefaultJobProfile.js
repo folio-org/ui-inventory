@@ -13,11 +13,11 @@ const useDefaultJobProfile = (jobProfileId) => {
 
   const path = `${DATA_IMPORT_JOB_PROFILES_ROUTE}/${jobProfileId}`;
 
-  const { isLoading, data: defaultJobProfile = {} } = useQuery(
-    [namespace, jobProfileId],
-    () => ky.get(path).json(),
-    { enabled: Boolean(jobProfileId) },
-  );
+  const { isLoading, data: defaultJobProfile = {} } = useQuery({
+    queryKey: [namespace, jobProfileId],
+    queryFn: () => ky.get(path).json(),
+    enabled: !!jobProfileId,
+  });
 
   return ({
     isLoading,
