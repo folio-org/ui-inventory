@@ -39,7 +39,13 @@
 * Adjust the Instance Edit screen header. Refs UIIN-2437.
 * Inventory: Retain Search/Browse query/options/filter and facet selections UNLESS user resets/clear selections. Refs UIIN-2433.
 * Statistical Code dropdown "contains" type ahead functionality needed (Instance/Holdings/Items). Refs UIIN-2466.
+* Fix problem with a large number of items on a single holdings record. Refs UIIN-2478.
 * Decrease rerenders for TargetProfileDetail component to avoid errors when view the target profile. Fixes UIIN-2467.
+
+## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
+
+* Fix useBoundWithHoldings for 100+ items. Fixes UIIN-2478.
 
 ## [9.4.7](https://github.com/folio-org/ui-inventory/tree/v9.4.7) (2023-06-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.6...v9.4.7)
