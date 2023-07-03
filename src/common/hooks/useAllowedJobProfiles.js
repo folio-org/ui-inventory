@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+import { isEmpty } from 'lodash';
 
 import {
   useOkapiKy,
@@ -23,7 +24,7 @@ const useAllowedJobProfiles = (allowedJobProfileIds) => {
   const { isLoading, data: allowedJobProfiles = {} } = useQuery({
     queryKey: [namespace, allowedJobProfileIds],
     queryFn: () => ky.get(path).json(),
-    enabled: !!allowedJobProfileIds,
+    enabled: !isEmpty(allowedJobProfileIds),
   });
 
   return ({
