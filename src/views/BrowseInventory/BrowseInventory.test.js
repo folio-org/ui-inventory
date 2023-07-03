@@ -181,4 +181,38 @@ describe('BrowseInventory', () => {
 
     expect(applySearch).not.toHaveBeenCalled();
   });
+
+  describe('when the selected qindex is one of those that should comprise the callNumberType param', () => {
+    it('should be added to the useInventoryBrowse filters', () => {
+      const filters = {
+        query: 'fakeQuery',
+        qindex: browseModeOptions.DEWEY,
+      };
+
+      useLocationFilters.mockReturnValue(getFiltersUtils({
+        filters,
+      }));
+
+      renderBrowseInventory();
+
+      const expectedFilters = {
+        ...filters,
+        callNumberType: filters.qindex,
+      };
+
+      expect(useInventoryBrowse).toHaveBeenCalledWith(expect.objectContaining({ filters: expectedFilters }));
+    });
+  });
+
+  it('should display search indexes', () => {
+    const { getByText } = renderBrowseInventory();
+
+    expect(getByText('Call numbers')).toBeDefined();
+    expect(getByText('Call numbers (all)')).toBeDefined();
+    expect(getByText('Dewey Decimal classification')).toBeDefined();
+    expect(getByText('Library of Congress classification')).toBeDefined();
+    expect(getByText('Local')).toBeDefined();
+    expect(getByText('National Library of Medicine classification')).toBeDefined();
+    expect(getByText('Other scheme')).toBeDefined();
+  });
 });
