@@ -15,7 +15,10 @@ import { browseModeOptions } from '../../constants';
 import BrowseInventory from './BrowseInventory';
 import { SearchModeNavigation } from '../../components';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
-import { useLastSearchTerms } from '../../hooks';
+import {
+  useLastSearchTerms,
+  useInventoryBrowse,
+} from '../../hooks';
 
 const mockGetLastSearch = jest.fn();
 const mockGetLastBrowseOffset = jest.fn().mockImplementation(() => INIT_PAGE_CONFIG);

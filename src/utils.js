@@ -255,7 +255,13 @@ export function filterItemsBy(name) {
 }
 
 export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+  const searchableIndex = indexes.find(({ value, subIndexes }) => {
+    if (subIndexes) {
+      return subIndexes.some(subIndex => subIndex.value === queryIndex);
+    }
+
+    return value === queryIndex;
+  });
 
   return get(searchableIndex, 'queryTemplate');
 }

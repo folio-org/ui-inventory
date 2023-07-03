@@ -107,15 +107,36 @@ export const segments = {
 
 export const browseModeOptions = {
   CALL_NUMBERS: 'callNumbers',
+  DEWEY: 'dewey',
+  LIBRARY_OF_CONGRESS: 'lc',
+  LOCAL: 'local',
+  NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
+  OTHER: 'other',
+  SUPERINTENDENT: 'sudoc',
   CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
 
 export const browseModeMap = {
   callNumbers: 'callNumbers',
+  dewey: 'dewey',
+  lc: 'lc',
+  local: 'local',
+  nlm: 'nlm',
+  other: 'other',
+  sudoc: 'sudoc',
   contributors: 'contributors',
   browseSubjects: 'browseSubjects',
 };
+
+export const INDEXES_WITH_CALL_NUMBER_TYPE_PARAM = [
+  browseModeOptions.DEWEY,
+  browseModeOptions.LIBRARY_OF_CONGRESS,
+  browseModeOptions.LOCAL,
+  browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE,
+  browseModeOptions.OTHER,
+  browseModeOptions.SUPERINTENDENT,
+];
 
 export const undefinedAsString = 'undefined';
 
@@ -170,6 +191,12 @@ export const queryIndexes = {
   SUBJECT: 'subject',
   QUERY_SEARCH: 'querySearch',
   CALL_NUMBER: 'callNumber',
+  DEWEY: 'dewey',
+  LIBRARY_OF_CONGRESS: 'lc',
+  LOCAL: 'local',
+  NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
+  OTHER: 'other',
+  SUPERINTENDENT: 'sudoc',
   CONTRIBUTOR: 'contributor',
 };
 
