@@ -41,6 +41,7 @@
 * Statistical Code dropdown "contains" type ahead functionality needed (Instance/Holdings/Items). Refs UIIN-2466.
 * Fix problem with a large number of items on a single holdings record. Refs UIIN-2478.
 * Decrease rerenders for TargetProfileDetail component to avoid errors when view the target profile. Fixes UIIN-2467.
+* Restrict modifying and deleting system call number types. Refs UIIN-2385.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
