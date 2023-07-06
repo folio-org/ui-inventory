@@ -449,5 +449,6 @@ export const RECORD_SOURCE = {
   RDA_CARRIER: 'rdacarrier',
   RDA_CONTENT: 'rdacontent',
   RDA_MODE_ISSUE: 'rdamodeissue',
+  SYSTEM: 'system',
   UC: 'UC',
 };

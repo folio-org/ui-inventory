@@ -4,17 +4,20 @@ import { MemoryRouter } from 'react-router-dom';
 import '../../test/jest/__mock__';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-
-import * as utils from '../utils';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
 import {
   renderWithIntl,
   stripesStub,
   translationsProperties
 } from '../../test/jest/helpers';
-
+import { RECORD_SOURCE } from '../constants';
 import CallNumberTypes from './CallNumberTypes';
 
+jest.mock('@folio/stripes/util', () => ({
+  ...jest.requireActual('@folio/stripes/util'),
+  getSourceSuppressor: jest.fn(),
+}));
 jest.mock('../utils');
 
 const defaultProps = {
@@ -43,12 +46,11 @@ describe('CallNumberTypes', () => {
 
   describe('when call number type is "system"', () => {
     it('should hide the "edit" and "delete" buttons', () => {
+      getSourceSuppressor.mockClear().mockReturnValue(() => true);
       renderCallNumberTypes();
 
-      const actionSuppressor = {
-        delete: expect(utils.sourceSuppressor).toHaveBeenCalledWith('system'),
-        edit: expect(utils.sourceSuppressor).toHaveBeenCalledWith('system'),
-      };
+      const suppressor = getSourceSuppressor(RECORD_SOURCE.SYSTEM);
+      const actionSuppressor = { delete: suppressor, edit: suppressor };
 
       expect(ControlledVocab).toHaveBeenCalledWith(expect.objectContaining({ actionSuppressor }), {});
     });
