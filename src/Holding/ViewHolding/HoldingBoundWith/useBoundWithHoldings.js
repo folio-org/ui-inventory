@@ -1,7 +1,10 @@
 import useChunkedCQLFetch from '../../../hooks/useChunkedCQLFetch';
 
 const useBoundWithHoldings = (boundWithItems) => {
-  const holdingsRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
+  let holdingsRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
+
+  // De-dup the list of holdingsRecordIds for efficiency
+  holdingsRecordIds = [...new Set(holdingsRecordIds)];
 
   const { items: holdingsRecords, isLoading } = useChunkedCQLFetch({
     ids: holdingsRecordIds,
