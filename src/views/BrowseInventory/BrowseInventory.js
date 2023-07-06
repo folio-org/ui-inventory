@@ -93,17 +93,17 @@ const BrowseInventory = () => {
   const searchableIndexesPlaceholder = intl.formatMessage({ id: 'ui-inventory.browse.searchableIndexesPlaceholder' });
   const isResetButtonDisabled = !location.search && !searchQuery;
 
-  const searchableOptions = browseInstanceIndexes.map((searchableIndex, index) => {
+  const searchableOptions = browseInstanceIndexes.map((searchableIndex) => {
     if (searchableIndex.subIndexes) {
       return (
         <optgroup
-          key={index}
+          key={searchableIndex.label}
           label={intl.formatMessage({ id: searchableIndex.label })}
           className={css.optgroup}
         >
-          {searchableIndex.subIndexes.map((subOption, i) => (
+          {searchableIndex.subIndexes.map((subOption) => (
             <option
-              key={i}
+              key={subOption.value}
               value={subOption.value}
             >
               {intl.formatMessage({ id: subOption.label })}
@@ -115,7 +115,7 @@ const BrowseInventory = () => {
 
     return (
       <option
-        key={index}
+        key={searchableIndex.value}
         value={searchableIndex.value}
       >
         {intl.formatMessage({ id: searchableIndex.label })}
