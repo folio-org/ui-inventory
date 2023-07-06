@@ -439,3 +439,15 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
 };
+
+export const RECORD_SOURCE = {
+  CONSORTIUM: 'consortium',
+  FOLIO: 'folio',
+  INN_REACH: 'inn-reach',
+  LOCAL: 'local',
+  MARC_RELATOR: 'marcrelator',
+  RDA_CARRIER: 'rdacarrier',
+  RDA_CONTENT: 'rdacontent',
+  RDA_MODE_ISSUE: 'rdamodeissue',
+  UC: 'UC',
+};
