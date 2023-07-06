@@ -5,6 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
 
+import { sourceSuppressor } from '../utils';
+
 class CallNumberTypes extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -19,6 +21,11 @@ class CallNumberTypes extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  actionSuppressor = {
+    edit: sourceSuppressor('system'),
+    delete: sourceSuppressor('system'),
+  }
+
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.call-number-types');
 
@@ -27,6 +34,7 @@ class CallNumberTypes extends React.Component {
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
+            actionSuppressor={this.actionSuppressor}
             baseUrl="call-number-types"
             records="callNumberTypes"
             label={<FormattedMessage id="ui-inventory.callNumberTypes" />}
