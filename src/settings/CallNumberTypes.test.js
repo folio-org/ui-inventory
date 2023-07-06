@@ -14,11 +14,7 @@ import {
 import { RECORD_SOURCE } from '../constants';
 import CallNumberTypes from './CallNumberTypes';
 
-jest.mock('@folio/stripes/util', () => ({
-  ...jest.requireActual('@folio/stripes/util'),
-  getSourceSuppressor: jest.fn(),
-}));
-jest.mock('../utils');
+jest.mock('@folio/stripes/util');
 
 const defaultProps = {
   stripes: {
@@ -46,11 +42,12 @@ describe('CallNumberTypes', () => {
 
   describe('when call number type is "system"', () => {
     it('should hide the "edit" and "delete" buttons', () => {
-      getSourceSuppressor.mockClear().mockReturnValue(() => true);
       renderCallNumberTypes();
 
-      const suppressor = getSourceSuppressor(RECORD_SOURCE.SYSTEM);
-      const actionSuppressor = { delete: suppressor, edit: suppressor };
+      const actionSuppressor = {
+        delete: expect(getSourceSuppressor).toHaveBeenNthCalledWith(1, RECORD_SOURCE.SYSTEM),
+        edit: expect(getSourceSuppressor).toHaveBeenNthCalledWith(2, RECORD_SOURCE.SYSTEM),
+      };
 
       expect(ControlledVocab).toHaveBeenCalledWith(expect.objectContaining({ actionSuppressor }), {});
     });
