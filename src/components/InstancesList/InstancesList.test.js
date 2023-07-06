@@ -8,7 +8,6 @@ import {
   cleanup,
   fireEvent,
   screen,
-  waitFor,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -130,6 +129,7 @@ const renderInstancesList = ({
             getLastSearchOffset={mockGetLastSearchOffset}
             storeLastSearch={mockStoreLastSearch}
             storeLastSearchOffset={mockStoreLastSearchOffset}
+            storeLastSegment={noop}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -291,10 +291,9 @@ describe('InstancesList', () => {
 
           const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
 
-          waitFor(() => {
-            fireEvent.click(button);
-            expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
-          });
+          fireEvent.click(button);
+
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?');
         });
       });
 
@@ -341,7 +340,7 @@ describe('InstancesList', () => {
         });
 
         it('should select option value "Contributors" after column "Contributors" click', async () => {
-          await act(async () => userEvent.click(document.querySelector('#clickable-list-column-contributors')));
+          await act(async () => fireEvent.click(document.querySelector('#clickable-list-column-contributors')));
 
           expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
         });
