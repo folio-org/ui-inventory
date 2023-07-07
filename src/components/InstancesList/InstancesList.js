@@ -25,7 +25,7 @@ import {
   stripesConnect,
   withNamespace,
 } from '@folio/stripes/core';
-import { SearchAndSort, makeQueryFunction } from '@folio/stripes/smart-components';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   Button,
   Icon,
@@ -55,10 +55,9 @@ import {
   isTestEnv,
   handleKeyCommand,
   buildSingleItemQuery,
-  getIsbnIssnTemplate
+  buildAdvancedSearchQuery,
 } from '../../utils';
 import {
-  CQL_FIND_ALL,
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   queryIndexes,
@@ -79,10 +78,7 @@ import {
 } from '../../storage';
 import facetsStore from '../../stores/facetsStore';
 import registerLogoutListener from '../../hooks/useLogout/utils';
-import {
-  advancedSearchIndexes,
-  fieldSearchConfigurations,
-} from '../../filterConfig';
+import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
 
@@ -96,40 +92,6 @@ const ALL_COLUMNS = Array.from(new Set([
   ...TOGGLEABLE_COLUMNS,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
-
-const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => {
-  const template = fieldSearchConfigurations[queryIndex]?.[matchOption];
-
-  return template;
-};
-
-function buildAdvancedSearchQuery(queryParams, pathComponents, resourceData, logger, props) {
-  const queryIndex = queryParams?.qindex ?? 'all';
-  const queryValue = get(queryParams, 'query', '');
-  const queryMatch = get(queryParams, 'match', 'exactPhrase');
-  let queryTemplate = getAdvancedSearchQueryTemplate(queryIndex, queryMatch);
-
-  if (queryIndex.match(/isbn|issn/)) {
-    // eslint-disable-next-line camelcase
-    const identifierTypes = resourceData?.identifier_types?.records ?? [];
-    queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
-  }
-
-  resourceData.query = { query: queryValue, qindex: '' };
-
-  // makeQueryFunction escapes quote and backslash characters by default,
-  // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
-  // we assume the user knows what they are doing and wants to run the CQL as-is.
-  return makeQueryFunction(
-    CQL_FIND_ALL,
-    queryTemplate,
-    {},
-    [],
-    2,
-    null,
-    queryIndex !== 'querySearch',
-  )(queryParams, pathComponents, resourceData, logger, props);
-}
 
 class InstancesList extends React.Component {
   static defaultProps = {

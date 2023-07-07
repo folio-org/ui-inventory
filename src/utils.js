@@ -22,6 +22,7 @@ import {
 import moment from 'moment';
 
 import { FormattedUTCDate } from '@folio/stripes/components';
+import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import {
   itemStatusesMap,
@@ -33,6 +34,8 @@ import {
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
+  CQL_FIND_ALL,
+  fieldSearchConfigurations,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -267,6 +270,37 @@ export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) 
 
   return template(queryTemplate)({ identifierTypeId });
 }
+
+const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
+
+export function buildAdvancedSearchQuery(queryParams, pathComponents, resourceData, logger, props) {
+  const queryIndex = queryParams?.qindex ?? 'all';
+  const queryValue = get(queryParams, 'query', '');
+  const queryMatch = get(queryParams, 'match', 'exactPhrase');
+  let queryTemplate = getAdvancedSearchQueryTemplate(queryIndex, queryMatch);
+
+  if (queryIndex.match(/isbn|issn/)) {
+    // eslint-disable-next-line camelcase
+    const identifierTypes = resourceData?.identifier_types?.records ?? [];
+    queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
+  }
+
+  resourceData.query = { query: queryValue, qindex: '' };
+
+  // makeQueryFunction escapes quote and backslash characters by default,
+  // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
+  // we assume the user knows what they are doing and wants to run the CQL as-is.
+  return makeQueryFunction(
+    CQL_FIND_ALL,
+    queryTemplate,
+    {},
+    [],
+    2,
+    null,
+    queryIndex !== 'querySearch',
+  )(queryParams, pathComponents, resourceData, logger, props);
+}
+
 
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
 // idTypes is an array of relationship definition objects of the form
