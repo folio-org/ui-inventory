@@ -57,6 +57,11 @@
 
 * Introduce server side pagination for large volume of items. Fixes UIIN-2478.
 
+## [9.4.9](https://github.com/folio-org/ui-inventory/tree/v9.4.9) (2023-07-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.8...v9.4.9)
+
+* Dedupe ID-list passed to `useBoundWithHoldings`. Further addresses UIIN-2478.
+
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
 
