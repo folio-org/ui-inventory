@@ -234,7 +234,7 @@ describe('InstancesList', () => {
     describe('when clicking on the `Browse` tab', () => {
       it('should pass the correct search by clicking on the `Browse` tab', () => {
         cleanup();
-        const search = '?qindex=subjects&query=book';
+        const search = '?qindex=subject&query=book';
 
         jest.spyOn(history, 'push');
 
@@ -360,6 +360,22 @@ describe('InstancesList', () => {
         userEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+      });
+    });
+
+    describe('when using advanced search', () => {
+      beforeEach(() => {
+        userEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          target: { value: 'test' }
+        });
+
+        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+        userEvent.click(advancedSearchSubmit);
+      });
+
+      it('should set advanced search query in search input', () => {
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword all "test"');
       });
     });
   });
