@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
+import { RECORD_SOURCE } from '../constants';
 import validateNameAndCode from './validateNameAndCode';
-
-import { sourceSuppressor } from '../utils';
 
 class FormatSettings extends React.Component {
   static propTypes = {
@@ -25,7 +25,10 @@ class FormatSettings extends React.Component {
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-formats');
-    const suppress = sourceSuppressor('rdacarrier');
+    const suppress = getSourceSuppressor([
+      RECORD_SOURCE.RDA_CARRIER,
+      RECORD_SOURCE.CONSORTIUM,
+    ]);
 
     return (
       <IntlConsumer>

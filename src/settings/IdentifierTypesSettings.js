@@ -4,8 +4,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
-import { sourceSuppressor } from '../utils';
+import { RECORD_SOURCE } from '../constants';
 
 class IdentifierTypesSettings extends React.Component {
   static propTypes = {
@@ -23,7 +24,10 @@ class IdentifierTypesSettings extends React.Component {
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.identifier-types');
-    const suppress = sourceSuppressor('folio');
+    const suppress = getSourceSuppressor([
+      RECORD_SOURCE.FOLIO,
+      RECORD_SOURCE.CONSORTIUM,
+    ]);
 
     return (
       <IntlConsumer>

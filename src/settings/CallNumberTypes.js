@@ -4,8 +4,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
-import { sourceSuppressor } from '../utils';
+import { RECORD_SOURCE } from '../constants';
 
 class CallNumberTypes extends React.Component {
   static propTypes = {
@@ -22,8 +23,8 @@ class CallNumberTypes extends React.Component {
   }
 
   actionSuppressor = {
-    edit: sourceSuppressor('system'),
-    delete: sourceSuppressor('system'),
+    edit: getSourceSuppressor(RECORD_SOURCE.SYSTEM),
+    delete: getSourceSuppressor(RECORD_SOURCE.SYSTEM),
   }
 
   render() {
