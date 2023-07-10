@@ -188,6 +188,7 @@ describe('Given InstanceMovementContainer', () => {
           content: 'instance-hrid-2',
         }],
         relatedRecordVersion: 2,
+        _actionType: 'edit',
       });
     });
 

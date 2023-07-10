@@ -654,7 +654,7 @@
     "holdingsPaneTitle": "Holdings • {location} • {callNumber}",
     "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
     "instance.saveError": "Saving instance failed",
-    "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, Bound with)",
+    "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, bound with)",
     "acq.polNumber": "POL number",
     "acq.orderStatus": "Order status",
     "acq.orderStatus.Closed": "Closed",
@@ -779,5 +779,11 @@
     "newMARCRecord": "New MARC Bib Record",
     "boundWithTitles.add": "Add Bound-with and analytics",
     "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
-    "selectCode": "Select code"
+    "selectCode": "Select code",
+    "actions.menuSection.sortBy": "Sort by",
+    "actions.menuSection.sortBy.relevance": "Relevance",
+    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.contributors": "Contributors",
+    "exportInstanceInMARC": "Export instance (MARC)",
+    "editInstance.title": "Edit instance • {title}"
 }

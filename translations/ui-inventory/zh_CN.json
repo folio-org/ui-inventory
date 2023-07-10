@@ -654,7 +654,7 @@
     "holdingsPaneTitle": "馆藏 • {location} • {callNumber}",
     "instanceRecordSubtitle": "{hrid} • 上次更新：{updatedDate}",
     "instance.saveError": "保存实例失败",
-    "itemRecordWithDescriptionBW": "单件记录（ {materialType} ， {status} ，绑定）",
+    "itemRecordWithDescriptionBW": "单件记录（ {materialType} ， {status} ，合订）",
     "acq.polNumber": "订单行号",
     "acq.orderStatus": "订单状态",
     "acq.orderStatus.Closed": "已关闭",
@@ -779,5 +779,11 @@
     "newMARCRecord": "新建MARC书目记录",
     "boundWithTitles.add": "添加合订与分析",
     "boundWithTitles.enterHoldingsHrid": "输入馆藏HRID",
-    "selectCode": "选择代码"
+    "selectCode": "选择代码",
+    "actions.menuSection.sortBy": "排序方式",
+    "actions.menuSection.sortBy.relevance": "相关性",
+    "actions.menuSection.sortBy.title": "题名",
+    "actions.menuSection.sortBy.contributors": "贡献者",
+    "exportInstanceInMARC": "导出实例（MARC）",
+    "editInstance.title": "编辑实例 • {title}"
 }

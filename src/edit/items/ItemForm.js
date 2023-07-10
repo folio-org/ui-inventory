@@ -92,9 +92,12 @@ function validate(values) {
 function checkUniqueBarcode(okapi, barcode) {
   return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
     {
-      headers: { 'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json' }
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'Content-Type': 'application/json',
+        ...(okapi.token && { 'X-Okapi-Token': okapi.token }),
+      },
+      credentials: 'include',
     });
 }
 
@@ -201,15 +204,15 @@ class ItemForm extends React.Component {
       httpError,
 
       referenceTables: {
-        locationsById,
-        materialTypes,
+        locationsById = [],
+        materialTypes = [],
         loanTypes = [],
-        itemNoteTypes,
-        electronicAccessRelationships,
-        callNumberTypes,
-        statisticalCodes,
-        statisticalCodeTypes,
-        itemDamagedStatuses,
+        itemNoteTypes = [],
+        electronicAccessRelationships = [],
+        callNumberTypes = [],
+        statisticalCodes = [],
+        statisticalCodeTypes = [],
+        itemDamagedStatuses = [],
       },
       handleSubmit,
       pristine,
@@ -217,7 +220,7 @@ class ItemForm extends React.Component {
       history,
     } = this.props;
 
-    const holdingLocation = locationsById[holdingsRecord.permanentLocationId];
+    const holdingLocation = locationsById[holdingsRecord?.permanentLocationId];
     const item = initialValues;
 
     const refLookup = (referenceTable, id) => {
@@ -439,6 +442,7 @@ class ItemForm extends React.Component {
                           id="additem_barcode"
                           validate={validateBarcode(this.props)}
                           component={TextField}
+                          autoFocus
                           fullWidth
                         />
                       </Col>

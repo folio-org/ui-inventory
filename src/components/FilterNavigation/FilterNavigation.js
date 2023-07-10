@@ -1,33 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import queryString from 'query-string';
+
 import {
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
 
 import { segments } from '../../constants';
+import { useLastSearchTerms } from '../../hooks';
 
-const FilterNavigation = ({ segment, onChange }) => (
-  <ButtonGroup
-    fullWidth
-    data-test-filters-navigation
-  >
-    {
-      Object.keys(segments).map(name => (
-        <Button
-          key={`${name}`}
-          to={`/inventory?segment=${name}&sort=title`}
-          buttonStyle={`${segment === name ? 'primary' : 'default'}`}
-          id={`segment-navigation-${name}`}
-          onClick={onChange}
-        >
-          <FormattedMessage id={`ui-inventory.filters.${name}`} />
-        </Button>
-      ))
-    }
-  </ButtonGroup>
-);
+const FilterNavigation = ({ segment, onChange }) => {
+  const { getLastSearch } = useLastSearchTerms();
+
+  return (
+    <ButtonGroup
+      fullWidth
+      data-test-filters-navigation
+    >
+      {
+        Object.keys(segments).map((name) => {
+          const searchParams = queryString.parse(getLastSearch(name));
+
+          searchParams.segment = name;
+
+          return (
+            <Button
+              key={`${name}`}
+              to={{
+                pathname: '/inventory',
+                search: queryString.stringify(searchParams),
+              }}
+              buttonStyle={`${segment === name ? 'primary' : 'default'}`}
+              id={`segment-navigation-${name}`}
+              onClick={() => onChange(name)}
+            >
+              <FormattedMessage id={`ui-inventory.filters.${name}`} />
+            </Button>
+          );
+        })
+      }
+    </ButtonGroup>
+  );
+};
 
 FilterNavigation.propTypes = {
   segment: PropTypes.string,

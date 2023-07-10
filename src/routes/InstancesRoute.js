@@ -25,6 +25,7 @@ class InstancesRoute extends React.Component {
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -47,6 +48,7 @@ class InstancesRoute extends React.Component {
       getLastSearchOffset,
       storeLastSearch,
       storeLastSearchOffset,
+      storeLastSegment,
     } = this.props;
     const { segment } = getParams(this.props);
     const { indexes, renderer } = getFilterConfig(segment);
@@ -76,6 +78,7 @@ class InstancesRoute extends React.Component {
             getLastSearchOffset={getLastSearchOffset}
             storeLastSearch={storeLastSearch}
             storeLastSearchOffset={storeLastSearchOffset}
+            storeLastSegment={storeLastSegment}
           />
         )}
       </DataContext.Consumer>

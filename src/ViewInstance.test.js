@@ -29,11 +29,11 @@ jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
       selectedJobProfileId: 'profileId'
     };
     const container =
-    <div>
-      <div>ImportRecordModal</div>
-      <button type="button" onClick={() => handleSubmit(args)}>handleSubmit</button>
-      <button type="button" onClick={() => handleCancel()}>handleCancel</button>
-    </div>;
+      <div>
+        <div>ImportRecordModal</div>
+        <button type="button" onClick={() => handleSubmit(args)}>handleSubmit</button>
+        <button type="button" onClick={() => handleCancel()}>handleCancel</button>
+      </div>;
     return container;
   }
   return null;
@@ -105,6 +105,9 @@ const defaultProp = {
     marcRecord: {
       GET: mockData,
     },
+    quickExport:{
+      POST: jest.fn(),
+    },
     query: {
       update: updateMock,
     },
@@ -148,6 +151,7 @@ const defaultProp = {
   },
   stripes: {
     connect: jest.fn(),
+    hasInterface: jest.fn().mockReturnValue(true),
     hasPerm: jest.fn().mockReturnValue(true),
     locale: 'Testlocale',
     logger: {
@@ -209,6 +213,24 @@ describe('ViewInstance', () => {
     expect(screen.queryByText('Move holdings/items to another instance')).not.toBeInTheDocument();
   });
   describe('Action Menu', () => {
+    it('should not be displayed', () => {
+      renderViewInstance({
+        stripes: {
+          ...defaultProp.stripes,
+          hasInterface: jest.fn().mockReturnValue(false),
+          hasPerm: jest.fn().mockReturnValue(false),
+        },
+        resources: {
+          ...defaultProp.resources,
+          configs: {
+            ...defaultProp.resources.configs,
+            records: [{ value: JSON.stringify({ titleLevelRequestsFeatureEnabled: true }) }],
+          },
+        },
+      });
+
+      expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
+    });
     it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
       renderViewInstance();
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -247,6 +269,12 @@ describe('ViewInstance', () => {
       renderViewInstance();
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
       userEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
+      expect(renderViewInstance()).toBeTruthy();
+    });
+    it('"Export instance (MARC)" button to be clicked', () => {
+      renderViewInstance();
+      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      userEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
       expect(renderViewInstance()).toBeTruthy();
     });
     it('"InstancePlugin" should render when user clicks "Move holdings/items to another instance" button', () => {
