@@ -4,6 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
+
+import { RECORD_SOURCE } from '../constants';
+
+const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
+const actionSuppressor = { edit: suppress, delete: suppress };
 
 class HoldingsNoteTypesSettings extends React.Component {
   static propTypes = {
@@ -37,6 +43,7 @@ class HoldingsNoteTypesSettings extends React.Component {
               name: intl.formatMessage({ id: 'ui-inventory.name' }),
               source: intl.formatMessage({ id: 'ui-inventory.source' }),
             }}
+            actionSuppressor={actionSuppressor}
             readOnlyFields={['source']}
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}

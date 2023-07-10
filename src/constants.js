@@ -588,3 +588,16 @@ export const fieldSearchConfigurations = {
     startsWith: 'item.id="%{query.query}*"',
   },
 };
+
+export const RECORD_SOURCE = {
+  CONSORTIUM: 'consortium',
+  FOLIO: 'folio',
+  INN_REACH: 'inn-reach',
+  LOCAL: 'local',
+  MARC_RELATOR: 'marcrelator',
+  RDA_CARRIER: 'rdacarrier',
+  RDA_CONTENT: 'rdacontent',
+  RDA_MODE_ISSUE: 'rdamodeissue',
+  SYSTEM: 'system',
+  UC: 'UC',
+};
