@@ -4,6 +4,12 @@ import { browseModeOptions } from '../../constants';
 export const VISIBLE_COLUMNS_MAP = {
   [browseModeOptions.SUBJECTS]: ['subject', 'numberOfTitles'],
   [browseModeOptions.CALL_NUMBERS]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.DEWEY]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.LIBRARY_OF_CONGRESS]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.LOCAL]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.OTHER]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.SUPERINTENDENT]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.CONTRIBUTORS]: ['contributor', 'contributorType', 'relatorTerm', 'numberOfTitles'],
 };
 

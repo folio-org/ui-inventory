@@ -97,7 +97,7 @@ const BrowseResultsPane = ({
 };
 
 BrowseResultsPane.propTypes = {
-  browseData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  browseData: PropTypes.arrayOf(PropTypes.object),
   filters: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
   isFiltersOpened: PropTypes.bool.isRequired,
