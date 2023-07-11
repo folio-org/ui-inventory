@@ -439,3 +439,8 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
 };
+
+export const SOURCE_VALUES = {
+  CONSORTIUM_MARC: 'CONSORTIUM-MARC',
+  CONSORTIUM_FOLIO: 'CONSORTIUM-FOLIO',
+};
