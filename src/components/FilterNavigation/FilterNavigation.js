@@ -26,20 +26,18 @@ const FilterNavigation = ({ segment, onChange }) => {
           searchParams.segment = name;
 
           return (
-            <>
-              <Button
-                key={`${name}`}
-                to={{
-                  pathname: '/inventory',
-                  search: queryString.stringify(searchParams),
-                }}
-                buttonStyle={`${segment === name ? 'primary' : 'default'}`}
-                id={`segment-navigation-${name}`}
-                onClick={() => onChange(name)}
-              >
-                <FormattedMessage id={`ui-inventory.filters.${name}`} />
-              </Button>
-            </>
+            <Button
+              key={`${name}`}
+              to={{
+                pathname: '/inventory',
+                search: queryString.stringify(searchParams),
+              }}
+              buttonStyle={`${segment === name ? 'primary' : 'default'}`}
+              id={`segment-navigation-${name}`}
+              onClick={() => onChange(name)}
+            >
+              <FormattedMessage id={`ui-inventory.filters.${name}`} />
+            </Button>
           );
         })
       }

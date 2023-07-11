@@ -4,6 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
+
+import { RECORD_SOURCE } from '../constants';
+
+const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
+const actionSuppressor = { edit: suppress, delete: suppress };
 
 class LoanTypesSettings extends React.Component {
   static propTypes = {
@@ -32,6 +38,7 @@ class LoanTypesSettings extends React.Component {
             label={<FormattedMessage id="ui-inventory.loanTypes" />}
             labelSingular={intl.formatMessage({ id: 'ui-inventory.loanType' })}
             objectLabel={<FormattedMessage id="ui-inventory.loans" />}
+            actionSuppressor={actionSuppressor}
             hiddenFields={['description', 'numberOfObjects']}
             nameKey="name"
             id="loantypes"

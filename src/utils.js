@@ -255,7 +255,13 @@ export function filterItemsBy(name) {
 }
 
 export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+  const searchableIndex = indexes.find(({ value, subIndexes }) => {
+    if (subIndexes) {
+      return subIndexes.some(subIndex => subIndex.value === queryIndex);
+    }
+
+    return value === queryIndex;
+  });
 
   return get(searchableIndex, 'queryTemplate');
 }
@@ -651,8 +657,6 @@ export const unmarshalInstance = (instance, identifierTypesById) => {
  *
  */
 export const omitFromArray = (array, path) => array.map(title => omit(title, path));
-
-export const sourceSuppressor = sourceValue => term => term.source === sourceValue;
 
 export const getNextSelectedRowsState = (selectedRows, row) => {
   const { id } = row;
