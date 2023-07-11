@@ -4,18 +4,17 @@ import { MemoryRouter } from 'react-router-dom';
 import '../../test/jest/__mock__';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-
-import * as utils from '../utils';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
 import {
   renderWithIntl,
   stripesStub,
   translationsProperties
 } from '../../test/jest/helpers';
-
+import { RECORD_SOURCE } from '../constants';
 import CallNumberTypes from './CallNumberTypes';
 
-jest.mock('../utils');
+jest.mock('@folio/stripes/util');
 
 const defaultProps = {
   stripes: {
@@ -46,8 +45,8 @@ describe('CallNumberTypes', () => {
       renderCallNumberTypes();
 
       const actionSuppressor = {
-        delete: expect(utils.sourceSuppressor).toHaveBeenCalledWith('system'),
-        edit: expect(utils.sourceSuppressor).toHaveBeenCalledWith('system'),
+        delete: expect(getSourceSuppressor).toHaveBeenNthCalledWith(1, RECORD_SOURCE.SYSTEM),
+        edit: expect(getSourceSuppressor).toHaveBeenNthCalledWith(2, RECORD_SOURCE.SYSTEM),
       };
 
       expect(ControlledVocab).toHaveBeenCalledWith(expect.objectContaining({ actionSuppressor }), {});
