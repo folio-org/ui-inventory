@@ -285,6 +285,10 @@ export function buildAdvancedSearchQuery(queryParams, pathComponents, resourceDa
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
   }
 
+  if (!queryTemplate) {
+    return undefined;
+  }
+
   resourceData.query = { query: queryValue, qindex: '' };
 
   // makeQueryFunction escapes quote and backslash characters by default,
