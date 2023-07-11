@@ -1,0 +1,9 @@
+.optgroup {
+  color: #bababa;
+  font-weight: 400;
+  background-color: #fff;
+
+  & option {
+      color: initial;
+    }
+}

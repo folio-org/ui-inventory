@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -29,6 +29,8 @@ import {
   useLastSearchTerms,
 } from '../../hooks';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
+import { INDEXES_WITH_CALL_NUMBER_TYPE_PARAM } from '../../constants';
+import css from './BrowseInventory.css';
 
 const BrowseInventory = () => {
   const history = useHistory();
@@ -64,13 +66,24 @@ const BrowseInventory = () => {
     setPageConfig(INIT_PAGE_CONFIG);
   });
 
+  const withExtraFilters = useMemo(() => {
+    if (filters.query && INDEXES_WITH_CALL_NUMBER_TYPE_PARAM.includes(filters.qindex)) {
+      return {
+        ...filters,
+        callNumberType: filters.qindex,
+      };
+    }
+
+    return filters;
+  }, [filters]);
+
   const {
     data,
     isFetching,
     pagination,
     totalRecords,
   } = useInventoryBrowse({
-    filters,
+    filters: withExtraFilters,
     pageParams: { pageConfig, setPageConfig },
     options: { onSettled: deleteItemToView },
   });
@@ -80,10 +93,35 @@ const BrowseInventory = () => {
   const searchableIndexesPlaceholder = intl.formatMessage({ id: 'ui-inventory.browse.searchableIndexesPlaceholder' });
   const isResetButtonDisabled = !location.search && !searchQuery;
 
-  const formattedSearchableIndexes = browseInstanceIndexes.map(({ label, ...rest }) => ({
-    label: intl.formatMessage({ id: label }),
-    ...rest,
-  }));
+  const searchableOptions = browseInstanceIndexes.map((searchableIndex) => {
+    if (searchableIndex.subIndexes) {
+      return (
+        <optgroup
+          key={searchableIndex.label}
+          label={intl.formatMessage({ id: searchableIndex.label })}
+          className={css.optgroup}
+        >
+          {searchableIndex.subIndexes.map((subOption) => (
+            <option
+              key={subOption.value}
+              value={subOption.value}
+            >
+              {intl.formatMessage({ id: subOption.label })}
+            </option>
+          ))}
+        </optgroup>
+      );
+    }
+
+    return (
+      <option
+        key={searchableIndex.value}
+        value={searchableIndex.value}
+      >
+        {intl.formatMessage({ id: searchableIndex.label })}
+      </option>
+    );
+  });
 
   const onApplySearch = useCallback(() => {
     const isSearchQueryValid = validateDataQuery(searchQuery);
@@ -117,7 +155,7 @@ const BrowseInventory = () => {
             searchQuery={searchQuery}
             isLoading={isFetching}
             ariaLabelId="ui-inventory.browse"
-            searchableIndexes={formattedSearchableIndexes}
+            searchableOptions={searchableOptions}
             changeSearchIndex={onChangeSearchIndex}
             selectedIndex={searchIndex}
             searchableIndexesPlaceholder={searchableIndexesPlaceholder}
