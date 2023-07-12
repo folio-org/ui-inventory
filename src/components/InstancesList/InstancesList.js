@@ -55,7 +55,6 @@ import {
   isTestEnv,
   handleKeyCommand,
   buildSingleItemQuery,
-  buildAdvancedSearchQuery,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -1142,8 +1141,8 @@ class InstancesList extends React.Component {
     const advancedSearchQueryBuilder = (rows) => {
       const formatRowCondition = (row) => {
         // use default row formatter, but wrap each search term with parentheses
-        const query = buildAdvancedSearchQuery({ qindex: row.searchOption, query: row.query, match: row.match }, {}, data, { log: noop });
 
+        const query = `${row.searchOption} ${row.match} ${row.query}`;
         return query;
       };
 
