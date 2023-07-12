@@ -20,7 +20,6 @@ const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
-const getQueryTemplateCallNumber = (queryValue) => `itemEffectiveShelvingOrder==/string "${queryValue}"`;
 const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
 
 const getAdvancedSearchTemplate = (queryValue) => {
@@ -72,10 +71,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryParams?.selectedBrowseResult) {
-    if (queryIndex === queryIndexes.CALL_NUMBER) {
-      queryTemplate = getQueryTemplateCallNumber(queryValue);
-    }
-
     if (queryIndex === queryIndexes.CONTRIBUTOR) {
       const escapedQueryValue = queryValue.replaceAll('"', '\\"');
 

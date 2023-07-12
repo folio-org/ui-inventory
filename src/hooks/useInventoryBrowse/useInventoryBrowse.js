@@ -66,6 +66,7 @@ const useInventoryBrowse = ({
   const {
     qindex,
     query: searchQuery,
+    callNumberType,
     ...otherFilters
   } = normalizedFilters;
 
@@ -73,6 +74,7 @@ const useInventoryBrowse = ({
     highlightMatch: !!searchQuery && !regExp.test(searchQuery),
     limit: BROWSE_RESULTS_COUNT,
     precedingRecordsCount: PRECEDING_RECORDS_COUNT,
+    ...(callNumberType && { callNumberType }),
   };
 
   const path = PATH_MAP[qindex];
