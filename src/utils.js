@@ -22,7 +22,6 @@ import {
 import moment from 'moment';
 
 import { FormattedUTCDate } from '@folio/stripes/components';
-import { makeQueryFunction } from '@folio/stripes/smart-components';
 
 import {
   itemStatusesMap,
@@ -34,8 +33,6 @@ import {
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
-  CQL_FIND_ALL,
-  fieldSearchConfigurations,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
